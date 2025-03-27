@@ -1,0 +1,33 @@
+name: Refresh Roadmap
+on:
+  workflow_dispatch: # Deliberately left empty. Allows us to trigger the workflow manually.
+jobs:
+  refresh-roadmap:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout # To make sure there's something for the action to work off of
+        uses: actions/checkout@master 
+        with:
+          ref: ${{ github.ref }}
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@477b21f02be01bcb8030d50f37cfec92bfa615b6
+        with:
+          ruby-version: 2.7.2
+      - name: Pull Roadmap
+        env:
+          NOTION_TOKEN: secret_tmp642IVFKbv3oSlmD2SJ6tSno0MtEgRbmw6KgO4rE7
+          NOTION_DB_ID: bca1384db53d4205bf1d99fc93f2151a
+          TARGET_PATH: ./_data/roadmap.yml
+        run: ruby -r ./.github/refresh-roadmap/refresh-roadmap.rb 
+        timeout-minutes: 2
+      - name: Commit changes # Otherwise this just changes in some machine in the cloud
+        run: |
+          git config --local user.name "${{ github.actor }}"
+          git add ./_data/roadmap.yml
+          git commit -m "Refreshing the roadmap data file"
+      - name: Push changes # push the output folder to your repo
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
+          force: false

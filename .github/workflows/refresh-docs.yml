@@ -1,0 +1,41 @@
+name: "Refresh docs"
+on:
+  schedule:
+    - cron: "0 0 * * 1-5"
+    # Run every hour so we can test properly
+    # - cron: "0 */1 * * 1-5"
+
+jobs:
+  update-latest-and-master-docs:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile --prefer-offline
+      - name: Update docs
+        run: |
+          ./script/docs-update
+          ./script/docs master --set-version master
+      - name: Create a pull request
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if git diff --quiet ; then
+            echo "No changes to commit."
+          else
+            git config user.email "metabase-bot@metabase.com"
+            git config user.name "Metabase Docs bot"
+            update_branch="docs-update-${{ github.run_number }}"
+            git switch --create "${update_branch}"
+            git add .
+            git commit \
+              --author="Metabase Docs bot <metabase-bot@metabase.com>" \
+              --message="Update master and latest docs"
+            git push --force -u origin "${update_branch}"
+            gh pr create --title "Refresh docs (nightly)" --body ""
+            # `GITHUB_TOKEN` cannot trigger workflows except through an explicit `workflow_dispatch`
+            # (cf. https://docs.github.com/en/actions/security-guides/automatic-token-authentication#using-the-github_token-in-a-workflow),
+            # thus creating the pull request above does not cause any workflow to run.
+            # Trigger the workflow manually:
+            gh workflow run --ref "${update_branch}" ci-jekyll.yml
+          fi
