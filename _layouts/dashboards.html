@@ -1,0 +1,204 @@
+---
+layout: default
+active: 'dashboards'
+---
+
+<div class="product-intro">
+    <div class="container">
+        <div class="">
+            <div class="text-centered intro-block mt0" style="max-width: 540px;">
+                {% if page.type == "kpi" %}
+                    <h1 class="xl my0">How to Measure {{ page.title }}</span></h1>
+                    <p class="xl my0">Learn about {{ page.title }}, including how to measure it, and leverage it in dashboards and visualizations with Metabase.</p>
+                {% else %}
+                    <h1 class="xl my0">Dashboards for {{ page.title }}</span></h1>
+                    <p class="xl my0">Metabase makes it easy for everyone to build a dashboard for {{ page.title }}.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="relative">
+    <div class="container relative">
+        <div class="row my4 pb3 relative align-center" style="align-items: center;">
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 mt0 pt0 px0">
+                <h2 class="my0">
+                    {% if page.type == "kpi" %}
+                        What is {{ page.title }}?
+                    {% else %}
+                        What’s a {{ page.title }} dashboard?
+                    {% endif %}
+                </h2>
+                <p>{{ page.summary }}</p>
+                <a class="block sm-inline-block px2 Button Button--primary" href="https://store.metabase.com/checkout">Get Started</a>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 col-lg-offset-2 bleed-off">
+                <div class="relative">
+                    <img
+                        src="{{ page.featured_image }}"
+                        class="max-100"
+                        srcset="
+                        {{ page.featured_image }} 1x,
+                        "
+                        alt="Graphs of {{ page.title }}"
+                    />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if page.type == "kpi" %}
+<div class="product-intro">
+    <div class="container py4 mt4 mobile-top-48">
+        <div class="row my4 pb3 relative align-center">
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                <h2>How to calculate {{ page.title }}</h2>
+                <p>{{ page.calculate | markdownify }}</p>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-5 col-lg-offset-1 bootstrap">
+                <div class="top-list">
+                    <h3>Other KPIs to measure related to {{ page.title }}</h3>
+                    {{ page.content }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+
+<div class="container relative">
+    <div class="flex flex-column flex-column-reverse sm-flex-row mt5" style="align-items: center;">
+        <div class="relative col-xs-12 col-md-7">
+            <h2>Why build a dashboard for {{ page.title }}?</h2>
+        </div>
+    </div>
+    <div class="flex flex-column flex-column-reverse sm-flex-row" style="align-items: center;">
+        <div class="relative col-xs-12 col-md-4">
+            <div class="relative">
+                <img
+                    src="/images/dashboards/email/everything-in-one-place.png"
+                    class="max-100"
+                    srcset="
+                        /images/dashboards/email/everything-in-one-place.png 1x,
+                    "
+                    alt="Sales per source graph"
+                loading="lazy"/>
+            </div>
+            <h3 class="large mb05">Everything in one place</h3>
+            <p class="mt0">Get everyone on the same page by collecting your most important metrics into a single view.</p>
+        </div>
+        <div class="relative col-xs-12 col-md-4">
+            <div class="relative">
+                <img
+                    src="/images/dashboards/email/sales-per-source.png"
+                    class="max-100"
+                    srcset="
+                        /images/dashboards/email/sales-per-source.png 1x,
+                    "
+                    alt="Sales per source graph"
+                loading="lazy"/>
+            </div>
+            <h3 class="large mb05">Share your perspective</h3>
+            <p class="mt0">Take your data wherever it needs to go by embedding it in your internal wikis, websites, and content.</p>
+            
+        </div>
+        <div class="relative col-xs-12 col-md-4">
+            <div class="relative">
+                <img
+                    src="/images/dashboards/email/unlock-exploration.png"
+                    class="max-100"
+                    srcset="
+                        /images/dashboards/email/unlock-exploration.png 1x,
+                    "
+                    alt="eCommerce orders filter"
+                loading="lazy"/>
+            </div>
+            <h3 class="large mb05">Unlock exploration</h3>
+            <p class="mt0">Empower your team to measure their own progress and explore new paths to achieve their goals.</p>
+        </div>
+    </div>
+</div>
+
+
+{% if page.type != "kpi" %}
+<div class="product-intro">
+    <div class="container py4 mt4 mobile-top-48">
+        <div class="row my4 pb3 relative align-center">
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                <h2>What should I track on my dashboard for {{ page.title }}?</h2>
+                <p class="large">Every team is different, but sometimes it helps to start with some examples. Here are our top 8 {{ page.title }} metrics to start tracking on your dashboards.</p>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-5 col-lg-offset-1 bootstrap">
+                <div class="top-list">
+                    {{ page.content }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<div class="relative mb4{% if page.type == 'kpi' %} my4 mt5 pt3{% endif %}">
+    <div class="container relative">
+        <div class="flex flex-column flex-column-reverse sm-flex-row">
+            <div class="relative col-xs-12 col-md-8 mb1">
+                <h2>
+                    How to use Metabase to {% if page.type == "kpi" %}measure{% else %}build{% endif %} {{ page.title }}{% if page.type != "kpi" %} dashboards{% endif %}
+                </h2>
+            </div>
+        </div>
+        <div class="flex flex-column sm-flex-row">
+            <div class="relative col-xs-12 col-md-4">
+                <div class="relative">
+                    <img
+                        src="/images/dashboards/get-started.png"
+                        class="max-100"
+                        srcset="
+                            /images/dashboards/get-started.png 1x,
+                        "
+                        alt="Get started"
+                    loading="lazy"/>
+                </div>
+                <h3 class="large mb0"><span class="text-brand">Step 1.</span><br>
+                Skip the custom quote</h3>
+                <p class="mt0">That's right, no sales calls necessary—just sign up, and get running in under 5 minutes.</p>
+            </div>
+            <div class="relative col-xs-12 col-md-4">
+                <div class="relative">
+                    <img
+                        src="/images/dashboards/plugin-database.png"
+                        class="max-100"
+                        srcset="
+                            /images/dashboards/plugin-database.png 1x,
+                        "
+                        alt="types of databases"
+                    loading="lazy"/>
+                </div>
+                <h3 class="large mb0"><span class="text-brand">Step 2.</span><br>
+                    Plugin your database</h3>
+                <p class="mt0">We connect to the most popular production databases and data warehouses.</p>
+                
+            </div>
+            <div class="relative col-xs-12 col-md-4">
+                <div class="relative">
+                    <img
+                        src="/images/dashboards/build-dashboards.png"
+                        class="max-100"
+                        srcset="
+                            /images/dashboards/build-dashboards.png 1x,
+                        "
+                        alt="dashboard example"
+                    loading="lazy"/>
+                </div>
+                <h3 class="large mb0"><span class="text-brand">Step 3.</span><br>
+                Build your {% if page.type == "kpi" %}KPI{% endif %} dashboards</h3>
+                <p class="mt0">Invite your team and start building dashboards—no SQL required.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include get-started-with-metabase.html %}

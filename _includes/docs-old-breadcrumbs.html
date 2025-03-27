@@ -1,0 +1,41 @@
+{% capture latest_or_explicit_version %}{% if site.docs_version == page.version and page.url contains "/docs/latest/" %}latest{% else %}{{page.version}}{% endif %}{% endcapture %}
+{% capture category_slug %}{{ page.category | slugify }}{% endcapture %}
+{% capture category_slug_part %}{% if category_slug == "troubleshooting-guide" %}index.html{% elsif category_slug == "api" %}{{ "api-documentation" | strip}}{% else %}start{% endif %}{% endcapture %}
+
+<div class="bootstrap">
+    {% if page.has_magic_breadcrumbs %}
+    <nav style="--bs-breadcrumb-divider: url('/images/chevron_blue_right.svg');" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item m-0 d-flex align-items-baseline"><a class="blue-60 fw-bold" href='/docs/{{ latest_or_explicit_version }}/'>{{ page.version }}</a></li>
+            {% comment %}
+            <!-- If we're on the README page, that's the root of the docs so output the page category with no linkage -->
+            <!-- Otherwise, we need to output either just the category, just the title, or the category and the title -->
+            <!-- This logic is embedded in the script (fetch-docs.js) that adds frontmatter to each markdown file -->
+            {% endcomment %}
+
+            {% if page.title == 'README' %}
+            <li class="breadcrumb-item m-0 d-flex align-items-baseline"><p class="m-0 neutral-40 fw-bold">{{ page.category }}</p></li>
+            {% else %}
+            {% if page.show_category_breadcrumb %}
+            <li class="breadcrumb-item m-0 d-flex align-items-baseline"><a class="blue-60 fw-bold" href='/docs/{{latest_or_explicit_version}}/{% if page.category != "Api" %}{{ category_slug }}/{% endif %}{{ category_slug_part }}'>{{ page.category }}</a></li>
+            {% endif %}
+            {% if page.show_title_breadcrumb %}
+            <li class="breadcrumb-item m-0 d-flex align-items-baseline"><a class=" blue-60 fw-bold" href='{{ page.url }}'>{{ page.title }}</a></li>
+            {% endif %}
+            {% endif %}
+        </ol>
+    </nav>
+    {% else %}
+    <nav style="--bs-breadcrumb-divider: url('/images/chevron_blue_right.svg');" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item m-0 d-flex align-items-baseline"><p class="m-0 neutral-40 fw-bold">{{ page.version }}</p></li>
+            {% if page.category == 'Api' %}
+            <li class="breadcrumb-item m-0 d-flex align-items-baseline"><p class="m-0 neutral-40 fw-bold">{{ page.category }}</p></li>
+            {% endif %}
+            {% if page.title != 'README' %}
+            <li class="breadcrumb-item m-0 d-flex align-items-baseline"><p class="m-0 neutral-40 fw-bold">{{ page.title }}</p></li>
+            {% endif %}
+        </ol>
+    </nav>
+    {% endif %}
+</div>

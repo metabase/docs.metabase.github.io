@@ -1,0 +1,81 @@
+<a class="navigate-between-pages">
+  <p class="title">Financial Models</p>
+
+  <p class="description"></p>
+
+  <span>Next page →</span>
+</a>
+
+<script>
+  function financialModelsListPagesAndIndexOfCurrentPage() {
+    const financialModelPages = [];
+    const currentPage = window.location.pathname;
+    let currentPageIndex = 0;
+
+    {% for section in site.data.financial-models-pages %}
+      financialModelPages.push({
+        title: "{{section.title}}",
+        description: "{{section.description}}",
+        url: "{{section.url}}",
+      });
+
+      if (currentPage === "{{section.url}}") {
+        currentPageIndex = financialModelPages.length - 1;
+      }
+
+      {% for page in section.pages %}
+        financialModelPages.push({
+          title: "{{page.title}}",
+          description: "{{page.description}}",
+          url: "{{page.url}}"});
+
+        if (currentPage === "{{page.url}}") {
+          currentPageIndex = financialModelPages.length - 1;
+        }
+      {% endfor %}
+    {% endfor %}
+
+    return {financialModelPages, currentPageIndex};
+  }
+
+  function financialModelsRenderNextPageInfo(nextPage) {
+    const navigateBetweenPages = document.querySelector('.navigate-between-pages');
+    const link = navigateBetweenPages.querySelector('a');
+    const title = navigateBetweenPages.querySelector('.title');
+    const description = navigateBetweenPages.querySelector('.description');
+
+    navigateBetweenPages.href = nextPage.url;
+
+    title.innerHTML = "Next – " + nextPage.title;
+
+    if (nextPage.description) {
+      description.innerHTML = nextPage.description;
+    }
+  }
+
+  function financialModelsRemoveNavComponent() {
+    const navigateBetweenPages = document.querySelector('.navigate-between-pages');
+    navigateBetweenPages.remove();
+  }
+
+  function financialModelsNavBetweenPages() {
+    const {financialModelPages, currentPageIndex} = financialModelsListPagesAndIndexOfCurrentPage();
+
+    if (currentPageIndex === financialModelPages.length - 1) {
+      financialModelsRemoveNavComponent();
+    }
+
+    let nextPage = financialModelPages[currentPageIndex + 1];
+
+    // In case we are at section page, we want to skip it and go to the first page of the section
+    if (financialModelPages[currentPageIndex].title === nextPage.title) {
+      nextPage = financialModelPages[currentPageIndex + 2];
+    }
+
+    financialModelsRenderNextPageInfo(nextPage)
+  }
+
+  window.addEventListener("DOMContentLoaded", () => {
+    financialModelsNavBetweenPages();
+  });
+</script>

@@ -1,0 +1,35 @@
+/*
+  Usage: <label class="input-field><input></label>
+  Notes: You can also make use of icons by placing the img tag before or after the input
+ */
+.input-field {
+  align-items: center;
+  background-color: $neutral-white;
+  border: 1px solid $neutral-95;
+  border-radius: $border-radius-lg;
+  display: flex;
+  flex-direction: row;
+  padding: 1rem;
+  transition: border 0.1s linear;
+
+  &:focus-within {
+    border: 1px solid $blue-60;
+  }
+
+  input {
+    border: none;
+    display: flex;
+    flex: 1;
+    padding: 0;
+
+    &:focus {
+      outline: none;
+    }
+
+    &::-webkit-search-cancel-button {
+      appearance: none;
+      content: url("/images/close.svg");
+      cursor: pointer;
+    }
+  }
+}

@@ -1,0 +1,27 @@
+<div class="juxtapose" data-showcredits="false" data-showlabels="false">
+  <img src={{include.image1}} loading="lazy" />
+  <img src={{include.image2}} loading="lazy" />
+</div>
+<script src="https://cdn.knightlab.com/libs/juxtapose/latest/js/juxtapose.min.js"></script>
+<link rel="stylesheet" href="https://cdn.knightlab.com/libs/juxtapose/latest/css/juxtapose.css">
+
+<script>
+  // When the div is scrolled into view, wiggle the slider
+  // to draw attention to it.
+  function wiggleSlider() {
+    const [slider] = juxtapose.sliders;
+
+    slider.updateSlider(48, true);
+    setTimeout(() => slider.updateSlider(52, true), 200);
+    setTimeout(() => slider.updateSlider(50, true), 400);
+  }
+
+  window.addEventListener('load', function () {
+    var observer = new IntersectionObserver(function(entries) {
+    if(entries[0].isIntersecting === true)
+        wiggleSlider();
+    }, { threshold: [1] });
+
+    observer.observe(document.querySelector(".jx-slider"));
+  })
+</script>

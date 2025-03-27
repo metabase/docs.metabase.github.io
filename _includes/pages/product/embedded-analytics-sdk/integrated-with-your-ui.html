@@ -1,0 +1,47 @@
+<div class="feature-plus-headline-container">
+  <div>
+    <h2>Integrated with your UI</h2>
+    <p>
+      Embed standalone components—from individual charts to the query
+      builder—that blend into your product. Pixel-perfect placement with no
+      fixed width or height for responsive designs. Override menus, rearrange
+      fields, move buttons, and lay out components to fit your UI.
+    </p>
+  </div>
+  <div class="feature-container">
+    <div class="integrate-with-ui-illustration bleed-image-to-right">
+      <img
+        class="no-shadow"
+        src="/images/product/embedded-analytics-sdk/integrate-with-ui-1.png"
+        style="margin: 0 -20px -60px 0"
+      loading="lazy"/>
+    </div>
+    <div class="language-javascript">
+      <div class="highlight">
+        <pre class="highlight">
+        <code class="language-javascript do-not-display-copy-button">
+import &#123;
+  MetabaseProvider,
+  InteractiveQuestion,
+  defineEmbeddingSdkConfig
+&#125; from "@metabase/embedding-sdk-react";
+
+const config = defineEmbeddingSdkConfig(&#123;
+  metabaseInstanceUrl: "https://metabase.example.com", // Required: Your Metabase instance URL
+  authProviderUri: "https://app.example.com/sso/metabase", // Required: An endpoint in your app that signs the user in and returns a session
+&#125;);
+
+&lt;MetabaseProvider config=&#123;config&#125;&gt;
+  &lt;InteractiveQuestion
+    questionId=&#123;questionId&#125;
+    isSaveEnabled=&#123;false&#125;
+    withResetButton=&#123;true&#125;
+    customTitle="Orders over time"
+  /&gt;
+&lt;/MetabaseProvider&gt;
+        </code>
+      </pre>
+      </div>
+    </div>
+  </div>
+</div>

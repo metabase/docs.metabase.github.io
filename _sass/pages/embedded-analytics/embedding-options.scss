@@ -1,0 +1,155 @@
+.embedding-page .embedding-options {
+  padding: 80px;
+
+  h3 {
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 36px;
+    margin-bottom: 64px;
+    text-align: center;
+  }
+
+  > div {
+    column-gap: 32px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    > div {
+      background-color: $neutral-98;
+      border: 1px solid $blue-90;
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      text-align: left;
+
+      > div {
+        padding: 24px;
+        position: relative;
+
+        h4 {
+          font-size: 24px;
+          font-weight: 700;
+          line-height: 32px;
+        }
+
+        h5 {
+          color: $neutral-60;
+          font-size: 20px;
+          font-weight: 400;
+          line-height: 28px;
+
+          a {
+            &.pro {
+              color: $blue-60;
+
+              &:hover {
+                color: $blue-40;
+              }
+            }
+
+            &.enterprise {
+              color: $purple-50;
+
+              &:hover {
+                color: $purple-40;
+              }
+            }
+          }
+        }
+
+        h6 {
+          color: $blue-60;
+          font-size: 18px;
+          font-weight: 700;
+          letter-spacing: 0;
+          text-transform: none;
+        }
+
+        .badge {
+          background-color: $blue-90;
+          color: $blue-60;
+          position: absolute;
+          right: 20px;
+          top: 20px;
+        }
+      }
+
+      > img {
+        margin: 32px auto 0 12px;
+        width: calc(100% - 12px);
+      }
+
+      ul {
+        padding-left: 0;
+
+        li {
+          background: url("/images/icons/list-doc-icon.svg") no-repeat left center;
+          background-position: 0 16px;
+          color: $neutral-40;
+          font-size: 20px;
+          font-weight: 400;
+          line-height: 28px;
+          list-style: none;
+          margin: 0;
+          padding: 5px 10px 5px 19px;
+        }
+      }
+    }
+
+    a {
+      align-items: center;
+      display: flex;
+
+      svg {
+        height: 10px;
+        left: -6px;
+        position: relative;
+        rotate: -90deg;
+        top: 2px;
+
+        path {
+          transition: stroke 0.3s ease;
+        }
+      }
+
+      &:hover {
+        svg path {
+          stroke: $blue-40;
+        }
+      }
+    }
+  }
+
+  @include media-breakpoint-down(lg) {
+    padding: 40px 0 0;
+
+    h3 {
+      font-size: 28px;
+      margin: 0 auto 20px;
+      max-width: 400px;
+    }
+
+    > div {
+      grid-template-columns: 1fr;
+
+      > div {
+        margin-bottom: 32px;
+
+        > div {
+          h4 {
+            font-size: 20px;
+          }
+
+          h5 {
+            font-size: 18px;
+          }
+
+          ul li {
+            font-size: 18px;
+          }
+        }
+      }
+    }
+  }
+}

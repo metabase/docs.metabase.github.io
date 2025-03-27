@@ -1,0 +1,23 @@
+$cards-width-default: 100%;
+$cards-width-md: 50%;
+$cards-width-lg: 33.3333%;
+$cards-spacing-md: 24px;
+$cards-spacing-lg: 32px;
+
+.cards {
+  &__card {
+    max-width: $cards-width-default;
+
+    @include media-breakpoint-up(md) {
+      max-width: calc($cards-width-md - calc($cards-spacing-md * 2 / 3));
+    }
+
+    @include media-breakpoint-up(lg) {
+      max-width: calc($cards-width-lg - calc($cards-spacing-lg * 2 / 3));
+    }
+
+    &__icon {
+      height: $cards-spacing-md;
+    }
+  }
+}

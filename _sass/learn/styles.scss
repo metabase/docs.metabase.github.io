@@ -1,0 +1,511 @@
+@import "learn/left-sidebar";
+@import "learn/right-sidebar";
+@import "learn/top-bar";
+@import "learn/index";
+@import "learn/category";
+@import "learn/article";
+@import "learn/feedback-widget";
+@import "learn/search-results";
+
+.learn {
+  border-bottom: 1px solid $blue-95;
+  box-shadow: 1000px 0 0 $neutral-98;
+  display: grid;
+  grid-template-columns: 226px 1fr;
+  margin: 0 auto;
+  max-width: 678px;
+  width: 100%;
+
+  @media screen and (max-width: 991px) {
+    box-shadow: -400px 0 0 $neutral-98, 400px 0 0 $neutral-98;
+    grid-template-columns: 1fr;
+  }
+
+  @media screen and (min-width: 992px) {
+    box-shadow: 600px 0 0 $neutral-98;
+    max-width: 920px;
+  }
+
+  @media screen and (max-width: 768px) {
+    max-width: 490px;
+  }
+
+  @media screen and (min-width: 1140px) {
+    max-width: 920px;
+  }
+
+  @media screen and (min-width: 1200px) {
+    max-width: 1100px;
+  }
+
+  @media screen and (min-width: 1400px) {
+    max-width: 1280px;
+  }
+
+  a {
+    transition: color 0.3 ease;
+  }
+
+  article {
+    background-color: $neutral-98;
+    box-shadow: 1000px 0 0 $neutral-98;
+    padding: 64px 0 64px 72px;
+    position: relative;
+    width: 100%;
+
+    @media screen and (max-width: 992px) {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+
+    button {
+      padding: 10px;
+    }
+
+    code {
+      background-color: $blue-85;
+      border-radius: 0.25rem;
+      color: $neutral-40;
+      padding: 0 2px;
+      white-space: unset;
+    }
+
+    pre code {
+      background: $blue-25;
+      border-radius: 0.75rem;
+      color: $neutral-white;
+      font-family: $fira-stack;
+      padding: 1.5rem;
+      white-space: unset;
+    }
+
+    header {
+      margin-bottom: 64px;
+
+      a {
+        margin: 24px 0 96px;
+      }
+
+      img {
+        background-color: transparent;
+        border-radius: 0;
+        display: none;
+        margin: 0 auto;
+        width: 50%;
+      }
+
+      @include media-breakpoint-down(xl) {
+        padding-right: 0;
+      }
+
+      @media screen and (max-width: 992px) {
+        a {
+          margin-bottom: 32px;
+        }
+
+        img {
+          display: block;
+        }
+      }
+    }
+
+    img,
+    iframe {
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 3px 24px rgba(0, 0, 0, 0.08);
+      margin-bottom: 1.728em;
+      margin-top: 1.2em;
+      max-width: 100%;
+      overflow: hidden;
+    }
+
+    header + p > a > img {
+      margin-top: 0;
+    }
+
+    > p {
+      color: $neutral-40;
+      font-size: 20px;
+      line-height: 28px;
+
+      @media screen and (max-width: 60em) {
+        font-size: 18px;
+        line-height: 26px;
+      }
+    }
+
+    .learn__summary {
+      color: $neutral-40;
+      font-size: 20px;
+      font-weight: 400;
+      line-height: 28px;
+      margin: 16px 0;
+    }
+  }
+
+  blockquote,
+  .plans-blockquote {
+    background-color: $blue-95;
+    border: 1px solid $blue-60;
+    border-radius: 0.625rem;
+    color: $neutral-40;
+    margin: 2rem 0;
+    padding: 1.5rem;
+
+    p {
+      font-size: 16px !important;
+      line-height: 1.5rem !important;
+      margin: 0;
+    }
+  }
+
+  h1 {
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-top: 32px;
+  }
+
+  h3 {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.4;
+
+    code {
+      font-size: 20px;
+    }
+  }
+
+  p {
+    color: #4c5773;
+    line-height: 30px;
+  }
+
+  svg path {
+    transition: stroke 0.3s ease;
+  }
+
+  /* tighten up list spacing on desktop for legibility */
+  @media screen and (min-width: 60em) {
+    li {
+      margin-bottom: 0.5em;
+    }
+
+    li > ul,
+    li > ol {
+      margin-top: 0.5em;
+    }
+
+    li > a {
+      display: inline;
+    }
+  }
+
+  div.code-snippet-wrapper {
+    overflow: hidden;
+    position: relative;
+
+    code {
+      background: #12436e;
+      border-radius: 0.75rem;
+      color: #fff;
+      font-family: "Roboto Mono", monospace;
+      padding: 1.5rem;
+      white-space: unset;
+    }
+
+    .copy-code-button {
+      background-color: #509ee34d;
+      border-radius: 8px;
+      color: $neutral-white;
+      cursor: pointer;
+      line-height: 0;
+      padding: 6px 8px;
+      position: absolute;
+      right: 8px;
+      top: 8px;
+
+      p {
+        color: white;
+        font-family: Lato, serif;
+        font-size: 14px;
+        font-weight: 900;
+        line-height: 20px;
+        margin: 0;
+      }
+
+      .copy-button-copy,
+      .copy-button-copied-wrapper {
+        color: $neutral-white;
+        opacity: 0;
+        transition: margin-left 0.3s ease-in-out, opacity 0.2s ease-in-out, width 0.3s ease-in-out;
+        width: 0;
+      }
+
+      .copy-button-copy {
+        display: flex;
+        margin-left: 0;
+      }
+
+      .copy-button-copied-wrapper {
+        align-items: center;
+        display: none;
+        gap: 0.25rem;
+      }
+
+      .copy-button-copy-wrapper {
+        align-items: center;
+        display: flex;
+        justify-content: space-evenly;
+      }
+
+      .copy-button-copy {
+        display: flex;
+        margin-left: 0;
+      }
+
+      .copy-button-copied-wrapper {
+        display: none;
+
+        &.d-flex {
+          display: flex;
+          opacity: 1;
+          width: 80px;
+
+          p {
+            width: 40px;
+          }
+        }
+      }
+
+      .d-none {
+        display: none !important;
+      }
+    }
+
+    &:hover .copy-code-button {
+      background-color: $blue-60;
+
+      .copy-button-copy {
+        margin-left: 4px;
+        opacity: 1;
+        transition: margin-left 0.3s ease-in-out, opacity 0.5s ease-in-out, width 0.3s ease-in-out;
+        width: 35px;
+      }
+
+      .copy-button-copied-wrapper {
+        width: 80px;
+      }
+    }
+  }
+
+  div.learn__post__content {
+    min-width: 0;
+    padding-right: 72px;
+    z-index: 2;
+
+    @media screen and (max-width: 991px) {
+      padding: 0 0 0 20px;
+
+      .version__selector {
+        display: block;
+        margin-bottom: 84px;
+      }
+    }
+
+    h2 {
+      font-size: 24px;
+      margin: 64px 0 24px;
+      width: 100%;
+    }
+
+    a h2,
+    a h3,
+    h3 a,
+    h2 a {
+      color: $blue-60;
+      transition: color 0.3s ease;
+
+      &:hover {
+        color: $blue-40;
+      }
+    }
+
+    // As long as Learn articles do not offer a way to copy links (like Docs does)
+    // we use this direct selector to style a border
+    & > h2 {
+      border-bottom: 1px solid $neutral-80;
+      padding-bottom: 16px;
+
+      &.no-border-bottom {
+        border-bottom: none;
+        margin-bottom: 16px;
+        padding-bottom: 0;
+      }
+    }
+
+    li {
+      font-size: 18px;
+      line-height: 30px;
+    }
+
+    p {
+      font-size: 18px;
+      line-height: 30px;
+    }
+  }
+
+  .version__selector {
+    display: none;
+    margin-top: 24px;
+  }
+}
+
+.learn__post {
+  display: grid;
+  grid-template-columns: 1fr 200px;
+  margin-bottom: 0;
+  position: relative;
+
+  @media screen and (max-width: 991px) {
+    grid-template-columns: 3fr 0;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1.34;
+    margin-top: 2rem;
+
+    code {
+      display: inline;
+      padding: 1.5rem;
+      white-space: normal;
+      word-break: break-word;
+    }
+  }
+
+  h4 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    line-height: 1.34;
+  }
+
+  a {
+    color: $blue-60;
+    font-weight: bold;
+
+    &:hover {
+      color: $blue-40;
+    }
+  }
+
+  h2,
+  h3,
+  h4,
+  h5 {
+    code {
+      background: $neutral-85;
+      border-radius: 0.25rem;
+      color: $neutral-40;
+      padding: 0;
+    }
+
+    p,
+    li,
+    td,
+    th {
+      background: $neutral-85;
+      border-radius: 0.25rem;
+      color: $neutral-40;
+      padding: 0 2px;
+    }
+
+    .copy-code-button {
+      display: none;
+    }
+  }
+
+  table {
+    background: $neutral-white;
+    border: 1px solid $neutral-95;
+    border-collapse: separate;
+    border-radius: 0.5rem;
+    margin-bottom: 4rem !important;
+    overflow: hidden;
+
+    tbody,
+    thead,
+    tr {
+      width: 100%;
+    }
+
+    th {
+      background-color: $neutral-99;
+      font-size: 0.688rem;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      line-height: 15px;
+      text-transform: uppercase;
+    }
+
+    td {
+      background: $neutral-white;
+
+      svg {
+        vertical-align: baseline;
+      }
+    }
+
+    th,
+    td {
+      border-bottom: 1px solid $neutral-95;
+      color: $neutral-60;
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+  }
+
+  blockquote {
+    background: $blue-95;
+    border: 1px solid $blue-60;
+    border-radius: 0.625rem;
+    color: $neutral-40;
+    margin: 2rem 0;
+    padding: 1.5rem;
+
+    a {
+      display: inline;
+    }
+
+    p {
+      font-size: 16px;
+      line-height: 1.5rem;
+      margin: 0;
+    }
+  }
+
+  .copy-clip-container {
+    .share-button {
+      opacity: 0;
+      transition-duration: 0.2s;
+    }
+
+    &:hover .share-button {
+      opacity: 1;
+    }
+  }
+
+  h2 {
+    margin-bottom: 0.5rem;
+  }
+
+  li {
+    margin-bottom: 0.75rem;
+  }
+}

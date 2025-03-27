@@ -1,0 +1,13 @@
+<section class="used-by-great-companies">
+  <ul>
+    <li>
+      <h2>Used by great companies</h2>
+    </li>
+
+    {% for customer in site.data.customer-logos | limit: 8 %}
+      <li>
+        <img src="{{customer.logo-black}}" alt="{{customer.customer}}" loading="lazy" />
+      </li>
+    {% endfor %}
+  </ul>
+</section>

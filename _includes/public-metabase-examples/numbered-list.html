@@ -1,0 +1,19 @@
+{% assign component = include.component %}
+
+<div class="numbered-list">
+  <h3>{{ component.headline }}</h3>
+
+  {% for item in component.items %}
+    <div class="numbered-list-item">
+      <div>{{ forloop.index }}</div>
+      <div>
+        <h4>{{ item.title }}</h4>
+        <p>{{ item.text }}</p>
+      </div>
+    </div>
+  {% endfor %}
+
+  <hr>
+
+  <a href="/features/analytics-dashboards">Learn more about building dashboards in Metabase{% include svg-icons/chevron.html height=12 width=12 %}</a>
+</div>

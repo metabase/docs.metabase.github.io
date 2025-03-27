@@ -1,0 +1,19 @@
+<div class="try-metabase-footer">
+  <div class="full-width-centered">
+    <h3>{{ include.data.title }}</h3>
+    <p>{{ include.data.description }}</p>
+    {% if include.data.ctas %}
+      <div class="d-flex justify-content-center">
+        {% for cta in include.data.ctas %}
+          <a
+              class="btn btn-primary mt-6 px-4 px-lg-5 py-3 mr-2 {{ cta.extra-classes }}"
+            href="{{ cta.href }}"
+            id="get-started-btn-home"
+            title="Metabase - {{ cta.text }}">
+            {{ cta.text }}
+          </a>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+</div>

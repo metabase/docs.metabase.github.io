@@ -1,0 +1,41 @@
+{% assign component = include.component %}
+
+<div class="swiper mySwiper">
+  <div class="swiper-wrapper">
+    {% for item in component.items %}
+      {% if item.type == 'image' %}
+        <div class="swiper-slide">
+          <img src="{{ item.src }}" alt="{{ item.alt }}" loading="lazy" />
+        </div>
+      {% endif %}
+
+      {% if item.type == 'youtube' %}
+        <script src="https://www.youtube.com/iframe_api"></script>
+        <div class="swiper-slide youtube">
+          <div id="youtube-id-{{ item.id }}">
+            <script>
+              if (!window.YTPlayers) {
+                window.YTPlayers = {};
+              }
+
+              window.YT.ready(function() {
+                window.YTPlayers["youtube-id-{{ item.id }}"] = new window.YT.Player("youtube-id-{{ item.id }}", {
+                    videoId: "{{ item.id }}",
+                    playerVars: {
+                      controls: 0,
+                      modestbranding: 1,
+                      rel: 0,
+                      showinfo: 0,
+                    }
+                });
+              });
+            </script>
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+  <div class="swiper-button-next"></div>
+  <div class="swiper-button-prev"></div>
+  <div class="swiper-pagination"></div>
+</div>

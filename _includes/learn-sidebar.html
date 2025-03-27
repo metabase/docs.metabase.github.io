@@ -1,0 +1,39 @@
+<aside class="hide sm-show overflow-y-auto" id="LearnSidebar">
+    {% include learn-search-bar.html %}
+    <ol class="no-list-style pl0 mt3">
+
+        {% comment %} track.name passed from the learn-post.html include. {% endcomment %}
+
+        {% for t in site.data.learn.tracks %}
+        <li class="LearnSidebarSection {% if track.name == t.name %}LearnSidebarSection--open{% endif %}">
+            <div class="flex align-center LearnSidebarHeader cursor-pointer text-dark text-brand-hover mb2">
+                <img src="/images/chevron.svg" width="12px" height="12px" class="SidebarChevron no-zoom" />
+                <span class="m0 text-inherit flex-full">{{t.name}}</span>
+            </div>
+            <ol class="pl0 mb3 border-left LearnSidebarTracks">
+                {% for lesson in t.lessons %}
+                  {% assign theLessonTitle = lesson.title | strip | downcase %}
+                  {% assign thePageTitle = page.title | strip | downcase %}
+
+                  <li>
+                      {% assign lessonURL = "/learn/" | append: t.slug | append: "/" | append: lesson.slug %}
+                      <a href="{{lessonURL}}"
+                          class="{% if theLessonTitle != thePageTitle %}text-dark{% endif %} text-brand-hover fw-700 block">
+                          <span class="text-inherit fw-400">{{lesson.title}}</span>
+                      </a>
+                  </li>
+                {% endfor %}
+            </ol>
+        </li>
+        {% endfor %}
+    </ol>
+</aside>
+
+<script type="text/javascript">
+    var sidebarTriggers = document.querySelectorAll(".LearnSidebarHeader");
+    sidebarTriggers.forEach(function trigger(element) {
+        element.addEventListener("click", function (event) {
+            element.parentNode.classList.toggle("LearnSidebarSection--open");
+        });
+    });
+</script>

@@ -1,0 +1,187 @@
+.events .events-carousel {
+  cursor: pointer;
+  height: 480px;
+  margin-top: -45px;
+  position: relative;
+  width: 100%;
+
+  .images-container {
+    cursor: pointer;
+    display: flex;
+    gap: 32px;
+    left: 0;
+    margin: 0 0 96px;
+    position: absolute;
+    top: 65px;
+
+    .image-container {
+      cursor: pointer;
+      height: 350px;
+      position: relative;
+      transition: opacity 0.3s ease-in-out;
+      width: 280px;
+
+      &:hover {
+        div.card {
+          box-shadow: 0 8px 8px -4px #10182818;
+          top: -65px;
+        }
+
+        .tagline {
+          opacity: 1;
+          top: 0;
+        }
+      }
+
+      > div {
+        background-repeat: no-repeat;
+        background-size: cover;
+        border-radius: 16px;
+        height: 100%;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+      }
+
+      .card {
+        border: none;
+        box-shadow: 0 1px 2px 0 #1018280d;
+        transition: top ease-in-out 0.3s, box-shadow ease-in-out 0.3s;
+
+        &[data-category="fireside-chats"] {
+          background-image: url("../images/events/categories/fireside-chats-tall.jpg");
+        }
+
+        &[data-category="customer-stories"] {
+          background-image: url("../images/events/categories/customer-stories-tall.jpg");
+        }
+
+        &[data-category="whats-new"] {
+          background-image: url("../images/events/categories/whats-new-tall.jpg");
+        }
+
+        &[data-category="mastering-metabase"] {
+          background-image: url("../images/events/categories/mastering-metabase-tall.jpg");
+        }
+
+        &[data-category="working-with-data"] {
+          background-image: url("../images/events/categories/working-with-data-tall.jpg");
+        }
+
+        &[data-category="partner-tech-talks"] {
+          background-image: url("../images/events/categories/partner-tech-talks-tall.jpg");
+        }
+
+        &[data-category="workshops"] {
+          background-image: url("../images/events/categories/workshops-tall.jpg");
+        }
+      }
+
+      .tagline {
+        align-items: flex-end;
+        color: $neutral-40;
+        display: flex;
+        font-size: 16px;
+        font-weight: 400;
+        opacity: 0;
+        top: 20px;
+        transition: opacity 0.3s ease-in-out, top 0.3s ease-in-out;
+        transition-delay: 0.15;
+
+        p {
+          margin-bottom: 5px;
+        }
+      }
+    }
+
+    &[data-is-centering="true"] {
+      .image-container:hover {
+        div.card {
+          top: 0;
+        }
+      }
+    }
+
+    &[data-is-filter-on="true"] {
+      .image-container {
+        opacity: 0.5;
+
+        &[data-is-selected="true"] {
+          opacity: 1;
+        }
+
+        &[data-is-selected="false"] {
+          &:hover {
+            div.card {
+              top: 0;
+            }
+
+            .tagline {
+              opacity: 0;
+              top: 20px;
+            }
+          }
+        }
+
+        &:hover {
+          opacity: 1;
+        }
+      }
+    }
+  }
+
+  .lateral-fader {
+    height: 100%;
+    left: 0;
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    width: 100%;
+
+    &::before {
+      background: linear-gradient(90deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);
+      content: "";
+      height: 100%;
+      left: 0;
+      position: absolute;
+      width: 90px;
+    }
+
+    &::after {
+      background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%);
+      content: "";
+      height: 100%;
+      position: absolute;
+      right: 0;
+      width: 90px;
+    }
+  }
+
+  @include media-breakpoint-down(lg) {
+    height: 260px;
+
+    .images-container {
+      gap: 16px;
+
+      .image-container {
+        height: 150px;
+        width: 120px;
+
+        &:hover {
+          div.card {
+            top: 0;
+          }
+
+          .tagline {
+            opacity: 0;
+          }
+        }
+
+        > div {
+          border-radius: 8px;
+        }
+      }
+    }
+  }
+}

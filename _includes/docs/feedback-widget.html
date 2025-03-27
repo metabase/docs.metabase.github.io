@@ -1,0 +1,9 @@
+{% comment %}
+  Add feedback widget for pages that aren't landing pages for navigation, tables of contents, etc.
+{% endcomment %}
+
+{% assign should_add_propose_a_change_dialog = page.category != "Cloud"} %}
+
+{% unless page.title == 'Start' or page.title == 'README' or page.title == 'Index' or page.title == 'Search' %}
+  {% include feedback-widget.html should_add_propose_a_change_dialog=should_add_propose_a_change_dialog %}
+{% endunless %}

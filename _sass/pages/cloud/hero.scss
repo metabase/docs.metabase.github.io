@@ -1,0 +1,223 @@
+@use "sass:math";
+
+$cloud-hero-animation-duration: 200ms;
+$cloud-hero-animation-delay: 100ms;
+$cloud-hero-toggle-size: 24px;
+$cloud-hero-toggle-width: 2 * $cloud-hero-toggle-size - 4;
+$cloud-hero-toggle-handle-size: 22px;
+$cloud-hero-toggle-handle-offset: math.div($cloud-hero-toggle-size - $cloud-hero-toggle-handle-size, 2);
+$cloud-hero-toggle-size-lg: 32px;
+$cloud-hero-toggle-width-lg: 2 * $cloud-hero-toggle-size-lg - 4;
+$cloud-hero-toggle-handle-size-lg: 30px;
+$cloud-hero-toggle-handle-offset-lg: math.div($cloud-hero-toggle-size-lg - $cloud-hero-toggle-handle-size-lg, 2);
+
+.hero {
+  position: relative;
+
+  &__background {
+    bottom: 0;
+    left: 0;
+    pointer-events: none;
+    position: absolute;
+    right: 0;
+    top: 0;
+    user-select: none;
+    z-index: 0;
+
+    &::before,
+    &::after {
+      bottom: 0;
+      content: "";
+      left: 0;
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+
+    &::before {
+      background: linear-gradient(180deg, $blue-95 0%, $neutral-white 100%);
+    }
+
+    &::after {
+      background: url("/images/cloud/background_clouds-2.png");
+      background-position: top center;
+      background-repeat: no-repeat;
+      background-size: cover;
+
+      @include media-breakpoint-up(lg) {
+        background-position: top right;
+        background-size: contain;
+      }
+    }
+  }
+
+  &__badge {
+    height: 56px;
+    margin: 0 0 0 -7px;
+
+    &__image {
+      margin: 7px 0 0;
+    }
+  }
+
+  &__profile {
+    border-left: 2px solid $blue-60;
+
+    &__avatar {
+      height: 48px;
+    }
+  }
+}
+
+.hero__tick {
+  background-color: $blue-95;
+  border-radius: 100%;
+  height: 28px;
+  margin: 0;
+  padding: 3px 0 0;
+  text-align: center;
+  transition: background-color $cloud-hero-animation-duration;
+  width: 28px;
+
+  & > svg {
+    margin: 0 auto;
+    transform: scale(0);
+  }
+}
+
+.hero__list {
+  .hero__list__item {
+    border-bottom: 1px solid $blue-95;
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  .hero__list__text {
+    font-size: 16px;
+    opacity: calc(2 / 3);
+    transition: opacity $cloud-hero-animation-duration;
+
+    @include media-breakpoint-up(lg) {
+      font-size: 18px;
+    }
+  }
+}
+
+#cloudHeroToggleList {
+  &.animate-1 {
+    .hero__content-panel__wrapper--animated {
+      transform: scale(1);
+    }
+  }
+
+  &.animate {
+    @for $i from 1 through 10 {
+      li:nth-child(#{$i}) {
+        .hero__tick {
+          background-color: $blue-90;
+          transition-delay: #{$i * $cloud-hero-animation-delay};
+
+          & > svg {
+            transform: scale(1);
+            transition: transform $cloud-hero-animation-duration;
+            transition-delay: #{$i * $cloud-hero-animation-delay};
+          }
+        }
+
+        .hero__list__text {
+          opacity: 1;
+          transition-delay: #{$i * $cloud-hero-animation-delay};
+        }
+      }
+    }
+
+    .hero__toggle__handle {
+      background-color: $blue-60;
+      left: $cloud-hero-toggle-width - $cloud-hero-toggle-handle-size;
+
+      @include media-breakpoint-up(lg) {
+        left: $cloud-hero-toggle-width-lg - $cloud-hero-toggle-handle-size-lg;
+      }
+
+      & > svg {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+.hero__content-panel {
+  z-index: 1;
+
+  .hero__wrapper {
+    @include media-breakpoint-down(lg) {
+      max-width: none;
+    }
+
+    .hero__animated {
+      transform: scale(0.95);
+      transition: transform (2 * $cloud-hero-animation-duration) cubic-bezier(0.47, 1.64, 0.41, 0.8) $cloud-hero-animation-delay;
+
+      @include media-breakpoint-up(lg) {
+        max-width: 450px;
+      }
+    }
+  }
+}
+
+.hero__toggle {
+  background-color: white;
+  border-radius: calc($cloud-hero-toggle-size / 2);
+  box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.1) inset;
+  height: $cloud-hero-toggle-size;
+  position: relative;
+  width: $cloud-hero-toggle-width;
+
+  @include media-breakpoint-up(lg) {
+    border-radius: calc($cloud-hero-toggle-size-lg / 2);
+    height: $cloud-hero-toggle-size-lg;
+    width: $cloud-hero-toggle-width-lg;
+  }
+
+  .hero__toggle__handle {
+    background-color: $neutral-40;
+    border: 1px solid $blue-75;
+    border-radius: calc($cloud-hero-toggle-handle-size / 2);
+    height: $cloud-hero-toggle-handle-size;
+    left: 0;
+    position: absolute;
+    top: $cloud-hero-toggle-handle-offset;
+    transition: background-color $cloud-hero-animation-duration, left $cloud-hero-animation-duration;
+    width: $cloud-hero-toggle-handle-size;
+
+    @include media-breakpoint-up(lg) {
+      border-radius: calc($cloud-hero-toggle-handle-size-lg / 2);
+      height: $cloud-hero-toggle-handle-size-lg;
+      top: $cloud-hero-toggle-handle-offset-lg;
+      width: $cloud-hero-toggle-handle-size-lg;
+    }
+
+    & > svg {
+      height: 12px;
+      opacity: 0;
+      transition: opacity $cloud-hero-animation-duration;
+      width: 12px;
+
+      @include media-breakpoint-up(lg) {
+        height: 16px;
+        width: 16px;
+      }
+    }
+  }
+
+  .hero__toggle__text {
+    font-size: 0.6875rem;
+    vertical-align: bottom;
+
+    @include media-breakpoint-up(sm) {
+      font-size: 1rem;
+    }
+  }
+}

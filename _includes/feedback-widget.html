@@ -1,0 +1,58 @@
+<div id="feedback-widget-container" class='bootstrap feedback-widget flex'>
+  <div id="page-feedback">
+    <h6>Was this helpful?</h6>
+    <button
+      id="page-feedback-vote-up"
+      class="vote-button Button"
+    />
+      {% include svg-icons/thumbs-up-icon.html width="18" height="18" class="me-1" %}
+      Yes
+    </button>
+    <button
+      id="page-feedback-vote-down"
+      class="vote-button Button"
+    >
+      {% include svg-icons/thumbs-up-icon.html width="18" height="18" class="rotate-180 me-1" %}
+      No
+    </button>
+  </div>
+
+  <div id="page-comment" class="flex flex-wrap full hide">
+    <div class="flex full">
+      <h6 id="page-feedback-question"></h6>
+    </div>
+
+    <div id="page-comment-form" class="flex full">
+      {% if include.section == "startup-guide" %}
+        <textarea id="feedback-comment-text" class="flex input sm-input-small bordered inline-block align-center" name="comment" placeholder="Let us know what you think"></textarea>
+      {% else %}
+      <input
+        id="feedback-comment-text"
+        maxlength=500
+        class="flex input sm-input-small bordered inline-block align-center"
+        name="comment"
+        placeholder="Let us know what you think"
+        />
+      {% endif %}
+
+      <button id="page-comment-submit" class="feedback-widget Button flex align-center">
+        Send
+      </button>
+    </div>
+  </div>
+
+  <div id="page-feedback-message" class="fs-18 hide">
+    <h6 class="page-feedback-title">Thanks for your feedback!</h6>
+  </div>
+
+  {% if include.should_add_propose_a_change_dialog %}
+    <span
+      class="paragraph-6 fs-13 neutral-60"
+      id="page-feedback-footer"
+    >
+      Want to improve these docs? <a href='{{ page.source_url }}' target="_blank">Propose a change.</a>
+    </span>
+  {% endif %}
+</div>
+
+<script type="text/javascript" src="/js/feedback-widget.js"></script>

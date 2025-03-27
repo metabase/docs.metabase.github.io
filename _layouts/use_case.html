@@ -1,0 +1,278 @@
+---
+layout: default
+---
+{% assign use-case = site.data.major-use-cases.use-cases | where: 'slug', page.use-case-name | first %}
+<div class="my2">
+    <div class="container">
+        <div class="row flex flex-column flex-row-sm justify-center align-center">
+            <div class="col-xs-12 col-sm-6">
+                <div class="flex flex-row align-center">
+                    <div class="circle bg-lightblue-tint inline-block mr05" style="height: 32px">
+                        <img style="margin: 4px" src="{{use-case.icon.path}}" height="24px" width="24px" alt="use-case.icon.alt">
+                    </div>
+                    <p class="pre-subheading large m0">{{use-case.pre-subheading}}</p>
+                </div>
+                <h1 class="large">
+                    {{use-case.heading}}
+                </h1>
+                <p class="large">{{use-case.summary}}</p>
+                <div class="bootstrap">
+                    <div class="d-flex gap-4">
+                        <a class="fs-13 Button btn btn-primary rounded-3" href="https://store.metabase.com/checkout">Get Started</a>
+                        <a class="fs-13 Button btn btn-outline-blue rounded-3" href="/talk-to-a-person/">Contact us</a>
+                    </div>
+                </div>
+            </div>
+            <div class="hide show-sm col-sm-4 col-sm-offset-2">
+                <img
+                    src="{{use-case.image.path}}"
+                    class="max-100"
+                    srcset="{{use-case.image.path}} 1x"
+                    alt="{{use-case.image.alt}}"
+                />
+            </div>
+        </div>
+    </div>
+</div>
+
+{% for section in use-case.sections %}
+<div class="py4">
+    <div class="container">
+        <div class="hide-sm row flex no-card">
+            {% if section.link %}<a href="{{section.link.url}}">{% endif %}
+                <div class="col-xs-12">
+                    <h2 class="mt0">{{section.heading}}</h2>
+                    <p>{{section.summary}}</p>
+                </div>
+                <div class="col-xs-12">
+                    <img
+                        src="{{section.image.path}}"
+                        class="max-100"
+                        srcset="{{section.image.path}} 1x"
+                        alt="Make Data Easy"
+                    loading="lazy"/>
+                </div>
+                <div class="col-xs-12 pt1">
+                    {% if section.link %}
+                    <div class="pseudo-link fw-bold pb1">{{section.link.text}} <img src="/images/chevron_blue.svg" alt="Chevron Right" width="10px" height="10px" class="SidebarChevron no-zoom"></div>
+                    {% endif %}
+
+                    {% if section.testimonial %}
+                    <p class="small my0 mt2">{{section.testimonial.summary}}</p>
+                    <p class="small my05">{{section.testimonial.author}}, <span class="text-dark">{{section.testimonial.position}}</span></p>
+                    <img
+                        src="{{section.testimonial.logo.path}}"
+                        srcset="{{section.testimonial.logo.path}} 1x"
+                        width="100px"
+                        alt="{{section.testimonial.logo.alt}}"
+                    loading="lazy"/>
+                    {% endif %}
+                </div>
+            {% if section.link %}</a>{% endif %}
+        </div>
+        <div class="hide show-sm">
+            <div class="row flex flex-row-sm align-center">
+                {% if section.image.is-left %}
+                <div class="col-sm-6">
+                    <img
+                        src="{{section.image.path}}"
+                        class="max-100"
+                        srcset="{{section.image.path}} 1x"
+                        alt="{{section.image.alt}}"
+                    loading="lazy"/>
+                </div>
+                <div class="col-sm-5 col-sm-offset-1 col-lg-4 col-lg-offset-2 no-card">
+                    {% if section.link %}<a href="{{section.link.url}}">{% endif %}
+                        <div>
+                            <h2>{{section.heading}}</h2>
+                            <p class="mb05">{{section.summary}}</p>
+                        </div>
+                        <div>
+                            {% if section.link %}
+                            <div class="pseudo-link fw-bold pb1">{{section.link.text}} <img src="/images/chevron_blue.svg" alt="Chevron Right" width="10px" height="10px" class="SidebarChevron no-zoom"></div>
+                            {% endif %}
+
+                            {% if section.testimonial %}
+                            <p class="small my0 mt2">{{section.testimonial.summary}}</p>
+                            <p class="xs my05"><strong>{{section.testimonial.author}}</strong>, <span class="text-dark">{{section.testimonial.position}}</span></p>
+                            <img
+                                src="{{section.testimonial.logo.path}}"
+                                srcset="{{section.testimonial.logo.path}} 1x"
+                                width="100px"
+                                alt="{{section.testimonial.logo.alt}}"
+                            loading="lazy"/>
+                            {% endif %}
+                        </div>
+                    {% if section.link %}</a>{% endif %}
+                </div>
+                {% else %}
+                <div class="col-sm-6 col-lg-4 no-card">
+                    {% if section.link %}<a href="{{section.link.url}}">{% endif %}
+                        <div>
+                            <h2>{{section.heading}}</h2>
+                            <p class="mb05">{{section.summary}}</p>
+                        </div>
+                        <div>
+                            {% if section.link %}
+                            <div class="pseudo-link fw-bold pb1">{{section.link.text}} <img src="/images/chevron_blue.svg" alt="Chevron Right" width="10px" height="10px" class="SidebarChevron no-zoom"></div>
+                            {% endif %}
+
+                            {% if section.testimonial %}
+                            <p class="small my0 mt2">{{section.testimonial.summary}}</p>
+                            <p class="small my05">{{section.testimonial.author}}, <span class="text-dark">{{section.testimonial.position}}</span></p>
+                            <img
+                                src="{{section.testimonial.logo.path}}"
+                                srcset="{{section.testimonial.logo.path}} 1x"
+                                width="100px"
+                                alt="{{section.testimonial.logo.alt}}"
+                            loading="lazy"/>
+                            {% endif %}
+                        </div>
+                    {% if section.link %}</a>{% endif %}
+                </div>
+                <div class="col-sm-6 col-sm-offset-0 col-lg-offset-2">
+                    <img
+                        src="{{section.image.path}}"
+                        class="max-100"
+                        srcset="{{section.image.path}} 1x"
+                        alt="{{section.image.alt}}"
+                    loading="lazy"/>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+<div class="bootstrap">
+  <div class="promote-pro-page-container use-case">
+    {% if page.use-case-name == "business-analytics" %}
+      {% include promote-pro-page-selling-governance.html %}
+    {% else %}
+      {% include promote-pro-page-selling-self-service.html %}
+    {% endif %}
+  </div>
+</div>
+
+<div class="py2 bootstrap">
+    <div class="container">
+        <div class="row px4 pb2">
+            <div class="col-sm-12">
+                <h2 class="h4 mb8">First-class compliance</h2>
+            </div>
+            <div class="col-sm-12 col-lg-3">
+                <img src="/images/SOC-2-Badge.png" alt="" width="100" class="py2" loading="lazy" />
+                <p class="paragraph-5"><strong class="neutral-black">SOC 2 Type II</strong><br>
+                Our SOC 2 Type II report attests to the controls we have in place governing the security of customer data as they map to Trust Service Principles (TSPs) established by the American Institute of Certified Public Accountants (AICPA).</p>
+            </div>
+            <div class="col-sm-12 col-lg-3 col-md-offset-1">
+                <img src="/images/GDPR-Badge.png" alt="" width="100" class="py2" loading="lazy" />
+                <p class="paragraph-5"><strong class="neutral-black">General Data Protection Regulation</strong></strong><br>
+                At Metabase, we’ve worked to make our products, processes, and procedures GDPR-compliant.</p>
+            </div>
+            <div class="col-sm-12 col-lg-3 col-md-offset-1">
+                <img src="/images/California-Badge.png" alt="" width="100" class="py2" loading="lazy" />
+                <p class="paragraph-5"><strong class="neutral-black">California Consumer Privacy Act (CCPA)</strong></strong><br>
+                Metabase acts as a service provider to customers under the California Consumer Privacy Act (CCPA), and we support our customers’ compliance with the CCPA.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="py2">
+    <div class="container">
+        <div class="row flex flex-column flex-row-sm">
+            {% assign first-testimonial = use-case.ending-testimonials.first %}
+            <div class="col-xs-12 col-sm-6 col-md-5 col-md-offset-1 col-lg-4 col-lg-offset-2 py2 px2">
+                <img
+                    src="{{first-testimonial.logo.path}}"
+                    srcset="{{first-testimonial.logo.path}} 1x"
+                    width="{{first-testimonial.logo.width}}"
+                    alt="{{first-testimonial.logo.alt}}"
+                loading="lazy"/>
+                <p class="large mb05">
+                    {{first-testimonial.summary}}
+                </p>
+                <div class="flex flex-row align-center">
+                    <img
+                        class="mr05"
+                        src="{{first-testimonial.author.image.path}}"
+                        srcset="{{first-testimonial.author.image.path}} 1x"
+                        width="48px"
+                        height="48px"
+                        alt="{{first-testimonial.author.image.alt}}"
+                    loading="lazy"/>
+                    <div class="flex flex-column justify-around py05">
+                        <p class="small my0"><strong>{{first-testimonial.author.name}}</strong></p>
+                        <p class="small my0 text-dark">{{first-testimonial.author.position}}</p>
+                    </div>
+                </div>
+            </div>
+            {% assign second-testimonial = use-case.ending-testimonials.second %}
+            <div class="col-xs-12 col-sm-6 col-md-5 col-lg-4 py2">
+                <img
+                    src="{{second-testimonial.logo.path}}"
+                    srcset="{{second-testimonial.logo.path}} 1x"
+                    width="{{second-testimonial.logo.width}}"
+                    alt="{{second-testimonial.logo.alt}}"
+                loading="lazy"/>
+                <p class="large mb05">
+                    {{second-testimonial.summary}}
+                </p>
+                <div class="flex flex-row align-center">
+                    <img
+                        class="mr05"
+                        src="{{second-testimonial.author.image.path}}"
+                        srcset="{{second-testimonial.author.image.path}} 1x"
+                        width="48px"
+                        height="48px"
+                        alt="{{second-testimonial.author.image.alt}}"
+                    loading="lazy"/>
+                    <div class="flex flex-column justify-around py05">
+                        <p class="small my0"><strong>{{second-testimonial.author.name}}</strong></p>
+                        <p class="small my0 text-dark">{{second-testimonial.author.position}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mb4">
+    <div class="container">
+        <div class="flex justify-center my2">
+            <h2 class="medium text-centered mb0">More ways to use Metabase</h2>
+        </div>
+        <div class="row flex flex-column flex-row-sm">
+            {% assign first-link = use-case.more-ways-to-use-metabase.first %}
+            <div class="col-xs-12 col-sm-6 col-md-5 col-md-offset-1 col-lg-4 col-lg-offset-2 p1">
+                <a class="large-card hover-card bg-neutral" href="{{first-link.url}}">
+                    <div class="circle bg-lightblue-tint inline-block">
+                        <img class="m05" src="{{first-link.icon.path}}" height="20px" width="20px" alt="{{first-link.icon.alt}}" loading="lazy" />
+                    </div>
+                    <p class="flex flex-column large dt">
+                        <b>{{first-link.heading}}</b>
+                        {{first-link.summary}}
+                    </p>
+                    <div class="pseudo-link fw-bold">Learn More <img src="/images/chevron_blue.svg" alt="Chevron Right" width="10px" height="10px" class="SidebarChevron no-zoom"></div>
+                </a>
+            </div>
+            {% assign second-link = use-case.more-ways-to-use-metabase.second %}
+            <div class="col-xs-12 col-sm-6 col-md-5 col-lg-4 p1">
+                <a class="large-card hover-card bg-neutral" href="{{second-link.url}}">
+                    <div class="circle bg-lightblue-tint inline-block">
+                        <img class="m05" src="{{second-link.icon.path}}" height="20px" width="20px" alt="{{second-link.icon.alt}}" loading="lazy" />
+                    </div>
+                    <p class="flex flex-column large dt">
+                        <b>{{second-link.heading}}</b>
+                        {{second-link.summary}}
+                    </p>
+                    <div class="pseudo-link fw-bold">Learn More <img src="/images/chevron_blue.svg" alt="Chevron Right" width="10px" height="10px" class="SidebarChevron no-zoom"></div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include get-started-with-metabase.html %}

@@ -1,0 +1,256 @@
+# Top level is the deployment model
+# Second level are the plans themselves
+# This is needed because the feature descriptions differ in each
+- slug: cloud
+  name: Business Intelligence
+  tagline: Business Intelligence
+  tooltip: I'm planning to use Metabase to help my team access data.
+  icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"><path stroke="#509EE3" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.75 6.75a2 2 0 0 1 2-2h10.5a2 2 0 0 1 2 2v10.5a2 2 0 0 1-2 2H6.75a2 2 0 0 1-2-2V6.75ZM9.75 8.75V19M5 8.25h14"/></svg>'
+  plans:
+    - slug: pricing-tier-oss
+      name: Open Source
+      intro: "Everything you need to self-host your own instance of Metabase."
+      price: Free
+      customer-logos:
+        - my-agro
+        - dub
+      highlights-title: "Choose because your team needs easy-to-use business intelligence:"
+      highlights:
+        - text: 'The core <span class="apply-tooltip" data-tippy-content="Let your team explore and work with data without needing SQL" data-tippy-placement="top"><a href="#analytics-dashboards">Business Intelligence</a></span> experience ready to deploy on your servers'
+          class: check
+        - text: Unlimited queries, charts, and dashboards
+          class: check
+        - text: 'Includes <span class="apply-tooltip" data-tippy-content="Basic embedding of dashboards and visualizations" data-tippy-placement="top"><a href="#static-embedding">Static Embedding</a></span> with the “Powered by Metabase” badge'
+          class: check
+        - text: Use of any official, partner, or community data source connectors
+          class: check
+      color: yellow-40
+      support: Community support forum
+      deployment: Self-hosted deployment
+      ctas:
+        - color: yellow
+          label: Get installation instructions
+          url: /start/oss/
+
+    - slug: pricing-tier-starter
+      name: Starter
+      intro: A fully-supported and managed cloud-hosted instance of Metabase.
+      price-monthly: 85
+      price-annual: 918
+      price-user-included: 5
+      price-user-monthly: 5
+      price-user-annual: 54
+      customer-logos:
+        - primer
+        - survicate
+      highlights-title: "Choose because you want everything in <b>Open Source</b> plus:"
+      highlights:
+        - text: 'The core <span class="apply-tooltip" data-tippy-content="Let your team explore and work with data without needing SQL" data-tippy-placement="top"><a href="#analytics-dashboards">Business Intelligence</a></span> experience deployed on a fast, reliable, and secure cloud'
+          class: check
+        - text: Hosting based in your choice of region
+          class: check
+        - text: Automatic upgrades, patches, backups, and monitoring all done for you
+          class: check
+        - text: 'Includes <span class="apply-tooltip" data-tippy-content="Basic embedding of dashboards and visualizations" data-tippy-placement="top"><a href="#static-embedding">Static Embedding</a></span> with a “Powered by Metabase” badge.'
+          class: check
+        - text: Full support from our team of experts for any of our 20+ official and partner data source connectors
+          class: check
+      color: green-40
+      support: 3-day email support
+      deployment: Cloud deployment
+      ctas:
+        - color: green
+          label: Start free trial
+          url: https://store.metabase.com/checkout?plan=starter
+
+    - slug: pricing-tier-pro
+      name: Pro
+      intro: Extra features helpful for managing lots of users and compliance.
+      price-monthly: 500
+      price-annual: 5400
+      price-user-included: 10
+      price-user-monthly: 10
+      price-user-annual: 108
+      customer-logos:
+        - open-ai
+        - huma
+      highlights-title: "Choose because you want everything in <b>Starter</b> plus:"
+      highlights:
+        - text: 'Single sign-on and user-group permissions mapping via SAML, LDAP or JWT with account provisioning via <span class="apply-tooltip" data-tippy-content="Keep authentication and account provisioning separate with SSO and SCIM" data-tippy-placement="top"><a href="#scim-account-provisioning">SCIM</a></span>'
+          class: check
+        - text: 'Granular row- and column-level permissions via <span class="apply-tooltip" data-tippy-content="Granular control over permissions that let you set strong boundaries around your data" data-tippy-placement="top"><a href="#row--and-column-level-permissions-data-sandboxes">Data Sandboxing</a></span>'
+          class: check
+        - text: Granular results caching controls for faster, more responsive dashboards
+          class: check
+        - text: 'Separate staging and production environments along with content and configuration version control via <span class="apply-tooltip" data-tippy-content="Export and import content from your Metabase." data-tippy-placement="top"><a href="#serialization">Serialization</a></span>'
+          class: check
+        - text: 'Insights into how your instance is being used via <span class="apply-tooltip" data-tippy-content="A special collection offering total visibility into what’s going on in your instance" data-tippy-placement="top"><a href="#usage-analytics">Usage Analytics</a></span>'
+          class: check
+        - text: '<span class="apply-tooltip" data-tippy-content="Match your branding" data-tippy-placement="top"><a href="#white-label-with-your-branding">White label</a></span> customization of your instance, including custom colors and fonts and a customizable domain'
+          class: check
+        - text: 'Includes <span class="apply-tooltip" data-tippy-content="The full power of Metabase in your app, matching your branding. (The most awesome version of embedding)" data-tippy-placement="top"><a href="#interactive-embedding">Interactive Embedding</a></span> and <span class="apply-tooltip" data-tippy-content="Basic embedding of dashboards and visualizations" data-tippy-placement="top"><a href="#static-embedding">Static Embedding</a></span>, without the “Powered by Metabase” badge'
+          class: check
+      color: blue-40
+      support: 3-day email support
+      deployment: Cloud or self-hosted deployment
+      ctas:
+        - color: blue
+          label: Start free trial
+          url: https://store.metabase.com/checkout?plan=pro
+
+    - slug: pricing-tier-enterprise
+      name: Enterprise
+      intro: Extra help with procurement and access to professional services.
+      price: Custom pricing
+      price-secondary: Starts at $15k/year
+      customer-logos:
+        - holland-and-barrett
+        - zalando
+      highlights-title: "Choose because you want everything in <b>Pro</b> plus:"
+      highlights:
+        - text: Our help with your procurement process to get Metabase
+          class: check
+        - text: A dedicated named success engineer with a 1-day email SLA
+          class: check
+        - text: 'Includes custom user pricing, helpful for scaled <span class="apply-tooltip" data-tippy-content="The full power of Metabase in your app, matching your branding. (The most awesome version of embedding)" data-tippy-placement="top"><a href="#interactive-embedding">Interactive Embedding</a></span>'
+          class: check
+        - text: 'Optional <span class="apply-tooltip" data-tippy-content="Run on-prem in ultra-secure and private environments" data-tippy-placement="top"><a href="#fully-air-gapped-deployment">air-gapping</a></span> or single-tenant hosting'
+          class: check
+        - text: Optional access to additional <a href='/product/professional-services'>Professional Services</a>
+          class: check
+      color: purple-40
+      support: Priority support
+      deployment: Cloud or self-hosted deployment
+      ctas:
+        - color: purple
+          label: Talk to sales
+          url: /sales/
+
+- slug: self-host
+  name: Embedded Analytics
+  tagline: Manage it yourself
+  tooltip: I'm planning to include Metabase in my product.
+  icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"><path stroke="#C6C9D2" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.75 6.75a2 2 0 0 1 2-2h10.5a2 2 0 0 1 2 2v10.5a2 2 0 0 1-2 2H6.75a2 2 0 0 1-2-2V6.75Z"/><path stroke="#C6C9D2" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m8.75 10.75 2.5 2.25-2.5 2.25"/></svg>'
+  plans:
+    - slug: pricing-tier-oss
+      name: Open Source
+      intro: Everything you need to embed visualizations and dashboards.
+      price: Free
+      customer-logos:
+        - my-agro
+        - dub
+      highlights-title: "Choose because your customers need easy-to-use embedded analytics:"
+      highlights:
+        - text: 'Everything you need to host your own instance for <span class="apply-tooltip" data-tippy-content="Basic embedding of dashboards and visualizations" data-tippy-placement="top"><a href="#static-embedding">Static Embedding</a></span> with a “Powered by Metabase” badge'
+          class: check
+        - text: Unlimited queries, charts, and dashboards
+          class: check
+        - text: 'Includes everything you need to host the core <span class="apply-tooltip" data-tippy-content="Let your team explore and work with data without needing SQL" data-tippy-placement="top"><a href="#analytics-dashboards">Business Intelligence</a></span> experience'
+          class: check
+        - text: Use of any official, partner, or community data source connectors
+          class: check
+      color: yellow-40
+      support: Community support forum
+      deployment: Self-hosted deployment
+      ctas:
+        - color: yellow
+          label: Get installation instructions
+          url: /start/oss/
+
+    - slug: pricing-tier-starter
+      name: Starter
+      intro: A fully-supported and managed cloud-hosted instance of Metabase.
+      price-monthly: 85
+      price-annual: 918
+      price-user-included: 5
+      price-user-monthly: 5
+      price-user-annual: 54
+      customer-logos:
+        - primer
+        - survicate
+      highlights-title: "Choose because you want everything in <b>Open Source</b> plus:"
+      color: green-40
+      highlights:
+        - text: 'Your own cloud-hosted instance for <span class="apply-tooltip" data-tippy-content="Basic embedding of dashboards and visualizations" data-tippy-placement="top"><a href="#static-embedding">Static Embedding</a></span> with a “Powered by Metabase” badge'
+          class: check
+        - text: Hosting based in your choice of region
+          class: check
+        - text: Automatic upgrades, patches, backups, and monitoring all done for you
+          class: check
+        - text: 'Includes everything you need for the core <span class="apply-tooltip" data-tippy-content="Let your team explore and work with data without needing SQL" data-tippy-placement="top"><a href="#analytics-dashboards">Business Intelligence</a></span> experience'
+          class: check
+        - text: Full support from our team of experts for any of our 20+ official and partner data source connectors
+          class: check
+      support: 3-day email support
+      deployment: Cloud deployment
+      ctas:
+        - color: green
+          label: Start free trial
+          url: https://store.metabase.com/checkout?plan=starter
+
+    - slug: pricing-tier-pro
+      name: Pro
+      intro: Extra features for embedding self-service exploration in your products.
+      price-monthly: 500
+      price-annual: 5400
+      price-user-included: 10
+      price-user-monthly: 10
+      price-user-annual: 108
+      customer-logos:
+        - open-ai
+        - huma
+      highlights-title: "Choose because you want everything in <b>Starter</b> plus:"
+      highlights:
+        - text: '<span class="apply-tooltip" data-tippy-content="The full power of Metabase in your app, matching your branding. (The most awesome version of embedding)" data-tippy-placement="top"><a href="#interactive-embedding">Interactive Embedding</a></span>, allowing you to offer your users ways to explore data on their own with drill-throughs or even the entire query builder'
+          class: check
+        - text: Removal of all “Powered by Metabase” badges
+          class: check
+        - text: 'Extensive <span class="apply-tooltip" data-tippy-content="Match your branding" data-tippy-placement="top"><a href="#white-label-with-your-branding">white-labeling</a></span> options, including custom colors and fonts and a customizable domain'
+          class: check
+        - text: 'Extra features that allow for secure, private <span class="apply-tooltip" data-tippy-content="Granular control over permissions that let you set strong boundaries around your data" data-tippy-placement="top"><a href="#multi-tenant-analytics">Multi-tenant</a></span> instances, including granular row- and column-level permission with automatic SSO-based mapping'
+          class: check
+        - text: 'Separate staging and production environments along with content and configuration version control via <span class="apply-tooltip" data-tippy-content="Export and import content from your Metabase." data-tippy-placement="top"><a href="#serialization">Serialization</a></span>'
+          class: check
+        - text: '<span class="apply-tooltip" data-tippy-content="The React toolkit for full control over what you embed, how it looks, and where you put it" data-tippy-placement="top"><a href="#embedded-analytics-sdk">Embedded Analytics SDK for React</a> for seamless in-app reporting with full control</span>'
+          class: check
+        - text: Granular results caching controls for faster, more responsive dashboards
+          class: check
+        - text: 'Insights into how your instance is being used via <span class="apply-tooltip" data-tippy-content="A special collection offering total visibility into what’s going on in your instance" data-tippy-placement="top"><a href="#usage-analytics">Usage Analytics</a></span>'
+          class: check
+        - text: 'Includes everything you need for the core <span class="apply-tooltip" data-tippy-content="Let your team explore and work with data without needing SQL" data-tippy-placement="top"><a href="#analytics-dashboards">Business Intelligence</a></span> experience, along with extra features for larger and growing teams'
+          class: check
+      color: blue-40
+      support: 3-day email support
+      deployment: Cloud or self-hosted deployment
+      ctas:
+        - color: blue
+          label: Start free trial
+          url: https://store.metabase.com/checkout?plan=pro
+
+    - slug: pricing-tier-enterprise
+      name: Enterprise
+      intro: Custom pricing for interactive embedding and extra help.
+      price: Custom pricing
+      price-secondary: Starts at $15k/year
+      customer-logos:
+        - holland-and-barrett
+        - zalando
+      highlights-title: "Choose because you want everything in <b>Pro</b> plus:"
+      highlights:
+        - text: 'Custom user pricing that works with your business for scaled <span class="apply-tooltip" data-tippy-content="The full power of Metabase in your app, matching your branding. (The most awesome version of embedding)" data-tippy-placement="top"><a href="#interactive-embedding">Interactive Embedding</a></span>'
+          class: check
+        - text: Our help with your procurement process to get Metabase
+          class: check
+        - text: A dedicated named success engineer with a 1-day email SLA
+          class: check
+        - text: 'Optional <span class="apply-tooltip" data-tippy-content="Run on-prem in ultra-secure and private environments" data-tippy-placement="top"><a href="#fully-air-gapped-deployment">air-gapping</a></span> or single-tenant hosting'
+          class: check
+        - text: "Optional access to additional <a href='/product/professional-services'>Professional Services</a>"
+          class: check
+      color: purple-40
+      support: Priority support
+      deployment: Cloud or self-hosted deployment
+      ctas:
+        - color: purple
+          label: Talk to sales
+          url: /sales/

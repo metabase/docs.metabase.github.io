@@ -1,0 +1,15 @@
+<div>
+  {% if page.version and page.version != site.docs_version and page.version != "latest" %}
+    {% if page.version == "master" %}
+      <blockquote>
+        These are the docs for the Metabase master branch. Some features documented here may not yet be available in the latest release.
+        Check out the <a class="text-purple text-underline" href="/docs/latest/">docs for the latest version, Metabase {{site.docs_version}}.</a>
+      </blockquote>
+    {% else %}
+      <blockquote>
+        These are the docs for Metabase {{ page.version }}.
+        Check out the <a class="text-purple text-underline" href="/docs/latest/">docs for the latest version, Metabase {{site.docs_version}}.</a>
+      </blockquote>
+    {% endif %}
+  {% endif %}
+</div>

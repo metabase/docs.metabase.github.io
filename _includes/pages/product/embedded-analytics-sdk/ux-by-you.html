@@ -1,0 +1,50 @@
+<div class="feature-plus-headline-container ux-by-you">
+  <div>
+    <h2>UX by you</h2>
+    <p>
+      Customize the behaviors and flows per component, like adding custom
+      actions to menu, or overhauling the layout of the query builder. There are
+      no rules.
+    </p>
+  </div>
+  <div class="feature-container">
+    <div class="integrate-with-ui-illustration">
+      <img src="/images/product/embedded-analytics-sdk/ux-by-you-1.png" loading="lazy" />
+    </div>
+    <div class="language-javascript">
+      <div class="highlight">
+        <pre class="highlight">
+        <code class="language-javascript do-not-display-copy-button">
+&lt;MetabaseProvider
+  config={config}
+  theme={theme}
+  pluginsConfig={% raw %}{{{% endraw %}
+    mapQuestionClickActions: (clickActions, clicked) =&gt; {
+      const nextClickActions = [...clickActions]
+
+      // If we are drilling down on the user id, add a custom action to view the user profile.
+      if (clicked.column?.name === &quot;user_id&quot;) {
+        nextClickActions.push({
+          buttonType: &quot;horizontal&quot;,
+          name: &quot;view-profile&quot;,
+          section: &quot;info&quot;,
+          type: &quot;custom&quot;,
+          icon: &quot;person&quot;,
+          title: &quot;View user profile&quot;,
+          onClick: ({ closePopover }) =&gt; {
+            console.log(`View Profile &gt; user_id = ${clicked.value}`)
+            closePopover()
+          },
+        })
+      }
+
+      return nextClickActions
+    },
+  }}
+/&gt;
+        </code>
+      </pre>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,177 @@
+.pricing-container .embedding-switcher {
+  background-color: white;
+  border: 1px solid $blue-90;
+  border-radius: $border-radius-xxl;
+  box-shadow: 0 1px 2px 0 rgba(16, 24, 40, 0.05);
+  margin: 0 0 24px;
+
+  @include media-breakpoint-up(lg) {
+    border-bottom: none;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    margin-bottom: 0;
+  }
+
+  &__toggle-container {
+    margin: 0 auto 32px;
+    max-width: 520px;
+    position: relative;
+    width: 100%;
+
+    @include media-breakpoint-down(lg) {
+      max-width: 100%;
+    }
+
+    @include media-breakpoint-up(lg) {
+      width: auto;
+    }
+
+    .pricing-tooltip {
+      border-bottom: 1px dashed $neutral-80;
+      font-size: 14px;
+    }
+  }
+
+  &__tagline {
+    margin-bottom: 4px;
+    position: relative;
+    z-index: 100;
+
+    @include media-breakpoint-up(md) {
+      bottom: 100%;
+      margin: 0;
+      position: absolute;
+      right: 0;
+      text-align: center;
+      transform: translateY(-0.75rem);
+    }
+
+    @include media-breakpoint-up(lg) {
+      transform: translateY(-2.1rem);
+    }
+
+    &__icon {
+      &--left {
+        @include media-breakpoint-up(lg) {
+          display: none;
+        }
+      }
+
+      &--right {
+        display: none;
+
+        @include media-breakpoint-up(lg) {
+          display: block;
+        }
+      }
+    }
+
+    & span {
+      font-size: 12px;
+
+      @include media-breakpoint-up(md) {
+        font-size: 14px;
+      }
+    }
+  }
+
+  &__toggle {
+    @include shadow-xs;
+
+    background-color: white;
+    border: 1px solid $blue-95;
+    border-radius: $border-radius-xl;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+
+    @include media-breakpoint-up(lg) {
+      width: auto;
+    }
+
+    &__indicator {
+      background-color: $blue-95;
+      border: 3px solid white;
+      border-radius: $border-radius-xl;
+      bottom: 0;
+      display: block;
+      left: 0;
+      position: absolute;
+      top: 0;
+      transition: left 200ms;
+      width: 50%;
+      z-index: 0;
+
+      &.hide {
+        display: none;
+      }
+
+      @include media-breakpoint-up(lg) {
+        width: 120px;
+      }
+    }
+
+    &__item {
+      min-width: 120px;
+      width: 50%;
+      width: 100%;
+      z-index: 1;
+
+      .icon svg path {
+        stroke: $neutral-80;
+      }
+
+      &__label {
+        background-color: transparent;
+        color: $neutral-80;
+        cursor: pointer;
+        font-size: 14px;
+        min-height: 36px;
+        transition: color 200ms;
+
+        @include media-breakpoint-up(lg) {
+          font-size: 16px;
+          min-height: 42px;
+        }
+
+        &:focus,
+        &:hover {
+          color: $neutral-40;
+        }
+
+        &:hover {
+          .icon svg path {
+            stroke: $neutral-40;
+          }
+        }
+
+        .icon {
+          font-size: 0;
+
+          svg {
+            fill: none;
+            height: auto;
+          }
+        }
+      }
+
+      & > input:checked + .embedding-switcher__toggle__item__label {
+        color: $blue-60;
+
+        .icon svg path {
+          stroke: $blue-60;
+        }
+
+        &:hover {
+          .icon svg path {
+            stroke: $blue-60;
+          }
+        }
+      }
+
+      & > input.temporarily-blue + .embedding-switcher__toggle__item__label {
+        color: $blue-60;
+      }
+    }
+  }
+}

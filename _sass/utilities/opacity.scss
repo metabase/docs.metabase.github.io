@@ -1,0 +1,14 @@
+$increments: (0, 0),
+  (25, 0.25),
+  (50, 0.5),
+  (60, 0.6),
+  (70, 0.7),
+  (75, 0.75);
+
+@each $increment in $increments {
+  $label: nth($increment, 1);
+  $value: nth($increment, 2);
+  .opacity-#{$label} {
+    opacity: #{$value};
+  }
+}

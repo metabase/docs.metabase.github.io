@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+  {% include head.html %}
+
+    <body>
+
+
+    {% include header.html color=true active=page.active %}
+
+    <div class="MB-Gallery container">
+
+      {% if page.header.title %}
+        <div class="MB-Gallery-Header">
+          <h1>{{ page.header.title }}</h1>
+          {% if page.header.description %}
+            <p>{{ page.header.description }}</p>
+          {% endif %}
+        </div>
+      {% endif %}
+
+      <iframe
+        src="{{ page.embed.url }}"
+        frameborder="0"
+        width="100%"
+        height="{{ page.embed.height }}"
+        allowtransparency></iframe>
+    </div>
+
+    {% include footer.html %}
+
+    {{ page.content }}
+
+    <script type="text/javascript" src="/js/contentloaded.min.js"></script>
+  </body>
+</html>

@@ -1,0 +1,33 @@
+{% assign component = include.component %}
+
+<section class="bg-blue-60 p-0 align-items-stretch d-flex flex-column flex-lg-row flex-wrap justify-content-start container full-width-sky-blue landing-page__full-width-sky-blue">
+    <div class="col-12 col-lg-6 d-flex flex-column h-100 pt-9 px-11 pb-8 p-lg-14">
+      <h2 class="mb-6 embedding-page__section-title m-0">{{ component.headline }}</h2>
+      <p class="mb-8 embedding-page__tagline">{{ component.subheading }}</p>
+
+      <ul class="align-items-center d-flex flex-row justify-content-start list-inline m-0 mb-13 full-width-sky-blue__ctas-list">
+        {% for link in component.links %}
+          <li class="full-width-sky-blue__ctas-list__item">
+            <a class="m-0 Button full-width-sky-blue__cta {{link.extra-classes}}" href="{{link.href}}">{{link.text}}</a>
+          </li>
+        {% endfor %}
+      </ul>
+
+      <blockquote class="quote">
+          <p class="quote__text">{{ component.quote.text }}</p>
+          <footer class="quote__footer">
+              <div class="quote__avatar">
+                  <img class="quote__avatar__image" src="{{ component.quote.avatar }}" alt="{{ component.quote.author }} - {{ component.quote.role-and-company }}" loading="lazy" />
+              </div>
+              <div class="quote__attribution">
+                  <p class="quote__attribution__name">{{ component.quote.author }}</p>
+                  <p class="quote__attribution__role">{{ component.quote.role }}</p>
+              </div>
+          </footer>
+      </blockquote>
+
+    </div>
+    <div class="col-12 col-lg-6 d-flex full-width-sky-blue__image-panel">
+      <div class="full-width-sky-blue__image" style="background-image: url({{component.image.src}})"></div>
+    </div>
+</section>

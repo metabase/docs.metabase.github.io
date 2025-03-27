@@ -1,0 +1,387 @@
+.public-metabase-examples {
+  background-color: $neutral-98;
+  box-shadow: 50vw 0 0 $neutral-98, -50vw 0 0 $neutral-98;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  max-width: 1280px;
+  padding-bottom: 66px;
+  position: relative;
+  width: 100%;
+
+  &::after {
+    background-color: $blue-90;
+    bottom: 0;
+    box-shadow: 50vw 0 0 $blue-90, -50vw 0 0 $blue-90;
+    content: "";
+    display: block;
+    height: 1px;
+    left: 0;
+    position: absolute;
+    width: 100%;
+  }
+
+  @include media-breakpoint-down(xxl) {
+    width: 1096px;
+  }
+
+  @include media-breakpoint-down(xl) {
+    width: 920px;
+  }
+
+  @include media-breakpoint-down(lg) {
+    display: flex;
+    flex-direction: column;
+    width: 680px;
+  }
+
+  @include media-breakpoint-down(md) {
+    max-width: calc(100% - 40px);
+    width: 468px;
+  }
+
+  a {
+    &.back-to-index {
+      font-weight: 700;
+    }
+  }
+
+  .hero {
+    background-image: url("/images/examples/index-hero-background.png");
+    background-position: top 30px right;
+    background-repeat: no-repeat;
+    background-size: contain;
+
+    @include media-breakpoint-down(lg) {
+      background-image: none;
+    }
+
+    h1 {
+      font-size: 36px;
+      font-weight: 900;
+      line-height: 40px;
+      margin-bottom: 16px;
+      max-width: 592px;
+      text-align: left;
+
+      @include media-breakpoint-down(lg) {
+        font-size: 30px;
+        line-height: 36px;
+        margin-bottom: 8px;
+      }
+    }
+
+    h2 {
+      color: $blue-60;
+      font-size: 24px;
+      font-weight: 700;
+      line-height: 32px;
+      margin-top: 64px;
+      padding-bottom: 8px;
+      text-align: left;
+
+      @include media-breakpoint-down(lg) {
+        font-size: 20px;
+        line-height: 28px;
+        margin-bottom: 4px;
+        margin-top: 24px;
+        padding-bottom: 0;
+      }
+    }
+
+    h3 {
+      color: $neutral-40;
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 26px;
+      max-width: 592px;
+      text-align: left;
+
+      @include media-breakpoint-down(lg) {
+        font-size: 16px;
+        line-height: 24px;
+      }
+
+      a {
+        color: $blue-60;
+        transition: color 0.3s ease;
+
+        &:hover {
+          color: $blue-40;
+        }
+      }
+    }
+  }
+
+  > div:last-child {
+    display: grid;
+    grid-template-columns: 312px 1fr;
+    margin-top: 64px;
+
+    @include media-breakpoint-down(lg) {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  .picker {
+    position: relative;
+
+    @include media-breakpoint-down(lg) {
+      margin-bottom: 48px;
+      margin-left: -20px;
+      overflow: hidden;
+      position: relative;
+      width: calc(100% + 20px);
+
+      &::before {
+        background-image: linear-gradient(to right, rgba(250, 251, 254, 1), rgba(250, 251, 254, 0));
+        content: "";
+        display: block;
+        height: 100%;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 30px;
+        z-index: 2;
+      }
+
+      &::after {
+        background-image: linear-gradient(to right, rgba(250, 251, 254, 0), rgba(250, 251, 254, 1));
+        content: "";
+        display: block;
+        height: 100%;
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 30px;
+      }
+    }
+
+    .picker-slider {
+      position: relative;
+      z-index: 2;
+
+      @include media-breakpoint-down(lg) {
+        display: flex;
+        overflow: hidden;
+        position: relative;
+      }
+    }
+
+    .hover-highlight {
+      background-color: $blue-90;
+      border-radius: 8px;
+      height: 20px;
+      position: absolute;
+      transition: all 0.3s ease;
+      width: 100%;
+      z-index: 1;
+
+      &.hidden {
+        display: none;
+      }
+
+      @include media-breakpoint-down(lg) {
+        display: none;
+      }
+    }
+
+    button {
+      align-items: center;
+      background-color: transparent;
+      border: none;
+      border-radius: 8px;
+      color: $neutral-40;
+      display: flex;
+      font-size: 14px;
+      font-weight: 400;
+      gap: 4px;
+      line-height: 16px;
+      margin-bottom: 4px;
+      margin-right: 8px;
+      padding: 8px;
+      text-align: left;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      width: 208px;
+
+      &:hover,
+      &.active {
+        color: $blue-60;
+
+        @include media-breakpoint-down(lg) {
+          background-color: $blue-90;
+        }
+      }
+
+      &.active {
+        font-weight: 700;
+      }
+
+      @include media-breakpoint-down(lg) {
+        flex: 1 0 auto;
+        padding: 8px 12px;
+        position: relative;
+        width: auto;
+
+        &:first-child {
+          margin-left: 20px;
+        }
+
+        &:last-child {
+          margin-right: 20px;
+        }
+      }
+
+      svg {
+        path {
+          stroke: $blue-60;
+        }
+
+        @include media-breakpoint-down(lg) {
+          min-width: 24px;
+        }
+      }
+    }
+  }
+
+  .entries {
+    display: grid;
+    gap: 32px;
+    grid-template-columns: 1fr 1fr;
+
+    @include media-breakpoint-down(lg) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .entry {
+    background-color: white;
+    border: 1px solid $blue-90;
+    border-radius: 12px;
+    margin-bottom: 32px;
+    padding: 24px 24px 20px;
+    transition: box-shadow 0.3s ease;
+
+    &:hover {
+      box-shadow: 0 8px 8px -4px rgba(16, 24, 40, 0.0314), 0 20px 24px -4px rgba(16, 24, 40, 0.0784);
+    }
+
+    > div {
+      &:first-child {
+        align-items: center;
+        background-color: $blue-95;
+        border-radius: 12px;
+        display: flex;
+        justify-content: center;
+
+        img {
+          border-radius: 12px;
+        }
+      }
+
+      &:last-child {
+        position: relative;
+      }
+
+      h4 {
+        font-size: 18px;
+        font-weight: 700;
+        line-height: 24px;
+        margin: 12px 0 6px;
+        max-width: calc(100% - 40px);
+      }
+
+      h5 {
+        color: $neutral-60;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 16px;
+        margin: 0;
+      }
+
+      button {
+        background-color: white;
+        border: 1px solid $blue-90;
+        border-radius: 8px;
+        padding: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+
+        &:hover {
+          background-color: $blue-95;
+          border-color: $blue-85;
+        }
+
+        svg {
+          padding: 4px;
+        }
+      }
+    }
+  }
+
+  .cta {
+    align-items: center;
+    background-color: $neutral-98;
+    border: 1px dashed $blue-90;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    justify-content: center;
+    margin-bottom: 32px;
+    padding: 48px;
+    text-align: center;
+    transition: box-shadow 0.3s ease;
+
+    button {
+      background-color: white;
+      border: 1px solid $blue-60;
+      border-radius: 8px;
+      color: $blue-60;
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 24px;
+      padding: 12px 20px;
+
+      svg {
+        margin-right: 8px;
+      }
+    }
+
+    p {
+      color: $neutral-15;
+      font-size: 24px;
+      font-weight: 700;
+      line-height: 32px;
+    }
+  }
+}
+
+.public-metabase-example {
+  div:first-child {
+    a {
+      font-weight: 700;
+    }
+  }
+
+  .intro {
+    h1 {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+  }
+
+  .title {
+    h3 {
+      font-size: 30px;
+      font-weight: 700;
+      line-height: 36px;
+      margin-bottom: 16px;
+    }
+  }
+}

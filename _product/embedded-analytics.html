@@ -1,0 +1,84 @@
+---
+use-case-name: embedded-analytics
+title: "Embedded Analytics | Metabase"
+image: /images/product/embedded-analytics.jpg
+summary: "Embedded Analytics. Create and embed interactive analytics in your products, with simple but powerful tools to let you match the look and feel of your brand."
+---
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu">
+
+<div class="bootstrap">
+    <div class="embedding-page">
+        {% include pages/pro/embedded-analytics/header.html %}
+
+        <div class="container">
+          {% include pages/pro/embedded-analytics/embedding-options.html %}
+          {% include pages/pro/embedded-analytics/fast-to-prototype.html %}
+          {% include pages/pro/embedded-analytics/our-customers-build-great-data-experiences.html %}
+          {% include pages/pro/embedded-analytics/comes-with-everything-your-users-need.html %}
+          {% include pages/pro/embedded-analytics/balance-of-plug-and-play.html %}
+        </div>
+
+        {% include pages/pro/embedded-analytics/key-features.html %}
+
+        <div class="container">
+          {% include pages/pro/embedded-analytics/learn-more.html %}
+          {% include pages/pro/embedded-analytics/ready-to-get-started.html %}
+          {% include pages/pro/embedded-analytics/used-by-great-companies.html %}
+          {% include pages/pro/embedded-analytics/more-ways-to-use-metabase.html %}
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    const charts = {
+        Classic: {
+            embedURL: 'https://metabase-www-1.metabaseapp.com/public/question/d6cc184d-78c2-44c3-b559-199ec2b2aa96',
+            parametersElement: document.querySelector('.parameters-wrapper-classic'),
+            parametersElementMobile: document.querySelector('.parameters-wrapper-classic-mobile')
+        },
+        Tech: {
+            embedURL: 'https://metabase-www-2.metabaseapp.com/public/question/37669a1d-ca5e-48a5-a7f7-7380ad1a3f76#theme=night',
+            parametersElement: document.querySelector('.parameters-wrapper-tech'),
+            parametersElementMobile: document.querySelector('.parameters-wrapper-tech-mobile')
+        },
+        Elegant: {
+            embedURL: 'https://metabase-www-3.metabaseapp.com/public/question/ea2a4cd3-08fe-4d14-a428-dd3439f689ed',
+            parametersElement: document.querySelector('.parameters-wrapper-elegant'),
+            parametersElementMobile: document.querySelector('.parameters-wrapper-elegant-mobile')
+        },
+        Playful: {
+            embedURL: 'https://metabase-www-4.metabaseapp.com/public/question/2bb42002-1c3e-4760-acc8-076a3ffb7cc9#theme=night',
+            parametersElement: document.querySelector('.parameters-wrapper-playful'),
+            parametersElementMobile: document.querySelector('.parameters-wrapper-playful-mobile')
+        }
+    }
+    const customizabilityChart = document.getElementById('customizability-chart');
+    const customizabilityChartMobile = document.getElementById('customizability-chart-mobile');
+    const buttons = document.querySelectorAll('.customizability-button');
+    const parametersWrappers = document.querySelectorAll('.parameters-wrapper');
+
+    function clickChartType(e) {
+        const button = e.target.closest('.customizability-button');
+        if (!button) return;
+        
+        buttons.forEach(btn => btn.classList.remove('active'));
+        parametersWrappers.forEach(parameterWrapper => parameterWrapper.classList.add('d-none'));
+
+        button.classList.add('active');
+        const buttonText = button.querySelector('.customizability-button-text').innerText;
+        customizabilityChart.setAttribute('src', charts[buttonText].embedURL);
+        customizabilityChartMobile.setAttribute('src', charts[buttonText].embedURL);
+        charts[buttonText].parametersElement.classList.remove('d-none');
+        charts[buttonText].parametersElementMobile.classList.remove('d-none');
+    }
+
+    buttons.forEach(btn => btn.addEventListener('click', clickChartType));
+
+</script>
+<script src="/js/embedding_code.bundle.js"></script>
+<script type="text/javascript" src="/js/tabs-with-timer.js"></script>
+<script type="text/javascript" src="/js/feature-card.js"></script>
+<script src="https://unpkg.com/@lottiefiles/lottie-player@1.5.7/dist/lottie-player.js"></script>

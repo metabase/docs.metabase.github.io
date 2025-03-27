@@ -1,0 +1,126 @@
+---
+layout: default
+title: "Metabase Product Roadmap"
+summary: "A look at what's coming to Metabase and some of what we recently released."
+show_releases_roadmap_nav: true
+---
+
+<div class="bootstrap">
+  <div class="roadmap">
+    <div class="container">
+      <div class="releases-roadmap-nav">
+        <a href="/releases">
+          {% include svg-icons/stars.html %}
+          What’s new
+        </a>
+        <a href="/roadmap" class="active">
+          {% include svg-icons/map.html %}
+          Roadmap
+        </a>
+      </div>
+
+      <h1>Highlights of what we’re cooking</h1>
+    </div>
+
+    <div class="roadmap__content container">
+      <div class="roadmap__navigation now">
+        <button class="roadmap__navigation__now active">{% include svg-icons/lightning.html %} Now</button>
+        <button class="roadmap__navigation__soon">{% include svg-icons/clock.html %} Soon</button>
+        <button class="roadmap__navigation__later">{% include svg-icons/moon-and-star.html %} Later</button>
+      </div>
+
+      <div class="roadmap__entries">
+        <div class="roadmap__entry">
+          <div class="roadmap__tiles__header roadmap__tiles__header__now">
+            Actively being built
+          </div>
+          <div class="roadmap__tiles roadmap__tiles__now">
+            {% for entry in site.data.roadmap.now %}
+              {% include roadmap-entry.html entry=entry %}
+            {% endfor %}
+          </div>
+        </div>
+
+        <div class="roadmap__entry">
+          <div class="roadmap__tiles__header roadmap__tiles__header__soon">
+            Planned for the next release or two
+          </div>
+          <div class="roadmap__tiles roadmap__tiles__soon">
+            {% for entry in site.data.roadmap.soon %}
+              {% include roadmap-entry.html entry=entry %}
+            {% endfor %}
+          </div>
+        </div>
+
+        <div class="roadmap__entry">
+          <div class="roadmap__tiles__header roadmap__tiles__header__later">
+            Coming in the next 6 months or so
+          </div>
+          <div class="roadmap__tiles roadmap__tiles__later">
+            {% for entry in site.data.roadmap.later %}
+              {% include roadmap-entry.html entry=entry %}
+            {% endfor %}
+          </div>
+        </div>
+
+        <p>Want to see what we shipped recently?
+          <a href="/releases"> See what’s new <img class="chevron-blue-right" src="/images/chevron_blue_right.svg"></a>
+        </p>
+
+      </div>
+
+      <div class="roadmap__right-sidebar">
+        <div>
+          <div>
+            <p>Keep in mind these are non-exhaustive plans and subject to change. Plans are always clearer for the near future than far out. Features may not be available in all plans.</p>
+          </div>
+          <div>
+            <p><b>Have a great feature idea?</b></p>
+            <a href="https://github.com/metabase/metabase/issues/new/choose">Submit on Github <img class="chevron-blue-right" src="/images/chevron_blue_right.svg"></a>
+          </div>
+        </div>
+        <div>
+          <h6>{% include svg-icons/stars.html %}What’s new</h6>
+          <p>Want to see what we shipped recently?</p>
+          <a href="/releases">See what’s new <img class="chevron-blue-right" src="/images/chevron_blue_right.svg"></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="/js/roadmap.js"></script>
+<script src="https://unpkg.com/@popperjs/core@2/dist/umd/popper.min.js"></script>
+<script src="https://unpkg.com/tippy.js@6/dist/tippy-bundle.umd.js"></script>
+<script src="https://unpkg.com/@popperjs/core@2/dist/umd/popper.js"></script>
+
+<script>
+  var applyTT = document.querySelectorAll(".apply-tooltip");
+
+  tippy(applyTT, {
+    appendTo: 'parent',
+    duration: [0, 0],
+    placement: "auto",
+    trigger: "mouseenter click",
+    popperOptions: {
+      strategy: "absolute",
+      modifiers: [
+        {
+          name: "flip",
+          options: {
+            fallbackPlacements: ["top", "right"],
+          },
+        },
+        {
+          name: "preventOverflow",
+          options: {
+            altAxis: true,
+            boundary: "window",
+            tether: false,
+          },
+        },
+      ],
+    },
+  });
+
+</script>

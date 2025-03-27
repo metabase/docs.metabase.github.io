@@ -1,0 +1,103 @@
+$blue-for-background: #f6fafd;
+
+.responsive-page.pro-page .hero-container {
+  &::after {
+    background: linear-gradient(to bottom, $blue-for-background, white 30%);
+    bottom: 0;
+    content: "";
+    height: 32%;
+    left: 0;
+    position: absolute;
+    width: 100%;
+    z-index: 3;
+  }
+}
+
+.responsive-page.pro-page .hero {
+  background-color: $blue-for-background;
+  background-image: url("/images/product/pro/hero-background.svg");
+  box-shadow: 1000px 0 0 $blue-for-background, -1000px 0 0 $blue-for-background;
+  max-width: none;
+
+  a {
+    &#get-started-btn-home,
+    &.btn-outline-blue {
+      padding: 12px 18px;
+    }
+  }
+
+  div {
+    &.align-items-center {
+      position: relative;
+      z-index: 3;
+    }
+
+    &#gradient-background {
+      background: radial-gradient(ellipse 110% 41% at 50% 51%, transparent 35%, #f6fafd 43%);
+      height: 100%;
+      position: absolute;
+      top: 0;
+      width: 100%;
+      z-index: 2;
+
+      @include media-breakpoint-down(lg) {
+        background: radial-gradient(ellipse 110% 51% at 50% 44%, transparent 35%, #f6fafd 43%);
+      }
+    }
+
+    @keyframes cloud {
+      from { left: 2%; }
+      to { left: 90%; }
+    }
+
+    &.cloud {
+      position: absolute;
+    }
+
+    &#cloud-cover-left {
+      background-color: $blue-for-background;
+      height: 100%;
+      left: -100%;
+      position: absolute;
+      top: 0;
+      width: 100%;
+      z-index: 3;
+    }
+
+    &#cloud-cover-right {
+      background-color: $blue-for-background;
+      height: 100%;
+      left: 100%;
+      position: absolute;
+      top: 0;
+      width: 100%;
+      z-index: 3;
+    }
+  }
+
+  h6 {
+    background-color: $blue-95;
+    border: 1px solid $blue-85;
+    box-shadow: 0 1px 2px 0 rgba(16, 24, 40, 0.05);
+    color: $blue-60;
+  }
+
+  @include media-breakpoint-down(lg) {
+    .cards-container {
+      flex-direction: column;
+      justify-content: center;
+      margin-top: 64px;
+      max-width: 592px;
+
+      .card {
+        padding-bottom: 25px;
+      }
+    }
+
+    .logos {
+      flex-wrap: wrap;
+      gap: 15px;
+      padding: 0;
+    }
+  }
+}

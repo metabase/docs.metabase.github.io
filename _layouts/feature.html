@@ -1,0 +1,42 @@
+---
+layout: default
+title: "Feature"
+---
+
+{% assign featureData = site.data.features[page.data] %}
+{% assign hero = featureData | where: "component", "hero" | first %}
+{% assign cards = featureData | where: "component", "cards" | first %}
+{% assign ctas = featureData | where: "component", "ctas" | first %}
+{% assign list = featureData | where: "component", "list" | first %}
+{% assign try-metabase = featureData | where: "component", "try-metabase" | first %}
+
+<div class="bootstrap">
+  <div class="responsive-page csv-uploads">
+    <div class="product-intro hero-neutral-background">
+      <div class="container">
+        {% if hero %}
+          {% include feature/hero.html data=hero %}
+        {% endif %}
+
+        {% if cards %}
+          {% include feature/cards.html data=cards %}
+        {% endif %}
+
+        {% if ctas %}
+          {% include feature/ctas.html data=ctas %}
+        {% endif %}
+
+        {% if list %}
+          {% include feature/list.html data=list %}
+        {% endif %}
+      </div>
+    </div>
+
+    {% if try-metabase %}
+      {% include feature/try-metabase.html data=try-metabase %}
+    {% endif %}
+  </div>
+</div>
+
+<script src="https://vjs.zencdn.net/7.20.3/video.min.js"></script>
+<script src="/js/video-autoplay.js" type="text/javascript"></script>

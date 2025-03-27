@@ -1,0 +1,57 @@
+{% assign component = include.component %}
+{% assign bottom = include.component.bottom-checklist %}
+
+<div class="two-checklists">
+  <h2>Metabase features with {{ component.db }}</h2>
+
+  <hr>
+
+  <h3>Available with all data sources</h3>
+
+  <ul class="checklist-outline">
+    <li>Unlimited queries, charts, and dashboards</li>
+    <li>Send dashboards and reports via email and Slack</li>
+    <li>Connect to multiple data sources and integrations</li>
+    <li>Single sign on via SAML, LDAP, or JWT</li>
+    <li>Interactive embedding with white label customization</li>
+    <li>Granular row- and column level permissions</li>
+  </ul>
+
+  {% if bottom %}
+    <hr>
+
+    <h3>
+      {% if bottom.icon %}
+        {% include svg-icons/{{bottom.icon}}.html %}
+      {% endif %}
+
+      {% if bottom.are-list-items-available == true %}
+        Bonus features with {{ component.db }}
+      {% else %}
+        Not available with {{ component.db }}
+      {% endif %}
+
+      {% if bottom.tooltip %}
+        <span class="apply-tooltip" data-tippy-content="{{bottom.tooltip}}" data-tippy-placement="top">
+          {% include svg-icons/info-icon-grey.html %}
+      {% endif %}
+    </h3>
+
+    {% if bottom.list-items %}
+      {% if bottom.are-list-items-available == true %}
+        {% assign availability_class = "available" %}
+      {% else %}
+        {% assign availability_class = "not-available" %}
+      {% endif %}
+      <ul class="checklist-outline {{ availability_class }}">
+        {% for item in bottom.list-items %}
+          <li>{{item}}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+
+    <hr>
+  {% endif %}
+
+  <a href="/pricing#compare" class="see-all-features">See all features {% include svg-icons/chevron.html %}</a>
+</div>

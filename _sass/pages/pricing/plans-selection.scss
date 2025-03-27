@@ -1,0 +1,249 @@
+.pricing-container .plans-selection {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  justify-content: flex-start;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+
+  @include media-breakpoint-up(lg) {
+    align-items: stretch;
+    flex-direction: row;
+    gap: 0;
+  }
+
+  &__plan {
+    background-color: white;
+    border: 1px solid $blue-90;
+    border-radius: $border-radius-xxl;
+    box-shadow: 0 1px 2px 0 rgba(16, 24, 40, 0.05);
+    margin: 0;
+    overflow: hidden;
+    padding: 0;
+    position: relative;
+    width: 100%;
+
+    &:first-child {
+      border-top-left-radius: $border-radius-xxl;
+    }
+
+    &:last-child {
+      border-top-right-radius: $border-radius-xxl;
+    }
+
+    @include media-breakpoint-down(xxl) {
+      &:nth-child(1),
+      &:nth-child(2) {
+        ul li:last-child {
+          margin-bottom: 18px;
+
+          &.show-logos {
+            margin-bottom: 42px;
+          }
+        }
+      }
+    }
+
+    @include media-breakpoint-down(xl) {
+      &:nth-child(1) {
+        ul li:last-child {
+          margin-bottom: 0;
+        }
+      }
+
+      &:nth-child(2) {
+        ul li:last-child {
+          margin-bottom: 39px;
+
+          &.show-logos {
+            margin-bottom: 63px;
+          }
+        }
+      }
+
+      &:nth-child(3),
+      &:nth-child(4) {
+        ul li:last-child {
+          margin-bottom: 21px;
+
+          &.show-logos {
+            margin-bottom: 63px;
+          }
+        }
+      }
+    }
+
+    @include media-breakpoint-down(lg) {
+      &:nth-child(1),
+      &:nth-child(2),
+      &:nth-child(3),
+      &:nth-child(4) {
+        ul li:last-child {
+          margin-bottom: 0;
+
+          &.show-logos {
+            margin-bottom: 10px;
+          }
+        }
+      }
+    }
+
+    @include media-breakpoint-up(lg) {
+      border-radius: 0;
+      border-right: none;
+      width: 33.3333%;
+
+      &:first-child {
+        border-bottom-left-radius: $border-radius-xxl;
+      }
+
+      &:last-child {
+        border: 1px solid $blue-90;
+        border-bottom-right-radius: $border-radius-xxl;
+      }
+    }
+
+    &__content {
+      background-color: $neutral-98;
+      border-bottom: 1px solid $blue-90;
+      padding: 0.5rem 1rem;
+
+      &:last-child {
+        opacity: 0.3;
+      }
+
+      @include media-breakpoint-down(xl) {
+        &.support {
+          min-height: 124px;
+        }
+      }
+
+      @include media-breakpoint-down(lg) {
+        &.support {
+          min-height: 0;
+        }
+      }
+
+      ul li {
+        margin: 0 0 16px;
+
+        &:last-child {
+          margin-bottom: 0;
+
+          &.show-logos {
+            margin-bottom: 16px;
+          }
+        }
+      }
+
+      &__customer-logos {
+        align-items: center;
+        display: flex;
+        gap: 24px;
+        margin-top: 24px;
+        opacity: 0.6;
+
+        img {
+          height: 32px;
+        }
+
+        @include media-breakpoint-down(xl) {
+          flex-direction: column;
+          gap: 10px;
+        }
+
+        @include media-breakpoint-down(lg) {
+          flex-direction: row;
+          gap: 30px;
+        }
+      }
+
+      &__price {
+        height: 32px;
+
+        &.custom {
+          font-size: 22px !important;
+          line-height: 31px;
+        }
+
+        &__digits {
+          line-height: 31px;
+        }
+
+        & > img {
+          width: 16px;
+        }
+      }
+    }
+
+    &__details {
+      .CheckList.CheckList--gray li {
+        &::before {
+          opacity: 0.75;
+          top: 3px;
+        }
+
+        &.icon-check::before {
+          background-image: url("/images/icons/checkmark-2.svg");
+        }
+
+        &.icon-plus::before {
+          background-image: url("/images/icons/plus-2.svg");
+          left: -29px;
+        }
+      }
+    }
+
+    &__cta {
+      bottom: 0;
+      left: 0;
+      position: absolute;
+      text-align: center;
+      width: 100%;
+
+      &__button {
+        box-shadow: none;
+
+        &:active,
+        &:focus,
+        &:hover {
+          box-shadow: none;
+        }
+      }
+    }
+
+    &__hosting-container {
+      align-items: center;
+      background-color: white;
+      border: 1px solid $blue-90;
+      border-radius: 8px;
+      box-shadow: 0 1px 2px 0 #1018280d;
+      display: inline-flex;
+      font-size: 14px;
+      font-weight: 700;
+      margin: 16px 0 20px;
+      padding: 6px 12px 6px 8px;
+
+      span {
+        color: $neutral-80;
+        margin-left: 5px;
+      }
+
+      path {
+        stroke: $neutral-60;
+        transition: stroke 0.2s ease-in-out;
+      }
+
+      svg {
+        margin-left: 3px;
+        margin-right: 3px;
+
+        &:first-child {
+          margin-left: 0;
+        }
+      }
+    }
+  }
+}

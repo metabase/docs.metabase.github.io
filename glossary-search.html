@@ -1,0 +1,29 @@
+---
+layout: glossary-entry
+title: "Search results"
+---
+
+<div class="bootstrap">
+    <ul id="search-results"></ul>
+</div>
+
+<script>
+  window.glossaryStore = {
+{% for page in site.glossary %}
+    {% if page.title != null and
+     page.title != empty %}
+    "{{ page.url | slugify }}": {
+        "title": {{page.title | jsonify}},
+        "content": {{page.content | strip_html | jsonify}},
+	"url": {{ page.url | replace: 'index.html', '' | jsonify }},
+        "date": {{ page.date | jsonify }},
+        "excerpt": {{ page.content | markdownify | strip_html | slice: 0, 150 | jsonify }},
+        "search_omit": "{{ page.search_omit }}"
+    }
+    {% unless forloop.last %},{% endunless %}
+    {% endif %}
+{% endfor %}
+    };
+</script>
+<script src="/js/lunr.min.js"></script>
+<script src="/js/glossary-search.js"></script>

@@ -1,0 +1,543 @@
+.releases.roadmap {
+  .roadmap {
+    h4 {
+      margin-bottom: 0;
+    }
+
+    &__content {
+      @include media-breakpoint-down(lg) {
+        padding: 12px 24px;
+
+        &::before {
+          background-color: $neutral-98;
+          content: "";
+          display: block;
+          height: 100vh;
+          left: 0;
+          position: fixed;
+          top: 0;
+          width: 24px;
+          z-index: 6;
+        }
+
+        &::after {
+          background-color: $neutral-98;
+          content: "";
+          display: block;
+          height: 100vh;
+          left: auto;
+          position: fixed;
+          right: 0;
+          top: 0;
+          width: 24px;
+          z-index: 6;
+        }
+      }
+    }
+
+    &__right-sidebar {
+      @include media-breakpoint-down(lg) {
+        width: 100%;
+      }
+
+      div:last-child {
+        background-color: transparent;
+      }
+
+      .response {
+        font-size: 14px;
+        font-weight: 700;
+        margin-top: 10px;
+
+        &#mce-error-response {
+          color: $red-60;
+        }
+      }
+
+      input {
+        margin-top: 12px;
+        width: 100%;
+      }
+
+      p.subtitle {
+        color: $neutral-60;
+        margin-top: 10px;
+      }
+    }
+
+    &__tiles {
+      background: transparent;
+      border: none;
+      padding: 0;
+    }
+
+    &__entries {
+      @include media-breakpoint-down(lg) {
+        margin-top: 81px;
+      }
+
+      &.extra-margin-top {
+        margin-top: 80px;
+      }
+    }
+
+    &__entry {
+      background: white;
+      padding: 24px;
+
+      a {
+        width: 100%;
+
+        &.read-more {
+          font-size: 16px;
+          margin-bottom: 40px;
+
+          img {
+            height: 23px;
+            margin-left: 4px;
+            position: relative;
+            top: 3px;
+          }
+        }
+
+        &.release-subtitle {
+          color: $neutral-15;
+          font-size: 24px;
+          font-weight: 700;
+          padding: 12px 0 0;
+        }
+
+        &.highlight {
+          @include shadow-xs;
+
+          background-color: $neutral-98;
+          border: 1px solid $blue-95;
+          border-radius: 12px;
+          display: flex;
+          margin-bottom: 24px;
+          overflow: hidden;
+          transition: box-shadow 0.3s;
+
+          &:hover {
+            @include shadow-xl;
+          }
+
+          div {
+            width: 50%;
+
+            &:first-child {
+              padding: 24px;
+
+              @include media-breakpoint-down(lg) {
+                padding: 12px 24px;
+              }
+            }
+
+            &:last-child {
+              background-size: cover;
+            }
+          }
+
+          @include media-breakpoint-down(lg) {
+            flex-direction: column;
+
+            div {
+              width: 100%;
+
+              &:last-child {
+                min-height: 200px;
+              }
+            }
+          }
+        }
+
+        &:last-of-type {
+          margin-bottom: 0;
+        }
+
+        p {
+          &:first-child {
+            color: $neutral-40;
+            font-size: 18px;
+            font-weight: 700;
+            line-height: 28px;
+          }
+
+          &:last-child {
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 24px;
+
+            @include media-breakpoint-down(lg) {
+              padding-bottom: 4px;
+            }
+          }
+        }
+      }
+
+      p {
+        padding-left: 0;
+
+        @include media-breakpoint-down(lg) {
+          &:first-child {
+            padding-bottom: 4px;
+          }
+        }
+      }
+
+      &__header {
+        align-items: center;
+        border-bottom: 1px solid $blue-95;
+        display: flex;
+        justify-content: space-between;
+        padding-bottom: 12px;
+
+        > div {
+          align-items: center;
+          display: flex;
+          gap: 10px;
+        }
+
+        .release-title {
+          color: $neutral-60;
+          font-size: 18px;
+          font-weight: 700;
+        }
+
+        .release-new-badge {
+          background-color: $blue-95;
+          border-radius: 5px;
+          color: $blue-60;
+          display: inline-block;
+          font-weight: 700;
+          padding: 4px 10px;
+        }
+
+        .release-date {
+          color: $neutral-60;
+          font-size: 14px;
+        }
+      }
+    }
+
+    &__navigation {
+      top: 312px;
+
+      @include media-breakpoint-down(lg) {
+        background-color: $neutral-98;
+        border-bottom: 5px solid $neutral-98;
+        box-shadow: 360px 0 0 $neutral-98;
+        left: 26px;
+        position: absolute;
+        top: 0;
+
+        &.fixed {
+          height: 83px;
+          left: 26px;
+          padding-top: 32px;
+          position: fixed;
+          top: 74px;
+          width: calc(100% - 48px);
+        }
+
+        &__slider {
+          background-color: $neutral-98;
+          display: flex;
+          flex-wrap: nowrap;
+          gap: 20px;
+          height: 50px;
+          left: 0;
+          padding-bottom: 10px;
+          position: absolute;
+        }
+      }
+
+      button {
+        @include media-breakpoint-down(lg) {
+          padding-left: 0;
+          padding-right: 0;
+          width: auto;
+        }
+      }
+
+      button:first-child {
+        &::before {
+          background-color: $blue-60;
+          content: "";
+          display: block;
+          height: 1px;
+          position: absolute;
+          right: 0;
+          top: 11px;
+          transition: left 0.3s, top 0.3s, background-color 0.3s;
+          width: 48px;
+
+          @include media-breakpoint-down(lg) {
+            height: 24px;
+            left: 50%;
+            top: 26px;
+            width: 1px;
+          }
+        }
+
+        &::after {
+          background-color: $blue-60;
+          border-radius: 50%;
+          content: "";
+          display: block;
+          height: 7px;
+          position: absolute;
+          right: -4px;
+          top: 8px;
+          transition: left 0.3s, top 0.3s, background-color 0.3s;
+          width: 7px;
+
+          @include media-breakpoint-down(lg) {
+            left: calc(50% - 3px);
+            top: 47px;
+          }
+        }
+      }
+
+      /* This is the horizontal ruler under the year dots */
+      &:first-child {
+        &.fixed {
+          &::after {
+            top: 82px;
+          }
+        }
+
+        &::after {
+          @include media-breakpoint-down(lg) {
+            left: 0;
+            position: absolute;
+            top: 70px;
+            width: 100%;
+            z-index: -1;
+          }
+        }
+      }
+
+      &.year-2024 button:first-child {
+        &::before {
+          top: 43px;
+
+          @include media-breakpoint-down(lg) {
+            left: 75px;
+            top: 26px;
+          }
+        }
+
+        &::after {
+          top: 40px;
+
+          @include media-breakpoint-down(lg) {
+            left: 72px;
+            top: 46px;
+          }
+        }
+      }
+
+      &.year-2023 button:first-child {
+        &::before {
+          top: 76px;
+
+          @include media-breakpoint-down(lg) {
+            left: 133px;
+            top: 26px;
+          }
+        }
+
+        &::after {
+          top: 73px;
+
+          @include media-breakpoint-down(lg) {
+            left: 130px;
+            top: 46px;
+          }
+        }
+      }
+
+      &.year-2022 button:first-child {
+        &::before {
+          top: 108px;
+
+          @include media-breakpoint-down(lg) {
+            left: 190px;
+            top: 26px;
+          }
+        }
+
+        &::after {
+          top: 105px;
+
+          @include media-breakpoint-down(lg) {
+            left: 187px;
+            top: 46px;
+          }
+        }
+      }
+
+      &.year-2021 button:first-child {
+        &::before {
+          top: 141px;
+
+          @include media-breakpoint-down(lg) {
+            left: 247px;
+            top: 26px;
+          }
+        }
+
+        &::after {
+          top: 138px;
+
+          @include media-breakpoint-down(lg) {
+            left: 244px;
+            top: 46px;
+          }
+        }
+      }
+
+      &.year-2020 button:first-child {
+        &::before {
+          top: 173px;
+
+          @include media-breakpoint-down(lg) {
+            left: 305px;
+            top: 26px;
+          }
+        }
+
+        &::after {
+          top: 170px;
+
+          @include media-breakpoint-down(lg) {
+            left: 302px;
+            top: 46px;
+          }
+        }
+      }
+
+      &.year-2019 button:first-child {
+        &::before {
+          top: 206px;
+
+          @include media-breakpoint-down(lg) {
+            left: 362px;
+            top: 26px;
+          }
+        }
+
+        &::after {
+          top: 203px;
+
+          @include media-breakpoint-down(lg) {
+            left: 359px;
+            top: 46px;
+          }
+        }
+      }
+
+      &.year-2018 button:first-child {
+        &::before {
+          top: 239px;
+
+          @include media-breakpoint-down(lg) {
+            left: 419px;
+            top: 26px;
+          }
+        }
+
+        &::after {
+          top: 236px;
+
+          @include media-breakpoint-down(lg) {
+            left: 416px;
+            top: 46px;
+          }
+        }
+      }
+
+      &.year-2017 button:first-child {
+        &::before {
+          top: 271px;
+
+          @include media-breakpoint-down(lg) {
+            left: 476px;
+            top: 26px;
+          }
+        }
+
+        &::after {
+          top: 268px;
+
+          @include media-breakpoint-down(lg) {
+            left: 473px;
+            top: 46px;
+          }
+        }
+      }
+
+      &.year-2016 button:first-child {
+        &::before {
+          top: 303px;
+
+          @include media-breakpoint-down(lg) {
+            left: 533px;
+            top: 26px;
+          }
+        }
+
+        &::after {
+          top: 300px;
+
+          @include media-breakpoint-down(lg) {
+            left: 530px;
+            top: 46px;
+          }
+        }
+      }
+
+      &.year-2015 button:first-child {
+        &::before {
+          top: 335px;
+
+          @include media-breakpoint-down(lg) {
+            left: 590px;
+            top: 26px;
+          }
+        }
+
+        &::after {
+          top: 332px;
+
+          @include media-breakpoint-down(lg) {
+            left: 587px;
+            top: 46px;
+          }
+        }
+      }
+
+      button {
+        &.active {
+          color: $blue-60;
+        }
+
+        &::before {
+          background-color: $blue-60;
+        }
+
+        &::after {
+          background-color: $blue-60;
+        }
+      }
+    }
+  }
+
+  .body-footer {
+    @include media-breakpoint-down(lg) {
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+}

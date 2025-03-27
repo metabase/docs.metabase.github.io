@@ -1,0 +1,133 @@
+<section class="m-0 p-0 w-100">
+  {% for model in site.data.pricing-tiers %}
+    <div class="{% if forloop.first == false %}d-none{% endif %} deployment deployment-{{ model.slug }} plans-selection">
+      {% for tier in model.plans %}
+        <div class="plans-selection__plan plans-selection__plan-{{ forloop.index }}">
+          <div class="p-4 p-md-6 plans-selection__plan__content">
+            {% if tier.slug != "pricing-tier-oss" and tier.slug != "pricing-tier-enterprise" %}
+              <div class="d-lg-none mb-4 w-100">
+                {% assign switcherId = model.slug | append: tier.slug %}
+                {% include plans-switcher-billing.html id=switcherId %}
+              </div>
+            {% endif %}
+
+            <h2 class="fw-bold fw-700 neutral-40 pricing-title">{{ tier.name }}</h2>
+
+            <div class="d-none d-lg-block mb-3 pricing-description">
+              <p class="fs-12 lh-sm m-0 neutral-60 pricing-description__content">{{ tier.intro }}</p>
+            </div>
+            <p class="d-lg-none fs-12 lh-sm m-0 mb-3 neutral-60">{{ tier.intro }}</p>
+
+            {% if tier.price-monthly %}
+              <!-- esthetic-ignore-start -->
+              <div class="billing billing-monthly d-flex flex-row flex-nowrap fs-14 fw-bold m-0 neutral-80 plans-selection__plan__content__price">
+                <span class="align-self-center mb-3 neutral-40">$</span><span class="fs-10 neutral-40 plans-selection__plan__content__price__digits">{{ tier.price-monthly }}</span><span class="align-self-center lh-1 mt-2">/month</span>
+                <img class="mx-2" src="/images/icons/plus-2.svg" alt="plus" />
+                <span class="align-self-center mb-3 neutral-40">$</span><span class="fs-10 neutral-40 plans-selection__plan__content__price__digits">{{ tier.price-user-monthly }}</span><span class="align-self-center lh-1 mt-2">/month per user</span>
+              </div>
+              <div class="billing billing-annual d-flex flex-row flex-nowrap fs-14 fw-bold m-0 neutral-80 plans-selection__plan__content__price d-none">
+                <span class="align-self-center mb-3 neutral-40">$</span><span class="fs-10 neutral-40 plans-selection__plan__content__price__digits">{{ tier.price-annual }}</span><span class="align-self-center lh-1 mt-2">/year</span>
+                <img class="mx-2" src="/images/icons/plus-2.svg" alt="plus" />
+                <span class="align-self-center mb-3 neutral-40">$</span><span class="fs-10 neutral-40 plans-selection__plan__content__price__digits">{{ tier.price-user-annual }}</span><span class="align-self-center lh-1 mt-2">/year per user</span>
+              </div>
+              <!-- esthetic-ignore-end -->
+              <div class="align-center d-flex flex-nowrap flex-row fs-14 justify-content-start mt-2 neutral-60 w-auto">
+                <div class="pricing-tooltip pricing-tooltip--top">
+                  First
+                  <span class="apply-tooltip" data-tippy-content="An user account is any account which has been added to your Metabase instance (manually or via SSO) that has not been deactivated." data-tippy-placement="top">
+                    {{ tier.price-user-included }} users</span> included
+                </div>
+              </div>
+            {% else %}
+              <p class="fs-10 fw-bold m-0 neutral-40 plans-selection__plan__content__price custom">{{ tier.price }}</p>
+              {% if tier.price-secondary %}
+                <div class="align-center d-flex flex-nowrap flex-row fs-14 justify-content-start mt-2 neutral-60 w-auto">{{ tier.price-secondary }}</div>
+              {% else %}
+                <div class="align-center d-none d-lg-flex flex-nowrap flex-row fs-14 justify-content-start mt-2 neutral-60 w-auto">&nbsp;</div>
+              {% endif %}
+            {% endif %}
+
+            <ul class="list-unstyled m-0 mt-4">
+              <li class="m-0 mb-5">
+                <a
+                  class="btn-base btn btn-primary btn-primary-{{ tier.ctas.first.color }} btn-link fs-13 p-2 w-100"
+                  href="{{ tier.ctas.first.url }}"
+                  target="_blank">{{ tier.ctas.first.label }}</a>
+              </li>
+              <li>
+                <h6 class="d-flex flex-nowrap flex-row fs-13 fw-400 lh-base m-0 neutral-40">
+                  <span class="mr-1 {{ tier.color }}">{% include svg-icons/support-bubble.html %}</span>
+                  <span>{{ tier.support }}</span>
+                </h6>
+              </li>
+              <li class="{% if include.show_logos == "true" %}show-logos{% endif %}">
+                <h6 class="d-flex flex-nowrap flex-row fs-13 fw-400 lh-base m-0 neutral-40">
+                  <span class="mr-1 {{ tier.color }}">{% include svg-icons/deployment-cube.html %}</span>
+                  <span>{{ tier.deployment }}</span>
+                </h6>
+              </li>
+            </ul>
+
+            {% if include.show_logos == "true" %}
+            <div class="plans-selection__plan__content__customer-logos">
+              {% for logo in tier.customer-logos %}
+                <img src="/images/logos/{{logo}}.svg" alt="{{logo}}" />
+              {% endfor %}
+            </div>
+            {% endif %}
+          </div>
+
+          <div class="p-4 pb-11 p-md-6 pb-md-14 plans-selection__plan__details">
+            <h6 class="fs-13 fw-400 neutral-40">{{ tier.highlights-title }}</h6>
+
+            <ul class="CheckList CheckList--gray pl-7 text-left">
+              {% for highlight in tier.highlights %}
+                <li class="m-0 mb-3 icon-{{ highlight.class }}">
+                  <p class="fs-13 lh-base m-0 neutral-40">{{ highlight.text }}</p>
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+
+          <div class="text-centered plans-selection__plan__cta">
+            <button class="align-items-center btn btn-link d-flex flex-nowrap flex-row fs-13 fw-bold justify-content-center mx-auto pb-4 px-4 pb-md-5 px-md-6 text-decoration-none user-select-none plans-selection__plan__cta__button compare-button">
+              <span>See full plan details</span>
+              <img
+                class="ml-1 mt-1"
+                src="/images/chevron_blue.svg"
+                width="14"
+                title="See full plan details" />
+            </button>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% endfor %}
+</section>
+
+<script type="text/javascript" src="/js/scrollIntoView.min.js"></script>
+<script type="text/javascript" src="/js/pricing/scroll-to-elements.js"></script>
+<script type="text/javascript">
+  document.addEventListener("DOMContentLoaded", function() {
+    function resizePricingDescription() {
+      let minHeight = -1;
+      document.querySelectorAll(".pricing-description__content").forEach(($descriptionContent) => {
+        if ($descriptionContent.offsetHeight > minHeight) {
+          minHeight = $descriptionContent.offsetHeight;
+        }
+      });
+
+      const formattedMinHeight = minHeight === -1 ? "auto" : `${minHeight}px`;
+      document.querySelectorAll(".pricing-description").forEach(($description) => {
+        $description.style.minHeight = formattedMinHeight;
+      });
+    }
+
+    // init UI
+    resizePricingDescription();
+    window.addEventListener("resize", resizePricingDescription);
+    window.addEventListener("plans-ready", resizePricingDescription);
+    window.addEventListener("deployment", resizePricingDescription);
+    window.addEventListener("billing", resizePricingDescription);
+  });
+</script>

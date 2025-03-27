@@ -1,0 +1,153 @@
+---
+layout: default
+title: Dashboard Examples | Metabase
+image: /images/opengraph/_dashboards/dashboards.jpg
+---
+
+<div class="relative">
+    <div class="container">
+        <div class="flex flex-column sm-flex-row" style="align-items: center;">
+            <div class="col-xs-12 col-sm-5 col-md-4 mt0 pt0 px0">
+                <h4 class="pre-subheading mb05 mt0">Sharing and publishing data</h4>
+                <h1 class="my0 xl">
+                    Dashboards
+                </h1>
+                <p class="xl">Dashboards make it easy to collect and publish live data in an interactive, explorable format.</p>
+            </div>
+            <div class="relative col-xs-12 col-sm-offset-1 col-sm-7 col-md-8 relative my2">
+                <div class="relative">
+                    <img src="/images/product/watch-video.png" class="max-100" srcset="
+                        /images/product/watch-video.png 1x,
+                        " alt="Graph of sales per source">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="bootstrap">
+    <div class="dashboards-listing">
+        <div class="relative mb4">
+            <div class="container relative">
+                <div class="flex flex-column flex-column-reverse sm-flex-row">
+                    <div class="relative col-xs-12 col-md-8 mb3">
+                        <h2 class="h3">Explore example dashboards</h2>
+                    </div>
+                </div>
+                <div class="row list g-6">
+                    {% for dash in site.dashboards %}
+                        {% if dash.type == "example" %}
+                        <div class="relative col-12 col-sm-6 col-lg-4 mb-7">
+                            <div class="relative">
+                                <a href="{{ dash.url }}"><img
+                                    src="{{ dash.listing_image }}"
+                                    class="max-100"
+                                    srcset="
+                                    {{ dash.listing_image }},
+                                    "
+                                    alt="Get started"
+                                /></a>
+                            </div>
+                            <h3 class="h4 mb0 mt-3">{{ dash.title }}</h3>
+                            <a href="{{ dash.url }}" class="link-with-chevron">Explore dashboard <img src="/images/chevron_blue.svg" width="10px" height="10px" class="SidebarChevron no-zoom"></a>
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+
+
+        <div class="relative mb4">
+            <div class="container relative">
+                <div class="flex flex-column flex-column-reverse sm-flex-row">
+                    <div class="relative col-xs-12 col-md-8 mb3">
+                        <h2 class="h3">Dashboards for teams</h2>
+                    </div>
+                </div>
+                <div class="row list g-6">
+                    {% for dash in site.dashboards %}
+                        {% if dash.type == "teams" %}
+                        <div class="relative col-12 col-sm-6 col-lg-4 mb-7">
+                            <div class="relative">
+                                <a href="{{ dash.url }}"><img
+                                    src="{{ dash.listing_image }}"
+                                    class="max-100"
+                                    srcset="
+                                    {{ dash.listing_image }},
+                                    "
+                                    alt="Get started"
+                                /></a>
+                            </div>
+                            <h3 class="h4 mb0 mt-3">{{ dash.title }}</h3>
+                            <a href="{{ dash.url }}" class="link-with-chevron">Explore dashboard <img src="/images/chevron_blue.svg" width="10px" height="10px" class="SidebarChevron no-zoom"></a>
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <div class="relative my4">
+            <div class="container relative">
+                <div class="flex flex-column flex-column-reverse sm-flex-row">
+                    <div class="relative col-xs-12 col-md-8 mb3">
+                        <h2 class="h3">Dashboards for specific products and technologies</h2>
+                    </div>
+                </div>
+                <div class="row list g-6">
+                    {% for dash in site.dashboards %}
+                        {% if dash.type == "technology" %}
+                        <div class="relative col-12 col-sm-6 col-lg-4 mb-7">
+                            <div class="relative">
+                                <a href="{{ dash.url }}"><img
+                                    src="{{ dash.listing_image }}"
+                                    class="max-100"
+                                    srcset="
+                                    {{ dash.listing_image }},
+                                    "
+                                    alt="Get started"
+                                /></a>
+                            </div>
+                            <h3 class="h4 mb0 mt-3">{{ dash.title }}</h3>
+                            <a href="{{ dash.url }}" class="link-with-chevron">Explore dashboard <img src="/images/chevron_blue.svg" width="10px" height="10px" class="SidebarChevron no-zoom"></a>
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <div class="relative my4">
+            <div class="container relative">
+                <div class="flex flex-column flex-column-reverse sm-flex-row">
+                    <div class="relative col-xs-12 col-md-8 mb3">
+                        <h2 class="h3">Dashboards for measuring KPIs</h2>
+                    </div>
+                </div>
+                <div class="row list g-6">
+                    {% for dash in site.dashboards %}
+                        {% if dash.type == "kpi" %}
+                        <div class="relative col-12 col-sm-6 col-lg-4 mb-7">
+                            <div class="relative">
+                                <a href="{{ dash.url }}"><img
+                                    src="{{ dash.listing_image }}"
+                                    class="max-100"
+                                    srcset="
+                                    {{ dash.listing_image }},
+                                    "
+                                    alt="Get started"
+                                /></a>
+                            </div>
+                            <h3 class="h4 mb0 mt-3">{{ dash.title }}</h3>
+                            <a href="{{ dash.url }}" class="link-with-chevron">Explore dashboard <img src="/images/chevron_blue.svg" width="10px" height="10px" class="SidebarChevron no-zoom"></a>
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% include get-started-with-metabase.html %}

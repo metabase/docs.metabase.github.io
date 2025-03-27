@@ -1,0 +1,62 @@
+---
+layout: default
+title: "Event"
+---
+
+{% assign spliturl = page.path | split: "/" %}
+{% assign slug = spliturl[1] | replace: ".html", "" %}
+
+{% assign event = site.data.events | where: "slug", slug | first %}
+
+{% if event.recording_id %}
+  {% assign upcoming_event_title = "Join an upcoming event" %}
+{% else %}
+  {% assign upcoming_event_title = "Can’t make this event?" %}
+  {% assign upcoming_event_subtitle = "Join another upcoming live event" %}
+{% endif %}
+
+<div class="bootstrap">
+  <div class="event">
+    <div class="main-content">
+      {% include pages/event/hero.html event=event %}
+
+      {% if event.recording_id %}
+        {% include pages/event/video.html recording_id=event.recording_id %}
+      {% endif %}
+
+      {% if event.intro %}
+        {% include pages/event/intro.html intro=event.intro %}
+      {% endif %}
+
+      {% if event.guests %}
+        {% include pages/event/guests.html event=event %}
+      {% endif %}
+
+      {% if event.summary_filename %}
+        {% assign summary_path = "pages/event/summary/" | append: event.summary_filename %}
+
+        <div class="summary">
+          {% include {{ summary_path }} %}
+        </div>
+      {% endif %}
+
+      {% include pages/event/subscribe.html %}
+    </div>
+
+    {% if event.recording_id %}
+      {% include pages/event/watch-other-episodes.html event=event %}
+    {% endif %}
+
+
+    {% if event.registration_snippet %}
+      {% include pages/event/registration.html snippet=event.registration_snippet %}
+    {% endif %}
+
+    {% include pages/event/upcoming-event.html current_event_slug=event.slug title=upcoming_event_title subtitle=upcoming_event_subtitle %}
+  </div>
+</div>
+
+<script src="/js/events/datetime.js"></script>
+<script src="/js/events/countdown.js"></script>
+<script src="/js/events/registration.js"></script>
+<script src="/js/pick-upcoming-event.js"></script>

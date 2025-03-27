@@ -1,0 +1,36 @@
+{% assign event = include.event %}
+
+<a href="/events/{{event.slug}}" class="events-entry" data-category="{{event.category}}">
+    {% if include.show-thumbnail != false %}
+        <img src="/images/events/categories/{{event.category}}.jpg" alt="{{event.category}}" loading="lazy" />
+    {% endif %}
+
+    <div>
+        {% if event.recurrence %}
+          <p>
+
+            <p data-date="{{event.date_utc}}" data-time="{{event.time_utc}}" class="recurrence">
+              <img src="/images/icons/recurring.svg" alt="Recurring Icon" />
+              {{event.recurrence}}
+            </p>
+          </p>
+        {% else %}
+            <p data-date="{{event.date_utc}}" data-time="{{event.time_utc}}">&nbsp;</p>
+        {% endif %}
+
+        <h3>{{event.name}}</h3>
+
+        {% if include.event.recording_id %}
+            <div href="/events/{{event.slug}}" class="watch">
+                <div>
+                    {% include svg-icons/play-icon.html width="33" height="33" fill="white" %}
+                </div>
+                Watch now
+            </div>
+        {% elsif include.event.registration_snippet %}
+            {% unless include.hide_registration_button %}
+            <div href="/events/{{event.slug}}" class="btn btn-primary">Register now</div>
+            {% endunless %}
+        {% endif %}
+    </div>
+</a>

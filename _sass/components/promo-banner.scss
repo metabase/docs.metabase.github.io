@@ -1,0 +1,184 @@
+// This can be removed once we replace the promo banner
+// 2023 11 15
+.promo-banner.data-stack-report {
+  background-color: #fff2d7;
+  position: relative;
+
+  button {
+    align-items: center;
+    background-color: #d1c7ac;
+    border-radius: 6px;
+    color: $neutral-40;
+    display: flex;
+    height: 30px;
+    margin-top: 4px;
+    padding-bottom: 4px;
+    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+    z-index: 3;
+
+    &:hover {
+      background-color: #c1b79c;
+      color: $neutral-15;
+    }
+  }
+
+  &::before {
+    background-image: url("/images/data-stack-report-2023/promo-banner-left.png");
+    background-size: cover;
+    content: "";
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 250px;
+  }
+
+  &::after {
+    background-image: url("/images/data-stack-report-2023/promo-banner-right.png");
+    background-size: cover;
+    content: "";
+    height: 106px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 250px;
+  }
+
+  span.button {
+    background-color: #efe4ce;
+    color: $neutral-40;
+  }
+}
+
+.promo-banner {
+  background-color: $blue-95;
+  box-shadow: 0 1px 1px $blue-90;
+  color: $neutral-40;
+  height: 48px;
+  overflow: hidden;
+  position: relative;
+  transition: height 0.3s ease-in-out;
+
+  &.hidden {
+    display: none;
+  }
+
+  &.no-height {
+    height: 0;
+  }
+
+  button {
+    background-color: transparent;
+    border: none;
+    color: $blue-60;
+    font-size: 28px;
+    position: absolute;
+    right: 12px;
+    top: 5px;
+    transition: color 0.2s ease-in-out;
+
+    &:hover {
+      color: $blue-40;
+    }
+  }
+
+  > div {
+    align-items: center;
+    display: flex;
+    gap: 20px;
+    height: 100%;
+    justify-content: center;
+    margin: 0 auto;
+    max-width: 1280px;
+    padding: 8px 0;
+    width: 100%;
+
+    a {
+      font-size: 14px;
+
+      img {
+        margin-left: 5px;
+      }
+    }
+
+    span {
+      color: $neutral-40;
+      font-size: 14px;
+
+      &.button {
+        background-color: $blue-90;
+        border-radius: 5px;
+        color: $blue-60;
+        font-weight: 700;
+        padding: 5px 10px 6px;
+
+        &.countdown-active {
+          background-color: $blue-60;
+          color: white;
+
+          img {
+            margin-right: 8px;
+          }
+        }
+      }
+    }
+  }
+
+  @include media-breakpoint-down(lg) {
+    display: none;
+  }
+}
+
+/* Once promo banner is not about financial models anymore, this can be removed */
+.promo-banner.financial-models {
+  background-color: $purple-95;
+  position: relative;
+
+  &::before {
+    background-image: url("/images/promo-banner/financial-models.png");
+    background-repeat: no-repeat;
+    background-size: 160px;
+    content: "";
+    display: block;
+    height: 100%;
+    left: 5%;
+    pointer-events: none;
+    position: absolute;
+    width: 100%;
+  }
+
+  &::after {
+    background-image: url("/images/promo-banner/financial-models-2.png");
+    background-repeat: no-repeat;
+    background-size: 194px;
+    content: "";
+    display: block;
+    height: 100%;
+    left: 82%;
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    width: 100%;
+  }
+
+  button {
+    color: $purple-50;
+    z-index: 3;
+  }
+
+  > div {
+    a {
+      color: $purple-50;
+    }
+
+    span {
+      font-weight: 400;
+
+      &.button {
+        background-color: #9e9fc74d;
+        color: $purple-50;
+        font-weight: 700;
+      }
+    }
+  }
+}

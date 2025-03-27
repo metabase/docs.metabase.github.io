@@ -1,0 +1,233 @@
+.love-page,
+.home-love {
+  background: $neutral-98;
+
+  .love-button-wrapper {
+    align-items: center;
+    background-color: $neutral-white;
+    border-radius: 35px;
+    cursor: pointer;
+    display: flex;
+    height: 70px;
+    position: relative;
+    transition: transform 0.3s;
+    user-select: none;
+    width: 254px;
+
+    .local-likes-wrapper {
+      background-color: #e9f5ff;
+      border-radius: 3px;
+      margin-bottom: 6px;
+      margin-top: 8px;
+      opacity: 0;
+      padding: 0 4px;
+      transition: opacity 0.6s;
+      visibility: hidden;
+    }
+
+    .total-likes {
+      color: $blue-85;
+      margin: 0;
+      opacity: 1;
+      transition: transform 0.3s, opacity 0.2s;
+    }
+
+    .love-button-circle {
+      align-items: center;
+      background-color: $blue-60;
+      border-color: #e9f5ff;
+      border-radius: 50%;
+      border-style: solid;
+      border-width: 6px;
+      display: flex;
+      height: 89px;
+      justify-content: center;
+      margin-bottom: 8px;
+      transition: background-color 0.3s, border-width 0.3s;
+      width: 89px;
+      z-index: 1;
+    }
+
+    &:hover {
+      .love-button-circle {
+        background-color: $blue-40;
+      }
+    }
+
+    &:active {
+      transform: translateY(15px);
+
+      .local-likes-wrapper {
+        opacity: 1;
+        transform: translateY(-15px);
+        visibility: visible;
+      }
+
+      .total-likes {
+        opacity: 0;
+        transform: translateY(-15px);
+      }
+
+      .love-button-circle {
+        border-width: 0;
+      }
+    }
+
+    @keyframes love-confetti {
+      0% {
+        opacity: 1;
+        transform: scale(0.9);
+      }
+
+      50% {
+        opacity: 1;
+        transform: scale(1.1);
+      }
+
+      100% {
+        opacity: 0;
+        transform: scale(1.3);
+      }
+    }
+
+    .love-confetti {
+      opacity: 0;
+    }
+
+    .love-confetti-animation {
+      animation: love-confetti 0.25s;
+      animation-delay: 0.05s;
+    }
+
+    @keyframes love-jump {
+      0%,
+      100% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.2);
+      }
+    }
+
+    .love-jump {
+      animation: love-jump 0.25s;
+    }
+
+    @keyframes local-likes-jump {
+      0%,
+      100% {
+        transform: scale(1) translateY(-25px);
+      }
+
+      50% {
+        transform: scale(1.3) translateY(-25px);
+      }
+    }
+
+    .local-likes-jump {
+      animation: local-likes-jump 0.6s infinite;
+    }
+
+    .love-button-circle-wrapper {
+      align-items: center;
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+    }
+
+    .local-likes {
+      color: $blue-85;
+      margin: 0;
+    }
+
+    .love-button-text-wrapper {
+      display: flex;
+      flex: 1;
+      justify-content: center;
+      padding-left: 83px;
+    }
+
+    .wow-thanks-text,
+    .send-us-a-tweet {
+      transform: scale(1);
+      transition: transform 0.2s;
+
+      &.scaled {
+        transform: scale(1.2);
+      }
+    }
+  }
+
+  .twitter-icon {
+    fill: $blue-85;
+    transition: fill 0.3s;
+  }
+
+  .card {
+    color: $neutral-15;
+
+    &:hover {
+      color: #22242b;
+    }
+
+    &:hover .twitter-icon {
+      color: #22242b;
+      fill: $blue-60;
+    }
+
+    p {
+      font-weight: 400;
+
+      &:last-child {
+        margin: 0;
+      }
+
+      img {
+        border-radius: 0.75rem;
+        margin: 10px 0;
+        width: 100%;
+      }
+    }
+
+    em {
+      color: $blue-60;
+      font-style: normal;
+    }
+  }
+
+  .love-list {
+    position: relative;
+  }
+
+  #load-more-shadow {
+    background: linear-gradient(180deg, rgba(250, 251, 254, 0) 0%, $neutral-98 60%);
+    bottom: 0;
+    box-sizing: content-box;
+    height: 280px;
+    left: 0;
+    position: absolute;
+    width: 100%;
+  }
+
+  #load-more-button-wrapper {
+    bottom: 32px;
+    display: flex;
+    justify-content: center;
+    left: 0;
+    position: absolute;
+    width: 100%;
+
+    #load-more-button {
+      box-shadow: 0 3px 24px rgba(0, 0, 0, 0.08);
+    }
+  }
+
+  .love-to-footer {
+    background: linear-gradient(180deg, $neutral-98 0%, $neutral-white 100%);
+  }
+}
+
+.home-love {
+  background: transparent;
+}

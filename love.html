@@ -1,0 +1,275 @@
+---
+layout: default
+title: "The data is clear: people everywhere love Metabase"
+summary: People showing their love for Metabase, an open-source analytics tool.
+image: /images/love/people-love-metabase.jpg
+---
+<script src="https://unpkg.com/imagesloaded@5/imagesloaded.pkgd.min.js"></script>
+<script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/list.js/2.3.1/list.min.js"></script>
+
+<div class="bootstrap">
+    <div class="love-page">
+        <div class="container mb-3">
+            <section class="py-13 py4 py-md-10 row d-flex flex-row align-items-center">
+                <div class="col-xs-12 col-md-7 col-lg-8 col-xxl-6 p-3">
+                    <h1 class="mt-4 h3 text-center text-md-start"><span class="blue-60">The data is clear:</span> people
+                        everywhere love Metabase.</h1>
+                </div>
+                <div
+                    class="col-xs-12 col-md-5 col-lg-4 col-xxl-6 p-3 mt-4 mt-md-0 d-flex justify-content-center justify-content-md-end">
+                    <div class="love-button-wrapper">
+                        <div class="love-button-circle-wrapper">
+                            <div class="local-likes-wrapper pe-none">
+                                <h6 class="local-likes">+0</h6>
+                            </div>
+                            <div class="love-button-circle pe-none">
+                                <div id="love-confetti-wrapper" class="love-confetti-wrapper position-absolute">
+                                    <img id="love-confetti" class="love-confetti" alt="Love Confetti"
+                                        src="/images/love/love-confetti.svg"
+                                        srcset="/images/love/love-confetti.svg 1x," />
+                                </div>
+                                <img id="love-icon" alt="Love Icon" src="/images/love/love-icon.svg"
+                                    srcset="/images/love/love-icon.svg 1x," />
+                            </div>
+                            <h6 class="total-likes pe-none"></h6>
+                        </div>
+                        <div class="love-button-text-wrapper">
+                            <h5 class="loving-metabase-text user-select-none m-0">Loving Metabase?</h5>
+                            <h5 class="wow-thanks-text user-select-none scaled d-none m-0">Wow, thanks!</h5>
+                            <div class="send-us-a-tweet user-select-none scaled d-none">
+                                <h6 class="m-0">Wow, that's a lot of love!</h6>
+                                <h6 class="neutral-60 m-0">Send us a <a
+                                        href="https://twitter.com/intent/tweet?text=I ❤️ @metabase" target="popup"
+                                        onclick="window.open('https://twitter.com/intent/tweet?text=I ❤️ @metabase','popup','width=600,height=600,scrollbars=no,resizable=no'); return false;">tweet</a>
+                                    to join in.</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <section class="container">
+            <div id="love-list" class="invisible pb-12">
+                <div class="row list">
+                    {% for story in site.data.love %}
+                    <div class="story col-xs-12 col-sm-6 col-lg-4 p-3">
+                        <div class="hover-raise-sm">
+                            <a class="card hover-shadow hover-pointer bg-neutral-white border-0 rounded-3 p-4"
+                                target="_blank" href="{{story.source_link}}">
+                                <div class="d-flex flex-row align-items-start">
+                                    <div class="col-xs-10 d-flex flex-row p-0 mb-4">
+                                        <img class="circle me-3" src="{{story.user_avatar}}"
+                                            srcset="{{story.user_avatar}} 1x" width="36px" height="36px"
+                                            alt="photo of {{story.user}}" />
+                                        <div class="d-flex flex-column justify-around py-0">
+                                            <p class="my-0 mb-0 paragraph-5 neutral-40 fw-bold">{{story.user |
+                                                markdownify | strip_html }}</p>
+                                            {% if story.user_title %}<p class="xs my-0 mb-0 paragraph-5 neutral-60">
+                                                {{story.user_title}}</p>{% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-2 text-end p-0">
+                                        {% if story.medium == "twitter" %}
+                                        {% include svg-icons/twitter-icon.html class="twitter-icon" width="19" height="16" %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                {{story.content | markdownify }}
+                                {% if story.image_url %}
+                                <img class="w-100 rounded-4 class-img-bottom" src="{{story.image_url}}"
+                                    srcset="{{story.image_url}} 1x" alt="{{image_alt}}" loading="lazy"/>
+                                {% endif %}
+                            </a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div id="load-more-shadow" class="pe-none"></div>
+                <div id="load-more-button-wrapper" class="pe-none">
+                    <button id="load-more-button" class="btn btn-outline-blue-solid pe-auto">Load more love</button>
+                </div>
+            </div>
+        </section>
+
+        <div class="love-to-footer">
+            <section class="container">
+                <div class="py-17 d-flex align-items-center flex-column">
+                    <h4 class="mb-4">Loving Metabase?</h4>
+                    <p class="paragraph-4 mb-6 neutral-60">Tweet about us and we'll add it here.</p>
+                    <a href="https://twitter.com/intent/?text=I ❤️ @metabase"
+                        class="Button btn btn-primary btn-link d-flex align-items-center" role="button" target="popup"
+                        onclick="window.open('https://twitter.com/intent/tweet?text=I ❤️ @metabase','popup','width=600,height=600,scrollbars=no,resizable=no'); return false;">
+                        {% include svg-icons/twitter-icon.html class="mr-2" width="16" height="13" fill="#fff" %}
+                        Share the love
+                    </a>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="/js/header.js"></script>
+
+<script type="text/javascript">
+    const loveConfettiWrapper = document.getElementById('love-confetti-wrapper');
+    const loveConfetti = document.getElementById('love-confetti');
+    const loveButtonCircle = document.querySelector('.love-button-circle');
+    const loveButtonWrapper = document.querySelector('.love-button-wrapper');
+    const loveIcon = document.getElementById('love-icon');
+    const localLikesWrapper = document.querySelector('.local-likes-wrapper');
+    const localLikes = document.querySelector('.local-likes');
+    const totalLikes = document.querySelector('.total-likes');
+    const lovingMetabaseText = document.querySelector('.loving-metabase-text');
+    const wowThanksText = document.querySelector('.wow-thanks-text');
+    const sendUsATweet = document.querySelector('.send-us-a-tweet');
+
+    let clickCount = 0;
+    let localLoveCount = 0;
+    let totalLoveCount = 0;
+    let loveJumpTimeout = null;
+    let loveButtonHoldInterval = null;
+
+    fetch('https://api.countapi.xyz/get/metabase/main')
+        .then(response => response.json())
+        .then(function (data) {
+            totalLikes.innerText = data.value;
+            totalLoveCount = data.value;
+        });
+
+    loveButtonWrapper.addEventListener('mousedown', function () {
+        loveIcon.classList.add('love-jump');
+        localLikesWrapper.classList.add('local-likes-jump');
+        loveConfetti.classList.add('love-confetti-animation');
+
+        loveButtonCircle.appendChild(loveConfettiWrapper);
+        clickCount = 0;
+
+        function updateLocalLoveCount() {
+            clickCount += 1;
+            localLoveCount += 1;
+            localLikes.innerHTML = '+' + localLoveCount;
+
+            loveConfetti.classList.add('love-confetti-animation');
+            loveIcon.classList.add('love-jump');
+            setTimeout(function () {
+                loveConfetti.classList.remove('love-confetti-animation');
+                loveIcon.classList.remove('love-jump');
+            }, 250);
+
+            loveConfettiWrapper.style.transform = 'rotate(' + Math.floor(Math.random() * 360) + 'deg)';
+        }
+        updateLocalLoveCount();
+        loveButtonHoldInterval = setInterval(updateLocalLoveCount, 300);
+    });
+    document.addEventListener('mouseup', function () {
+        if (!loveButtonHoldInterval) {
+            return;
+        }
+
+        clearInterval(loveButtonHoldInterval);
+        loveButtonHoldInterval = null;
+
+        if (loveJumpTimeout) {
+            clearTimeout(loveJumpTimeout);
+            loveJumpTimeout = null;
+        }
+
+        localLikesWrapper.classList.remove('local-likes-jump');
+        loveJumpTimeout = setTimeout(function () {
+            loveIcon.classList.remove('love-jump');
+        }, 400);
+
+        if (localLoveCount > 0 && localLoveCount < 10) {
+            lovingMetabaseText.classList.add('d-none');
+            wowThanksText.classList.remove('d-none');
+            setTimeout(function () {
+                wowThanksText.classList.remove('scaled');
+            }, 50);
+        } else if (localLoveCount >= 10) {
+            lovingMetabaseText.classList.add('d-none');
+            wowThanksText.classList.add('d-none');
+            sendUsATweet.classList.remove('d-none');
+            setTimeout(function () {
+                sendUsATweet.classList.remove('scaled');
+            }, 50);
+        }
+
+        totalLikes.innerHTML = (totalLoveCount + localLoveCount).toString();
+        fetch('https://api.countapi.xyz/update/metabase/main?amount=' + clickCount);
+    });
+</script>
+<script type="text/javascript">
+    const loveListContainer = document.getElementById('love-list');
+    const loadMoreShadow = document.getElementById('load-more-shadow');
+    const loadMoreButtonWrapper = document.getElementById('load-more-button-wrapper');
+    const loadMoreButton = document.getElementById('load-more-button');
+
+    function getItemsPerPage() {
+        if (window.innerWidth < 576) {
+            return 9;
+        } else if (window.innerWidth < 768) {
+            return 15;
+        } else {
+            return 20;
+        }
+    }
+
+    let masonry;
+    let itemsPerPage = getItemsPerPage();
+    let page = 1;
+
+    const loveList = new List('love-list', {
+        valueNames: ['story']
+    });
+
+    function loadMore() {
+        let index = 0;
+        const items = [];
+        loveList.filter(function (item) {
+            if (index < itemsPerPage * page) {
+                index += 1;
+                if (index > itemsPerPage * (page - 1)) {
+                    items.push(item.elm);
+                }
+                return true;
+            } else {
+                index += 1;
+                return false;
+            }
+        })
+
+        masonry.addItems(items);
+        masonry.layout();
+
+        if (loveList.matchingItems.length === loveList.items.length) {
+            if (loadMoreShadow) {
+                loadMoreShadow.remove();
+            }
+
+            if (loadMoreButtonWrapper) {
+                loadMoreButtonWrapper.remove();
+            }
+        }
+    }
+
+    imagesLoaded(document.querySelector('.love-page'), function () {
+        loveList.filter(function () { return false; });
+        loveListContainer.classList.remove('invisible');
+
+        masonry = new Masonry('.list', {
+            itemSelector: '.story',
+            transitionDuration: 0
+        });
+
+        loadMore();
+    })
+
+    if (loadMoreButton) {
+        loadMoreButton.addEventListener('click', () => {
+            page += 1;
+            loadMore();
+        });
+    }
+</script>

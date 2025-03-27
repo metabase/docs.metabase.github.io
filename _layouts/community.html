@@ -1,0 +1,54 @@
+---
+layout: default
+active: 'community'
+---
+{% assign sorted_posts = site.community-posts | sort: 'date' | reverse %}
+{% assign featured_posts = 'How to fix broken dashboards,UX principles for beautiful dashboards' %}
+{% assign featured_posts_array = featured_posts | split: ',' %}
+{% assign descriptions = 'How to build dashboards your teammates would use? Follow this 6 step guide from Daria on how to apply UX rules to create attractive and professional dashboards.,A data catalog is used to organize data assets in your company. Juan Suarez explains benefits and shares tips on what to pay attention to when choosing one.' %}
+{% assign descriptions_array = descriptions | split: ',' %}
+
+<div class="bg-off-white-gradient mb-3">
+    <section class="container py3">
+        <div class="flex flex-column align-center mb-4">
+          <h1 class="text-brand mt-45 pr-4" style="font-size: 32px;">Community Stories</h1>
+            <span class="dt text-centered" style="max-width: 450px;">Practical stories and community advice about working with data. Got a story of your own? <a href="/community-posts/community-stories-tips" target="_blank">Share it with us.</a></span>
+        </div>
+        <div class="row flex mt-2 mb-4">
+            {% for post_title in featured_posts_array %}
+            {% assign featured_post = site.community-posts | where: 'title', post_title %}
+            {% assign post = featured_post[0] %}
+            <div class="col-xs-12 col-sm-6 p-25 mt-25 mb-25">
+                <a class="small-card hover-card small-vertical-raise hover-shadow bg-white" href="{{post.url}}">
+                    <div class="flex flex-row justify-between align-center">
+                        {% assign category_filters = post.category_filters | split: ',' %}
+                        <span class="category-tag">{{category_filters[0]}}</span>
+                        <p class="xs text-light-grey my0">{{post.read_time}}</p>
+                    </div>
+                    <p class="fw-900 mt-25 mb-2 xl">{{post.title}}</p>
+                    <p class="small lt">{{ descriptions_array[forloop.index0] }}</p>
+                    <div class="flex flex-row align-center">
+                        <img
+                            class="circle mr05"
+                            src="{{post.author_img}}"
+                            srcset="{{post.author_img}} 1x"
+                            width="36px"
+                            height="36px"
+                            alt="photo of {{post.author}}"
+                        />
+                        <div class="flex flex-column justify-around py05">
+                            <p class="xs dt my0"><strong>{{post.author}}</strong></p>
+                            <p class="xs my0 text-dark">{{post.organization}}</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+    <section class="container">
+        {% include community-stories-signup-form.html id="1"%}
+        {{ content }}
+        {% include community-stories-signup-form.html id="2"%}
+    </section>
+</div>

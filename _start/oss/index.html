@@ -1,0 +1,128 @@
+---
+title: Metabase Open Source Editions
+summary: "Metabase Open Source edition ships either as a Docker image or a standalone JAR."
+layout: default_light_blue_footer
+---
+
+<div class="bootstrap">
+  <div class="start-oss-page">
+    <img
+      class="start-oss-page__background-image"
+      src="/images/start/harbor.svg"
+    />
+
+    <div class="start-oss-page__container">
+      <h6>Metabase open source</h6>
+      <h1>Run your own free self-hosted Metabase</h1>
+
+      <div class="start-oss-page__card recommended">
+        <div>
+          <div class="start-oss-page__logo-container">
+            <img src="/images/start/docker.svg" class="start-oss-page__logo" />
+          </div>
+          <h3>Docker Image</h3>
+          <span class="badge">Recommended</span>
+        </div>
+        <p>Metabase provides an official Docker image via Dockerhub that can be used for deployments on any system that is running Docker. Here’s a one-liner that will start a container running Metabase.</p>
+        <pre><code>docker run -d -p 3000:3000 --name metabase metabase/metabase</code></pre>
+        <p><a href="/docs/latest/installation-and-operation/running-metabase-on-docker">Running on Docker documentation <img class="chevron-blue-right" src="/images/chevron_blue_right.svg"></a></p>
+      </div>
+
+      <div class="start-oss-page__card">
+        <div class="flex align-center">
+          <div class="start-oss-page__logo-container">
+            <img src="/images/start/jar.svg" class="start-oss-page__logo" />
+          </div>
+          <h3>JAR file</h3>
+        </div>
+        <ol>
+          <li><a href="/start/oss/jar" target="_blank">Download Metabase.</a></li>
+          <li>Create a new directory and move the Metabase JAR into it.</li>
+          <li>Change into your new Metabase directory and run the JAR.</li>
+        </ol>
+        <pre><code class="start-oss-page__indented">java -jar metabase.jar</code></pre>
+        <p class="small start-oss-page__indented">Metabase will log its progress in the terminal as it starts up. Wait until you see “Metabase Initialization Complete” and visit localhost:3000.</a>
+        <p><a href="/docs/latest/installation-and-operation/running-the-metabase-jar-file">Running the Jar File documentation <img class="chevron-blue-right" src="/images/chevron_blue_right.svg"></a></p>
+      </div>
+
+      <div class="start-oss-page__help">
+        <h4>Need some help getting started? Check out our <a href="https://discourse.metabase.com">friendly community forum</a></h4>
+        <p>Need an extra hand? All of <a href="/pricing/">Metabase’s plans</a> include support from our world-class success team.</p>
+      </div>
+
+      {% comment %}
+      <div class="start-oss-page__stay-in-touch">
+        <h3><img src="/images/icons/envelope.svg">Stay in touch</h3>
+        <p>Get tips and infrequent (but important) updates from Metabase. No spam ever.</p>
+
+        <!-- Begin MailChimp Signup Form -->
+        <form
+          action="//metabase.us10.list-manage.com/subscribe/post?u=869fec0e4689e8fd1db91e795&amp;id=b9664113a8"
+          class="validate"
+          id="mc-embedded-subscribe-form"
+          method="post"
+          name="mc-embedded-subscribe-form"
+          novalidate
+          target="_blank">
+          <div class="mc-field-group">
+            <div>
+              <input
+                class="required email input input-small bordered {% if include.color %}border-darkblue{% endif %} mr-2"
+                id="mce-EMAIL"
+                name="EMAIL"
+                placeholder="youlooknice@metabase.com"
+                style="flex-grow: 1;"
+                tabindex="-1"
+                type="email"
+                value="" />
+
+              <input
+                class="Button Button--primary Button--small"
+                id="mc-embedded-subscribe"
+                name="subscribe"
+                type="submit"
+                value="Sign up" />
+            </div>
+            <div class="clear" id="mce-responses">
+              <div
+                class="response"
+                id="mce-error-response"
+                style="display:none"></div>
+              <div
+                class="response"
+                id="mce-success-response"
+                style="display:none"></div>
+            </div>
+          </div>
+
+          <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups -->
+          <div style="position: absolute; left: -5000px;">
+            <input
+              name="b_869fec0e4689e8fd1db91e795_b9664113a8"
+              tabindex="-1"
+              type="text"
+              value="" />
+          </div>
+        </form>
+        <!-- End mc_embed_signup -->
+      </div>
+      {% endcomment %}
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  document.addEventListener("DOMContentLoaded", function() {
+    var dockerCode = document.querySelector('code');
+    dockerCode.addEventListener('copy', (event) => {
+      snowplow(
+        'trackStructEvent',
+        'docker-script', // event category
+        'script-copied', // event action
+        'oss-start-page' // event label
+      );
+    });
+  });
+</script>
+
+<script src="/js/new-docs-code-snippet-copy.js"></script>

@@ -1,0 +1,76 @@
+.data-stack-report-2023.dashboard-container {
+  h1 {
+    font-size: 48px;
+    line-height: 48px;
+    max-width: 800px;
+  }
+
+  div.dashboard-hero {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin: 64px 0 32px;
+
+    div.explore-container {
+      align-items: flex-end;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+
+      > div:first-child {
+        color: $neutral-15;
+        flex: 1 60%;
+        font-size: 24px;
+        max-width: 640px;
+      }
+
+      > div:last-child {
+        text-align: right;
+      }
+
+      @include media-breakpoint-down(lg) {
+        align-items: flex-start;
+        flex-direction: column;
+
+        > div {
+          width: 100%;
+        }
+
+        > div:first-child {
+          font-size: 18px;
+        }
+
+        > div:last-child {
+          margin-top: 10px;
+          text-align: left;
+        }
+      }
+    }
+  }
+
+  iframe {
+    background: white;
+    border-radius: 0;
+    height: 100vw;
+    margin-top: 0;
+    outline: none;
+    width: 100vw;
+
+    @include media-breakpoint-down(lg) {
+      height: calc(100vw * 1.3);
+    }
+
+    @include media-breakpoint-down(md) {
+      height: calc(100vw * 3.6);
+    }
+
+    @include media-breakpoint-down(sm) {
+      height: calc(100vw * 5.4);
+    }
+  }
+
+  img.curved-arrow {
+    margin-left: 6px;
+    transform: rotateY(180deg);
+  }
+}

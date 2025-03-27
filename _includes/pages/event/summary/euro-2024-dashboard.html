@@ -1,0 +1,133 @@
+<h3>Summary</h3>
+
+<p>
+  In a recent webinar, Thomas Schmidt, an analytics engineer at Metabase, walked
+  us through the process of building a data visualization project in Metabase
+  from the ground up. In this summary, you will find key takeaways.
+</p>
+
+<h4>Introduction to the Project</h4>
+
+<p>
+  Thomas starts by introducing the project: creating a data visualization
+  <a href="/gallery/uefa-euro-2024-stats-dashboard">dashboard</a> for the Euro
+  2024 championship. The goal was to demonstrate the full ETL (Extract,
+  Transform, Load) process — taking data from multiple sources and turning it
+  into a dashboard using Metabase. This project serves as a template for any
+  other data visualization project in Metabase.
+</p>
+
+<h4>End-to-End Data Flow</h4>
+
+<ol>
+  <li>
+    <b>Data Extraction:</b> The project starts with pulling raw data in JSON
+    format from the
+    <a href="https://www.sportmonks.com/blogs/casestudy/metabase/">dashboard</a
+    >, a provider of sports data. This data included nested details like game
+    events, goals, and player statistics.
+  </li>
+  <li>
+    <b>Data Transformation:</b> Next, the raw data was cleaned and transformed.
+    This involved standardizing timestamps, handling floating-point precision,
+    and adding new columns to simplify data joining.
+  </li>
+  <li>
+    <b>Data Loading:</b> The transformed data was then loaded into a PostgreSQL
+    database, ready to be visualized in Metabase.
+  </li>
+</ol>
+
+<h4>Data Modeling</h4>
+
+<ol>
+  <li>
+    <b>Simplifying Analysis:</b> Thomas highlighted the value of data modeling
+    in making analysis easier. By setting up pre-built
+    <a href="/learn/metabase-basics/getting-started/models">data models</a>, you
+    can avoid repetitive tasks and reduce the chance of errors.
+  </li>
+  <li>
+    <b>Custom Columns and Business Logic:</b> Integrating
+    <a href="/docs/latest/questions/query-builder/expressions"
+      >custom columns</a
+    >
+    and business logic within your data models standardizes calculations and
+    ensures consistency across your organization.
+  </li>
+</ol>
+
+<h4>Visualization tips</h4>
+
+<ol>
+  <li>
+    <b>Heat Maps:</b> A standout feature was the use of heat maps to visualize
+    ball coordinates on a soccer pitch. This required creating a
+    <a href="/docs/latest/configuring-metabase/custom-maps"
+      >custom region map</a
+    >
+    using GeoJSON files.
+  </li>
+  <li>
+    <b>Image Display in Tables:</b> Thomas also showed how to display images,
+    like team logos and player photos, within tables in Metabase by setting the
+    right
+    <a href="/learn/grow-your-data-skills/data-fundamentals/data-types-overview"
+      >semantic types</a
+    >
+    and display options.
+  </li>
+</ol>
+
+<h4>User Experience Enhancements</h4>
+
+<ol>
+  <li>
+    <b>Interactive Filters:</b> The dashboard included interactive filters that
+    allowed users to zoom in on specific data points. For example, selecting a
+    season automatically filtered the available games and teams.
+  </li>
+  <li>
+    <b>Conditional Card Display:</b> To improve the user experience, cards with
+    no data were hidden, reducing clutter and keeping the focus on relevant
+    information.
+  </li>
+</ol>
+
+<h4>Advanced Customization</h4>
+
+<ol>
+  <li>
+    <b>Click Actions:</b> Thomas showed how to customize click actions on
+    dashboard elements, allowing users to navigate smoothly to detailed views or
+    other dashboards.
+  </li>
+  <li>
+    <b>Linked Filters:</b> By
+    <a
+      href="/learn/metabase-basics/querying-and-dashboards/dashboards/linking-filters"
+      >linking filters</a
+    >, the dashboard ensured that changes in one filter dynamically updated the
+    options in others, creating a better user experience.
+  </li>
+</ol>
+
+<h4>Practical Tips</h4>
+
+<ol>
+  <li>
+    <b>Documentation and Semantic Types:</b> Proper documentation and setting
+    semantic types can significantly improve the usability of your dashboard for
+    end users.
+  </li>
+</ol>
+
+<p>
+  We highly recommend you watch a recording of this event as Thomas provided a
+  complete guide to building a data visualization project in Metabase from
+  scratch. Whether you're working with sports data or any other dataset, the
+  principles and techniques shared are broadly applicable. For those eager to
+  dive deeper, the open-source code and additional resources are available on
+  <a href="https://github.com/metabase/uefa-euro-2024-data">GitHub</a>. Happy
+  visualizing!
+</p>

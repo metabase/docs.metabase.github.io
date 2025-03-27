@@ -1,0 +1,53 @@
+---
+layout: glossary
+title: Data and Business Intelligence Glossary Terms
+headline: Data and Business Intelligence Glossary Terms
+---
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/list.js/2.3.1/list.min.js"></script>
+
+<div id="glossary-list">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6">
+            {% include glossary-search-bar.html %}
+        </div>
+    </div>
+    {% assign alphabet = "ABCDEFGHIJKLMNOPQRSTVWX" | split: "" %}
+    <div class="d-flex justify-content-center row row-cols-auto g-2 mb-6">
+        {% for letter in alphabet %}
+        <div class="col">
+          <a href="#{{letter}}" id="{{letter}}-filter" class="btn-base rounded-3 box-4 d-flex justify-content-center align-items-center">{{ letter }}</a>
+        </div>
+        {% endfor %}
+    </div>
+    <dl class="list row g-6">
+        {% assign sorted_terms = site.glossary | sort: 'title' %}
+        {% assign current_first_letter = '' %}
+
+        {% for entry in sorted_terms %}
+        {% assign first_letter = entry.title | slice: 0 %}
+        {% if current_first_letter != first_letter %}
+        {% assign current_first_letter = first_letter %}
+        <a id="{{ first_letter | upcase }}" class="col-12 mt-9 pe-none">
+            <h4 class="letter ms-3 mb-0">{{ first_letter | upcase }}</h4>
+        </a>
+        {% endif %}
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="hover-raise-sm h-100">
+                <div class="card hover-shadow border-0 rounded-3 pb-6 h-100">
+                    <a href="{{ entry.url }}" class="card-body">
+                        <dt id="{{ entry.title }}">
+                            <h5 class="term">{{ entry.title }}</h5>
+                        </dt>
+                        <dd class="mb-6">
+                            <p class="def paragraph-5 neutral-40">{{ entry.def | markdownify | strip_html }}</p>
+                        </dd>
+                        <p class="d-none content">{{ entry.content | markdownify | strip_html }}</p>
+                        <span class="stretched-link pseudo-link">Read More</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </dl>
+</div>

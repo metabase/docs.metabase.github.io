@@ -1,0 +1,135 @@
+.pricing-container .plans-compare {
+  background-color: white;
+  border: 1px solid $blue-90;
+  border-radius: 12px;
+  box-shadow: 0 1px 2px 0 rgba(16, 24, 40, 0.05);
+  display: grid;
+  grid-template-columns: [leftcol] 1fr [col] 200px [col] 200px [col] 200px [col] 200px;
+  padding-top: 24px;
+
+  &.full {
+    > div {
+      &:nth-child(1),
+      &:nth-child(2),
+      &:nth-child(3),
+      &:nth-child(4),
+      &:nth-child(5), {
+        border-bottom: 1px solid $blue-90;
+      }
+
+      &:nth-last-child(1),
+      &:nth-last-child(2),
+      &:nth-last-child(3),
+      &:nth-last-child(4) {
+        padding-bottom: 20px;
+        padding-top: 20px;
+
+        .Button {
+          display: none;
+        }
+      }
+
+      &:nth-last-child(2),
+      &:nth-last-child(3),
+      &:nth-last-child(4) {
+        border-right: 1px solid $blue-90;
+      }
+    }
+  }
+
+  &.header-only {
+    border-bottom: 1px solid $blue-90;
+    border-radius: 0;
+    box-shadow: none;
+    opacity: 0;
+    pointer-events: none;
+    position: fixed;
+
+    // 10000 otherwise tippy scrolls above it
+    z-index: 10000;
+
+    &.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+  }
+
+  > div {
+    border-right: 1px solid $blue-90;
+    font-size: 12px;
+    padding: 16px 24px;
+    text-align: center;
+
+    &[data-row].hovering {
+      background-color: $blue-95;
+    }
+
+    &:nth-last-child(1),
+    &:nth-last-child(2),
+    &:nth-last-child(3),
+    &:nth-last-child(4), {
+      border-right: none;
+    }
+
+    p {
+      font-size: 12px;
+      margin-bottom: 0;
+    }
+  }
+
+  h3 {
+    font-size: 16px;
+    padding-bottom: 8px;
+  }
+
+  .Button {
+    padding: 8px;
+    transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+
+    &:hover {
+      color: white;
+    }
+  }
+
+  .header {
+    border-right: none;
+    font-size: 14px;
+    font-weight: 700;
+
+    &.pricing-tier-oss {
+      color: $yellow-60;
+    }
+
+    &.pricing-tier-starter {
+      color: $green-50;
+    }
+
+    &.pricing-tier-pro {
+      color: $blue-60;
+    }
+
+    &.pricing-tier-enterprise {
+      color: $purple-50;
+    }
+  }
+
+  .section-title {
+    border-right: none;
+    font-size: 14px;
+    grid-column: leftcol / span 5;
+    padding: 48px 24px 24px;
+    text-align: left;
+  }
+
+  .pricing-tier-enterprise {
+    border-right: none;
+  }
+
+  .label {
+    text-align: left;
+  }
+
+  @include media-breakpoint-down(lg) {
+    display: none;
+  }
+}

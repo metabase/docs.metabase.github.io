@@ -1,0 +1,195 @@
+---
+layout: default
+title: "How companies use Metabase"
+image: /images/case-studies/case-studies-main-og.jpg
+redirect_from:
+  - /case_studies
+---
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/list.js/2.3.1/list.min.js"></script>
+
+<div class="bootstrap">
+  <div class="container">
+    <div class="mb-2 row justify-content-center">
+      <h1 class="h3 mt-11 mb-3 text-centered">
+        Real companies, real data, real stories
+      </h1>
+      <p
+        class="paragraph-5 neutral-black text-center col-10 col-md-8 col-lg-6 col-xl-5"
+      >
+        Over {{ site.data.number_of_instances.instances }} organizations use
+        Metabase to make working with data easy for everyone on their team.
+        Explore what real businesses have built with Metabase.
+      </p>
+    </div>
+    <div class="pt-6 pb-8 row align-items-center">
+      {% assign featured_case_study_array = site.case-studies | where:
+      "company_name", "Gojek" %} {% assign featured_case_study =
+      featured_case_study_array[0] %}
+      <div class="col-12 col-sm-6 mb-6 mb-sm-0">
+        <img
+          class="mb-4"
+          src="{{ featured_case_study.logo_image }}"
+          srcset="{{featured_case_study.logo_image}} 1x"
+          alt="{{ featured_case_study.company_name }} logo"
+          style="width: 142px"
+        />
+        <h3 class="mb-6">{{ featured_case_study.title }}</h3>
+        <a
+          href="{{ featured_case_study.url }}"
+          class="btn btn-primary btn-link"
+          role="button"
+          >Read the case study</a
+        >
+      </div>
+      <div class="col-12 col-sm-6">
+        <img
+          class="w-100 rounded-4"
+          src="{{ featured_case_study.featured_image }}"
+          srcset="{{featured_case_study.featured_image}} 1x"
+          alt=""
+          loading="lazy"
+        />
+      </div>
+    </div>
+    <div class="my-9">
+      <p id="filters-header" class="paragraph-5 neutral-40 text-centered">
+        Explore customer stories by industry
+      </p>
+      <div class="row row-cols-auto g-3 justify-content-center">
+        <div class="col">
+          <div
+            id="All Stories-filter"
+            class="btn-base btn-base-toggle selected py-2 px-3 align-items-center justify-content-center rounded-3 fs-12"
+          >
+            All Stories
+          </div>
+        </div>
+        {% assign filters = '' %} {% for case in site.case-studies %} {% assign
+        filters = filters | append: case.industry | append: ',' %} {% endfor %}
+        {% assign filters = filters | split: ',' | uniq %} {% for filter in
+        filters %} {% if filter != '' %}
+        <div class="col">
+          <div
+            id="{{filter}}-filter"
+            class="btn-base btn-base-toggle py-2 px-3 align-items-center justify-content-center rounded-3 fs-12"
+          >
+            {{filter}}
+          </div>
+        </div>
+        {% endif %} {% endfor %}
+      </div>
+    </div>
+    <div id="case-list">
+      <div
+        class="row list g-6 {% if site.case-studies.size <= 12 %}mb-15{% endif %}"
+      >
+        {% for case in site.case-studies %}
+        <div class="col col-12 col-sm-6 col-lg-4">
+          <div class="hover-raise-sm">
+            <div class="card overflow-visible border-0 pb-3">
+              <div
+                class="w-100 card-hover-shadow rounded-4 overflow-hidden d-flex justify-content-center align-items-center position-relative"
+                style="height: 167px"
+              >
+                <div
+                  class="card-img-top fill-image h-100"
+                  style="background-image: url('{{ case.featured_image }}')"
+                ></div>
+                <div
+                  class="position-absolute bottom-0 end-0 bg-neutral-white p-3 m-3 rounded-3 d-flex justify-content-center align-items-center"
+                  style="height: 56px; width: 114px"
+                >
+                  <img
+                    class="w-100"
+                    src="{{ case.logo_image }}"
+                    srcset="{{case.logo_image}} 1x"
+                    alt="{{ case.company_name }} logo"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+              <div class="card-body p-0">
+                <div class="d-none industry-name">{{ case.industry }}</div>
+                <p class="paragraph-5 my-3">{{ case.title }}</p>
+                <a href="{{ case.url }}" class="stretched-link"
+                  ><span class="chevron blue-small-right"
+                    >Read the case study</span
+                  ></a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      <div
+        class="d-flex flex-row justify-content-center mt-11 mb-15 {% if site.case-studies.size <= 12 %}d-none{% endif %}"
+      >
+        <ul class="pagination flex flex-row justify-content-center"></ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="rounded-4 no-overflow">
+    {% include get-started-with-metabase.html %}
+  </div>
+</div>
+
+<script type="text/javascript">
+  const caseList = new List("case-list", {
+    valueNames: ["industry-name"],
+    page: 12,
+    pagination: [
+      {
+        item: '<li><div class="page btn-base btn-base-circle mx-1"></div></li>',
+      },
+    ],
+  });
+
+  const selectFilterToggleElement = (element) => {
+    const filterButtons = document.querySelectorAll(".btn-base-toggle");
+    filterButtons.forEach((filter) => {
+      if (element !== filter) {
+        filter.classList.remove("selected");
+      }
+    });
+
+    if (element.matches(".selected") || element.innerText === "All Stories") {
+      caseList.filter();
+    } else {
+      caseList.filter(function(item) {
+        return (
+          item.values()["industry-name"].replaceAll("&amp;", "&") ===
+          element.innerText
+        );
+      });
+    }
+    element.classList.toggle("selected");
+  };
+
+  document.addEventListener(
+    "click",
+    function(event) {
+      const element = event.target;
+      if (!element.matches(".btn-base-toggle")) return;
+      event.preventDefault();
+      selectFilterToggleElement(element);
+    },
+    false,
+  );
+
+  document.addEventListener(
+    "click",
+    function(event) {
+      const element = event.target;
+      if (!element.matches(".btn-base-circle")) return;
+
+      const filtersHeader = document.getElementById("filters-header");
+      filtersHeader.scrollIntoView();
+    },
+    false,
+  );
+</script>
