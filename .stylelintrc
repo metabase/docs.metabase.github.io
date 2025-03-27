@@ -1,0 +1,66 @@
+{
+  "extends": "stylelint-config-standard-scss",
+  "plugins": [
+    "stylelint-order"
+  ],
+  "rules": {
+    "alpha-value-notation": "number",
+    "color-function-notation": "legacy",
+    "color-no-invalid-hex": true,
+    "max-line-length": [
+      120,
+      {
+        "ignorePattern": "/(filter|transition): /"
+      }
+    ],
+    "order/properties-alphabetical-order": true,
+    "selector-class-pattern": [
+      "^([a-z][a-z0-9]*)(-(-*)[a-z0-9]+)*$",
+      {
+        "resolveNestedSelectors": true,
+        "severity": "warning"
+      }
+    ],
+    "selector-id-pattern": [
+      "^([a-z][a-z0-9]*)(-[a-z0-9]+)*$",
+      {
+        "severity": "warning"
+      }
+    ],
+    "scss/at-extend-no-missing-placeholder": null,
+    "scss/at-if-no-null": [
+      true,
+      {
+        "severity": "warning"
+      }
+    ],
+    "scss/no-global-function-names": [
+      true,
+      {
+        "severity": "warning"
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": [
+        "css/**/*.css",
+        "_sass/**/*.scss"
+      ],
+      "rules": {
+        "no-descending-specificity": [
+          true,
+          {
+            "severity": "warning"
+          }
+        ],
+        "no-duplicate-selectors": [
+          true,
+          {
+            "severity": "warning"
+          }
+        ]
+      }
+    }
+  ]
+}
