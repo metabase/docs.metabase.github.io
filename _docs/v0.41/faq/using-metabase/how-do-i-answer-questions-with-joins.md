@@ -1,0 +1,19 @@
+---
+version: v0.41
+has_magic_breadcrumbs: true
+show_category_breadcrumb: true
+show_title_breadcrumb: true
+category: FAQ
+title: 'How Do I Answer Questions With Joins'
+source_url: 'https://github.com/metabase/metabase/blob/master/docs/faq/using-metabase/how-do-i-answer-questions-with-joins.md'
+layout: docs
+---
+
+# How do I answer questions where I need to join tables together?
+
+If you're using Metabase version 0.32 or earlier, you'll need to either write a SQL query that contains joins, or have your Metabase administrator set up foreign keys (they can read more about that [here][editing-metadata]).
+
+If you are using Metabase 0.33 or above, you can [perform joins using the Notebook editor][notebook-editor-joins], but you should probably upgrade anyway.
+
+[editing-metadata]: ../../administration-guide/03-metadata-editing.html
+[notebook-editor-joins]: /learn/questions/joins-in-metabase.html
