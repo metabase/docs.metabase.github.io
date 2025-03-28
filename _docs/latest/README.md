@@ -14,6 +14,7 @@ redirect_from:
   - /latest/administration-guide
   - /latest/operations-guide
   - /latest/faq
+  - /
 latest: true
 ---
 
