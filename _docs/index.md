@@ -1,4 +1,5 @@
 ---
-permalink: /
-redirect_to: /latest/
+permalink: /docs
+redirect_to:
+  - ./latest/
 ---
