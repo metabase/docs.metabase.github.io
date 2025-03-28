@@ -8,9 +8,9 @@ title: 'Funnel charts'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/questions/visualizations/funnel.md'
 layout: new-docs
 redirect_from:
-    - /docs/v0.53/questions/sharing/visualizations/funnel
+    - /v0.53/questions/sharing/visualizations/funnel
     - /learn/visualization/funnel
-    - /docs/v0.53/questions/visualizations/funnel
+    - /v0.53/questions/visualizations/funnel
     - /learn/metabase-basics/querying-and-dashboards/visualization/funnel
 description: 'Funnel charts visualize how a value is broken out by a series of steps, and the percent change between steps. To build a funnel chart in Metabase, you need a table with the name and value for each step.'
 ---

@@ -8,8 +8,8 @@ title: Questions
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/questions/introduction.md'
 layout: new-docs
 redirect_from:
-    - /docs/v0.53/users-guide/04-asking-questions
-    - /docs/v0.53/users-guide/06-sharing-answers
+    - /v0.53/users-guide/04-asking-questions
+    - /v0.53/users-guide/06-sharing-answers
 ---
 
 # Questions

@@ -8,7 +8,7 @@ title: Slack
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/configuring-metabase/slack.md'
 layout: new-docs
 redirect_from:
-    - /docs/v0.51/administration-guide/09-setting-up-slack
+    - /v0.51/administration-guide/09-setting-up-slack
 ---
 
 # Slack

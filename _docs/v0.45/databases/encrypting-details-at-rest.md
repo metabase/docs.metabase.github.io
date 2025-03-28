@@ -8,7 +8,7 @@ title: 'Encrypting your database connection'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/databases/encrypting-details-at-rest.md'
 layout: new-docs
 redirect_from:
-    - /docs/v0.45/operations-guide/encrypting-database-details-at-rest
+    - /v0.45/operations-guide/encrypting-database-details-at-rest
 ---
 
 # Encrypting your database connection

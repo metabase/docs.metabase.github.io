@@ -8,7 +8,7 @@ title: 'Connecting to AWS''s Relational Database Service (RDS)'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/databases/connections/aws-rds.md'
 layout: new-docs
 redirect_from:
-    - /docs/v0.49/administration-guide/databases/aws-rds
+    - /v0.49/administration-guide/databases/aws-rds
 ---
 
 # Connecting to AWS's Relational Database Service (RDS)

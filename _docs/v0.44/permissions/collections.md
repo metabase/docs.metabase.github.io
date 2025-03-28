@@ -8,7 +8,7 @@ title: 'Collection permissions'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/permissions/collections.md'
 layout: new-docs
 redirect_from:
-    - /docs/v0.44/administration-guide/06-collections
+    - /v0.44/administration-guide/06-collections
 ---
 
 # Collection permissions

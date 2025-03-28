@@ -8,7 +8,7 @@ title: 'Parameters for static embeds'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/embedding/static-embedding-parameters.md'
 layout: new-docs
 redirect_from:
-    - /docs/master/embedding/signed-embedding-parameters
+    - /master/embedding/signed-embedding-parameters
 ---
 
 # Parameters for static embeds

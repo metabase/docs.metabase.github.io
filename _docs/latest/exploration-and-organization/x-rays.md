@@ -9,7 +9,7 @@ source_url: >-
   https://github.com/metabase/metabase/blob/master/docs/exploration-and-organization/x-rays.md
 layout: new-docs
 redirect_from:
-  - /docs/latest/users-guide/14-x-rays
+  - /latest/users-guide/14-x-rays
 latest: true
 ---
 

@@ -8,7 +8,7 @@ title: 'Amazon Redshift'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/databases/connections/redshift.md'
 layout: new-docs
 redirect_from:
-    - /docs/v0.53/administration-guide/databases/redshift
+    - /v0.53/administration-guide/databases/redshift
 ---
 
 # Amazon Redshift

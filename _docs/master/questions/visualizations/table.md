@@ -8,7 +8,7 @@ title: Tables
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/questions/visualizations/table.md'
 layout: new-docs
 redirect_from:
-    - /docs/master/questions/sharing/visualizations/table
+    - /master/questions/sharing/visualizations/table
 ---
 
 # Tables

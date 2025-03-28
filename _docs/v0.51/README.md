@@ -7,13 +7,13 @@ category: 'Table of Contents'
 title: 'Metabase documentation'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/README.md'
 layout: new-docs
-permalink: /docs/v0.51/index.html
+permalink: /v0.51/index.html
 redirect_from:
-    - /docs/v0.51/enterprise-guide
-    - /docs/v0.51/users-guide
-    - /docs/v0.51/administration-guide
-    - /docs/v0.51/operations-guide
-    - /docs/v0.51/faq
+    - /v0.51/enterprise-guide
+    - /v0.51/users-guide
+    - /v0.51/administration-guide
+    - /v0.51/operations-guide
+    - /v0.51/faq
 ---
 
 # Metabase documentation

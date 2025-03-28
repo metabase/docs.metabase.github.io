@@ -12,7 +12,7 @@ description: >-
   How to set up JWT-based authentication in Metabase to connect with your
   identity provider and manage user access.
 redirect_from:
-  - /docs/latest/enterprise-guide/authenticating-with-jwt
+  - /latest/enterprise-guide/authenticating-with-jwt
 latest: true
 ---
 

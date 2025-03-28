@@ -8,7 +8,7 @@ title: 'About the anonymous usage data we collect'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/installation-and-operation/information-collection.md'
 layout: new-docs
 redirect_from:
-    - /docs/v0.50/information-collection
+    - /v0.50/information-collection
 ---
 
 # About the anonymous usage data we collect

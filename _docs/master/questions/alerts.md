@@ -8,8 +8,8 @@ title: Alerts
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/questions/alerts.md'
 layout: new-docs
 redirect_from:
-    - /docs/master/users-guide/15-alerts
-    - /docs/master/questions/sharing/alerts
+    - /master/users-guide/15-alerts
+    - /master/questions/sharing/alerts
 ---
 
 # Alerts

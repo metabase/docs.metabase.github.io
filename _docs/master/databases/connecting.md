@@ -8,10 +8,10 @@ title: 'Adding and managing databases'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/databases/connecting.md'
 layout: new-docs
 redirect_from:
-    - /docs/master/administration-guide/01-managing-databases
-    - /docs/master/databases/connections/sql-server
-    - /docs/master/administration-guide/databases/h2
-    - /docs/master/databases/connections/h2
+    - /master/administration-guide/01-managing-databases
+    - /master/databases/connections/sql-server
+    - /master/administration-guide/databases/h2
+    - /master/databases/connections/h2
 ---
 
 # Adding and managing databases

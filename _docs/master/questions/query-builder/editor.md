@@ -8,7 +8,7 @@ title: 'The query builder'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/questions/query-builder/editor.md'
 layout: new-docs
 redirect_from:
-    - /docs/master/questions/query-builder/introduction
+    - /master/questions/query-builder/introduction
 ---
 
 # The query builder

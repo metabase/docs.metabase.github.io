@@ -9,7 +9,7 @@ source_url: >-
   https://github.com/metabase/metabase/blob/master/docs/embedding/static-embedding-parameters.md
 layout: new-docs
 redirect_from:
-  - /docs/latest/embedding/signed-embedding-parameters
+  - /latest/embedding/signed-embedding-parameters
 latest: true
 ---
 

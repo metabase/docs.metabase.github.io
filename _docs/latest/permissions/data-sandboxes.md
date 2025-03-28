@@ -9,7 +9,7 @@ source_url: >-
   https://github.com/metabase/metabase/blob/master/docs/permissions/data-sandboxes.md
 layout: new-docs
 redirect_from:
-  - /docs/latest/enterprise-guide/data-sandboxes
+  - /latest/enterprise-guide/data-sandboxes
 latest: true
 ---
 

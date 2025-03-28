@@ -8,7 +8,7 @@ title: 'Formatting defaults'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/data-modeling/formatting.md'
 layout: new-docs
 redirect_from:
-    - /docs/v0.46/administration-guide/19-formatting-settings
+    - /v0.46/administration-guide/19-formatting-settings
 ---
 
 # Formatting defaults 

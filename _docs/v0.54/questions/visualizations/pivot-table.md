@@ -8,7 +8,7 @@ title: 'Pivot tables'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/questions/visualizations/pivot-table.md'
 layout: new-docs
 redirect_from:
-    - /docs/v0.54/questions/sharing/visualizations/pivot-table
+    - /v0.54/questions/sharing/visualizations/pivot-table
 ---
 
 # Pivot tables

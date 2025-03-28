@@ -9,8 +9,8 @@ source_url: >-
   https://github.com/metabase/metabase/blob/master/docs/questions/native-editor/snippets.md
 layout: new-docs
 redirect_from:
-  - /docs/latest/users-guide/sql-snippets
-  - /docs/latest/questions/native-editor/sql-snippets
+  - /latest/users-guide/sql-snippets
+  - /latest/questions/native-editor/sql-snippets
 latest: true
 ---
 

@@ -8,7 +8,7 @@ title: 'Overview of premium features'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/paid-features/overview.md'
 layout: new-docs
 redirect_from:
-    - /docs/v0.46/enterprise-guide/start
+    - /v0.46/enterprise-guide/start
 ---
 
 # Overview of premium features

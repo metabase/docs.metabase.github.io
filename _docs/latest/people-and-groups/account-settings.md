@@ -9,7 +9,7 @@ source_url: >-
   https://github.com/metabase/metabase/blob/master/docs/people-and-groups/account-settings.md
 layout: new-docs
 redirect_from:
-  - /docs/latest/users-guide/account-settings
+  - /latest/users-guide/account-settings
 latest: true
 ---
 

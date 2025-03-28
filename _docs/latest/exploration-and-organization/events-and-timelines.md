@@ -9,7 +9,7 @@ source_url: >-
   https://github.com/metabase/metabase/blob/master/docs/exploration-and-organization/events-and-timelines.md
 layout: new-docs
 redirect_from:
-  - /docs/latest/users-guide/events-and-timelines
+  - /latest/users-guide/events-and-timelines
 latest: true
 ---
 

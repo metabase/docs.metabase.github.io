@@ -9,8 +9,8 @@ source_url: >-
   https://github.com/metabase/metabase/blob/master/docs/installation-and-operation/migrating-from-h2.md
 layout: new-docs
 redirect_from:
-  - /docs/latest/operations-guide/migrating-from-h2
-  - /docs/latest/operations-guide/running-migrations-manually
+  - /latest/operations-guide/migrating-from-h2
+  - /latest/operations-guide/running-migrations-manually
 latest: true
 ---
 

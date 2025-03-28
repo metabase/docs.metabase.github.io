@@ -9,12 +9,12 @@ source_url: >-
   https://github.com/metabase/metabase/blob/master/docs/configuring-metabase/appearance.md
 layout: new-docs
 redirect_from:
-  - /docs/latest/administration-guide/whitelabeling
-  - /docs/latest/enterprise-guide/whitelabeling
-  - /docs/latest/enterprise-guide/customize-embeds
-  - /docs/latest/embedding/whitelabeling
-  - /docs/latest/embedding/fonts
-  - /docs/latest/embedding/customize-embeds
+  - /latest/administration-guide/whitelabeling
+  - /latest/enterprise-guide/whitelabeling
+  - /latest/enterprise-guide/customize-embeds
+  - /latest/embedding/whitelabeling
+  - /latest/embedding/fonts
+  - /latest/embedding/customize-embeds
 latest: true
 ---
 

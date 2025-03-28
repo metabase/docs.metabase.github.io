@@ -8,7 +8,7 @@ title: 'SAML with Auth0'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/people-and-groups/saml-auth0.md'
 layout: new-docs
 redirect_from:
-    - /docs/v0.50/enterprise-guide/saml-auth0
+    - /v0.50/enterprise-guide/saml-auth0
 ---
 
 # SAML with Auth0

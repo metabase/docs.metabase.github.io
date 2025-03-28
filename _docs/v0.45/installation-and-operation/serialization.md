@@ -8,7 +8,7 @@ title: Serialization
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/installation-and-operation/serialization.md'
 layout: new-docs
 redirect_from:
-    - /docs/v0.45/enterprise-guide/serialization
+    - /v0.45/enterprise-guide/serialization
 ---
 
 ## Serialization

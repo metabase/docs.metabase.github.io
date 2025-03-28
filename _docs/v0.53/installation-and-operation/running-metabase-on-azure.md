@@ -8,7 +8,7 @@ title: 'Running Metabase on Microsoft Azure'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/installation-and-operation/running-metabase-on-azure.md'
 layout: new-docs
 redirect_from:
-    - /docs/v0.53/operations-guide/running-metabase-on-azure
+    - /v0.53/operations-guide/running-metabase-on-azure
 ---
 
 # Running Metabase on Microsoft Azure

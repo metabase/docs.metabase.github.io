@@ -8,7 +8,7 @@ title: 'Data permissions'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/permissions/data.md'
 layout: new-docs
 redirect_from:
-    - /docs/v0.47/administration-guide/data-permissions
+    - /v0.47/administration-guide/data-permissions
 ---
 
 # Data permissions

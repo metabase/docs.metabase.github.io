@@ -8,7 +8,7 @@ title: 'Setting up Metabase'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/configuring-metabase/setting-up-metabase.md'
 layout: new-docs
 redirect_from:
-    - /docs/master/setting-up-metabase
+    - /master/setting-up-metabase
 ---
 
 # Setting up Metabase

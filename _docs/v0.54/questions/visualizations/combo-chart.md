@@ -8,7 +8,7 @@ title: 'Combo charts'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/questions/visualizations/combo-chart.md'
 layout: new-docs
 redirect_from:
-    - /docs/v0.54/questions/sharing/visualizations/combo-chart
+    - /v0.54/questions/sharing/visualizations/combo-chart
 ---
 
 # Combo charts

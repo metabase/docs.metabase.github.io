@@ -8,7 +8,7 @@ title: 'Dashboard interactivity'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/dashboards/interactive.md'
 layout: new-docs
 redirect_from:
-    - /docs/master/users-guide/interactive-dashboards
+    - /master/users-guide/interactive-dashboards
 ---
 
 # Dashboard interactivity

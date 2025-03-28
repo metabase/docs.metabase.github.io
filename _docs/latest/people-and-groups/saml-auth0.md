@@ -9,7 +9,7 @@ source_url: >-
   https://github.com/metabase/metabase/blob/master/docs/people-and-groups/saml-auth0.md
 layout: new-docs
 redirect_from:
-  - /docs/latest/enterprise-guide/saml-auth0
+  - /latest/enterprise-guide/saml-auth0
 latest: true
 ---
 

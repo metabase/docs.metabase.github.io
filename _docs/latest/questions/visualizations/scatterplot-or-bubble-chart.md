@@ -9,7 +9,7 @@ source_url: >-
   https://github.com/metabase/metabase/blob/master/docs/questions/visualizations/scatterplot-or-bubble-chart.md
 layout: new-docs
 redirect_from:
-  - /docs/latest/questions/sharing/visualizations/scatterplot-or-bubble-chart
+  - /latest/questions/sharing/visualizations/scatterplot-or-bubble-chart
 latest: true
 ---
 

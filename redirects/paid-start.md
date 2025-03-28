@@ -1,4 +1,4 @@
 ---
-permalink: /docs/latest/paid-features/start
+permalink: /latest/paid-features/start
 redirect_to: /pricing/
 ---

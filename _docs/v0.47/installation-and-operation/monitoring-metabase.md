@@ -8,8 +8,8 @@ title: 'Monitoring your Metabase'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/installation-and-operation/monitoring-metabase.md'
 layout: new-docs
 redirect_from:
-    - /docs/v0.47/operations-guide/jmx-monitoring
-    - /docs/v0.47/operations-guide/enable-jmx
+    - /v0.47/operations-guide/jmx-monitoring
+    - /v0.47/operations-guide/enable-jmx
 ---
 
 # Monitoring Your Metabase

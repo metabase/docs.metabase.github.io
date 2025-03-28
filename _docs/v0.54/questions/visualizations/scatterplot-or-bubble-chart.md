@@ -8,7 +8,7 @@ title: 'Scatterplots and bubble charts'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/questions/visualizations/scatterplot-or-bubble-chart.md'
 layout: new-docs
 redirect_from:
-    - /docs/v0.54/questions/sharing/visualizations/scatterplot-or-bubble-chart
+    - /v0.54/questions/sharing/visualizations/scatterplot-or-bubble-chart
 ---
 
 # Scatterplots and bubble charts

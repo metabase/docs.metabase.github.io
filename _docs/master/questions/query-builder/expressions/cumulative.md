@@ -8,8 +8,8 @@ title: 'Cumulative count and sum'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/questions/query-builder/expressions/cumulative.md'
 layout: new-docs
 redirect_from:
-    - /docs/master/questions/expressions/cumulativesum
-    - /docs/master/questions/expressions/cumulativecount
+    - /master/questions/expressions/cumulativesum
+    - /master/questions/expressions/cumulativecount
 ---
 
 # Cumulative count and sum

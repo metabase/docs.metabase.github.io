@@ -9,7 +9,7 @@ source_url: >-
   https://github.com/metabase/metabase/blob/master/docs/permissions/collections.md
 layout: new-docs
 redirect_from:
-  - /docs/latest/administration-guide/06-collections
+  - /latest/administration-guide/06-collections
 latest: true
 ---
 

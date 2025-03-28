@@ -8,7 +8,7 @@ title: 'Environment variables'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/configuring-metabase/environment-variables.md'
 layout: new-docs
 redirect_from:
-    - /docs/v0.51/operations-guide/environment-variables
+    - /v0.51/operations-guide/environment-variables
 ---
 
 # Environment variables

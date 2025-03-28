@@ -8,7 +8,7 @@ title: 'Full-app embedding'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/embedding/full-app-embedding.md'
 layout: new-docs
 redirect_from:
-    - /docs/v0.44/enterprise-guide/full-app-embedding
+    - /v0.44/enterprise-guide/full-app-embedding
 ---
 
 # Full-app embedding

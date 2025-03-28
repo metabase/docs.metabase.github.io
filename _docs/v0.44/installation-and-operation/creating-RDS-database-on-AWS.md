@@ -8,7 +8,7 @@ title: 'Creating an RDS database on AWS'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/installation-and-operation/creating-RDS-database-on-AWS.md'
 layout: new-docs
 redirect_from:
-    - /docs/v0.44/operations-guide/creating-RDS-database-on-AWS
+    - /v0.44/operations-guide/creating-RDS-database-on-AWS
 ---
 
 # Creating an RDS database on AWS

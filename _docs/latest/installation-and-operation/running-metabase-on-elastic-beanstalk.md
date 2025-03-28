@@ -9,7 +9,7 @@ source_url: >-
   https://github.com/metabase/metabase/blob/master/docs/installation-and-operation/running-metabase-on-elastic-beanstalk.md
 layout: new-docs
 redirect_from:
-  - /docs/latest/operations-guide/running-metabase-on-elastic-beanstalk
+  - /latest/operations-guide/running-metabase-on-elastic-beanstalk
   - >-
     /docs/latest/installation-and-operation/advanced-topics-for-running-Metabase-in-AWS-ElasticBeanstalk
   - >-

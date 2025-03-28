@@ -8,7 +8,7 @@ title: 'Running the Metabase JAR file'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/installation-and-operation/running-the-metabase-jar-file.md'
 layout: new-docs
 redirect_from:
-    - /docs/v0.46/operations-guide/running-the-metabase-jar-file
+    - /v0.46/operations-guide/running-the-metabase-jar-file
 ---
 
 # Running the Metabase OSS JAR file

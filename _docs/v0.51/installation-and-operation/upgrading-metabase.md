@@ -8,7 +8,7 @@ title: 'Upgrading Metabase'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/installation-and-operation/upgrading-metabase.md'
 layout: new-docs
 redirect_from:
-    - /docs/v0.51/operations-guide/upgrading-metabase
+    - /v0.51/operations-guide/upgrading-metabase
 ---
 
 # Upgrading Metabase

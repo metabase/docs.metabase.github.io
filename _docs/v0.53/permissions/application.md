@@ -8,7 +8,7 @@ title: 'Application permissions'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/permissions/application.md'
 layout: new-docs
 redirect_from:
-    - /docs/v0.53/administration-guide/application-permissions
+    - /v0.53/administration-guide/application-permissions
 ---
 
 # Application permissions

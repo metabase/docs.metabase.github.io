@@ -8,7 +8,7 @@ title: X-rays
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/exploration-and-organization/x-rays.md'
 layout: new-docs
 redirect_from:
-    - /docs/v0.46/users-guide/14-x-rays
+    - /v0.46/users-guide/14-x-rays
 ---
 
 # X-rays

@@ -8,7 +8,7 @@ title: 'The SQL editor'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/questions/native-editor/writing-sql.md'
 layout: new-docs
 redirect-from:
-    - /docs/latest/users-guide/writing-sql
+    - /latest/users-guide/writing-sql
 ---
 
 # The SQL editor

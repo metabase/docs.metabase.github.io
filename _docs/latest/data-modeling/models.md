@@ -8,7 +8,7 @@ title: Models
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/data-modeling/models.md'
 layout: new-docs
 redirect_from:
-  - /docs/latest/users-guide/models
+  - /latest/users-guide/models
 latest: true
 ---
 

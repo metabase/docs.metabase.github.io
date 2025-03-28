@@ -9,7 +9,7 @@ source_url: >-
   https://github.com/metabase/metabase/blob/master/docs/questions/visualizations/line-bar-and-area-charts.md
 layout: new-docs
 redirect_from:
-  - /docs/latest/questions/visualizations/line-bar-and-area-charts
+  - /latest/questions/visualizations/line-bar-and-area-charts
 latest: true
 ---
 

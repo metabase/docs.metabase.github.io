@@ -9,7 +9,7 @@ source_url: >-
   https://github.com/metabase/metabase/blob/master/docs/permissions/application.md
 layout: new-docs
 redirect_from:
-  - /docs/latest/administration-guide/application-permissions
+  - /latest/administration-guide/application-permissions
 latest: true
 ---
 

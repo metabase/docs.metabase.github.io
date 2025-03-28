@@ -9,7 +9,7 @@ source_url: >-
   https://github.com/metabase/metabase/blob/master/docs/configuring-metabase/log-configuration.md
 layout: new-docs
 redirect_from:
-  - /docs/latest/operations-guide/log-configuration
+  - /latest/operations-guide/log-configuration
 latest: true
 ---
 

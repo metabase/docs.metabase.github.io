@@ -1,5 +1,5 @@
 ---
-permalink: /docs/all
+permalink: /all
 layout: new-docs
 title: Available Versions
 category: ignore

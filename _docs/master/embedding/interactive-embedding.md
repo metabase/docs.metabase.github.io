@@ -8,8 +8,8 @@ title: 'Interactive embedding'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/embedding/interactive-embedding.md'
 layout: new-docs
 redirect_from:
-    - /docs/master/enterprise-guide/full-app-embedding
-    - /docs/master/embedding/full-app-embedding
+    - /master/enterprise-guide/full-app-embedding
+    - /master/embedding/full-app-embedding
 ---
 
 # Interactive embedding

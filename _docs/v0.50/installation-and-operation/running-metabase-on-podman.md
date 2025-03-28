@@ -8,7 +8,7 @@ title: 'Running Metabase on Podman'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/installation-and-operation/running-metabase-on-podman.md'
 layout: new-docs
 redirect_from:
-    - /docs/v0.50/operations-guide/running-metabase-on-podman
+    - /v0.50/operations-guide/running-metabase-on-podman
 ---
 
 # Running Metabase on Podman

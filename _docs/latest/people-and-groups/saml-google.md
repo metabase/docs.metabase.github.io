@@ -9,7 +9,7 @@ source_url: >-
   https://github.com/metabase/metabase/blob/master/docs/people-and-groups/saml-google.md
 layout: new-docs
 redirect_from:
-  - /docs/latest/enterprise-guide/saml-google
+  - /latest/enterprise-guide/saml-google
 latest: true
 ---
 

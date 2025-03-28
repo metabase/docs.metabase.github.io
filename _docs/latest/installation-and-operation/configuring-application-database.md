@@ -9,7 +9,7 @@ source_url: >-
   https://github.com/metabase/metabase/blob/master/docs/installation-and-operation/configuring-application-database.md
 layout: new-docs
 redirect_from:
-  - /docs/latest/operations-guide/configuring-application-database
+  - /latest/operations-guide/configuring-application-database
 latest: true
 ---
 

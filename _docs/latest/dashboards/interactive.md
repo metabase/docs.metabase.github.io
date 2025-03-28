@@ -9,7 +9,7 @@ source_url: >-
   https://github.com/metabase/metabase/blob/master/docs/dashboards/interactive.md
 layout: new-docs
 redirect_from:
-  - /docs/latest/users-guide/interactive-dashboards
+  - /latest/users-guide/interactive-dashboards
 latest: true
 ---
 

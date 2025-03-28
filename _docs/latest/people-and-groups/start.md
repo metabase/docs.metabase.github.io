@@ -9,7 +9,7 @@ source_url: >-
   https://github.com/metabase/metabase/blob/master/docs/people-and-groups/start.md
 layout: new-docs
 redirect_from:
-  - /docs/latest/administration-guide/sso
+  - /latest/administration-guide/sso
 latest: true
 ---
 

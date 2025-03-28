@@ -8,7 +8,7 @@ title: 'Running Metabase on Debian as a service with nginx'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/installation-and-operation/running-metabase-on-debian.md'
 layout: new-docs
 redirect_from:
-    - /docs/v0.49/operations-guide/running-metabase-on-debian
+    - /v0.49/operations-guide/running-metabase-on-debian
 ---
 
 # Running Metabase on Debian as a service with nginx

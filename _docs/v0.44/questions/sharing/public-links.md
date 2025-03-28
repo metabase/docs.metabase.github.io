@@ -8,8 +8,8 @@ title: 'Public links'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/questions/sharing/public-links.md'
 layout: new-docs
 redirect_from:
-    - /docs/v0.44/administration-guide/12-public-links
-    - /docs/v0.44/embedding/12-public-links
+    - /v0.44/administration-guide/12-public-links
+    - /v0.44/embedding/12-public-links
 ---
 
 # Public links

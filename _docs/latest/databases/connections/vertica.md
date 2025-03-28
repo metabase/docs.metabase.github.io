@@ -9,7 +9,7 @@ source_url: >-
   https://github.com/metabase/metabase/blob/master/docs/databases/connections/vertica.md
 layout: new-docs
 redirect_from:
-  - /docs/latest/administration-guide/databases/vertica
+  - /latest/administration-guide/databases/vertica
 latest: true
 ---
 

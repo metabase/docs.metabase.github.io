@@ -8,7 +8,7 @@ title: 'Advanced topics for running Metabase on Elastic Beanstalk'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/installation-and-operation/advanced-topics-for-running-Metabase-in-AWS-ElasticBeanstalk.md'
 layout: new-docs
 redirect_from:
-    - /docs/v0.46/operations-guide/advanced-topics-for-running-Metabase-in-AWS-ElasticBeanstalk
+    - /v0.46/operations-guide/advanced-topics-for-running-Metabase-in-AWS-ElasticBeanstalk
 ---
 
 # Advanced topics for running Metabase on Elastic Beanstalk

@@ -9,8 +9,8 @@ source_url: >-
   https://github.com/metabase/metabase/blob/master/docs/embedding/public-links.md
 layout: new-docs
 redirect_from:
-  - /docs/latest/administration-guide/12-public-links
-  - /docs/latest/embedding/12-public-links
+  - /latest/administration-guide/12-public-links
+  - /latest/embedding/12-public-links
 latest: true
 ---
 

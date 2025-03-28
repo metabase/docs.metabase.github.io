@@ -8,8 +8,8 @@ title: Fonts
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/configuring-metabase/fonts.md'
 layout: new-docs
 redirect_from:
-    - /docs/master/enterprise-guide/fonts
-    - /docs/master/embedding/fonts
+    - /master/enterprise-guide/fonts
+    - /master/embedding/fonts
 ---
 
 # Fonts

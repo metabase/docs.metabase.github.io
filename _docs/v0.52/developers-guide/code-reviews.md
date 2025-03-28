@@ -8,7 +8,7 @@ title: 'Code reviews'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/developers-guide/code-reviews.md'
 layout: new-docs
 redirect_from:
-    - /docs/v0.52/code-reviews
+    - /v0.52/code-reviews
 ---
 
 # Code reviews

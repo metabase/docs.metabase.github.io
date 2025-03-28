@@ -8,7 +8,7 @@ title: 'Session expiration'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/people-and-groups/changing-session-expiration.md'
 layout: new-docs
 redirect_from:
-    - /docs/v0.48/operations-guide/changing-session-expiration
+    - /v0.48/operations-guide/changing-session-expiration
 ---
 
 # Session expiration

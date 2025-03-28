@@ -8,7 +8,7 @@ title: 'SAML with Google'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/people-and-groups/saml-google.md'
 layout: new-docs
 redirect_from:
-    - /docs/master/enterprise-guide/saml-google
+    - /master/enterprise-guide/saml-google
 ---
 
 # SAML with Google

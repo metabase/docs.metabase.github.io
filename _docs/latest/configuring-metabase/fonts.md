@@ -9,8 +9,8 @@ source_url: >-
   https://github.com/metabase/metabase/blob/master/docs/configuring-metabase/fonts.md
 layout: new-docs
 redirect_from:
-  - /docs/latest/enterprise-guide/fonts
-  - /docs/latest/embedding/fonts
+  - /latest/enterprise-guide/fonts
+  - /latest/embedding/fonts
 latest: true
 ---
 

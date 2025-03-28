@@ -8,8 +8,8 @@ title: Snippets
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/questions/native-editor/snippets.md'
 layout: new-docs
 redirect_from:
-    - /docs/master/users-guide/sql-snippets
-    - /docs/master/questions/native-editor/sql-snippets
+    - /master/users-guide/sql-snippets
+    - /master/questions/native-editor/sql-snippets
 ---
 
 # Snippets

@@ -8,7 +8,7 @@ title: Collections
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/exploration-and-organization/collections.md'
 layout: new-docs
 redirect_from:
-    - /docs/master/users-guide/collections
+    - /master/users-guide/collections
 ---
 
 # Collections

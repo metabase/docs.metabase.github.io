@@ -8,7 +8,7 @@ title: 'Pie and sunburst charts'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/questions/visualizations/pie-or-donut-chart.md'
 layout: new-docs
 redirect_from:
-    - /docs/master/questions/sharing/visualizations/pie-or-donut-chart
+    - /master/questions/sharing/visualizations/pie-or-donut-chart
 ---
 
 # Pie and sunburst charts

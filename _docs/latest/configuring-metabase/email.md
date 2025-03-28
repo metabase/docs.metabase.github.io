@@ -9,7 +9,7 @@ source_url: >-
   https://github.com/metabase/metabase/blob/master/docs/configuring-metabase/email.md
 layout: new-docs
 redirect_from:
-  - /docs/latest/administration-guide/02-setting-up-email
+  - /latest/administration-guide/02-setting-up-email
 latest: true
 ---
 

@@ -8,7 +8,7 @@ title: 'Segments and metrics'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/data-modeling/segments-and-metrics.md'
 layout: new-docs
 redirect_from:
-    - /docs/v0.44/administration-guide/07-segments-and-metrics
+    - /v0.44/administration-guide/07-segments-and-metrics
 ---
 
 # Segments and metrics

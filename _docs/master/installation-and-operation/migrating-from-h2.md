@@ -8,8 +8,8 @@ title: 'Migrating to a production application database'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/installation-and-operation/migrating-from-h2.md'
 layout: new-docs
 redirect_from:
-    - /docs/master/operations-guide/migrating-from-h2
-    - /docs/master/operations-guide/running-migrations-manually
+    - /master/operations-guide/migrating-from-h2
+    - /master/operations-guide/running-migrations-manually
 ---
 
 # Migrating to a production application database

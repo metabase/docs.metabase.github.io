@@ -9,7 +9,7 @@ source_url: >-
   https://github.com/metabase/metabase/blob/master/docs/questions/visualizations/trend.md
 layout: new-docs
 redirect_from:
-  - /docs/latest/questions/sharing/visualizations/trend
+  - /latest/questions/sharing/visualizations/trend
 latest: true
 ---
 

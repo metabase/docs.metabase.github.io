@@ -8,7 +8,7 @@ title: 'Configuring the Metabase application database'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/installation-and-operation/configuring-application-database.md'
 layout: new-docs
 redirect_from:
-    - /docs/v0.53/operations-guide/configuring-application-database
+    - /v0.53/operations-guide/configuring-application-database
 ---
 
 # Configuring the Metabase application database

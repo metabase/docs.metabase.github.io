@@ -9,8 +9,8 @@ source_url: >-
   https://github.com/metabase/metabase/blob/master/docs/questions/visualizations/visualizing-results.md
 layout: new-docs
 redirect_from:
-  - /docs/latest/users-guide/05-visualizing-results
-  - /docs/latest/questions/sharing/visualizing-results
+  - /latest/users-guide/05-visualizing-results
+  - /latest/questions/sharing/visualizing-results
 latest: true
 ---
 

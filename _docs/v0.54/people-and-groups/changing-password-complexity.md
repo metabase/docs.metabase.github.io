@@ -8,7 +8,7 @@ title: Passwords
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/people-and-groups/changing-password-complexity.md'
 layout: new-docs
 redirect_from:
-    - /docs/v0.54/operations-guide/changing-password-complexity
+    - /v0.54/operations-guide/changing-password-complexity
 ---
 
 # Passwords

@@ -9,7 +9,7 @@ source_url: >-
   https://github.com/metabase/metabase/blob/master/docs/people-and-groups/changing-password-complexity.md
 layout: new-docs
 redirect_from:
-  - /docs/latest/operations-guide/changing-password-complexity
+  - /latest/operations-guide/changing-password-complexity
 latest: true
 ---
 

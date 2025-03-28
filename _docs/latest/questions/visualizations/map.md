@@ -9,7 +9,7 @@ source_url: >-
   https://github.com/metabase/metabase/blob/master/docs/questions/visualizations/map.md
 layout: new-docs
 redirect_from:
-  - /docs/latest/questions/sharing/visualizations/maps
+  - /latest/questions/sharing/visualizations/maps
   - /learn/basics/visualizing-data/maps
   - /learn/visualization/maps
   - /learn/metabase-basics/querying-and-dashboards/visualization/maps

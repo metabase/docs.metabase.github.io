@@ -8,7 +8,7 @@ title: MongoDB
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/databases/connections/mongodb.md'
 layout: new-docs
 redirect_from:
-    - /docs/v0.54/administration-guide/databases/mongodb
+    - /v0.54/administration-guide/databases/mongodb
 ---
 
 # MongoDB

@@ -8,7 +8,7 @@ title: 'Exporting results'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/questions/exporting-results.md'
 layout: new-docs
 redirect_from:
-    - /docs/v0.54/questions/sharing/exporting-results
+    - /v0.54/questions/sharing/exporting-results
 ---
 
 # Exporting results

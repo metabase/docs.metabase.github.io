@@ -8,7 +8,7 @@ title: 'Custom expressions'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/questions/query-builder/expressions.md'
 layout: new-docs
 redirect_from:
-    - /docs/v0.46/users-guide/expressions
+    - /v0.46/users-guide/expressions
 ---
 
 # Custom expressions

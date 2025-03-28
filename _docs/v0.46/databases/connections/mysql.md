@@ -8,7 +8,7 @@ title: MySQL
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/databases/connections/mysql.md'
 layout: new-docs
 redirect_from:
-    - /docs/v0.46/administration-guide/databases/mysql
+    - /v0.46/administration-guide/databases/mysql
 ---
 
 # MySQL

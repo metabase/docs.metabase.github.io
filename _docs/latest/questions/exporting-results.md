@@ -9,7 +9,7 @@ source_url: >-
   https://github.com/metabase/metabase/blob/master/docs/questions/exporting-results.md
 layout: new-docs
 redirect_from:
-  - /docs/latest/questions/sharing/exporting-results
+  - /latest/questions/sharing/exporting-results
 latest: true
 ---
 

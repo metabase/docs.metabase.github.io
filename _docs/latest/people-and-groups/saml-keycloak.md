@@ -9,7 +9,7 @@ source_url: >-
   https://github.com/metabase/metabase/blob/master/docs/people-and-groups/saml-keycloak.md
 layout: new-docs
 redirect_from:
-  - /docs/latest/enterprise-guide/saml-keycloak
+  - /latest/enterprise-guide/saml-keycloak
 latest: true
 ---
 

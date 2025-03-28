@@ -9,7 +9,7 @@ source_url: >-
   https://github.com/metabase/metabase/blob/master/docs/installation-and-operation/serialization.md
 layout: new-docs
 redirect_from:
-  - /docs/latest/enterprise-guide/serialization
+  - /latest/enterprise-guide/serialization
 latest: true
 ---
 

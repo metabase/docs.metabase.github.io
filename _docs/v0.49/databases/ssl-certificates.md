@@ -8,7 +8,7 @@ title: 'SSL certificate'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/databases/ssl-certificates.md'
 layout: new-docs
 redirect_from:
-    - /docs/v0.49/administration-guide/secure-database-connections-with-ssl-certificates
+    - /v0.49/administration-guide/secure-database-connections-with-ssl-certificates
 ---
 
 ## SSL certificate

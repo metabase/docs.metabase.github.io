@@ -9,7 +9,7 @@ source_url: >-
   https://github.com/metabase/metabase/blob/master/docs/installation-and-operation/running-metabase-on-debian.md
 layout: new-docs
 redirect_from:
-  - /docs/latest/operations-guide/running-metabase-on-debian
+  - /latest/operations-guide/running-metabase-on-debian
 latest: true
 ---
 

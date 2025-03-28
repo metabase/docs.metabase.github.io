@@ -8,7 +8,7 @@ title: 'Admin tools'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/usage-and-performance-tools/tools.md'
 layout: new-docs
 redirect_from:
-    - /docs/master/enterprise-guide/tools
+    - /master/enterprise-guide/tools
 ---
 
 # Admin tools

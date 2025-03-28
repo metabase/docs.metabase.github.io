@@ -8,8 +8,8 @@ title: 'Dashboard subscriptions'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/dashboards/subscriptions.md'
 layout: new-docs
 redirect_from:
-    - /docs/master/users-guide/dashboard-subscriptions
-    - /docs/master/enterprise-guide/dashboards-subscriptions
+    - /master/users-guide/dashboard-subscriptions
+    - /master/enterprise-guide/dashboards-subscriptions
 ---
 
 # Dashboard subscriptions

@@ -8,7 +8,7 @@ title: 'Referencing models and saved questions'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/questions/native-editor/referencing-saved-questions-in-queries.md'
 layout: new-docs
 redirect_from:
-    - /docs/master/users-guide/referencing-saved-questions-in-queries
+    - /master/users-guide/referencing-saved-questions-in-queries
 ---
 
 # Referencing models and saved questions

@@ -8,8 +8,8 @@ title: Metrics
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/data-modeling/metrics.md'
 layout: new-docs
 redirect_from:
-    - /docs/v0.53/administration-guide/07-segments-and-metrics
-    - /docs/v0.53/data-modeling/segments-and-metrics
+    - /v0.53/administration-guide/07-segments-and-metrics
+    - /v0.53/data-modeling/segments-and-metrics
 ---
 
 # Metrics

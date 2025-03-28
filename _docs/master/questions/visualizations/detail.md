@@ -8,7 +8,7 @@ title: Detail
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/questions/visualizations/detail.md'
 layout: new-docs
 redirect_from:
-    - /docs/master/questions/sharing/visualizations/detail
+    - /master/questions/sharing/visualizations/detail
 ---
 
 # Detail

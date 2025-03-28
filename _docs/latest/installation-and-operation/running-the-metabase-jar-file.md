@@ -9,8 +9,8 @@ source_url: >-
   https://github.com/metabase/metabase/blob/master/docs/installation-and-operation/running-the-metabase-jar-file.md
 layout: new-docs
 redirect_from:
-  - /docs/latest/operations-guide/running-the-metabase-jar-file
-  - /docs/installation-and-operation/java-versions
+  - /latest/operations-guide/running-the-metabase-jar-file
+  - /installation-and-operation/java-versions
 latest: true
 ---
 

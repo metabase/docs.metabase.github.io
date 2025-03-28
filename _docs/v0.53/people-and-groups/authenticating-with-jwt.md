@@ -9,7 +9,7 @@ source_url: 'https://github.com/metabase/metabase/blob/master/docs/people-and-gr
 layout: new-docs
 description: 'How to set up JWT-based authentication in Metabase to connect with your identity provider and manage user access.'
 redirect_from:
-    - /docs/v0.53/enterprise-guide/authenticating-with-jwt
+    - /v0.53/enterprise-guide/authenticating-with-jwt
 ---
 
 # JWT-based authentication

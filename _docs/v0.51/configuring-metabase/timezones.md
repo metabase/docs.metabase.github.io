@@ -8,7 +8,7 @@ title: Timezones
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/configuring-metabase/timezones.md'
 layout: new-docs
 redirect_from:
-    - /docs/v0.51/operations-guide/handling-timezones
+    - /v0.51/operations-guide/handling-timezones
 ---
 
 # Timezones

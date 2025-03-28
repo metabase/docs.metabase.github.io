@@ -9,8 +9,8 @@ source_url: >-
   https://github.com/metabase/metabase/blob/master/docs/installation-and-operation/activating-the-enterprise-edition.md
 layout: new-docs
 redirect_from:
-  - /docs/latest/enterprise-guide/activating-the-enterprise-edition
-  - /docs/latest/paid-features/activating-the-enterprise-edition
+  - /latest/enterprise-guide/activating-the-enterprise-edition
+  - /latest/paid-features/activating-the-enterprise-edition
 latest: true
 ---
 

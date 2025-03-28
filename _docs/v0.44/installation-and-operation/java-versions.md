@@ -8,7 +8,7 @@ title: 'Java versions'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/installation-and-operation/java-versions.md'
 layout: new-docs
 redirect_from:
-    - /docs/v0.44/operations-guide/java-versions
+    - /v0.44/operations-guide/java-versions
 ---
 
 # Java versions

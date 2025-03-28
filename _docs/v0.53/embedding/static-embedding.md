@@ -8,7 +8,7 @@ title: 'Static embedding'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/embedding/static-embedding.md'
 layout: new-docs
 redirect_from:
-    - /docs/v0.53/embedding/signed-embedding
+    - /v0.53/embedding/signed-embedding
 ---
 
 # Static embedding

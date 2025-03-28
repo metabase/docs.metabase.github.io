@@ -8,7 +8,7 @@ title: 'JWT-based authentication'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/people-and-groups/authenticating-with-jwt.md'
 layout: new-docs
 redirect_from:
-    - /docs/v0.46/enterprise-guide/authenticating-with-jwt
+    - /v0.46/enterprise-guide/authenticating-with-jwt
 ---
 
 # JWT-based authentication

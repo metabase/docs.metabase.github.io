@@ -8,7 +8,7 @@ title: 'Custom maps'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/configuring-metabase/custom-maps.md'
 layout: new-docs
 redirect_from:
-    - /docs/v0.48/administration-guide/20-custom-maps
+    - /v0.48/administration-guide/20-custom-maps
 ---
 
 # Custom maps

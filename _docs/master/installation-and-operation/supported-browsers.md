@@ -8,7 +8,7 @@ title: 'Supported browsers'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/installation-and-operation/supported-browsers.md'
 layout: new-docs
 redirect_from:
-    - /docs/master/administration-guide/supported-browsers
+    - /master/administration-guide/supported-browsers
 ---
 
 # Supported browsers

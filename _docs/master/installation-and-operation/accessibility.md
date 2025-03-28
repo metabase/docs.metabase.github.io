@@ -8,8 +8,8 @@ title: 'Accessibility in Metabase'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/installation-and-operation/accessibility.md'
 layout: new-docs
 redirect_from:
-    - /docs/master/accessibility
-    - /docs/master/people-and-groups/accessibility
+    - /master/accessibility
+    - /master/people-and-groups/accessibility
 ---
 
 # Accessibility in Metabase

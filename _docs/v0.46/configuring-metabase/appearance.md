@@ -8,12 +8,12 @@ title: Appearance
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/configuring-metabase/appearance.md'
 layout: new-docs
 redirect_from:
-    - /docs/v0.46/administration-guide/whitelabeling
-    - /docs/v0.46/enterprise-guide/whitelabeling
-    - /docs/v0.46/enterprise-guide/customize-embeds
-    - /docs/v0.46/embedding/whitelabeling
-    - /docs/v0.46/embedding/fonts
-    - /docs/v0.46/embedding/customize-embeds
+    - /v0.46/administration-guide/whitelabeling
+    - /v0.46/enterprise-guide/whitelabeling
+    - /v0.46/enterprise-guide/customize-embeds
+    - /v0.46/embedding/whitelabeling
+    - /v0.46/embedding/fonts
+    - /v0.46/embedding/customize-embeds
 ---
 
 # Appearance

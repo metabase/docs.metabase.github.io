@@ -9,9 +9,9 @@ source_url: >-
   https://github.com/metabase/metabase/blob/master/docs/questions/visualizations/funnel.md
 layout: new-docs
 redirect_from:
-  - /docs/latest/questions/sharing/visualizations/funnel
+  - /latest/questions/sharing/visualizations/funnel
   - /learn/visualization/funnel
-  - /docs/latest/questions/visualizations/funnel
+  - /latest/questions/visualizations/funnel
   - /learn/metabase-basics/querying-and-dashboards/visualization/funnel
 description: >-
   Funnel charts visualize how a value is broken out by a series of steps, and

@@ -8,7 +8,7 @@ title: 'Metabase logs'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/configuring-metabase/log-configuration.md'
 layout: new-docs
 redirect_from:
-    - /docs/v0.47/operations-guide/log-configuration
+    - /v0.47/operations-guide/log-configuration
 ---
 
 # Metabase logs

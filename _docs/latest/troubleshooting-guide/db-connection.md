@@ -9,7 +9,7 @@ source_url: >-
   https://github.com/metabase/metabase/blob/master/docs/troubleshooting-guide/db-connection.md
 layout: new-docs
 redirect_from:
-  - /docs/latest/troubleshooting-guide/datawarehouse
+  - /latest/troubleshooting-guide/datawarehouse
 latest: true
 ---
 

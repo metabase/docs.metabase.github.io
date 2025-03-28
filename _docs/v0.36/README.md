@@ -6,7 +6,7 @@ show_title_breadcrumb: true
 category: 'Table of Contents'
 title: README
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/README.md'
-permalink: /docs/v0.36/index.html
+permalink: /v0.36/index.html
 layout: docs
 ---
 

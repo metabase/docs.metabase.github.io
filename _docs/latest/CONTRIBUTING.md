@@ -8,7 +8,7 @@ title: Contributing to Metabase
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/CONTRIBUTING.md'
 layout: new-docs
 redirect_from:
-  - /docs/latest/developers-guide/contributing
+  - /latest/developers-guide/contributing
 latest: true
 ---
 

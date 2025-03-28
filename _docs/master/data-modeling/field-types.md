@@ -8,7 +8,7 @@ title: 'Field types'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/data-modeling/field-types.md'
 layout: new-docs
 redirect_from:
-    - /docs/master/users-guide/field-types
+    - /master/users-guide/field-types
 ---
 
 # Field types

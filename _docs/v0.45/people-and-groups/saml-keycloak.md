@@ -8,7 +8,7 @@ title: 'SAML with Keycloak'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/people-and-groups/saml-keycloak.md'
 layout: new-docs
 redirect_from:
-    - /docs/v0.45/enterprise-guide/saml-keycloak
+    - /v0.45/enterprise-guide/saml-keycloak
 ---
 
 # SAML with Keycloak

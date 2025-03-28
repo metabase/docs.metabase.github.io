@@ -9,7 +9,7 @@ source_url: >-
   https://github.com/metabase/metabase/blob/master/docs/data-modeling/metadata-editing.md
 layout: new-docs
 redirect_from:
-  - /docs/latest/administration-guide/03-metadata-editing
+  - /latest/administration-guide/03-metadata-editing
 latest: true
 ---
 

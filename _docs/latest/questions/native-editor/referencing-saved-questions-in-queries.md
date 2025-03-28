@@ -9,7 +9,7 @@ source_url: >-
   https://github.com/metabase/metabase/blob/master/docs/questions/native-editor/referencing-saved-questions-in-queries.md
 layout: new-docs
 redirect_from:
-  - /docs/latest/users-guide/referencing-saved-questions-in-queries
+  - /latest/users-guide/referencing-saved-questions-in-queries
 latest: true
 ---
 

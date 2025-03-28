@@ -8,7 +8,7 @@ title: 'Working with MongoDB in Metabase'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/databases/connections/mongodb.md'
 layout: new-docs
 redirect_from:
-    - /docs/v0.49/administration-guide/databases/mongodb
+    - /v0.49/administration-guide/databases/mongodb
 ---
 
 # Working with MongoDB in Metabase

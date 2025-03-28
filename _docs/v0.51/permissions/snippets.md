@@ -8,7 +8,7 @@ title: 'SQL snippet folder permissions'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/permissions/snippets.md'
 layout: new-docs
 redirect_from:
-    - /docs/v0.51/enterprise-guide/sql-snippets
+    - /v0.51/enterprise-guide/sql-snippets
 ---
 
 # SQL snippet folder permissions

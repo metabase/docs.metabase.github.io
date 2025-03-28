@@ -9,7 +9,7 @@ source_url: >-
   https://github.com/metabase/metabase/blob/master/docs/installation-and-operation/running-metabase-on-podman.md
 layout: new-docs
 redirect_from:
-  - /docs/latest/operations-guide/running-metabase-on-podman
+  - /latest/operations-guide/running-metabase-on-podman
 latest: true
 ---
 

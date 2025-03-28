@@ -9,7 +9,7 @@ source_url: >-
   https://github.com/metabase/metabase/blob/master/docs/installation-and-operation/information-collection.md
 layout: new-docs
 redirect_from:
-  - /docs/latest/information-collection
+  - /latest/information-collection
 latest: true
 ---
 

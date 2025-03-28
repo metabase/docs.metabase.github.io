@@ -8,7 +8,7 @@ title: 'People and groups'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/people-and-groups/managing.md'
 layout: new-docs
 redirect_from:
-    - /docs/v0.53/administration-guide/04-managing-users
+    - /v0.53/administration-guide/04-managing-users
 ---
 
 # People and groups

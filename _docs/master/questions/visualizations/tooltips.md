@@ -8,7 +8,7 @@ title: Tooltips
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/questions/visualizations/tooltips.md'
 layout: new-docs
 redirect_from:
-    - /docs/master/questions/sharing/visualizations/tooltips
+    - /master/questions/sharing/visualizations/tooltips
 ---
 
 # Tooltips

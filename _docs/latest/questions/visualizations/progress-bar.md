@@ -9,7 +9,7 @@ source_url: >-
   https://github.com/metabase/metabase/blob/master/docs/questions/visualizations/progress-bar.md
 layout: new-docs
 redirect_from:
-  - /docs/latest/questions/sharing/visualizations/progress-bar
+  - /latest/questions/sharing/visualizations/progress-bar
 latest: true
 ---
 

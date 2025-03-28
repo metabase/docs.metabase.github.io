@@ -8,8 +8,8 @@ title: 'Google Sign-In'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/people-and-groups/google-sign-in.md'
 layout: new-docs
 redirect_from:
-    - /docs/v0.52/administration-guide/10-single-sign-on
-    - /docs/v0.52/people-and-groups/google-and-ldap
+    - /v0.52/administration-guide/10-single-sign-on
+    - /v0.52/people-and-groups/google-and-ldap
 ---
 
 # Google Sign-In

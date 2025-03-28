@@ -8,7 +8,7 @@ title: 'Set up email'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/configuring-metabase/email.md'
 layout: new-docs
 redirect_from:
-    - /docs/v0.54/administration-guide/02-setting-up-email
+    - /v0.54/administration-guide/02-setting-up-email
 ---
 
 # Set up email

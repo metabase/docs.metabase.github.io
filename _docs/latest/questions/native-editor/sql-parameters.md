@@ -9,7 +9,7 @@ source_url: >-
   https://github.com/metabase/metabase/blob/master/docs/questions/native-editor/sql-parameters.md
 layout: new-docs
 redirect_from:
-  - /docs/latest/users-guide/13-sql-parameters
+  - /latest/users-guide/13-sql-parameters
 latest: true
 ---
 

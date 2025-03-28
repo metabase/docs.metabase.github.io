@@ -9,8 +9,8 @@ source_url: >-
   https://github.com/metabase/metabase/blob/master/docs/questions/query-builder/expressions/cumulative.md
 layout: new-docs
 redirect_from:
-  - /docs/latest/questions/expressions/cumulativesum
-  - /docs/latest/questions/expressions/cumulativecount
+  - /latest/questions/expressions/cumulativesum
+  - /latest/questions/expressions/cumulativecount
 latest: true
 ---
 

@@ -9,7 +9,7 @@ source_url: >-
   https://github.com/metabase/metabase/blob/master/docs/installation-and-operation/running-metabase-on-azure.md
 layout: new-docs
 redirect_from:
-  - /docs/latest/operations-guide/running-metabase-on-azure
+  - /latest/operations-guide/running-metabase-on-azure
 latest: true
 ---
 

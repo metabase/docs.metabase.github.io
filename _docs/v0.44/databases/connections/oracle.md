@@ -8,7 +8,7 @@ title: 'Working with Oracle in Metabase'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/databases/connections/oracle.md'
 layout: new-docs
 redirect_from:
-    - /docs/v0.44/administration-guide/databases/oracle
+    - /v0.44/administration-guide/databases/oracle
 ---
 
 # Working with Oracle in Metabase

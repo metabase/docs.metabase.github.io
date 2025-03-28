@@ -8,7 +8,7 @@ title: 'Working with Google Analytics in Metabase'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/databases/connections/google-analytics.md'
 layout: new-docs
 redirect_from:
-    - /docs/v0.45/administration-guide/databases/google-analytics
+    - /v0.45/administration-guide/databases/google-analytics
 ---
 
 # Working with Google Analytics in Metabase

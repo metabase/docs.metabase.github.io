@@ -8,7 +8,7 @@ title: 'Running Metabase on Docker'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/installation-and-operation/running-metabase-on-docker.md'
 layout: new-docs
 redirect_from:
-    - /docs/master/operations-guide/running-metabase-on-docker
+    - /master/operations-guide/running-metabase-on-docker
 ---
 
 # Running Metabase on Docker

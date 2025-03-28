@@ -9,7 +9,7 @@ source_url: >-
   https://github.com/metabase/metabase/blob/master/docs/databases/connections/snowflake.md
 layout: new-docs
 redirect_from:
-  - /docs/latest/administration-guide/databases/snowflake
+  - /latest/administration-guide/databases/snowflake
 latest: true
 ---
 

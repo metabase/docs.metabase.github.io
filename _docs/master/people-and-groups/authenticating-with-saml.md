@@ -8,7 +8,7 @@ title: 'SAML-based authentication'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/people-and-groups/authenticating-with-saml.md'
 layout: new-docs
 redirect_from:
-    - /docs/master/enterprise-guide/authenticating-with-saml
+    - /master/enterprise-guide/authenticating-with-saml
 ---
 
 # SAML-based authentication

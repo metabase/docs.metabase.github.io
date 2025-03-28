@@ -8,7 +8,7 @@ title: 'Data sandboxes'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/permissions/data-sandboxes.md'
 layout: new-docs
 redirect_from:
-    - /docs/v0.50/enterprise-guide/data-sandboxes
+    - /v0.50/enterprise-guide/data-sandboxes
 ---
 
 # Data sandboxes

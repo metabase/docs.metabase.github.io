@@ -8,7 +8,7 @@ title: 'Gauge chart'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/questions/visualizations/gauge.md'
 layout: new-docs
 redirect_from:
-    - /docs/master/questions/sharing/visualizations/gauge
+    - /master/questions/sharing/visualizations/gauge
 ---
 
 # Gauge chart

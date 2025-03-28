@@ -8,7 +8,7 @@ title: 'Events and timelines'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/exploration-and-organization/events-and-timelines.md'
 layout: new-docs
 redirect_from:
-    - /docs/v0.50/users-guide/events-and-timelines
+    - /v0.50/users-guide/events-and-timelines
 ---
 
 # Events and timelines

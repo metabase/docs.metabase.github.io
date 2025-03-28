@@ -9,8 +9,8 @@ source_url: >-
   https://github.com/metabase/metabase/blob/master/docs/configuring-metabase/caching.md
 layout: new-docs
 redirect_from:
-  - /docs/latest/administration-guide/14-caching
-  - /docs/latest/enterprise-guide/cache
+  - /latest/administration-guide/14-caching
+  - /latest/enterprise-guide/cache
 latest: true
 ---
 

@@ -8,7 +8,7 @@ title: 'Auditing tools'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/usage-and-performance-tools/audit.md'
 layout: new-docs
 redirect_from:
-    - /docs/v0.50/enterprise-guide/audit
+    - /v0.50/enterprise-guide/audit
 ---
 
 # Auditing tools

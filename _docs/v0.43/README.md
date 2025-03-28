@@ -6,7 +6,7 @@ show_title_breadcrumb: true
 category: 'Table of Contents'
 title: 'Getting started'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/README.md'
-permalink: /docs/v0.43/index.html
+permalink: /v0.43/index.html
 layout: docs
 ---
 

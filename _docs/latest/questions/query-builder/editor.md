@@ -9,7 +9,7 @@ source_url: >-
   https://github.com/metabase/metabase/blob/master/docs/questions/query-builder/editor.md
 layout: new-docs
 redirect_from:
-  - /docs/latest/questions/query-builder/introduction
+  - /latest/questions/query-builder/introduction
 latest: true
 ---
 

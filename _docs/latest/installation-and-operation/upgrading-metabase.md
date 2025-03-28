@@ -9,7 +9,7 @@ source_url: >-
   https://github.com/metabase/metabase/blob/master/docs/installation-and-operation/upgrading-metabase.md
 layout: new-docs
 redirect_from:
-  - /docs/latest/operations-guide/upgrading-metabase
+  - /latest/operations-guide/upgrading-metabase
 latest: true
 ---
 

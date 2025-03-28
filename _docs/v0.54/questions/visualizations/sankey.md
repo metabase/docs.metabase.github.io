@@ -8,7 +8,7 @@ title: 'Sankey charts'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/questions/visualizations/sankey.md'
 layout: new-docs
 redirect_from:
-    - /docs/v0.54/questions/sharing/visualizations/sankey
+    - /v0.54/questions/sharing/visualizations/sankey
 ---
 
 # Sankey charts

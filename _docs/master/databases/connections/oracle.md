@@ -8,7 +8,7 @@ title: Oracle
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/databases/connections/oracle.md'
 layout: new-docs
 redirect_from:
-    - /docs/master/administration-guide/databases/oracle
+    - /master/administration-guide/databases/oracle
 ---
 
 # Oracle

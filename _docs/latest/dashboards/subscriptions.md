@@ -9,8 +9,8 @@ source_url: >-
   https://github.com/metabase/metabase/blob/master/docs/dashboards/subscriptions.md
 layout: new-docs
 redirect_from:
-  - /docs/latest/users-guide/dashboard-subscriptions
-  - /docs/latest/enterprise-guide/dashboards-subscriptions
+  - /latest/users-guide/dashboard-subscriptions
+  - /latest/enterprise-guide/dashboards-subscriptions
 latest: true
 ---
 

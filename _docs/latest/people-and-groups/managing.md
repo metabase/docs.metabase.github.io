@@ -9,7 +9,7 @@ source_url: >-
   https://github.com/metabase/metabase/blob/master/docs/people-and-groups/managing.md
 layout: new-docs
 redirect_from:
-  - /docs/latest/administration-guide/04-managing-users
+  - /latest/administration-guide/04-managing-users
 latest: true
 ---
 

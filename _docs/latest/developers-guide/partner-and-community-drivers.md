@@ -9,7 +9,7 @@ source_url: >-
   https://github.com/metabase/metabase/blob/master/docs/developers-guide/partner-and-community-drivers.md
 layout: new-docs
 redirect_from:
-  - /docs/latest/developers-guide-drivers
+  - /latest/developers-guide-drivers
 latest: true
 ---
 

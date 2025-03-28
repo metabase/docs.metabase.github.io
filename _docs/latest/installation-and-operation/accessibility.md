@@ -9,8 +9,8 @@ source_url: >-
   https://github.com/metabase/metabase/blob/master/docs/installation-and-operation/accessibility.md
 layout: new-docs
 redirect_from:
-  - /docs/latest/accessibility
-  - /docs/latest/people-and-groups/accessibility
+  - /latest/accessibility
+  - /latest/people-and-groups/accessibility
 latest: true
 ---
 

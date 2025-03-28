@@ -9,7 +9,7 @@ source_url: >-
   https://github.com/metabase/metabase/blob/master/docs/questions/query-builder/expressions-list.md
 layout: new-docs
 redirect_from:
-  - /docs/latest/users-guide/expressions-list
+  - /latest/users-guide/expressions-list
 latest: true
 ---
 

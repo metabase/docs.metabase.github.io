@@ -3,7 +3,7 @@ version: v0.10.3
 category: 'Table of Contents'
 title: README
 source_url: 'https://github.com/metabase/metabase-init/blob/master/docs/README.md'
-permalink: /docs/v0.10.3/index.html
+permalink: /v0.10.3/index.html
 ---
 
 ## For Users

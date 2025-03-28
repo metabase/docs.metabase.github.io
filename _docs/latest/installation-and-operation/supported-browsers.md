@@ -9,7 +9,7 @@ source_url: >-
   https://github.com/metabase/metabase/blob/master/docs/installation-and-operation/supported-browsers.md
 layout: new-docs
 redirect_from:
-  - /docs/latest/administration-guide/supported-browsers
+  - /latest/administration-guide/supported-browsers
 latest: true
 ---
 

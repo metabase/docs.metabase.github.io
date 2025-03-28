@@ -8,7 +8,7 @@ title: 'SAML with Microsoft Entra ID'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/people-and-groups/saml-azure.md'
 layout: new-docs
 redirect_from:
-    - /docs/v0.52/enterprise-guide/authenticating-with-saml-azure-ad
+    - /v0.52/enterprise-guide/authenticating-with-saml-azure-ad
 ---
 
 # SAML with Microsoft Entra ID

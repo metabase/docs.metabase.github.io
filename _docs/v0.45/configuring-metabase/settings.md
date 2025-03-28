@@ -8,7 +8,7 @@ title: 'General settings'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/configuring-metabase/settings.md'
 layout: new-docs
 redirect_from:
-    - /docs/v0.45/administration-guide/08-configuration-settings
+    - /v0.45/administration-guide/08-configuration-settings
 ---
 
 # General settings

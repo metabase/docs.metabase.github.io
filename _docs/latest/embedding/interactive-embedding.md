@@ -9,8 +9,8 @@ source_url: >-
   https://github.com/metabase/metabase/blob/master/docs/embedding/interactive-embedding.md
 layout: new-docs
 redirect_from:
-  - /docs/latest/enterprise-guide/full-app-embedding
-  - /docs/latest/embedding/full-app-embedding
+  - /latest/enterprise-guide/full-app-embedding
+  - /latest/embedding/full-app-embedding
 latest: true
 ---
 

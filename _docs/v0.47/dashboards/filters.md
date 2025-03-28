@@ -8,7 +8,7 @@ title: 'Dashboard filters'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/dashboards/filters.md'
 layout: new-docs
 redirect_from:
-    - /docs/v0.47/users-guide/08-dashboard-filters
+    - /v0.47/users-guide/08-dashboard-filters
 ---
 
 # Dashboard filters

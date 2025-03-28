@@ -9,7 +9,7 @@ source_url: >-
   https://github.com/metabase/metabase/blob/master/docs/installation-and-operation/installing-metabase.md
 layout: new-docs
 redirect_from:
-  - /docs/latest/operations-guide/installing-metabase
+  - /latest/operations-guide/installing-metabase
 latest: true
 ---
 

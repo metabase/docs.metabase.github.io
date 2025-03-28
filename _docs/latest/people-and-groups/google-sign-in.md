@@ -9,8 +9,8 @@ source_url: >-
   https://github.com/metabase/metabase/blob/master/docs/people-and-groups/google-sign-in.md
 layout: new-docs
 redirect_from:
-  - /docs/latest/administration-guide/10-single-sign-on
-  - /docs/latest/people-and-groups/google-and-ldap
+  - /latest/administration-guide/10-single-sign-on
+  - /latest/people-and-groups/google-and-ldap
 latest: true
 ---
 

@@ -9,7 +9,7 @@ source_url: >-
   https://github.com/metabase/metabase/blob/master/docs/data-modeling/field-types.md
 layout: new-docs
 redirect_from:
-  - /docs/latest/users-guide/field-types
+  - /latest/users-guide/field-types
 latest: true
 ---
 

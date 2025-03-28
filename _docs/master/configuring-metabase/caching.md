@@ -8,8 +8,8 @@ title: 'Caching query results'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/configuring-metabase/caching.md'
 layout: new-docs
 redirect_from:
-    - /docs/master/administration-guide/14-caching
-    - /docs/master/enterprise-guide/cache
+    - /master/administration-guide/14-caching
+    - /master/enterprise-guide/cache
 ---
 
 # Caching query results

@@ -8,7 +8,7 @@ title: 'Partner and community drivers'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/developers-guide/partner-and-community-drivers.md'
 layout: new-docs
 redirect_from:
-    - /docs/v0.50/developers-guide-drivers
+    - /v0.50/developers-guide-drivers
 ---
 
 # Partner and community drivers

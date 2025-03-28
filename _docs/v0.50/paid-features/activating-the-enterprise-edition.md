@@ -8,7 +8,7 @@ title: 'Activating your Metabase commercial license'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/paid-features/activating-the-enterprise-edition.md'
 layout: new-docs
 redirect_from:
-    - /docs/v0.50/enterprise-guide/activating-the-enterprise-edition
+    - /v0.50/enterprise-guide/activating-the-enterprise-edition
 ---
 
 # Activating your Metabase commercial license

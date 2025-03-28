@@ -8,7 +8,7 @@ title: 'SSH tunneling'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/databases/ssh-tunnel.md'
 layout: new-docs
 redirect_from:
-    - /docs/master/administration-guide/ssh-tunnel-for-database-connections
+    - /master/administration-guide/ssh-tunnel-for-database-connections
 ---
 
 # SSH tunneling

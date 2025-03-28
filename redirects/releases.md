@@ -1,5 +1,5 @@
 ---
-permalink: /docs/latest/releases
+permalink: /latest/releases
 redirect_to: https://github.com/metabase/metabase/releases
 ---
 

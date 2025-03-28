@@ -8,7 +8,7 @@ title: Snowflake
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/databases/connections/snowflake.md'
 layout: new-docs
 redirect_from:
-    - /docs/master/administration-guide/databases/snowflake
+    - /master/administration-guide/databases/snowflake
 ---
 
 # Snowflake

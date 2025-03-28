@@ -9,8 +9,8 @@ source_url: >-
   https://github.com/metabase/metabase/blob/master/docs/installation-and-operation/monitoring-metabase.md
 layout: new-docs
 redirect_from:
-  - /docs/latest/operations-guide/jmx-monitoring
-  - /docs/latest/operations-guide/enable-jmx
+  - /latest/operations-guide/jmx-monitoring
+  - /latest/operations-guide/enable-jmx
 latest: true
 ---
 

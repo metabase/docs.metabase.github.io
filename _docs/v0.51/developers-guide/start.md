@@ -8,7 +8,7 @@ title: 'Developer Guide'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/developers-guide/start.md'
 layout: new-docs
 redirect_from:
-    - /docs/v0.51/developers-guide
+    - /v0.51/developers-guide
 ---
 
 # Developer Guide

@@ -9,7 +9,7 @@ source_url: >-
   https://github.com/metabase/metabase/blob/master/docs/configuring-metabase/customizing-jetty-webserver.md
 layout: new-docs
 redirect_from:
-  - /docs/latest/operations-guide/customizing-jetty-webserver
+  - /latest/operations-guide/customizing-jetty-webserver
 latest: true
 ---
 

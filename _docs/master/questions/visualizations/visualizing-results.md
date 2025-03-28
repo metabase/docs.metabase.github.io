@@ -8,8 +8,8 @@ title: 'Visualization overview'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/questions/visualizations/visualizing-results.md'
 layout: new-docs
 redirect_from:
-    - /docs/master/users-guide/05-visualizing-results
-    - /docs/master/questions/sharing/visualizing-results
+    - /master/users-guide/05-visualizing-results
+    - /master/questions/sharing/visualizing-results
 ---
 
 # Visualization overview

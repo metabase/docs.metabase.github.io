@@ -8,7 +8,7 @@ title: 'Progress bars'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/questions/visualizations/progress-bar.md'
 layout: new-docs
 redirect_from:
-    - /docs/v0.54/questions/sharing/visualizations/progress-bar
+    - /v0.54/questions/sharing/visualizations/progress-bar
 ---
 
 # Progress bars

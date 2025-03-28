@@ -8,7 +8,7 @@ title: 'Google BigQuery'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/databases/connections/bigquery.md'
 layout: new-docs
 redirect_from:
-    - /docs/v0.45/administration-guide/databases/bigquery
+    - /v0.45/administration-guide/databases/bigquery
 ---
 
 # Google BigQuery

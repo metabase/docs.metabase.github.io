@@ -9,7 +9,7 @@ source_url: >-
   https://github.com/metabase/metabase/blob/master/docs/installation-and-operation/running-metabase-on-docker.md
 layout: new-docs
 redirect_from:
-  - /docs/latest/operations-guide/running-metabase-on-docker
+  - /latest/operations-guide/running-metabase-on-docker
 latest: true
 ---
 

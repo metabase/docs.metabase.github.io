@@ -8,7 +8,7 @@ title: 'Languages and localization'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/configuring-metabase/localization.md'
 layout: new-docs
 redirect_from:
-    - /docs/master/administration-guide/localization
+    - /master/administration-guide/localization
 ---
 
 # Languages and localization

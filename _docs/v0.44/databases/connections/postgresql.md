@@ -8,7 +8,7 @@ title: 'Connecting to a PostgreSQL database'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/databases/connections/postgresql.md'
 layout: new-docs
 redirect_from:
-    - /docs/v0.44/administration-guide/databases/postgresql
+    - /v0.44/administration-guide/databases/postgresql
 ---
 
 # Connecting to a PostgreSQL database

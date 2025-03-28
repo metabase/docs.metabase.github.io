@@ -8,8 +8,8 @@ title: 'Data reference'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/exploration-and-organization/data-model-reference.md'
 layout: new-docs
 redirect_from:
-    - /docs/v0.53/users-guide/12-data-model-reference
-    - /docs/v0.53/questions/native-editor/data-model-reference
+    - /v0.53/users-guide/12-data-model-reference
+    - /v0.53/questions/native-editor/data-model-reference
 ---
 
 # Data reference

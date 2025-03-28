@@ -9,7 +9,7 @@ source_url: >-
   https://github.com/metabase/metabase/blob/master/docs/developers-guide/code-reviews.md
 layout: new-docs
 redirect_from:
-  - /docs/latest/code-reviews
+  - /latest/code-reviews
 latest: true
 ---
 

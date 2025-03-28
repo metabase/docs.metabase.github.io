@@ -9,8 +9,8 @@ source_url: >-
   https://github.com/metabase/metabase/blob/master/docs/exploration-and-organization/data-model-reference.md
 layout: new-docs
 redirect_from:
-  - /docs/latest/users-guide/12-data-model-reference
-  - /docs/latest/questions/native-editor/data-model-reference
+  - /latest/users-guide/12-data-model-reference
+  - /latest/questions/native-editor/data-model-reference
 latest: true
 ---
 
