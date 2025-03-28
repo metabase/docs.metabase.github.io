@@ -13,5 +13,5 @@ For product releases, see the list of [Metabase releases](https://github.com/met
 
 {% for version in site.available_versions reversed %}
 
-- [{{ version }}](/docs/{{ version }}/)
+- [{{ version }}](/{{ version }}/)
 {% endfor %}
