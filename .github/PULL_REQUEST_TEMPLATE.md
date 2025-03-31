@@ -1,2 +1,0 @@
-- Did you remember to add a trailing slash if you added permalink frontmatter?
-- If you wrote a new blog post, have you added `redirect_from` in frontmatter?
