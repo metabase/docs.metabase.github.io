@@ -92,7 +92,7 @@ This expression would return rows where `Created At` is between January 1, 2020 
 
 ## List of expressions
 
-See a full list of [expressions][expression-list].
+See a full list of [expressions](../expressions-list).
 
 For a tutorial on expressions, see [Custom expressions in the query builder][custom-expressions].
 

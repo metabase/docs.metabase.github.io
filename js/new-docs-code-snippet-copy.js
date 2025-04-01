@@ -18,7 +18,10 @@ function addCopyFunction(copyButton, text) {
 }
 
 document.querySelectorAll("code").forEach((codeSnippet) => {
+  console.log(codeSnippet);
+  console.log(codeSnippet.innerHTML.length)
   if (
+    codeSnippet.classList.length === 0 ||
     codeSnippet.classList.contains("language-plaintext") ||
     codeSnippet.classList.contains("do-not-display-copy-button")
   ) {
