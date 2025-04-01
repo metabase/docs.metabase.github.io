@@ -1,7 +1,12 @@
 (ns tasks.util
   (:require [clj-yaml.core :as yaml]))
 
-(defn log [level message] (println (str level " " message)))
+(defn log [level message]
+  (when-not (System/getenv "QUIET")
+    (println (str level " " message))))
+
+(defn generate-yaml [data]
+  (yaml/generate-string data :dumper-options {:flow-style :block}))
 
 (defn update-frontmatter!
   "Reads a file, updates its YAML frontmatter by applying f to the value of the
@@ -24,6 +29,6 @@
         updated (apply f data args)]
     (when (not= data updated)
       (println "Writing changes to frontmatter in: " file)
-      (let [new-front (yaml/generate-string updated :dumper-options {:flow-style :block})
+      (let [new-front (generate-yaml updated)
             new-content (str "---\n" new-front "---\n" rest)]
         (spit file new-content)))))

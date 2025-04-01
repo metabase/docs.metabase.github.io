@@ -58,29 +58,73 @@
   (doseq [file (fs/glob dir "**/*.md")]
     (process-md (str file) dry-run?)))
 
-(do
-  (defn process-yaml [path dry-run?]
-    (let [parsed (yaml/parse-string (slurp path))
-          updated (walk/postwalk
-                    (fn [node]
-                      (if (and (map? node)
-                               (contains? node :url)
-                               (some #(str/starts-with? (:url node) %) (map #(str "/" % "/") outbound-link-roots)))
-                        (update-in node [:url] #(str "https://metabase.com" %))
-                        node))
-                    parsed)]
-      (if dry-run?
-        (do (u/log "  📝" (str "Dry run: Would update file: " path))
-            updated)
-        (do
-          (spit path (yaml/generate-string updated :dumper-options {:flow-style :block}))
-          (u/log "  ✅" (str "Updated file: " path))))))
-  (process-yaml "_data/docs/nav/latest.yml" true))
+;; YAML processing for _data dir (which stores nav info):
 
+(defn- add-metabase-prefix? [node]
+  (and (map? node)
+       (contains? node :url)
+       (not (str/starts-with? (:url node) "/docs/"))
+       (not (str/starts-with? (:url node) "https://metabase.com"))
+       (not (str/starts-with? (:url node) "https://www.metabase.com"))
+       (not (str/starts-with? (:url node) "http://metabase.com"))
+       (not (str/starts-with? (:url node) "http://www.metabase.com"))))
+
+(defn- remove-metabase-prefix? [node]
+  (and (map? node)
+       (contains? node :url)
+       (or (str/starts-with? (:url node) "https://metabase.com/docs")
+           (str/starts-with? (:url node) "https://www.metabase.com/docs")
+           (str/starts-with? (:url node) "http://metabase.com/docs")
+           (str/starts-with? (:url node) "http://www.metabase.com/docs"))))
+
+(defn- update-node [node]
+  (let [add? (add-metabase-prefix? node)
+        remove? (remove-metabase-prefix? node)]
+    (when add? (u/log "  📝" (str "Adding prefix to: " (:url node))))
+    (when remove? (u/log "  📝" (str "Removing prefix from: " (:url node))))
+    (cond-> node
+      add? (update-in [:url] #(str "https://metabase.com" %))
+      remove? (update-in [:url]
+                         (comp
+                           #(str/replace % #"^http://www.metabase.com" "")
+                           #(str/replace % #"^http://metabase.com" "")
+                           #(str/replace % #"^https://www.metabase.com" "")
+                           #(str/replace % #"^https://metabase.com" ""))))))
+
+(comment
+  (mapv (comp :url update-node)
+        [{:url "/learn/latest/cloud/start"}
+         {:url "http://www.metabase.com/docs/latest/cloud/start"}])
+;; => ["https://metabase.com/learn/latest/cloud/start"
+;;     "/docs/latest/cloud/start"]
+  )
+
+(defn- process-yaml [path dry-run?]
+  (let [parsed (yaml/parse-string (slurp path))
+        updated (walk/postwalk
+                  update-node
+                  parsed)]
+    (cond
+      dry-run?
+      (u/log "  📝" (str "Dry run: Would update file: " path))
+
+      (= parsed updated)
+      (u/log "  ℹ️" (str "No changes for file: " path))
+
+      :else
+      (do (spit path (u/generate-yaml updated))
+          (u/log "  ✅" (str "Updated file: " path))))))
+
+(comment
+
+  (process-yaml "_data/docs/nav/latest.yml" false)
+
+  )
 
 (defn- crawl-data-directory
   [dry-run?]
-  (doseq [file (concat (fs/glob "_data" "**/*.yaml") (fs/glob "_data" "**/*.yml"))]
+  (doseq [file (concat (fs/glob "_data" "**/*.yaml")
+                       (fs/glob "_data" "**/*.yml"))]
     (process-yaml (str file) dry-run?)))
 
 (defn -main
