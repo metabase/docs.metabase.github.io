@@ -32,13 +32,13 @@ The visualization settings on a card are independent of the settings on the orig
 
 Go to your SQL question and [change the visualization type](../questions/visualizations/visualizing-results) to a table. Then, check if any of the following situations apply to the raw query results:
 
-- [Aggregations (counts, sums, etc.) are wrong](/learn/grow-your-data-skills/learn-sql/debugging-sql/sql-logic#aggregated-results-counts-sums-etc-are-wrong).
-- [Results have duplicated rows](/learn/grow-your-data-skills/learn-sql/debugging-sql/sql-logic-duplicated-data).
-- [Results are missing rows](/learn/grow-your-data-skills/learn-sql/debugging-sql/sql-logic-missing-data).
+- [Aggregations (counts, sums, etc.) are wrong](https://metabase.com/learn/grow-your-data-skills/learn-sql/debugging-sql/sql-logic#aggregated-results-counts-sums-etc-are-wrong).
+- [Results have duplicated rows](https://metabase.com/learn/grow-your-data-skills/learn-sql/debugging-sql/sql-logic-duplicated-data).
+- [Results are missing rows](https://metabase.com/learn/grow-your-data-skills/learn-sql/debugging-sql/sql-logic-missing-data).
 
 **Explanation**
 
-If your question or dashboard card is powered by a handwritten [SQL query](../questions/native-editor/writing-sql) rather than the [query builder](../questions/query-builder/editor), your visualization is going to be more sensitive to changes in the underlying data (for example, renamed fields, or the sudden appearance of a wild null value). To learn more, read about [Common reasons for unexpected query results](/learn/grow-your-data-skills/learn-sql/debugging-sql/sql-logic#common-reasons-for-unexpected-query-results).
+If your question or dashboard card is powered by a handwritten [SQL query](../questions/native-editor/writing-sql) rather than the [query builder](../questions/query-builder/editor), your visualization is going to be more sensitive to changes in the underlying data (for example, renamed fields, or the sudden appearance of a wild null value). To learn more, read about [Common reasons for unexpected query results](https://metabase.com/learn/grow-your-data-skills/learn-sql/debugging-sql/sql-logic#common-reasons-for-unexpected-query-results).
 
 If you're having problems with things like SQL syntax errors or [SQL variables](/glossary/variable#example-variable-in-metabase), see [Troubleshooting SQL questions](./sql) for more help.
 

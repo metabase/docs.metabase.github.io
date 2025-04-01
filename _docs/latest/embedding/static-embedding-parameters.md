@@ -250,5 +250,5 @@ If your static embedding URL exceeds the maximum header size, you'll see a log m
 ## Further reading
 
 - [Static embedding documentation](./static-embedding).
-- [Strategies for delivering customer-facing analytics](/learn/metabase-basics/embedding/overview).
-- [Publishing data visualizations to the web](/learn/metabase-basics/embedding/charts-and-dashboards).
+- [Strategies for delivering customer-facing analytics](https://metabase.com/learn/metabase-basics/embedding/overview).
+- [Publishing data visualizations to the web](https://metabase.com/learn/metabase-basics/embedding/charts-and-dashboards).

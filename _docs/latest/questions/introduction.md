@@ -36,7 +36,7 @@ Selecting **Question** will take you to the [editor in the graphical query build
 
 Selecting **SQL/native code** will open the [native code editor](./native-editor/writing-sql).
 
-Even if you know SQL, you should still check out the [graphical query builder](./query-builder/editor), as you can use it to build [interactive charts](/learn/metabase-basics/querying-and-dashboards/questions/drill-through).
+Even if you know SQL, you should still check out the [graphical query builder](./query-builder/editor), as you can use it to build [interactive charts](https://metabase.com/learn/metabase-basics/querying-and-dashboards/questions/drill-through).
 
 ### From an existing question
 

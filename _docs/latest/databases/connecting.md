@@ -87,4 +87,4 @@ If you've deleted the Metabase [Sample Database](/glossary/sample_database), go 
 
 - [Metadata editing](../data-modeling/metadata-editing).
 - [Setting data access permissions](../permissions/data).
-- [Metabase at scale](/learn/metabase-basics/administration/administration-and-operation/metabase-at-scale).
+- [Metabase at scale](https://metabase.com/learn/metabase-basics/administration/administration-and-operation/metabase-at-scale).

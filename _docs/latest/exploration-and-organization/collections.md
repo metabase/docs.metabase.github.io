@@ -122,8 +122,8 @@ You can upload data to collections. See [Uploading data](./uploads)]
 
 ## Further reading
 
-- [Keeping your analytics organized](/learn/metabase-basics/administration/administration-and-operation/same-page)
-- [Multiple environments](/learn/metabase-basics/administration/administration-and-operation/multi-env#one-collection-per-environment)
+- [Keeping your analytics organized](https://metabase.com/learn/metabase-basics/administration/administration-and-operation/same-page)
+- [Multiple environments](https://metabase.com/learn/metabase-basics/administration/administration-and-operation/multi-env#one-collection-per-environment)
 
 [dashboards]: ../dashboards/introduction
 [models]: ../data-modeling/models

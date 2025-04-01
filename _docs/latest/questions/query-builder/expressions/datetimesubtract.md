@@ -84,7 +84,7 @@ case(between(now, [Depart At], [Arrive By]), "Yes", "No")
 
 ## Accepted data types
 
-| [Data type](/learn/grow-your-data-skills/data-fundamentals/data-types-overview#examples-of-data-types) | Works with `datetimeSubtract` |
+| [Data type](https://metabase.com/learn/grow-your-data-skills/data-fundamentals/data-types-overview#examples-of-data-types) | Works with `datetimeSubtract` |
 | ------------------------------------------------------------------------------------------------------------------------------ | ----------------------------- |
 | String                                                                                                                         | ❌                            |
 | Number                                                                                                                         | ❌                            |
@@ -178,5 +178,5 @@ datetimeSubtract([Arrive By], 30, "minute")
 ## Further reading
 
 - [Custom expressions documentation](../expressions)
-- [Custom expressions tutorial](/learn/metabase-basics/querying-and-dashboards/questions/custom-expressions)
-- [Time series analysis](/learn/metabase-basics/querying-and-dashboards/time-series/start)
+- [Custom expressions tutorial](https://metabase.com/learn/metabase-basics/querying-and-dashboards/questions/custom-expressions)
+- [Time series analysis](https://metabase.com/learn/metabase-basics/querying-and-dashboards/time-series/start)

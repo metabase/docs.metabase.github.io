@@ -136,7 +136,7 @@ To undo this auto-connecting of cards, click on the toast that pops up when Meta
 
 ## Filtering dashboards with native/SQL questions
 
-If you're trying to connect a filter to a card with a native/SQL questions, you'll need to [add a variable or field filter to your query](../questions/native-editor/sql-parameters). For an in-depth article, check out [Adding filters to dashboards with SQL questions](/learn/metabase-basics/querying-and-dashboards/sql-in-metabase/filters).
+If you're trying to connect a filter to a card with a native/SQL questions, you'll need to [add a variable or field filter to your query](../questions/native-editor/sql-parameters). For an in-depth article, check out [Adding filters to dashboards with SQL questions](https://metabase.com/learn/metabase-basics/querying-and-dashboards/sql-in-metabase/filters).
 
 You can't connect a time grouping parameter widget to a card with a SQL question.
 
@@ -276,4 +276,4 @@ You can also set up a dashboard question to [update a filter on click](./interac
 - [Interactive dashboards](./interactive)
 - [Dashboard subscriptions](./subscriptions)
 - [Charts with multiple series](./multiple-series)
-- [Learn dashboards](/learn/metabase-basics/querying-and-dashboards/dashboards)
+- [Learn dashboards](https://metabase.com/learn/metabase-basics/querying-and-dashboards/dashboards)

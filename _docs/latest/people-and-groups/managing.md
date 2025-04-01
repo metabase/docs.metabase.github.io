@@ -231,5 +231,5 @@ To promote someone to become a group manager:
 ## Further reading
 
 - [Configure Single Sign-On (SSO)](./start#authentication).
-- [Permissions strategies](/learn/metabase-basics/administration/permissions/strategy).
-- [Multi-tenant permissions](/learn/metabase-basics/administration/permissions/multi-tenant-permissions).
+- [Permissions strategies](https://metabase.com/learn/metabase-basics/administration/permissions/strategy).
+- [Multi-tenant permissions](https://metabase.com/learn/metabase-basics/administration/permissions/multi-tenant-permissions).

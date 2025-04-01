@@ -140,7 +140,7 @@ If you want Metabase to treat a text or number column as a datetime column:
 - UNIXNanoSeconds->DateTime
 - UNIXSeconds->DateTime
 
-Casting is different from setting the [field type](./field-types). For example, say you have a "Created At" column with a string [data type](/learn/grow-your-data-skills/data-fundamentals/data-types-overview) in your database. You'll need to cast "Created At" to one of the datetime types above if you want to do things like:
+Casting is different from setting the [field type](./field-types). For example, say you have a "Created At" column with a string [data type](https://metabase.com/learn/grow-your-data-skills/data-fundamentals/data-types-overview) in your database. You'll need to cast "Created At" to one of the datetime types above if you want to do things like:
 
 - Create relative date filters, such as "Created At = Last week".
 - Use "Created At" with formulas like [datetimeAdd](../questions/query-builder/expressions/datetimeadd).
@@ -258,5 +258,5 @@ If Metabase supports JSON unfolding for your database, you can decide whether to
 
 ## Further reading
 
-- [Keeping your analytics organized](/learn/metabase-basics/administration/administration-and-operation/same-page)
-- [Data modeling tutorials](/learn/metabase-basics/getting-started/models)
+- [Keeping your analytics organized](https://metabase.com/learn/metabase-basics/administration/administration-and-operation/same-page)
+- [Data modeling tutorials](https://metabase.com/learn/metabase-basics/getting-started/models)

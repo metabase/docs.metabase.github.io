@@ -96,4 +96,4 @@ Because of how snippet folder permissions work, we recommend that you consider s
 
 ## Further reading
 
-- [Snippets](/learn/metabase-basics/querying-and-dashboards/sql-in-metabase/snippets).
+- [Snippets](https://metabase.com/learn/metabase-basics/querying-and-dashboards/sql-in-metabase/snippets).

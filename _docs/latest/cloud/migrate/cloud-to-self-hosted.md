@@ -32,7 +32,7 @@ A self-hosted Metabase comes with a built-in H2 application database (H2 is a fi
 
 We recommend using PostgreSQL as your application database, but you can use MySQL or MariaDB as well. Before starting the migration from Metabase Cloud, [configure the application database](/docs/latest/installation-and-operation/configuring-application-database) for your self-hosted instance.
 
-For more on why you should use PostgreSQL as your application database, check out [How to run Metabase in production](/learn/metabase-basics/administration/administration-and-operation/metabase-in-production).
+For more on why you should use PostgreSQL as your application database, check out [How to run Metabase in production](https://metabase.com/learn/metabase-basics/administration/administration-and-operation/metabase-in-production).
 
 ### If you're on a Pro plan, you'll need to switch to a self-hosted Pro plan
 

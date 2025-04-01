@@ -23,7 +23,7 @@ Metabase is built and packaged as a Java JAR file and can be run anywhere that J
 
 ## Self-hosting Metabase
 
-For an overview on how to self-host Metabase, check out [how to run Metabase in production](/learn/metabase-basics/administration/administration-and-operation/metabase-in-production).
+For an overview on how to self-host Metabase, check out [how to run Metabase in production](https://metabase.com/learn/metabase-basics/administration/administration-and-operation/metabase-in-production).
 
 ### Running on Docker (Recommended for self-hosting)
 

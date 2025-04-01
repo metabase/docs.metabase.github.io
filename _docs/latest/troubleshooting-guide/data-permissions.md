@@ -126,7 +126,7 @@ If you can’t solve your problem using the troubleshooting guides:
 [groups]: ../people-and-groups/managing#groups
 [group-permissions]: ../permissions/introduction#key-points-regarding-permissions
 [known-issues]: ./known-issues
-[learn-permissions]: /learn/metabase-basics/administration/permissions
+[learn-permissions]: https://metabase.com/learn/metabase-basics/administration/permissions
 [native-query-editing]: ../permissions/data#query-builder-and-native-create-queries-permission
 [pricing]: /pricing
 [proxies]: ./proxies

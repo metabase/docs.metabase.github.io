@@ -110,4 +110,4 @@ Now go forth and start letting your data get to know each other!
 
 ## Further reading
 
-- [Time series comparisons](/learn/metabase-basics/querying-and-dashboards/time-series/time-series-comparisons)
+- [Time series comparisons](https://metabase.com/learn/metabase-basics/querying-and-dashboards/time-series/time-series-comparisons)

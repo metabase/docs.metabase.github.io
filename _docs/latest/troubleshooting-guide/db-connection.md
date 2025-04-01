@@ -17,7 +17,7 @@ latest: true
 
 If you can't connect to your database, you'll need to figure out if the problem is happening with Metabase or your database server.
 
-If your database connection is successful, but the tables aren't showing up in the [Data Browser](/learn/metabase-basics/querying-and-dashboards/data-browser), go to [Troubleshooting missing tables](./cant-see-tables).
+If your database connection is successful, but the tables aren't showing up in the [Data Browser](https://metabase.com/learn/metabase-basics/querying-and-dashboards/data-browser), go to [Troubleshooting missing tables](./cant-see-tables).
 
 ## Troubleshooting connections to Metabase
 

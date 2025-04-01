@@ -29,10 +29,10 @@ To fix problems with your Metabase [application database](../installation-and-op
    - More people are using Metabase to access your database,
    - People are accessing your database more often, or
    - A script or application (other than Metabase) is accessing the database frequently.
-3. If specific tables are being queried a lot, try [Optimizing your table schemas](/learn/metabase-basics/administration/administration-and-operation/making-dashboards-faster#organize-data-to-anticipate-common-questions).
+3. If specific tables are being queried a lot, try [Optimizing your table schemas](https://metabase.com/learn/metabase-basics/administration/administration-and-operation/making-dashboards-faster#organize-data-to-anticipate-common-questions).
 4. Run a question from Metabase, then [run the same query](../questions/query-builder/editor#viewing-the-native-query-that-powers-your-question) directly against your database.
-   - If the queries take about the same time, your data or usage might be outgrowing your database. You can give your database more resources, or consider [upgrading your hardware](/learn/grow-your-data-skills/data-landscape/which-data-warehouse).
-   - If the query in Metabase takes longer than a direct query against your database, you might need to adjust the deployment of your Metabase app. Check out some options in [Metabase at scale](/learn/metabase-basics/administration/administration-and-operation/metabase-at-scale).
+   - If the queries take about the same time, your data or usage might be outgrowing your database. You can give your database more resources, or consider [upgrading your hardware](https://metabase.com/learn/grow-your-data-skills/data-landscape/which-data-warehouse).
+   - If the query in Metabase takes longer than a direct query against your database, you might need to adjust the deployment of your Metabase app. Check out some options in [Metabase at scale](https://metabase.com/learn/metabase-basics/administration/administration-and-operation/metabase-at-scale).
 5. If a script or third-party application is hitting your database with a lot of queries at a time:
    - Stop your script or application, and [clear any queued queries](#clearing-queued-queries).
    - Recommended: add a timeout to your script, schedule the script or application to run during off-hours, or replicate your database (and point your tools there instead).
@@ -76,7 +76,7 @@ By default, Metabase makes regular sync and scan queries against your database t
 
 **Explanation**
 
-If a question uses data stored as the wrong [data type](/learn/grow-your-data-skills/data-fundamentals/data-types-overview) in your database (most common with number, date, or timestamp values stored as strings), Metabase will generate a query that asks your database to convert the values on the fly. Typing your columns correctly at the schema level will help your database avoid that extra step to return results faster in Metabase.
+If a question uses data stored as the wrong [data type](https://metabase.com/learn/grow-your-data-skills/data-fundamentals/data-types-overview) in your database (most common with number, date, or timestamp values stored as strings), Metabase will generate a query that asks your database to convert the values on the fly. Typing your columns correctly at the schema level will help your database avoid that extra step to return results faster in Metabase.
 
 ## Related problems
 

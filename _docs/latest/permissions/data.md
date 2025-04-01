@@ -185,7 +185,7 @@ See [Upload permissions](../databases/uploads#add-people-to-a-group-with-data-ac
 
 - [Permissions introduction](./introduction)
 - [Impersonation](./impersonation)
-- [Learn permissions](/learn/metabase-basics/administration/permissions)
+- [Learn permissions](https://metabase.com/learn/metabase-basics/administration/permissions)
 - [Troubleshooting permissions](../troubleshooting-guide/permissions)
 - [Data sandboxing: setting row-level permissions][sandbox-rows]
 - [Advanced data sandboxing: limiting access to columns][sandbox-columns]
@@ -195,6 +195,6 @@ See [Upload permissions](../databases/uploads#add-people-to-a-group-with-data-ac
 [dashboard-subscriptions]: ../dashboards/subscriptions
 [data-sandboxing]: ./data-sandboxes
 [permissions-overview]: ./introduction
-[sandbox-columns]: /learn/metabase-basics/administration/permissions/data-sandboxing-column-permissions
-[sandbox-rows]: /learn/metabase-basics/administration/permissions/data-sandboxing-row-permissions
+[sandbox-columns]: https://metabase.com/learn/metabase-basics/administration/permissions/data-sandboxing-column-permissions
+[sandbox-rows]: https://metabase.com/learn/metabase-basics/administration/permissions/data-sandboxing-row-permissions
 [sql-snippet-folders]: ../questions/native-editor/snippets

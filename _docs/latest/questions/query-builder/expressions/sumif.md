@@ -118,7 +118,7 @@ To view those payments by month, set the **Group by** column to "Date Received: 
 
 ## Accepted data types
 
-| [Data type](/learn/grow-your-data-skills/data-fundamentals/data-types-overview#examples-of-data-types) | Works with `SumIf` |
+| [Data type](https://metabase.com/learn/grow-your-data-skills/data-fundamentals/data-types-overview#examples-of-data-types) | Works with `SumIf` |
 | ------------------------------------------------------------------------------------------------------------------------------ | ------------------ |
 | String                                                                                                                         | ❌                 |
 | Number                                                                                                                         | ✅                 |
@@ -283,4 +283,4 @@ SumIf([Payment], [Plan] = "Business" OR [Plan] = "Premium")
 ## Further reading
 
 - [Custom expressions documentation](../expressions)
-- [Custom expressions tutorial](/learn/metabase-basics/querying-and-dashboards/questions/custom-expressions)
+- [Custom expressions tutorial](https://metabase.com/learn/metabase-basics/querying-and-dashboards/questions/custom-expressions)

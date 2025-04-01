@@ -133,4 +133,4 @@ Note that for questions outside of that collection, you can only temporarily app
 
 ## Further reading
 
-- [Keeping your Metabase organized](/learn/metabase-basics/administration/administration-and-operation/same-page)
+- [Keeping your Metabase organized](https://metabase.com/learn/metabase-basics/administration/administration-and-operation/same-page)

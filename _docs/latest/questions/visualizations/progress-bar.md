@@ -65,4 +65,4 @@ Selecting "**Style**: Percent" in format options will only change how the result
 
 - [Gauge charts](./gauge)
 - [Goal lines on bar and line charts](./line-bar-and-area-charts#goal-lines)
-- Tutorial: [Which chart should I use?](/learn/metabase-basics/querying-and-dashboards/visualization/chart-guide)
+- Tutorial: [Which chart should I use?](https://metabase.com/learn/metabase-basics/querying-and-dashboards/visualization/chart-guide)

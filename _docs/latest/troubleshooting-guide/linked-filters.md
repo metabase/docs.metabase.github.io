@@ -78,6 +78,6 @@ See [Limitations of linking filters](../dashboards/linked-filters#limitations-of
 
 [filter-widget-gloss]: /glossary/filter_widget
 [foreign-key-gloss]: /glossary/foreign_key
-[join-types]: /learn/grow-your-data-skills/learn-sql/working-with-sql/sql-join-types
-[learn-linking]: /learn/metabase-basics/querying-and-dashboards/dashboards/linking-filters
+[join-types]: https://metabase.com/learn/grow-your-data-skills/learn-sql/working-with-sql/sql-join-types
+[learn-linking]: https://metabase.com/learn/metabase-basics/querying-and-dashboards/dashboards/linking-filters
 [linked-filter-gloss]: /glossary/linked_filter

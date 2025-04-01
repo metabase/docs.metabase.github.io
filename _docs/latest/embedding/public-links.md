@@ -62,7 +62,7 @@ See docs for the [export format endpoint](/docs/latest/api#tag/public/GET/public
 
 ## Simulating drill-through with public links
 
-Metabase's automatic [drill-through](/learn/metabase-basics/querying-and-dashboards/questions/drill-through) won't work on public dashboards because public links don't give people access to your raw data.
+Metabase's automatic [drill-through](https://metabase.com/learn/metabase-basics/querying-and-dashboards/questions/drill-through) won't work on public dashboards because public links don't give people access to your raw data.
 
 You can simulate drill-through on a public dashboard by setting up a [custom click behavior](../dashboards/interactive) that sends people from one public link to another public link.
 
@@ -195,6 +195,6 @@ Admins can see all publicly shared questions, dashboards, and actions in **Admin
 
 ## Further reading
 
-- [Publishing data visualizations to the web](/learn/metabase-basics/embedding/charts-and-dashboards).
+- [Publishing data visualizations to the web](https://metabase.com/learn/metabase-basics/embedding/charts-and-dashboards).
 - [Customizing Metabase's appearance](../configuring-metabase/appearance).
 - [Embedding introduction](../embedding/start).

@@ -99,7 +99,7 @@ For more gory details, see [Limitations](#limitations).
 
 ## Accepted data types
 
-| [Data type](/learn/grow-your-data-skills/data-fundamentals/data-types-overview#examples-of-data-types) | Works with `convertTimezone` |
+| [Data type](https://metabase.com/learn/grow-your-data-skills/data-fundamentals/data-types-overview#examples-of-data-types) | Works with `convertTimezone` |
 | ------------------------------------------------------------------------------------------------------------------------------ | ---------------------------- |
 | String                                                                                                                         | ❌                           |
 | Number                                                                                                                         | ❌                           |
@@ -256,5 +256,5 @@ convertTimezone(convertTimezone([Source Time], "UTC"), "Canada/Eastern", "UTC")
 ## Further reading
 
 - [Custom expressions documentation](../expressions)
-- [Custom expressions tutorial](/learn/metabase-basics/querying-and-dashboards/questions/custom-expressions)
-- [Time series analysis](/learn/metabase-basics/querying-and-dashboards/time-series/start)
+- [Custom expressions tutorial](https://metabase.com/learn/metabase-basics/querying-and-dashboards/questions/custom-expressions)
+- [Time series analysis](https://metabase.com/learn/metabase-basics/querying-and-dashboards/time-series/start)

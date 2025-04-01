@@ -109,6 +109,6 @@ Some plans contain additional functionality for organizing snippets into folders
 
 ## Learn more
 
-- [Snippets](/learn/metabase-basics/querying-and-dashboards/sql-in-metabase/sql-snippets)
-- [Snippets vs Saved Questions vs Views](/learn/metabase-basics/querying-and-dashboards/sql-in-metabase/organizing-sql).
+- [Snippets](https://metabase.com/learn/metabase-basics/querying-and-dashboards/sql-in-metabase/sql-snippets)
+- [Snippets vs Saved Questions vs Views](https://metabase.com/learn/metabase-basics/querying-and-dashboards/sql-in-metabase/organizing-sql).
 - If you're having trouble with your SQL query, go to the [SQL troubleshooting guide](../../troubleshooting-guide/sql).

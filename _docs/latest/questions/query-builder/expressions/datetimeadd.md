@@ -84,7 +84,7 @@ case(between(now, [Opened On], [Finish By]), "Yes", "No")
 
 ## Accepted data types
 
-| [Data type](/learn/grow-your-data-skills/data-fundamentals/data-types-overview#examples-of-data-types) | Works with `datetimeAdd` |
+| [Data type](https://metabase.com/learn/grow-your-data-skills/data-fundamentals/data-types-overview#examples-of-data-types) | Works with `datetimeAdd` |
 | ------------------------------------------------------------------------------------------------------------------------------ | ------------------------ |
 | String                                                                                                                         | ❌                       |
 | Number                                                                                                                         | ❌                       |
@@ -178,5 +178,5 @@ datetimeAdd([Opened On], 14, "day")
 ## Further reading
 
 - [Custom expressions documentation](../expressions)
-- [Custom expressions tutorial](/learn/metabase-basics/querying-and-dashboards/questions/custom-expressions)
-- [Time series analysis](/learn/metabase-basics/querying-and-dashboards/time-series/start)
+- [Custom expressions tutorial](https://metabase.com/learn/metabase-basics/querying-and-dashboards/questions/custom-expressions)
+- [Time series analysis](https://metabase.com/learn/metabase-basics/querying-and-dashboards/time-series/start)

@@ -54,7 +54,7 @@ If you'd like to share your data with the good people of the internet, admins ca
 | Export results\*                                                                                                                | ✅                                              | ✅                                        | ✅                              | ✅                                     |
 | Restrict data with [locked filters](./static-embedding-parameters#restricting-data-in-a-static-embed-with-locked-parameters) | ❌                                              | ❌                                        | ✅                              | ❌                                     |
 | Restrict data with [sandboxes](../permissions/data-sandboxes)                                                                | ✅                                              | ✅                                        | ❌                              | ❌                                     |
-| Use the [drill-through menu](/learn/metabase-basics/querying-and-dashboards/questions/drill-through)    | ✅                                              | ✅                                        | ❌                              | ❌                                     |
+| Use the [drill-through menu](https://metabase.com/learn/metabase-basics/querying-and-dashboards/questions/drill-through)    | ✅                                              | ✅                                        | ❌                              | ❌                                     |
 | Self-serve via [query builder](/glossary/query_builder)                                                 | ✅                                              | ✅                                        | ❌                              | ❌                                     |
 | View usage of embeds with [usage analytics](../usage-and-performance-tools/usage-analytics)                                  | ✅                                              | ✅                                        | ❌                              | ❌                                     |
 | [Actions on dashboards](../dashboards/actions)                                                                               | ✅                                              | ✅                                        | ❌                              | ❌                                     |
@@ -69,7 +69,7 @@ If you'd like to share your data with the good people of the internet, admins ca
 
 ## Further reading
 
-- [Strategies for delivering customer-facing analytics](/learn/metabase-basics/embedding/overview).
-- [Publishing data visualizations to the web](/learn/metabase-basics/embedding/charts-and-dashboards).
-- [Multi-tenant self-service analytics](/learn/metabase-basics/embedding/multi-tenant-self-service-analytics).
+- [Strategies for delivering customer-facing analytics](https://metabase.com/learn/metabase-basics/embedding/overview).
+- [Publishing data visualizations to the web](https://metabase.com/learn/metabase-basics/embedding/charts-and-dashboards).
+- [Multi-tenant self-service analytics](https://metabase.com/learn/metabase-basics/embedding/multi-tenant-self-service-analytics).
 - [Customizing Metabase's appearance](../configuring-metabase/appearance).

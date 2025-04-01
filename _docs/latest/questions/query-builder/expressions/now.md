@@ -53,7 +53,7 @@ case(now >= [Start] AND now < [Deadline], "In progress",
 
 ## Data types
 
-| [Data type](/learn/grow-your-data-skills/data-fundamentals/data-types-overview#examples-of-data-types) | Returned by `now` |
+| [Data type](https://metabase.com/learn/grow-your-data-skills/data-fundamentals/data-types-overview#examples-of-data-types) | Returned by `now` |
 | ------------------------------------------------------------------------------------------------------------------------------ | ----------------- |
 | String                                                                                                                         | ❌                |
 | Number                                                                                                                         | ❌                |
@@ -112,5 +112,5 @@ You can use `pd.Timestamp.now()` using the `pandas` module. This will give you a
 ## Further reading
 
 - [Custom expressions documentation](../expressions)
-- [Custom expressions tutorial](/learn/metabase-basics/querying-and-dashboards/questions/custom-expressions)
-- [Time series analysis](/learn/metabase-basics/querying-and-dashboards/time-series/start)
+- [Custom expressions tutorial](https://metabase.com/learn/metabase-basics/querying-and-dashboards/questions/custom-expressions)
+- [Time series analysis](https://metabase.com/learn/metabase-basics/querying-and-dashboards/time-series/start)

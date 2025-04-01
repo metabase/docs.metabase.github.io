@@ -79,7 +79,7 @@ You can use [Markdown](http://commonmark.org/help/) to format the text in your t
 
 ![Result](images/result.png)
 
-To learn more, see [Fun with Markdown in your dashboards](/learn/metabase-basics/querying-and-dashboards/dashboards/markdown).
+To learn more, see [Fun with Markdown in your dashboards](https://metabase.com/learn/metabase-basics/querying-and-dashboards/dashboards/markdown).
 
 ### Including variables in text cards
 
@@ -298,7 +298,7 @@ If your Metabase administrator has enabled [public sharing](../embedding/public-
 
 ![Share icon](./images/share-icon.png)
 
-Public links can be viewed by anyone, even if they don't have access to Metabase. You can also use the public embedding code to embed your question or dashboard in a simple web page or blog post. Check out examples of simple apps with embedded dashboards in our [embedding-reference-apps repository](https://github.com/metabase/embedding-reference-apps). To learn more about [embedding](../embedding/introduction), check out our article on [How to use Metabase to deliver analytics to your customers](/learn/metabase-basics/embedding/overview), as well as an article on how to combine branding, Single Sign-On, full app embedding, and data sandboxing to deliver [multi-tenant, self-service analytics](/learn/developing-applications/advanced-metabase/multi-tenant-self-service-analytics).
+Public links can be viewed by anyone, even if they don't have access to Metabase. You can also use the public embedding code to embed your question or dashboard in a simple web page or blog post. Check out examples of simple apps with embedded dashboards in our [embedding-reference-apps repository](https://github.com/metabase/embedding-reference-apps). To learn more about [embedding](../embedding/introduction), check out our article on [How to use Metabase to deliver analytics to your customers](https://metabase.com/learn/metabase-basics/embedding/overview), as well as an article on how to combine branding, Single Sign-On, full app embedding, and data sandboxing to deliver [multi-tenant, self-service analytics](https://metabase.com/learn/developing-applications/advanced-metabase/multi-tenant-self-service-analytics).
 
 ## Exporting results from a dashboard
 
@@ -355,4 +355,4 @@ Some tips:
 - [Interactive dashboards](./interactive)
 - [Dashboard charts with multiple series](./multiple-series)
 - [Dashboard subscriptions](./subscriptions)
-- [Making dashboards faster](/learn/metabase-basics/administration/administration-and-operation/making-dashboards-faster)
+- [Making dashboards faster](https://metabase.com/learn/metabase-basics/administration/administration-and-operation/making-dashboards-faster)

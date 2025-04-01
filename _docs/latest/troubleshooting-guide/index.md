@@ -103,7 +103,7 @@ Metabase adds new features and squashes bugs with each release. [Upgrading to th
 [incorrect-times]: ./timezones
 [known-issues]: ./known-issues
 [ldap]: ./ldap
-[learn]: /learn
+[learn]: https://metabase.com/learn
 [linked-filters]: ./linked-filters
 [login]: ./cant-log-in
 [models]: ./models

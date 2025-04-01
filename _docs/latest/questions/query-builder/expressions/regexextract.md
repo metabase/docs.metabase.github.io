@@ -52,7 +52,7 @@ Now, you can use **Campaign Name** in places where you need clean labels, such a
 
 ## Accepted data types
 
-| [Data type](/learn/grow-your-data-skills/data-fundamentals/data-types-overview#examples-of-data-types) | Works with `regexextract` |
+| [Data type](https://metabase.com/learn/grow-your-data-skills/data-fundamentals/data-types-overview#examples-of-data-types) | Works with `regexextract` |
 | ------------------------------------------------------------------------------------------------------------------------------ | ------------------------- |
 | String                                                                                                                         | ✅                        |
 | Number                                                                                                                         | ❌                        |
@@ -148,4 +148,4 @@ regexextract([URL], "^[^?#]+\?utm_campaign=(.*)")
 ## Further reading
 
 - [Custom expressions documentation](../expressions)
-- [Custom expressions tutorial](/learn/metabase-basics/querying-and-dashboards/questions/custom-expressions)
+- [Custom expressions tutorial](https://metabase.com/learn/metabase-basics/querying-and-dashboards/questions/custom-expressions)

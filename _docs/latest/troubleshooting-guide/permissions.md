@@ -59,13 +59,13 @@ If you can’t solve your problem using the troubleshooting guides:
 [collection-permissions]: ../permissions/collections
 [collections-restricted-data]: ./data-permissions#a-user-group-can-view-collections-that-contain-restricted-data
 [connecting-database]: ../databases/connecting
-[data-browser]: /learn/metabase-basics/querying-and-dashboards/data-browser
+[data-browser]: https://metabase.com/learn/metabase-basics/querying-and-dashboards/data-browser
 [data-model]: ../data-modeling/metadata-editing
 [data-permissions]: ../permissions/data
 [discourse]: https://discourse.metabase.com/
 [group-permissions]: ../permissions/introduction#key-points-regarding-permissions
 [known-issues]: ./known-issues
-[learn-permissions]: /learn/metabase-basics/administration/permissions
+[learn-permissions]: https://metabase.com/learn/metabase-basics/administration/permissions
 [permission-denied]: ./data-permissions#getting-a-permission-denied-error-message
 [proxies]: ./proxies
 [sandboxing]: ./sandboxing

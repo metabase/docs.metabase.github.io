@@ -13,7 +13,7 @@ latest: true
 
 # Substring
 
-`substring` extracts part of some text. This function is useful for cleaning up text (or any value with a [string data type](/learn/grow-your-data-skills/data-fundamentals/data-types-overview#examples-of-data-types)) that has a consistent format.
+`substring` extracts part of some text. This function is useful for cleaning up text (or any value with a [string data type](https://metabase.com/learn/grow-your-data-skills/data-fundamentals/data-types-overview#examples-of-data-types)) that has a consistent format.
 
 For example, `substring` should work well on strings like SKU numbers, ISO codes, and standardized email addresses.
 
@@ -65,7 +65,7 @@ substring([Mission ID], (1 + length([Mission ID]) - 3), 3)
 
 ## Accepted data types
 
-| [Data type](/learn/grow-your-data-skills/data-fundamentals/data-types-overview#examples-of-data-types) | Works with `substring` |
+| [Data type](https://metabase.com/learn/grow-your-data-skills/data-fundamentals/data-types-overview#examples-of-data-types) | Works with `substring` |
 | ------------------------------------------------------------------------------------------------------------------------------ | ---------------------- |
 | String                                                                                                                         | ✅                     |
 | Number                                                                                                                         | ❌                     |
@@ -158,4 +158,4 @@ substring([Mission ID], 9, 3)
 ## Further reading
 
 - [Custom expressions documentation](../expressions)
-- [Custom expressions tutorial](/learn/metabase-basics/querying-and-dashboards/questions/custom-expressions)
+- [Custom expressions tutorial](https://metabase.com/learn/metabase-basics/querying-and-dashboards/questions/custom-expressions)

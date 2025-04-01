@@ -148,8 +148,8 @@ case(isnull([Feedback]), "Unknown feedback.", [Feedback])
 - [Custom expressions tutorial][custom-expressions-learn]
 
 [custom-expressions-doc]: ../expressions
-[custom-expressions-learn]: /learn/metabase-basics/querying-and-dashboards/questions/custom-expressions
-[data-types]: /learn/grow-your-data-skills/data-fundamentals/data-types-overview#examples-of-data-types
+[custom-expressions-learn]: https://metabase.com/learn/metabase-basics/querying-and-dashboards/questions/custom-expressions
+[data-types]: https://metabase.com/learn/grow-your-data-skills/data-fundamentals/data-types-overview#examples-of-data-types
 [notebook-editor-def]: /glossary/query_builder
 [numpy]: https://numpy.org/doc/
 [pandas]: https://pandas.pydata.org/pandas-docs/stable/

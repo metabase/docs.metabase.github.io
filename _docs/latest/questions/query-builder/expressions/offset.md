@@ -47,7 +47,7 @@ The value in the `Previous` column for October 4th is `3`, which is the value of
 
 The `Offset` function returns whatever value is in the offset row.
 
-| [Data type](/learn/grow-your-data-skills/data-fundamentals/data-types-overview#examples-of-data-types) | Returned by `Offset` |
+| [Data type](https://metabase.com/learn/grow-your-data-skills/data-fundamentals/data-types-overview#examples-of-data-types) | Returned by `Offset` |
 | ------------------------------------------------------------------------------------------------------------------------------ | -------------------- |
 | String                                                                                                                         | ✅                   |
 | Number                                                                                                                         | ✅                   |
@@ -140,4 +140,4 @@ ORDER BY
 ## Further reading
 
 - [Custom expressions documentation](../expressions)
-- [Custom expressions tutorial](/learn/metabase-basics/querying-and-dashboards/questions/custom-expressions)
+- [Custom expressions tutorial](https://metabase.com/learn/metabase-basics/querying-and-dashboards/questions/custom-expressions)

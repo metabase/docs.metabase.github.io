@@ -35,7 +35,7 @@ Only the `#` and `ID` is required. Metabase just displays the model or question 
 
 ## Model, table, or saved question as a Common Table Expression (CTE)
 
-The same syntax can be used in [Common Table Expressions (CTEs)](/learn/grow-your-data-skills/learn-sql/working-with-sql/sql-cte) (with SQL databases that support CTEs):
+The same syntax can be used in [Common Table Expressions (CTEs)](https://metabase.com/learn/grow-your-data-skills/learn-sql/working-with-sql/sql-cte) (with SQL databases that support CTEs):
 
 ```sql
 WITH gizmo_orders AS {% raw %}{{#5-gizmo-orders-in-2019}}{% endraw %}
@@ -67,14 +67,14 @@ FROM
 
 - You can only reference a model or saved question in a query when working with a SQL database like PostgreSQL, MySQL, Snowflake or SQL Server.
 - The model or saved question you select has to be one that's based on the same database as the one you've currently selected in the native query editor.
-- You cannot refer to variables in sub-queries. You only have access to the _results_ of the model or saved question, not the model or saved question's query. For example, if you have a saved question that uses a [field filter](/learn/metabase-basics/querying-and-dashboards/sql-in-metabase/field-filters), you won't be able to reference that variable. If you need to change how the saved question has filtered the results, you'll need to update (or duplicate) that question and apply the filter.
+- You cannot refer to variables in sub-queries. You only have access to the _results_ of the model or saved question, not the model or saved question's query. For example, if you have a saved question that uses a [field filter](https://metabase.com/learn/metabase-basics/querying-and-dashboards/sql-in-metabase/field-filters), you won't be able to reference that variable. If you need to change how the saved question has filtered the results, you'll need to update (or duplicate) that question and apply the filter.
 
 ## Further reading
 
 - [Models](../../data-modeling/models)
-- [Snippets](/learn/metabase-basics/querying-and-dashboards/sql-in-metabase/sql-snippets)
-- [Snippets vs Saved Questions vs. Views](/learn/metabase-basics/querying-and-dashboards/sql-in-metabase/organizing-sql)
+- [Snippets](https://metabase.com/learn/metabase-basics/querying-and-dashboards/sql-in-metabase/sql-snippets)
+- [Snippets vs Saved Questions vs. Views](https://metabase.com/learn/metabase-basics/querying-and-dashboards/sql-in-metabase/organizing-sql)
 - [SQL troubleshooting guide](../../troubleshooting-guide/sql).
 
-[cte]: /learn/grow-your-data-skills/learn-sql/working-with-sql/sql-cte
+[cte]: https://metabase.com/learn/grow-your-data-skills/learn-sql/working-with-sql/sql-cte
 [model]: ../../data-modeling/models

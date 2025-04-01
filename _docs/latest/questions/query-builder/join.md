@@ -59,5 +59,5 @@ You can join tables on comparison conditions like `=`, `≠`, `>`, `≥`, `<`, o
 - [Joins in Metabase][join]
 - [Type of joins][join-types]
 
-[join]: /learn/metabase-basics/querying-and-dashboards/questions/joins-in-metabase
-[join-types]: /learn/grow-your-data-skills/learn-sql/working-with-sql/sql-join-types
+[join]: https://metabase.com/learn/metabase-basics/querying-and-dashboards/questions/joins-in-metabase
+[join-types]: https://metabase.com/learn/grow-your-data-skills/learn-sql/working-with-sql/sql-join-types

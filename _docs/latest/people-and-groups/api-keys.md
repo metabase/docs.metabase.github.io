@@ -121,4 +121,4 @@ getGroups().then(groups => console.log("Groups in your Metabase:", groups));
 ## Further reading
 
 - [Metabase API reference](../api).
-- [Working with the Metabase API](/learn/metabase-basics/administration/administration-and-operation/metabase-api).
+- [Working with the Metabase API](https://metabase.com/learn/metabase-basics/administration/administration-and-operation/metabase-api).

@@ -444,8 +444,8 @@ More on [Dashboard filters][dashboard-filters].
 
 [sql-editor]: ./writing-sql
 [dashboard-filters]: ../../dashboards/filters
-[field-filter]: /learn/metabase-basics/querying-and-dashboards/sql-in-metabase/field-filters
-[sql-variables]: /learn/metabase-basics/querying-and-dashboards/sql-in-metabase/sql-variables
+[field-filter]: https://metabase.com/learn/metabase-basics/querying-and-dashboards/sql-in-metabase/field-filters
+[sql-variables]: https://metabase.com/learn/metabase-basics/querying-and-dashboards/sql-in-metabase/sql-variables
 [troubleshooting-filters]: ../../troubleshooting-guide/filters
 [troubleshooting-sql]: ../../troubleshooting-guide/sql
-[basic-input]: /learn/grow-your-data-skills/learn-sql/working-with-sql/sql-variables
+[basic-input]: https://metabase.com/learn/grow-your-data-skills/learn-sql/working-with-sql/sql-variables

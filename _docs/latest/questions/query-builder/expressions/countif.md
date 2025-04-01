@@ -120,7 +120,7 @@ To view your conditional counts by plan, set the **Group by** column to "Plan".
 
 ## Accepted data types
 
-| [Data type](/learn/grow-your-data-skills/data-fundamentals/data-types-overview#examples-of-data-types) | Works with `CountIf` |
+| [Data type](https://metabase.com/learn/grow-your-data-skills/data-fundamentals/data-types-overview#examples-of-data-types) | Works with `CountIf` |
 | ------------------------------------------------------------------------------------------------------------------------------ | -------------------- |
 | String                                                                                                                         | ❌                   |
 | Number                                                                                                                         | ❌                   |
@@ -293,4 +293,4 @@ CountIf([Active Subscription] = false)
 ## Further reading
 
 - [Custom expressions documentation](../expressions)
-- [Custom expressions tutorial](/learn/metabase-basics/querying-and-dashboards/questions/custom-expressions)
+- [Custom expressions tutorial](https://metabase.com/learn/metabase-basics/querying-and-dashboards/questions/custom-expressions)

@@ -20,9 +20,9 @@ latest: true
 
 {% include shared/in-page-promo-embedding-workshop.html %}
 
-**Interactive embedding** is what you want if you want to offer [multi-tenant, self-service analytics](/learn/metabase-basics/embedding/multi-tenant-self-service-analytics).
+**Interactive embedding** is what you want if you want to offer [multi-tenant, self-service analytics](https://metabase.com/learn/metabase-basics/embedding/multi-tenant-self-service-analytics).
 
-Interactive embedding is the only type of embedding that integrates with your [permissions](../permissions/introduction) and [SSO](../people-and-groups/start#authentication) to give people the right level of access to [query](/glossary/query_builder) and [drill-down](/learn/metabase-basics/querying-and-dashboards/questions/drill-through) into your data.
+Interactive embedding is the only type of embedding that integrates with your [permissions](../permissions/introduction) and [SSO](../people-and-groups/start#authentication) to give people the right level of access to [query](/glossary/query_builder) and [drill-down](https://metabase.com/learn/metabase-basics/querying-and-dashboards/questions/drill-through) into your data.
 
 ## Interactive embedding demo
 
@@ -41,7 +41,7 @@ Check out the [Interactive embedding quick start](/docs/latest/embedding/interac
 3. Set up [permissions](../permissions/introduction) for each group.
 4. Set up [SSO](../people-and-groups/start#authentication) to automatically apply permissions and show people the right data upon sign-in. In general, **we recommend using [SSO with JWT](../people-and-groups/authenticating-with-jwt)**.
 
-If you're dealing with a [multi-tenant](/learn/metabase-basics/embedding/multi-tenant-self-service-analytics) situation, check out our recommendations for [Configuring permissions for different customer schemas](/learn/metabase-basics/administration/permissions/multi-tenant-permissions).
+If you're dealing with a [multi-tenant](https://metabase.com/learn/metabase-basics/embedding/multi-tenant-self-service-analytics) situation, check out our recommendations for [Configuring permissions for different customer schemas](https://metabase.com/learn/metabase-basics/administration/permissions/multi-tenant-permissions).
 
 If you have your app running locally, and you're using the Pro Cloud version, or hosting Metabase and your app in different domains, you'll need to set your Metabase environment's session cookie samesite option to "none".
 
@@ -154,7 +154,7 @@ Learn more about [SameSite cookies](https://developer.mozilla.org/en-US/docs/Web
 
 ## Securing interactive embeds
 
-Metabase uses HTTP cookies to authenticate people and keep them signed into your embedded Metabase, even when someone closes their browser session. If you enjoy diagrammed auth flows, check out [Interactive embedding with SSO](/learn/metabase-basics/embedding/securing-embeds).
+Metabase uses HTTP cookies to authenticate people and keep them signed into your embedded Metabase, even when someone closes their browser session. If you enjoy diagrammed auth flows, check out [Interactive embedding with SSO](https://metabase.com/learn/metabase-basics/embedding/securing-embeds).
 
 To limit the amount of time that a person stays logged in, set [`MAX_SESSION_AGE`](../configuring-metabase/environment-variables#max_session_age) to a number in minutes. The default value is 20,160 (two weeks).
 
@@ -378,6 +378,6 @@ To build a sample interactive embed using SSO with JWT, see our reference apps:
 ## Further reading
 
 - [Interactive embedding quick start](/docs/latest/embedding/interactive-embedding-quick-start-guide)
-- [Strategies for delivering customer-facing analytics](/learn/metabase-basics/embedding/overview).
-- [Permissions strategies](/learn/metabase-basics/administration/permissions/strategy).
+- [Strategies for delivering customer-facing analytics](https://metabase.com/learn/metabase-basics/embedding/overview).
+- [Permissions strategies](https://metabase.com/learn/metabase-basics/administration/permissions/strategy).
 - [Customizing Metabase's appearance](../configuring-metabase/appearance).

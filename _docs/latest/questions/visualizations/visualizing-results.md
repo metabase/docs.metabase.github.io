@@ -45,7 +45,7 @@ To change how the answer to your question is displayed, click on the **Visualiza
 
 If a particular visualization doesn’t really make sense for your answer, that option will appear in the "Other charts" section. You can still select one of these other charts, though you might need to fiddle with the chart options to make the chart work with your data.
 
-Not sure which visualization type to use? Check out [Which chart should you use?](/learn/metabase-basics/querying-and-dashboards/visualization/chart-guide)
+Not sure which visualization type to use? Check out [Which chart should you use?](https://metabase.com/learn/metabase-basics/querying-and-dashboards/visualization/chart-guide)
 
 ## Visualization options
 
@@ -91,7 +91,7 @@ The [Detail](./detail) visualization shows a single result record (row) in an ea
 
 ## Line charts
 
-[Line charts](./line-bar-and-area-charts) are best for displaying the trend of a number over time, especially when you have lots of x-axis values. For more, check out our [Guide to line charts](/learn/metabase-basics/querying-and-dashboards/visualization/line-charts) and [Time series analysis](/learn/metabase-basics/querying-and-dashboards/time-series) tutorials.
+[Line charts](./line-bar-and-area-charts) are best for displaying the trend of a number over time, especially when you have lots of x-axis values. For more, check out our [Guide to line charts](https://metabase.com/learn/metabase-basics/querying-and-dashboards/visualization/line-charts) and [Time series analysis](https://metabase.com/learn/metabase-basics/querying-and-dashboards/time-series) tutorials.
 
 ![Trend lines](../images/trend-lines.png)
 
@@ -183,4 +183,4 @@ See also [Formatting defaults](../../data-modeling/formatting).
 
 - [Charts with multiple series](../../dashboards/multiple-series)
 - [Appearance](../../configuring-metabase/appearance)
-- [BI dashboard best practices](/learn/metabase-basics/querying-and-dashboards/dashboards/bi-dashboard-best-practices)
+- [BI dashboard best practices](https://metabase.com/learn/metabase-basics/querying-and-dashboards/dashboards/bi-dashboard-best-practices)

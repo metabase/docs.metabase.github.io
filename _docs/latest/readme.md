@@ -44,11 +44,11 @@ Run as a JAR, using Docker, or on [Metabase Cloud](https://store.metabase.com/ch
 
 Once installed, set up your Metabase and connect to your data.
 
-### [Getting started](/learn/metabase-basics/getting-started/index)
+### [Getting started](https://metabase.com/learn/metabase-basics/getting-started/index)
 
 With your data connected, get started asking questions, creating dashboards, and sharing your work.
 
-### [A tour of Metabase](/learn/metabase-basics/overview/tour-of-metabase)
+### [A tour of Metabase](https://metabase.com/learn/metabase-basics/overview/tour-of-metabase)
 
 Metabase is a deep product with a lot of tools to simplify business intelligence, from embeddable charts and interactive dashboards, to GUI and SQL editors, to auditing and data sandboxing, and more.
 
@@ -240,7 +240,7 @@ Metabase's reference documentation.
 ### Metabase API
 
 - [Metabase API documentation](./api)
-- [API tutorial](/learn/metabase-basics/administration/administration-and-operation/metabase-api)
+- [API tutorial](https://metabase.com/learn/metabase-basics/administration/administration-and-operation/metabase-api)
 
 ### Troubleshooting
 
@@ -260,7 +260,7 @@ Metabase's reference documentation.
 
 ### Tutorials and guides
 
-[Learn Metabase](/learn) has a ton of articles on how to use Metabase, data best practices, and more.
+[Learn Metabase](https://metabase.com/learn) has a ton of articles on how to use Metabase, data best practices, and more.
 
 ## More resources
 

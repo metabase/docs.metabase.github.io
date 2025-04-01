@@ -10,9 +10,9 @@
     "sales" "sass" "site" "start" "startup-guide" "talk-to-a-person"
     "troubleshooting" "upgrade"})
 
-(defn log [level message] (println (str level " " message)))
+(defn- log [level message] (println (str level " " message)))
 
-(defn update-links
+(defn- update-links
   "Replaces occurrences of links starting with '/learn' with 'https://metabase.com/learn'.
   It handles both inline links (e.g., [c](/learn/y)) and reference-style links (e.g., [b]: /learn/x)."
   [content]
@@ -20,7 +20,7 @@
       (str/replace #"(\(\s*)/learn" "$1https://metabase.com/learn")
       (str/replace #"(\]\:\s*)/learn" "$1https://metabase.com/learn")))
 
-(defn process-file
+(defn- process-file
   "Reads a markdown file, updates its content if necessary, and writes the updated content back.
   When dry-run is enabled, logs the intended action instead of modifying the file."
   [file dry-run?]
@@ -35,29 +35,15 @@
               (spit file new-content)
               (log "✅" (str "Updated file: " file))))))))
 
-(defn crawl-directory
+(defn- crawl-directory
   "Recursively finds all Markdown files in the given directory and processes each one."
   [dir dry-run?]
   (doseq [file (fs/glob dir "**/*.md")]
     (prn (str file))
     (process-file (str file) dry-run?)))
 
-(defn parse-args
-  "Parses command-line arguments.
-  Looks for an optional '--dry-run' flag and a directory path."
-  [args]
-  (let [dry-run? (some #(= "--dry-run" %) args)
-        dir (first (remove #(= "--dry-run" %) args))]
-    {:dry-run dry-run? :dir dir}))
-
 (defn -main
-  "Entry point. Usage: bb script.clj [--dry-run] <directory>"
+  "Entry point. Args are validated in bb.edn"
   [{:keys [dry-run? dir]}]
-  (if (and dir (fs/directory? dir))
-    (do
-      (log "🚀" (str "Crawling directory: " dir (if dry-run? " (dry run mode)" "")))
-      (crawl-directory dir dry-run?))
-    (println "Usage: bb script.clj [--dry-run] <directory>")))
-
-(when (= *file* (System/getProperty "babashka.file"))
-  (apply -main *command-line-args*))
+  (log "🚀" (str "Crawling directory: " dir (if dry-run? " (dry run mode)" "")))
+  (crawl-directory dir dry-run?))

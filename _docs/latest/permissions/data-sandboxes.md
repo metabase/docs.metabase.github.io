@@ -19,7 +19,7 @@ latest: true
 
 Data sandboxes let you give granular permissions to rows and columns for different groups of people. You can sandbox what data a group [can view](./data#can-view-data-permission), as well as what data a group [can query](./data#create-queries-permissions) with the query builder.
 
-You can use sandboxes to set up [self-service analytics](/learn/metabase-basics/embedding/multi-tenant-self-service-analytics), so that each of your customers only views the rows that match their customer ID. For example, if you have an Accounts table with information about your customers, you can sandbox that table so that each customer only sees the data relevant to them.
+You can use sandboxes to set up [self-service analytics](https://metabase.com/learn/metabase-basics/embedding/multi-tenant-self-service-analytics), so that each of your customers only views the rows that match their customer ID. For example, if you have an Accounts table with information about your customers, you can sandbox that table so that each customer only sees the data relevant to them.
 
 ## Data sandbox examples
 
@@ -69,7 +69,7 @@ You can also use a custom sandbox to:
 
 - [Display an edited column instead of hiding the column](#displaying-edited-columns-in-an-custom-sandbox).
 - [Pass a user attribute to a SQL parameter](#restricting-rows-in-an-custom-sandbox-with-user-attributes).
-- [Pass a user attribute to a Markdown parameter](/learn/metabase-basics/querying-and-dashboards/dashboards/markdown#custom-url-with-a-sandboxing-attribute).
+- [Pass a user attribute to a Markdown parameter](https://metabase.com/learn/metabase-basics/querying-and-dashboards/dashboards/markdown#custom-url-with-a-sandboxing-attribute).
 
 ## Limitations
 
@@ -115,7 +115,7 @@ Examples of user attributes in play:
 
 - [Restricting rows in basic sandboxes](./data-sandbox-examples#basic-sandbox-setup---filtering-rows-based-on-user-attributes)
 - [Restricting rows in custom sandboxes](./data-sandbox-examples#custom-example-2-filtering-rows-and-columns)
-- [Displaying custom text in Markdown dashboard cards](/learn/metabase-basics/querying-and-dashboards/dashboards/markdown#custom-url-with-a-sandboxing-attribute)
+- [Displaying custom text in Markdown dashboard cards](https://metabase.com/learn/metabase-basics/querying-and-dashboards/dashboards/markdown#custom-url-with-a-sandboxing-attribute)
 
 ## Creating a basic sandbox
 
@@ -278,6 +278,6 @@ Metabase can only create a data sandbox using the group membership or user attri
 ## Further reading
 
 - [Data sandbox examples](./data-sandbox-examples)
-- [Permissions strategies](/learn/metabase-basics/administration/permissions/strategy)
-- [Configuring permissions for different customer schemas](/learn/metabase-basics/administration/permissions/multi-tenant-permissions)
-- [Securing embedded Metabase](/learn/metabase-basics/embedding/securing-embeds)
+- [Permissions strategies](https://metabase.com/learn/metabase-basics/administration/permissions/strategy)
+- [Configuring permissions for different customer schemas](https://metabase.com/learn/metabase-basics/administration/permissions/multi-tenant-permissions)
+- [Securing embedded Metabase](https://metabase.com/learn/metabase-basics/embedding/securing-embeds)

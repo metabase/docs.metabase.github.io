@@ -67,19 +67,19 @@ If you can’t solve your problem using the troubleshooting guides:
 - Search or ask the [Metabase community][discourse].
 - Search for [known model issues][known-issues-models] using the label `Querying/Models`. For more information, go to [How to find a known bug or limitation][known-issues].
 
-[analytics-database-learn]: /learn/metabase-basics/administration/administration-and-operation/making-dashboards-faster#consider-a-database-optimized-for-analytics
-[denormalize-data-learn]: /learn/metabase-basics/administration/administration-and-operation/making-dashboards-faster#denormalize-data
+[analytics-database-learn]: https://metabase.com/learn/metabase-basics/administration/administration-and-operation/making-dashboards-faster#consider-a-database-optimized-for-analytics
+[denormalize-data-learn]: https://metabase.com/learn/metabase-basics/administration/administration-and-operation/making-dashboards-faster#denormalize-data
 [discourse]: https://discourse.metabase.com/
-[flatten-json-learn]: /learn/metabase-basics/administration/administration-and-operation/making-dashboards-faster#pull-data-out-of-json-and-slot-its-keys-into-columns
-[indexes-learn]: /learn/metabase-basics/administration/administration-and-operation/making-dashboards-faster#index-frequently-queried-columns
+[flatten-json-learn]: https://metabase.com/learn/metabase-basics/administration/administration-and-operation/making-dashboards-faster#pull-data-out-of-json-and-slot-its-keys-into-columns
+[indexes-learn]: https://metabase.com/learn/metabase-basics/administration/administration-and-operation/making-dashboards-faster#index-frequently-queried-columns
 [known-issues]: ./known-issues
 [known-issues-models]: https://github.com/metabase/metabase/labels/Querying%2FModels
-[limit-data-learn]: /learn/metabase-basics/administration/administration-and-operation/making-dashboards-faster#ask-for-less-data
-[materialize-views-learn]: /learn/metabase-basics/administration/administration-and-operation/making-dashboards-faster#materialize-views-create-new-tables-to-store-query-results
-[model-button-image]: /learn/images/models/model-icon.png
+[limit-data-learn]: https://metabase.com/learn/metabase-basics/administration/administration-and-operation/making-dashboards-faster#ask-for-less-data
+[materialize-views-learn]: https://metabase.com/learn/metabase-basics/administration/administration-and-operation/making-dashboards-faster#materialize-views-create-new-tables-to-store-query-results
+[model-button-image]: https://metabase.com/learn/images/models/model-icon.png
 [model-docs]: ../data-modeling/models
-[replicate-database-learn]: /learn/metabase-basics/administration/administration-and-operation/making-dashboards-faster#replicate-your-database
-[sql-explain-learn]: /learn/grow-your-data-skills/learn-sql/working-with-sql/sql-best-practices#explain
-[summary-tables-learn]: /learn/metabase-basics/administration/administration-and-operation/making-dashboards-faster#aggregate-data-ahead-of-time-with-summary-tables
+[replicate-database-learn]: https://metabase.com/learn/metabase-basics/administration/administration-and-operation/making-dashboards-faster#replicate-your-database
+[sql-explain-learn]: https://metabase.com/learn/grow-your-data-skills/learn-sql/working-with-sql/sql-best-practices#explain
+[summary-tables-learn]: https://metabase.com/learn/metabase-basics/administration/administration-and-operation/making-dashboards-faster#aggregate-data-ahead-of-time-with-summary-tables
 [troubleshooting-sandboxing]: ./sandboxing
 [model-persistence]: /docs/latest/data-modeling/model-persistence

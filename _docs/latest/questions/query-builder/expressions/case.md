@@ -251,7 +251,7 @@ case([Has Wings] = TRUE  AND [Has Face] = TRUE,  "Bird",
      [Has Wings] = FALSE AND [Has Face] = TRUE,  "Superman", "Unknown")
 ```
 
-For example, this [SQL trick to order bar charts](/learn/metabase-basics/querying-and-dashboards/sql-in-metabase/sql-tricks-ordering-charts) could be written using a Metabase `case` expression instead.
+For example, this [SQL trick to order bar charts](https://metabase.com/learn/metabase-basics/querying-and-dashboards/sql-in-metabase/sql-tricks-ordering-charts) could be written using a Metabase `case` expression instead.
 
 ### Spreadsheets
 
@@ -338,16 +338,16 @@ case([Has Wings] = TRUE  AND [Has Face] = TRUE,  "Bird",
 - [Custom expressions tutorial][custom-expressions-learn]
 
 [aggregate-functions]: ../expressions-list#aggregations
-[business-logic]: /learn/grow-your-data-skills/analytics/avoiding-data-jargon#create-specific-language-and-shared-definitions
+[business-logic]: https://metabase.com/learn/grow-your-data-skills/analytics/avoiding-data-jargon#create-specific-language-and-shared-definitions
 [countif]: ../expressions-list#countif
 [custom-expressions-doc]: ../expressions
 [custom-expressions-list]: ../expressions-list
-[custom-expressions-learn]: /learn/metabase-basics/querying-and-dashboards/questions/custom-expressions
+[custom-expressions-learn]: https://metabase.com/learn/metabase-basics/querying-and-dashboards/questions/custom-expressions
 [data-sandboxing-docs]: ../../../permissions/data-sandboxes
-[data-types]: /learn/grow-your-data-skills/data-fundamentals/data-types-overview#examples-of-data-types
-[filter-learn]: /learn/metabase-basics/querying-and-dashboards/questions/searching-tables
+[data-types]: https://metabase.com/learn/grow-your-data-skills/data-fundamentals/data-types-overview#examples-of-data-types
+[filter-learn]: https://metabase.com/learn/metabase-basics/querying-and-dashboards/questions/searching-tables
 [notebook-editor-def]: /glossary/notebook_editor
 [numpy]: https://numpy.org/doc/
 [pandas]: https://pandas.pydata.org/pandas-docs/stable/
-[sql-reference-guide]: /learn/grow-your-data-skills/learn-sql/debugging-sql/sql-syntax#common-sql-reference-guides
+[sql-reference-guide]: https://metabase.com/learn/grow-your-data-skills/learn-sql/debugging-sql/sql-syntax#common-sql-reference-guides
 [sumif]: ./sumif

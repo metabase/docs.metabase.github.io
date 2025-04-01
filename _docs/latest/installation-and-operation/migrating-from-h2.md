@@ -16,7 +16,7 @@ latest: true
 
 # Migrating to a production application database
 
-This page covers how to convert a Metabase that's been using the built-in application database, H2, to a production-ready instance PostgreSQL. For more on why you should use Postgres as your app DB, check out [How to run Metabase in production](/learn/metabase-basics/administration/administration-and-operation/metabase-in-production).
+This page covers how to convert a Metabase that's been using the built-in application database, H2, to a production-ready instance PostgreSQL. For more on why you should use Postgres as your app DB, check out [How to run Metabase in production](https://metabase.com/learn/metabase-basics/administration/administration-and-operation/metabase-in-production).
 
 If you'd rather move to Metabase Cloud, check out [Migrate to Metabase Cloud](/docs/latest/cloud/migrate/guide).
 

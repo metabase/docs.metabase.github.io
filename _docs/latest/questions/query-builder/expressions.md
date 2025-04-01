@@ -97,6 +97,6 @@ See a full list of [expressions](../expressions-list).
 For a tutorial on expressions, see [Custom expressions in the query builder][custom-expressions].
 
 [aggregations]: ./expressions-list#aggregations
-[custom-expressions]: /learn/metabase-basics/querying-and-dashboards/questions/custom-expressions
+[custom-expressions]: https://metabase.com/learn/metabase-basics/querying-and-dashboards/questions/custom-expressions
 [expression-list]: ./expressions-list
 [functions]: ./expressions-list#functions
