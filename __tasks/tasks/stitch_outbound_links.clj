@@ -99,17 +99,17 @@
 ;;     "/docs/latest/cloud/start"]
   )
 
-(defn- process-yaml [path dry-run?]
+(defn- fix-yaml-links [path dry-run?]
   (let [parsed (yaml/parse-string (slurp path))
         updated (walk/postwalk
                   update-node
                   parsed)]
     (cond
       (and (= parsed updated) dry-run?)
-      (do
-        ;; reindent the file in-place
-        (spit path (u/generate-yaml parsed))
-        (u/log "  📝" (str "Dry run: Would update file: " path)))
+      (u/log "  ℹ️" (str "Dry run: No update to: " path))
+
+      dry-run?
+      (u/log "  📝" (str "Dry run: Would update file: " path))
 
       (= parsed updated)
       (u/log "  ℹ️" (str "No changes for file: " path))
@@ -118,17 +118,17 @@
       (do (spit path (u/generate-yaml updated))
           (u/log "  ✅" (str "Updated file: " path))))))
 
-(comment
-
-  (process-yaml "_data/docs/nav/latest.yml" false)
-
-  )
+(defn- fix-yaml-indent [path & _]
+  (try
+    (->> path slurp yaml/parse-string u/generate-yaml (spit path))
+    (catch Exception e
+      (u/log "  ❌" (str "Error processing file: " path ": " (.getMessage e))))))
 
 (defn- crawl-data-directory
-  [dry-run?]
+  [f dry-run?]
   (doseq [file (concat (fs/glob "_data" "**/*.yaml")
                        (fs/glob "_data" "**/*.yml"))]
-    (process-yaml (str file) dry-run?)))
+    (f (str file) dry-run?)))
 
 (defn -main
   "Entry point. Args are validated in bb.edn"
@@ -136,4 +136,7 @@
   (u/log "🚀" (str "Crawling _docs directory: updating markdown links" (when dry-run? " (dry run mode)")))
   (crawl-md-directory "_docs" dry-run?)
   (u/log "🚀" (str "Crawling _data directory: updating yaml links" (when dry-run? " (dry run mode)")))
-  (crawl-data-directory dry-run?))
+  (crawl-data-directory fix-yaml-links dry-run?))
+
+(defn indent-yaml! []
+  (crawl-data-directory fix-yaml-indent false))
