@@ -105,8 +105,11 @@
                   update-node
                   parsed)]
     (cond
-      dry-run?
-      (u/log "  📝" (str "Dry run: Would update file: " path))
+      (and (= parsed updated) dry-run?)
+      (do
+        ;; reindent the file in-place
+        (spit path (u/generate-yaml parsed))
+        (u/log "  📝" (str "Dry run: Would update file: " path)))
 
       (= parsed updated)
       (u/log "  ℹ️" (str "No changes for file: " path))
