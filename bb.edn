@@ -1,0 +1,20 @@
+{:paths ["__tasks"]
+ :tasks {:requires [[babashka.fs :as fs]]
+         :init (do (defn parse-args
+                     "Parses command-line arguments.
+                      Looks for an optional '--dry-run' flag and a directory path."
+                     [args]
+                     (let [dry-run? (some (fn [x] (= "--dry-run" x)) args)
+                           dir (first (remove (set ["--dry-run"]) args))]
+                       {:dry-run? dry-run? :dir dir})))
+
+         permalink-frontmatter
+         {:requires [[tasks.permalink-frontmatter :refer [add-docs-permalinks!]]]
+          :task (add-docs-permalinks! (parse-args *command-line-args*))}
+
+         stitch-outbound-links
+         {:requires [[tasks.stitch-outbound-links :refer [-main]]]
+          :task (let [{:keys [dir dry-run?] :as parsed} (parse-args *command-line-args*)]
+                  (if (and dir (fs/directory? dir))
+                    (-main parsed)
+                    (println "Usage: bb script.clj [--dry-run] <directory>")))}}}
