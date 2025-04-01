@@ -49,7 +49,7 @@ podman run -d -p 12345:3000 --name=metabase docker.io/metabase/metabase:latest
 
 ## Pro or Enterprise quick start
 
-Use this quick start if you have a [license token](../installation-and-operation/activating-the-enterprise-edition) for a [Pro or Enterprise version](/pricing/) of Metabase, and you want to run Metabase locally.
+Use this quick start if you have a [license token](../installation-and-operation/activating-the-enterprise-edition) for a [Pro or Enterprise version](https://metabase.com/pricing/) of Metabase, and you want to run Metabase locally.
 
 Assuming you have [Podman](https://podman.io) installed and running, get the latest container image:
 

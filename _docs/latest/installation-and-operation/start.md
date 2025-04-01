@@ -65,4 +65,4 @@ Metabase's CLI.
 
 ---
 
-If you’d like more technical resources to set up your data stack with Metabase, connect with a [Metabase Expert](/partners/).
+If you’d like more technical resources to set up your data stack with Metabase, connect with a [Metabase Expert](https://metabase.com/partners/).

@@ -268,7 +268,7 @@ Metabase's reference documentation.
 
 Share and connect with other Metabasers.
 
-### [Metabase Cloud](/cloud/docs)
+### [Metabase Cloud](https://metabase.com/cloud/docs)
 
 For docs specific to Metabase Cloud plans.
 
@@ -280,7 +280,7 @@ Practical advice from our community.
 
 News, updates, and ideas.
 
-### [Customers](/case-studies)
+### [Customers](https://metabase.com/case-studies)
 
 Real companies, real data, real stories.
 
@@ -300,10 +300,10 @@ A list of all Metabase releases, including both the Enterprise Edition and the O
 
 Contribute to the Metabase open source project!
 
-### [Data and Business Intelligence Glossary](/glossary)
+### [Data and Business Intelligence Glossary](https://metabase.com/glossary)
 
 Data jargon explained.
 
-### [Metabase Experts](/partners/)
+### [Metabase Experts](https://metabase.com/partners/)
 
-If you’d like more technical resources to set up your data stack with Metabase, connect with a [Metabase Expert](/partners/).
+If you’d like more technical resources to set up your data stack with Metabase, connect with a [Metabase Expert](https://metabase.com/partners/).

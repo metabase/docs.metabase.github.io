@@ -248,7 +248,7 @@ Prior to running Cypress against Metabase® Enterprise Edition™, set `MB_EDITI
 **Enterprise instance will start without a premium token!**
 
 If you want to test premium features (feature flags), valid tokens need to be available to all Cypress tests. We achieve this by prefixing environment variables with `CYPRESS_`.
-You should provide two tokens that correspond to the `EE/PRO` self-hosted (all features enabled) and `STARTER` Cloud (no features enabled) Metabase plans. For more information, please see [Metabase pricing page](/pricing/). (note: only a few tests require the no features token)
+You should provide two tokens that correspond to the `EE/PRO` self-hosted (all features enabled) and `STARTER` Cloud (no features enabled) Metabase plans. For more information, please see [Metabase pricing page](https://metabase.com/pricing/). (note: only a few tests require the no features token)
 
 - `CYPRESS_ALL_FEATURES_TOKEN`
 - `CYPRESS_NO_FEATURES_TOKEN`

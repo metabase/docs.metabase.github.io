@@ -75,7 +75,7 @@ Use a query’s average execution time to determine how long to cache the query'
 
 Metabase will recalculate a query's average execution time whenever it runs the query against the database to refresh the cached results. So if the first time Metabase runs the query against the database, it takes 5 minutes to return results, the average execution time will be 5 minutes. If the next query against the database takes 7 minutes to return, Metabase will update the average to 6 minutes (the average of 5 and 7 is 6).
 
-On [Pro](/product/pro) and [Enterprise](/product/enterprise) plans, you can view querying and caching stats in the [Usage analytics](../usage-and-performance-tools/usage-analytics) collection.
+On [Pro](https://metabase.com/product/pro) and [Enterprise](https://metabase.com/product/enterprise) plans, you can view querying and caching stats in the [Usage analytics](../usage-and-performance-tools/usage-analytics) collection.
 
 ### Don’t cache results
 
@@ -106,7 +106,7 @@ You can set caching policies for different entities.
 - [Dashboard caching](#dashboard-caching-policy)\*
 - [Question caching](#question-caching-policy)\*
 
-_\* Denotes [Pro](/product/pro) and [Enterprise](/product/enterprise) features._
+_\* Denotes [Pro](https://metabase.com/product/pro) and [Enterprise](https://metabase.com/product/enterprise) features._
 
 ### Default caching policy
 

@@ -70,7 +70,7 @@ This error will only occur if you're using **Signed SSO requests**. That is, in 
 
 ## Checking if SAML is working correctly
 
-Go to your Metabase login page. If SAML is working correctly, you should see [a single button to sign in](/glossary/sso) with your identity provider (IdP). Once you're authenticated, you should be automatically redirected to the Metabase home page.
+Go to your Metabase login page. If SAML is working correctly, you should see [a single button to sign in](https://metabase.com/glossary/sso) with your identity provider (IdP). Once you're authenticated, you should be automatically redirected to the Metabase home page.
 
 ## Are you still stuck?
 

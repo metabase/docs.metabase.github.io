@@ -18,7 +18,7 @@ latest: true
 
 Enabling [Google Sign-In](https://developers.google.com/identity/sign-in/web/sign-in) for single sign-on (SSO) lets your team log in with a click instead of using email and password. SSO can also be used to let people create Metabase accounts without asking an admin to add each person manually. You can find SSO options under **Settings** > **Admin settings** > **Authentication**.
 
-If you'd like to have people authenticate with [SAML][saml-docs] or [JWT][jwt-docs], Metabase's [Pro and Enterprise](/pricing/) let you do just that.
+If you'd like to have people authenticate with [SAML][saml-docs] or [JWT][jwt-docs], Metabase's [Pro and Enterprise](https://metabase.com/pricing/) let you do just that.
 
 ## Enabling Google Sign-In
 
@@ -49,7 +49,7 @@ Once you have your Google API `Client ID` (ending in `.apps.googleusercontent.co
 
 ## Creating Metabase accounts with Google Sign-in
 
-> On [paid plans](/pricing/), you're [charged for each active account](/docs/latest/cloud/how-billing-works#what-counts-as-a-user-account).
+> On [paid plans](https://metabase.com/pricing/), you're [charged for each active account](/docs/latest/cloud/how-billing-works#what-counts-as-a-user-account).
 
 If people's Google account email addresses are from a specific domain, and you want to allow them to sign up on their own, you can enter that domain in the **Domain** field.
 
@@ -61,7 +61,7 @@ Note that Metabase accounts _created_ with Google Sign-In will not have password
 
 {% include plans-blockquote.html feature="Multiple domains for Google Sign-in" %}
 
-If you're on a [pro](/product/pro) or [Enterprise](/product/enterprise) plan, you can specify multiple domains from the same Google Workspace in the **Domain** field, separated by a comma. For example, `mycompany.com,example.com.br,otherdomain.co.uk`.
+If you're on a [pro](https://metabase.com/product/pro) or [Enterprise](https://metabase.com/product/enterprise) plan, you can specify multiple domains from the same Google Workspace in the **Domain** field, separated by a comma. For example, `mycompany.com,example.com.br,otherdomain.co.uk`.
 
 ## Syncing user attributes with Google
 
@@ -72,4 +72,4 @@ User attributes can't be synced with regular Google Sign-In. To synchronize user
 [jwt-docs]: ./authenticating-with-jwt
 [saml-docs]: ./authenticating-with-saml
 [user-attributes-docs]: ../permissions/data-sandboxes#choosing-user-attributes-for-data-sandboxes
-[user-attributes-def]: /glossary/attribute#user-attributes-in-metabase
+[user-attributes-def]: https://metabase.com/glossary/attribute#user-attributes-in-metabase

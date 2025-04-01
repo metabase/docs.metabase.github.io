@@ -42,6 +42,6 @@ If you click on a column you’re interested in, you’ll see a description of i
 
 ## Connections
 
-In the data reference sidebar, under **Connections**, you can find a list of table relationships (defined by [foreign keys](/glossary/foreign_key)).
+In the data reference sidebar, under **Connections**, you can find a list of table relationships (defined by [foreign keys](https://metabase.com/glossary/foreign_key)).
 
 If a foreign key relationship exists in your database, but doesn't show up in your Metabase, your Metabase admin will need to update your [Metabase Table Metadata](../data-modeling/metadata-editing).

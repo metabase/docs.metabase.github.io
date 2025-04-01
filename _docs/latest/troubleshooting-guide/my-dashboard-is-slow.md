@@ -62,7 +62,7 @@ When someone loads a question or a dashboard in a static embed, however, that qu
    - Narrow down the time frame to the reporting period that you care about.
    - Exclude invalid records, such as: blanks, nulls, or rows with values like "cancelled", "expired", "invalid", and so on.
 3. Remove [joins](../questions/query-builder/join) to tables that aren't being used.
-4. If you're aggregating data from the query builder, ask your database admin if there's a pre-aggregated [view](/glossary/view) that you can use instead.
+4. If you're aggregating data from the query builder, ask your database admin if there's a pre-aggregated [view](https://metabase.com/glossary/view) that you can use instead.
 
 **Explanation**
 

@@ -13,7 +13,7 @@ latest: true
 
 # SQLite
 
-> SQLite isn't available for [Metabase Cloud](/cloud/).
+> SQLite isn't available for [Metabase Cloud](https://metabase.com/cloud/).
 
 To add a database connection, click on the **gear** icon in the top right, and navigate to **Admin settings** > **Databases** > **Add a database**.
 

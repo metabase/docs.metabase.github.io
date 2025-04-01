@@ -128,7 +128,7 @@ If you can’t solve your problem using the troubleshooting guides:
 [known-issues]: ./known-issues
 [learn-permissions]: https://metabase.com/learn/metabase-basics/administration/permissions
 [native-query-editing]: ../permissions/data#query-builder-and-native-create-queries-permission
-[pricing]: /pricing
+[pricing]: https://metabase.com/pricing
 [proxies]: ./proxies
 [sql-access]: ./data-permissions#a-user-group-cant-access-the-sql-editor
 [sql-sandboxing]: ./sandboxing#is-the-question-written-in-sql

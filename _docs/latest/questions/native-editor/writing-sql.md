@@ -115,8 +115,8 @@ See [Caching question policies](../../configuring-metabase/caching#question-cach
 
 [learn-sql]: https://metabase.com/learn/grow-your-data-skills/learn-sql/working-with-sql
 [ref-models]: ./referencing-saved-questions-in-queries
-[sample-database-gloss]: /glossary/sample_database
-[sql-gloss]: /glossary/sql
+[sample-database-gloss]: https://metabase.com/glossary/sample_database
+[sql-gloss]: https://metabase.com/glossary/sql
 [troubleshooting-sql]: ../../troubleshooting-guide/sql
-[variable-gloss]: /glossary/variable
+[variable-gloss]: https://metabase.com/glossary/variable
 [drill-through]: https://metabase.com/learn/metabase-basics/querying-and-dashboards/questions/drill-through

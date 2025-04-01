@@ -42,7 +42,7 @@ Unsigned parameters, such as appearance settings, should be added directly to yo
 
 ## Adding a filter widget to a static embed
 
-You can use **editable parameters** to add [filter widgets](/glossary/filter_widget) to embedded dashboards or SQL questions.
+You can use **editable parameters** to add [filter widgets](https://metabase.com/glossary/filter_widget) to embedded dashboards or SQL questions.
 
 1. Go to your dashboard or SQL question. Make sure you've set up a [dashboard filter](../dashboards/filters) or [SQL variable](../questions/native-editor/sql-parameters).
 2. Click on the **sharing icon** > **Embed this item in an application**.
@@ -202,9 +202,9 @@ You can preview appearance settings from your question or dashboard's embedded a
 | `font`\*                   | [font name](../configuring-metabase/fonts)                                                                                                  |
 | `downloads`\*\*            | true (default), false.                                                                                                                         |
 
-\* Available on [Pro](/product/pro) and [Enterprise](/product/enterprise) plans
+\* Available on [Pro](https://metabase.com/product/pro) and [Enterprise](https://metabase.com/product/enterprise) plans
 
-\*\* Disabling downloads is available on [Pro](/product/pro) and [Enterprise](/product/enterprise) plans.
+\*\* Disabling downloads is available on [Pro](https://metabase.com/product/pro) and [Enterprise](https://metabase.com/product/enterprise) plans.
 
 For global appearance settings, such as the colors and fonts used across your entire Metabase instance, see [Customizing Metabase's appearance](../configuring-metabase/appearance).
 

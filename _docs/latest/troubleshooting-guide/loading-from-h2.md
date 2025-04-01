@@ -139,6 +139,6 @@ Exception in thread "main" java.lang.AssertionError: Assert failed: Unable to co
 3.  Move Metabase to a faster server (in particular, a server with faster disks).
 
 [backup]: ../installation-and-operation/backing-up-metabase-application-data
-[enterprise]: /pricing
+[enterprise]: https://metabase.com/pricing
 [serialization-docs]: ../installation-and-operation/serialization
 [serialization-learn]: https://metabase.com/learn/metabase-basics/administration/administration-and-operation/serialization

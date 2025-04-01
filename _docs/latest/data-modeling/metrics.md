@@ -29,7 +29,7 @@ You can:
 - Add metrics to [dashboards](../dashboards/introduction).
 - View metrics in the [database browser](../exploration-and-organization/exploration#browse-your-databases).
 - Pick metrics as aggregation columns in the Summarize block when creating questions, modify them or combine.
-- [Pro](/product/pro) and [Enterprise](/product/enterprise) plans include the ability to [mark metrics as verified](../exploration-and-organization/content-verification).
+- [Pro](https://metabase.com/product/pro) and [Enterprise](https://metabase.com/product/enterprise) plans include the ability to [mark metrics as verified](../exploration-and-organization/content-verification).
 
 ### Metrics in the query builder
 

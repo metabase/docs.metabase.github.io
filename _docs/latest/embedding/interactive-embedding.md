@@ -22,7 +22,7 @@ latest: true
 
 **Interactive embedding** is what you want if you want to offer [multi-tenant, self-service analytics](https://metabase.com/learn/metabase-basics/embedding/multi-tenant-self-service-analytics).
 
-Interactive embedding is the only type of embedding that integrates with your [permissions](../permissions/introduction) and [SSO](../people-and-groups/start#authentication) to give people the right level of access to [query](/glossary/query_builder) and [drill-down](https://metabase.com/learn/metabase-basics/querying-and-dashboards/questions/drill-through) into your data.
+Interactive embedding is the only type of embedding that integrates with your [permissions](../permissions/introduction) and [SSO](../people-and-groups/start#authentication) to give people the right level of access to [query](https://metabase.com/glossary/query_builder) and [drill-down](https://metabase.com/learn/metabase-basics/querying-and-dashboards/questions/drill-through) into your data.
 
 ## Interactive embedding demo
 

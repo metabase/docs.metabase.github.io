@@ -40,7 +40,7 @@ For emails, we can:
 
 ### Add subscribers
 
-Add email addresses to register subscribers. On Metabase [Pro](/product/pro) and [Enterprise](/product/enterprise), admins can limit email recipients to [approved domains for notifications](../configuring-metabase/email#approved-domains-for-notifications) and [configure which recipients Metabase suggests](../configuring-metabase/email#suggest-recipients-on-dashboard-subscriptions-and-alerts).
+Add email addresses to register subscribers. On Metabase [Pro](https://metabase.com/product/pro) and [Enterprise](https://metabase.com/product/enterprise), admins can limit email recipients to [approved domains for notifications](../configuring-metabase/email#approved-domains-for-notifications) and [configure which recipients Metabase suggests](../configuring-metabase/email#suggest-recipients-on-dashboard-subscriptions-and-alerts).
 
 ### Determine frequency and timing
 
@@ -89,7 +89,7 @@ If you check this box, Metabase will drop any visualization settings applied to 
 
 Here you can specify which questions Metabase should attach results for.
 
-The attached files will include up to 2000 rows by default. If you're self-hosting Metabase, you can adjust this row limit by setting the environment variable [MB_UNAGGREGATED_QUERY_ROW_LIMIT](../configuring-metabase/environment-variables#mb_unaggregated_query_row_limit). To change this row limit on your Metabase Cloud instance, you can [contact us](/help/premium) and request a different row limit.
+The attached files will include up to 2000 rows by default. If you're self-hosting Metabase, you can adjust this row limit by setting the environment variable [MB_UNAGGREGATED_QUERY_ROW_LIMIT](../configuring-metabase/environment-variables#mb_unaggregated_query_row_limit). To change this row limit on your Metabase Cloud instance, you can [contact us](https://metabase.com/help/premium) and request a different row limit.
 
 ## Slack subscription options
 

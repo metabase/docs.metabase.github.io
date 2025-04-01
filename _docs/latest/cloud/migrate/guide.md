@@ -53,7 +53,7 @@ Once the snapshot upload completes:
 
 While Metabase prepping the migration, click on the **Go to Metabase Store** button to sign in to or set up your account.
 
-Choose your plan: [Starter](/product/starter) or [Pro](/product/pro). You can choose monthly or annual billing (annual will save you 10%).
+Choose your plan: [Starter](https://metabase.com/product/starter) or [Pro](https://metabase.com/product/pro). You can choose monthly or annual billing (annual will save you 10%).
 
 Choose your deployment: you can specify your DNS alias and select your hosting region.
 

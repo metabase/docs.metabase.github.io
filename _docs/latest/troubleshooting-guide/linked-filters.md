@@ -76,8 +76,8 @@ See [Limitations of linking filters](../dashboards/linked-filters#limitations-of
 
 1. Check that Metabase's table metadata for your database includes the foreign key relationship.
 
-[filter-widget-gloss]: /glossary/filter_widget
-[foreign-key-gloss]: /glossary/foreign_key
+[filter-widget-gloss]: https://metabase.com/glossary/filter_widget
+[foreign-key-gloss]: https://metabase.com/glossary/foreign_key
 [join-types]: https://metabase.com/learn/grow-your-data-skills/learn-sql/working-with-sql/sql-join-types
 [learn-linking]: https://metabase.com/learn/metabase-basics/querying-and-dashboards/dashboards/linking-filters
-[linked-filter-gloss]: /glossary/linked_filter
+[linked-filter-gloss]: https://metabase.com/glossary/linked_filter

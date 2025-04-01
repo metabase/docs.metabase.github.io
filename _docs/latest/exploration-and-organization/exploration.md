@@ -62,7 +62,7 @@ You can search by:
 
 The left sidebar lists your databases, [models](../data-modeling/models), and [metrics](../data-modeling/metrics).
 
-[Pro](/product/pro) and [Enterprise](/product/enterprise) plans include the ability to filter for [verified models and metrics](./content-verification).
+[Pro](https://metabase.com/product/pro) and [Enterprise](https://metabase.com/product/enterprise) plans include the ability to filter for [verified models and metrics](./content-verification).
 
 The database browser will list all the databases connected to your Metabase. Hover over a table and click on the **bolt** icon to [X-ray](x-rays) the table, or click on the **book** icon to view more info about the table: its fields and their descriptions (if any), what questions are based on that table, and more.
 

@@ -92,7 +92,7 @@ Metabase adds new features and squashes bugs with each release. [Upgrading to th
 [appdb]: ./loading-from-h2
 [bugs]: ./bugs
 [cant-see-tables]: ./cant-see-tables
-[cloud]: /cloud/
+[cloud]: https://metabase.com/cloud/
 [db-connection]: ./db-connection
 [db-performance]: ./db-performance
 [docker]: ./docker

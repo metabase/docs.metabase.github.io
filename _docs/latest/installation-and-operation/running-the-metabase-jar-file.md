@@ -16,11 +16,11 @@ latest: true
 
 # Running the Metabase OSS JAR file
 
-> We recommend running Metabase on [Metabase Cloud](/cloud/). If you need to self-host, you _can_ run Metabase as a standalone JAR, but [we recommend running Metabase in a Docker container](./running-metabase-on-docker).
+> We recommend running Metabase on [Metabase Cloud](https://metabase.com/cloud/). If you need to self-host, you _can_ run Metabase as a standalone JAR, but [we recommend running Metabase in a Docker container](./running-metabase-on-docker).
 
 To run the free, Open Source version of Metabase via a JAR file, you will need to have a Java Runtime Environment (JRE) installed on your system.
 
-If you have a token for the [Pro or Enterprise editions](/pricing/) of Metabase, see [Activating your Metabase commercial license](../installation-and-operation/activating-the-enterprise-edition).
+If you have a token for the [Pro or Enterprise editions](https://metabase.com/pricing/) of Metabase, see [Activating your Metabase commercial license](../installation-and-operation/activating-the-enterprise-edition).
 
 ## Quick start
 
@@ -28,7 +28,7 @@ If you have a token for the [Pro or Enterprise editions](/pricing/) of Metabase,
 
 If you have Java installed:
 
-1. [Download the JAR file for Metabase OSS](/start/oss/jar). If you're on a [Pro](/product/pro) or [Enterprise](/product/enterprise) plan, download the [JAR for the Enterprise Edition](https://downloads.metabase.com/enterprise/latest/metabase.jar).
+1. [Download the JAR file for Metabase OSS](https://metabase.com/start/oss/jar). If you're on a [Pro](https://metabase.com/product/pro) or [Enterprise](https://metabase.com/product/enterprise) plan, download the [JAR for the Enterprise Edition](https://downloads.metabase.com/enterprise/latest/metabase.jar).
 2. Create a new directory and move the Metabase JAR into it.
 3. Change into your new Metabase directory and run the JAR.
 
@@ -60,10 +60,10 @@ If Java isn't installed, you'll need to install Java before you can run Metabase
 
 Download the JAR file:
 
-- [Metabase OSS](/start/oss/jar)
+- [Metabase OSS](https://metabase.com/start/oss/jar)
 - [Metabase Enterprise/Pro edition](https://downloads.metabase.com/enterprise/latest/metabase.jar)
 
-If you want to install the [Pro or Enterprise editions](/pricing/) of Metabase, see [Activating your Metabase commercial license](../installation-and-operation/activating-the-enterprise-edition).
+If you want to install the [Pro or Enterprise editions](https://metabase.com/pricing/) of Metabase, see [Activating your Metabase commercial license](../installation-and-operation/activating-the-enterprise-edition).
 
 ### 3. Create a new directory and move the Metabase JAR into it
 

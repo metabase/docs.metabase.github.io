@@ -71,7 +71,7 @@ The tool will then prompt you to pick 1-3 tables to embed. You can press <space>
 
 ## Permissions setup with multi-tenancy (optional)
 
-If you have a Pro/EE license, the tool can set up permissions. To get a license, sign up for a [free trial of self-hosted Metabase Pro](/pricing/).
+If you have a Pro/EE license, the tool can set up permissions. To get a license, sign up for a [free trial of self-hosted Metabase Pro](https://metabase.com/pricing/).
 
 If you opted to set up multi-tenancy and connected to your own database, the tool will ask you for the column you want to use to sandbox the table (e.g., a user ID column). Metabase will [sandbox data](../../permissions/data-sandboxes) based on the values in that column.
 

@@ -27,7 +27,7 @@ Learn more about [uploads](/docs/latest/exploration-and-organization/uploads).
 
 ### Metabase Cloud Storage uses ClickHouse
 
-Under the hood, Metabase Cloud Storage uses [ClickHouse](/data-sources/click-house) to store your data.
+Under the hood, Metabase Cloud Storage uses [ClickHouse](https://metabase.com/data-sources/click-house) to store your data.
 
 ### Writing SQL queries on data stored in Metabase Cloud Storage
 
@@ -47,7 +47,7 @@ Current customers can [contact us](mailto:help@metabase.com) to get Metabase sto
 
 ## Metabase Cloud Storage pricing
 
-Pricing depends on how much data you need to store. See the section on Storage on our [pricing page](/pricing/).
+Pricing depends on how much data you need to store. See the section on Storage on our [pricing page](https://metabase.com/pricing/).
 
 ## Syncing Google Sheets with Metabase
 

@@ -46,7 +46,7 @@ Metabase offers several options for authentication.
 
 ### SSO for Metabase Pro and Enterprise plans
 
-With [Pro and Enterprise plans](/pricing/), you have more options to help orchestrate lots of people and groups.
+With [Pro and Enterprise plans](https://metabase.com/pricing/), you have more options to help orchestrate lots of people and groups.
 
 - [JWT][jwt]
 - LDAP advanced features
@@ -78,4 +78,4 @@ Metabase supports user provisioning via the SCIM protocol.
 [saml-auth0]: ./saml-auth0
 [saml-google]: ./saml-google
 [saml-keycloak]: ./saml-keycloak
-[sso-def]: /glossary/sso
+[sso-def]: https://metabase.com/glossary/sso

@@ -167,7 +167,7 @@ For the full list options you can parameterize, see [customizing the appearance 
 
 ![Powered by Metabase](./images/powered-by-metabase.png)
 
-The banner appears on static embeds created with Metabase's open-source version. To remove the banner, you'll need to upgrade to a [Pro](/product/pro) or [Enterprise](/product/enterprise) plan.
+The banner appears on static embeds created with Metabase's open-source version. To remove the banner, you'll need to upgrade to a [Pro](https://metabase.com/product/pro) or [Enterprise](https://metabase.com/product/enterprise) plan.
 
 ## Regenerating the static embedding secret key
 

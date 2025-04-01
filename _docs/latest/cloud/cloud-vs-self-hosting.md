@@ -36,7 +36,7 @@ Infrastructure costs are tricky to estimate, so keep in mind that the above self
 
 There are some cases where you _should_ self-host.
 
-- You need an [air-gapped environment](/product/air-gapping), usually for regulatory compliance, or if you’re running your own three-letter-agency… If you’re not sure if you need an air-gapped environment, you don’t need an air-gapped environment. If you do need an air-gap, we have an [air-gap offering as well](/talk-to-a-person/) (just not for Cloud, obviously).
+- You need an [air-gapped environment](https://metabase.com/product/air-gapping), usually for regulatory compliance, or if you’re running your own three-letter-agency… If you’re not sure if you need an air-gapped environment, you don’t need an air-gapped environment. If you do need an air-gap, we have an [air-gap offering as well](https://metabase.com/talk-to-a-person/) (just not for Cloud, obviously).
 - You have some regulations that stipulate how you run your software (like HIPAA).
 - You want to run a custom build of Metabase. That is, you’re running a fork of Metabase (OSS or the Enterprise/Pro version) so you can add your own customizations to the software, and you have the engineering resources to tank that level of overhead.
 - You want to use a community or custom driver. We only support [official (1st-party) and partner drivers](/docs/latest/databases/connecting#connecting-to-supported-databases) on Metabase Cloud, because we need to be able to vouch for their quality and help you with problems in a production context.
@@ -47,7 +47,7 @@ Otherwise, you're better off having us handle all of the overhead so you can foc
 
 Metabase also has a paid version that ships with all of the bells and whistles (SSO, row-level permissions, customization, and a lot more). Plans with this version include:
 
-- [Metabase Pro](/product/pro)
-- [Metabase Enterprise](/product/enterprise)
+- [Metabase Pro](https://metabase.com/product/pro)
+- [Metabase Enterprise](https://metabase.com/product/enterprise)
 
 You can self-host this paid version, or have have us host it for you on Metabase Cloud for no additional cost. We don't charge more because we believe you'll have such a better experience that it'll be easier for us to support you.

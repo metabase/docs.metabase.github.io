@@ -16,7 +16,7 @@ latest: true
 
 # Activating your Metabase commercial license
 
-The [paid Pro and Enterprise editions](/pricing/) of Metabase are distinct from the free [Open Source edition](../installation-and-operation/running-the-metabase-jar-file) and the [Starter version of Metabase Cloud](/cloud/).
+The [paid Pro and Enterprise editions](https://metabase.com/pricing/) of Metabase are distinct from the free [Open Source edition](../installation-and-operation/running-the-metabase-jar-file) and the [Starter version of Metabase Cloud](https://metabase.com/cloud/).
 
 ## If you're running on Metabase Cloud
 
@@ -29,7 +29,7 @@ To use your Pro/Enterprise features, you’ll need to do two things:
 - Download Metabase Enterprise Edition
 - Enter your license.
 
-You can get a license by signing up for a free trial of the [Pro or Enterprise edition plans](/pricing/), both of which can be self-hosted or hosted on Metabase Cloud.
+You can get a license by signing up for a free trial of the [Pro or Enterprise edition plans](https://metabase.com/pricing/), both of which can be self-hosted or hosted on Metabase Cloud.
 
 ### Download the Enterprise edition
 
@@ -50,7 +50,7 @@ OR
 
 ## Upgrading from a self-hosted Metabase Open Source Edition to a Pro or Enterprise plan
 
-To get all the features available when upgrading to a _self-hosted_ [Pro or Enterprise plan](/pricing/), you'll need to:
+To get all the features available when upgrading to a _self-hosted_ [Pro or Enterprise plan](https://metabase.com/pricing/), you'll need to:
 
 1. Change to the Metabase Enterprise Edition (that goes for both the Pro and Enterprise plans).
 2. Activate your license.
@@ -66,7 +66,7 @@ Assuming you've been using a [production application database](../installation-a
 
 Migrating to the Enterprise Edition will keep all of your questions, dashboards, people, settings — everything in your existing Metabase.
 
-And don't stress. You won't lose any of your work, and if you get stuck, we're [here to help](/help/premium).
+And don't stress. You won't lose any of your work, and if you get stuck, we're [here to help](https://metabase.com/help/premium).
 
 ## Validating your token
 
@@ -80,7 +80,7 @@ https://token-check.metabase.com/api/[token-id]/v2/status
 
 If your Metabase can't validate the token, it'll disable the Pro/Enterprise features, but will continue to work normally as if you were running the Open Source edition.
 
-If you can't expose your Metabase to the internet, talk to us about our [air-gapped Metabase](/product/air-gapping).
+If you can't expose your Metabase to the internet, talk to us about our [air-gapped Metabase](https://metabase.com/product/air-gapping).
 
 ## Routing outbound Metabase traffic through a proxy
 
@@ -108,12 +108,12 @@ If you're hosting Metabase behind a firewall that blocks outgoing connections, *
 44.212.138.188
 ```
 
-To verify your license with a token check to `token-check.metabase.com`, your Metabase will make GET HTTP requests to these IP addresses and parse their responses. If you can't allow outbound connections for security reasons, please [contact us](/help/premium).
+To verify your license with a token check to `token-check.metabase.com`, your Metabase will make GET HTTP requests to these IP addresses and parse their responses. If you can't allow outbound connections for security reasons, please [contact us](https://metabase.com/help/premium).
 
 ## Note about Zscaler deployments
 
 When Metabase is deployed inside infrastructure that uses Zscaler, you should do the following:
 
-1. Contact your networking team and let them know that Metabase will need to perform token checks in order for paid features to work. If you need an air-gapped version of Metabase, [contact us](/help/premium).
+1. Contact your networking team and let them know that Metabase will need to perform token checks in order for paid features to work. If you need an air-gapped version of Metabase, [contact us](https://metabase.com/help/premium).
 2. Make sure Zscaler isn't acting as a proxy or DNS for the server where Metabase is running. Metabase needs a direct connection to the token check service without any gateway acting as a proxy.
 3. Make sure the server where Metabase is running isn't using Zscaler root CA certificates for all websites. Otherwise, the Java virtual machine where Metabase runs will determine that the certificate authority is incorrect.

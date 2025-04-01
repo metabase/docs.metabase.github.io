@@ -55,7 +55,7 @@ Metabase will take you to the relevant usage dashboard and plug in the item's ID
 
 By default, Metabase will keep the data about [activity](#activity-log-model), [views](#view-log-model), and [query execution](#query-log-model) for **720 days**. Twice a day, Metabase will delete rows older than this threshold. You can change this limit by adjusting the environment variable [`MB_AUDIT_MAX_RETENTION_DAYS`](../configuring-metabase/environment-variables#mb_audit_max_retention_days).
 
-Metabase Open Source edition, which is also used on the [Metabase Cloud Starter plan](/pricing/), doesn't collect [Activity](#activity-log-model) and [View](#view-log-model) data. If you upgrade from the Open Source/Starter to a Pro or Enterprise plan, you'll only see View and Activity data in Usage Analytics _starting from the time when you upgraded_.
+Metabase Open Source edition, which is also used on the [Metabase Cloud Starter plan](https://metabase.com/pricing/), doesn't collect [Activity](#activity-log-model) and [View](#view-log-model) data. If you upgrade from the Open Source/Starter to a Pro or Enterprise plan, you'll only see View and Activity data in Usage Analytics _starting from the time when you upgraded_.
 
 ## Creating custom reports
 

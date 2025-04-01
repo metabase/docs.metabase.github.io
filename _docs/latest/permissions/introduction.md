@@ -54,7 +54,7 @@ If instead you're wondering about what data Metabase the company can see, check 
 
 ### Application permissions
 
-[Application permissions](application) (available on [Pro and Enterprise plans](/pricing/)) dictate access to Metabase application-level features, including:
+[Application permissions](application) (available on [Pro and Enterprise plans](https://metabase.com/pricing/)) dictate access to Metabase application-level features, including:
 
 - **Settings**: The Settings tab in the Admin panel.
 - **Monitoring access**: The Tools and Troubleshooting tabs in the Admin panel.

@@ -15,7 +15,7 @@ Managing billing and accounts in the Metabase Store.
 
 ## Try out a free 14-day trial of Pro
 
-If you're on a [Starter](/product/starter) cloud plan, you can try out [all the features of Metabase Pro](/product/pro) for free for 14 days with no commitment.
+If you're on a [Starter](https://metabase.com/product/starter) cloud plan, you can try out [all the features of Metabase Pro](https://metabase.com/product/pro) for free for 14 days with no commitment.
 
 If you want to stick with Pro, you'll have the chance to upgrade. Otherwise, your plan will automatically switch back to Starter.
 
@@ -63,7 +63,7 @@ To cancel a Starter or Pro plan directly in the Metabase Store:
 
 1. Log in to your Metabase [Store account](https://store.metabase.com).
 2. Go to **Instances**.
-3. Under the instance with the subscription that you want to cancel, click **Cancel subscription and delete instance**. If you're on an Enterprise plan, you'll need to [contact support](/help-premium).
+3. Under the instance with the subscription that you want to cancel, click **Cancel subscription and delete instance**. If you're on an Enterprise plan, you'll need to [contact support](https://metabase.com/help-premium).
 
 ## Update payment information
 
@@ -110,7 +110,7 @@ The primary account holder should request a name change by emailing [billing@met
 
 ## Reset your Admin password
 
-If you need to reset your Admin password, [contact support](/help-premium).
+If you need to reset your Admin password, [contact support](https://metabase.com/help-premium).
 
 ## Change your company name
 
@@ -143,7 +143,7 @@ If you need to change your primary account holder, for example if your primary a
 
 ## Move from Metabase Cloud to self-hosting Metabase
 
-If you're on Metabase Cloud but need to switch to hosting Metabase yourself, [contact us](/help-premium) and we'll give you a backup of your application database that you can use to restore Metabase on your own infrastructure.
+If you're on Metabase Cloud but need to switch to hosting Metabase yourself, [contact us](https://metabase.com/help-premium) and we'll give you a backup of your application database that you can use to restore Metabase on your own infrastructure.
 
 ## Further reading
 

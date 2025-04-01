@@ -142,6 +142,6 @@ case(isempty([Feedback]), "No feedback.", [Feedback])
 [custom-expressions-doc]: ../expressions
 [custom-expressions-learn]: https://metabase.com/learn/metabase-basics/querying-and-dashboards/questions/custom-expressions
 [data-types]: https://metabase.com/learn/grow-your-data-skills/data-fundamentals/data-types-overview#examples-of-data-types
-[notebook-editor-def]: /glossary/query_builder
+[notebook-editor-def]: https://metabase.com/glossary/query_builder
 [numpy]: https://numpy.org/doc/
 [pandas]: https://pandas.pydata.org/pandas-docs/stable/

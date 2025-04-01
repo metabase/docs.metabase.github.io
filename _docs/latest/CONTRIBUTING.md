@@ -77,7 +77,7 @@ If there are tests missing, code style concerns or specific architectural issues
 
 ## Ways to help
 
-The starting point would be to get familiar with Metabase the product, and know your way around. If you're using it at work, that's great! If not, [download Metabase](/start/oss/) and play around with it. Read the docs and generally get a feel for the flow of the product.
+The starting point would be to get familiar with Metabase the product, and know your way around. If you're using it at work, that's great! If not, [download Metabase](https://metabase.com/start/oss/) and play around with it. Read the docs and generally get a feel for the flow of the product.
 
 Here are some ways you can help, in order of increasing coordination + interaction with us:
 

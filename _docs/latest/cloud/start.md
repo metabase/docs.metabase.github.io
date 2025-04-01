@@ -12,7 +12,7 @@ latest: true
 
 # Metabase Cloud
 
-Metabase Cloud is what we call our hosted service for our [Starter](/product/starter), [Pro](/product/pro), and [Enterprise](/product/enterprise) plans. We deal with running your Metabase server for you, manage uptime and backups, and handle all the upgrades so you're always on the latest version of Metabase.
+Metabase Cloud is what we call our hosted service for our [Starter](https://metabase.com/product/starter), [Pro](https://metabase.com/product/pro), and [Enterprise](https://metabase.com/product/enterprise) plans. We deal with running your Metabase server for you, manage uptime and backups, and handle all the upgrades so you're always on the latest version of Metabase.
 
 ## Metabase Cloud documentation
 
@@ -45,8 +45,8 @@ Manage your Metabase Cloud instance, subscription, and billing via the [Metabase
 
 ## Metabase Cloud contact
 
-- [Send us an email](/help/premium)
+- [Send us an email](https://metabase.com/help/premium)
 
 ## Terms of service
 
-- [Hosting terms of service](/license/hosting)
+- [Hosting terms of service](https://metabase.com/license/hosting)

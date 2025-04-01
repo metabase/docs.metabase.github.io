@@ -55,7 +55,7 @@ Notification **recipients** can see whatever the notification **creator** can se
 
 ## More control over email options
 
-On [Enterprise](/product/enterprise) and [Pro](/product/pro) plans, Admins can:
+On [Enterprise](https://metabase.com/product/enterprise) and [Pro](https://metabase.com/product/pro) plans, Admins can:
 
 - Limit email recipients to [approved domains for notifications](../configuring-metabase/email#approved-domains-for-notifications).
 - [Limit which recipients Metabase suggests](../configuring-metabase/email#suggest-recipients-on-dashboard-subscriptions-and-alerts) when people set up a subscription or alert.

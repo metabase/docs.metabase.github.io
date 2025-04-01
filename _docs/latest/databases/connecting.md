@@ -29,7 +29,7 @@ The connection settings differ database to database. For the list of connection 
 
 ## Connecting to supported databases
 
-The databases listed below have official drivers maintained by the Metabase team. Customers on [Pro and Enterprise](/pricing/) will get official support. For each database, Metabase supports the oldest supported version through the latest stable version.
+The databases listed below have official drivers maintained by the Metabase team. Customers on [Pro and Enterprise](https://metabase.com/pricing/) will get official support. For each database, Metabase supports the oldest supported version through the latest stable version.
 
 - [Amazon Athena](./connections/athena)
 - [BigQuery](./connections/bigquery) (Google Cloud Platform)
@@ -74,7 +74,7 @@ Go to **Admin settings** > **Databases** > your database and click **Remove this
 
 ## Restoring the Sample Database
 
-If you've deleted the Metabase [Sample Database](/glossary/sample_database), go to **Admin settings** > **Databases** and click **Bring the Sample Database back**.
+If you've deleted the Metabase [Sample Database](https://metabase.com/glossary/sample_database), go to **Admin settings** > **Databases** and click **Bring the Sample Database back**.
 
 ## Troubleshooting
 

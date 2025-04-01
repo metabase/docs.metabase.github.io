@@ -58,11 +58,11 @@ Current partner drivers:
 
 Partner drivers are available to Cloud customers out-of-the-box.
 
-If you have interest in becoming a partner, please fill the [partner form](/partners/join) and we will get in touch.
+If you have interest in becoming a partner, please fill the [partner form](https://metabase.com/partners/join) and we will get in touch.
 
 ## Community drivers
 
-> You install these drivers at your own risk. The plugins run as part of your Metabase and will have access to anything your Metabase does. And since we can’t vet for them, we don’t make them available on [Metabase Cloud](/cloud/).
+> You install these drivers at your own risk. The plugins run as part of your Metabase and will have access to anything your Metabase does. And since we can’t vet for them, we don’t make them available on [Metabase Cloud](https://metabase.com/cloud/).
 
 Anyone can build a community driver. These are the currently known third-party database drivers for Metabase.
 
@@ -85,7 +85,7 @@ If you don't see a driver for your database, try looking in the comments of the 
 
 If you are having problems installing or using a community driver, your best bet is to contact the author of the driver.
 
-[Metabase Cloud](/cloud/) doesn't support community drivers, meaning that (for now) you can only use Metabase Cloud with the [officially supported drivers](../databases/connecting#connecting-to-supported-databases), and the partner drivers listed above.
+[Metabase Cloud](https://metabase.com/cloud/) doesn't support community drivers, meaning that (for now) you can only use Metabase Cloud with the [officially supported drivers](../databases/connecting#connecting-to-supported-databases), and the partner drivers listed above.
 
 ## Write your own driver
 

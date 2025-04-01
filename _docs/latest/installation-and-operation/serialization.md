@@ -494,9 +494,9 @@ import path & options
 
 ## Serialization via the API
 
-> Just like the CLI serialization commands, these endpoints are only available for [Pro](/product/pro) and [Enterprise](/product/enterprise) plans.
+> Just like the CLI serialization commands, these endpoints are only available for [Pro](https://metabase.com/product/pro) and [Enterprise](https://metabase.com/product/enterprise) plans.
 
-You can import and export serialized Metabase data via Metabase's API, which makes serialization possible for [Metabase Cloud](/cloud/) deployments.
+You can import and export serialized Metabase data via Metabase's API, which makes serialization possible for [Metabase Cloud](https://metabase.com/cloud/) deployments.
 
 There are two endpoints:
 

@@ -15,7 +15,7 @@ latest: true
 
 # Running Metabase on Docker
 
-> To get fast, reliable, and secure deployment with none of the work or hidden costs that come with self-hosting, check out [Metabase Cloud](/cloud/).
+> To get fast, reliable, and secure deployment with none of the work or hidden costs that come with self-hosting, check out [Metabase Cloud](https://metabase.com/cloud/).
 
 Metabase provides an official Docker image via Dockerhub that can be used for deployments on any system that is running Docker.
 
@@ -55,7 +55,7 @@ docker run -d -p 12345:3000 --name metabase metabase/metabase
 
 ## Pro or Enterprise quick start
 
-Use this quick start if you have a [license token](../installation-and-operation/activating-the-enterprise-edition) for a [Pro or Enterprise version](/pricing/) of Metabase, and you want to run Metabase locally. See below for instructions on [running Metabase in production](#production-installation).
+Use this quick start if you have a [license token](../installation-and-operation/activating-the-enterprise-edition) for a [Pro or Enterprise version](https://metabase.com/pricing/) of Metabase, and you want to run Metabase locally. See below for instructions on [running Metabase in production](#production-installation).
 
 Assuming you have [Docker](https://www.docker.com/) installed and running, get the latest Docker image:
 

@@ -19,7 +19,7 @@ Metabase is built and packaged as a Java JAR file and can be run anywhere that J
 
 ## Metabase Cloud (Recommended)
 
-[Metabase Cloud](/cloud/) is the easiest way to run Metabase. All you need to do is [sign up for a free trial](https://store.metabase.com/checkout), and you're off to the races.
+[Metabase Cloud](https://metabase.com/cloud/) is the easiest way to run Metabase. All you need to do is [sign up for a free trial](https://store.metabase.com/checkout), and you're off to the races.
 
 ## Self-hosting Metabase
 
@@ -35,7 +35,7 @@ If you're self-hosting but don’t use Docker, the JAR is the easiest way to get
 
 ## Air-gapped Metabase
 
-If you're self-hosting because you need an air-gapped environment, check out the [air-gapped edition of Metabase](/product/air-gapping).
+If you're self-hosting because you need an air-gapped environment, check out the [air-gapped edition of Metabase](https://metabase.com/product/air-gapping).
 
 ## Professional services from the Metabase team
 
@@ -47,7 +47,7 @@ If you want help with:
 - Embedding
 - Data modeling
 
-Check out our [professional services](/product/professional-services).
+Check out our [professional services](https://metabase.com/product/professional-services).
 
 ## Upgrading Metabase
 
@@ -64,4 +64,4 @@ We currently do not distribute Metabase on AWS Marketplace or Azure Marketplace.
 
 ## Connect with a Metabase Expert
 
-If you’d like more technical resources to set up your data stack with Metabase, connect with a [Metabase Expert](/partners/).
+If you’d like more technical resources to set up your data stack with Metabase, connect with a [Metabase Expert](https://metabase.com/partners/).
