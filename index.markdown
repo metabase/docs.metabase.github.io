@@ -1,3 +1,3 @@
 ---
-redirect_to: latest/
+redirect_to: /docs/latest/
 ---

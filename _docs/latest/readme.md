@@ -7,7 +7,7 @@ category: Table of Contents
 title: Metabase documentation
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/README.md'
 layout: new-docs
-permalink: /latest/
+permalink: /docs/latest/
 redirect_from:
   - /docs/latest/enterprise-guide
   - /docs/latest/users-guide
@@ -15,6 +15,7 @@ redirect_from:
   - /docs/latest/operations-guide
   - /docs/latest/faq
   - /docs/latest/
+  - /latest/
   - /latest/enterprise-guide
   - /latest/users-guide
   - /latest/administration-guide
