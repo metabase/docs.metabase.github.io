@@ -1,6 +1,8 @@
 (ns tasks.util
   (:require [clj-yaml.core :as yaml]))
 
+(defn log [level message] (println (str level " " message)))
+
 (defn update-frontmatter!
   "Reads a file, updates its YAML frontmatter by applying f to the value of the
   YAML frontmatter, as a clojure map and writes the updated content back.

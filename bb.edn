@@ -14,7 +14,4 @@
 
          stitch-outbound-links
          {:requires [[tasks.stitch-outbound-links :refer [-main]]]
-          :task (let [{:keys [dir dry-run?] :as parsed} (parse-args *command-line-args*)]
-                  (if (and dir (fs/directory? dir))
-                    (-main parsed)
-                    (println "Usage: bb script.clj [--dry-run] <directory>")))}}}
+          :task (-main (parse-args *command-line-args*))}}}
