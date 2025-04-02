@@ -101,9 +101,7 @@
 
 (defn- fix-yaml-links [path dry-run?]
   (let [parsed (yaml/parse-string (slurp path))
-        updated (walk/postwalk
-                  update-node
-                  parsed)]
+        updated (walk/postwalk update-node parsed)]
     (cond
       (and (= parsed updated) dry-run?)
       (u/log "  ℹ️" (str "Dry run: No update to: " path))
@@ -126,8 +124,8 @@
 
 (defn- crawl-data-directory
   [f dry-run?]
-  (doseq [file (concat (fs/glob "_data" "**/*.yaml")
-                       (fs/glob "_data" "**/*.yml"))]
+  (doseq [file (concat (fs/glob "." "_data/**.yaml")
+                       (fs/glob "." "_data/**.yml"))]
     (f (str file) dry-run?)))
 
 (defn -main
