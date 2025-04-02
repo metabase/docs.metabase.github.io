@@ -1,5 +1,8 @@
 {:paths ["__tasks"]
- :tasks {:requires [[babashka.fs :as fs]]
+ :deps {org.clj-commons/hickory {:mvn/version "0.7.7"}
+        hiccup/hiccup {:mvn/version "1.0.5"}}
+ :tasks {:requires [[babashka.fs :as fs]
+                    ]
          :init (do (defn parse-args
                      "Parses command-line arguments.
                       Looks for an optional '--dry-run' flag and a directory path."

@@ -3,6 +3,8 @@
             [clj-yaml.core :as yaml]
             [clojure.string :as str]
             [clojure.walk :as walk]
+            [hickory.core :as hickory]
+            [hiccup2.core :as hiccup]
             [tasks.util :as u]))
 
 (def outbound-link-roots
@@ -60,48 +62,103 @@
 
 ;; YAML processing for _data dir (which stores nav info):
 
-(defn- add-metabase-prefix? [node]
-  (and (map? node)
-       (contains? node :url)
-       (not (str/starts-with? (:url node) "/docs/"))
-       (not (str/starts-with? (:url node) "https://metabase.com"))
-       (not (str/starts-with? (:url node) "https://www.metabase.com"))
-       (not (str/starts-with? (:url node) "http://metabase.com"))
-       (not (str/starts-with? (:url node) "http://www.metabase.com"))))
 
-(defn- remove-metabase-prefix? [node]
-  (and (map? node)
-       (contains? node :url)
-       (or (str/starts-with? (:url node) "https://metabase.com/docs")
-           (str/starts-with? (:url node) "https://www.metabase.com/docs")
-           (str/starts-with? (:url node) "http://metabase.com/docs")
-           (str/starts-with? (:url node) "http://www.metabase.com/docs"))))
+;; YAML values can be html, so we update their links too.
 
-(defn- update-node [node]
-  (let [add? (add-metabase-prefix? node)
-        remove? (remove-metabase-prefix? node)]
-    (when add? (u/log "  📝" (str "Adding prefix to: " (:url node))))
-    (when remove? (u/log "  📝" (str "Removing prefix from: " (:url node))))
-    (cond-> node
-      add? (update-in [:url] #(str "https://metabase.com" %))
-      remove? (update-in [:url]
-                         (comp
-                           #(str/replace % #"^http://www.metabase.com" "")
-                           #(str/replace % #"^http://metabase.com" "")
-                           #(str/replace % #"^https://www.metabase.com" "")
-                           #(str/replace % #"^https://metabase.com" ""))))))
+(defn ->hiccup
+  "Wraps a html string with divs to capture any strings before or after the html."
+  [html-str]
+  (let [with-html-head-body (hickory/as-hiccup (hickory/parse (str "<div>" html-str "</div>")))]
+    (-> with-html-head-body first (nth 3) (nth 2))))
+
+(defn <-hiccup
+  "Unwraps a hiccup structure from the divs added by ->hiccup."
+  [hiccup]
+  (-> hiccup hiccup/html (str/replace #"^\<div\>" "") (str/replace #"\<\/div\>$" "") str))
+
+(defn update-html! [html-str walk-fn]
+  (let [data (->hiccup html-str)]
+    (<-hiccup (walk/postwalk walk-fn data))))
+
+(def attrs-to-update #{:href})
+
+(def yaml-keys-to-update #{:url :link :oss :enterprise :starter :pro})
+
+(defn fix-link-string? [x]
+  (and
+    (instance? clojure.lang.MapEntry x)
+    (contains? yaml-keys-to-update (first x))
+    (string? (second x))
+    x))
+
+(defn fix-strategy [s]
+  (cond
+    (some #(str/starts-with? s %) (mapv #(str "/" % "/") outbound-link-roots))
+    :add
+
+    (or (str/starts-with? s "https://metabase.com/docs")
+        (str/starts-with? s "https://www.metabase.com/docs")
+        (str/starts-with? s "http://metabase.com/docs")
+        (str/starts-with? s "http://www.metabase.com/docs"))
+    :remove
+
+    :else nil))
 
 (comment
-  (mapv (comp :url update-node)
-        [{:url "/learn/latest/cloud/start"}
-         {:url "http://www.metabase.com/docs/latest/cloud/start"}])
-;; => ["https://metabase.com/learn/latest/cloud/start"
-;;     "/docs/latest/cloud/start"]
+  (fix-strategy "/foob/latest/cloud/start")
+  ;; => :add
+  (fix-strategy "https://metabase.com/docs/latest/cloud/start")
+  ;; => :remove
+  (fix-strategy "/docs/x")
+  ;; => nil
   )
+
+(declare fix-html-links)
+
+(defn fix-link-string
+  ([s] (fix-link-string s true))
+  ([s fix-html?]
+   (let [strat (fix-strategy s)
+         fixed (case strat
+                 :add (str "https://metabase.com" (when-not (str/starts-with? s "/") "/") s)
+                 :remove (let [replacement (if (str/starts-with? s "/") "" "/")]
+                           (-> s
+                               (str/replace #"^http://metabase.com" replacement)
+                               (str/replace #"^http://www.metabase.com" replacement)
+                               (str/replace #"^https://metabase.com" replacement)
+                               (str/replace #"^https://www.metabase.com" replacement)))
+                 nil s)]
+     (if fix-html? (fix-html-links fixed) fixed))))
+
+(defn fix-html-links [s]
+  (update-html! s
+                (fn [x]
+                  (if (and (instance? clojure.lang.MapEntry x)
+                           (contains? attrs-to-update (first x))
+                           (string? (second x)))
+                    [(first x) (fix-link-string (second x) false)]
+                    x))))
+
+(comment
+  (fix-link-string "/foob/latest/cloud/start")
+  ;; => "https://metabase.com/foob/latest/cloud/start"
+  (fix-link-string "https://metabase.com/docs/latest/cloud/start")
+  ;; => "/docs/latest/cloud/start"
+  (fix-link-string "/docs/x")
+  ;; => "/docs/x"
+  )
+
+(defn update-links [link-data]
+  (walk/postwalk
+    (fn [x]
+      (if-let [[k v] (fix-link-string? x)]
+        [k (fix-link-string v)]
+        x))
+    link-data))
 
 (defn- fix-yaml-links [path dry-run?]
   (let [parsed (yaml/parse-string (slurp path))
-        updated (walk/postwalk update-node parsed)]
+        updated (update-links parsed)]
     (cond
       (and (= parsed updated) dry-run?)
       (u/log "  ℹ️" (str "Dry run: No update to: " path))
