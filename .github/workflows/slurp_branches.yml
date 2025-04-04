@@ -14,46 +14,37 @@ jobs:
         uses: actions/checkout@v4
         
   slurp-branches:
-    needs: checkout-docs-repo
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        branch:
-          - master
-          - release-x.53.x
-          - release-x.52.x
-          - release-x.51.x
-          - release-x.50.x
-          - release-x.49.x
-          - release-x.48.x
-          - release-x.47.x
-          - release-x.48.x
-          - release-x.46.x
-          - release-x.45.x
-          - release-x.44.x
-          - release-x.43.x
-      # TODO: ^ add more release branches ^
+        branch: [master, release-x.53.x, release-x.52.x, release-x.51.x, release-x.50.x, release-x.49.x, release-x.48.x, release-x.47.x, release-x.46.x, release-x.45.x, release-x.44.x, release-x.43.x]
     steps:
-      # Clone only a subdirectory from branch {{matrix.branch}} on metabase/metabase using sparse checkout
-      # This will be much faster.
-      - name: Clone /docs/ from master with sparse checkout
+      - name: Clone docs from ${{ matrix.branch }}
         run: |
-          echo ${{ matrix.branch }}
-          git clone --depth 1 --branch ${{ matrix.branch }} --filter=blob:none --no-checkout https://github.com/metabase/metabase.git ../metabase-main_${{ matrix.branch }}
-          cd ../metabase-main_${{ matrix.branch }}
+          git clone --depth 1 --branch ${{ matrix.branch }} --filter=blob:none --no-checkout https://github.com/metabase/metabase.git repo_${{ matrix.branch }}
+          cd repo_${{ matrix.branch }}
           git sparse-checkout init --cone
           git sparse-checkout set docs
           git checkout ${{ matrix.branch }}
-
-      # List all markdown files in the specific subdirectory
-      - name: Move markdown files
+      - name: Upload docs as artifact
         run: |
-          mkdir -p _docs/${{ matrix.branch }}/
-          cp -r ../metabase-main_${{ matrix.branch }}/docs/. _docs/${{ matrix.branch }}/
+          mkdir -p _docs/${{ matrix.branch }}
+          cp -r repo_${{ matrix.branch }}/docs/. _docs/${{ matrix.branch }}/
+        uses: actions/upload-artifact@v3
+        with:
+          name: docs-${{ matrix.branch }}
+          path: _docs/${{ matrix.branch }}
 
-      - name: List markdown files
-        run: |
-          ls -altr _docs
+  aggregate-docs:
+    needs: slurp-branches
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download all docs artifacts
+        uses: actions/download-artifact@v3
+        with:
+          path: _docs
+      - name: List aggregated _docs directory
+        run: ls -altr _docs
 
 
  # # Optionally, commit and push if changes are expected:
