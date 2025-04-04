@@ -36,7 +36,7 @@ jobs:
       # This will be much faster.
       - name: Clone /docs/ from master with sparse checkout
         run: |
-          git clone --depth 1 --branch {{matrix.branch}} --filter=blob:none --no-checkout https://github.com/metabase/metabase.git ../metabase-main
+          git clone --depth 1 --branch ${{ matrix.branch }} --filter=blob:none --no-checkout https://github.com/metabase/metabase.git ../metabase-main
           cd ../metabase-main
           git sparse-checkout init --cone
           git sparse-checkout set docs
