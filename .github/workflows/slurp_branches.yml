@@ -1,0 +1,57 @@
+name: Process Branches
+
+on:
+  pull_request:
+    master
+  workflow_dispatch:
+
+jobs:
+  make-docs-dir:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Make _docs Directory
+        run: mkdir _docs
+  process-branches:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        branch:
+          - master
+          - release-x.53.x
+          - release-x.52.x
+          - release-x.51.x
+          - release-x.50.x
+          - release-x.49.x
+          - release-x.48.x
+          - release-x.47.x
+          - release-x.48.x
+          - release-x.46.x
+          - release-x.45.x
+          - release-x.44.x
+          - release-x.43.x
+# TODO: ^ add more release branches ^
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ matrix.branch }}
+
+      - name: Process file for branch ${{ matrix.branch }}
+        run: |
+          # Here we assume each branch has a file named after the branch (e.g. branch1)
+          echo "Processing branch: ${{ matrix.branch }} (not really)"
+          sleep 5
+          echo "Branch processed: ${{ matrix.branch }}" >> _docs/${{ matrix.branch }}.txt
+          # Add additional processing as needed
+          cat ${{ matrix.branch }}
+
+ # # Optionally, commit and push if changes are expected:
+ #    - name: Commit changes
+ #      run: |
+ #        git config user.name "GitHub Action"
+ #        git config user.email "action@github.com"
+ #        git add ${{ matrix.branch }}
+ #        git commit -m "Processed file for ${{ matrix.branch }}"
+ #        git push origin ${{ matrix.branch }}
+ #      env:
+ #        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

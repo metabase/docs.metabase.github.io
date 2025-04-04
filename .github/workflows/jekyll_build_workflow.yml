@@ -1,0 +1,22 @@
+name: Jekyll Build Workflow
+
+# When this gets called, we should have stuff at all _docs/<branch>/
+
+on:
+  workflow_run:
+    workflows: ["Process Branches"]
+    types:
+      - completed
+
+jobs:
+  final-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Final Step
+        run: echo "All branch processing jobs have completed!"
+      - name: Check _docs contents
+        run: ls -al _docs
+      - name: start the build
+        run: script/build
+      - name: check output
+        run: ls -al _site
