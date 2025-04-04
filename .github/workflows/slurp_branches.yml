@@ -7,6 +7,10 @@ on:
   workflow_dispatch:
 
 jobs:
+  checkout-docs-repo:
+    steps:
+      - name: Checkout docs repository
+        uses: actions/checkout@v4
   slurp-branches:
     runs-on: ubuntu-latest
     strategy:
@@ -25,16 +29,13 @@ jobs:
           - release-x.45.x
           - release-x.44.x
           - release-x.43.x
-# TODO: ^ add more release branches ^
-    steps:
-      - name: Checkout docs repository
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ matrix.branch }}
+      # TODO: ^ add more release branches ^
 
       # Clone only a subdirectory from branch {{matrix.branch}} on metabase/metabase using sparse checkout
       # This will be much faster.
       - name: Clone /docs/ from master with sparse checkout
+        with:
+          ref: ${{ matrix.branch }}
         run: |
           echo ${{ matrix.branch }}
           git clone --depth 1 --branch ${{ matrix.branch }} --filter=blob:none --no-checkout https://github.com/metabase/metabase.git ../metabase-main
