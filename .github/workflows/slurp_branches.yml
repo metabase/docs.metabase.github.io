@@ -12,6 +12,32 @@ jobs:
     steps:
       - name: Checkout docs repository
         uses: actions/checkout@v4
+
+  process-branches:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up branches list
+        id: branches
+        run: echo "::set-output name=list::master release-x.53.x release-x.52.x release-x.51.x release-x.50.x release-x.49.x release-x.48.x release-x.47.x release-x.46.x release-x.45.x release-x.44.x release-x.43.x"
+
+      - name: Process each branch
+        run: |
+          mkdir -p _docs
+          for branch in ${{ steps.branches.outputs.list }}; do
+            echo "Processing branch: $branch"
+            git clone --depth 1 --branch $branch --filter=blob:none --no-checkout https://github.com/metabase/metabase.git temp_$branch
+            cd temp_$branch
+            git sparse-checkout init --cone
+            git sparse-checkout set docs
+            git checkout $branch
+            mkdir -p ../_docs/$branch
+            cp -r docs/. ../_docs/$branch/
+            cd ..
+            rm -rf temp_$branch
+          done
+
+      - name: List _docs contents
+        run: ls -altr _docs
         
   slurp-branches:
     runs-on: ubuntu-latest
@@ -26,10 +52,11 @@ jobs:
           git sparse-checkout init --cone
           git sparse-checkout set docs
           git checkout ${{ matrix.branch }}
-      - name: Upload docs as artifact
+      - name: copy docs
         run: |
           mkdir -p _docs/${{ matrix.branch }}
           cp -r repo_${{ matrix.branch }}/docs/. _docs/${{ matrix.branch }}/
+      - name: upload docs as artifact
         uses: actions/upload-artifact@v3
         with:
           name: docs-${{ matrix.branch }}
