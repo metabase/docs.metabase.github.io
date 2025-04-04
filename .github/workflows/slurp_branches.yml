@@ -13,6 +13,14 @@ jobs:
       - name: Checkout docs repository
         uses: actions/checkout@v4
 
+  caught-new-branch-name:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Display received payload
+        run: |
+          echo "Received branch name: ${{ github.event.client_payload.branch }}"
+          # Add your workflow steps here based on the branch argument.
+
   process-branches:
     runs-on: ubuntu-latest
     steps:
