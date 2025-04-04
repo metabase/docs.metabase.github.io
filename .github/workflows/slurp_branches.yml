@@ -7,11 +7,6 @@ on:
   workflow_dispatch:
 
 jobs:
-  make-docs-dir:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Make _docs Directory
-        run: mkdir _docs
   process-branches:
     runs-on: ubuntu-latest
     strategy:
@@ -39,6 +34,7 @@ jobs:
 
       - name: Process file for branch ${{ matrix.branch }}
         run: |
+          mkdir -p _docs
           # Here we assume each branch has a file named after the branch (e.g. branch1)
           echo "Processing branch: ${{ matrix.branch }} (not really)"
           sleep 5
