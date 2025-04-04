@@ -1,0 +1,30 @@
+name: Update Markdown Docs
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+  retrieve-and-print:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout the current docs repository
+      - name: Checkout docs repository
+        uses: actions/checkout@v3
+
+      # Clone only a subdirectory from the main repository using sparse checkout
+      # This will be much faster.
+      - name: Clone specific subdirectory with sparse checkout for
+        run: |
+          git clone --depth 1 --branch master --filter=blob:none --no-checkout https://github.com/metabase/metabase.git ../metabase-main
+          cd ../metabase-main
+          git sparse-checkout init --cone
+          git sparse-checkout set docs
+          git checkout master
+
+      # List all markdown files in the specific subdirectory
+      - name: List Markdown files
+        run: |
+          find ../metabase-main/docs -type f -print
