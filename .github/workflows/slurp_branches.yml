@@ -18,7 +18,7 @@ jobs:
     steps:
       - name: Set up branches list
         id: branches
-        run: echo "::set-output name=list::master release-x.53.x release-x.52.x release-x.51.x release-x.50.x release-x.49.x release-x.48.x release-x.47.x release-x.46.x release-x.45.x release-x.44.x release-x.43.x"
+        run: echo "::set-output name=list::master release-x.53.x release-x.52.x release-x.51.x release-x.50.x release-x.49.x release-x.48.x release-x.47.x release-x.46.x release-x.45.x release-x.44.x release-x.43.x release-x.42.x release-x.41.x"
 
       - name: Process each branch
         run: |
@@ -38,49 +38,8 @@ jobs:
 
       - name: List _docs contents
         run: ls -altr _docs
-        
-  slurp-branches:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        branch: [master, release-x.53.x, release-x.52.x, release-x.51.x, release-x.50.x, release-x.49.x, release-x.48.x, release-x.47.x, release-x.46.x, release-x.45.x, release-x.44.x, release-x.43.x]
-    steps:
-      - name: Clone docs from ${{ matrix.branch }}
-        run: |
-          git clone --depth 1 --branch ${{ matrix.branch }} --filter=blob:none --no-checkout https://github.com/metabase/metabase.git repo_${{ matrix.branch }}
-          cd repo_${{ matrix.branch }}
-          git sparse-checkout init --cone
-          git sparse-checkout set docs
-          git checkout ${{ matrix.branch }}
-      - name: copy docs
-        run: |
-          mkdir -p _docs/${{ matrix.branch }}
-          cp -r repo_${{ matrix.branch }}/docs/. _docs/${{ matrix.branch }}/
-      - name: upload docs as artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: docs-${{ matrix.branch }}
-          path: _docs/${{ matrix.branch }}
-
-  aggregate-docs:
-    needs: slurp-branches
-    runs-on: ubuntu-latest
-    steps:
-      - name: Download all docs artifacts
-        uses: actions/download-artifact@v4
-        with:
-          path: _docs
-      - name: List aggregated _docs directory
-        run: ls -altr _docs
-
 
  # # Optionally, commit and push if changes are expected:
- #    - name: Commit changes
- #      run: |
- #        git config user.name "GitHub Action"
- #        git config user.email "action@github.com"
- #        git add ${{ matrix.branch }}
- #        git commit -m "Processed file for ${{ matrix.branch }}"
- #        git push origin ${{ matrix.branch }}
- #      env:
- #        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: view changes
+        run: |
+          ls _docs
