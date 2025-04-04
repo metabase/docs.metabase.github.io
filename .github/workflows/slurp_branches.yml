@@ -39,17 +39,17 @@ jobs:
       - name: Clone /docs/ from master with sparse checkout
         run: |
           echo ${{ matrix.branch }}
-          git clone --depth 1 --branch ${{ matrix.branch }} --filter=blob:none --no-checkout https://github.com/metabase/metabase.git ../metabase-main
-          cd ../metabase-main
+          git clone --depth 1 --branch ${{ matrix.branch }} --filter=blob:none --no-checkout https://github.com/metabase/metabase.git ../metabase-main_${{ matrix.branch }}
+          cd ../metabase-main_${{ matrix.branch }}
           git sparse-checkout init --cone
           git sparse-checkout set docs
-          git checkout master
+          git checkout ${{ matrix.branch }}
 
       # List all markdown files in the specific subdirectory
       - name: Move markdown files
         run: |
           mkdir -p _docs/${{ matrix.branch }}/
-          cp -r ../metabase-main/docs/. _docs/${{ matrix.branch }}/
+          cp -r ../metabase-main_${{ matrix.branch }}/docs/. _docs/${{ matrix.branch }}/
 
       - name: List markdown files
         run: |
