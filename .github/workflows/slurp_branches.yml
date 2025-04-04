@@ -35,8 +35,6 @@ jobs:
       # Clone only a subdirectory from branch {{matrix.branch}} on metabase/metabase using sparse checkout
       # This will be much faster.
       - name: Clone /docs/ from master with sparse checkout
-        with:
-          ref: ${{ matrix.branch }}
         run: |
           echo ${{ matrix.branch }}
           git clone --depth 1 --branch ${{ matrix.branch }} --filter=blob:none --no-checkout https://github.com/metabase/metabase.git ../metabase-main
