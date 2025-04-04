@@ -16,7 +16,7 @@ jobs:
 
       # Clone only a subdirectory from the main repository using sparse checkout
       # This will be much faster.
-      - name: Clone specific subdirectory with sparse checkout for
+      - name: Clone /docs/ from master with sparse checkout
         run: |
           git clone --depth 1 --branch master --filter=blob:none --no-checkout https://github.com/metabase/metabase.git ../metabase-main
           cd ../metabase-main
@@ -25,6 +25,11 @@ jobs:
           git checkout master
 
       # List all markdown files in the specific subdirectory
-      - name: List Markdown files
+      - name: Move markdown files
         run: |
-          find ../metabase-main/docs -type f -print
+          mkdir -p _docs/master/
+          cp -r ../metabase-main/docs/. _docs/master/
+
+      - name: List markdown files
+        run: |
+          ls -altr _docs/master
