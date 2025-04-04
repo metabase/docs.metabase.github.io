@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  process-branches:
+  slurp-branches:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -27,18 +27,29 @@ jobs:
           - release-x.43.x
 # TODO: ^ add more release branches ^
     steps:
-      - name: Checkout repository
+      - name: Checkout docs repository
         uses: actions/checkout@v4
-        with:
-          ref: ${{ matrix.branch }}
 
-      - name: Process file for branch ${{ matrix.branch }}
+      # Clone only a subdirectory from branch {{matrix.branch}} on metabase/metabase using sparse checkout
+      # This will be much faster.
+      - name: Clone /docs/ from master with sparse checkout
         run: |
-          mkdir -p _docs
-          # Here we assume each branch has a file named after the branch (e.g. branch1)
-          echo "Processing branch: ${{ matrix.branch }} (not really)"
-          sleep 5
-          echo "Branch processed: ${{ matrix.branch }}" >> _docs/${{ matrix.branch }}.txt
+          git clone --depth 1 --branch {{matrix.branch}} --filter=blob:none --no-checkout https://github.com/metabase/metabase.git ../metabase-main
+          cd ../metabase-main
+          git sparse-checkout init --cone
+          git sparse-checkout set docs
+          git checkout master
+
+      # List all markdown files in the specific subdirectory
+      - name: Move markdown files
+        run: |
+          mkdir -p _docs/{{matrix.branch}}/
+          cp -r ../metabase-main/docs/. _docs/{{matrix.branch}}/
+
+      - name: List markdown files
+        run: |
+          ls -altr _docs
+
 
  # # Optionally, commit and push if changes are expected:
  #    - name: Commit changes
