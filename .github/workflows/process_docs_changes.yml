@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  retrieve-and-print:
+  retrieve-and-move-master:
     runs-on: ubuntu-latest
     steps:
       # Checkout the current docs repository
@@ -33,3 +33,5 @@ jobs:
       - name: List markdown files
         run: |
           ls -altr _docs/master
+
+      - name: generate docs site
