@@ -29,6 +29,8 @@ jobs:
     steps:
       - name: Checkout docs repository
         uses: actions/checkout@v4
+        with:
+          ref: ${{ matrix.branch }}
 
       # Clone only a subdirectory from branch {{matrix.branch}} on metabase/metabase using sparse checkout
       # This will be much faster.
