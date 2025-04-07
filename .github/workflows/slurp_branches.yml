@@ -28,12 +28,12 @@ jobs:
     steps:
       - name: Save branches list # this should come from the main repo eventually
         id: branches
-        run: echo "{list}={master release-x.53.x release-x.52.x release-x.51.x release-x.50.x release-x.49.x release-x.48.x release-x.47.x release-x.46.x release-x.45.x release-x.44.x release-x.43.x release-x.42.x release-x.41.x}"
+        run: echo "{branch_list}={master release-x.53.x release-x.52.x release-x.51.x release-x.50.x release-x.49.x release-x.48.x release-x.47.x release-x.46.x release-x.45.x release-x.44.x release-x.43.x release-x.42.x release-x.41.x}"
 
       - name: Process each branch
         run: |
           mkdir -p _docs
-          for branch in ${{ steps.branches.outputs.list }}; do
+          for branch in ${{ steps.branches.outputs.branch_list }}; do
             echo "Processing branch: $branch"
             git clone --depth 1 --branch $branch --filter=blob:none --no-checkout https://github.com/metabase/metabase.git temp_$branch
             cd temp_$branch
