@@ -14,15 +14,11 @@ on:
     types: [trigger-workflow]
 
 jobs:
-  checkout-docs-repo:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout docs repository
-        uses: actions/checkout@v4
-
   caught-new-branch-name:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
       - name: Setup Babashka
         uses: turtlequeue/setup-babashka@v1.7.0
         with:
