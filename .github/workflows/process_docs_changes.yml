@@ -23,8 +23,18 @@ jobs:
   caught-new-branch-name:
     runs-on: ubuntu-latest
     steps:
-      - name: Display received payload
+      - name: Setup Babashka
+        uses: turtlequeue/setup-babashka@v1.7.0
+        with:
+          babashka-version: 1.12.197
+      - name: Check bb runs
+        run: bb --version
+      - name: Display branch name
         run: |
-          cat $GITHUB_EVENT_PATH
-          echo "Received branch name: ${{ github.event.client_payload.branch }}"
+          echo "\nReceived branch name"
+          echo $GITHB_EVENT_PATH | jq .inputs.branch_name
           # Add your workflow steps here based on the branch argument.
+      - name: Pull branch content
+        run: bb script/pull_docs_sources.clj
+      - name: check _docs tree
+        run: tree _docs
