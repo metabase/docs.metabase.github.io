@@ -1,4 +1,4 @@
-name: Process Branches
+name: Slurp Branches
 
 on:
   pull_request:
@@ -26,9 +26,9 @@ jobs:
   process-branches:
     runs-on: ubuntu-latest
     steps:
-      - name: Set up branches list
+      - name: Save branches list # this should come from the main repo eventually
         id: branches
-        run: echo "::set-output name=list::master release-x.53.x release-x.52.x release-x.51.x release-x.50.x release-x.49.x release-x.48.x release-x.47.x release-x.46.x release-x.45.x release-x.44.x release-x.43.x release-x.42.x release-x.41.x"
+        run: echo "{list}={master release-x.53.x release-x.52.x release-x.51.x release-x.50.x release-x.49.x release-x.48.x release-x.47.x release-x.46.x release-x.45.x release-x.44.x release-x.43.x release-x.42.x release-x.41.x}"
 
       - name: Process each branch
         run: |
