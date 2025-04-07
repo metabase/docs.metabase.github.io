@@ -19,5 +19,6 @@ jobs:
     steps:
       - name: Display received payload
         run: |
+          cat $GITHUB_EVENT_PATH
           echo "Received branch name: ${{ github.event.client_payload.branch }}"
           # Add your workflow steps here based on the branch argument.
