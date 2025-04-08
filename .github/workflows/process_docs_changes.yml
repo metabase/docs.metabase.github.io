@@ -33,7 +33,7 @@ jobs:
           ./script/docs master --set-version master
       - name: Create a pull request
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.METABASE_AUTOMATION_USER_TOKEN }}
         run: |
           if git diff --quiet ; then
             echo "No changes to commit."
