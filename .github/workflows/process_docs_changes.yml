@@ -20,11 +20,10 @@ jobs:
       - name: Checkout docs repository
         uses: actions/checkout@v4
 
-  # caught-new-branch-name:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Display received payload
-  #       run: |
-  #         cat $GITHUB_EVENT_PATH
-  #         echo "Received branch name: ${{ github.event.client_payload.branch }}"
-  #         # Add your workflow steps here based on the branch argument.
+  show-branch-name:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Display received payload
+        run: |
+          cat $GITHUB_EVENT_PATH
+          echo "Received branch name: ${{ github.event.client_payload.branch }}"
