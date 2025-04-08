@@ -24,3 +24,26 @@ jobs:
       - name: Display received payload
         run: |
           echo "Got branch_name: ${{ github.event.inputs.branch_name }}"
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile --prefer-offline
+      - name: Update docs
+        run: |
+          ./script/docs-update
+          ./script/docs master --set-version master
+      - name: Create a pull request
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if git diff --quiet ; then
+            echo "No changes to commit."
+          else
+            git config user.email "metabase-bot@metabase.com"
+            git config user.name "Metabase Docs bot"
+            update_branch="docs-update-${{ github.run_number }}"
+            git switch --create "${update_branch}"
+            git add .
+            git commit \
+              --author="Metabase Docs bot <metabase-bot@metabase.com>" \
+              --message="Update master and latest docs"
+            git push --force -u origin "${update_branch}"
+            gh pr create --title "Refresh docs (nightly)" --body ""
