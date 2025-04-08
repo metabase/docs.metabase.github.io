@@ -8,19 +8,23 @@ on:
       branch_name:
         type: string
         description: Which `metabase/metabase` branch to grab docs from
+        message:
+          required: true
   repository_dispatch:
     types: [trigger-workflow]
 
 jobs:
+  checkout-docs-repo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout docs repository
+        uses: actions/checkout@v4
+
   caught-new-branch-name:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile --prefer-offline
-      - name: Update docs
+      - name: Display received payload
         run: |
-          ./script/docs-update
-          ./script/docs master --set-version master
-          tree _docs
+          cat $GITHUB_EVENT_PATH
+          echo "Received branch name: ${{ github.event.client_payload.branch }}"
+          # Add your workflow steps here based on the branch argument.
