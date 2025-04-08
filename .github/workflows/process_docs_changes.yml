@@ -23,5 +23,4 @@ jobs:
     steps:
       - name: Display received payload
         run: |
-          cat $GITHUB_EVENT_PATH
-          echo "Received branch name: ${{ github.event.client_payload.branch_name }}"
+          cat $GITHUB_EVENT_PATH | jq '.inputs.branch_name'
