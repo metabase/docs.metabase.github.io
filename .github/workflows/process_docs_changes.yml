@@ -6,10 +6,9 @@ on:
   workflow_dispatch:
     inputs:
       branch_name:
+        description: Which `metabase/metabase` branch triggered this workflow
+        required: true
         type: string
-        description: Which `metabase/metabase` branch to grab docs from
-        message:
-          required: true
 
 jobs:
   checkout-docs-repo:
@@ -22,24 +21,61 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - name: Display received payload
         run: |
           echo "Got branch_name: ${{ github.event.inputs.branch_name }}"
+
       - name: Install dependencies
         run: yarn install --frozen-lockfile --prefer-offline
+
+      - name: Set up Ruby # uses version from .ruby-version
+        uses: ruby/setup-ruby@d5fb7a202fc07872cb44f00ba8e6197b70cb0c55 # v1.179.0
+        with:
+          bundler-cache: true
+
+      - name: Install dependencies
+        run: bundle install
+
       - name: Update docs
         run: |
           ./script/docs-update
           ./script/docs master --set-version master
+
+      - name: "Lint markdown"
+        run: "yarn lint-markdown"
+
+      - name: "Lint styles"
+        run: "yarn lint-styles"
+
+      - name: "Validate links"
+        run: "yarn lint-links"
+
+      - name: "Lint scripts"
+        run: "yarn lint-scripts"
+
+      - name: Build Jekyll Site
+        env:
+          JEKYLL_ENV: staging
+          NODE_ENV: production
+        run: "script/build"
+
+      - name: "Check all links"
+        run: "script/links"
+
       - name: Create a pull request
         env:
           GH_TOKEN: ${{ secrets.METABASE_AUTOMATION_USER_TOKEN }}
         run: |
-          git config user.email "metabase-bot@metabase.com"
-          git config user.name "Metabase Docs bot"
-          update_branch="docs-update-${{ github.run_number }}"
-          git switch --create "${update_branch}"
-          git add .
-          git commit --author="Metabase Docs bot <metabase-bot@metabase.com>" --message="Update master and latest docs"
-          git push --force -u origin "${update_branch}"
-          gh pr create --title "Refresh docs (nightly)" --body ""
+          if git diff --quiet ; then
+            echo "No changes to commit."
+          else
+            git config user.email "metabase-bot@metabase.com"
+            git config user.name "Metabase Docs bot"
+            update_branch="docs-update-${{ github.run_number }}"
+            git switch --create "${update_branch}"
+            git add .
+            git commit --author="Metabase Docs bot <metabase-bot@metabase.com>" --message="Update master and latest docs"
+            git push --force -u origin "${update_branch}"
+            gh pr create --title "Refresh docs (${{ github.event.inputs.branch_name }})" --body ""
+          fi
