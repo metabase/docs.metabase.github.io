@@ -35,16 +35,11 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.METABASE_AUTOMATION_USER_TOKEN }}
         run: |
-          if git diff --quiet ; then
-            echo "No changes to commit."
-          else
-            git config user.email "metabase-bot@metabase.com"
-            git config user.name "Metabase Docs bot"
-            update_branch="docs-update-${{ github.run_number }}"
-            git switch --create "${update_branch}"
-            git add .
-            git commit \
-              --author="Metabase Docs bot <metabase-bot@metabase.com>" \
-              --message="Update master and latest docs"
-            git push --force -u origin "${update_branch}"
-            gh pr create --title "Refresh docs (nightly)" --body ""
+          git config user.email "metabase-bot@metabase.com"
+          git config user.name "Metabase Docs bot"
+          update_branch="docs-update-${{ github.run_number }}"
+          git switch --create "${update_branch}"
+          git add .
+          git commit --author="Metabase Docs bot <metabase-bot@metabase.com>" --message="Update master and latest docs"
+          git push --force -u origin "${update_branch}"
+          gh pr create --title "Refresh docs (nightly)" --body ""
