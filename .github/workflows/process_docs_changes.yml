@@ -18,7 +18,7 @@ jobs:
       - name: Checkout docs repository
         uses: actions/checkout@v4
 
-  show-branch-name:
+  build-and-commit:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -40,8 +40,8 @@ jobs:
           else
             git config user.email "metabase-bot@metabase.com"
             git config user.name "Metabase Docs bot"
-            UPDATE_BRANCH="docs-update-${{ github.run_number }}"
-            git switch --create "${UPDATE_BRANCH}"
+            update_branch="docs-update-${{ github.run_number }}"
+            git switch --create "${update_branch}"
             git add .
             git commit \
               --author="Metabase Docs bot <metabase-bot@metabase.com>" \
