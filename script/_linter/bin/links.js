@@ -91,6 +91,7 @@ const allFiles = glob
     ignore: [
       // `${folderPath}/_docs/master/**/*`,
       `${folderPath}/_docs/v*.*/**/*`,
+      `${folderPath}/_docs/**/embedding/sdk/api/**`,
       `${folderPath}/_site/**/*`,
       `${folderPath}/images/**/*`,
       `${folderPath}/node_modules/**/*`,
