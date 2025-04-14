@@ -36,26 +36,26 @@ jobs:
           ./script/docs-update
           ./script/docs master --set-version master
 
-      - name: "Lint markdown"
+      - name: "Lint the markdown"
         run: |
           yarn lint-markdown
 
-      - name: "Lint styles"
+      - name: "Lint the styles"
         run: |
           echo "todo: yarn lint-styles"
           # yarn lint-styles
 
-      - name: "Validate links"
+      - name: "Validate the links"
         run: |
           echo "todo: yarn lint-links"
           # yarn lint-links
 
-      - name: "Lint scripts"
+      - name: "Lint the scripts"
         run: |
           echo "todo: yarn lint-scripts"
           # yarn lint-scripts
 
-      - name: Build Jekyll Site
+      - name: Build the Jekyll Site
         env:
           JEKYLL_ENV: staging
           NODE_ENV: production
@@ -65,10 +65,10 @@ jobs:
           # Run the jekyll server:
           JEKYLL_ENV=development bundle exec jekyll build --baseurl '' --config _config.docs.yml --trace
 
-      # - name: "Check all links"
-      #   run: "script/links"
+      - name: "Check all of the links"
+        run: "script/links"
 
-      - name: Create a pull request
+      - name: Create the pull request
         env:
           GH_TOKEN: ${{ secrets.METABASE_AUTOMATION_USER_TOKEN }}
         run: |
