@@ -3,11 +3,10 @@
 {% endif %}
 
 {% assign title = page.title | append: " | Embedded analytics SDK API" %}
-{% assign desc =  page.description | default: "Reference documentation for {{page.title}}"  %}
+{% capture desc %}{% if page.description %}{{ page.description }}{% else %}Reference documentation for {{ page.title }}.{% endif %}{% endcapture %}
 {% assign img = "/images/twitter/default.png" %}
 {% assign author = page.author | default: "The Metabase Team" %}
 
-<title>{{title}}</title>
 <!-- Twitter cards -->
 <meta name="twitter:site" content="@{{ site.twitter_username }}" />
 <meta name="twitter:creator" content="{{ author }}" />
