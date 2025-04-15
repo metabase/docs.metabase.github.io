@@ -83,7 +83,10 @@ function invalidateUrl(url, type = "") {
 }
 
 const folderPath = path.resolve("./");
-const allErrors = glob
+
+console.log("Checking folderPath: ", folderPath)
+
+const allFiles = glob
   .sync(`${folderPath}/**/*.{html,htm,md,markdown}`, {
     ignore: [
       // `${folderPath}/_docs/master/**/*`,
@@ -97,7 +100,13 @@ const allErrors = glob
       `${folderPath}/tmp/**/*`,
       `${folderPath}/vendor/**/*`,
     ],
-  })
+  });
+
+console.log("Checking ", allFiles.length, "files...")
+
+const Errorz = [];
+
+const allErrors = allFiles
   .map((filePathFull) => {
     const filePath = filePathFull.replace(folderPath, "");
     let fileContent = fs.readFileSync(filePathFull, "utf8");
@@ -120,6 +129,7 @@ const allErrors = glob
 
     // has content
     if (fileContent && fileContent.length > 3) {
+      console.log("Checking:", filePath);
       try {
         // front matter
         const frontMatterPermalinkErrors = [];
@@ -128,7 +138,9 @@ const allErrors = glob
           fileContent.match(REGEX_FRONT_MATTER) || [];
         if (frontMatterResultStr) {
           const frontMatterStr = frontMatterResultStr.split("---").join("");
+
           const frontMatterObj = yaml.load(frontMatterStr, "utf8");
+          console.log("  > parsed front matter")
           if (frontMatterObj && Object.keys(frontMatterObj).length > 0) {
             // check redundant permalink
             if (frontMatterObj.permalink && frontMatterObj.permalink !== "/") {
@@ -150,8 +162,7 @@ const allErrors = glob
                 });
               }
             }
-
-            // check properties
+            console.log("  > checking properties..");
             FRONT_MATTER_PROPERTIES.forEach((frontMatterPropertyName) => {
               if (frontMatterObj[frontMatterPropertyName]) {
                 const frontMatterPropValue =
@@ -233,6 +244,7 @@ const allErrors = glob
         return null;
       } catch (err) {
         console.error(`Error in ${filePath}\n${err}\n`);
+        Errorz.push({file: filePath, error: err});
       }
     } else {
       console.warn(`${filePath} content cannot be parsed\n`);
@@ -242,5 +254,14 @@ const allErrors = glob
 
 // breaks on errors
 if (allErrors && allErrors.length > 0) {
+  console.log(JSON.stringify(allErrors));
   throw new Error("Invalid urls");
+}
+
+// breaks on errors
+if (Errorz && Errorz.length > 0) {
+  console.log(JSON.stringify(Errorz, " ", 2));
+  throw new Error("Errorz found.")
+} else {
+  console.log("Done, no errors found: OK")
 }
