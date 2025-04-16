@@ -1,12 +1,12 @@
 #!/bin/sh
-# usage: script/links
+# usage: script/links [output-file]
 #
 # Check for broken links
 
 #!/bin/bash
-TARGET="${1:-_site}" #default to _site
+OUT_FILE="${1:-htmlproofer.out}" #default to _site
 
-bundle exec htmlproofer "$TARGET" \
+bundle exec htmlproofer _site \
        --check-opengraph \
        --check-html \
        --assume-extension \
@@ -15,4 +15,4 @@ bundle exec htmlproofer "$TARGET" \
        --file-ignore '/\/community\//,/\/start\//,/\/plans\//,/\/pricing\//,/\/docs\/v.*/,/\/docs\/master/,/\/home\/new\//,/\/docs\/latest\/(contributing|faq)\.html/,/.*running-metabase-on-elastic-beanstalk.*/' \
        --url-ignore "/docs/latest/api/" \
        --checks-to-ignore HtmlCheck \
-       --empty-alt-ignore true
+       --empty-alt-ignore true > "$OUT_FILE" 2>&1
