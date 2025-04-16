@@ -8,15 +8,7 @@
    [clojure.string :as str]
    [clojure.walk :as walk]))
 
-(def cli-spec
-  {:spec
-   {:htmlproofer-output {:desc "The file that htmlproofer was piped into."
-                         :require true
-                         :validate fs/regular-file?}}})
 
-(defn- usage
-  []
-  (cli/format-opts (merge cli-spec {:order (vec (keys (:spec cli-spec)))})))
 
 
 (defn- url-ok? [url]
@@ -65,12 +57,17 @@
   (when-let [[_ link] (re-find #"internally linking to (/[^\s,]+)" line)]
     link))
 
+(defn- no-trailing-slash [s]
+  (cond-> s
+    (and (string? s) (str/ends-with? s "/"))
+    (subs 0 (dec (count s)))))
+
 (defn- gather-htmlproofer-links [file]
   (let [possibly-broken-links (transient #{})]
     (with-open [rdr (io/reader file)]
       (doseq [line (line-seq rdr)]
         (when-let [link (extract-path line)]
-          (conj! possibly-broken-links link))))
+          (conj! possibly-broken-links (no-trailing-slash link)))))
     (persistent! possibly-broken-links)))
 
 (defn- parse-frontmatter [file]
@@ -79,7 +76,7 @@
       (when (= "---" (first lines))
         (let [[_ & rest] lines
               [frontmatter _] (split-with #(not= "---" %) rest)]
-          (yaml/parse-string (str (clojure.string/join "\n" frontmatter))))))))
+          (yaml/parse-string (str/join "\n" frontmatter)))))))
 
 (defn- normalize-redirect [link]
   (str/replace link #"\.[^.]+$" ""))
@@ -87,44 +84,63 @@
 (defn- gather-redirects [site-dir]
   (let [redirect-froms (transient #{})]
     (doseq [file (fs/glob site-dir "**.md")
-            :let [frontmatter (parse-frontmatter (str file))] :when frontmatter
+            :let [frontmatter (parse-frontmatter (str file))]
+            :when (and frontmatter (map? frontmatter))
             :let [redirects (:redirect_from frontmatter)] :when redirects
             redirect redirects]
+      #_:clj-kondo/ignore
       (conj! redirect-froms (normalize-redirect redirect)))
     (persistent! redirect-froms)))
 
+(def cli-spec
+  {:spec
+   {:htmlproofer-output {:desc "The file that htmlproofer was piped into."
+                         :require true
+                         :validate fs/regular-file?}}})
+
+(defn- usage
+  []
+  (cli/format-opts (merge cli-spec {:order (vec (sort (keys (:spec cli-spec))))})))
+
 (defn -main [& args]
-  (let [opts              (try (cli/parse-opts args cli-spec)
-                               (catch Exception _
-                                 (println "Usage: script/analyze_links.clj")
-                                 (println)
-                                 (println (usage))
-                                 (System/exit 1)))
-        _                 (when (or (:help opts) (:h opts))
-                            (println (usage))
-                            (System/exit 1))
+  (let [opts                      (try (cli/parse-opts args cli-spec)
+                                       (catch Exception _
+                                         (println "Usage: script/analyze_links.clj")
+                                         (println)
+                                         (println (usage))
+                                         (System/exit 1)))
+        _                         (when (or (:help opts) (:h opts))
+                                    (println (usage))
+                                    (System/exit 1))
         ;; htmlproofer only knows about docs.metabase.github.io, so it will report 'missing links'
         ;; but in reality, those links might exist e.g. on metabase.com.
         ;;
         ;; UNKNOWN: We might need to check one of the metabase.github.io
         ;;          cloudflare branch deployments for links too.
-        htmlproofer-links (gather-htmlproofer-links (:htmlproofer-output opts))
-        redirects         (gather-redirects "_docs")
-        missing-links     (->> htmlproofer-links
-                               (remove redirects)
-                               (remove (into #{} (map #(str % ".html") redirects))))
-        _                 (println (count htmlproofer-links) "missing links reported by htmlproofer.")
-        _                 (println (count redirects) "unique redirect links gathered from in _docs.")
-        _                 (println (count missing-links) "reported links without redirects.")
-        _                 (println "Checking if the missing links are live on https://metabase.com ...")
-        o                 (check-broken-links missing-links)]
-    (prn o)
-    (System/exit 1)))
+        htmlproofer-links         (gather-htmlproofer-links (:htmlproofer-output opts))
+        redirects                 (gather-redirects "_docs")
+        external-or-missing-links (->> htmlproofer-links
+                                       (remove redirects)
+                                       (remove (into #{} (map #(str % ".html") redirects))))
+        _                         (println (count htmlproofer-links) "missing links reported by htmlproofer.")
+        _                         (println (count redirects) "unique redirect links gathered from in _docs.")
+        _                         (println (count external-or-missing-links) "reported links without redirects.")
+        _                         (println "Checking if the missing links are live on https://metabase.com ...")
+        out                       (check-broken-links external-or-missing-links)]
+    (if (zero? (:broken-count out))
+      (do
+        (println "Done. OK.")
+        (System/exit 0))
+      (do
+        (prn out)
+        (System/exit 1)))))
 
 (when (= *file* (System/getProperty "babashka.file"))
   (apply -main *command-line-args*))
 
 (comment
+
+  (def opts {:htmlproofer-output "htmlproofer.out"})
 
   ;; TODO: do we need to check links on data urls too?
   ;; data-urls:
