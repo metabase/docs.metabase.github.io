@@ -52,6 +52,7 @@ jobs:
         run: |
           yarn lint-links
 
+
       - name: Build the Jekyll Site
         env:
           JEKYLL_ENV: staging
@@ -62,8 +63,20 @@ jobs:
           # Run the jekyll server:
           JEKYLL_ENV=development bundle exec jekyll build --baseurl '' --config _config.docs.yml --trace
 
+      - name: Setup Babashka
+        uses: turtlequeue/setup-babashka@v1.7.0
+        with:
+          babashka-version: 1.12.197
+      - name: Check bb runs
+        run: bb --version
+
       - name: "Check all of the links"
-        run: "script/links"
+        run: |
+          script/links
+          echo 'checking reported links...'
+          cat htmlproofer.out | wc -l
+          bb script/analyze_links.clj --htmlproofer-output htmlproofer.out
+          exit 1
 
       - name: Create the pull request
         env:

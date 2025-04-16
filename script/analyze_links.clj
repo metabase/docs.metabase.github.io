@@ -64,9 +64,6 @@
   (when-let [[_ link] (re-find #"internally linking to (/[^\s,]+)" line)]
     link))
 
-(def og-site-dir "../metabase.github.io/_site")
-(def out-file "../docs.metabase.github.io/out_real.txt")
-
 (defn gather-missing-links [file]
   (let [possibly-broken-links (transient #{})]
     (with-open [rdr (io/reader file)]
