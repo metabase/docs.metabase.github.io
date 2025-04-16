@@ -64,7 +64,7 @@
   (when-let [[_ link] (re-find #"internally linking to (/[^\s,]+)" line)]
     link))
 
-(defn gather-missing-links [file]
+(defn gather-htmlproofer-links [file]
   (let [possibly-broken-links (transient #{})]
     (with-open [rdr (io/reader file)]
       (doseq [line (line-seq rdr)]
@@ -72,25 +72,46 @@
           (conj! possibly-broken-links link))))
     (persistent! possibly-broken-links)))
 
+(defn parse-frontmatter [file]
+  (with-open [r (io/reader file)]
+    (let [lines (line-seq r)]
+      (when (= "---" (first lines))
+        (let [[_ & rest] lines
+              [frontmatter _] (split-with #(not= "---" %) rest)]
+          (yaml/parse-string (str (clojure.string/join "\n" frontmatter))))))))
+
+(defn gather-redirects [site-dir]
+  (let [redirect-froms (transient #{})]
+    (doseq [file (fs/glob site-dir "**.md")
+            :let [frontmatter (parse-frontmatter (str file))] :when frontmatter
+            :let [redirects (:redirect_from frontmatter)] :when redirects
+            redirect redirects]
+      (conj! redirect-froms redirect))
+    (persistent! redirect-froms)))
+
 (defn -main [& args]
-  (let [opts (try (cli/parse-opts args cli-spec)
-                  (catch Exception _
-                    (println "Usage: script/analyze_links.clj")
-                    (println)
-                    (println (usage))
-                    (System/exit 1)))
-        _ (when (or (:help opts) (:h opts))
-            (println (usage))
-            (System/exit 1))
+  (let [opts              (try (cli/parse-opts args cli-spec)
+                               (catch Exception _
+                                 (println "Usage: script/analyze_links.clj")
+                                 (println)
+                                 (println (usage))
+                                 (System/exit 1)))
+        _                 (when (or (:help opts) (:h opts))
+                            (println (usage))
+                            (System/exit 1))
         ;; htmlproofer only knows about docs.metabase.github.io, so it will report 'missing links'
         ;; but in reality, those links might exist e.g. on metabase.com.
         ;;
         ;; UNKNOWN: We might need to check one of the metabase.github.io
         ;;          cloudflare branch deployments for links too.
-        missing-links (gather-missing-links (:htmlproofer-output opts))
-        _ (println (str "htmlproofer reported " (count missing-links)) "missing links.")
-        _ (println "Checking if the links are live on https://metabase.com ...")
-        o (check-broken-links missing-links)]
+        htmlproofer-links (gather-htmlproofer-links (:htmlproofer-output opts))
+        _                 (println (str "htmlproofer reported " (count htmlproofer-links)) "missing links.")
+        redirects         (gather-redirects "_docs")
+        _                 (println (str "Found " (count redirects) " unique redirect links in _docs"))
+        missing-links     (remove redirects htmlproofer-links)
+        _                 (println (str "reported links without redirects: " (count missing-links)))
+        _                 (println "Checking if the missing-links are live on https://metabase.com ...")
+        o                 (check-broken-links missing-links)]
     (prn o)
     (System/exit 1)))
 
