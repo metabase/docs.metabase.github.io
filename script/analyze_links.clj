@@ -5,6 +5,7 @@
    [babashka.fs :as fs]
    [clj-yaml.core :as yaml]
    [clojure.java.io :as io]
+   [clojure.string :as str]
    [clojure.walk :as walk]))
 
 (def cli-spec
@@ -13,7 +14,7 @@
                          :require true
                          :validate fs/regular-file?}}})
 
-(defn usage
+(defn- usage
   []
   (cli/format-opts (merge cli-spec {:order (vec (keys (:spec cli-spec)))})))
 
@@ -43,7 +44,7 @@
     {:broken-count (count broken)
      :broken broken}))
 
-(defn check-broken-links
+(defn- check-broken-links
   "High-level wrapper around `broken-links*` that retries the check up to `retries`
   times (default 2). On each retry, it only rechecks the broken paths from the
   previous attempt. Stops early if no broken links remain. Returns the result
@@ -60,11 +61,11 @@
                (inc trial)
                (broken-links* (:broken mp)))))))
 
-(defn extract-path [line]
+(defn- extract-path [line]
   (when-let [[_ link] (re-find #"internally linking to (/[^\s,]+)" line)]
     link))
 
-(defn gather-htmlproofer-links [file]
+(defn- gather-htmlproofer-links [file]
   (let [possibly-broken-links (transient #{})]
     (with-open [rdr (io/reader file)]
       (doseq [line (line-seq rdr)]
@@ -72,7 +73,7 @@
           (conj! possibly-broken-links link))))
     (persistent! possibly-broken-links)))
 
-(defn parse-frontmatter [file]
+(defn- parse-frontmatter [file]
   (with-open [r (io/reader file)]
     (let [lines (line-seq r)]
       (when (= "---" (first lines))
@@ -80,13 +81,16 @@
               [frontmatter _] (split-with #(not= "---" %) rest)]
           (yaml/parse-string (str (clojure.string/join "\n" frontmatter))))))))
 
-(defn gather-redirects [site-dir]
+(defn- normalize-redirect [link]
+  (str/replace link #"\.[^.]+$" ""))
+
+(defn- gather-redirects [site-dir]
   (let [redirect-froms (transient #{})]
     (doseq [file (fs/glob site-dir "**.md")
             :let [frontmatter (parse-frontmatter (str file))] :when frontmatter
             :let [redirects (:redirect_from frontmatter)] :when redirects
             redirect redirects]
-      (conj! redirect-froms redirect))
+      (conj! redirect-froms (normalize-redirect redirect)))
     (persistent! redirect-froms)))
 
 (defn -main [& args]
@@ -105,12 +109,14 @@
         ;; UNKNOWN: We might need to check one of the metabase.github.io
         ;;          cloudflare branch deployments for links too.
         htmlproofer-links (gather-htmlproofer-links (:htmlproofer-output opts))
-        _                 (println (str "htmlproofer reported " (count htmlproofer-links)) "missing links.")
         redirects         (gather-redirects "_docs")
-        _                 (println (str "Found " (count redirects) " unique redirect links in _docs"))
-        missing-links     (remove redirects htmlproofer-links)
-        _                 (println (str "reported links without redirects: " (count missing-links)))
-        _                 (println "Checking if the missing-links are live on https://metabase.com ...")
+        missing-links     (->> htmlproofer-links
+                               (remove redirects)
+                               (remove (into #{} (map #(str % ".html") redirects))))
+        _                 (println (count htmlproofer-links) "missing links reported by htmlproofer.")
+        _                 (println (count redirects) "unique redirect links gathered from in _docs.")
+        _                 (println (count missing-links) "reported links without redirects.")
+        _                 (println "Checking if the missing links are live on https://metabase.com ...")
         o                 (check-broken-links missing-links)]
     (prn o)
     (System/exit 1)))
