@@ -57,7 +57,7 @@
        (> trial retries) mp
        (zero? (:broken-count mp)) mp
        :else (recur
-               (inc retries)
+               (inc trial)
                (broken-links* (:broken mp)))))))
 
 (defn extract-path [line]
