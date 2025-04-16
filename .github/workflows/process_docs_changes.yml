@@ -72,7 +72,7 @@ jobs:
 
       - name: "Check all of the links"
         run: |
-          script/links
+          script/links || true
           echo 'checking reported links...'
           cat htmlproofer.out | wc -l
           bb script/analyze_links.clj --htmlproofer-output htmlproofer.out
