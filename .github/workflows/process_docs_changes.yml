@@ -74,7 +74,7 @@ jobs:
         run: |
           script/links || true
           echo 'checking reported links...'
-          cat htmlproofer.out | wc -l
+          echo "htmlproofer spit out a report of length: $(cat htmlproofer.out | wc -l)"
           bb script/analyze_links.clj --htmlproofer-output htmlproofer.out
           exit 1
 

@@ -126,16 +126,19 @@
         _                         (println (count external-or-missing-links) "reported links without redirects.")
         _                         (println "Checking if the missing links are live on https://metabase.com ...")
         out                       (check-broken-links external-or-missing-links)]
-    (prn ["htmlproofer links:"]
-         (doseq [l (sort (set htmlproofer-links))]
-           (println " " l)))
-    (prn ["redirects:"]
-         (doseq [l (sort (set redirects))]
-           (println " " l)))
-    (prn ["external-or-missing-links:"]
-         (doseq [l (sort (set external-or-missing-links))]
-           (println " " l)))
+    (println ">>>>>>>>>> htmlproofer links <<<<<<<<<")
+    (doseq [l (sort (set htmlproofer-links))]
+      (println " " l))
+    (println "\n\n\n")
+    (println ">>>>>>>>>> redirects <<<<<<<<<")
+    (doseq [l (sort (set redirects))]
+      (println " " l))
+    (println "\n\n\n")
+    (println ">>>>>>>>>> external-or-missing-links <<<<<<<<<")
+    (doseq [l (sort (set external-or-missing-links))]
+      (println " " l))
 
+    (println "\n\n\n")
     (if (zero? (:broken-count out))
       (do
         (println "Done. OK.")
@@ -146,6 +149,12 @@
 
 (when (= *file* (System/getProperty "babashka.file"))
   (apply -main *command-line-args*))
+
+
+(comment
+
+
+  )
 
 (comment
 
