@@ -8,24 +8,23 @@
    [clojure.string :as str]
    [clojure.walk :as walk]))
 
-
-
-
-(defn- url-ok? [url]
+(defn- url-ok?
   "Returns true if the given URL responds with a 2xx HTTP status.
   Uses `babashka.curl` with `:throw false` to avoid exceptions on failure.
   Returns false on error or non-2xx status."
+  [url]
   (try
     (let [{:keys [status]} (curl/get url {:throw false})]
       (<= 200 status 299))
     (catch Exception _ false)))
 
-(defn- broken-links* [missing-paths]
+(defn- broken-links*
   "Takes a collection of relative paths and checks their availability
   by making HTTP GET requests to https://metabase.com/<path>. Uses a fixed-size
   thread pool to parallelize the checks. Returns a map with:
     - :broken-count — the number of unreachable URLs
     - :broken       — a vector of paths that failed the check"
+  [missing-paths]
   (let [pool (java.util.concurrent.Executors/newFixedThreadPool 100)
         tasks (map (fn [p]
                      (fn [] (if (url-ok? (str "https://metabase.com/" p)) nil p)))
@@ -127,6 +126,10 @@
         _                         (println (count external-or-missing-links) "reported links without redirects.")
         _                         (println "Checking if the missing links are live on https://metabase.com ...")
         out                       (check-broken-links external-or-missing-links)]
+    (prn ["htmlproofer links:" (set htmlproofer-links)])
+    (prn ["redirects:" (set redirects)])
+    (prn ["external-or-missing-links:" (set external-or-missing-links)])
+
     (if (zero? (:broken-count out))
       (do
         (println "Done. OK.")
