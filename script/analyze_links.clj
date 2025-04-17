@@ -126,9 +126,15 @@
         _                         (println (count external-or-missing-links) "reported links without redirects.")
         _                         (println "Checking if the missing links are live on https://metabase.com ...")
         out                       (check-broken-links external-or-missing-links)]
-    (prn ["htmlproofer links:" (set htmlproofer-links)])
-    (prn ["redirects:" (set redirects)])
-    (prn ["external-or-missing-links:" (set external-or-missing-links)])
+    (prn ["htmlproofer links:"]
+         (doseq [l (sort (set htmlproofer-links))]
+           (println " " l)))
+    (prn ["redirects:"]
+         (doseq [l (sort (set redirects))]
+           (println " " l)))
+    (prn ["external-or-missing-links:"]
+         (doseq [l (sort (set external-or-missing-links))]
+           (println " " l)))
 
     (if (zero? (:broken-count out))
       (do
