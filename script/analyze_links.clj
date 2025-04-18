@@ -101,6 +101,9 @@
   []
   (cli/format-opts (merge cli-spec {:order (vec (sort (keys (:spec cli-spec))))})))
 
+(def excluded-links
+  #{"/events/metabase-setup-workshop" "/learn/building-analytics/dashboards/cross-filtering"})
+
 (defn -main [& args]
   (let [opts                      (try (cli/parse-opts args cli-spec)
                                        (catch Exception _
@@ -125,7 +128,7 @@
         _                         (println (count redirects) "unique redirect links gathered from in _docs.")
         _                         (println (count external-or-missing-links) "reported links without redirects.")
         _                         (println "Checking if the missing links are live on https://metabase.com ...")
-        out                       (check-broken-links external-or-missing-links)]
+        out                       (check-broken-links (remove excluded-links external-or-missing-links))]
     (println ">>>>>>>>>> htmlproofer links <<<<<<<<<")
     (doseq [l (sort (set htmlproofer-links))]
       (println " " l))
@@ -149,12 +152,6 @@
 
 (when (= *file* (System/getProperty "babashka.file"))
   (apply -main *command-line-args*))
-
-
-(comment
-
-
-  )
 
 (comment
 
