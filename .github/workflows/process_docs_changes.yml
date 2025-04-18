@@ -76,7 +76,6 @@ jobs:
           echo 'checking reported links...'
           echo "htmlproofer spit out a report of length: $(cat htmlproofer.out | wc -l)"
           bb script/analyze_links.clj --htmlproofer-output htmlproofer.out
-          exit 1
 
       - name: Create the pull request
         env:
@@ -87,10 +86,29 @@ jobs:
           else
             git config user.email "metabase-bot@metabase.com"
             git config user.name "Metabase Docs bot"
-            update_branch="docs-update-${{ github.run_number }}"
-            git switch --create "${update_branch}"
+            update_branch="docs-update"
+
+            # Check out or create the update branch
+            if git ls-remote --exit-code --heads origin "$update_branch" > /dev/null; then
+              git fetch origin "$update_branch"
+              git switch "$update_branch"
+            else
+              git switch --create "$update_branch"
+            fi
+
             git add _site
             git commit --author="Metabase Docs bot <metabase-bot@metabase.com>" --message="Update master and latest docs"
-            git push --force -u origin "${update_branch}"
-            gh pr create --title "Refresh docs (${{ github.event.inputs.branch_name }})" --body ""
+            git push --force origin "$update_branch"
+
+            # Check if a PR already exists for this branch
+            existing_pr=$(gh pr list --head "$update_branch" --json number --jq '.[0].number')
+
+            if [ -z "$existing_pr" ]; then
+              gh pr create \
+                --title "Refresh docs (${{ github.event.inputs.branch_name }})" \
+                --body "" \
+                --head "$update_branch"
+            else
+              echo "PR already exists: #$existing_pr"
+            fi
           fi
