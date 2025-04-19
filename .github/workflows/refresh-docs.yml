@@ -12,6 +12,9 @@ jobs:
       - uses: actions/checkout@v3
       - name: Prepare back-end environment
         uses: metabase/metabase/.github/actions/prepare-backend@master
+      - name: Post-prepare back-end environment
+        # Removes all tmp files that are added in the "Prepare back-end environment" step
+        run: git clean -fd
       - name: Prepare Node.js
         uses: actions/setup-node@v4
         with:
