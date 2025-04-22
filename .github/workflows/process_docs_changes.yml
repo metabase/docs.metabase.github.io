@@ -84,6 +84,12 @@ jobs:
       #     echo "htmlproofer spit out a report of length: $(cat htmlproofer.out | wc -l)"
       #     bb script/analyze_links.clj --htmlproofer-output htmlproofer.out
 
+      - name: Authenticate Git with GITHUB_TOKEN
+        run: |
+          git config --global user.name "Metabase Docs bot"
+          git config --global user.email "metabase-bot@metabase.com"
+          git remote set-url origin "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/metabase/docs.metabase.github.io.git"
+
       - name: Create the pull request
         env:
           GH_TOKEN: ${{ secrets.METABASE_AUTOMATION_USER_TOKEN }}
