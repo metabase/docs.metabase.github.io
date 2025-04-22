@@ -1,11 +1,11 @@
 #!/usr/bin/env bb
-(ns update-or-create-branch
+(ns update-or-create-pr
   (:require [babashka.process :as p :refer [sh shell]]
             [babashka.fs :as fs]
             [cheshire.core :as json]))
 
 (defn usage []
-  (println "Usage: script/update_or_create_branch.clj branchname")
+  (println "Usage: script/update_or_create_pr.clj branchname")
   (System/exit 1))
 
 (def source-branch (first *command-line-args*))
