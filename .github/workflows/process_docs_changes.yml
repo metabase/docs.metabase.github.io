@@ -18,8 +18,8 @@ jobs:
 
       - name: Display received payload
         run: |
-          echo "Got branch_name: ${{ github.event.inputs.branch_name }}"
-          echo "Running on branch: ${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}"
+          echo "Got (metabase/)branch_name: ${{ github.event.inputs.branch_name }}"
+          echo "Running on (docs.metabase.github.io/)branch: ${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}"
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile --prefer-offline
@@ -52,7 +52,6 @@ jobs:
       - name: "Validate the links"
         run: |
           yarn lint-links
-
 
       - name: Build the Jekyll Site
         env:
@@ -95,6 +94,18 @@ jobs:
             if git ls-remote --exit-code --heads origin "$update_branch" > /dev/null; then
               echo "found existing branch"
               git fetch origin "$update_branch"
+
+              echo "Staging _site/docs to preserve it..."
+              git add _site/docs
+
+              echo "Commit it so it's not untracked anymore"
+              git commit --author="Metabase Docs bot <metabase-bot@metabase.com>" -m "Preserve _site/docs before switching branches"
+
+              echo "Optionally stash other changes (untracked or not)"
+              echo "Stashing remaining untracked files..."
+
+              git stash --include-untracked
+
               git switch "$update_branch"
             else
               echo "creating new branch"
