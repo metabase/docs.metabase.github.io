@@ -19,6 +19,7 @@ jobs:
       - name: Display received payload
         run: |
           echo "Got branch_name: ${{ github.event.inputs.branch_name }}"
+          echo "Running on branch: ${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}"
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile --prefer-offline
