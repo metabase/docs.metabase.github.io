@@ -84,20 +84,29 @@ jobs:
           if git diff --quiet ; then
             echo "No changes to commit."
           else
+            echo "Found changes."
             git config user.email "metabase-bot@metabase.com"
             git config user.name "Metabase Docs bot"
             update_branch="docs-update"
 
+            echo "updating branch: $update_branch ..."
             # Check out or create the update branch
             if git ls-remote --exit-code --heads origin "$update_branch" > /dev/null; then
+              echo "found existing branch"
               git fetch origin "$update_branch"
               git switch "$update_branch"
             else
+              echo "creating new branch"
               git switch --create "$update_branch"
             fi
 
+            echo "Adding files..."
+
+            echo "> Adding site_"
             git add _site
-            git commit --author="Metabase Docs bot <metabase-bot@metabase.com>" --message="Update master and latest docs"
+
+            echo "commiting as Metabase Docs bot..."
+            git commit --author="Metabase Docs bot <metabase-bot@metabase.com>" --message="Update docs"
             git push --force origin "$update_branch"
 
             # Check if a PR already exists for this branch
