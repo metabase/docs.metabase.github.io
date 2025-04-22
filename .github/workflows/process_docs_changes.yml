@@ -1,6 +1,8 @@
 name: Process Docs Changes
-
 on:
+  # pull_request:
+  #   branches:
+  #     - master
   workflow_dispatch:
     inputs:
       branch_name:
@@ -9,7 +11,72 @@ on:
         type: string
 
 jobs:
-  example:
+  build-and-commit:
     runs-on: ubuntu-latest
+    env:
+      MAIN_REPO_BRANCH: "${{ github.event.inputs.branch_name }}"
     steps:
-      - run: echo "Triggered for branch ${{ inputs.branch_name }}"
+      - uses: actions/checkout@v4
+
+      - name: Set current branch name
+        run: echo "LOCAL_REPO_BRANCH=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_ENV
+
+      - name: Display received payload
+        run: |
+          echo "Got (metabase/)branch_name: $MAIN_REPO_BRANCH"
+          echo "Running on (docs.metabase.github.io/)branch: $LOCAL_REPO_BRANCH"
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile --prefer-offline
+
+      - name: Set up Ruby # uses version from .ruby-version
+        uses: ruby/setup-ruby@d5fb7a202fc07872cb44f00ba8e6197b70cb0c55 # v1.179.0
+        with:
+          bundler-cache: true
+
+      - name: Install dependencies
+        run: bundle install
+
+      - name: Update docs
+        run: |
+          ./script/docs-update
+          ./script/docs master --set-version master
+
+      - name: "Lint the markdown"
+        run: |
+          yarn lint-markdown
+
+      - name: "Lint the styles"
+        run: |
+          yarn lint-styles
+
+      - name: "Lint the scripts"
+        run: |
+          yarn lint-scripts
+
+      - name: "Validate the links"
+        run: |
+          yarn lint-links
+
+      - name: Build the Jekyll Site
+        env:
+          JEKYLL_ENV: staging
+          NODE_ENV: production
+        run: |
+          # Clear the existing site:
+          rm -rf _site
+          # Build the jekyll site:
+          JEKYLL_ENV=development bundle exec jekyll build --baseurl '' --config _config.docs.yml --trace
+
+      - name: "Check all of the links"
+        run: |
+          script/links || true
+          echo 'checking reported links...'
+          echo "htmlproofer spit out a report of length: $(cat htmlproofer.out | wc -l)"
+          bb script/analyze_links.clj --htmlproofer-output htmlproofer.out
+
+      - name: Create the pull request
+        env:
+          GH_TOKEN: ${{ secrets.METABASE_AUTOMATION_USER_TOKEN }}
+        run: |
+          bb script/update_or_create_pr.clj $MAIN_REPO_BRANCH
