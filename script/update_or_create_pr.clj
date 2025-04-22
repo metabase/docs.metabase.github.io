@@ -9,6 +9,8 @@
   (System/exit 1))
 
 (def source-branch (first *command-line-args*))
+(def target-branch (str "update-" source-branch))
+
 (when-not source-branch (usage))
 
 (def artifact-dirs ["_docs" "_site/docs"]) ;; Directories to copy
