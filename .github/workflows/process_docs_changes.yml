@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       main_repo_branch: "${{ github.event.inputs.branch_name }}"
-      local_repo_branch: "${{ GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/} }}"
+      local_repo_branch: "${{ GITHUB_REF#refs/heads/ }}"
     steps:
       - uses: actions/checkout@v4
 
