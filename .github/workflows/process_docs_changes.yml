@@ -22,10 +22,12 @@ jobs:
         run: echo "LOCAL_REPO_BRANCH=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_ENV
 
       - name: echo branch name
-        run: echo "Got (metabase/)branch_name: $MAIN_REPO_BRANCH"
+        run: |
+          echo "Got (metabase) branch_name: $MAIN_REPO_BRANCH"
 
       - name: echo local repo branch
-        run: echo "Running on (docs.metabase.github.io/)branch: $LOCAL_REPO_BRANCH"
+        run: |
+          echo "Running on (docs.metabase.github.io) branch: $LOCAL_REPO_BRANCH"
 
       - name: Setup Babashka
         uses: turtlequeue/setup-babashka@v1.7.0
