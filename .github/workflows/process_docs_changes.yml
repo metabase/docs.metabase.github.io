@@ -21,12 +21,18 @@ jobs:
       - name: Set current branch name
         run: echo "LOCAL_REPO_BRANCH=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_ENV
 
-      - name: Display received payload
-        run: |
-          echo "Got (metabase/)branch_name: $MAIN_REPO_BRANCH"
-          echo "Running on (docs.metabase.github.io/)branch: $LOCAL_REPO_BRANCH"
+      - name: echo branch name
+        run: echo "Got (metabase/)branch_name: $MAIN_REPO_BRANCH"
 
-      - name: Install dependencies
+      - name: echo local repo branch
+        run: echo "Running on (docs.metabase.github.io/)branch: $LOCAL_REPO_BRANCH"
+
+      - name: Setup Babashka
+        uses: turtlequeue/setup-babashka@v1.7.0
+        with:
+          babashka-version: 1.12.197
+
+      - name: Install js dependencies
         run: yarn install --frozen-lockfile --prefer-offline
 
       - name: Set up Ruby # uses version from .ruby-version
@@ -34,7 +40,7 @@ jobs:
         with:
           bundler-cache: true
 
-      - name: Install dependencies
+      - name: Install ruby dependencies
         run: |
           bundle install
 
