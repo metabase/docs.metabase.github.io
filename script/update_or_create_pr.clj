@@ -15,17 +15,17 @@
 
 (doseq [ad artifact-dirs]
   (println "Adding" ad "...")
-  (shell {:dir temp-dir} "git" "add" ad))
+  (shell "git" "add" ad))
 
-(let [{:keys [exit]} (shell {:dir temp-dir
-                             :continue true}
-                            "git" "diff" "--cached" "--quiet")]
+(let [{:keys [exit]} (shell
+                       {:continue true}
+                       "git" "diff" "--cached" "--quiet")]
   (if (zero? exit)
     (println "→ No changes to commit.")
     (do
       (println "→ Changes detected, committing...")
-      (shell {:dir temp-dir} "git" "commit" "-m" target-branch)
-      (shell {:dir temp-dir} "git" "push" "--force" "origin" target-branch)
+      (shell "git" "commit" "-m" target-branch)
+      (shell "git" "push" "--force" "origin" target-branch)
       (println "→ Branch updated successfully."))))
 
 (println "→ Checking for existing PR...")
