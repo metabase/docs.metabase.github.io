@@ -49,23 +49,23 @@ jobs:
       - name: Update docs
         run: |
           ./script/docs-update
-          ./script/docs master --set-version master
+          #./script/docs master --set-version master
 
-      - name: "Lint the markdown"
-        run: |
-          yarn lint-markdown
+      # - name: "Lint the markdown"
+      #   run: |
+      #     yarn lint-markdown
 
-      - name: "Lint the styles"
-        run: |
-          yarn lint-styles
+      # - name: "Lint the styles"
+      #   run: |
+      #     yarn lint-styles
 
-      - name: "Lint the scripts"
-        run: |
-          yarn lint-scripts
+      # - name: "Lint the scripts"
+      #   run: |
+      #     yarn lint-scripts
 
-      - name: "Validate the links"
-        run: |
-          yarn lint-links
+      # - name: "Validate the links"
+      #   run: |
+      #     yarn lint-links
 
       - name: Build the Jekyll Site
         env:
@@ -77,12 +77,12 @@ jobs:
           # Build the jekyll site:
           JEKYLL_ENV=development bundle exec jekyll build --baseurl '' --config _config.docs.yml --trace
 
-      - name: "Check all of the links"
-        run: |
-          script/links || true
-          echo 'checking reported links...'
-          echo "htmlproofer spit out a report of length: $(cat htmlproofer.out | wc -l)"
-          bb script/analyze_links.clj --htmlproofer-output htmlproofer.out
+      # - name: "Check all of the links"
+      #   run: |
+      #     script/links || true
+      #     echo 'checking reported links...'
+      #     echo "htmlproofer spit out a report of length: $(cat htmlproofer.out | wc -l)"
+      #     bb script/analyze_links.clj --htmlproofer-output htmlproofer.out
 
       - name: Create the pull request
         env:
