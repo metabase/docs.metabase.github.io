@@ -14,14 +14,16 @@ jobs:
   build-and-commit:
     runs-on: ubuntu-latest
     env:
-      main_repo_branch: "${{ github.event.inputs.branch_name }}"
-      local_repo_branch: "${{ GITHUB_REF#refs/heads/ }}"
+      MAIN_REPO_BRANCH: "${{ github.event.inputs.branch_name }}"
     steps:
       - uses: actions/checkout@v4
 
+      - name: Set current branch name
+        run: echo "LOCAL_REPO_BRANCH=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_ENV
+
       - name: Display received payload
         run: |
-          echo "Got (metabase/)branch_name: $main_repo_branch"
+          echo "Got (metabase/)branch_name: $MAIN_REPO_BRANCH"
           echo "Running on (docs.metabase.github.io/)branch: $local_repo_branch"
 
 
@@ -92,11 +94,11 @@ jobs:
             git config user.email "metabase-bot@metabase.com"
             git config user.name "Metabase Docs bot"
             
-            echo "updating branch: $main_repo_branch ..."
+            echo "updating branch: $MAIN_REPO_BRANCH ..."
             # Check out or create the update branch
-            if git ls-remote --exit-code --heads origin "$main_repo_branch" > /dev/null; then
+            if git ls-remote --exit-code --heads origin "$MAIN_REPO_BRANCH" > /dev/null; then
               echo "found existing branch"
-              git fetch origin "$main_repo_branch"
+              git fetch origin "$MAIN_REPO_BRANCH"
 
               echo "Staging _site/docs to preserve it..."
               git add _site/docs
@@ -109,10 +111,10 @@ jobs:
 
               git stash --include-untracked
 
-              git switch "$main_repo_branch"
+              git switch "$MAIN_REPO_BRANCH"
             else
               echo "creating new branch"
-              git switch --create "$main_repo_branch"
+              git switch --create "$MAIN_REPO_BRANCH"
             fi
 
             echo "Adding files..."
@@ -122,16 +124,16 @@ jobs:
 
             echo "commiting as Metabase Docs bot..."
             git commit --author="Metabase Docs bot <metabase-bot@metabase.com>" --message="Update docs"
-            git push --force origin "$main_repo_branch"
+            git push --force origin "$MAIN_REPO_BRANCH"
 
             # Check if a PR already exists for this branch
-            existing_pr=$(gh pr list --head "$main_repo_branch" --json number --jq '.[0].number')
+            existing_pr=$(gh pr list --head "$MAIN_REPO_BRANCH" --json number --jq '.[0].number')
 
             if [ -z "$existing_pr" ]; then
               gh pr create \
                 --title "Refresh docs (${{ github.event.inputs.branch_name }})" \
                 --body "" \
-                --head "$main_repo_branch"
+                --head "$MAIN_REPO_BRANCH"
             else
               echo "PR already exists: #$existing_pr"
             fi
