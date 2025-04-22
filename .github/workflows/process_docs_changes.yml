@@ -1,0 +1,114 @@
+name: Process Docs Changes
+on:
+  # pull_request:
+  #   branches:
+  #     - master
+  workflow_dispatch:
+    inputs:
+      branch_name:
+        description: Which `metabase/metabase` branch triggered this workflow
+        required: true
+        type: string
+
+jobs:
+  build-and-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Display received payload
+        run: |
+          echo "Got branch_name: ${{ github.event.inputs.branch_name }}"
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile --prefer-offline
+
+      - name: Set up Ruby # uses version from .ruby-version
+        uses: ruby/setup-ruby@d5fb7a202fc07872cb44f00ba8e6197b70cb0c55 # v1.179.0
+        with:
+          bundler-cache: true
+
+      - name: Install dependencies
+        run: bundle install
+
+      - name: Update docs
+        run: |
+          ./script/docs-update
+          ./script/docs master --set-version master
+
+      - name: "Lint the markdown"
+        run: |
+          yarn lint-markdown
+
+      - name: "Lint the styles"
+        run: |
+          yarn lint-styles
+
+      - name: "Lint the scripts"
+        run: |
+          yarn lint-scripts
+
+      - name: "Validate the links"
+        run: |
+          yarn lint-links
+
+
+      - name: Build the Jekyll Site
+        env:
+          JEKYLL_ENV: staging
+          NODE_ENV: production
+        run: |
+          # Clear the existing site:
+          rm -rf _site
+          # Run the jekyll server:
+          JEKYLL_ENV=development bundle exec jekyll build --baseurl '' --config _config.docs.yml --trace
+
+      - name: Setup Babashka
+        uses: turtlequeue/setup-babashka@v1.7.0
+        with:
+          babashka-version: 1.12.197
+      - name: Check bb runs
+        run: bb --version
+
+      - name: "Check all of the links"
+        run: |
+          script/links || true
+          echo 'checking reported links...'
+          echo "htmlproofer spit out a report of length: $(cat htmlproofer.out | wc -l)"
+          bb script/analyze_links.clj --htmlproofer-output htmlproofer.out
+
+      - name: Create the pull request
+        env:
+          GH_TOKEN: ${{ secrets.METABASE_AUTOMATION_USER_TOKEN }}
+        run: |
+          if git diff --quiet ; then
+            echo "No changes to commit."
+          else
+            git config user.email "metabase-bot@metabase.com"
+            git config user.name "Metabase Docs bot"
+            update_branch="docs-update"
+
+            # Check out or create the update branch
+            if git ls-remote --exit-code --heads origin "$update_branch" > /dev/null; then
+              git fetch origin "$update_branch"
+              git switch "$update_branch"
+            else
+              git switch --create "$update_branch"
+            fi
+
+            git add _site
+            git commit --author="Metabase Docs bot <metabase-bot@metabase.com>" --message="Update master and latest docs"
+            git push --force origin "$update_branch"
+
+            # Check if a PR already exists for this branch
+            existing_pr=$(gh pr list --head "$update_branch" --json number --jq '.[0].number')
+
+            if [ -z "$existing_pr" ]; then
+              gh pr create \
+                --title "Refresh docs (${{ github.event.inputs.branch_name }})" \
+                --body "" \
+                --head "$update_branch"
+            else
+              echo "PR already exists: #$existing_pr"
+            fi
+          fi
