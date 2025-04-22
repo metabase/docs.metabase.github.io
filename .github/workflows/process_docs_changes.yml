@@ -14,7 +14,7 @@ jobs:
   build-and-commit:
     runs-on: ubuntu-latest
     env:
-      MAIN_REPO_BRANCH: "${{ github.event.inputs.branch_name }}"
+      BRANCH_NAME: "${{ github.event.inputs.branch_name }}"
     steps:
       - uses: actions/checkout@v4
 
@@ -23,7 +23,7 @@ jobs:
 
       - name: Display received payload
         run: |
-          echo "Got (metabase/)branch_name: $MAIN_REPO_BRANCH"
+          echo "Got (metabase/)branch_name: $BRANCH_NAME"
           echo "Running on (docs.metabase.github.io/)branch: $LOCAL_REPO_BRANCH"
 
       - name: Install dependencies
@@ -71,7 +71,7 @@ jobs:
           # Clear the existing site:
           rm -rf _site
           # Build the jekyll site:
-          JEKYLL_ENV=development bundle exec jekyll build --baseurl '' --config _config.docs.yml --trace
+          bundle exec jekyll build --baseurl '' --config _config.docs.yml --trace
 
       - name: "Check all of the links"
         run: |
@@ -90,4 +90,4 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.METABASE_AUTOMATION_USER_TOKEN }}
         run: |
-          bb script/update_or_create_branch.clj
+          bb script/update_or_create_branch.clj $BRANCH_NAME

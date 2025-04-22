@@ -5,38 +5,13 @@
             [cheshire.core :as json]))
 
 (defn usage []
-  (println "Usage: script/update_or_create_branch.clj branchname [--skip-clone]")
+  (println "Usage: script/update_or_create_branch.clj branchname")
   (System/exit 1))
 
 (def source-branch (first *command-line-args*))
 (when-not source-branch (usage))
+
 (def artifact-dirs ["_docs" "_site/docs"]) ;; Directories to copy
-
-(def temp-dir "temp_dir") ;; Temporary directory for cloning
-(def repo-coords (str "https://github.com/metabase/docs.metabase.github.io.git"))
-
-(when-not (contains? (set *command-line-args*) "--skip-clone")
-  (println "→ Cloning" repo-coords "repo...")
-  (fs/delete-tree temp-dir)
-  (println "Cloning repo...")
-  (shell "git" "clone"
-         "--depth" "1"
-         "--branch" "master"
-         (str "https://github.com/metabase/docs.metabase.github.io.git")
-         temp-dir))
-
-(doseq [ad artifact-dirs]
-  (println "Copying" ad  "->" (str (fs/path temp-dir ad)) "...")
-  (fs/copy-tree ad (fs/path temp-dir ad) {:replace-existing true}))
-
-(def target-branch (str "update-" source-branch))
-
-(prn ["target-branch" target-branch])
-
-(println "→ Committing changes...")
-(shell {:dir temp-dir} "git" "checkout" "-B" target-branch)
-(shell {:dir temp-dir} "git" "config" "user.name" "Metabase Docs bot")
-(shell {:dir temp-dir} "git" "config" "user.email" "metabase-bot@metabase.com")
 
 (doseq [ad artifact-dirs]
   (println "Adding" ad "...")
