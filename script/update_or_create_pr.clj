@@ -20,11 +20,11 @@
                          (str "https://api.github.com/repos/metabase/docs.metabase.github.io/pulls?head=metabase:" "update-" "doc-update-detection"))
                   :out
                   json/parse-string)
-        o (some #(when (= target-branch (get % "title"))
-                   (get % "number"))
-                pr-data)]
+        pr-num (some #(when (= target-branch (get % "title"))
+                        (get % "number"))
+                     pr-data)]
     (println "→ PR number:" o)
-    (boolean o)))
+    (boolean pr-num)))
 
 (defn -main [& args]
   (let [source-branch (or (first args) (usage))
