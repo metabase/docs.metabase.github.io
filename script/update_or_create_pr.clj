@@ -14,9 +14,12 @@
   (let [pr-json
         (slurp
           (-> (str "https://api.github.com/repos/metabase/docs.metabase.github.io/pulls?head=metabase:" target-branch)
-              (shell {:out :string :continue true})))]
-    (some #(when (= target-branch (% "title")) (% "number"))
-          (json/parse-string pr-json))))
+              (shell {:out :string :continue true})))
+        _ (println "→ PR JSON:" pr-json)
+        o (some #(when (= target-branch (% "title")) (% "number"))
+                (json/parse-string pr-json))]
+    (println "→ PR number:" o)
+    (boolean o)))
 
 (defn -main [& args]
   (let [source-branch (or (first args) (usage))
@@ -38,7 +41,7 @@
 
     (println "→ Checking for existing PR...")
 
-    (if (existing-pr?)
+    (if (existing-pr? target-branch)
       (println "✓ PR already exists: #" existing-pr?)
       (do
         (println "→ Creating new PR...")
