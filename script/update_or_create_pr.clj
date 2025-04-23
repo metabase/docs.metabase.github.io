@@ -2,7 +2,8 @@
 (ns update-or-create-pr
   (:require [babashka.process :as p :refer [sh shell]]
             [babashka.fs :as fs]
-            [cheshire.core :as json]))
+            [cheshire.core :as json]
+            [clojure.string :as str]))
 
 (defn usage []
   (println "Usage: script/update_or_create_pr.clj branchname")
@@ -10,14 +11,18 @@
 
 (def artifact-dirs ["_docs" "_site/docs"]) ;; Directories to copy
 
+
+
 (defn existing-pr? [target-branch]
-  (let [pr-json
-        (slurp
-          (-> (str "https://api.github.com/repos/metabase/docs.metabase.github.io/pulls?head=metabase:" target-branch)
-              (shell {:out :string :continue true})))
-        _ (println "→ PR JSON:" pr-json)
-        o (some #(when (= target-branch (% "title")) (% "number"))
-                (json/parse-string pr-json))]
+  (let [pr-data (->
+                  (shell {:out :string :continue true}
+                         "curl"
+                         (str "https://api.github.com/repos/metabase/docs.metabase.github.io/pulls?head=metabase:" "update-" "doc-update-detection"))
+                  :out
+                  json/parse-string)
+        o (some #(when (= target-branch (get % "title"))
+                   (get % "number"))
+                pr-data)]
     (println "→ PR number:" o)
     (boolean o)))
 
