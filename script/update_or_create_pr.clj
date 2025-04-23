@@ -1,7 +1,6 @@
 #!/usr/bin/env bb
 (ns update-or-create-pr
-  (:require [babashka.process :as p :refer [sh shell]]
-            [babashka.fs :as fs]
+  (:require [babashka.process :as p]
             [cheshire.core :as json]
             [clojure.string :as str]))
 
@@ -15,33 +14,33 @@
 
 (defn existing-pr? [target-branch]
   (let [pr-data (->
-                  (shell {:out :string :continue true}
-                         "curl"
-                         (str "https://api.github.com/repos/metabase/docs.metabase.github.io/pulls?head=metabase:" "update-" "doc-update-detection"))
+                  (p/shell {:out :string :continue true}
+                           "curl"
+                           (str "https://api.github.com/repos/metabase/docs.metabase.github.io/pulls?head=metabase:" "update-" "doc-update-detection"))
                   :out
                   json/parse-string)
         pr-num (some #(when (= target-branch (get % "title"))
                         (get % "number"))
                      pr-data)]
-    (println "→ PR number:" o)
+    (println "→ PR number:" pr-num)
     (boolean pr-num)))
 
 (defn -main [& args]
   (let [source-branch (or (first args) (usage))
         target-branch (str "update-" source-branch)
         _ (println "Swithcing to target branch.")
-        _ (shell "git" "checkout" "-B" target-branch)
+        _ (p/shell "git" "checkout" "-B" target-branch)
         _ (doseq [ad artifact-dirs]
             (println "Adding" ad "...")
-            (shell "git" "add" ad))
-        {:keys [exit]} (shell {:continue true} "git" "diff" "--cached" "--quiet")]
+            (p/shell "git" "add" ad))
+        {:keys [exit]} (p/shell {:continue true} "git" "diff" "--cached" "--quiet")]
 
     (if (zero? exit)
       (println "→ No changes to commit.")
       (do
         (println "→ Changes detected, committing...")
-        (shell "git" "commit" "-m" (str "[auto] adding content to " target-branch))
-        (shell "git" "push" "--force" "origin" target-branch)
+        (p/shell "git" "commit" "-m" (str "[auto] adding content to " target-branch))
+        (p/shell "git" "push" "--force" "origin" target-branch)
         (println "→ Branch updated successfully.")))
 
     (println "→ Checking for existing PR...")
@@ -50,11 +49,11 @@
       (println "✓ PR already exists: #" existing-pr?)
       (do
         (println "→ Creating new PR...")
-        (shell "gh" "pr" "create"
-               "--repo" "metabase/docs.metabase.github.io"
-               "--title" target-branch
-               "--body" (str "updated: " (pr-str artifact-dirs))
-               "--head" target-branch)))))
+        (p/shell "gh" "pr" "create"
+                 "--repo" "metabase/docs.metabase.github.io"
+                 "--title" target-branch
+                 "--body" (str "updated: " (pr-str artifact-dirs))
+                 "--head" target-branch)))))
 
 (when (= *file* (System/getProperty "babashka.file"))
   (apply -main *command-line-args*))
