@@ -34,10 +34,10 @@ jobs:
         with:
           babashka-version: 1.12.199
 
-      # - name: Filter non-documented branches
-      #   description: This will stop the workflow if the branch isn't master or release-x.\d.x.
-      #   run: |
-      #     bb script/check_incoming_branchname.clj $MAIN_REPO_BRANCH
+      - name: Filter non-documented branches
+        description: This will stop the workflow if the branch isn't master or release-x.\d.x.
+        run: |
+          bb script/check_incoming_branchname.clj $MAIN_REPO_BRANCH
 
       - name: Install js dependencies
         run: yarn install --frozen-lockfile --prefer-offline
