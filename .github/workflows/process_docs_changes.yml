@@ -49,10 +49,12 @@ jobs:
         run: |
           bundle install
 
+      - name: Update docs for branchname
+        run: |
+          bb script/update_docs_for_branchname.clj branchname
+
       - name: Update docs
         run: |
-          # ./script/docs-update
-          # ./script/docs master --set-version master
           ./script/docs "$MAIN_REPO_BRANCH" --set-version "$MAIN_REPO_BRANCH"
 
       - name: "Lint the markdown"
@@ -81,20 +83,20 @@ jobs:
           # Build the jekyll site:
           JEKYLL_ENV=development bundle exec jekyll build --baseurl '' --config _config.docs.yml --trace
 
-      - name: "Check all of the links"
+      - name: Run metabase.com-aware link checks
         run: |
           script/links || true
           echo 'checking reported links...'
           echo "htmlproofer spit out a report of length: $(cat htmlproofer.out | wc -l)"
           bb script/analyze_links.clj --htmlproofer-output htmlproofer.out
 
-      - name: Authenticate Git with GITHUB_TOKEN
+      - name: Setup Git Authenticatation
         run: |
           git config --global user.name "Metabase Docs bot"
           git config --global user.email "metabase-bot@metabase.com"
           git remote set-url origin "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/metabase/docs.metabase.github.io.git"
 
-      - name: Create the pull request
+      - name: Update or Create the Pull Request
         env:
           GH_TOKEN: ${{ secrets.METABASE_AUTOMATION_USER_TOKEN }}
         run: |
