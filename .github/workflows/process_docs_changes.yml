@@ -18,7 +18,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Set current branch name
-        run: echo "LOCAL_REPO_BRANCH=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_ENV
+        run: echo "LOCAL_REPO_BRANCH=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> "$GITHUB_ENV"
 
       - name: echo branch name
         run: |
@@ -35,7 +35,7 @@ jobs:
 
       - name: Filter non-documented branches
         run: |
-          bb script/check_incoming_branchname.clj $MAIN_REPO_BRANCH
+          bb script/check_incoming_branchname.clj "$MAIN_REPO_BRANCH"
 
       - name: Install js dependencies
         run: yarn install --frozen-lockfile --prefer-offline
@@ -49,10 +49,12 @@ jobs:
         run: |
           bundle install
 
+      - name: Update docs for branchname
+        run: |
+          bb script/update_docs_for_branchname.clj "$MAIN_REPO_BRANCH"
+
       - name: Update docs
         run: |
-          # ./script/docs-update
-          # ./script/docs master --set-version master
           ./script/docs "$MAIN_REPO_BRANCH" --set-version "$MAIN_REPO_BRANCH"
 
       - name: "Lint the markdown"
@@ -81,21 +83,21 @@ jobs:
           # Build the jekyll site:
           JEKYLL_ENV=development bundle exec jekyll build --baseurl '' --config _config.docs.yml --trace
 
-      - name: "Check all of the links"
+      - name: Run metabase.com-aware link checks
         run: |
           script/links || true
           echo 'checking reported links...'
-          echo "htmlproofer spit out a report of length: $(cat htmlproofer.out | wc -l)"
+          echo "htmlproofer spit out a report of length: $(wc -l < htmlproofer.out)"
           bb script/analyze_links.clj --htmlproofer-output htmlproofer.out
 
-      - name: Authenticate Git with GITHUB_TOKEN
+      - name: Setup Git Authenticatation
         run: |
           git config --global user.name "Metabase Docs bot"
           git config --global user.email "metabase-bot@metabase.com"
           git remote set-url origin "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/metabase/docs.metabase.github.io.git"
 
-      - name: Create the pull request
+      - name: Update or Create the Pull Request
         env:
           GH_TOKEN: ${{ secrets.METABASE_AUTOMATION_USER_TOKEN }}
         run: |
-          bb script/update_or_create_pr.clj $MAIN_REPO_BRANCH
+          bb script/update_or_create_pr.clj "$MAIN_REPO_BRANCH"
