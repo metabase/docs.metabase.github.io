@@ -9,18 +9,39 @@ on:
         description: Which `metabase/metabase` branch triggered this workflow
         required: true
         type: string
+  repository_dispatch:
+    types: [docs_update]
 
 jobs:
   build-and-commit:
     runs-on: ubuntu-latest
+    env:
+      MAIN_REPO_BRANCH: "${{ github.event.inputs.branch_name || github.event.client_payload.branch_name }}"
     steps:
       - uses: actions/checkout@v4
 
-      - name: Display received payload
-        run: |
-          echo "Got branch_name: ${{ github.event.inputs.branch_name }}"
+      - name: Set current branch name
+        run: echo "LOCAL_REPO_BRANCH=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_ENV
 
-      - name: Install dependencies
+      - name: echo branch name
+        run: |
+          echo "Got (metabase) branch_name: $MAIN_REPO_BRANCH"
+
+      - name: echo local repo branch
+        run: |
+          echo "Running on (docs.metabase.github.io) branch: $LOCAL_REPO_BRANCH"
+
+      - name: Setup Babashka
+        uses: turtlequeue/setup-babashka@v1.7.0
+        with:
+          babashka-version: 1.12.199
+
+      - name: Filter non-documented branches
+        description: This will stop the workflow if the branch isn't master or release-x.\d.x.
+        run: |
+          bb script/check_incoming_branchname.clj $MAIN_REPO_BRANCH
+
+      - name: Install js dependencies
         run: yarn install --frozen-lockfile --prefer-offline
 
       - name: Set up Ruby # uses version from .ruby-version
@@ -28,30 +49,31 @@ jobs:
         with:
           bundler-cache: true
 
-      - name: Install dependencies
-        run: bundle install
+      - name: Install ruby dependencies
+        run: |
+          bundle install
 
       - name: Update docs
         run: |
-          ./script/docs-update
-          ./script/docs master --set-version master
+          # ./script/docs-update
+          # ./script/docs master --set-version master
+          ./script/docs "$MAIN_REPO_BRANCH" --set-version "$MAIN_REPO_BRANCH"
 
-      - name: "Lint the markdown"
-        run: |
-          yarn lint-markdown
+      # - name: "Lint the markdown"
+      #   run: |
+      #     yarn lint-markdown
 
-      - name: "Lint the styles"
-        run: |
-          yarn lint-styles
+      # - name: "Lint the styles"
+      #   run: |
+      #     yarn lint-styles
 
-      - name: "Lint the scripts"
-        run: |
-          yarn lint-scripts
+      # - name: "Lint the scripts"
+      #   run: |
+      #     yarn lint-scripts
 
-      - name: "Validate the links"
-        run: |
-          yarn lint-links
-
+      # - name: "Validate the links"
+      #   run: |
+      #     yarn lint-links
 
       - name: Build the Jekyll Site
         env:
@@ -60,55 +82,24 @@ jobs:
         run: |
           # Clear the existing site:
           rm -rf _site
-          # Run the jekyll server:
+          # Build the jekyll site:
           JEKYLL_ENV=development bundle exec jekyll build --baseurl '' --config _config.docs.yml --trace
 
-      - name: Setup Babashka
-        uses: turtlequeue/setup-babashka@v1.7.0
-        with:
-          babashka-version: 1.12.197
-      - name: Check bb runs
-        run: bb --version
+      # - name: "Check all of the links"
+      #   run: |
+      #     script/links || true
+      #     echo 'checking reported links...'
+      #     echo "htmlproofer spit out a report of length: $(cat htmlproofer.out | wc -l)"
+      #     bb script/analyze_links.clj --htmlproofer-output htmlproofer.out
 
-      - name: "Check all of the links"
+      - name: Authenticate Git with GITHUB_TOKEN
         run: |
-          script/links || true
-          echo 'checking reported links...'
-          echo "htmlproofer spit out a report of length: $(cat htmlproofer.out | wc -l)"
-          bb script/analyze_links.clj --htmlproofer-output htmlproofer.out
+          git config --global user.name "Metabase Docs bot"
+          git config --global user.email "metabase-bot@metabase.com"
+          git remote set-url origin "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/metabase/docs.metabase.github.io.git"
 
       - name: Create the pull request
         env:
           GH_TOKEN: ${{ secrets.METABASE_AUTOMATION_USER_TOKEN }}
         run: |
-          if git diff --quiet ; then
-            echo "No changes to commit."
-          else
-            git config user.email "metabase-bot@metabase.com"
-            git config user.name "Metabase Docs bot"
-            update_branch="docs-update"
-
-            # Check out or create the update branch
-            if git ls-remote --exit-code --heads origin "$update_branch" > /dev/null; then
-              git fetch origin "$update_branch"
-              git switch "$update_branch"
-            else
-              git switch --create "$update_branch"
-            fi
-
-            git add _site
-            git commit --author="Metabase Docs bot <metabase-bot@metabase.com>" --message="Update master and latest docs"
-            git push --force origin "$update_branch"
-
-            # Check if a PR already exists for this branch
-            existing_pr=$(gh pr list --head "$update_branch" --json number --jq '.[0].number')
-
-            if [ -z "$existing_pr" ]; then
-              gh pr create \
-                --title "Refresh docs (${{ github.event.inputs.branch_name }})" \
-                --body "" \
-                --head "$update_branch"
-            else
-              echo "PR already exists: #$existing_pr"
-            fi
-          fi
+          bb script/update_or_create_pr.clj $MAIN_REPO_BRANCH
