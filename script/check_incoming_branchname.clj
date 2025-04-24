@@ -1,4 +1,5 @@
-(ns check-incoming-branchname)
+(ns check-incoming-branchname
+  (:require [clojure.string :as str]))
 
 (defn usage []
   (println "Usage: script/check_incoming_branchname.clj branchname")
