@@ -13,7 +13,8 @@
 (defn categorize-branchname [branchname]
   (cond
     (= branchname "master") [:master]
-    (re-matches release-regex branchname) [:release (extract-release-num branchname)]))
+    (re-matches release-regex branchname) [:release (extract-release-num branchname)]
+    (str/starts-with? branchname "docs-workflow-test-") [:test branchname]))
 
 (defn -main
   "This is called from the `process_docs_changes.yml` workflow. It checks that
@@ -26,7 +27,8 @@
         [category release-num] (categorize-branchname branchname)]
     (case category
       :master (println "Master branch detected.")
-      :release (println "Release branch detected:" release-num)
+      :release (println "Release branch detected. Release number: " release-num)
+      :test (println "Test branch detected. Branchname: " branchname)
       (do (println "Unpublishable branchname: " branchname)
           (System/exit 1)))))
 
