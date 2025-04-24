@@ -53,10 +53,6 @@ jobs:
         run: |
           bb script/update_docs_for_branchname.clj "$MAIN_REPO_BRANCH"
 
-      - name: Update docs
-        run: |
-          ./script/docs "$MAIN_REPO_BRANCH" --set-version "$MAIN_REPO_BRANCH"
-
       - name: "Lint the markdown"
         run: |
           yarn lint-markdown
