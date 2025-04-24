@@ -14,7 +14,9 @@
   (cond
     (= branchname "master") [:master]
     (re-matches release-regex branchname) [:release (extract-release-num branchname)]
-    (str/starts-with? branchname "docs-workflow-test-") [:test branchname]))
+    (or
+      (= branchname "doc-update-detection")
+      (str/starts-with? branchname "docs-workflow-test-")) [:test branchname]))
 
 (defn -main
   "This is called from the `process_docs_changes.yml` workflow. It checks that
