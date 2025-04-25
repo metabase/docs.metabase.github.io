@@ -14,3 +14,18 @@
     (or
       (= branchname "doc-update-detection")
       (str/starts-with? branchname "docs-workflow-test-")) [:test branchname]))
+
+(comment
+  (categorize-branchname "release-x.49.x")
+  ;; => [:release 49]
+
+  (categorize-branchname "master")
+  ;; => [:master]
+
+  (categorize-branchname "docs-workflow-test-123")
+  ;; => [:test "docs-workflow-test-123"]
+
+  (categorize-branchname "any-other-branch")
+  ;; => nil
+
+  )
