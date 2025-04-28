@@ -56,7 +56,9 @@ jobs:
 
       - name: Update docs for branchname
         run: |
-          bb script/update_docs_for_branchname.clj "$MAIN_REPO_BRANCH"
+          ./script/docs master --set-version master
+          # this bb script shells into this, but removing it for clarity ^
+          # bb script/update_docs_for_branchname.clj "$MAIN_REPO_BRANCH"
 
       - name: "Lint the markdown"
         run: |
