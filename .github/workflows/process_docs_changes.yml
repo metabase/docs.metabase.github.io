@@ -37,6 +37,11 @@ jobs:
         run: |
           bb script/check_incoming_branchname.clj "$MAIN_REPO_BRANCH"
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
       - name: Install js dependencies
         run: yarn install --frozen-lockfile --prefer-offline
 
