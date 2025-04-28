@@ -8,8 +8,8 @@
   (println "Usage: script/update_or_create_pr.clj branchname")
   (System/exit 1))
 
-(def artifact-dirs ["_docs" "_site/docs"]) ;; Directories to copy
-
+(def artifact-dirs ["_docs"
+                    "_site/docs"]) ;; Directories to copy
 
 
 (defn existing-pr? [target-branch]
@@ -27,13 +27,18 @@
     (boolean pr-num)))
 
 (defn -main [& args]
+  (prn "showing contents of artifact-dirs:" artifact-dirs)
+  (doseq [ad artifact-dirs]
+    (println "→" ad ":")
+    (p/shell "ls" "-al" ad))
   (let [source-branch (or (first args) (usage))
         target-branch (str "update-" source-branch)
         _ (println "Swithcing to target branch.")
         _ (p/shell "git" "checkout" "-B" target-branch)
         _ (doseq [ad artifact-dirs]
-            (println "Adding" ad "...")
-            (p/shell "git" "add" ad))
+            (p/shell
+              {:pre-start-fn #(apply println "Running" (:cmd %))}
+              "git" "add" ad))
         {:keys [exit]} (p/shell {:continue true} "git" "diff" "--cached" "--quiet")]
 
     (if (zero? exit)
@@ -50,6 +55,8 @@
       (println "✓ PR already exists: #" existing-pr?)
       (do
         (println "→ Creating new PR...")
+        (println "→ Running git status...")
+        (p/shell "git" "status")
         (p/shell "gh" "pr" "create"
                  "--repo" "metabase/docs.metabase.github.io"
                  "--title" target-branch
