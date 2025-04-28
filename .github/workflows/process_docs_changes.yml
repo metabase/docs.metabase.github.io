@@ -54,6 +54,11 @@ jobs:
         run: |
           bundle install
 
+      - name: Install Clojure to build cljs
+        uses: DeLaGuardo/setup-clojure@11.0
+        with:
+          cli: latest
+
       - name: Update docs for branchname
         run: |
           ./script/docs master --set-version master
