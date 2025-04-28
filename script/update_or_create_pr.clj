@@ -11,7 +11,6 @@
 (def artifact-dirs ["_docs"
                     "_site/docs"]) ;; Directories to copy
 
-
 (defn existing-pr? [target-branch]
   (let [pr-data (->
                   (p/shell {:out :string :continue true}

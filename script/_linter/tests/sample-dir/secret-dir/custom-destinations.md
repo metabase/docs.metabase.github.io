@@ -133,7 +133,7 @@ This time, we'll see a slightly different menu:
 - Go to a custom question
 - Update a dashboard filter
 
-The reason there is a **Do nothing** option is because the Product category question is written in SQL, and SQL questions don't include the action menu. And here's where we show you a neat trick. If we look at the card's question, **Product**, we'll see that it's a simple SQL query with two [field filters](/learn/building-analytics/sql-templates/field-filters.html).
+The reason there is a **Do nothing** option is because the Product category question is written in SQL, and SQL questions don't include the action menu. And here's where we show you a neat trick. If we look at the card's question, **Product**, we'll see that it's a simple SQL query with two [field filters](/learn/metabase-basics/querying-and-dashboards/sql-in-metabase/field-filters.html).
 
 {% include image_and_caption.html url="/learn/images/custom-destinations-choose-what-happens-when-people-click-on-charts-in-your-dashboard/product-category-question.png" description="<em>Fig. 15</em>. Product category question written in SQL." %}
 

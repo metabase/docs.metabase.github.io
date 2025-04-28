@@ -1,12 +1,13 @@
 #!/bin/sh
-# usage: script/links [output-file]
+# usage: script/links
 #
 # Check for broken links
 
 #!/bin/bash
 OUT_FILE="${1:-htmlproofer.out}" #default to _site
+TARGET="${1:-_site}" #default to _site
 
-bundle exec htmlproofer _site \
+bundle exec htmlproofer "$TARGET" \
        --check-opengraph \
        --check-html \
        --assume-extension \

@@ -17,7 +17,7 @@ var settings = {
 };
 
 program
-  .option("-l, --latest") // copy docs into _docs/latest
+  .option("-l, --latest") // Also copy docs to latest
   .option("-s, --set-version <version>") // Specify target directory and version
   .option("-u, --update"); // Download docs from current release_branch
 
@@ -36,9 +36,9 @@ if (program.args.length > 0 && program.args[0][0] != "-") {
   settings.version = program.args[0];
 }
 
-const config = yaml.load("_config.yml");
 // if we're updating, use the current release branch.
 if (settings.update) {
+  const config = yaml.load("_config.yml");
   settings.version = config.release_branch;
 }
 
@@ -54,22 +54,17 @@ if (options.setVersion) {
   settings.setVersion = options.setVersion;
   console.log("Version set to", options.setVersion);
 }
-
 console.log("Downloading docs from branch", settings.version);
 
 if (!settings.version.match(/^v[0-9]+\./)) {
   console.warn("WARNING: version is not in the canonical form (e.g. v0.44.3)");
 }
 
-console.log("Settings: ", settings);
-
 fetchDocs(settings)
   .then(() => {
+    const config = yaml.load("_config.yml");
     const version = settings.update ? config.docs_version : settings.setVersion;
-
-    console.log("Squashing version", version);
     const docsVersion = squashVersion(version);
-    console.log("docsVersion", docsVersion);
 
     if (settings.latest) {
       // Before we update frontmatter for our latest (search-engine indexed) docs
