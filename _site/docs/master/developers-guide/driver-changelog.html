@@ -60,7 +60,7 @@
 <meta name="twitter:site" content="@metabase" />
 
 <meta name="twitter:title" content="Driver interface changelog | Metabase Documentation" />
-<meta name="twitter:description" content="Driver Interface Changelog Metabase 0.55.0   Added a feature :expression-literals for drivers that support expressions consisting of a single string, number, or boolean literal value.   Added a new abstract driver mix-in :metabase.driver.sql.query-processor.boolean-is-comparison/boolean-is-comparison that..." />
+<meta name="twitter:description" content="Driver Interface Changelog Metabase 0.55.0   Added a feature :expression-literals for drivers that support expressions consisting of a single string, number, or boolean literal value.   Added a feature :multi-level-schema for drivers that support..." />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:image" content="https://www.metabase.com/images/twitter/default.png" />
 <!-- end of Twitter cards -->
@@ -70,14 +70,14 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://www.metabase.com/docs/master/developers-guide/driver-changelog" />
 <meta name="title" property="og:title" content="Driver interface changelog | Metabase Documentation" />
-<meta name="description" property="og:description" content="Driver Interface Changelog Metabase 0.55.0   Added a feature :expression-literals for drivers that support expressions consisting of a single string, number, or boolean literal value.   Added a new abstract driver mix-in :metabase.driver.sql.query-processor.boolean-is-comparison/boolean-is-comparison that..." />
+<meta name="description" property="og:description" content="Driver Interface Changelog Metabase 0.55.0   Added a feature :expression-literals for drivers that support expressions consisting of a single string, number, or boolean literal value.   Added a feature :multi-level-schema for drivers that support..." />
 <meta name="image" property="og:image" content="https://www.metabase.com/images/twitter/default.png" />
 <!-- end of Open Graph metadata -->
 
   
 
   
-    <link href="/images/favicon-dev.svg" rel="shortcut icon" />
+    <link href="/images/favicon.svg" rel="shortcut icon" />
   
   <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
   <link
@@ -5400,6 +5400,12 @@ Roadmap</a>
     <p>Added a feature <code class="language-plaintext highlighter-rouge">:expression-literals</code> for drivers that support expressions consisting of a single string, number, or boolean literal value.</p>
   </li>
   <li>
+    <p>Added a feature <code class="language-plaintext highlighter-rouge">:multi-level-schema</code> for drivers that support hierarchical levels between database and schema. Such as databricks’ catalog. Defaults to false.</p>
+  </li>
+  <li>
+    <p>Added the multi-method <code class="language-plaintext highlighter-rouge">adjust-schema-qualification</code> that allows drivers to to qualify, or unqualify table schemas based on enabling or disabling multi-level-schema support. Drivers may need to implement <code class="language-plaintext highlighter-rouge">sql.qp/-&gt;honeysql [driver ::h2x/identifier]</code> to properly quote fully qualified schemas.</p>
+  </li>
+  <li>
     <p>Added a new abstract driver mix-in <code class="language-plaintext highlighter-rouge">:metabase.driver.sql.query-processor.boolean-is-comparison/boolean-is-comparison</code> that can be inherited by drivers that require boolean literal constants to be converted to comparison expressions in the top level of WHERE, AND, OR, NOT, and CASE clauses.</p>
   </li>
   <li>
@@ -6927,7 +6933,7 @@ table below:</p>
   crossorigin="anonymous"></script>
 <script type="text/javascript">
     Sentry.init({
-        environment: "development",
+        environment: "production",
         dsn: "https://4b0be007af0a45f3bf6f59e5381ffe74@o408345.ingest.sentry.io/6722711",
         integrations: [new Sentry.BrowserTracing()],
         tracesSampleRate: 1.0,
