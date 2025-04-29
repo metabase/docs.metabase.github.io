@@ -27,19 +27,37 @@ You can embed a dashboard using the one of the dashboard components:
 
 A lightweight dashboard component. Use this component when you want to display results without letting people interact with the data.
 
-Docs: [StaticDashboard](./api/StaticDashboard)
+#### API Reference
+- [Component](./api/StaticDashboard)
+- [Props](./api/StaticDashboardProps)
+
+#### Props
+
+{% include_file "{{ dirname }}/api/snippets/StaticDashboardProps.md" snippet="properties" %}
 
 ### `InteractiveDashboard`
 
 A dashboard component with drill downs, click behaviors, and the ability to view and click into questions. Use this component when you want to allow people to explore their data.
 
-Docs: [InteractiveDashboard](./api/InteractiveDashboard)
+#### API Reference
+- [Component](./api/InteractiveDashboard)
+- [Props](./api/InteractiveDashboardProps)
+
+#### Props
+
+{% include_file "{{ dirname }}/api/snippets/InteractiveDashboardProps.md" snippet="properties" %}
 
 ### `EditableDashboard`
 
 A dashboard component with the features available in the `InteractiveDashboard` component, as well as the ability to add and update questions, layout, and content within your dashboard. Use this component when you want to give people the ability to modify your dashboards, for example in an admin panel in your app.
 
-Docs: [EditableDashboard](./api/EditableDashboard)
+#### API Reference
+- [Component](./api/EditableDashboard)
+- [Props](./api/EditableDashboardProps)
+
+#### Props
+
+{% include_file "{{ dirname }}/api/snippets/EditableDashboardProps.md" snippet="properties" %}
 
 ## Example embedded dashboard with `InteractiveDashboard` component
 
@@ -121,18 +139,34 @@ If you want to replace the existing menu with your own component, you can do so 
 
 Creating a dashboard could be done with `useCreateDashboardApi` hook or `CreateDashboardModal` component.
 
-### Hook
+### `useCreateDashboardApi`
 
-Docs: [useCreateDashboardApi](./api/useCreateDashboardApi)
+Use this hook if you'd like to have total control over the UI and settings.
 
+#### API Reference
+- [Hook](./api/useCreateDashboardApi)
+- [Options](./api/CreateDashboardValues)
+
+#### Example
 ```typescript
 {% include_file "{{ dirname }}/snippets/dashboards/create-dashboard.tsx" snippet="example-hook" %}
 ```
 
-### Component
+#### Options
 
-Docs: [CreateDashboardModal](./api/CreateDashboardModal)
+{% include_file "{{ dirname }}/api/snippets/CreateDashboardValues.md" snippet="properties" %}
 
+### `CreateDashboardModal`
+
+#### API Refernce
+- [Component](./api/CreateDashboardModal)
+- [Props](./api/CreateDashboardModalProps)
+
+#### Example
 ```typescript
 {% include_file "{{ dirname }}/snippets/dashboards/create-dashboard.tsx" snippet="example-component" %}
 ```
+
+#### Props
+
+{% include_file "{{ dirname }}/api/snippets/CreateDashboardModalProps.md" snippet="properties" %}

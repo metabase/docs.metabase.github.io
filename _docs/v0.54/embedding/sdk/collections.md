@@ -13,15 +13,25 @@ layout: new-docs
 
 {% include plans-blockquote.html feature="Embedded analytics SDK" sdk=true %}
 
+## Embedding a collection browser
+
 You can embed Metabase's collection browser so that people can explore items in your Metabase from your application.
 
-Docs: [CollectionBrowser](./api/CollectionBrowser)
+### `CollectionBrowser`
 
-## Example embedding code with `CollectionBrowser`
+#### API Reference
+- [Component](./api/CollectionBrowser)
+- [Props](./api/CollectionBrowserProps)
+
+#### Example
 
 ```tsx
 {% include_file "{{ dirname }}/snippets/collections/collection-browser.tsx" %}
 ```
+
+#### Props
+
+{% include_file "{{ dirname }}/api/snippets/CollectionBrowserProps.md" snippet="properties" %}
 
 ## Hide the collection picker and hard code the collection you want people to save stuff to
 

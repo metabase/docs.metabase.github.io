@@ -344,7 +344,7 @@ case([Has Wings] = TRUE  AND [Has Face] = TRUE,  "Bird",
 [data-sandboxing-docs]: ../../../permissions/data-sandboxes
 [data-types]: /learn/grow-your-data-skills/data-fundamentals/data-types-overview#examples-of-data-types
 [filter-learn]: /learn/metabase-basics/querying-and-dashboards/questions/searching-tables
-[notebook-editor-def]: /glossary/notebook_editor
+[notebook-editor-def]: /glossary/notebook-editor
 [numpy]: https://numpy.org/doc/
 [pandas]: https://pandas.pydata.org/pandas-docs/stable/
 [sql-reference-guide]: /learn/grow-your-data-skills/learn-sql/debugging-sql/sql-syntax#common-sql-reference-guides

@@ -1,0 +1,86 @@
+<h1 id="blog-post-examples">Blog Post Examples</h1>
+
+<p>One of the most powerful things you can do when sharing howto posts is giving the reader an environment they can follow along in.</p>
+
+<p>This document proposes a way that this could be done for our dear blog readers with a combination of pre-populated H2 databases and Docker.</p>
+
+<h2 id="proposal">Proposal</h2>
+
+<p>We should be able to make it as simple as spinning up a Docker container for the reader to login to.</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run metabase/blog:cross-filtering
+</code></pre></div></div>
+
+<h2 id="prerequisites">Prerequisites</h2>
+
+<ul>
+  <li>Docker</li>
+</ul>
+
+<h2 id="getting-started">Getting Started</h2>
+
+<p>First, fire up a shiny new Metabase.</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Create a directory for our example databases if it doesn't exist already</span>
+<span class="nb">mkdir </span>example_dbs
+
+<span class="c"># Change into this directory - we want to run docker build from here, otherwise we send the entire blog directory to Docker</span>
+<span class="nb">cd </span>example_dbs
+
+<span class="c"># Spin up Metabase with the desired version!</span>
+docker run <span class="nt">-p</span> 3000:3000 <span class="nt">--network</span> metabae <span class="nt">--name</span> metabase metabase/metabase:v0.37.0.2
+</code></pre></div></div>
+
+<p>Then create some dashboards and whatnot. We’ll also configure our Metabase instance using the Metabase Configurator from <code class="language-plaintext highlighter-rouge">success-engineering</code></p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run <span class="nt">--rm</span> <span class="nt">--name</span> configurator <span class="nt">--network</span> metabae <span class="se">\</span>
+  <span class="nt">-e</span> <span class="nv">MB_HOSTNAME</span><span class="o">=</span>metabase <span class="se">\</span>
+  <span class="nt">-e</span> <span class="nv">MB_ADMIN_EMAIL</span><span class="o">=</span>admin@metabase.blog <span class="se">\</span>
+  metabase_config_environment
+</code></pre></div></div>
+
+<p>When you’re done, shut down your Docker image.</p>
+
+<h2 id="preparing-your-demo-container">Preparing your demo container</h2>
+
+<ul>
+  <li>Copy your Metabase db to your local filesystem</li>
+</ul>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker <span class="nb">cp </span>metabase:/metabase.db/metabase.db.mv.db ./
+</code></pre></div></div>
+
+<ul>
+  <li>Build a Docker image with that database pre-existing!</li>
+</ul>
+
+<p>_Note the <code class="language-plaintext highlighter-rouge">VARIANT</code> variable that specifies the version so this example will always be in sync with the blog post`</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker build <span class="nt">-t</span> mb_blog_crossfilter <span class="nb">.</span> <span class="nt">--build-arg</span> <span class="nv">VARIANT</span><span class="o">=</span>v0.37.0.2
+</code></pre></div></div>
+
+<h2 id="lets-see-if-it-worked">Let’s see if it worked!</h2>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run <span class="nt">--rm</span> <span class="nt">-p</span> 3535:3000 <span class="nt">--name</span> mb_blog_whatwhat mb_blog_crossfilter
+</code></pre></div></div>
+
+<p>That’s it! It worked! 🎃</p>
+
+<h2 id="remove-your-blog-container-if-youre-all-done">Remove your blog container if you’re all done</h2>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker <span class="nb">rm </span>metabase
+</code></pre></div></div>
+
+<h2 id="push-to-production">Push to production</h2>
+
+<p>In theory, we can push this to an official dockerhub repo like so:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker tag mb_blog_crossfilter metabase/blog:cross-filtering
+docker push metabase/blog:cross-filtering
+</code></pre></div></div>
+
+<p>One open question:</p>
+
+<ul>
+  <li>Do we want to maintain the <code class="language-plaintext highlighter-rouge">.db</code>. files in this repo?</li>
+</ul>

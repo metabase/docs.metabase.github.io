@@ -116,7 +116,7 @@ You can add events to collections, and organize those events into timelines. See
 
 ## Uploading data
 
-You can upload data to collections. See [Uploading data](./uploads)]
+You can upload data to collections. See [Uploading data](./uploads).
 
 ## Further reading
 
