@@ -11,6 +11,7 @@ on:
 
 jobs:
   build-and-commit:
+    name: Build for ${{ github.event.inputs.branch_name || github.event.client_payload.branch_name }}
     runs-on: ubuntu-latest
     env:
       MAIN_REPO_BRANCH: "${{ github.event.inputs.branch_name || github.event.client_payload.branch_name }}"
