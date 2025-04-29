@@ -40,7 +40,7 @@
   times (default 2). On each retry, it only rechecks the broken paths from the
   previous attempt. Stops early if no broken links remain. Returns the result
   map from the final attempt."
-  ([missing-paths] (check-broken-links missing-paths {:retries 2}))
+  ([missing-paths] (check-broken-links missing-paths {:retries 4}))
   ([missing-paths {:keys [retries]}]
    (loop [trial 1
           mp (broken-links* missing-paths)]

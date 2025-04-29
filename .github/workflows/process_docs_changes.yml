@@ -9,8 +9,11 @@ on:
   repository_dispatch:
     types: [docs_update]
 
+run-name: Process Docs Changes on branch ${{ github.event.inputs.branch_name || github.event.client_payload.branch_name }}
+
 jobs:
   build-and-commit:
+    name: Build for ${{ github.event.inputs.branch_name || github.event.client_payload.branch_name }}
     runs-on: ubuntu-latest
     env:
       MAIN_REPO_BRANCH: "${{ github.event.inputs.branch_name || github.event.client_payload.branch_name }}"
@@ -63,9 +66,7 @@ jobs:
 
       - name: Update docs for branchname
         run: |
-          ./script/docs master --set-version master
-          # this bb script shells into this, but removing it for clarity ^
-          # bb script/update_docs_for_branchname.clj "$MAIN_REPO_BRANCH"
+          bb script/update_docs_for_branchname.clj "$MAIN_REPO_BRANCH"
 
       - name: "Lint the markdown"
         run: |
