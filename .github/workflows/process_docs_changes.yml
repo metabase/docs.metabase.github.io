@@ -85,13 +85,13 @@ jobs:
 
       - name: Build the Jekyll Site
         env:
-          JEKYLL_ENV: staging
+          JEKYLL_ENV: production
           NODE_ENV: production
         run: |
           # Clear the existing site:
           rm -rf _site
           # Build the jekyll site:
-          JEKYLL_ENV=development bundle exec jekyll build --baseurl '' --config _config.docs.yml --trace
+          bundle exec jekyll build --baseurl '' --config _config.docs.yml --trace
 
       - name: Run metabase.com-aware link checks
         run: |
