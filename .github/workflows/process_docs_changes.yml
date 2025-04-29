@@ -9,6 +9,8 @@ on:
   repository_dispatch:
     types: [docs_update]
 
+run-name: Workflow to build ${{ github.event.inputs.branch_name || github.event.client_payload.branch_name }}
+
 jobs:
   build-and-commit:
     name: Build for ${{ github.event.inputs.branch_name || github.event.client_payload.branch_name }}
