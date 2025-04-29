@@ -28,6 +28,12 @@ jobs:
         run: |
           echo "Running on (docs.metabase.github.io) branch: $LOCAL_REPO_BRANCH"
 
+      - name: Prepare java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu' # See 'Supported distributions' for available options
+          java-version: '21'
+
       - name: Install Clojure to build cljs
         uses: DeLaGuardo/setup-clojure@13.2
         with:
