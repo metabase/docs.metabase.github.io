@@ -429,6 +429,25 @@
     }
   }
 
+  p,
+  li,
+  h2,
+  h3,
+  h4,
+  td,
+  th {
+    a {
+      code {
+        color: $blue-60;
+        transition: color 0.25s ease;
+      }
+
+      &:hover code {
+        color: $blue-40;
+      }
+    }
+  }
+
   table {
     background: $neutral-white;
     border: 1px solid $neutral-95;
@@ -454,6 +473,13 @@
 
     td {
       background: $neutral-white;
+
+      // To hide empty `a` elements in tables that cause wrong vertical positioning of a td content
+      &:first-child a:empty {
+        display: block;
+        height: 0;
+        width: 0;
+      }
 
       svg {
         vertical-align: baseline;

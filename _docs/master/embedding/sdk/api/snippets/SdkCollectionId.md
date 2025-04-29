@@ -1,0 +1,14 @@
+---
+version: master
+has_magic_breadcrumbs: true
+show_category_breadcrumb: true
+show_title_breadcrumb: true
+category: Embedding
+title: SdkCollectionId
+source_url: 'https://github.com/metabase/metabase/blob/master/docs/embedding/sdk/api/snippets/SdkCollectionId.md'
+layout: new-docs
+---
+
+```ts
+type SdkCollectionId = number | "personal" | "root" | SdkEntityId;
+```

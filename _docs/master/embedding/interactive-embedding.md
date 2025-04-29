@@ -30,7 +30,7 @@ To see the query builder in action, click on **Reports** > **+ New** > **Questio
 
 ## Quick start
 
-Check out the [Interactive embedding quick start](/docs/latest/embedding/interactive-embedding-quick-start-guide).
+Check out the [Interactive embedding quick start](/docs/master/embedding/interactive-embedding-quick-start-guide).
 
 ## Prerequisites for interactive embedding
 
@@ -245,12 +245,12 @@ See [interactive UI components](./interactive-ui-components)
 
 To build a sample interactive embed using SSO with JWT, see our reference apps:
 
-- [Node.js + Express](https://github.com/metabase/metabase-nodejs-express-interactive-embedding-sample) (with [quick start guide](/docs/latest/embedding/interactive-embedding-quick-start-guide))
+- [Node.js + Express](https://github.com/metabase/metabase-nodejs-express-interactive-embedding-sample) (with [quick start guide](/docs/master/embedding/interactive-embedding-quick-start-guide))
 - [Node.js + React](https://github.com/metabase/sso-examples/tree/master/app-embed-example)
 
 ## Further reading
 
-- [Interactive embedding quick start](/docs/latest/embedding/interactive-embedding-quick-start-guide)
+- [Interactive embedding quick start](/docs/master/embedding/interactive-embedding-quick-start-guide)
 - [Strategies for delivering customer-facing analytics](/learn/metabase-basics/embedding/overview).
 - [Permissions strategies](/learn/metabase-basics/administration/permissions/strategy).
 - [Customizing Metabase's appearance](../configuring-metabase/appearance).
