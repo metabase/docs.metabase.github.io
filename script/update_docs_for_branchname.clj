@@ -1,7 +1,7 @@
 (ns update-docs-for-branchname
   (:require
    [babashka.process :as p]
-   [bling.core :refer [bling callout]]
+   [bling.core :as b]
    [clojure.string :as str]
    [clj-yaml.core :as yaml]
    [util :as u]))
@@ -22,7 +22,7 @@
   (let [branchname    (first args)
         dry-run?      (contains? (set args) "--dry-run")
         _             (when (nil? branchname)
-                        (println (callout {:type :error} (bling [:red "No branchname provided."])))
+                        (b/callout {:type :error} (b/bling [:red "No branchname provided."]))
                         (usage))
         [category
          release-num] (u/categorize-branchname branchname)
@@ -34,7 +34,7 @@
                         (= category :test)                    (format "./script/docs %s --set-version %s" branchname branchname)
                         :else (do (println "Unpublishable branchname: " branchname)
                                   (System/exit 1)))]
-    (callout {:type :info :label (str "Command for " branchname)} command)
+    (b/callout {:type :info :label (str "Command for " branchname)} command)
     (when-not dry-run?
       (p/shell command))))
 
