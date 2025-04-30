@@ -17,9 +17,13 @@ jobs:
           echo "Counting files in _site directory:"
           ls -R _site | wc -l
 
+      - name: Remove CNAME if present
+        run: rm -f _site/CNAME
+
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./_site
           publish_branch: gh-pages
+          enable_jekyll: false # the page has already been built
