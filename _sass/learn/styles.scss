@@ -448,6 +448,14 @@
     }
   }
 
+  @mixin table-header {
+    background-color: $neutral-99;
+    font-size: 0.688rem;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
   table {
     background: $neutral-white;
     border: 1px solid $neutral-95;
@@ -463,12 +471,9 @@
     }
 
     th {
-      background-color: $neutral-99;
-      font-size: 0.688rem;
-      font-weight: 900;
-      letter-spacing: 0.1em;
+      @include table-header;
+
       line-height: 15px;
-      text-transform: uppercase;
     }
 
     td {
@@ -493,6 +498,72 @@
     }
 
     tr:last-child td {
+      border-bottom: 0;
+    }
+  }
+
+  @media screen and (max-width: map-get($grid-breakpoints, xxl)) {
+    table {
+      background: none;
+      border: 0;
+      border-radius: 0;
+    }
+
+    table thead {
+      border: none;
+      clip: rect(0 0 0 0);
+      height: 1px;
+      margin: -1px;
+      overflow: hidden;
+      padding: 0;
+      position: absolute;
+      width: 1px;
+    }
+
+    table tr {
+      border-radius: 0.5rem;
+      display: block;
+      margin-bottom: 0.625em;
+      overflow: hidden;
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
+    table td {
+      display: block;
+      font-size: map-get($font-sizes, 13);
+      padding: 0.625em;
+    }
+
+    table tr td:first-child {
+      background: $neutral-99;
+      font-weight: bold;
+    }
+
+    table tr {
+      border: 1px solid $neutral-95;
+    }
+
+    table tr td,
+    table tr:last-child td {
+      border-bottom: 1px solid $neutral-95;
+    }
+
+    table td::before {
+      @include table-header;
+
+      content: attr(data-label) ":";
+      float: left;
+      margin-right: 10px;
+    }
+
+    table td:last-child {
       border-bottom: 0;
     }
   }
