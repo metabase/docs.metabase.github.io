@@ -22,7 +22,7 @@
     (println "→ PR info:" pr-info)
     pr-info))
 
-(defn artifact-dirs [category release-num]
+(defn ->artifact-dirs [category release-num]
   (cond
     (= category :master) ["_docs" "_site/docs"]
 
@@ -48,7 +48,8 @@
         target-branch (str "update-" source-branch)
         _ (println "Switching to target branch: " target-branch)
         _ (p/shell "git" "checkout" "-B" target-branch)
-        _ (doseq [ad (artifact-dirs category release-num)]
+        artifact-dirs (->artifact-dirs category release-num)
+        _ (doseq [ad artifact-dirs]
             (println "Adding" ad "...")
             (p/shell "git" "add" ad))
         {:keys [exit]} (p/shell {:continue true} "git" "diff" "--cached" "--quiet")]

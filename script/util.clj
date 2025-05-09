@@ -18,9 +18,7 @@
   (cond
     (= branchname "master") [:master]
     (re-matches release-regex branchname) [:release (extract-release-num branchname)]
-    (or
-      (= branchname "doc-update-detection")
-      (str/starts-with? branchname "docs-workflow-test-")) [:test branchname]))
+    (str/starts-with? branchname "docs-workflow-test-") [:test branchname]))
 
 (comment
   (categorize-branchname "release-x.49.x")
