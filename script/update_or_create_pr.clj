@@ -1,8 +1,7 @@
 #!/usr/bin/env bb
 (ns update-or-create-pr
   (:require [babashka.process :as p]
-            [cheshire.core :as json]
-            [clojure.string :as str]))
+            [cheshire.core :as json]))
 
 (defn usage []
   (println "Usage: script/update_or_create_pr.clj branchname")
@@ -13,12 +12,12 @@
 
 
 (defn existing-pr? [target-branch]
-  (let [pr-data (->
-                  (p/shell {:out :string :continue true}
+  (let [curl-data (p/shell {:out :string :continue true}
                            "curl"
-                           (str "https://api.github.com/repos/metabase/docs.metabase.github.io/pulls?head=metabase:" "update-" "doc-update-detection"))
-                  :out
-                  json/parse-string)
+                           (str "https://api.github.com/repos/metabase/docs.metabase.github.io/pulls?head=metabase:"
+                                "update-" target-branch))
+        _ (println "→ Curl data: " (pr-str curl-data))
+        pr-data (-> curl-data :out json/parse-string)
         _ (println "→ PR data: " (pr-str pr-data))
         pr-num (some #(when (= target-branch (get % "title"))
                         (get % "number"))

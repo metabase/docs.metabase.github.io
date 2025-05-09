@@ -2,7 +2,6 @@
   (:require
    [babashka.process :as p]
    [bling.core :as b]
-   [clojure.string :as str]
    [clj-yaml.core :as yaml]
    [util :as u]))
 
