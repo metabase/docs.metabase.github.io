@@ -1,36 +1,54 @@
 #!/usr/bin/env bb
 (ns update-or-create-pr
-  (:require [babashka.process :as p]
-            [cheshire.core :as json]))
+  (:require
+   [clojure.string :as str]
+   [cheshire.core :as json]
+   [babashka.process :as p]
+   [util :as u]))
 
 (defn usage []
-  (println "Usage: script/update_or_create_pr.clj branchname")
+  (println "Usage: script/update_or_create_pr.clj branchname [--dry-run]")
   (System/exit 1))
 
-(def artifact-dirs ["_docs" "_site/docs"]) ;; Directories to copy
-
-
-
-(defn existing-pr? [target-branch]
+(defn existing-pr?
+  "Checks if a PR already exists for the given target branch name."
+  [target-branch]
   (let [curl-data (p/shell {:out :string :continue true}
-                           "curl"
-                           (str "https://api.github.com/repos/metabase/docs.metabase.github.io/pulls?head=metabase:"
-                                "update-" target-branch))
+                           "gh" "pr" "list" "--repo" "metabase/docs.metabase.github.io" "--json" "title,number,state")
         _ (println "→ Curl data: " (pr-str curl-data))
-        pr-data (-> curl-data :out json/parse-string)
+        pr-data (-> curl-data :out (json/parse-string true))
         _ (println "→ PR data: " (pr-str pr-data))
-        pr-num (some #(when (= target-branch (get % "title"))
-                        (get % "number"))
-                     pr-data)]
-    (println "→ PR number:" pr-num)
-    (boolean pr-num)))
+        pr-info (some #(when (= target-branch (get % :title)) %) pr-data)]
+    (println "→ PR info:" pr-info)
+    pr-info))
 
-(defn -main [& args]
+(defn artifact-dirs [category release-num]
+  (cond
+    (= category :master) ["_docs" "_site/docs"]
+
+    (= (u/config-docs-version) release-num)
+    ["_docs/latest"
+     "_site/docs/latest"
+     (str "_docs/v0." release-num)
+     (str "_site/docs/v0." release-num)]
+
+    (= category :release) [(str "_docs/v0." release-num)
+                           (str "_site/docs/v0." release-num)]
+    :else []))
+
+(defn -main
+  "Main function to update or create a PR.
+
+  Usage: script/update_or_create_pr.clj branchname [--dry-run]"
+  [& args]
   (let [source-branch (or (first args) (usage))
+        [category release-num] (u/categorize-branchname source-branch)
+        _ (println "→ Branch info: " [category release-num])
+        dry-run? (contains? (set args) "--dry-run")
         target-branch (str "update-" source-branch)
-        _ (println "Swithcing to target branch.")
+        _ (println "Switching to target branch: " target-branch)
         _ (p/shell "git" "checkout" "-B" target-branch)
-        _ (doseq [ad artifact-dirs]
+        _ (doseq [ad (artifact-dirs category release-num)]
             (println "Adding" ad "...")
             (p/shell "git" "add" ad))
         {:keys [exit]} (p/shell {:continue true} "git" "diff" "--cached" "--quiet")]
@@ -40,20 +58,25 @@
       (do
         (println "→ Changes detected, committing...")
         (p/shell "git" "commit" "-m" (str "[auto] adding content to " target-branch))
-        (p/shell "git" "push" "--force" "origin" target-branch)
-        (println "→ Branch updated successfully.")))
+        (if dry-run?
+          (do (println "Would run: " "git" "push" "--force" "origin" target-branch))
+          (do (p/shell "git" "push" "--force" "origin" target-branch)
+              (println "→ Branch updated successfully.")))))
 
     (println "→ Checking for existing PR...")
 
-    (if (existing-pr? target-branch)
-      (println "✓ PR already exists: #" existing-pr?)
+    (if-let [pr-info (existing-pr? target-branch)]
+      (println "✓ PR already exists: #" pr-info)
       (do
         (println "→ Creating new PR...")
-        (p/shell "gh" "pr" "create"
-                 "--repo" "metabase/docs.metabase.github.io"
-                 "--title" target-branch
-                 "--body" (str "updated: " (pr-str artifact-dirs))
-                 "--head" target-branch)))))
+        (let [args ["gh" "pr" "create"
+                    "--repo" "metabase/docs.metabase.github.io"
+                    "--title" target-branch
+                    "--body" (str "updated: " (pr-str artifact-dirs))
+                    "--head" target-branch]]
+          (if dry-run?
+            (println "Would run: " (str/join " " args))
+            (apply p/shell args)))))))
 
 (when (= *file* (System/getProperty "babashka.file"))
   (apply -main *command-line-args*))
