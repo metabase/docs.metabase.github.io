@@ -60,7 +60,7 @@
         (println "→ Changes detected, committing...")
         (p/shell "git" "commit" "-m" (str "[auto] adding content to " target-branch))
         (if dry-run?
-          (do (println "Would run: " "git" "push" "--force" "origin" target-branch))
+          (println "Would run: " "git" "push" "--force" "origin" target-branch)
           (do (p/shell "git" "push" "--force" "origin" target-branch)
               (println "→ Branch updated successfully.")))))
 
