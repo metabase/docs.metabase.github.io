@@ -13,9 +13,9 @@ please open a PR against the markdown files in
 
 ### [Process Docs Changes](.github/workflows/process_docs_changes.yml)
 
-Lints links, markdown, etc. and builds the _site and _docs using the `script/docs` and jekyll, then opens a PR to this repo's  master branch with those changes.
+Lints links, markdown, etc. and builds the _site and _docs using the cljs compiler, `script/docs` and jekyll, then opens a PR to this repo's master branch with the updated changes for a given branchname.
 
-At anytime, the master branch of this repo should be publishable.
+*At anytime, the master branch of this repo should be publishable.*
 
 #### Triggering
 
