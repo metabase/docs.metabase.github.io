@@ -3,11 +3,11 @@
 The docs portion of the [website](/) for
 [Metabase](https://github.com/metabase/metabase).
 
-## Requesting updates
+## ⚠️ Proposing Documentation Updates ⚠️
 
-This is a repo generated from the
+This repo is generated from the
 [Metabase](https://github.com/metabase/metabase) repo. If you have suggestions,
-please open a PR against the markdown files in
+please open [an issue there](https://github.com/metabase/metabase/issues/new/choose), or a PR against the markdown files in
 [Metabase](https://github.com/metabase/metabase/docs).
 
 ## Workflow Scripts Overview
