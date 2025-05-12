@@ -95,7 +95,14 @@
                                 "--body" (str "updated: " (pr-str artifact-dirs))
                                 "--head" target-branch]]
                       (println dr-notify "running: " (str/join " " args))
-                      (when-not dry-run? (apply p/shell args)))))))))))))
+                      (when-not dry-run? (apply p/shell args))))))))))
+      (when dry-run?
+        (println
+          (pr-str {:category category
+                   :release release-num
+                   :source-branch source-branch
+                   :target-branch target-branch
+                   :artifact-dirs artifact-dirs}))))))
 
 (when (= *file* (System/getProperty "babashka.file"))
   (apply -main *command-line-args*))
