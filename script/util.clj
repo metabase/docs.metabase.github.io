@@ -1,6 +1,7 @@
 (ns util
   (:require [clojure.string :as str]
-            [clj-yaml.core :as yaml]))
+            [clj-yaml.core :as yaml]
+            [puget.printer :as puget]))
 
 (def release-regex #"release-x\.(\d+)\.x")
 
@@ -53,3 +54,6 @@
 
          ;; Pop any stashed changes
          (p/sh "git" "stash" "pop")))))
+
+(defn pp [& xs]
+  (doseq [x xs] (puget/cprint x)))

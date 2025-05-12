@@ -6,7 +6,8 @@
    [clj-yaml.core :as yaml]
    [clojure.java.io :as io]
    [clojure.string :as str]
-   [clojure.walk :as walk]))
+   [clojure.walk :as walk]
+   [util :as u]))
 
 (defn- url-ok?
   "Returns true if the given URL responds with a 2xx HTTP status.
@@ -137,7 +138,7 @@
               :external-or-missing-link-count (count external-or-missing-links)
               :report report}))
       (do
-        (prn report)
+        (u/pp report)
         (System/exit 1)))))
 
 (when (= *file* (System/getProperty "babashka.file"))

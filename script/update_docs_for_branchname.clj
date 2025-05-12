@@ -4,9 +4,6 @@
    [bling.core :as b]
    [util :as u]))
 
-;; TODO: add test that docs_version is always parsable
-
-
 (defn usage []
   (println "Usage: script/update_docs_for_branchname.clj branchname")
   (System/exit 1))
@@ -38,11 +35,11 @@
     (b/callout {:type :info :label (str "Command for " branchname)} command)
     (when-not dry-run?
       (p/shell command))
-    (prn {:branchname branchname
-          :category category
-          :release-num release-num
-          :dry-run? dry-run?
-          :command command})))
+    (u/pp {:branchname branchname
+           :category category
+           :release-num release-num
+           :dry-run? dry-run?
+           :command command})))
 
 (when (= *file* (System/getProperty "babashka.file"))
   (apply -main *command-line-args*))

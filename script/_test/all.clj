@@ -106,6 +106,11 @@
       (is (= create-or-update-data (:update-or-create expectation)))))
   (println))
 
+(deftest config-version-is-parseable
+  (let [docs-version (u/config-docs-version)]
+    (is (integer? docs-version)
+        (str "Expected config version to be an integer, got: " docs-version))))
+
 (defn -main [& args]
   (println "Running all tests...")
   (let [{:keys [fail error] :as results} (t/run-tests *ns*)]
