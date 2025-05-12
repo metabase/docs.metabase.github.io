@@ -14,7 +14,7 @@ please open a PR against the markdown files in
 
 ### [Process Docs Changes](.github/workflows/process_docs_changes.yml)
 
-Lints links, markdown, etc. and builds the _site and _docs using the cljs
+Lints links, markdown, etc. and builds the `_site` and `_docs` using the cljs
 compiler, `script/docs` and jekyll, then opens a PR to this repo's master branch
 with the updated changes for a given branchname.
 
@@ -98,7 +98,8 @@ dry-run:  Adding _site/docs/master ...
 
 #### Tests
 
-Given the non-trivial scripts run during a build, there are tests for these scripts to ensure they work. 
+Given the non-trivial scripts run during a build, there are tests for these
+scripts to ensure they work.
 
 See: [script/_test/all.clj](script/_test/all.clj).
 
@@ -107,4 +108,3 @@ They are run in the `Process Docs Workflow`, and can be run manually via:
 ``` shell
 bb script/_test/all.clj
 ```
-
