@@ -26,6 +26,10 @@ This workflow is triggered from `metabase/metabase` (aka the main repo),
 whenever there is an update to `/docs`. The triggering workflow includes the
 branch name, e.g.: `master` or `release-x.49.x`.
 
+Building docs can be [run on a branch manually
+from](https://github.com/metabase/docs.metabase.github.io/actions/workflows/process_docs_changes.yml)
+too.
+
 Since we've split up the site into 2 jekyll instances, certain linters got some
 extra care, like `analyze_links.clj` below.
 
@@ -92,4 +96,15 @@ dry-run:  Adding _site/docs/master ...
 → No changes to commit.
 ```
 
+#### Tests
+
+Given the non-trivial scripts run during a build, there are tests for these scripts to ensure they work. 
+
+See: [script/_test/all.clj](script/_test/all.clj).
+
+They are run in the `Process Docs Workflow`, and can be run manually via:
+
+``` shell
+bb script/_test/all.clj
+```
 
