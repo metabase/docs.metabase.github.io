@@ -75,8 +75,6 @@
                                                (str "_docs/v0." cdv)
                                                (str "_site/docs/v0." cdv)]}})))
 
-(prn expected)
-
 (deftest branchname-filter-exit-code-test
   (doseq [branchname branches
           :let [expectation (get expected branchname)]]
@@ -112,6 +110,8 @@
         (str "Expected config version to be an integer, got: " docs-version))))
 
 (defn -main [& args]
+  (println "Expectations: ")
+  (u/pp expected)
   (println "Running all tests...")
   (let [{:keys [fail error] :as results} (t/run-tests *ns*)]
     (if (zero? (+ fail error))
