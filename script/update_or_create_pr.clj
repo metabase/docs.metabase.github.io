@@ -79,10 +79,9 @@
                           "--title" target-branch
                           "--body" (str "updated: " (pr-str artifact-dirs))
                           "--head" target-branch]]
-                (if dry-run?
-                  (println dr-notify "git" "push" "--force" "origin" target-branch)
-                  (do (p/shell "git" "push" "--force" "origin" target-branch)
-                      (println "→ Branch updated successfully.")))
+                (println dr-notify "git" "push" "--force" "origin" target-branch)
+                (when-not dry-run? (p/shell "git" "push" "--force" "origin" target-branch)
+                          (println "→ Branch updated successfully."))
 
                 (println "→ Checking for existing PR...")
 

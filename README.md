@@ -13,13 +13,21 @@ please open a PR against the markdown files in
 
 ### [Process Docs Changes](.github/workflows/process_docs_changes.yml)
 
-This workflow takes a branch name from `metabase/metabase` main repo such as `master` or `release-x.49.x`, lints and builds the docs, and opens a PR to master with those changes.
+Lints links, markdown, etc. and builds the _site and _docs using the `script/docs` and jekyll, then opens a PR to this repo's  master branch with those changes.
+
+At anytime, the master branch of this repo should be publishable.
+
+#### Triggering
+
+This workflow is triggered from `metabase/metabase` (aka the main repo), whenever there is an update to `/docs`. The triggering workflow includes the branch name, e.g.: `master` or `release-x.49.x`.
 
 Since we've split up the site into 2 jekyll instances, certain linters got some extra care, like `analyze_links.clj` below.
 
 Note, all of these scripts take an optional `--dry-run` flag that explains what they do without actually doing the operation.
 
-#### `check_incoming_branchname.clj`
+#### New Script Docs
+
+##### `check_incoming_branchname.clj`
 
 If the branchname doesn't match master, a release branch, or a workflow-testing branch, using [util/categorize-branchname](https://github.com/metabase/docs.metabase.github.io/blob/branch-updates-file-adding/script/util.clj#L17-L21). This step Exits 1, stopping the build.
 
@@ -32,7 +40,7 @@ e.g. `bb script/check_incoming_branchname.clj master` exits 0.
 | docs-workflow-test-1 | 0         |
 | anything-else        | 1         |
 
-#### `update_docs_for_branchname.clj`
+##### `update_docs_for_branchname.clj`
 
 Garunteed to be ran on a valid branchname (due to `check_incoming_branchname` above):
 
@@ -46,13 +54,13 @@ When the release version number matches the latest docs_version number from the 
 - `bb script/update_docs_for_branchname.clj release-x.54.x`
   - runs: `./script/docs-update`
 
-#### `analyze_links.clj`
+##### `analyze_links.clj`
 
 Builds ontop of our existing link checking.
 Runs `htmlproofer`, gathers the results, and for links that are "not found" (because they are no longer in this jekyll installation), checks for the links at metabase.com
 Exits 1, stopping the build whenever htmlproofer reports missing links that are not avaliable at `metabase.com`.
 
-#### `update_or_create_pr.clj`
+##### `update_or_create_pr.clj`
 
 Git adds, commits, and creates a PR to master with files associated with the branch.
 
@@ -65,3 +73,5 @@ dry-run:  Adding _docs/master ...
 dry-run:  Adding _site/docs/master ...
 → No changes to commit.
 ```
+
+
