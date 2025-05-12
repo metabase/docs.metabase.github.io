@@ -24,7 +24,7 @@
     (u/pp {:branchname branchname :category category :release-num release-num :result result})
     (when (= result ::fail)
       (println (b/bling [:red "Unpublishable branchname: "] branchname))
-      (System/exit 0))))
+      (System/exit 1))))
 
 (when (= *file* (System/getProperty "babashka.file"))
   (apply -main *command-line-args*))
