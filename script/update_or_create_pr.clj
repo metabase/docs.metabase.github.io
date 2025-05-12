@@ -57,11 +57,27 @@
               (p/shell "git" "add" ad))
           {:keys [exit]} (p/shell {:continue true} "git" "diff" "--cached" "--quiet")]
 
-      (if (zero? exit)
-        (println "→ No changes to commit.")
-        (do
-          (println "→ Changes detected, committing...")
-          (p/shell "git" "commit" "-m" (str "[auto] adding content to " target-branch))
+    (if (zero? exit)
+      (println "→ No changes to commit.")
+      (do
+        (println "→ Changes detected, committing...")
+        (p/shell "git" "commit" "-m" (str "[auto] adding content to " target-branch))
+        (if dry-run?
+          (println "Would run: " "git" "push" "--force" "origin" target-branch)
+          (do (p/shell "git" "push" "--force" "origin" target-branch)
+              (println "→ Branch updated successfully.")))))
+
+    (println "→ Checking for existing PR...")
+
+    (if-let [pr-info (existing-pr? target-branch)]
+      (println "✓ PR already exists: #" pr-info)
+      (do
+        (println "→ Creating new PR...")
+        (let [args ["gh" "pr" "create"
+                    "--repo" "metabase/docs.metabase.github.io"
+                    "--title" target-branch
+                    "--body" (str "updated: " (pr-str artifact-dirs))
+                    "--head" target-branch]]
           (if dry-run?
             (println "Would run: " "git" "push" "--force" "origin" target-branch)
             (do (p/shell "git" "push" "--force" "origin" target-branch)
