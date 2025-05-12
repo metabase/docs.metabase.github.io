@@ -41,59 +41,46 @@
 
   Usage: script/update_or_create_pr.clj branchname [--dry-run]"
   [& args]
-  (let [source-branch (or (first args) (usage))
-        [category release-num] (u/categorize-branchname source-branch)
-        _ (println "→ Branch info: " [category release-num])
-        dry-run? (contains? (set args) "--dry-run")
-        target-branch (str "update-" source-branch)
-        _ (println "Switching to target branch: " target-branch)
-        _ (p/shell "git" "checkout" "-B" target-branch)
-        artifact-dirs (->artifact-dirs category release-num)
-        _ (doseq [ad artifact-dirs]
-            (println "Adding" ad "...")
-            (p/shell "git" "add" ad))
-        {:keys [exit]} (p/shell {:continue true} "git" "diff" "--cached" "--quiet")]
+  (u/with-saved-branchname
+    (let [source-branch (or (first args) (usage))
+          [category release-num] (u/categorize-branchname source-branch)
+          _ (println "→ Branch info: " (case category :master "master"
+                                             :release (str "Release version:" release-num)
+                                             "test branch"))
+          dry-run? (contains? (set args) "--dry-run")
+          target-branch (str "update-" source-branch)
+          _ (println "Switching to target branch: " target-branch)
+          _ (p/shell "git" "checkout" "-B" target-branch)
+          artifact-dirs (->artifact-dirs category release-num)
+          _ (doseq [ad artifact-dirs]
+              (println "Adding" ad "...")
+              (p/shell "git" "add" ad))
+          {:keys [exit]} (p/shell {:continue true} "git" "diff" "--cached" "--quiet")]
 
-    (if (zero? exit)
-      (println "→ No changes to commit.")
-      (do
-        (println "→ Changes detected, committing...")
-        (p/shell "git" "commit" "-m" (str "[auto] adding content to " target-branch))
-        (if dry-run?
-          (println "Would run: " "git" "push" "--force" "origin" target-branch)
-          (do (p/shell "git" "push" "--force" "origin" target-branch)
-              (println "→ Branch updated successfully.")))))
-
-    (println "→ Checking for existing PR...")
-
-    (if-let [pr-info (existing-pr? target-branch)]
-      (println "✓ PR already exists: #" pr-info)
-      (do
-        (println "→ Creating new PR...")
-        (let [args ["gh" "pr" "create"
-                    "--repo" "metabase/docs.metabase.github.io"
-                    "--title" target-branch
-                    "--body" (str "updated: " (pr-str artifact-dirs))
-                    "--head" target-branch]]
+      (if (zero? exit)
+        (println "→ No changes to commit.")
+        (do
+          (println "→ Changes detected, committing...")
+          (p/shell "git" "commit" "-m" (str "[auto] adding content to " target-branch))
           (if dry-run?
-            (println "Would run: " (str/join " " args))
-            (apply p/shell args)))))))
+            (println "Would run: " "git" "push" "--force" "origin" target-branch)
+            (do (p/shell "git" "push" "--force" "origin" target-branch)
+                (println "→ Branch updated successfully.")))
+
+          (println "→ Checking for existing PR...")
+
+          (if-let [pr-info (existing-pr? target-branch)]
+            (println "✓ PR already exists: #" pr-info)
+            (do
+              (println "→ Creating new PR...")
+              (let [args ["gh" "pr" "create"
+                          "--repo" "metabase/docs.metabase.github.io"
+                          "--title" target-branch
+                          "--body" (str "updated: " (pr-str artifact-dirs))
+                          "--head" target-branch]]
+                (if dry-run?
+                  (println "Would run: " (str/join " " args))
+                  (apply p/shell args))))))))))
 
 (when (= *file* (System/getProperty "babashka.file"))
   (apply -main *command-line-args*))
-
-(defmacro the-env []
-  (into {} (for [k (keys &env)]
-             [(name k) k])))
-
-(defmacro nocommit-repl []
-  `(clojure.main/repl
-     :init   (fn []
-               (remove-ns '~'temp)
-               (create-ns '~'temp)
-               (doseq [[binding# value#] (the-env)]
-                 (intern '~'temp (symbol binding#) value#)))
-     :prompt (fn [] (printf "paused.%s=> " (peek (clojure.string/split (str *ns*) #"\."))))
-     :eval (fn [f#] (binding [clojure.test/*test-out* *out*] (eval f#)))
-     :read clojure.core.server/repl-read
-     :print clojure.pprint/pprint))

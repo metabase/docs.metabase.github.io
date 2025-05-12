@@ -34,3 +34,22 @@
   ;; => nil
 
   )
+
+(defmacro with-saved-branchname
+  "Simple macro that saves current git branch, executes body,
+   then restores the original branch and stashed changes."
+  [& body]
+  `(let [branch-name# (clojure.string/trim (:out (p/sh "git" "rev-parse" "--abbrev-ref" "HEAD")))]
+     ;; Stash any changes
+     (p/sh "git" "stash" "save" "Auto-stash from with-saved-branchname")
+
+     (try
+       ;; Execute body
+       ~@body
+
+       (finally
+         ;; Switch back to original branch
+         (p/sh "git" "checkout" branch-name#)
+
+         ;; Pop any stashed changes
+         (p/sh "git" "stash" "pop")))))
