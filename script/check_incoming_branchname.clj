@@ -1,7 +1,7 @@
 (ns check-incoming-branchname
   (:require
-   [util :as u]
-   [clojure.string :as str]))
+   [bling.core :as b]
+   [util :as u]))
 
 (defn usage []
   (println "Usage: script/check_incoming_branchname.clj branchname")
@@ -15,13 +15,16 @@
   [& args]
   (let [branchname (or (first args) (usage))
         _ (println "Checking branchname:" branchname)
-        [category release-num] (u/categorize-branchname branchname)]
-    (case category
-      :master (println "Master branch detected.")
-      :release (println "Release branch detected. Release number: " release-num)
-      :test (println "Test branch detected. Branchname: " branchname)
-      (do (println "Unpublishable branchname: " branchname)
-          (System/exit 1)))))
+        [category release-num] (u/categorize-branchname branchname)
+        result (case category
+                 :master (println "Master branch detected.")
+                 :release (println "Release branch detected. Release number: " release-num)
+                 :test (println "Test branch detected. Branchname: " branchname)
+                 ::fail)]
+    (u/pp {:branchname branchname :category category :release-num release-num :result result})
+    (when (= result ::fail)
+      (println (b/bling [:red "Unpublishable branchname: "] branchname))
+      (System/exit 1))))
 
 (when (= *file* (System/getProperty "babashka.file"))
   (apply -main *command-line-args*))

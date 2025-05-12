@@ -6,7 +6,8 @@
    [clj-yaml.core :as yaml]
    [clojure.java.io :as io]
    [clojure.string :as str]
-   [clojure.walk :as walk]))
+   [clojure.walk :as walk]
+   [util :as u]))
 
 (defn- url-ok?
   "Returns true if the given URL responds with a 2xx HTTP status.
@@ -128,13 +129,16 @@
         _                         (println (count redirects) "unique redirect links gathered from in _docs.")
         _                         (println (count external-or-missing-links) "reported links without redirects.")
         _                         (println "Checking if the missing links are live on https://metabase.com ...")
-        out                       (check-broken-links (remove excluded-links external-or-missing-links))]
-    (if (zero? (:broken-count out))
+        report                    (check-broken-links (remove excluded-links external-or-missing-links))]
+    (if (zero? (:broken-count report))
       (do
         (println "Done. OK.")
-        (System/exit 0))
+        (prn {:htmlproofer-link-count (count htmlproofer-links)
+              :redirect-count (count redirects)
+              :external-or-missing-link-count (count external-or-missing-links)
+              :report report}))
       (do
-        (prn out)
+        (u/pp report)
         (System/exit 1)))))
 
 (when (= *file* (System/getProperty "babashka.file"))
