@@ -66,43 +66,26 @@
           (p/shell "git" "commit" "-m" (str "[auto] adding content to " target-branch))
           (println dr-notify "git" "push" "--force" "origin" target-branch)
           (when-not dry-run? (p/shell "git" "push" "--force" "origin" target-branch))
-          (println dr-notify "→ Branch updated successfully.")
-
+          (println dr-notify "→ Target Branch updated successfully.")
           (println "→ Checking for existing PR...")
 
           (if-let [pr-info (existing-pr? target-branch)]
             (println "✓ PR already exists: #" pr-info)
             (do
               (println "→ Creating new PR...")
-              (let [args ["gh" "pr" "create"
-                          "--repo" "metabase/docs.metabase.github.io"
-                          "--title" target-branch
-                          "--body" (str "updated: " (pr-str artifact-dirs))
-                          "--head" target-branch]]
-                (println dr-notify "git" "push" "--force" "origin" target-branch)
-                (when-not dry-run? (p/shell "git" "push" "--force" "origin" target-branch)
-                          (println "→ Branch updated successfully."))
-
-                (println "→ Checking for existing PR...")
-
-                (if-let [pr-info (existing-pr? target-branch)]
-                  (println "✓ PR already exists: #" pr-info)
-                  (do
-                    (println "→ Creating new PR...")
-                    (let [args ["gh" "pr" "create"
-                                "--repo" "metabase/docs.metabase.github.io"
-                                "--title" target-branch
-                                "--body" (str "updated: " (pr-str artifact-dirs))
-                                "--head" target-branch]]
-                      (println dr-notify "running: " (str/join " " args))
-                      (when-not dry-run? (apply p/shell args))))))))))
-      (when dry-run?
-        (println
-          (pr-str {:category category
-                   :release release-num
-                   :source-branch source-branch
-                   :target-branch target-branch
-                   :artifact-dirs artifact-dirs}))))))
+              (let [args (remove nil?
+                                 ["gh" "pr" "create" (when dry-run? "--dry-run")
+                                  "--repo" "metabase/docs.metabase.github.io"
+                                  "--title" target-branch
+                                  "--body" (str "updated: " (pr-str artifact-dirs))
+                                  "--head" target-branch])]
+                (println dr-notify "running: " (str/join " " args))
+                (apply p/shell args))))))
+      (prn {:category category
+            :release release-num
+            :source-branch source-branch
+            :target-branch target-branch
+            :artifact-dirs artifact-dirs}))))
 
 (when (= *file* (System/getProperty "babashka.file"))
   (apply -main *command-line-args*))
