@@ -1,6 +1,7 @@
 (ns update-docs-for-branchname
   (:require
    [babashka.process :as p]
+   [ice.core :as ice]
    [bling.core :as b]
    [util :as u]))
 
@@ -12,7 +13,7 @@
   (let [branchname    (first args)
         dry-run?      (contains? (set args) "--dry-run")
         _             (when (nil? branchname)
-                        (b/callout {:type :error} (b/bling [:red "No branchname provided."]))
+                        (b/callout {:type :error} (ice/p-str [:red "No branchname provided."]))
                         (usage))
         [category
          release-num] (u/categorize-branchname branchname)

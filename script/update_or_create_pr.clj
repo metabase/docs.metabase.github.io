@@ -4,7 +4,7 @@
    [clojure.string :as str]
    [cheshire.core :as json]
    [babashka.process :as p]
-   [bling.core :as b]
+   [ice.core :as ice]
    [util :as u]))
 
 (defn usage []
@@ -50,7 +50,7 @@
                                              :release (str "Release version:" release-num)
                                              "test branch"))
           dry-run? (contains? (set args) "--dry-run")
-          dr-notify (if dry-run? (b/bling [:yellow "dry-run: "]) "")
+          dr-notify (if dry-run? (ice/p-str [:yellow "dry-run: "]) "")
           target-branch (str "update-" source-branch)
           _ (p/shell "git" "checkout" "-B" target-branch)
           artifact-dirs (->artifact-dirs category release-num)
