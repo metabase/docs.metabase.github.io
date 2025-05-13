@@ -1,14 +1,20 @@
 # docs.metabase.github.io
 
-The docs portion of the [website](/) for
+The docs portion of the [website](https://metabase.com) for
 [Metabase](https://github.com/metabase/metabase).
 
-## ⚠️ Proposing Documentation Updates ⚠️
+# ⚠️ Proposing Documentation Updates ⚠️
 
 This repo is generated from the
 [Metabase](https://github.com/metabase/metabase) repo. If you have suggestions,
 please open [an issue there](https://github.com/metabase/metabase/issues/new/choose), or a PR against the markdown files in
 [Metabase](https://github.com/metabase/metabase/docs).
+
+## Repo Description
+
+This repo contains the docs for metabase. They get built here automatically.
+
+*At anytime, the master branch of this repo should be publishable alongside the [metabase/metabase.github.io](https://github.com/metabase/metabase.github.io) site.*
 
 ## Workflow Scripts Overview
 
@@ -18,7 +24,7 @@ Lints links, markdown, etc. and builds the `_site` and `_docs` using the cljs
 compiler, `script/docs` and jekyll, then opens a PR to this repo's master branch
 with the updated changes for a given branchname.
 
-*At anytime, the master branch of this repo should be publishable.*
+
 
 #### Triggering
 
@@ -42,7 +48,7 @@ they do without actually doing the operation.
 
 If the branchname doesn't match master, a release branch, or a workflow-testing
 branch, using
-[util/categorize-branchname](https://github.com/metabase/docs.metabase.github.io/blob/branch-updates-file-adding/script/util.clj#L17-L21).
+[util/categorize-branchname](https://github.com/metabase/docs.metabase.github.io/blob/master/script/util.clj#L17-L21).
 This step Exits 1, stopping the build.
 
 e.g. `bb script/check_incoming_branchname.clj master` exits 0.
