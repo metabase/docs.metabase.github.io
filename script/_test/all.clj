@@ -1,6 +1,6 @@
 (ns -test.all
   (:require
-   [bling.core :as b]
+   [ice.core :as ice]
    [clojure.test :as t :refer [deftest is testing]]
    [clojure.string :as str]
    [clj-yaml.core :as yaml]
@@ -80,7 +80,7 @@
           :let [expectation (get expected branchname)]]
     (let [{:keys [exit] :as result} (p/sh {:continue true}
                                           "bb" "script/check_incoming_branchname.clj" branchname)]
-      (println (b/bling [:green "Testing: check_incoming_branchname for "] branchname [:green " has correct exit code"]))
+      (ice/p [:green "Testing: check_incoming_branchname for "] branchname [:green " has correct exit code"])
       (is (= exit (:exit expectation))
           (str "Expected exit code for branchname " branchname ": " (:exit expectation) ", got: " exit))))
   (println))
@@ -90,7 +90,7 @@
           :let [expectation (get expected branchname)]]
     (let [{:keys [out] :as result} (p/sh {:continue true :out :string}
                                          "bb" "script/update_docs_for_branchname.clj" branchname "--dry-run")]
-      (println (b/bling [:green "Testing: update_docs_for_branchname for "] branchname [:green " Returns correct branch name"]))
+      (ice/p [:green "Testing: update_docs_for_branchname for "] branchname [:green " Returns correct branch name"])
       (is (str/includes? out (:update-docs-command expectation)))))
   (println))
 
@@ -100,7 +100,7 @@
     (let [{:keys [out] :as result} (p/sh {:continue true :out :string}
                                          "bb" "script/update_or_create_pr.clj" branchname "--dry-run")
           create-or-update-data (read-string (last (str/split-lines out)))]
-      (println (b/bling [:green "Testing: update_docs_for_branchname for "] branchname [:green " Returns peoper branches and artifact dirs"]))
+      (ice/p [:green "Testing: update_docs_for_branchname for "] branchname [:green " Returns peoper branches and artifact dirs"])
       (is (= create-or-update-data (:update-or-create expectation)))))
   (println))
 
@@ -115,7 +115,7 @@
   (println "Running all tests...")
   (let [{:keys [fail error] :as results} (t/run-tests *ns*)]
     (if (zero? (+ fail error))
-      (println "All tests passed.")
+      (ice/p [:green "All tests passed."])
       (do (println "Some tests failed.")
           (System/exit 1)))))
 

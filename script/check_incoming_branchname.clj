@@ -1,6 +1,6 @@
 (ns check-incoming-branchname
   (:require
-   [bling.core :as b]
+   [ice.core :as ice]
    [util :as u]))
 
 (defn usage []
@@ -23,7 +23,7 @@
                  ::fail)]
     (u/pp {:branchname branchname :category category :release-num release-num :result result})
     (when (= result ::fail)
-      (println (b/bling [:red "Unpublishable branchname: "] branchname))
+      (ice/p [:red "Unpublishable branchname: "] branchname)
       (System/exit 1))))
 
 (when (= *file* (System/getProperty "babashka.file"))
