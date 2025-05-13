@@ -24,17 +24,15 @@ Lints links, markdown, etc. and builds the `_site` and `_docs` using the cljs
 compiler, `script/docs` and jekyll, then opens a PR to this repo's master branch
 with the updated changes for a given branchname.
 
-
-
 #### Triggering
 
-This workflow is triggered from `metabase/metabase` (aka the main repo),
+The [Process Docs Changes](.github/workflows/process_docs_changes.yml) workflow is triggered from `metabase/metabase` (aka the main repo),
 whenever there is an update to `/docs`. The triggering workflow includes the
 branch name, e.g.: `master` or `release-x.49.x`.
 
 Building docs can be [run on a branch manually
 from](https://github.com/metabase/docs.metabase.github.io/actions/workflows/process_docs_changes.yml)
-too.
+as well.
 
 Since we've split up the site into 2 jekyll instances, certain linters got some
 extra care, like `analyze_links.clj` below.
