@@ -112,3 +112,5 @@ They are run in the `Process Docs Workflow`, and can be run manually via:
 ``` shell
 bb script/_test/all.clj
 ```
+
+This will print a description of behaviors for documentation.
