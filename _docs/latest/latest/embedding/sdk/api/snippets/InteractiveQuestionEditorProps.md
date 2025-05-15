@@ -1,0 +1,24 @@
+---
+version: v0.54
+has_magic_breadcrumbs: true
+show_category_breadcrumb: true
+show_title_breadcrumb: true
+category: Embedding
+title: InteractiveQuestionEditorProps
+source_url: >-
+  https://github.com/metabase/metabase/blob/master/docs/embedding/sdk/api/snippets/InteractiveQuestionEditorProps.md
+layout: new-docs
+latest: true
+---
+
+**`Expand`**
+
+## Properties
+
+<!-- [<snippet properties>] -->
+
+| Property                        | Type         | Description                                         |
+| :------------------------------ | :----------- | :-------------------------------------------------- |
+| <a id="onapply"></a> `onApply?` | () => `void` | Callback function executed when changes are applied |
+
+<!-- [<endsnippet properties>] -->
