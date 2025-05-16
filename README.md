@@ -1,9 +1,9 @@
-# docs.metabase.github.io
+# metabase doc building repo
 
-The docs portion of the [website](https://metabase.com) for
-[Metabase](https://github.com/metabase/metabase).
+This repo is the home of the docs piece of the [website](https://metabase.com) for
+[Metabase](https://github.com/metabase/metabase). Those are built in a workflow in this repo.
 
-# ⚠️ Proposing Documentation Updates ⚠️
+## ⚠️ Proposing Documentation Updates ⚠️
 
 This repo is generated from the
 [Metabase](https://github.com/metabase/metabase) repo. If you have suggestions,
