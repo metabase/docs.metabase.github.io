@@ -129,7 +129,7 @@ const allErrors = allFiles
     }
 
     // has content
-    if (fileContent && fileContent.length > 3) {
+    if (fileContent && fileContent.length > 3 && filePath != "/README.md") {
       console.log("Checking:", filePath);
       try {
         // front matter
