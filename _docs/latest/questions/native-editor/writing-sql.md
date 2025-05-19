@@ -110,10 +110,10 @@ See [Caching question policies](../../configuring-metabase/caching#question-cach
 
 ## Learn more
 
-- [Best practices for writing SQL queries](/learn/grow-your-data-skills/learn-sql/working-with-sql/sql-best-practices)
+- [Best practices for writing SQL queries](/learn/sql/working-with-sql/sql-best-practices)
 - [SQL troubleshooting guide][troubleshooting-sql].
 
-[learn-sql]: /learn/grow-your-data-skills/learn-sql/working-with-sql
+[learn-sql]: /learn/sql/working-with-sql
 [ref-models]: ./referencing-saved-questions-in-queries
 [sample-database-gloss]: /glossary/sample_database
 [sql-gloss]: /glossary/sql

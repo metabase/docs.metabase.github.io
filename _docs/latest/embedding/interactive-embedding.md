@@ -16,7 +16,7 @@ latest: true
 
 # Interactive embedding
 
-{% include plans-blockquote.html feature="Interactive embedding" %}
+{% include plans-blockquote.html feature="Interactive embedding" convert_pro_link_to_embbedding=true %}
 
 {% include shared/in-page-promo-embedding-workshop.html %}
 
