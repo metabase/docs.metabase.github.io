@@ -52,7 +52,7 @@ docker run -d -p 3000:3000 -e MB_SITE_NAME="Awesome Company" --name metabase met
 
 ## Environment variables on Metabase Cloud
 
-If you're running Metabase Cloud, you can [contact support](/help/premium) to adjust environment variables for your Metabase.
+If you're running Metabase Cloud, you can [contact support](/help-premium) to adjust environment variables for your Metabase.
 
 ---
 
@@ -580,17 +580,6 @@ Allow admins to embed Metabase via the SDK?
 
 Allow admins to embed Metabase via static embedding?
 
-### `MB_ENABLE_FIELD_USAGE_ANALYSIS`
-
-- Type: boolean
-- Default: `false`
-- [Configuration file name](./config-file): `enable-field-usage-analysis`
-
-Enable field usage analysis for queries. This will analyze the fields used in queries and store them in the
-    application database.
-
-    Turn off by default since we haven't had an user-facing feature that uses this data yet.
-
 ### `MB_ENABLE_PASSWORD_LOGIN`
 
 > Only available on Metabase [Pro](/product/pro) and [Enterprise](/product/enterprise) plans.
@@ -697,7 +686,7 @@ Keyword setting to control whitelabeling of the help link. Valid values are `:me
 > Only available on Metabase [Pro](/product/pro) and [Enterprise](/product/enterprise) plans.
 
 - Type: string
-- Default: `https://www.metabase.com/help/premium`
+- Default: `https://www.metabase.com/help-premium`
 - [Configuration file name](./config-file): `help-link-custom-destination`
 
 Custom URL for the help link.
@@ -1133,6 +1122,10 @@ The base URL where dashboard notitification links will point to instead of the M
 - Default: `3`
 
 The size of the thread pool used to send notifications.
+
+If Metabase stops sending notifications like alerts, it may be because long-running
+  queries are clogging the notification queue. You may be able to unclog the queue by
+  increasing the size of the thread pool dedicated to notifications.
 
 ### `MB_PERSISTED_MODEL_REFRESH_CRON_SCHEDULE`
 

@@ -33,10 +33,9 @@ Supported languages include:
 | Arabic (Saudi Arabia)  | `ar-SA` |
 | Bulgarian              | `bg`    |
 | Catalan                | `ca`    |
-| Chinese (Traditional)  | `zh`    |
-| Chinese (Taiwanese)    | `zh-TW` |
 | Chinese (Hong Kong)    | `zh-HK` |
 | Chinese (Simplified)   | `zh-CN` |
+| Chinese (Taiwanese)    | `zh-TW` |
 | Czech                  | `cs`    |
 | Dutch                  | `nl`    |
 | Farsi/Persian          | `fa`    |
@@ -46,11 +45,11 @@ Supported languages include:
 | Hebrew                 | `he`    |
 | Hungarian              | `hu`    |
 | Indonesian             | `id`    |
-| Malay                  | `ms`    |
 | Italian                | `it`    |
 | Japanese               | `ja`    |
 | Korean                 | `ko`    |
 | Latvian                | `lv`    |
+| Malay                  | `ms`    |
 | Norwegian Bokmål       | `nb`    |
 | Polish                 | `pl`    |
 | Portuguese (Brazilian) | `pt-BR` |
