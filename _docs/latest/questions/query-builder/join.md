@@ -67,4 +67,4 @@ You can join tables on comparison conditions like:
 - [Type of joins][join-types]
 
 [join]: /learn/metabase-basics/querying-and-dashboards/questions/joins-in-metabase
-[join-types]: /learn/grow-your-data-skills/learn-sql/working-with-sql/sql-join-types
+[join-types]: /learn/sql/working-with-sql/sql-join-types

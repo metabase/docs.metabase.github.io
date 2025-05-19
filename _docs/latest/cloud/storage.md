@@ -27,7 +27,7 @@ Learn more about [uploads](/docs/latest/exploration-and-organization/uploads).
 
 ### Metabase Cloud Storage uses ClickHouse
 
-Under the hood, Metabase Cloud Storage uses [ClickHouse](/data-sources/click-house) to store your data.
+Under the hood, Metabase Cloud Storage uses [ClickHouse](/data-sources/clickhouse) to store your data.
 
 ### Writing SQL queries on data stored in Metabase Cloud Storage
 
@@ -43,7 +43,11 @@ New customers can sign up for a [Metabase Cloud instance with storage](https://s
 
 ### Existing cloud customers
 
-Current customers can [contact us](mailto:help@metabase.com) to get Metabase storage added to their Metabase.
+Current customers can add storage through Metabase Store.
+
+1. Log in to [Metabase Store](https://store.metabase.com/)
+2. In the **Instances** section, click **Add Storage** for the instance that you'd like to add storage to.
+3. Choose how much Storage you would like to add. You can start with 500K stored rows per month and add more Storage later.
 
 ## Metabase Cloud Storage pricing
 

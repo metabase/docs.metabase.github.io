@@ -59,7 +59,7 @@ To make sure that your table is actually queryable by Metabase:
 
 If there's a problem with your table name or database permissions, you'll get an error message like:
 
-- [Table not found](/learn/grow-your-data-skills/learn-sql/debugging-sql/sql-syntax#column-or-table-name-is-not-found-or-not-recognized)
+- [Table not found](/learn/sql/debugging-sql/sql-syntax#column-or-table-name-is-not-found-or-not-recognized)
 - [Permission denied](./data-permissions#getting-a-permission-denied-error-message)
 
 For less common errors, try searching or asking the [Metabase community](https://discourse.metabase.com/).

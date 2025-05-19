@@ -261,7 +261,7 @@ Metabase's reference documentation.
 
 Share and connect with other Metabasers.
 
-### [Metabase Cloud](/cloud/docs)
+### [Metabase Cloud](/docs/latest/cloud/start)
 
 For docs specific to Metabase Cloud plans.
 
@@ -273,7 +273,7 @@ Practical advice from our community.
 
 News, updates, and ideas.
 
-### [Customers](/case_studies)
+### [Customers](/case-studies)
 
 Real companies, real data, real stories.
 

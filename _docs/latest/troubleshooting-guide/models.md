@@ -79,7 +79,7 @@ If you can’t solve your problem using the troubleshooting guides:
 [model-button-image]: /learn/images/models/model-icon.png
 [model-docs]: ../data-modeling/models
 [replicate-database-learn]: /learn/metabase-basics/administration/administration-and-operation/making-dashboards-faster#replicate-your-database
-[sql-explain-learn]: /learn/grow-your-data-skills/learn-sql/working-with-sql/sql-best-practices#explain
+[sql-explain-learn]: /learn/sql/working-with-sql/sql-best-practices#explain
 [summary-tables-learn]: /learn/metabase-basics/administration/administration-and-operation/making-dashboards-faster#aggregate-data-ahead-of-time-with-summary-tables
 [troubleshooting-sandboxing]: ./sandboxing
 [model-persistence]: /docs/latest/data-modeling/model-persistence

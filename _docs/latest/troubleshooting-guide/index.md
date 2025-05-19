@@ -63,6 +63,7 @@ Problems, their causes, how to detect them, and how to fix them.
 ## Email and alerts
 
 - [Metabase isn't sending email][not-sending-email].
+- [Troubleshooting notifications](./notifications).
 
 ## Error messages
 

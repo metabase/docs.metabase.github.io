@@ -94,7 +94,7 @@ Note that you cannot switch back to monthly billing until your annual cycle has 
 
 ## W-9 form requests
 
-See Metabase's updated [W9 form](/docs/w9).
+See Metabase's updated [W9 form](/files/2024_W9_signed.pdf).
 
 ## Update your Tax ID
 
