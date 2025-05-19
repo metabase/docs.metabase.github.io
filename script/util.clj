@@ -57,3 +57,6 @@
 
 (defn pp [& xs]
   (doseq [x xs] (puget/cprint x)))
+
+(defn pp-line [& xs]
+  (doseq [x xs] (puget/cprint x {:width 10e20})))
