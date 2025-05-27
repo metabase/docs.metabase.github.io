@@ -17,7 +17,7 @@ on:
   repository_dispatch:
     types: [docs_update, docs_merge]
 
-run-name: Processing Docs from branch ${{ github.event.inputs.branch_name || github.event.client_payload.branch_name }} | ${{ github.event.action || github.event.inputs.dispatch_type }}
+run-name: Processing `${{ github.event.action || github.event.inputs.dispatch_type }}` for branch `${{ github.event.inputs.branch_name || github.event.client_payload.branch_name }}`
 
 jobs:
   build:
