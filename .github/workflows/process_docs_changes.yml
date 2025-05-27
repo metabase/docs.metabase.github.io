@@ -6,6 +6,14 @@ on:
         description: Which `metabase/metabase` branch triggered this workflow
         required: true
         type: string
+      dispatch_type:
+        description: 'Type of dispatch action to simulate'
+        required: false
+        default: 'docs_update'
+        type: choice
+        options:
+          - docs_update
+          - docs_merge
   repository_dispatch:
     types: [docs_update, docs_merge]
 
@@ -112,14 +120,18 @@ jobs:
           git remote set-url origin "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/metabase/docs.metabase.github.io.git"
 
       - name: Update or Create the Pull Request
-        if: github.event.action == 'docs_update'
+        if: |
+          (github.event_name == 'repository_dispatch' && github.event.action == 'docs_update') ||
+          (github.event_name == 'workflow_dispatch' && github.event.inputs.dispatch_type == 'docs_update')
         env:
           GH_TOKEN: ${{ secrets.METABASE_AUTOMATION_USER_TOKEN }}
         run: |
           bb script/update_or_create_pr.clj "$MAIN_REPO_BRANCH"
 
       - name: Merge Updated Docs
-        if: github.event.action == 'docs_merge'
+        if: |
+          (github.event_name == 'repository_dispatch' && github.event.action == 'docs_merge') ||
+          (github.event_name == 'workflow_dispatch' && github.event.inputs.dispatch_type == 'docs_merge')
         env:
           GH_TOKEN: ${{ secrets.METABASE_AUTOMATION_USER_TOKEN }}
         run: |
