@@ -19,7 +19,6 @@
         result (case category
                  :master (println "Master branch detected.")
                  :release (println "Release branch detected. Release number: " release-num)
-                 :test (println "Test branch detected. Branchname: " branchname)
                  ::fail)]
     (u/pp {:branchname branchname :category category :release-num release-num :result result})
     (when (= result ::fail)

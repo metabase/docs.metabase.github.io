@@ -6,18 +6,40 @@ on:
         description: Which `metabase/metabase` branch triggered this workflow
         required: true
         type: string
+      dispatch_type:
+        description: 'Type of dispatch action to simulate'
+        required: false
+        default: 'docs_update'
+        type: choice
+        options:
+          - docs_update
+          - docs_merge
   repository_dispatch:
-    types: [docs_update]
+    types: [docs_update, docs_merge]
 
-run-name: Process Docs Changes on branch ${{ github.event.inputs.branch_name || github.event.client_payload.branch_name }}
+run-name: Processing `${{ github.event.action || github.event.inputs.dispatch_type }}` for branch `${{ github.event.inputs.branch_name || github.event.client_payload.branch_name }}`
 
 jobs:
-  build-and-commit:
-    name: Build for ${{ github.event.inputs.branch_name || github.event.client_payload.branch_name }}
+  build:
+    name: Build for ${{ github.event.inputs.branch_name || github.event.client_payload.branch_name }} | ${{ github.event.action || github.event.inputs.dispatch_type }}
     runs-on: ubuntu-latest
     env:
       MAIN_REPO_BRANCH: "${{ github.event.inputs.branch_name || github.event.client_payload.branch_name }}"
     steps:
+      - name: Running Docs Update
+        if: |
+          (github.event_name == 'repository_dispatch' && github.event.action == 'docs_update') ||
+          (github.event_name == 'workflow_dispatch' && github.event.inputs.dispatch_type == 'docs_update')
+        run: |
+          echo "This is a 'docs_update' event"
+
+      - name: Running Docs Merge
+        if: |
+          (github.event_name == 'repository_dispatch' && github.event.action == 'docs_merge') ||
+          (github.event_name == 'workflow_dispatch' && github.event.inputs.dispatch_type == 'docs_merge')
+        run: |
+          echo "This is a 'docs_merge' event"
+
       - uses: actions/checkout@v4
 
       - name: Set current branch name
@@ -112,7 +134,24 @@ jobs:
           git remote set-url origin "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/metabase/docs.metabase.github.io.git"
 
       - name: Update or Create the Pull Request
+        if: |
+          (github.event_name == 'repository_dispatch' && github.event.action == 'docs_update') ||
+          (github.event_name == 'workflow_dispatch' && github.event.inputs.dispatch_type == 'docs_update')
         env:
           GH_TOKEN: ${{ secrets.METABASE_AUTOMATION_USER_TOKEN }}
         run: |
           bb script/update_or_create_pr.clj "$MAIN_REPO_BRANCH"
+
+      - name: Merge Updated Docs
+        if: |
+          (github.event_name == 'repository_dispatch' && github.event.action == 'docs_merge') ||
+          (github.event_name == 'workflow_dispatch' && github.event.inputs.dispatch_type == 'docs_merge')
+        env:
+          GH_TOKEN: ${{ secrets.METABASE_AUTOMATION_USER_TOKEN }}
+        run: |
+          echo '============= Showing Status ============='
+          git status
+          echo '\n============= Showing Diff ============='
+          git diff origin master
+          echo '\n============= Pushing Changes ============='
+          git push origin master && echo '\n============= Merge Complete ============='
