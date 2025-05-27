@@ -17,11 +17,11 @@ on:
   repository_dispatch:
     types: [docs_update, docs_merge]
 
-run-name: Process Docs Changes on branch ${{ github.event.inputs.branch_name || github.event.client_payload.branch_name }}
+run-name: Processing Docs from branch ${{ github.event.inputs.branch_name || github.event.client_payload.branch_name }} | ${{ github.event.action || github.event.inputs.dispatch_type }}
 
 jobs:
   build:
-    name: Build for ${{ github.event.inputs.branch_name || github.event.client_payload.branch_name }}
+    name: Build for ${{ github.event.inputs.branch_name || github.event.client_payload.branch_name }} | ${{ github.event.action || github.event.inputs.dispatch_type }}
     runs-on: ubuntu-latest
     env:
       MAIN_REPO_BRANCH: "${{ github.event.inputs.branch_name || github.event.client_payload.branch_name }}"
