@@ -94,6 +94,21 @@ jobs:
         run: |
           bb script/update_docs_for_branchname.clj "$MAIN_REPO_BRANCH"
 
+      - name: Checkout Control files from Marketing Repo
+        uses: actions/checkout@4
+        with:
+          repository: metabase/metabase.github.io
+          path: metabase.github.io
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Merge control files from Marketing Repo
+        run: |
+          cp -r ../metabase.github.io/_data .
+          cp -r ../metabase.github.io/_includes .
+          cp -r ../metabase.github.io/_layouts .
+          cp -r ../metabase.github.io/_plugins .
+          cp -r ../metabase.github.io/_saas .
+
       - name: "Lint the markdown"
         run: |
           yarn lint-markdown
