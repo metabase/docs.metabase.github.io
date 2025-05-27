@@ -1,6 +1,5 @@
 (ns util
-  (:require [clojure.string :as str]
-            [clj-yaml.core :as yaml]
+  (:require [clj-yaml.core :as yaml]
             [puget.printer :as puget]))
 
 (def release-regex #"release-x\.(\d+)\.x")
@@ -20,21 +19,6 @@
     (= branchname "master") [:master]
     (re-matches release-regex branchname) [:release (extract-release-num branchname)]
     (str/starts-with? branchname "docs-workflow-test-") [:test branchname]))
-
-(comment
-  (categorize-branchname "release-x.49.x")
-  ;; => [:release 49]
-
-  (categorize-branchname "master")
-  ;; => [:master]
-
-  (categorize-branchname "docs-workflow-test-123")
-  ;; => [:test "docs-workflow-test-123"]
-
-  (categorize-branchname "any-other-branch")
-  ;; => nil
-
-  )
 
 (defn pp [& xs]
   (doseq [x xs] (puget/cprint x)))

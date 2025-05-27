@@ -47,7 +47,7 @@
         [category release-num] (u/categorize-branchname source-branch)
         _ (println "→ Branch info: " (case category :master "master"
                                            :release (str "Release version:" release-num)
-                                           "test branch"))
+                                           (throw (ex-info (str "Unpublishable branchname: " source-branch) {:babashka/exit 1}))))
         dry-run? (contains? (set args) "--dry-run")
         dr-notify (if dry-run? (ice/p-str [:yellow "dry-run: "]) "")
         target-branch (str "update-" source-branch)
