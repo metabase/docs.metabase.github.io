@@ -94,6 +94,12 @@ jobs:
         run: |
           bb script/update_docs_for_branchname.clj "$MAIN_REPO_BRANCH"
 
+      - name: Setup Git Authenticatation
+        run: |
+          git config --global user.name "Metabase Docs bot"
+          git config --global user.email "metabase-bot@metabase.com"
+          git remote set-url origin "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/metabase/docs.metabase.github.io.git"
+
       - name: Checkout Control files from Marketing Repo
         uses: actions/checkout@v4
         with:
@@ -142,12 +148,6 @@ jobs:
           echo 'checking reported links...'
           echo "htmlproofer spit out a report of length: $(wc -l < htmlproofer.out)"
           bb script/analyze_links.clj --htmlproofer-output htmlproofer.out
-
-      - name: Setup Git Authenticatation
-        run: |
-          git config --global user.name "Metabase Docs bot"
-          git config --global user.email "metabase-bot@metabase.com"
-          git remote set-url origin "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/metabase/docs.metabase.github.io.git"
 
       - name: Update or Create the Pull Request
         if: |
