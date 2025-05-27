@@ -7,7 +7,7 @@ on:
         required: true
         type: string
   repository_dispatch:
-    types: [docs_update]
+    types: [docs_update, docs_merge]
 
 run-name: Process Docs Changes on branch ${{ github.event.inputs.branch_name || github.event.client_payload.branch_name }}
 
@@ -112,7 +112,20 @@ jobs:
           git remote set-url origin "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/metabase/docs.metabase.github.io.git"
 
       - name: Update or Create the Pull Request
+        if: github.event.action == 'docs_update'
         env:
           GH_TOKEN: ${{ secrets.METABASE_AUTOMATION_USER_TOKEN }}
         run: |
           bb script/update_or_create_pr.clj "$MAIN_REPO_BRANCH"
+
+      - name: Merge Updated Docs
+        if: github.event.action == 'docs_merge'
+        env:
+          GH_TOKEN: ${{ secrets.METABASE_AUTOMATION_USER_TOKEN }}
+        run: |
+          echo '============= Showing Status ============='
+          git status
+          echo '\n============= Showing Diff ============='
+          git diff origin master
+          echo '\n============= Pushing Changes ============='
+          git push origin master && echo '\n============= Merge Complete ============='

@@ -45,9 +45,10 @@
   [& args]
   (let [source-branch (or (first args) (usage))
         [category release-num] (u/categorize-branchname source-branch)
-        _ (println "→ Branch info: " (case category :master "master"
-                                           :release (str "Release version:" release-num)
-                                           (throw (ex-info (str "Unpublishable branchname: " source-branch) {:babashka/exit 1}))))
+        _ (println "→ Branch info: " (case category
+                                       :master "master"
+                                       :release (str "Release version:" release-num)
+                                       (throw (ex-info (str "Unpublishable branchname: " source-branch) {:babashka/exit 1}))))
         dry-run? (contains? (set args) "--dry-run")
         dr-notify (if dry-run? (ice/p-str [:yellow "dry-run: "]) "")
         target-branch (str "update-" source-branch)

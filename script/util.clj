@@ -6,19 +6,19 @@
 
 (defn- extract-release-num [release-branchname]
   (let [[_ num] (re-matches release-regex release-branchname)]
-    (Integer/parseInt num)))
+    (parse-long num)))
 
 (defn config-docs-version
   "Get the latest docs version number from the _config.yml file."
   []
   (let [[_ version-num] (re-matches #"v0.(\d+)" (:docs_version (yaml/parse-string (slurp "_config.yml"))))]
-    (Integer/parseInt version-num)))
+    (parse-long version-num)))
 
 (defn categorize-branchname [branchname]
   (cond
     (= branchname "master") [:master]
     (re-matches release-regex branchname) [:release (extract-release-num branchname)]
-    (str/starts-with? branchname "docs-workflow-test-") [:test branchname]))
+    :else []))
 
 (defn pp [& xs]
   (doseq [x xs] (puget/cprint x)))
