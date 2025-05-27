@@ -95,9 +95,10 @@ jobs:
           bb script/update_docs_for_branchname.clj "$MAIN_REPO_BRANCH"
 
       - name: Checkout Control files from Marketing Repo
-        uses: actions/checkout@4
+        uses: actions/checkout@v4
         with:
           repository: metabase/metabase.github.io
+          ref: master
           path: metabase.github.io
           token: ${{ secrets.GITHUB_TOKEN }}
 
