@@ -28,11 +28,11 @@ function isMetabaseUrl(url) {
   // - <protocol>://www.metabase.com/<path>
   // - <protocol>://metabase.com/<path>
   return !!(
-    url.indexOf("metabase.") === 0 ||
-    url.indexOf("://www.metabase.") === 4 ||
-    url.indexOf("://www.metabase.") === 5 ||
-    url.indexOf("://metabase.") === 4 ||
-    url.indexOf("://metabase.") === 5
+    url.indexOf("metabase.com") === 0 ||
+    url.indexOf("://www.metabase.com") === 4 ||
+    url.indexOf("://www.metabase.com") === 5 ||
+    url.indexOf("://metabase.com") === 4 ||
+    url.indexOf("://metabase.com") === 5
   );
 }
 
