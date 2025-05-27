@@ -16,7 +16,8 @@
         (finally
           (p/shell "git checkout" original-branch-name))))))
 
-(def branches ["master" "release-x.49.x"
+(def branches ["master"
+               "release-x.49.x"
                "release-x.50.x"
                "docs-workflow-test-123"
                ;; Current release branch:
