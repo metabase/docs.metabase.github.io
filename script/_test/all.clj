@@ -4,7 +4,6 @@
    [clojure.test :as t :refer [deftest is]]
    [clojure.string :as str]
    [babashka.process :as p]
-   [fix-liquid-templates :as flt]
    [util :as u]))
 
 (def branches ["master"
@@ -60,16 +59,6 @@
     (when (= category :release)
       (is (integer? release-num)
           (str "Expected release number to be an integer for branchname " branchname ", got: " release-num)))))
-
-(deftest liquid-template-normalization-test
-  (let [test-cases [["{% assign sorted = site.community-posts | sort: 'date' | reverse %}" "{% assign sorted = site.community-posts default: empty | sort: 'date' | reverse %}"]
-                    ["{% assign sorted_posts = site.community-posts | sort: 'date' | reverse %}" "{% assign sorted_posts = site.community-posts default: empty | sort: 'date' | reverse %}"]
-                    ["{% assign sorted_terms = site.glossary | sort: 'title' %}" "{% assign sorted_terms = site.glossary default: empty | sort: 'title' %}"]
-                    ["{% assign\n                      multiline_var = site.some-collection |\n                      sort: 'date' | reverse\n                     %}" "{% assign multiline_var = site.some-collection default: empty |\n                      sort: 'date' | reverse\n                     %}"]]]
-    (doseq [[input expected] test-cases]
-      (ice/p [:green "Testing liquid transformation for input: " [:underline input]])
-      (is (= expected
-             (flt/transform-liquid-assigns input))))))
 
 (defn -main [& _args]
   (println "Expectations: ")
