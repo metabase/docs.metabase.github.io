@@ -116,6 +116,12 @@ jobs:
           cp -r .marketing_repo/_plugins .
           cp -r .marketing_repo/_sass .
 
+      - name: Normalize liquid templates
+        run: |
+          # Many layouts expect there to be certain collections that this repo
+          # doesn't have, so we modify liquid filters to handle empty collections.
+          bb script/fix_liquid_templates.clj
+
       - name: "Run: yarn lint-markdown"
         run: |
           yarn lint-markdown
