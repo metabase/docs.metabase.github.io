@@ -7,6 +7,7 @@
    [clojure.java.io :as io]
    [clojure.string :as str]
    [clojure.walk :as walk]
+   [ice.core :as ice]
    [util :as u]))
 
 (defn- url-ok?
@@ -45,7 +46,9 @@
   ([missing-paths {:keys [retries]}]
    (loop [trial 1
           mp (broken-links* missing-paths)]
-     (println "  > check-broken-links Trial" trial)
+     (ice/p "  > check-broken-links:"
+            [:magenta " Trial: " trial] " | "
+            [:cyan "Missing Path Count: " (count missing-paths)])
      (cond
        (> trial retries) mp
        (zero? (:broken-count mp)) mp
@@ -132,7 +135,7 @@
         report                    (check-broken-links (remove excluded-links external-or-missing-links))]
     (if (zero? (:broken-count report))
       (do
-        (println "Done. OK.")
+        (ice/p [:green "Done! OK."])
         (prn {:htmlproofer-link-count (count htmlproofer-links)
               :redirect-count (count redirects)
               :external-or-missing-link-count (count external-or-missing-links)
