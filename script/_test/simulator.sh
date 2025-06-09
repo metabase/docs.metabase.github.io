@@ -11,16 +11,16 @@ set -euo pipefail
 
 echo "Running simulator.sh on branch: $MAIN_REPO_BRANCH"
 
-printf '\n\n\n============================== bb script/_test/all.clj ==============================z'
+printf '\n\n\n============================== bb script/_test/all.clj ==============================z\n'
 bb script/_test/all.clj
 
-printf '\n\n\n============================== bb script/check_incoming_branchname.clj "$MAIN_REPO_BRANCH" ==============================z'
+printf '\n\n\n============================== bb script/check_incoming_branchname.clj "$MAIN_REPO_BRANCH" ==============================z\n'
 bb script/check_incoming_branchname.clj "$MAIN_REPO_BRANCH"
 
-printf '\n\n\n============================== bb script/update_docs_for_branchname.clj "$MAIN_REPO_BRANCH" ==============================z'
+printf '\n\n\n============================== bb script/update_docs_for_branchname.clj "$MAIN_REPO_BRANCH" ==============================z\n'
 bb script/update_docs_for_branchname.clj "$MAIN_REPO_BRANCH"
 
-printf '\n\n\n============================== copy marketing files ==============================z'
+printf '\n\n\n============================== copy marketing files ==============================z\n'
 
 cp -r ../metabase.github.io/_data .
 cp -r ../metabase.github.io/_includes .
@@ -29,16 +29,16 @@ cp -r ../metabase.github.io/_layouts .
 cp -r ../metabase.github.io/_plugins .
 cp -r ../metabase.github.io/_sass .
 
-printf '\n\n\n============================== yarn lint-markdown ==============================z'
+printf '\n\n\n============================== yarn lint-markdown ==============================z\n'
 yarn lint-markdown
 
-printf '\n\n\n============================== yarn lint-styles ==============================z'
+printf '\n\n\n============================== yarn lint-styles ==============================z\n'
 yarn lint-styles
 
-printf '\n\n\n============================== yarn lint-scripts ==============================z'
+printf '\n\n\n============================== yarn lint-scripts ==============================z\n'
 yarn lint-scripts
 
-printf '\n\n\n============================== yarn lint-links ==============================z'
+printf '\n\n\n============================== yarn lint-links ==============================z\n'
 yarn lint-links
 
 
