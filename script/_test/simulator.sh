@@ -41,13 +41,11 @@ yarn lint-scripts
 printf '\n\n\n============================== yarn lint-links ==============================z\n'
 yarn lint-links
 
-
 # Clear the existing site:
 rm -rf _site
+
 # Build the jekyll site:
 bundle exec jekyll build
-
-bb script/install_docs_redirect.clj
 
 script/links || true
 

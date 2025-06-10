@@ -44,11 +44,14 @@
   map from the final attempt."
   ([missing-paths] (check-broken-links missing-paths {:retries 4}))
   ([missing-paths {:keys [retries]}]
+   (ice/p "  > check-broken-links:"
+          [:magenta " Trial: 0"] " | "
+          [:cyan "Missing Path Count: " (count missing-paths)])
    (loop [trial 1
           mp (broken-links* missing-paths)]
      (ice/p "  > check-broken-links:"
             [:magenta " Trial: " trial] " | "
-            [:cyan "Missing Path Count: " (count missing-paths)])
+            [:cyan "Missing Path Count: " (:broken-count mp)])
      (cond
        (> trial retries) mp
        (zero? (:broken-count mp)) mp

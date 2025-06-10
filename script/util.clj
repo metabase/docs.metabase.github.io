@@ -20,8 +20,12 @@
     (re-matches release-regex branchname) [:release (extract-release-num branchname)]
     :else []))
 
-(defn pp [& xs]
+(defn pp
+  "Pretty print values."
+  [& xs]
   (doseq [x xs] (puget/cprint x)))
 
-(defn pp-line [& xs]
+(defn pp-line
+  "Pretty print values on a single line."
+  [& xs]
   (doseq [x xs] (puget/cprint x {:width 10e20})))

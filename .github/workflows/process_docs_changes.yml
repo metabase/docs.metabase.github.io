@@ -149,10 +149,6 @@ jobs:
           echo "htmlproofer spit out a report of length: $(wc -l < htmlproofer.out)"
           bb script/analyze_links.clj --htmlproofer-output htmlproofer.out
 
-      - name: install docs-only index redirection to /docs/latest
-        run: |
-          bb script/install_docs_redirect.clj
-
       - name: Update or Create the Pull Request
         if: |
           (github.event_name == 'repository_dispatch' && github.event.action == 'docs_update') ||
