@@ -47,6 +47,8 @@ rm -rf _site
 # Build the jekyll site:
 bundle exec jekyll build
 
+bb script/install_docs_redirect.clj
+
 script/links || true
 
 printf '\n checking reported links...'
@@ -55,5 +57,3 @@ echo ''
 echo "htmlproofer spit out a report of length: $(wc -l < htmlproofer.out)"
 
 bb script/analyze_links.clj --htmlproofer-output htmlproofer.out
-
-# TODO: continue with the rest of the CI pipeline
