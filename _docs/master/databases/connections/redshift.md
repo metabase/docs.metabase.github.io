@@ -111,6 +111,10 @@ You can enable model persistence to allow Metabase to create tables with model d
 
 Check out [Model persistence](../../data-modeling/model-persistence).
 
+## Database routing
+
+See [Database routing](../../permissions/database-routing).
+
 ## Danger zone
 
 See [Danger zone](../danger-zone).

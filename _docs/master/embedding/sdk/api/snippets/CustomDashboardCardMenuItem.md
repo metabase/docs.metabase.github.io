@@ -13,7 +13,7 @@ layout: new-docs
 type CustomDashboardCardMenuItem = ({
   question,
 }: {
-  question: MetabaseQuestion;
+  question?: MetabaseQuestion;
 }) => DashCardMenuItem;
 ```
 
@@ -21,10 +21,10 @@ type CustomDashboardCardMenuItem = ({
 
 <!-- [<snippet parameters>] -->
 
-| Parameter                 | Type                                                               |
-| :------------------------ | :----------------------------------------------------------------- |
-| `{ question, }`           | \{ `question`: [`MetabaseQuestion`](./api/MetabaseQuestion); \} |
-| `{ question, }.question?` | [`MetabaseQuestion`](./api/MetabaseQuestion)                    |
+| Parameter                 | Type                                                                |
+| :------------------------ | :------------------------------------------------------------------ |
+| `{ question, }`           | \{ `question?`: [`MetabaseQuestion`](./api/MetabaseQuestion); \} |
+| `{ question, }.question?` | [`MetabaseQuestion`](./api/MetabaseQuestion)                     |
 
 <!-- [<endsnippet parameters>] -->
 

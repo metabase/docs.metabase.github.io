@@ -11,8 +11,8 @@ layout: new-docs
 
 ```ts
 type SdkEventHandlersConfig = {
-  onDashboardLoad: SdkDashboardLoadEvent;
-  onDashboardLoadWithoutCards: SdkDashboardLoadEvent;
+  onDashboardLoad?: SdkDashboardLoadEvent;
+  onDashboardLoadWithoutCards?: SdkDashboardLoadEvent;
 };
 ```
 

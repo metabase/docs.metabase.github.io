@@ -10,27 +10,17 @@ layout: new-docs
 ---
 
 ```ts
-type MetabaseFetchRequestTokenFn = (
-  url: string,
-) => Promise<MetabaseEmbeddingSessionToken | null>;
+type MetabaseFetchRequestTokenFn = () => Promise<{
+  jwt: string;
+}>;
 ```
-
-## Parameters
-
-<!-- [<snippet parameters>] -->
-
-| Parameter | Type     |
-| :-------- | :------- |
-| `url`     | `string` |
-
-<!-- [<endsnippet parameters>] -->
 
 ## Returns
 
 <!-- [<snippet returns>] -->
 
-[`Promise`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<
-\| [`MetabaseEmbeddingSessionToken`](./api/MetabaseEmbeddingSessionToken)
-\| `null`\>
+[`Promise`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<\{
+`jwt`: `string`;
+\}\>
 
 <!-- [<endsnippet returns>] -->

@@ -84,6 +84,7 @@ You can think of semantic types as adding extra flavor to a field to communicate
 - Category
 - Name
 - Title
+- Description
 - Product
 - Source
 - Location

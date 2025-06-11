@@ -11,7 +11,7 @@ layout: new-docs
 
 ```ts
 type InteractiveQuestionFilterProps = {
-  withColumnItemIcon: boolean;
+  withColumnItemIcon?: boolean;
 };
 ```
 
