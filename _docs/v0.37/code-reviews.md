@@ -6,7 +6,6 @@ show_title_breadcrumb: true
 category: 'Table of Contents'
 title: 'Code Reviews'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/code-reviews.md'
-layout: docs
 ---
 
 **The overall goal of a code review is to serve as a safety net for other people on our team and help them write better code, not to judge them or their code. When in doubt, assume that they have good intentions and BE NICE.**

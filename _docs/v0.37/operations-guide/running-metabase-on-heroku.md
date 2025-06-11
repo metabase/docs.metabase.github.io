@@ -6,7 +6,6 @@ show_title_breadcrumb: true
 category: 'Operations Guide'
 title: 'Running Metabase on Heroku'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/operations-guide/running-metabase-on-heroku.md'
-layout: docs
 ---
 
 # Running Metabase on Heroku
@@ -42,13 +41,13 @@ Heroku is very kind and offers a free tier to be used for very small/non-critica
  * When using the `free` tier, if you don’t access the application for a while Heroku will sleep your Metabase environment.  This prevents things like Pulses and Metabase background tasks from running when scheduled and at times makes the app appear to be slow when really it's just Heroku reloading your app.  You can resolve this by upgrading to the `hobby` tier or higher.
  * Sometimes Metabase may run out of memory and you will see messages like `Error R14 (Memory quota exceeded)` in the Heroku logs. If this happens regularly we recommend upgrading to the `standard-2x` tier dyno.
 
-Now that you’ve installed Metabase, it’s time to [set it up and connect it to your database](../setting-up-metabase.html).
+Now that you’ve installed Metabase, it’s time to [set it up and connect it to your database](../setting-up-metabase).
 
 
 ### Troubleshooting
 
 * If your Metabase instance is getting stuck part way through the initialization process and only every shows roughly 30% completion on the loading progress.
-    * The most likely culprit here is a stale database migrations lock that was not cleared.  This can happen if for some reason Heroku kills your Metabase dyno at the wrong time during startup.  __To fix it:__ you can either clear the lock using the built-in [release-locks](../troubleshooting-guide/application-database.html) command line function, or if needed you can login to your Metabase application database directly and delete the row in the `DATABASECHANGELOGLOCK` table.  Then just restart Metabase.
+    * The most likely culprit here is a stale database migrations lock that was not cleared.  This can happen if for some reason Heroku kills your Metabase dyno at the wrong time during startup.  __To fix it:__ you can either clear the lock using the built-in [release-locks](../troubleshooting-guide/application-database) command line function, or if needed you can login to your Metabase application database directly and delete the row in the `DATABASECHANGELOGLOCK` table.  Then just restart Metabase.
 
 
 ## Deploying New Versions of Metabase

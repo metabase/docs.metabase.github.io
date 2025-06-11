@@ -4,16 +4,15 @@ has_magic_breadcrumbs: true
 show_category_breadcrumb: false
 show_title_breadcrumb: true
 category: 'Table of Contents'
-title: 'Api Documentation'
+title: 'API Documentation'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/api-documentation.md'
-layout: docs
 ---
 
 # API Documentation for Metabase
 
 _This file was generated from source comments by `lein run api-documentation`_.
 
-Check out an introduction to the [Metabase API](https://www.metabase.com/blog/metabase-api/index.html).
+Check out an introduction to the [Metabase API](/blog/metabase-api/index).
 
 ## `GET /api/activity/`
 

@@ -4,9 +4,8 @@ has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
 category: 'Enterprise Guide'
-title: 'Authenticating With Jwt'
+title: 'Authenticating With JWT'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/enterprise-guide/authenticating-with-jwt.md'
-layout: docs
 ---
 
 ## JWT-based Authentication
@@ -53,4 +52,4 @@ Once you have configured your JWT authentication, you can choose to disable the 
 ---
 
 ## Next: Creating data sandboxes for your user groups
-Data sandboxes automatically filter specific tables for your users based on who they are. We'll show you [how to set these up](data-sandboxes.html) next.
+Data sandboxes automatically filter specific tables for your users based on who they are. We'll show you [how to set these up](data-sandboxes) next.

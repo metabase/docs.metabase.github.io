@@ -6,7 +6,6 @@ show_title_breadcrumb: true
 category: 'Troubleshooting Guide'
 title: Datawarehouse
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/troubleshooting-guide/datawarehouse.md'
-layout: docs
 ---
 
 ## Troubleshooting Process

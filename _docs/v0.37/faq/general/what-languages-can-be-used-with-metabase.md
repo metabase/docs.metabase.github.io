@@ -6,7 +6,6 @@ show_title_breadcrumb: true
 category: FAQ
 title: 'What Languages Can Be Used With Metabase'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/faq/general/what-languages-can-be-used-with-metabase.md'
-layout: docs
 ---
 
 # What languages can be used with Metabase?

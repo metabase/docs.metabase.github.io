@@ -6,7 +6,6 @@ show_title_breadcrumb: true
 category: 'Users Guide'
 title: '07 Dashboards'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/users-guide/07-dashboards.md'
-layout: docs
 ---
 
 ## Dashboards
@@ -25,7 +24,7 @@ You can make as many dashboards as you want. Go nuts.
 
 ### How to create a dashboard
 
-In the top right of the screen, click the **+** icon to open the **Create** menu, and select **New Dashboard**. Give your new dashboard a name and a description, choose which [collection](06-sharing-answers.html#collections) the dashboard should go in, then click **Create**, and Metabase will take you to your shiny new dashboard.
+In the top right of the screen, click the **+** icon to open the **Create** menu, and select **New Dashboard**. Give your new dashboard a name and a description, choose which [collection](06-sharing-answers#collections) the dashboard should go in, then click **Create**, and Metabase will take you to your shiny new dashboard.
 
 ![Create Dashboard](images/dashboards/DashboardCreate.png)
 
@@ -63,7 +62,7 @@ Click the **eye** icon to see what your formatted Markdown will look like when y
 
 ![Result](images/dashboards/text-cards/result.png)
 
-To learn more, see [Fun with Markdown in your dashboards](https://www.metabase.com/blog/markdown-in-dashboards/index.html).
+To learn more, see [Fun with Markdown in your dashboards](/blog/markdown-in-dashboards/index).
 
 ### Arranging cards
 
@@ -117,11 +116,11 @@ Combining fullscreen mode and auto refresh is a great way to keep your team in s
 
 ## Sharing dashboards with public links
 
-If your Metabase administrator has enabled [public sharing](../administration-guide/12-public-links.html) on a saved question or dashboard, you can go to that question or dashboard and click on the **sharing** icon to find its public links.
+If your Metabase administrator has enabled [public sharing](../administration-guide/12-public-links) on a saved question or dashboard, you can go to that question or dashboard and click on the **sharing** icon to find its public links.
 
 ![Share icon](images/share-icon.png)
 
-Public links can be viewed by anyone, even if they don't have access to Metabase. You can also use the public embedding code to embed your question or dashboard in a simple web page or blog post. Check out examples of simple apps with embedded dashboards in our [embedding-reference-apps repository](https://github.com/metabase/embedding-reference-apps). To learn more about [embedding](../administration-guide/13-embedding.html), check out our article on [How to use Metabase to deliver analytics to your customers](https://www.metabase.com/blog/external-facing-analytics/index.html), as well as an article on how to combine branding, Single Sign-On, full app embedding, and data sandboxing to deliver [multi-tenant, self-service analytics](https://www.metabase.com/blog/embedding/index.html).
+Public links can be viewed by anyone, even if they don't have access to Metabase. You can also use the public embedding code to embed your question or dashboard in a simple web page or blog post. Check out examples of simple apps with embedded dashboards in our [embedding-reference-apps repository](https://github.com/metabase/embedding-reference-apps). To learn more about [embedding](../administration-guide/13-embedding), check out our article on [How to use Metabase to deliver analytics to your customers](/blog/external-facing-analytics/index), as well as an article on how to combine branding, Single Sign-On, full app embedding, and data sandboxing to deliver [multi-tenant, self-service analytics](/blog/embedding/index).
 
 ### Configuring a dashboard through its URL
 
@@ -151,13 +150,13 @@ Some tips:
 
 - **Emphasize the most important questions**. To draw people’s attention to what matters most, place the most important saved question cards near the top of the dashboard, and/or make them bigger than the other cards, 
 - **Keep dashboards focused**. If you have more than 10 cards on a dashboard, think about breaking the dashboard into two separate ones. You don't want to overwhelm people with too much information, and each dashboard should revolve around one theme or topic. Remember — you can make as many dashboards as you want, so you don’t have to cram everything into just one.
-- **Add filters to your dashboard**. [Adding filters](08-dashboard-filters.html) to dashboards makes them more useful. For example, instead of your dashboard being full of questions that are restricted to a specific time span, you can make more general questions and use dashboard filters to change the time span you're looking at.
-- **Make your dashboards interactive.** [Customize what happens when users click on a chart or table in your dashboard](interactive-dashboards.html).
+- **Add filters to your dashboard**. [Adding filters](08-dashboard-filters) to dashboards makes them more useful. For example, instead of your dashboard being full of questions that are restricted to a specific time span, you can make more general questions and use dashboard filters to change the time span you're looking at.
+- **Make your dashboards interactive.** [Customize what happens when users click on a chart or table in your dashboard](interactive-dashboards).
 
-See [Making dashboards faster](https://www.metabase.com/blog/faster-dashboards/index.html) for tips on improving dashboard performance.
+See [Making dashboards faster](/blog/faster-dashboards/index) for tips on improving dashboard performance.
 
 ---
 
 ## Next: Adding dashboard filters
 
-Make your dashboards more flexible and powerful by [adding dashboard filters](08-dashboard-filters.html).
+Make your dashboards more flexible and powerful by [adding dashboard filters](08-dashboard-filters).

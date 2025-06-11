@@ -6,7 +6,6 @@ show_title_breadcrumb: true
 category: 'Operations Guide'
 title: 'Changing Session Expiration'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/operations-guide/changing-session-expiration.md'
-layout: docs
 ---
 
 # Changing session expiration

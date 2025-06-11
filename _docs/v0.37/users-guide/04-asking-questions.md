@@ -6,7 +6,6 @@ show_title_breadcrumb: true
 category: 'Users Guide'
 title: '04 Asking Questions'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/users-guide/04-asking-questions.md'
-layout: docs
 ---
 
 ## Asking questions in Metabase
@@ -20,8 +19,8 @@ Metabase's two core concepts are questions and their corresponding answers. Ever
 When you click the Ask a Question button, you'll see that there are three ways to ask a specific question in Metabase:
 
 1. The simple question mode, which lets you filter, summarize, and visualize data.
-2. [The custom question mode](custom-questions.html), which gives you a powerful notebook-style editor to create more complex questions that require joins, multiple stages of filtering and aggregating, or custom columns.
-3. [The SQL/native query editor](writing-sql.html).
+2. [The custom question mode](custom-questions), which gives you a powerful notebook-style editor to create more complex questions that require joins, multiple stages of filtering and aggregating, or custom columns.
+3. [The SQL/native query editor](writing-sql).
 
 This page will cover the simple mode.
 
@@ -114,7 +113,7 @@ Some grouping columns will give you the option of choosing how big or small to m
 
 Once you're done setting your metrics and groupings, click Done to close the Summarize sidebar and see your results in all their glory.
 
-If you want to jump ahead and learn about [how to change the visualization](05-visualizing-results.html) of your results, by all means, feel free.
+If you want to jump ahead and learn about [how to change the visualization](05-visualizing-results) of your results, by all means, feel free.
 
 ### Viewing an individual record's details
 
@@ -132,4 +131,4 @@ You can download or export the results of a question by clicking on the Download
 
 ## Next: creating custom questions
 
-If you have a question that's a bit more involved or specific, you can use the powerful notebook editor to craft a [custom question](custom-questions.html).
+If you have a question that's a bit more involved or specific, you can use the powerful notebook editor to craft a [custom question](custom-questions).

@@ -6,7 +6,6 @@ show_title_breadcrumb: true
 category: 'Users Guide'
 title: '15 Alerts'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/users-guide/15-alerts.md'
-layout: docs
 ---
 
 ## Getting alerts about questions
@@ -15,7 +14,7 @@ Whether you're keeping track of revenue, users, or negative reviews, there are o
 
 ### Getting alerts
 
-To start using alerts, someone on your team who's an administrator will need to make sure that [email integration](../administration-guide/02-setting-up-email.html) is set up first.
+To start using alerts, someone on your team who's an administrator will need to make sure that [email integration](../administration-guide/02-setting-up-email) is set up first.
 
 ### Types of alerts
 
@@ -31,7 +30,7 @@ We'll go through these one by one.
 
 This kind of alert is useful when you're doing things like tracking daily active users and you want to know when you reach a certain number of them, or when you're tracking orders per week and you want to know whenever that number ever goes below a certain threshold.
 
-To start, you'll need a line, area, or bar chart displaying a number over time. (If you need help with that, check out the page on [asking questions](04-asking-questions.html).)
+To start, you'll need a line, area, or bar chart displaying a number over time. (If you need help with that, check out the page on [asking questions](04-asking-questions).)
 
 Now we need to set up a goal line. To do that, open up the visualization settings by clicking the Settings button in the bottom-left. Then click on the Display tab, and turn on the "Show goal" setting. Choose a value for your goal and click Done.
 
@@ -75,9 +74,9 @@ If you're an administrator of your Metabase instance, you'll be able to see and 
 
 ![Recipients](./images/alerts/recipients.png)
 
-Just like with [Pulses](10-pulses.html), you can add any Metabase user, email address, or even a Slack channel as a recipient of an alert. Admins can add or remove recipients on any alert, even ones that they did not create themselves.
+Just like with [Pulses](10-pulses), you can add any Metabase user, email address, or even a Slack channel as a recipient of an alert. Admins can add or remove recipients on any alert, even ones that they did not create themselves.
 
-Here's more information about [setting up email integration](../administration-guide/02-setting-up-email.html) and [setting up Slack integration](../administration-guide/09-setting-up-slack.html).
+Here's more information about [setting up email integration](../administration-guide/02-setting-up-email) and [setting up Slack integration](../administration-guide/09-setting-up-slack).
 
 ### Stopping alerts
 

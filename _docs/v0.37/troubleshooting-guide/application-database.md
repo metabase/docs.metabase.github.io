@@ -6,7 +6,6 @@ show_title_breadcrumb: true
 category: 'Troubleshooting Guide'
 title: 'Application Database'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/troubleshooting-guide/application-database.md'
-layout: docs
 ---
 
 ## Specific Problems:

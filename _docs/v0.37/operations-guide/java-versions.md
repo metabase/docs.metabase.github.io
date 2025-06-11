@@ -6,7 +6,6 @@ show_title_breadcrumb: true
 category: 'Operations Guide'
 title: 'Java Versions'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/operations-guide/java-versions.md'
-layout: docs
 ---
 
 # Java Versions

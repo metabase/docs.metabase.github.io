@@ -6,7 +6,6 @@ show_title_breadcrumb: true
 category: 'Operations Guide'
 title: 'Migrating From H2'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/operations-guide/migrating-from-h2.md'
-layout: docs
 ---
 
 # Migrating from using the H2 database to MySQL or Postgres
@@ -16,8 +15,8 @@ If you decide to use the default application database (H2) when you initially st
 Metabase provides a custom migration command for upgrading H2 application database files by copying their data to a new database. Here's what you'll want to do:
 
 1. Shutdown your Metabase instance so that it's not running. This ensures no accidental data gets written to the db while migrating.
-2. Make a backup copy of your H2 application database by following the instructions in [Backing up Metabase Application Data](backing-up-metabase-application-data.html). Safety first!
-3. Run the Metabase data migration command using the appropriate environment variables for the target database you want to migrate to. You can find details about specifying MySQL and Postgres databases at [Configuring the application database](configuring-application-database.html). Here's an example of migrating to Postgres:
+2. Make a backup copy of your H2 application database by following the instructions in [Backing up Metabase Application Data](backing-up-metabase-application-data). Safety first!
+3. Run the Metabase data migration command using the appropriate environment variables for the target database you want to migrate to. You can find details about specifying MySQL and Postgres databases at [Configuring the application database](configuring-application-database). Here's an example of migrating to Postgres:
 
 ```
 export MB_DB_TYPE=postgres

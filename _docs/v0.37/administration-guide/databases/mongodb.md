@@ -6,7 +6,6 @@ show_title_breadcrumb: true
 category: 'Administration Guide'
 title: Mongodb
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/administration-guide/databases/mongodb.md'
-layout: docs
 ---
 
 # Working with MongoDB in Metabase

@@ -6,7 +6,6 @@ show_title_breadcrumb: true
 category: 'Administration Guide'
 title: '20 Custom Maps'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/administration-guide/20-custom-maps.md'
-layout: docs
 ---
 
 ## Custom Maps
@@ -48,4 +47,4 @@ GeoJSON, we recommend that you start [here](https://geojson.org/).
 
 ## Next: editing metadata
 Taking just a few minutes to edit and add info to your database’s metadata can greatly enhance your experience with
-Metabase. Let’s learn how to [edit your metadata](03-metadata-editing.html).
+Metabase. Let’s learn how to [edit your metadata](03-metadata-editing).

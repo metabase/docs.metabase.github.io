@@ -6,7 +6,6 @@ show_title_breadcrumb: true
 category: 'Users Guide'
 title: '06 Sharing Answers'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/users-guide/06-sharing-answers.md'
-layout: docs
 ---
 
 ## Sharing and organizing your questions and answers
@@ -23,7 +22,7 @@ Now, whenever you want to refer to your question again you can find it by search
 
 ### Sharing questions with public links
 
-If your Metabase administrator has enabled [public sharing](../administration-guide/12-public-links.html) on a saved question or dashboard, you can go to that question or dashboard and click on the sharing icon to find its public links. Public links can be viewed by anyone, even if they don't have access to Metabase. You can also use the public embedding code to embed your question or dashboard in a simple web page or blog post.
+If your Metabase administrator has enabled [public sharing](../administration-guide/12-public-links) on a saved question or dashboard, you can go to that question or dashboard and click on the sharing icon to find its public links. Public links can be viewed by anyone, even if they don't have access to Metabase. You can also use the public embedding code to embed your question or dashboard in a simple web page or blog post.
 
 ![Share icon](images/share-icon.png)
 
@@ -35,7 +34,7 @@ After your team has been using Metabase for a while, you’ll probably end up wi
 
 #### Collections
 
-Collections are the main way to organize questions, as well as dashboards and pulses. [Administrators can give you different kinds of access](../administration-guide/06-collections.html) to each collection:
+Collections are the main way to organize questions, as well as dashboards and pulses. [Administrators can give you different kinds of access](../administration-guide/06-collections) to each collection:
 
 - **View access:** you can see the collection and its contents, but you can't modify anything or put anything new into the collection.
 - **Curate access:** you can edit, move, or archive the collection and its contents. You can also move or save new things in it and create new collections inside of it, and can also pin items in the collection to the top of the screen. Only administrators can edit permissions for collections, however.
@@ -81,4 +80,4 @@ If you have second thoughts and want to bring an archived item back, you can see
 
 ## Next: creating dashboards
 
-Next, we'll learn about [creating dashboards and adding questions to them](07-dashboards.html).
+Next, we'll learn about [creating dashboards and adding questions to them](07-dashboards).

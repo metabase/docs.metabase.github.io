@@ -4,9 +4,8 @@ has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
 category: 'Users Guide'
-title: '13 Sql Parameters'
+title: '13 SQL Parameters'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/users-guide/13-sql-parameters.md'
-layout: docs
 ---
 
 ## SQL Parameters
@@ -37,7 +36,7 @@ If you're writing a native MongoDB query, your query would look more like this, 
 {% raw %}[{ $match: { category: {{cat}} } }]{% endraw %}
 ```
 
-To learn more about SQL variables, check out [Create filter widgets for charts using SQL variables](https://www.metabase.com/blog/sql-template-variables/index.html).
+To learn more about SQL variables, check out [Create filter widgets for charts using SQL variables](/blog/sql-template-variables/index).
 
 ### The Field Filter variable type
 
@@ -97,7 +96,7 @@ Filter widgets **can't** be displayed if the variable is mapped to a field marke
 - Longitude
 - URL
 
-You can learn more in [Field Filters: create smart filter widgets for SQL questions](https://www.metabase.com/blog/field-filters/index.html)
+You can learn more in [Field Filters: create smart filter widgets for SQL questions](/blog/field-filters/index)
 
 #### Setting a default value
 
@@ -117,7 +116,7 @@ WHERE p.createdAt = [[ {% raw %}{{dateOfCreation}}{% endraw %} #]]CURRENT_DATE()
 
 #### Connecting a SQL question to a dashboard filter
 
-In order for a saved SQL/native question to be usable with a dashboard filter, it must contain at least one field filter. The kind of dashboard filter that can be used with the SQL question depends on the field that you map to the question's field filter(s). For example, if you have a field filter called `{% raw %}{{var}}{% endraw %}` and you map it to a State field, you can map a Location dashboard filter to your SQL question. In this example, you'd create a new dashboard or go to an existing one, click the "Edit" button, add the SQL question that contains your State field filter, add a new dashboard filter or edit an existing Location filter, then click the dropdown on the SQL question card to see the State field filter. [Learn more about dashboard filters here](08-dashboard-filters.html).
+In order for a saved SQL/native question to be usable with a dashboard filter, it must contain at least one field filter. The kind of dashboard filter that can be used with the SQL question depends on the field that you map to the question's field filter(s). For example, if you have a field filter called `{% raw %}{{var}}{% endraw %}` and you map it to a State field, you can map a Location dashboard filter to your SQL question. In this example, you'd create a new dashboard or go to an existing one, click the "Edit" button, add the SQL question that contains your State field filter, add a new dashboard filter or edit an existing Location filter, then click the dropdown on the SQL question card to see the State field filter. [Learn more about dashboard filters here](08-dashboard-filters).
 
 ![Field filter](images/sql-parameters/state-field-filter.png)
 
@@ -201,4 +200,4 @@ The `{% raw %}{{#123}}{% endraw %}` tag is substituted for the SQL query of the 
 
 ## Next: automated x-ray explorations
 
-Learn about how to easily and quickly see automatic explorations of your data with Metabase's powerful [x-ray feature](14-x-rays.html).
+Learn about how to easily and quickly see automatic explorations of your data with Metabase's powerful [x-ray feature](14-x-rays).

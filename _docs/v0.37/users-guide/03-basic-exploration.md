@@ -6,7 +6,6 @@ show_title_breadcrumb: true
 category: 'Users Guide'
 title: '03 Basic Exploration'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/users-guide/03-basic-exploration.md'
-layout: docs
 ---
 
 ## Exploring in Metabase
@@ -21,7 +20,7 @@ Alternatively, you can dive right in to exploring the data in Metabase by clicki
 
 ![Browse data](./images/browse-data.png)
 
-To learn more, see [Exploring data with Metabase's data browser](https://www.metabase.com/blog/data-browser/index.html).
+To learn more, see [Exploring data with Metabase's data browser](/blog/data-browser/index).
 
 #### Exploring collections
 
@@ -35,9 +34,9 @@ Collections also have a list of any other items that are saved within them, as w
 
 #### Exploring dashboards
 
-Dashboards are simply collections of charts and numbers that you want to be able to refer back to regularly. [Learn more about dashboards](07-dashboards.html).
+Dashboards are simply collections of charts and numbers that you want to be able to refer back to regularly. [Learn more about dashboards](07-dashboards).
 
-If you click on a part of a chart, such as a bar in a bar chart, or a dot on a line chart, you'll see a menu with actions you can take to dive deeper into that result, to branch off from it in a different direction, or to [x-ray](14-x-rays.html) it to see an automatic exploration of the thing you clicked on.
+If you click on a part of a chart, such as a bar in a bar chart, or a dot on a line chart, you'll see a menu with actions you can take to dive deeper into that result, to branch off from it in a different direction, or to [x-ray](14-x-rays) it to see an automatic exploration of the thing you clicked on.
 
 ![Drill through](images/drill-through/drill-through.png)
 
@@ -69,4 +68,4 @@ One of our personal favorite ways to explore is with the Distribution option. Th
 
 ## Next: Asking custom questions
 
-So what do you do if you can't find an existing dashboard or question that's exactly what you're looking for? Let's learn about [asking our own new questions](04-asking-questions.html)
+So what do you do if you can't find an existing dashboard or question that's exactly what you're looking for? Let's learn about [asking our own new questions](04-asking-questions)

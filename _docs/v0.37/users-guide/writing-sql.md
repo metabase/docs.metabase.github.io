@@ -4,9 +4,8 @@ has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
 category: 'Users Guide'
-title: 'Writing Sql'
+title: 'Writing SQL'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/users-guide/writing-sql.md'
-layout: docs
 ---
 
 ## Asking more advanced questions in the SQL/native query editor
@@ -21,7 +20,7 @@ Even if you don't understand SQL or how to use it, it's worthwhile to understand
 
 ### Starting a new SQL query
 
-If you have the [permissions](../administration-guide/05-setting-permissions.html) to use the SQL editor, when you click the Ask a Question button you'll see an option to start a new SQL query. There's also a shortcut to the editor in the top nav bar; it's the little console icon.
+If you have the [permissions](../administration-guide/05-setting-permissions) to use the SQL editor, when you click the Ask a Question button you'll see an option to start a new SQL query. There's also a shortcut to the editor in the top nav bar; it's the little console icon.
 
 You can write SQL (or your database's native querying language) directly into the editor that appears.
 
@@ -35,24 +34,24 @@ Questions asked using SQL can be saved, downloaded, or added to a dashboard just
 
 ### Using SQL filters
 
-If you or someone else wrote a SQL query that includes [variables](13-sql-parameters.html), your question might have filter widgets at the top of the screen. Filter widgets let you modify the SQL query before it's run, changing the results you might get.
+If you or someone else wrote a SQL query that includes [variables](13-sql-parameters), your question might have filter widgets at the top of the screen. Filter widgets let you modify the SQL query before it's run, changing the results you might get.
 
 ![SQL filter](images/SQL-filter-widget.png)
 
-Writing SQL queries that use variables or parameters can be very powerful, but it's also a bit more advanced, so that topic has its own page if you'd like to [learn more](13-sql-parameters.html).
+Writing SQL queries that use variables or parameters can be very powerful, but it's also a bit more advanced, so that topic has its own page if you'd like to [learn more](13-sql-parameters).
 
 ### SQL snippets
 
-You can use [SQL snippets](sql-snippets.html) to save, reuse, and share SQL code across multiple questions that are composed using the SQL editor.
+You can use [SQL snippets](sql-snippets) to save, reuse, and share SQL code across multiple questions that are composed using the SQL editor.
 
 
 ### Learn more
 
-- [Best practices for writing SQL queries](https://www.metabase.com/blog/sql-best-practices/index.html).
+- [Best practices for writing SQL queries](/blog/sql-best-practices/index).
 
 
 ---
 
 ## Next: Creating charts
 
-Now that you have an answer to your question, you can learn about [visualizing answers](05-visualizing-results.html).
+Now that you have an answer to your question, you can learn about [visualizing answers](05-visualizing-results).

@@ -6,7 +6,6 @@ show_title_breadcrumb: true
 category: 'Enterprise Guide'
 title: Whitelabeling
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/enterprise-guide/whitelabeling.md'
-layout: docs
 ---
 
 ## White labeling Metabase
@@ -27,9 +26,9 @@ You can customize the colors that Metabase uses throughout the app:
 * **Accent colors:** these are the colors that are used for some icons, secondary buttons, elements of the graphical query builder, and chart colors.
 * **Additional chart colors:** as the name implies, these are additional colors that are included in the charting options to give your lines, bars, and pie slices some extra pizazz.
 
-To learn more, check out this article on [branding your Metabase instance](https://www.metabase.com/blog/white-label/index.html).
+To learn more, check out this article on [branding your Metabase instance](/blog/white-label/index).
 
 ---
 
 ## Next: Copying contents of one Metabase instance to another
-Learn how to use [serialization](serialization.html) to create and load data dumps of the contents of a Metabase instance.
+Learn how to use [serialization](serialization) to create and load data dumps of the contents of a Metabase instance.

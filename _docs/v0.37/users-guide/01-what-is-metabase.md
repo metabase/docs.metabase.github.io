@@ -6,7 +6,6 @@ show_title_breadcrumb: true
 category: 'Users Guide'
 title: '01 What Is Metabase'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/users-guide/01-what-is-metabase.md'
-layout: docs
 ---
 
 ## What is Metabase?
@@ -17,7 +16,7 @@ Your questions can be saved for later, making it easy to come back to them, or y
 
 ## Finding your way around
 
-So, you've [gotten Metabase up and running](../operations-guide/start.html) and [connected it to your data](../administration-guide/01-managing-databases.html). It's time to give you the lay of the land.
+So, you've [gotten Metabase up and running](../operations-guide/start) and [connected it to your data](../administration-guide/01-managing-databases). It's time to give you the lay of the land.
 
 ### The home page
 
@@ -25,13 +24,13 @@ So, you've [gotten Metabase up and running](../operations-guide/start.html) and 
 
 Fresh out of the box, Metabase will show you a few things on the home page:
 
-- Some [automatic explorations](14-x-rays.html) of your tables that you can look at and save as a dashboard if you like any of them. (Administrators can permanently hide this section by clicking the `X` that appears on hover.)
+- Some [automatic explorations](14-x-rays) of your tables that you can look at and save as a dashboard if you like any of them. (Administrators can permanently hide this section by clicking the `X` that appears on hover.)
 - An area where things you or your teammates create will show up, along with a link to see all the dashboards, questions, and pulses you have.
 - A list of the databases you've connected to Metabase. (As with x-rays, administrators can permanently hide this section by clicking the `X` that appears on hover. You can always click on "Browse Data" from the main nav bar to see your databases and tables.)
 
 ![Our data](./images/our-data.png)
 
-Once you've created some [dashboards](07-dashboards.html), any of them that you pin in the main "Our analytics" collection will show up on the homepage for all of your teammates, so that when they log in to Metabase they'll know right where to go.
+Once you've created some [dashboards](07-dashboards), any of them that you pin in the main "Our analytics" collection will show up on the homepage for all of your teammates, so that when they log in to Metabase they'll know right where to go.
 
 ### Browse your data
 
@@ -41,7 +40,7 @@ If you connected your database to Metabase during setup, you'll see it listed at
 
 ### Explore your analytics
 
-As you and your team create dashboards and collections, they'll start to show up on the homepage. Click on a collection in the "Our analytics" section to see its contents, or click "browse all items" to see everything you and your team have made. [More about exploring](03-basic-exploration.html)
+As you and your team create dashboards and collections, they'll start to show up on the homepage. Click on a collection in the "Our analytics" section to see its contents, or click "browse all items" to see everything you and your team have made. [More about exploring](03-basic-exploration)
 
 ### Ask a question or write a query
 
@@ -63,4 +62,4 @@ The search bar that's always present at the top of the screen lets you search th
 
 ## A primer on databases
 
-To fully understand how to use Metabase, it’s useful to have at least a high-level understanding of databases, so we'll discuss [the basics of databases](02-database-basics.html) next.
+To fully understand how to use Metabase, it’s useful to have at least a high-level understanding of databases, so we'll discuss [the basics of databases](02-database-basics) next.

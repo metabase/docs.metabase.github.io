@@ -6,19 +6,18 @@ show_title_breadcrumb: true
 category: 'Users Guide'
 title: '11 Metabot'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/users-guide/11-metabot.md'
-layout: docs
 ---
 
 ## Getting answers in Slack with MetaBot
 
-You can already send data to Slack on a set schedule with [Pulses](10-pulses.html), but what about when you need an answer right now? Say hello to MetaBot.
+You can already send data to Slack on a set schedule with [Pulses](10-pulses), but what about when you need an answer right now? Say hello to MetaBot.
 
 MetaBot helps add context to conversations you’re having in Slack by letting you insert results from Metabase.
 
 ### Connecting to Slack.
 To use MetaBot with Slack you’ll first need to connect Metabase to your Slack with an API token.
 
-See [Setting up Slack](../administration-guide/09-setting-up-slack.html) for more information.
+See [Setting up Slack](../administration-guide/09-setting-up-slack) for more information.
 
 
 ### What can MetaBot do?
@@ -50,7 +49,7 @@ If you don’t have a sense of which questions you want to view in  Slack, you c
 
 ## To review
 
-- [Connect to Slack](../administration-guide/09-setting-up-slack.html) to start using MetaBot.
+- [Connect to Slack](../administration-guide/09-setting-up-slack) to start using MetaBot.
 - Show data from Metabase in Slack using ```metabot show <question-id>```
 - Search for questions by typing ```metabot show <search-term>```
 - Get a list of questions by typing ```metabot list```
@@ -61,4 +60,4 @@ If you don’t have a sense of which questions you want to view in  Slack, you c
 
 ## Next:
 
-Sometimes you’ll need help understanding what data is available to you and what it means. Metabase provides a way for your administrators and data experts to build a [data model reference](12-data-model-reference.html) to help you make sense of your data.
+Sometimes you’ll need help understanding what data is available to you and what it means. Metabase provides a way for your administrators and data experts to build a [data model reference](12-data-model-reference) to help you make sense of your data.

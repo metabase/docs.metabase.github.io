@@ -5,8 +5,7 @@ show_category_breadcrumb: true
 show_title_breadcrumb: true
 category: 'Users Guide'
 title: '05 Visualizing Results'
-source_url: 'https://github.com/metabase/metabase/blob/master/docs/questions/sharing/visualizing-results.md'
-layout: docs
+source_url: 'https://github.com/metabase/metabase/blob/master/docs/users-guide/05-visualizing-results.md'
 ---
 
 # Visualizing results
@@ -36,7 +35,7 @@ To change how the answer to your question is displayed, click on the **Visualiza
 
 If a particular visualization doesn’t really make sense for your answer, that option will appear grayed out in the sidebar. You can still select a grayed-out option, though you might need to open the chart options to make your selection work with your data.
 
-Once a question returns results, you can save the question, download the results, or add the question to a [dashboard](07-dashboards.html) or [pulse](10-pulses.html).
+Once a question returns results, you can save the question, download the results, or add the question to a [dashboard](07-dashboards) or [pulse](10-pulses).
 
 ## Visualization types and options
 
@@ -90,7 +89,7 @@ Open up the settings for your table and you'll see the Columns tab, which displa
 
 To hide a column, click the X icon on it; that'll send it down to the **More columns** area in case you want to bring it back. To add a linked column, just click the + icon on it, which will bring it to the **Visible columns** section. Click and drag any of the columns listed there to rearrange the order in which they appear. Another super easy way to rearrange columns without having to open up the visualization settings is to simply click and drag on a column's heading to move it where you'd like it to go.
 
-> Changing these options doesn't change the actual table itself; these changes create a custom view of the table that you can save as a **question** in Metabase and refer back to later, share with others, or add to a [dashboard](07-dashboards.html).
+> Changing these options doesn't change the actual table itself; these changes create a custom view of the table that you can save as a **question** in Metabase and refer back to later, share with others, or add to a [dashboard](07-dashboards).
 
 #### Column formatting options
 
@@ -157,7 +156,7 @@ If your table is a result that contains one numeric column and two grouping colu
 
 ![Bar chart](images/visualizations/bar.png)
 
-Learn more about [Bar charts](https://www.metabase.com/blog/bar-chart/index.html).
+Learn more about [Bar charts](/blog/bar-chart/index).
 
 **Area charts** are useful when comparing the proportions of two metrics over time. Both bar and area charts can be stacked.
 
@@ -195,7 +194,7 @@ If you're trying to group a number by a column that has a lot of possible values
 
 #### Histograms
 
-If you have a bar chart like Count of Users by Age, where the x-axis is a number, you'll get a special kind of chart called a **[histogram](https://www.metabase.com/blog/histograms/index.html)**, where each bar represents a range of values (called a "bin"). Note that Metabase will automatically bin your results any time you use a number as a grouping, even if you aren't viewing a bar chart. Questions that use latitude and longitude will also get binned automatically.
+If you have a bar chart like Count of Users by Age, where the x-axis is a number, you'll get a special kind of chart called a **[histogram](/blog/histograms/index)**, where each bar represents a range of values (called a "bin"). Note that Metabase will automatically bin your results any time you use a number as a grouping, even if you aren't viewing a bar chart. Questions that use latitude and longitude will also get binned automatically.
 
 ![Histogram](images/histogram.png)
 
@@ -222,7 +221,7 @@ There's quite a bit you can do in this tab, but the options available will depen
 - **Set the colors and labels** for the series on your chart.
 - **Change the style of your lines** for Line and Area charts, and choose whether to display dots on the lines.
 - **Specify how to handle missing values**. Use the "Replace missing values with…" setting to change how your chart deals with missing values. You can use linear interpolation, or display those points as zero or as nothing.
-- **Add a goal line**. Goal lines can be used in conjunction with [alerts](15-alerts.html) to send an email or a Slack message when your metric cross this line.
+- **Add a goal line**. Goal lines can be used in conjunction with [alerts](15-alerts) to send an email or a Slack message when your metric cross this line.
 - **Add a trend line**. If you're looking at a time series chart, you can turn on a trend line to show where things are heading.
 - **Show values on data points**. The default setting will try and fit as many values on your chart as will fit nicely, but you can also force Metabase to show the values for each and every data point, which it will do begrudgingly. Showing values also works with multi-series charts, but be aware that the more data points you add, the more crowded with values the charts will become.
 
@@ -281,10 +280,10 @@ When you open up the Map options, you can manually switch between a region map (
 
 Metabase also allows administrators to add custom region maps via GeoJSON files through the Metabase **Admin Panel**.
 
-Learn more about [visualizing data with maps](https://www.metabase.com/blog/map-visualization/index.html).
+Learn more about [visualizing data with maps](/blog/map-visualization/index).
 
 ---
 
 ## Next: Sharing and organizing questions
 
-Now let's learn about [sharing and organizing your saved questions](06-sharing-answers.html).
+Now let's learn about [sharing and organizing your saved questions](06-sharing-answers).

@@ -6,7 +6,6 @@ show_title_breadcrumb: true
 category: 'Operations Guide'
 title: 'Running the Metabase Mac App'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/operations-guide/running-the-metabase-mac-app.md'
-layout: docs
 ---
 
 # Running the Metabase Mac Application
@@ -16,7 +15,7 @@ Note that currently the Mac Application is not setup for shared use, so some Met
 
 ### Installing the Mac Application
 
-Start off by downloading the [Metabase Mac Application](https://metabase.com/start/mac.html) if you haven't done so already.
+Start off by downloading the [Metabase Mac Application](/start/mac) if you haven't done so already.
 Once the download is complete go ahead and double click the file to open it up. You should see something like this:
 
 ![macinstaller](images/MacInstaller.png)
@@ -36,7 +35,7 @@ Give the application a moment to finish initializing and then you should see the
 
 ![macwelcome](images/MacWelcome.png)
 
-Now that you’ve installed Metabase, it’s time to [set it up and connect it to your database](../setting-up-metabase.html).
+Now that you’ve installed Metabase, it’s time to [set it up and connect it to your database](../setting-up-metabase).
 
 ### The application database
 

@@ -6,7 +6,6 @@ show_title_breadcrumb: true
 category: 'Table of Contents'
 title: 'Developers Guide Drivers'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/developers-guide-drivers.md'
-layout: docs
 ---
 
 # Community-built database drivers

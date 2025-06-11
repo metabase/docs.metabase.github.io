@@ -6,7 +6,6 @@ show_title_breadcrumb: true
 category: 'Troubleshooting Guide'
 title: Proxies
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/troubleshooting-guide/proxies.md'
-layout: docs
 ---
 
 If you're experiencing problems where attempting to save a question or dashboard sometimes fails, or Metabase only loads a blank page, this might be caused by the use of a proxy.

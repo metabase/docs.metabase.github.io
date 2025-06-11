@@ -6,7 +6,6 @@ show_title_breadcrumb: true
 category: 'Troubleshooting Guide'
 title: Installing
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/troubleshooting-guide/installing.md'
-layout: docs
 ---
 
 ## Troubleshooting Process
