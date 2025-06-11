@@ -11,7 +11,7 @@ layout: new-docs
 
 ```ts
 type InteractiveQuestionSaveButtonProps = {
-  onClick: MouseEventHandler<HTMLButtonElement>;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
 } & ButtonProps;
 ```
 

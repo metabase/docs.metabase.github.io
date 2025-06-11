@@ -15,8 +15,9 @@ layout: new-docs
 
 <!-- [<snippet properties>] -->
 
-| Property                        | Type         | Description                                         |
-| :------------------------------ | :----------- | :-------------------------------------------------- |
-| <a id="onapply"></a> `onApply?` | () => `void` | Callback function executed when changes are applied |
+| Property                                              | Type         | Description                                         |
+| :---------------------------------------------------- | :----------- | :-------------------------------------------------- |
+| <a id="hasvisualizebutton"></a> `hasVisualizeButton?` | `boolean`    | -                                                   |
+| <a id="onapply"></a> `onApply?`                       | () => `void` | Callback function executed when changes are applied |
 
 <!-- [<endsnippet properties>] -->

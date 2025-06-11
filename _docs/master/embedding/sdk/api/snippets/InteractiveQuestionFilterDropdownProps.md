@@ -11,7 +11,7 @@ layout: new-docs
 
 ```ts
 type InteractiveQuestionFilterDropdownProps = {
-  withColumnItemIcon: boolean;
+  withColumnItemIcon?: boolean;
 };
 ```
 

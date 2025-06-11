@@ -11,6 +11,7 @@ layout: new-docs
 
 ```ts
 type MetabaseAuthConfig =
-  | MetabaseAuthConfigWithProvider
-  | MetabaseAuthConfigWithApiKey;
+  | MetabaseAuthConfigWithApiKey
+  | MetabaseAuthConfigWithJwt
+  | MetabaseAuthConfigWithSaml;
 ```

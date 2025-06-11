@@ -11,7 +11,7 @@ layout: new-docs
 
 ```ts
 type MetabaseDashboardPluginsConfig = {
-  dashboardCardMenu:
+  dashboardCardMenu?:
     | DashboardCardMenuCustomElement
     | DashboardCardCustomMenuItem;
 };

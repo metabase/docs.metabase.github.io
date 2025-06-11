@@ -11,9 +11,9 @@ layout: new-docs
 
 ```ts
 type DashboardCardCustomMenuItem = {
-  customItems: (DashCardMenuItem | CustomDashboardCardMenuItem)[];
-  withDownloads: boolean;
-  withEditLink: boolean;
+  customItems?: (DashCardMenuItem | CustomDashboardCardMenuItem)[];
+  withDownloads?: boolean;
+  withEditLink?: boolean;
 };
 ```
 

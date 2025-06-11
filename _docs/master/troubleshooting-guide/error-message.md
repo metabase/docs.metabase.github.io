@@ -17,8 +17,8 @@ An error message can help you find the right troubleshooting guide. The exact wo
 
 See if your error details contain any of:
 
-- [Table or column "not found" or "not recognized"](/learn/grow-your-data-skills/learn-sql/debugging-sql/sql-syntax#column-or-table-name-is-not-found-or-not-recognized).
-- [Function does not exist](/learn/grow-your-data-skills/learn-sql/debugging-sql/sql-syntax#sql-function-does-not-exist).
+- [Table or column "not found" or "not recognized"](/learn/sql/debugging-sql/sql-syntax#column-or-table-name-is-not-found-or-not-recognized).
+- [Function does not exist](/learn/sql/debugging-sql/sql-syntax#sql-function-does-not-exist).
 - [Permission denied](./data-permissions#getting-a-permission-denied-error-message).
 
 For example, this SQL error tells you that the function `DATEFROMPARTS` does not work on a BigQuery database:

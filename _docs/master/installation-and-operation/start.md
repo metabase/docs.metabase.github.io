@@ -33,6 +33,10 @@ How to back up your Metabase data: questions, dashboards, and other application 
 
 How to safely upgrade your Metabase.
 
+## [Development instances](./development-instance)
+
+Try out your changes before deploying to production.
+
 ## [Serialization](./serialization)
 
 Export your questions, dashboards, and more as YAML files that you can check into version control.
