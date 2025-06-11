@@ -52,7 +52,7 @@ docker run -d -p 3000:3000 -e MB_SITE_NAME="Awesome Company" --name metabase met
 
 ## Environment variables on Metabase Cloud
 
-If you're running Metabase Cloud, you can [contact support](/help/premium) to adjust environment variables for your Metabase.
+If you're running Metabase Cloud, you can [contact support](/help-premium) to adjust environment variables for your Metabase.
 
 ---
 
@@ -687,7 +687,7 @@ Keyword setting to control whitelabeling of the help link. Valid values are `:me
 > Only available on Metabase [Pro](/product/pro) and [Enterprise](/product/enterprise) plans.
 
 - Type: string
-- Default: `https://www.metabase.com/help/premium`
+- Default: `https://www.metabase.com/help-premium`
 - [Configuration file name](./config-file): `help-link-custom-destination`
 
 Custom URL for the help link.
