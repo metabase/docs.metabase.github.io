@@ -6,7 +6,6 @@ show_title_breadcrumb: true
 category: 'Troubleshooting Guide'
 title: Loggingin
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/troubleshooting-guide/loggingin.md'
-layout: docs
 ---
 
 ## Troubleshooting Process
@@ -19,7 +18,7 @@ layout: docs
 
 ### Forgotten Password
 
-[This FAQ](../faq/using-metabase/how-do-i-reset-my-password.html) will tell you what to do in the event of a forgotten password.
+[This FAQ](../faq/using-metabase/how-do-i-reset-my-password) will tell you what to do in the event of a forgotten password.
 
 ### Invalid Google Auth Token:
 

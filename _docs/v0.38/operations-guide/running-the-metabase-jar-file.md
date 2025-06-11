@@ -6,7 +6,6 @@ show_title_breadcrumb: true
 category: 'Operations Guide'
 title: 'Running the Metabase Jar File'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/operations-guide/running-the-metabase-jar-file.md'
-layout: docs
 ---
 
 # Running the Metabase JAR file
@@ -15,11 +14,11 @@ To run Metabase via a JAR file, you will need to have a Java Runtime Environment
 
 ### Install Java JRE
 
-We recommend the latest LTS version of JRE from [AdoptOpenJDK](https://adoptopenjdk.net/releases.html) with HotSpot JVM and x64 architecture, but other [Java versions](./java-versions.html) are supported too.
+We recommend the latest LTS version of JRE from [AdoptOpenJDK](https://adoptopenjdk.net/releases.html) with HotSpot JVM and x64 architecture, but other [Java versions](./java-versions) are supported too.
 
 ### Download Metabase
 
-Go to the [Metabase download page](https://metabase.com/start/jar.html) and download the latest release. Place the downloaded JAR file into a newly created directory (as it will create some files when it is run).
+Go to the [Metabase download page](/start/jar) and download the latest release. Place the downloaded JAR file into a newly created directory (as it will create some files when it is run).
 
 ### Launching Metabase
 
@@ -42,6 +41,6 @@ At this point you're ready to go! You can access your new Metabase server on por
 
 You can use another port than 3000 by setting the `MB_JETTY_PORT` environment variable before running the jar.
 
-Note that in the default configuration Metabase will use a local H2 database for storing all its own application data. This is meant for simple evaluations or personal use, so if you want to run Metabase in production we recommend you [migrate away from H2](./migrating-from-h2.html).
+Note that in the default configuration Metabase will use a local H2 database for storing all its own application data. This is meant for simple evaluations or personal use, so if you want to run Metabase in production we recommend you [migrate away from H2](./migrating-from-h2).
 
-Now that you’ve installed Metabase, it’s time to [set it up and connect it to your database](../setting-up-metabase.html).
+Now that you’ve installed Metabase, it’s time to [set it up and connect it to your database](../setting-up-metabase).

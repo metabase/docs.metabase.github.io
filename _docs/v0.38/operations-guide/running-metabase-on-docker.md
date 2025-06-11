@@ -6,14 +6,13 @@ show_title_breadcrumb: true
 category: 'Operations Guide'
 title: 'Running Metabase on Docker'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/operations-guide/running-metabase-on-docker.md'
-layout: docs
 ---
 
 # Running Metabase on Docker
 
 Metabase provides an official Docker image via Dockerhub that can be used for deployments on any system that is running Docker.
 
-If you're trying to upgrade your Metabase version on Docker, check out these [upgrading instructions](upgrading-metabase.html).
+If you're trying to upgrade your Metabase version on Docker, check out these [upgrading instructions](upgrading-metabase).
 
 ### Launching Metabase on a new container
 
@@ -87,7 +86,7 @@ Keep in mind that Metabase will be connecting from within your docker container,
 
 ### Migrating from H2 to Postgres as the Metabase application database
 
-For general information, see instructions for [migrating from H2 to MySQL or Postgres](migrating-from-h2.html).
+For general information, see instructions for [migrating from H2 to MySQL or Postgres](migrating-from-h2).
 
 To migrate an existing Metabase container from an H2 application database to another database container (e.g. Postgres, MySQL), there are a few considerations to keep in mind:
 
@@ -126,7 +125,7 @@ It's best to set your Java timezone to match the timezone you'd like all your re
 
 ### Additional custom settings
 
-While running Metabase on docker you can use any of the custom settings from [Customizing the Metabase Jetty Webserver](customizing-jetty-webserver.html) by setting environment variables on your docker run command.
+While running Metabase on docker you can use any of the custom settings from [Customizing the Metabase Jetty Webserver](customizing-jetty-webserver) by setting environment variables on your docker run command.
 
 In addition to the standard custom settings there are two docker specific environment variables `MUID` and `MGID` which are used to set the user and group IDs used by metabase when running in a docker container. These settings make it possible to match file permissions when files, such as the application database, are shared between the host and the container.
 
@@ -134,7 +133,7 @@ Here's how to use a database file, owned by your account, that is stored in your
 
     docker run -d -v ~/my-metabase-db:/metabase.db --name metabase -e MB_DB_FILE=/metabase.db -e MUID=$UID -e MGID=$GID -p 3000:3000 metabase/metabase
 
-Now that you’ve installed Metabase, it’s time to [set it up and connect it to your database](../setting-up-metabase.html).
+Now that you’ve installed Metabase, it’s time to [set it up and connect it to your database](../setting-up-metabase).
 
 
 ### Copying the application database
@@ -155,7 +154,7 @@ On some hosts Metabase can fail to start with an error message like:
     java.lang.OutOfMemoryError: Java heap space
 
 If that happens, you'll need to set a JVM option to manually configure the maximum amount of memory the JVM uses for the heap. Refer
-to [these instructions](../troubleshooting-guide/running.html) for details on how to do that.
+to [these instructions](../troubleshooting-guide/running) for details on how to do that.
 
 ### Adding external dependencies or plugins
 

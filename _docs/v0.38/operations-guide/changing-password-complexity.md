@@ -6,7 +6,6 @@ show_title_breadcrumb: true
 category: 'Operations Guide'
 title: 'Changing Password Complexity'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/operations-guide/changing-password-complexity.md'
-layout: docs
 ---
 
 # Changing Metabase password complexity

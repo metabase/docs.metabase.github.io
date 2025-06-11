@@ -4,14 +4,13 @@ has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
 category: 'Enterprise Guide'
-title: 'Sql Snippets'
+title: 'SQL Snippets'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/enterprise-guide/sql-snippets.md'
-layout: docs
 ---
 
 # SQL snippet folders and permissions
 
-This article covers **SQL snippet folders**, which are an Enterprise feature for organizing and permissioning snippets. You can learn more about [how SQL snippets work in our User Guide](../users-guide/sql-snippets.html).
+This article covers **SQL snippet folders**, which are an Enterprise feature for organizing and permissioning snippets. You can learn more about [how SQL snippets work in our User Guide](../users-guide/sql-snippets).
 
 Folder permissions should not be considered a security feature, but instead a feature that helps organize and standardize snippets. Although folders are distinct and separate from Collections, they both serve an organizational function: Collections gather and permission dashboards and questions; folders gather and permission snippets. For more info, see the [discussion on permissions below](#permissions).
 
@@ -23,7 +22,7 @@ The **Top folder** is the snippet sidebar's default folder. It is the root folde
 
 ### Creating a new SQL snippet folder
 
-You can create a SQL snippet folder from the **Snippets** menu in the [SQL editor](../users-guide/writing-sql.html).
+You can create a SQL snippet folder from the **Snippets** menu in the [SQL editor](../users-guide/writing-sql).
 
 ![Create new snippet folder](./images/sql-snippets/snippet-folder.png)
 
@@ -45,7 +44,7 @@ Note that snippet names must be unique; folders do not affect this requirement.
 
 ## Permissions
 
-Administrators (and only administrators) can set snippet visibility and editability by placing snippets in **folders**, then granting groups one of three permission levels with respect to those folders. If you're familiar with [collection permissions](../administration-guide/06-collections.html#setting-permissions-for-collections), the functionality is similar. For more on how collection and folder permissions work together, see [how folder permissions work](#how-folder-permissions-work) below.
+Administrators (and only administrators) can set snippet visibility and editability by placing snippets in **folders**, then granting groups one of three permission levels with respect to those folders. If you're familiar with [collection permissions](/docs/latest/administration-guide/06-collections#setting-permissions-for-collections), the functionality is similar. For more on how collection and folder permissions work together, see [how folder permissions work](#how-folder-permissions-work) below.
 
 ### Changing permissions on a folder
 
@@ -71,7 +70,7 @@ Archiving or unarchiving snippets does not affect a snippet's permissions. If, f
 
 ### How folder permissions work
 
-As with collection permissions, folder permissions are additive, meaning that the more permissive access overrules less permissive access. See [Setting permissions](../administration-guide/05-setting-permissions.html) for a more detailed discussion.
+As with collection permissions, folder permissions are additive, meaning that the more permissive access overrules less permissive access. See [Setting permissions](../administration-guide/05-setting-permissions) for a more detailed discussion.
 
 But snippet folder permissions require some more effort to unpack, as permissions for snippet folders must work in conjunction with permissions for data and collections.
 
@@ -89,4 +88,4 @@ In three parts:
 
 Because of how snippet folder permissions work, we recommend that you consider snippet folder permissions as an additional tool for snippet organization, not as method of preventing access to the SQL code those snippets contain. Use folder permissions to keep the snippet sidebar tidy by exposing teams to folders relevant to their analytical domain, and restrict editing permissions to key snippets in your organization to keep important SQL code accurate and safe from bugs introduced by unvetted edits.
 
-Learn more about [SQL snippets](https://www.metabase.com/blog/sql-snippets/index.html).
+Learn more about [SQL snippets](/blog/sql-snippets/index).

@@ -6,7 +6,6 @@ show_title_breadcrumb: true
 category: 'Operations Guide'
 title: 'Running Migrations Manually'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/operations-guide/running-migrations-manually.md'
-layout: docs
 ---
 
 # Running Metabase database migrations manually

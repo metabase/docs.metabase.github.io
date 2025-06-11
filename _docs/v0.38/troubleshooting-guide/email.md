@@ -6,7 +6,6 @@ show_title_breadcrumb: true
 category: 'Troubleshooting Guide'
 title: Email
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/troubleshooting-guide/email.md'
-layout: docs
 ---
 
 ## Troubleshooting Process

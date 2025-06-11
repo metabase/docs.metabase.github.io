@@ -6,7 +6,6 @@ show_title_breadcrumb: true
 category: 'Users Guide'
 title: '12 Data Model Reference'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/users-guide/12-data-model-reference.md'
-layout: docs
 ---
 
 ## Data Model Reference
@@ -31,4 +30,4 @@ In addition to looking at a table's column, you can also look at its connections
 
 ## Next: powering up your SQL questions with variables
 
-Find out [how to use variables in your native SQL queries](13-sql-parameters.html) to create powerful filter widgets and more.
+Find out [how to use variables in your native SQL queries](13-sql-parameters) to create powerful filter widgets and more.

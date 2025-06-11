@@ -6,7 +6,6 @@ show_title_breadcrumb: true
 category: 'Table of Contents'
 title: Contributing
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/contributing.md'
-layout: docs
 ---
 
 ## Thank you
@@ -22,7 +21,7 @@ Metabase is all about letting non-technical users get access to the their organi
 It's important to keep in mind these goals of the Metabase project. Many times
 proposals will be marked "Out of Scope" or otherwise deprioritized. This doesn't mean the proposal isn't useful, or that we wouldn't be interested in seeing it done as a side project or as an experimental branch. However, it does mean that we won't point the core team or contributors to it in the near term. Issues that are slightly out of scope will be kept open in case there is community support (and ideally contributions).
 
-To get a sense for the end goals, make sure to read the [Zen of Metabase](https://github.com/metabase/metabase/blob/master/zen.html).
+To get a sense for the end goals, make sure to read the [Zen of Metabase](https://github.com/metabase/metabase/blob/master/zen.md).
 
 ## Our product process:
 
@@ -54,7 +53,7 @@ Once one or more people have started to work on a feature, it should be marked [
 
 ### E) Verification and merging
 
-All PRs that involve more than an insignificant change should be reviewed. See our [Code Review Process](code-reviews.html).
+All PRs that involve more than an insignificant change should be reviewed. See our [Code Review Process](code-reviews).
 
 If all goes well, the feature gets coded up, verified and then the pull request gets merged! High-fives all around.
 

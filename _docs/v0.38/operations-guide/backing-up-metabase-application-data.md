@@ -6,7 +6,6 @@ show_title_breadcrumb: true
 category: 'Operations Guide'
 title: 'Backing Up Metabase Application Data'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/operations-guide/backing-up-metabase-application-data.md'
-layout: docs
 ---
 
 # Backing up Metabase Application Data

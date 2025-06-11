@@ -6,7 +6,6 @@ show_title_breadcrumb: true
 category: 'Troubleshooting Guide'
 title: Bugs
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/troubleshooting-guide/bugs.md'
-layout: docs
 ---
 
 ## Reporting a bug

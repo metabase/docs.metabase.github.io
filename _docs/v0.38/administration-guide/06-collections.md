@@ -6,7 +6,6 @@ show_title_breadcrumb: true
 category: 'Administration Guide'
 title: '06 Collections'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/administration-guide/06-collections.md'
-layout: docs
 ---
 
 ## Creating Collections for Your Saved Questions
@@ -18,7 +17,7 @@ Collections are a great way to organize your dashboards, saved questions, and pu
 
 Metabase starts out with a default top-level collection which is called "Our analytics," which every other collection is saved inside of.
 
-This page will teach you how to create and manage your collections. For more information on organizing saved questions and using collections, [check out this section of the User's Guide](../users-guide/06-sharing-answers.html).
+This page will teach you how to create and manage your collections. For more information on organizing saved questions and using collections, [check out this section of the User's Guide](../users-guide/06-sharing-answers).
 
 ### Creating and editing collections
 If a user has Curate access for a collection, they can create new sub-collections inside it and edit the contents of the collection. From the detail view of any collection, click on the `Create a collection` button to make a new one. Give your collection a name, choose where it should live, and give it a description if you'd like.
@@ -35,7 +34,7 @@ One great feature in Metabase is that you can pin the most important couple of i
 Any user with curate permissions for a collection can pin items in it, making it easy to delegate curation responsibilities to other members of your team. To pin something, you can either click and drag it to the top of the page, or click on its menu and choose the pin action. (Note that collections themselves can't be pinned.)
 
 ### Setting permissions for collections
-Collection permissions are similar to [data access permissions](05-setting-permissions.html). Rather than going to the Admin Panel, you set permissions on collections by clicking on the lock icon in the top-right of the screen while viewing the collection and clicking on `Edit permissions`. Only Administrators can edit collection permissions. Each [user group](05-setting-permissions.html) can have either View, Curate, or No access to a collection:
+Collection permissions are similar to [data access permissions](05-setting-permissions). Rather than going to the Admin Panel, you set permissions on collections by clicking on the lock icon in the top-right of the screen while viewing the collection and clicking on `Edit permissions`. Only Administrators can edit collection permissions. Each [user group](05-setting-permissions) can have either View, Curate, or No access to a collection:
 
 - **Curate access:** the user can edit, move, and archive items saved in this collection, and can save or move new items into it. They can also create new sub-collections within this collection. In order to archive a sub-collection within this collection, they'll need to have Curate access for it and any and all collections within it.
 - **View access:** the user can see all the questions, dashboards, and pulses in the collection. If the user does not have permission to view some or all of the questions included in a given dashboard or pulse then those questions will not be visible to them; but any questions that are saved in this collection *will* be visible to them, *even if the user doesn't have access to the underlying data used to in the question.*
@@ -52,7 +51,7 @@ Just like with data access permissions, collection permissions are *additive*, m
 ### Permissions and sub-collections
 One nuance with how collections permissions work has to do with sub-collections. A user group can be given access to a collection located somewhere within one or more sub-collections *without* having to have access to every collection "above" it. E.g., if a user group had access to the "Super Secret Collection" that's saved several layers deep within a "Marketing" collection that the group does *not* have access to, the "Super Secret Collection" would show up at the top-most level that the group *does* have access to.
 
-To learn more, check out our Learn article on [working with collection permissions](https://www.metabase.com/learn/organization/organization/collection-permissions.html).
+To learn more, check out our Learn article on [working with collection permissions](/learn/organization/organization/collection-permissions).
 
 ### Personal collections
 
@@ -70,4 +69,4 @@ You can always *unarchive* things by clicking on the More menu from a collection
 ---
 
 ## Next: sharing and embedding with public links
-Want to share certain dashboards or questions with the world? You can do that with [public links](12-public-links.html).
+Want to share certain dashboards or questions with the world? You can do that with [public links](12-public-links).

@@ -6,7 +6,6 @@ show_title_breadcrumb: true
 category: 'Enterprise Guide'
 title: Audit
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/enterprise-guide/audit.md'
-layout: docs
 ---
 
 ## Audit Logs
@@ -49,7 +48,7 @@ The Items section focuses on questions, dashboards and downloads, and is divided
 
 The Questions section will show you your most popular queries, as well as your slowest queries. If queries you think are important aren't appearing on your most popular queries list, you may want to make sure your team is focusing on the right things.
 
-If important queries are appearing on the list of slowest queries, you will want to look at optimizing them. One option is to adjust your [caching settings](../administration-guide/14-caching.html), but there are plenty of other options as well. To help you determine if your optimization efforts are heading in the right direction, use the `Query views and speed per day` visualization at the bottom of the page.
+If important queries are appearing on the list of slowest queries, you will want to look at optimizing them. One option is to adjust your [caching settings](../administration-guide/14-caching), but there are plenty of other options as well. To help you determine if your optimization efforts are heading in the right direction, use the `Query views and speed per day` visualization at the bottom of the page.
 
 ![Items](./images/audit-questions.png)
 

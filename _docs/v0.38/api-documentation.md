@@ -4,16 +4,15 @@ has_magic_breadcrumbs: true
 show_category_breadcrumb: false
 show_title_breadcrumb: true
 category: 'Table of Contents'
-title: 'Api Documentation'
+title: 'API Documentation'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/api-documentation.md'
-layout: docs
 ---
 
 # API Documentation for Metabase
 
 _This file was generated from source comments by `lein run api-documentation`_.
 
-Check out an introduction to the [Metabase API](https://www.metabase.com/learn/developing-applications/advanced-metabase/metabase-api.html).
+Check out an introduction to the [Metabase API](/learn/developing-applications/advanced-metabase/metabase-api).
 
 ## `GET /api/activity/`
 
@@ -1918,7 +1917,7 @@ Notification about a potential schema change to one of our `Databases`.
   `Table`. Optional Parameter `:scan` can be `"full" or "schema" for a full sync or a schema sync, available
   regardless if a `:table_id` or `:table_name` is passed.
   This endpoint is secured by an API key that needs to be passed as a `X-METABASE-APIKEY` header which needs to be defined in 
-  the `MB_API_KEY` [environment variable](./operations-guide/environment-variables.html#mb_api_key)
+  the `MB_API_KEY` [environment variable](/docs/latest/operations-guide/environment-variables#mb_api_key)
 
 ##### PARAMS:
 

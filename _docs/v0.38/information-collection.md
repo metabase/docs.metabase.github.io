@@ -6,7 +6,6 @@ show_title_breadcrumb: true
 category: 'Table of Contents'
 title: 'Information Collection'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/information-collection.md'
-layout: docs
 ---
 
 # About the Information we collect:

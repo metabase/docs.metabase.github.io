@@ -6,7 +6,6 @@ show_title_breadcrumb: true
 category: 'Operations Guide'
 title: 'Running Metabase on Debian'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/operations-guide/running-metabase-on-debian.md'
-layout: docs
 ---
 
 # Running Metabase on Debian as a service with nginx
@@ -155,4 +154,3 @@ Now, whenever you need to start, stop, or restart Metabase, all you need to do i
     $ sudo systemctl start metabase.service
     $ sudo systemctl stop metabase.service
     $ sudo systemctl restart metabase.service
-

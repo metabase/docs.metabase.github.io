@@ -6,7 +6,6 @@ show_title_breadcrumb: true
 category: 'Operations Guide'
 title: 'Creating RDS Database on AWS'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/operations-guide/creating-RDS-database-on-AWS.md'
-layout: docs
 ---
 
 - [Configuring RDS for Metabase (the recommended guide)](#configuring-rds-for-metabase-the-recommended-guide)
@@ -77,7 +76,7 @@ On the edit page, you need to delete the IP address that appears as default, the
 
 # Step 4 
 
-After having finished all the previous steps, go to the your Elastic Beanstalk deployment and add the RDS instance as the Application Database with [Environment variables](environment-variables.html) under the [Software configuration](running-metabase-on-elastic-beanstalk.html#set-or-change-environment-variables).
+After having finished all the previous steps, go to the your Elastic Beanstalk deployment and add the RDS instance as the Application Database with [Environment variables](environment-variables) under the [Software configuration](running-metabase-on-elastic-beanstalk#set-or-change-environment-variables).
 
 ---
 # Decouple your RDS database from the Elastic Beanstalk deployment

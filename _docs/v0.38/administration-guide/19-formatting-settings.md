@@ -6,14 +6,13 @@ show_title_breadcrumb: true
 category: 'Administration Guide'
 title: '19 Formatting Settings'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/administration-guide/19-formatting-settings.md'
-layout: docs
 ---
 
 ## Setting default formatting for your data
 
 There are Metabase users around the world, each with different preferences for how dates, times, numbers, and currencies should be formatted and displayed. Metabase allows you to customize these formatting options at three different levels:
 
-1. **Global**. Set global defaults in the [Localization](localization.html) section in Admin -> Settings -> Localization.
+1. **Global**. Set global defaults in the [Localization](localization) section in Admin -> Settings -> Localization.
 2. **Field**.  Set field (column) defaults in Admin -> Data Model. Field defaults override global defaults.
 3. **Question**. Set formatting defaults for individual questions in the visualization settings of that question. Question defaults override global and field defaults.
 
@@ -42,4 +41,4 @@ Lastly, you can override all formatting settings in any specific saved question 
 ---
 
 ## Next: caching query results
-Metabase makes it easy to [automatically cache results](14-caching.html) for queries that take a long time to run.
+Metabase makes it easy to [automatically cache results](14-caching) for queries that take a long time to run.

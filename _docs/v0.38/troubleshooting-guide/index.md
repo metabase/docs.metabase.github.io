@@ -6,23 +6,22 @@ show_title_breadcrumb: false
 category: 'Troubleshooting Guide'
 title: Index
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/troubleshooting-guide/index.md'
-layout: docs
 ---
 
 ## What are you having trouble with?
 
-### [Logging in](loggingin.html)
+### [Logging in](loggingin)
 
-### [Running Metabase](running.html)
+### [Running Metabase](running)
 
-### [Running Metabase on Docker](docker.html)
+### [Running Metabase on Docker](docker)
 
-### [The Metabase Application Database](application-database.html)
+### [The Metabase Application Database](application-database)
 
-### [Connecting to databases and data warehouses with Metabase](datawarehouse.html)
+### [Connecting to databases and data warehouses with Metabase](datawarehouse)
 
-### [Incorrect results due to time zones](timezones.html)
+### [Incorrect results due to time zones](timezones)
 
-### [Problems with saving questions/dashboards or blank page](proxies.html)
+### [Problems with saving questions/dashboards or blank page](proxies)
 
-### [I think I found a bug](bugs.html)
+### [I think I found a bug](bugs)

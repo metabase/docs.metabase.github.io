@@ -6,14 +6,13 @@ show_title_breadcrumb: true
 category: 'Users Guide'
 title: 'Interactive Dashboards'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/users-guide/interactive-dashboards.md'
-layout: docs
 ---
 
 ## Interactive dashboards
 
 You can customize what happens when people click on questions in your dashboard.
 
-By default, when you create charts using Metabase's graphical query builder, your charts automatically come with [drill-through capabilities](https://www.metabase.com/blog/drilling-through-data/index.html), which let folks click on a chart to explore further. But if you have a more customized click path in mind, Metabase allows you to customize what happens when a user clicks on a chart or table in your dashboard.
+By default, when you create charts using Metabase's graphical query builder, your charts automatically come with [drill-through capabilities](/blog/drilling-through-data/index), which let folks click on a chart to explore further. But if you have a more customized click path in mind, Metabase allows you to customize what happens when a user clicks on a chart or table in your dashboard.
 
 You can set up a dashboard card to:
 
@@ -44,7 +43,7 @@ If your dashboard has a filter, you'll also see an option to [update the filter]
 
 ### Open the action menu
 
-For questions composed using the query builder, the default click behavior is to open the **action menu**, which presents people with the option to [drill through the data](https://www.metabase.com/blog/drilling-through-data/index.html):
+For questions composed using the query builder, the default click behavior is to open the **action menu**, which presents people with the option to [drill through the data](/blog/drilling-through-data/index):
 
 ![Action menu](images/interactive-dashboards/action-menu.png)
 
@@ -74,7 +73,7 @@ Once you select the column that contains the value you want to pass, the sidebar
 
 In the example above, when a user clicks on the **Orders by product category** card, Metabase will pass the clicked `Product -> Category` to the destination dashboard ("Interactive Dashboard"), which will then filter its cards by that `Category`.
 
-You can also send the currently selected value of a dashboard filter on the current dashboard to the destination. And if you're using [Metabase Enterprise Edition](https://www.metabase.com/enterprise/scale/index.html), you can pass a user attribute provided by SSO to the destination, too. Those user attributes will show up as options when you click on one of the destination's filters (provided the values are compatible with that filter).
+You can also send the currently selected value of a dashboard filter on the current dashboard to the destination. And if you're using [Metabase Enterprise Edition](/enterprise/scale/index), you can pass a user attribute provided by SSO to the destination, too. Those user attributes will show up as options when you click on one of the destination's filters (provided the values are compatible with that filter).
 
 When displaying questions as tables, you can select different click behaviors for different columns in the table. You can also modify the contents of the cells in a given column, replacing the value with custom text. For example, if you had a column that listed categories, you could change the text in the cell to read: "Click for details about {% raw %}{{Category}}{% endraw %}", where `Category` is the name of your column.
 
@@ -96,7 +95,7 @@ For example, we could type a URL like this:
 
 Next we’ll click **Done**, then **Save** our dashboard. Now when we click our chart, we’ll be taken to the URL that we entered above, with the value of the clicked bar inserted into the URL.
 
-To learn more, check out [Custom destinations: choose what happens when people click on charts in your dashboard](https://www.metabase.com/learn/building-analytics/dashboards/custom-destinations.html).
+To learn more, check out [Custom destinations: choose what happens when people click on charts in your dashboard](/learn/building-analytics/dashboards/custom-destinations).
 
 ### Use a chart to filter a dashboard
 
@@ -108,7 +107,7 @@ For example, clicking on the `Widget` bar will update the current dashboard's **
 
 ![Cross-filtering](images/interactive-dashboards/cross-filter.png)
 
-To set up cross-filtering, choose a dashboard filter that you'd like to update on click, and a question to use to update that filter. You can think of this question as your "navigation question." Instead of wiring this navigation question up to the filter, you'll [wire up every other question on the dashboard to the filter](08-dashboard-filters.html). 
+To set up cross-filtering, choose a dashboard filter that you'd like to update on click, and a question to use to update that filter. You can think of this question as your "navigation question." Instead of wiring this navigation question up to the filter, you'll [wire up every other question on the dashboard to the filter](08-dashboard-filters). 
 
 Below, we'll use the **Orders by product category question** as our navigation question, so we'll leave this question disconnected from the filter, and connect all the other questions to the **Category** filter.
 
@@ -124,10 +123,10 @@ Click **Done** in the sidebar, then **Save** your dashboard.
 
 Now we can use our navigation question (Orders by product category) to interactively filter the data across your dashboard. When people click on a value in the navigation question, Metabase will send the clicked value to the filter, and update every card on the dashboard by filtering them for the clicked value - every card except for the navigation question: Orders by product category. The reason we don't want the navigation question to update is so that we can click on other bars to update the filter with a different value.
 
-To learn more, check out [Cross-filtering: using a chart to update a dashboard filter](https://www.metabase.com/learn/building-analytics/dashboards/cross-filtering.html).
+To learn more, check out [Cross-filtering: using a chart to update a dashboard filter](/learn/building-analytics/dashboards/cross-filtering).
 
 ---
 
 ## Next: Charts with multiple series
 
-We'll learn how to [create charts with multiple lines, bars, and more](09-multi-series-charting.html).
+We'll learn how to [create charts with multiple lines, bars, and more](09-multi-series-charting).

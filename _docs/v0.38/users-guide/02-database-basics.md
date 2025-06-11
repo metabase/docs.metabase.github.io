@@ -6,7 +6,6 @@ show_title_breadcrumb: true
 category: 'Users Guide'
 title: '02 Database Basics'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/users-guide/02-database-basics.md'
-layout: docs
 ---
 
 ## A Short Overview of Databases
@@ -87,4 +86,4 @@ To do this, we’d open up the Reservation table, add a filter to only look at r
 
 ## Next: Asking questions
 
-Now that we have a shared vocabulary and a basic understanding of databases, let's learn more about [exploring in Metabase](03-basic-exploration.html)
+Now that we have a shared vocabulary and a basic understanding of databases, let's learn more about [exploring in Metabase](03-basic-exploration)

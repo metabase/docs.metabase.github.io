@@ -6,7 +6,6 @@ show_title_breadcrumb: true
 category: FAQ
 title: 'Is Metabase 508 Compliant'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/faq/general/is-metabase-508-compliant.md'
-layout: docs
 ---
 
 # Is Metabase accessible or 508 compliant?
