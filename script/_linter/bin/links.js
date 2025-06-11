@@ -28,11 +28,11 @@ function isMetabaseUrl(url) {
   // - <protocol>://www.metabase.com/<path>
   // - <protocol>://metabase.com/<path>
   return !!(
-    url.indexOf("metabase.") === 0 ||
-    url.indexOf("://www.metabase.") === 4 ||
-    url.indexOf("://www.metabase.") === 5 ||
-    url.indexOf("://metabase.") === 4 ||
-    url.indexOf("://metabase.") === 5
+    url.indexOf("metabase.com") === 0 ||
+    url.indexOf("://www.metabase.com") === 4 ||
+    url.indexOf("://www.metabase.com") === 5 ||
+    url.indexOf("://metabase.com") === 4 ||
+    url.indexOf("://metabase.com") === 5
   );
 }
 
@@ -105,7 +105,15 @@ const allFiles = glob
 
 console.log("Checking ", allFiles.length, "files...")
 
-const Errorz = [];
+const results = {
+  processed: 0,
+  successful: 0,
+  withErrors: 0,
+  parseErrors: 0,
+  skipped: 0,
+  allErrors: [],
+  parseErrorDetails: []
+};
 
 const allErrors = allFiles
   .map((filePathFull) => {
@@ -130,7 +138,7 @@ const allErrors = allFiles
 
     // has content
     if (fileContent && fileContent.length > 3 && filePath != "/README.md") {
-      console.log("Checking:", filePath);
+      results.processed++;
       try {
         // front matter
         const frontMatterPermalinkErrors = [];
@@ -141,7 +149,6 @@ const allErrors = allFiles
           const frontMatterStr = frontMatterResultStr.split("---").join("");
 
           const frontMatterObj = yaml.load(frontMatterStr, "utf8");
-          console.log("  > parsed front matter")
           if (frontMatterObj && Object.keys(frontMatterObj).length > 0) {
             // check redundant permalink
             if (frontMatterObj.permalink && frontMatterObj.permalink !== "/") {
@@ -156,14 +163,12 @@ const allErrors = allFiles
                 (filePath === `${frontMatterPermalink}.html` ||
                   filePath === `${frontMatterPermalink}/index.html`)
               ) {
-                console.log(filePath, frontMatterPermalink);
                 frontMatterPermalinkErrors.push({
                   message: "Redundant `permalink` property (front matter)",
                   url: filePath,
                 });
               }
             }
-            console.log("  > checking properties..");
             FRONT_MATTER_PROPERTIES.forEach((frontMatterPropertyName) => {
               if (frontMatterObj[frontMatterPropertyName]) {
                 const frontMatterPropValue =
@@ -230,39 +235,63 @@ const allErrors = allFiles
           .concat(frontMatterErrors)
           .concat(codeErrors);
         if (errors && errors.length > 0) {
-          console.log(
-            `${filePath} - ${errors.length} error${
-              errors.length > 1 ? "s" : ""
-            }`,
-          );
-          console.log(
-            errors.map(({ message, url }) => `- ${message}: ${url}\n`).join(""),
-          );
-
+          results.withErrors++;
+          results.allErrors.push({
+            file: filePath,
+            errors: errors
+          });
           return errors;
         }
 
+        results.successful++;
         return null;
       } catch (err) {
-        console.error(`Error in ${filePath}\n${err}\n`);
-        Errorz.push({file: filePath, error: err});
+        results.parseErrors++;
+        results.parseErrorDetails.push({file: filePath, error: err.message});
       }
     } else {
-      console.warn(`${filePath} content cannot be parsed\n`);
+      results.skipped++;
     }
   })
   .filter((errors) => !!errors);
 
-// breaks on errors
+// Print summary report
+console.log("\n=== LINK CHECKER REPORT ===");
+console.log(`Total files found: ${allFiles.length}`);
+console.log(`Files processed: ${results.processed}`);
+console.log(`Files skipped: ${results.skipped}`);
+console.log(`Files successful: ${results.successful}`);
+console.log(`Files with link errors: ${results.withErrors}`);
+console.log(`Files with parse errors: ${results.parseErrors}`);
+
+// Show parse errors if any
+if (results.parseErrors > 0) {
+  console.log("\n=== PARSE ERRORS ===");
+  results.parseErrorDetails.forEach(({file, error}) => {
+    console.log(`${file}: ${error}`);
+  });
+}
+
+// Show link errors if any
+if (results.withErrors > 0) {
+  console.log("\n=== LINK ERRORS ===");
+  results.allErrors.forEach(({file, errors}) => {
+    console.log(`\n${file} - ${errors.length} error${errors.length > 1 ? "s" : ""}:`);
+    errors.forEach(({message, url}) => {
+      console.log(`  - ${message}: ${url}`);
+    });
+  });
+}
+
+// Exit with appropriate code
 if (allErrors && allErrors.length > 0) {
-  console.log(JSON.stringify(allErrors));
+  console.log("\n❌ Link validation failed");
   throw new Error("Invalid urls");
 }
 
-// breaks on errors
-if (Errorz && Errorz.length > 0) {
-  console.log(JSON.stringify(Errorz, " ", 2));
-  throw new Error("Errorz found.")
-} else {
-  console.log("Done, no errors found: OK")
+if (results.parseErrors > 0) {
+  console.log("\n❌ Parse errors found");
+  throw new Error("Parse errors found");
 }
+
+console.log("\n✅ All checks passed!");

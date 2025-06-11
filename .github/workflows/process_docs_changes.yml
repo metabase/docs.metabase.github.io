@@ -94,19 +94,41 @@ jobs:
         run: |
           bb script/update_docs_for_branchname.clj "$MAIN_REPO_BRANCH"
 
-      - name: "Lint the markdown"
+      - name: Setup Git Authenticatation
+        run: |
+          git config --global user.name "Metabase Docs bot"
+          git config --global user.email "metabase-bot@metabase.com"
+          git remote set-url origin "https://x-access-token:${{ secrets.METABASE_AUTOMATION_USER_TOKEN }}@github.com/metabase/docs.metabase.github.io.git"
+
+      - name: Checkout Control files from Marketing Repo
+        uses: actions/checkout@v4
+        with:
+          repository: metabase/metabase.github.io
+          ref: master
+          path: .marketing_repo
+          token: ${{ secrets.METABASE_AUTOMATION_USER_TOKEN }}
+
+      - name: Merge control files from Marketing Repo
+        run: |
+          cp -r .marketing_repo/_data .
+          cp -r .marketing_repo/_includes .
+          cp -r .marketing_repo/_layouts .
+          cp -r .marketing_repo/_plugins .
+          cp -r .marketing_repo/_sass .
+
+      - name: "Run: yarn lint-markdown"
         run: |
           yarn lint-markdown
 
-      - name: "Lint the styles"
+      - name: "Run: yarn lint-styles"
         run: |
           yarn lint-styles
 
-      - name: "Lint the scripts"
+      - name: "Run: yarn lint-scripts"
         run: |
           yarn lint-scripts
 
-      - name: "Validate the links"
+      - name: "Run: yarn lint-links"
         run: |
           yarn lint-links
 
@@ -126,12 +148,6 @@ jobs:
           echo 'checking reported links...'
           echo "htmlproofer spit out a report of length: $(wc -l < htmlproofer.out)"
           bb script/analyze_links.clj --htmlproofer-output htmlproofer.out
-
-      - name: Setup Git Authenticatation
-        run: |
-          git config --global user.name "Metabase Docs bot"
-          git config --global user.email "metabase-bot@metabase.com"
-          git remote set-url origin "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/metabase/docs.metabase.github.io.git"
 
       - name: Update or Create the Pull Request
         if: |
