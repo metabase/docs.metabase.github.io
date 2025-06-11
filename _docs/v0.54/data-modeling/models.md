@@ -176,7 +176,7 @@ See [Model persistence](./model-persistence)
 - [Troubleshooting models][troubleshooting-models].
 
 [column-type]: ./field-types
-[cte]: /learn/grow-your-data-skills/learn-sql/working-with-sql/sql-cte
+[cte]: /learn/sql/working-with-sql/sql-cte
 [measures-dimensions]: /learn/grow-your-data-skills/data-fundamentals/dimensions-and-measures
 [question]: ../questions/start
 [learn-models]: /learn/metabase-basics/getting-started/models
