@@ -12,5 +12,5 @@ latest: true
 ---
 
 ```ts
-type EntityTypeFilterKeys = "table" | "question" | "model" | "metric";
+type EntityTypeFilterKeys = "table" | "model";
 ```

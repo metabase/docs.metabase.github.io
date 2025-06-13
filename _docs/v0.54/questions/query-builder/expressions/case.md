@@ -109,13 +109,13 @@ For example, if we want to count the unique number of orders for each order date
 
 All of the outputs must have the same data type.
 
-**Avoid:**:
+**Avoid**:
 
 ```
 case(condition1, "string", condition2, TRUE, condition3, 1)
 ```
 
-**Do:**:
+**Do**:
 
 ```
 case(condition1, "string", condition2, "TRUE", condition3, "1")
@@ -347,5 +347,5 @@ case([Has Wings] = TRUE  AND [Has Face] = TRUE,  "Bird",
 [notebook-editor-def]: /glossary/notebook-editor
 [numpy]: https://numpy.org/doc/
 [pandas]: https://pandas.pydata.org/pandas-docs/stable/
-[sql-reference-guide]: /learn/grow-your-data-skills/learn-sql/debugging-sql/sql-syntax#common-sql-reference-guides
+[sql-reference-guide]: /learn/sql/debugging-sql/sql-syntax#common-sql-reference-guides
 [sumif]: ./sumif

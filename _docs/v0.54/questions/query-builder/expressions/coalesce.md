@@ -183,8 +183,8 @@ coalesce([Notes], [Comments] "No notes or comments.")
 [custom-expressions-doc]: ../expressions
 [custom-expressions-learn]: /learn/metabase-basics/querying-and-dashboards/questions/custom-expressions
 [data-types]: /learn/grow-your-data-skills/data-fundamentals/data-types-overview#examples-of-data-types
-[missing-dates]: /learn/grow-your-data-skills/learn-sql/debugging-sql/sql-logic-missing-data#how-to-fill-in-data-for-missing-report-dates
+[missing-dates]: /learn/sql/debugging-sql/sql-logic-missing-data#how-to-fill-in-data-for-missing-report-dates
 [notebook-editor-def]: /glossary/notebook-editor
 [numpy]: https://numpy.org/doc/
 [pandas]: https://pandas.pydata.org/pandas-docs/stable/
-[sql-reference-guide]: /learn/grow-your-data-skills/learn-sql/debugging-sql/sql-syntax#common-sql-reference-guides
+[sql-reference-guide]: /learn/sql/debugging-sql/sql-syntax#common-sql-reference-guides
