@@ -6,7 +6,6 @@ show_title_breadcrumb: true
 category: FAQ
 title: 'How Do I Reset My Password'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/faq/using-metabase/how-do-i-reset-my-password.md'
-layout: docs
 ---
 
 ## How do I reset my password?
@@ -17,7 +16,7 @@ If you're running the MacOS application on your laptop, you can click on the Hel
 
 ### Using the web app as a normal user
 
-If you're having trouble logging in due to a forgotten password, click the link that reads, "I seem to have forgotten my password" in the lower-right of the log-in screen. If your Metabase administrator has already [configured your email settings](../../administration-guide/02-setting-up-email.html), you'll receive a password reset email. If email has not been configured, you will need to contact a Metabase admin to perform a password reset via Admin Panel > People.
+If you're having trouble logging in due to a forgotten password, click the link that reads, "I seem to have forgotten my password" in the lower-right of the log-in screen. If your Metabase administrator has already [configured your email settings](../../administration-guide/02-setting-up-email), you'll receive a password reset email. If email has not been configured, you will need to contact a Metabase admin to perform a password reset via Admin Panel > People.
 
 ### Using the web app as an administrator
 

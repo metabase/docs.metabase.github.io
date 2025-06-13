@@ -6,7 +6,6 @@ show_title_breadcrumb: true
 category: 'Administration Guide'
 title: '01 Managing Databases'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/administration-guide/01-managing-databases.md'
-layout: docs
 ---
 
 ## Managing databases
@@ -24,20 +23,20 @@ Now you’ll see a list of your databases. To connect another database to Metaba
 - Amazon Redshift
 - Druid
 - Google Analytics
-- [Google BigQuery](databases/bigquery.html)
+- [Google BigQuery](databases/bigquery)
 - H2
-- [MongoDB (version 3.4 or higher)](databases/mongodb.html)
-- [MySQL (version 5.7 or higher, as well as MariaDB version 10.2 or higher)](databases/mysql.html)
-- [Oracle](databases/oracle.html)
+- [MongoDB (version 3.4 or higher)](databases/mongodb)
+- [MySQL (version 5.7 or higher, as well as MariaDB version 10.2 or higher)](databases/mysql)
+- [Oracle](databases/oracle)
 - PostgreSQL
 - Presto
-- [Snowflake](databases/snowflake.html)
+- [Snowflake](databases/snowflake)
 - SparkSQL
 - SQL Server
 - SQLite
-- [Vertica](databases/vertica.html)
+- [Vertica](databases/vertica)
 
-Don't see the database you need here? Take a look at our [Community Drivers](../developers-guide-drivers.html) page to see if somebody else has built one or how to get started building your own.
+Don't see the database you need here? Take a look at our [Community Drivers](../developers-guide-drivers) page to see if somebody else has built one or how to get started building your own.
 
 To add a database, you'll need its connection information.
 
@@ -68,7 +67,7 @@ To add a database, you'll need its connection information.
 
 #### Errors When Connecting
 
-If you're experiencing errors when connecting to your database, check our [troubleshooting guide](../troubleshooting-guide/datawarehouse.html) for help.
+If you're experiencing errors when connecting to your database, check our [troubleshooting guide](../troubleshooting-guide/datawarehouse) for help.
 
 ### Secure Socket Layer (SSL)
 
@@ -200,4 +199,4 @@ This allows you to use the full array of features included in ssh. If you find y
 
 ## Next: enabling features that send email
 
-Metabase can send emails for certain features, like email invites, but first you need to [set up an email account](02-setting-up-email.html).
+Metabase can send emails for certain features, like email invites, but first you need to [set up an email account](02-setting-up-email).

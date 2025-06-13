@@ -6,7 +6,6 @@ show_title_breadcrumb: true
 category: 'Table of Contents'
 title: 'Developers Guide'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/developers-guide.md'
-layout: docs
 ---
 
 **This guide will teach you:**
@@ -35,7 +34,7 @@ If you have problems with your development environment, make sure that you are n
 
 These are the set of tools which are required in order to complete any build of the Metabase code. Follow the links to download and install them on your own before continuing.
 
-1. [Java Development Kit JDK (https://adoptopenjdk.net/releases.html)](https://adoptopenjdk.net/releases.html) - latest LTS version of JDK - more about [Java versions](./operations-guide/java-versions.html)
+1. [Java Development Kit JDK (https://adoptopenjdk.net/releases.html)](https://adoptopenjdk.net/releases.html) - latest LTS version of JDK - more about [Java versions](./operations-guide/java-versions)
 2. [Node.js (http://nodejs.org/)](http://nodejs.org/) - latest LTS release
 3. [Yarn package manager for Node.js](https://yarnpkg.com/) - latest release of version 1.x
 4. [Leiningen (http://leiningen.org/)](http://leiningen.org/) - latest release
@@ -52,7 +51,7 @@ After running the build script simply look in `target/uberjar` for the output .j
 
 ## Building `Metabase.app`
 
-See [this guide](developers-guide-osx.html).
+See [this guide](developers-guide-osx).
 
 # Development Environment
 

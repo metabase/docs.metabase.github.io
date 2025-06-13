@@ -6,7 +6,6 @@ show_title_breadcrumb: true
 category: 'Administration Guide'
 title: '12 Public Links'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/administration-guide/12-public-links.md'
-layout: docs
 ---
 
 ## Sharing and embedding dashboards or questions
@@ -65,4 +64,4 @@ To specify multiple values for filters, though, you'll need to separate them wit
 
 ## Next: embedding dashboards and charts in other applications
 
-If you're trying to do more complex, integrated embedding in your own web application, then you can check out the [documentation for that feature](13-embedding.html).
+If you're trying to do more complex, integrated embedding in your own web application, then you can check out the [documentation for that feature](13-embedding).

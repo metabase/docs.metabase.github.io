@@ -6,7 +6,6 @@ show_title_breadcrumb: true
 category: 'Users Guide'
 title: '08 Dashboard Filters'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/users-guide/08-dashboard-filters.md'
-layout: docs
 ---
 
 ## Dashboard Filters
@@ -62,7 +61,7 @@ The ID filter provides a simple input box where you can type the ID of a user, o
 
 The Other Categories filter is a flexible filter type that will let you create either a dropdown menu or an input box to filter on any category field in your cards.
 
-**Note:** If you're trying to filter Native/SQL questions, you'll need to [add a bit of additional markup to your query](13-sql-parameters.html) in order to use a dashboard filter with that question. For an in-depth article on this, check out [Adding filters to dashboards with SQL questions](https://www.metabase.com/blog/dashboard-filters/index.html).
+**Note:** If you're trying to filter Native/SQL questions, you'll need to [add a bit of additional markup to your query](13-sql-parameters) in order to use a dashboard filter with that question. For an in-depth article on this, check out [Adding filters to dashboards with SQL questions](/blog/dashboard-filters/index).
 
 ### Example filter
 
@@ -97,7 +96,7 @@ Once you’ve added a filter to your dashboard, just click on the filter to sele
 
 ![Using a filter](images/dashboard-filters/08-use-filter.png)
 
-You can also set up a dashboard question to [update a filter on click](interactive-dashboards.html#use-a-chart-to-filter-a-dashboard).
+You can also set up a dashboard question to [update a filter on click](interactive-dashboards#use-a-chart-to-filter-a-dashboard).
 
 ### Choosing between a dropdown or autocomplete for your filter
 
@@ -113,7 +112,7 @@ In both cases, you can pick one or multiple selections for your filter.
 
 ![Multi-select](images/dashboard-filters/multi-select.png)
 
-If Metabase somehow picked the wrong behavior for your field, admins can go to the [Data Model](../administration-guide/03-metadata-editing.html) section of the admin panel and click on the **gear** icon by the field in question to specify a list, search box, or plain input box.
+If Metabase somehow picked the wrong behavior for your field, admins can go to the [Data Model](../administration-guide/03-metadata-editing) section of the admin panel and click on the **gear** icon by the field in question to specify a list, search box, or plain input box.
 
 ![Search options](images/dashboard-filters/search-options.png)
 
@@ -141,4 +140,4 @@ Here are a few tips to get the most out of dashboard filters:
 
 ## Next: Interactive dashboards
 
-We'll learn how to [make our dashboards interactive](interactive-dashboards.html).
+We'll learn how to [make our dashboards interactive](interactive-dashboards).

@@ -6,7 +6,6 @@ show_title_breadcrumb: true
 category: FAQ
 title: 'Can I Request a New Feature'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/faq/general/can-i-request-a-new-feature.md'
-layout: docs
 ---
 
 # Can I request a new feature?

@@ -6,7 +6,6 @@ show_title_breadcrumb: true
 category: 'Administration Guide'
 title: '05 Setting Permissions'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/administration-guide/05-setting-permissions.md'
-layout: docs
 ---
 
 ## Setting Data Access Permissions
@@ -19,7 +18,7 @@ Metabase uses a group-based approach to set permissions and restrictions on your
 
 A user can be a member of multiple groups, and if one of the groups they’re in has access to a particular database or table, but another group they’re a member of does not, then they **will** have access to that database.
 
-In addition to setting permissions on your databases and tables, you can also [set access permissions on the collections](06-collections.html) where your dashboards, questions, and pulses are saved. Collection permissions can be set and edited from the collection itself, or the Admin Panel.
+In addition to setting permissions on your databases and tables, you can also [set access permissions on the collections](06-collections) where your dashboards, questions, and pulses are saved. Collection permissions can be set and edited from the collection itself, or the Admin Panel.
 
 ### Groups
 
@@ -33,13 +32,13 @@ You’ll notice that you already have two default groups: Administrators and All
 
 You’ll also see that you’re a member of the **Administrators** group — that’s why you were able to go to the Admin Panel in the first place. So, to make someone an admin of Metabase you just need to add them to this group. Metabase admins can log into the Admin Panel and make changes there, and they always have unrestricted access to all data that you have in your Metabase instance. So be careful who you add to the Administrator group!
 
-The **All Users** group is another special one. Every Metabase user is always a member of this group, though they can also be a member of as many other groups as you want. We recommend using the All Users group as a way to set default access levels for new Metabase users. If you have [Google single sign-on](10-single-sign-on.html) enabled, new users who join that way will be automatically added to the All Users group.
+The **All Users** group is another special one. Every Metabase user is always a member of this group, though they can also be a member of as many other groups as you want. We recommend using the All Users group as a way to set default access levels for new Metabase users. If you have [Google single sign-on](10-single-sign-on) enabled, new users who join that way will be automatically added to the All Users group.
 
 #### An important note on the All Users group
 
-As we mentioned above, a user is given the _most permissive_ setting she has for a given database/schema/table across _all_ groups she is in. Because of that, it is important that your All Users group should never have _greater_ access for an item than a group for which you're trying to restrict access — otherwise the more permissive setting will win out. This goes for both data access as well as [collection permission](06-collections.html) settings.
+As we mentioned above, a user is given the _most permissive_ setting she has for a given database/schema/table across _all_ groups she is in. Because of that, it is important that your All Users group should never have _greater_ access for an item than a group for which you're trying to restrict access — otherwise the more permissive setting will win out. This goes for both data access as well as [collection permission](06-collections) settings.
 
-If you’ve set up the [Slack integration](09-setting-up-slack.html) and enabled [Metabot](../users-guide/11-metabot.html), you’ll also see a special **Metabot** group, which will allow you to restrict which questions your users will be able to access in Slack via Metabot.
+If you’ve set up the [Slack integration](09-setting-up-slack) and enabled [Metabot](../users-guide/11-metabot), you’ll also see a special **Metabot** group, which will allow you to restrict which questions your users will be able to access in Slack via Metabot.
 
 #### Managing groups
 
@@ -85,7 +84,7 @@ Lastly, data access levels for tables are almost exactly the same as well:
 - **Unrestricted access:** can ask questions about this table and see saved questions and dashboard cards using this table.
 - **No access:** can’t ask questions about this table or see saved questions or dashboard cards using this table.
 
-_Note: you’ll notice that tables don’t have the option for limited access. If need to set column-level or row-level data permissions, check out the [data sandboxing](../enterprise-guide/data-sandboxes.html) feature of the [Enterprise Edition](https://www.metabase.com/enterprise/)._
+_Note: you’ll notice that tables don’t have the option for limited access. If need to set column-level or row-level data permissions, check out the [data sandboxing](/docs/latest/enterprise-guide/data-sandboxes) feature of the [Enterprise Edition](/enterprise/)._
 
 ### A note about Pulses
 
@@ -95,4 +94,4 @@ Pulses act a bit differently with regard to permissions. When a user creates a n
 
 ## Next: collections
 
-Metabase lets you create and set permissions on collections of dashboards and questions. [Learn how](06-collections.html).
+Metabase lets you create and set permissions on collections of dashboards and questions. [Learn how](06-collections).

@@ -6,7 +6,6 @@ show_title_breadcrumb: true
 category: 'Users Guide'
 title: '10 Pulses'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/users-guide/10-pulses.md'
-layout: docs
 ---
 
 ## Sharing updates with pulses
@@ -23,7 +22,7 @@ First, choose a name for your pulse. This will show up in the email subject line
 
 ### Pick your data
 
-Before you can create a pulse, you’ll need to have some [saved questions](06-sharing-answers.html). Click the dropdown to see a list of all your saved questions. You can type in the dropdown to help filter and find the question you’re looking for.
+Before you can create a pulse, you’ll need to have some [saved questions](06-sharing-answers). Click the dropdown to see a list of all your saved questions. You can type in the dropdown to help filter and find the question you’re looking for.
 
 ![Pick your data](images/pulses/03-pick-your-data.png)
 
@@ -77,4 +76,4 @@ If a pulse has outlived its usefulness you can archive it by clicking on the Arc
 
 ## Next: Connecting Metabase to Slack with Metabot 🤖
 
-If your team uses Slack to communicate, you can [use Metabot](11-metabot.html) to display your saved questions directly within Slack whenever you want.
+If your team uses Slack to communicate, you can [use Metabot](11-metabot) to display your saved questions directly within Slack whenever you want.

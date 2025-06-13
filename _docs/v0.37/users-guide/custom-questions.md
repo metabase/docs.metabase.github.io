@@ -6,12 +6,11 @@ show_title_breadcrumb: true
 category: 'Users Guide'
 title: 'Custom Questions'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/users-guide/custom-questions.md'
-layout: docs
 ---
 
 ## Creating custom questions with the notebook editor
 
-If you have a question that's a bit more involved than a [simple question](04-asking-questions.html), you can create a custom question using the notebook editor. You can get there by clicking the Ask a Question button in the top nav bar and selecting Custom Question. If you started from a Simple question or a saved question, you can get back to the custom question notebook editor by clicking the icon in the top-right of the screen.
+If you have a question that's a bit more involved than a [simple question](04-asking-questions), you can create a custom question using the notebook editor. You can get there by clicking the Ask a Question button in the top nav bar and selecting Custom Question. If you started from a Simple question or a saved question, you can get back to the custom question notebook editor by clicking the icon in the top-right of the screen.
 
 ### The parts of the notebook
 
@@ -25,7 +24,7 @@ The notebook is made up of a sequence of individual steps. Under each step you'l
 
 This first step is required, and is where you pick the data that you want to base your question on. In most cases you'll pick one of the tables in your database, but you can also choose a previously saved question's result as the starting point for your new question. What this means in practice is that you can do things like use complex SQL queries to create new tables that can be used as starting data in a question just like any other table in your database.
 
-You can use most saved questions as source data, provided you have [permission](../administration-guide/05-setting-permissions.html) to view that question. You can even use questions that were saved as a chart rather than a table.
+You can use most saved questions as source data, provided you have [permission](../administration-guide/05-setting-permissions) to view that question. You can even use questions that were saved as a chart rather than a table.
 
 There are some kinds of saved questions that can't be used as source data:
 
@@ -39,7 +38,7 @@ There are some kinds of saved questions that can't be used as source data:
 
 ![Filtering](./images/notebook/filter-step.png)
 
-When you add a filter step, you can select one or more columns to filter on. Depending on the type of column you pick, you'll get different options, like a calendar for date columns. [Learn more about filtering](04-asking-questions.html).
+When you add a filter step, you can select one or more columns to filter on. Depending on the type of column you pick, you'll get different options, like a calendar for date columns. [Learn more about filtering](04-asking-questions).
 
 You can add subsequent filter steps after every Summarize step. This lets you do things like summarize by the count of rows per month, and then add a filter on the `count` column to only include rows where the count is greater than 100. (This is basically like a SQL `HAVING` clause.)
 
@@ -47,7 +46,7 @@ You can add subsequent filter steps after every Summarize step. This lets you do
 
 ![Filter expression](./images/expressions/filter-expression.png)
 
-If you have a more complex filter you're trying to express, you can pick "Custom Expression" from the add-filter menu create a filter expression. You can use comparison operators like greater than (>) or less than (<), as well as spreadsheet-like functions. For example, `[Subtotal] > 100 OR median([Age]) < 40`. [Learn more about writing expressions](./expressions.html)
+If you have a more complex filter you're trying to express, you can pick "Custom Expression" from the add-filter menu create a filter expression. You can use comparison operators like greater than (>) or less than (<), as well as spreadsheet-like functions. For example, `[Subtotal] > 100 OR median([Age]) < 40`. [Learn more about writing expressions](./expressions)
 
 #### Summarizing
 
@@ -63,7 +62,7 @@ If you summarize and add a grouping you can then summarize _again_. You can also
 
 ![Custom expression](./images/expressions/aggregation-expression.png)
 
-Custom expressions allow you to use spreadsheet-like functions and simple arithmetic within or between aggregation functions. For example, you could do `Average(sqrt[FieldX]) + Sum([FieldY])` or `Max(floor([FieldX] - [FieldY]))`, where `FieldX` and `FieldY` are fields in the currently selected table. [Learn more about writing expressions](./expressions.html)
+Custom expressions allow you to use spreadsheet-like functions and simple arithmetic within or between aggregation functions. For example, you could do `Average(sqrt[FieldX]) + Sum([FieldY])` or `Max(floor([FieldX] - [FieldY]))`, where `FieldX` and `FieldY` are fields in the currently selected table. [Learn more about writing expressions](./expressions)
 
 #### Creating custom columns
 
@@ -71,7 +70,7 @@ Custom expressions allow you to use spreadsheet-like functions and simple arithm
 
 Custom columns are helpful when you need to create a new column based on a calculation, such as subtracting the value of one column from another, or extracting a portion of an existing text column. Note that columns you add in a custom question are not permanently added to your table; they'll only be present in the given question.
 
-You can use the following math operators in your formulas: `+`, `–`, `*` (multiplication), and `/` (division), along with a whole host of spreadsheet-like functions. You can also use parentheses to clarify the order of operations. You can [learn more about writing expressions here](./expressions.html).
+You can use the following math operators in your formulas: `+`, `–`, `*` (multiplication), and `/` (division), along with a whole host of spreadsheet-like functions. You can also use parentheses to clarify the order of operations. You can [learn more about writing expressions here](./expressions).
 
 #### Sorting results
 
@@ -87,7 +86,7 @@ The row limit step lets you limit how many rows you want from the previous resul
 
 ![Joining](./images/notebook/join-step.png)
 
-You can [join data](https://www.metabase.com/blog/joining-tables/index.html) to combine your current data with another table, or even with a saved question.
+You can [join data](/blog/joining-tables/index) to combine your current data with another table, or even with a saved question.
 
 Currently you can't use joins if your starting data is from a Google Analytics or MongoDB database.
 
@@ -114,7 +113,7 @@ In many cases you might have tables A, B, and C, where A and B have a connection
 
 ![An A to B to C join](./images/notebook/join-a-b-c.png)
 
-See [Joins in Metabase](https://www.metabase.com/blog/joining-tables/index.html) to learn more.
+See [Joins in Metabase](/blog/joining-tables/index) to learn more.
 
 ### Viewing the SQL that powers your question
 
@@ -124,4 +123,4 @@ Under the hood, all Metabase questions are SQL (gasp!). If you're curious to see
 
 ## Next: writing SQL
 
-If you have a question that's even too much for the notebook, you can always fire up the trusty old [SQL editor](writing-sql.html).
+If you have a question that's even too much for the notebook, you can always fire up the trusty old [SQL editor](writing-sql).

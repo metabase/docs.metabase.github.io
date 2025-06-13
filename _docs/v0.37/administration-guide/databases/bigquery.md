@@ -6,7 +6,6 @@ show_title_breadcrumb: true
 category: 'Administration Guide'
 title: Bigquery
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/administration-guide/databases/bigquery.md'
-layout: docs
 ---
 
 ## Working with Google BigQuery in Metabase
@@ -103,11 +102,11 @@ FROM [my_dataset.my_table]
 
 ## Troubleshooting
 
-If you're having trouble with your BigQuery connection, you can check out this [troubleshooting guide](../../troubleshooting-guide/datawarehouse.html), or visit [Metabase's discussion forum](https://discourse.metabase.com/search?q=bigquery) to see if someone has encountered and resolved a similar issue.
+If you're having trouble with your BigQuery connection, you can check out this [troubleshooting guide](/docs/latest/troubleshooting-guide/datawarehouse), or visit [Metabase's discussion forum](https://discourse.metabase.com/search?q=bigquery) to see if someone has encountered and resolved a similar issue.
 
 ## Further reading
 
-- [Managing databases](./01-managing-databases.html).
-- [Metadata editing](./03-metadata-editing.html).
-- [Creating segments and metrics](./07-segments-and-metrics.html).
-- [Setting data access permissions](./05-setting-permissions.html).
+- [Managing databases](/docs/latest/administration-guide/01-managing-databases).
+- [Metadata editing](/docs/latest/administration-guide/03-metadata-editing).
+- [Creating segments and metrics](/docs/latest/administration-guide/07-segments-and-metrics).
+- [Setting data access permissions](/docs/latest/administration-guide/05-setting-permissions).

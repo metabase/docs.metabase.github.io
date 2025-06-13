@@ -6,7 +6,6 @@ show_title_breadcrumb: true
 category: 'Administration Guide'
 title: '02 Setting Up Email'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/administration-guide/02-setting-up-email.md'
-layout: docs
 ---
 
 ## Setting up Email
@@ -56,4 +55,4 @@ You should see this form:
 ---
 
 ## Next: setting up Slack
-If you want to use Slack to enhance the Metabase experience then lets do that now. Let’s learn [how to setup Slack](09-setting-up-slack.html).
+If you want to use Slack to enhance the Metabase experience then lets do that now. Let’s learn [how to setup Slack](09-setting-up-slack).

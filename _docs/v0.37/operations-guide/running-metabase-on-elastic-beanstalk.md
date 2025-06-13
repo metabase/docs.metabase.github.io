@@ -6,7 +6,6 @@ show_title_breadcrumb: true
 category: 'Operations Guide'
 title: 'Running Metabase on Elastic Beanstalk'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/operations-guide/running-metabase-on-elastic-beanstalk.md'
-layout: docs
 ---
 
 **Covered in this guide:**
@@ -33,7 +32,7 @@ After clicking the launch URL, you should see a screen that looks like this:
 
 ![Elastic Beanstalk First Screen](images/EBFirstScreen.png)
 
-_NOTE: If this screenshot doesn't match what you see in the Elastic Beanstalk console, it's likely that you are on an old version of the Elastic Beanstalk UI. At the time of writing this documentation, both versions of the UI are being reported in the wild. If you need to, you can [view our older AWS EB documentation](running-metabase-on-elastic-beanstalk-old.html)._
+_NOTE: If this screenshot doesn't match what you see in the Elastic Beanstalk console, it's likely that you are on an old version of the Elastic Beanstalk UI. At the time of writing this documentation, both versions of the UI are being reported in the wild. If you need to, you can [view our older AWS EB documentation](running-metabase-on-elastic-beanstalk-old)._
 
 ### Application information
 
@@ -157,7 +156,7 @@ When it's all done you should see something like this:
 
 To see your new Metabase instance, simply click on the link in parentheses next to your environment name in the top-left. In this example it's `metabase-env-tttt.elasticbeanstalk.com`
 
-Now that you’ve installed Metabase, it’s time to [set it up and connect it to your database](../setting-up-metabase.html).
+Now that you’ve installed Metabase, it’s time to [set it up and connect it to your database](../setting-up-metabase).
 
 ---
 

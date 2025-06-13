@@ -6,7 +6,6 @@ show_title_breadcrumb: true
 category: 'Administration Guide'
 title: '09 Setting Up Slack'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/administration-guide/09-setting-up-slack.md'
-layout: docs
 ---
 
 ## Setting up Slack
@@ -40,4 +39,4 @@ That's it!  Metabase will automatically run a quick test to check that the API t
 ---
 
 ## Next: configuring Metabase
-There are a few other settings you configure in Metabase. [Learn how](08-configuration-settings.html).
+There are a few other settings you configure in Metabase. [Learn how](08-configuration-settings).

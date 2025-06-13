@@ -6,7 +6,6 @@ show_title_breadcrumb: true
 category: 'Administration Guide'
 title: '14 Caching'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/administration-guide/14-caching.md'
-layout: docs
 ---
 
 ## Caching query results in Metabase
@@ -34,4 +33,4 @@ Lastly, you can set the maximum size of each question's cache in kilobytes, to p
 ---
 
 ## Next: map customization
-If you need to use a map tile server other than the one Metabase provides, you can find more information [on the next page](20-custom-maps.html).
+If you need to use a map tile server other than the one Metabase provides, you can find more information [on the next page](20-custom-maps).
