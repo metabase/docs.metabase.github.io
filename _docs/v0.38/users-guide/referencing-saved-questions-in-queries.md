@@ -6,7 +6,6 @@ show_title_breadcrumb: true
 category: 'Users Guide'
 title: 'Referencing Saved Questions in Queries'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/users-guide/referencing-saved-questions-in-queries.md'
-layout: docs
 ---
 
 ## Referencing saved questions in queries
@@ -89,18 +88,18 @@ FROM 2019_gizmo_orders
 
 For other ways to standardize analytics, check out:
 
-- [Segments and Metrics](../administration-guide/07-segments-and-metrics.html)
-- [SQL Snippets](https://www.metabase.com/learn/building-analytics/sql-templates/sql-snippets.html)
-- [SQL Snippets vs Saved Questions vs. Views](https://www.metabase.com/learn/building-analytics/sql-templates/organizing-sql.html)
+- [Segments and Metrics](../administration-guide/07-segments-and-metrics)
+- [SQL Snippets](/learn/building-analytics/sql-templates/sql-snippets)
+- [SQL Snippets vs Saved Questions vs. Views](/learn/building-analytics/sql-templates/organizing-sql)
 
 ### Limitations and tradeoffs
 
 - You can only reference a saved question in a query when working with a SQL database like PostgreSQL, MySQL, or SQL Server.
 - The saved question you select has to be one that's based on the same database as the one you've currently selected in the native query editor.
-- You cannot reference variables in sub-queries. You only have access to the _results_ of the saved question, not the saved question's query. For example, if you have a saved question that uses a [field filter](https://www.metabase.com/learn/building-analytics/sql-templates/field-filters), you won't be able to reference that variable. If you need to change how the saved question has filtered the results, you'll need to update (or duplicate) that question and apply the filter.
+- You cannot reference variables in sub-queries. You only have access to the _results_ of the saved question, not the saved question's query. For example, if you have a saved question that uses a [field filter](/learn/building-analytics/sql-templates/field-filters), you won't be able to reference that variable. If you need to change how the saved question has filtered the results, you'll need to update (or duplicate) that question and apply the filter.
 
 ---
 
 ## Next: automated X-ray explorations
 
-Learn about how to easily and quickly see automatic explorations of your data with Metabase's powerful [X-ray feature](14-x-rays.html).
+Learn about how to easily and quickly see automatic explorations of your data with Metabase's powerful [X-ray feature](14-x-rays).

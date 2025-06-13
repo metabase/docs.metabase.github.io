@@ -6,7 +6,6 @@ show_title_breadcrumb: true
 category: 'Administration Guide'
 title: '08 Configuration Settings'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/administration-guide/08-configuration-settings.md'
-layout: docs
 ---
 
 ## General settings
@@ -45,11 +44,11 @@ _Setting the default timezone will not change the timezone of any data in your d
 
 ### Anonymous Tracking
 
-This option turns determines whether or not you allow [anonymous data about your usage of Metabase](../information-collection.html) to be sent back to us to help us improve the product. _Your database’s data is never tracked or sent_.
+This option turns determines whether or not you allow [anonymous data about your usage of Metabase](../information-collection) to be sent back to us to help us improve the product. _Your database’s data is never tracked or sent_.
 
 ### Enable X-rays
 
-[X-rays](../users-guide/14-x-rays.html) are a great way to allow your users to quickly explore your data or interesting parts of charts, or to see a comparison of different things. But if you're dealing with data sources where allowing users to run x-rays on them would incur burdonsome performance or monetary costs, you can turn them off here.
+[X-rays](../users-guide/14-x-rays) are a great way to allow your users to quickly explore your data or interesting parts of charts, or to see a comparison of different things. But if you're dealing with data sources where allowing users to run x-rays on them would incur burdonsome performance or monetary costs, you can turn them off here.
 
 ### Enabled Nested Queries
 
@@ -65,4 +64,4 @@ To manually fix field or table names if they still look wrong, you can go to the
 
 ## Next: Formatting data
 
-Customize the default language for Metabase, as well as how numbers, dates, times, and currencies should be displayed in Metabase with [formatting settings](19-formatting-settings.html).
+Customize the default language for Metabase, as well as how numbers, dates, times, and currencies should be displayed in Metabase with [formatting settings](19-formatting-settings).

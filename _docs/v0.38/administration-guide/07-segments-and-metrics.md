@@ -6,7 +6,6 @@ show_title_breadcrumb: true
 category: 'Administration Guide'
 title: '07 Segments and Metrics'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/administration-guide/07-segments-and-metrics.md'
-layout: docs
 ---
 
 ## Creating Custom Segments and Metrics
@@ -58,4 +57,4 @@ Lastly, you can also view the revision history for each segment and metric from 
 ---
 
 ## Next: managing user accounts
-Let's learn how to [create and manage accounts for your users](04-managing-users.html).
+Let's learn how to [create and manage accounts for your users](04-managing-users).

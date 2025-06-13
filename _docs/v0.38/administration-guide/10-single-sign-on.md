@@ -6,7 +6,6 @@ show_title_breadcrumb: true
 category: 'Administration Guide'
 title: '10 Single Sign On'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/administration-guide/10-single-sign-on.md'
-layout: docs
 ---
 
 ## Authenticating with Google Sign-In or LDAP
@@ -15,7 +14,7 @@ Enabling Google Sign-In or LDAP lets your team log in with a click instead of us
 
 ![Authentication](./images/authentication.png)
 
-If you'd like to have your users authenticate with SAML, we offer a paid feature that lets you do just that. [Learn more about authenticating with SAML](../enterprise-guide/authenticating-with-saml.html)
+If you'd like to have your users authenticate with SAML, we offer a paid feature that lets you do just that. [Learn more about authenticating with SAML](../enterprise-guide/authenticating-with-saml)
 
 As time goes on we may add other auth providers. If you have a service you’d like to see work with Metabase please let us know by [filing an issue](http://github.com/metabase/metabase/issues/new).
 
@@ -59,4 +58,4 @@ If you have user groups in Metabase you are using to control access, it is often
 ---
 
 ## Next: setting data permissions
-Find out how to create user groups and define what data they can access with [permissions](05-setting-permissions.html).
+Find out how to create user groups and define what data they can access with [permissions](05-setting-permissions).

@@ -6,7 +6,6 @@ show_title_breadcrumb: true
 category: 'Operations Guide'
 title: 'Environment Variables'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/operations-guide/environment-variables.md'
-layout: docs
 ---
 
 # Environment variables
@@ -53,7 +52,7 @@ Note: This setting is not an idle/inactivity timeout. If you set this to 15 minu
 
 Use [MB_SESSION_COOKIES](#mb_session_cookies) to also expire sessions, when browser is closed.
 
-Also see the [Changing session expiration](changing-session-expiration.html) documentation page.
+Also see the [Changing session expiration](changing-session-expiration) documentation page.
 
 #### `MB_ADMIN_EMAIL`
 
@@ -383,7 +382,7 @@ Default: `null`
 
 When set, this will encrypt database credentials stored in the application database. Requirement: minimum 16 characters base64-encoded string.
 
-Also see documentation page [Encrypting database details at rest](encrypting-database-details-at-rest.html).
+Also see documentation page [Encrypting database details at rest](encrypting-database-details-at-rest).
 
 #### `MB_GOOGLE_AUTH_AUTO_CREATE_ACCOUNTS_DOMAIN`
 
@@ -496,7 +495,7 @@ Default: `null`
 
 When set to `true`, will enable HTTPS with the options configured in the `MB_JETTY_SSL_*` variables.
 
-Also see the [Customizing Jetty web server](customizing-jetty-webserver.html) documentation page.
+Also see the [Customizing Jetty web server](customizing-jetty-webserver) documentation page.
 
 #### `MB_JETTY_SSL_KEYSTORE`
 
@@ -951,7 +950,7 @@ Default: `null`
 
 When set to `true`, the user login session will expire, when the browser is closed. The user login session will always expire after the amount of time defined in [MAX_SESSION_AGE](#max_session_age) (by default 2 weeks).
 
-Also see the [Changing session expiration](changing-session-expiration.html) documentation page.
+Also see the [Changing session expiration](changing-session-expiration) documentation page.
 
 #### `MB_SETUP_TOKEN`
 

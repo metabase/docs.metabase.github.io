@@ -6,7 +6,6 @@ show_title_breadcrumb: true
 category: 'Operations Guide'
 title: 'Running Metabase on Kubernetes'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/operations-guide/running-metabase-on-kubernetes.md'
-layout: docs
 ---
 
 # Running Metabase on Kubernetes
@@ -41,4 +40,3 @@ Deploy Metabase using your config file:
 ```bash
 $ helm install --name my-release -f metabase-config.yaml stable/metabase
 ```
-

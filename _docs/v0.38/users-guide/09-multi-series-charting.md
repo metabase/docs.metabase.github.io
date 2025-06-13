@@ -6,7 +6,6 @@ show_title_breadcrumb: true
 category: 'Users Guide'
 title: '09 Multi Series Charting'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/users-guide/09-multi-series-charting.md'
-layout: docs
 ---
 
 ## Charts with multiple series
@@ -32,7 +31,7 @@ If you’re creating a new question, you can view the results as a multi-series 
 
 As an example, we might want to see which website or service is referring the most people to our website. In the **Sample Dataset** that ships with Metabase, you would group by the `Source` and `Created At` columns of the **People** table.
 
-To create the multi-series chart, select the **People** table, click on the **Summarize** button in the upper right, then add `Source` and `Created At` as groupings (the `count of rows` metric that we want is selected by default). Be sure to click the plus button to the right of your selection, so Metabase knows to add the grouping; otherwise, Metabase will switch to that grouping. [Learn more about asking questions](04-asking-questions.html).
+To create the multi-series chart, select the **People** table, click on the **Summarize** button in the upper right, then add `Source` and `Created At` as groupings (the `count of rows` metric that we want is selected by default). Be sure to click the plus button to the right of your selection, so Metabase knows to add the grouping; otherwise, Metabase will switch to that grouping. [Learn more about asking questions](04-asking-questions).
 
 Metabase will automatically display a multi-series line chart visualization of how each referrer has performed for us.
 
@@ -99,7 +98,7 @@ Additionally, there is an option to configure the formatting of the values:
 - **Compact**. Metabase abbreviates values, e.g., 1,000 becomes 1K.
 - **Full**. Values are displayed in their natural beauty.
 
-To learn more about how to create multi-series charts, check out our article on [time series comparisons](https://www.metabase.com/blog/Time-Series-Comparisons/index.html).
+To learn more about how to create multi-series charts, check out our article on [time series comparisons](/blog/Time-Series-Comparisons/index).
 
 Now go forth and start letting your data get to know each other!
 
@@ -107,4 +106,4 @@ Now go forth and start letting your data get to know each other!
 
 ## Next: Dashboard subscriptions
 
-Set up a dashboard to send updates via email or Slack with [dashboard subscriptions](dashboard-subscriptions.html).
+Set up a dashboard to send updates via email or Slack with [dashboard subscriptions](dashboard-subscriptions).

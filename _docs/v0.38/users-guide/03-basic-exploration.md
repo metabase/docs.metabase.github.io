@@ -6,7 +6,6 @@ show_title_breadcrumb: true
 category: 'Users Guide'
 title: '03 Basic Exploration'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/users-guide/03-basic-exploration.md'
-layout: docs
 ---
 
 ## Exploring in Metabase
@@ -21,7 +20,7 @@ Alternatively, you can dive right in to exploring the data in Metabase by clicki
 
 ![Browse data](./images/browse-data.png)
 
-To learn more, see [Exploring data with Metabase's data browser](https://www.metabase.com/learn/basics/questions/data-browser.html).
+To learn more, see [Exploring data with Metabase's data browser](/learn/basics/questions/data-browser).
 
 #### Exploring collections
 
@@ -35,9 +34,9 @@ Collections have a list of any other items that are saved within them, and you c
 
 #### Exploring dashboards
 
-Dashboards are a set of questions and text cards that you want to be able to refer back to regularly. [Learn more about dashboards](07-dashboards.html).
+Dashboards are a set of questions and text cards that you want to be able to refer back to regularly. [Learn more about dashboards](07-dashboards).
 
-If you click on a part of a chart, such as a bar in a bar chart, or a dot on a line chart, you'll see a the **Action menu**, with actions you can take to dive deeper into that result, branch off from it in a different direction, or create an [X-ray](14-x-rays.html) to see an automatic exploration of the data.
+If you click on a part of a chart, such as a bar in a bar chart, or a dot on a line chart, you'll see a the **Action menu**, with actions you can take to dive deeper into that result, branch off from it in a different direction, or create an [X-ray](14-x-rays) to see an automatic exploration of the data.
 ![Drill through](images/drill-through/drill-through.png)
 
 In this example of orders by product category over time, clicking on a dot on this line chart gives us the ability to:
@@ -46,7 +45,7 @@ In this example of orders by product category over time, clicking on a dot on th
 - **View these Orders**: See a list of the orders for a particular month
 - **Break out by a category**:  See things like the Gizmo orders in June 2017 broken out by the status of the customer (e.g., `new` or `VIP`). Different charts will have different breakout options, such as **Location** and **Time**.
 
-> Note that while charts created with SQL don't currently have the action menu, you can add SQL questions to a dashboard and customize their click behavior. You can send people to a [custom destination](https://www.metabase.com/learn/building-analytics/dasboards/custom-destinations.html) (like another dashboard or an external URL), or have the clicked value [update a dashboard filter](https://www.metabase.com/learn/building-analytics/dashboards/cross-filtering.html).
+> Note that while charts created with SQL don't currently have the action menu, you can add SQL questions to a dashboard and customize their click behavior. You can send people to a [custom destination](/learn/building-analytics/dasboards/custom-destinations) (like another dashboard or an external URL), or have the clicked value [update a dashboard filter](/learn/building-analytics/dashboards/cross-filtering).
 
 Clicking on a table cell will often allow you to filter the results using a comparison operator, like =, >, or <. For example, you can click on a table cell, and select the less than operator `<` to filter for values that are less than the selected value.
 
@@ -56,7 +55,7 @@ Lastly, clicking on the ID of an item in a table gives you the option to go to a
 
 ![Detail view](images/drill-through/detail-view.png)
 
-When you add questions to a dashboard, you can have even more control over what happens when people click on your chart. In addition to the default action menu, you can add a [custom destination](https://www.metabase.com/learn/building-analytics/dasboards/custom-destinations.html) or [update a filter](https://www.metabase.com/learn/building-analytics/dashboards/cross-filtering.html). Check out [interactive dashboards](interactive-dashboards.html). to learn more.
+When you add questions to a dashboard, you can have even more control over what happens when people click on your chart. In addition to the default action menu, you can add a [custom destination](/learn/building-analytics/dasboards/custom-destinations) or [update a filter](/learn/building-analytics/dashboards/cross-filtering). Check out [interactive dashboards](interactive-dashboards). to learn more.
 
 #### Exploring saved questions
 
@@ -72,4 +71,4 @@ One of our personal favorite ways to explore is with the **Distribution** option
 
 ## Next: Asking custom questions
 
-So what do you do if you can't find an existing dashboard or question that's exactly what you're looking for? Let's learn about [asking our own new questions](04-asking-questions.html).
+So what do you do if you can't find an existing dashboard or question that's exactly what you're looking for? Let's learn about [asking our own new questions](04-asking-questions).

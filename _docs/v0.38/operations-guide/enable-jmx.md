@@ -4,9 +4,8 @@ has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
 category: 'Operations Guide'
-title: 'Enable Jmx'
+title: 'Enable JMX'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/operations-guide/enable-jmx.md'
-layout: docs
 ---
 
 ## Monitoring Your Metabase Instance

@@ -6,7 +6,6 @@ show_title_breadcrumb: true
 category: 'Operations Guide'
 title: 'Log Configuration'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/operations-guide/log-configuration.md'
-layout: docs
 ---
 
 # Configuring Logging Level

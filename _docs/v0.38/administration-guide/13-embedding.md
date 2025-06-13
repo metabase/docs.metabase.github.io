@@ -6,7 +6,6 @@ show_title_breadcrumb: true
 category: 'Administration Guide'
 title: '13 Embedding'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/administration-guide/13-embedding.md'
-layout: docs
 ---
 
 ## Embedding Metabase in other applications
@@ -137,5 +136,5 @@ If you'd like to embed Metabase dashboards or charts in your application without
 
 To learn more about embedding, check out these articles:
 
-- [How to use Metabase to deliver analytics to your customers](https://www.metabase.com/blog/external-facing-analytics/index.html).
-- [How to embed Metabase in your app to deliver multi-tenant, self-service analytics](https://www.metabase.com/blog/embedding/index.html).
+- [How to use Metabase to deliver analytics to your customers](/blog/external-facing-analytics/index).
+- [How to embed Metabase in your app to deliver multi-tenant, self-service analytics](/blog/embedding/index).

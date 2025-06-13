@@ -6,7 +6,6 @@ show_title_breadcrumb: true
 category: FAQ
 title: 'Does Metabase Do X'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/faq/general/does-metabase-do-x.md'
-layout: docs
 ---
 
 # Does Metabase do X?

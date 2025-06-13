@@ -6,7 +6,6 @@ show_title_breadcrumb: true
 category: 'Table of Contents'
 title: 'Developers Guide Vscode'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/developers-guide-vscode.md'
-layout: docs
 ---
 
 # Developing Metabase with Visual Studio Code

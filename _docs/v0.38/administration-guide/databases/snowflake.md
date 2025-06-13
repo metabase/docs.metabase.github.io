@@ -6,7 +6,6 @@ show_title_breadcrumb: true
 category: 'Administration Guide'
 title: Snowflake
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/administration-guide/databases/snowflake.md'
-layout: docs
 ---
 
 ### Connecting to Snowflake

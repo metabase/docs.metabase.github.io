@@ -6,7 +6,6 @@ show_title_breadcrumb: true
 category: 'Administration Guide'
 title: '03 Metadata Editing'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/administration-guide/03-metadata-editing.md'
-layout: docs
 ---
 
 ## The Data Model page: editing metadata
@@ -18,7 +17,7 @@ The **Data Model** section of the **Admin Panel** contains settings to edit meta
 - **Segments**
 - **Metrics**
 
-This page focuses on editing table and column metadata; another page covers [segments and metrics](07-segments-and-metrics.html).
+This page focuses on editing table and column metadata; another page covers [segments and metrics](07-segments-and-metrics).
 
 ### What is metadata?
 
@@ -44,7 +43,7 @@ For table Metadata, you can:
 
 You can set tables to be **Queryable** or **Hidden**. Setting table visibility can be especially useful if you have a lot of tables in your database but your users will only be interested in a subset of those tables. Table visibility can help keep your Metabase instance tidy by hiding unnecessary tables out of the user interface. 
 
-Visibility settings are distinct from **permissions**. Users can still query hidden tables using the **SQL editor**. See [**permissions**](05-setting-permissions.html) for controlling access to data.
+Visibility settings are distinct from **permissions**. Users can still query hidden tables using the **SQL editor**. See [**permissions**](05-setting-permissions) for controlling access to data.
 
 **Queryable tables** can be selected from the **notebook editor**, and all of the data in the table can be displayed (unless certain columns are excluded — more on that below).
 
@@ -220,4 +219,4 @@ You can also select from several options:
 ---
 
 ## Next: creating segments and metrics
-Learn how to create canonical definitions of your commonly used [segments and metrics](07-segments-and-metrics.html).
+Learn how to create canonical definitions of your commonly used [segments and metrics](07-segments-and-metrics).

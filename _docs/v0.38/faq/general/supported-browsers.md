@@ -6,7 +6,6 @@ show_title_breadcrumb: true
 category: FAQ
 title: 'Supported Browsers'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/faq/general/supported-browsers.md'
-layout: docs
 ---
 
 ## Browser Support
@@ -22,4 +21,3 @@ We try our best to make sure Metabase works in as many browsers as possible but 
 - Safari (v11+)
 
 Metabase _may_ run perfectly fine on older versions of your browser of choice or a specific browser not listed above, but your mileage may vary. We always recommend you use the most up to date browser you can.
-

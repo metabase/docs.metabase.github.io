@@ -6,7 +6,6 @@ show_title_breadcrumb: true
 category: 'Troubleshooting Guide'
 title: Docker
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/troubleshooting-guide/docker.md'
-layout: docs
 ---
 
 While Docker simplifies a lot of aspects of running Metabase, there are a number of potential pitfalls to keep in mind.
@@ -107,7 +106,7 @@ The logs for the Docker container return an error message after the “Verifying
 
 #### How to fix this:
 
-Try to connect with `mysql` or `psql` commands with the connection string parameters you are passing in [via the environment variables](../operations-guide/configuring-application-database.html).
+Try to connect with `mysql` or `psql` commands with the connection string parameters you are passing in [via the environment variables](../operations-guide/configuring-application-database).
 
 If you can’t connect to the database, the problem is due to either the credentials or connectivity. Verify that the credentials are correct. If you are able to log in with those credentials from another machine then try to make the same connection from the host running the Docker container.
 
@@ -133,7 +132,7 @@ This occurs if you get the Setup screen every time you start the application. Th
 
 #### How to fix this:
 
-Make sure you are giving the container a [persistent volume](../operations-guide/running-metabase-on-docker.html#mounting-a-mapped-file-storage-volume)
+Make sure you are giving the container a [persistent volume](../operations-guide/running-metabase-on-docker#mounting-a-mapped-file-storage-volume)
 
 ### The internal port isn’t being remapped correctly
 

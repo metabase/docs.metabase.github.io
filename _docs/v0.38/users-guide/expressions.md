@@ -6,12 +6,11 @@ show_title_breadcrumb: true
 category: 'Users Guide'
 title: Expressions
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/users-guide/expressions.md'
-layout: docs
 ---
 
 ## Writing expressions in the notebook editor
 
-[Custom expressions](https://www.metabase.com/blog/custom-expressions/index.html) are a way to create more advanced filters and aggregations, or to add custom columns to your custom question. These expressions are accessible in the notebook editor of custom questions when clicking the button to add a new filter, a new metric in the Summarize area, or when creating a new custom column.
+[Custom expressions](/blog/custom-expressions/index) are a way to create more advanced filters and aggregations, or to add custom columns to your custom question. These expressions are accessible in the notebook editor of custom questions when clicking the button to add a new filter, a new metric in the Summarize area, or when creating a new custom column.
 
 ### How to write expressions
 
@@ -21,7 +20,7 @@ In each of these three places, you can:
 - Use basic mathematical operators: `+`, `-`, `*` (multiply), `/` (divide) on numeric column with numeric values, like integers, floats, and doubles. You can't currently do math on timestamp columns.
 - Use conditional operators: `AND`, `OR`, `NOT`, `>`, `>=` (greater than or equal to), `<`, `<=` (less than or equal to), `=`, `!=` (not equal to).
 - Refer to columns in the current table, or columns that are linked via a foreign key relationship. Column names should be included inside of square brackets, like this: `[Name of Column]`. Columns in connected tables can be referred to like this: `[ConnectedTableName.Column]`.
-- Refer to saved [Segments or Metrics](../administration-guide/07-segments-and-metrics.html) that are present in the currently selected table. You write these out the same as with columns, like this: `[Valid User Sessions]`.
+- Refer to saved [Segments or Metrics](../administration-guide/07-segments-and-metrics) that are present in the currently selected table. You write these out the same as with columns, like this: `[Valid User Sessions]`.
 - Use most of the different functions listed below.
 
 ### Aggregation functions
@@ -124,4 +123,4 @@ Additionally, **Presto** only provides _approximate_ results for `median` and `p
 If you're using or maintaining a third-party database driver, please [refer to the wiki](https://github.com/metabase/metabase/wiki/What's-new-in-0.35.0-for-Metabase-driver-authors) to see how your driver might be impacted.
 
 
-See [Custom expressions in the notebook editor](https://www.metabase.com/blog/custom-expressions/index.html) to learn more.
+See [Custom expressions in the notebook editor](/blog/custom-expressions/index) to learn more.

@@ -6,7 +6,6 @@ show_title_breadcrumb: true
 category: 'Users Guide'
 title: '14 X Rays'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/users-guide/14-x-rays.md'
-layout: docs
 ---
 
 ## X-rays
@@ -81,4 +80,4 @@ If you still have questions about X-rays or comparisons, you can head over to ou
 
 ## Next: setting up alerts
 
-Learn how to get notified when one of your questions meets or goal or has results with [alerts](15-alerts.html).
+Learn how to get notified when one of your questions meets or goal or has results with [alerts](15-alerts).

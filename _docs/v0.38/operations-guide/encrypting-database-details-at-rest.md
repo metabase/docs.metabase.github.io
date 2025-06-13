@@ -6,7 +6,6 @@ show_title_breadcrumb: true
 category: 'Operations Guide'
 title: 'Encrypting Database Details at Rest'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/operations-guide/encrypting-database-details-at-rest.md'
-layout: docs
 ---
 
 # Encrypting your database connection details at rest
@@ -40,4 +39,4 @@ You can rotate the encryption key using the cli command `rotate-encryption-key`.
 
 Metabase app should be stopped while running this command, and restarted with the new key as the `MB_ENCRYPTION_SECRET_KEY` environment variable.
 
-**Note**: As with all data migrations, it's recommended that you [backup](./backing-up-metabase-application-data.html) your data before doing a key rotation.
+**Note**: As with all data migrations, it's recommended that you [backup](./backing-up-metabase-application-data) your data before doing a key rotation.

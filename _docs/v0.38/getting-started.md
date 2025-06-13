@@ -6,7 +6,6 @@ show_title_breadcrumb: true
 category: 'Table of Contents'
 title: 'Getting Started'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/getting-started.md'
-layout: docs
 ---
 
 # Getting Started with Metabase
@@ -23,7 +22,7 @@ The way you log in to Metabase will depend on how you or your admin set it up, s
 
 Fresh out of the box, Metabase will show you a few things on the home page:
 
-- Some [automatic explorations](./users-guide/14-x-rays.html) of your tables that you can look at and save as a dashboard if you like any of them.
+- Some [automatic explorations](./users-guide/14-x-rays) of your tables that you can look at and save as a dashboard if you like any of them.
 - An area where things you or your teammates create will show up, along with a link to see all the dashboards, questions, and pulses you have.
 - A list of the databases you've connected to Metabase.
 
@@ -127,4 +126,4 @@ One other thing: once you’ve asked a question or saved a dashboard, the URL in
 
 ## That’s it!
 
-We hope this was helpful. Want to learn more? Is your thirst for knowledge insatiable? Check out our [Users Guide](users-guide/start.html) for more in-depth explanations of the ins and outs of Metabase.
+We hope this was helpful. Want to learn more? Is your thirst for knowledge insatiable? Check out our [Users Guide](users-guide/start) for more in-depth explanations of the ins and outs of Metabase.

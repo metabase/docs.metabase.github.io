@@ -6,7 +6,6 @@ show_title_breadcrumb: true
 category: 'Administration Guide'
 title: Oracle
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/administration-guide/databases/oracle.md'
-layout: docs
 ---
 
 ## Working with Oracle in Metabase
@@ -53,4 +52,4 @@ Finally, you can choose a custom plugins directory if the default doesn't suit y
 
 #### When running from Docker
 
-The process for adding plugins when running via Docker is similar, but you'll need to mount the `plugins` directory. Refer to instructions [here](../../operations-guide/running-metabase-on-docker.html#adding-external-dependencies-or-plugins) for more details.
+The process for adding plugins when running via Docker is similar, but you'll need to mount the `plugins` directory. Refer to instructions [here](../../operations-guide/running-metabase-on-docker#adding-external-dependencies-or-plugins) for more details.

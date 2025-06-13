@@ -6,12 +6,11 @@ show_title_breadcrumb: true
 category: 'Table of Contents'
 title: 'Setting Up Metabase'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/setting-up-metabase.md'
-layout: docs
 ---
 
 # Setting up Metabase
 
-This guide will help you set up Metabase once you’ve gotten it installed. If you haven’t installed Metabase yet, you can [get Metabase here](https://metabase.com/start/).
+This guide will help you set up Metabase once you’ve gotten it installed. If you haven’t installed Metabase yet, you can [get Metabase here](/start/).
 
 Start Metabase up for the first time and you’ll see this screen:
 ![Welcome Screen](images/WelcomeScreen.png)
@@ -36,7 +35,7 @@ If you’re ready to connect, here’s what you’ll need:
 * The **username** you use for the database
 * The **password** you use for the database
 
-If you’re using Heroku, here are [instructions on how to get this information](./administration-guide/01-managing-databases.html#heroku-databases). If you’re an Amazon RDS kind of person, you can follow [these instructions](./administration-guide/01-managing-databases.html#rds-databases).
+If you’re using Heroku, here are [instructions on how to get this information](./administration-guide/01-managing-databases#heroku-databases). If you’re an Amazon RDS kind of person, you can follow [these instructions](./administration-guide/01-managing-databases#rds-databases).
 
 If you don't have this information handy, the person responsible for administering the database should have it.
 
@@ -63,6 +62,6 @@ At this point you are all set and ready to use Metabase.  Since we like keeping 
 Once you're done here simply follow the link to **Take me to Metabase**.  And if you decided to skip the newsletter sign-up it's cool, we still like you :)
 
 # Next: Getting started with Metabase
-For a quick overview of how to use Metabase, head over to the [Getting Started Guide](getting-started.html).
+For a quick overview of how to use Metabase, head over to the [Getting Started Guide](getting-started).
 
-For information on adding team members, connecting additional databases, configuring Metabase settings, and more, check out the [Admin Guide](./administration-guide/start.html).
+For information on adding team members, connecting additional databases, configuring Metabase settings, and more, check out the [Admin Guide](./administration-guide/start).

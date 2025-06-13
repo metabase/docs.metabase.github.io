@@ -6,12 +6,11 @@ show_title_breadcrumb: true
 category: 'Enterprise Guide'
 title: 'Full App Embedding'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/enterprise-guide/full-app-embedding.md'
-layout: docs
 ---
 
 ## Embedding all of Metabase in your web app
 
-The open-source edition of Metabase allows you to [embed standalone charts or dashboards](../administration-guide/13-embedding.html) in your own web applications for simple situations. But what if you want to provide your users with a more interactive, browsable experience? Metabase Enterprise Edition allows you to embed the entire Metabase app within your own web app, allowing you to provide [drill-through](https://www.metabase.com/learn/basics/questions/drill-through.html) for your embedded charts and dashboards, or even embed the graphical query builder, or collections of dashboards and charts.
+The open-source edition of Metabase allows you to [embed standalone charts or dashboards](../administration-guide/13-embedding) in your own web applications for simple situations. But what if you want to provide your users with a more interactive, browsable experience? Metabase Enterprise Edition allows you to embed the entire Metabase app within your own web app, allowing you to provide [drill-through](/learn/basics/questions/drill-through) for your embedded charts and dashboards, or even embed the graphical query builder, or collections of dashboards and charts.
 
 You'll be putting the whole Metabase app into an iframe, and the SSO integration you've set up with Metabase will be used to make sure the embedded Metabase respects the collection and data permissions you've set up for your user groups. Clicking on charts and graphs in the embed will do just what they do in Metabase itself. You can even display a specific Metabase collection in an embed to allow your users to browse through all the dashboards and questions that you've made available to them. The only difference is that Metabase's top nav bar and global search will not be rendered in your iframe.
 
@@ -95,7 +94,7 @@ Drill-through also allows users to click on the title of a chart in a dashboard 
 
 Depending on the collections permissions you set, your users can also save their explorations into collections. If you want to allow them to find these saved explorations, make sure your web application implements a link to view the collections directory.
 
-Check out our article, [Create charts with explorable data](https://www.metabase.com/learn/basics/questions/drill-through.html).
+Check out our article, [Create charts with explorable data](/learn/basics/questions/drill-through).
 
 #### Using SSO to apply data or collection permissions to embeds
 
@@ -111,12 +110,12 @@ When signing JWTs for either SSO (i.e., in full-app embedding) or standalone que
 
 Check out these articles:
 
-- [Deliver analytics to your customers](https://www.metabase.com/learn/building-analytics/dashboards/linking-filters.html).
-- [Embed Metabase in your app to deliver multi-tenant, self-service analytics](https://www.metabase.com/learn/developing-applications/advanced-metabase/multi-tenant-self-service-analytics.html).
-- [Create charts with explorable data](https://www.metabase.com/learn/developing-applications/advanced-metabase/multi-tenant-self-service-analytics.html).
+- [Deliver analytics to your customers](/learn/building-analytics/dashboards/linking-filters).
+- [Embed Metabase in your app to deliver multi-tenant, self-service analytics](/learn/developing-applications/advanced-metabase/multi-tenant-self-service-analytics).
+- [Create charts with explorable data](/learn/developing-applications/advanced-metabase/multi-tenant-self-service-analytics).
 
 ---
 
 ## Next: white labeling
 
-Learn how to quickly add your own logo and customize the way Metabase looks with [white labeling](whitelabeling.html).
+Learn how to quickly add your own logo and customize the way Metabase looks with [white labeling](whitelabeling).

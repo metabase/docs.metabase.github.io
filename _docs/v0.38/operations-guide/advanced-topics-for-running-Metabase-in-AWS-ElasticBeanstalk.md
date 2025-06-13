@@ -6,7 +6,6 @@ show_title_breadcrumb: true
 category: 'Operations Guide'
 title: 'Advanced Topics for Running Metabase in AWS ElasticBeanstalk'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/operations-guide/advanced-topics-for-running-Metabase-in-AWS-ElasticBeanstalk.md'
-layout: docs
 ---
 
 - [Logging](#logging)

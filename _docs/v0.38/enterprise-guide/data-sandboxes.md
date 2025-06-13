@@ -6,7 +6,6 @@ show_title_breadcrumb: true
 category: 'Enterprise Guide'
 title: 'Data Sandboxes'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/enterprise-guide/data-sandboxes.md'
-layout: docs
 ---
 
 ## Sandboxing your data
@@ -21,7 +20,7 @@ The way they work is that you first pick a table that you want to sandbox for us
 
 For Metabase to be able to automatically filter tables based on who's viewing them, your users will need to have distinct attributes associated with their accounts to differentiate them — something like `User_ID`. We'll then use these attributes as the basis for filtering the tables you choose. There are two ways to add these attributes to your users:
 
-1. If you've already [connected your SSO](authenticating-with-saml.html) to Metabase, any user attributes you set there can be automatically passed to Metabase.
+1. If you've already [connected your SSO](authenticating-with-saml) to Metabase, any user attributes you set there can be automatically passed to Metabase.
 2. You can also add attributes manually to a user by going to the People section of the Admin Panel, and clicking on the “…” menu on the far right of a user’s name in the table you’ll see there. Click on Edit Details from that menu to add and edit a user’s attributes.
 
 Now that your users have attributes, you’ll be able to sandbox tables, and automatically filter them based on these user attributes.
@@ -146,4 +145,4 @@ An important distinction to make is that you can use a saved SQL query in the _c
 
 ## Next: embedding Metabase in your web app
 
-The next section will explain [how to embed](full-app-embedding.html) interactive dashboards and charts, or even whole sections of Metabase within your app.
+The next section will explain [how to embed](full-app-embedding) interactive dashboards and charts, or even whole sections of Metabase within your app.

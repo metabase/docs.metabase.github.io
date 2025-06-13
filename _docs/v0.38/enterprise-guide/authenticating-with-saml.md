@@ -4,14 +4,13 @@ has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
 category: 'Enterprise Guide'
-title: 'Authenticating With Saml'
+title: 'Authenticating With SAML'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/enterprise-guide/authenticating-with-saml.md'
-layout: docs
 ---
 
 ## Authenticating with SAML
 
-The open source edition of Metabase includes the option to set up single sign-on (SSO) with [Google Sign-in or LDAP](../administration-guide/10-single-sign-on.html), but the Enterprise edition of Metabase additionally lets you connect your SAML- or JWT-based SSO. Integrating your SSO with Metabase allows you to:
+The open source edition of Metabase includes the option to set up single sign-on (SSO) with [Google Sign-in or LDAP](../administration-guide/10-single-sign-on), but the Enterprise edition of Metabase additionally lets you connect your SAML- or JWT-based SSO. Integrating your SSO with Metabase allows you to:
 
 - automatically pass user attributes from your SSO to Metabase in order to power data sandboxes
 - let your users access Metabase without re-authenticating.
@@ -205,4 +204,4 @@ When users log in to Metabase for the first time via SSO, this will automaticall
 
 ## Next: JWT-based SSO
 
-If SAML isn’t your bag, find out how to enable [JWT-based SSO](authenticating-with-jwt.html).
+If SAML isn’t your bag, find out how to enable [JWT-based SSO](authenticating-with-jwt).

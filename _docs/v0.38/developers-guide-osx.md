@@ -6,13 +6,12 @@ show_title_breadcrumb: true
 category: 'Table of Contents'
 title: 'Developers Guide Osx'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/developers-guide-osx.md'
-layout: docs
 ---
 
 # Metabase OS X App
 
 NOTE: These instructions are only for packaging a built Metabase uberjar into `Metabase.app`. They are not useful if your goal is to work on Metabase itself; for development, please see
-our [developers' guide](developers-guide.html).
+our [developers' guide](developers-guide).
 
 ## First-Time Configuration
 <details>

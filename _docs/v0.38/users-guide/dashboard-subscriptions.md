@@ -6,7 +6,6 @@ show_title_breadcrumb: true
 category: 'Users Guide'
 title: 'Dashboard Subscriptions'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/users-guide/dashboard-subscriptions.md'
-layout: docs
 ---
 
 ## Dashboard subscriptions
@@ -15,7 +14,7 @@ Dashboard subscriptions are a great way to keep you and your team up to date on 
 
 ### Enabling dashboard subscriptions
 
-To enable dashboard subscriptions, your administrators will need to have set up email or Slack for your Metabase. See [Setting up email](../administration-guide/02-setting-up-email.html) or [Setting up Slack](../administration-guide/09-setting-up-slack.html).
+To enable dashboard subscriptions, your administrators will need to have set up email or Slack for your Metabase. See [Setting up email](/docs/latest/administration-guide/02-setting-up-email) or [Setting up Slack](/docs/latest/administration-guide/09-setting-up-slack).
 
 ### Setting up a dashboard subscription
 
@@ -41,7 +40,7 @@ For emails, we can:
 - **Skip updates without results**. If there are no results, we can tell Metabase to skip sending the email.
 - **Attach results**. Tell Metabase if it should also attach results to the email (which will include up to 2000 rows of data). You can choose between CSV and XLSX file formats.
 
-If you've added filters to your dashboard and set default values for those filters, Metabase will apply those default values to your subscriptions, filtering the results of all questions that are connected to those filters when the subscriptions are sent. To learn more, check out [dashboard filters](./08-dashboard-filters.html).
+If you've added filters to your dashboard and set default values for those filters, Metabase will apply those default values to your subscriptions, filtering the results of all questions that are connected to those filters when the subscriptions are sent. To learn more, check out [dashboard filters](/docs/latest/users-guide/08-dashboard-filters).
 
 ### Email example
 
@@ -59,11 +58,11 @@ You can specify how often Metabase sends a Slack message (hourly, daily, weekly,
 
 ### Related reading
 
-- [Setting up email](../administration-guide/02-setting-up-email.html)
-- [Setting up Slack](../administration-guide/09-setting-up-slack.html)
+- [Setting up email](/docs/latest/administration-guide/02-setting-up-email)
+- [Setting up Slack](/docs/latest/administration-guide/09-setting-up-slack)
 
 ---
 
 ## Next: Getting reports with Pulses
 
-Pulses let you send out a group of saved questions on a schedule via email or Slack. [Get started with Pulses](10-pulses.html).
+Pulses let you send out a group of saved questions on a schedule via email or Slack. [Get started with Pulses](10-pulses).
