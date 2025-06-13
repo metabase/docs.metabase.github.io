@@ -110,8 +110,7 @@
 </head>
 
 
-    <body>
-
+  <body>
     
 
 
@@ -3754,7 +3753,6 @@ Roadmap</a>
           
         </div>
         
-          
 
 
   
@@ -3835,12 +3833,10 @@ Roadmap</a>
   
 
 
-        
       </div>
 	  </article>
   </div>
 </div>
-
 
 <script type="text/javascript" src="/js/new-docs-version-selector.js"></script>
 <script type="text/javascript" src="/js/new-docs-anchor-links.js"></script>
@@ -4121,105 +4117,47 @@ Roadmap</a>
 <!-- Sentry -->
 <script src="https://browser.sentry-cdn.com/7.80.0/bundle.tracing.min.js" integrity="sha384-9p7yMLyZIHc6xTuqX+LoBi2J9UM/oPBExF4+dyIjtjaFZqaY5FdMWVdThn65jDBC" crossorigin="anonymous"></script>
 <script type="text/javascript">
-    Sentry.init({
-        environment: "production",
-        dsn: "https://4b0be007af0a45f3bf6f59e5381ffe74@o408345.ingest.sentry.io/6722711",
-        integrations: [new Sentry.BrowserTracing()],
-        tracesSampleRate: 1.0,
-        ignoreErrors: ["ResizeObserver loop limit exceeded", "ResizeObserver loop completed with undelivered notifications."],
-    });
-</script>
-
-<!-- UTM channel attribution -->
-<script>
-    // creating own implementation of closest since Internet Explorer does not support this
-    function closestATag(element) {
-        let node = element;
-        while (node) {
-            if (node.tagName === 'A') {
-                return node;
-            }
-            node = node.parentNode;
-        }
-
-        return null;
-    }
-
-    document.body.addEventListener('click', function(e) {
-      const element = closestATag(e.target);
-
-      if (element) {
-        const params = new Proxy(new URLSearchParams(window.location.search), {
-          get: (searchParams, prop) => searchParams.get(prop),
-        });
-        const {utm_source, utm_medium, utm_campaign, utm_term, utm_content, gclid } = params;
-
-        if (!utm_source && !utm_medium && !utm_campaign && !utm_term && !utm_content && !gclid) {
-          return;
-        }
-
-        e.preventDefault();
-
-        const toUrl = new URL(element.href);
-
-        if (utm_source) {
-          toUrl.searchParams.set('utm_source', utm_source);
-        }
-        if (utm_medium) {
-          toUrl.searchParams.set('utm_medium', utm_medium);
-        }
-        if (utm_campaign) {
-          toUrl.searchParams.set('utm_campaign', utm_campaign);
-        }
-        if (utm_term) {
-          toUrl.searchParams.set('utm_term', utm_term);
-        }
-        if (utm_content) {
-          toUrl.searchParams.set('utm_content', utm_content);
-        }
-        if (gclid) {
-          toUrl.searchParams.set('gclid', gclid);
-        }
-
-        const toUrlWithUtmParams = toUrl.toString();
-
-        const openInNewWindow = element.getAttribute('target');
-        if (openInNewWindow === '_blank') {
-          // opens in new window
-          window.open(toUrlWithUtmParams, '_blank', 'noopener noreferrer');
-        } else {
-          window.open(toUrlWithUtmParams, '_self');
-        }
-      }
-    });
+  Sentry.init({
+    environment: "production",
+    dsn:
+      "https://4b0be007af0a45f3bf6f59e5381ffe74@o408345.ingest.sentry.io/6722711",
+    integrations: [new Sentry.BrowserTracing()],
+    tracesSampleRate: 1.0,
+    ignoreErrors: [
+      "ResizeObserver loop limit exceeded",
+      "ResizeObserver loop completed with undelivered notifications.",
+    ],
+  });
 </script>
 
 <!-- show/hide logic for More Resources button -->
 <script type="text/javascript">
-    const $moreResourcesButtons = document.querySelectorAll('.more-resources');
+  const $moreResourcesButtons = document.querySelectorAll(".more-resources");
 
-    $moreResourcesButtons.forEach($button => {
-      $button.addEventListener('click', () => {
-        $button.nextElementSibling.classList.toggle('hide');
-        $button.querySelector('.more-resources-chevron').classList.toggle('chevron-up');
-      });
+  $moreResourcesButtons.forEach(($button) => {
+    $button.addEventListener("click", () => {
+      $button.nextElementSibling.classList.toggle("hide");
+      $button
+        .querySelector(".more-resources-chevron")
+        .classList.toggle("chevron-up");
     });
+  });
 </script>
 
 <!-- forms -->
 <script type="text/javascript" src="//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js"></script>
 <script type="text/javascript">
-    (function() {
-        window.fnames = new Array();
-        window.ftypes = new Array();
-        fnames[0] = "EMAIL";
-        ftypes[0] = "email";
-        fnames[1] = "FNAME";
-        ftypes[1] = "text";
-        fnames[2] = "LNAME";
-        ftypes[2] = "text";
-    })();
-    var $mcj = jQuery.noConflict(true);
+  (function() {
+    window.fnames = new Array();
+    window.ftypes = new Array();
+    fnames[0] = "EMAIL";
+    ftypes[0] = "email";
+    fnames[1] = "FNAME";
+    ftypes[1] = "text";
+    fnames[2] = "LNAME";
+    ftypes[2] = "text";
+  })();
+  var $mcj = jQuery.noConflict(true);
 </script>
 
 
