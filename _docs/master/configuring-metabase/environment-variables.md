@@ -1144,14 +1144,6 @@ Allow persisting models into the source database.
 
 Token for premium features. Go to the MetaStore to get yours!
 
-### `MB_QUERY_ANALYSIS_ENABLED`
-
-- Type: boolean
-- Default: `false`
-- [Configuration file name](./config-file): `query-analysis-enabled`
-
-Whether or not we analyze any queries at all.
-
 ### `MB_QUERY_CACHING_MAX_KB`
 
 - Type: integer
