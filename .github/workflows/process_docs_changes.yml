@@ -2,8 +2,12 @@ name: Process Docs Changes
 on:
   workflow_dispatch:
     inputs:
-      branch_name:
-        description: Which `metabase/metabase` branch triggered this workflow
+      source_branch:
+        description: metabase/metabase branch triggered this workflow?
+        required: true
+        type: string
+      target_branch:
+        description: metabase/metabase target branch name
         required: true
         type: string
       dispatch_type:
@@ -17,14 +21,15 @@ on:
   repository_dispatch:
     types: [docs_update, docs_merge]
 
-run-name: Processing `${{ github.event.action || github.event.inputs.dispatch_type }}` for branch `${{ github.event.inputs.branch_name || github.event.client_payload.branch_name }}`
+run-name: Processing `${{ github.event.action || github.event.inputs.dispatch_type }}` | `${{ github.event.inputs.source_branch || github.event.client_payload.source_branch }}` -> `${{ github.event.inputs.target_branch || github.event.client_payload.target_branch }}`
 
 jobs:
   build:
-    name: Build for ${{ github.event.inputs.branch_name || github.event.client_payload.branch_name }} | ${{ github.event.action || github.event.inputs.dispatch_type }}
+    name: Build for `${{ github.event.inputs.source_branch || github.event.client_payload.source_branch }}` -> ${{ github.event.inputs.target_branch || github.event.client_payload.target_branch }} | ${{ github.event.action || github.event.inputs.dispatch_type }}
     runs-on: ubuntu-latest
     env:
-      MAIN_REPO_BRANCH: "${{ github.event.inputs.branch_name || github.event.client_payload.branch_name }}"
+      MAIN_REPO_SOURCE_BRANCH: "${{ github.event.inputs.source_branch || github.event.client_payload.source_branch }}"
+      MAIN_REPO_TARGET_BRANCH: "${{ github.event.inputs.target_branch || github.event.client_payload.target_branch }}"
     steps:
       - name: Running Docs Update
         if: |
@@ -47,7 +52,8 @@ jobs:
 
       - name: echo branch name
         run: |
-          echo "Got (metabase) branch_name: $MAIN_REPO_BRANCH"
+          echo "metabase/metabase source_branch: $MAIN_REPO_SOURCE_BRANCH"
+          echo "metabase/metabase target_branch: $MAIN_REPO_TARGET_BRANCH"
 
       - name: echo local repo branch
         run: |
@@ -59,11 +65,11 @@ jobs:
           distribution: 'zulu' # See 'Supported distributions' for available options
           java-version: '21'
 
-      - name: Install Clojure to build cljs
+      - name: Install Clojure (needed to build cljs for SDK dox generation)
         uses: DeLaGuardo/setup-clojure@13.2
         with:
           cli: 1.12.0.1530
-          bb: 1.12.199
+          bb: 1.12.200
 
       - name: Run docs repo build tests
         run: |
@@ -71,7 +77,7 @@ jobs:
 
       - name: Filter non-documented branches
         run: |
-          bb script/check_incoming_branchname.clj "$MAIN_REPO_BRANCH"
+          bb script/check_incoming_branchname.clj "$MAIN_REPO_TARGET_BRANCH"
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -90,15 +96,23 @@ jobs:
         run: |
           bundle install
 
-      - name: Update docs for branchname
-        run: |
-          bb script/update_docs_for_branchname.clj "$MAIN_REPO_BRANCH"
-
       - name: Setup Git Authenticatation
         run: |
           git config --global user.name "Metabase Docs bot"
           git config --global user.email "metabase-bot@metabase.com"
           git remote set-url origin "https://x-access-token:${{ secrets.METABASE_AUTOMATION_USER_TOKEN }}@github.com/metabase/docs.metabase.github.io.git"
+
+      - name: Checkout Main Repo
+        uses: actions/checkout@v4
+        with:
+          repository: metabase/metabase
+          ref: ${{ env.main_repo_source_branch }}
+          path: ${{ env.main_repo_source_branch }} # check it out into a dir w/ the same name:
+          token: ${{ secrets.METABASE_AUTOMATION_USER_TOKEN }}
+
+      - name: Update docs for branchname
+        run: |
+          bb script/update_docs_for_branchname.clj  --repo-dir "$MAIN_REPO_SOURCE_BRANCH" --target-branch "$MAIN_REPO_TARGET_BRANCH"
 
       - name: Checkout Control files from Marketing Repo
         uses: actions/checkout@v4
@@ -156,7 +170,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.METABASE_AUTOMATION_USER_TOKEN }}
         run: |
-          bb script/update_or_create_pr.clj "$MAIN_REPO_BRANCH"
+          bb script/update_or_create_pr.clj "$MAIN_REPO_SOURCE_BRANCH"
 
       - name: Merge Updated Docs
         if: |

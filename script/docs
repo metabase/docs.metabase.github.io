@@ -12,6 +12,7 @@ var settings = {
   latest: false,
   version: "master",
   finalDir: "_docs",
+  newDir: undefined,
   config: "_config.yml",
   update: false,
 };
@@ -19,7 +20,10 @@ var settings = {
 program
   .option("-l, --latest") // copy docs into _docs/latest
   .option("-s, --set-version <version>") // Specify target directory and version
-  .option("-u, --update"); // Download docs from current release_branch
+  .option("-u, --update") // Download docs from current release_branch
+  // Specify directory that the metabase repo is in.
+  // Leave this off to automatically download it in fetchDocs
+  .option("-r, --repo-dir <dir>");
 
 program.parse(process.argv);
 
@@ -29,6 +33,11 @@ const options = program.opts();
 // Useful when you've backported a docs PR and you want to update the docs on the website.
 if (options.update) {
   settings.update = true;
+}
+
+if (options.repoDir) {
+  console.log("Using new directory:", options.repoDir);
+  settings.newDir = options.repoDir;
 }
 
 // If no branch is specified, use the current release branch
@@ -62,6 +71,9 @@ if (!settings.version.match(/^v[0-9]+\./)) {
 }
 
 console.log("Settings: ", settings);
+
+// set settings.newDir to skip the download step
+// if we already have 'downloaded' it.
 
 fetchDocs(settings)
   .then(() => {
