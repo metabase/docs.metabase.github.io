@@ -9,11 +9,13 @@
 
 (def cli-spec
   {:spec
-   {:target-branch {:desc "The target branch to update docs for."
+   {:target-branch {:ref "<target-branch>"
+                    :desc "The target branch to update docs for."
                     :alias :t
                     :require true}
     ;; repo-dir is the name of the source branch.
-    :repo-dir {:desc "The file path to the metabase repository where the docs are located."
+    :repo-dir {:ref "<repo-dir>"
+               :desc "The file path to the metabase repository where the docs are located."
                :alias :r
                :validate fs/directory?}
     :dry-run {:desc "If set, will not execute the command, just print it out."
@@ -34,7 +36,7 @@
       (merge {:order (vec (keys (:spec cli-spec)))})
       cli/format-opts
       println)
-  (System/exit 1))
+  (throw (ex-info "Usage information printed." {:babashka/exit 1})))
 
 (defn- add-repo-dir [cmd repo-dir]
   (if repo-dir
