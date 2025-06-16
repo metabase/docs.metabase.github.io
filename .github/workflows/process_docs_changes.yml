@@ -101,6 +101,11 @@ jobs:
           git config --global user.email "metabase-bot@metabase.com"
           git remote set-url origin "https://x-access-token:${{ secrets.METABASE_AUTOMATION_USER_TOKEN }}@github.com/metabase/docs.metabase.github.io.git"
 
+      - name: Debug environment variables
+        run: |
+          echo "main_repo_source_branch = '${{ env.main_repo_source_branch }}'"
+          echo "main_repo_target_branch = '${{ env.main_repo_target_branch }}'"
+
       - name: Checkout Main Repo
         uses: actions/checkout@v4
         with:
