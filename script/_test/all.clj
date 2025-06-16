@@ -1,9 +1,10 @@
 (ns -test.all
   (:require
-   [ice.core :as ice]
-   [clojure.test :as t :refer [deftest is]]
-   [clojure.string :as str]
    [babashka.process :as p]
+   [clojure.edn :as edn]
+   [clojure.string :as str]
+   [clojure.test :as t :refer [deftest is]]
+   [ice.core :as ice]
    [util :as u]))
 
 (def branches ["master"
@@ -15,16 +16,16 @@
 
 (def expected
   (assoc {"master"                 {:publish-branch-docs? true
-                                    :update-docs-command "./script/docs master --set-version master"}
+                                    :update-docs-command "./script/docs master --set-version master --repo-dir ../metabase"}
           "release-x.49.x"         {:publish-branch-docs? true
-                                    :update-docs-command "./script/docs release-x.49.x --set-version v0.49"}
+                                    :update-docs-command "./script/docs release-x.49.x --set-version v0.49 --repo-dir ../metabase"}
           "release-x.50.x"         {:publish-branch-docs? true
-                                    :update-docs-command "./script/docs release-x.50.x --set-version v0.50"}
+                                    :update-docs-command "./script/docs release-x.50.x --set-version v0.50 --repo-dir ../metabase"}
           "any-other-branch"       {:publish-branch-docs? false
                                     :update-docs-command "Unpublishable branchname"}}
          ;; Current release branch:
          (str "release-x." (u/config-docs-version) ".x")
-         {:publish-branch-docs? true :update-docs-command "./script/docs-update"}))
+         {:publish-branch-docs? true :update-docs-command "./script/docs --update --latest --repo-dir ../metabase"}))
 
 (deftest branchname-filter-exit-code-test
   (doseq [branchname branches
@@ -39,12 +40,16 @@
   (println))
 
 (deftest update-docs-for-branchname-test
-  (doseq [branchname branches
-          :let [expectation (get expected branchname)]]
-    (let [{:keys [out] :as _result} (p/sh {:continue true :out :string}
-                                          "bb" "script/update_docs_for_branchname.clj" branchname "--dry-run")]
-      (ice/p [:green "Testing: update_docs_for_branchname for " [:white branchname] " Returns correct branch name"])
-      (is (str/includes? out (:update-docs-command expectation)))))
+  (doseq [target-branch branches
+          :let [expectation (get expected target-branch)]]
+    (let [cmd (str "bb script/update_docs_for_branchname.clj --dry-run --repo-dir ../metabase --target-branch "  target-branch)
+          {:keys [out] :as _result} (p/sh {:continue true :out :string} cmd)]
+      (ice/p [:green "Testing: update_docs_for_branchname for " [:white target-branch] " Returns correct branch name"])
+      (if (= target-branch "any-other-branch")
+        (is (str/includes? out "Unpublishable"))
+        (let [data (edn/read-string (last (str/split-lines out)))]
+          (is (= (:update-docs-command expectation)
+                 (:command data)))))))
   (println))
 
 (deftest config-version-is-parseable

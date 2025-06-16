@@ -1,9 +1,7 @@
 (ns update-docs-for-branchname
   (:require
-   [babashka.process :as p]
-   [babashka.fs :as fs]
    [babashka.cli :as cli]
-   [ice.core :as ice]
+   [babashka.process :as p]
    [bling.core :as b]
    [util :as u]))
 
@@ -16,8 +14,7 @@
     ;; repo-dir is the name of the source branch.
     :repo-dir {:ref "<repo-dir>"
                :desc "The file path to the metabase repository where the docs are located."
-               :alias :r
-               :validate fs/directory?}
+               :alias :r}
     :dry-run {:desc "If set, will not execute the command, just print it out."
               :coerce :boolean}}
    :error-fn                           ; a function to handle errors
@@ -25,9 +22,7 @@
      (when (= :org.babashka/cli type)
        (let [msg (case cause
                    :require
-                   (format "Missing required argument: %s\n" option)
-                   :validate
-                   (format "%s does not exist!\n" msg))]
+                   (format "Missing required argument: %s\n" option))]
          (u/pp data)
          (throw (ex-info msg {:babashka/exit 1})))))})
 
@@ -56,7 +51,7 @@
 
                             ;; for "current version", just use docs-update
                             (= (u/config-docs-version) release-num)
-                            "script/docs --update --latest"
+                            "./script/docs --update --latest"
 
                             (= category :release)
                             (format "./script/docs release-x.%s.x --set-version v0.%s" release-num release-num)
@@ -68,11 +63,11 @@
     (b/callout {:type :info :label (str "Command for " target-branch)} command)
     (when-not dry-run?
       (p/shell command))
-    (u/pp {:branchname  target-branch
-           :category    category
-           :release-num release-num
-           :dry-run?    dry-run?
-           :command     command})))
+    (prn {:branchname  target-branch
+          :category    category
+          :release-num release-num
+          :dry-run?    dry-run?
+          :command     command})))
 
 (when (= *file* (System/getProperty "babashka.file"))
   (apply -main *command-line-args*))
