@@ -88,7 +88,7 @@ jobs:
           git config --global user.email "metabase-bot@metabase.com"
           git remote set-url origin "https://x-access-token:${{ secrets.METABASE_AUTOMATION_USER_TOKEN }}@github.com/metabase/docs.metabase.github.io.git"
 
-      - name: Debug environment variables
+      - name: Announce env vars
         run: |
           echo "main_repo_source_branch = '${{ env.MAIN_REPO_SOURCE_BRANCH }}'"
           echo "main_repo_target_branch = '${{ env.MAIN_REPO_TARGET_BRANCH }}'"
@@ -103,10 +103,6 @@ jobs:
 
       - name: Update docs for branchname
         run: |
-          pwd
-          ls
-          ls script
-          cat script/update_docs_for_branchname.clj
           bb script/update_docs_for_branchname.clj --repo-dir "$MAIN_REPO_SOURCE_BRANCH" --target-branch "$MAIN_REPO_TARGET_BRANCH"
 
       - name: Checkout Control files from Marketing Repo

@@ -50,12 +50,14 @@
                                        :release (str "Release version:" release-num)
                                        (throw (ex-info (str "Unpublishable branchname: " source-branch) {:babashka/exit 1}))))
         dry-run? (contains? (set args) "--dry-run")
-        dr-notify (if dry-run? (ice/p-str [:yellow "dry-run: "]) "")
+        println-dr (fn [& args]
+                     (println (if dry-run? (ice/p-str [:yellow "dry-run: "]) "")
+                              (str/join " " args)))
         target-branch (str "update-" source-branch)
         _ (p/shell "git" "checkout" "-B" target-branch)
         artifact-dirs (->artifact-dirs category release-num)
         _ (doseq [ad artifact-dirs]
-            (println dr-notify "Adding" ad "...")
+            (println-dr "Adding" ad "...")
             (p/shell "git" "add" ad))
         {:keys [exit]} (p/shell {:continue true} "git" "diff" "--cached" "--quiet")]
 
@@ -64,9 +66,9 @@
       (do
         (println "→ Changes detected, committing...")
         (p/shell "git" "commit" "-m" (str "[auto] adding content to " target-branch))
-        (println dr-notify "git" "push" "--force" "origin" target-branch)
+        (println-dr "git" "push" "--force" "origin" target-branch)
         (when-not dry-run? (p/shell "git" "push" "--force" "origin" target-branch))
-        (println dr-notify "→ Target Branch updated successfully.")
+        (println-dr "→ Target Branch updated successfully.")
         (println "→ Checking for existing PR...")
 
         (if-let [pr-info (existing-pr? target-branch)]
@@ -79,7 +81,7 @@
                                 "--title" target-branch
                                 "--body" (str "updated: " (pr-str artifact-dirs))
                                 "--head" target-branch])]
-              (println dr-notify "running: " (str/join " " args))
+              (println-dr "running: " (str/join " " args))
               (apply p/shell args))))))
     (prn {:category category
           :release release-num
