@@ -31,19 +31,7 @@ jobs:
       MAIN_REPO_SOURCE_BRANCH: "${{ github.event.inputs.source_branch || github.event.client_payload.source_branch }}"
       MAIN_REPO_TARGET_BRANCH: "${{ github.event.inputs.target_branch || github.event.client_payload.target_branch }}"
     steps:
-      - name: Running Docs Update
-        if: |
-          (github.event_name == 'repository_dispatch' && github.event.action == 'docs_update') ||
-          (github.event_name == 'workflow_dispatch' && github.event.inputs.dispatch_type == 'docs_update')
-        run: |
-          echo "This is a 'docs_update' event"
-
-      - name: Running Docs Merge
-        if: |
-          (github.event_name == 'repository_dispatch' && github.event.action == 'docs_merge') ||
-          (github.event_name == 'workflow_dispatch' && github.event.inputs.dispatch_type == 'docs_merge')
-        run: |
-          echo "This is a 'docs_merge' event"
+      - uses: actions/checkout@v4
 
       - name: Set current branch name
         run: echo "LOCAL_REPO_BRANCH=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> "$GITHUB_ENV"
