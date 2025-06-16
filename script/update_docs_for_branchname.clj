@@ -40,7 +40,6 @@
 (defn -main [& args]
   (let [{:keys [repo-dir target-branch]
          :as   opts}  (cli/parse-opts args cli-spec)
-        _             (u/pp ["opts" opts])
         _             (when (or (:help opts) (:h opts)) (show-usage-and-exit))
         dry-run?      (contains? (set args) "--dry-run")
         [category
