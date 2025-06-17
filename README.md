@@ -33,11 +33,11 @@ of the release branches (`release-x.N.x`). They both open a PR in this repo
 reflecting the changes from the source branch of the PR which triggered the
 `Process Docs Changes` workflow.
 
-1. [docs_bump_detected.yml](https://github.com/metabase/metabase/blob/master/.github/workflows/docs_bump_detected.yml)
+- [docs_bump_detected.yml](https://github.com/metabase/metabase/blob/master/.github/workflows/docs_bump_detected.yml)
 
 Triggered whenever a PR is opened or updated (but not merged).
 
-2. [docs_merge_detected.yml](https://github.com/metabase/metabase/blob/master/.github/workflows/docs_merge_detected.yml)
+- [docs_merge_detected.yml](https://github.com/metabase/metabase/blob/master/.github/workflows/docs_merge_detected.yml)
 
 Triggered when the PR is merged.
 
