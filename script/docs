@@ -23,11 +23,16 @@ program
   .option("-u, --update") // Download docs from current release_branch
   // Specify directory that the metabase repo is in.
   // Leave this off to automatically download it in fetchDocs
-  .option("-r, --repo-dir <dir>");
+  .option("-r, --repo-dir <dir>")
+  .option("-b, --source-branch <dir>");
 
 program.parse(process.argv);
 
 const options = program.opts();
+
+if (options.sourceBranch) {
+  settings.branchName = options.sourceBranch
+}
 
 // When running script with --update flag, fetch-docs won't update the latest_version in the config.
 // Useful when you've backported a docs PR and you want to update the docs on the website.

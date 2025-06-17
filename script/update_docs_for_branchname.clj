@@ -33,9 +33,9 @@
       println)
   (throw (ex-info "Usage information printed." {:babashka/exit 1})))
 
-(defn- add-repo-dir [cmd repo-dir]
+(defn- add-source-branch [cmd repo-dir]
   (if repo-dir
-    (str cmd " --repo-dir " repo-dir) cmd))
+    (str cmd " --source-branch " repo-dir) cmd))
 
 (defn -main [& args]
   (let [{:keys [repo-dir target-branch]
@@ -58,7 +58,7 @@
                             :else (do (println "Unpublishable branchname: " target-branch)
                                       (throw (ex-info "Unpublishable branchname!"
                                                       {:babashka/exit 1 :opts opts}))))
-                          (add-repo-dir repo-dir))]
+                          (add-source-branch repo-dir))]
     (b/callout {:type :info :label (str "Command for " target-branch)} command)
     (when-not dry-run?
       (p/shell command))
