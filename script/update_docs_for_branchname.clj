@@ -11,10 +11,9 @@
                     :desc "The target branch to update docs for."
                     :alias :t
                     :require true}
-    ;; repo-dir is the name of the source branch.
-    :repo-dir {:ref "<repo-dir>"
-               :desc "The file path to the metabase repository where the docs are located."
-               :alias :r}
+    :source-branch {:ref "<source-branch>"
+                    :desc "The file path to the metabase repository where the docs are located."
+                    :alias :r}
     :dry-run {:desc "If set, will not execute the command, just print it out."
               :coerce :boolean}}
    :error-fn                           ; a function to handle errors
@@ -33,12 +32,12 @@
       println)
   (throw (ex-info "Usage information printed." {:babashka/exit 1})))
 
-(defn- add-source-branch [cmd repo-dir]
-  (if repo-dir
-    (str cmd " --source-branch " repo-dir) cmd))
+(defn- add-source-branch [cmd source-branch]
+  (if source-branch
+    (str cmd " --source-branch " source-branch) cmd))
 
 (defn -main [& args]
-  (let [{:keys [repo-dir target-branch]
+  (let [{:keys [source-branch target-branch]
          :as   opts}  (cli/parse-opts args cli-spec)
         _             (when (or (:help opts) (:h opts)) (show-usage-and-exit))
         dry-run?      (contains? (set args) "--dry-run")
@@ -58,7 +57,7 @@
                             :else (do (println "Unpublishable branchname: " target-branch)
                                       (throw (ex-info "Unpublishable branchname!"
                                                       {:babashka/exit 1 :opts opts}))))
-                          (add-source-branch repo-dir))]
+                          (add-source-branch source-branch))]
     (b/callout {:type :info :label (str "Command for " target-branch)} command)
     (when-not dry-run?
       (p/shell command))

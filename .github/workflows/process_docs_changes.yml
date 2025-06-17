@@ -91,17 +91,9 @@ jobs:
           echo "main_repo_source_branch = '${{ env.MAIN_REPO_SOURCE_BRANCH }}'"
           echo "main_repo_target_branch = '${{ env.MAIN_REPO_TARGET_BRANCH }}'"
 
-      - name: Checkout Main Repo
-        uses: actions/checkout@v4
-        with:
-          repository: metabase/metabase
-          ref: ${{ env.MAIN_REPO_SOURCE_BRANCH }}
-          path: ${{ env.MAIN_REPO_SOURCE_BRANCH }} # check it out into a dir w/ the same name:
-          token: ${{ secrets.METABASE_AUTOMATION_USER_TOKEN }}
-
       - name: Update docs for branchname
         run: |
-          bb script/update_docs_for_branchname.clj --repo-dir "$MAIN_REPO_SOURCE_BRANCH" --target-branch "$MAIN_REPO_TARGET_BRANCH"
+          bb script/update_docs_for_branchname.clj --source-branch "$MAIN_REPO_SOURCE_BRANCH" --target-branch "$MAIN_REPO_TARGET_BRANCH"
 
       - name: Checkout Control files from Marketing Repo
         uses: actions/checkout@v4
