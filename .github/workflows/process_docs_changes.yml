@@ -36,13 +36,10 @@ jobs:
       - name: Set current branch name
         run: echo "LOCAL_REPO_BRANCH=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> "$GITHUB_ENV"
 
-      - name: echo branch name
+      - name: echo branch names
         run: |
           echo "metabase/metabase source_branch: $MAIN_REPO_SOURCE_BRANCH"
           echo "metabase/metabase target_branch: $MAIN_REPO_TARGET_BRANCH"
-
-      - name: echo local repo branch
-        run: |
           echo "Running on (docs.metabase.github.io) branch: $LOCAL_REPO_BRANCH"
 
       - name: Prepare java
