@@ -19,15 +19,15 @@
                     :alias :r}}
    :error-fn u/cli-error-fn})
 
-(defn existing-pr?
+(defn existing-pr-by-title?
   "Checks if a PR already exists for the given target branch name."
-  [target-branch]
-  (let [curl-data (p/shell {:out :string :continue true}
+  [title]
+  (let [raw-data (p/shell {:out :string :continue true}
                            "gh" "pr" "list" "--repo" "metabase/docs.metabase.github.io" "--json" "title,number,state")
         ;; _ (println "→ Curl data: " (pr-str curl-data))
-        pr-data (-> curl-data :out (json/parse-string true))
+        pr-data (-> raw-data :out (json/parse-string true))
         _ (println "→ PR data: " (pr-str pr-data))
-        pr-info (some #(when (= target-branch (get % :title)) %) pr-data)]
+        pr-info (some #(when (= title (get % :title)) %) pr-data)]
     (println "→ PR info:" pr-info)
     pr-info))
 
@@ -90,7 +90,7 @@
         (println (str "→ Target Branch '" target-branch-name "' updated successfully."))
         (println "→ Checking for existing PR...")
 
-        (if-let [pr-info (existing-pr? target-branch-name)]
+        (if-let [pr-info (existing-pr-by-title? target-branch-title)]
           (println "✓ PR already exists: #" pr-info)
           (do
             (println "→ Creating new PR...")
