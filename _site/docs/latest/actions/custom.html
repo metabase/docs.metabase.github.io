@@ -39,14 +39,15 @@
     }
   </script>
 
-      
+  
+       
 
 <title>Custom actions | Metabase Documentation</title>
 <!-- Twitter cards -->
 <meta name="twitter:site" content="@metabase">
 
 <meta name="twitter:title" content="Custom actions | Metabase Documentation">
-<meta name="twitter:description" content="Custom actions Write SQL to update records in your databases.  Creating a custom action  You must be in a group with Native query editing access to create an action  There are two ways...">
+<meta name="twitter:description" content="Custom actions Write SQL to update records in your databases.  Creating a custom action  You must be in a group with Native query editing access to create an action.  There are two ways...">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -56,11 +57,48 @@
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://www.metabase.com/docs/latest/actions/custom">
 <meta name="title" property="og:title" content="Custom actions | Metabase Documentation">
-<meta name="description" property="og:description" content="Custom actions Write SQL to update records in your databases.  Creating a custom action  You must be in a group with Native query editing access to create an action  There are two ways...">
+<meta name="description" property="og:description" content="Custom actions Write SQL to update records in your databases.  Creating a custom action  You must be in a group with Native query editing access to create an action.  There are two ways...">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
+
   
-  <link href="/images/favicon.svg" rel="shortcut icon">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "url": "https://www.metabase.com/",
+    "sameAs": [
+      "https://github.com/metabase",
+      "https://www.linkedin.com/company/metabase/",
+      "https://x.com/metabase",
+      "https://www.youtube.com/@metabasedata"
+    ],
+    "logo": "https://github.com/metabase/metabase.github.io/blob/master/images/metabase-logo.png?raw=",
+    "name": "Metabase",
+    "description": "Metabase is an open source Business Intelligence and Embedded Analytics tool. Connect to your data stack in 5 minutes to make queries, visualizations, and dashboards easy for everyone—no SQL required",
+    "email": "hello@metabase.com",
+    "foundingDate": "2015-02-01T00:00:00.000Z",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "9740 Campo Rd",
+      "addressLocality": "Spring Valley",
+      "addressCountry": "USA",
+      "addressRegion": "CA",
+      "postalCode": "91977"
+    },
+    "knowsAbout": [
+      { "@type": "Thing", "name": "Business Intelligence" },
+      { "@type": "Thing", "name": "Embedded Analytics" },
+      { "@type": "Thing", "name": "Self-service analytics" },
+      { "@type": "Thing", "name": "Open source Business Intelligence" }
+    ]
+  }
+</script>
+
+
+  
+    <link href="/images/favicon.svg" rel="shortcut icon">
   
   <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/flexboxgrid/6.3.1/flexboxgrid.min.css" rel="stylesheet" type="text/css">
@@ -4006,7 +4044,7 @@ Roadmap</a>
 <div class="version__selector cursor-pointer">
   <span class="version__current">
     
-      v0.54
+      v0.55
     
 
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="chevron">
@@ -4016,6 +4054,14 @@ Roadmap</a>
   </span>
   <ul class="version__dropdown">
     
+      
+    
+      
+        <li>
+          <a href="/docs/v0.54">
+            v0.54
+          </a>
+        </li>
       
     
       
@@ -4082,14 +4128,6 @@ Roadmap</a>
         </li>
       
     
-      
-        <li>
-          <a href="/docs/v0.45">
-            v0.45
-          </a>
-        </li>
-      
-    
     <li><a href="/docs/all">See more</a></li>
   </ul>
 </div>
@@ -4127,14 +4165,24 @@ Roadmap</a>
 <h2 id="creating-a-custom-action">Creating a custom action</h2>
 
 <blockquote>
-  <p>You must be in a group with Native query editing access to create an action</p>
+  <p>You must be in a group with Native query editing access to create an action.</p>
 </blockquote>
 
 <p>There are two ways to create a custom action:</p>
 
+<p>From the command palette:</p>
+
 <ol>
-  <li>Click the <strong>+ New</strong> &gt; <strong>Action</strong>. When you save your action, you’ll be prompted to associate that action with a model. (NOTE: the <strong>Action</strong> option will only show up in the <strong>+ New</strong> menu if you’ve first created, or have access to, a <a href="../data-modeling/models">model</a> in Metabase.)</li>
-  <li>Via the model detail page: from a model, click on the <strong>info</strong> button in the upper right. In the upper right of the sidebar, click <strong>Model detail</strong> &gt; <strong>Actions</strong> &gt; <strong>New action</strong>.</li>
+  <li>Hit command-K (mac) or ctrl-K (windows) to open the command palette.</li>
+  <li>Search for <strong>New Action</strong>.</li>
+</ol>
+
+<p>From a model:</p>
+
+<ol>
+  <li>First, <a href="../data-modeling/models">create a model</a>.</li>
+  <li>Visit the model and click on the <strong>info</strong> button.</li>
+  <li>Click the <strong>Actions</strong> tab.</li>
 </ol>
 
 <p>In the action editor, you can write your own code to create an action, like writing an action that would only update a subset of the columns in a table. See <a href="#example-custom-actions">Example actions</a>.</p>
@@ -4297,13 +4345,7 @@ Roadmap</a>
         <div id="sub-navigation-content">
           
         </div>
-        
-
-
-  
-    <div id="feedback-widget-container" class="bootstrap feedback-widget">
-  
-
+        <div id="was-this-helpful-widget">
   <div id="page-feedback">
     <h6>Was this helpful?</h6>
     <button id="page-feedback-vote-up" class="vote-button Button">
@@ -4323,19 +4365,15 @@ Roadmap</a>
   </div>
 
   <div id="page-comment" class="flex flex-wrap full hide">
-    <div class="flex full">
-      <h6 id="page-feedback-question"></h6>
-    </div>
+    <p id="page-feedback-question"></p>
 
-    <div id="page-comment-form" class="flex full">
-      
-      <input id="feedback-comment-text" maxlength="500" class="flex input sm-input-small bordered inline-block align-center" name="comment" placeholder="Let us know what you think">
-      
+    <form id="page-comment-form" class="flex full">
+      <textarea id="feedback-comment-text" name="comment" placeholder="Type here…"></textarea>
 
-      <button id="page-comment-submit" class="feedback-widget Button flex align-center">
+      <button id="page-comment-submit" class="Button flex align-center">
         Send
       </button>
-    </div>
+    </form>
   </div>
 
   <div id="page-feedback-message" class="fs-18 hide">
@@ -4349,34 +4387,7 @@ Roadmap</a>
   
 </div>
 
-<script type="text/javascript" src="/js/feedback-widget.js"></script>
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const iframe = document.getElementById("subscribe-to-ai-newsletter-righthandside");
-
-    // Certain collections (e.g., "docs") do not display the newsletter iframe
-    if (!iframe) {
-      return;
-    }
-    const url = new URL(iframe.src, window.location.origin);
-
-    // Copy search params from the main window
-    const currentParams = new URLSearchParams(window.location.search);
-    for (const [key, value] of currentParams.entries()) {
-      url.searchParams.set(key, value);
-    }
-
-    // Add the current pathname as signup_path
-    url.searchParams.set("signup_path", window.location.pathname);
-
-    // Apply the new src
-    iframe.src = url.toString();
-  });
-</script>
-<script type="text/javascript" src="/js/side-email-cta.js"></script>
-
-  
-
+<script type="text/javascript" src="/js/was-this-helpful-widget.js"></script>
 
       </div>
 	  </article>
