@@ -1,5 +1,6 @@
 (ns util
   (:require [clj-yaml.core :as yaml]
+            [babashka.cli :as cli]
             [puget.printer :as puget]))
 
 (def release-regex #"release-x\.(\d+)\.x")
@@ -29,3 +30,19 @@
   "Pretty print values on a single line."
   [& xs]
   (doseq [x xs] (puget/cprint x {:width 10e20})))
+
+(defn show-usage-and-exit [cli-spec]
+  (-> cli-spec
+      (merge {:order (vec (keys (:spec cli-spec)))})
+      cli/format-opts
+      println)
+  (throw (ex-info "" {:babashka/exit 1})))
+
+(defn cli-error-fn [{:keys [spec type cause _msg option] :as data}]
+  (when (= :org.babashka/cli type)
+    (let [msg (case cause
+                :require
+                (format "Missing required argument: %s\n" option))]
+      (pp data)
+      (println msg)
+      (show-usage-and-exit spec))))

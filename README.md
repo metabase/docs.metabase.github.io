@@ -1,8 +1,9 @@
 # metabase doc building repo
 
-This repo is the home of the docs piece of the [website](https://metabase.com)
-for [Metabase](https://github.com/metabase/metabase). Those are built in a
-workflow in this repo.
+This repo is the home of the docs piece of the [Metabase
+website](https://metabase.com) for
+[Metabase](https://github.com/metabase/metabase). Docs are built in a workflow
+in this repo.
 
 ## ⚠️ Proposing Documentation Updates ⚠️
 
@@ -17,21 +18,31 @@ This repo contains the docs + docs building mechanisms for Metabase. Docs data
 gets pulled from the [main metabase repo](https://github.com/metabase/metabase)
 and built here automatically when a PR against a publishable branch is updated
 or merged. This ends up on `metabase.com` because we merge the static assets
-(html/css/js) here into the [marketing
-repo](https://github.com/metabase/metabase.github.io) during a build (todo).
+(html/css/js) which live here into the [marketing
+repo](https://github.com/metabase/metabase.github.io) during a marketing build.
 
 With these steps in place, at anytime, the master branch of this repo should be
 publishable alongside the [marketing
 repo](https://github.com/metabase/metabase.github.io) site.
 
+## Branch-based previews on Cloudflare Pages
+
+Every branch that gets built is also uploaded to cloudflare pages. A link to the
+live preview will be added to each PR.
+
 ## Docs Workflow Overview
 
 [Process Docs Changes](.github/workflows/process_docs_changes.yml) is triggered
-by 2 workflows in the main metabase repo. They both trigger for PRs with a
-change to the `/docs` directory, where the PR's target branch is `master` or one
-of the release branches (`release-x.N.x`). They both open a PR in this repo
-reflecting the changes from the source branch of the PR which triggered the
-`Process Docs Changes` workflow.
+by the
+[docs_bump_detected.yml](https://github.com/metabase/metabase/blob/master/.github/workflows/docs_bump_detected.yml)
+and
+[docs_merge_detected.yml](https://github.com/metabase/metabase/blob/master/.github/workflows/docs_merge_detected.yml)
+workflows in the main metabase repo. They trigger for PRs when a PR with docs
+changes gets opened/edited or merged respectively. This happens only for PRs
+targeting `master` or a release branche (`release-x.N.x`).
+
+They both open a PR in this repo reflecting the changes from the source branch
+of the PR which triggered the `Process Docs Changes` workflow.
 
 - [docs_bump_detected.yml](https://github.com/metabase/metabase/blob/master/.github/workflows/docs_bump_detected.yml)
 
@@ -41,7 +52,7 @@ Triggered whenever a PR is opened or updated (but not merged).
 
 Triggered when the PR is merged.
 
-TODO: When this happens, we should merge the `update-<target-branch>` PR into
+When this happens, we merge the `{target-branch}->{source-branch}` PR into
 `master` in this repo.
 
 ---
@@ -50,39 +61,53 @@ TODO: When this happens, we should merge the `update-<target-branch>` PR into
 
 ### [Process Docs Changes](.github/workflows/process_docs_changes.yml)
 
-Handles a lot of steps required for a faithful build
+Notable steps:
 
-Lints links, markdown, etc. and builds the `_site` and `_docs` using the cljs
-compiler, `script/docs` and jekyll, then opens a PR to this repo's master branch
-with the updated changes for a given branchname.
+- `Update docs for branchname`:
+  - Downloads docs from metabase/metabase, adds frontmatter, and builds SDK docs
+    using cljs compiler.
+
+- Builds Jekyll site
+
+- Lints markdown, styles, scripts, and links.
+
+- Opens PR with changes to `master` for the `_site` (html/js/css), and `_docs`
+  (markdown) directories.
+
+#### Steps required for a faithful build:
+
+- Since we've split up the site into 2 jekyll instances, we cannot rely on
+  htmlproofer to check links from the docs to the marketing site. So
+  `analyze_links.clj` checks any missing links against `metabase.com`.
+  
+- Copies over control directories from marketing repo: `_data`, `_includes`,
+  `_layouts`, `_plugins`, and `_sass`. These are needed so we get a faithful
+  docs build.
 
 #### Triggering
 
 The [Process Docs Changes](.github/workflows/process_docs_changes.yml) workflow
-is triggered from `metabase/metabase` (aka the main repo), whenever there is an
-update to `/docs`. The triggering workflow includes the branch name, e.g.:
-`master` or `release-x.49.x`.
+is triggered from `metabase/metabase` (aka the main repo). The triggering
+workflow includes the target and source branch name, e.g.: [`my-docs-hotfix` ->
+`master`] or [`v49-new-feature-dox` -> `release-x.49.x`].
 
-Building docs can be [run on a branch manually
-from](https://github.com/metabase/docs.metabase.github.io/actions/workflows/process_docs_changes.yml)
+Building docs can be [run
+manually](https://github.com/metabase/docs.metabase.github.io/actions/workflows/process_docs_changes.yml)
 as well.
-
-Since we've split up the site into 2 jekyll instances, certain linters got some
-extra care, like `analyze_links.clj` below.
-
-Note, all of these scripts take an optional `--dry-run` flag that explains what
-they do without actually doing the operation.
 
 #### New Script Docs
 
+Note, these scripts take an optional `--dry-run` flag that explains what they do
+without actually doing the operation.
+
 ##### `check_incoming_branchname.clj`
 
-If the branchname doesn't match master, a release branch, or a workflow-testing
-branch, using
-[util/categorize-branchname](https://github.com/metabase/docs.metabase.github.io/blob/master/script/util.clj#L17-L21).
-This step Exits 1, stopping the build.
-
-e.g. `bb script/check_incoming_branchname.clj master` exits 0.
+If the target doesn't match master or a release branch, This step stops the
+build. See
+[util/categorize-branchname](https://github.com/metabase/docs.metabase.github.io/blob/master/script/util.clj#L18-L22)
+for details.
+  
+e.g. `bb script/check_incoming_branchname.clj --target-branch master` exits 0.
 
 | branch | exit-code |
 |:---------------------|:----------|
@@ -96,44 +121,43 @@ e.g. `bb script/check_incoming_branchname.clj master` exits 0.
 Garunteed to be ran on a valid branchname (due to `check_incoming_branchname`
 above):
 
-- `bb script/update_docs_for_branchname.clj release-x.50.x`
-  - runs: `./script/docs release-x.50.x --set-version v0.50`
-- `bb script/update_docs_for_branchname.clj master`
-  - runs: `./script/docs master --set-version master`
-  
+``` shell
+$ bb script/update_docs_for_branchname.clj --dry-run --target-branch release-x.54.x --source-branch my-branch
+
+┌ Command for release-x.54.x
+│ ./script/docs release-x.54.x --set-version v0.54 --source-branch my-branch
+└
+```
+
 When the release version number matches the latest docs_version number from the
 _config.yml file, it sets latest as well:
 
-- `bb script/update_docs_for_branchname.clj release-x.54.x`
-  - runs: `./script/docs-update`
+``` shell
+bb script/update_docs_for_branchname.clj --dry-run --source-branch cool-55-docs --target-branch release-x.55.x
+
+┌ Command for release-x.55.x
+│ ./script/docs --update --latest --source-branch cool-55-docs
+└
+```
 
 ##### `analyze_links.clj`
 
-Builds ontop of our existing link checking. Since the site has been split into
-2, `htmlproofer` cannot see the marketing links. So this step runs
-`htmlproofer`, gathers the results, and for links that are "not found" (because
-they are no longer in this jekyll installation), checks for the links at
-metabase.com
+Builds ontop of our existing link checking. Since the original jekyll site has
+been split into 2, [htmlproofer](https://github.com/gjtorikian/html-proofer)
+cannot see links to the marketing site. So this step runs `htmlproofer`, and
+checks `metabase.com` for all "missing links" reported.
 
-Exits 1, stopping the build whenever htmlproofer reports missing links that are
-not avaliable at `metabase.com`.
+This will stop the build when there are htmlproofer-reported links that are not
+live on `metabase.com`.
 
 ##### `update_or_create_pr.clj`
 
-Git adds, commits, and creates a PR to master with files associated with the
-branch.
+Git adds, commits, and creates or updates a PR to master with files associated
+with the branch.
 
 - `bb script/update_or_create_pr.clj master`
 
-``` shell
-→ Branch info:  master
-Switched to and reset branch 'update-master'
-dry-run:  Adding _docs/master ...
-dry-run:  Adding _site/docs/master ...
-→ No changes to commit.
-```
-
-#### Tests
+## Tests
 
 Given the non-trivial scripts run during a build, there are tests for these
 scripts to ensure they work.
@@ -145,5 +169,3 @@ They are run in the `Process Docs Workflow`, and can be run manually via:
 ``` shell
 bb script/_test/all.clj
 ```
-
-This will print a description of behaviors for documentation.

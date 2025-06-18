@@ -16,24 +16,8 @@
                     :require true}
     :source-branch {:ref "<source-branch>"
                     :desc "The source branch of the triggering PR."
-                    :alias :r}
-    :dry-run {:desc "If set, will not execute the command, just print it out."
-              :coerce :boolean}}
-   :error-fn                           ; a function to handle errors
-   (fn [{:keys [_spec type cause _msg option] :as data}]
-     (when (= :org.babashka/cli type)
-       (let [msg (case cause
-                   :require
-                   (format "Missing required argument: %s\n" option))]
-         (u/pp data)
-         (throw (ex-info msg {:babashka/exit 1})))))})
-
-(defn- show-usage-and-exit []
-  (-> cli-spec
-      (merge {:order (vec (keys (:spec cli-spec)))})
-      cli/format-opts
-      println)
-  (throw (ex-info "Usage information printed." {:babashka/exit 1})))
+                    :alias :r}}
+   :error-fn u/cli-error-fn})
 
 (defn existing-pr?
   "Checks if a PR already exists for the given target branch name."
@@ -62,7 +46,6 @@
                            (str "_site/docs/v0." release-num)]
     :else []))
 
-
 (defn- report-pr-body [source-branch target-branch artifact-dirs]
   (str/join "\n"
             [(str "# `" source-branch "` -> `" target-branch "`")
@@ -75,14 +58,12 @@
              "---"]))
 
 (defn -main
-  "Main function to update or create a PR.
-
-  Usage: script/update_or_create_pr.clj branchname [--dry-run]"
+  "Main function to update or create a PR. "
   [& args]
   (let [{:keys    [source-branch target-branch]
-         dry-run? :dry-run
          :as      opts}     (cli/parse-opts args cli-spec)
-        _                   (when (or (:help opts) (:h opts)) (show-usage-and-exit))
+        _                   (when (or (:help opts) (:h opts))
+                              (u/show-usage-and-exit cli-spec))
         [category
          release-num]       (u/categorize-branchname target-branch)
         _                   (do (println "→ Target Branch info: "
@@ -92,46 +73,40 @@
                                            (throw (ex-info (str "Unpublishable branchname: " target-branch)
                                                            {:babashka/exit 1}))))
                                 (println "→ Source Branch info: " source-branch))
-        println-dr          (fn [& args] (println (if dry-run? (ice/p-str [:yellow "dry-run: "]) "")
-                                                  (str/join " " args)))
-        target-branch (str source-branch "->" target-branch)
+        target-branch       (str source-branch "->" target-branch)
         _                   (p/shell "git" "checkout" "-B" target-branch)
         artifact-dirs       (->artifact-dirs category release-num)
         _                   (doseq [ad artifact-dirs]
-                              (println-dr "Adding" ad "...")
+                              (println "Adding" ad "...")
                               (p/shell "git" "add" ad))
-        {:keys [exit]}      (p/shell {:continue true} "git" "diff" "--cached" "--quiet")
+        {diff-exit :exit}      (p/shell {:continue true} "git" "diff" "--cached" "--quiet")
         target-branch-title (str "[auto-build] " source-branch " -> " target-branch)]
-
-    (if (zero? exit)
+    (if (zero? diff-exit)
       (println "→ No changes to commit.")
       (do
         (println "→ Changes detected, committing...")
         (p/shell "git" "commit" "-m" (str "[auto] adding content to " target-branch))
-        (println-dr "git" "push" "--force" "origin" target-branch)
-        (when-not dry-run?
-          (p/shell "git" "push" "--force" "origin" target-branch))
-        (println-dr "→ Target Branch updated successfully.")
+        (p/shell "git" "push" "--force" "origin" target-branch)
+        (println "→ Target Branch updated successfully.")
         (println "→ Checking for existing PR...")
 
         (if-let [pr-info (existing-pr? target-branch)]
           (println "✓ PR already exists: #" pr-info)
           (do
             (println "→ Creating new PR...")
-            (let [args (remove nil?
-                               ["gh" "pr" "create" (when dry-run? "--dry-run")
-                                "--repo" "metabase/docs.metabase.github.io"
-                                "--title" target-branch-title
-                                "--body" (report-pr-body source-branch target-branch-title artifact-dirs)
-                                "--head" target-branch])]
-              (println-dr "running: " (str/join " " args))
+            (let [args ["gh" "pr" "create"
+                        "--repo" "metabase/docs.metabase.github.io"
+                        "--title" target-branch-title
+                        "--body" (report-pr-body source-branch target-branch-title artifact-dirs)
+                        "--head" target-branch]]
+              (println "running: " (str/join " " args))
               (apply p/shell args))))))
-    (prn {:category      category
-          :release       release-num
-          :source-branch source-branch
-          :target-branch target-branch
+    (prn {:category            category
+          :release             release-num
+          :source-branch       source-branch
+          :target-branch       target-branch
           :target-branch-title target-branch-title
-          :artifact-dirs artifact-dirs})))
+          :artifact-dirs       artifact-dirs})))
 
 (when (= *file* (System/getProperty "babashka.file"))
   (apply -main *command-line-args*))

@@ -3,6 +3,7 @@
    [babashka.cli :as cli]
    [babashka.process :as p]
    [bling.core :as b]
+   [clojure.set :as set]
    [util :as u]))
 
 (def cli-spec
@@ -13,34 +14,23 @@
                     :require true}
     :source-branch {:ref "<source-branch>"
                     :desc "The file path to the metabase repository where the docs are located."
-                    :alias :r}
+                    :alias :r
+                    :require true}
     :dry-run {:desc "If set, will not execute the command, just print it out."
               :coerce :boolean}}
-   :error-fn                           ; a function to handle errors
-   (fn [{:keys [_spec type cause _msg option] :as data}]
-     (when (= :org.babashka/cli type)
-       (let [msg (case cause
-                   :require
-                   (format "Missing required argument: %s\n" option))]
-         (u/pp data)
-         (throw (ex-info msg {:babashka/exit 1})))))})
-
-(defn- show-usage-and-exit []
-  (-> cli-spec
-      (merge {:order (vec (keys (:spec cli-spec)))})
-      cli/format-opts
-      println)
-  (throw (ex-info "Usage information printed." {:babashka/exit 1})))
+   :error-fn u/cli-error-fn})
 
 (defn- add-source-branch [cmd source-branch]
   (if source-branch
     (str cmd " --source-branch " source-branch) cmd))
 
 (defn -main [& args]
-  (let [{:keys [source-branch target-branch]
+  (let [_ (when (seq (set/intersection #{"-h" "--help"} (set args)))
+            (u/show-usage-and-exit cli-spec))
+        {:keys [source-branch target-branch]
          dry-run? :dry-run
          :as   opts}  (cli/parse-opts args cli-spec)
-        _             (when (or (:help opts) (:h opts)) (show-usage-and-exit))
+
         [category
          release-num] (u/categorize-branchname target-branch)
         command       (-> (cond
@@ -61,7 +51,8 @@
     (b/callout {:type :info :label (str "Command for " target-branch)} command)
     (when-not dry-run?
       (p/shell command))
-    (prn {:branchname  target-branch
+    (prn {:target-branch target-branch
+          :source-branch source-branch
           :category    category
           :release-num release-num
           :dry-run?    dry-run?
