@@ -39,14 +39,15 @@
     }
   </script>
 
-      
+  
+       
 
 <title>Driver interface changelog | Metabase Documentation</title>
 <!-- Twitter cards -->
 <meta name="twitter:site" content="@metabase">
 
 <meta name="twitter:title" content="Driver interface changelog | Metabase Documentation">
-<meta name="twitter:description" content="Driver Interface Changelog Metabase 0.54.10  Add metabase.driver/table-known-to-not-exist? for drivers to test if an exception is due to a query on a table that no longer exists Add metabase.driver.sql-jdbc/impl-table-known-to-not-exist? for JDBC drivers. This is the implemenation...">
+<meta name="twitter:description" content="Driver Interface Changelog Metabase 0.55.0   Add the multi-method ->date that allows the driver to control how to cast strings and temporal types to dates.   Add the multi-method date-dbtype that allows the driver...">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -56,11 +57,48 @@
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://www.metabase.com/docs/latest/developers-guide/driver-changelog">
 <meta name="title" property="og:title" content="Driver interface changelog | Metabase Documentation">
-<meta name="description" property="og:description" content="Driver Interface Changelog Metabase 0.54.10  Add metabase.driver/table-known-to-not-exist? for drivers to test if an exception is due to a query on a table that no longer exists Add metabase.driver.sql-jdbc/impl-table-known-to-not-exist? for JDBC drivers. This is the implemenation...">
+<meta name="description" property="og:description" content="Driver Interface Changelog Metabase 0.55.0   Add the multi-method ->date that allows the driver to control how to cast strings and temporal types to dates.   Add the multi-method date-dbtype that allows the driver...">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
+
   
-  <link href="/images/favicon.svg" rel="shortcut icon">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "url": "https://www.metabase.com/",
+    "sameAs": [
+      "https://github.com/metabase",
+      "https://www.linkedin.com/company/metabase/",
+      "https://x.com/metabase",
+      "https://www.youtube.com/@metabasedata"
+    ],
+    "logo": "https://github.com/metabase/metabase.github.io/blob/master/images/metabase-logo.png?raw=",
+    "name": "Metabase",
+    "description": "Metabase is an open source Business Intelligence and Embedded Analytics tool. Connect to your data stack in 5 minutes to make queries, visualizations, and dashboards easy for everyone—no SQL required",
+    "email": "hello@metabase.com",
+    "foundingDate": "2015-02-01T00:00:00.000Z",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "9740 Campo Rd",
+      "addressLocality": "Spring Valley",
+      "addressCountry": "USA",
+      "addressRegion": "CA",
+      "postalCode": "91977"
+    },
+    "knowsAbout": [
+      { "@type": "Thing", "name": "Business Intelligence" },
+      { "@type": "Thing", "name": "Embedded Analytics" },
+      { "@type": "Thing", "name": "Self-service analytics" },
+      { "@type": "Thing", "name": "Open source Business Intelligence" }
+    ]
+  }
+</script>
+
+
+  
+    <link href="/images/favicon.svg" rel="shortcut icon">
   
   <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/flexboxgrid/6.3.1/flexboxgrid.min.css" rel="stylesheet" type="text/css">
@@ -4006,7 +4044,7 @@ Roadmap</a>
 <div class="version__selector cursor-pointer">
   <span class="version__current">
     
-      v0.54
+      v0.55
     
 
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="chevron">
@@ -4016,6 +4054,14 @@ Roadmap</a>
   </span>
   <ul class="version__dropdown">
     
+      
+    
+      
+        <li>
+          <a href="/docs/v0.54">
+            v0.54
+          </a>
+        </li>
       
     
       
@@ -4082,14 +4128,6 @@ Roadmap</a>
         </li>
       
     
-      
-        <li>
-          <a href="/docs/v0.45">
-            v0.45
-          </a>
-        </li>
-      
-    
     <li><a href="/docs/all">See more</a></li>
   </ul>
 </div>
@@ -4119,6 +4157,94 @@ Roadmap</a>
 
 
         <h1 id="driver-interface-changelog">Driver Interface Changelog</h1>
+
+<h2 id="metabase-0550">Metabase 0.55.0</h2>
+
+<ul>
+  <li>
+    <p>Add the multi-method <code class="language-plaintext highlighter-rouge">-&gt;date</code> that allows the driver to control how to cast strings and temporal types to dates.</p>
+  </li>
+  <li>
+    <p>Add the multi-method <code class="language-plaintext highlighter-rouge">date-dbtype</code> that allows the driver to control which types dates are cast to.</p>
+  </li>
+  <li>
+    <p>Extend <code class="language-plaintext highlighter-rouge">date()</code> to accept a DateTime (or DB equivalent) in addition to an ISO string. When given a DateTime, it will truncate it to a date.</p>
+  </li>
+  <li>
+    <p>Added a feature <code class="language-plaintext highlighter-rouge">:expressions/datetime</code> for drivers that support converting iso strings to datetimes</p>
+  </li>
+  <li>
+    <p>Added a feature <code class="language-plaintext highlighter-rouge">:expression-literals</code> for drivers that support expressions consisting of a single string, number, or boolean literal value.</p>
+  </li>
+  <li>
+    <p>Added a feature <code class="language-plaintext highlighter-rouge">:multi-level-schema</code> for drivers that support hierarchical levels between database and schema. Such as databricks’ catalog. Defaults to false.</p>
+  </li>
+  <li>
+    <p>Added the multi-method <code class="language-plaintext highlighter-rouge">adjust-schema-qualification</code> that allows drivers to to qualify, or unqualify table schemas based on enabling or disabling multi-level-schema support. Drivers may need to implement <code class="language-plaintext highlighter-rouge">sql.qp/-&gt;honeysql [driver ::h2x/identifier]</code> to properly quote fully qualified schemas.</p>
+  </li>
+  <li>
+    <p>Added the multi-method <code class="language-plaintext highlighter-rouge">float-dbtype</code> which returns the name of the float type we coerce to for coercion strategies and the <code class="language-plaintext highlighter-rouge">float()</code> custom expression function.</p>
+  </li>
+  <li>
+    <p>Added a feature <code class="language-plaintext highlighter-rouge">:expressions/float</code> for drivers that support casting text to floats.</p>
+  </li>
+  <li>
+    <p>Added the multi-method <code class="language-plaintext highlighter-rouge">integer-dbtype</code> that allows the driver to control which type integers are cast to.</p>
+  </li>
+  <li>
+    <p>The <code class="language-plaintext highlighter-rouge">metabase.upload</code> namespace has been replaced with <code class="language-plaintext highlighter-rouge">metabase.upload.core</code>, but upload type keywords e.g.
+<code class="language-plaintext highlighter-rouge">:metabase.upload/varchar-255</code> remain unchanged. Make sure you weren’t using <code class="language-plaintext highlighter-rouge">::</code> keywords inside methods like
+<code class="language-plaintext highlighter-rouge">metabase.driver/upload-type-&gt;database-type</code> or <code class="language-plaintext highlighter-rouge">metabase.driver/allowed-promotions</code> – make sure you use
+<code class="language-plaintext highlighter-rouge">:metabase.upload/varchar-255</code> rather than something like <code class="language-plaintext highlighter-rouge">::upload/varchar-255</code>.</p>
+  </li>
+  <li>
+    <p>The <code class="language-plaintext highlighter-rouge">metabase.models.secret</code> namespace has been replaced with <code class="language-plaintext highlighter-rouge">metabase.secrets.core</code>; if you were using it please
+update your usages.</p>
+  </li>
+  <li>
+    <p>The namespace <code class="language-plaintext highlighter-rouge">metabase.public-settings</code> has been removed, and settings have been moved to appropriate modules, e.g.
+<code class="language-plaintext highlighter-rouge">site-uuid</code> now lives in <code class="language-plaintext highlighter-rouge">metabase.system.core</code>. If you were using this namespace, please update your code
+accordingly. You should be able to find the correct one by looking at how those settings are used in our first-party
+drivers.</p>
+  </li>
+  <li>
+    <p>The namespaces <code class="language-plaintext highlighter-rouge">metabase.models.field</code>, <code class="language-plaintext highlighter-rouge">metabase.models.field-values</code>, and <code class="language-plaintext highlighter-rouge">metabase.models.table</code> have been moved
+to <code class="language-plaintext highlighter-rouge">metabase.warehouse-schema.field</code>, <code class="language-plaintext highlighter-rouge">metabase.warehouse-schema.field-values</code>, and
+<code class="language-plaintext highlighter-rouge">metabase.warehouse-schema.table</code> respectively. You shouldn’t use these namespaces directly in your drivers, but if
+you did, please update your references.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">metabase.driver.sql.query-processor/-&gt;honeysql</code> is no longer supported for <code class="language-plaintext highlighter-rouge">:model/Table</code> (support for this was
+deprecated in 0.48.0) – methods for this will no longer be used; if you have such a method, migrate it to
+<code class="language-plaintext highlighter-rouge">:metadata/table</code> instead. If you have a <code class="language-plaintext highlighter-rouge">:model/Table</code> and need a <code class="language-plaintext highlighter-rouge">:metadata/table</code> instead (such as in
+implementations of <code class="language-plaintext highlighter-rouge">metabase.driver/table-rows-seq</code>) you can use <code class="language-plaintext highlighter-rouge">metabase.lib.metadata/table</code>.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">metabase.db.metadata-queries</code> has been removed; the parts meant for usage by drivers have been moved to
+<code class="language-plaintext highlighter-rouge">metabase.driver.common.table-rows-sample</code>.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">metabase.util.ssh</code> has been moved to <code class="language-plaintext highlighter-rouge">metabase.driver.sql-jdbc.connection.ssh-tunnel</code>.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">metabase.query-processor.pipeline/*query-timeout-ms*</code> has been moved to
+<code class="language-plaintext highlighter-rouge">metabase.driver.settings/*query-timeout-ms*</code>.</p>
+  </li>
+  <li>
+    <p>The namespace <code class="language-plaintext highlighter-rouge">metabase.query-processor.context</code>, deprecated in 0.50.0, has been removed.</p>
+  </li>
+  <li>
+    <p>All settings formerly in a <code class="language-plaintext highlighter-rouge">metabase.driver.*</code> namespace have been moved to <code class="language-plaintext highlighter-rouge">metabase.driver.settings</code>, and all
+settings formerly in a <code class="language-plaintext highlighter-rouge">metabase.query-processor.*</code> namespace have been moved to
+<code class="language-plaintext highlighter-rouge">metabase.query-processor.settings</code>.</p>
+  </li>
+</ul>
+
+<h2 id="metabase-05411">Metabase 0.54.11</h2>
+<ul>
+  <li>The multimethods <code class="language-plaintext highlighter-rouge">metabase.driver.sql-jdbc.sync.interface/active-tables</code> and <code class="language-plaintext highlighter-rouge">metabase.driver.sql-jdbc.sync.interface/filtered-syncable-schemas</code>, aswell as the functions
+<code class="language-plaintext highlighter-rouge">metabase.driver.sql-jdbc.sync.describe_database/fast-active-tables</code>, <code class="language-plaintext highlighter-rouge">metabase.driver.sql-jdbc.sync.describe_database/have-select-privilege-fn</code> and <code class="language-plaintext highlighter-rouge">metabase.driver.sql-jdbc.sync.describe_database/db-tables</code> now take a database spec instead of a <code class="language-plaintext highlighter-rouge">java.sql.Connection</code> object.</li>
+</ul>
 
 <h2 id="metabase-05410">Metabase 0.54.10</h2>
 
@@ -5185,13 +5311,7 @@ table below:</p>
         <div id="sub-navigation-content">
           
         </div>
-        
-
-
-  
-    <div id="feedback-widget-container" class="bootstrap feedback-widget">
-  
-
+        <div id="was-this-helpful-widget">
   <div id="page-feedback">
     <h6>Was this helpful?</h6>
     <button id="page-feedback-vote-up" class="vote-button Button">
@@ -5211,19 +5331,15 @@ table below:</p>
   </div>
 
   <div id="page-comment" class="flex flex-wrap full hide">
-    <div class="flex full">
-      <h6 id="page-feedback-question"></h6>
-    </div>
+    <p id="page-feedback-question"></p>
 
-    <div id="page-comment-form" class="flex full">
-      
-      <input id="feedback-comment-text" maxlength="500" class="flex input sm-input-small bordered inline-block align-center" name="comment" placeholder="Let us know what you think">
-      
+    <form id="page-comment-form" class="flex full">
+      <textarea id="feedback-comment-text" name="comment" placeholder="Type here…"></textarea>
 
-      <button id="page-comment-submit" class="feedback-widget Button flex align-center">
+      <button id="page-comment-submit" class="Button flex align-center">
         Send
       </button>
-    </div>
+    </form>
   </div>
 
   <div id="page-feedback-message" class="fs-18 hide">
@@ -5237,34 +5353,7 @@ table below:</p>
   
 </div>
 
-<script type="text/javascript" src="/js/feedback-widget.js"></script>
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const iframe = document.getElementById("subscribe-to-ai-newsletter-righthandside");
-
-    // Certain collections (e.g., "docs") do not display the newsletter iframe
-    if (!iframe) {
-      return;
-    }
-    const url = new URL(iframe.src, window.location.origin);
-
-    // Copy search params from the main window
-    const currentParams = new URLSearchParams(window.location.search);
-    for (const [key, value] of currentParams.entries()) {
-      url.searchParams.set(key, value);
-    }
-
-    // Add the current pathname as signup_path
-    url.searchParams.set("signup_path", window.location.pathname);
-
-    // Apply the new src
-    iframe.src = url.toString();
-  });
-</script>
-<script type="text/javascript" src="/js/side-email-cta.js"></script>
-
-  
-
+<script type="text/javascript" src="/js/was-this-helpful-widget.js"></script>
 
       </div>
 	  </article>

@@ -39,7 +39,8 @@
     }
   </script>
 
-      
+  
+       
 
 <title>Introduction to dashboards | Metabase Documentation</title>
 <!-- Twitter cards -->
@@ -59,8 +60,45 @@
 <meta name="description" property="og:description" content="Introduction to dashboards  What is a dashboard? Dashboards group a set of questions into tabs on a single page. You can think of dashboards as shareable reports that feature a set of related questions. You...">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
+
   
-  <link href="/images/favicon.svg" rel="shortcut icon">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "url": "https://www.metabase.com/",
+    "sameAs": [
+      "https://github.com/metabase",
+      "https://www.linkedin.com/company/metabase/",
+      "https://x.com/metabase",
+      "https://www.youtube.com/@metabasedata"
+    ],
+    "logo": "https://github.com/metabase/metabase.github.io/blob/master/images/metabase-logo.png?raw=",
+    "name": "Metabase",
+    "description": "Metabase is an open source Business Intelligence and Embedded Analytics tool. Connect to your data stack in 5 minutes to make queries, visualizations, and dashboards easy for everyone—no SQL required",
+    "email": "hello@metabase.com",
+    "foundingDate": "2015-02-01T00:00:00.000Z",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "9740 Campo Rd",
+      "addressLocality": "Spring Valley",
+      "addressCountry": "USA",
+      "addressRegion": "CA",
+      "postalCode": "91977"
+    },
+    "knowsAbout": [
+      { "@type": "Thing", "name": "Business Intelligence" },
+      { "@type": "Thing", "name": "Embedded Analytics" },
+      { "@type": "Thing", "name": "Self-service analytics" },
+      { "@type": "Thing", "name": "Open source Business Intelligence" }
+    ]
+  }
+</script>
+
+
+  
+    <link href="/images/favicon.svg" rel="shortcut icon">
   
   <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/flexboxgrid/6.3.1/flexboxgrid.min.css" rel="stylesheet" type="text/css">
@@ -4006,7 +4044,7 @@ Roadmap</a>
 <div class="version__selector cursor-pointer">
   <span class="version__current">
     
-      v0.54
+      v0.55
     
 
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="chevron">
@@ -4016,6 +4054,14 @@ Roadmap</a>
   </span>
   <ul class="version__dropdown">
     
+      
+    
+      
+        <li>
+          <a href="/docs/v0.54">
+            v0.54
+          </a>
+        </li>
       
     
       
@@ -4078,14 +4124,6 @@ Roadmap</a>
         <li>
           <a href="/docs/v0.46">
             v0.46
-          </a>
-        </li>
-      
-    
-      
-        <li>
-          <a href="/docs/v0.45">
-            v0.45
           </a>
         </li>
       
@@ -4350,9 +4388,15 @@ src="https://www.youtube.com/embed/{{video_id}}
 
 <p>You can change a card’s visualization settings (to add a goal line, for example). Changing a card’s visualization settings will only affect how the question appears on that dashboard card; these changes won’t affect the original question’s visualization settings.</p>
 
-<p>Click on the <strong>pencil</strong> icon to enter dashboard edit mode, hover over the question you want to edit, and click on the <strong>palette</strong> icon to edit a card’s visualization’s settings.</p>
+<p>Click on the <strong>pencil</strong> icon to enter dashboard edit mode, hover over the question you want to edit, and click on the <strong>pencil</strong> icon or <strong>palette</strong> icon (depending on the chart type) to edit a card’s visualization’s settings.</p>
 
 <p><img src="images/visualization-settings.png" alt="Visualization settings"></p>
+
+<p>If you clicked the pencil icon, look for <strong>Settings</strong> button in the bottom right.</p>
+
+<p><img src="./images/settings-sidebar.png" alt="Settings sidebar"></p>
+
+<p>You can also <a href="./multiple-series">add more data to the chart</a>.</p>
 
 <h3 id="hiding-a-card-when-it-doesnt-return-results">Hiding a card when it doesn’t return results</h3>
 
@@ -4361,8 +4405,8 @@ src="https://www.youtube.com/embed/{{video_id}}
 <p>When in dashboard edit mode, click on the <strong>Visualization settings</strong> for the card.</p>
 
 <ul>
-  <li>If the card displays a table, the option is in the <strong>Columns</strong> tab.</li>
-  <li>If the card displays a chart, the option is in the <strong>Display</strong> tab.</li>
+  <li>For tables, the option is in the <strong>Columns</strong> tab.</li>
+  <li>For other charts, the option is in the <strong>Display</strong> tab.</li>
 </ul>
 
 <p>Toggle the option <strong>Hide this card if there are no results</strong>. When you turn on this option, the query will still run in the background, but the dashboard won’t display the card. If the query returns results, the dashboard will display the card, moving the other cards around to make room for it according to how you’ve arranged the cards in dashboard edit mode.</p>
@@ -4375,9 +4419,18 @@ src="https://www.youtube.com/embed/{{video_id}}
   <li>Go to your dashboard and click the <strong>pencil icon</strong> to go into edit mode.</li>
   <li>Hover over the card (question) that you want to edit.</li>
   <li>Click the <strong>palette icon</strong> to bring up the visualization settings for that card.</li>
-  <li>Click <strong>Reset to defaults</strong>.</li>
+  <li>Click <strong>Reset to defaults</strong> (bottom right).</li>
   <li>Click <strong>Done</strong> to save the card’s visualization settings.</li>
   <li>Click <strong>Save</strong> to save the dashboard.</li>
+</ol>
+
+<p>If you don’t see the palette icon, you’ll need to:</p>
+
+<ol>
+  <li>Click the <strong>pencil icon</strong> to edit the card’s visualization settings.</li>
+  <li>Remove the data in the <strong>Manage data</strong> section.</li>
+  <li>Re-add the question to the card.</li>
+  <li><strong>Save</strong> your changes.</li>
 </ol>
 
 <h2 id="fullscreen-dashboards">Fullscreen dashboards</h2>
@@ -4507,13 +4560,7 @@ src="https://www.youtube.com/embed/{{video_id}}
         <div id="sub-navigation-content">
           
         </div>
-        
-
-
-  
-    <div id="feedback-widget-container" class="bootstrap feedback-widget">
-  
-
+        <div id="was-this-helpful-widget">
   <div id="page-feedback">
     <h6>Was this helpful?</h6>
     <button id="page-feedback-vote-up" class="vote-button Button">
@@ -4533,19 +4580,15 @@ src="https://www.youtube.com/embed/{{video_id}}
   </div>
 
   <div id="page-comment" class="flex flex-wrap full hide">
-    <div class="flex full">
-      <h6 id="page-feedback-question"></h6>
-    </div>
+    <p id="page-feedback-question"></p>
 
-    <div id="page-comment-form" class="flex full">
-      
-      <input id="feedback-comment-text" maxlength="500" class="flex input sm-input-small bordered inline-block align-center" name="comment" placeholder="Let us know what you think">
-      
+    <form id="page-comment-form" class="flex full">
+      <textarea id="feedback-comment-text" name="comment" placeholder="Type here…"></textarea>
 
-      <button id="page-comment-submit" class="feedback-widget Button flex align-center">
+      <button id="page-comment-submit" class="Button flex align-center">
         Send
       </button>
-    </div>
+    </form>
   </div>
 
   <div id="page-feedback-message" class="fs-18 hide">
@@ -4559,34 +4602,7 @@ src="https://www.youtube.com/embed/{{video_id}}
   
 </div>
 
-<script type="text/javascript" src="/js/feedback-widget.js"></script>
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const iframe = document.getElementById("subscribe-to-ai-newsletter-righthandside");
-
-    // Certain collections (e.g., "docs") do not display the newsletter iframe
-    if (!iframe) {
-      return;
-    }
-    const url = new URL(iframe.src, window.location.origin);
-
-    // Copy search params from the main window
-    const currentParams = new URLSearchParams(window.location.search);
-    for (const [key, value] of currentParams.entries()) {
-      url.searchParams.set(key, value);
-    }
-
-    // Add the current pathname as signup_path
-    url.searchParams.set("signup_path", window.location.pathname);
-
-    // Apply the new src
-    iframe.src = url.toString();
-  });
-</script>
-<script type="text/javascript" src="/js/side-email-cta.js"></script>
-
-  
-
+<script type="text/javascript" src="/js/was-this-helpful-widget.js"></script>
 
       </div>
 	  </article>

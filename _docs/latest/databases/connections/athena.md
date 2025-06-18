@@ -1,5 +1,5 @@
 ---
-version: v0.54
+version: v0.55
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -70,7 +70,7 @@ By default, Metabase will execute a query as soon as you choose an grouping opti
 ### Choose when syncs and scans happen
 
 See [syncs and scans](../sync-scan#choose-when-syncs-and-scans-happen).
-  
+
 ### Periodically refingerprint tables
 
 > Periodic refingerprinting will increase the load on your database.
@@ -136,7 +136,8 @@ There may be additional permissions required for other Athena functionality, lik
         "athena:StopQueryExecution",
         "athena:CreatePreparedStatement",
         "athena:DeletePreparedStatement",
-        "athena:GetPreparedStatement"
+        "athena:GetPreparedStatement",
+        "athena:GetTableMetadata"
       ],
       "Resource": "*"
     },
@@ -212,9 +213,14 @@ If Metabase also needs to create tables, you'll need additional AWS Glue permiss
   ]
 }
 ```
+
 ## Model features
 
 There aren't (yet) any model features available for Athena.
+
+## Database routing
+
+See [Database routing](../../permissions/database-routing).
 
 ## Danger zone
 
