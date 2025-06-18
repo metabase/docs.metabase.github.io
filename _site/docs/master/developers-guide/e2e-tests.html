@@ -4348,15 +4348,15 @@ partial-match the payload provided. This is simply a convenience function for co
 
 <h3 id="embedding-sdk-tests">Embedding SDK tests</h3>
 
-<p>Tests located in <code class="language-plaintext highlighter-rouge">e2e/test-component/scenarios/embedding-sdk/</code> are used to run automated checks for the Embedding SDK.</p>
+<p>Tests located in <code class="language-plaintext highlighter-rouge">e2e/test/scenarios/embedding-sdk</code> are used to run automated checks for the Embedding SDK.</p>
 
-<p>In order to run the tests locally, see <a href="https://github.com/metabase/metabase/blob/master/enterprise/frontend/src/embedding-sdk/dev.md">sdk docs about e2e</a></p>
+<p>Embedding SDK is a library, and not an application. We use Storybook to host public components, and we run tests against it.</p>
+
+<p>In order to run stories used for tests locally, please check <a href="https://github.com/metabase/metabase/blob/master/enterprise/frontend/src/embedding-sdk/README.md#storybook">storybook setup docs</a></p>
 
 <h3 id="sample-apps-compatibility-with-embedding-sdk-tests">Sample Apps compatibility with Embedding SDK tests</h3>
 
 <p>In order to check compatibility between Sample Apps and Embedding SDK, we have a special test suite for each sample app that pulls this Sample App, starts it and runs its Cypress tests against the local <code class="language-plaintext highlighter-rouge">metabase.jar</code> and local <code class="language-plaintext highlighter-rouge">@metabase/embedding-sdk-react</code> package.</p>
-
-<h4 id="local-runs">Local runs</h4>
 
 <p>To run these tests locally, run:</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ENTERPRISE_TOKEN=&lt;token&gt; TEST_SUITE=&lt;sample_app_repo_name&gt;-e2e OPEN_UI=false EMBEDDING_SDK_VERSION=local START_METABASE=false GENERATE_SNAPSHOTS=false START_CONTAINERS=false yarn test-cypress
@@ -4365,21 +4365,6 @@ partial-match the payload provided. This is simply a convenience function for co
 <p>For example for the <code class="language-plaintext highlighter-rouge">metabase-nodejs-react-sdk-embedding-sample</code>, run:</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ENTERPRISE_TOKEN=&lt;token&gt; TEST_SUITE=metabase-nodejs-react-sdk-embedding-sample-e2e OPEN_UI=false EMBEDDING_SDK_VERSION=local START_METABASE=false GENERATE_SNAPSHOTS=false START_CONTAINERS=false yarn test-cypress
 </code></pre></div></div>
-
-<h5 id="warning-obtaining-the-shoppys-metabase-app-db-dump-locally">:warning: Obtaining the Shoppy’s Metabase App DB Dump locally</h5>
-<p>For the Shoppy’s Sample App Tests (<code class="language-plaintext highlighter-rouge">TEST_SUITE=shoppy-e2e</code>) locally, a proper App DB dump of the Shoppy’s Metabase Instance must be placed to the <code class="language-plaintext highlighter-rouge">./e2e/tmp/db_dumps/shoppy_metabase_app_db_dump.sql</code></p>
-
-<p>You can get it by:</p>
-<ul>
-  <li>Enabling the <code class="language-plaintext highlighter-rouge">Tailscale</code> and logging in using your work email address.</li>
-  <li>Running <code class="language-plaintext highlighter-rouge">pg_dump "postgres://:@:/" &gt; ./e2e/tmp/db_dumps/shoppy_metabase_app_db_dump.sql</code> command.
-    <ul>
-      <li>See the <code class="language-plaintext highlighter-rouge">Shoppy Coredev Appdb</code> record in <code class="language-plaintext highlighter-rouge">1password</code> for credentials.</li>
-    </ul>
-  </li>
-</ul>
-
-<h4 id="ci-runs">CI runs</h4>
 
 <p>On our CI, test failures do not block the merging of a pull request (PR). However, if a test fails, it’s most likely due to one of the following reasons:</p>
 
@@ -4401,32 +4386,6 @@ partial-match the payload provided. This is simply a convenience function for co
 </ul>
 
 <p>If a PR breaks compatibility between the Embedding SDK and the Sample Apps, the PR can still be merged. However, for each Sample App affected, a separate PR should be created to restore compatibility with the new <code class="language-plaintext highlighter-rouge">@metabase/embedding-sdk-react</code> version when it is released. These compatibility PRs should be merged only once the Embedding SDK version containing breaking changes is officially released.</p>
-
-<h3 id="embedding-sdk-integration-tests-with-host-apps">Embedding SDK integration tests with Host Apps</h3>
-
-<p>When we want to check integration of the Embedding SDK with consumer’s apps that use different frameworks/bundlers, or when we want to test some tricky integration cases like conflicting types, we use Host App tests.</p>
-
-<p>Tests a bit similar to Sample App tests, but:</p>
-<ul>
-  <li>Host Apps are placed in the <code class="language-plaintext highlighter-rouge">metabase</code> repo <code class="language-plaintext highlighter-rouge">e2e/embedding-sdk-host-apps/&lt;HOST_APP_NAME&gt;</code>.</li>
-  <li>Host Apps tests are under <code class="language-plaintext highlighter-rouge">e2e/test-host-app/&lt;HOST_APP_NAME&gt;/*</code>.</li>
-  <li>Host app contains the client application only that is run in a Docker container during e2e testing.</li>
-  <li>Tests use the regular Cypress backend and Cypress infrastructure, so we can mock anything and use Cypress helpers.</li>
-</ul>
-
-<h4 id="local-runs-1">Local runs</h4>
-
-<p>To run these tests locally, run:</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ENTERPRISE_TOKEN=&lt;token&gt; TEST_SUITE=&lt;host_app_name&gt;-e2e OPEN_UI=false EMBEDDING_SDK_VERSION=local HOST_APP_ENVIRONMENT=production yarn test-cypress
-</code></pre></div></div>
-
-<p>For example for the <code class="language-plaintext highlighter-rouge">vite-6-host-app</code> Host App, run:</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ENTERPRISE_TOKEN=&lt;token&gt; TEST_SUITE=vite-6-host-app-e2e OPEN_UI=false EMBEDDING_SDK_VERSION=local HOST_APP_ENVIRONMENT=production yarn test-cypress
-</code></pre></div></div>
-
-<h4 id="ci-runs-1">CI runs</h4>
-
-<p>Same as for Sample App tests - failures don’t block a PR from being merged.</p>
 
 <h2 id="db-snapshots">DB Snapshots</h2>
 

@@ -4170,7 +4170,7 @@ Roadmap</a>
 
 <p>Metabase supports the oldest supported version through the latest stable version. See <a href="https://endoflife.software/applications/databases/mysql">MySQL end-of-life dates</a>.</p>
 
-<h2 id="edit-connection-details">Edit connection details</h2>
+<h2 id="settings">Settings</h2>
 
 <p>You can edit these settings at any time. Just remember to save your changes.</p>
 
@@ -4218,9 +4218,30 @@ Roadmap</a>
 
 <p>By default, Metabase will execute a query as soon as you choose an grouping option from the <strong>Summarize</strong> menu or a filter condition from the <a href="/learn/metabase-basics/querying-and-dashboards/questions/drill-through">drill-through menu</a>. If your database is slow, you may want to disable re-running to avoid loading data on each click.</p>
 
-<h3 id="choose-when-syncs-and-scans-happen">Choose when syncs and scans happen</h3>
+<h3 id="choose-when-metabase-syncs-and-scans">Choose when Metabase syncs and scans</h3>
 
-<p>See <a href="../sync-scan#choose-when-syncs-and-scans-happen">syncs and scans</a>.</p>
+<p>Turn this option <strong>ON</strong> to manage the queries that Metabase uses to stay up to date with your database. For more information, see <a href="../sync-scan">Syncing and scanning databases</a>.</p>
+
+<h4 id="database-syncing">Database syncing</h4>
+
+<p>If you’ve selected <strong>Choose when syncs and scans happen</strong> &gt; <strong>ON</strong>, you’ll be able to set:</p>
+
+<ul>
+  <li>The frequency of the <a href="../sync-scan#how-database-syncs-work">sync</a>: hourly (default) or daily.</li>
+  <li>The time to run the sync, in the timezone of the server where your Metabase app is running.</li>
+</ul>
+
+<h4 id="scanning-for-filter-values">Scanning for filter values</h4>
+
+<p>Metabase can scan the values present in each field in this database to enable checkbox filters in dashboards and questions. This can be a somewhat resource-intensive process, particularly if you have a very large database.</p>
+
+<p>If you’ve selected <strong>Choose when syncs and scans happen</strong> &gt; <strong>ON</strong>, you’ll see the following options under <strong>Scanning for filter values</strong>:</p>
+
+<ul>
+  <li><strong>Regularly, on a schedule</strong> allows you to run <a href="../sync-scan#how-database-scans-work">scan queries</a> at a frequency that matches the rate of change to your database. The time is set in the timezone of the server where your Metabase app is running. This is the best option for a small database, or tables with distinct values that get updated often.</li>
+  <li><strong>Only when adding a new filter widget</strong> is a great option if you want scan queries to run on demand. Turning this option <strong>ON</strong> means that Metabase will only scan and cache the values of the field(s) that are used when a new filter is added to a dashboard or SQL question.</li>
+  <li><strong>Never, I’ll do this manually if I need to</strong> is an option for databases that are either prohibitively large, or which never really have new values added. Use the <a href="../sync-scan#manually-scanning-column-values">Re-scan field values now</a> button to run a manual scan and bring your filter values up to date.</li>
+</ul>
 
 <h3 id="periodically-refingerprint-tables">Periodically refingerprint tables</h3>
 
@@ -4275,7 +4296,7 @@ Roadmap</a>
 <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">DROP</span> <span class="k">USER</span> <span class="s1">'metabase'</span><span class="o">@</span><span class="s1">'localhost'</span><span class="p">;</span>
 </code></pre></div></div>
 
-<p>If you can’t connect to the database, but the user, host, and password are correct, try adding <code class="language-plaintext highlighter-rouge">trustServerCertificate=true</code> to the additional JDBC options. This option will tell the Metabase driver to trust the server certificate even though it lacks a root certificate, and it should establish a secure connection.</p>
+<p>If you can’t connect to the database, but the user, host, and password are correct, try adding <code class="language-plaintext highlighter-rouge">trustServerCertificate=true</code> to the additional JDBC options. This option will tell the Metabase driver to trust the server certificate even though it doesn’t have a root certificate installed, and it should establish a secure connection.</p>
 
 <h2 id="syncing-records-that-include-json">Syncing records that include JSON</h2>
 
@@ -4331,26 +4352,6 @@ Roadmap</a>
     <p>You may want to check in with the vendor that’s hosting the platform, as Vitess can run into issues returning metadata from the information schema. Metabase needs this metadata to populate its application database; if Metabase can’t get that metadata, fields may not appear (or appear empty).</p>
   </li>
 </ul>
-
-<h2 id="model-features">Model features</h2>
-
-<p>Choose whether to enable features related to <a href="../../data-modeling/models">Metabase models</a>. These features will often require that the database user account, the one you use to connect to your database, has both read and write privileges.</p>
-
-<h3 id="model-actions">Model actions</h3>
-
-<p>Turn this setting on to allow <a href="../../actions/introduction">actions</a> from models created from this data to be run. Actions are able to read, write, and possibly delete data. Your database user will need write permissions.</p>
-
-<h3 id="model-persistence">Model persistence</h3>
-
-<p>We’ll create tables with model data and refresh them on a schedule you define. To enable <a href="../../data-modeling/model-persistence">model persistence</a>, you need to grant this connection’s credentials read and write permissions on a schema Metabase provides.</p>
-
-<h2 id="database-routing">Database routing</h2>
-
-<p>See <a href="../../permissions/database-routing">Database routing</a>.</p>
-
-<h2 id="danger-zone">Danger zone</h2>
-
-<p>See <a href="../danger-zone">Danger zone</a>.</p>
 
 <h2 id="further-reading">Further reading</h2>
 

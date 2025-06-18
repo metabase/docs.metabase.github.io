@@ -49,7 +49,7 @@
 <meta name="twitter:site" content="@metabase">
 
 <meta name="twitter:title" content="Driver interface changelog | Metabase Documentation">
-<meta name="twitter:description" content="Driver Interface Changelog Metabase 0.55.0   Add the multi-method ->date that allows the driver to control how to cast strings and temporal types to dates.   Add the multi-method date-dbtype that allows the driver...">
+<meta name="twitter:description" content="Driver Interface Changelog Metabase 0.54.0   Added a feature :test/arrays and multimethod native-array-query to enable the testing of array types for databases that support them.   Added a feature :expressions/text for drivers...">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -59,7 +59,7 @@
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://www.metabase.com/docs/master/developers-guide/driver-changelog">
 <meta name="title" property="og:title" content="Driver interface changelog | Metabase Documentation">
-<meta name="description" property="og:description" content="Driver Interface Changelog Metabase 0.55.0   Add the multi-method ->date that allows the driver to control how to cast strings and temporal types to dates.   Add the multi-method date-dbtype that allows the driver...">
+<meta name="description" property="og:description" content="Driver Interface Changelog Metabase 0.54.0   Added a feature :test/arrays and multimethod native-array-query to enable the testing of array types for databases that support them.   Added a feature :expressions/text for drivers...">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -4160,127 +4160,9 @@ Roadmap</a>
 
         <h1 id="driver-interface-changelog">Driver Interface Changelog</h1>
 
-<h2 id="metabase-0550">Metabase 0.55.0</h2>
-
-<ul>
-  <li>
-    <p>Add the multi-method <code class="language-plaintext highlighter-rouge">-&gt;date</code> that allows the driver to control how to cast strings and temporal types to dates.</p>
-  </li>
-  <li>
-    <p>Add the multi-method <code class="language-plaintext highlighter-rouge">date-dbtype</code> that allows the driver to control which types dates are cast to.</p>
-  </li>
-  <li>
-    <p>Extend <code class="language-plaintext highlighter-rouge">date()</code> to accept a DateTime (or DB equivalent) in addition to an ISO string. When given a DateTime, it will truncate it to a date.</p>
-  </li>
-  <li>
-    <p>Added a feature <code class="language-plaintext highlighter-rouge">:expressions/datetime</code> for drivers that support converting iso strings to datetimes</p>
-  </li>
-  <li>
-    <p>Added a feature <code class="language-plaintext highlighter-rouge">:expression-literals</code> for drivers that support expressions consisting of a single string, number, or boolean literal value.</p>
-  </li>
-  <li>
-    <p>Added a feature <code class="language-plaintext highlighter-rouge">:multi-level-schema</code> for drivers that support hierarchical levels between database and schema. Such as databricks’ catalog. Defaults to false.</p>
-  </li>
-  <li>
-    <p>Added the multi-method <code class="language-plaintext highlighter-rouge">adjust-schema-qualification</code> that allows drivers to to qualify, or unqualify table schemas based on enabling or disabling multi-level-schema support. Drivers may need to implement <code class="language-plaintext highlighter-rouge">sql.qp/-&gt;honeysql [driver ::h2x/identifier]</code> to properly quote fully qualified schemas.</p>
-  </li>
-  <li>
-    <p>Added the multi-method <code class="language-plaintext highlighter-rouge">float-dbtype</code> which returns the name of the float type we coerce to for coercion strategies and the <code class="language-plaintext highlighter-rouge">float()</code> custom expression function.</p>
-  </li>
-  <li>
-    <p>Added a feature <code class="language-plaintext highlighter-rouge">:expressions/float</code> for drivers that support casting text to floats.</p>
-  </li>
-  <li>
-    <p>Added the multi-method <code class="language-plaintext highlighter-rouge">integer-dbtype</code> that allows the driver to control which type integers are cast to.</p>
-  </li>
-  <li>
-    <p>The <code class="language-plaintext highlighter-rouge">metabase.upload</code> namespace has been replaced with <code class="language-plaintext highlighter-rouge">metabase.upload.core</code>, but upload type keywords e.g.
-<code class="language-plaintext highlighter-rouge">:metabase.upload/varchar-255</code> remain unchanged. Make sure you weren’t using <code class="language-plaintext highlighter-rouge">::</code> keywords inside methods like
-<code class="language-plaintext highlighter-rouge">metabase.driver/upload-type-&gt;database-type</code> or <code class="language-plaintext highlighter-rouge">metabase.driver/allowed-promotions</code> – make sure you use
-<code class="language-plaintext highlighter-rouge">:metabase.upload/varchar-255</code> rather than something like <code class="language-plaintext highlighter-rouge">::upload/varchar-255</code>.</p>
-  </li>
-  <li>Added the multi-method <code class="language-plaintext highlighter-rouge">metabase.driver.sql.parameters.substitution/time-grouping-&gt;replacement-snippet-info</code>.  This is effectively <code class="language-plaintext highlighter-rouge">-&gt;replacement-snippet-info</code> for the new native query time grouping feature, but is its own separate multimethod because it needs an extra parameter.</li>
-  <li>
-    <p>The <code class="language-plaintext highlighter-rouge">metabase.models.secret</code> namespace has been replaced with <code class="language-plaintext highlighter-rouge">metabase.secrets.core</code>; if you were using it please
-update your usages.</p>
-  </li>
-  <li>
-    <p>The namespace <code class="language-plaintext highlighter-rouge">metabase.public-settings</code> has been removed, and settings have been moved to appropriate modules, e.g.
-<code class="language-plaintext highlighter-rouge">site-uuid</code> now lives in <code class="language-plaintext highlighter-rouge">metabase.system.core</code>. If you were using this namespace, please update your code
-accordingly. You should be able to find the correct one by looking at how those settings are used in our first-party
-drivers.</p>
-  </li>
-  <li>
-    <p>The namespaces <code class="language-plaintext highlighter-rouge">metabase.models.field</code>, <code class="language-plaintext highlighter-rouge">metabase.models.field-values</code>, and <code class="language-plaintext highlighter-rouge">metabase.models.table</code> have been moved
-to <code class="language-plaintext highlighter-rouge">metabase.warehouse-schema.field</code>, <code class="language-plaintext highlighter-rouge">metabase.warehouse-schema.field-values</code>, and
-<code class="language-plaintext highlighter-rouge">metabase.warehouse-schema.table</code> respectively. You shouldn’t use these namespaces directly in your drivers, but if
-you did, please update your references.</p>
-  </li>
-  <li>
-    <p><code class="language-plaintext highlighter-rouge">metabase.driver.sql.query-processor/-&gt;honeysql</code> is no longer supported for <code class="language-plaintext highlighter-rouge">:model/Table</code> (support for this was
-deprecated in 0.48.0) – methods for this will no longer be used; if you have such a method, migrate it to
-<code class="language-plaintext highlighter-rouge">:metadata/table</code> instead. If you have a <code class="language-plaintext highlighter-rouge">:model/Table</code> and need a <code class="language-plaintext highlighter-rouge">:metadata/table</code> instead (such as in
-implementations of <code class="language-plaintext highlighter-rouge">metabase.driver/table-rows-seq</code>) you can use <code class="language-plaintext highlighter-rouge">metabase.lib.metadata/table</code>.</p>
-  </li>
-  <li>
-    <p><code class="language-plaintext highlighter-rouge">metabase.db.metadata-queries</code> has been removed; the parts meant for usage by drivers have been moved to
-<code class="language-plaintext highlighter-rouge">metabase.driver.common.table-rows-sample</code>.</p>
-  </li>
-  <li>
-    <p><code class="language-plaintext highlighter-rouge">metabase.util.ssh</code> has been moved to <code class="language-plaintext highlighter-rouge">metabase.driver.sql-jdbc.connection.ssh-tunnel</code>.</p>
-  </li>
-  <li>
-    <p><code class="language-plaintext highlighter-rouge">metabase.query-processor.pipeline/*query-timeout-ms*</code> has been moved to
-<code class="language-plaintext highlighter-rouge">metabase.driver.settings/*query-timeout-ms*</code>.</p>
-  </li>
-  <li>
-    <p>The namespace <code class="language-plaintext highlighter-rouge">metabase.query-processor.context</code>, deprecated in 0.50.0, has been removed.</p>
-  </li>
-  <li>All settings formerly in a <code class="language-plaintext highlighter-rouge">metabase.driver.*</code> namespace have been moved to <code class="language-plaintext highlighter-rouge">metabase.driver.settings</code>, and all
-settings formerly in a <code class="language-plaintext highlighter-rouge">metabase.query-processor.*</code> namespace have been moved to
-<code class="language-plaintext highlighter-rouge">metabase.query-processor.settings</code>.</li>
-</ul>
-
-<h2 id="metabase-05412">Metabase 0.54.12</h2>
-
-<ul>
-  <li>The function <code class="language-plaintext highlighter-rouge">metabase.driver.sql-jdbc.sync/describe-table-fields-xf</code> now takes a table instead of a database</li>
-</ul>
-
-<h2 id="metabase-05411">Metabase 0.54.11</h2>
-
-<ul>
-  <li>The multimethods <code class="language-plaintext highlighter-rouge">metabase.driver.sql-jdbc.sync.interface/active-tables</code> and <code class="language-plaintext highlighter-rouge">metabase.driver.sql-jdbc.sync.interface/filtered-syncable-schemas</code>, aswell as the functions
-<code class="language-plaintext highlighter-rouge">metabase.driver.sql-jdbc.sync.describe_database/fast-active-tables</code>, <code class="language-plaintext highlighter-rouge">metabase.driver.sql-jdbc.sync.describe_database/have-select-privilege-fn</code> and <code class="language-plaintext highlighter-rouge">metabase.driver.sql-jdbc.sync.describe_database/db-tables</code> now take a database spec instead of a <code class="language-plaintext highlighter-rouge">java.sql.Connection</code> object.</li>
-</ul>
-
-<h2 id="metabase-05410">Metabase 0.54.10</h2>
-
-<ul>
-  <li>Add <code class="language-plaintext highlighter-rouge">metabase.driver/table-known-to-not-exist?</code> for drivers to test if an exception is due to a query on a table that no longer exists</li>
-  <li>Add <code class="language-plaintext highlighter-rouge">metabase.driver.sql-jdbc/impl-table-known-to-not-exist?</code> for JDBC drivers. This is the implemenation of table-known-to-not-exist for jdbc and allows testing directly against <code class="language-plaintext highlighter-rouge">java.sql.SQLException</code> throwables without worrying about the exception cause chain.</li>
-</ul>
-
 <h2 id="metabase-0540">Metabase 0.54.0</h2>
 
 <ul>
-  <li>
-    <p>Added the multi-method <code class="language-plaintext highlighter-rouge">allowed-promotions</code> that allows driver control over which column type promotions are supported for uploads.</p>
-  </li>
-  <li>
-    <p>Added the multi-method <code class="language-plaintext highlighter-rouge">alter-table-columns!</code>, like <code class="language-plaintext highlighter-rouge">alter-columns!</code> but accepts additional kw-arg opts.
-Existing implementations of <code class="language-plaintext highlighter-rouge">alter-columns!</code> will be used by default.</p>
-  </li>
-  <li>
-    <p><code class="language-plaintext highlighter-rouge">alter-columns!</code> is now marked as deprecated. Drivers
-should seek to implement the new <code class="language-plaintext highlighter-rouge">alter-table-columns!</code> method.</p>
-  </li>
-  <li>
-    <p>The multimethod <code class="language-plaintext highlighter-rouge">metabase.driver.sql-jdbc.sync.interface/alter-table-columns-sql</code> has been added, like <code class="language-plaintext highlighter-rouge">alter-columns-sql</code> but accepts additional kw-arg opts. Existing implementations of <code class="language-plaintext highlighter-rouge">alter-columns-sql</code> will be used by default.</p>
-  </li>
-  <li>
-    <p><code class="language-plaintext highlighter-rouge">metabase.driver.sql-jdbc.sync.interface/alter-columns-sql</code> is now marked as deprecated. Drivers should seek to implement the new <code class="language-plaintext highlighter-rouge">alter-table-columns-sql</code> method.</p>
-  </li>
   <li>
     <p>Added a feature <code class="language-plaintext highlighter-rouge">:test/arrays</code> and multimethod <code class="language-plaintext highlighter-rouge">native-array-query</code> to enable the testing of array types for
 databases that support them.</p>
@@ -4318,15 +4200,7 @@ databases that support them.</p>
 <h2 id="metabase-0530">Metabase 0.53.0</h2>
 
 <ul>
-  <li>
-    <p>Added the multimethod <code class="language-plaintext highlighter-rouge">bad-connection-details</code> to allow mocking bad connection parameters for tests.</p>
-  </li>
-  <li>
-    <p>Added <code class="language-plaintext highlighter-rouge">driver/dynamic-database-types-lookup</code> and its <code class="language-plaintext highlighter-rouge">:postgres</code> implementation. The method generates map
-of <code class="language-plaintext highlighter-rouge">database_type</code> to <code class="language-plaintext highlighter-rouge">base_type</code>, for dynamic types, ie. those which are not covered
-by <code class="language-plaintext highlighter-rouge">sql-jdbc.sync/database-type-&gt;base-type</code>. Its original purpose was to enable mapping of user defined enums in
-postgres to appropriate base type in results metadata.</p>
-  </li>
+  <li>Added the multimethod <code class="language-plaintext highlighter-rouge">bad-connection-details</code> to allow mocking bad connection parameters for tests.</li>
 </ul>
 
 <h2 id="metabase-05212">Metabase 0.52.12</h2>

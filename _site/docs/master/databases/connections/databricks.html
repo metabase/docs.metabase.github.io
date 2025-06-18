@@ -4164,50 +4164,43 @@ Roadmap</a>
 
 <p>You can edit these settings at any time. Just remember to save your changes.</p>
 
-<h2 id="edit-connection-details">Edit connection details</h2>
-
-<h3 id="display-name">Display name</h3>
+<h2 id="display-name">Display name</h2>
 
 <p>The display name for the database in the Metabase interface.</p>
 
-<h3 id="host">Host</h3>
+<h2 id="host">Host</h2>
 
 <p>Your database’s IP address, or its domain name (e.g., <code class="language-plaintext highlighter-rouge">xxxxxxxxxx.cloud.databricks.com</code> or <code class="language-plaintext highlighter-rouge">adb-xxxxx.azuredatabricks.net</code>). This is the value of your Databrick’s compute resource’s Server Hostname.</p>
 
 <p>See <a href="https://docs.databricks.com/en/integrations/jdbc/compute.html">Compute settings for the Databricks JDBC Driver</a>.</p>
 
-<h3 id="http-path">HTTP path</h3>
+<h2 id="http-path">HTTP path</h2>
 
 <p>This is the Databrick’s compute resources HTTP Path value. This value is often a SQL warehouse endpoint in the format <code class="language-plaintext highlighter-rouge">/sql/1.0/endpoints/abcdef1234567890</code>. See <a href="https://docs.databricks.com/en/compute/sql-warehouse/index.html">Connect to a SQL warehouse</a>.</p>
 
 <p>Additionally, see <a href="https://docs.databricks.com/en/integrations/jdbc/compute.html">Compute settings for the Databricks JDBC Driver</a>.</p>
 
-<h3 id="authentication">Authentication</h3>
+<h2 id="authentication">Authentication</h2>
 
 <p>There are two ways to authenticate with Databricks. You can use a personal access token (PAT) or a service principal using OAuth (OAuth M2M).</p>
 
 <p>The Databricks driver supports both options. Use the toggle to select the authentication method you want to use.</p>
 
-<h4 id="personal-access-token-authentication">Personal access token authentication</h4>
+<h3 id="personal-access-token-authentication">Personal access token authentication</h3>
 <p>See <a href="https://docs.databricks.com/en/dev-tools/auth/pat.html">Personal Access Token (PAT)</a>.</p>
 
-<h4 id="authenticate-access-with-a-service-principal-using-oauth-oauth-m2m">Authenticate access with a service principal using OAuth (OAuth M2M)</h4>
+<h3 id="authenticate-access-with-a-service-principal-using-oauth-oauth-m2m">Authenticate access with a service principal using OAuth (OAuth M2M)</h3>
 
 <p>See <a href="https://docs.databricks.com/en/dev-tools/auth/oauth-m2m.html">Authenticate access with a service principal using OAuth</a>.</p>
 
-<h3 id="enable-multiple-catalogs">Enable multiple catalogs</h3>
-
-<p>Toggle on to sync multiple catalogs. If you enable this, you’ll be able to <a href="#catalogs-and-schemas">specify which catalogs to sync</a>.</p>
-
-<h3 id="default-catalog">Default catalog</h3>
-
-<p>Required. You must specify a default catalog (so you don’t have to deal with catalog qualification in native queries).</p>
+<h2 id="catalog">Catalog</h2>
+<p>For now, you can only select one catalog. Metabase doesn’t support multi-catalog connections. If you want to use more than one catalog in Metabase, you can set up multiple connections, each selecting a different catalog.</p>
 
 <p>You can’t sync Databricks’s legacy catalogs, however, including the <code class="language-plaintext highlighter-rouge">samples</code> or <code class="language-plaintext highlighter-rouge">hive_metastore</code> catalogs.</p>
 
-<h3 id="catalogs-and-schemas">Catalogs and schemas</h3>
+<h2 id="schemas">Schemas</h2>
 
-<p>You can specify which catalogs and schemas you want to sync and scan. Options are:</p>
+<p>You can specify which schemas you want to sync and scan. Options are:</p>
 
 <ul>
   <li>All</li>
@@ -4215,7 +4208,7 @@ Roadmap</a>
   <li>All except…</li>
 </ul>
 
-<p>For the <strong>Only these</strong> and <strong>All except</strong> options, you can input a comma-separated list of values to tell Metabase which catalogs and schemas you want to include (or exclude). For example:</p>
+<p>For the <strong>Only these</strong> and <strong>All except</strong> options, you can input a comma-separated list of values to tell Metabase which schemas you want to include (or exclude). For example:</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>foo,bar,baz
 </code></pre></div></div>
@@ -4231,21 +4224,42 @@ Roadmap</a>
 
 <p>Note that only the <code class="language-plaintext highlighter-rouge">*</code> wildcard is supported; you can’t use other special characters or regexes.</p>
 
-<h3 id="additional-jdbc-connection-string-options">Additional JDBC connection string options</h3>
+<h2 id="additional-jdbc-connection-string-options">Additional JDBC connection string options</h2>
 
 <p>You can append options to the connection string that Metabase uses to connect to your database. E.g., <code class="language-plaintext highlighter-rouge">IgnoreTransactions=0</code>.</p>
 
 <p>See <a href="https://docs.databricks.com/en/integrations/jdbc/compute.html">Compute settings for the Databricks JDBC Driver</a>.</p>
 
-<h3 id="re-run-queries-for-simple-explorations">Re-run queries for simple explorations</h3>
+<h2 id="re-run-queries-for-simple-explorations">Re-run queries for simple explorations</h2>
 
 <p>Turn this option <strong>OFF</strong> if people want to click <strong>Run</strong> (the play button) before applying any summarizations or filters in the query builder.</p>
 
 <p>By default, Metabase will execute a query as soon as you choose an grouping option from the <strong>Summarize</strong> menu or a filter condition from the <a href="/learn/metabase-basics/querying-and-dashboards/questions/drill-through">drill-through menu</a>. If your database is slow, you may want to disable re-running to avoid loading data on each click.</p>
 
-<h3 id="choose-when-syncs-and-scans-happen">Choose when syncs and scans happen</h3>
+<h2 id="choose-when-metabase-syncs-and-scans">Choose when Metabase syncs and scans</h2>
 
-<p>See <a href="../sync-scan#choose-when-syncs-and-scans-happen">syncs and scans</a>.</p>
+<p>Turn this option <strong>ON</strong> to manage the queries that Metabase uses to stay up to date with your database. For more information, see <a href="../sync-scan">Syncing and scanning databases</a>.</p>
+
+<h3 id="database-syncing">Database syncing</h3>
+
+<p>If you’ve selected <strong>Choose when syncs and scans happen</strong> &gt; <strong>ON</strong>, you’ll be able to set:</p>
+
+<ul>
+  <li>The frequency of the <a href="../sync-scan#how-database-syncs-work">sync</a>: hourly (default) or daily.</li>
+  <li>The time to run the sync, in the timezone of the server where your Metabase app is running.</li>
+</ul>
+
+<h3 id="scanning-for-filter-values">Scanning for filter values</h3>
+
+<p>Metabase can scan the values present in each field in this database to enable checkbox filters in dashboards and questions. This can be a somewhat resource-intensive process, particularly if you have a very large database.</p>
+
+<p>If you’ve selected <strong>Choose when syncs and scans happen</strong> &gt; <strong>ON</strong>, you’ll see the following options under <strong>Scanning for filter values</strong>:</p>
+
+<ul>
+  <li><strong>Regularly, on a schedule</strong> allows you to run <a href="../sync-scan#how-database-scans-work">scan queries</a> at a frequency that matches the rate of change to your database. The time is set in the timezone of the server where your Metabase app is running. This is the best option for a small database, or tables with distinct values that get updated often.</li>
+  <li><strong>Only when adding a new filter widget</strong> is a great option if you want scan queries to run on demand. Turning this option <strong>ON</strong> means that Metabase will only scan and cache the values of the field(s) that are used when a new filter is added to a dashboard or SQL question.</li>
+  <li><strong>Never, I’ll do this manually if I need to</strong> is an option for databases that are either prohibitively large, or which never really have new values added. Use the <a href="../sync-scan#manually-scanning-column-values">Re-scan field values now</a> button to run a manual scan and bring your filter values up to date.</li>
+</ul>
 
 <h3 id="periodically-refingerprint-tables">Periodically refingerprint tables</h3>
 
@@ -4256,18 +4270,6 @@ Roadmap</a>
 <p>Turn this option <strong>ON</strong> to scan a sample of values every time Metabase runs a <a href="../sync-scan#how-database-syncs-work">sync</a>.</p>
 
 <p>A fingerprinting query examines the first 10,000 rows from each column and uses that data to guesstimate how many unique values each column has, what the minimum and maximum values are for numeric and timestamp columns, and so on. If you leave this option <strong>OFF</strong>, Metabase will only fingerprint your columns once during setup.</p>
-
-<h2 id="model-features">Model features</h2>
-
-<p>There aren’t (yet) any model features available for Databricks.</p>
-
-<h2 id="database-routing">Database routing</h2>
-
-<p>See <a href="../../permissions/database-routing">Database routing</a>.</p>
-
-<h2 id="danger-zone">Danger zone</h2>
-
-<p>See <a href="../danger-zone">Danger zone</a>.</p>
 
 <h2 id="further-reading">Further reading</h2>
 

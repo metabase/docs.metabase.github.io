@@ -13,49 +13,42 @@ layout: new-docs
 
 {% include plans-blockquote.html feature="Embedded analytics SDK" sdk=true %}
 
-## Passing a configuration object to `MetabaseProvider`
-
-To use the SDK in your app, you need to import the `MetabaseProvider` component and provide it with an `authConfig` object.
-
-### `MetabaseProvider`
-
-A component that configures the SDK and provides the Metabase SDK's context and theme.
-
-#### API Reference
-
-- [Component](./api/MetabaseProvider)
-- [Props](./api/MetabaseProviderProps)
-
-#### Example
+To use the SDK in your app, you need to import the `MetabaseProvider` component and provide it with an `authConfig` object, like so:
 
 ```typescript
-{% include_file "{{ dirname }}/snippets/config/config-base.tsx" %}
+{% include_file "{{ dirname }}/snippets/config/config-base.tsx" snippet="example" %}
 ```
 
-#### Props
+You can also pass additional props to `MetabaseProvider`:
 
-{% include_file "{{ dirname }}/api/snippets/MetabaseProviderProps.md" snippet="properties" %}
+- `authConfig` (Required). Defines how to authenticate with Metabase.
+- `theme` (Optional) See [Appearance](./appearance).
+- `pluginsConfig` (Optional). See [Plugins](./plugins).
+- `eventHandlers` (Optional). See [Global event handlers](#global-event-handlers).
+- `className` (Optional). Classes to be added to the wrapper element.
+- `locale` (Optional). Defines the display language. Accepts an ISO language code such as `en` or `de`.
+- `loaderComponent` (Optional). A custom loader component to display while the SDK is loading.
+- `errorComponent` (Optional). A custom error component to display when the SDK encounters an error.
+- `allowConsoleLog` (Optional). If `true`, log messages will be printed to the console.
+
+## Example `config` object passed to `MetabaseProvider`
+
+```typescript
+{% include_file "{{ dirname }}/snippets/config/config-with-theme.tsx" %}
+```
 
 ## Global event handlers
 
-You can listen for events by defining the `eventHandlers` prop for `MetabaseProvider`.
+`MetabaseProvider` also supports `eventHandlers`.
 
-### `SdkEventHandlersConfig`
+Currently, we support:
 
-Accepts an object where each key is an event type and the corresponding value is the event handler function.
+- `onDashboardLoad?: (dashboard: Dashboard | null) => void;`. Triggers when a dashboard loads with all visible cards and their content
+- `onDashboardLoadWithoutCards?: (dashboard: Dashboard | null) => void;`. Triggers after a dashboard loads, but without its cards (at this stage only the dashboard title, tabs, and cards grid are rendered, but the contents of the cards have yet to load.
 
-#### API Reference
-
-- [Type](./api/SdkEventHandlersConfig)
-
-#### Example
 ```typescript
 {% include_file "{{ dirname }}/snippets/config/config-with-event-handlers.tsx" snippet="example" %}
 ```
-
-#### Props
-
-{% include_file "{{ dirname }}/api/snippets/SdkEventHandlersConfig.md" snippet="properties" %}
 
 ## Reloading Metabase components
 

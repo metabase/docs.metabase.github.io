@@ -49,7 +49,7 @@
 <meta name="twitter:site" content="@metabase">
 
 <meta name="twitter:title" content="Isempty | Metabase Documentation">
-<meta name="twitter:description" content="Isempty isEmpty checks whether a value in a string column is an empty string (" ")="" or="" null.="" calling="" isempty="" on="" a="" non-string="" column="" would="" cause="" an="" error.="" syntax="" isempty(text="" column)..."="">
+<meta name="twitter:description" content="Isempty isempty checks whether a value in a string column is an empty string (" ")="" or="" null.="" calling="" isempty="" on="" a="" non-string="" column="" would="" cause="" an="" error.="" syntax="" isempty(text="" column)..."="">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -59,7 +59,7 @@
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://www.metabase.com/docs/master/questions/query-builder/expressions/isempty">
 <meta name="title" property="og:title" content="Isempty | Metabase Documentation">
-<meta name="description" property="og:description" content="Isempty isEmpty checks whether a value in a string column is an empty string (" ")="" or="" null.="" calling="" isempty="" on="" a="" non-string="" column="" would="" cause="" an="" error.="" syntax="" isempty(text="" column)..."="">
+<meta name="description" property="og:description" content="Isempty isempty checks whether a value in a string column is an empty string (" ")="" or="" null.="" calling="" isempty="" on="" a="" non-string="" column="" would="" cause="" an="" error.="" syntax="" isempty(text="" column)..."="">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -4160,88 +4160,88 @@ Roadmap</a>
 
         <h1 id="isempty">Isempty</h1>
 
-<p><code class="language-plaintext highlighter-rouge">isEmpty</code> checks whether a value in a <strong>string column</strong> is an empty string (<code class="language-plaintext highlighter-rouge">""</code>) or null. Calling <code class="language-plaintext highlighter-rouge">isEmpty</code> on a non-string column would cause an error.</p>
+<p><code class="language-plaintext highlighter-rouge">isempty</code> checks whether a value in a <strong>string column</strong> is an empty string (<code class="language-plaintext highlighter-rouge">""</code>) or null. Calling <code class="language-plaintext highlighter-rouge">isempty</code> on a non-string column would cause an error.</p>
 
 <h2 id="syntax">Syntax</h2>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>isEmpty(text column)
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>isempty(text column)
 </code></pre></div></div>
 
-<p>You can use <code class="language-plaintext highlighter-rouge">isEmpty</code> in <a href="../expressions#filter-expressions-and-conditionals">custom filters</a>, or as the condition for conditional aggregations <a href="../expressions/countif"><code class="language-plaintext highlighter-rouge">CountIf</code></a> and <a href="../expressions/sumif"><code class="language-plaintext highlighter-rouge">SumIf</code></a>. To create a custom column using <code class="language-plaintext highlighter-rouge">isEmpty</code>, you must combine <code class="language-plaintext highlighter-rouge">isEmpty</code> with another function that accepts boolean values, like <a href="./case"><code class="language-plaintext highlighter-rouge">case</code></a>.</p>
+<p>You can use <code class="language-plaintext highlighter-rouge">isempty</code> in <a href="../expressions#filter-expressions-and-conditionals">custom filters</a>, or as the condition for conditional aggregations <a href="../expressions/countif"><code class="language-plaintext highlighter-rouge">CountIf</code></a> and <a href="../expressions/sumif"><code class="language-plaintext highlighter-rouge">SumIf</code></a>. To create a custom column using <code class="language-plaintext highlighter-rouge">isempty</code>, you must combine <code class="language-plaintext highlighter-rouge">isempty</code> with another function that accepts boolean values, like <a href="./case"><code class="language-plaintext highlighter-rouge">case</code></a>.</p>
 
 <h2 id="how-metabase-handles-empty-strings-and-null-values">How Metabase handles empty strings and null values</h2>
 
 <p>In Metabase, columns with string <a href="/learn/grow-your-data-skills/data-fundamentals/data-types-overview#examples-of-data-types">data types</a> will display blank cells for empty strings, strings of whitespace characters, <em>or</em> <code class="language-plaintext highlighter-rouge">null</code> values (if the column is nullable in your database).
-The table below shows you examples of the output of <code class="language-plaintext highlighter-rouge">isEmpty</code>.</p>
+The table below shows you examples of the output of <code class="language-plaintext highlighter-rouge">isempty</code>.</p>
 
 <table>
   <thead>
     <tr>
       <th>Metabase shows</th>
       <th>Database value</th>
-      <th><code class="language-plaintext highlighter-rouge">isEmpty(value)</code></th>
+      <th><code class="language-plaintext highlighter-rouge">isempty(value)</code></th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td data-label="Metabase shows">&nbsp;</td>
       <td data-label="Database value"><code class="language-plaintext highlighter-rouge">null</code></td>
-      <td data-label="isEmpty(value)"><code class="language-plaintext highlighter-rouge">true</code></td>
+      <td data-label="isempty(value)"><code class="language-plaintext highlighter-rouge">true</code></td>
     </tr>
     <tr>
       <td data-label="Metabase shows">&nbsp;</td>
       <td data-label="Database value"><code class="language-plaintext highlighter-rouge">""</code> (empty string)</td>
-      <td data-label="isEmpty(value)"><code class="language-plaintext highlighter-rouge">true</code></td>
+      <td data-label="isempty(value)"><code class="language-plaintext highlighter-rouge">true</code></td>
     </tr>
     <tr>
       <td data-label="Metabase shows">&nbsp;</td>
       <td data-label="Database value"><code class="language-plaintext highlighter-rouge">" "</code> (whitespace)</td>
-      <td data-label="isEmpty(value)"><code class="language-plaintext highlighter-rouge">false</code></td>
+      <td data-label="isempty(value)"><code class="language-plaintext highlighter-rouge">false</code></td>
     </tr>
     <tr>
       <td data-label="Metabase shows">kitten</td>
       <td data-label="Database value"><code class="language-plaintext highlighter-rouge">"kitten"</code></td>
-      <td data-label="isEmpty(value)"><code class="language-plaintext highlighter-rouge">false</code></td>
+      <td data-label="isempty(value)"><code class="language-plaintext highlighter-rouge">false</code></td>
     </tr>
   </tbody>
 </table>
 
 <h2 id="creating-a-boolean-custom-column">Creating a boolean custom column</h2>
 
-<p>To create a custom column using <code class="language-plaintext highlighter-rouge">isEmpty</code>, you must combine <code class="language-plaintext highlighter-rouge">isEmpty</code> with another function.
+<p>To create a custom column using <code class="language-plaintext highlighter-rouge">isempty</code>, you must combine <code class="language-plaintext highlighter-rouge">isempty</code> with another function.
 For example, if you want to create a custom column that contains <code class="language-plaintext highlighter-rouge">true</code> when the <code class="language-plaintext highlighter-rouge">Feedback</code> column is empty or null, and <code class="language-plaintext highlighter-rouge">false</code> otherwise, you can use the <a href="./case"><code class="language-plaintext highlighter-rouge">case expression</code></a> :</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>case(isEmpty([Feedback]), true, false)
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>case(isempty([Feedback]), true, false)
 </code></pre></div></div>
 
 <h2 id="replacing-empty-strings-with-another-value">Replacing empty strings with another value</h2>
 
-<p>You can combine <code class="language-plaintext highlighter-rouge">isEmpty</code> with the <a href="./case"><code class="language-plaintext highlighter-rouge">case</code> expression</a> to replace empty strings with something more descriptive.</p>
+<p>You can combine <code class="language-plaintext highlighter-rouge">isempty</code> with the <a href="./case"><code class="language-plaintext highlighter-rouge">case</code> expression</a> to replace empty strings with something more descriptive.</p>
 
 <p>For example, you can create a new custom column that will contain <code class="language-plaintext highlighter-rouge">"No feedback"</code> when the original <code class="language-plaintext highlighter-rouge">[Feedback]</code> column is empty or null, and the feedback value when <code class="language-plaintext highlighter-rouge">[Feedback]</code> is has a non-empty value. The custom expression to do it is:</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>case(isEmpty([Feedback]), "No feedback.", [Feedback])
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>case(isempty([Feedback]), "No feedback.", [Feedback])
 </code></pre></div></div>
 
 <table>
   <thead>
     <tr>
       <th>Feedback</th>
-      <th><code class="language-plaintext highlighter-rouge">case(isEmpty([Feedback]), "No feedback.", [Feedback])</code></th>
+      <th><code class="language-plaintext highlighter-rouge">case(isempty([Feedback]), "No feedback.", [Feedback])</code></th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td data-label="Feedback"><code class="language-plaintext highlighter-rouge">""</code></td>
-      <td data-label="case(isEmpty([Feedback]), &quot;No feedback.&quot;, [Feedback])"><code class="language-plaintext highlighter-rouge">"No feedback."</code></td>
+      <td data-label="case(isempty([Feedback]), &quot;No feedback.&quot;, [Feedback])"><code class="language-plaintext highlighter-rouge">"No feedback."</code></td>
     </tr>
     <tr>
       <td data-label="Feedback"><code class="language-plaintext highlighter-rouge">null</code></td>
-      <td data-label="case(isEmpty([Feedback]), &quot;No feedback.&quot;, [Feedback])"><code class="language-plaintext highlighter-rouge">"No feedback."</code></td>
+      <td data-label="case(isempty([Feedback]), &quot;No feedback.&quot;, [Feedback])"><code class="language-plaintext highlighter-rouge">"No feedback."</code></td>
     </tr>
     <tr>
       <td data-label="Feedback"><code class="language-plaintext highlighter-rouge">"I like your style."</code></td>
-      <td data-label="case(isEmpty([Feedback]), &quot;No feedback.&quot;, [Feedback])"><code class="language-plaintext highlighter-rouge">"I like your style."</code></td>
+      <td data-label="case(isempty([Feedback]), &quot;No feedback.&quot;, [Feedback])"><code class="language-plaintext highlighter-rouge">"I like your style."</code></td>
     </tr>
   </tbody>
 </table>
@@ -4252,29 +4252,29 @@ For example, if you want to create a custom column that contains <code class="la
   <thead>
     <tr>
       <th><a href="/learn/grow-your-data-skills/data-fundamentals/data-types-overview#examples-of-data-types">Data type</a></th>
-      <th>Works with <code class="language-plaintext highlighter-rouge">isEmpty</code></th>
+      <th>Works with <code class="language-plaintext highlighter-rouge">isempty</code></th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td data-label="Data type">String</td>
-      <td data-label="Works with isEmpty">✅</td>
+      <td data-label="Works with isempty">✅</td>
     </tr>
     <tr>
       <td data-label="Data type">Number</td>
-      <td data-label="Works with isEmpty">❌</td>
+      <td data-label="Works with isempty">❌</td>
     </tr>
     <tr>
       <td data-label="Data type">Timestamp</td>
-      <td data-label="Works with isEmpty">❌</td>
+      <td data-label="Works with isempty">❌</td>
     </tr>
     <tr>
       <td data-label="Data type">Boolean</td>
-      <td data-label="Works with isEmpty">❌</td>
+      <td data-label="Works with isempty">❌</td>
     </tr>
     <tr>
       <td data-label="Data type">JSON</td>
-      <td data-label="Works with isEmpty">❌</td>
+      <td data-label="Works with isempty">❌</td>
     </tr>
   </tbody>
 </table>
@@ -4282,13 +4282,13 @@ For example, if you want to create a custom column that contains <code class="la
 <h2 id="limitations">Limitations</h2>
 
 <ul>
-  <li>To create a custom column you must combine <code class="language-plaintext highlighter-rouge">isEmpty</code> with another expression that accepts boolean arguments (i.e., <code class="language-plaintext highlighter-rouge">true</code> or <code class="language-plaintext highlighter-rouge">false</code>).</li>
-  <li><code class="language-plaintext highlighter-rouge">isEmpty</code> only accepts one value at a time. If you need to deal with empty strings from multiple columns, you’ll need to use multiple <code class="language-plaintext highlighter-rouge">isEmpty</code> expressions with the <a href="./case">case expression</a>.</li>
+  <li>To create a custom column you must combine <code class="language-plaintext highlighter-rouge">isempty</code> with another expression that accepts boolean arguments (i.e., <code class="language-plaintext highlighter-rouge">true</code> or <code class="language-plaintext highlighter-rouge">false</code>).</li>
+  <li><code class="language-plaintext highlighter-rouge">isempty</code> only accepts one value at a time. If you need to deal with empty strings from multiple columns, you’ll need to use multiple <code class="language-plaintext highlighter-rouge">isempty</code> expressions with the <a href="./case">case expression</a>.</li>
 </ul>
 
 <h2 id="related-functions">Related functions</h2>
 
-<p>This section covers functions and formulas that can be used interchangeably with the Metabase <code class="language-plaintext highlighter-rouge">isEmpty</code> expression, with notes on how to choose the best option for your use case.</p>
+<p>This section covers functions and formulas that can be used interchangeably with the Metabase <code class="language-plaintext highlighter-rouge">isempty</code> expression, with notes on how to choose the best option for your use case.</p>
 
 <ul>
   <li><a href="#sql">SQL</a></li>
@@ -4302,21 +4302,21 @@ For example, if you want to create a custom column that contains <code class="la
   <thead>
     <tr>
       <th>Feedback</th>
-      <th><code class="language-plaintext highlighter-rouge">case(isEmpty([Feedback]), "No feedback.", [Feedback])</code></th>
+      <th><code class="language-plaintext highlighter-rouge">case(isempty([Feedback]), "No feedback.", [Feedback])</code></th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td data-label="Feedback"><code class="language-plaintext highlighter-rouge">""</code></td>
-      <td data-label="case(isEmpty([Feedback]), &quot;No feedback.&quot;, [Feedback])"><code class="language-plaintext highlighter-rouge">"No feedback."</code></td>
+      <td data-label="case(isempty([Feedback]), &quot;No feedback.&quot;, [Feedback])"><code class="language-plaintext highlighter-rouge">"No feedback."</code></td>
     </tr>
     <tr>
       <td data-label="Feedback"><code class="language-plaintext highlighter-rouge">null</code></td>
-      <td data-label="case(isEmpty([Feedback]), &quot;No feedback.&quot;, [Feedback])"><code class="language-plaintext highlighter-rouge">"No feedback."</code></td>
+      <td data-label="case(isempty([Feedback]), &quot;No feedback.&quot;, [Feedback])"><code class="language-plaintext highlighter-rouge">"No feedback."</code></td>
     </tr>
     <tr>
       <td data-label="Feedback"><code class="language-plaintext highlighter-rouge">"I like your style."</code></td>
-      <td data-label="case(isEmpty([Feedback]), &quot;No feedback.&quot;, [Feedback])"><code class="language-plaintext highlighter-rouge">"I like your style."</code></td>
+      <td data-label="case(isempty([Feedback]), &quot;No feedback.&quot;, [Feedback])"><code class="language-plaintext highlighter-rouge">"I like your style."</code></td>
     </tr>
   </tbody>
 </table>
@@ -4329,9 +4329,9 @@ For example, if you want to create a custom column that contains <code class="la
      <span class="k">ELSE</span> <span class="n">Feedback</span> <span class="k">END</span>
 </code></pre></div></div>
 
-<p>is equivalent to the Metabase <code class="language-plaintext highlighter-rouge">isEmpty</code> expression:</p>
+<p>is equivalent to the Metabase <code class="language-plaintext highlighter-rouge">isempty</code> expression:</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>case(isEmpty([Feedback]), "No feedback.", [Feedback])
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>case(isempty([Feedback]), "No feedback.", [Feedback])
 </code></pre></div></div>
 
 <h3 id="spreadsheets">Spreadsheets</h3>
@@ -4341,9 +4341,9 @@ For example, if you want to create a custom column that contains <code class="la
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>=IF(A2 = "", "Unknown feedback.", A2)
 </code></pre></div></div>
 
-<p>is equivalent to the Metabase <code class="language-plaintext highlighter-rouge">isEmpty</code> expression:</p>
+<p>is equivalent to the Metabase <code class="language-plaintext highlighter-rouge">isempty</code> expression:</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>case(isEmpty([Feedback]), "No feedback.", [Feedback])
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>case(isempty([Feedback]), "No feedback.", [Feedback])
 </code></pre></div></div>
 
 <h3 id="python">Python</h3>
@@ -4353,9 +4353,9 @@ For example, if you want to create a custom column that contains <code class="la
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="p">[</span><span class="sh">"</span><span class="s">Custom Column</span><span class="sh">"</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">where</span><span class="p">((</span><span class="n">df</span><span class="p">[</span><span class="sh">"</span><span class="s">Feedback</span><span class="sh">"</span><span class="p">]</span> <span class="o">==</span> <span class="sh">""</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="sh">"</span><span class="s">Feedback</span><span class="sh">"</span><span class="p">].</span><span class="nf">isnull</span><span class="p">()),</span> <span class="sh">"</span><span class="s">No feedback.</span><span class="sh">"</span><span class="p">,</span> <span class="n">df</span><span class="p">[</span><span class="sh">"</span><span class="s">Feedback</span><span class="sh">"</span><span class="p">])</span>
 </code></pre></div></div>
 
-<p>is equivalent to the Metabase <code class="language-plaintext highlighter-rouge">isEmpty</code> expression:</p>
+<p>is equivalent to the Metabase <code class="language-plaintext highlighter-rouge">isempty</code> expression:</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>case(isEmpty([Feedback]), "No feedback.", [Feedback])
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>case(isempty([Feedback]), "No feedback.", [Feedback])
 </code></pre></div></div>
 
 <h2 id="further-reading">Further reading</h2>

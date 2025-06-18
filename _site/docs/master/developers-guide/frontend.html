@@ -4527,19 +4527,42 @@ Roadmap</a>
 
 <h2 id="component-styling-tree-rings">Component Styling Tree Rings</h2>
 
-<h3 id="css-modules">CSS modules</h3>
+<h3 id="classic--global-css-with-bem-style-selectors-deprecated">classic / global CSS with BEM style selectors (deprecated)</h3>
 
-<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">.primary</span> <span class="p">{</span>
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">.Button.Button--primary</span> <span class="p">{</span>
   <span class="nl">color</span><span class="p">:</span> <span class="n">-var</span><span class="p">(</span><span class="n">--mb-color-brand</span><span class="p">);</span>
 <span class="p">}</span>
 </code></pre></div></div>
 
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nx">S</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./Foo.css</span><span class="dl">"</span><span class="p">;</span>
+<h3 id="atomic--utility-css-discouraged">atomic / utility CSS (discouraged)</h3>
 
-<span class="kd">const</span> <span class="nx">Foo</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="p">{</span><span class="nx">S</span><span class="p">.</span><span class="nx">primary</span><span class="p">}</span> <span class="sr">/&gt;</span><span class="err">;
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">.text-brand</span> <span class="p">{</span>
+  <span class="nl">color</span><span class="p">:</span> <span class="n">-var</span><span class="p">(</span><span class="n">--mb-color-brand</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">Foo</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="dl">"</span><span class="s2">text-brand</span><span class="dl">"</span> <span class="o">/&gt;</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="inline-style-discouraged">inline style (discouraged)</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">Foo</span> <span class="o">=</span> <span class="p">({</span> <span class="nx">color</span> <span class="p">)</span> <span class="o">=&gt;</span>
+  <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">style</span><span class="o">=</span><span class="p">{{</span> <span class="na">color</span><span class="p">:</span> <span class="nx">color</span> <span class="p">}}</span> <span class="sr">/</span><span class="err">&gt;
 </span></code></pre></div></div>
 
-<h3 id="emotion-discouraged"><a href="https://emotion.sh/">Emotion</a> (discouraged)</h3>
+<h3 id="css-modules-deprecated">CSS modules (deprecated)</h3>
+
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">:local</span><span class="o">(</span><span class="nc">.primary</span><span class="o">)</span> <span class="p">{</span>
+  <span class="nl">color</span><span class="p">:</span> <span class="n">-var</span><span class="p">(</span><span class="n">--mb-color-brand</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nx">style</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./Foo.css</span><span class="dl">"</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">Foo</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="p">{</span><span class="nx">style</span><span class="p">.</span><span class="nx">primary</span><span class="p">}</span> <span class="sr">/&gt;</span><span class="err">;
+</span></code></pre></div></div>
+
+<h3 id="emotion"><a href="https://emotion.sh/">Emotion</a></h3>
 
 <div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nx">styled</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@emotion/styled</span><span class="dl">"</span><span class="p">;</span>
 

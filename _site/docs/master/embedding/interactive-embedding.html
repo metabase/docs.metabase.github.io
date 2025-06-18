@@ -4170,7 +4170,7 @@ Roadmap</a>
 
 
     
-      <p class="m-0 ms-2 paragraph-5 neutral-40">Interactive embedding is only available on <a class="fw-bold" href="https://store.metabase.com/checkout/embedding">Pro</a> and <a class="fw-bold link-purple" href="/product/enterprise">Enterprise</a> plans
+      <p class="m-0 ms-2 paragraph-5 neutral-40">Interactive embedding is only available on <a class="fw-bold" href="/product/pro">Pro</a> and <a class="fw-bold link-purple" href="/product/enterprise">Enterprise</a> plans
     
 
     (both self-hosted and on Metabase Cloud).
@@ -4426,7 +4426,132 @@ Roadmap</a>
 
 <h2 id="showing-or-hiding-metabase-ui-components">Showing or hiding Metabase UI components</h2>
 
-<p>See <a href="./interactive-ui-components">interactive UI components</a></p>
+<p>To change the interface of your interactive embed, you can add parameters to the end of your embedding URL. If you want to change the colors or fonts in your embed, see <a href="../configuring-metabase/appearance">Customizing appearance</a>.</p>
+
+<p>For example, you can disable Metabase’s <a href="#top_nav">top nav bar</a> and <a href="#side_nav">side nav menu</a> like this:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>your_embedding_url?top_nav=false&amp;side_nav=false
+</code></pre></div></div>
+
+<p><img src="./images/no-top-no-side.png" alt="Top nav and side nav disabled"></p>
+
+<p>Options include:</p>
+
+<ul>
+  <li><a href="#action_buttons">Action buttons</a></li>
+  <li><a href="#additional_info">Additional info</a></li>
+  <li><a href="#breadcrumbs">Breadcrumbs</a></li>
+  <li><a href="#header">Header</a></li>
+  <li><a href="#locale">Locale</a></li>
+  <li><a href="#logo">Logo</a></li>
+  <li><a href="#new_button">New button</a></li>
+  <li><a href="#search">Search</a></li>
+  <li><a href="#side_nav">Side nav</a></li>
+  <li><a href="#top_nav">Top nav</a></li>
+</ul>
+
+<blockquote>
+  <p>To make sure that query parameters are preserved when using <a href="../dashboards/interactive#customizing-click-behavior">click behavior</a>, configure the <a href="../configuring-metabase/settings#site-url">Site URL</a> Admin setting to be your Metabase server URL.</p>
+</blockquote>
+
+<h3 id="action_buttons"><code class="language-plaintext highlighter-rouge">action_buttons</code></h3>
+
+<p>Visible by default on question pages when the <a href="#header">header</a> is enabled.</p>
+
+<p>To hide the action buttons such as <strong>Filter</strong>, <strong>Summarize</strong>, the query builder button, and so on:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>header=false&amp;action_buttons=false
+</code></pre></div></div>
+
+<p><img src="./images/action-buttons.png" alt="Action buttons"></p>
+
+<h3 id="additional_info"><code class="language-plaintext highlighter-rouge">additional_info</code></h3>
+
+<p>Visible by default on question and dashboard pages, when the <a href="#header">header</a> is enabled.</p>
+
+<p>To hide the gray text “Edited X days ago by FirstName LastName”, as well as the breadcrumbs with collection, database, and table names:</p>
+
+<p><code class="language-plaintext highlighter-rouge">header=false&amp;additional_info=false</code></p>
+
+<p><img src="./images/additional-info.png" alt="Additional info"></p>
+
+<h3 id="breadcrumbs"><code class="language-plaintext highlighter-rouge">breadcrumbs</code></h3>
+
+<p>Shown by default in the top nav bar. Collection breadcrumbs show the path to the item (i.e., the collection(s) the item is in). To hide the breadcrumbs:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>breadcrumbs=false
+</code></pre></div></div>
+
+<h3 id="header"><code class="language-plaintext highlighter-rouge">header</code></h3>
+
+<p>Visible by default on question and dashboard pages.</p>
+
+<p>To hide a question or dashboard’s title, <a href="#additional_info">additional info</a>, and <a href="#action_buttons">action buttons</a>:</p>
+
+<p><code class="language-plaintext highlighter-rouge">header=false</code></p>
+
+<h3 id="locale"><code class="language-plaintext highlighter-rouge">locale</code></h3>
+
+<p>You can change the language of the user interface via a parameter. For example, to set the locale to Spanish:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>locale=es
+</code></pre></div></div>
+
+<p>Read more about <a href="../configuring-metabase/localization">localization</a>.</p>
+
+<h3 id="logo"><code class="language-plaintext highlighter-rouge">logo</code></h3>
+
+<p>Whether to show the logo that opens and closes the sidebar nav. Default is true. How Metabase displays the logo depends on the <code class="language-plaintext highlighter-rouge">side_nav</code> setting. Here’s a rough breakdown of how these two parameters interact:</p>
+
+<p>If <code class="language-plaintext highlighter-rouge">logo=true</code> and:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">side_nav=true</code>: Looks like regular Metabase (with whatever logo you have set).</li>
+  <li><code class="language-plaintext highlighter-rouge">side_nav=false</code>: There is no sidebar, so nothing happens when you hover over the logo.</li>
+</ul>
+
+<p>If <code class="language-plaintext highlighter-rouge">logo=false</code> and:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">side_nav=true</code>: Metabase shows the generic sidebar icon, with a gray color in normal state, and a brand color on hover.</li>
+  <li><code class="language-plaintext highlighter-rouge">side_nav=false</code>: There is no side nav nor logo, so the breadcrumbs move all the way to the left of the screen.</li>
+</ul>
+
+<h3 id="new_button"><code class="language-plaintext highlighter-rouge">new_button</code></h3>
+
+<p>Hidden by default. To show the <strong>+ New</strong> button used to create queries or dashboards:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>top_nav=true&amp;new_button=true
+</code></pre></div></div>
+
+<h3 id="search"><code class="language-plaintext highlighter-rouge">search</code></h3>
+
+<p>Hidden by default. To show the search box in the top nav:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>top_nav=true&amp;search=true
+</code></pre></div></div>
+
+<h3 id="side_nav"><code class="language-plaintext highlighter-rouge">side_nav</code></h3>
+
+<p>The navigation sidebar is shown on <code class="language-plaintext highlighter-rouge">/collection</code> and home page routes, and hidden everywhere else by default.</p>
+
+<p>To allow people to minimize the sidebar:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>top_nav=true&amp;side_nav=true
+</code></pre></div></div>
+
+<p><img src="./images/side-nav.png" alt="Side nav"></p>
+
+<h3 id="top_nav"><code class="language-plaintext highlighter-rouge">top_nav</code></h3>
+
+<p>Shown by default. To hide the top navigation bar:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>top_nav=false
+</code></pre></div></div>
+
+<p><img src="./images/top-nav.png" alt="Top nav bar"></p>
+
+<p><code class="language-plaintext highlighter-rouge">search</code>, <code class="language-plaintext highlighter-rouge">new_button</code>, and <code class="language-plaintext highlighter-rouge">breadcrumbs</code> all depend on <code class="language-plaintext highlighter-rouge">top_nav</code> being set to <code class="language-plaintext highlighter-rouge">true</code>. If these three children (<code class="language-plaintext highlighter-rouge">search</code>, <code class="language-plaintext highlighter-rouge">new_button</code>, and <code class="language-plaintext highlighter-rouge">breadcrumbs</code>) are all false, Metabase will hide the top nav bar.</p>
 
 <h2 id="reference-apps">Reference apps</h2>
 

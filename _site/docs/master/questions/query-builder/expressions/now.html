@@ -4199,24 +4199,24 @@ Roadmap</a>
 
 <p>To mark a task in progress, you’d use the expression:</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>now() &gt;= [Start] AND now() &lt; [Deadline]
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>now &gt;= [Start] AND now &lt; [Deadline]
 </code></pre></div></div>
 
 <p>To check if you need to ask for an extension:</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>now() &gt;= [Start] AND now() &gt;= [Deadline]
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>now &gt;= [Start] AND now &gt;= [Deadline]
 </code></pre></div></div>
 
 <p>If you’re looking for an adrenaline rush (and you have real-time data), you can flag the tasks that are due <em>right this second</em>:</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>now() = [Deadline]
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>now = [Deadline]
 </code></pre></div></div>
 
 <p>To set up the <strong>Status</strong> column that combines all three situations above, you’d wrap everything in a <code class="language-plaintext highlighter-rouge">case</code> expression:</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>case(now() &gt;= [Start] AND now() &lt; [Deadline], "In progress",
-     now() &gt;= [Start] AND now() &gt;= [Deadline], "Needs extension",
-     now() = [Deadline], "DUE RIGHT NOW!")
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>case(now &gt;= [Start] AND now &lt; [Deadline], "In progress",
+     now &gt;= [Start] AND now &gt;= [Deadline], "Needs extension",
+     now = [Deadline], "DUE RIGHT NOW!")
 </code></pre></div></div>
 
 <h2 id="data-types">Data types</h2>
@@ -4225,29 +4225,29 @@ Roadmap</a>
   <thead>
     <tr>
       <th><a href="/learn/grow-your-data-skills/data-fundamentals/data-types-overview#examples-of-data-types">Data type</a></th>
-      <th>Returned by <code class="language-plaintext highlighter-rouge">now()</code></th>
+      <th>Returned by <code class="language-plaintext highlighter-rouge">now</code></th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td data-label="Data type">String</td>
-      <td data-label="Returned by now()">❌</td>
+      <td data-label="Returned by now">❌</td>
     </tr>
     <tr>
       <td data-label="Data type">Number</td>
-      <td data-label="Returned by now()">❌</td>
+      <td data-label="Returned by now">❌</td>
     </tr>
     <tr>
       <td data-label="Data type">Timestamp</td>
-      <td data-label="Returned by now()">✅</td>
+      <td data-label="Returned by now">✅</td>
     </tr>
     <tr>
       <td data-label="Data type">Boolean</td>
-      <td data-label="Returned by now()">❌</td>
+      <td data-label="Returned by now">❌</td>
     </tr>
     <tr>
       <td data-label="Data type">JSON</td>
-      <td data-label="Returned by now()">❌</td>
+      <td data-label="Returned by now">❌</td>
     </tr>
   </tbody>
 </table>

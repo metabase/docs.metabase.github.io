@@ -49,7 +49,7 @@
 <meta name="twitter:site" content="@metabase">
 
 <meta name="twitter:title" content="Syncing and scanning databases | Metabase Documentation">
-<meta name="twitter:description" content="Syncing and scanning databases Metabase periodically runs different types of queries to stay up to date with your database’s metadata. Knowing stuff about your data helps Metabase do things like display the right chart for the results automatically, and populate dropdown...">
+<meta name="twitter:description" content="Syncing and scanning databases Metabase runs different types of queries to stay up to date with your database.  Syncs get updated schemas to display in the Data Browser. Scans take samples of column values to populate filter...">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -59,7 +59,7 @@
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://www.metabase.com/docs/master/databases/sync-scan">
 <meta name="title" property="og:title" content="Syncing and scanning databases | Metabase Documentation">
-<meta name="description" property="og:description" content="Syncing and scanning databases Metabase periodically runs different types of queries to stay up to date with your database’s metadata. Knowing stuff about your data helps Metabase do things like display the right chart for the results automatically, and populate dropdown...">
+<meta name="description" property="og:description" content="Syncing and scanning databases Metabase runs different types of queries to stay up to date with your database.  Syncs get updated schemas to display in the Data Browser. Scans take samples of column values to populate filter...">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -4160,54 +4160,56 @@ Roadmap</a>
 
         <h1 id="syncing-and-scanning-databases">Syncing and scanning databases</h1>
 
-<p>Metabase periodically runs different types of queries to stay up to date with your database’s metadata. Knowing stuff about your data helps Metabase do things like display the right chart for the results automatically, and populate dropdown menus in filter widgets.</p>
-
-<p>There are a couple of things Metabase does:</p>
+<p>Metabase runs different types of queries to stay up to date with your database.</p>
 
 <ul>
   <li><a href="#how-database-syncs-work">Syncs</a> get updated schemas to display in the <a href="/learn/metabase-basics/querying-and-dashboards/data-browser">Data Browser</a>.</li>
-  <li><a href="#how-database-scans-work">Scans</a> take samples of column values to populate filter dropdown menus and suggest helpful visualizations. Metabase doesn’t store <em>complete</em> tables from your database.</li>
+  <li><a href="#how-database-scans-work">Scans</a> take samples of column values to populate filter dropdown menus and suggest helpful visualizations. Metabase does not store <em>complete</em> tables from your database.</li>
   <li><a href="#how-database-fingerprinting-works">Fingerprinting</a> takes an additional sample of column values to help with smart behavior, such as auto-binning for bar charts.</li>
 </ul>
 
 <h2 id="initial-sync-scan-and-fingerprinting">Initial sync, scan, and fingerprinting</h2>
 
-<p>When Metabase first connects to your database, Metabase performs a <a href="#how-database-syncs-work">sync</a> to determine the metadata of the columns in your tables and automatically assign each column a <a href="../data-modeling/field-types">semantic type</a>.</p>
+<p>When Metabase first connects to your database, Metabase performs a <a href="#how-database-scans-work">sync</a> to determine the metadata of the columns in your tables and automatically assign each column a <a href="../data-modeling/field-types">semantic type</a>. Once the sync is successful, Metabase runs <a href="#scheduling-database-scans">scans</a> of each table to look for URLs, JSON, encoded strings, etc. The <a href="#how-database-fingerprinting-works">fingerprinting</a> queries run once the syncs are complete.</p>
 
 <p>You can follow the progress of these queries from <strong>Admin</strong> &gt; <strong>Troubleshooting</strong> &gt; <strong>Logs</strong>.</p>
 
 <p>Once the queries are done running, you can view and edit the synced metadata from <strong>Admin settings</strong> &gt; <strong>Table Metadata</strong>. For more info, see <a href="../data-modeling/metadata-editing">editing metadata</a>.</p>
 
-<h3 id="choose-when-syncs-and-scans-happen">Choose when syncs and scans happen</h3>
+<h2 id="choose-when-metabase-syncs-and-scans">Choose when Metabase syncs and scans</h2>
 
-<p>By default, Metabase does a lightweight hourly sync and an intensive daily scan of field values. If you have a large database, you might want to choose when syncs and scans happen:</p>
+<p>If you want to change the default schedule for <a href="#how-database-scans-work">sync</a> and <a href="#scheduling-database-scans">scan</a> queries:</p>
 
-<h3 id="database-syncing">Database syncing</h3>
+<ol>
+  <li>Go to <strong>Admin</strong> &gt; <strong>Databases</strong> &gt; your database.</li>
+  <li>Expand <strong>Show advanced options</strong>.</li>
+  <li>Turn ON <strong>Choose when syncs and scans happen</strong>.</li>
+</ol>
 
-<p>If you’ve selected <strong>Choose when syncs and scans happen</strong> &gt; <strong>ON</strong>, you’ll be able to set:</p>
+<h2 id="scheduling-database-syncs">Scheduling database syncs</h2>
+
+<p>If you’ve turned on <a href="#choose-when-metabase-syncs-and-scans">Choose when syncs and scans happen</a>, you’ll be able to set:</p>
 
 <ul>
   <li>The frequency of the <a href="#how-database-syncs-work">sync</a>: hourly (default) or daily.</li>
   <li>The time to run the sync, in the timezone of the server where your Metabase app is running.</li>
 </ul>
 
-<h3 id="scanning-for-filter-values">Scanning for filter values</h3>
+<h2 id="scheduling-database-scans">Scheduling database scans</h2>
 
-<p>Metabase can scan and cache the values present in a field so it can display things like checkbox filters in dashboards and questions. Metabase will only scan fields that people are actually using in your Metabase. So if people are using a filter widget on a dashboard, Metabase will scan and cache values from that field to include in dropdown menus. If people stop using the filter widget for a couple of weeks, Metabase will stop scanning and caching those values.</p>
-
-<p>If you’ve selected <strong>Choose when syncs and scans happen</strong> &gt; <strong>ON</strong>, you’ll see the following options under <strong>Scanning for filter values</strong>:</p>
+<p>If you’ve turned ON <a href="#choose-when-metabase-syncs-and-scans">Choose when syncs and scans happen</a>, you’ll see the following <a href="#how-database-scans-work">scan</a> options:</p>
 
 <ul>
   <li><strong>Regularly, on a schedule</strong> allows you to run <a href="#how-database-scans-work">scan queries</a> at a frequency that matches the rate of change to your database. The time is set in the timezone of the server where your Metabase app is running. This is the best option for a small database, or tables with distinct values that get updated often.</li>
   <li><strong>Only when adding a new filter widget</strong> is a great option if you want scan queries to run on demand. Turning this option <strong>ON</strong> means that Metabase will only scan and cache the values of the field(s) that are used when a new filter is added to a dashboard or SQL question.</li>
-  <li><strong>Never, I’ll do this manually if I need to</strong> is an option for databases that are either prohibitively large, or which never really have new values added. Use the <a href="#manually-scanning-column-values">Re-scan field values</a> button to run a manual scan and bring your filter values up to date.</li>
+  <li><strong>Never, I’ll do this manually if I need to</strong> is an option for databases that are either prohibitively large, or which never really have new values added. Use the <a href="#manually-scanning-column-values">Re-scan field values now</a> button to run a manual scan and bring your filter values up to date.</li>
 </ul>
 
 <h2 id="manually-syncing-tables-and-columns">Manually syncing tables and columns</h2>
 
 <ol>
   <li>Go to <strong>Admin settings</strong> &gt; <strong>Databases</strong> &gt; your database.</li>
-  <li>Click <strong>Sync database schema</strong>.</li>
+  <li>Click <strong>Sync database schema now</strong>.</li>
 </ol>
 
 <h2 id="manually-scanning-column-values">Manually scanning column values</h2>
@@ -4263,7 +4265,7 @@ Roadmap</a>
 <p>Metabase syncs and scans regularly, but if the database administrator has just changed the database schema, or if a lot of data is added automatically at specific times, you may want to write a script that uses the <a href="/learn/metabase-basics/administration/administration-and-operation/metabase-api">Metabase API</a> to force a sync or scan. <a href="../api">Our API</a> provides two ways to initiate a sync or scan of a database:</p>
 
 <ol>
-  <li>Using a session token: the <code class="language-plaintext highlighter-rouge">/api/database/:id/sync_schema</code> or <code class="language-plaintext highlighter-rouge">api/database/:id/rescan_values</code> endpoints. These endpoints do the same things as going to the database in the Admin Panel and choosing <strong>Sync database schema</strong> or <strong>Re-scan field values</strong> respectively. To use these endpoints, you have to authenticate with a user ID and pass a session token in the header of your request.</li>
+  <li>Using a session token: the <code class="language-plaintext highlighter-rouge">/api/database/:id/sync_schema</code> or <code class="language-plaintext highlighter-rouge">api/database/:id/rescan_values</code> endpoints. These endpoints do the same things as going to the database in the Admin Panel and choosing <strong>Sync database schema now</strong> or <strong>Re-scan field values now</strong> respectively. To use these endpoints, you have to authenticate with a user ID and pass a session token in the header of your request.</li>
   <li>Using an API key: <code class="language-plaintext highlighter-rouge">/api/notify/db/:id</code>. We created this endpoint so that people could notify their Metabase to sync after an <a href="/learn/grow-your-data-skills/data-landscape/etl-landscape">ETL operation</a> finishes. To use this endpoint, you must pass an API key by defining the <code class="language-plaintext highlighter-rouge">MB_API_KEY</code> environment variable.</li>
 </ol>
 
@@ -4280,7 +4282,7 @@ Roadmap</a>
 <span class="k">LIMIT</span> <span class="mi">0</span>
 </code></pre></div></div>
 
-<p>This query runs against your database during setup, and again every hour by default. This scanning query is fast with most relational databases, but can be slower with MongoDB and some <a href="../developers-guide/community-drivers">community-built database drivers</a>. Syncing can’t be turned off completely, otherwise Metabase wouldn’t work.</p>
+<p>This query runs against your database during setup, and again every hour by default. This scanning query is fast with most relational databases, but can be slower with MongoDB and some <a href="../developers-guide/partner-and-community-drivers">community-built database drivers</a>. Syncing can’t be turned off completely, otherwise Metabase wouldn’t work.</p>
 
 <h2 id="how-database-scans-work">How database scans work</h2>
 
@@ -4301,7 +4303,7 @@ Roadmap</a>
 
 <p>Cached column values are displayed in filter dropdown menus. If people type in the filter search box for values that aren’t in the first 1,000 distinct records or 100kB of text, Metabase will run a query against your database to look for those values on the fly.</p>
 
-<p>A scan is more intensive than a sync query, so it only runs once during setup, and again once a day by default. If you <a href="#scanning-for-filter-values">disable scans</a> entirely, you’ll need to bring things up to date by running <a href="#manually-scanning-column-values">manual scans</a>.</p>
+<p>A scan is more intensive than a sync query, so it only runs once during setup, and again once a day by default. If you <a href="#scheduling-database-scans">disable scans</a> entirely, you’ll need to bring things up to date by running <a href="#manually-scanning-column-values">manual scans</a>.</p>
 
 <p>To reduce the number of tables and fields Metabase needs to scan in order to stay current with your connected database, Metabase will only scan values for fields that someone has queried in the last fourteen days.</p>
 
@@ -4313,13 +4315,12 @@ Roadmap</a>
 
 <p>By default, Metabase only runs <a href="#how-database-fingerprinting-works">fingerprinting</a> queries when you first connect your database.</p>
 
-<p>Turn this setting on if you want Metabase to use larger samples of column values when making suggestions in the UI:</p>
+<p>Turn this setting ON if you want Metabase to use larger samples of column values when making suggestions in the UI:</p>
 
 <ol>
   <li>Go to <strong>Admin</strong> &gt; <strong>Databases</strong> &gt; your database.</li>
-  <li>Click on <strong>Edit connection details</strong>.</li>
   <li>Expand <strong>Show advanced options</strong>.</li>
-  <li>Turn on <strong>Periodically refingerprint tables</strong>.</li>
+  <li>Turn ON <strong>Periodically refingerprint tables</strong>.</li>
 </ol>
 
 <h2 id="how-database-fingerprinting-works">How database fingerprinting works</h2>
@@ -4333,7 +4334,7 @@ Roadmap</a>
 <span class="k">LIMIT</span> <span class="mi">10000</span>
 </code></pre></div></div>
 
-<p>Metabase uses the results of this query to provide better suggestions in the Metabase UI (such as filter dropdowns and auto-binning).
+<p>The result of this query is used to provide better suggestions in the Metabase UI (such as filter dropdowns and auto-binning).
 To avoid putting strain on your database, Metabase only runs fingerprinting queries the <a href="#initial-sync-scan-and-fingerprinting">first time</a> you set up a database connection. To change this default, you can turn ON <a href="#periodically-refingerprint-tables">Periodically refingerprint tables</a>.</p>
 
 <h2 id="further-reading">Further reading</h2>

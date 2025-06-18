@@ -4273,13 +4273,11 @@ x.com</code></li>
   <li>Default: <code class="language-plaintext highlighter-rouge">null</code></li>
 </ul>
 
-<p>When set, this key is required for calls to /notify/ endpoints.</p>
+<p>When set, this API key is required for all API requests.</p>
 
-<p>Middleware that enforces validation of the client via the request header X-Metabase-Apikey for /notify endpoints.
+<p>Middleware that enforces validation of the client via the request header X-Metabase-Apikey.
         If the header is available, then it’s validated against MB_API_KEY.
-        When it matches, the request continues; otherwise it’s blocked with a 403 Forbidden response.
-        MB_API_KEY is used only for /notify endpoints and isn’t the same as Metabase API keys
-        used for authenticating other API requests. MP_API_KEY can be an arbitrary string.</p>
+        When it matches, the request continues; otherwise it’s blocked with a 403 Forbidden response.</p>
 
 <h3 id="mb_application_colors"><code class="language-plaintext highlighter-rouge">MB_APPLICATION_COLORS</code></h3>
 
@@ -4621,7 +4619,7 @@ x.com</code></li>
   <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">ee-openai-model</code></li>
 </ul>
 
-<p>The OpenAI Model (e.g. ‘gpt-4’, ‘gpt-3.5-turbo’).</p>
+<p>The OpenAI Model (e.g. gpt-4, gpt-3.5-turbo).</p>
 
 <p>This feature is experimental.</p>
 
@@ -4772,7 +4770,7 @@ x.com</code></li>
   <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">embedding-homepage</code></li>
 </ul>
 
-<p>Embedding homepage status, indicating if it’s visible, hidden or has been dismissed.</p>
+<p>Embedding homepage status, indicating if its visible, hidden or has been dismissed.</p>
 
 <h3 id="mb_embedding_secret_key"><code class="language-plaintext highlighter-rouge">MB_EMBEDDING_SECRET_KEY</code></h3>
 
@@ -4828,6 +4826,20 @@ x.com</code></li>
 </ul>
 
 <p>Allow admins to embed Metabase via static embedding?</p>
+
+<h3 id="mb_enable_field_usage_analysis"><code class="language-plaintext highlighter-rouge">MB_ENABLE_FIELD_USAGE_ANALYSIS</code></h3>
+
+<ul>
+  <li>Type: boolean</li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">false</code></li>
+  <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">enable-field-usage-analysis</code></li>
+</ul>
+
+<p>Enable field usage analysis for queries. This will analyze the fields used in queries and store them in the
+    application database.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Turn off by default since we havent had an user-facing feature that uses this data yet.
+</code></pre></div></div>
 
 <h3 id="mb_enable_password_login"><code class="language-plaintext highlighter-rouge">MB_ENABLE_PASSWORD_LOGIN</code></h3>
 
@@ -5010,7 +5022,7 @@ x.com</code></li>
   <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">jwt-attribute-email</code></li>
 </ul>
 
-<p>Key to retrieve the JWT user’s email address.</p>
+<p>Key to retrieve the JWT users email address.</p>
 
 <h3 id="mb_jwt_attribute_firstname"><code class="language-plaintext highlighter-rouge">MB_JWT_ATTRIBUTE_FIRSTNAME</code></h3>
 
@@ -5024,7 +5036,7 @@ x.com</code></li>
   <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">jwt-attribute-firstname</code></li>
 </ul>
 
-<p>Key to retrieve the JWT user’s first name.</p>
+<p>Key to retrieve the JWT users first name.</p>
 
 <h3 id="mb_jwt_attribute_groups"><code class="language-plaintext highlighter-rouge">MB_JWT_ATTRIBUTE_GROUPS</code></h3>
 
@@ -5038,7 +5050,7 @@ x.com</code></li>
   <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">jwt-attribute-groups</code></li>
 </ul>
 
-<p>Key to retrieve the JWT user’s groups.</p>
+<p>Key to retrieve the JWT users groups.</p>
 
 <h3 id="mb_jwt_attribute_lastname"><code class="language-plaintext highlighter-rouge">MB_JWT_ATTRIBUTE_LASTNAME</code></h3>
 
@@ -5052,7 +5064,7 @@ x.com</code></li>
   <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">jwt-attribute-lastname</code></li>
 </ul>
 
-<p>Key to retrieve the JWT user’s last name.</p>
+<p>Key to retrieve the JWT users last name.</p>
 
 <h3 id="mb_jwt_enabled"><code class="language-plaintext highlighter-rouge">MB_JWT_ENABLED</code></h3>
 
@@ -5353,7 +5365,7 @@ don’t have one.</p>
   <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">ldap-user-filter</code></li>
 </ul>
 
-<p>User lookup filter. The placeholder ‘{login}’ will be replaced by the user supplied login.</p>
+<p>User lookup filter. The placeholder {login} will be replaced by the user supplied login.</p>
 
 <h3 id="mb_ldap_user_provisioning_enabled"><code class="language-plaintext highlighter-rouge">MB_LDAP_USER_PROVISIONING_ENABLED</code></h3>
 
@@ -5430,7 +5442,7 @@ don’t have one.</p>
   <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">native-query-autocomplete-match-style</code></li>
 </ul>
 
-<p>Matching style for native query editor’s autocomplete. Can be “substring”, “prefix”, or “off”. Larger instances can have performance issues matching using substring, so can use prefix matching,  or turn autocompletions off.</p>
+<p>Matching style for native query editors autocomplete. Can be “substring”, “prefix”, or “off”. Larger instances can have performance issues matching using substring, so can use prefix matching,  or turn autocompletions off.</p>
 
 <h3 id="mb_nested_field_columns_value_length_limit"><code class="language-plaintext highlighter-rouge">MB_NESTED_FIELD_COLUMNS_VALUE_LENGTH_LIMIT</code></h3>
 
@@ -5536,10 +5548,6 @@ don’t have one.</p>
 
 <p>The size of the thread pool used to send notifications.</p>
 
-<p>If Metabase stops sending notifications like alerts, it may be because long-running
-  queries are clogging the notification queue. You may be able to unclog the queue by
-  increasing the size of the thread pool dedicated to notifications.</p>
-
 <h3 id="mb_persisted_model_refresh_cron_schedule"><code class="language-plaintext highlighter-rouge">MB_PERSISTED_MODEL_REFRESH_CRON_SCHEDULE</code></h3>
 
 <ul>
@@ -5570,6 +5578,16 @@ don’t have one.</p>
 </ul>
 
 <p>Token for premium features. Go to the MetaStore to get yours!</p>
+
+<h3 id="mb_query_analysis_enabled"><code class="language-plaintext highlighter-rouge">MB_QUERY_ANALYSIS_ENABLED</code></h3>
+
+<ul>
+  <li>Type: boolean</li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">false</code></li>
+  <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">query-analysis-enabled</code></li>
+</ul>
+
+<p>Whether or not we analyze any queries at all.</p>
 
 <h3 id="mb_query_caching_max_kb"><code class="language-plaintext highlighter-rouge">MB_QUERY_CACHING_MAX_KB</code></h3>
 
@@ -5796,7 +5814,7 @@ don’t have one.</p>
 </ul>
 
 <p>Encoded certificate for the identity provider. Depending on your IdP, you might need to download this,
-open it in a text editor, then copy and paste the certificate’s contents here.</p>
+open it in a text editor, then copy and paste the certificates contents here.</p>
 
 <h3 id="mb_saml_identity_provider_issuer"><code class="language-plaintext highlighter-rouge">MB_SAML_IDENTITY_PROVIDER_ISSUER</code></h3>
 
@@ -5810,7 +5828,7 @@ open it in a text editor, then copy and paste the certificate’s contents here.
   <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">saml-identity-provider-issuer</code></li>
 </ul>
 
-<p>This is a unique identifier for the IdP. Often referred to as Entity ID or simply ‘Issuer’. Depending
+<p>This is a unique identifier for the IdP. Often referred to as Entity ID or simply Issuer. Depending
 on your IdP, this usually looks something like <code class="language-plaintext highlighter-rouge">http://www.example.com/141xkex604w0Q5PN724v</code>.</p>
 
 <h3 id="mb_saml_identity_provider_slo_uri"><code class="language-plaintext highlighter-rouge">MB_SAML_IDENTITY_PROVIDER_SLO_URI</code></h3>
@@ -5962,7 +5980,7 @@ don’t have one.</p>
   <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">session-cookie-samesite</code></li>
 </ul>
 
-<p>Value for the session cookie’s <code class="language-plaintext highlighter-rouge">SameSite</code> directive.</p>
+<p>Value for the session cookies <code class="language-plaintext highlighter-rouge">SameSite</code> directive.</p>
 
 <p>See <a href="../embedding/interactive-embedding#embedding-metabase-in-a-different-domain">Embedding Metabase in a different domain</a>.
         Read more about <a href="../embedding/interactive-embedding">interactive Embedding</a>.
@@ -6077,17 +6095,6 @@ don’t have one.</p>
 
 <p>Enables Metabot character on the home page.</p>
 
-<h3 id="mb_show_static_embed_terms"><code class="language-plaintext highlighter-rouge">MB_SHOW_STATIC_EMBED_TERMS</code></h3>
-
-<ul>
-  <li>Type: boolean</li>
-  <li>Default: <code class="language-plaintext highlighter-rouge">true</code></li>
-  <li><a href="../installation-and-operation/serialization">Exported as</a>: <code class="language-plaintext highlighter-rouge">show-static-embed-terms</code>.</li>
-  <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">show-static-embed-terms</code></li>
-</ul>
-
-<p>Check if the static embedding licensing should be hidden in the static embedding flow.</p>
-
 <h3 id="mb_site_locale"><code class="language-plaintext highlighter-rouge">MB_SITE_LOCALE</code></h3>
 
 <ul>
@@ -6144,11 +6151,7 @@ don’t have one.</p>
 
 <p>The name of the channel where bug reports should be posted.</p>
 
-<h3 id="mb_slack_files_channel-deprecated"><code class="language-plaintext highlighter-rouge">MB_SLACK_FILES_CHANNEL [DEPRECATED]</code></h3>
-
-<blockquote>
-  <p>DEPRECATED: 0.54.0</p>
-</blockquote>
+<h3 id="mb_slack_files_channel"><code class="language-plaintext highlighter-rouge">MB_SLACK_FILES_CHANNEL</code></h3>
 
 <ul>
   <li>Type: string</li>
@@ -6167,7 +6170,7 @@ don’t have one.</p>
   <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">source-address-header</code></li>
 </ul>
 
-<p>Identify the source of HTTP requests by this header’s value, instead of its remote address.</p>
+<p>Identify the source of HTTP requests by this headers value, instead of its remote address.</p>
 
 <h3 id="mb_sql_jdbc_fetch_size"><code class="language-plaintext highlighter-rouge">MB_SQL_JDBC_FETCH_SIZE</code></h3>
 
@@ -6266,7 +6269,7 @@ don’t have one.</p>
   <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">update-channel</code></li>
 </ul>
 
-<p>We’ll notify you here when there’s a new version of this type of release.</p>
+<p>Well notify you here when theres a new version of this type of release.</p>
 
 <h3 id="mb_uploads_database_id-deprecated"><code class="language-plaintext highlighter-rouge">MB_UPLOADS_DATABASE_ID [DEPRECATED]</code></h3>
 
@@ -6551,15 +6554,29 @@ Default: <code class="language-plaintext highlighter-rouge">null</code></p>
 
 <p>Also see documentation page <a href="../databases/encrypting-details-at-rest">Encrypting database details at rest</a>.</p>
 
+<h3 id="mb_jdbc_data_warehouse_unreturned_connection_timeout_seconds"><code class="language-plaintext highlighter-rouge">MB_JDBC_DATA_WAREHOUSE_UNRETURNED_CONNECTION_TIMEOUT_SECONDS</code></h3>
+
+<p>Type: integer<br>
+Default: <code class="language-plaintext highlighter-rouge">1200</code><br>
+Since: v47.4</p>
+
+<p>Metabase’s query processor will normally kill connections when their queries time out, but in practice some connections can be severed and go undetected by Metabase, staying alive even after a query returns or times out. This environment variable tells Metabase how long to wait before killing connections if no response is received from the connection.</p>
+
+<p>This variable affects connections that are severed and undetected by Metabase (that is, in situations where Metabase never receives a connection closed signal and is treating an inactive connection as active). You may want to adjust this variable’s value if your connection is unreliable or is a dynamic connections behind a SSH tunnel where the connection to the SSH tunnel host may stay active even after the connection from the SSH tunnel host to your database is severed.</p>
+
+<p>Unless set otherwise, the default production value for <code class="language-plaintext highlighter-rouge">metabase.query-processor.query-timeout-ms</code> is used which is 1,200,000 ms (i.e. 1,200 seconds or 20 minutes).</p>
+
 <h3 id="mb_jdbc_data_warehouse_debug_unreturned_connection_stack_traces"><code class="language-plaintext highlighter-rouge">MB_JDBC_DATA_WAREHOUSE_DEBUG_UNRETURNED_CONNECTION_STACK_TRACES</code></h3>
 
 <p>Type: boolean<br>
 Default: <code class="language-plaintext highlighter-rouge">false</code><br>
 Since: v51.3</p>
 
-<p>If <code class="language-plaintext highlighter-rouge">true</code>, log a stack trace for any connections killed due to exceeding the timeout specified in <a href="#mb_db_query_timeout_minutes">MB_DB_QUERY_TIMEOUT_MINUTES</a>.</p>
+<p>If <code class="language-plaintext highlighter-rouge">true</code>, log a stack trace for any connections killed due to exceeding the timeout specified in <a href="#mb_jdbc_data_warehouse_unreturned_connection_timeout_seconds">MB_JDBC_DATA_WAREHOUSE_UNRETURNED_CONNECTION_TIMEOUT_SECONDS</a>.</p>
 
 <p>In order to see the stack traces in the logs, you’ll also need to update the com.mchange log level to “INFO” or higher via a custom log4j configuration. For configuring log levels, see <a href="./log-configuration">Metabase log configuration</a>.</p>
+
+<p>To set a timeout for how long Metabase should wait before it kills unreturned connections, see <a href="#mb_jdbc_data_warehouse_unreturned_connection_timeout_seconds">MB_JDBC_DATA_WAREHOUSE_UNRETURNED_CONNECTION_TIMEOUT_SECONDS</a>.</p>
 
 <h3 id="mb_jetty_async_response_timeout"><code class="language-plaintext highlighter-rouge">MB_JETTY_ASYNC_RESPONSE_TIMEOUT</code></h3>
 

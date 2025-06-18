@@ -4170,7 +4170,7 @@ Roadmap</a>
 
 
     
-      <p class="m-0 ms-2 paragraph-5 neutral-40">Embedded analytics SDK is only available on <a class="fw-bold" href="https://store.metabase.com/checkout/embedding">Pro</a> and <a class="fw-bold link-purple" href="/product/enterprise">Enterprise</a> plans
+      <p class="m-0 ms-2 paragraph-5 neutral-40">Embedded analytics SDK is only available on <a class="fw-bold" href="/product/pro">Pro</a> and <a class="fw-bold link-purple" href="/product/enterprise">Enterprise</a> plans
     
 
     (both self-hosted and on Metabase Cloud).
@@ -4221,7 +4221,7 @@ Roadmap</a>
   <li>Copy <code class="language-plaintext highlighter-rouge">.env.docker.example</code> to <code class="language-plaintext highlighter-rouge">.env.docker</code>.</li>
   <li>In the <code class="language-plaintext highlighter-rouge">.env.docker</code> file, replace <code class="language-plaintext highlighter-rouge">&lt;your_enterprise_token&gt;</code> with your premium embedding token.</li>
   <li>In the top-level directory, run:
-    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>yarn start
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> yarn start
 </code></pre></div>    </div>
   </li>
 </ol>
@@ -4310,8 +4310,6 @@ Roadmap</a>
 
 <h2 id="enable-sso-with-jwt">Enable SSO with JWT</h2>
 
-<p>We’ll also need to update our JWT Provider URI in Metabase. By default, this URI is where the SDK will redirect login requests.</p>
-
 <p>From any Metabase page, click on the <strong>gear</strong> icon in the upper right and select <strong>Admin Settings</strong> &gt; <strong>Settings</strong> &gt; <strong>Authentication</strong>.</p>
 
 <p>On the card that says <strong>JWT</strong>, click the <strong>Setup</strong> button.</p>
@@ -4369,6 +4367,7 @@ Roadmap</a>
 <pre><code class="language-txt"># FRONTEND
 CLIENT_PORT=3100
 VITE_METABASE_INSTANCE_URL="http://localhost:3000"
+VITE_AUTH_PROVIDER_URI="http://localhost:9090/sso/metabase"
 
 # BACKEND
 AUTH_PROVIDER_PORT=9090

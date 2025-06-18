@@ -4327,10 +4327,12 @@ Roadmap</a>
   <span class="na">api-keys</span><span class="pi">:</span>
     <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Admin</span><span class="nv"> </span><span class="s">API</span><span class="nv"> </span><span class="s">key"</span>
       <span class="na">group</span><span class="pi">:</span> <span class="s">admin</span>
+      <span class="na">description</span><span class="pi">:</span> <span class="s2">"</span><span class="s">API</span><span class="nv"> </span><span class="s">key</span><span class="nv"> </span><span class="s">with</span><span class="nv"> </span><span class="s">admin</span><span class="nv"> </span><span class="s">permissions."</span>
       <span class="na">creator</span><span class="pi">:</span> <span class="s">cam@example.com</span>
       <span class="na">key</span><span class="pi">:</span> <span class="s">mb_firsttestapikey</span>
     <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s2">"</span><span class="s">All</span><span class="nv"> </span><span class="s">Users</span><span class="nv"> </span><span class="s">API</span><span class="nv"> </span><span class="s">key"</span>
       <span class="na">group</span><span class="pi">:</span> <span class="s">all-users</span>
+      <span class="na">description</span><span class="pi">:</span> <span class="s2">"</span><span class="s">API</span><span class="nv"> </span><span class="s">key</span><span class="nv"> </span><span class="s">with</span><span class="nv"> </span><span class="s">permissions</span><span class="nv"> </span><span class="s">of</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">All</span><span class="nv"> </span><span class="s">Users</span><span class="nv"> </span><span class="s">group."</span>
       <span class="na">creator</span><span class="pi">:</span> <span class="s">cam@example.com</span>
       <span class="na">key</span><span class="pi">:</span> <span class="s">mb_secondtestapikey</span>
 
@@ -4347,7 +4349,7 @@ api-keys:
 
 </code></pre></div></div>
 
-<p>See below for more on <a href="#referring-to-environment-variables-in-the-configyml">environment variables in the config file</a>.</p>
+<p>See below for more on <a href="#referring-to-environment-variables-in-the-configyml">env vars in the config file</a>.</p>
 
 <p>API keys that you create (the value of the <code class="language-plaintext highlighter-rouge">key</code>) must have the format <code class="language-plaintext highlighter-rouge">mb_</code> followed by a <a href="https://en.wikipedia.org/wiki/Base64">Base64</a> string (if you’re wearing formal attire, you’d say a <em>tetrasexagesimal</em> string). So, <code class="language-plaintext highlighter-rouge">mb_</code> followed by letters and numbers, minimum: 12 characters, maximum: 254 characters. Concretely, the API key you create must satisfy the following regular expression: <code class="language-plaintext highlighter-rouge">mb_[A-Za-z0-9+/=]+</code>.</p>
 
@@ -4377,14 +4379,7 @@ api-keys:
 
 <h2 id="referring-to-environment-variables-in-the-configyml">Referring to environment variables in the <code class="language-plaintext highlighter-rouge">config.yml</code></h2>
 
-<p>As shown in the examples above, environment variables can be specified with template tags like so:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-setting: "{{ env POSTGRES_TEST_DATA_PASSWORD }}"
-
-</code></pre></div></div>
-
-<p>Note the quote marks wrapping the template <code class="language-plaintext highlighter-rouge">"{{ env API_KEY_FROM_ENV }}"</code>; if you don’t include the quotes, the YAML parser won’t know it’s a string template for Metabase to expand, and Metabase won’t know to swap in the env var’s value.</p>
+<p>As shown in the Databases examples above, environment variables can be specified with <code class="language-plaintext highlighter-rouge">{{ template-tags }}</code> like <code class="language-plaintext highlighter-rouge">{{ env POSTGRES_TEST_DATA_PASSWORD }}</code> or <code class="language-plaintext highlighter-rouge">[[options {{template-tags}}]]</code>.</p>
 
 <p>Metabase doesn’t support recursive expansion, so if one of your environment variables references <em>another</em> environment variable, you’re going to have a bad time.</p>
 
@@ -4393,11 +4388,9 @@ setting: "{{ env POSTGRES_TEST_DATA_PASSWORD }}"
 <p>If a value contains double braces (<code class="language-plaintext highlighter-rouge">}}</code> or <code class="language-plaintext highlighter-rouge">{{</code>), you must use triple backticks to tell the config parser to use the literal value. For example, if your password was <code class="language-plaintext highlighter-rouge">MetaPa$$123{{&gt;</code>, you’d need to wrap the value in triple braces, like so:</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-password: "{{{ MetaPa$$123{{&gt; }}}"
+password: {{{ MetaPa$$123{{&gt; }}}
 
 </code></pre></div></div>
-
-<p>Note the quote marks in <code class="language-plaintext highlighter-rouge">"{{{ MetaPa$$123{{&gt; }}}"</code>.</p>
 
 <h2 id="disable-initial-database-sync">Disable initial database sync</h2>
 

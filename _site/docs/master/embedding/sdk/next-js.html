@@ -4224,6 +4224,7 @@ Roadmap</a>
 
 <span class="kd">const</span> <span class="nx">authConfig</span> <span class="o">=</span> <span class="nf">defineMetabaseAuthConfig</span><span class="p">({</span>
   <span class="na">metabaseInstanceUrl</span><span class="p">:</span> <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">NEXT_PUBLIC_METABASE_INSTANCE_URL</span><span class="p">,</span>
+  <span class="na">authProviderUri</span><span class="p">:</span> <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">NEXT_PUBLIC_METABASE_AUTH_PROVIDER_URI</span><span class="p">,</span>
 <span class="p">});</span>
 
 <span class="k">export</span> <span class="kd">const</span> <span class="nx">EmbeddingSdkProvider</span> <span class="o">=</span> <span class="p">({</span>
@@ -4237,7 +4238,7 @@ Roadmap</a>
 <span class="p">};</span>
 </code></pre></div></div>
 
-<p>Next, add an <code class="language-plaintext highlighter-rouge">index.tsx</code> file to that <code class="language-plaintext highlighter-rouge">metabase</code> directory. This file will include the <code class="language-plaintext highlighter-rouge">use client</code> directive, and it’ll export a lazy-loaded version of the <code class="language-plaintext highlighter-rouge">EmbeddingSdkProvider</code> with SSR disabled.</p>
+<p>Next, add an <code class="language-plaintext highlighter-rouge">index.tsx</code> file to that <code class="language-plaintext highlighter-rouge">metabase</code> directory. This file will include the <code class="language-plaintext highlighter-rouge">use client</code> directive, and it’ll export a lazy-loaded version of the <code class="language-plaintext highlighter-rouge">EmbeddingSdkProvider</code> with  SSR disabled.</p>
 
 <div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="dl">"</span><span class="s2">use client</span><span class="dl">"</span><span class="p">;</span>
 
@@ -4308,7 +4309,7 @@ Roadmap</a>
 
 <p>You can create a Route handler that signs people in to Metabase.</p>
 
-<p>Create a new <code class="language-plaintext highlighter-rouge">route.ts</code> file in your <code class="language-plaintext highlighter-rouge">app/*</code> directory, for example <code class="language-plaintext highlighter-rouge">app/sso/metabase/route.ts</code> that corresponds to an endpoint at /sso/metabase. This route handler should generate a JWT for the authenticated user and return the token in a JSON object with the shape <code class="language-plaintext highlighter-rouge">{ jwt: string }</code>.</p>
+<p>Create a new <code class="language-plaintext highlighter-rouge">route.ts</code> file in your <code class="language-plaintext highlighter-rouge">app/*</code> directory, for example <code class="language-plaintext highlighter-rouge">app/sso/metabase/route.ts</code> that corresponds to an endpoint at /sso/metabase.</p>
 
 <div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nx">jwt</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">jsonwebtoken</span><span class="dl">"</span><span class="p">;</span>
 
@@ -4327,8 +4328,27 @@ Roadmap</a>
     <span class="c1">// This is the JWT signing secret in your Metabase JWT authentication setting</span>
     <span class="nx">METABASE_JWT_SHARED_SECRET</span><span class="p">,</span>
   <span class="p">);</span>
-  <span class="c1">// The user backend should return a JSON object with the JWT.</span>
-  <span class="k">return</span> <span class="nx">Response</span><span class="p">.</span><span class="nf">json</span><span class="p">({</span> <span class="na">jwt</span><span class="p">:</span> <span class="nx">token</span> <span class="p">});</span>
+  <span class="kd">const</span> <span class="nx">ssoUrl</span> <span class="o">=</span> <span class="s2">`</span><span class="p">${</span><span class="nx">METABASE_INSTANCE_URL</span><span class="p">}</span><span class="s2">/auth/sso?token=true&amp;jwt=</span><span class="p">${</span><span class="nx">token</span><span class="p">}</span><span class="s2">`</span><span class="p">;</span>
+
+  <span class="k">try</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">ssoResponse</span> <span class="o">=</span> <span class="k">await</span> <span class="nf">fetch</span><span class="p">(</span><span class="nx">ssoUrl</span><span class="p">,</span> <span class="p">{</span> <span class="na">method</span><span class="p">:</span> <span class="dl">"</span><span class="s2">GET</span><span class="dl">"</span> <span class="p">});</span>
+    <span class="kd">const</span> <span class="nx">ssoResponseBody</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">ssoResponse</span><span class="p">.</span><span class="nf">json</span><span class="p">();</span>
+
+    <span class="k">return</span> <span class="nx">Response</span><span class="p">.</span><span class="nf">json</span><span class="p">(</span><span class="nx">ssoResponseBody</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">catch </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if </span><span class="p">(</span><span class="nx">error</span> <span class="k">instanceof</span> <span class="nb">Error</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="nx">Response</span><span class="p">.</span><span class="nf">json</span><span class="p">(</span>
+        <span class="p">{</span>
+          <span class="na">status</span><span class="p">:</span> <span class="dl">"</span><span class="s2">error</span><span class="dl">"</span><span class="p">,</span>
+          <span class="na">message</span><span class="p">:</span> <span class="dl">"</span><span class="s2">authentication failed</span><span class="dl">"</span><span class="p">,</span>
+          <span class="na">error</span><span class="p">:</span> <span class="nx">error</span><span class="p">.</span><span class="nx">message</span><span class="p">,</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+          <span class="na">status</span><span class="p">:</span> <span class="mi">401</span><span class="p">,</span>
+        <span class="p">},</span>
+      <span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div></div>
 
@@ -4338,6 +4358,7 @@ Roadmap</a>
 
 <span class="kd">const</span> <span class="nx">authConfig</span> <span class="o">=</span> <span class="nf">defineMetabaseAuthConfig</span><span class="p">({</span>
   <span class="na">metabaseInstanceUrl</span><span class="p">:</span> <span class="dl">"</span><span class="s2">https://metabase.example.com</span><span class="dl">"</span><span class="p">,</span> <span class="c1">// Required: Your Metabase instance URL</span>
+  <span class="na">authProviderUri</span><span class="p">:</span> <span class="dl">"</span><span class="s2">/sso/metabase</span><span class="dl">"</span><span class="p">,</span> <span class="c1">// Required: An endpoint in your app that signs the user in and returns a session</span>
 <span class="p">});</span>
 </code></pre></div></div>
 
@@ -4345,7 +4366,7 @@ Roadmap</a>
 
 <p>You can create an API route that signs people in to Metabase.</p>
 
-<p>Create a new <code class="language-plaintext highlighter-rouge">metabase.ts</code> file in your <code class="language-plaintext highlighter-rouge">pages/api/*</code> directory, for example <code class="language-plaintext highlighter-rouge">pages/api/sso/metabase.ts</code> that corresponds to an endpoint at /api/sso/metabase. This API route should generate a JWT for the authenticated user and return the token in a JSON object with the shape <code class="language-plaintext highlighter-rouge">{ jwt: string }</code>.</p>
+<p>Create a new <code class="language-plaintext highlighter-rouge">metabase.ts</code> file in your <code class="language-plaintext highlighter-rouge">pages/api/*</code> directory, for example <code class="language-plaintext highlighter-rouge">pages/api/sso/metabase.ts</code> that corresponds to an endpoint at /api/sso/metabase.</p>
 
 <div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="kd">type</span> <span class="p">{</span> <span class="nx">NextApiRequest</span><span class="p">,</span> <span class="nx">NextApiResponse</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">next</span><span class="dl">"</span><span class="p">;</span>
 <span class="k">import</span> <span class="nx">jwt</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">jsonwebtoken</span><span class="dl">"</span><span class="p">;</span>
@@ -4368,8 +4389,22 @@ Roadmap</a>
     <span class="c1">// This is the JWT signing secret in your Metabase JWT authentication setting</span>
     <span class="nx">METABASE_JWT_SHARED_SECRET</span><span class="p">,</span>
   <span class="p">);</span>
-  <span class="c1">// The user backend should return a JSON object with the JWT.</span>
-  <span class="nx">res</span><span class="p">.</span><span class="nf">status</span><span class="p">(</span><span class="mi">200</span><span class="p">).</span><span class="nf">json</span><span class="p">({</span> <span class="na">jwt</span><span class="p">:</span> <span class="nx">token</span> <span class="p">});</span>
+  <span class="kd">const</span> <span class="nx">ssoUrl</span> <span class="o">=</span> <span class="s2">`</span><span class="p">${</span><span class="nx">METABASE_INSTANCE_URL</span><span class="p">}</span><span class="s2">/auth/sso?token=true&amp;jwt=</span><span class="p">${</span><span class="nx">token</span><span class="p">}</span><span class="s2">`</span><span class="p">;</span>
+
+  <span class="k">try</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">ssoResponse</span> <span class="o">=</span> <span class="k">await</span> <span class="nf">fetch</span><span class="p">(</span><span class="nx">ssoUrl</span><span class="p">,</span> <span class="p">{</span> <span class="na">method</span><span class="p">:</span> <span class="dl">"</span><span class="s2">GET</span><span class="dl">"</span> <span class="p">});</span>
+    <span class="kd">const</span> <span class="nx">ssoResponseBody</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">ssoResponse</span><span class="p">.</span><span class="nf">json</span><span class="p">();</span>
+
+    <span class="nx">res</span><span class="p">.</span><span class="nf">status</span><span class="p">(</span><span class="mi">200</span><span class="p">).</span><span class="nf">json</span><span class="p">(</span><span class="nx">ssoResponseBody</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">catch </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if </span><span class="p">(</span><span class="nx">error</span> <span class="k">instanceof</span> <span class="nb">Error</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">res</span><span class="p">.</span><span class="nf">status</span><span class="p">(</span><span class="mi">401</span><span class="p">).</span><span class="nf">json</span><span class="p">({</span>
+        <span class="na">status</span><span class="p">:</span> <span class="dl">"</span><span class="s2">error</span><span class="dl">"</span><span class="p">,</span>
+        <span class="na">message</span><span class="p">:</span> <span class="dl">"</span><span class="s2">authentication failed</span><span class="dl">"</span><span class="p">,</span>
+        <span class="na">error</span><span class="p">:</span> <span class="nx">error</span><span class="p">.</span><span class="nx">message</span><span class="p">,</span>
+      <span class="p">});</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div></div>
 
@@ -4379,6 +4414,7 @@ Roadmap</a>
 
 <span class="kd">const</span> <span class="nx">authConfig</span> <span class="o">=</span> <span class="nf">defineMetabaseAuthConfig</span><span class="p">({</span>
   <span class="na">metabaseInstanceUrl</span><span class="p">:</span> <span class="dl">"</span><span class="s2">https://metabase.example.com</span><span class="dl">"</span><span class="p">,</span> <span class="c1">// Required: Your Metabase instance URL</span>
+  <span class="na">authProviderUri</span><span class="p">:</span> <span class="dl">"</span><span class="s2">/sso/metabase</span><span class="dl">"</span><span class="p">,</span> <span class="c1">// Required: An endpoint in your app that signs the user in and returns a session</span>
 <span class="p">});</span>
 </code></pre></div></div>
 

@@ -13,15 +13,11 @@ redirect_from:
 
 # Collections
 
-Collections are the main way to organize [questions](../questions/introduction), [dashboards](../dashboards/introduction), and [models][models]. You can think of collections like folders or directories. You can nest collections in other collections, and move collections around. One thing to note is that a single item, like a question or dashboard, can only be in one collection at a time (excluding parent collections).
+After your team has been using Metabase for a while, you’ll probably end up with lots of saved questions and dashboards.
 
-## Create a collection
+![Our analytics](./images/our-analytics-page.png)
 
-![Our analytics](./images/create-new-collection.png)
-
-To create a collection, click on the **+** button in the left nav sidebar at the top of the **Collections** section.
-
-You can also create a new collection from any collection page by clicking on the folder icon with the plus sign in the top right of the collection page.
+Collections are the main way to organize questions, dashboards, and [models][models]. You can think of them like folders or directories. You can nest collections in other collections, and move collections around. One thing to note is that a single item, like a question or dashboard, can only be in one collection at a time (excluding parent collections).
 
 ## Collection types
 
@@ -55,7 +51,7 @@ To add an Official badge to a collection, an admin can visit the collection and 
 
 ## Your personal collection
 
- You'll find your **Your personal collection** in the left side navbar under collections. Only you (and your admins) can view and edit this collection.
+In addition to the collections you and your teammates have made, you'll also always have your own personal collection that only you and administrators can see. To find it, click on the "browse all items" button on the homepage and click on "my personal collection" in the list of collections.
 
 You can use your personal collection as a scratch space to put experiments and explorations that you don't think would be particularly interesting to the rest of your team, or as a work-in-progress space where you can work on things and then move them to a shared place once they're ready.
 
@@ -69,41 +65,25 @@ In each collection, you can pin important or useful dashboards, models, and ques
 
 To pin and un-pin things in a collection, you need to have **Curate** permissions for that collection.
 
-- To pin an item, find the item on the collection page, go into the three-dot menu (**...**), and select **Pin this**.
-- To unpin a pinned item, hover over the pinned card, go to the three-dot menu (**...**), and select **Unpin**.
+- To pin an item, find the item on the collection page, go into the three dot menu (**...**), and select **Pin this**.
 
-For pinned questions, you can also choose whether to display the visualization from the three-dot menu (**...**).
+- To unpin a pinned item, hover over the pinned card, go to the three dot menu (**...**), and select **Unpin**.
+
+For pinned questions, you can also choose whether to display the visualization from the three dot menu (**...**).
 
 ![Show pinned viz](./images/pinned-show-viz.png)
 
-Pinned items will appear pinned for all people looking at the collection. If you just want to organize your favorite items, you should [bookmark them](./exploration#bookmarks) (only you can see your bookmarks).
-
-## Moving collections
-
-To move a collection:
-
-1. Visit the collection's page.
-2. Click on the three-dot menu in the page.
-3. Select **Move**.
-4. Select a new collection to move to. To make the collection a top-level collection, select the **Our Analytics** collection.
+Pinned items will appear pinned for all people looking at the collection. If you just want to organize _your_ favorite items, you should [bookmark them](./exploration#bookmarks) (only you can see your bookmarks).
 
 ## Moving items from collection to collection
 
-To move items between collections:
+To move an item from one collection to another, just click and drag it onto the collection where you want it to go. You can also click on the the three dot menu (**...**) menu to the right of the item and pick the **Move** action.
 
-1. To move one item:
-
-   - Click and drag it onto the destination collection, or
-   - Click the three-dot menu (**...**) next to the item and select **Move**
-
-2. To move multiple items:
-   - Click the checkboxes next to the items you want to move
-   - Click the **Move** action that appears at the bottom of the screen
-   - Select the destination collection
+If you're trying to move several things at once, click on the checkboxes next to the items' icons to select them, then click the Move action that pops up at the bottom of the screen.
 
 ![Selecting questions](./images/question-checkbox.png)
 
-You must have Curate permission for the collection that you're moving a question into and the collection you're moving the question out of. Metabase admins can move items into (and out of) anyone's [personal collection](#your-personal-collection).
+Note that you have to have Curate permission for the collection that you're moving a question into _and_ the collection you're moving the question out of. Metabase admins can move items into (and out of) anyone's [personal collection](#your-personal-collection).
 
 ## Moving questions into dashboards
 
@@ -113,20 +93,14 @@ You can move any question from a collection to a dashboard (and vice versa). Vis
 
 If a collection has questions that have been added to dashboards in that collection, you can move the questions into their dashboards to declutter the collection.
 
-To bulk-move questions into their dashboards:
-
-1. Visit a collection page
-2. Click on the three-dot menu (**...**)
-3. Select **Move questions into their dashboards**
-
-A modal will appear explaining what will happen:
+To bulk-move questions into their dashboards, visit a collection page, click on the three-dot menu (**...**), and select **Move questions into their dashboards**. Metabase will pop up a modal to let you know what's going on:
 
 - If a question only appears in a single dashboard in this collection, it'll be moved into that dashboard to declutter the collection.
 - Permissions won't change.
 
 You can preview the changes before initiating the move. Hit the preview button to see which questions will be moved into which dashboards. No questions will be moved into dashboards they weren't already added to. All this move does is "save" the questions to the dashboard rather than the collection.
 
-In general, you want to save questions to dashboards unless you know people will want to reuse that question in multiple dashboards.
+In general, you want to save questions to dashboards unless you know people will want to re-use that question in multiple dashboards.
 
 ## Cleaning up collections
 
@@ -142,7 +116,7 @@ You can add events to collections, and organize those events into timelines. See
 
 ## Uploading data
 
-You can upload data to collections. See [Uploading data](./uploads).
+You can upload data to collections. See [Uploading data](./uploads)]
 
 ## Further reading
 

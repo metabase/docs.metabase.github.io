@@ -4196,7 +4196,7 @@ Roadmap</a>
   </thead>
   <tbody>
     <tr>
-      <td data-label="Example"><code class="language-plaintext highlighter-rouge">case(isempty("glass half full"), "empty glass", isNull("glass half full"), "missing glass", "glass half full")</code></td>
+      <td data-label="Example"><code class="language-plaintext highlighter-rouge">case(isempty("glass half full"), "empty glass", isnull("glass half full"), "missing glass", "glass half full")</code></td>
     </tr>
     <tr>
       <td data-label="Example">“glass half full”</td>
@@ -4269,13 +4269,13 @@ Roadmap</a>
     <tr>
       <td data-label="Sighting ID">3</td>
       <td data-label="Has Wings">False</td>
-      <td data-label="Has Face">True</td>
+      <td data-label="Has Face">False</td>
       <td data-label="Sighting Type">Superman</td>
     </tr>
     <tr>
       <td data-label="Sighting ID">4</td>
       <td data-label="Has Wings">False</td>
-      <td data-label="Has Face">False</td>
+      <td data-label="Has Face">True</td>
       <td data-label="Sighting Type">Unknown</td>
     </tr>
   </tbody>
@@ -4396,12 +4396,12 @@ Roadmap</a>
 
 <p>All of the outputs must have the same data type.</p>
 
-<p><strong>Avoid</strong>:</p>
+<p><strong>Avoid:</strong>:</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>case(condition1, "string", condition2, TRUE, condition3, 1)
 </code></pre></div></div>
 
-<p><strong>Do</strong>:</p>
+<p><strong>Do:</strong>:</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>case(condition1, "string", condition2, "TRUE", condition3, "1")
 </code></pre></div></div>
@@ -4587,7 +4587,7 @@ Roadmap</a>
 
 <h3 id="sql">SQL</h3>
 
-<p>In most cases (unless you’re using a NoSQL database), questions created from the <a href="/glossary/notebook-editor">notebook editor</a> are converted into SQL queries that run against your database or data warehouse. Metabase <code class="language-plaintext highlighter-rouge">case</code> expressions are converted into SQL <code class="language-plaintext highlighter-rouge">CASE WHEN</code> statements.</p>
+<p>In most cases (unless you’re using a NoSQL database), questions created from the <a href="/glossary/notebook_editor">notebook editor</a> are converted into SQL queries that run against your database or data warehouse. Metabase <code class="language-plaintext highlighter-rouge">case</code> expressions are converted into SQL <code class="language-plaintext highlighter-rouge">CASE WHEN</code> statements.</p>
 
 <p>Using the table from the <a href="#labeling-a-row-based-on-conditions-from-multiple-columns">Labeling rows</a> example:</p>
 

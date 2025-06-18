@@ -4171,8 +4171,6 @@ Roadmap</a>
 <span class="c1"># You'll need to update (or remove) the `users` and `databases` sections.</span>
 <span class="c1"># The settings in `settings` include default values. We recommend removing</span>
 <span class="c1"># or commenting out settings that you don't set.</span>
-<span class="c1"># To use an env var, you can use a template string: ""</span>
-<span class="c1"># Note the quote marks wrapping the env var template.</span>
 <span class="c1"># For more on the configuration file, see:</span>
 <span class="c1"># https://www.metabase.com/docs/latest/configuring-metabase/config-file</span>
 <span class="c1"># For more on what each setting does, check out:</span>
@@ -4213,10 +4211,12 @@ Roadmap</a>
   <span class="na">api-keys</span><span class="pi">:</span>
     <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Admin API key</span>
       <span class="na">group</span><span class="pi">:</span> <span class="s">admin</span>
+      <span class="na">description</span><span class="pi">:</span> <span class="s">API key with admin permissions.</span>
       <span class="na">creator</span><span class="pi">:</span> <span class="s">first@example.com</span>
       <span class="na">key</span><span class="pi">:</span> <span class="s">mb_firsttestapikey123</span>
     <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">All Users API key</span>
       <span class="na">group</span><span class="pi">:</span> <span class="s">all-users</span>
+      <span class="na">description</span><span class="pi">:</span> <span class="s">API key with permissions of the All Users group.</span>
       <span class="na">creator</span><span class="pi">:</span> <span class="s">first@example.com</span>
       <span class="na">key</span><span class="pi">:</span> <span class="s">mb_secondtestapikey456</span>
   <span class="na">settings</span><span class="pi">:</span>
@@ -4255,7 +4255,6 @@ Roadmap</a>
     <span class="na">application-name</span><span class="pi">:</span> <span class="s">Metabase</span>
     <span class="na">attachment-row-limit</span><span class="pi">:</span> <span class="kc">null</span>
     <span class="na">attachment-table-row-limit</span><span class="pi">:</span> <span class="m">20</span>
-    <span class="na">backfill-entity-ids-repeat-ms</span><span class="pi">:</span> <span class="m">3000</span>
     <span class="na">bcc-enabled</span><span class="pi">:</span> <span class="kc">true</span>
     <span class="na">breakout-bin-width</span><span class="pi">:</span> <span class="m">10.0</span>
     <span class="na">breakout-bins-num</span><span class="pi">:</span> <span class="m">8</span>
@@ -4289,6 +4288,7 @@ Roadmap</a>
     <span class="na">enable-embedding-interactive</span><span class="pi">:</span> <span class="kc">false</span>
     <span class="na">enable-embedding-sdk</span><span class="pi">:</span> <span class="kc">false</span>
     <span class="na">enable-embedding-static</span><span class="pi">:</span> <span class="kc">false</span>
+    <span class="na">enable-field-usage-analysis</span><span class="pi">:</span> <span class="kc">false</span>
     <span class="na">enable-password-login</span><span class="pi">:</span> <span class="kc">true</span>
     <span class="na">enable-pivoted-exports</span><span class="pi">:</span> <span class="kc">true</span>
     <span class="na">enable-public-sharing</span><span class="pi">:</span> <span class="kc">true</span>
@@ -4351,6 +4351,7 @@ Roadmap</a>
     <span class="na">persisted-model-refresh-cron-schedule</span><span class="pi">:</span> <span class="s">0 0 0/6 * * ? *</span>
     <span class="na">persisted-models-enabled</span><span class="pi">:</span> <span class="kc">false</span>
     <span class="na">premium-embedding-token</span><span class="pi">:</span> <span class="kc">null</span>
+    <span class="na">query-analysis-enabled</span><span class="pi">:</span> <span class="kc">false</span>
     <span class="na">query-caching-max-kb</span><span class="pi">:</span> <span class="m">2000</span>
     <span class="na">query-caching-max-ttl</span><span class="pi">:</span> <span class="m">3024000.0</span>
     <span class="na">redirect-all-requests-to-https</span><span class="pi">:</span> <span class="kc">false</span>
@@ -4392,14 +4393,15 @@ Roadmap</a>
     <span class="na">show-homepage-xrays</span><span class="pi">:</span> <span class="kc">true</span>
     <span class="na">show-metabase-links</span><span class="pi">:</span> <span class="kc">true</span>
     <span class="na">show-metabot</span><span class="pi">:</span> <span class="kc">true</span>
-    <span class="na">show-static-embed-terms</span><span class="pi">:</span> <span class="kc">true</span>
     <span class="na">site-locale</span><span class="pi">:</span> <span class="s">en</span>
     <span class="na">site-name</span><span class="pi">:</span> <span class="s">Metabase</span>
     <span class="na">site-url</span><span class="pi">:</span> <span class="kc">null</span>
     <span class="na">slack-app-token</span><span class="pi">:</span> <span class="kc">null</span>
     <span class="na">slack-bug-report-channel</span><span class="pi">:</span> <span class="s">metabase-bugs</span>
+    <span class="na">slack-files-channel</span><span class="pi">:</span> <span class="s">metabase_files</span>
     <span class="na">source-address-header</span><span class="pi">:</span> <span class="s">X-Forwarded-For</span>
     <span class="na">sql-jdbc-fetch-size</span><span class="pi">:</span> <span class="m">500</span>
+    <span class="na">sql-parsing-enabled</span><span class="pi">:</span> <span class="kc">true</span>
     <span class="na">ssh-heartbeat-interval-sec</span><span class="pi">:</span> <span class="m">180</span>
     <span class="na">start-of-week</span><span class="pi">:</span> <span class="s">sunday</span>
     <span class="na">subscription-allowed-domains</span><span class="pi">:</span> <span class="kc">null</span>

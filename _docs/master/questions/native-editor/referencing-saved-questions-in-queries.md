@@ -33,7 +33,7 @@ Only the `#` and `ID` is required. Metabase just displays the model or question 
 
 ## Model, table, or saved question as a Common Table Expression (CTE)
 
-The same syntax can be used in [Common Table Expressions (CTEs)](/learn/sql/working-with-sql/sql-cte) (with SQL databases that support CTEs):
+The same syntax can be used in [Common Table Expressions (CTEs)](/learn/grow-your-data-skills/learn-sql/working-with-sql/sql-cte) (with SQL databases that support CTEs):
 
 ```sql
 WITH gizmo_orders AS {% raw %}{{#5-gizmo-orders-in-2019}}{% endraw %}
@@ -74,5 +74,5 @@ FROM
 - [Snippets vs Saved Questions vs. Views](/learn/metabase-basics/querying-and-dashboards/sql-in-metabase/organizing-sql)
 - [SQL troubleshooting guide](../../troubleshooting-guide/sql).
 
-[cte]: /learn/sql/working-with-sql/sql-cte
+[cte]: /learn/grow-your-data-skills/learn-sql/working-with-sql/sql-cte
 [model]: ../../data-modeling/models

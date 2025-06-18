@@ -365,21 +365,48 @@ When dealing with business logic you don't want to be concerned with the specifi
 
 ## Component Styling Tree Rings
 
-### CSS modules
+### classic / global CSS with BEM style selectors (deprecated)
 
 ```css
-.primary {
+.Button.Button--primary {
+  color: -var(--mb-color-brand);
+}
+```
+
+### atomic / utility CSS (discouraged)
+
+```css
+.text-brand {
   color: -var(--mb-color-brand);
 }
 ```
 
 ```javascript
-import S from "./Foo.css";
-
-const Foo = () => <div className={S.primary} />;
+const Foo = () => <div className="text-brand" />;
 ```
 
-### [Emotion](https://emotion.sh/) (discouraged)
+### inline style (discouraged)
+
+```javascript
+const Foo = ({ color ) =>
+  <div style={%raw%}{{ color: color }}{%endraw%} />
+```
+
+### CSS modules (deprecated)
+
+```css
+:local(.primary) {
+  color: -var(--mb-color-brand);
+}
+```
+
+```javascript
+import style from "./Foo.css";
+
+const Foo = () => <div className={style.primary} />;
+```
+
+### [Emotion](https://emotion.sh/)
 
 ```javascript
 import styled from "@emotion/styled";

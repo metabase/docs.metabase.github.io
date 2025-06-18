@@ -13,7 +13,7 @@ redirect_from:
 
 # Setting up Metabase
 
-This guide will help you set up Metabase once you’ve gotten it installed. If you haven’t installed Metabase yet, you can [get Metabase here](/pricing/).
+This guide will help you set up Metabase once you’ve gotten it installed. If you haven’t installed Metabase yet, you can [get Metabase here](/pricing).
 
 Start Metabase up for the first time and you’ll see this screen:
 ![Welcome Screen](images/WelcomeScreen.png)

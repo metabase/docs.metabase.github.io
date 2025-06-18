@@ -4405,10 +4405,13 @@ Roadmap</a>
 
 <h2 id="related-functions">Related functions</h2>
 
+<p>Different ways to do the same thing, because it’s fun to try new things.</p>
+
 <p><strong>Metabase</strong></p>
 
 <ul>
-  <li><a href="#conditional-running-counts">Conditional running counts</a></li>
+  <li><a href="#case">case</a></li>
+  <li><a href="#cumulativecount">CumulativeCount</a></li>
 </ul>
 
 <p><strong>Other tools</strong></p>
@@ -4419,9 +4422,77 @@ Roadmap</a>
   <li><a href="#python">Python</a></li>
 </ul>
 
-<h3 id="conditional-running-counts">Conditional running counts</h3>
+<h3 id="case">case</h3>
 
-<p><code class="language-plaintext highlighter-rouge">CountIf</code> doesn’t do running counts, and <a href="../expressions/cumulative">CumulativeCount</a> doesn’t accept conditions (or any other arguments) . To do conditional running counts, you’ll need to be creative: combine <a href="../expressions/cumulative">CumulativeSum</a> (not <code class="language-plaintext highlighter-rouge">CumulativeCount</code>! ) with <a href="./case"><code class="language-plaintext highlighter-rouge">case</code></a>. The idea is to use <code class="language-plaintext highlighter-rouge">case</code> to return <code class="language-plaintext highlighter-rouge">1</code> when a condition is satisfied and <code class="language-plaintext highlighter-rouge">0</code> when it isn’t, then compute the running sum of all the 1’s.</p>
+<p>You can combine <a href="../expressions-list#count"><code class="language-plaintext highlighter-rouge">Count</code></a> with <a href="./case"><code class="language-plaintext highlighter-rouge">case</code></a>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Count(case([Plan] = "Basic", [ID]))
+</code></pre></div></div>
+
+<p>to do the same thing as <code class="language-plaintext highlighter-rouge">CountIf</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>CountIf([Plan] = "Basic")
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">case</code> version lets you count a different column when the condition isn’t met. For example, if you’ve got data from different sources:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID: Source A</th>
+      <th>Plan: Source A</th>
+      <th>ID: Source B</th>
+      <th>Plan: Source B</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td data-label="ID: Source A">1</td>
+      <td data-label="Plan: Source A">Basic</td>
+      <td data-label="ID: Source B">&nbsp;</td>
+      <td data-label="Plan: Source B">&nbsp;</td>
+    </tr>
+    <tr>
+      <td data-label="ID: Source A">&nbsp;</td>
+      <td data-label="Plan: Source A">&nbsp;</td>
+      <td data-label="ID: Source B">B</td>
+      <td data-label="Plan: Source B">basic</td>
+    </tr>
+    <tr>
+      <td data-label="ID: Source A">&nbsp;</td>
+      <td data-label="Plan: Source A">&nbsp;</td>
+      <td data-label="ID: Source B">C</td>
+      <td data-label="Plan: Source B">basic</td>
+    </tr>
+    <tr>
+      <td data-label="ID: Source A">4</td>
+      <td data-label="Plan: Source A">Business</td>
+      <td data-label="ID: Source B">D</td>
+      <td data-label="Plan: Source B">business</td>
+    </tr>
+    <tr>
+      <td data-label="ID: Source A">5</td>
+      <td data-label="Plan: Source A">Premium</td>
+      <td data-label="ID: Source B">E</td>
+      <td data-label="Plan: Source B">premium</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>To count the total number of Basic plans across both sources, you could create a <code class="language-plaintext highlighter-rouge">case</code> expression to:</p>
+
+<ul>
+  <li>Count the rows in “ID: Source A” where “Plan: Source A = “Basic”</li>
+  <li>Count the rows in “ID: Source B” where “Plan: Source B = “basic”</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Count(case([Plan: Source A] = "Basic", [ID: Source A],
+            case([Plan: Source B] = "basic", [ID: Source B])))
+</code></pre></div></div>
+
+<h3 id="cumulativecount">CumulativeCount</h3>
+
+<p><code class="language-plaintext highlighter-rouge">CountIf</code> doesn’t do running counts. You’ll need to combine <a href="../expressions-list#cumulativecount">CumulativeCount</a> with <a href="./case"><code class="language-plaintext highlighter-rouge">case</code></a>.</p>
 
 <p>If our sample data is a time series:</p>
 
@@ -4491,7 +4562,7 @@ Roadmap</a>
 
 <p>Create an aggregation from <strong>Summarize</strong> &gt; <strong>Custom expression</strong>:</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>CumulativeSum(case([Active Subscription] = true, 1,0))
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>CumulativeCount(case([Active Subscription] = true, [ID]))
 </code></pre></div></div>
 
 <p>You’ll also need to set the <strong>Group by</strong> column to “Created Date: Month”.</p>

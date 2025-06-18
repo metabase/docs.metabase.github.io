@@ -44,12 +44,12 @@
 <meta name="robots" content="noindex">
    
 
-<title>Data and field types | Metabase Documentation</title>
+<title>Field types | Metabase Documentation</title>
 <!-- Twitter cards -->
 <meta name="twitter:site" content="@metabase">
 
-<meta name="twitter:title" content="Data and field types | Metabase Documentation">
-<meta name="twitter:description" content="Data and field types Metabase distinguishes between two types of column metadata: data types and field types.  Data types are the underlying column type as defined in your database, like Date or Text. Metabase reads...">
+<meta name="twitter:title" content="Field types | Metabase Documentation">
+<meta name="twitter:description" content="Field types While data types indicate to a database how it should interpret the values in a field, field types or semantic types describe the meaning of a field. For example, a column’s data type could be type/text but...">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -58,8 +58,8 @@
 <meta property="og:site_name" content="Metabase | Business Intelligence, Dashboards, and Data Visualization">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://www.metabase.com/docs/master/data-modeling/field-types">
-<meta name="title" property="og:title" content="Data and field types | Metabase Documentation">
-<meta name="description" property="og:description" content="Data and field types Metabase distinguishes between two types of column metadata: data types and field types.  Data types are the underlying column type as defined in your database, like Date or Text. Metabase reads...">
+<meta name="title" property="og:title" content="Field types | Metabase Documentation">
+<meta name="description" property="og:description" content="Field types While data types indicate to a database how it should interpret the values in a field, field types or semantic types describe the meaning of a field. For example, a column’s data type could be type/text but...">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -4158,313 +4158,145 @@ Roadmap</a>
 </div>
 
 
-        <h1 id="data-and-field-types">Data and field types</h1>
+        <h1 id="field-types">Field types</h1>
 
-<p>Metabase distinguishes between two types of column metadata: data types and field types.</p>
+<p>While data types indicate to a database how it should interpret the values in a field, <strong>field types</strong> or <strong>semantic types</strong> describe the <em>meaning</em> of a field. For example, a column’s data type could be <code class="language-plaintext highlighter-rouge">type/text</code> but the semantic type may be <strong>Email</strong>. Field types are just one example of metadata—information about data—that <a href="./metadata-editing">Admins can change</a> in Metabase.</p>
 
-<ul>
-  <li><a href="#data-types"><strong>Data types</strong></a> are the underlying column type as defined in your database, like <code class="language-plaintext highlighter-rouge">Date</code> or <code class="language-plaintext highlighter-rouge">Text</code>. Metabase reads the data types during the <a href="../databases/sync-scan">database sync process</a>.</li>
-  <li><a href="#semantic-types"><strong>Semantic types</strong></a>, also called <strong>field types</strong>, are labels that describe how the data should be interpreted. For example, if you have a column with a data type of <code class="language-plaintext highlighter-rouge">Text</code> that you use to store emails, you can add a semantic type of <code class="language-plaintext highlighter-rouge">Email</code> to let people (and Metabase) know what kind of text the column stores.</li>
-</ul>
+<p>Field types dictate how Metabase displays its data, as well as the column’s special functionality, if any. By marking columns in a table as <strong>Latitude</strong> and <strong>Longitude</strong>, Metabase can use the columns to create pin and heat maps. Similarly, designating a column as a <strong>URL</strong> allows users to click on the link to visit that URL.</p>
 
-<p>Data and semantic types determine how Metabase formats the data, which charts are available, how the filters work, and other functionality.</p>
-
-<h2 id="data-types">Data types</h2>
-
-<p>Data types are the underlying column types as defined in your database. Metabase reads the data types during the <a href="../databases/sync-scan">database sync process</a>. Because Metabase connects to many different databases, it uses its own type hierarchy under the hood, so that it can, for example, handle date fields in databases as different as PostgreSQL and MongoDB.</p>
-
-<p>The main data types in Metabase:</p>
-
-<table>
-  <thead>
-    <tr>
-      <th>Data Type</th>
-      <th>Example database types</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td data-label="Data Type">Numeric</td>
-      <td data-label="Example database types"><code class="language-plaintext highlighter-rouge">INTEGER</code>, <code class="language-plaintext highlighter-rouge">FLOAT</code></td>
-    </tr>
-    <tr>
-      <td data-label="Data Type">Temporal</td>
-      <td data-label="Example database types"><code class="language-plaintext highlighter-rouge">DATE</code>, <code class="language-plaintext highlighter-rouge">TIMESTAMP</code></td>
-    </tr>
-    <tr>
-      <td data-label="Data Type">Text</td>
-      <td data-label="Example database types"><code class="language-plaintext highlighter-rouge">VARCHAR</code>, <code class="language-plaintext highlighter-rouge">TEXT</code></td>
-    </tr>
-    <tr>
-      <td data-label="Data Type">Text-like</td>
-      <td data-label="Example database types">MongoDB <code class="language-plaintext highlighter-rouge">BSONID</code>, Postgres <code class="language-plaintext highlighter-rouge">Enum</code></td>
-    </tr>
-    <tr>
-      <td data-label="Data Type">Boolean</td>
-      <td data-label="Example database types">Boolean</td>
-    </tr>
-    <tr>
-      <td data-label="Data Type">Collection</td>
-      <td data-label="Example database types"><code class="language-plaintext highlighter-rouge">JSON</code>, BigQuery <code class="language-plaintext highlighter-rouge">RECORD</code>, MongoDB <code class="language-plaintext highlighter-rouge">Object</code></td>
-    </tr>
-  </tbody>
-</table>
-
-<p>Metabase currently doesn’t support array types. On columns containing arrays, you’ll only be able to filter by <strong>Is empty</strong> or <strong>Is not empty</strong>.</p>
-
-<p>For some fields, you can tell Metabase to <a href="#editing-data-and-semantic-types">cast the field to a different data type</a> (for example, changing a text type to a date type).</p>
-
-<h2 id="semantic-types">Semantic types</h2>
-
-<p>You can think of semantic types as adding extra flavor to a field to communicate meaning and enable <a href="#what-data-and-semantic-types-enable">additional functionality</a>. Available semantic types depend on the underlying data types.</p>
-
-<h3 id="semantic-types-for-any-field">Semantic types for any field</h3>
+<h2 id="overall-row">Overall Row</h2>
 
 <ul>
-  <li>
-    <p><strong>Entity key.</strong> Used to indicate that the field uniquely identifies each row. Could be a Product ID, serial number, etc.</p>
-  </li>
-  <li>
-    <p><strong>Foreign key.</strong> Used to refer to an Entity key of another table in order to connect data from different tables that are related. For example, in a Products table, you might have a Customer ID field that points to a Customers table, where Customer ID is the Entity key. If you want to use <a href="../dashboards/linked-filters">linked filters on dashboards</a>, you must set up foreign key relationships.</p>
-  </li>
+  <li><strong>Entity Key</strong>: The field in this table that uniquely identifies each row. Could be a product ID, serial number, etc.</li>
+  <li><strong>Entity Name</strong>: Different from the entity key, the entity name represents what each row in the table <em>is</em>. For example, in a Users table, you might want to use a field containing usernames as the entity name.</li>
+  <li><strong>Foreign Key</strong>: The column in this table that (usually) refers to the entity key of another table in order to connect data from different tables that are related. For example, in a Products table, you might have a Customer ID field that points to a Customers table, where Customer ID is the primary key.</li>
 </ul>
 
-<h3 id="semantic-types-for-numeric-fields">Semantic types for numeric fields</h3>
+<h2 id="common">Common</h2>
+
+<p>Common field types are text/varchar types.</p>
 
 <ul>
-  <li>Quantity</li>
-  <li>Score</li>
-  <li>Percentage</li>
-  <li>Financial
-    <ul>
-      <li>Currency</li>
-      <li>Discount</li>
-      <li>Income</li>
-    </ul>
-  </li>
-  <li>Location
-    <ul>
-      <li>Latitude</li>
-      <li>Longitude</li>
-    </ul>
-  </li>
-  <li>Category</li>
+  <li><strong>Category</strong>: If set to category, Metabase will know that it can use this field to group results when creating questions for automatic insights like <a href="../exploration-and-organization/x-rays">X-rays</a>.</li>
+  <li><strong>Comment</strong></li>
+  <li><strong>Description</strong></li>
+  <li><strong>Title</strong></li>
 </ul>
 
-<h3 id="semantic-types-for-temporal-fields">Semantic types for temporal fields</h3>
+<h2 id="location">Location</h2>
+
+<p>Marking fields as locations tell Metabase that it can use the field to display data on a <a href="../questions/visualizations/map">map chart</a>.</p>
 
 <ul>
-  <li>Creation date</li>
-  <li>Creation time</li>
-  <li>Creation timestamp</li>
-  <li>Joined date</li>
-  <li>Joined time</li>
-  <li>Joined timestamp</li>
-  <li>Birthday</li>
+  <li><strong>City</strong></li>
+  <li><strong>Country</strong></li>
+  <li><strong>Latitude</strong>: Tells Metabase that the data could be plotted on a <a href="../questions/visualizations/map">pin map</a>.</li>
+  <li><strong>Longitude</strong>: Did you know that you can use the moons of Jupiter to calculate longitude?</li>
+  <li><strong>State</strong></li>
+  <li><strong>Zip Code</strong></li>
 </ul>
 
-<h3 id="semantic-types-for-text-fields">Semantic types for text fields</h3>
+<h2 id="financial">Financial</h2>
+
+<p>Financial field types tell Metabase to treat the field’s values as money. If you select any of the financial field types, Metabase will ask which currency you want to use. Metabase treats each of the following types as money, their differences are purely semantic.</p>
 
 <ul>
-  <li>Entity name</li>
-  <li>Email
-    <ul>
-      <li>URL</li>
-      <li>Image URL</li>
-      <li>Avatar URL</li>
-    </ul>
-  </li>
-  <li>Category</li>
-  <li>Name</li>
-  <li>Title</li>
-  <li>Description</li>
-  <li>Product</li>
-  <li>Source</li>
-  <li>Location
-    <ul>
-      <li>City</li>
-      <li>State</li>
-      <li>Country</li>
-      <li>ZipCode</li>
-    </ul>
-  </li>
+  <li><strong>Cost</strong></li>
+  <li><strong>Currency</strong></li>
+  <li><strong>Discount</strong></li>
+  <li><strong>Gross margin</strong></li>
+  <li><strong>Income</strong></li>
+  <li><strong>Price</strong></li>
 </ul>
 
-<h3 id="semantic-types-for-collection-fields">Semantic types for collection fields</h3>
+<p>See <a href="../questions/visualizations/table#currency-formatting-options">Currency formatting options</a>.</p>
+
+<h2 id="numeric">Numeric</h2>
+
+<p>Metabase will treat numeric field types as <a href="../questions/visualizations/table#number-formatting-options">numbers</a>.</p>
 
 <ul>
-  <li>
-    <p>Field containing JSON.</p>
-
-    <p>See <a href="./json-unfolding">Working with JSON</a>.</p>
-  </li>
+  <li><strong>Percentage</strong>: Displays the number as a percentage by default.</li>
+  <li><strong>Quantity</strong>: Displays the number as normal by default.</li>
+  <li><strong>Score</strong>: Displays the number as normal by default.</li>
+  <li><strong>Share</strong>: The same as percentage, so prefer “Percentage”.</li>
 </ul>
 
-<h2 id="editing-data-and-semantic-types">Editing data and semantic types</h2>
+<p>See <a href="../questions/visualizations/table#number-formatting-options">Number formatting options</a>.</p>
 
-<p>Admins, and people with <a href="../permissions/data#manage-table-metadata-permissions">permission to manage table metadata</a>, can cast data types and edit semantic types in the Admin setting’s Table Metadata tab.</p>
+<h2 id="profile">Profile</h2>
 
-<h3 id="cast-data-types">Cast data types</h3>
+<p>Fields that deal with people.</p>
 
-<p>Data types can’t be edited in Metabase directly, but you can cast certain <a href="./metadata-editing#casting-to-a-specific-data-type">data types to different types</a> so that, for example, Metabase will interpret a text data type as a date type.</p>
+<ul>
+  <li><strong>Birthday</strong>. Date field.</li>
+  <li><strong>Company</strong>: Text field.</li>
+  <li><strong>Email</strong>: Displays as a <a href="https://en.wikipedia.org/wiki/Mailto">mailto</a> link.</li>
+  <li><strong>Owner</strong>: Text field.</li>
+  <li><strong>Subscription</strong>: Text field.</li>
+  <li><strong>User</strong>: Text field.</li>
+</ul>
 
-<p>Changes made in Table Metadata apply across your entire Metabase. Metabase currently only supports casting to a datetime type in Metadata settings. However, if you you build a query in the query builder, in you can use type casting custom expressions like <a href="../questions/query-builder/expressions-list#date"><code class="language-plaintext highlighter-rouge">date()</code></a> or <a href="../questions/query-builder/expressions-list#integer"><code class="language-plaintext highlighter-rouge">integer()</code></a> to cast a string to a different type in your query.</p>
+<h2 id="date-and-time">Date and Time</h2>
 
-<h3 id="semantic-types-dont-change-the-data-types">Semantic types don’t change the data types</h3>
+<p>Date and time field types tell Metabase the field contains datetime values, so it can use date pickers and display time series (e.g., a line chart).</p>
 
-<p>You can pick a semantic type compatible with the underlying data type in <a href="./metadata-editing#field-type">table metadata settings</a></p>
+<p>If your database stores datetimes as a number or string, you can <a href="./metadata-editing#casting-to-a-specific-data-type">cast that column to a datetime</a>.</p>
 
-<p>Semantic types only add meaning; they should NOT be used for type casting. For example, if you set a text field’s semantic type to “Quantity”, Metabase will still treat the field as a text field. Instead, apply semantic types to tell Metabase how to format or visualize the field (like telling Metabase that a numeric values represents a percentage).</p>
+<ul>
+  <li><strong>Cancelation date</strong></li>
+  <li><strong>Cancelation time</strong></li>
+  <li><strong>Cancelation timestamp</strong></li>
+  <li><strong>Creation date</strong></li>
+  <li><strong>Creation time</strong></li>
+  <li><strong>Creation timestamp</strong></li>
+  <li><strong>Deletion date</strong></li>
+  <li><strong>Deletion time</strong></li>
+  <li><strong>Deletion timestamp</strong></li>
+  <li><strong>Updated date</strong></li>
+  <li><strong>Updated time</strong></li>
+  <li><strong>Updated timestamp</strong></li>
+  <li><strong>Join date</strong></li>
+  <li><strong>Join time</strong></li>
+  <li><strong>Join timestamp</strong></li>
+  <li><strong>UNIX Timestamp (Milliseconds)</strong></li>
+  <li><strong>UNIX Timestamp (Seconds)</strong></li>
+</ul>
 
-<h2 id="what-data-and-semantic-types-enable">What data and semantic types enable</h2>
+<p>See <a href="../questions/visualizations/table#date-formatting-options">Date formatting options</a>.</p>
 
-<h3 id="display-format">Display format</h3>
+<h2 id="categorical">Categorical</h2>
 
-<p>Some semantic types change the way the data in the field is displayed.</p>
+<ul>
+  <li><strong>Enum</strong>: An abbreviation for “enumerated type,” the value of an enum draws on a predefined list of options. An example of an enum would be a field for the months of the year. This list of twelve options is defined in the makeup of the column, and no options outside this list would be valid.</li>
+  <li><strong>Product</strong></li>
+  <li><strong>Source</strong>: For example, the source of a visitor to your website (such as a search engine or other website).</li>
+</ul>
 
-<p>Formatting setting from Table Metadata settings will be applied across your Metabase, but people can change them for individual charts.</p>
+<h2 id="urls">URLs</h2>
 
-<table>
-  <thead>
-    <tr>
-      <th>Semantic type</th>
-      <th>Format</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td data-label="Semantic type">Percentage</td>
-      <td data-label="Format">Displayed as percentage, for example 0.75 will be displayed as 75\%</td>
-    </tr>
-    <tr>
-      <td data-label="Semantic type">Currency</td>
-      <td data-label="Format">On charts and in detail view, the values are prepended by the currency symbol, e.g., <code class="language-plaintext highlighter-rouge">$134.65</code>. By default in the table view, the currency symbol is only displayed in the header, but you can change the metadata formatting settings to show the symbol for every row.</td>
-    </tr>
-    <tr>
-      <td data-label="Semantic type">Latitude/Longitude</td>
-      <td data-label="Format">Displayed as coordinates, e.g., <code class="language-plaintext highlighter-rouge">0.00000000° N</code></td>
-    </tr>
-    <tr>
-      <td data-label="Semantic type">Email</td>
-      <td data-label="Format">Display as a <code class="language-plaintext highlighter-rouge">mailto</code> link</td>
-    </tr>
-    <tr>
-      <td data-label="Semantic type">URL</td>
-      <td data-label="Format">Can format as a clickable link</td>
-    </tr>
-    <tr>
-      <td data-label="Semantic type">Image URL</td>
-      <td data-label="Format">Can display as an image. See <a href="../questions/visualizations/table#display-as">table format settings</a></td>
-    </tr>
-    <tr>
-      <td data-label="Semantic type">Avatar URL</td>
-      <td data-label="Format">Can display as avatar circle image. See <a href="../questions/visualizations/table#display-as">table format settings</a></td>
-    </tr>
-    <tr>
-      <td data-label="Semantic type">Field containing JSON</td>
-      <td data-label="Format">In detail view, display as prettified JSON</td>
-    </tr>
-    <tr>
-      <td data-label="Semantic type">Entity and Foreign key</td>
-      <td data-label="Format">Highlighted in table view</td>
-    </tr>
-  </tbody>
-</table>
+<p>Metabase can display fields with URLs as images or links.</p>
 
-<h3 id="visualizations">Visualizations</h3>
+<ul>
+  <li><strong>Avatar Image URL</strong>: Displays the field as an image in table and detail views.</li>
+  <li><strong>Image URL</strong>: Displays the field as an image in table and detail views.</li>
+  <li><strong>URL</strong>: Displays the field as a link.</li>
+</ul>
 
-<p>When you create a question in the query builder, Metabase will automatically choose the most suitable chart for you based on the data types and the semantic types of the field in the “Group by” step (you can change the chart type later).</p>
+<h2 id="other">Other</h2>
 
-<table>
-  <thead>
-    <tr>
-      <th>Group by data type</th>
-      <th>Automatic chart</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td data-label="Group by data type">Text/Category</td>
-      <td data-label="Automatic chart">Bar chart</td>
-    </tr>
-    <tr>
-      <td data-label="Group by data type">Temporal</td>
-      <td data-label="Automatic chart">Line chart</td>
-    </tr>
-    <tr>
-      <td data-label="Group by data type">Numeric - binned</td>
-      <td data-label="Automatic chart">Bar chart</td>
-    </tr>
-    <tr>
-      <td data-label="Group by data type">Numeric - not binned</td>
-      <td data-label="Automatic chart">Table</td>
-    </tr>
-    <tr>
-      <td data-label="Group by data type">Boolean</td>
-      <td data-label="Automatic chart">Bar chart</td>
-    </tr>
-    <tr>
-      <td data-label="Group by data type">No aggregation</td>
-      <td data-label="Automatic chart">Table</td>
-    </tr>
-  </tbody>
-</table>
+<ul>
+  <li><strong>Field containing JSON</strong>. See <a href="./json-unfolding">Working with JSON</a></li>
+  <li><strong>No semantic type</strong> – Used for fields that don’t fall into any of the above field types.</li>
+</ul>
 
-<p>Additionally, if you use location semantic types:</p>
+<h2 id="using-field-types-in-metabase">Using field types in Metabase</h2>
 
-<table>
-  <thead>
-    <tr>
-      <th>Group by semantic type</th>
-      <th>Functionality</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td data-label="Group by semantic type">Latitude/Longitude - binned</td>
-      <td data-label="Functionality">Grid map</td>
-    </tr>
-    <tr>
-      <td data-label="Group by semantic type">Latitude/longitude - not binned</td>
-      <td data-label="Functionality">Pin map</td>
-    </tr>
-    <tr>
-      <td data-label="Group by semantic type">Country</td>
-      <td data-label="Functionality">World region map</td>
-    </tr>
-    <tr>
-      <td data-label="Group by semantic type">State</td>
-      <td data-label="Functionality">United States region map</td>
-    </tr>
-  </tbody>
-</table>
+<h3 id="set-column-types-in-models-to-enable-people-to-explore-results-with-the-query-builder">Set column types in models to enable people to explore results with the query builder</h3>
 
-<h3 id="extract-values-from-columns">Extract values from columns</h3>
+<p>You can set field types for <a href="./models">models</a>, which helps Metabase understand how to work with data in models built using SQL. If you set each column type in a SQL model, people will be able to explore that model using the query builder and drill-through menus.</p>
 
-<p>For some fields, you can quickly extract values from columns using <a href="../questions/visualizations/table#extract-domain-subdomain-host-or-path">shortcuts in table view</a> or in the <a href="../questions/query-builder/expressions">custom expression editor</a> in the query builder:</p>
-
-<table>
-  <thead>
-    <tr>
-      <th>Group by data type</th>
-      <th>Extract</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td data-label="Group by data type">URL semantic types</td>
-      <td data-label="Extract">Extract host, domain, subdomain, path</td>
-    </tr>
-    <tr>
-      <td data-label="Group by data type">Email semantic type</td>
-      <td data-label="Extract">Extract host, domain</td>
-    </tr>
-    <tr>
-      <td data-label="Group by data type">Temporal data types</td>
-      <td data-label="Extract">Extract date parts like month, day, etc</td>
-    </tr>
-  </tbody>
-</table>
+<p>With records that include integer entity keys, you can also configure text fields in models to <a href="./models#surface-individual-records-in-search-by-matching-against-this-column">surface individual records in search</a>.</p>
 
 <h3 id="x-rays">X-rays</h3>
 
@@ -4474,15 +4306,23 @@ Roadmap</a>
 
 <p>Knowing what field types are and how they work is helpful when using <a href="/learn/metabase-basics/querying-and-dashboards/sql-in-metabase/field-filters">field filters</a>, as you can only create field filters for <a href="../questions/native-editor/sql-parameters#field-filter-compatible-types">certain field types</a>.</p>
 
+<h3 id="editing-types-in-the-table-metadata-page">Editing types in the Table Metadata page</h3>
+
+<p>If you’re an administrator, you can edit field types using the <a href="./metadata-editing">Table Metadata page</a> in the Admin Panel.</p>
+
+<p>While data types themselves can’t be edited in Metabase, admins can manually <a href="./metadata-editing#casting-to-a-specific-data-type">cast certain data types</a> to be read differently, like interpreting a numerical data type as a date format.</p>
+
+<blockquote>
+  <p>Metabase currently supports only casting to a datetime type in Metadata settings.</p>
+</blockquote>
+
 <h3 id="json-unfolding">JSON unfolding</h3>
 
 <p>See <a href="./json-unfolding">Working with JSON</a>.</p>
 
-<h2 id="set-semantic-types-in-models-to-enable-people-to-explore-results-with-the-query-builder">Set semantic types in models to enable people to explore results with the query builder</h2>
+<h3 id="arrays">Arrays</h3>
 
-<p>You can set field types for <a href="./models">models</a>, which helps Metabase understand how to work with data in models built using SQL. If you set each column type in a SQL model, people will be able to explore that model using the query builder and drill-through menus.</p>
-
-<p>With records that include integer entity keys, you can also configure text fields in models to <a href="./models#surface-individual-records-in-search-by-matching-against-this-column">surface individual records in search</a>.</p>
+<p>Metabase currently does not support array types with any database. You’ll only be able to use <strong>Is empty</strong> or <strong>Is not empty</strong> filters on columns containing arrays.</p>
 
 <h2 id="further-reading">Further Reading</h2>
 
@@ -4566,7 +4406,7 @@ Roadmap</a>
 <script type="text/javascript" src="/js/position-feedback-widget.js"></script>
 
 <script>
-  const pageTitle = `Data and field types`;
+  const pageTitle = `Field types`;
   const pageURL = '/docs/master/data-modeling/field-types';
   const pageURLSplit = pageURL.split('/');
 

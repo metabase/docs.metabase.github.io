@@ -4200,13 +4200,7 @@ Roadmap</a>
   <p><strong>You can only download the key once</strong>. If you delete the key, you’ll need to create another service account with the same roles.</p>
 </blockquote>
 
-<h2 id="connection-and-sync">Connection and sync</h2>
-
-<p>After connecting to a database, you’ll see the “Connection and sync” section that displays the current connection status and options to manage your database connection.</p>
-
-<p>Here you can <a href="../sync-scan">sync the database schema and rescan field values</a>, and edit connection details.</p>
-
-<h2 id="edit-connection-details">Edit connection details</h2>
+<h2 id="settings">Settings</h2>
 
 <p>You can edit these settings at any time. Just remember to save your changes.</p>
 
@@ -4266,7 +4260,7 @@ Roadmap</a>
 
 <h3 id="alternate-hostname">Alternate hostname</h3>
 
-<p>If you want to use a different hostname to connect to BigQuery. Format: <code class="language-plaintext highlighter-rouge">https://&lt;hostname&gt;:&lt;port&gt;</code>. If you’re using a proxy service to connect to BigQuery (e.g. a privacy proxy that anonymizes PII), you should configure this field to the proxy hostname or IP. Remember to set the complete URI with protocol and port number.</p>
+<p>If you’re using a proxy service to connect to BigQuery (e.g. a privacy proxy that anonymizes PII), you should configure this field to the proxy hostname or IP. Remember to set the complete URI with protocol and port number.</p>
 
 <h3 id="re-run-queries-for-simple-explorations">Re-run queries for simple explorations</h3>
 
@@ -4274,9 +4268,30 @@ Roadmap</a>
 
 <p>By default, Metabase will execute a query as soon as you choose an grouping option from the <strong>Summarize</strong> menu or a filter condition from the <a href="/learn/metabase-basics/querying-and-dashboards/questions/drill-through">drill-through menu</a>. If your database is slow, you may want to disable re-running to avoid loading data on each click.</p>
 
-<h3 id="choose-when-syncs-and-scans-happen">Choose when syncs and scans happen</h3>
+<h3 id="choose-when-metabase-syncs-and-scans">Choose when Metabase syncs and scans</h3>
 
-<p>See <a href="../sync-scan#choose-when-syncs-and-scans-happen">syncs and scans</a>.</p>
+<p>Turn this option <strong>ON</strong> to manage the queries that Metabase uses to stay up to date with your database. For more information, see <a href="../sync-scan#syncing-and-scanning-databases">Syncing and scanning databases</a>.</p>
+
+<h4 id="database-syncing">Database syncing</h4>
+
+<p>If you’ve selected <strong>Choose when syncs and scans happen</strong> &gt; <strong>ON</strong>, you’ll be able to set:</p>
+
+<ul>
+  <li>The frequency of the <a href="../sync-scan#how-database-syncs-work">sync</a>: hourly (default) or daily.</li>
+  <li>The time to run the sync, in the timezone of the server where your Metabase app is running.</li>
+</ul>
+
+<h4 id="scanning-for-filter-values">Scanning for filter values</h4>
+
+<p>Metabase can scan the values present in each field in this database to enable checkbox filters in dashboards and questions. This can be a somewhat resource-intensive process, particularly if you have a very large database.</p>
+
+<p>If you’ve selected <strong>Choose when syncs and scans happen</strong> &gt; <strong>ON</strong>, you’ll see the following options under <strong>Scanning for filter values</strong>:</p>
+
+<ul>
+  <li><strong>Regularly, on a schedule</strong> allows you to run <a href="../sync-scan#how-database-scans-work">scan queries</a> at a frequency that matches the rate of change to your database. The time is set in the timezone of the server where your Metabase app is running. This is the best option for a small database, or tables with distinct values that get updated often.</li>
+  <li><strong>Only when adding a new filter widget</strong> is a great option if you want scan queries to run on demand. Turning this option <strong>ON</strong> means that Metabase will only scan and cache the values of the field(s) that are used when a new filter is added to a dashboard or SQL question.</li>
+  <li><strong>Never, I’ll do this manually if I need to</strong> is an option for databases that are either prohibitively large, or which never really have new values added. Use the <a href="../sync-scan#manually-scanning-column-values">Re-scan field values now</a> button to run a manual scan and bring your filter values up to date.</li>
+</ul>
 
 <h3 id="periodically-refingerprint-tables">Periodically refingerprint tables</h3>
 
@@ -4332,18 +4347,6 @@ Roadmap</a>
 <h2 id="troubleshooting">Troubleshooting</h2>
 
 <p>If you’re having trouble with your BigQuery connection, you can check out this <a href="../../troubleshooting-guide/bigquery-drive">troubleshooting guide</a> that covers BigQuery issues, <a href="../../troubleshooting-guide/db-connection">this one</a> on data warehouse connections, or visit <a href="https://discourse.metabase.com/search?q=bigquery">Metabase’s discussion forum</a> to see if someone has encountered and resolved a similar issue.</p>
-
-<h2 id="model-features">Model features</h2>
-
-<p>There aren’t (yet) any model features available for BigQuery.</p>
-
-<h2 id="database-routing">Database routing</h2>
-
-<p>See <a href="../../permissions/database-routing">Database routing</a>.</p>
-
-<h2 id="danger-zone">Danger zone</h2>
-
-<p>See <a href="../danger-zone">Danger zone</a>.</p>
 
 <h2 id="further-reading">Further reading</h2>
 

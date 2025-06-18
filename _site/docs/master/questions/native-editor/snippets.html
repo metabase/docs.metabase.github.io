@@ -49,7 +49,7 @@
 <meta name="twitter:site" content="@metabase">
 
 <meta name="twitter:title" content="Snippets | Metabase Documentation">
-<meta name="twitter:description" content="Snippets  Snippets are reusable bits of SQL or native queries. Anyone with permissions to the SQL editor can create and edit snippets, which are then available for all SQL authors. For example, if you frequently...">
+<meta name="twitter:description" content="Snippets  Snippets are reusable bits of SQL or native queries. Anyone with permissions to the SQL editor can create and edit snippets, which are then available for all SQL authors. For example,...">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -59,7 +59,7 @@
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://www.metabase.com/docs/master/questions/native-editor/snippets">
 <meta name="title" property="og:title" content="Snippets | Metabase Documentation">
-<meta name="description" property="og:description" content="Snippets  Snippets are reusable bits of SQL or native queries. Anyone with permissions to the SQL editor can create and edit snippets, which are then available for all SQL authors. For example, if you frequently...">
+<meta name="description" property="og:description" content="Snippets  Snippets are reusable bits of SQL or native queries. Anyone with permissions to the SQL editor can create and edit snippets, which are then available for all SQL authors. For example,...">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -4160,7 +4160,7 @@ Roadmap</a>
 
         <h1 id="snippets">Snippets</h1>
 
-<p><img src="../images/sql-snippets.png" alt="SQL snippet"></p>
+<p><img src="../images/highlight_and_save_as_snippet.gif" alt="Highlight and save as snippet"></p>
 
 <p><strong>Snippets</strong> are reusable bits of SQL or native queries. Anyone with permissions to the <a href="./writing-sql">SQL editor</a> can create and edit snippets, which are then available for all SQL authors.</p>
 
@@ -4170,11 +4170,10 @@ Roadmap</a>
 
 <p>Here’s a simple query with a join using the <strong>Sample Database</strong> included with Metabase.</p>
 
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span>
-  <span class="o">*</span>
-<span class="k">FROM</span>
-  <span class="n">orders</span> <span class="k">AS</span> <span class="n">o</span>
-  <span class="k">LEFT</span> <span class="k">JOIN</span> <span class="n">products</span> <span class="k">AS</span> <span class="n">p</span> <span class="k">ON</span> <span class="n">o</span><span class="p">.</span><span class="n">product_id</span> <span class="o">=</span> <span class="n">p</span><span class="p">.</span><span class="n">id</span>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span>
+<span class="k">FROM</span> <span class="n">orders</span> <span class="k">AS</span> <span class="n">o</span>
+<span class="k">LEFT</span> <span class="k">JOIN</span> <span class="n">products</span> <span class="k">AS</span> <span class="n">p</span>
+<span class="k">ON</span> <span class="n">o</span><span class="p">.</span><span class="n">product_id</span> <span class="o">=</span> <span class="n">p</span><span class="p">.</span><span class="n">id</span>
 </code></pre></div></div>
 
 <p>Let’s save everything after FROM as a snippet to reuse in other queries.</p>
@@ -4186,7 +4185,8 @@ Roadmap</a>
     <p><strong>Highlight a section of SQL</strong> that you want to save. In this case, we’ll select the following SQL code:</p>
 
     <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">orders</span> <span class="k">AS</span> <span class="n">o</span>
-<span class="k">LEFT</span> <span class="k">JOIN</span> <span class="n">products</span> <span class="k">AS</span> <span class="n">p</span> <span class="k">ON</span> <span class="n">o</span><span class="p">.</span><span class="n">product_id</span> <span class="o">=</span> <span class="n">p</span><span class="p">.</span><span class="n">id</span>
+<span class="k">LEFT</span> <span class="k">JOIN</span> <span class="n">products</span> <span class="k">AS</span> <span class="n">p</span>
+<span class="k">ON</span> <span class="n">o</span><span class="p">.</span><span class="n">product_id</span> <span class="o">=</span> <span class="n">p</span><span class="p">.</span><span class="n">id</span>
 </code></pre></div>    </div>
   </li>
   <li><strong>Right-click on the highlighted section.</strong></li>
@@ -4196,12 +4196,8 @@ Roadmap</a>
 
 <p>In this case, we named the snippet “Orders and Products”. The snippet will now be available for anyone to use. Here’s what the snippet looks like in the SQL editor:</p>
 
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-<span class="k">SELECT</span>
-  <span class="o">*</span>
-<span class="k">FROM</span>
-  <span class="p">{{</span><span class="n">snippet</span><span class="p">:</span> <span class="n">Orders</span> <span class="k">and</span> <span class="n">products</span><span class="p">}}</span>
-
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span>
+<span class="k">FROM</span> <span class="p">{{</span><span class="n">snippet</span><span class="p">:</span> <span class="n">Orders</span> <span class="k">and</span> <span class="n">Products</span><span class="p">}}</span>
 </code></pre></div></div>
 
 <p>When writing in the SQL editor, you can now start typing <code class="language-plaintext highlighter-rouge">{{snippet:}}</code> and Metabase will present autocomplete options for available snippets.</p>
@@ -4209,6 +4205,8 @@ Roadmap</a>
 <p>Note: if you use aliases in a snippet, you’ll need to observe those aliases outside of the snippet as well. For example, if a snippet aliases <code class="language-plaintext highlighter-rouge">products AS p</code>, code outside of the snippet will need to use the alias <code class="language-plaintext highlighter-rouge">p</code> to reference columns in that table (as in <code class="language-plaintext highlighter-rouge">p.column_name</code>).</p>
 
 <h2 id="snippet-menu">Snippet menu</h2>
+
+<p><img src="../images/snippet_sidebar_and_insertion.gif" alt="Snippet sidebar and insertion"></p>
 
 <p>The SQL editor <strong>sidebar</strong> has a <strong>Snippets</strong> menu to list available and archived snippets.</p>
 

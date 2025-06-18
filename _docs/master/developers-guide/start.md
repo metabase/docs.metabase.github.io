@@ -31,7 +31,6 @@ This guide contains detailed information on how to work on Metabase codebase.
 - [How to add support in Metabase for other languages](internationalization)
 - [Working with Clojure](clojure)
 - [Annotated Clojure source code](https://metabase-dev-docs.github.io/)
-- [Automating Common Tasks with MAGE](mage)
 
 ## Testing
 
@@ -47,7 +46,7 @@ This guide contains detailed information on how to work on Metabase codebase.
 
 ## Database drivers
 
-- [Community drivers](./community-drivers)
+- [Partner and community drivers](./partner-and-community-drivers)
 - [Guide to writing a driver](drivers/start)
 
 ## Metabase documentation

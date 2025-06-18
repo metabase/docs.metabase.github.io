@@ -121,13 +121,11 @@ Enable the collection of anonymous usage data in order to help Metabase improve.
 - Type: string
 - Default: `null`
 
-When set, this key is required for calls to /notify/ endpoints.
+When set, this API key is required for all API requests.
 
-Middleware that enforces validation of the client via the request header X-Metabase-Apikey for /notify endpoints.
-        If the header is available, then it's validated against MB_API_KEY.
-        When it matches, the request continues; otherwise it's blocked with a 403 Forbidden response.
-        MB_API_KEY is used only for /notify endpoints and isn't the same as Metabase API keys
-        used for authenticating other API requests. MP_API_KEY can be an arbitrary string.
+Middleware that enforces validation of the client via the request header X-Metabase-Apikey.
+        If the header is available, then it’s validated against MB_API_KEY.
+        When it matches, the request continues; otherwise it’s blocked with a 403 Forbidden response.
 
 ### `MB_APPLICATION_COLORS`
 
@@ -410,7 +408,7 @@ This feature is experimental.
 - Default: `gpt-4-turbo-preview`
 - [Configuration file name](./config-file): `ee-openai-model`
 
-The OpenAI Model (e.g. 'gpt-4', 'gpt-3.5-turbo').
+The OpenAI Model (e.g. gpt-4, gpt-3.5-turbo).
 
 This feature is experimental.
 
@@ -527,7 +525,7 @@ Allow Metabase SDK access to these space delimited origins.
 - [Exported as](../installation-and-operation/serialization): `embedding-homepage`.
 - [Configuration file name](./config-file): `embedding-homepage`
 
-Embedding homepage status, indicating if it's visible, hidden or has been dismissed.
+Embedding homepage status, indicating if its visible, hidden or has been dismissed.
 
 ### `MB_EMBEDDING_SECRET_KEY`
 
@@ -571,6 +569,17 @@ Allow admins to embed Metabase via the SDK?
 - [Configuration file name](./config-file): `enable-embedding-static`
 
 Allow admins to embed Metabase via static embedding?
+
+### `MB_ENABLE_FIELD_USAGE_ANALYSIS`
+
+- Type: boolean
+- Default: `false`
+- [Configuration file name](./config-file): `enable-field-usage-analysis`
+
+Enable field usage analysis for queries. This will analyze the fields used in queries and store them in the
+    application database.
+
+    Turn off by default since we havent had an user-facing feature that uses this data yet.
 
 ### `MB_ENABLE_PASSWORD_LOGIN`
 
@@ -713,7 +722,7 @@ For setting the maximum, see [MB_APPLICATION_DB_MAX_CONNECTION_POOL_SIZE](#mb_ap
 - Default: `email`
 - [Configuration file name](./config-file): `jwt-attribute-email`
 
-Key to retrieve the JWT user's email address.
+Key to retrieve the JWT users email address.
 
 ### `MB_JWT_ATTRIBUTE_FIRSTNAME`
 
@@ -723,7 +732,7 @@ Key to retrieve the JWT user's email address.
 - Default: `first_name`
 - [Configuration file name](./config-file): `jwt-attribute-firstname`
 
-Key to retrieve the JWT user's first name.
+Key to retrieve the JWT users first name.
 
 ### `MB_JWT_ATTRIBUTE_GROUPS`
 
@@ -733,7 +742,7 @@ Key to retrieve the JWT user's first name.
 - Default: `groups`
 - [Configuration file name](./config-file): `jwt-attribute-groups`
 
-Key to retrieve the JWT user's groups.
+Key to retrieve the JWT users groups.
 
 ### `MB_JWT_ATTRIBUTE_LASTNAME`
 
@@ -743,7 +752,7 @@ Key to retrieve the JWT user's groups.
 - Default: `last_name`
 - [Configuration file name](./config-file): `jwt-attribute-lastname`
 
-Key to retrieve the JWT user's last name.
+Key to retrieve the JWT users last name.
 
 ### `MB_JWT_ENABLED`
 
@@ -976,7 +985,7 @@ Search base for users. (Will be searched recursively).
 - Default: `(&(objectClass=inetOrgPerson)(|(uid={login})(mail={login})))`
 - [Configuration file name](./config-file): `ldap-user-filter`
 
-User lookup filter. The placeholder '{login}' will be replaced by the user supplied login.
+User lookup filter. The placeholder {login} will be replaced by the user supplied login.
 
 ### `MB_LDAP_USER_PROVISIONING_ENABLED`
 
@@ -1035,7 +1044,7 @@ The map tile server URL template used in map visualizations, for example from Op
 - [Exported as](../installation-and-operation/serialization): `native-query-autocomplete-match-style`.
 - [Configuration file name](./config-file): `native-query-autocomplete-match-style`
 
-Matching style for native query editor's autocomplete. Can be "substring", "prefix", or "off". Larger instances can have performance issues matching using substring, so can use prefix matching,  or turn autocompletions off.
+Matching style for native query editors autocomplete. Can be "substring", "prefix", or "off". Larger instances can have performance issues matching using substring, so can use prefix matching,  or turn autocompletions off.
 
 ### `MB_NESTED_FIELD_COLUMNS_VALUE_LENGTH_LIMIT`
 
@@ -1115,10 +1124,6 @@ The base URL where dashboard notitification links will point to instead of the M
 
 The size of the thread pool used to send notifications.
 
-If Metabase stops sending notifications like alerts, it may be because long-running
-  queries are clogging the notification queue. You may be able to unclog the queue by
-  increasing the size of the thread pool dedicated to notifications.
-
 ### `MB_PERSISTED_MODEL_REFRESH_CRON_SCHEDULE`
 
 - Type: string
@@ -1143,6 +1148,14 @@ Allow persisting models into the source database.
 - [Configuration file name](./config-file): `premium-embedding-token`
 
 Token for premium features. Go to the MetaStore to get yours!
+
+### `MB_QUERY_ANALYSIS_ENABLED`
+
+- Type: boolean
+- Default: `false`
+- [Configuration file name](./config-file): `query-analysis-enabled`
+
+Whether or not we analyze any queries at all.
 
 ### `MB_QUERY_CACHING_MAX_KB`
 
@@ -1313,7 +1326,7 @@ Enable group membership synchronization with SAML.
 - [Configuration file name](./config-file): `saml-identity-provider-certificate`
 
 Encoded certificate for the identity provider. Depending on your IdP, you might need to download this,
-open it in a text editor, then copy and paste the certificate's contents here.
+open it in a text editor, then copy and paste the certificates contents here.
 
 ### `MB_SAML_IDENTITY_PROVIDER_ISSUER`
 
@@ -1323,7 +1336,7 @@ open it in a text editor, then copy and paste the certificate's contents here.
 - Default: `null`
 - [Configuration file name](./config-file): `saml-identity-provider-issuer`
 
-This is a unique identifier for the IdP. Often referred to as Entity ID or simply 'Issuer'. Depending
+This is a unique identifier for the IdP. Often referred to as Entity ID or simply Issuer. Depending
 on your IdP, this usually looks something like `http://www.example.com/141xkex604w0Q5PN724v`.
 
 ### `MB_SAML_IDENTITY_PROVIDER_SLO_URI`
@@ -1437,7 +1450,7 @@ Should new email notifications be sent to admins, for all new SSO users?
 - Default: `:lax`
 - [Configuration file name](./config-file): `session-cookie-samesite`
 
-Value for the session cookie's `SameSite` directive.
+Value for the session cookies `SameSite` directive.
 
 See [Embedding Metabase in a different domain](../embedding/interactive-embedding#embedding-metabase-in-a-different-domain).
         Read more about [interactive Embedding](../embedding/interactive-embedding).
@@ -1530,15 +1543,6 @@ Whether or not to display Metabase links outside admin settings.
 
 Enables Metabot character on the home page.
 
-### `MB_SHOW_STATIC_EMBED_TERMS`
-
-- Type: boolean
-- Default: `true`
-- [Exported as](../installation-and-operation/serialization): `show-static-embed-terms`.
-- [Configuration file name](./config-file): `show-static-embed-terms`
-
-Check if the static embedding licensing should be hidden in the static embedding flow.
-
 ### `MB_SITE_LOCALE`
 
 - Type: string
@@ -1585,9 +1589,7 @@ Bot user OAuth token for connecting the Metabase Slack app. This should be used 
 
 The name of the channel where bug reports should be posted.
 
-### `MB_SLACK_FILES_CHANNEL [DEPRECATED]`
-
-> DEPRECATED: 0.54.0
+### `MB_SLACK_FILES_CHANNEL`
 
 - Type: string
 - Default: `metabase_files`
@@ -1602,7 +1604,7 @@ The name of the channel to which Metabase files should be initially uploaded.
 - [Exported as](../installation-and-operation/serialization): `source-address-header`.
 - [Configuration file name](./config-file): `source-address-header`
 
-Identify the source of HTTP requests by this header's value, instead of its remote address.
+Identify the source of HTTP requests by this headers value, instead of its remote address.
 
 ### `MB_SQL_JDBC_FETCH_SIZE`
 
@@ -1681,7 +1683,7 @@ Must be less than 1048575, and less than the number configured in MB_AGGREGATED_
 - [Exported as](../installation-and-operation/serialization): `update-channel`.
 - [Configuration file name](./config-file): `update-channel`
 
-We'll notify you here when there's a new version of this type of release.
+Well notify you here when theres a new version of this type of release.
 
 ### `MB_UPLOADS_DATABASE_ID [DEPRECATED]`
 
@@ -1943,15 +1945,29 @@ When set, this will encrypt database credentials stored in the application datab
 
 Also see documentation page [Encrypting database details at rest](../databases/encrypting-details-at-rest).
 
+### `MB_JDBC_DATA_WAREHOUSE_UNRETURNED_CONNECTION_TIMEOUT_SECONDS`
+
+Type: integer<br>
+Default: `1200`<br>
+Since: v47.4
+
+Metabase's query processor will normally kill connections when their queries time out, but in practice some connections can be severed and go undetected by Metabase, staying alive even after a query returns or times out. This environment variable tells Metabase how long to wait before killing connections if no response is received from the connection.
+
+This variable affects connections that are severed and undetected by Metabase (that is, in situations where Metabase never receives a connection closed signal and is treating an inactive connection as active). You may want to adjust this variable's value if your connection is unreliable or is a dynamic connections behind a SSH tunnel where the connection to the SSH tunnel host may stay active even after the connection from the SSH tunnel host to your database is severed.
+
+Unless set otherwise, the default production value for `metabase.query-processor.query-timeout-ms` is used which is 1,200,000 ms (i.e. 1,200 seconds or 20 minutes).
+
 ### `MB_JDBC_DATA_WAREHOUSE_DEBUG_UNRETURNED_CONNECTION_STACK_TRACES`
 
 Type: boolean<br>
 Default: `false`<br>
 Since: v51.3
 
-If `true`, log a stack trace for any connections killed due to exceeding the timeout specified in [MB_DB_QUERY_TIMEOUT_MINUTES](#mb_db_query_timeout_minutes).
+If `true`, log a stack trace for any connections killed due to exceeding the timeout specified in [MB_JDBC_DATA_WAREHOUSE_UNRETURNED_CONNECTION_TIMEOUT_SECONDS](#mb_jdbc_data_warehouse_unreturned_connection_timeout_seconds).
 
 In order to see the stack traces in the logs, you'll also need to update the com.mchange log level to "INFO" or higher via a custom log4j configuration. For configuring log levels, see [Metabase log configuration](./log-configuration).
+
+To set a timeout for how long Metabase should wait before it kills unreturned connections, see [MB_JDBC_DATA_WAREHOUSE_UNRETURNED_CONNECTION_TIMEOUT_SECONDS](#mb_jdbc_data_warehouse_unreturned_connection_timeout_seconds).
 
 ### `MB_JETTY_ASYNC_RESPONSE_TIMEOUT`
 

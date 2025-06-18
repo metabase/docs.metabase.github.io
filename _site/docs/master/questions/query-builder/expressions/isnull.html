@@ -49,7 +49,7 @@
 <meta name="twitter:site" content="@metabase">
 
 <meta name="twitter:title" content="Isnull | Metabase Documentation">
-<meta name="twitter:description" content="Isnull isNull checks if a value is a null, a special kind of placeholder that’s used by a database when something is missing or unknown. Syntax isNull(text column)  You can use...">
+<meta name="twitter:description" content="Isnull isnull checks if a value is a null, a special kind of placeholder that’s used by a database when something is missing or unknown. Syntax isnull(text column)  You can use...">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -59,7 +59,7 @@
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://www.metabase.com/docs/master/questions/query-builder/expressions/isnull">
 <meta name="title" property="og:title" content="Isnull | Metabase Documentation">
-<meta name="description" property="og:description" content="Isnull isNull checks if a value is a null, a special kind of placeholder that’s used by a database when something is missing or unknown. Syntax isNull(text column)  You can use...">
+<meta name="description" property="og:description" content="Isnull isnull checks if a value is a null, a special kind of placeholder that’s used by a database when something is missing or unknown. Syntax isnull(text column)  You can use...">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -4160,49 +4160,49 @@ Roadmap</a>
 
         <h1 id="isnull">Isnull</h1>
 
-<p><code class="language-plaintext highlighter-rouge">isNull</code> checks if a value is a <code class="language-plaintext highlighter-rouge">null</code>, a special kind of placeholder that’s used by a database when something is missing or unknown.</p>
+<p><code class="language-plaintext highlighter-rouge">isnull</code> checks if a value is a <code class="language-plaintext highlighter-rouge">null</code>, a special kind of placeholder that’s used by a database when something is missing or unknown.</p>
 
 <h2 id="syntax">Syntax</h2>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>isNull(text column)
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>isnull(text column)
 </code></pre></div></div>
 
-<p>You can use <code class="language-plaintext highlighter-rouge">isNull</code> in <a href="../expressions#filter-expressions-and-conditionals">custom filters</a>, or as the condition for conditional aggregations <a href="../expressions/countif"><code class="language-plaintext highlighter-rouge">CountIf</code></a> and <a href="../expressions/sumif"><code class="language-plaintext highlighter-rouge">SumIf</code></a>. To create a custom column using <code class="language-plaintext highlighter-rouge">isNull</code>, you must combine <code class="language-plaintext highlighter-rouge">isNull</code> with another function that accepts boolean values, like <a href="./case"><code class="language-plaintext highlighter-rouge">case</code></a>.</p>
+<p>You can use <code class="language-plaintext highlighter-rouge">isnull</code> in <a href="../expressions#filter-expressions-and-conditionals">custom filters</a>, or as the condition for conditional aggregations <a href="../expressions/countif"><code class="language-plaintext highlighter-rouge">CountIf</code></a> and <a href="../expressions/sumif"><code class="language-plaintext highlighter-rouge">SumIf</code></a>. To create a custom column using <code class="language-plaintext highlighter-rouge">isnull</code>, you must combine <code class="language-plaintext highlighter-rouge">isnull</code> with another function that accepts boolean values, like <a href="./case"><code class="language-plaintext highlighter-rouge">case</code></a>.</p>
 
 <h2 id="how-metabase-handles-nulls">How Metabase handles nulls</h2>
 
 <p>In Metabase tables, <code class="language-plaintext highlighter-rouge">null</code>s are displayed as blank cells. Additionally, for string columns, empty strings and strings containing only whitespace characters will be displayed as blank as well.</p>
 
-<p>The table below shows you examples of the output of <code class="language-plaintext highlighter-rouge">isNull</code>.</p>
+<p>The table below shows you examples of the output of <code class="language-plaintext highlighter-rouge">isnull</code>.</p>
 
 <table>
   <thead>
     <tr>
       <th>Metabase shows</th>
       <th>Database value</th>
-      <th><code class="language-plaintext highlighter-rouge">isNull(value)</code></th>
+      <th><code class="language-plaintext highlighter-rouge">isnull(value)</code></th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td data-label="Metabase shows">&nbsp;</td>
       <td data-label="Database value"><code class="language-plaintext highlighter-rouge">null</code></td>
-      <td data-label="isNull(value)"><code class="language-plaintext highlighter-rouge">true</code></td>
+      <td data-label="isnull(value)"><code class="language-plaintext highlighter-rouge">true</code></td>
     </tr>
     <tr>
       <td data-label="Metabase shows">&nbsp;</td>
       <td data-label="Database value"><code class="language-plaintext highlighter-rouge">""</code> (empty string)</td>
-      <td data-label="isNull(value)"><code class="language-plaintext highlighter-rouge">false</code>*</td>
+      <td data-label="isnull(value)"><code class="language-plaintext highlighter-rouge">false</code>*</td>
     </tr>
     <tr>
       <td data-label="Metabase shows">&nbsp;</td>
       <td data-label="Database value"><code class="language-plaintext highlighter-rouge">" "</code> (whitespace)</td>
-      <td data-label="isNull(value)"><code class="language-plaintext highlighter-rouge">false</code></td>
+      <td data-label="isnull(value)"><code class="language-plaintext highlighter-rouge">false</code></td>
     </tr>
     <tr>
       <td data-label="Metabase shows">kitten</td>
       <td data-label="Database value"><code class="language-plaintext highlighter-rouge">"kitten"</code></td>
-      <td data-label="isNull(value)"><code class="language-plaintext highlighter-rouge">false</code></td>
+      <td data-label="isnull(value)"><code class="language-plaintext highlighter-rouge">false</code></td>
     </tr>
   </tbody>
 </table>
@@ -4211,40 +4211,40 @@ Roadmap</a>
 
 <h2 id="creating-a-boolean-custom-column">Creating a boolean custom column</h2>
 
-<p>To create a custom column using <code class="language-plaintext highlighter-rouge">isNull</code>, you must combine <code class="language-plaintext highlighter-rouge">isNull</code> with another function.
+<p>To create a custom column using <code class="language-plaintext highlighter-rouge">isnull</code>, you must combine <code class="language-plaintext highlighter-rouge">isnull</code> with another function.
 For example, if you want to create a custom column that contains <code class="language-plaintext highlighter-rouge">true</code> when the <code class="language-plaintext highlighter-rouge">Discount</code> column is null, and <code class="language-plaintext highlighter-rouge">false</code> otherwise, you can use the <a href="./case"><code class="language-plaintext highlighter-rouge">case expression</code></a> :</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>case(isNull([Discount]), true, false)
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>case(isnull([Discount]), true, false)
 </code></pre></div></div>
 
 <h2 id="replacing-null-values-with-another-value">Replacing null values with another value</h2>
 
-<p>Combine <code class="language-plaintext highlighter-rouge">isNull</code> with the <a href="./case"><code class="language-plaintext highlighter-rouge">case</code> expression</a> to replace missing information with something more descriptive:</p>
+<p>Combine <code class="language-plaintext highlighter-rouge">isnull</code> with the <a href="./case"><code class="language-plaintext highlighter-rouge">case</code> expression</a> to replace missing information with something more descriptive:</p>
 
 <p>For example, you can create a new custom column that will contain <code class="language-plaintext highlighter-rouge">"Unknown feedback"</code> when the original <code class="language-plaintext highlighter-rouge">[Feedback]</code> column is null, and the actual feedback value when <code class="language-plaintext highlighter-rouge">[Feedback]</code> is has a value. The custom expression to do it is:</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>case(isNull([Feedback]), "Unknown feedback.", [Feedback])
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>case(isnull([Feedback]), "Unknown feedback.", [Feedback])
 </code></pre></div></div>
 
 <table>
   <thead>
     <tr>
       <th>Feedback</th>
-      <th><code class="language-plaintext highlighter-rouge">case(isNull([Feedback]), "Unknown feedback.", [Feedback])</code></th>
+      <th><code class="language-plaintext highlighter-rouge">case(isnull([Feedback]), "Unknown feedback.", [Feedback])</code></th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td data-label="Feedback"><code class="language-plaintext highlighter-rouge">null</code></td>
-      <td data-label="case(isNull([Feedback]), &quot;Unknown feedback.&quot;, [Feedback])"><code class="language-plaintext highlighter-rouge">"Unknown feedback."</code></td>
+      <td data-label="case(isnull([Feedback]), &quot;Unknown feedback.&quot;, [Feedback])"><code class="language-plaintext highlighter-rouge">"Unknown feedback."</code></td>
     </tr>
     <tr>
       <td data-label="Feedback"><code class="language-plaintext highlighter-rouge">""</code></td>
-      <td data-label="case(isNull([Feedback]), &quot;Unknown feedback.&quot;, [Feedback])"><code class="language-plaintext highlighter-rouge">""</code></td>
+      <td data-label="case(isnull([Feedback]), &quot;Unknown feedback.&quot;, [Feedback])"><code class="language-plaintext highlighter-rouge">""</code></td>
     </tr>
     <tr>
       <td data-label="Feedback"><code class="language-plaintext highlighter-rouge">"I like your style."</code></td>
-      <td data-label="case(isNull([Feedback]), &quot;Unknown feedback.&quot;, [Feedback])"><code class="language-plaintext highlighter-rouge">"I like your style."</code></td>
+      <td data-label="case(isnull([Feedback]), &quot;Unknown feedback.&quot;, [Feedback])"><code class="language-plaintext highlighter-rouge">"I like your style."</code></td>
     </tr>
   </tbody>
 </table>
@@ -4255,29 +4255,29 @@ For example, if you want to create a custom column that contains <code class="la
   <thead>
     <tr>
       <th><a href="/learn/grow-your-data-skills/data-fundamentals/data-types-overview#examples-of-data-types">Data type</a></th>
-      <th>Works with <code class="language-plaintext highlighter-rouge">isNull</code></th>
+      <th>Works with <code class="language-plaintext highlighter-rouge">isnull</code></th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td data-label="Data type">String</td>
-      <td data-label="Works with isNull">✅</td>
+      <td data-label="Works with isnull">✅</td>
     </tr>
     <tr>
       <td data-label="Data type">Number</td>
-      <td data-label="Works with isNull">✅</td>
+      <td data-label="Works with isnull">✅</td>
     </tr>
     <tr>
       <td data-label="Data type">Timestamp</td>
-      <td data-label="Works with isNull">✅</td>
+      <td data-label="Works with isnull">✅</td>
     </tr>
     <tr>
       <td data-label="Data type">Boolean</td>
-      <td data-label="Works with isNull">✅</td>
+      <td data-label="Works with isnull">✅</td>
     </tr>
     <tr>
       <td data-label="Data type">JSON</td>
-      <td data-label="Works with isNull">✅</td>
+      <td data-label="Works with isnull">✅</td>
     </tr>
   </tbody>
 </table>
@@ -4285,14 +4285,14 @@ For example, if you want to create a custom column that contains <code class="la
 <h2 id="limitations">Limitations</h2>
 
 <ul>
-  <li>In Metabase, you must combine <code class="language-plaintext highlighter-rouge">isNull</code> with another expression that accepts boolean arguments (i.e., <code class="language-plaintext highlighter-rouge">true</code> or <code class="language-plaintext highlighter-rouge">false</code>).</li>
-  <li><code class="language-plaintext highlighter-rouge">isNull</code> only accepts one value at a time. If you need to deal with blank cells across multiple columns, see the <a href="./coalesce">coalesce expression</a>.</li>
-  <li>If <code class="language-plaintext highlighter-rouge">isNull</code> doesn’t seem to do anything to your blank cells, you might have empty strings. Try the <a href="./isempty"><code class="language-plaintext highlighter-rouge">isEmpty</code> expression</a> instead.</li>
+  <li>In Metabase, you must combine <code class="language-plaintext highlighter-rouge">isnull</code> with another expression that accepts boolean arguments (i.e., <code class="language-plaintext highlighter-rouge">true</code> or <code class="language-plaintext highlighter-rouge">false</code>).</li>
+  <li><code class="language-plaintext highlighter-rouge">isnull</code> only accepts one value at a time. If you need to deal with blank cells across multiple columns, see the <a href="./coalesce">coalesce expression</a>.</li>
+  <li>If <code class="language-plaintext highlighter-rouge">isnull</code> doesn’t seem to do anything to your blank cells, you might have empty strings. Try the <a href="./isempty"><code class="language-plaintext highlighter-rouge">isempty</code> expression</a> instead.</li>
 </ul>
 
 <h2 id="related-functions">Related functions</h2>
 
-<p>This section covers functions and formulas that can be used interchangeably with the Metabase <code class="language-plaintext highlighter-rouge">isNull</code> expression, with notes on how to choose the best option for your use case.</p>
+<p>This section covers functions and formulas that can be used interchangeably with the Metabase <code class="language-plaintext highlighter-rouge">isnull</code> expression, with notes on how to choose the best option for your use case.</p>
 
 <ul>
   <li><a href="#sql">SQL</a></li>
@@ -4306,21 +4306,21 @@ For example, if you want to create a custom column that contains <code class="la
   <thead>
     <tr>
       <th>Feedback</th>
-      <th><code class="language-plaintext highlighter-rouge">case(isNull([Feedback]), "Unknown feedback.", [Feedback])</code></th>
+      <th><code class="language-plaintext highlighter-rouge">case(isnull([Feedback]), "Unknown feedback.", [Feedback])</code></th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td data-label="Feedback"><code class="language-plaintext highlighter-rouge">null</code></td>
-      <td data-label="case(isNull([Feedback]), &quot;Unknown feedback.&quot;, [Feedback])"><code class="language-plaintext highlighter-rouge">"Unknown feedback."</code></td>
+      <td data-label="case(isnull([Feedback]), &quot;Unknown feedback.&quot;, [Feedback])"><code class="language-plaintext highlighter-rouge">"Unknown feedback."</code></td>
     </tr>
     <tr>
       <td data-label="Feedback"><code class="language-plaintext highlighter-rouge">""</code></td>
-      <td data-label="case(isNull([Feedback]), &quot;Unknown feedback.&quot;, [Feedback])"><code class="language-plaintext highlighter-rouge">""</code></td>
+      <td data-label="case(isnull([Feedback]), &quot;Unknown feedback.&quot;, [Feedback])"><code class="language-plaintext highlighter-rouge">""</code></td>
     </tr>
     <tr>
       <td data-label="Feedback"><code class="language-plaintext highlighter-rouge">"I like your style."</code></td>
-      <td data-label="case(isNull([Feedback]), &quot;Unknown feedback.&quot;, [Feedback])"><code class="language-plaintext highlighter-rouge">"I like your style."</code></td>
+      <td data-label="case(isnull([Feedback]), &quot;Unknown feedback.&quot;, [Feedback])"><code class="language-plaintext highlighter-rouge">"I like your style."</code></td>
     </tr>
   </tbody>
 </table>
@@ -4333,9 +4333,9 @@ For example, if you want to create a custom column that contains <code class="la
      <span class="k">ELSE</span> <span class="n">Feedback</span> <span class="k">END</span>
 </code></pre></div></div>
 
-<p>is equivalent to the Metabase <code class="language-plaintext highlighter-rouge">isNull</code> expression:</p>
+<p>is equivalent to the Metabase <code class="language-plaintext highlighter-rouge">isnull</code> expression:</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>case(isNull([Feedback]), "Unknown feedback.", [Feedback])
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>case(isnull([Feedback]), "Unknown feedback.", [Feedback])
 </code></pre></div></div>
 
 <h3 id="spreadsheets">Spreadsheets</h3>
@@ -4347,9 +4347,9 @@ For example, if you want to create a custom column that contains <code class="la
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>=IF(ISNA(A2), "Unknown feedback.", A2)
 </code></pre></div></div>
 
-<p>is equivalent to the Metabase <code class="language-plaintext highlighter-rouge">isNull</code> expression:</p>
+<p>is equivalent to the Metabase <code class="language-plaintext highlighter-rouge">isnull</code> expression:</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>case(isNull([Feedback]), "Unknown feedback.", [Feedback])
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>case(isnull([Feedback]), "Unknown feedback.", [Feedback])
 </code></pre></div></div>
 
 <h3 id="python">Python</h3>
@@ -4361,9 +4361,9 @@ For example, if you want to create a custom column that contains <code class="la
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>df["Custom Column"] = np.where(df["Feedback"].isnull(), "Unknown feedback.", df["Feedback"])
 </code></pre></div></div>
 
-<p>is equivalent to the Metabase <code class="language-plaintext highlighter-rouge">isNull</code> expression:</p>
+<p>is equivalent to the Metabase <code class="language-plaintext highlighter-rouge">isnull</code> expression:</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>case(isNull([Feedback]), "Unknown feedback.", [Feedback])
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>case(isnull([Feedback]), "Unknown feedback.", [Feedback])
 </code></pre></div></div>
 
 <h2 id="further-reading">Further reading</h2>

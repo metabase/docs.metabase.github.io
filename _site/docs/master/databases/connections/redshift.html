@@ -49,7 +49,7 @@
 <meta name="twitter:site" content="@metabase">
 
 <meta name="twitter:title" content="Amazon Redshift | Metabase Documentation">
-<meta name="twitter:description" content="Connect Metabase to Amazon Redshift data warehouses to run queries and create dashboards.">
+<meta name="twitter:description" content="Amazon Redshift To add a database connection, click on the gear icon in the top right, and navigate to Admin settings > Databases > Add a database. Settings You can edit these settings at any time. Just remember to save...">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -59,7 +59,7 @@
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://www.metabase.com/docs/master/databases/connections/redshift">
 <meta name="title" property="og:title" content="Amazon Redshift | Metabase Documentation">
-<meta name="description" property="og:description" content="Connect Metabase to Amazon Redshift data warehouses to run queries and create dashboards.">
+<meta name="description" property="og:description" content="Amazon Redshift To add a database connection, click on the gear icon in the top right, and navigate to Admin settings > Databases > Add a database. Settings You can edit these settings at any time. Just remember to save...">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -4162,15 +4162,9 @@ Roadmap</a>
 
 <p>To add a database connection, click on the <strong>gear</strong> icon in the top right, and navigate to <strong>Admin settings</strong> &gt; <strong>Databases</strong> &gt; <strong>Add a database</strong>.</p>
 
-<h2 id="connection-and-sync">Connection and sync</h2>
+<h2 id="settings">Settings</h2>
 
-<p>After connecting to a database, you’ll see the “Connection and sync” section that displays the current connection status and options to manage your database connection.</p>
-
-<p>Here you can <a href="../sync-scan">sync the database schema and rescan field values</a>, and edit connection details.</p>
-
-<h2 id="edit-connection-details">Edit connection details</h2>
-
-<p>To access or modify your database connection settings, click the <strong>Edit connection details</strong> button.</p>
+<p>You can edit these settings at any time. Just remember to save your changes.</p>
 
 <h3 id="display-name">Display name</h3>
 
@@ -4230,21 +4224,42 @@ Roadmap</a>
 
 <p>See our <a href="../ssh-tunnel">guide to SSH tunneling</a>.</p>
 
-<h3 id="additional-jdbc-connection-string-options">Additional JDBC connection string options</h3>
+<h2 id="additional-jdbc-connection-string-options">Additional JDBC connection string options</h2>
 
 <p>You can append options to the connection string that Metabase uses to connect to your database.</p>
 
-<h3 id="re-run-queries-for-simple-explorations">Re-run queries for simple explorations</h3>
+<h2 id="re-run-queries-for-simple-explorations">Re-run queries for simple explorations</h2>
 
 <p>Turn this option <strong>OFF</strong> if people want to click <strong>Run</strong> (the play button) before applying any <a href="../../questions/query-builder/summarizing-and-grouping">Summarize</a> or filter selections.</p>
 
 <p>By default, Metabase will execute a query as soon as you choose an grouping option from the <strong>Summarize</strong> menu or a filter condition from the <a href="/learn/metabase-basics/querying-and-dashboards/questions/drill-through">drill-through menu</a>. If your database is slow, you may want to disable re-running to avoid loading data on each click.</p>
 
-<h3 id="choose-when-syncs-and-scans-happen">Choose when syncs and scans happen</h3>
+<h2 id="choose-when-metabase-syncs-and-scans">Choose when Metabase syncs and scans</h2>
 
-<p>See <a href="../sync-scan#choose-when-syncs-and-scans-happen">syncs and scans</a>.</p>
+<p>Turn this option <strong>ON</strong> to manage the queries that Metabase uses to stay up to date with your database. For more information, see <a href="../sync-scan">Syncing and scanning databases</a>.</p>
 
-<h3 id="periodically-refingerprint-tables">Periodically refingerprint tables</h3>
+<h3 id="database-syncing">Database syncing</h3>
+
+<p>If you’ve selected <strong>Choose when syncs and scans happen</strong> &gt; <strong>ON</strong>, you’ll be able to set:</p>
+
+<ul>
+  <li>The frequency of the <a href="../sync-scan#how-database-syncs-work">sync</a>: hourly (default) or daily.</li>
+  <li>The time to run the sync, in the timezone of the server where your Metabase app is running.</li>
+</ul>
+
+<h3 id="scanning-for-filter-values">Scanning for filter values</h3>
+
+<p>Metabase can scan the values present in each field in this database to enable checkbox filters in dashboards and questions. This can be a somewhat resource-intensive process, particularly if you have a very large database.</p>
+
+<p>If you’ve selected <strong>Choose when syncs and scans happen</strong> &gt; <strong>ON</strong>, you’ll see the following options under <strong>Scanning for filter values</strong>:</p>
+
+<ul>
+  <li><strong>Regularly, on a schedule</strong> allows you to run <a href="../sync-scan#manually-scanning-column-values">scan queries</a> at a frequency that matches the rate of change to your database. The time is set in the timezone of the server where your Metabase app is running. This is the best option for a small database, or tables with distinct values that get updated often.</li>
+  <li><strong>Only when adding a new filter widget</strong> is a great option if you want scan queries to run on demand. Turning this option <strong>ON</strong> means that Metabase will only scan and cache the values of the field(s) that are used when a new filter is added to a dashboard or SQL question.</li>
+  <li><strong>Never, I’ll do this manually if I need to</strong> is an option for databases that are either prohibitively large, or which never really have new values added. Use the <a href="../sync-scan#manually-scanning-column-values">Re-scan field values now</a> button to run a manual scan and bring your filter values up to date.</li>
+</ul>
+
+<h2 id="periodically-refingerprint-tables">Periodically refingerprint tables</h2>
 
 <blockquote>
   <p>Periodic refingerprinting will increase the load on your database.</p>
@@ -4253,24 +4268,6 @@ Roadmap</a>
 <p>Turn this option <strong>ON</strong> to scan a sample of values every time Metabase runs a <a href="../sync-scan#how-database-syncs-work">sync</a>.</p>
 
 <p>A fingerprinting query examines the first 10,000 rows from each column and uses that data to guesstimate how many unique values each column has, what the minimum and maximum values are for numeric and timestamp columns, and so on. If you leave this option <strong>OFF</strong>, Metabase will only fingerprint your columns once during setup.</p>
-
-<h2 id="model-features">Model features</h2>
-
-<p>Choose whether to enable features related to Metabase models. These will often require a write connection.</p>
-
-<h3 id="model-persistence">Model persistence</h3>
-
-<p>You can enable model persistence to allow Metabase to create tables with model data and refresh them on a schedule. This requires write permissions to a designated schema.</p>
-
-<p>Check out <a href="../../data-modeling/model-persistence">Model persistence</a>.</p>
-
-<h2 id="database-routing">Database routing</h2>
-
-<p>See <a href="../../permissions/database-routing">Database routing</a>.</p>
-
-<h2 id="danger-zone">Danger zone</h2>
-
-<p>See <a href="../danger-zone">Danger zone</a>.</p>
 
 <h2 id="further-reading">Further reading</h2>
 

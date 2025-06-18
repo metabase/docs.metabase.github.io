@@ -57,32 +57,6 @@ or with yarn:
 yarn add @metabase/embedding-sdk-react@53-stable
 ```
 
-### Resolving `@types/react` version mismatches
-
-In rare scenarios, the Embedding SDK and your application may use different major versions of `@types/react`, causing TypeScript conflicts.
-
-To enforce a single `@types/react` version across all dependencies, add an `overrides` (npm) or `resolutions` (Yarn) section to your `package.json` and specify the `@types/react` version your application uses.
-
-#### NPM set @types/react version
-
-```json
-{
-  "overrides": {
-    "@types/react": "..."
-  }
-}
-```
-
-#### Yarn set @types/react version
-
-```json
-{
-  "resolutions": {
-    "@types/react": "..."
-  }
-}
-```
-
 ## Developing with the Embedded analytics SDK
 
 Start with one of the quickstarts, then see these pages for more info on components, theming, and more.
@@ -123,6 +97,7 @@ The SDK doesn't support:
 - Alerts
 - Server-side rendering (SSR)
 - Multiple _interactive_ dashboards on the same application page. If you need to embed multiple dashboards on the same application page, you can embed static dashboards.
+- React 19
 
 ## Issues, feature requests and support
 

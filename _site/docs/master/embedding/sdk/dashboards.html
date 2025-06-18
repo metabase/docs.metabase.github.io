@@ -4186,252 +4186,112 @@ Roadmap</a>
 
 <p>You can embed a dashboard using the one of the dashboard components:</p>
 
-<h3 id="staticdashboard"><code class="language-plaintext highlighter-rouge">StaticDashboard</code></h3>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">StaticDashboard</code></li>
+</ul>
 
 <p>A lightweight dashboard component. Use this component when you want to display results without letting people interact with the data.</p>
 
-<h4 id="api-reference">API Reference</h4>
 <ul>
-  <li><a href="./api/StaticDashboard">Component</a></li>
-  <li><a href="./api/StaticDashboardProps">Props</a></li>
+  <li><code class="language-plaintext highlighter-rouge">InteractiveDashboard</code></li>
 </ul>
-
-<h4 id="props">Props</h4>
-
-<table>
-  <thead>
-    <tr>
-      <th style="text-align: left">Property</th>
-      <th style="text-align: left">Type</th>
-      <th style="text-align: left">Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="classname"></a> <code class="language-plaintext highlighter-rouge">className?</code></td>
-      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">string</code></td>
-      <td style="text-align: left" data-label="Description">A custom class name to be added to the root element.</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="dashboardid"></a> <code class="language-plaintext highlighter-rouge">dashboardId</code></td>
-      <td style="text-align: left" data-label="Type"><a href="./api/SdkDashboardId"><code class="language-plaintext highlighter-rouge">SdkDashboardId</code></a></td>
-      <td style="text-align: left" data-label="Description">The ID of the dashboard. <br> This is either: <br> - the numerical ID when accessing a dashboard link, i.e. <code class="language-plaintext highlighter-rouge">http://localhost:3000/dashboard/1-my-dashboard</code> where the ID is <code class="language-plaintext highlighter-rouge">1</code> <br> - the string ID found in the <code class="language-plaintext highlighter-rouge">entity_id</code> key of the dashboard object when using the API directly or using the SDK Collection Browser to return data</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="hiddenparameters"></a> <code class="language-plaintext highlighter-rouge">hiddenParameters?</code></td>
-      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">string</code>[]</td>
-      <td style="text-align: left" data-label="Description">A list of <a href="/docs/master/embedding/public-links#appearance-parameters">parameters to hide</a>. <br> - Combining <a href="./api/InteractiveDashboardProps#initialparameters">initialParameters</a> and <a href="./api/InteractiveDashboardProps#hiddenparameters">hiddenParameters</a> to filter data on the frontend is a <a href="/docs/master/embedding/sdk/authentication#security-warning-each-end-user-must-have-their-own-metabase-account">security risk</a>. <br> - Combining <a href="./api/InteractiveDashboardProps#initialparameters">initialParameters</a> and <a href="./api/InteractiveDashboardProps#hiddenparameters">hiddenParameters</a> to declutter the user interface is fine.</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="initialparameters"></a> <code class="language-plaintext highlighter-rouge">initialParameters?</code></td>
-      <td style="text-align: left" data-label="Type"><a href="./api/ParameterValues"><code class="language-plaintext highlighter-rouge">ParameterValues</code></a></td>
-      <td style="text-align: left" data-label="Description">Query parameters for the dashboard. For a single option, use a <code class="language-plaintext highlighter-rouge">string</code> value, and use a list of strings for multiple options. <br> - Combining <a href="./api/InteractiveDashboardProps#initialparameters">initialParameters</a> and <a href="./api/InteractiveDashboardProps#hiddenparameters">hiddenParameters</a> to filter data on the frontend is a <a href="/docs/master/embedding/sdk/authentication#security-warning-each-end-user-must-have-their-own-metabase-account">security risk</a>. <br> - Combining <a href="./api/InteractiveDashboardProps#initialparameters">initialParameters</a> and <a href="./api/InteractiveDashboardProps#hiddenparameters">hiddenParameters</a> to declutter the user interface is fine.</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="onload"></a> <code class="language-plaintext highlighter-rouge">onLoad?</code></td>
-      <td style="text-align: left" data-label="Type">(<code class="language-plaintext highlighter-rouge">dashboard</code>: <code class="language-plaintext highlighter-rouge">null</code> | <a href="./api/MetabaseDashboard"><code class="language-plaintext highlighter-rouge">MetabaseDashboard</code></a>) =&gt; <code class="language-plaintext highlighter-rouge">void</code></td>
-      <td style="text-align: left" data-label="Description">Callback that is called when the dashboard is loaded.</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="onloadwithoutcards"></a> <code class="language-plaintext highlighter-rouge">onLoadWithoutCards?</code></td>
-      <td style="text-align: left" data-label="Type">(<code class="language-plaintext highlighter-rouge">dashboard</code>: <code class="language-plaintext highlighter-rouge">null</code> | <a href="./api/MetabaseDashboard"><code class="language-plaintext highlighter-rouge">MetabaseDashboard</code></a>) =&gt; <code class="language-plaintext highlighter-rouge">void</code></td>
-      <td style="text-align: left" data-label="Description">Callback that is called when the dashboard is loaded without cards.</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="style"></a> <code class="language-plaintext highlighter-rouge">style?</code></td>
-      <td style="text-align: left" data-label="Type"><a href="https://github.com/DefinitelyTyped/DefinitelyTyped/blob/0b728411cd1dfb4bd26992bb35a73cf8edaa22e7/types/react/index.d.ts#L2579"><code class="language-plaintext highlighter-rouge">CSSProperties</code></a></td>
-      <td style="text-align: left" data-label="Description">A custom style object to be added to the root element.</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="withcardtitle"></a> <code class="language-plaintext highlighter-rouge">withCardTitle?</code></td>
-      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">boolean</code></td>
-      <td style="text-align: left" data-label="Description">Whether the dashboard cards should display a title.</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="withdownloads"></a> <code class="language-plaintext highlighter-rouge">withDownloads?</code></td>
-      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">boolean</code></td>
-      <td style="text-align: left" data-label="Description">Whether to hide the download button.</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="withtitle"></a> <code class="language-plaintext highlighter-rouge">withTitle?</code></td>
-      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">boolean</code></td>
-      <td style="text-align: left" data-label="Description">Whether the dashboard should display a title.</td>
-    </tr>
-  </tbody>
-</table>
-
-<h3 id="interactivedashboard"><code class="language-plaintext highlighter-rouge">InteractiveDashboard</code></h3>
 
 <p>A dashboard component with drill downs, click behaviors, and the ability to view and click into questions. Use this component when you want to allow people to explore their data.</p>
 
-<h4 id="api-reference-1">API Reference</h4>
 <ul>
-  <li><a href="./api/InteractiveDashboard">Component</a></li>
-  <li><a href="./api/InteractiveDashboardProps">Props</a></li>
+  <li><code class="language-plaintext highlighter-rouge">EditableDashboard</code></li>
 </ul>
-
-<h4 id="props-1">Props</h4>
-
-<table>
-  <thead>
-    <tr>
-      <th style="text-align: left">Property</th>
-      <th style="text-align: left">Type</th>
-      <th style="text-align: left">Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="classname"></a> <code class="language-plaintext highlighter-rouge">className?</code></td>
-      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">string</code></td>
-      <td style="text-align: left" data-label="Description">A custom class name to be added to the root element.</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="dashboardid"></a> <code class="language-plaintext highlighter-rouge">dashboardId</code></td>
-      <td style="text-align: left" data-label="Type"><a href="./api/SdkDashboardId"><code class="language-plaintext highlighter-rouge">SdkDashboardId</code></a></td>
-      <td style="text-align: left" data-label="Description">The ID of the dashboard. <br> This is either: <br> - the numerical ID when accessing a dashboard link, i.e. <code class="language-plaintext highlighter-rouge">http://localhost:3000/dashboard/1-my-dashboard</code> where the ID is <code class="language-plaintext highlighter-rouge">1</code> <br> - the string ID found in the <code class="language-plaintext highlighter-rouge">entity_id</code> key of the dashboard object when using the API directly or using the SDK Collection Browser to return data</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="drillthroughquestionheight"></a> <code class="language-plaintext highlighter-rouge">drillThroughQuestionHeight?</code></td>
-      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">Height</code>&lt;<code class="language-plaintext highlighter-rouge">string</code> | <code class="language-plaintext highlighter-rouge">number</code>&gt;</td>
-      <td style="text-align: left" data-label="Description">Height of a question component when drilled from the dashboard to a question level.</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="drillthroughquestionprops"></a> <code class="language-plaintext highlighter-rouge">drillThroughQuestionProps?</code></td>
-      <td style="text-align: left" data-label="Type"><a href="./api/DrillThroughQuestionProps"><code class="language-plaintext highlighter-rouge">DrillThroughQuestionProps</code></a></td>
-      <td style="text-align: left" data-label="Description">Props of a question component when drilled from the dashboard to a question level.</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="hiddenparameters"></a> <code class="language-plaintext highlighter-rouge">hiddenParameters?</code></td>
-      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">string</code>[]</td>
-      <td style="text-align: left" data-label="Description">A list of <a href="/docs/master/embedding/public-links#appearance-parameters">parameters to hide</a>. <br> - Combining <a href="./api/InteractiveDashboardProps#initialparameters">initialParameters</a> and <a href="./api/InteractiveDashboardProps#hiddenparameters">hiddenParameters</a> to filter data on the frontend is a <a href="/docs/master/embedding/sdk/authentication#security-warning-each-end-user-must-have-their-own-metabase-account">security risk</a>. <br> - Combining <a href="./api/InteractiveDashboardProps#initialparameters">initialParameters</a> and <a href="./api/InteractiveDashboardProps#hiddenparameters">hiddenParameters</a> to declutter the user interface is fine.</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="initialparameters"></a> <code class="language-plaintext highlighter-rouge">initialParameters?</code></td>
-      <td style="text-align: left" data-label="Type"><a href="./api/ParameterValues"><code class="language-plaintext highlighter-rouge">ParameterValues</code></a></td>
-      <td style="text-align: left" data-label="Description">Query parameters for the dashboard. For a single option, use a <code class="language-plaintext highlighter-rouge">string</code> value, and use a list of strings for multiple options. <br> - Combining <a href="./api/InteractiveDashboardProps#initialparameters">initialParameters</a> and <a href="./api/InteractiveDashboardProps#hiddenparameters">hiddenParameters</a> to filter data on the frontend is a <a href="/docs/master/embedding/sdk/authentication#security-warning-each-end-user-must-have-their-own-metabase-account">security risk</a>. <br> - Combining <a href="./api/InteractiveDashboardProps#initialparameters">initialParameters</a> and <a href="./api/InteractiveDashboardProps#hiddenparameters">hiddenParameters</a> to declutter the user interface is fine.</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="onload"></a> <code class="language-plaintext highlighter-rouge">onLoad?</code></td>
-      <td style="text-align: left" data-label="Type">(<code class="language-plaintext highlighter-rouge">dashboard</code>: <code class="language-plaintext highlighter-rouge">null</code> | <a href="./api/MetabaseDashboard"><code class="language-plaintext highlighter-rouge">MetabaseDashboard</code></a>) =&gt; <code class="language-plaintext highlighter-rouge">void</code></td>
-      <td style="text-align: left" data-label="Description">Callback that is called when the dashboard is loaded.</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="onloadwithoutcards"></a> <code class="language-plaintext highlighter-rouge">onLoadWithoutCards?</code></td>
-      <td style="text-align: left" data-label="Type">(<code class="language-plaintext highlighter-rouge">dashboard</code>: <code class="language-plaintext highlighter-rouge">null</code> | <a href="./api/MetabaseDashboard"><code class="language-plaintext highlighter-rouge">MetabaseDashboard</code></a>) =&gt; <code class="language-plaintext highlighter-rouge">void</code></td>
-      <td style="text-align: left" data-label="Description">Callback that is called when the dashboard is loaded without cards.</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="plugins"></a> <code class="language-plaintext highlighter-rouge">plugins?</code></td>
-      <td style="text-align: left" data-label="Type"><a href="./api/MetabasePluginsConfig"><code class="language-plaintext highlighter-rouge">MetabasePluginsConfig</code></a></td>
-      <td style="text-align: left" data-label="Description">Additional mapper function to override or add drill-down menu. See the implementing custom actions section for more details.</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="renderdrillthroughquestion"></a> <code class="language-plaintext highlighter-rouge">renderDrillThroughQuestion?</code></td>
-      <td style="text-align: left" data-label="Type">() =&gt; <a href="https://github.com/DefinitelyTyped/DefinitelyTyped/blob/0b728411cd1dfb4bd26992bb35a73cf8edaa22e7/types/react/index.d.ts#L478"><code class="language-plaintext highlighter-rouge">ReactNode</code></a></td>
-      <td style="text-align: left" data-label="Description">A custom React component to render the question layout. Use namespaced InteractiveQuestion components to build the layout.</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="style"></a> <code class="language-plaintext highlighter-rouge">style?</code></td>
-      <td style="text-align: left" data-label="Type"><a href="https://github.com/DefinitelyTyped/DefinitelyTyped/blob/0b728411cd1dfb4bd26992bb35a73cf8edaa22e7/types/react/index.d.ts#L2579"><code class="language-plaintext highlighter-rouge">CSSProperties</code></a></td>
-      <td style="text-align: left" data-label="Description">A custom style object to be added to the root element.</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="withcardtitle"></a> <code class="language-plaintext highlighter-rouge">withCardTitle?</code></td>
-      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">boolean</code></td>
-      <td style="text-align: left" data-label="Description">Whether the dashboard cards should display a title.</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="withdownloads"></a> <code class="language-plaintext highlighter-rouge">withDownloads?</code></td>
-      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">boolean</code></td>
-      <td style="text-align: left" data-label="Description">Whether to hide the download button.</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="withtitle"></a> <code class="language-plaintext highlighter-rouge">withTitle?</code></td>
-      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">boolean</code></td>
-      <td style="text-align: left" data-label="Description">Whether the dashboard should display a title.</td>
-    </tr>
-  </tbody>
-</table>
-
-<h3 id="editabledashboard"><code class="language-plaintext highlighter-rouge">EditableDashboard</code></h3>
 
 <p>A dashboard component with the features available in the <code class="language-plaintext highlighter-rouge">InteractiveDashboard</code> component, as well as the ability to add and update questions, layout, and content within your dashboard. Use this component when you want to give people the ability to modify your dashboards, for example in an admin panel in your app.</p>
 
-<h4 id="api-reference-2">API Reference</h4>
-<ul>
-  <li><a href="./api/EditableDashboard">Component</a></li>
-  <li><a href="./api/EditableDashboardProps">Props</a></li>
-</ul>
-
-<h4 id="props-2">Props</h4>
+<h2 id="dashboard-component-props">Dashboard component props</h2>
 
 <table>
   <thead>
     <tr>
-      <th style="text-align: left">Property</th>
-      <th style="text-align: left">Type</th>
-      <th style="text-align: left">Description</th>
+      <th>Prop</th>
+      <th>Type</th>
+      <th>Description</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td style="text-align: left" data-label="Property"><a id="classname"></a> <code class="language-plaintext highlighter-rouge">className?</code></td>
-      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">string</code></td>
-      <td style="text-align: left" data-label="Description">A custom class name to be added to the root element.</td>
+      <td data-label="Prop">dashboardId</td>
+      <td data-label="Type"><code class="language-plaintext highlighter-rouge">number \| string</code></td>
+      <td data-label="Description">The ID of the dashboard. This is either:<br>- the numerical ID when accessing a dashboard link, i.e. <code class="language-plaintext highlighter-rouge">http://localhost:3000/dashboard/1-my-dashboard</code> where the ID is <code class="language-plaintext highlighter-rouge">1</code><br>- the string ID found in the <code class="language-plaintext highlighter-rouge">entity_id</code> key of the dashboard object when using the API directly or using the SDK Collection Browser to return data</td>
     </tr>
     <tr>
-      <td style="text-align: left" data-label="Property"><a id="dashboardid"></a> <code class="language-plaintext highlighter-rouge">dashboardId</code></td>
-      <td style="text-align: left" data-label="Type"><a href="./api/SdkDashboardId"><code class="language-plaintext highlighter-rouge">SdkDashboardId</code></a></td>
-      <td style="text-align: left" data-label="Description">The ID of the dashboard. <br> This is either: <br> - the numerical ID when accessing a dashboard link, i.e. <code class="language-plaintext highlighter-rouge">http://localhost:3000/dashboard/1-my-dashboard</code> where the ID is <code class="language-plaintext highlighter-rouge">1</code> <br> - the string ID found in the <code class="language-plaintext highlighter-rouge">entity_id</code> key of the dashboard object when using the API directly or using the SDK Collection Browser to return data</td>
+      <td data-label="Prop">initialParameters**</td>
+      <td data-label="Type"><code class="language-plaintext highlighter-rouge">Record&lt;string, string \| string[]&gt;</code></td>
+      <td data-label="Description">Query parameters for the dashboard. For a single option, use a <code class="language-plaintext highlighter-rouge">string</code> value, and use a list of strings for multiple options.</td>
     </tr>
     <tr>
-      <td style="text-align: left" data-label="Property"><a id="drillthroughquestionheight"></a> <code class="language-plaintext highlighter-rouge">drillThroughQuestionHeight?</code></td>
-      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">number</code></td>
-      <td style="text-align: left" data-label="Description">Height of a question component when drilled from the dashboard to a question level.</td>
+      <td data-label="Prop">withTitle</td>
+      <td data-label="Type"><code class="language-plaintext highlighter-rouge">boolean</code></td>
+      <td data-label="Description">Whether the dashboard should display a title.</td>
     </tr>
     <tr>
-      <td style="text-align: left" data-label="Property"><a id="drillthroughquestionprops"></a> <code class="language-plaintext highlighter-rouge">drillThroughQuestionProps?</code></td>
-      <td style="text-align: left" data-label="Type"><a href="./api/DrillThroughQuestionProps"><code class="language-plaintext highlighter-rouge">DrillThroughQuestionProps</code></a></td>
-      <td style="text-align: left" data-label="Description">Props for the drill-through question</td>
+      <td data-label="Prop">withCardTitle</td>
+      <td data-label="Type"><code class="language-plaintext highlighter-rouge">boolean</code></td>
+      <td data-label="Description">Whether the dashboard cards should display a title.</td>
     </tr>
     <tr>
-      <td style="text-align: left" data-label="Property"><a id="initialparameters"></a> <code class="language-plaintext highlighter-rouge">initialParameters?</code></td>
-      <td style="text-align: left" data-label="Type"><a href="./api/ParameterValues"><code class="language-plaintext highlighter-rouge">ParameterValues</code></a></td>
-      <td style="text-align: left" data-label="Description">Query parameters for the dashboard. For a single option, use a <code class="language-plaintext highlighter-rouge">string</code> value, and use a list of strings for multiple options. <br> - Combining <a href="./api/InteractiveDashboardProps#initialparameters">initialParameters</a> and <a href="./api/InteractiveDashboardProps#hiddenparameters">hiddenParameters</a> to filter data on the frontend is a <a href="/docs/master/embedding/sdk/authentication#security-warning-each-end-user-must-have-their-own-metabase-account">security risk</a>. <br> - Combining <a href="./api/InteractiveDashboardProps#initialparameters">initialParameters</a> and <a href="./api/InteractiveDashboardProps#hiddenparameters">hiddenParameters</a> to declutter the user interface is fine.</td>
+      <td data-label="Prop">withDownloads</td>
+      <td data-label="Type"><code class="language-plaintext highlighter-rouge">boolean \| null</code></td>
+      <td data-label="Description">Whether to hide the download button.</td>
     </tr>
     <tr>
-      <td style="text-align: left" data-label="Property"><a id="onload"></a> <code class="language-plaintext highlighter-rouge">onLoad?</code></td>
-      <td style="text-align: left" data-label="Type">(<code class="language-plaintext highlighter-rouge">dashboard</code>: <code class="language-plaintext highlighter-rouge">null</code> | <a href="./api/MetabaseDashboard"><code class="language-plaintext highlighter-rouge">MetabaseDashboard</code></a>) =&gt; <code class="language-plaintext highlighter-rouge">void</code></td>
-      <td style="text-align: left" data-label="Description">Callback that is called when the dashboard is loaded.</td>
+      <td data-label="Prop">hiddenParameters**</td>
+      <td data-label="Type"><code class="language-plaintext highlighter-rouge">string[] \| null</code></td>
+      <td data-label="Description">A list of <a href="../../embedding/public-links#appearance-parameters">parameters to hide</a>.</td>
     </tr>
     <tr>
-      <td style="text-align: left" data-label="Property"><a id="onloadwithoutcards"></a> <code class="language-plaintext highlighter-rouge">onLoadWithoutCards?</code></td>
-      <td style="text-align: left" data-label="Type">(<code class="language-plaintext highlighter-rouge">dashboard</code>: <code class="language-plaintext highlighter-rouge">null</code> | <a href="./api/MetabaseDashboard"><code class="language-plaintext highlighter-rouge">MetabaseDashboard</code></a>) =&gt; <code class="language-plaintext highlighter-rouge">void</code></td>
-      <td style="text-align: left" data-label="Description">Callback that is called when the dashboard is loaded without cards.</td>
+      <td data-label="Prop">drillThroughQuestionHeight*</td>
+      <td data-label="Type"><code class="language-plaintext highlighter-rouge">number \| null</code></td>
+      <td data-label="Description">Height of a question component when drilled from the dashboard to a question level.</td>
     </tr>
     <tr>
-      <td style="text-align: left" data-label="Property"><a id="plugins"></a> <code class="language-plaintext highlighter-rouge">plugins?</code></td>
-      <td style="text-align: left" data-label="Type"><a href="./api/MetabasePluginsConfig"><code class="language-plaintext highlighter-rouge">MetabasePluginsConfig</code></a></td>
-      <td style="text-align: left" data-label="Description">Additional mapper function to override or add drill-down menu. See the implementing custom actions section for more details.</td>
+      <td data-label="Prop">questionPlugins*</td>
+      <td data-label="Type"><code class="language-plaintext highlighter-rouge">{ mapQuestionClickActions: Function } \| null</code></td>
+      <td data-label="Description">Additional mapper function to override or add drill-down menu. See the implementing custom actions section for more details.</td>
     </tr>
     <tr>
-      <td style="text-align: left" data-label="Property"><a id="style"></a> <code class="language-plaintext highlighter-rouge">style?</code></td>
-      <td style="text-align: left" data-label="Type"><a href="https://github.com/DefinitelyTyped/DefinitelyTyped/blob/0b728411cd1dfb4bd26992bb35a73cf8edaa22e7/types/react/index.d.ts#L2579"><code class="language-plaintext highlighter-rouge">CSSProperties</code></a></td>
-      <td style="text-align: left" data-label="Description">A custom style object to be added to the root element.</td>
+      <td data-label="Prop">onLoad</td>
+      <td data-label="Type"><code class="language-plaintext highlighter-rouge">(dashboard: Dashboard \| null) =&gt; void</code></td>
+      <td data-label="Description">Event handler that triggers after dashboard loads with all visible cards and their content.</td>
     </tr>
     <tr>
-      <td style="text-align: left" data-label="Property"><a id="withcardtitle"></a> <code class="language-plaintext highlighter-rouge">withCardTitle?</code></td>
-      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">boolean</code></td>
-      <td style="text-align: left" data-label="Description">Whether the dashboard cards should display a title.</td>
+      <td data-label="Prop">onLoadWithoutCards</td>
+      <td data-label="Type"><code class="language-plaintext highlighter-rouge">(dashboard: Dashboard \| null) =&gt; void</code></td>
+      <td data-label="Description">Event handler that triggers after dashboard loads, but without its cards - at this stage dashboard title, tabs and cards grid is rendered, but cards content is not yet loaded.</td>
     </tr>
     <tr>
-      <td style="text-align: left" data-label="Property"><a id="withdownloads"></a> <code class="language-plaintext highlighter-rouge">withDownloads?</code></td>
-      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">boolean</code></td>
-      <td style="text-align: left" data-label="Description">Whether to hide the download button.</td>
+      <td data-label="Prop">renderDrillThroughQuestion*</td>
+      <td data-label="Type"><code class="language-plaintext highlighter-rouge">() =&gt; ReactNode</code></td>
+      <td data-label="Description">A react component that renders <a href="#customizing-drill-through-question-layout">a question’s layout</a> shown after drilling through a question or clicking on a question card in the dashboard.</td>
+    </tr>
+    <tr>
+      <td data-label="Prop">drillThroughQuestionProps*</td>
+      <td data-label="Type"><code class="language-plaintext highlighter-rouge">[InteractiveQuestionProps](./questions#question-props)</code></td>
+      <td data-label="Description">Props for the drill-through question</td>
     </tr>
   </tbody>
 </table>
+
+<p><em>* Not available for <code class="language-plaintext highlighter-rouge">StaticDashboard</code>.</em></p>
+
+<p><em>** Combining <code class="language-plaintext highlighter-rouge">initialParameters</code> and <code class="language-plaintext highlighter-rouge">hiddenParameters</code> to filter data on the frontend is a <a href="./authentication#security-warning-each-end-user-must-have-their-own-metabase-account">security risk</a>. Combining <code class="language-plaintext highlighter-rouge">initialParameters</code> and <code class="language-plaintext highlighter-rouge">hiddenParameters</code> to declutter the user interface is fine.</em></p>
+
+<p>By default, dashboard components take full page height (100vh). You can override this with custom styles passed via <code class="language-plaintext highlighter-rouge">style</code> or <code class="language-plaintext highlighter-rouge">className</code> props.</p>
+
+<div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">&lt;</span><span class="nc">EditableDashboard</span>
+  <span class="na">style</span><span class="p">=</span><span class="si">{</span><span class="p">{</span>
+    <span class="na">height</span><span class="p">:</span> <span class="mi">800</span><span class="p">,</span>
+    <span class="na">minHeight</span><span class="p">:</span> <span class="dl">"</span><span class="s2">auto</span><span class="dl">"</span><span class="p">,</span>
+  <span class="p">}</span><span class="si">}</span>
+  <span class="na">dashboardId</span><span class="p">=</span><span class="si">{</span><span class="nx">dashboardId</span><span class="si">}</span>
+<span class="p">/&gt;</span>
+</code></pre></div></div>
 
 <h2 id="example-embedded-dashboard-with-interactivedashboard-component">Example embedded dashboard with <code class="language-plaintext highlighter-rouge">InteractiveDashboard</code> component</h2>
 
@@ -4444,6 +4304,7 @@ Roadmap</a>
 
 <span class="kd">const</span> <span class="nx">authConfig</span> <span class="o">=</span> <span class="nf">defineMetabaseAuthConfig</span><span class="p">({</span>
   <span class="na">metabaseInstanceUrl</span><span class="p">:</span> <span class="dl">"</span><span class="s2">https://your-metabase.example.com</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">authProviderUri</span><span class="p">:</span> <span class="dl">"</span><span class="s2">https://your-app.example.com/sso/metabase</span><span class="dl">"</span><span class="p">,</span>
 <span class="p">});</span>
 
 <span class="k">export</span> <span class="k">default</span> <span class="kd">function</span> <span class="nf">App</span><span class="p">()</span> <span class="p">{</span>
@@ -4465,19 +4326,6 @@ Roadmap</a>
 </span>    <span class="o">&lt;</span><span class="sr">/MetabaseProvider</span><span class="err">&gt;
 </span>  <span class="p">);</span>
 <span class="p">}</span>
-</code></pre></div></div>
-
-<h2 id="customizing-dashboard-height">Customizing dashboard height</h2>
-
-<p>By default, dashboard components take full page height (100vh). You can override this with custom styles passed via <code class="language-plaintext highlighter-rouge">style</code> or <code class="language-plaintext highlighter-rouge">className</code> props.</p>
-
-<div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">&lt;</span><span class="nc">EditableDashboard</span>
-  <span class="na">style</span><span class="p">=</span><span class="si">{</span><span class="p">{</span>
-    <span class="na">height</span><span class="p">:</span> <span class="mi">800</span><span class="p">,</span>
-    <span class="na">minHeight</span><span class="p">:</span> <span class="dl">"</span><span class="s2">auto</span><span class="dl">"</span><span class="p">,</span>
-  <span class="p">}</span><span class="si">}</span>
-  <span class="na">dashboardId</span><span class="p">=</span><span class="si">{</span><span class="nx">dashboardId</span><span class="si">}</span>
-<span class="p">/&gt;</span>
 </code></pre></div></div>
 
 <h2 id="customizing-drill-through-question-layout">Customizing drill-through question layout</h2>
@@ -4600,21 +4448,12 @@ Roadmap</a>
 
 <p>Creating a dashboard could be done with <code class="language-plaintext highlighter-rouge">useCreateDashboardApi</code> hook or <code class="language-plaintext highlighter-rouge">CreateDashboardModal</code> component.</p>
 
-<h3 id="usecreatedashboardapi"><code class="language-plaintext highlighter-rouge">useCreateDashboardApi</code></h3>
+<h3 id="hook">Hook</h3>
 
-<p>Use this hook if you’d like to have total control over the UI and settings.</p>
-
-<h4 id="api-reference-3">API Reference</h4>
-<ul>
-  <li><a href="./api/useCreateDashboardApi">Hook</a></li>
-  <li><a href="./api/CreateDashboardValues">Options</a></li>
-</ul>
-
-<h4 id="example">Example</h4>
 <div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="p">{</span> <span class="nx">createDashboard</span> <span class="p">}</span> <span class="o">=</span> <span class="nf">useCreateDashboardApi</span><span class="p">();</span>
 
 <span class="kd">const</span> <span class="nx">handleDashboardCreate</span> <span class="o">=</span> <span class="k">async </span><span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
-  <span class="kd">const</span> <span class="nx">dashboard</span> <span class="o">=</span> <span class="k">await</span> <span class="nf">createDashboard</span><span class="p">(</span><span class="nx">options</span><span class="p">);</span>
+  <span class="kd">const</span> <span class="nx">dashboard</span> <span class="o">=</span> <span class="k">await</span> <span class="nf">createDashboard</span><span class="p">(</span><span class="nx">props</span><span class="p">);</span>
 
   <span class="c1">// do something with created empty dashboard, e.g., use the dashboard in EditableDashboard component</span>
 <span class="p">};</span>
@@ -4622,44 +4461,37 @@ Roadmap</a>
 <span class="k">return</span> <span class="o">&lt;</span><span class="nx">button</span> <span class="nx">onClick</span><span class="o">=</span><span class="p">{</span><span class="nx">handleDashboardCreate</span><span class="p">}</span><span class="o">&gt;</span><span class="nx">Create</span> <span class="k">new</span> <span class="nx">dashboard</span><span class="o">&lt;</span><span class="sr">/button&gt;</span><span class="err">;
 </span></code></pre></div></div>
 
-<h4 id="options">Options</h4>
+<p>Props:</p>
 
 <table>
   <thead>
     <tr>
-      <th style="text-align: left">Property</th>
-      <th style="text-align: left">Type</th>
-      <th style="text-align: left">Description</th>
+      <th>Prop</th>
+      <th>Type</th>
+      <th>Description</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td style="text-align: left" data-label="Property"><a id="collectionid"></a> <code class="language-plaintext highlighter-rouge">collectionId</code></td>
-      <td style="text-align: left" data-label="Type"><a href="./api/SdkCollectionId"><code class="language-plaintext highlighter-rouge">SdkCollectionId</code></a></td>
-      <td style="text-align: left" data-label="Description">Collection in which to create a new dashboard. You can use predefined system values like <code class="language-plaintext highlighter-rouge">root</code> or <code class="language-plaintext highlighter-rouge">personal</code>.</td>
+      <td data-label="Prop">name</td>
+      <td data-label="Type"><code class="language-plaintext highlighter-rouge">string</code></td>
+      <td data-label="Description">(required) Dashboard title</td>
     </tr>
     <tr>
-      <td style="text-align: left" data-label="Property"><a id="description"></a> <code class="language-plaintext highlighter-rouge">description</code></td>
-      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">null</code> | <code class="language-plaintext highlighter-rouge">string</code></td>
-      <td style="text-align: left" data-label="Description">Dashboard description</td>
+      <td data-label="Prop">description</td>
+      <td data-label="Type"><code class="language-plaintext highlighter-rouge">string \| null</code></td>
+      <td data-label="Description">Optional dashboard description</td>
     </tr>
     <tr>
-      <td style="text-align: left" data-label="Property"><a id="name"></a> <code class="language-plaintext highlighter-rouge">name</code></td>
-      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">string</code></td>
-      <td style="text-align: left" data-label="Description">Dashboard title</td>
+      <td data-label="Prop">collectionId</td>
+      <td data-label="Type"><code class="language-plaintext highlighter-rouge">number \| 'root' \| 'personal'</code></td>
+      <td data-label="Description">Collection in which to create a new dashboard. You can use predefined system values like <code class="language-plaintext highlighter-rouge">root</code> or <code class="language-plaintext highlighter-rouge">personal</code>.</td>
     </tr>
   </tbody>
 </table>
 
-<h3 id="createdashboardmodal"><code class="language-plaintext highlighter-rouge">CreateDashboardModal</code></h3>
+<h3 id="component">Component</h3>
 
-<h4 id="api-refernce">API Refernce</h4>
-<ul>
-  <li><a href="./api/CreateDashboardModal">Component</a></li>
-  <li><a href="./api/CreateDashboardModalProps">Props</a></li>
-</ul>
-
-<h4 id="example-1">Example</h4>
 <div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="p">[</span><span class="nx">dashboard</span><span class="p">,</span> <span class="nx">setDashboard</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="o">&lt;</span><span class="nx">MetabaseDashboard</span> <span class="o">|</span> <span class="kc">null</span><span class="o">&gt;</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
 
 <span class="k">if </span><span class="p">(</span><span class="nx">dashboard</span><span class="p">)</span> <span class="p">{</span>
@@ -4669,36 +4501,31 @@ Roadmap</a>
 <span class="k">return</span> <span class="o">&lt;</span><span class="nx">CreateDashboardModal</span> <span class="nx">onClose</span><span class="o">=</span><span class="p">{</span><span class="nx">handleClose</span><span class="p">}</span> <span class="nx">onCreate</span><span class="o">=</span><span class="p">{</span><span class="nx">setDashboard</span><span class="p">}</span> <span class="sr">/&gt;</span><span class="err">;
 </span></code></pre></div></div>
 
-<h4 id="props-3">Props</h4>
+<p>Supported component props:</p>
 
 <table>
   <thead>
     <tr>
-      <th style="text-align: left">Property</th>
-      <th style="text-align: left">Type</th>
-      <th style="text-align: left">Description</th>
+      <th>Prop</th>
+      <th>Type</th>
+      <th>Description</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td style="text-align: left" data-label="Property"><a id="initialcollectionid"></a> <code class="language-plaintext highlighter-rouge">initialCollectionId?</code></td>
-      <td style="text-align: left" data-label="Type"><a href="./api/SdkCollectionId"><code class="language-plaintext highlighter-rouge">SdkCollectionId</code></a></td>
-      <td style="text-align: left" data-label="Description">Initial collection in which to create a dashboard. You can use predefined system values like <code class="language-plaintext highlighter-rouge">root</code> or <code class="language-plaintext highlighter-rouge">personal</code>.</td>
+      <td data-label="Prop">collectionId?</td>
+      <td data-label="Type"><code class="language-plaintext highlighter-rouge">number \| 'root' \| 'personal'</code></td>
+      <td data-label="Description">Initial collection in which to create a dashboard. You can use predefined system values like <code class="language-plaintext highlighter-rouge">root</code> or <code class="language-plaintext highlighter-rouge">personal</code>.</td>
     </tr>
     <tr>
-      <td style="text-align: left" data-label="Property"><a id="isopen"></a> <code class="language-plaintext highlighter-rouge">isOpen?</code></td>
-      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">boolean</code></td>
-      <td style="text-align: left" data-label="Description">Whether the modal is open or not.</td>
+      <td data-label="Prop">onCreate</td>
+      <td data-label="Type"><code class="language-plaintext highlighter-rouge">(dashboard: Dashboard) =&gt; void</code></td>
+      <td data-label="Description">Handler to react on dashboard creation.</td>
     </tr>
     <tr>
-      <td style="text-align: left" data-label="Property"><a id="onclose"></a> <code class="language-plaintext highlighter-rouge">onClose?</code></td>
-      <td style="text-align: left" data-label="Type">() =&gt; <code class="language-plaintext highlighter-rouge">void</code></td>
-      <td style="text-align: left" data-label="Description">Handler to close modal component</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="oncreate"></a> <code class="language-plaintext highlighter-rouge">onCreate</code></td>
-      <td style="text-align: left" data-label="Type">(<code class="language-plaintext highlighter-rouge">dashboard</code>: <a href="./api/MetabaseDashboard"><code class="language-plaintext highlighter-rouge">MetabaseDashboard</code></a>) =&gt; <code class="language-plaintext highlighter-rouge">void</code></td>
-      <td style="text-align: left" data-label="Description">Handler to react on dashboard creation.</td>
+      <td data-label="Prop">onClose</td>
+      <td data-label="Type"><code class="language-plaintext highlighter-rouge">() =&gt; void</code></td>
+      <td data-label="Description">Handler to close modal component</td>
     </tr>
   </tbody>
 </table>

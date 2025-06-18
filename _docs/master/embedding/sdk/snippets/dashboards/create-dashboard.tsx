@@ -7,7 +7,7 @@ import {
 } from "@metabase/embedding-sdk-react";
 
 const ExampleHook = () => {
-  const options = {
+  const props = {
     name: "New dashboard",
     description: null,
     collectionId: 1,
@@ -17,7 +17,7 @@ const ExampleHook = () => {
   const { createDashboard } = useCreateDashboardApi();
 
   const handleDashboardCreate = async () => {
-    const dashboard = await createDashboard(options);
+    const dashboard = await createDashboard(props);
 
     // do something with created empty dashboard, e.g., use the dashboard in EditableDashboard component
   };

@@ -238,15 +238,9 @@ You can change the width of a dashboard by going into the three dots menu in the
 
 You can change a card's visualization settings (to add a goal line, for example). Changing a card's visualization settings will only affect how the question appears on that dashboard card; these changes won't affect the original question's visualization settings.
 
-Click on the **pencil** icon to enter dashboard edit mode, hover over the question you want to edit, and click on the **pencil** icon or **palette** icon (depending on the chart type) to edit a card's visualization's settings.
+Click on the **pencil** icon to enter dashboard edit mode, hover over the question you want to edit, and click on the **palette** icon to edit a card's visualization's settings.
 
 ![Visualization settings](images/visualization-settings.png)
-
-If you clicked the pencil icon, look for **Settings** button in the bottom right.
-
-![Settings sidebar](./images/settings-sidebar.png)
-
-You can also [add more data to the chart](./multiple-series).
 
 ### Hiding a card when it doesn't return results
 
@@ -254,8 +248,8 @@ One neat thing to call out: if you have a question card that rarely returns resu
 
 When in dashboard edit mode, click on the **Visualization settings** for the card.
 
-- For tables, the option is in the **Columns** tab.
-- For other charts, the option is in the **Display** tab.
+- If the card displays a table, the option is in the **Columns** tab.
+- If the card displays a chart, the option is in the **Display** tab.
 
 Toggle the option **Hide this card if there are no results**. When you turn on this option, the query will still run in the background, but the dashboard won't display the card. If the query returns results, the dashboard will display the card, moving the other cards around to make room for it according to how you've arranged the cards in dashboard edit mode.
 
@@ -265,17 +259,10 @@ If you want to revert a dashboard card to its original visualization settings (i
 
 1. Go to your dashboard and click the **pencil icon** to go into edit mode.
 2. Hover over the card (question) that you want to edit.
-3. Click the **palette icon** to bring up the visualization settings for that card. 
-4. Click **Reset to defaults** (bottom right).
+3. Click the **palette icon** to bring up the visualization settings for that card.
+4. Click **Reset to defaults**.
 5. Click **Done** to save the card's visualization settings.
 6. Click **Save** to save the dashboard.
-
-If you don't see the palette icon, you'll need to:
-
-1. Click the **pencil icon** to edit the card's visualization settings.
-2. Remove the data in the **Manage data** section.
-3. Re-add the question to the card.
-4. **Save** your changes.
 
 ## Fullscreen dashboards
 
@@ -309,7 +296,7 @@ If your Metabase administrator has enabled [public sharing](../embedding/public-
 
 ![Share icon](./images/share-icon.png)
 
-Public links can be viewed by anyone, even if they don't have access to Metabase. You can also use the public embedding code to embed your question or dashboard in a simple web page or blog post. Check out examples of simple apps with embedded dashboards in our [embedding-reference-apps repository](https://github.com/metabase/embedding-reference-apps). To learn more about [embedding](../embedding/introduction), check out our article on [How to use Metabase to deliver analytics to your customers](/learn/metabase-basics/embedding/overview), as well as an article on how to combine branding, Single Sign-On, full app embedding, and data sandboxing to deliver [multi-tenant, self-service analytics](/learn/metabase-basics/embedding/multi-tenant-self-service-analytics).
+Public links can be viewed by anyone, even if they don't have access to Metabase. You can also use the public embedding code to embed your question or dashboard in a simple web page or blog post. Check out examples of simple apps with embedded dashboards in our [embedding-reference-apps repository](https://github.com/metabase/embedding-reference-apps). To learn more about [embedding](../embedding/introduction), check out our article on [How to use Metabase to deliver analytics to your customers](/learn/metabase-basics/embedding/overview), as well as an article on how to combine branding, Single Sign-On, full app embedding, and data sandboxing to deliver [multi-tenant, self-service analytics](/learn/developing-applications/advanced-metabase/multi-tenant-self-service-analytics).
 
 ## Exporting results from a dashboard
 

@@ -13,7 +13,7 @@ redirect_from:
 
 # Encrypting your database connection
 
-Metabase stores connection information for the various databases you add in the [Metabase application database](/glossary/application-database). To prevent bad actors from being able to access these details if they were to gain access to the application DB, Metabase can automatically encrypt them with AES256 + SHA512 when they are saved, and decrypt them on-the-fly whenever they are needed.
+Metabase stores connection information for the various databases you add in the [Metabase application database](/glossary/application_database). To prevent bad actors from being able to access these details if they were to gain access to the application DB, Metabase can automatically encrypt them with AES256 + SHA512 when they are saved, and decrypt them on-the-fly whenever they are needed.
 
 ## Creating an encryption key
 

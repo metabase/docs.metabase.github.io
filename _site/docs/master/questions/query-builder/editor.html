@@ -4231,7 +4231,7 @@ Roadmap</a>
 
 <p>To choose which columns to include in your query, click on the arrow next to the data source. If you uncheck a column, you’ll still be able to use the column while building a query (for example, in filters) but Metabase won’t display the column in results.</p>
 
-<p>You can <a href="../visualizations/table#rearranging-adding-and-hiding-columns">hide columns</a> from the table views.</p>
+<p>You can <a href="../visualizations/table#rearranging-adding-and-removing-columns">hide columns</a> from the table views.</p>
 
 <blockquote>
   <p><strong>Hiding columns should <em>not</em> be used to secure sensitive information</strong>. Hiding columns in table visualization settings only affects the visibility of the columns <em>in the visualization</em>, not in the query results. Even people with only “view data” permissions to the question will be able to change the visualization settings and unhide columns. To exclude a column from the results of a specific query, uncheck the column in the “Data” block of the query builder.</p>
@@ -4257,13 +4257,15 @@ Roadmap</a>
 
 <p>Custom expressions allow you to use spreadsheet-like functions and simple arithmetic within or between aggregation functions.</p>
 
+<p><img src="../images/aggregation-expression.png" alt="Custom expression"></p>
+
 <p>For example, you could do <code class="language-plaintext highlighter-rouge">Average(sqrt[FieldX]) + Sum([FieldY])</code> or <code class="language-plaintext highlighter-rouge">Max(floor([FieldX] - [FieldY]))</code>, where <code class="language-plaintext highlighter-rouge">FieldX</code> and <code class="language-plaintext highlighter-rouge">FieldY</code> are fields in the currently selected table. <a href="./expressions">Learn more about writing expressions</a>.</p>
 
 <h2 id="custom-columns">Custom columns</h2>
 
 <p><img src="../images/custom-column.png" alt="Custom column"></p>
 
-<p>Custom columns are helpful when you need to create a new column based on a calculation, such as subtracting the value of one column from another, or extracting a portion of an existing text column. Custom columns that you add aren’t permanently added to the underlying database table; the columns will only be present in the given question.</p>
+<p>Custom columns are helpful when you need to create a new column based on a calculation, such as subtracting the value of one column from another, or extracting a portion of an existing text column. Custom columns that you add aren’t permanently added to your table; the columns will only be present in the given question.</p>
 
 <p>You can use the following math operators in your formulas: <code class="language-plaintext highlighter-rouge">+</code>, <code class="language-plaintext highlighter-rouge">–</code>, <code class="language-plaintext highlighter-rouge">*</code> (multiplication), and <code class="language-plaintext highlighter-rouge">/</code> (division), along with a whole host of spreadsheet-like functions. You can also use parentheses to clarify the order of operations. See <a href="../query-builder/expressions-list">list of expressions</a>.</p>
 
@@ -4282,6 +4284,8 @@ Roadmap</a>
 <p><img src="../images/view-the-sql.png" alt="View the SQL"></p>
 
 <p>Under the hood, all Metabase questions are converted to SQL or another language native to your query engine. To view the native query that Metabase will run when you click <strong>Visualize</strong>, click the <strong>View SQL</strong> or <strong>View query</strong> button in the top right of the query builder. Metabase will preview the native query in a sidebar:</p>
+
+<p><img src="../images/sql-sidebar.png" alt="SQL sidebar"></p>
 
 <p>To view the native query, you must have <a href="../../permissions/data">query builder and native permissions</a>.</p>
 

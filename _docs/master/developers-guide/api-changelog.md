@@ -11,42 +11,6 @@ layout: new-docs
 
 # Breaking changes to the API interface
 
-## Metabase 0.55.0
-
-- `POST /api/card/from-csv` has been renamed to `POST /api/upload/csv`.
-
-- `GET /api/util/stats` has been renamed to `GET /api/analytics/anonymous-stats`.
-
-- `GET /api/util/bug_report_details` has been renamed to `GET /api/bug-reporting/details`.
-
-- `POST /api/util/product-feedback` has been renamed to `POST /api/product-feedback`.
-
-- `POST /api/util/entity_id` has been renamed to `POST /api/eid-translation/translate`.
-
-- `POST /api/util/password_check` has been renamed to `POST /api/session/password-check`.
-
-- `GET /api/util/logs` has been renamed to `GET /api/logger/logs`.
-
-- `GET /api/util/openapi` has been removed; you can use `GET /api/docs/openapi.json` instead, which does the same
-  thing.
-
-- `GET /api/util/diagnostic_info/connection_pool_info` has been renamed to `GET
-  /api/bug-reporting/connection-pool-details`.
-
-## Metabase 0.54.0
-
-- The alert system has been migrated from the legacy pulse infrastructure to the new notification system. This migration includes the following changes:
-
-  - The majority of `/api/alert` endpoints have been removed in favor of the new `/api/notification` endpoints. For backward compatibility, these endpoints will remain available until the next release:
-    - `GET /api/alert`
-    - `GET /api/alert/:id`
-    - `DELETE /api/alert/:id/subscription`
-
-  - Developers should migrate to using the `/api/notification` endpoints. For reference:
-    - An overview of the new notification system can be found at `src/metabase/notification/README.md`
-    - Notification API documentation at `{{YOUR_URL}}/api/docs/#tag/apinotification`
-    - Interactive API documentation available at `/api/docs` endpoint
-
 ## Metabase 0.53.0
 
 - `POST /api/card/:card-id/query/:export-format`

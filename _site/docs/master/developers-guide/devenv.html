@@ -4239,6 +4239,13 @@ Roadmap</a>
 <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ USE_ESLINT</span><span class="o">=</span><span class="nb">true </span>yarn build-hot
 </code></pre></div></div>
 
+<p>By default, these build processes rely on a memory cache. The build process with ESLint loader enabled uses a large amount of memory and may take a considerable amount of time to start (1 - 2 minutes or more). FE developers (or anyone else who frequently restarts FE builds) are encouraged to use webpack’s filesystem cache option for much better start-up performance:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ FS_CACHE</span><span class="o">=</span><span class="nb">true </span>yarn build-hot
+</code></pre></div></div>
+
+<p>When using <code class="language-plaintext highlighter-rouge">FS_CACHE=true</code> you may need to remove the <code class="language-plaintext highlighter-rouge">node_modules/.cache</code> directory to fix scenarios where the build may be improperly cached, and you must run <code class="language-plaintext highlighter-rouge">rm -rf node_modules/.cache</code> in order for the build to work correctly when alternating between open source and enterprise builds of the codebase.</p>
+
 <h3 id="frontend-testing">Frontend testing</h3>
 
 <p>Run all unit and Cypress end-to-end tests with</p>
@@ -4247,6 +4254,8 @@ Roadmap</a>
 </code></pre></div></div>
 
 <p>Cypress tests and some unit tests are located in <code class="language-plaintext highlighter-rouge">frontend/test</code> directory. New unit test files are added next to the files they test.</p>
+
+<p>If you are using <code class="language-plaintext highlighter-rouge">FS_CACHE=true</code>, you can also use <code class="language-plaintext highlighter-rouge">FS_CACHE=true</code> with <code class="language-plaintext highlighter-rouge">yarn test</code>.</p>
 
 <h3 id="frontend-debugging">Frontend debugging</h3>
 
@@ -4504,17 +4513,17 @@ Redshift and Bigquery). The tests will fail on launch and let you know what para
 
 <p><code class="language-plaintext highlighter-rouge">clj-kondo</code> must be <a href="https://github.com/clj-kondo/clj-kondo/blob/master/doc/install.md">installed separately</a>.</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Run clj-kondo
-mage kondo
-
-# Lint the migrations file (if you've written a database migration):
-mage lint-migrations
-
-# Run Eastwood
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Run Eastwood
 clojure -X:dev:ee:ee-dev:drivers:drivers-dev:eastwood
 
 # Run the namespace checker
 clojure -X:dev:ee:ee-dev:drivers:drivers-dev:test:namespace-checker
+
+# Run clj-kondo
+./bin/kondo.sh
+
+# Lint the migrations file (if you've written a database migration):
+./bin/lint-migrations-file.sh
 </code></pre></div></div>
 
 <h2 id="continuous-integration">Continuous integration</h2>

@@ -30,12 +30,11 @@ The connection settings differ database to database. For the list of connection 
 
 The databases listed below have official drivers maintained by the Metabase team. Customers on [Pro and Enterprise](/pricing/) will get official support. For each database, Metabase supports the oldest supported version through the latest stable version.
 
-- [Athena](./connections/athena)
+- [Amazon Athena](./connections/athena)
 - [BigQuery](./connections/bigquery) (Google Cloud Platform)
-- [ClickHouse](./connections/clickhouse)
 - [Databricks](./connections/databricks)
 - [Druid](./connections/druid)
-- [MongoDB](./connections/mongodb)
+- [MongoDB (recommend version 4.2 or higher)](./connections/mongodb)
 - [MariaDB](./connections/mariadb)
 - [MySQL](./connections/mysql)
 - [Oracle](./connections/oracle)
@@ -46,10 +45,9 @@ The databases listed below have official drivers maintained by the Metabase team
 - [SparkSQL](./connections/sparksql)
 - [SQL Server](./connections/sql-server)
 - [SQLite](./connections/sqlite)
-- [Starburst](./connections/starburst)
 - [Vertica](./connections/vertica)
 
-If you don't see your database listed here, see [Community drivers](../developers-guide/community-drivers).
+If you don't see your database listed here, see [partner and community drivers](../developers-guide/partner-and-community-drivers#partner-drivers).
 
 As of version 46.6.4, Metabase [no longer supports H2 connections](/blog/vulnerability-post-mortem). But Metabase still ships with an H2 database to include an embedded application database, as well as to provide some sample data out of the box.
 

@@ -49,7 +49,7 @@
 <meta name="twitter:site" content="@metabase">
 
 <meta name="twitter:title" content="API changelog | Metabase Documentation">
-<meta name="twitter:description" content="Breaking changes to the API interface Metabase 0.55.0   POST /api/card/from-csv has been renamed to POST /api/upload/csv.   GET /api/util/stats has been renamed to GET /api/analytics/anonymous-stats.   <code class=" language-plaintext..."="">
+<meta name="twitter:description" content="Breaking changes to the API interface Metabase 0.53.0   POST /api/card/:card-id/query/:export-format Previously, request parameters (parameters, pivot-results?, and format-rows?) could be sent via query parameters or as application/x-www-form-urlencoded form content. In Metabase 0.53.0, parameters must be sent as...">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -59,7 +59,7 @@
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://www.metabase.com/docs/master/developers-guide/api-changelog">
 <meta name="title" property="og:title" content="API changelog | Metabase Documentation">
-<meta name="description" property="og:description" content="Breaking changes to the API interface Metabase 0.55.0   POST /api/card/from-csv has been renamed to POST /api/upload/csv.   GET /api/util/stats has been renamed to GET /api/analytics/anonymous-stats.   <code class=" language-plaintext..."="">
+<meta name="description" property="og:description" content="Breaking changes to the API interface Metabase 0.53.0   POST /api/card/:card-id/query/:export-format Previously, request parameters (parameters, pivot-results?, and format-rows?) could be sent via query parameters or as application/x-www-form-urlencoded form content. In Metabase 0.53.0, parameters must be sent as...">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -4159,65 +4159,6 @@ Roadmap</a>
 
 
         <h1 id="breaking-changes-to-the-api-interface">Breaking changes to the API interface</h1>
-
-<h2 id="metabase-0550">Metabase 0.55.0</h2>
-
-<ul>
-  <li>
-    <p><code class="language-plaintext highlighter-rouge">POST /api/card/from-csv</code> has been renamed to <code class="language-plaintext highlighter-rouge">POST /api/upload/csv</code>.</p>
-  </li>
-  <li>
-    <p><code class="language-plaintext highlighter-rouge">GET /api/util/stats</code> has been renamed to <code class="language-plaintext highlighter-rouge">GET /api/analytics/anonymous-stats</code>.</p>
-  </li>
-  <li>
-    <p><code class="language-plaintext highlighter-rouge">GET /api/util/bug_report_details</code> has been renamed to <code class="language-plaintext highlighter-rouge">GET /api/bug-reporting/details</code>.</p>
-  </li>
-  <li>
-    <p><code class="language-plaintext highlighter-rouge">POST /api/util/product-feedback</code> has been renamed to <code class="language-plaintext highlighter-rouge">POST /api/product-feedback</code>.</p>
-  </li>
-  <li>
-    <p><code class="language-plaintext highlighter-rouge">POST /api/util/entity_id</code> has been renamed to <code class="language-plaintext highlighter-rouge">POST /api/eid-translation/translate</code>.</p>
-  </li>
-  <li>
-    <p><code class="language-plaintext highlighter-rouge">POST /api/util/password_check</code> has been renamed to <code class="language-plaintext highlighter-rouge">POST /api/session/password-check</code>.</p>
-  </li>
-  <li>
-    <p><code class="language-plaintext highlighter-rouge">GET /api/util/logs</code> has been renamed to <code class="language-plaintext highlighter-rouge">GET /api/logger/logs</code>.</p>
-  </li>
-  <li>
-    <p><code class="language-plaintext highlighter-rouge">GET /api/util/openapi</code> has been removed; you can use <code class="language-plaintext highlighter-rouge">GET /api/docs/openapi.json</code> instead, which does the same
-thing.</p>
-  </li>
-  <li>
-    <p><code class="language-plaintext highlighter-rouge">GET /api/util/diagnostic_info/connection_pool_info</code> has been renamed to <code class="language-plaintext highlighter-rouge">GET
-/api/bug-reporting/connection-pool-details</code>.</p>
-  </li>
-</ul>
-
-<h2 id="metabase-0540">Metabase 0.54.0</h2>
-
-<ul>
-  <li>
-    <p>The alert system has been migrated from the legacy pulse infrastructure to the new notification system. This migration includes the following changes:</p>
-
-    <ul>
-      <li>The majority of <code class="language-plaintext highlighter-rouge">/api/alert</code> endpoints have been removed in favor of the new <code class="language-plaintext highlighter-rouge">/api/notification</code> endpoints. For backward compatibility, these endpoints will remain available until the next release:
-        <ul>
-          <li><code class="language-plaintext highlighter-rouge">GET /api/alert</code></li>
-          <li><code class="language-plaintext highlighter-rouge">GET /api/alert/:id</code></li>
-          <li><code class="language-plaintext highlighter-rouge">DELETE /api/alert/:id/subscription</code></li>
-        </ul>
-      </li>
-      <li>Developers should migrate to using the <code class="language-plaintext highlighter-rouge">/api/notification</code> endpoints. For reference:
-        <ul>
-          <li>An overview of the new notification system can be found at <code class="language-plaintext highlighter-rouge">src/metabase/notification/README.md</code></li>
-          <li>Notification API documentation at <code class="language-plaintext highlighter-rouge">/api/docs/#tag/apinotification</code></li>
-          <li>Interactive API documentation available at <code class="language-plaintext highlighter-rouge">/api/docs</code> endpoint</li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-</ul>
 
 <h2 id="metabase-0530">Metabase 0.53.0</h2>
 

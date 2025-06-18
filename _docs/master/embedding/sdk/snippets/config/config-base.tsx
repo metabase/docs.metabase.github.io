@@ -1,27 +1,14 @@
-import React from "react";
 import {
   MetabaseProvider,
   defineMetabaseAuthConfig,
-  defineMetabaseTheme,
 } from "@metabase/embedding-sdk-react";
 
-// Configure authentication
+const theme = {};
+
+// [<snippet example>]
 const authConfig = defineMetabaseAuthConfig({
   metabaseInstanceUrl: "https://metabase.example.com", // Required: Your Metabase instance URL
-});
-
-// See the "Customizing appearance" section for more information
-const theme = defineMetabaseTheme({
-  // Optional: Specify a font to use from the set of fonts supported by Metabase
-  fontFamily: "Lato",
-
-  // Optional: Match your application's color scheme
-  colors: {
-    brand: "#9B5966",
-    "text-primary": "#4C5773",
-    "text-secondary": "#696E7B",
-    "text-tertiary": "#949AAB",
-  },
+  authProviderUri: "https://app.example.com/sso/metabase", // Required: An endpoint in your app that signs the user in and returns a session
 });
 
 export default function App() {
@@ -35,3 +22,4 @@ export default function App() {
     </MetabaseProvider>
   );
 }
+// [<endsnippet example>]

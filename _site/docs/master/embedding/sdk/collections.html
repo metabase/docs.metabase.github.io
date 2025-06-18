@@ -4178,19 +4178,43 @@ Roadmap</a>
   </div>
 </div>
 
-<h2 id="embedding-a-collection-browser">Embedding a collection browser</h2>
-
 <p>You can embed Metabase’s collection browser so that people can explore items in your Metabase from your application.</p>
 
-<h3 id="collectionbrowser"><code class="language-plaintext highlighter-rouge">CollectionBrowser</code></h3>
+<h2 id="collectionbrowser-props"><code class="language-plaintext highlighter-rouge">CollectionBrowser</code> props</h2>
 
-<h4 id="api-reference">API Reference</h4>
-<ul>
-  <li><a href="./api/CollectionBrowser">Component</a></li>
-  <li><a href="./api/CollectionBrowserProps">Props</a></li>
-</ul>
+<table>
+  <thead>
+    <tr>
+      <th>Prop</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td data-label="Prop">collectionId</td>
+      <td data-label="Type"><code class="language-plaintext highlighter-rouge">number \| 'root' \| 'personal'</code></td>
+      <td data-label="Description">The numerical ID of the collection, “personal” for the user’s personal collection, or “root” for the root collection. You can find this ID in the URL when accessing a collection in your Metabase instance. For example, the collection ID in <code class="language-plaintext highlighter-rouge">http://localhost:3000/collection/1-my-collection</code> would be <code class="language-plaintext highlighter-rouge">1</code>. Defaults to “personal”</td>
+    </tr>
+    <tr>
+      <td data-label="Prop">onClick</td>
+      <td data-label="Type"><code class="language-plaintext highlighter-rouge">(item: CollectionItem) =&gt; void</code></td>
+      <td data-label="Description">An optional click handler that emits the clicked entity.</td>
+    </tr>
+    <tr>
+      <td data-label="Prop">pageSize</td>
+      <td data-label="Type"><code class="language-plaintext highlighter-rouge">number</code></td>
+      <td data-label="Description">The number of items to display per page. The default is 25.</td>
+    </tr>
+    <tr>
+      <td data-label="Prop">visibleEntityTypes</td>
+      <td data-label="Type"><code class="language-plaintext highlighter-rouge">["question", "model", "dashboard", "collection"]</code></td>
+      <td data-label="Description">The types of entities that should be visible. If not provided, all entities will be shown.</td>
+    </tr>
+  </tbody>
+</table>
 
-<h4 id="example">Example</h4>
+<h2 id="example-embedding-code-with-collectionbrowser">Example embedding code with <code class="language-plaintext highlighter-rouge">CollectionBrowser</code></h2>
 
 <div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nx">React</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">react</span><span class="dl">"</span><span class="p">;</span>
 <span class="k">import</span> <span class="p">{</span> <span class="nx">CollectionBrowser</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@metabase/embedding-sdk-react</span><span class="dl">"</span><span class="p">;</span>
@@ -4213,70 +4237,16 @@ Roadmap</a>
 <span class="p">}</span>
 </code></pre></div></div>
 
-<h4 id="props">Props</h4>
-
-<table>
-  <thead>
-    <tr>
-      <th style="text-align: left">Property</th>
-      <th style="text-align: left">Type</th>
-      <th style="text-align: left">Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="classname"></a> <code class="language-plaintext highlighter-rouge">className?</code></td>
-      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">string</code></td>
-      <td style="text-align: left" data-label="Description">A custom class name to be added to the root element.</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="collectionid"></a> <code class="language-plaintext highlighter-rouge">collectionId?</code></td>
-      <td style="text-align: left" data-label="Type"><a href="./api/SdkCollectionId"><code class="language-plaintext highlighter-rouge">SdkCollectionId</code></a></td>
-      <td style="text-align: left" data-label="Description">The numerical ID of the collection, “personal” for the user’s personal collection, or “root” for the root collection. You can find this ID in the URL when accessing a collection in your Metabase instance. For example, the collection ID in <code class="language-plaintext highlighter-rouge">http://localhost:3000/collection/1-my-collection</code> would be <code class="language-plaintext highlighter-rouge">1</code>. Defaults to “personal”</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="emptycontentcomponent"></a> <code class="language-plaintext highlighter-rouge">EmptyContentComponent?</code></td>
-      <td style="text-align: left" data-label="Type">| <code class="language-plaintext highlighter-rouge">null</code> | <a href="https://github.com/DefinitelyTyped/DefinitelyTyped/blob/0b728411cd1dfb4bd26992bb35a73cf8edaa22e7/types/react/index.d.ts#L104"><code class="language-plaintext highlighter-rouge">ComponentType</code></a></td>
-      <td style="text-align: left" data-label="Description">A component to display when there are no items in the collection.</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="onclick"></a> <code class="language-plaintext highlighter-rouge">onClick?</code></td>
-      <td style="text-align: left" data-label="Type">(<code class="language-plaintext highlighter-rouge">item</code>: <a href="./api/MetabaseCollectionItem"><code class="language-plaintext highlighter-rouge">MetabaseCollectionItem</code></a>) =&gt; <code class="language-plaintext highlighter-rouge">void</code></td>
-      <td style="text-align: left" data-label="Description">A function to call when an item is clicked.</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="pagesize"></a> <code class="language-plaintext highlighter-rouge">pageSize?</code></td>
-      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">number</code></td>
-      <td style="text-align: left" data-label="Description">The number of items to display per page. The default is 25.</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="style"></a> <code class="language-plaintext highlighter-rouge">style?</code></td>
-      <td style="text-align: left" data-label="Type"><a href="https://github.com/DefinitelyTyped/DefinitelyTyped/blob/0b728411cd1dfb4bd26992bb35a73cf8edaa22e7/types/react/index.d.ts#L2579"><code class="language-plaintext highlighter-rouge">CSSProperties</code></a></td>
-      <td style="text-align: left" data-label="Description">A custom style object to be added to the root element.</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="visiblecolumns"></a> <code class="language-plaintext highlighter-rouge">visibleColumns?</code></td>
-      <td style="text-align: left" data-label="Type"><a href="./api/CollectionBrowserListColumns"><code class="language-plaintext highlighter-rouge">CollectionBrowserListColumns</code></a>[]</td>
-      <td style="text-align: left" data-label="Description">The columns to display in the collection items table. If not provided, all columns will be shown.</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="visibleentitytypes"></a> <code class="language-plaintext highlighter-rouge">visibleEntityTypes?</code></td>
-      <td style="text-align: left" data-label="Type">(<code class="language-plaintext highlighter-rouge">"model"</code> | <code class="language-plaintext highlighter-rouge">"question"</code> | <code class="language-plaintext highlighter-rouge">"collection"</code> | <code class="language-plaintext highlighter-rouge">"dashboard"</code>)[]</td>
-      <td style="text-align: left" data-label="Description">The types of entities that should be visible. If not provided, all entities will be shown.</td>
-    </tr>
-  </tbody>
-</table>
-
 <h2 id="hide-the-collection-picker-and-hard-code-the-collection-you-want-people-to-save-stuff-to">Hide the collection picker and hard code the collection you want people to save stuff to</h2>
 
 <p>With static questions, you set a specific collection as the collection people can save items to, so that they don’t have bother picking a collection. To hard-code a collection:</p>
 
 <ol>
   <li>Set <code class="language-plaintext highlighter-rouge">isSaveEnabled</code> to true.</li>
-  <li>Set <code class="language-plaintext highlighter-rouge">targetCollection</code> to the collection ID you want people to save items to.</li>
+  <li>Set <code class="language-plaintext highlighter-rouge">targetCollection</code> (previously <code class="language-plaintext highlighter-rouge">saveToCollection</code>) to the collection ID you want people to save items to.</li>
 </ol>
 
-<p>For more options, see <a href="./questions">Question props</a>.</p>
+<p>For more options, see <a href="./questions#question-props">Question props</a>.</p>
 
 
         <div>

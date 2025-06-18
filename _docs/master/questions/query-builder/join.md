@@ -48,14 +48,7 @@ Your joins can also include multiple conditions to refine your results. Metabase
 
 ## Joining with different operators
 
-You can join tables on comparison conditions like:
-
-- `=` (equals)
-- `≠` (not equals) 
-- `>` (greater than)
-- `≥` (greater than or equal to)
-- `<` (less than)
-- `≤` (less than or equal to)
+You can join tables on comparison conditions like `=`, `≠`, `>`, `≥`, `<`, or `≤`.
 
 ![Join operators](../images/join-operator.png)
 
@@ -65,4 +58,4 @@ You can join tables on comparison conditions like:
 - [Type of joins][join-types]
 
 [join]: /learn/metabase-basics/querying-and-dashboards/questions/joins-in-metabase
-[join-types]: /learn/sql/working-with-sql/sql-join-types
+[join-types]: /learn/grow-your-data-skills/learn-sql/working-with-sql/sql-join-types

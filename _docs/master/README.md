@@ -57,7 +57,6 @@ Metabase's reference documentation.
 - [Backing up Metabase](./installation-and-operation/backing-up-metabase-application-data)
 - [Migrating to a production application database](./installation-and-operation/migrating-from-h2)
 - [Monitoring your Metabase](./installation-and-operation/monitoring-metabase)
-- [Development instances](./installation-and-operation/development-instance)
 - [Serialization](./installation-and-operation/serialization)
 - [Commands](./installation-and-operation/commands)
 - [Supported browsers](./installation-and-operation/supported-browsers)
@@ -103,7 +102,7 @@ Metabase's reference documentation.
 - [Visualizing data](./questions/visualizations/visualizing-results)
 - [Combo charts](./questions/visualizations/combo-chart)
 - [Detail](./questions/visualizations/detail)
-- [Funnel charts](./questions/visualizations/funnel)
+- [Funnel charts](./questions/visualizations/detail)
 - [Gauge charts](./questions/visualizations/gauge)
 - [Line, bar, and area charts](./questions/visualizations/line-bar-and-area-charts)
 - [Maps](./questions/visualizations/map)
@@ -147,12 +146,11 @@ Metabase's reference documentation.
 - [Basic actions](./actions/basic)
 - [Custom actions](./actions/custom)
 
-### Exploration and organization
+### Organization
 
 - [Organization overview](./exploration-and-organization/start)
 - [Basic exploration](./exploration-and-organization/exploration)
 - [Collections](./exploration-and-organization/collections)
-- [Keyboard shortcuts](./exploration-and-organization/keyboard-shortcuts)
 - [History](./exploration-and-organization/history)
 - [Trash](./exploration-and-organization/delete-and-restore)
 - [Data reference](./exploration-and-organization/data-model-reference)
@@ -191,8 +189,6 @@ Metabase's reference documentation.
 - [Application permissions](./permissions/application)
 - [Data sandboxes](./permissions/data-sandboxes)
 - [Data sandbox examples](./permissions/data-sandbox-examples)
-- [Connection impersonation](./permissions/impersonation)
-- [Database routing](./permissions/database-routing)
 - [Snippets folder permissions](./permissions/snippets)
 - [Notification permissions](./permissions/notifications)
 
@@ -264,7 +260,7 @@ Metabase's reference documentation.
 
 Share and connect with other Metabasers.
 
-### [Metabase Cloud](/docs/latest/cloud/start)
+### [Metabase Cloud](/cloud/docs)
 
 For docs specific to Metabase Cloud plans.
 

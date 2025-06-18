@@ -24,8 +24,6 @@ The template lists example `database`, `user`, and `settings` sections for the [
 # You'll need to update (or remove) the `users` and `databases` sections.
 # The settings in `settings` include default values. We recommend removing
 # or commenting out settings that you don't set.
-# To use an env var, you can use a template string: "{{ env YOUR_ENV_VAR }}"
-# Note the quote marks wrapping the env var template.
 # For more on the configuration file, see:
 # https://www.metabase.com/docs/latest/configuring-metabase/config-file
 # For more on what each setting does, check out:
@@ -66,10 +64,12 @@ config:
   api-keys:
     - name: Admin API key
       group: admin
+      description: API key with admin permissions.
       creator: first@example.com
       key: mb_firsttestapikey123
     - name: All Users API key
       group: all-users
+      description: API key with permissions of the All Users group.
       creator: first@example.com
       key: mb_secondtestapikey456
   settings:
@@ -108,7 +108,6 @@ config:
     application-name: Metabase
     attachment-row-limit: null
     attachment-table-row-limit: 20
-    backfill-entity-ids-repeat-ms: 3000
     bcc-enabled: true
     breakout-bin-width: 10.0
     breakout-bins-num: 8
@@ -142,6 +141,7 @@ config:
     enable-embedding-interactive: false
     enable-embedding-sdk: false
     enable-embedding-static: false
+    enable-field-usage-analysis: false
     enable-password-login: true
     enable-pivoted-exports: true
     enable-public-sharing: true
@@ -204,6 +204,7 @@ config:
     persisted-model-refresh-cron-schedule: 0 0 0/6 * * ? *
     persisted-models-enabled: false
     premium-embedding-token: null
+    query-analysis-enabled: false
     query-caching-max-kb: 2000
     query-caching-max-ttl: 3024000.0
     redirect-all-requests-to-https: false
@@ -245,14 +246,15 @@ config:
     show-homepage-xrays: true
     show-metabase-links: true
     show-metabot: true
-    show-static-embed-terms: true
     site-locale: en
     site-name: Metabase
     site-url: null
     slack-app-token: null
     slack-bug-report-channel: metabase-bugs
+    slack-files-channel: metabase_files
     source-address-header: X-Forwarded-For
     sql-jdbc-fetch-size: 500
+    sql-parsing-enabled: true
     ssh-heartbeat-interval-sec: 180
     start-of-week: sunday
     subscription-allowed-domains: null

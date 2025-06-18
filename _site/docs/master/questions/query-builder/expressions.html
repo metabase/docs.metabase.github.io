@@ -49,7 +49,7 @@
 <meta name="twitter:site" content="@metabase">
 
 <meta name="twitter:title" content="Custom expressions | Metabase Documentation">
-<meta name="twitter:description" content="Custom expressions  Custom expressions are like formulas in spreadsheet software like Excel, Google Sheets, and LibreOffice Calc. They are the power tools in the query builder’s editor that allow you to ask more complicated...">
+<meta name="twitter:description" content="Custom expressions Custom expressions are like formulas in spreadsheet software like Excel, Google Sheets, and LibreOffice Calc. They are the power tools in the notebook editor of the query builder that allow you to ask more complicated questions. You can...">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -59,7 +59,7 @@
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://www.metabase.com/docs/master/questions/query-builder/expressions">
 <meta name="title" property="og:title" content="Custom expressions | Metabase Documentation">
-<meta name="description" property="og:description" content="Custom expressions  Custom expressions are like formulas in spreadsheet software like Excel, Google Sheets, and LibreOffice Calc. They are the power tools in the query builder’s editor that allow you to ask more complicated...">
+<meta name="description" property="og:description" content="Custom expressions Custom expressions are like formulas in spreadsheet software like Excel, Google Sheets, and LibreOffice Calc. They are the power tools in the notebook editor of the query builder that allow you to ask more complicated questions. You can...">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -4160,25 +4160,21 @@ Roadmap</a>
 
         <h1 id="custom-expressions">Custom expressions</h1>
 
-<p><img src="../images/custom-expression-editor.png" alt="Custom expression editor"></p>
-
-<p><a href="./expressions-list">Custom expressions</a> are like formulas in spreadsheet software like Excel, Google Sheets, and LibreOffice Calc. They are the power tools in the query builder’s editor that allow you to ask more complicated questions.</p>
+<p><a href="./expressions-list">Custom expressions</a> are like formulas in spreadsheet software like Excel, Google Sheets, and LibreOffice Calc. They are the power tools in the notebook editor of the query builder that allow you to ask more complicated questions.</p>
 
 <p>You can also skip to the <a href="./expressions-list">complete list of expressions</a>.</p>
 
 <h2 id="custom-expressions-to-create-filters-metrics-and-custom-columns">Custom expressions to create filters, metrics, and custom columns</h2>
 
-<p>To use the custom expression editor, create a <strong>Custom Column</strong> (where the custom expression is used as a Field Formula to calculate values for the new column), or click on <strong>Filter</strong> or <strong>Summarize</strong> and select <strong>Custom Expression</strong>.</p>
+<p>To use custom expression, create a <strong>Custom Column</strong> (where the custom expression is used as a Field Formula to calculate values for the new column), or click on <strong>Filter</strong> or <strong>Summarize</strong> and select <strong>Custom Expression</strong>.</p>
 
 <p>When using the query builder, you can use expressions to create new:</p>
 
 <ul>
-  <li><strong>Custom columns</strong>. You could use <code class="language-plaintext highlighter-rouge">[Subtotal] / [Quantity]</code> to create a new column, which you could name “Item price”.</li>
-  <li><strong>Filters</strong>. The expression <code class="language-plaintext highlighter-rouge">contains([comment], "Metabase")</code> would filter for rows where the <code class="language-plaintext highlighter-rouge">comment</code> field contained the word “Metabase”.</li>
-  <li><strong>Summaries</strong>. Also known as metrics or aggregations. <code class="language-plaintext highlighter-rouge">Share([Total] &gt; 50)</code> would return the percentage of orders with totals greater than 50 dollars.</li>
+  <li><strong>Custom columns</strong>. You could use <code class="language-plaintext highlighter-rouge">= [Subtotal] / [Quantity]</code> to create a new column, which you could name “Item price”.</li>
+  <li><strong>Filters</strong>. The expression <code class="language-plaintext highlighter-rouge">= contains([comment], "Metabase")</code> would filter for rows where the <code class="language-plaintext highlighter-rouge">comment</code> field contained the word “Metabase”.</li>
+  <li><strong>Summaries</strong>. Also known as metrics or aggregations. <code class="language-plaintext highlighter-rouge">= Share([Total] &gt; 50)</code> would return the percentage of orders with totals greater than 50 dollars.</li>
 </ul>
-
-<p>Type in your expression, give it a name, and click <strong>Done</strong>. If the Done button is grayed out, check that your expression is valid, and that you’ve given the expression a name (which you enter at the bottom of the expression editor).</p>
 
 <p>This page covers the basics of expressions. You can check out a <a href="./expressions-list">full list of expressions</a> in Metabase, or walk through a tutorial that shows you how you can use <a href="/learn/metabase-basics/querying-and-dashboards/questions/custom-expressions">custom expressions in the notebook editor</a>.</p>
 
@@ -4194,41 +4190,19 @@ Roadmap</a>
 
 <p><a href="./expressions-list#functions">Functions</a>, by contrast, do something to each value in a column, like searching for a word in each value (<code class="language-plaintext highlighter-rouge">contains</code>), rounding each value up to the nearest integer (the <code class="language-plaintext highlighter-rouge">ceil</code> function), and so on.</p>
 
-<h2 id="function-browser">Function browser</h2>
-
-<p><img src="../images/function-browser.png" alt="Function browser"></p>
-
-<p>The expression editor includes a function browser to help you find the function you need. To view the browser, flick on the <strong>f</strong> on the right of the expression editor. See also a <a href="./expressions-list">list of functions and aggregations</a>.</p>
-
-<h2 id="auto-format">Auto-format</h2>
-
-<p><img src="../images/auto-format.png" alt="Auto-format expression"></p>
-
-<p>To format expressions, click on the auto-format button on the right side of the expression editor (the lightning bolt wrapped in braces).</p>
-
 <h2 id="basic-mathematical-operators">Basic mathematical operators</h2>
 
 <p>Use <code class="language-plaintext highlighter-rouge">+</code>, <code class="language-plaintext highlighter-rouge">-</code>, <code class="language-plaintext highlighter-rouge">*</code> (multiply), <code class="language-plaintext highlighter-rouge">/</code> (divide) on numeric columns with numeric values, like integers, floats, and double. You can use parentheses, <code class="language-plaintext highlighter-rouge">(</code> and <code class="language-plaintext highlighter-rouge">)</code>, to group parts of your expression.</p>
 
-<p>For example, you could create a new column that calculates the difference between the total and subtotal of a order: <code class="language-plaintext highlighter-rouge">[Total] - [Subtotal]</code>.</p>
+<p>For example, you could create a new column that calculates the difference between the total and subtotal of a order: <code class="language-plaintext highlighter-rouge">= [Total] - [Subtotal]</code>.</p>
 
 <p>To do math on timestamp columns, you can use <a href="expressions-list#date-functions">Date functions</a> like <a href="./expressions/datetimediff">dateDiff</a>.</p>
 
 <h2 id="conditional-operators">Conditional operators</h2>
 
-<ul>
-  <li><code class="language-plaintext highlighter-rouge">AND</code></li>
-  <li><code class="language-plaintext highlighter-rouge">OR</code></li>
-  <li><code class="language-plaintext highlighter-rouge">NOT</code></li>
-  <li><code class="language-plaintext highlighter-rouge">&gt;</code></li>
-  <li><code class="language-plaintext highlighter-rouge">&gt;=</code> (greater than or equal to)</li>
-  <li><code class="language-plaintext highlighter-rouge">&lt;</code></li>
-  <li><code class="language-plaintext highlighter-rouge">&lt;=</code> (less than or equal to)</li>
-  <li><code class="language-plaintext highlighter-rouge">=</code></li>
-  <li><code class="language-plaintext highlighter-rouge">!=</code> (not equal to)</li>
-</ul>
+<p><code class="language-plaintext highlighter-rouge">AND</code>, <code class="language-plaintext highlighter-rouge">OR</code>, <code class="language-plaintext highlighter-rouge">NOT</code>, <code class="language-plaintext highlighter-rouge">&gt;</code>, <code class="language-plaintext highlighter-rouge">&gt;=</code> (greater than or equal to), <code class="language-plaintext highlighter-rouge">&lt;</code>, <code class="language-plaintext highlighter-rouge">&lt;=</code> (less than or equal to), <code class="language-plaintext highlighter-rouge">=</code>, <code class="language-plaintext highlighter-rouge">!=</code> (not equal to).</p>
 
-<p>For example, you could create a filter for customers from California or Vermont: <code class="language-plaintext highlighter-rouge">[State] = "CA" OR [State] = "VT"</code>.</p>
+<p>For example, you could create a filter for customers from California or Vermont: <code class="language-plaintext highlighter-rouge">= [State] = "CA" OR [State] = "VT"</code>.</p>
 
 <p>You can also use conditionals with the <code class="language-plaintext highlighter-rouge">case</code> function (alias <code class="language-plaintext highlighter-rouge">if</code>):</p>
 

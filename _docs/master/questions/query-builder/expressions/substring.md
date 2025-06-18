@@ -73,9 +73,9 @@ substring([Mission ID], (1 + length([Mission ID]) - 3), 3)
 
 ## Limitations
 
-`substring` extracts text by counting a fixed number of characters. If you need to extract text based on some more complicated logic, try [`regexExtract`](../expressions-list#regexextract).
+`substring` extracts text by counting a fixed number of characters. If you need to extract text based on some more complicated logic, try [`regexextract`](../expressions-list#regexextract).
 
-And if you only need to clean up extra whitespace around your text, you can use the [`trim`](../expressions-list#trim), [`lTrim`](../expressions-list#ltrim), or [`rTrim`](../expressions-list#rtrim) expressions instead.
+And if you only need to clean up extra whitespace around your text, you can use the [`trim`](../expressions-list#trim), [`ltrim`](../expressions-list#ltrim), or [`rtrim`](../expressions-list#rtrim) expressions instead.
 
 ## Related functions
 
@@ -83,7 +83,7 @@ This section covers functions and formulas that work the same way as the Metabas
 
 **[Metabase expressions](../expressions-list)**
 
-- [regexExtract](#regexextract)
+- [regexextract](#regexextract)
 
 **Other tools**
 
@@ -91,12 +91,12 @@ This section covers functions and formulas that work the same way as the Metabas
 - [Spreadsheets](#spreadsheets)
 - [Python](#python)
 
-### RegexExtract
+### Regexextract
 
-Use [regexExtract](./regexextract) if you need to extract text based on more specific rules. For example, you could get the agent ID with a regex pattern that finds the last occurrence of "00" (and everything after it):
+Use [regexextract](./regexextract) if you need to extract text based on more specific rules. For example, you could get the agent ID with a regex pattern that finds the last occurrence of "00" (and everything after it):
 
 ```
-regexExtract([Mission ID], ".+(00.+)$")
+regexextract([Mission ID], ".+(00.+)$")
 ```
 
 should return the same result as
@@ -107,7 +107,7 @@ substring([Mission ID], 9, 3)
 
 ### SQL
 
-When you run a question using the [notebook editor](/glossary/notebook-editor), Metabase will convert your graphical query settings (filters, summaries, etc.) into a query, and run that query against your database to get your results.
+When you run a question using the [notebook editor](/glossary/notebook_editor), Metabase will convert your graphical query settings (filters, summaries, etc.) into a query, and run that query against your database to get your results.
 
 If our [sample data](#getting-a-substring-from-the-left) is stored in a PostgreSQL database:
 

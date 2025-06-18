@@ -13,7 +13,7 @@ redirect_from:
 
 # Permissions introduction
 
-There are always going to be sensitive bits of information in your data, and thankfully Metabase provides a rich set of tools to ensure that people on your team only see the data they're supposed to.
+There are always going to be sensitive bits of information in your data, and thankfully Metabase provides a rich set of tools to ensure that people on your team only see the data they’re supposed to.
 
 If instead you're wondering about what data Metabase the company can see, check out our page on [data privacy and security](/security).
 
@@ -25,33 +25,55 @@ If instead you're wondering about what data Metabase the company can see, check 
 
 ## What you can set permissions on
 
-- [Data permissions](./data) - Control access to databases, schemas, and tables, including:
-  - [View data](./data#view-data-permissions)
-  - [Create queries](./data#create-queries-permissions)
-  - [Download results](./data#download-results-permissions)
-  - [Manage database](./data#manage-database-permissions)
-- [Collection permissions][collections] - Control access to questions, dashboards, models, metrics, events, and timelines
-- [Application permissions](application) - Control access to admin features (Pro and Enterprise plans only):
-  - [Settings tab in Admin panel](application#settings-access)
-  - [Monitoring tools and troubleshooting](application#monitoring-access)
-  - [Dashboard subscriptions and alerts](application#subscriptions-and-alerts)
-- [Snippet folder permissions][snippet-folders] - Control access to SQL snippet folders (available on plans with snippet folders)
+- [Data permissions](#data-permissions)
+- [Collection permissions](#collection-permissions)
+- [Application permissions](#application-permissions)
+- [Snippet folder permissions](#snippet-folder-permissions)
 
-## Tools for managing multi-tenant setups
+### Data permissions
 
-At a high-level, Metabase provides several approaches to managing permissions for different multi-tenant setups, depending on how you've segregated your data.
+[Data permissions](./data) allow you to set permissions on database and their schemas and tables.
 
-### Your customers share a single database
+- [View data](./data#view-data-permissions)
+- [Create queries](./data#create-queries-permissions)
+- [Download results](./data#download-results-permissions)
+- [Manage database](./data#manage-database-permissions)
 
-[Data sandboxes](./data-sandboxes) let you apply row and column-level security, so each customer only sees their data in the tables.
+### Collection permissions
 
-### Each customer has their own database
+[Collection permissions][collections] dictate which groups can view/edit items in collections, including:
 
-With [Database routing](./database-routing), you can build a question once, and have Metabase send a query to a different database depending on the customer.
+- Questions
+- Dashboards
+- Models
+- Metrics
+- Events
+- Timelines
 
-### You'd prefer to manage permissions via the database itself
+### Application permissions
 
-With [Connection impersonation](./impersonation), you can manage permissions with roles you define in your database.
+[Application permissions](application) (available on [Pro and Enterprise plans](/pricing/)) dictate access to Metabase application-level features, including:
+
+- **Settings**: The Settings tab in the Admin panel.
+- **Monitoring access**: The Tools and Troubleshooting tabs in the Admin panel.
+- **Subscriptions and Alerts**. Which groups can create/edit dashboard subscriptions and alerts.
+
+### Snippet folder permissions
+
+For plans that include [Snippet Folders][snippet-folders], you can also set permissions on those folders.
+
+## Changing permissions
+
+Whenever you change permissions for a group, make sure you:
+
+- Save your changes.
+- Click yes to confirm your choices.
+
+## Further reading
+
+- [Managing people and groups](../people-and-groups/managing)
+- [Permissions guide][permissions]
+- [Troubleshooting permissions][troubleshooting-permissions]
 
 [collections]: ../exploration-and-organization/collections
 [dashboard-subscriptions]: ../dashboards/subscriptions

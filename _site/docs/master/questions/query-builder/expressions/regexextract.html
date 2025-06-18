@@ -44,12 +44,12 @@
 <meta name="robots" content="noindex">
    
 
-<title>RegexExtract | Metabase Documentation</title>
+<title>Regexextract | Metabase Documentation</title>
 <!-- Twitter cards -->
 <meta name="twitter:site" content="@metabase">
 
-<meta name="twitter:title" content="RegexExtract | Metabase Documentation">
-<meta name="twitter:description" content="RegexExtract  ⚠️ regexExtract is unavailable for MongoDB, SQLite, and SQL Server. For Druid, regexExtract is only available for the Druid-JDBC driver.  regexExtract uses regular expressions (regex) to get a specific part of...">
+<meta name="twitter:title" content="Regexextract | Metabase Documentation">
+<meta name="twitter:description" content="Regexextract  ⚠️ regexextract is unavailable for MongoDB, SQLite, and SQL Server. For Druid, regexextract is only available for the Druid-JDBC driver.  regexextract uses regular expressions (regex) to get a specific part of...">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -58,8 +58,8 @@
 <meta property="og:site_name" content="Metabase | Business Intelligence, Dashboards, and Data Visualization">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://www.metabase.com/docs/master/questions/query-builder/expressions/regexextract">
-<meta name="title" property="og:title" content="RegexExtract | Metabase Documentation">
-<meta name="description" property="og:description" content="RegexExtract  ⚠️ regexExtract is unavailable for MongoDB, SQLite, and SQL Server. For Druid, regexExtract is only available for the Druid-JDBC driver.  regexExtract uses regular expressions (regex) to get a specific part of...">
+<meta name="title" property="og:title" content="Regexextract | Metabase Documentation">
+<meta name="description" property="og:description" content="Regexextract  ⚠️ regexextract is unavailable for MongoDB, SQLite, and SQL Server. For Druid, regexextract is only available for the Druid-JDBC driver.  regexextract uses regular expressions (regex) to get a specific part of...">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -4158,17 +4158,17 @@ Roadmap</a>
 </div>
 
 
-        <h1 id="regexextract">RegexExtract</h1>
+        <h1 id="regexextract">Regexextract</h1>
 
 <blockquote>
-  <p>⚠️ <code class="language-plaintext highlighter-rouge">regexExtract</code> is unavailable for MongoDB, SQLite, and SQL Server. For Druid, <code class="language-plaintext highlighter-rouge">regexExtract</code> is only available for the Druid-JDBC driver.</p>
+  <p>⚠️ <code class="language-plaintext highlighter-rouge">regexextract</code> is unavailable for MongoDB, SQLite, and SQL Server. For Druid, <code class="language-plaintext highlighter-rouge">regexextract</code> is only available for the Druid-JDBC driver.</p>
 </blockquote>
 
-<p><code class="language-plaintext highlighter-rouge">regexExtract</code> uses <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions">regular expressions (regex)</a> to get a specific part of your text.</p>
+<p><code class="language-plaintext highlighter-rouge">regexextract</code> uses <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions">regular expressions (regex)</a> to get a specific part of your text.</p>
 
-<p><code class="language-plaintext highlighter-rouge">regexExtract</code> is ideal for text that has little to no structure, like URLs or freeform survey responses. If you’re working with strings in predictable formats like SKU numbers, IDs, or other types of codes, check out the simpler <a href="../expressions/substring">substring</a> expression instead.</p>
+<p><code class="language-plaintext highlighter-rouge">regexextract</code> is ideal for text that has little to no structure, like URLs or freeform survey responses. If you’re working with strings in predictable formats like SKU numbers, IDs, or other types of codes, check out the simpler <a href="../expressions/substring">substring</a> expression instead.</p>
 
-<p>Use <code class="language-plaintext highlighter-rouge">regexExtract</code> to create custom columns with shorter, more readable labels for things like:</p>
+<p>Use <code class="language-plaintext highlighter-rouge">regexextract</code> to create custom columns with shorter, more readable labels for things like:</p>
 
 <ul>
   <li>filter dropdown menus,</li>
@@ -4185,8 +4185,8 @@ Roadmap</a>
   </thead>
   <tbody>
     <tr>
-      <td data-label="Syntax"><code class="language-plaintext highlighter-rouge">regexExtract(text, regular_expression)</code></td>
-      <td data-label="Example"><code class="language-plaintext highlighter-rouge">regexExtract("regexExtract", "ex(.*)")</code></td>
+      <td data-label="Syntax"><code class="language-plaintext highlighter-rouge">regexextract(text, regular_expression)</code></td>
+      <td data-label="Example"><code class="language-plaintext highlighter-rouge">regexextract("regexextract", "ex(.*)")</code></td>
     </tr>
     <tr>
       <td data-label="Syntax">Gets a specific part of your text using a regular expression.</td>
@@ -4224,7 +4224,7 @@ Roadmap</a>
 
 <p>You can create a custom column <strong>Campaign Name</strong> with the expression:</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>regexExtract([URL], "^[^?#]+\?utm_campaign=(.*)")
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>regexextract([URL], "^[^?#]+\?utm_campaign=(.*)")
 </code></pre></div></div>
 
 <p>Here, the regex pattern <a href="https://www.oreilly.com/library/view/regular-expressions-cookbook/9780596802837/ch07s13.html"><code class="language-plaintext highlighter-rouge">^[^?#]+\?</code> matches all valid URL strings</a>. You can replace <code class="language-plaintext highlighter-rouge">utm_campaign=</code> with whatever query parameter you like. At the end of the regex pattern, the <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Groups_and_Backreferences">capturing group</a> <code class="language-plaintext highlighter-rouge">(.*)</code> gets all of the characters that appear after the query parameter <code class="language-plaintext highlighter-rouge">utm_campaign=</code>.</p>
@@ -4237,42 +4237,42 @@ Roadmap</a>
   <thead>
     <tr>
       <th><a href="/learn/grow-your-data-skills/data-fundamentals/data-types-overview#examples-of-data-types">Data type</a></th>
-      <th>Works with <code class="language-plaintext highlighter-rouge">regexExtract</code></th>
+      <th>Works with <code class="language-plaintext highlighter-rouge">regexextract</code></th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td data-label="Data type">String</td>
-      <td data-label="Works with regexExtract">✅</td>
+      <td data-label="Works with regexextract">✅</td>
     </tr>
     <tr>
       <td data-label="Data type">Number</td>
-      <td data-label="Works with regexExtract">❌</td>
+      <td data-label="Works with regexextract">❌</td>
     </tr>
     <tr>
       <td data-label="Data type">Timestamp</td>
-      <td data-label="Works with regexExtract">❌</td>
+      <td data-label="Works with regexextract">❌</td>
     </tr>
     <tr>
       <td data-label="Data type">Boolean</td>
-      <td data-label="Works with regexExtract">❌</td>
+      <td data-label="Works with regexextract">❌</td>
     </tr>
     <tr>
       <td data-label="Data type">JSON</td>
-      <td data-label="Works with regexExtract">❌</td>
+      <td data-label="Works with regexextract">❌</td>
     </tr>
   </tbody>
 </table>
 
 <h2 id="limitations">Limitations</h2>
 
-<p><code class="language-plaintext highlighter-rouge">regexExtract</code> is unavailable for MongoDB, SQLite, and SQL Server. For Druid, <code class="language-plaintext highlighter-rouge">regexExtract</code> is only available for the Druid-JDBC driver.</p>
+<p><code class="language-plaintext highlighter-rouge">regexextract</code> is unavailable for MongoDB, SQLite, and SQL Server. For Druid, <code class="language-plaintext highlighter-rouge">regexextract</code> is only available for the Druid-JDBC driver.</p>
 
 <p>Regex can be a dark art. You have been warned.</p>
 
 <h2 id="related-functions">Related functions</h2>
 
-<p>This section covers functions and formulas that work the same way as the Metabase <code class="language-plaintext highlighter-rouge">regexExtract</code> expression, with notes on how to choose the best option for your use case.</p>
+<p>This section covers functions and formulas that work the same way as the Metabase <code class="language-plaintext highlighter-rouge">regexextract</code> expression, with notes on how to choose the best option for your use case.</p>
 
 <p><strong><a href="../expressions-list">Metabase expressions</a></strong></p>
 
@@ -4301,12 +4301,12 @@ Roadmap</a>
 
 <p>or</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>regexExtract([URL], "^(?:https?:\/\/)?(?:[^@\/\n]+@)?(?:www\.)?([^:\/.\n]+)")
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>regexextract([URL], "^(?:https?:\/\/)?(?:[^@\/\n]+@)?(?:www\.)?([^:\/.\n]+)")
 </code></pre></div></div>
 
 <h3 id="sql">SQL</h3>
 
-<p>When you run a question using the <a href="/glossary/notebook-editor">notebook editor</a>, Metabase will convert your graphical query settings (filters, summaries, etc.) into a query, and run that query against your database to get your results.</p>
+<p>When you run a question using the <a href="/glossary/notebook_editor">notebook editor</a>, Metabase will convert your graphical query settings (filters, summaries, etc.) into a query, and run that query against your database to get your results.</p>
 
 <p>If our <a href="#searching-and-cleaning-text">sample data</a> is stored in a PostgreSQL database:</p>
 
@@ -4316,21 +4316,21 @@ Roadmap</a>
 <span class="k">FROM</span> <span class="n">follow_the_white_rabbit</span>
 </code></pre></div></div>
 
-<p>is equivalent to the Metabase <code class="language-plaintext highlighter-rouge">regexExtract</code> expression:</p>
+<p>is equivalent to the Metabase <code class="language-plaintext highlighter-rouge">regexextract</code> expression:</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>regexExtract([URL], "^[^?#]+\?utm_campaign=(.*)")
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>regexextract([URL], "^[^?#]+\?utm_campaign=(.*)")
 </code></pre></div></div>
 
 <h3 id="spreadsheets">Spreadsheets</h3>
 
 <p>If our <a href="#searching-and-cleaning-text">sample data</a> is in a spreadsheet where “URL” is in column A, the spreadsheet function</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>regexExtract(A2, "^[^?#]+\?utm_campaign=(.*)")
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>regexextract(A2, "^[^?#]+\?utm_campaign=(.*)")
 </code></pre></div></div>
 
 <p>uses pretty much the same syntax as the Metabase expression:</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>regexExtract([URL], "^[^?#]+\?utm_campaign=(.*)")
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>regexextract([URL], "^[^?#]+\?utm_campaign=(.*)")
 </code></pre></div></div>
 
 <h3 id="python">Python</h3>
@@ -4340,9 +4340,9 @@ Roadmap</a>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>df['Campaign Name'] = df['URL'].str.extract(r'^[^?#]+\?utm_campaign=(.*)')
 </code></pre></div></div>
 
-<p>does the same thing as the Metabase <code class="language-plaintext highlighter-rouge">regexExtract</code> expression:</p>
+<p>does the same thing as the Metabase <code class="language-plaintext highlighter-rouge">regexextract</code> expression:</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>regexExtract([URL], "^[^?#]+\?utm_campaign=(.*)")
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>regexextract([URL], "^[^?#]+\?utm_campaign=(.*)")
 </code></pre></div></div>
 
 <h2 id="further-reading">Further reading</h2>
@@ -4426,7 +4426,7 @@ Roadmap</a>
 <script type="text/javascript" src="/js/position-feedback-widget.js"></script>
 
 <script>
-  const pageTitle = `RegexExtract`;
+  const pageTitle = `Regexextract`;
   const pageURL = '/docs/master/questions/query-builder/expressions/regexextract';
   const pageURLSplit = pageURL.split('/');
 

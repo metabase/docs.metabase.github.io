@@ -49,7 +49,7 @@
 <meta name="twitter:site" content="@metabase">
 
 <meta name="twitter:title" content="Alerts | Metabase Documentation">
-<meta name="twitter:description" content="Alerts Set up an alert to send the results of questions to people via email or Slack, or to a webhook. Alerts are for questions only. If you instead want to get the results of a dashboard sent to you, check...">
+<meta name="twitter:description" content="Alerts Set up an alert to send the results of questions to people via email or Slack, or to a webhook.  Alerts are for questions only. If you instead want to get the...">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -59,7 +59,7 @@
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://www.metabase.com/docs/master/questions/alerts">
 <meta name="title" property="og:title" content="Alerts | Metabase Documentation">
-<meta name="description" property="og:description" content="Alerts Set up an alert to send the results of questions to people via email or Slack, or to a webhook. Alerts are for questions only. If you instead want to get the results of a dashboard sent to you, check...">
+<meta name="description" property="og:description" content="Alerts Set up an alert to send the results of questions to people via email or Slack, or to a webhook.  Alerts are for questions only. If you instead want to get the...">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -4162,6 +4162,8 @@ Roadmap</a>
 
 <p>Set up an alert to send the results of questions to people via email or Slack, or to a webhook.</p>
 
+<p><img src="./images/the-wide-world-of-alerts.png" alt="The wide world of alerts"></p>
+
 <p>Alerts are for questions only. If you instead want to get the results of a dashboard sent to you, check out <a href="../dashboards/subscriptions">dashboard subscriptions</a>.</p>
 
 <h2 id="prerequisite-for-alerts">Prerequisite for alerts</h2>
@@ -4176,48 +4178,27 @@ Roadmap</a>
 
 <h2 id="creating-an-alert">Creating an alert</h2>
 
-<p><img src="./images/get-alerts-about-this.png" alt="Get alerts"></p>
-
 <p>To create an alert:</p>
 
 <ol>
-  <li>Save your question.</li>
-  <li>Click on the sharing icon in the top-right of the screen.</li>
-  <li>Select <strong>Create an alert</strong>.</li>
-  <li>Select what you want to be alerted about. The alert options will depend on the question’s visualization. See <a href="#types-of-alerts">types of alerts</a>.</li>
-  <li>Select when you want Metabase to check the results. Metabase can check for results by the minute, hourly, daily, weekly, monthly, or on a custom schedule that you set using the Quartz <a href="https://www.quartz-scheduler.org/documentation/quartz-2.3.0/tutorials/crontrigger.html">cron syntax</a>.</li>
-  <li>Select the alert’s destination: <a href="../configuring-metabase/email">email</a>, <a href="../configuring-metabase/slack">Slack</a>, or to a <a href="../configuring-metabase/webhooks">webhook</a>.</li>
-  <li>Configure any other options (like <a href="#send-a-one-time-alert">only sending the alert once</a>).</li>
-  <li>Click <strong>Done</strong>.</li>
+  <li>Save your question</li>
+  <li>Click on the sharing icon in the top-right of the screen</li>
+  <li>Select <strong>Create alert</strong>.</li>
 </ol>
 
-<h2 id="send-a-one-time-alert">Send a one-time alert</h2>
+<p><img src="./images/get-alerts-about-this.png" alt="Get alerts"></p>
 
-<p>When setting up an alert, if you select the option to <strong>Only send the alert once</strong>, Metabase will send that alert once, then delete itself, never to alert anyone ever again. These “disposable” alerts are handy for things like letting you know when you reach a one-time milestone.</p>
-
-<h2 id="testing-alerts">Testing alerts</h2>
-
-<p>To test the alert, first make sure that the question returns results (if the question doesn’t return any results, Metabase won’t send the alert).</p>
-
-<p>Then hit the <strong>Send now</strong> button to trigger the alert.</p>
+<p>Available types of alerts will depend on the visualization you selected.</p>
 
 <h2 id="types-of-alerts">Types of alerts</h2>
+
+<p>There are three kinds of things you can get alerted about in Metabase:</p>
 
 <ul>
   <li><a href="#results-alerts">Results alerts</a>: when a question returns any result.</li>
   <li><a href="#goal-line-alerts">Goal line alerts</a> when a time series crosses a goal line.</li>
   <li><a href="#progress-bar-alerts">Progress bar alerts</a>: when a progress bar reaches or goes below its goal.</li>
 </ul>
-
-<h2 id="results-alerts">Results alerts</h2>
-
-<p>Metabase can send you an alert on a schedule when one of your questions returns <em>any</em> result. This kind of alert is also particularly useful if you have a question that doesn’t <em>usually</em> return any results, but you want to know when the question <em>does</em> return results.</p>
-
-<p>For example, you might have a table called <code class="language-plaintext highlighter-rouge">Reviews</code>, and you want to know any time a customer leaves a bad review, which you consider to be anything below three stars. To set up an alert for this situation, you’d go and create a raw data question (i.e., a question that returns a list of reviews), and add a filter to only include results with fewer than three stars.</p>
-
-<p>You probably don’t want to be alerted about all the bad reviews you’ve <em>ever</em> gotten, but just recent ones. So you can add a filter to only include results from yesterday or today, depending on how often you want to check for these bad reviews. At this point, when you check the results of this question, it probably won’t return any results, which is a good thing.</p>
-
-<p>Save the question, create an alert, and select how often you want Metabase to check this question for results. That’s it!</p>
 
 <h2 id="goal-line-alerts">Goal line alerts</h2>
 
@@ -4237,19 +4218,9 @@ Roadmap</a>
   <li>How often you want Metabase to check to see if the goal line has been crossed.</li>
 </ul>
 
-<p>Click Done, and your alert will be all set up!</p>
+<p><img src="./images/goal-line-options.png" alt="Goal line alert options"></p>
 
-<p>If you need to edit or unsubscribe from the alert you set up, just click that same icon. You’ll see the Edit and Unsubscribe buttons. This is also where you’ll see alerts about this question that admins might have added you to.</p>
-
-<p>Metabase will email you when:</p>
-
-<ul>
-  <li>You set up an alert</li>
-  <li>You’ve been unsubscribed from an alert</li>
-  <li>One of your alerts has stopped working</li>
-  <li>You unsubscribed from an alert</li>
-  <li>An admin added you to an alert</li>
-</ul>
+<p>Click Done, and your alert will be all set up! You’ll get an email confirmation, too. If you need to edit or unsubscribe from the alert you set up, just click that same icon. You’ll see the Edit and Unsubscribe buttons. This is also where you’ll see alerts about this question that administrators might have added you to.</p>
 
 <h2 id="progress-bar-alerts">Progress bar alerts</h2>
 
@@ -4273,40 +4244,52 @@ Roadmap</a>
   <li>How often you want Metabase to check to see if the goal has been reached.</li>
 </ul>
 
+<h2 id="results-alerts">Results alerts</h2>
+
+<p>Lastly, you can get an alert when one of your saved questions returns <em>any</em> result. This kind of alert is the most useful if you have a question that doesn’t <em>usually</em> return any results, but you just want to know when it <em>does</em> return results.</p>
+
+<p>For example, you might have a table called <code class="language-plaintext highlighter-rouge">Reviews</code>, and you want to know any time a customer leaves a bad review, which you consider to be anything below three stars. To set up an alert for this situation, you’d go and create a raw data question (i.e., a question that returns a list of reviews), and add a filter to only include results with fewer than three stars.</p>
+
+<p>You probably don’t want to be alerted about all the bad reviews you’ve <em>ever</em> gotten, but just recent ones. So you can add a filter to only include results from yesterday or today, depending on how often you want to check for these bad reviews. At this point, when you check the results of this question, it probably won’t return any results, which is a good thing.</p>
+
+<p>Save the question, create an alert, and select how often you want Metabase to check this question for results. That’s it!</p>
+
 <h2 id="editing-and-deleting-alerts">Editing and deleting alerts</h2>
 
-<p>To edit or delete alerts on a question, click on the Sharing icon in the top right corner. What you can edit depends on whether you’re an admin.</p>
+<p>To edit or delete alerts on a question, click on the Sharing icon in the top right corner.</p>
 
-<p>Everyone:</p>
+<p>You’ll be able to edit alerts that you set up. Admins get additional special privileges with alerts.</p>
+
+<h3 id="everyone">Everyone</h3>
 
 <ul>
   <li>Everyone can edit alerts that they’ve personally set up (but not alerts set up by other people).</li>
   <li>Everyone can view and unsubscribe from all alerts they receive by clicking on the <strong>gear</strong> icon in the upper right and navigating to <strong>Account settings</strong> &gt; <strong>Notifications</strong>.</li>
 </ul>
 
-<p>Admins:</p>
+<h3 id="admins">Admins</h3>
 
 <ul>
   <li>Admins can edit and delete any alert. This can’t be undone, so be careful!</li>
-  <li>Admins can add or remove recipients on any alert, even ones that they didn’t create themselves.</li>
-  <li>Admins can bulk manage alerts per person from the <a href="../people-and-groups/managing#unsubscribe-from-all-subscriptions-and-alerts">People menu in Admin settings</a>.</li>
+  <li>Admins can add or remove recipients on any alert, even ones that they did not create themselves.</li>
+  <li>Admins can remove all alerts created by a Metabase user and unsubscribe that user from all other alerts from the <a href="../people-and-groups/managing#unsubscribe-from-all-subscriptions-and-alerts">People menu in Admin settings</a>.</li>
 </ul>
 
 <h2 id="avoid-changing-the-name-of-the-alerted-channel-in-slack">Avoid changing the name of the alerted channel in Slack</h2>
 
 <p>Once you set up an alert to a Slack channel, avoid changing the name of that channel in Slack. If you rename the channel in Slack, but you want Metabase to continue to send alerts to that renamed channel, you’ll need to update the alert in Metabase to point to the new channel name.</p>
 
-<h2 id="alert-expiration-and-special-cases">Alert expiration and special cases</h2>
+<h2 id="alert-expiration">Alert expiration</h2>
 
-<p>Some circumstances will automatically change or delete alerts:</p>
+<p>Some circumstances will automatically delete alerts:</p>
 
 <ul>
-  <li><strong>You rename the target Slack channel</strong>. Well, technically the alert won’t get deleted, but Metabase will no longer have anywhere to send the alerts to. You’ll need to update the alert’s target channel in Metabase to the new channel’s name.</li>
-  <li><strong>If a goal line is removed from the question powering a “Goal line” alert</strong>, the alert will change to a “Results” type alert.</li>
-  <li><strong>If the question is deleted</strong>, Metabase will delete any alerts set up for that question.</li>
+  <li>Renaming the alerted channel in Slack. Well, technically the alert won’t get deleted, but Metabase will no longer have anywhere to send the alerts to. You’ll need to update the alert’s target channel in Metabase to the new channel’s name.</li>
+  <li>If a saved question that has an alert gets edited in such a way that the alert doesn’t make sense anymore, the alert will get deleted. For example, if a saved question with a goal line alert on it gets edited, and the goal line is removed entirely, Metabase will delete the alert.</li>
+  <li>If a question is deleted, Metabase will delete any alerts set up for that question.</li>
 </ul>
 
-<p>Alerts will continue to work <em>even if the person who set up the alert no longer has an active account</em>. For example, if an alert with multiple recipients (or to a Slack channel) was set up by someone whose account has since been deactivated, that alert will continue to work (though Metabase will stop sending the alerts to the deactivated account).</p>
+<p>Alerts will continue to work even if the person who set up the alert no longer has an active account. For example, if an alert with multiple recipients (or to a Slack channel) was set up by someone whose account has since been deactivated, that alert will continue to work (though Metabase will stop sending the alerts to the deactivated account).</p>
 
 <h2 id="admins-can-see-all-alerts">Admins can see all alerts</h2>
 

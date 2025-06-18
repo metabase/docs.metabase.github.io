@@ -7,7 +7,6 @@ category: Embedding
 title: 'Parameters for static embeds'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/embedding/static-embedding-parameters.md'
 layout: new-docs
-summary: 'Using parameters to customize embedded static questions and dashboards.'
 redirect_from:
     - /docs/master/embedding/signed-embedding-parameters
 ---
@@ -41,7 +40,7 @@ Unsigned parameters, such as appearance settings, should be added directly to yo
 
 ## Adding a filter widget to a static embed
 
-You can use **editable parameters** to add [filter widgets](/glossary/filter-widget) to embedded dashboards or SQL questions.
+You can use **editable parameters** to add [filter widgets](/glossary/filter_widget) to embedded dashboards or SQL questions.
 
 1. Go to your dashboard or SQL question. Make sure you've set up a [dashboard filter](../dashboards/filters) or [SQL variable](../questions/native-editor/sql-parameters).
 2. Click on the **sharing icon** > **Embed this item in an application**.
@@ -64,33 +63,33 @@ If you want to set a default value for your [editable filter widget](#adding-a-f
 your_embedding_url?parameter_name=value
 ```
 
-For example, if your embedded dashboard has a filter connected to an editable parameter called "Breakfast", and you want to set the default value to "Hash browns":
+Let's say your embedded dashboard has a filter connected to an editable parameter called "Breakfast". If you want to set the default value for the "Breakfast" filter to "Scrambled eggs":
 
 ```
-your_embedding_url?breakfast=Hash_browns
+your_embedding_url?breakfast=Scrambled_eggs
 ```
 
-To specify default values for multiple filters, separate them with ampersands (&):
+To specify default values for more than one filter, separate the filters with ampersands (&):
 
 ```
-your_embedding_url?breakfast=Hash_browns&lunch=Sandwich
+your_embedding_url?breakfast=Scrambled_eggs&lunch=Grilled_cheese
 ```
 
-You can set multiple default values for a single filter by separating the values with ampersands (&):
+You can set multiple default values for a filter by separating the `key=value` pairs with ampersands (&):
 
 ```
-your_embedding_url?breakfast=Hash_browns&breakfast=Pancakes
+your_embedding_url?breakfast=Scrambled_eggs&breakfast=Bacon
 ```
 
 ## Hiding filter widgets from a static embed
 
-If you have multiple editable parameters (resulting in multiple filter widgets), you can hide specific ones from your static embed by adding `#hide_parameters` to the end of the URL in your iframe's `src` attribute:
+If you have a lot of editable parameters (resulting in a lot of filter widgets), you can hide them from your static embed by adding `#hide_parameters` to the end of the URL in your iframe's `src` attribute:
 
 ```
 your_embedding_url#hide_parameters=parameter_name
 ```
 
-For example, to hide a filter called "Breakfast" from your embedded dashboard:
+For example, if you want to hide a filter called "Breakfast" from your embedded dashboard:
 
 ```
 your_embedding_url#hide_parameters=breakfast
@@ -105,7 +104,7 @@ your_embedding_url#hide_parameters=breakfast,lunch
 You can also simultaneously assign a parameter a default value _and_ hide its filter widget:
 
 ```
-your_embedding_url?breakfast=Hash_browns#hide_parameters=breakfast
+your_embedding_url?breakfast=Scrambled_eggs#hide_parameters=breakfast
 ```
 
 ## Unsigned parameter syntax
@@ -192,14 +191,14 @@ You can preview appearance settings from your question or dashboard's embedded a
 
 | Parameter name             | Possible values                                                                                                                                |
 | -------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
-| `background`               | `true` (default), `false`. Dashboards only.                                                                                                    |
-| `bordered`                 | `true` (default), `false`.                                                                                                                     |
-| `locale`\*                 | E.g., `ko`. See [list of locales](../configuring-metabase/localization#supported-languages)                                                 |
-| `titled`                   | `true` (default), `false`.                                                                                                                     |
-| `theme`                    | `null` (default), `night`. `theme=transparent` should work, but is deprecated (see [Transparent backgrounds](#transparent-backgrounds-for-embeds)) |
+| `background`               | true (default), false. Dashboards only.                                                                                                        |
+| `bordered`                 | true (default), false.                                                                                                                         |
+| `locale\*`                 | E.g., `locale=ko`. See [list of locales](../configuring-metabase/localization#supported-languages)                                          |
+| `titled`                   | true (default), false.                                                                                                                         |
+| `theme`                    | null (default), night. `theme=transparent` should work, but is deprecated (see [Transparent backgrounds](#transparent-backgrounds-for-embeds)) |
 | `refresh` (dashboard only) | integer (seconds, e.g., `refresh=60`).                                                                                                         |
 | `font`\*                   | [font name](../configuring-metabase/fonts)                                                                                                  |
-| `downloads`\*\*            | `true` (default), `false`, `results`, `pdf`                                                                                                    |
+| `downloads`\*\*            | true (default), false.                                                                                                                         |
 
 \* Available on [Pro](/product/pro) and [Enterprise](/product/enterprise) plans
 
@@ -211,13 +210,13 @@ For global appearance settings, such as the colors and fonts used across your en
 
 {% include plans-blockquote.html feature="Locales for static embeds" %}
 
-To change the UI language for a static embed, you can set its [locale](../configuring-metabase/localization#supported-languages). For example, to set a public link's language to Korean, append `#locale=ko`:
+To change the UI language for a static embed, you can set its [locale](../configuring-metabase/localization#supported-languages). For example, to set a public link's language to Korean, you could append `#locale=ko`.
 
 ```
 https://metabase.example.com/public/dashboard/7b6e347b-6928-4aff-a56f-6cfa5b718c6b?category=&city=&state=#locale=ko
 ```
 
-If you have multiple parameters, separate them with an ampersand (`&`):
+If you have multiple params, separated them with an ampersand `&`:
 
 ```
 category=Gadget&state=Vermont#theme=night&locale=ko
@@ -236,24 +235,13 @@ Making an embed transparent depends on the type of embed:
 
 {% include plans-blockquote.html feature="Disabling downloads" %}
 
-By default, Metabase will include a **Download** button on embedded questions, and an **Export to PDF** option on embedded dashboards.
+By default, Metabase will include a **Download** button on embedded questions, and an **Export to PDF** option on embedded dashboards. You can remove the option to download results by setting `downloads=false` in the embedding URL in the iframe's `src` attribute, see [customizing the appearance of static embeds](./static-embedding#customizing-the-appearance-of-static-embeds).
 
-You can configure these options with the `downloads` parameter in the embedding URL in the iframe's `src` attribute, see [customizing the appearance of static embeds](./static-embedding#customizing-the-appearance-of-static-embeds).
-
-`downloads` accepts the following values:
-
-- `true` (default): include both the Download and Export to PDF options.
-- `false`: hide both the Download and Export to PDF options.
-- `results`: show the Download option.
-- `pdf`: show the Export to PDF option (dashboards only).
-
-You can combine the explicit options: `downloads=results,pdf` is the same as `downloads=true`.
-
-The `downloads` parameter replaces the legacy `hide_download_button` parameter.
+If the download option is missing when you expected it to be available, check that the URL in the `src` attribute for your iframe has the parameter `downloads=true`.
 
 ## Maximum request size
 
-The maximum length of a static embedding URL (including all parameters) is determined by your [`MB_JETTY_REQUEST_HEADER_SIZE`](../configuring-metabase/environment-variables#mb_jetty_request_header_size) environment variable. The default is 8192 bytes.
+The maximum length of a static embedding URL (including all parameters) is the value of your [`MB_JETTY_REQUEST_HEADER_SIZE`](../configuring-metabase/environment-variables#mb_jetty_request_header_size) environment variable. The default is 8192 bytes.
 
 If your static embedding URL exceeds the maximum header size, you'll see a log message like `URI too long`. You can update the environment variable to accept larger headers. If you're using a proxy server, you may need to set a corresponding property on the server as well.
 

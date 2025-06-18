@@ -4178,22 +4178,41 @@ Roadmap</a>
   </div>
 </div>
 
-<h2 id="passing-a-configuration-object-to-metabaseprovider">Passing a configuration object to <code class="language-plaintext highlighter-rouge">MetabaseProvider</code></h2>
+<p>To use the SDK in your app, you need to import the <code class="language-plaintext highlighter-rouge">MetabaseProvider</code> component and provide it with an <code class="language-plaintext highlighter-rouge">authConfig</code> object, like so:</p>
 
-<p>To use the SDK in your app, you need to import the <code class="language-plaintext highlighter-rouge">MetabaseProvider</code> component and provide it with an <code class="language-plaintext highlighter-rouge">authConfig</code> object.</p>
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">authConfig</span> <span class="o">=</span> <span class="nf">defineMetabaseAuthConfig</span><span class="p">({</span>
+  <span class="na">metabaseInstanceUrl</span><span class="p">:</span> <span class="dl">"</span><span class="s2">https://metabase.example.com</span><span class="dl">"</span><span class="p">,</span> <span class="c1">// Required: Your Metabase instance URL</span>
+  <span class="na">authProviderUri</span><span class="p">:</span> <span class="dl">"</span><span class="s2">https://app.example.com/sso/metabase</span><span class="dl">"</span><span class="p">,</span> <span class="c1">// Required: An endpoint in your app that signs the user in and returns a session</span>
+<span class="p">});</span>
 
-<h3 id="metabaseprovider"><code class="language-plaintext highlighter-rouge">MetabaseProvider</code></h3>
+<span class="k">export</span> <span class="k">default</span> <span class="kd">function</span> <span class="nf">App</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">return </span><span class="p">(</span>
+    <span class="o">&lt;</span><span class="nx">MetabaseProvider</span>
+      <span class="nx">authConfig</span><span class="o">=</span><span class="p">{</span><span class="nx">authConfig</span><span class="p">}</span>
+      <span class="nx">theme</span><span class="o">=</span><span class="p">{</span><span class="nx">theme</span><span class="p">}</span>
+      <span class="nx">className</span><span class="o">=</span><span class="dl">"</span><span class="s2">optional-class</span><span class="dl">"</span>
+    <span class="o">&gt;</span>
+      <span class="nx">Hello</span> <span class="nx">World</span><span class="o">!</span>
+    <span class="o">&lt;</span><span class="sr">/MetabaseProvider</span><span class="err">&gt;
+</span>  <span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
 
-<p>A component that configures the SDK and provides the Metabase SDK’s context and theme.</p>
-
-<h4 id="api-reference">API Reference</h4>
+<p>You can also pass additional props to <code class="language-plaintext highlighter-rouge">MetabaseProvider</code>:</p>
 
 <ul>
-  <li><a href="./api/MetabaseProvider">Component</a></li>
-  <li><a href="./api/MetabaseProviderProps">Props</a></li>
+  <li><code class="language-plaintext highlighter-rouge">authConfig</code> (Required). Defines how to authenticate with Metabase.</li>
+  <li><code class="language-plaintext highlighter-rouge">theme</code> (Optional) See <a href="./appearance">Appearance</a>.</li>
+  <li><code class="language-plaintext highlighter-rouge">pluginsConfig</code> (Optional). See <a href="./plugins">Plugins</a>.</li>
+  <li><code class="language-plaintext highlighter-rouge">eventHandlers</code> (Optional). See <a href="#global-event-handlers">Global event handlers</a>.</li>
+  <li><code class="language-plaintext highlighter-rouge">className</code> (Optional). Classes to be added to the wrapper element.</li>
+  <li><code class="language-plaintext highlighter-rouge">locale</code> (Optional). Defines the display language. Accepts an ISO language code such as <code class="language-plaintext highlighter-rouge">en</code> or <code class="language-plaintext highlighter-rouge">de</code>.</li>
+  <li><code class="language-plaintext highlighter-rouge">loaderComponent</code> (Optional). A custom loader component to display while the SDK is loading.</li>
+  <li><code class="language-plaintext highlighter-rouge">errorComponent</code> (Optional). A custom error component to display when the SDK encounters an error.</li>
+  <li><code class="language-plaintext highlighter-rouge">allowConsoleLog</code> (Optional). If <code class="language-plaintext highlighter-rouge">true</code>, log messages will be printed to the console.</li>
 </ul>
 
-<h4 id="example">Example</h4>
+<h2 id="example-config-object-passed-to-metabaseprovider">Example <code class="language-plaintext highlighter-rouge">config</code> object passed to <code class="language-plaintext highlighter-rouge">MetabaseProvider</code></h2>
 
 <div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nx">React</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">react</span><span class="dl">"</span><span class="p">;</span>
 <span class="k">import</span> <span class="p">{</span>
@@ -4205,6 +4224,7 @@ Roadmap</a>
 <span class="c1">// Configure authentication</span>
 <span class="kd">const</span> <span class="nx">authConfig</span> <span class="o">=</span> <span class="nf">defineMetabaseAuthConfig</span><span class="p">({</span>
   <span class="na">metabaseInstanceUrl</span><span class="p">:</span> <span class="dl">"</span><span class="s2">https://metabase.example.com</span><span class="dl">"</span><span class="p">,</span> <span class="c1">// Required: Your Metabase instance URL</span>
+  <span class="na">authProviderUri</span><span class="p">:</span> <span class="dl">"</span><span class="s2">https://app.example.com/sso/metabase</span><span class="dl">"</span><span class="p">,</span> <span class="c1">// Required: An endpoint in your app that signs the user in and returns a session</span>
 <span class="p">});</span>
 
 <span class="c1">// See the "Customizing appearance" section for more information</span>
@@ -4234,86 +4254,18 @@ Roadmap</a>
 <span class="p">}</span>
 </code></pre></div></div>
 
-<h4 id="props">Props</h4>
-
-<table>
-  <thead>
-    <tr>
-      <th style="text-align: left">Property</th>
-      <th style="text-align: left">Type</th>
-      <th style="text-align: left">Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="allowconsolelog"></a> <code class="language-plaintext highlighter-rouge">allowConsoleLog?</code></td>
-      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">boolean</code></td>
-      <td style="text-align: left" data-label="Description">Whether to allow logging to the DevTools console. Defaults to true.</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="authconfig"></a> <code class="language-plaintext highlighter-rouge">authConfig</code></td>
-      <td style="text-align: left" data-label="Type"><a href="./api/MetabaseAuthConfig"><code class="language-plaintext highlighter-rouge">MetabaseAuthConfig</code></a></td>
-      <td style="text-align: left" data-label="Description">Defines how to authenticate with Metabase.</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="children"></a> <code class="language-plaintext highlighter-rouge">children</code></td>
-      <td style="text-align: left" data-label="Type"><a href="https://github.com/DefinitelyTyped/DefinitelyTyped/blob/0b728411cd1dfb4bd26992bb35a73cf8edaa22e7/types/react/index.d.ts#L478"><code class="language-plaintext highlighter-rouge">ReactNode</code></a></td>
-      <td style="text-align: left" data-label="Description">The children of the MetabaseProvider component.</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="classname"></a> <code class="language-plaintext highlighter-rouge">className?</code></td>
-      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">string</code></td>
-      <td style="text-align: left" data-label="Description">A custom class name to be added to the root element.</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="errorcomponent"></a> <code class="language-plaintext highlighter-rouge">errorComponent?</code></td>
-      <td style="text-align: left" data-label="Type"><a href="./api/SdkErrorComponent"><code class="language-plaintext highlighter-rouge">SdkErrorComponent</code></a></td>
-      <td style="text-align: left" data-label="Description">A custom error component to display when the SDK encounters an error.</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="eventhandlers"></a> <code class="language-plaintext highlighter-rouge">eventHandlers?</code></td>
-      <td style="text-align: left" data-label="Type"><a href="./api/SdkEventHandlersConfig"><code class="language-plaintext highlighter-rouge">SdkEventHandlersConfig</code></a></td>
-      <td style="text-align: left" data-label="Description">See <a href="/docs/master/embedding/sdk/config#global-event-handlers">Global event handlers</a>.</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="loadercomponent"></a> <code class="language-plaintext highlighter-rouge">loaderComponent?</code></td>
-      <td style="text-align: left" data-label="Type">() =&gt; <a href="https://github.com/DefinitelyTyped/DefinitelyTyped/blob/0b728411cd1dfb4bd26992bb35a73cf8edaa22e7/types/react/index.d.ts#L4240"><code class="language-plaintext highlighter-rouge">Element</code></a></td>
-      <td style="text-align: left" data-label="Description">A custom loader component to display while the SDK is loading.</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="locale"></a> <code class="language-plaintext highlighter-rouge">locale?</code></td>
-      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">string</code></td>
-      <td style="text-align: left" data-label="Description">Defines the display language. Accepts an ISO language code such as <code class="language-plaintext highlighter-rouge">en</code> or <code class="language-plaintext highlighter-rouge">de</code>. Defaults to the instance locale.</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="pluginsconfig"></a> <code class="language-plaintext highlighter-rouge">pluginsConfig?</code></td>
-      <td style="text-align: left" data-label="Type"><a href="./api/MetabasePluginsConfig"><code class="language-plaintext highlighter-rouge">MetabasePluginsConfig</code></a></td>
-      <td style="text-align: left" data-label="Description">See <a href="/docs/master/embedding/sdk/plugins">Plugins</a>.</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="theme"></a> <code class="language-plaintext highlighter-rouge">theme?</code></td>
-      <td style="text-align: left" data-label="Type"><a href="./api/MetabaseTheme"><code class="language-plaintext highlighter-rouge">MetabaseTheme</code></a></td>
-      <td style="text-align: left" data-label="Description">See <a href="/docs/master/embedding/sdk/appearance">Appearance</a>.</td>
-    </tr>
-  </tbody>
-</table>
-
 <h2 id="global-event-handlers">Global event handlers</h2>
 
-<p>You can listen for events by defining the <code class="language-plaintext highlighter-rouge">eventHandlers</code> prop for <code class="language-plaintext highlighter-rouge">MetabaseProvider</code>.</p>
+<p><code class="language-plaintext highlighter-rouge">MetabaseProvider</code> also supports <code class="language-plaintext highlighter-rouge">eventHandlers</code>.</p>
 
-<h3 id="sdkeventhandlersconfig"><code class="language-plaintext highlighter-rouge">SdkEventHandlersConfig</code></h3>
-
-<p>Accepts an object where each key is an event type and the corresponding value is the event handler function.</p>
-
-<h4 id="api-reference-1">API Reference</h4>
+<p>Currently, we support:</p>
 
 <ul>
-  <li><a href="./api/SdkEventHandlersConfig">Type</a></li>
+  <li><code class="language-plaintext highlighter-rouge">onDashboardLoad?: (dashboard: Dashboard | null) =&gt; void;</code>. Triggers when a dashboard loads with all visible cards and their content</li>
+  <li><code class="language-plaintext highlighter-rouge">onDashboardLoadWithoutCards?: (dashboard: Dashboard | null) =&gt; void;</code>. Triggers after a dashboard loads, but without its cards (at this stage only the dashboard title, tabs, and cards grid are rendered, but the contents of the cards have yet to load.</li>
 </ul>
 
-<h4 id="example-1">Example</h4>
-<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">handleDashboardLoad</span><span class="p">:</span> <span class="nx">SdkDashboardLoadEvent</span> <span class="o">=</span> <span class="p">(</span><span class="nx">dashboard</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">handleDashboardLoad</span><span class="p">:</span> <span class="nx">SdkDashboardLoadEvent</span> <span class="o">=</span> <span class="nx">dashboard</span> <span class="o">=&gt;</span> <span class="p">{</span>
   <span class="cm">/* do whatever you need to do - e.g. send analytics events, show notifications */</span>
 <span class="p">};</span>
 
@@ -4328,30 +4280,6 @@ Roadmap</a>
   <span class="o">&lt;</span><span class="sr">/MetabaseProvider</span><span class="err">&gt;
 </span><span class="p">);</span>
 </code></pre></div></div>
-
-<h4 id="props-1">Props</h4>
-
-<table>
-  <thead>
-    <tr>
-      <th style="text-align: left">Property</th>
-      <th style="text-align: left">Type</th>
-      <th style="text-align: left">Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="ondashboardload"></a> <code class="language-plaintext highlighter-rouge">onDashboardLoad?</code></td>
-      <td style="text-align: left" data-label="Type"><a href="./api/SdkDashboardLoadEvent"><code class="language-plaintext highlighter-rouge">SdkDashboardLoadEvent</code></a></td>
-      <td style="text-align: left" data-label="Description">Triggers when a dashboard loads with all visible cards and their content</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="ondashboardloadwithoutcards"></a> <code class="language-plaintext highlighter-rouge">onDashboardLoadWithoutCards?</code></td>
-      <td style="text-align: left" data-label="Type"><a href="./api/SdkDashboardLoadEvent"><code class="language-plaintext highlighter-rouge">SdkDashboardLoadEvent</code></a></td>
-      <td style="text-align: left" data-label="Description">Triggers after a dashboard loads, but without its cards (at this stage only the dashboard title, tabs, and cards grid are rendered, but the contents of the cards have yet to load.</td>
-    </tr>
-  </tbody>
-</table>
 
 <h2 id="reloading-metabase-components">Reloading Metabase components</h2>
 

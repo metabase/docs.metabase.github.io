@@ -11,23 +11,23 @@ layout: new-docs
 
 # Isnull
 
-`isNull` checks if a value is a `null`, a special kind of placeholder that's used by a database when something is missing or unknown.
+`isnull` checks if a value is a `null`, a special kind of placeholder that's used by a database when something is missing or unknown.
 
 ## Syntax
 
 ```
-isNull(text column)
+isnull(text column)
 ```
 
-You can use `isNull` in [custom filters](../expressions#filter-expressions-and-conditionals), or as the condition for conditional aggregations [`CountIf`](../expressions/countif) and [`SumIf`](../expressions/sumif). To create a custom column using `isNull`, you must combine `isNull` with another function that accepts boolean values, like [`case`](./case).
+You can use `isnull` in [custom filters](../expressions#filter-expressions-and-conditionals), or as the condition for conditional aggregations [`CountIf`](../expressions/countif) and [`SumIf`](../expressions/sumif). To create a custom column using `isnull`, you must combine `isnull` with another function that accepts boolean values, like [`case`](./case).
 
 ## How Metabase handles nulls
 
 In Metabase tables, `null`s are displayed as blank cells. Additionally, for string columns, empty strings and strings containing only whitespace characters will be displayed as blank as well.
 
-The table below shows you examples of the output of `isNull`.
+The table below shows you examples of the output of `isnull`.
 
-| Metabase shows | Database value      | `isNull(value)` |
+| Metabase shows | Database value      | `isnull(value)` |
 | -------------- | ------------------- | --------------- |
 |                | `null`              | `true`          |
 |                | `""` (empty string) | `false`\*       |
@@ -38,24 +38,24 @@ The table below shows you examples of the output of `isNull`.
 
 ## Creating a boolean custom column
 
-To create a custom column using `isNull`, you must combine `isNull` with another function.
+To create a custom column using `isnull`, you must combine `isnull` with another function.
 For example, if you want to create a custom column that contains `true` when the `Discount` column is null, and `false` otherwise, you can use the [`case expression`](./case) :
 
 ```
-case(isNull([Discount]), true, false)
+case(isnull([Discount]), true, false)
 ```
 
 ## Replacing null values with another value
 
-Combine `isNull` with the [`case` expression](./case) to replace missing information with something more descriptive:
+Combine `isnull` with the [`case` expression](./case) to replace missing information with something more descriptive:
 
 For example, you can create a new custom column that will contain `"Unknown feedback"` when the original `[Feedback]` column is null, and the actual feedback value when `[Feedback]` is has a value. The custom expression to do it is:
 
 ```
-case(isNull([Feedback]), "Unknown feedback.", [Feedback])
+case(isnull([Feedback]), "Unknown feedback.", [Feedback])
 ```
 
-| Feedback               | `case(isNull([Feedback]), "Unknown feedback.", [Feedback])` |
+| Feedback               | `case(isnull([Feedback]), "Unknown feedback.", [Feedback])` |
 | ---------------------- | ----------------------------------------------------------- |
 | `null`                 | `"Unknown feedback."`                                       |
 | `""`                   | `""`                                                        |
@@ -63,7 +63,7 @@ case(isNull([Feedback]), "Unknown feedback.", [Feedback])
 
 ## Accepted data types
 
-| [Data type][data-types] | Works with `isNull` |
+| [Data type][data-types] | Works with `isnull` |
 | ----------------------- | ------------------- |
 | String                  | ✅                  |
 | Number                  | ✅                  |
@@ -73,13 +73,13 @@ case(isNull([Feedback]), "Unknown feedback.", [Feedback])
 
 ## Limitations
 
-- In Metabase, you must combine `isNull` with another expression that accepts boolean arguments (i.e., `true` or `false`).
-- `isNull` only accepts one value at a time. If you need to deal with blank cells across multiple columns, see the [coalesce expression](./coalesce).
-- If `isNull` doesn't seem to do anything to your blank cells, you might have empty strings. Try the [`isEmpty` expression](./isempty) instead.
+- In Metabase, you must combine `isnull` with another expression that accepts boolean arguments (i.e., `true` or `false`).
+- `isnull` only accepts one value at a time. If you need to deal with blank cells across multiple columns, see the [coalesce expression](./coalesce).
+- If `isnull` doesn't seem to do anything to your blank cells, you might have empty strings. Try the [`isempty` expression](./isempty) instead.
 
 ## Related functions
 
-This section covers functions and formulas that can be used interchangeably with the Metabase `isNull` expression, with notes on how to choose the best option for your use case.
+This section covers functions and formulas that can be used interchangeably with the Metabase `isnull` expression, with notes on how to choose the best option for your use case.
 
 - [SQL](#sql)
 - [Spreadsheets](#spreadsheets)
@@ -87,7 +87,7 @@ This section covers functions and formulas that can be used interchangeably with
 
 All examples below use the table from the [Replacing null values](#replacing-null-values-with-another-value) example:
 
-| Feedback               | `case(isNull([Feedback]), "Unknown feedback.", [Feedback])` |
+| Feedback               | `case(isnull([Feedback]), "Unknown feedback.", [Feedback])` |
 | ---------------------- | ----------------------------------------------------------- |
 | `null`                 | `"Unknown feedback."`                                       |
 | `""`                   | `""`                                                        |
@@ -102,10 +102,10 @@ CASE WHEN Feedback IS NULL THEN "Unknown feedback",
      ELSE Feedback END
 ```
 
-is equivalent to the Metabase `isNull` expression:
+is equivalent to the Metabase `isnull` expression:
 
 ```
-case(isNull([Feedback]), "Unknown feedback.", [Feedback])
+case(isnull([Feedback]), "Unknown feedback.", [Feedback])
 ```
 
 ### Spreadsheets
@@ -118,10 +118,10 @@ Assuming our sample [feedback column](#replacing-null-values-with-another-value)
 =IF(ISNA(A2), "Unknown feedback.", A2)
 ```
 
-is equivalent to the Metabase `isNull` expression:
+is equivalent to the Metabase `isnull` expression:
 
 ```
-case(isNull([Feedback]), "Unknown feedback.", [Feedback])
+case(isnull([Feedback]), "Unknown feedback.", [Feedback])
 ```
 
 ### Python
@@ -134,10 +134,10 @@ Assuming our sample [feedback column](#replacing-null-values-with-another-value)
 df["Custom Column"] = np.where(df["Feedback"].isnull(), "Unknown feedback.", df["Feedback"])
 ```
 
-is equivalent to the Metabase `isNull` expression:
+is equivalent to the Metabase `isnull` expression:
 
 ```
-case(isNull([Feedback]), "Unknown feedback.", [Feedback])
+case(isnull([Feedback]), "Unknown feedback.", [Feedback])
 ```
 
 ## Further reading
