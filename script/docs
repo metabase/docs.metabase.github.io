@@ -21,15 +21,14 @@ program
   .option("-l, --latest") // copy docs into _docs/latest
   .option("-s, --set-version <version>") // Specify target directory and version
   .option("-u, --update") // Download docs from current release_branch
-  // When set, we grab the tarball for this branch
-  .option("-b, --source-branch <dir>");
+  .option("-b, --source-branch <dir>"); // When set, we grab the tarball for this branch
 
 program.parse(process.argv);
 
 const options = program.opts();
 
 if (options.sourceBranch) {
-  settings.branchName = options.sourceBranch
+  settings.sourceBranch = options.sourceBranch
 }
 
 // When running script with --update flag, fetch-docs won't update the latest_version in the config.
