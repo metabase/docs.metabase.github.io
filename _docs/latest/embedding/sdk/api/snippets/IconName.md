@@ -1,5 +1,5 @@
 ---
-version: v0.54
+version: v0.55
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -24,6 +24,7 @@ type IconName =
   | "add"
   | "add_column"
   | "add_data"
+  | "add_folder"
   | "add_row"
   | "add_to_dash"
   | "ai"
@@ -142,6 +143,8 @@ type IconName =
   | "lock_filled"
   | "mail"
   | "mail_filled"
+  | "metabot"
+  | "metabot_sad"
   | "metric"
   | "model_with_badge"
   | "moon"
@@ -178,6 +181,7 @@ type IconName =
   | "sort_arrows"
   | "sum"
   | "sync"
+  | "redo"
   | "return"
   | "reference"
   | "refresh"
@@ -197,6 +201,7 @@ type IconName =
   | "sparkles"
   | "star_filled"
   | "star"
+  | "stop"
   | "store"
   | "sun"
   | "t-shirt"
@@ -208,6 +213,7 @@ type IconName =
   | "triangle_left"
   | "triangle_right"
   | "unarchive"
+  | "undo"
   | "unknown"
   | "unpin"
   | "unsubscribe"
