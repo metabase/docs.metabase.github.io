@@ -53,6 +53,8 @@
              "## Updated Directories:"
              (str/join "\n" (map #(str "- `" % "`") artifact-dirs))
              ""
+             (str "Find the [Triggering PR](https://github.com/metabase/metabase/pulls?q=sort%3Aupdated-desc+is%3Apr+is%3Aopen+" source-branch ").")
+             ""
              "> This PR will be merged when the PR that triggered this build is merged."]))
 
 (defn -main
@@ -95,7 +97,7 @@
             (let [args ["gh" "pr" "create"
                         "--repo" "metabase/docs.metabase.github.io"
                         "--title" target-branch-title
-                        "--body" (report-pr-body source-branch target-branch-title artifact-dirs)
+                        "--body" (report-pr-body source-branch target-branch artifact-dirs)
                         "--head" target-branch-name]]
               (println "running: " (str/join " " args))
               (apply p/shell args))))))
