@@ -39,14 +39,15 @@
     }
   </script>
 
-      
+  
+       
 
 <title>Charts with multiple series | Metabase Documentation</title>
 <!-- Twitter cards -->
 <meta name="twitter:site" content="@metabase">
 
 <meta name="twitter:title" content="Charts with multiple series | Metabase Documentation">
-<meta name="twitter:description" content="Charts with multiple series Data in isolation is rarely all that useful. One of the best ways to add context and clarity when communicating with data is to show data side-by-side with other data. Here are just a few examples of...">
+<meta name="twitter:description" content="Charts with multiple series One of the best ways to add context and clarity when communicating with data is to show data side-by-side with other data. For example:  Your company’s revenue vs. its costs over time Average order price this...">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -56,11 +57,48 @@
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://www.metabase.com/docs/latest/dashboards/multiple-series">
 <meta name="title" property="og:title" content="Charts with multiple series | Metabase Documentation">
-<meta name="description" property="og:description" content="Charts with multiple series Data in isolation is rarely all that useful. One of the best ways to add context and clarity when communicating with data is to show data side-by-side with other data. Here are just a few examples of...">
+<meta name="description" property="og:description" content="Charts with multiple series One of the best ways to add context and clarity when communicating with data is to show data side-by-side with other data. For example:  Your company’s revenue vs. its costs over time Average order price this...">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
+
   
-  <link href="/images/favicon.svg" rel="shortcut icon">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "url": "https://www.metabase.com/",
+    "sameAs": [
+      "https://github.com/metabase",
+      "https://www.linkedin.com/company/metabase/",
+      "https://x.com/metabase",
+      "https://www.youtube.com/@metabasedata"
+    ],
+    "logo": "https://github.com/metabase/metabase.github.io/blob/master/images/metabase-logo.png?raw=",
+    "name": "Metabase",
+    "description": "Metabase is an open source Business Intelligence and Embedded Analytics tool. Connect to your data stack in 5 minutes to make queries, visualizations, and dashboards easy for everyone—no SQL required",
+    "email": "hello@metabase.com",
+    "foundingDate": "2015-02-01T00:00:00.000Z",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "9740 Campo Rd",
+      "addressLocality": "Spring Valley",
+      "addressCountry": "USA",
+      "addressRegion": "CA",
+      "postalCode": "91977"
+    },
+    "knowsAbout": [
+      { "@type": "Thing", "name": "Business Intelligence" },
+      { "@type": "Thing", "name": "Embedded Analytics" },
+      { "@type": "Thing", "name": "Self-service analytics" },
+      { "@type": "Thing", "name": "Open source Business Intelligence" }
+    ]
+  }
+</script>
+
+
+  
+    <link href="/images/favicon.svg" rel="shortcut icon">
   
   <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/flexboxgrid/6.3.1/flexboxgrid.min.css" rel="stylesheet" type="text/css">
@@ -4006,7 +4044,7 @@ Roadmap</a>
 <div class="version__selector cursor-pointer">
   <span class="version__current">
     
-      v0.54
+      v0.55
     
 
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="chevron">
@@ -4016,6 +4054,14 @@ Roadmap</a>
   </span>
   <ul class="version__dropdown">
     
+      
+    
+      
+        <li>
+          <a href="/docs/v0.54">
+            v0.54
+          </a>
+        </li>
       
     
       
@@ -4082,14 +4128,6 @@ Roadmap</a>
         </li>
       
     
-      
-        <li>
-          <a href="/docs/v0.45">
-            v0.45
-          </a>
-        </li>
-      
-    
     <li><a href="/docs/all">See more</a></li>
   </ul>
 </div>
@@ -4120,118 +4158,118 @@ Roadmap</a>
 
         <h1 id="charts-with-multiple-series">Charts with multiple series</h1>
 
-<p>Data in isolation is rarely all that useful. One of the best ways to add context and clarity when communicating with data is to show data side-by-side with other data. Here are just a few examples of data that is better together than apart.</p>
+<p>One of the best ways to add context and clarity when communicating with data is to show data side-by-side with other data. For example:</p>
 
 <ul>
-  <li>Your company’s revenue vs. its costs over time.</li>
-  <li>Average order price this month and user signups for that month.</li>
-  <li>New users per day vs. returning users per day.</li>
-  <li>Orders per day from a few different product lines.</li>
+  <li>Your company’s revenue vs. its costs over time</li>
+  <li>Average order price this month and user signups for that month</li>
+  <li>Orders per day from a few different product lines</li>
 </ul>
 
 <h2 id="displaying-data-side-by-side">Displaying data side by side</h2>
 
-<p>There are two main ways to visualize data side by side:</p>
+<p>There are two main ways to visualize multiple series in Metabase:</p>
 
-<ol>
-  <li>
-    <p><a href="#ask-a-question-that-involves-multiple-dimensions"><strong>Ask a question that involves multiple dimensions</strong></a> with the query builder (or in SQL, if you’re fancy). Example: the count of users by region over time.</p>
-  </li>
-  <li>
-    <p><a href="#combining-two-saved-questions"><strong>Combine two saved questions</strong></a> that share a common dimension (like time) on a dashboard. For example, you could look at revenue over time and costs over time together.</p>
-  </li>
-</ol>
+<ul>
+  <li><a href="#ask-a-question-that-involves-multiple-dimensions"><strong>Ask a question that involves multiple dimensions</strong></a> with the query builder (or in SQL, if you’re using SQL). For example, the count of users by region over time.</li>
+  <li><a href="#combining-multiple-questions-on-one-dashboard-card"><strong>Combine multiple questions on one dashboard card</strong></a> that share a common dimension (like time) on a dashboard. For example, you could look at revenue over time and costs over time together.</li>
+</ul>
 
 <h2 id="ask-a-question-that-involves-multiple-dimensions">Ask a question that involves multiple dimensions</h2>
 
-<p>If you’re creating a new question, you can view the results as a multi-series visualization by summarizing your data and grouping it into two groups.</p>
+<p>If you’re creating a new question, you can view the results as a multi-series visualization by summarizing your data and grouping it by two or more dimensions.</p>
 
-<p>As an example, we might want to see which website or service is referring the most people to our website. In the <strong>Sample Database</strong> that ships with Metabase, you would group by the <code class="language-plaintext highlighter-rouge">Source</code> and <code class="language-plaintext highlighter-rouge">Created At</code> columns of the <strong>People</strong> table.</p>
+<p>For example, we might want to see sales by month and product category. In the <strong>Sample Database</strong> that ships with Metabase, you would count the number of rows, then group by the <code class="language-plaintext highlighter-rouge">Product -&gt; Category</code> and <code class="language-plaintext highlighter-rouge">Created At</code>:</p>
 
-<p>To create the multi-series chart, select the <strong>People</strong> table, click on the <strong>Summarize</strong> button in the upper right, then add <code class="language-plaintext highlighter-rouge">Source</code> and <code class="language-plaintext highlighter-rouge">Created At</code> as groupings (the <code class="language-plaintext highlighter-rouge">count of rows</code> metric that we want is selected by default). Be sure to click the plus button to the right of your selection, so Metabase knows to add the grouping; otherwise, Metabase will switch to that grouping. <a href="../questions/start">Learn more about asking questions</a>.</p>
+<p><img src="./images/editor-orders-by-product-category.png" alt="Orders by product category"></p>
 
-<p>Metabase will automatically display a multi-series line chart visualization of how each referrer has performed for us.</p>
+<p>Metabase will automatically display a multi-series line chart, with each series representing a different category.</p>
 
-<p><img src="./images/multi-series_query_builder.png" alt="multi-series in the query builder"></p>
+<p><img src="./images/multi-series_query_builder.png" alt="Multi-series in the query builder"></p>
 
-<p>You can also create a multi-series chart by composing a custom question in the notebook editor. All you need to do is summarize your data (e.g., count the rows) and group that data into multiple groups (e.g. <code class="language-plaintext highlighter-rouge">Created At</code> by month and Product Category).</p>
+<p>Metabase can visualize up to 100 distinct values of a dimension at once, so if you’re selecting a field that contains many values, you might need to filter the values.</p>
 
-<p><img src="./images/notebook_editor_multi-series.png" alt="Composing a multi-series question in the notebook editor"></p>
+<h2 id="combining-multiple-questions-on-one-dashboard-card">Combining multiple questions on one dashboard card</h2>
 
-<p>Note: you won’t be able to add another saved question to multi-series visualizations made in this fashion. Metabase can visualize up to 100 distinct values of a dimension at once, so if you’re selecting a field that contains a lot of values, you might need to filter the values.</p>
-
-<h2 id="combining-two-saved-questions">Combining two saved questions</h2>
-
-<p>If you already have two or more saved questions you’d like to compare, and they have the same first dimension, they can be combined onto a single dashboard card. You can even compare questions that pull data from different databases. Here’s how:</p>
+<p>You can layer multiple questions on a single dashboard card. You can even layer questions that query different databases, as long as they share the same datetime dimension.</p>
 
 <ol>
   <li>
-    <p>Add a question with a dimension like time or category to a dashboard. In practice, these will usually be line charts or bar charts.</p>
+    <p><strong>Create a dashboard and enter dashboard edit mode</strong>. On a dashboard, click the <strong>Pencil</strong> icon to enter editing mode.</p>
   </li>
   <li>
-    <p>While in edit mode on the dashboard, hovering over a card will display some editing options in the upper right of the question, including an option to <strong>add a line</strong>, as well as a <strong>gear</strong> icon. Click on the add a line option (the <strong>+</strong> with a line and the word “Add” next to it).</p>
+    <p><strong>Add a question</strong> with a dimension like time or category to a dashboard. In practice, questions you’ll typically want to overlay will be line or bar charts.</p>
+  </li>
+  <li>
+    <p><strong>Edit the card’s visualization</strong>. Still in dashboard edit mode, hover over the question’s card and click the <strong>Pencil</strong> icon to edit the card’s visualization.</p>
   </li>
 </ol>
 
-<p><img src="./images/add_series.png" alt="add multi-series"></p>
+<p><img src="./images/edit-visualization.png" alt="Edit visualization"></p>
 
 <ol>
-  <li>In the Edit Data modal, you’ll see the original question on the left, with a list of compatible questions you can choose from on the right. Search question(s) to add, and check the box next to each question you’d like to see alongside with the original. Metabase will add the question(s) to the same chart.</li>
+  <li><strong>Add more data</strong>. In the Manage data sidebar on the left, click on <strong>Add more data</strong>.</li>
 </ol>
 
-<p><img src="./images/edit_modal.png" alt="multi-series edit modal"></p>
+<p><img src="./images/add-data.png" alt="Manage data sidebar"></p>
+
+<p>Metabase will list questions in the left sidebar. Valid questions that you can plot on the card will have a plus sign <strong>+</strong>. You can also swap out the card’s current question for a different question, which may update the list of compatible questions.</p>
 
 <p>If necessary, the X and Y axes will automatically update. Metabase will create a legend using the existing card titles to help you understand which question maps to which series on the chart. Repeat this process as many times as you need.</p>
 
-<p><img src="images/edit_modal_multi-series.png" alt="Edit modal with multi-series"></p>
+<p>You can also swap out the chart’s original question entirely, for example if you want to start over, or to reset the question’s visualization to its original settings.</p>
 
-<p>To remove a series, simply uncheck its box.</p>
+<ol>
+  <li>
+    <p>(Optional) <strong>Rename your chart</strong> to reflect the combined data.</p>
+  </li>
+  <li>
+    <p><strong>Save</strong> your changes.</p>
+  </li>
+</ol>
 
-<p>Once you have your chart looking how you’d like, hit done. Metabase will show your changes on the card in the dashboard. Depending on how dense your data is, at this point you might want to consider enlarging your chart to make sure the data is legible.</p>
+<h2 id="combining-number-charts">Combining number charts</h2>
 
-<blockquote>
-  <p><strong>SQL questions may not work</strong>. Metabase has less information about SQL-based questions, so we cannot guarantee they can be added reliably. You’ll see a little warning sign next to SQL questions to indicate this uncertainty, so be aware that adding these kinds of questions may not work.</p>
-</blockquote>
+<p>If you need to compare single numbers to get a sense of how they differ, Metabase can turn multiple number charts into a funnel or bar chart.</p>
 
-<h2 id="combining-number-charts">Combining Number charts</h2>
+<ol>
+  <li>
+    <p><strong>Add a number chart to a dashboard.</strong></p>
+  </li>
+  <li>
+    <p><strong>Visualize as a funnel chart</strong>. (Yes, we know you’re going for a bar chart, bear with us, you’re going to switch the funnel’s type to a bar chart.) In dashboard edit mode, hover over the card and click on <strong>Visualize another way</strong>. Metabase will change the visualization to a funnel chart.</p>
+  </li>
+</ol>
 
-<p>If you need to compare single numbers to get a sense of how they differ, Metabase can turn multiple number charts into a bar chart.</p>
+<p><img src="./images/visualize-another-way.png" alt="Visualize another way"></p>
 
-<p>As above, while editing a dashboard, hover over a number chart of your choice, and click on the icon with the <strong>+</strong> and bar chart icon to add a saved question.</p>
+<ol>
+  <li>
+    <p><strong>Add more data</strong>. Add another question that returns a single number to the chart.</p>
+  </li>
+  <li>
+    <p><strong>Set the Funnel type to a bar chart</strong>. Click <strong>Settings</strong> and change <strong>Funnel type</strong> to “Bar chart”.</p>
+  </li>
+</ol>
 
-<p>Use the search bar to find other saved question(s) that you’d like to see represented on the bar chart, and click the checkbox to add them to your chart. In this case, we added <strong>Widget orders</strong> to compare them to <strong>Gadget orders</strong>.</p>
-
-<p><img src="./images/numbers_to_bar_chart.png" alt="From numbers to bar chart"></p>
+<p><img src="./images/set-to-bar-chart.png" alt="Set Funnel chart to Bar chart"></p>
 
 <h2 id="multi-series-charts-values-and-legibility">Multi-series charts, values, and legibility</h2>
 
 <p>When displaying multiple series, it’s important to keep legibility in mind. Combining many series can sometimes decrease the communication value of the data.</p>
 
-<p>Metabase allows you to add values to multi-series charts, but go easy on this feature, especially on charts with lots of data points. Adding values to multiple series, each with many data points, can make charts more difficult to read.</p>
+<p>Metabase allows you to add values to multi-series charts, but use this feature sparingly, especially on charts with many data points. Adding values to multiple series, each with many data points, can make charts <em>more</em> difficult to read.</p>
 
-<p>From the <strong>Visualization &gt; Display</strong> options, you can toggle the option: <strong>Show values on data points</strong>. Metabase will do its best to fit as many values as can fit nicely. You can also force Metabase to (begrudgingly) show values for all data points, by setting the <strong>Values to show</strong> to <strong>All</strong>.</p>
+<p>From the <strong>Visualization &gt; Display</strong> options, you can toggle the option: <strong>Show values on data points</strong>. Metabase will do its best to fit as many values as can fit nicely. You can also force Metabase to show values for all data points by setting the <strong>Values to show</strong> to <strong>All</strong>.</p>
 
-<p><img src="./images/add_values.png" alt="add values to multi-series chart"></p>
+<p><img src="./images/add_values.png" alt="Add values to multi-series chart"></p>
 
-<p>You can also toggle values for each individual series. If you have three series, for example, you can show values on one, two, or all three series.</p>
-
-<ul>
-  <li>
-    <p>For a question with multiple dimensions, go to <strong>Visualization &gt; Data</strong> tab, click on the three dots menu <strong>…</strong> to the right of a series, and toggle <strong>Show values for this series</strong> to show or hide its values.</p>
-  </li>
-  <li>
-    <p>For a dashboard card that combines multiple saved questions, go to the <strong>Visualization &gt; Display</strong> tab, click on the down arrow to the right of a series to expand its details, and toggle <strong>Show values for this series</strong> to show or hide its values.</p>
-  </li>
-</ul>
-
-<p>You can also toggle values for the whole chart, then selectively hide values for individual series until you have your chart looking just right.</p>
-
-<p>Additionally, there is an option to configure the formatting of the values:</p>
+<p>Additionally, you can configure the formatting of the values:</p>
 
 <ul>
-  <li><strong>Auto</strong>. Metabase selects the appropriate style for you</li>
-  <li><strong>Compact</strong>. Metabase abbreviates values, e.g., 1,000 becomes 1K.</li>
-  <li><strong>Full</strong>. Values are displayed in their natural beauty.</li>
+  <li><strong>Auto</strong>: Metabase selects the appropriate style for you</li>
+  <li><strong>Compact</strong>: Metabase abbreviates values, e.g., 1,000 becomes 1K</li>
+  <li><strong>Full</strong>: Values are displayed in their natural form</li>
 </ul>
 
 <p>Now go forth and start letting your data get to know each other!</p>
@@ -4257,13 +4295,7 @@ Roadmap</a>
         <div id="sub-navigation-content">
           
         </div>
-        
-
-
-  
-    <div id="feedback-widget-container" class="bootstrap feedback-widget">
-  
-
+        <div id="was-this-helpful-widget">
   <div id="page-feedback">
     <h6>Was this helpful?</h6>
     <button id="page-feedback-vote-up" class="vote-button Button">
@@ -4283,19 +4315,15 @@ Roadmap</a>
   </div>
 
   <div id="page-comment" class="flex flex-wrap full hide">
-    <div class="flex full">
-      <h6 id="page-feedback-question"></h6>
-    </div>
+    <p id="page-feedback-question"></p>
 
-    <div id="page-comment-form" class="flex full">
-      
-      <input id="feedback-comment-text" maxlength="500" class="flex input sm-input-small bordered inline-block align-center" name="comment" placeholder="Let us know what you think">
-      
+    <form id="page-comment-form" class="flex full">
+      <textarea id="feedback-comment-text" name="comment" placeholder="Type here…"></textarea>
 
-      <button id="page-comment-submit" class="feedback-widget Button flex align-center">
+      <button id="page-comment-submit" class="Button flex align-center">
         Send
       </button>
-    </div>
+    </form>
   </div>
 
   <div id="page-feedback-message" class="fs-18 hide">
@@ -4309,34 +4337,7 @@ Roadmap</a>
   
 </div>
 
-<script type="text/javascript" src="/js/feedback-widget.js"></script>
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const iframe = document.getElementById("subscribe-to-ai-newsletter-righthandside");
-
-    // Certain collections (e.g., "docs") do not display the newsletter iframe
-    if (!iframe) {
-      return;
-    }
-    const url = new URL(iframe.src, window.location.origin);
-
-    // Copy search params from the main window
-    const currentParams = new URLSearchParams(window.location.search);
-    for (const [key, value] of currentParams.entries()) {
-      url.searchParams.set(key, value);
-    }
-
-    // Add the current pathname as signup_path
-    url.searchParams.set("signup_path", window.location.pathname);
-
-    // Apply the new src
-    iframe.src = url.toString();
-  });
-</script>
-<script type="text/javascript" src="/js/side-email-cta.js"></script>
-
-  
-
+<script type="text/javascript" src="/js/was-this-helpful-widget.js"></script>
 
       </div>
 	  </article>

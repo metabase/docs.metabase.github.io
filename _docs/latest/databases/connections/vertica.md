@@ -1,5 +1,5 @@
 ---
-version: v0.54
+version: v0.55
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -53,6 +53,10 @@ The process for adding plugins when running via Docker is similar, but you'll ne
 ## Model features
 
 There aren't (yet) any model features for Vertica.
+
+## Database routing
+
+See [Database routing](../../permissions/database-routing).
 
 ## Danger zone
 

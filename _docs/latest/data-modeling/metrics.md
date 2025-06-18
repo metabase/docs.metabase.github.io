@@ -1,5 +1,5 @@
 ---
-version: v0.54
+version: v0.55
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -45,11 +45,15 @@ You can use custom expressions to combine multiple metrics, or perform calculati
 
 ## Creating a metric
 
-You can create a metric by clicking on the **+ New** menu and selecting **Metric**.
+To create a metric, bring up the command palette with cmd/ctrl + k. That’s cmd + k for Macs, or ctrl + k for Windows PCs. Search for New metric.
+
+You can also create a metric by first creating a question, then converting it to a metric:
+
+1. Click on **+ New** and select **Question**
+2. Build your query using the query builder
+3. Once you've created your question, you can convert it to a metric by clicking the three dot menu (**...**) and selecting **Turn into a metric**
 
 Select your starting data. You can start from a model, metric, table, or saved question.
-
-You can only use the query builder to define a metric.
 
 The metric editor is similar to the regular query builder, with two key differences:
 
