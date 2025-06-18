@@ -1,5 +1,5 @@
 ---
-version: v0.54
+version: v0.55
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -8,6 +8,9 @@ title: Notification permissions
 source_url: >-
   https://github.com/metabase/metabase/blob/master/docs/permissions/notifications.md
 layout: new-docs
+summary: >-
+  Learn who can create and edit alerts and dashboard subscriptions, and what
+  data recipients can see in their notifications.
 latest: true
 ---
 
@@ -28,7 +31,7 @@ What you can do with alerts and dashboard subscriptions depends on whether you'r
 Everyone's in the All Users group. Which means that everyone can:
 
 - Create [alerts](../questions/alerts) and [dashboard subscriptions](../dashboards/subscriptions#setting-up-a-dashboard-subscription).
-- Add new recipients to dashboard subscriptions that they created. Non-admins can only add themselves to alerts.
+- Add new recipients to dashboard subscriptions and alerts that they created.
 - Unsubscribe from any alert or subscription in their [Account settings](../people-and-groups/account-settings).
 
 When a notification creator adds new recipients to an alert or subscription, Metabase will display data to the recipients using the **creator's** [data permissions](../permissions/data) and [collection permissions](../permissions/collections).

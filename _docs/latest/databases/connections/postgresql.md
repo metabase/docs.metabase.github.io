@@ -1,5 +1,5 @@
 ---
-version: v0.54
+version: v0.55
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -198,6 +198,10 @@ Turn this setting on to allow [actions](../../actions/introduction) from models 
 ### Model persistence
 
 We'll create tables with model data and refresh them on a schedule you define. To enable [model persistence](../../data-modeling/model-persistence), you need to grant this connection's credentials read and write permissions on a schema Metabase provides.
+
+## Database routing
+
+See [Database routing](../../permissions/database-routing).
 
 ## Danger zone
 

@@ -1,5 +1,5 @@
 ---
-version: v0.54
+version: v0.55
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -75,7 +75,7 @@ substring([Mission ID], (1 + length([Mission ID]) - 3), 3)
 
 ## Limitations
 
-`substring` extracts text by counting a fixed number of characters. If you need to extract text based on some more complicated logic, try [`regexextract`](../expressions-list#regexextract).
+`substring` extracts text by counting a fixed number of characters. If you need to extract text based on some more complicated logic, try [`regexExtract`](../expressions-list#regexextract).
 
 And if you only need to clean up extra whitespace around your text, you can use the [`trim`](../expressions-list#trim), [`lTrim`](../expressions-list#ltrim), or [`rTrim`](../expressions-list#rtrim) expressions instead.
 
@@ -85,7 +85,7 @@ This section covers functions and formulas that work the same way as the Metabas
 
 **[Metabase expressions](../expressions-list)**
 
-- [regexextract](#regexextract)
+- [regexExtract](#regexextract)
 
 **Other tools**
 
@@ -93,12 +93,12 @@ This section covers functions and formulas that work the same way as the Metabas
 - [Spreadsheets](#spreadsheets)
 - [Python](#python)
 
-### Regexextract
+### RegexExtract
 
-Use [regexextract](./regexextract) if you need to extract text based on more specific rules. For example, you could get the agent ID with a regex pattern that finds the last occurrence of "00" (and everything after it):
+Use [regexExtract](./regexextract) if you need to extract text based on more specific rules. For example, you could get the agent ID with a regex pattern that finds the last occurrence of "00" (and everything after it):
 
 ```
-regexextract([Mission ID], ".+(00.+)$")
+regexExtract([Mission ID], ".+(00.+)$")
 ```
 
 should return the same result as
