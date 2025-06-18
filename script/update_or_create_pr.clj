@@ -62,33 +62,17 @@
                            (str "_site/docs/v0." release-num)]
     :else []))
 
-(defn- open-prs-for-build [source-branch target-branch]
-  (->> (str "gh pr list --repo metabase/metabase"
-            " --head " source-branch
-            " --base " target-branch
-            " --state open"
-            " --json number,title,state,createdAt,url")
-       (p/shell {:out :string :continue true})
-       deref
-       :out
-       json/decode))
 
 (defn- report-pr-body [source-branch target-branch artifact-dirs]
-  (let [matching-prs (open-prs-for-build source-branch target-branch)
-        matching-pr-report (when matching-prs
-                             (str/join "\n"
-                                       (map #(str "- [#" (:number %) " " (:title %) "](" (:url %) ")")
-                                            matching-prs)))]
-    (str/join "\n"
-              [(str "# `" source-branch "` -> `" target-branch "`")
-               ""
-               "## Updated Directories:"
-               (str/join "\n" (map #(str "- `" % "`") artifact-dirs))
-               ""
-               "> This PR will be merged when the PR that triggered this build is merged."
-               ""
-               "---"
-               matching-pr-report])))
+  (str/join "\n"
+            [(str "# `" source-branch "` -> `" target-branch "`")
+             ""
+             "## Updated Directories:"
+             (str/join "\n" (map #(str "- `" % "`") artifact-dirs))
+             ""
+             "> This PR will be merged when the PR that triggered this build is merged."
+             ""
+             "---"]))
 
 (defn -main
   "Main function to update or create a PR.
