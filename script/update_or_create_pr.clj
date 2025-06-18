@@ -110,26 +110,27 @@
                                 (println "→ Source Branch info: " source-branch))
         println-dr          (fn [& args] (println (if dry-run? (ice/p-str [:yellow "dry-run: "]) "")
                                                   (str/join " " args)))
-        target-branch-title (str "[auto-build] " source-branch " -> " target-branch)
-        _                   (p/shell "git" "checkout" "-B" target-branch-title)
+        target-branch (str source-branch "->" target-branch)
+        _                   (p/shell "git" "checkout" "-B" target-branch)
         artifact-dirs       (->artifact-dirs category release-num)
         _                   (doseq [ad artifact-dirs]
                               (println-dr "Adding" ad "...")
                               (p/shell "git" "add" ad))
-        {:keys [exit]}      (p/shell {:continue true} "git" "diff" "--cached" "--quiet")]
+        {:keys [exit]}      (p/shell {:continue true} "git" "diff" "--cached" "--quiet")
+        target-branch-title (str "[auto-build] " source-branch " -> " target-branch)]
 
     (if (zero? exit)
       (println "→ No changes to commit.")
       (do
         (println "→ Changes detected, committing...")
-        (p/shell "git" "commit" "-m" (str "[auto] adding content to " target-branch-title))
-        (println-dr "git" "push" "--force" "origin" target-branch-title)
+        (p/shell "git" "commit" "-m" (str "[auto] adding content to " target-branch))
+        (println-dr "git" "push" "--force" "origin" target-branch)
         (when-not dry-run?
-          (p/shell "git" "push" "--force" "origin" target-branch-title))
+          (p/shell "git" "push" "--force" "origin" target-branch))
         (println-dr "→ Target Branch updated successfully.")
         (println "→ Checking for existing PR...")
 
-        (if-let [pr-info (existing-pr? target-branch-title)]
+        (if-let [pr-info (existing-pr? target-branch)]
           (println "✓ PR already exists: #" pr-info)
           (do
             (println "→ Creating new PR...")
@@ -138,13 +139,14 @@
                                 "--repo" "metabase/docs.metabase.github.io"
                                 "--title" target-branch-title
                                 "--body" (report-pr-body source-branch target-branch-title artifact-dirs)
-                                "--head" target-branch-title])]
+                                "--head" target-branch])]
               (println-dr "running: " (str/join " " args))
               (apply p/shell args))))))
     (prn {:category      category
           :release       release-num
           :source-branch source-branch
-          :target-branch target-branch-title
+          :target-branch target-branch
+          :target-branch-title target-branch-title
           :artifact-dirs artifact-dirs})))
 
 (when (= *file* (System/getProperty "babashka.file"))
