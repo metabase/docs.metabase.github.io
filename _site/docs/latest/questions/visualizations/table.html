@@ -39,14 +39,15 @@
     }
   </script>
 
-      
+  
+       
 
 <title>Tables | Metabase Documentation</title>
 <!-- Twitter cards -->
 <meta name="twitter:site" content="@metabase">
 
 <meta name="twitter:title" content="Tables | Metabase Documentation">
-<meta name="twitter:description" content="Tables The Table option is good for looking at tabular data (duh), or for lists of things like users or orders. The visualization options for tables allow you to add, hide, or rearrange fields in the table you’re looking at, as...">
+<meta name="twitter:description" content="Tables  Tables are data’s natural habitat. Rearranging, adding, and hiding columns Open up the settings for your table visualization and you’ll see the Columns tab, which displays all the columns currently being shown...">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -56,11 +57,48 @@
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://www.metabase.com/docs/latest/questions/visualizations/table">
 <meta name="title" property="og:title" content="Tables | Metabase Documentation">
-<meta name="description" property="og:description" content="Tables The Table option is good for looking at tabular data (duh), or for lists of things like users or orders. The visualization options for tables allow you to add, hide, or rearrange fields in the table you’re looking at, as...">
+<meta name="description" property="og:description" content="Tables  Tables are data’s natural habitat. Rearranging, adding, and hiding columns Open up the settings for your table visualization and you’ll see the Columns tab, which displays all the columns currently being shown...">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
+
   
-  <link href="/images/favicon.svg" rel="shortcut icon">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "url": "https://www.metabase.com/",
+    "sameAs": [
+      "https://github.com/metabase",
+      "https://www.linkedin.com/company/metabase/",
+      "https://x.com/metabase",
+      "https://www.youtube.com/@metabasedata"
+    ],
+    "logo": "https://github.com/metabase/metabase.github.io/blob/master/images/metabase-logo.png?raw=",
+    "name": "Metabase",
+    "description": "Metabase is an open source Business Intelligence and Embedded Analytics tool. Connect to your data stack in 5 minutes to make queries, visualizations, and dashboards easy for everyone—no SQL required",
+    "email": "hello@metabase.com",
+    "foundingDate": "2015-02-01T00:00:00.000Z",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "9740 Campo Rd",
+      "addressLocality": "Spring Valley",
+      "addressCountry": "USA",
+      "addressRegion": "CA",
+      "postalCode": "91977"
+    },
+    "knowsAbout": [
+      { "@type": "Thing", "name": "Business Intelligence" },
+      { "@type": "Thing", "name": "Embedded Analytics" },
+      { "@type": "Thing", "name": "Self-service analytics" },
+      { "@type": "Thing", "name": "Open source Business Intelligence" }
+    ]
+  }
+</script>
+
+
+  
+    <link href="/images/favicon.svg" rel="shortcut icon">
   
   <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/flexboxgrid/6.3.1/flexboxgrid.min.css" rel="stylesheet" type="text/css">
@@ -4006,7 +4044,7 @@ Roadmap</a>
 <div class="version__selector cursor-pointer">
   <span class="version__current">
     
-      v0.54
+      v0.55
     
 
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="chevron">
@@ -4016,6 +4054,14 @@ Roadmap</a>
   </span>
   <ul class="version__dropdown">
     
+      
+    
+      
+        <li>
+          <a href="/docs/v0.54">
+            v0.54
+          </a>
+        </li>
       
     
       
@@ -4082,14 +4128,6 @@ Roadmap</a>
         </li>
       
     
-      
-        <li>
-          <a href="/docs/v0.45">
-            v0.45
-          </a>
-        </li>
-      
-    
     <li><a href="/docs/all">See more</a></li>
   </ul>
 </div>
@@ -4120,9 +4158,11 @@ Roadmap</a>
 
         <h1 id="tables">Tables</h1>
 
-<p>The <strong>Table</strong> option is good for looking at tabular data (duh), or for lists of things like users or orders. The visualization options for tables allow you to add, hide, or rearrange fields in the table you’re looking at, as well as modify their formatting. Check out <a href="/learn/metabase-basics/querying-and-dashboards/visualization/table">Everything you can do with the table visualization</a>.</p>
+<p><img src="../images/table.png" alt="A table in Metabase"></p>
 
-<h2 id="rearranging-adding-and-removing-columns">Rearranging, adding, and removing columns</h2>
+<p>Tables are data’s natural habitat.</p>
+
+<h2 id="rearranging-adding-and-hiding-columns">Rearranging, adding, and hiding columns</h2>
 
 <p>Open up the settings for your table visualization and you’ll see the Columns tab, which displays all the columns currently being shown in the table. To hide a column, click the eye icon.</p>
 
@@ -4140,6 +4180,19 @@ Roadmap</a>
 
 <p>To rearrange the order of the columns, simply click and drag any of the columns in the sidebar. You can also click on a column’s heading in the table and drag the column to another position in the table.</p>
 
+<h2 id="custom-columns">Custom columns</h2>
+
+<p><img src="../images/add-column.png" alt="Add column"></p>
+
+<p>To add a column, you can click the <strong>+</strong> button in the upper right of the table. From here you can:</p>
+
+<ul>
+  <li>Extract part of column (like extracting part of a URL or date)</li>
+  <li>Combine columns (like concatenating columns for first name and last name)</li>
+</ul>
+
+<p>For more complicated calculations, you can use the editor to <a href="../query-builder/editor#custom-columns">add a custom column</a>.</p>
+
 <h2 id="add-row-numbers-to-a-table">Add row numbers to a table</h2>
 
 <p>To number the rows of a table, click on the <strong>gear</strong> icon in bottom left to bring up the table formatting sidebar. In the <strong>Columns</strong> tab, and toggle on <strong>Show row index</strong>. Metabase will add a column to the left of the table displaying a number for each row.</p>
@@ -4151,6 +4204,8 @@ Roadmap</a>
 <p>To change the width of a column, you can click and drag the edges of the column’s header.</p>
 
 <h2 id="column-heading-options-for-filtering-and-summarizing">Column heading options for filtering and summarizing</h2>
+
+<p><img src="../images/column-actions.png" alt="Column actions"></p>
 
 <p>Click on a column heading and Metabase will present quick options for filtering and summarizing the data. The options for the column depend on the column’s data type (ID, Text, Number, Date).</p>
 
@@ -4222,6 +4277,18 @@ Roadmap</a>
 <h3 id="sum-over-time">Sum over time</h3>
 
 <p>Add up all the values and group by a time period, generally by month.</p>
+
+<h2 id="table-cell-click-options">Table cell click options</h2>
+
+<p><img src="../images/cell-action-string.png" alt="Clicking on a table cell gives you different options depending on the column's data type"></p>
+
+<p>Clicking on a table cell will give you different options based on the data type and its values.</p>
+
+<h2 id="detail-views">Detail views</h2>
+
+<p><img src="../images/detail-view.png" alt="Detail view"></p>
+
+<p>To make records easier to read, you can click on an entity key column (either a primary or foreign key) to bring up a detail view. For example, clicking on an order <code class="language-plaintext highlighter-rouge">ID</code> will bring up details from that order.</p>
 
 <h2 id="column-formatting-options">Column formatting options</h2>
 
@@ -4403,6 +4470,10 @@ Roadmap</a>
 
 <p>You can set as many rules on a table as you want, and change the order in which those rules are applied. If two or more rules disagree with each other, the rule that’s on the top of your list of rules will win. You can click and drag your rules to reorder them, and click on a rule to edit it.</p>
 
+<h2 id="adding-tables-to-dashboards">Adding tables to dashboards</h2>
+
+<p>When you add a table to a dashboard, you can add <a href="../../dashboards/interactive#custom-destinations">custom destinations</a> to individual columns, wire up filter widgets, and more. To see an example of a table used in a dashboard, check out our article on <a href="/learn/metabase-basics/querying-and-dashboards/dashboards/build-a-record-lookup-tool">building a record lookup tool with Metabase</a>.</p>
+
 <h2 id="table-pagination-on-dashboard-cards">Table pagination on dashboard cards</h2>
 
 <p>When you add a table to dashboard, the table will be scrollable by default. You can paginate the rows by:</p>
@@ -4415,15 +4486,23 @@ Roadmap</a>
 
 <p><img src="../images/paginate-table-on-dashboard-card.png" alt="Paginate table results on dashboard card"></p>
 
+<h2 id="foreign-key-remapping">Foreign key remapping</h2>
+
+<p>Here’s one last cool feature, though it requires an admin to change some settings in the Data Model section. Foreign keys are useful, but they’re generally not meaningful for (human) readers. Instead of displaying a foreign key as a number, say a product ID, it’d be nice to display the values as the product’s <code class="language-plaintext highlighter-rouge">Title</code>. Metabase can substitute foreign keys with values from the foreign table that are associated with that entity key. What this means is that instead of showing the <code class="language-plaintext highlighter-rouge">Product_ID</code> value, you can set it up so that people will instead see the product <code class="language-plaintext highlighter-rouge">Title</code>, like “Lightweight Wool Computer.” Your Metabase admins can set this up in the <strong>Admin Panel</strong> in the <strong>Data Model tab</strong>. In this case, we’ll select the <code class="language-plaintext highlighter-rouge">Orders</code> table, and change the foreign key from the <code class="language-plaintext highlighter-rouge">Products</code> table to instead display in the Order table as the <code class="language-plaintext highlighter-rouge">Product → Title</code>.</p>
+
 <h3 id="pivoted-tables">Pivoted tables</h3>
 
 <blockquote>
   <p>This auto-pivoting is distinct from the <a href="./pivot-table">pivot table</a> visualization.</p>
 </blockquote>
 
-<p>If your table is a result that contains one numeric column and two grouping columns, Metabase will also automatically “pivot” your table, like in the example below. Pivoting takes one of your columns and rotates it 90 degrees (“pivots” it) so that each of its values becomes a column heading. If you open up the visualization settings by clicking the gear icon, you can choose which column to pivot in case Metabase got it wrong; or you can also turn the pivoting behavior off entirely.</p>
+<p>If your table is a result that contains one numeric column and two grouping columns, Metabase can “pivot” your table, like in the example below, where row values for the <code class="language-plaintext highlighter-rouge">Category</code> column (<code class="language-plaintext highlighter-rouge">Doohickey</code>, <code class="language-plaintext highlighter-rouge">Gadget</code>, <code class="language-plaintext highlighter-rouge">Gizmo</code> and <code class="language-plaintext highlighter-rouge">Widget</code>) become column headings. If you open up the visualization settings by clicking the gear icon, you can choose which column to pivot in case Metabase got it wrong. You can also turn off the pivoting behavior entirely.</p>
 
 <p><img src="../images/pivot.png" alt="Pivot table"></p>
+
+<h2 id="table-export-options">Table export options</h2>
+
+<p>See <a href="../exporting-results">Exporting results</a>.</p>
 
 
         <div>
@@ -4440,13 +4519,7 @@ Roadmap</a>
         <div id="sub-navigation-content">
           
         </div>
-        
-
-
-  
-    <div id="feedback-widget-container" class="bootstrap feedback-widget">
-  
-
+        <div id="was-this-helpful-widget">
   <div id="page-feedback">
     <h6>Was this helpful?</h6>
     <button id="page-feedback-vote-up" class="vote-button Button">
@@ -4466,19 +4539,15 @@ Roadmap</a>
   </div>
 
   <div id="page-comment" class="flex flex-wrap full hide">
-    <div class="flex full">
-      <h6 id="page-feedback-question"></h6>
-    </div>
+    <p id="page-feedback-question"></p>
 
-    <div id="page-comment-form" class="flex full">
-      
-      <input id="feedback-comment-text" maxlength="500" class="flex input sm-input-small bordered inline-block align-center" name="comment" placeholder="Let us know what you think">
-      
+    <form id="page-comment-form" class="flex full">
+      <textarea id="feedback-comment-text" name="comment" placeholder="Type here…"></textarea>
 
-      <button id="page-comment-submit" class="feedback-widget Button flex align-center">
+      <button id="page-comment-submit" class="Button flex align-center">
         Send
       </button>
-    </div>
+    </form>
   </div>
 
   <div id="page-feedback-message" class="fs-18 hide">
@@ -4492,34 +4561,7 @@ Roadmap</a>
   
 </div>
 
-<script type="text/javascript" src="/js/feedback-widget.js"></script>
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const iframe = document.getElementById("subscribe-to-ai-newsletter-righthandside");
-
-    // Certain collections (e.g., "docs") do not display the newsletter iframe
-    if (!iframe) {
-      return;
-    }
-    const url = new URL(iframe.src, window.location.origin);
-
-    // Copy search params from the main window
-    const currentParams = new URLSearchParams(window.location.search);
-    for (const [key, value] of currentParams.entries()) {
-      url.searchParams.set(key, value);
-    }
-
-    // Add the current pathname as signup_path
-    url.searchParams.set("signup_path", window.location.pathname);
-
-    // Apply the new src
-    iframe.src = url.toString();
-  });
-</script>
-<script type="text/javascript" src="/js/side-email-cta.js"></script>
-
-  
-
+<script type="text/javascript" src="/js/was-this-helpful-widget.js"></script>
 
       </div>
 	  </article>

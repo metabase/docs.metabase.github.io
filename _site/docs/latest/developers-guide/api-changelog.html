@@ -39,14 +39,15 @@
     }
   </script>
 
-      
+  
+       
 
 <title>API changelog | Metabase Documentation</title>
 <!-- Twitter cards -->
 <meta name="twitter:site" content="@metabase">
 
 <meta name="twitter:title" content="API changelog | Metabase Documentation">
-<meta name="twitter:description" content="Breaking changes to the API interface Metabase 0.54.0   The alert system has been migrated from the legacy pulse infrastructure to the new notification system. This migration includes the following changes:  The majority of /api/alert endpoints...">
+<meta name="twitter:description" content="Breaking changes to the API interface Metabase 0.55.0   POST /api/card/from-csv has been renamed to POST /api/upload/csv.   GET /api/util/stats has been renamed to GET /api/analytics/anonymous-stats.   <code class=" language-plaintext..."="">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -56,11 +57,48 @@
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://www.metabase.com/docs/latest/developers-guide/api-changelog">
 <meta name="title" property="og:title" content="API changelog | Metabase Documentation">
-<meta name="description" property="og:description" content="Breaking changes to the API interface Metabase 0.54.0   The alert system has been migrated from the legacy pulse infrastructure to the new notification system. This migration includes the following changes:  The majority of /api/alert endpoints...">
+<meta name="description" property="og:description" content="Breaking changes to the API interface Metabase 0.55.0   POST /api/card/from-csv has been renamed to POST /api/upload/csv.   GET /api/util/stats has been renamed to GET /api/analytics/anonymous-stats.   <code class=" language-plaintext..."="">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
+
   
-  <link href="/images/favicon.svg" rel="shortcut icon">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "url": "https://www.metabase.com/",
+    "sameAs": [
+      "https://github.com/metabase",
+      "https://www.linkedin.com/company/metabase/",
+      "https://x.com/metabase",
+      "https://www.youtube.com/@metabasedata"
+    ],
+    "logo": "https://github.com/metabase/metabase.github.io/blob/master/images/metabase-logo.png?raw=",
+    "name": "Metabase",
+    "description": "Metabase is an open source Business Intelligence and Embedded Analytics tool. Connect to your data stack in 5 minutes to make queries, visualizations, and dashboards easy for everyone—no SQL required",
+    "email": "hello@metabase.com",
+    "foundingDate": "2015-02-01T00:00:00.000Z",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "9740 Campo Rd",
+      "addressLocality": "Spring Valley",
+      "addressCountry": "USA",
+      "addressRegion": "CA",
+      "postalCode": "91977"
+    },
+    "knowsAbout": [
+      { "@type": "Thing", "name": "Business Intelligence" },
+      { "@type": "Thing", "name": "Embedded Analytics" },
+      { "@type": "Thing", "name": "Self-service analytics" },
+      { "@type": "Thing", "name": "Open source Business Intelligence" }
+    ]
+  }
+</script>
+
+
+  
+    <link href="/images/favicon.svg" rel="shortcut icon">
   
   <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/flexboxgrid/6.3.1/flexboxgrid.min.css" rel="stylesheet" type="text/css">
@@ -4006,7 +4044,7 @@ Roadmap</a>
 <div class="version__selector cursor-pointer">
   <span class="version__current">
     
-      v0.54
+      v0.55
     
 
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="chevron">
@@ -4016,6 +4054,14 @@ Roadmap</a>
   </span>
   <ul class="version__dropdown">
     
+      
+    
+      
+        <li>
+          <a href="/docs/v0.54">
+            v0.54
+          </a>
+        </li>
       
     
       
@@ -4082,14 +4128,6 @@ Roadmap</a>
         </li>
       
     
-      
-        <li>
-          <a href="/docs/v0.45">
-            v0.45
-          </a>
-        </li>
-      
-    
     <li><a href="/docs/all">See more</a></li>
   </ul>
 </div>
@@ -4119,6 +4157,40 @@ Roadmap</a>
 
 
         <h1 id="breaking-changes-to-the-api-interface">Breaking changes to the API interface</h1>
+
+<h2 id="metabase-0550">Metabase 0.55.0</h2>
+
+<ul>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">POST /api/card/from-csv</code> has been renamed to <code class="language-plaintext highlighter-rouge">POST /api/upload/csv</code>.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">GET /api/util/stats</code> has been renamed to <code class="language-plaintext highlighter-rouge">GET /api/analytics/anonymous-stats</code>.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">GET /api/util/bug_report_details</code> has been renamed to <code class="language-plaintext highlighter-rouge">GET /api/bug-reporting/details</code>.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">POST /api/util/product-feedback</code> has been renamed to <code class="language-plaintext highlighter-rouge">POST /api/product-feedback</code>.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">POST /api/util/entity_id</code> has been renamed to <code class="language-plaintext highlighter-rouge">POST /api/eid-translation/translate</code>.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">POST /api/util/password_check</code> has been renamed to <code class="language-plaintext highlighter-rouge">POST /api/session/password-check</code>.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">GET /api/util/logs</code> has been renamed to <code class="language-plaintext highlighter-rouge">GET /api/logger/logs</code>.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">GET /api/util/openapi</code> has been removed; you can use <code class="language-plaintext highlighter-rouge">GET /api/docs/openapi.json</code> instead, which does the same
+thing.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">GET /api/util/diagnostic_info/connection_pool_info</code> has been renamed to <code class="language-plaintext highlighter-rouge">GET
+/api/bug-reporting/connection-pool-details</code>.</p>
+  </li>
+</ul>
 
 <h2 id="metabase-0540">Metabase 0.54.0</h2>
 
@@ -4290,13 +4362,7 @@ When <code class="language-plaintext highlighter-rouge">format_rows</code> is <c
         <div id="sub-navigation-content">
           
         </div>
-        
-
-
-  
-    <div id="feedback-widget-container" class="bootstrap feedback-widget">
-  
-
+        <div id="was-this-helpful-widget">
   <div id="page-feedback">
     <h6>Was this helpful?</h6>
     <button id="page-feedback-vote-up" class="vote-button Button">
@@ -4316,19 +4382,15 @@ When <code class="language-plaintext highlighter-rouge">format_rows</code> is <c
   </div>
 
   <div id="page-comment" class="flex flex-wrap full hide">
-    <div class="flex full">
-      <h6 id="page-feedback-question"></h6>
-    </div>
+    <p id="page-feedback-question"></p>
 
-    <div id="page-comment-form" class="flex full">
-      
-      <input id="feedback-comment-text" maxlength="500" class="flex input sm-input-small bordered inline-block align-center" name="comment" placeholder="Let us know what you think">
-      
+    <form id="page-comment-form" class="flex full">
+      <textarea id="feedback-comment-text" name="comment" placeholder="Type here…"></textarea>
 
-      <button id="page-comment-submit" class="feedback-widget Button flex align-center">
+      <button id="page-comment-submit" class="Button flex align-center">
         Send
       </button>
-    </div>
+    </form>
   </div>
 
   <div id="page-feedback-message" class="fs-18 hide">
@@ -4342,34 +4404,7 @@ When <code class="language-plaintext highlighter-rouge">format_rows</code> is <c
   
 </div>
 
-<script type="text/javascript" src="/js/feedback-widget.js"></script>
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const iframe = document.getElementById("subscribe-to-ai-newsletter-righthandside");
-
-    // Certain collections (e.g., "docs") do not display the newsletter iframe
-    if (!iframe) {
-      return;
-    }
-    const url = new URL(iframe.src, window.location.origin);
-
-    // Copy search params from the main window
-    const currentParams = new URLSearchParams(window.location.search);
-    for (const [key, value] of currentParams.entries()) {
-      url.searchParams.set(key, value);
-    }
-
-    // Add the current pathname as signup_path
-    url.searchParams.set("signup_path", window.location.pathname);
-
-    // Apply the new src
-    iframe.src = url.toString();
-  });
-</script>
-<script type="text/javascript" src="/js/side-email-cta.js"></script>
-
-  
-
+<script type="text/javascript" src="/js/was-this-helpful-widget.js"></script>
 
       </div>
 	  </article>

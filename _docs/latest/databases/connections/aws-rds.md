@@ -1,5 +1,5 @@
 ---
-version: v0.54
+version: v0.55
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -29,3 +29,7 @@ Here's how to get connection information for databases on Amazon's RDS:
    - **Username**. Find this under Configuration Details.
    - **Database Name**. Find this under Configuration Details.
    - **Password**. Ask your database administrator for the password.
+
+## Database routing
+
+See [Database routing](../../permissions/database-routing).

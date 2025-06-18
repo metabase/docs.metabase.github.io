@@ -1,5 +1,5 @@
 ---
-version: v0.54
+version: v0.55
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -125,7 +125,7 @@ If you want Metabase to treat a text or number column as a datetime column:
 4. Scroll to **Cast to a specific data type**
 5. Select a casting option.
 
-> Metabase currently supports only casting to a datetime type in **Cast to a specific data type**. If you need to cast to a different type (like float), you can [create a SQL question](../questions/native-editor/writing-sql#starting-a-new-sql-query) that casts the data and [save it as a model](./models#create-a-model-from-a-saved-question), or create a view directly in your database.
+> Metabase currently supports limited casting options in **Cast to a specific data type**. If you need to cast to a type that's not available in Metabase, you can [create a SQL question](../questions/native-editor/writing-sql#starting-a-new-sql-query) that casts the data and [save it as a model](./models#create-a-model-from-a-saved-question), or create a view directly in your database.
 
 **Text to datetime casting options**:
 
@@ -139,6 +139,16 @@ If you want Metabase to treat a text or number column as a datetime column:
 - UNIXMilliSeconds->DateTime
 - UNIXNanoSeconds->DateTime
 - UNIXSeconds->DateTime
+
+**Text to numeric casting options**:
+
+- String->Integer
+- String->Float
+
+**Other options**:
+
+- Float->Integer
+- Datetime->Date
 
 Casting is different from setting the [field type](./field-types). For example, say you have a "Created At" column with a string [data type](/learn/grow-your-data-skills/data-fundamentals/data-types-overview) in your database. You'll need to cast "Created At" to one of the datetime types above if you want to do things like:
 
