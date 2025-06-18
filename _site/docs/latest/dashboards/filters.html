@@ -39,7 +39,8 @@
     }
   </script>
 
-      
+  
+       
 
 <title>Dashboard filters | Metabase Documentation</title>
 <!-- Twitter cards -->
@@ -59,8 +60,45 @@
 <meta name="description" property="og:description" content="Dashboard filters and parameters  Have you ever found yourself in a situation where it seems like you need to create nearly identical copies of the same dashboard, with just one different variable? Maybe you have an...">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
+
   
-  <link href="/images/favicon.svg" rel="shortcut icon">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "url": "https://www.metabase.com/",
+    "sameAs": [
+      "https://github.com/metabase",
+      "https://www.linkedin.com/company/metabase/",
+      "https://x.com/metabase",
+      "https://www.youtube.com/@metabasedata"
+    ],
+    "logo": "https://github.com/metabase/metabase.github.io/blob/master/images/metabase-logo.png?raw=",
+    "name": "Metabase",
+    "description": "Metabase is an open source Business Intelligence and Embedded Analytics tool. Connect to your data stack in 5 minutes to make queries, visualizations, and dashboards easy for everyone—no SQL required",
+    "email": "hello@metabase.com",
+    "foundingDate": "2015-02-01T00:00:00.000Z",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "9740 Campo Rd",
+      "addressLocality": "Spring Valley",
+      "addressCountry": "USA",
+      "addressRegion": "CA",
+      "postalCode": "91977"
+    },
+    "knowsAbout": [
+      { "@type": "Thing", "name": "Business Intelligence" },
+      { "@type": "Thing", "name": "Embedded Analytics" },
+      { "@type": "Thing", "name": "Self-service analytics" },
+      { "@type": "Thing", "name": "Open source Business Intelligence" }
+    ]
+  }
+</script>
+
+
+  
+    <link href="/images/favicon.svg" rel="shortcut icon">
   
   <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/flexboxgrid/6.3.1/flexboxgrid.min.css" rel="stylesheet" type="text/css">
@@ -4006,7 +4044,7 @@ Roadmap</a>
 <div class="version__selector cursor-pointer">
   <span class="version__current">
     
-      v0.54
+      v0.55
     
 
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="chevron">
@@ -4016,6 +4054,14 @@ Roadmap</a>
   </span>
   <ul class="version__dropdown">
     
+      
+    
+      
+        <li>
+          <a href="/docs/v0.54">
+            v0.54
+          </a>
+        </li>
       
     
       
@@ -4082,14 +4128,6 @@ Roadmap</a>
         </li>
       
     
-      
-        <li>
-          <a href="/docs/v0.45">
-            v0.45
-          </a>
-        </li>
-      
-    
     <li><a href="/docs/all">See more</a></li>
   </ul>
 </div>
@@ -4143,9 +4181,11 @@ Roadmap</a>
 
 <h2 id="filter-and-parameter-types">Filter and parameter types</h2>
 
-<p>The type of filter or parameter widget you choose will determine how the widget works, as well as which fields you’ll be able to filter your cards by.</p>
+<p>The type of filter or parameter widget you choose determines how the widget works, including which fields you’ll be able to filter your cards by.</p>
 
 <h3 id="filter-widgets">Filter widgets</h3>
+
+<p><strong>Filters</strong> determine what data to show. For example, a date filter might show only data from the last 30 days, or a category filter might show only specific product categories.</p>
 
 <ul>
   <li><a href="#date-picker-filters">Date picker</a></li>
@@ -4153,9 +4193,12 @@ Roadmap</a>
   <li><a href="#id-filter">ID</a></li>
   <li><a href="#number-filter">Number</a></li>
   <li><a href="#text-or-category-filter">Text or category</a></li>
+  <li><a href="#boolean-filter">Boolean</a></li>
 </ul>
 
 <h3 id="parameter-widgets">Parameter widgets</h3>
+
+<p><strong>Parameters</strong> determine how to show the data. The time grouping parameter, for example, changes the granularity of time-based visualizations (like showing data by month instead of by day) without removing any data points.</p>
 
 <ul>
   <li><a href="#time-grouping-parameter">Time grouping</a></li>
@@ -4239,6 +4282,10 @@ Roadmap</a>
   <li><strong>Starts with</strong>. Match values that begin with the entered text.</li>
   <li><strong>Ends with</strong>. Match values that end with the entered text.</li>
 </ul>
+
+<h2 id="boolean-filter">Boolean filter</h2>
+
+<p>A boolean filter allows people to filter data based on true/false values.</p>
 
 <h2 id="connecting-a-filter-or-parameter-widget-to-dashboard-cards">Connecting a filter or parameter widget to dashboard cards</h2>
 
@@ -4405,7 +4452,15 @@ Roadmap</a>
 
 <p>If a dashboard is particularly large or slow, or you have multiple filters that you want to adjust before the dashboard refreshes its results, you may want to tell Metabase when to apply those filters and refresh the dashboard.</p>
 
-<p>To turn off the automatic application of filters, click on the info <strong>i</strong> icon, and toggle the <strong>Auto-apply filters</strong> option. With auto-apply turned off, each time you change a value in a filter, you’ll need to click the <strong>Apply</strong> button to refresh the dashboard with the new filter value.</p>
+<p>To turn off the automatic application of filters.</p>
+
+<ol>
+  <li>Click on the three-dot menu <strong>…</strong>.</li>
+  <li>Select <strong>Edit settings</strong>.</li>
+  <li>In the <strong>General</strong> section, toggle off <strong>Auto-apply filters</strong>.</li>
+</ol>
+
+<p>With auto-apply turned off, each time you change a value in a filter, you’ll need to click the <strong>Apply</strong> button to refresh the dashboard with the new filter value.</p>
 
 <p><img src="./images/apply-button.png" alt="Click Apply to apply the filters and refresh the dashboard"></p>
 
@@ -4444,13 +4499,7 @@ Roadmap</a>
         <div id="sub-navigation-content">
           
         </div>
-        
-
-
-  
-    <div id="feedback-widget-container" class="bootstrap feedback-widget">
-  
-
+        <div id="was-this-helpful-widget">
   <div id="page-feedback">
     <h6>Was this helpful?</h6>
     <button id="page-feedback-vote-up" class="vote-button Button">
@@ -4470,19 +4519,15 @@ Roadmap</a>
   </div>
 
   <div id="page-comment" class="flex flex-wrap full hide">
-    <div class="flex full">
-      <h6 id="page-feedback-question"></h6>
-    </div>
+    <p id="page-feedback-question"></p>
 
-    <div id="page-comment-form" class="flex full">
-      
-      <input id="feedback-comment-text" maxlength="500" class="flex input sm-input-small bordered inline-block align-center" name="comment" placeholder="Let us know what you think">
-      
+    <form id="page-comment-form" class="flex full">
+      <textarea id="feedback-comment-text" name="comment" placeholder="Type here…"></textarea>
 
-      <button id="page-comment-submit" class="feedback-widget Button flex align-center">
+      <button id="page-comment-submit" class="Button flex align-center">
         Send
       </button>
-    </div>
+    </form>
   </div>
 
   <div id="page-feedback-message" class="fs-18 hide">
@@ -4496,34 +4541,7 @@ Roadmap</a>
   
 </div>
 
-<script type="text/javascript" src="/js/feedback-widget.js"></script>
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const iframe = document.getElementById("subscribe-to-ai-newsletter-righthandside");
-
-    // Certain collections (e.g., "docs") do not display the newsletter iframe
-    if (!iframe) {
-      return;
-    }
-    const url = new URL(iframe.src, window.location.origin);
-
-    // Copy search params from the main window
-    const currentParams = new URLSearchParams(window.location.search);
-    for (const [key, value] of currentParams.entries()) {
-      url.searchParams.set(key, value);
-    }
-
-    // Add the current pathname as signup_path
-    url.searchParams.set("signup_path", window.location.pathname);
-
-    // Apply the new src
-    iframe.src = url.toString();
-  });
-</script>
-<script type="text/javascript" src="/js/side-email-cta.js"></script>
-
-  
-
+<script type="text/javascript" src="/js/was-this-helpful-widget.js"></script>
 
       </div>
 	  </article>

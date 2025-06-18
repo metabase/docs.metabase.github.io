@@ -1,5 +1,5 @@
 ---
-version: v0.54
+version: v0.55
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -101,6 +101,10 @@ A fingerprinting query examines the first 10,000 rows from each column and uses 
 ## Syncing records that include JSON
 
 JSON schema inference doesn't work with MariaDB, due to implementation differences between MySQL and MariaDB.
+
+## Database routing
+
+See [Database routing](../../permissions/database-routing).
 
 ## Danger zone
 

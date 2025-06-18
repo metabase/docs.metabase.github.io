@@ -1,5 +1,5 @@
 ---
-version: v0.54
+version: v0.55
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -15,7 +15,7 @@ latest: true
 
 {% include plans-blockquote.html feature="Impersonation access" %}
 
-> For now, impersonation access is only available for PostgreSQL, Redshift, and Snowflake.
+> For now, impersonation access is only available for MySQL, PostgreSQL, Redshift, Snowflake, and SQL Server. If you want to switch database _connections_ based on who is logged in, check out [Database routing](./database-routing).
 
 > If you're using views in PostgresSQL, the row-level security policies on views will only work on Postgres versions 15 and higher.
 
