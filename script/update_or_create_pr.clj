@@ -48,20 +48,18 @@
 
 (defn- report-pr-body [source-branch target-branch artifact-dirs]
   (str/join "\n"
-            [(str "# `" source-branch "` -> `" target-branch "`")
+            [(str "`" source-branch "` -> `" target-branch "`")
              ""
              "## Updated Directories:"
              (str/join "\n" (map #(str "- `" % "`") artifact-dirs))
              ""
-             "> This PR will be merged when the PR that triggered this build is merged."
-             ""
-             "---"]))
+             "> This PR will be merged when the PR that triggered this build is merged."]))
 
 (defn -main
   "Main function to update or create a PR. "
   [& args]
-  (let [{:keys    [source-branch target-branch]
-         :as      opts}     (cli/parse-opts args cli-spec)
+  (let [{:keys [source-branch target-branch]
+         :as   opts}     (cli/parse-opts args cli-spec)
         _                   (when (or (:help opts) (:h opts))
                               (u/show-usage-and-exit cli-spec))
         [category
@@ -73,24 +71,24 @@
                                            (throw (ex-info (str "Unpublishable branchname: " target-branch)
                                                            {:babashka/exit 1}))))
                                 (println "→ Source Branch info: " source-branch))
-        target-branch       (str source-branch "->" target-branch)
-        _                   (p/shell "git" "checkout" "-B" target-branch)
+        target-branch-name  (str source-branch "->" target-branch)
+        _                   (p/shell "git" "checkout" "-B" target-branch-name)
         artifact-dirs       (->artifact-dirs category release-num)
         _                   (doseq [ad artifact-dirs]
                               (println "Adding" ad "...")
                               (p/shell "git" "add" ad))
-        {diff-exit :exit}      (p/shell {:continue true} "git" "diff" "--cached" "--quiet")
+        {diff-exit :exit}   (p/shell {:continue true} "git" "diff" "--cached" "--quiet")
         target-branch-title (str "[auto-build] " source-branch " -> " target-branch)]
     (if (zero? diff-exit)
       (println "→ No changes to commit.")
       (do
         (println "→ Changes detected, committing...")
-        (p/shell "git" "commit" "-m" (str "[auto] adding content to " target-branch))
-        (p/shell "git" "push" "--force" "origin" target-branch)
-        (println "→ Target Branch updated successfully.")
+        (p/shell "git" "commit" "-m" (str "[auto] adding content to " target-branch-name))
+        (p/shell "git" "push" "--force" "origin" target-branch-name)
+        (println (str "→ Target Branch '" target-branch-name "' updated successfully."))
         (println "→ Checking for existing PR...")
 
-        (if-let [pr-info (existing-pr? target-branch)]
+        (if-let [pr-info (existing-pr? target-branch-name)]
           (println "✓ PR already exists: #" pr-info)
           (do
             (println "→ Creating new PR...")
@@ -98,7 +96,7 @@
                         "--repo" "metabase/docs.metabase.github.io"
                         "--title" target-branch-title
                         "--body" (report-pr-body source-branch target-branch-title artifact-dirs)
-                        "--head" target-branch]]
+                        "--head" target-branch-name]]
               (println "running: " (str/join " " args))
               (apply p/shell args))))))
     (prn {:category            category
