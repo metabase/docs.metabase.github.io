@@ -110,19 +110,19 @@ jobs:
           cp -r .marketing_repo/_plugins .
           cp -r .marketing_repo/_sass .
 
-      - name: "Run: yarn lint-markdown"
+      - name: "yarn lint-markdown"
         run: |
           yarn lint-markdown
 
-      - name: "Run: yarn lint-styles"
+      - name: "yarn lint-styles"
         run: |
           yarn lint-styles
 
-      - name: "Run: yarn lint-scripts"
+      - name: "yarn lint-scripts"
         run: |
           yarn lint-scripts
 
-      - name: "Run: yarn lint-links"
+      - name: "yarn lint-links"
         run: |
           yarn lint-links
 
@@ -136,9 +136,11 @@ jobs:
           # Build the jekyll site:
           script/build
 
-      - name: Run metabase.com-aware link checks
+      - name: Run htmlproofer + metabase.com-aware link checks
         run: |
+          SECONDS=0
           script/links || true
+          echo "Time elapsed: ${SECONDS} seconds"
           echo 'checking reported links...'
           echo "htmlproofer spit out a report of length: $(wc -l < htmlproofer.out)"
           bb script/analyze_links.clj --htmlproofer-output htmlproofer.out
