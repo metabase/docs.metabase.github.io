@@ -2,8 +2,12 @@ name: Process Docs Changes
 on:
   workflow_dispatch:
     inputs:
-      branch_name:
-        description: Which `metabase/metabase` branch triggered this workflow
+      source_branch:
+        description: metabase/metabase branch triggered this workflow?
+        required: true
+        type: string
+      target_branch:
+        description: metabase/metabase target branch name
         required: true
         type: string
       dispatch_type:
@@ -17,40 +21,25 @@ on:
   repository_dispatch:
     types: [docs_update, docs_merge]
 
-run-name: Processing `${{ github.event.action || github.event.inputs.dispatch_type }}` for branch `${{ github.event.inputs.branch_name || github.event.client_payload.branch_name }}`
+run-name: Processing `${{ github.event.action || github.event.inputs.dispatch_type }}` | `${{ github.event.inputs.source_branch || github.event.client_payload.source_branch }}` -> `${{ github.event.inputs.target_branch || github.event.client_payload.target_branch }}`
 
 jobs:
   build:
-    name: Build for ${{ github.event.inputs.branch_name || github.event.client_payload.branch_name }} | ${{ github.event.action || github.event.inputs.dispatch_type }}
+    name: Build for `${{ github.event.inputs.source_branch || github.event.client_payload.source_branch }}` -> ${{ github.event.inputs.target_branch || github.event.client_payload.target_branch }} | ${{ github.event.action || github.event.inputs.dispatch_type }}
     runs-on: ubuntu-latest
     env:
-      MAIN_REPO_BRANCH: "${{ github.event.inputs.branch_name || github.event.client_payload.branch_name }}"
+      MAIN_REPO_SOURCE_BRANCH: "${{ github.event.inputs.source_branch || github.event.client_payload.source_branch }}"
+      MAIN_REPO_TARGET_BRANCH: "${{ github.event.inputs.target_branch || github.event.client_payload.target_branch }}"
     steps:
-      - name: Running Docs Update
-        if: |
-          (github.event_name == 'repository_dispatch' && github.event.action == 'docs_update') ||
-          (github.event_name == 'workflow_dispatch' && github.event.inputs.dispatch_type == 'docs_update')
-        run: |
-          echo "This is a 'docs_update' event"
-
-      - name: Running Docs Merge
-        if: |
-          (github.event_name == 'repository_dispatch' && github.event.action == 'docs_merge') ||
-          (github.event_name == 'workflow_dispatch' && github.event.inputs.dispatch_type == 'docs_merge')
-        run: |
-          echo "This is a 'docs_merge' event"
-
       - uses: actions/checkout@v4
 
       - name: Set current branch name
         run: echo "LOCAL_REPO_BRANCH=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> "$GITHUB_ENV"
 
-      - name: echo branch name
+      - name: echo branch names
         run: |
-          echo "Got (metabase) branch_name: $MAIN_REPO_BRANCH"
-
-      - name: echo local repo branch
-        run: |
+          echo "metabase/metabase source_branch: $MAIN_REPO_SOURCE_BRANCH"
+          echo "metabase/metabase target_branch: $MAIN_REPO_TARGET_BRANCH"
           echo "Running on (docs.metabase.github.io) branch: $LOCAL_REPO_BRANCH"
 
       - name: Prepare java
@@ -59,11 +48,11 @@ jobs:
           distribution: 'zulu' # See 'Supported distributions' for available options
           java-version: '21'
 
-      - name: Install Clojure to build cljs
+      - name: Install Clojure (needed to build cljs for SDK dox generation)
         uses: DeLaGuardo/setup-clojure@13.2
         with:
           cli: 1.12.0.1530
-          bb: 1.12.199
+          bb: 1.12.200
 
       - name: Run docs repo build tests
         run: |
@@ -71,7 +60,7 @@ jobs:
 
       - name: Filter non-documented branches
         run: |
-          bb script/check_incoming_branchname.clj "$MAIN_REPO_BRANCH"
+          bb script/check_incoming_branchname.clj --target-branch "$MAIN_REPO_TARGET_BRANCH"
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -90,15 +79,20 @@ jobs:
         run: |
           bundle install
 
-      - name: Update docs for branchname
-        run: |
-          bb script/update_docs_for_branchname.clj "$MAIN_REPO_BRANCH"
-
       - name: Setup Git Authenticatation
         run: |
           git config --global user.name "Metabase Docs bot"
           git config --global user.email "metabase-bot@metabase.com"
           git remote set-url origin "https://x-access-token:${{ secrets.METABASE_AUTOMATION_USER_TOKEN }}@github.com/metabase/docs.metabase.github.io.git"
+
+      - name: Announce env vars
+        run: |
+          echo "main_repo_source_branch = '${{ env.MAIN_REPO_SOURCE_BRANCH }}'"
+          echo "main_repo_target_branch = '${{ env.MAIN_REPO_TARGET_BRANCH }}'"
+
+      - name: Update docs for branchname
+        run: |
+          bb script/update_docs_for_branchname.clj --source-branch "$MAIN_REPO_SOURCE_BRANCH" --target-branch "$MAIN_REPO_TARGET_BRANCH"
 
       - name: Checkout Control files from Marketing Repo
         uses: actions/checkout@v4
@@ -116,19 +110,19 @@ jobs:
           cp -r .marketing_repo/_plugins .
           cp -r .marketing_repo/_sass .
 
-      - name: "Run: yarn lint-markdown"
+      - name: "yarn lint-markdown"
         run: |
           yarn lint-markdown
 
-      - name: "Run: yarn lint-styles"
+      - name: "yarn lint-styles"
         run: |
           yarn lint-styles
 
-      - name: "Run: yarn lint-scripts"
+      - name: "yarn lint-scripts"
         run: |
           yarn lint-scripts
 
-      - name: "Run: yarn lint-links"
+      - name: "yarn lint-links"
         run: |
           yarn lint-links
 
@@ -142,9 +136,11 @@ jobs:
           # Build the jekyll site:
           script/build
 
-      - name: Run metabase.com-aware link checks
+      - name: Run htmlproofer + metabase.com-aware link checks
         run: |
+          SECONDS=0
           script/links || true
+          echo "Time elapsed: ${SECONDS} seconds"
           echo 'checking reported links...'
           echo "htmlproofer spit out a report of length: $(wc -l < htmlproofer.out)"
           bb script/analyze_links.clj --htmlproofer-output htmlproofer.out
@@ -156,7 +152,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.METABASE_AUTOMATION_USER_TOKEN }}
         run: |
-          bb script/update_or_create_pr.clj "$MAIN_REPO_BRANCH"
+          bb script/update_or_create_pr.clj --source-branch "$MAIN_REPO_SOURCE_BRANCH" --target-branch "$MAIN_REPO_TARGET_BRANCH"
 
       - name: Merge Updated Docs
         if: |
@@ -170,4 +166,5 @@ jobs:
           echo '\n============= Showing Diff ============='
           git diff origin master
           echo '\n============= Pushing Changes ============='
-          git push origin master && echo '\n============= Merge Complete ============='
+          git push origin master
+          echo '\n============= Merge Complete ============='

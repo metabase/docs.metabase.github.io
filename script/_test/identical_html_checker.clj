@@ -44,19 +44,20 @@
 
 (defn -main [& args]
   (let [other-repo-path (first args)
-        _ (when-not other-repo-path
-            (throw (ex-info (ice/p-str [:red (str "Please provide the path to the original repo \n"
-                                                  "Usage: identical_html_checker.clj ../metabase.github.io")])
-                            {:babashka/exit 1})))
-        _ (when-not (fs/exists? other-repo-path)
-            (throw (ex-info (ice/p-str [:red (str "Invalid path \n"
-                                                  "Usage: identical_html_checker.clj <path>")])
-                            {:babashka/exit 1})))
-        num-subpaths (map #(str "v0." %) (range 12 (inc (u/config-docs-version))))
+        _error-check (do (when-not other-repo-path
+                           (throw (ex-info (ice/p-str [:red (str "Please provide the path to the original repo \n"
+                                                                 "Usage: identical_html_checker.clj ../metabase.github.io <path>")])
+                                           {:babashka/exit 1})))
+                         (when-not (fs/exists? other-repo-path)
+                           (throw (ex-info (ice/p-str [:red (str "Invalid path \n"
+                                                                 "Usage: identical_html_checker.clj <path>")])
+                                           {:babashka/exit 1}))))
+        num-subpaths (map #(str "v0." %) (range 12 (+ 2 (u/config-docs-version))))
         subpaths (into [] (conj num-subpaths "latest" "master"))
         _ (apply ice/p [:magenta "Checking Subpaths: "]
                  ((juxt first (constantly "-") last) num-subpaths) ", and latest and master")
-        reports (for [subpath subpaths] (missing-file-report other-repo-path subpath))
+        reports (for [subpath subpaths]
+                  (missing-file-report other-repo-path subpath))
         {ok true errors false} (group-by :ok? reports)]
     (doseq [error errors]
       (let [{:keys [subpath docs-only og-only og-pages docs-pages diff]} error]
@@ -74,3 +75,8 @@
 
 (when (= *file* (System/getProperty "babashka.file"))
   (apply -main *command-line-args*))
+
+(comment
+  (-main "../metabase.github.io")
+
+  )

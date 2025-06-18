@@ -12,6 +12,7 @@ var settings = {
   latest: false,
   version: "master",
   finalDir: "_docs",
+  newDir: undefined,
   config: "_config.yml",
   update: false,
 };
@@ -19,11 +20,16 @@ var settings = {
 program
   .option("-l, --latest") // copy docs into _docs/latest
   .option("-s, --set-version <version>") // Specify target directory and version
-  .option("-u, --update"); // Download docs from current release_branch
+  .option("-u, --update") // Download docs from current release_branch
+  .option("-b, --source-branch <dir>"); // When set, we grab the tarball for this branch
 
 program.parse(process.argv);
 
 const options = program.opts();
+
+if (options.sourceBranch) {
+  settings.sourceBranch = options.sourceBranch
+}
 
 // When running script with --update flag, fetch-docs won't update the latest_version in the config.
 // Useful when you've backported a docs PR and you want to update the docs on the website.
@@ -55,13 +61,24 @@ if (options.setVersion) {
   console.log("Version set to", options.setVersion);
 }
 
-console.log("Downloading docs from branch", settings.version);
+// If no repoDir is specified, download and extract a tarball. That will not
+// work for branch previews, so we usually (todo: always?) need to setup the
+// repo before running this script.
+if (options.repoDir) {
+  console.log("Metabase docs data downloaded already in:", options.repoDir);
+  settings.newDir = options.repoDir;
+} else {
+  console.log("Downloading metabase docs data from branch:", settings.version);
+}
 
 if (!settings.version.match(/^v[0-9]+\./)) {
   console.warn("WARNING: version is not in the canonical form (e.g. v0.44.3)");
 }
 
 console.log("Settings: ", settings);
+
+// set settings.newDir to skip the download step
+// if we already have 'downloaded' it.
 
 fetchDocs(settings)
   .then(() => {
