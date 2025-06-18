@@ -1,5 +1,5 @@
 ---
-version: v0.54
+version: v0.55
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -81,6 +81,10 @@ If you've selected **Choose when syncs and scans happen** > **ON**, you'll see t
 Turn this option **ON** to scan a sample of values every time Metabase runs a [sync](../sync-scan#how-database-syncs-work).
 
 A fingerprinting query examines the first 10,000 rows from each column and uses that data to guesstimate how many unique values each column has, what the minimum and maximum values are for numeric and timestamp columns, and so on. If you leave this option **OFF**, Metabase will only fingerprint your columns once during setup.
+
+## Database routing
+
+See [Database routing](../../permissions/database-routing).
 
 ## Danger zone
 

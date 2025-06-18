@@ -1,5 +1,5 @@
 ---
-version: v0.54
+version: v0.55
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -17,6 +17,8 @@ latest: true
 ![Example action](./images/example-action.png)
 
 ## What are actions?
+
+> Want to edit data directly in your database through Metabase and build data apps? Join our [Early Access Program](https://form.fillout.com/t/j9cymCcLGVus) to explore this new feature, try it with your team, and help shape what we build next.
 
 **Actions** are entities in Metabase that let you build custom forms and business logic.
 

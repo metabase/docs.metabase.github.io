@@ -1,5 +1,5 @@
 ---
-version: v0.54
+version: v0.55
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -12,27 +12,17 @@ latest: true
 ---
 
 ```ts
-type MetabaseFetchRequestTokenFn = (
-  url: string,
-) => Promise<MetabaseEmbeddingSessionToken | null>;
+type MetabaseFetchRequestTokenFn = () => Promise<{
+  jwt: string;
+}>;
 ```
-
-## Parameters
-
-<!-- [<snippet parameters>] -->
-
-| Parameter | Type     |
-| :-------- | :------- |
-| `url`     | `string` |
-
-<!-- [<endsnippet parameters>] -->
 
 ## Returns
 
 <!-- [<snippet returns>] -->
 
-[`Promise`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<
-\| [`MetabaseEmbeddingSessionToken`](./api/MetabaseEmbeddingSessionToken)
-\| `null`\>
+[`Promise`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<\{
+`jwt`: `string`;
+\}\>
 
 <!-- [<endsnippet returns>] -->

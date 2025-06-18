@@ -1,5 +1,5 @@
 ---
-version: v0.54
+version: v0.55
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: false
@@ -34,6 +34,10 @@ How to back up your Metabase data: questions, dashboards, and other application 
 ## [Upgrading Metabase](upgrading-metabase)
 
 How to safely upgrade your Metabase.
+
+## [Development instances](./development-instance)
+
+Try out your changes before deploying to production.
 
 ## [Serialization](./serialization)
 
