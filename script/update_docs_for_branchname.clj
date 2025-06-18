@@ -17,7 +17,7 @@
     :dry-run {:desc "If set, will not execute the command, just print it out."
               :coerce :boolean}}
    :error-fn                           ; a function to handle errors
-   (fn [{:keys [spec type cause msg option] :as data}]
+   (fn [{:keys [_spec type cause _msg option] :as data}]
      (when (= :org.babashka/cli type)
        (let [msg (case cause
                    :require
@@ -38,9 +38,9 @@
 
 (defn -main [& args]
   (let [{:keys [source-branch target-branch]
+         dry-run? :dry-run
          :as   opts}  (cli/parse-opts args cli-spec)
         _             (when (or (:help opts) (:h opts)) (show-usage-and-exit))
-        dry-run?      (contains? (set args) "--dry-run")
         [category
          release-num] (u/categorize-branchname target-branch)
         command       (-> (cond
