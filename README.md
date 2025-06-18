@@ -74,7 +74,7 @@ Notable steps:
 - Opens PR with changes to `master` for the `_site` (html/js/css), and `_docs`
   (markdown) directories.
 
-#### Steps required for a faithful build:
+#### Steps required for a faithful build
 
 - Since we've split up the site into 2 jekyll instances, we cannot rely on
   htmlproofer to check links from the docs to the marketing site. So
