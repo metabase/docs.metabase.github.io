@@ -335,21 +335,6 @@ script/docs master --latest --set-version v0.41.2
 
 The above command would download the master tarball, extract the docs and put them into `_docs/v0.41` (or create the directory if this 41 marks a new major release), and set the `site.latest_version` to `v0.41.2`.
 
-## Cloud docs
-
-To update the docs in `_docs/latest/cloud`, edit them in `_cloud-docs` and then run:
-
-```bash
-npm run latest-docs
-```
-
-## Add frontmatter to latest docs
-
-The latest docs are the only docs that we index for search engines. To add additional key-value pairs to the fronmatter for the latest docs, update the frontmatter JSON at `lib/latest-frontmatter.json`. Then run:
-
-```sh
-npm run latest-docs
-```
 
 ## Linters
 
