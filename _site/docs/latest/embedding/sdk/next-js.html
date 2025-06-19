@@ -39,7 +39,8 @@
     }
   </script>
 
-      
+  
+       
 
 <title>Embedded analytics SDK - Using the SDK with Next.js | Metabase Documentation</title>
 <!-- Twitter cards -->
@@ -59,8 +60,45 @@
 <meta name="description" property="og:description" content="Embedded analytics SDK - Using the SDK with Next.js     <path d=" m12="" 10c12.5523..."="">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
+
   
-  <link href="/images/favicon.svg" rel="shortcut icon">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "url": "https://www.metabase.com/",
+    "sameAs": [
+      "https://github.com/metabase",
+      "https://www.linkedin.com/company/metabase/",
+      "https://x.com/metabase",
+      "https://www.youtube.com/@metabasedata"
+    ],
+    "logo": "https://github.com/metabase/metabase.github.io/blob/master/images/metabase-logo.png?raw=",
+    "name": "Metabase",
+    "description": "Metabase is an open source Business Intelligence and Embedded Analytics tool. Connect to your data stack in 5 minutes to make queries, visualizations, and dashboards easy for everyone—no SQL required",
+    "email": "hello@metabase.com",
+    "foundingDate": "2015-02-01T00:00:00.000Z",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "9740 Campo Rd",
+      "addressLocality": "Spring Valley",
+      "addressCountry": "USA",
+      "addressRegion": "CA",
+      "postalCode": "91977"
+    },
+    "knowsAbout": [
+      { "@type": "Thing", "name": "Business Intelligence" },
+      { "@type": "Thing", "name": "Embedded Analytics" },
+      { "@type": "Thing", "name": "Self-service analytics" },
+      { "@type": "Thing", "name": "Open source Business Intelligence" }
+    ]
+  }
+</script>
+
+
+  
+    <link href="/images/favicon.svg" rel="shortcut icon">
   
   <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/flexboxgrid/6.3.1/flexboxgrid.min.css" rel="stylesheet" type="text/css">
@@ -4006,7 +4044,7 @@ Roadmap</a>
 <div class="version__selector cursor-pointer">
   <span class="version__current">
     
-      v0.54
+      v0.55
     
 
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="chevron">
@@ -4016,6 +4054,14 @@ Roadmap</a>
   </span>
   <ul class="version__dropdown">
     
+      
+    
+      
+        <li>
+          <a href="/docs/v0.54">
+            v0.54
+          </a>
+        </li>
       
     
       
@@ -4078,14 +4124,6 @@ Roadmap</a>
         <li>
           <a href="/docs/v0.46">
             v0.46
-          </a>
-        </li>
-      
-    
-      
-        <li>
-          <a href="/docs/v0.45">
-            v0.45
           </a>
         </li>
       
@@ -4184,7 +4222,6 @@ Roadmap</a>
 
 <span class="kd">const</span> <span class="nx">authConfig</span> <span class="o">=</span> <span class="nf">defineMetabaseAuthConfig</span><span class="p">({</span>
   <span class="na">metabaseInstanceUrl</span><span class="p">:</span> <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">NEXT_PUBLIC_METABASE_INSTANCE_URL</span><span class="p">,</span>
-  <span class="na">authProviderUri</span><span class="p">:</span> <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">NEXT_PUBLIC_METABASE_AUTH_PROVIDER_URI</span><span class="p">,</span>
 <span class="p">});</span>
 
 <span class="k">export</span> <span class="kd">const</span> <span class="nx">EmbeddingSdkProvider</span> <span class="o">=</span> <span class="p">({</span>
@@ -4198,7 +4235,7 @@ Roadmap</a>
 <span class="p">};</span>
 </code></pre></div></div>
 
-<p>Next, add an <code class="language-plaintext highlighter-rouge">index.tsx</code> file to that <code class="language-plaintext highlighter-rouge">metabase</code> directory. This file will include the <code class="language-plaintext highlighter-rouge">use client</code> directive, and it’ll export a lazy-loaded version of the <code class="language-plaintext highlighter-rouge">EmbeddingSdkProvider</code> with  SSR disabled.</p>
+<p>Next, add an <code class="language-plaintext highlighter-rouge">index.tsx</code> file to that <code class="language-plaintext highlighter-rouge">metabase</code> directory. This file will include the <code class="language-plaintext highlighter-rouge">use client</code> directive, and it’ll export a lazy-loaded version of the <code class="language-plaintext highlighter-rouge">EmbeddingSdkProvider</code> with SSR disabled.</p>
 
 <div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="dl">"</span><span class="s2">use client</span><span class="dl">"</span><span class="p">;</span>
 
@@ -4269,7 +4306,7 @@ Roadmap</a>
 
 <p>You can create a Route handler that signs people in to Metabase.</p>
 
-<p>Create a new <code class="language-plaintext highlighter-rouge">route.ts</code> file in your <code class="language-plaintext highlighter-rouge">app/*</code> directory, for example <code class="language-plaintext highlighter-rouge">app/sso/metabase/route.ts</code> that corresponds to an endpoint at /sso/metabase.</p>
+<p>Create a new <code class="language-plaintext highlighter-rouge">route.ts</code> file in your <code class="language-plaintext highlighter-rouge">app/*</code> directory, for example <code class="language-plaintext highlighter-rouge">app/sso/metabase/route.ts</code> that corresponds to an endpoint at /sso/metabase. This route handler should generate a JWT for the authenticated user and return the token in a JSON object with the shape <code class="language-plaintext highlighter-rouge">{ jwt: string }</code>.</p>
 
 <div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nx">jwt</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">jsonwebtoken</span><span class="dl">"</span><span class="p">;</span>
 
@@ -4288,27 +4325,8 @@ Roadmap</a>
     <span class="c1">// This is the JWT signing secret in your Metabase JWT authentication setting</span>
     <span class="nx">METABASE_JWT_SHARED_SECRET</span><span class="p">,</span>
   <span class="p">);</span>
-  <span class="kd">const</span> <span class="nx">ssoUrl</span> <span class="o">=</span> <span class="s2">`</span><span class="p">${</span><span class="nx">METABASE_INSTANCE_URL</span><span class="p">}</span><span class="s2">/auth/sso?token=true&amp;jwt=</span><span class="p">${</span><span class="nx">token</span><span class="p">}</span><span class="s2">`</span><span class="p">;</span>
-
-  <span class="k">try</span> <span class="p">{</span>
-    <span class="kd">const</span> <span class="nx">ssoResponse</span> <span class="o">=</span> <span class="k">await</span> <span class="nf">fetch</span><span class="p">(</span><span class="nx">ssoUrl</span><span class="p">,</span> <span class="p">{</span> <span class="na">method</span><span class="p">:</span> <span class="dl">"</span><span class="s2">GET</span><span class="dl">"</span> <span class="p">});</span>
-    <span class="kd">const</span> <span class="nx">ssoResponseBody</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">ssoResponse</span><span class="p">.</span><span class="nf">json</span><span class="p">();</span>
-
-    <span class="k">return</span> <span class="nx">Response</span><span class="p">.</span><span class="nf">json</span><span class="p">(</span><span class="nx">ssoResponseBody</span><span class="p">);</span>
-  <span class="p">}</span> <span class="k">catch </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">if </span><span class="p">(</span><span class="nx">error</span> <span class="k">instanceof</span> <span class="nb">Error</span><span class="p">)</span> <span class="p">{</span>
-      <span class="k">return</span> <span class="nx">Response</span><span class="p">.</span><span class="nf">json</span><span class="p">(</span>
-        <span class="p">{</span>
-          <span class="na">status</span><span class="p">:</span> <span class="dl">"</span><span class="s2">error</span><span class="dl">"</span><span class="p">,</span>
-          <span class="na">message</span><span class="p">:</span> <span class="dl">"</span><span class="s2">authentication failed</span><span class="dl">"</span><span class="p">,</span>
-          <span class="na">error</span><span class="p">:</span> <span class="nx">error</span><span class="p">.</span><span class="nx">message</span><span class="p">,</span>
-        <span class="p">},</span>
-        <span class="p">{</span>
-          <span class="na">status</span><span class="p">:</span> <span class="mi">401</span><span class="p">,</span>
-        <span class="p">},</span>
-      <span class="p">);</span>
-    <span class="p">}</span>
-  <span class="p">}</span>
+  <span class="c1">// The user backend should return a JSON object with the JWT.</span>
+  <span class="k">return</span> <span class="nx">Response</span><span class="p">.</span><span class="nf">json</span><span class="p">({</span> <span class="na">jwt</span><span class="p">:</span> <span class="nx">token</span> <span class="p">});</span>
 <span class="p">}</span>
 </code></pre></div></div>
 
@@ -4318,7 +4336,6 @@ Roadmap</a>
 
 <span class="kd">const</span> <span class="nx">authConfig</span> <span class="o">=</span> <span class="nf">defineMetabaseAuthConfig</span><span class="p">({</span>
   <span class="na">metabaseInstanceUrl</span><span class="p">:</span> <span class="dl">"</span><span class="s2">https://metabase.example.com</span><span class="dl">"</span><span class="p">,</span> <span class="c1">// Required: Your Metabase instance URL</span>
-  <span class="na">authProviderUri</span><span class="p">:</span> <span class="dl">"</span><span class="s2">/sso/metabase</span><span class="dl">"</span><span class="p">,</span> <span class="c1">// Required: An endpoint in your app that signs the user in and returns a session</span>
 <span class="p">});</span>
 </code></pre></div></div>
 
@@ -4326,7 +4343,7 @@ Roadmap</a>
 
 <p>You can create an API route that signs people in to Metabase.</p>
 
-<p>Create a new <code class="language-plaintext highlighter-rouge">metabase.ts</code> file in your <code class="language-plaintext highlighter-rouge">pages/api/*</code> directory, for example <code class="language-plaintext highlighter-rouge">pages/api/sso/metabase.ts</code> that corresponds to an endpoint at /api/sso/metabase.</p>
+<p>Create a new <code class="language-plaintext highlighter-rouge">metabase.ts</code> file in your <code class="language-plaintext highlighter-rouge">pages/api/*</code> directory, for example <code class="language-plaintext highlighter-rouge">pages/api/sso/metabase.ts</code> that corresponds to an endpoint at /api/sso/metabase. This API route should generate a JWT for the authenticated user and return the token in a JSON object with the shape <code class="language-plaintext highlighter-rouge">{ jwt: string }</code>.</p>
 
 <div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="kd">type</span> <span class="p">{</span> <span class="nx">NextApiRequest</span><span class="p">,</span> <span class="nx">NextApiResponse</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">next</span><span class="dl">"</span><span class="p">;</span>
 <span class="k">import</span> <span class="nx">jwt</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">jsonwebtoken</span><span class="dl">"</span><span class="p">;</span>
@@ -4349,22 +4366,8 @@ Roadmap</a>
     <span class="c1">// This is the JWT signing secret in your Metabase JWT authentication setting</span>
     <span class="nx">METABASE_JWT_SHARED_SECRET</span><span class="p">,</span>
   <span class="p">);</span>
-  <span class="kd">const</span> <span class="nx">ssoUrl</span> <span class="o">=</span> <span class="s2">`</span><span class="p">${</span><span class="nx">METABASE_INSTANCE_URL</span><span class="p">}</span><span class="s2">/auth/sso?token=true&amp;jwt=</span><span class="p">${</span><span class="nx">token</span><span class="p">}</span><span class="s2">`</span><span class="p">;</span>
-
-  <span class="k">try</span> <span class="p">{</span>
-    <span class="kd">const</span> <span class="nx">ssoResponse</span> <span class="o">=</span> <span class="k">await</span> <span class="nf">fetch</span><span class="p">(</span><span class="nx">ssoUrl</span><span class="p">,</span> <span class="p">{</span> <span class="na">method</span><span class="p">:</span> <span class="dl">"</span><span class="s2">GET</span><span class="dl">"</span> <span class="p">});</span>
-    <span class="kd">const</span> <span class="nx">ssoResponseBody</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">ssoResponse</span><span class="p">.</span><span class="nf">json</span><span class="p">();</span>
-
-    <span class="nx">res</span><span class="p">.</span><span class="nf">status</span><span class="p">(</span><span class="mi">200</span><span class="p">).</span><span class="nf">json</span><span class="p">(</span><span class="nx">ssoResponseBody</span><span class="p">);</span>
-  <span class="p">}</span> <span class="k">catch </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">if </span><span class="p">(</span><span class="nx">error</span> <span class="k">instanceof</span> <span class="nb">Error</span><span class="p">)</span> <span class="p">{</span>
-      <span class="nx">res</span><span class="p">.</span><span class="nf">status</span><span class="p">(</span><span class="mi">401</span><span class="p">).</span><span class="nf">json</span><span class="p">({</span>
-        <span class="na">status</span><span class="p">:</span> <span class="dl">"</span><span class="s2">error</span><span class="dl">"</span><span class="p">,</span>
-        <span class="na">message</span><span class="p">:</span> <span class="dl">"</span><span class="s2">authentication failed</span><span class="dl">"</span><span class="p">,</span>
-        <span class="na">error</span><span class="p">:</span> <span class="nx">error</span><span class="p">.</span><span class="nx">message</span><span class="p">,</span>
-      <span class="p">});</span>
-    <span class="p">}</span>
-  <span class="p">}</span>
+  <span class="c1">// The user backend should return a JSON object with the JWT.</span>
+  <span class="nx">res</span><span class="p">.</span><span class="nf">status</span><span class="p">(</span><span class="mi">200</span><span class="p">).</span><span class="nf">json</span><span class="p">({</span> <span class="na">jwt</span><span class="p">:</span> <span class="nx">token</span> <span class="p">});</span>
 <span class="p">}</span>
 </code></pre></div></div>
 
@@ -4374,7 +4377,6 @@ Roadmap</a>
 
 <span class="kd">const</span> <span class="nx">authConfig</span> <span class="o">=</span> <span class="nf">defineMetabaseAuthConfig</span><span class="p">({</span>
   <span class="na">metabaseInstanceUrl</span><span class="p">:</span> <span class="dl">"</span><span class="s2">https://metabase.example.com</span><span class="dl">"</span><span class="p">,</span> <span class="c1">// Required: Your Metabase instance URL</span>
-  <span class="na">authProviderUri</span><span class="p">:</span> <span class="dl">"</span><span class="s2">/sso/metabase</span><span class="dl">"</span><span class="p">,</span> <span class="c1">// Required: An endpoint in your app that signs the user in and returns a session</span>
 <span class="p">});</span>
 </code></pre></div></div>
 
@@ -4393,13 +4395,7 @@ Roadmap</a>
         <div id="sub-navigation-content">
           
         </div>
-        
-
-
-  
-    <div id="feedback-widget-container" class="bootstrap feedback-widget">
-  
-
+        <div id="was-this-helpful-widget">
   <div id="page-feedback">
     <h6>Was this helpful?</h6>
     <button id="page-feedback-vote-up" class="vote-button Button">
@@ -4419,19 +4415,15 @@ Roadmap</a>
   </div>
 
   <div id="page-comment" class="flex flex-wrap full hide">
-    <div class="flex full">
-      <h6 id="page-feedback-question"></h6>
-    </div>
+    <p id="page-feedback-question"></p>
 
-    <div id="page-comment-form" class="flex full">
-      
-      <input id="feedback-comment-text" maxlength="500" class="flex input sm-input-small bordered inline-block align-center" name="comment" placeholder="Let us know what you think">
-      
+    <form id="page-comment-form" class="flex full">
+      <textarea id="feedback-comment-text" name="comment" placeholder="Type here…"></textarea>
 
-      <button id="page-comment-submit" class="feedback-widget Button flex align-center">
+      <button id="page-comment-submit" class="Button flex align-center">
         Send
       </button>
-    </div>
+    </form>
   </div>
 
   <div id="page-feedback-message" class="fs-18 hide">
@@ -4445,34 +4437,7 @@ Roadmap</a>
   
 </div>
 
-<script type="text/javascript" src="/js/feedback-widget.js"></script>
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const iframe = document.getElementById("subscribe-to-ai-newsletter-righthandside");
-
-    // Certain collections (e.g., "docs") do not display the newsletter iframe
-    if (!iframe) {
-      return;
-    }
-    const url = new URL(iframe.src, window.location.origin);
-
-    // Copy search params from the main window
-    const currentParams = new URLSearchParams(window.location.search);
-    for (const [key, value] of currentParams.entries()) {
-      url.searchParams.set(key, value);
-    }
-
-    // Add the current pathname as signup_path
-    url.searchParams.set("signup_path", window.location.pathname);
-
-    // Apply the new src
-    iframe.src = url.toString();
-  });
-</script>
-<script type="text/javascript" src="/js/side-email-cta.js"></script>
-
-  
-
+<script type="text/javascript" src="/js/was-this-helpful-widget.js"></script>
 
       </div>
 	  </article>

@@ -1,5 +1,5 @@
 ---
-version: v0.54
+version: v0.55
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: false
@@ -33,6 +33,7 @@ This guide contains detailed information on how to work on Metabase codebase.
 - [How to add support in Metabase for other languages](internationalization)
 - [Working with Clojure](clojure)
 - [Annotated Clojure source code](https://metabase-dev-docs.github.io/)
+- [Automating Common Tasks with MAGE](mage)
 
 ## Testing
 

@@ -39,14 +39,15 @@
     }
   </script>
 
-      
+  
+       
 
 <title>Snippets | Metabase Documentation</title>
 <!-- Twitter cards -->
 <meta name="twitter:site" content="@metabase">
 
 <meta name="twitter:title" content="Snippets | Metabase Documentation">
-<meta name="twitter:description" content="Snippets  Snippets are reusable bits of SQL or native queries. Anyone with permissions to the SQL editor can create and edit snippets, which are then available for all SQL authors. For example,...">
+<meta name="twitter:description" content="Snippets  Snippets are reusable bits of SQL or native queries. Anyone with permissions to the SQL editor can create and edit snippets, which are then available for all SQL authors. For example, if you frequently...">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -56,11 +57,48 @@
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://www.metabase.com/docs/latest/questions/native-editor/snippets">
 <meta name="title" property="og:title" content="Snippets | Metabase Documentation">
-<meta name="description" property="og:description" content="Snippets  Snippets are reusable bits of SQL or native queries. Anyone with permissions to the SQL editor can create and edit snippets, which are then available for all SQL authors. For example,...">
+<meta name="description" property="og:description" content="Snippets  Snippets are reusable bits of SQL or native queries. Anyone with permissions to the SQL editor can create and edit snippets, which are then available for all SQL authors. For example, if you frequently...">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
+
   
-  <link href="/images/favicon.svg" rel="shortcut icon">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "url": "https://www.metabase.com/",
+    "sameAs": [
+      "https://github.com/metabase",
+      "https://www.linkedin.com/company/metabase/",
+      "https://x.com/metabase",
+      "https://www.youtube.com/@metabasedata"
+    ],
+    "logo": "https://github.com/metabase/metabase.github.io/blob/master/images/metabase-logo.png?raw=",
+    "name": "Metabase",
+    "description": "Metabase is an open source Business Intelligence and Embedded Analytics tool. Connect to your data stack in 5 minutes to make queries, visualizations, and dashboards easy for everyone—no SQL required",
+    "email": "hello@metabase.com",
+    "foundingDate": "2015-02-01T00:00:00.000Z",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "9740 Campo Rd",
+      "addressLocality": "Spring Valley",
+      "addressCountry": "USA",
+      "addressRegion": "CA",
+      "postalCode": "91977"
+    },
+    "knowsAbout": [
+      { "@type": "Thing", "name": "Business Intelligence" },
+      { "@type": "Thing", "name": "Embedded Analytics" },
+      { "@type": "Thing", "name": "Self-service analytics" },
+      { "@type": "Thing", "name": "Open source Business Intelligence" }
+    ]
+  }
+</script>
+
+
+  
+    <link href="/images/favicon.svg" rel="shortcut icon">
   
   <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/flexboxgrid/6.3.1/flexboxgrid.min.css" rel="stylesheet" type="text/css">
@@ -4006,7 +4044,7 @@ Roadmap</a>
 <div class="version__selector cursor-pointer">
   <span class="version__current">
     
-      v0.54
+      v0.55
     
 
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="chevron">
@@ -4016,6 +4054,14 @@ Roadmap</a>
   </span>
   <ul class="version__dropdown">
     
+      
+    
+      
+        <li>
+          <a href="/docs/v0.54">
+            v0.54
+          </a>
+        </li>
       
     
       
@@ -4082,14 +4128,6 @@ Roadmap</a>
         </li>
       
     
-      
-        <li>
-          <a href="/docs/v0.45">
-            v0.45
-          </a>
-        </li>
-      
-    
     <li><a href="/docs/all">See more</a></li>
   </ul>
 </div>
@@ -4120,7 +4158,7 @@ Roadmap</a>
 
         <h1 id="snippets">Snippets</h1>
 
-<p><img src="../images/highlight_and_save_as_snippet.gif" alt="Highlight and save as snippet"></p>
+<p><img src="../images/sql-snippets.png" alt="SQL snippet"></p>
 
 <p><strong>Snippets</strong> are reusable bits of SQL or native queries. Anyone with permissions to the <a href="./writing-sql">SQL editor</a> can create and edit snippets, which are then available for all SQL authors.</p>
 
@@ -4130,10 +4168,11 @@ Roadmap</a>
 
 <p>Here’s a simple query with a join using the <strong>Sample Database</strong> included with Metabase.</p>
 
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span>
-<span class="k">FROM</span> <span class="n">orders</span> <span class="k">AS</span> <span class="n">o</span>
-<span class="k">LEFT</span> <span class="k">JOIN</span> <span class="n">products</span> <span class="k">AS</span> <span class="n">p</span>
-<span class="k">ON</span> <span class="n">o</span><span class="p">.</span><span class="n">product_id</span> <span class="o">=</span> <span class="n">p</span><span class="p">.</span><span class="n">id</span>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span>
+  <span class="o">*</span>
+<span class="k">FROM</span>
+  <span class="n">orders</span> <span class="k">AS</span> <span class="n">o</span>
+  <span class="k">LEFT</span> <span class="k">JOIN</span> <span class="n">products</span> <span class="k">AS</span> <span class="n">p</span> <span class="k">ON</span> <span class="n">o</span><span class="p">.</span><span class="n">product_id</span> <span class="o">=</span> <span class="n">p</span><span class="p">.</span><span class="n">id</span>
 </code></pre></div></div>
 
 <p>Let’s save everything after FROM as a snippet to reuse in other queries.</p>
@@ -4145,8 +4184,7 @@ Roadmap</a>
     <p><strong>Highlight a section of SQL</strong> that you want to save. In this case, we’ll select the following SQL code:</p>
 
     <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">orders</span> <span class="k">AS</span> <span class="n">o</span>
-<span class="k">LEFT</span> <span class="k">JOIN</span> <span class="n">products</span> <span class="k">AS</span> <span class="n">p</span>
-<span class="k">ON</span> <span class="n">o</span><span class="p">.</span><span class="n">product_id</span> <span class="o">=</span> <span class="n">p</span><span class="p">.</span><span class="n">id</span>
+<span class="k">LEFT</span> <span class="k">JOIN</span> <span class="n">products</span> <span class="k">AS</span> <span class="n">p</span> <span class="k">ON</span> <span class="n">o</span><span class="p">.</span><span class="n">product_id</span> <span class="o">=</span> <span class="n">p</span><span class="p">.</span><span class="n">id</span>
 </code></pre></div>    </div>
   </li>
   <li><strong>Right-click on the highlighted section.</strong></li>
@@ -4156,8 +4194,12 @@ Roadmap</a>
 
 <p>In this case, we named the snippet “Orders and Products”. The snippet will now be available for anyone to use. Here’s what the snippet looks like in the SQL editor:</p>
 
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span>
-<span class="k">FROM</span> <span class="p">{{</span><span class="n">snippet</span><span class="p">:</span> <span class="n">Orders</span> <span class="k">and</span> <span class="n">Products</span><span class="p">}}</span>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">SELECT</span>
+  <span class="o">*</span>
+<span class="k">FROM</span>
+  <span class="p">{{</span><span class="n">snippet</span><span class="p">:</span> <span class="n">Orders</span> <span class="k">and</span> <span class="n">products</span><span class="p">}}</span>
+
 </code></pre></div></div>
 
 <p>When writing in the SQL editor, you can now start typing <code class="language-plaintext highlighter-rouge">{{snippet:}}</code> and Metabase will present autocomplete options for available snippets.</p>
@@ -4165,8 +4207,6 @@ Roadmap</a>
 <p>Note: if you use aliases in a snippet, you’ll need to observe those aliases outside of the snippet as well. For example, if a snippet aliases <code class="language-plaintext highlighter-rouge">products AS p</code>, code outside of the snippet will need to use the alias <code class="language-plaintext highlighter-rouge">p</code> to reference columns in that table (as in <code class="language-plaintext highlighter-rouge">p.column_name</code>).</p>
 
 <h2 id="snippet-menu">Snippet menu</h2>
-
-<p><img src="../images/snippet_sidebar_and_insertion.gif" alt="Snippet sidebar and insertion"></p>
 
 <p>The SQL editor <strong>sidebar</strong> has a <strong>Snippets</strong> menu to list available and archived snippets.</p>
 
@@ -4238,13 +4278,7 @@ Roadmap</a>
         <div id="sub-navigation-content">
           
         </div>
-        
-
-
-  
-    <div id="feedback-widget-container" class="bootstrap feedback-widget">
-  
-
+        <div id="was-this-helpful-widget">
   <div id="page-feedback">
     <h6>Was this helpful?</h6>
     <button id="page-feedback-vote-up" class="vote-button Button">
@@ -4264,19 +4298,15 @@ Roadmap</a>
   </div>
 
   <div id="page-comment" class="flex flex-wrap full hide">
-    <div class="flex full">
-      <h6 id="page-feedback-question"></h6>
-    </div>
+    <p id="page-feedback-question"></p>
 
-    <div id="page-comment-form" class="flex full">
-      
-      <input id="feedback-comment-text" maxlength="500" class="flex input sm-input-small bordered inline-block align-center" name="comment" placeholder="Let us know what you think">
-      
+    <form id="page-comment-form" class="flex full">
+      <textarea id="feedback-comment-text" name="comment" placeholder="Type here…"></textarea>
 
-      <button id="page-comment-submit" class="feedback-widget Button flex align-center">
+      <button id="page-comment-submit" class="Button flex align-center">
         Send
       </button>
-    </div>
+    </form>
   </div>
 
   <div id="page-feedback-message" class="fs-18 hide">
@@ -4290,34 +4320,7 @@ Roadmap</a>
   
 </div>
 
-<script type="text/javascript" src="/js/feedback-widget.js"></script>
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const iframe = document.getElementById("subscribe-to-ai-newsletter-righthandside");
-
-    // Certain collections (e.g., "docs") do not display the newsletter iframe
-    if (!iframe) {
-      return;
-    }
-    const url = new URL(iframe.src, window.location.origin);
-
-    // Copy search params from the main window
-    const currentParams = new URLSearchParams(window.location.search);
-    for (const [key, value] of currentParams.entries()) {
-      url.searchParams.set(key, value);
-    }
-
-    // Add the current pathname as signup_path
-    url.searchParams.set("signup_path", window.location.pathname);
-
-    // Apply the new src
-    iframe.src = url.toString();
-  });
-</script>
-<script type="text/javascript" src="/js/side-email-cta.js"></script>
-
-  
-
+<script type="text/javascript" src="/js/was-this-helpful-widget.js"></script>
 
       </div>
 	  </article>

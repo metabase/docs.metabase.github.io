@@ -1,5 +1,5 @@
 ---
-version: v0.54
+version: v0.55
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -378,17 +378,17 @@ some-ns=> (take 10 (keys environ.core/env))
 `clj-kondo` must be [installed separately](https://github.com/clj-kondo/clj-kondo/blob/master/doc/install.md).
 
 ```
+# Run clj-kondo
+mage kondo
+
+# Lint the migrations file (if you've written a database migration):
+mage lint-migrations
+
 # Run Eastwood
 clojure -X:dev:ee:ee-dev:drivers:drivers-dev:eastwood
 
 # Run the namespace checker
 clojure -X:dev:ee:ee-dev:drivers:drivers-dev:test:namespace-checker
-
-# Run clj-kondo
-./bin/kondo.sh
-
-# Lint the migrations file (if you've written a database migration):
-./bin/lint-migrations-file.sh
 ```
 
 ## Continuous integration
