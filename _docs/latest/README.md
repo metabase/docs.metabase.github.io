@@ -1,5 +1,5 @@
 ---
-version: v0.54
+version: v0.55
 has_magic_breadcrumbs: true
 show_category_breadcrumb: false
 show_title_breadcrumb: true
@@ -58,6 +58,7 @@ Metabase's reference documentation.
 - [Backing up Metabase](./installation-and-operation/backing-up-metabase-application-data)
 - [Migrating to a production application database](./installation-and-operation/migrating-from-h2)
 - [Monitoring your Metabase](./installation-and-operation/monitoring-metabase)
+- [Development instances](./installation-and-operation/development-instance)
 - [Serialization](./installation-and-operation/serialization)
 - [Commands](./installation-and-operation/commands)
 - [Supported browsers](./installation-and-operation/supported-browsers)
@@ -103,7 +104,7 @@ Metabase's reference documentation.
 - [Visualizing data](./questions/visualizations/visualizing-results)
 - [Combo charts](./questions/visualizations/combo-chart)
 - [Detail](./questions/visualizations/detail)
-- [Funnel charts](./questions/visualizations/detail)
+- [Funnel charts](./questions/visualizations/funnel)
 - [Gauge charts](./questions/visualizations/gauge)
 - [Line, bar, and area charts](./questions/visualizations/line-bar-and-area-charts)
 - [Maps](./questions/visualizations/map)
@@ -147,11 +148,12 @@ Metabase's reference documentation.
 - [Basic actions](./actions/basic)
 - [Custom actions](./actions/custom)
 
-### Organization
+### Exploration and organization
 
 - [Organization overview](./exploration-and-organization/start)
 - [Basic exploration](./exploration-and-organization/exploration)
 - [Collections](./exploration-and-organization/collections)
+- [Keyboard shortcuts](./exploration-and-organization/keyboard-shortcuts)
 - [History](./exploration-and-organization/history)
 - [Trash](./exploration-and-organization/delete-and-restore)
 - [Data reference](./exploration-and-organization/data-model-reference)
@@ -190,6 +192,8 @@ Metabase's reference documentation.
 - [Application permissions](./permissions/application)
 - [Data sandboxes](./permissions/data-sandboxes)
 - [Data sandbox examples](./permissions/data-sandbox-examples)
+- [Connection impersonation](./permissions/impersonation)
+- [Database routing](./permissions/database-routing)
 - [Snippets folder permissions](./permissions/snippets)
 - [Notification permissions](./permissions/notifications)
 
@@ -300,3 +304,5 @@ Data jargon explained.
 ### [Metabase Experts](/partners/)
 
 If you’d like more technical resources to set up your data stack with Metabase, connect with a [Metabase Expert](/partners/).
+
+<!-- docs bump 1 -->
