@@ -136,6 +136,10 @@ jobs:
         run: |
           yarn lint-links
 
+      - name: Remove cloud docs for all versions but latest
+        run: |
+          bb script/manage_cloud_docs.clj
+
       - name: Build the Jekyll Site
         env:
           JEKYLL_ENV: production
