@@ -7,7 +7,6 @@ category: Embedding
 title: InteractiveQuestionEditorProps
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/embedding/sdk/api/snippets/InteractiveQuestionEditorProps.md'
 layout: new-docs
-latest: true
 ---
 
 **`Expand`**
