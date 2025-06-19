@@ -1,5 +1,5 @@
 ---
-version: v0.54
+version: v0.55
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -23,7 +23,7 @@ Sankey charts show how data flows through multi-dimensional steps. They're usefu
 
 To create a Sankey chart, you'll need at least three columns in your results:
 
-- **Source column**: specifies a node in the Sannkey flow.
+- **Source column**: specifies a node in the Sankey flow.
 - **Target column**: specifies a receiving node.
 - **Count column**: value that determines the thickness of the target node.
 

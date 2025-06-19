@@ -1,5 +1,5 @@
 ---
-version: v0.54
+version: v0.55
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -28,38 +28,38 @@ Let's say you have some project data, and you want to add a status column for ea
 To mark a task in progress, you'd use the expression:
 
 ```
-now >= [Start] AND now < [Deadline]
+now() >= [Start] AND now() < [Deadline]
 ```
 
 To check if you need to ask for an extension:
 
 ```
-now >= [Start] AND now >= [Deadline]
+now() >= [Start] AND now() >= [Deadline]
 ```
 
 If you're looking for an adrenaline rush (and you have real-time data), you can flag the tasks that are due _right this second_:
 
 ```
-now = [Deadline]
+now() = [Deadline]
 ```
 
 To set up the **Status** column that combines all three situations above, you'd wrap everything in a `case` expression:
 
 ```
-case(now >= [Start] AND now < [Deadline], "In progress",
-     now >= [Start] AND now >= [Deadline], "Needs extension",
-     now = [Deadline], "DUE RIGHT NOW!")
+case(now() >= [Start] AND now() < [Deadline], "In progress",
+     now() >= [Start] AND now() >= [Deadline], "Needs extension",
+     now() = [Deadline], "DUE RIGHT NOW!")
 ```
 
 ## Data types
 
-| [Data type](/learn/grow-your-data-skills/data-fundamentals/data-types-overview#examples-of-data-types) | Returned by `now` |
-| ------------------------------------------------------------------------------------------------------------------------------ | ----------------- |
-| String                                                                                                                         | ❌                |
-| Number                                                                                                                         | ❌                |
-| Timestamp                                                                                                                      | ✅                |
-| Boolean                                                                                                                        | ❌                |
-| JSON                                                                                                                           | ❌                |
+| [Data type](/learn/grow-your-data-skills/data-fundamentals/data-types-overview#examples-of-data-types) | Returned by `now()` |
+| ------------------------------------------------------------------------------------------------------------------------------ | ------------------- |
+| String                                                                                                                         | ❌                  |
+| Number                                                                                                                         | ❌                  |
+| Timestamp                                                                                                                      | ✅                  |
+| Boolean                                                                                                                        | ❌                  |
+| JSON                                                                                                                           | ❌                  |
 
 `now` returns a `timestamp with time zone` if time zones are supported by your database, otherwise `now` returns a `timestamp without time zone`.
 

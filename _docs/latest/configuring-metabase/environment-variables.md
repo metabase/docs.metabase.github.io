@@ -1,5 +1,5 @@
 ---
-version: v0.54
+version: v0.55
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -80,6 +80,13 @@ Maximum number of rows to return for aggregated queries via the API.
 
 Must be less than 1048575. See also MB_UNAGGREGATED_QUERY_ROW_LIMIT.
 
+### `MB_AI_PROXY_BASE_URL`
+
+- Type: string
+- Default: `http://localhost:8000`
+
+URL for the a AI Proxy service.
+
 ### `MB_ALLOWED_IFRAME_HOSTS`
 
 - Type: string
@@ -129,7 +136,7 @@ Middleware that enforces validation of the client via the request header X-Metab
         If the header is available, then it's validated against MB_API_KEY.
         When it matches, the request continues; otherwise it's blocked with a 403 Forbidden response.
         MB_API_KEY is used only for /notify endpoints and isn't the same as Metabase API keys
-        used for authenticating other API requests. MP_API_KEY can be an arbitrary string.
+        used for authenticating other API requests. MB_API_KEY can be an arbitrary string.
 
 ### `MB_APPLICATION_COLORS`
 
@@ -261,14 +268,6 @@ Maximum number of rows to render in an alert or subscription image.
 Range: 1-100. To limit the total number of rows included in the file attachment
         for an email dashboard subscription, use MB_UNAGGREGATED_QUERY_ROW_LIMIT.
 
-### `MB_BACKFILL_ENTITY_IDS_REPEAT_MS`
-
-- Type: integer
-- Default: `2000`
-- [Exported as](../installation-and-operation/serialization): `backfill-entity-ids-repeat-ms`.
-
-Frequency for running backfill entity ids job in ms.  Minimum value is 1000, and any value at or below 0 will disable the job entirely.
-
 ### `MB_BCC_ENABLED`
 
 - Type: boolean
@@ -307,8 +306,8 @@ Identify when new versions of Metabase are available.
 - Type: boolean
 - Default: `true`
 
-Whether to (asynchronously) sync newly created Databases during config-from-file initialization. By default, true, but you can disable
-  this behavior if you want to sync it manually or use SerDes to populate its data model.
+Whether to (asynchronously) sync newly created Databases during config-from-file initialization. By default, true,
+  but you can disable this behavior if you want to sync it manually or use SerDes to populate its data model.
 
 ### `MB_CUSTOM_FORMATTING`
 
@@ -362,8 +361,8 @@ Consider metabase.driver/can-connect? / can-connect-with-details? to have failed
   successfully connect after this many milliseconds. By default, this is 10 seconds.
 
 Timeout in milliseconds for connecting to databases, both Metabase application database and data connections.
-        In case you're connecting via an SSH tunnel and run into a timeout, you might consider increasing this value
-        as the connections via tunnels have more overhead than connections without.
+  In case you're connecting via an SSH tunnel and run into a timeout, you might consider increasing this value as the
+  connections via tunnels have more overhead than connections without.
 
 ### `MB_DB_QUERY_TIMEOUT_MINUTES`
 
@@ -582,17 +581,6 @@ Allow admins to embed Metabase via the SDK?
 
 Allow admins to embed Metabase via static embedding?
 
-### `MB_ENABLE_FIELD_USAGE_ANALYSIS`
-
-- Type: boolean
-- Default: `false`
-- [Configuration file name](./config-file): `enable-field-usage-analysis`
-
-Enable field usage analysis for queries. This will analyze the fields used in queries and store them in the
-    application database.
-
-    Turn off by default since we haven't had an user-facing feature that uses this data yet.
-
 ### `MB_ENABLE_PASSWORD_LOGIN`
 
 > Only available on Metabase [Pro](/product/pro) and [Enterprise](/product/enterprise) plans.
@@ -699,7 +687,7 @@ Keyword setting to control whitelabeling of the help link. Valid values are `:me
 > Only available on Metabase [Pro](/product/pro) and [Enterprise](/product/enterprise) plans.
 
 - Type: string
-- Default: `https://www.metabase.com/help-premium`
+- Default: `https://www.metabase.com/help/premium`
 - [Configuration file name](./config-file): `help-link-custom-destination`
 
 Custom URL for the help link.
@@ -722,9 +710,11 @@ Maximum size of the c3p0 connection pool.
 
 Change this to a higher value if you notice that regular usage consumes all or close to all connections.
 
-When all connections are in use then Metabase will be slower to return results for queries, since it would have to wait for an available connection before processing the next query in the queue.
+  When all connections are in use then Metabase will be slower to return results for queries, since it would have to
+  wait for an available connection before processing the next query in the queue.
 
-For setting the maximum, see [MB_APPLICATION_DB_MAX_CONNECTION_POOL_SIZE](#mb_application_db_max_connection_pool_size).
+  For setting the maximum,
+  see [MB_APPLICATION_DB_MAX_CONNECTION_POOL_SIZE](#mb_application_db_max_connection_pool_size).
 
 ### `MB_JWT_ATTRIBUTE_EMAIL`
 
@@ -1110,6 +1100,15 @@ Options for displaying the illustration when there are no results after searchin
 
 The custom illustration for when there are no results after searching.
 
+### `MB_NON_TABLE_CHART_GENERATED`
+
+- Type: boolean
+- Default: `false`
+- [Exported as](../installation-and-operation/serialization): `non-table-chart-generated`.
+- [Configuration file name](./config-file): `non-table-chart-generated`
+
+Whether a non-table chart has already been generated. Required for analytics to track instance activation journey.
+
 ### `MB_NOT_BEHIND_PROXY`
 
 - Type: boolean
@@ -1128,6 +1127,13 @@ By default "Site Url" is used in notification links, but can be overridden.
 
 The base URL where dashboard notitification links will point to instead of the Metabase base URL.
         Only applicable for users who utilize interactive embedding and subscriptions.
+
+### `MB_NOTIFICATION_SYSTEM_EVENT_THREAD_POOL_SIZE`
+
+- Type: integer
+- Default: `5`
+
+The size of the thread pool used to send system event notifications.
 
 ### `MB_NOTIFICATION_THREAD_POOL_SIZE`
 
@@ -1436,12 +1442,27 @@ don't have one.
 
 Is SCIM currently enabled?
 
+### `MB_SDK_ENCRYPTION_VALIDATION_KEY`
+
+- Type: string
+- Default: `null`
+
+Used for encrypting and checking whether SDK requests are signed.
+
 ### `MB_SEARCH_ENGINE`
 
 - Type: keyword
 - Default: `:in-place`
 
 Which engine to use when performing search. Supported values are :in-place and :appdb.
+
+### `MB_SEARCH_LANGUAGE`
+
+- Type: string
+- Default: `null`
+
+When using the appdb engine against postgresql, override the language used for stemming in to_tsvector.
+  Value must be a valid configured langauge option in your database such as 'english' or 'simple'.
 
 ### `MB_SEARCH_TYPEAHEAD_ENABLED`
 
@@ -1756,6 +1777,16 @@ Upload settings.
 
 Prefix for upload table names.
 
+### `MB_USE_TENANTS`
+
+> Only available on Metabase [Pro](/product/pro) and [Enterprise](/product/enterprise) plans.
+
+- Type: boolean
+- Default: `false`
+- [Configuration file name](./config-file): `use-tenants`
+
+Turn on the Tenants feature, allowing users to be assigned to a particular Tenant.
+
 ### `MB_USER_VISIBILITY`
 
 > Only available on Metabase [Pro](/product/pro) and [Enterprise](/product/enterprise) plans.
@@ -1972,29 +2003,15 @@ When set, this will encrypt database credentials stored in the application datab
 
 Also see documentation page [Encrypting database details at rest](../databases/encrypting-details-at-rest).
 
-### `MB_JDBC_DATA_WAREHOUSE_UNRETURNED_CONNECTION_TIMEOUT_SECONDS`
-
-Type: integer<br>
-Default: `1200`<br>
-Since: v47.4
-
-Metabase's query processor will normally kill connections when their queries time out, but in practice some connections can be severed and go undetected by Metabase, staying alive even after a query returns or times out. This environment variable tells Metabase how long to wait before killing connections if no response is received from the connection.
-
-This variable affects connections that are severed and undetected by Metabase (that is, in situations where Metabase never receives a connection closed signal and is treating an inactive connection as active). You may want to adjust this variable's value if your connection is unreliable or is a dynamic connections behind a SSH tunnel where the connection to the SSH tunnel host may stay active even after the connection from the SSH tunnel host to your database is severed.
-
-Unless set otherwise, the default production value for `metabase.query-processor.query-timeout-ms` is used which is 1,200,000 ms (i.e. 1,200 seconds or 20 minutes).
-
 ### `MB_JDBC_DATA_WAREHOUSE_DEBUG_UNRETURNED_CONNECTION_STACK_TRACES`
 
 Type: boolean<br>
 Default: `false`<br>
 Since: v51.3
 
-If `true`, log a stack trace for any connections killed due to exceeding the timeout specified in [MB_JDBC_DATA_WAREHOUSE_UNRETURNED_CONNECTION_TIMEOUT_SECONDS](#mb_jdbc_data_warehouse_unreturned_connection_timeout_seconds).
+If `true`, log a stack trace for any connections killed due to exceeding the timeout specified in [MB_DB_QUERY_TIMEOUT_MINUTES](#mb_db_query_timeout_minutes).
 
 In order to see the stack traces in the logs, you'll also need to update the com.mchange log level to "INFO" or higher via a custom log4j configuration. For configuring log levels, see [Metabase log configuration](./log-configuration).
-
-To set a timeout for how long Metabase should wait before it kills unreturned connections, see [MB_JDBC_DATA_WAREHOUSE_UNRETURNED_CONNECTION_TIMEOUT_SECONDS](#mb_jdbc_data_warehouse_unreturned_connection_timeout_seconds).
 
 ### `MB_JETTY_ASYNC_RESPONSE_TIMEOUT`
 
