@@ -21,11 +21,17 @@ on:
   repository_dispatch:
     types: [docs_update, docs_merge]
 
-run-name: Processing `${{ github.event.action || github.event.inputs.dispatch_type }}` | `${{ github.event.inputs.source_branch || github.event.client_payload.source_branch }}` -> `${{ github.event.inputs.target_branch || github.event.client_payload.target_branch }}`
+run-name: >-
+  ${{
+    (github.event.action == 'docs_merge' || github.event.inputs.dispatch_type == 'docs_merge') && '🔄' ||
+    (github.event.action == 'docs_update' || github.event.inputs.dispatch_type == 'docs_update') && '✅'
+  }} | `${{ github.event.inputs.source_branch || github.event.client_payload.source_branch }}`
+   -> `${{ github.event.inputs.target_branch || github.event.client_payload.target_branch }}`
 
 jobs:
   build:
-    name: Build for `${{ github.event.inputs.source_branch || github.event.client_payload.source_branch }}` -> ${{ github.event.inputs.target_branch || github.event.client_payload.target_branch }} | ${{ github.event.action || github.event.inputs.dispatch_type }}
+    name: >-
+     `${{ github.event.inputs.source_branch || github.event.client_payload.source_branch }}` -> ${{ github.event.inputs.target_branch || github.event.client_payload.target_branch }} | ${{ github.event.action || github.event.inputs.dispatch_type }}
     runs-on: ubuntu-latest
     env:
       MAIN_REPO_SOURCE_BRANCH: "${{ github.event.inputs.source_branch || github.event.client_payload.source_branch }}"
@@ -91,6 +97,10 @@ jobs:
           echo "main_repo_target_branch = '${{ env.MAIN_REPO_TARGET_BRANCH }}'"
 
       - name: Update docs for branchname
+        # for docs_merge, the tarball will be gone by the time this workflow runs.
+        if: |
+          (github.event_name == 'repository_dispatch' && github.event.action == 'docs_update') ||
+          (github.event_name == 'workflow_dispatch' && github.event.inputs.dispatch_type == 'docs_update')
         run: |
           bb script/update_docs_for_branchname.clj --source-branch "$MAIN_REPO_SOURCE_BRANCH" --target-branch "$MAIN_REPO_TARGET_BRANCH"
 
