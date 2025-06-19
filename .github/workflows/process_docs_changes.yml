@@ -164,6 +164,14 @@ jobs:
         run: |
           bb script/update_or_create_pr.clj --source-branch "$MAIN_REPO_SOURCE_BRANCH" --target-branch "$MAIN_REPO_TARGET_BRANCH"
 
+      - name: Remove control files from Marketing Repo
+        run: |
+          rm -rf _data
+          rm -rf _includes
+          rm -rf _layouts
+          rm -rf _plugins
+          rm -rf _sass
+
       - name: Merge Updated Docs
         if: |
           (github.event_name == 'repository_dispatch' && github.event.action == 'docs_merge') ||
