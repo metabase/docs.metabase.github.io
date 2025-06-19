@@ -23,8 +23,8 @@ on:
 
 run-name: >-
   ${{
-    (github.event.action == 'docs_merge' || github.event.inputs.dispatch_type == 'docs_merge') && '🔄' ||
-    (github.event.action == 'docs_update' || github.event.inputs.dispatch_type == 'docs_update') && '✅'
+    (github.event.action == 'docs_merge' || github.event.inputs.dispatch_type == 'docs_merge') && '✅' ||
+    (github.event.action == 'docs_update' || github.event.inputs.dispatch_type == 'docs_update') && '🔄'
   }} | `${{ github.event.inputs.source_branch || github.event.client_payload.source_branch }}`
    -> `${{ github.event.inputs.target_branch || github.event.client_payload.target_branch }}`
 
