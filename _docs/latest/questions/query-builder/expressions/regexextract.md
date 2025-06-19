@@ -1,25 +1,25 @@
 ---
-version: v0.54
+version: v0.55
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
 category: Questions
-title: Regexextract
+title: RegexExtract
 source_url: >-
   https://github.com/metabase/metabase/blob/master/docs/questions/query-builder/expressions/regexextract.md
 layout: new-docs
 latest: true
 ---
 
-# Regexextract
+# RegexExtract
 
-> ⚠️ `regexextract` is unavailable for MongoDB, SQLite, and SQL Server. For Druid, `regexextract` is only available for the Druid-JDBC driver.
+> ⚠️ `regexExtract` is unavailable for MongoDB, SQLite, and SQL Server. For Druid, `regexExtract` is only available for the Druid-JDBC driver.
 
-`regexextract` uses [regular expressions (regex)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions) to get a specific part of your text.
+`regexExtract` uses [regular expressions (regex)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions) to get a specific part of your text.
 
-`regexextract` is ideal for text that has little to no structure, like URLs or freeform survey responses. If you're working with strings in predictable formats like SKU numbers, IDs, or other types of codes, check out the simpler [substring](../expressions/substring) expression instead.
+`regexExtract` is ideal for text that has little to no structure, like URLs or freeform survey responses. If you're working with strings in predictable formats like SKU numbers, IDs, or other types of codes, check out the simpler [substring](../expressions/substring) expression instead.
 
-Use `regexextract` to create custom columns with shorter, more readable labels for things like:
+Use `regexExtract` to create custom columns with shorter, more readable labels for things like:
 
 - filter dropdown menus,
 - chart labels, or
@@ -27,7 +27,7 @@ Use `regexextract` to create custom columns with shorter, more readable labels f
 
 | Syntax                                                        | Example                                  |
 | ------------------------------------------------------------- | ---------------------------------------- |
-| `regexextract(text, regular_expression)`                      | `regexextract("regexextract", "ex(.*)")` |
+| `regexExtract(text, regular_expression)`                      | `regexExtract("regexExtract", "ex(.*)")` |
 | Gets a specific part of your text using a regular expression. | "extract"                                |
 
 ## Searching and cleaning text
@@ -43,7 +43,7 @@ Let's say that you have web data with a lot of different URLs, and you want to m
 You can create a custom column **Campaign Name** with the expression:
 
 ```
-regexextract([URL], "^[^?#]+\?utm_campaign=(.*)")
+regexExtract([URL], "^[^?#]+\?utm_campaign=(.*)")
 ```
 
 Here, the regex pattern [`^[^?#]+\?` matches all valid URL strings](https://www.oreilly.com/library/view/regular-expressions-cookbook/9780596802837/ch07s13.html). You can replace `utm_campaign=` with whatever query parameter you like. At the end of the regex pattern, the [capturing group](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Groups_and_Backreferences) `(.*)` gets all of the characters that appear after the query parameter `utm_campaign=`.
@@ -52,7 +52,7 @@ Now, you can use **Campaign Name** in places where you need clean labels, such a
 
 ## Accepted data types
 
-| [Data type](/learn/grow-your-data-skills/data-fundamentals/data-types-overview#examples-of-data-types) | Works with `regexextract` |
+| [Data type](/learn/grow-your-data-skills/data-fundamentals/data-types-overview#examples-of-data-types) | Works with `regexExtract` |
 | ------------------------------------------------------------------------------------------------------------------------------ | ------------------------- |
 | String                                                                                                                         | ✅                        |
 | Number                                                                                                                         | ❌                        |
@@ -62,13 +62,13 @@ Now, you can use **Campaign Name** in places where you need clean labels, such a
 
 ## Limitations
 
-`regexextract` is unavailable for MongoDB, SQLite, and SQL Server. For Druid, `regexextract` is only available for the Druid-JDBC driver.
+`regexExtract` is unavailable for MongoDB, SQLite, and SQL Server. For Druid, `regexExtract` is only available for the Druid-JDBC driver.
 
 Regex can be a dark art. You have been warned.
 
 ## Related functions
 
-This section covers functions and formulas that work the same way as the Metabase `regexextract` expression, with notes on how to choose the best option for your use case.
+This section covers functions and formulas that work the same way as the Metabase `regexExtract` expression, with notes on how to choose the best option for your use case.
 
 **[Metabase expressions](../expressions-list)**
 
@@ -95,7 +95,7 @@ substring([URL], 13, 8)
 or
 
 ```
-regexextract([URL], "^(?:https?:\/\/)?(?:[^@\/\n]+@)?(?:www\.)?([^:\/.\n]+)")
+regexExtract([URL], "^(?:https?:\/\/)?(?:[^@\/\n]+@)?(?:www\.)?([^:\/.\n]+)")
 ```
 
 ### SQL
@@ -111,10 +111,10 @@ SELECT
 FROM follow_the_white_rabbit
 ```
 
-is equivalent to the Metabase `regexextract` expression:
+is equivalent to the Metabase `regexExtract` expression:
 
 ```
-regexextract([URL], "^[^?#]+\?utm_campaign=(.*)")
+regexExtract([URL], "^[^?#]+\?utm_campaign=(.*)")
 ```
 
 ### Spreadsheets
@@ -122,13 +122,13 @@ regexextract([URL], "^[^?#]+\?utm_campaign=(.*)")
 If our [sample data](#searching-and-cleaning-text) is in a spreadsheet where "URL" is in column A, the spreadsheet function
 
 ```
-regexextract(A2, "^[^?#]+\?utm_campaign=(.*)")
+regexExtract(A2, "^[^?#]+\?utm_campaign=(.*)")
 ```
 
 uses pretty much the same syntax as the Metabase expression:
 
 ```
-regexextract([URL], "^[^?#]+\?utm_campaign=(.*)")
+regexExtract([URL], "^[^?#]+\?utm_campaign=(.*)")
 ```
 
 ### Python
@@ -139,10 +139,10 @@ Assuming the [sample data](#searching-and-cleaning-text) is in a dataframe colum
 df['Campaign Name'] = df['URL'].str.extract(r'^[^?#]+\?utm_campaign=(.*)')
 ```
 
-does the same thing as the Metabase `regexextract` expression:
+does the same thing as the Metabase `regexExtract` expression:
 
 ```
-regexextract([URL], "^[^?#]+\?utm_campaign=(.*)")
+regexExtract([URL], "^[^?#]+\?utm_campaign=(.*)")
 ```
 
 ## Further reading

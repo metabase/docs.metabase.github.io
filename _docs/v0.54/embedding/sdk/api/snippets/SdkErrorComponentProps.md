@@ -7,7 +7,6 @@ category: Embedding
 title: SdkErrorComponentProps
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/embedding/sdk/api/snippets/SdkErrorComponentProps.md'
 layout: new-docs
-latest: true
 ---
 
 ```ts

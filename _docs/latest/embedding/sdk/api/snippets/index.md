@@ -1,5 +1,5 @@
 ---
-version: v0.54
+version: v0.55
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -71,14 +71,15 @@ latest: true
 
 ## MetabaseProvider
 
-| Name                                                                      | Description                                                   |
-| :------------------------------------------------------------------------ | :------------------------------------------------------------ |
-| [defineMetabaseAuthConfig](./api/defineMetabaseAuthConfig)             | Defines a Metabase auth config.                               |
-| [MetabaseAuthConfig](./api/MetabaseAuthConfig)                         | -                                                             |
-| [MetabaseAuthConfigWithApiKey](./api/MetabaseAuthConfigWithApiKey)     | -                                                             |
-| [MetabaseAuthConfigWithProvider](./api/MetabaseAuthConfigWithProvider) | -                                                             |
-| [MetabaseProvider](./api/MetabaseProvider)                             | A component that provides the Metabase SDK context and theme. |
-| [MetabaseProviderProps](./api/MetabaseProviderProps)                   | -                                                             |
+| Name                                                                  | Description                                                   |
+| :-------------------------------------------------------------------- | :------------------------------------------------------------ |
+| [defineMetabaseAuthConfig](./api/defineMetabaseAuthConfig)         | Defines a Metabase auth config.                               |
+| [MetabaseAuthConfig](./api/MetabaseAuthConfig)                     | -                                                             |
+| [MetabaseAuthConfigWithApiKey](./api/MetabaseAuthConfigWithApiKey) | -                                                             |
+| [MetabaseAuthConfigWithJwt](./api/MetabaseAuthConfigWithJwt)       | -                                                             |
+| [MetabaseAuthConfigWithSaml](./api/MetabaseAuthConfigWithSaml)     | -                                                             |
+| [MetabaseProvider](./api/MetabaseProvider)                         | A component that provides the Metabase SDK context and theme. |
+| [MetabaseProviderProps](./api/MetabaseProviderProps)               | -                                                             |
 
 ## ModifyQuestion
 
@@ -144,3 +145,4 @@ latest: true
 | [SdkQuestionTitleProps](./api/SdkQuestionTitleProps)                       | -                                                                                                                                                                                                                                                                                                                      |
 | [SdkUserId](./api/SdkUserId)                                               | -                                                                                                                                                                                                                                                                                                                      |
 | [SqlParameterValues](./api/SqlParameterValues)                             | -                                                                                                                                                                                                                                                                                                                      |
+| [UserBackendJwtResponse](./api/UserBackendJwtResponse)                     | -                                                                                                                                                                                                                                                                                                                      |
