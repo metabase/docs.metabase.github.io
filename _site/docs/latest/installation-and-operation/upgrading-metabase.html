@@ -4274,6 +4274,8 @@ Roadmap</a>
 
 <p>Check out a list of <a href="https://github.com/metabase/metabase/releases">Metabase releases</a>.</p>
 
+<p>When upgrading between major versions (e.g. v53.x to v54.x), use the latest minor version available for that major version. E.g., if you want to upgrade from v50 to v51, use the latest point version available for 51.</p>
+
 <h2 id="upgrading-metabase-on-other-platforms">Upgrading Metabase on other platforms</h2>
 
 <ul>
@@ -4282,7 +4284,7 @@ Roadmap</a>
 
 <h2 id="what-happens-during-an-upgrade-or-downgrade">What happens during an upgrade or downgrade?</h2>
 
-<p>During a <strong>major version</strong> upgrade (e.g., 53.1 5o 54.1), Metabase will:</p>
+<p>During a <strong>major version</strong> upgrade (e.g., 53.1 or 54.1), Metabase will:</p>
 
 <ul>
   <li>Perform all the migrations needed to upgrade to the new version, such as any schema changes to the application database between the two versions.</li>
@@ -4339,6 +4341,8 @@ java --add-opens java.base/java.nio=ALL-UNNAMED -jar metabase.jar migrate down
   <li>Perform the upgrade as normal (as outlined above).</li>
   <li>Raise the number of nodes to the same number you had before.</li>
 </ol>
+
+<p>Make sure you container orchestrator or cluster manager doesn’t kill the Metabase process while it’s performing the migrations, otherwise you’ll may end up with a corrupted application database and you’ll need to restore from a backup.</p>
 
 
         <div>
