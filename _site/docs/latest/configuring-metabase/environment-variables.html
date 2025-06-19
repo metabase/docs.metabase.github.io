@@ -39,7 +39,8 @@
     }
   </script>
 
-      
+  
+       
 
 <title>Environment variables | Metabase Documentation</title>
 <!-- Twitter cards -->
@@ -59,8 +60,45 @@
 <meta name="description" property="og:description" content="Environment variables This documentation was generated from source by running: clojure -M:ee:doc environment-variables-documentation  Many settings in Metabase can be viewed and modified in the Admin Panel, or set via environment variables. The environment variables always take...">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
+
   
-  <link href="/images/favicon.svg" rel="shortcut icon">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "url": "https://www.metabase.com/",
+    "sameAs": [
+      "https://github.com/metabase",
+      "https://www.linkedin.com/company/metabase/",
+      "https://x.com/metabase",
+      "https://www.youtube.com/@metabasedata"
+    ],
+    "logo": "https://github.com/metabase/metabase.github.io/blob/master/images/metabase-logo.png?raw=",
+    "name": "Metabase",
+    "description": "Metabase is an open source Business Intelligence and Embedded Analytics tool. Connect to your data stack in 5 minutes to make queries, visualizations, and dashboards easy for everyone—no SQL required",
+    "email": "hello@metabase.com",
+    "foundingDate": "2015-02-01T00:00:00.000Z",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "9740 Campo Rd",
+      "addressLocality": "Spring Valley",
+      "addressCountry": "USA",
+      "addressRegion": "CA",
+      "postalCode": "91977"
+    },
+    "knowsAbout": [
+      { "@type": "Thing", "name": "Business Intelligence" },
+      { "@type": "Thing", "name": "Embedded Analytics" },
+      { "@type": "Thing", "name": "Self-service analytics" },
+      { "@type": "Thing", "name": "Open source Business Intelligence" }
+    ]
+  }
+</script>
+
+
+  
+    <link href="/images/favicon.svg" rel="shortcut icon">
   
   <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/flexboxgrid/6.3.1/flexboxgrid.min.css" rel="stylesheet" type="text/css">
@@ -4006,7 +4044,7 @@ Roadmap</a>
 <div class="version__selector cursor-pointer">
   <span class="version__current">
     
-      v0.54
+      v0.55
     
 
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="chevron">
@@ -4016,6 +4054,14 @@ Roadmap</a>
   </span>
   <ul class="version__dropdown">
     
+      
+    
+      
+        <li>
+          <a href="/docs/v0.54">
+            v0.54
+          </a>
+        </li>
       
     
       
@@ -4078,14 +4124,6 @@ Roadmap</a>
         <li>
           <a href="/docs/v0.46">
             v0.46
-          </a>
-        </li>
-      
-    
-      
-        <li>
-          <a href="/docs/v0.45">
-            v0.45
           </a>
         </li>
       
@@ -4184,6 +4222,15 @@ java --add-opens java.base/java.nio=ALL-UNNAMED -jar metabase.jar
 
 <p>Must be less than 1048575. See also MB_UNAGGREGATED_QUERY_ROW_LIMIT.</p>
 
+<h3 id="mb_ai_proxy_base_url"><code class="language-plaintext highlighter-rouge">MB_AI_PROXY_BASE_URL</code></h3>
+
+<ul>
+  <li>Type: string</li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">http://localhost:8000</code></li>
+</ul>
+
+<p>URL for the a AI Proxy service.</p>
+
 <h3 id="mb_allowed_iframe_hosts"><code class="language-plaintext highlighter-rouge">MB_ALLOWED_IFRAME_HOSTS</code></h3>
 
 <ul>
@@ -4239,7 +4286,7 @@ x.com</code></li>
         If the header is available, then it’s validated against MB_API_KEY.
         When it matches, the request continues; otherwise it’s blocked with a 403 Forbidden response.
         MB_API_KEY is used only for /notify endpoints and isn’t the same as Metabase API keys
-        used for authenticating other API requests. MP_API_KEY can be an arbitrary string.</p>
+        used for authenticating other API requests. MB_API_KEY can be an arbitrary string.</p>
 
 <h3 id="mb_application_colors"><code class="language-plaintext highlighter-rouge">MB_APPLICATION_COLORS</code></h3>
 
@@ -4396,16 +4443,6 @@ x.com</code></li>
 <p>Range: 1-100. To limit the total number of rows included in the file attachment
         for an email dashboard subscription, use MB_UNAGGREGATED_QUERY_ROW_LIMIT.</p>
 
-<h3 id="mb_backfill_entity_ids_repeat_ms"><code class="language-plaintext highlighter-rouge">MB_BACKFILL_ENTITY_IDS_REPEAT_MS</code></h3>
-
-<ul>
-  <li>Type: integer</li>
-  <li>Default: <code class="language-plaintext highlighter-rouge">2000</code></li>
-  <li><a href="../installation-and-operation/serialization">Exported as</a>: <code class="language-plaintext highlighter-rouge">backfill-entity-ids-repeat-ms</code>.</li>
-</ul>
-
-<p>Frequency for running backfill entity ids job in ms.  Minimum value is 1000, and any value at or below 0 will disable the job entirely.</p>
-
 <h3 id="mb_bcc_enabled"><code class="language-plaintext highlighter-rouge">MB_BCC_ENABLED</code></h3>
 
 <ul>
@@ -4454,8 +4491,8 @@ x.com</code></li>
   <li>Default: <code class="language-plaintext highlighter-rouge">true</code></li>
 </ul>
 
-<p>Whether to (asynchronously) sync newly created Databases during config-from-file initialization. By default, true, but you can disable
-  this behavior if you want to sync it manually or use SerDes to populate its data model.</p>
+<p>Whether to (asynchronously) sync newly created Databases during config-from-file initialization. By default, true,
+  but you can disable this behavior if you want to sync it manually or use SerDes to populate its data model.</p>
 
 <h3 id="mb_custom_formatting"><code class="language-plaintext highlighter-rouge">MB_CUSTOM_FORMATTING</code></h3>
 
@@ -4521,8 +4558,8 @@ x.com</code></li>
   successfully connect after this many milliseconds. By default, this is 10 seconds.</p>
 
 <p>Timeout in milliseconds for connecting to databases, both Metabase application database and data connections.
-        In case you’re connecting via an SSH tunnel and run into a timeout, you might consider increasing this value
-        as the connections via tunnels have more overhead than connections without.</p>
+  In case you’re connecting via an SSH tunnel and run into a timeout, you might consider increasing this value as the
+  connections via tunnels have more overhead than connections without.</p>
 
 <h3 id="mb_db_query_timeout_minutes"><code class="language-plaintext highlighter-rouge">MB_DB_QUERY_TIMEOUT_MINUTES</code></h3>
 
@@ -4799,20 +4836,6 @@ x.com</code></li>
 
 <p>Allow admins to embed Metabase via static embedding?</p>
 
-<h3 id="mb_enable_field_usage_analysis"><code class="language-plaintext highlighter-rouge">MB_ENABLE_FIELD_USAGE_ANALYSIS</code></h3>
-
-<ul>
-  <li>Type: boolean</li>
-  <li>Default: <code class="language-plaintext highlighter-rouge">false</code></li>
-  <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">enable-field-usage-analysis</code></li>
-</ul>
-
-<p>Enable field usage analysis for queries. This will analyze the fields used in queries and store them in the
-    application database.</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Turn off by default since we haven't had an user-facing feature that uses this data yet.
-</code></pre></div></div>
-
 <h3 id="mb_enable_password_login"><code class="language-plaintext highlighter-rouge">MB_ENABLE_PASSWORD_LOGIN</code></h3>
 
 <blockquote>
@@ -4950,7 +4973,7 @@ x.com</code></li>
 
 <ul>
   <li>Type: string</li>
-  <li>Default: <code class="language-plaintext highlighter-rouge">https://www.metabase.com/help-premium</code></li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">https://www.metabase.com/help/premium</code></li>
   <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">help-link-custom-destination</code></li>
 </ul>
 
@@ -4978,9 +5001,11 @@ x.com</code></li>
 
 <p>Change this to a higher value if you notice that regular usage consumes all or close to all connections.</p>
 
-<p>When all connections are in use then Metabase will be slower to return results for queries, since it would have to wait for an available connection before processing the next query in the queue.</p>
+<p>When all connections are in use then Metabase will be slower to return results for queries, since it would have to
+  wait for an available connection before processing the next query in the queue.</p>
 
-<p>For setting the maximum, see <a href="#mb_application_db_max_connection_pool_size">MB_APPLICATION_DB_MAX_CONNECTION_POOL_SIZE</a>.</p>
+<p>For setting the maximum,
+  see <a href="#mb_application_db_max_connection_pool_size">MB_APPLICATION_DB_MAX_CONNECTION_POOL_SIZE</a>.</p>
 
 <h3 id="mb_jwt_attribute_email"><code class="language-plaintext highlighter-rouge">MB_JWT_ATTRIBUTE_EMAIL</code></h3>
 
@@ -5486,6 +5511,17 @@ don’t have one.</p>
 
 <p>The custom illustration for when there are no results after searching.</p>
 
+<h3 id="mb_non_table_chart_generated"><code class="language-plaintext highlighter-rouge">MB_NON_TABLE_CHART_GENERATED</code></h3>
+
+<ul>
+  <li>Type: boolean</li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">false</code></li>
+  <li><a href="../installation-and-operation/serialization">Exported as</a>: <code class="language-plaintext highlighter-rouge">non-table-chart-generated</code>.</li>
+  <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">non-table-chart-generated</code></li>
+</ul>
+
+<p>Whether a non-table chart has already been generated. Required for analytics to track instance activation journey.</p>
+
 <h3 id="mb_not_behind_proxy"><code class="language-plaintext highlighter-rouge">MB_NOT_BEHIND_PROXY</code></h3>
 
 <ul>
@@ -5510,6 +5546,15 @@ don’t have one.</p>
 
 <p>The base URL where dashboard notitification links will point to instead of the Metabase base URL.
         Only applicable for users who utilize interactive embedding and subscriptions.</p>
+
+<h3 id="mb_notification_system_event_thread_pool_size"><code class="language-plaintext highlighter-rouge">MB_NOTIFICATION_SYSTEM_EVENT_THREAD_POOL_SIZE</code></h3>
+
+<ul>
+  <li>Type: integer</li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">5</code></li>
+</ul>
+
+<p>The size of the thread pool used to send system event notifications.</p>
 
 <h3 id="mb_notification_thread_pool_size"><code class="language-plaintext highlighter-rouge">MB_NOTIFICATION_THREAD_POOL_SIZE</code></h3>
 
@@ -5918,6 +5963,15 @@ don’t have one.</p>
 
 <p>Is SCIM currently enabled?</p>
 
+<h3 id="mb_sdk_encryption_validation_key"><code class="language-plaintext highlighter-rouge">MB_SDK_ENCRYPTION_VALIDATION_KEY</code></h3>
+
+<ul>
+  <li>Type: string</li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">null</code></li>
+</ul>
+
+<p>Used for encrypting and checking whether SDK requests are signed.</p>
+
 <h3 id="mb_search_engine"><code class="language-plaintext highlighter-rouge">MB_SEARCH_ENGINE</code></h3>
 
 <ul>
@@ -5926,6 +5980,16 @@ don’t have one.</p>
 </ul>
 
 <p>Which engine to use when performing search. Supported values are :in-place and :appdb.</p>
+
+<h3 id="mb_search_language"><code class="language-plaintext highlighter-rouge">MB_SEARCH_LANGUAGE</code></h3>
+
+<ul>
+  <li>Type: string</li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">null</code></li>
+</ul>
+
+<p>When using the appdb engine against postgresql, override the language used for stemming in to_tsvector.
+  Value must be a valid configured langauge option in your database such as ‘english’ or ‘simple’.</p>
 
 <h3 id="mb_search_typeahead_enabled"><code class="language-plaintext highlighter-rouge">MB_SEARCH_TYPEAHEAD_ENABLED</code></h3>
 
@@ -6324,6 +6388,20 @@ don’t have one.</p>
 
 <p>Prefix for upload table names.</p>
 
+<h3 id="mb_use_tenants"><code class="language-plaintext highlighter-rouge">MB_USE_TENANTS</code></h3>
+
+<blockquote>
+  <p>Only available on Metabase <a href="/product/pro">Pro</a> and <a href="/product/enterprise">Enterprise</a> plans.</p>
+</blockquote>
+
+<ul>
+  <li>Type: boolean</li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">false</code></li>
+  <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">use-tenants</code></li>
+</ul>
+
+<p>Turn on the Tenants feature, allowing users to be assigned to a particular Tenant.</p>
+
 <h3 id="mb_user_visibility"><code class="language-plaintext highlighter-rouge">MB_USER_VISIBILITY</code></h3>
 
 <blockquote>
@@ -6545,29 +6623,15 @@ Default: <code class="language-plaintext highlighter-rouge">null</code></p>
 
 <p>Also see documentation page <a href="../databases/encrypting-details-at-rest">Encrypting database details at rest</a>.</p>
 
-<h3 id="mb_jdbc_data_warehouse_unreturned_connection_timeout_seconds"><code class="language-plaintext highlighter-rouge">MB_JDBC_DATA_WAREHOUSE_UNRETURNED_CONNECTION_TIMEOUT_SECONDS</code></h3>
-
-<p>Type: integer<br>
-Default: <code class="language-plaintext highlighter-rouge">1200</code><br>
-Since: v47.4</p>
-
-<p>Metabase’s query processor will normally kill connections when their queries time out, but in practice some connections can be severed and go undetected by Metabase, staying alive even after a query returns or times out. This environment variable tells Metabase how long to wait before killing connections if no response is received from the connection.</p>
-
-<p>This variable affects connections that are severed and undetected by Metabase (that is, in situations where Metabase never receives a connection closed signal and is treating an inactive connection as active). You may want to adjust this variable’s value if your connection is unreliable or is a dynamic connections behind a SSH tunnel where the connection to the SSH tunnel host may stay active even after the connection from the SSH tunnel host to your database is severed.</p>
-
-<p>Unless set otherwise, the default production value for <code class="language-plaintext highlighter-rouge">metabase.query-processor.query-timeout-ms</code> is used which is 1,200,000 ms (i.e. 1,200 seconds or 20 minutes).</p>
-
 <h3 id="mb_jdbc_data_warehouse_debug_unreturned_connection_stack_traces"><code class="language-plaintext highlighter-rouge">MB_JDBC_DATA_WAREHOUSE_DEBUG_UNRETURNED_CONNECTION_STACK_TRACES</code></h3>
 
 <p>Type: boolean<br>
 Default: <code class="language-plaintext highlighter-rouge">false</code><br>
 Since: v51.3</p>
 
-<p>If <code class="language-plaintext highlighter-rouge">true</code>, log a stack trace for any connections killed due to exceeding the timeout specified in <a href="#mb_jdbc_data_warehouse_unreturned_connection_timeout_seconds">MB_JDBC_DATA_WAREHOUSE_UNRETURNED_CONNECTION_TIMEOUT_SECONDS</a>.</p>
+<p>If <code class="language-plaintext highlighter-rouge">true</code>, log a stack trace for any connections killed due to exceeding the timeout specified in <a href="#mb_db_query_timeout_minutes">MB_DB_QUERY_TIMEOUT_MINUTES</a>.</p>
 
 <p>In order to see the stack traces in the logs, you’ll also need to update the com.mchange log level to “INFO” or higher via a custom log4j configuration. For configuring log levels, see <a href="./log-configuration">Metabase log configuration</a>.</p>
-
-<p>To set a timeout for how long Metabase should wait before it kills unreturned connections, see <a href="#mb_jdbc_data_warehouse_unreturned_connection_timeout_seconds">MB_JDBC_DATA_WAREHOUSE_UNRETURNED_CONNECTION_TIMEOUT_SECONDS</a>.</p>
 
 <h3 id="mb_jetty_async_response_timeout"><code class="language-plaintext highlighter-rouge">MB_JETTY_ASYNC_RESPONSE_TIMEOUT</code></h3>
 
@@ -6861,13 +6925,7 @@ Default: <code class="language-plaintext highlighter-rouge">null</code></p>
         <div id="sub-navigation-content">
           
         </div>
-        
-
-
-  
-    <div id="feedback-widget-container" class="bootstrap feedback-widget">
-  
-
+        <div id="was-this-helpful-widget">
   <div id="page-feedback">
     <h6>Was this helpful?</h6>
     <button id="page-feedback-vote-up" class="vote-button Button">
@@ -6887,19 +6945,15 @@ Default: <code class="language-plaintext highlighter-rouge">null</code></p>
   </div>
 
   <div id="page-comment" class="flex flex-wrap full hide">
-    <div class="flex full">
-      <h6 id="page-feedback-question"></h6>
-    </div>
+    <p id="page-feedback-question"></p>
 
-    <div id="page-comment-form" class="flex full">
-      
-      <input id="feedback-comment-text" maxlength="500" class="flex input sm-input-small bordered inline-block align-center" name="comment" placeholder="Let us know what you think">
-      
+    <form id="page-comment-form" class="flex full">
+      <textarea id="feedback-comment-text" name="comment" placeholder="Type here…"></textarea>
 
-      <button id="page-comment-submit" class="feedback-widget Button flex align-center">
+      <button id="page-comment-submit" class="Button flex align-center">
         Send
       </button>
-    </div>
+    </form>
   </div>
 
   <div id="page-feedback-message" class="fs-18 hide">
@@ -6913,34 +6967,7 @@ Default: <code class="language-plaintext highlighter-rouge">null</code></p>
   
 </div>
 
-<script type="text/javascript" src="/js/feedback-widget.js"></script>
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const iframe = document.getElementById("subscribe-to-ai-newsletter-righthandside");
-
-    // Certain collections (e.g., "docs") do not display the newsletter iframe
-    if (!iframe) {
-      return;
-    }
-    const url = new URL(iframe.src, window.location.origin);
-
-    // Copy search params from the main window
-    const currentParams = new URLSearchParams(window.location.search);
-    for (const [key, value] of currentParams.entries()) {
-      url.searchParams.set(key, value);
-    }
-
-    // Add the current pathname as signup_path
-    url.searchParams.set("signup_path", window.location.pathname);
-
-    // Apply the new src
-    iframe.src = url.toString();
-  });
-</script>
-<script type="text/javascript" src="/js/side-email-cta.js"></script>
-
-  
-
+<script type="text/javascript" src="/js/was-this-helpful-widget.js"></script>
 
       </div>
 	  </article>

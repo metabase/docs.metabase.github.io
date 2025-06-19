@@ -39,7 +39,8 @@
     }
   </script>
 
-      
+  
+       
 
 <title>Parameters for static embeds | Metabase Documentation</title>
 <!-- Twitter cards -->
@@ -59,8 +60,45 @@
 <meta name="description" property="og:description" content="Parameters for static embeds Also known as: parameters for signed embeds, or standalone embeds. Parameters are pieces of information that are passed between Metabase and your website via the embedding URL. You can use parameters to specify how Metabase items...">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
+
   
-  <link href="/images/favicon.svg" rel="shortcut icon">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "url": "https://www.metabase.com/",
+    "sameAs": [
+      "https://github.com/metabase",
+      "https://www.linkedin.com/company/metabase/",
+      "https://x.com/metabase",
+      "https://www.youtube.com/@metabasedata"
+    ],
+    "logo": "https://github.com/metabase/metabase.github.io/blob/master/images/metabase-logo.png?raw=",
+    "name": "Metabase",
+    "description": "Metabase is an open source Business Intelligence and Embedded Analytics tool. Connect to your data stack in 5 minutes to make queries, visualizations, and dashboards easy for everyone—no SQL required",
+    "email": "hello@metabase.com",
+    "foundingDate": "2015-02-01T00:00:00.000Z",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "9740 Campo Rd",
+      "addressLocality": "Spring Valley",
+      "addressCountry": "USA",
+      "addressRegion": "CA",
+      "postalCode": "91977"
+    },
+    "knowsAbout": [
+      { "@type": "Thing", "name": "Business Intelligence" },
+      { "@type": "Thing", "name": "Embedded Analytics" },
+      { "@type": "Thing", "name": "Self-service analytics" },
+      { "@type": "Thing", "name": "Open source Business Intelligence" }
+    ]
+  }
+</script>
+
+
+  
+    <link href="/images/favicon.svg" rel="shortcut icon">
   
   <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/flexboxgrid/6.3.1/flexboxgrid.min.css" rel="stylesheet" type="text/css">
@@ -4006,7 +4044,7 @@ Roadmap</a>
 <div class="version__selector cursor-pointer">
   <span class="version__current">
     
-      v0.54
+      v0.55
     
 
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="chevron">
@@ -4016,6 +4054,14 @@ Roadmap</a>
   </span>
   <ul class="version__dropdown">
     
+      
+    
+      
+        <li>
+          <a href="/docs/v0.54">
+            v0.54
+          </a>
+        </li>
       
     
       
@@ -4078,14 +4124,6 @@ Roadmap</a>
         <li>
           <a href="/docs/v0.46">
             v0.46
-          </a>
-        </li>
-      
-    
-      
-        <li>
-          <a href="/docs/v0.45">
-            v0.45
           </a>
         </li>
       
@@ -4193,29 +4231,29 @@ Roadmap</a>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>your_embedding_url?parameter_name=value
 </code></pre></div></div>
 
-<p>Let’s say your embedded dashboard has a filter connected to an editable parameter called “Breakfast”. If you want to set the default value for the “Breakfast” filter to “Scrambled eggs”:</p>
+<p>For example, if your embedded dashboard has a filter connected to an editable parameter called “Breakfast”, and you want to set the default value to “Hash browns”:</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>your_embedding_url?breakfast=Scrambled_eggs
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>your_embedding_url?breakfast=Hash_browns
 </code></pre></div></div>
 
-<p>To specify default values for more than one filter, separate the filters with ampersands (&amp;):</p>
+<p>To specify default values for multiple filters, separate them with ampersands (&amp;):</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>your_embedding_url?breakfast=Scrambled_eggs&amp;lunch=Grilled_cheese
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>your_embedding_url?breakfast=Hash_browns&amp;lunch=Sandwich
 </code></pre></div></div>
 
-<p>You can set multiple default values for a filter by separating the <code class="language-plaintext highlighter-rouge">key=value</code> pairs with ampersands (&amp;):</p>
+<p>You can set multiple default values for a single filter by separating the values with ampersands (&amp;):</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>your_embedding_url?breakfast=Scrambled_eggs&amp;breakfast=Bacon
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>your_embedding_url?breakfast=Hash_browns&amp;breakfast=Pancakes
 </code></pre></div></div>
 
 <h2 id="hiding-filter-widgets-from-a-static-embed">Hiding filter widgets from a static embed</h2>
 
-<p>If you have a lot of editable parameters (resulting in a lot of filter widgets), you can hide them from your static embed by adding <code class="language-plaintext highlighter-rouge">#hide_parameters</code> to the end of the URL in your iframe’s <code class="language-plaintext highlighter-rouge">src</code> attribute:</p>
+<p>If you have multiple editable parameters (resulting in multiple filter widgets), you can hide specific ones from your static embed by adding <code class="language-plaintext highlighter-rouge">#hide_parameters</code> to the end of the URL in your iframe’s <code class="language-plaintext highlighter-rouge">src</code> attribute:</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>your_embedding_url#hide_parameters=parameter_name
 </code></pre></div></div>
 
-<p>For example, if you want to hide a filter called “Breakfast” from your embedded dashboard:</p>
+<p>For example, to hide a filter called “Breakfast” from your embedded dashboard:</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>your_embedding_url#hide_parameters=breakfast
 </code></pre></div></div>
@@ -4227,7 +4265,7 @@ Roadmap</a>
 
 <p>You can also simultaneously assign a parameter a default value <em>and</em> hide its filter widget:</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>your_embedding_url?breakfast=Scrambled_eggs#hide_parameters=breakfast
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>your_embedding_url?breakfast=Hash_browns#hide_parameters=breakfast
 </code></pre></div></div>
 
 <h2 id="unsigned-parameter-syntax">Unsigned parameter syntax</h2>
@@ -4327,23 +4365,23 @@ Roadmap</a>
   <tbody>
     <tr>
       <td data-label="Parameter name"><code class="language-plaintext highlighter-rouge">background</code></td>
-      <td data-label="Possible values">true (default), false. Dashboards only.</td>
+      <td data-label="Possible values"><code class="language-plaintext highlighter-rouge">true</code> (default), <code class="language-plaintext highlighter-rouge">false</code>. Dashboards only.</td>
     </tr>
     <tr>
       <td data-label="Parameter name"><code class="language-plaintext highlighter-rouge">bordered</code></td>
-      <td data-label="Possible values">true (default), false.</td>
+      <td data-label="Possible values"><code class="language-plaintext highlighter-rouge">true</code> (default), <code class="language-plaintext highlighter-rouge">false</code>.</td>
     </tr>
     <tr>
-      <td data-label="Parameter name"><code class="language-plaintext highlighter-rouge">locale\*</code></td>
-      <td data-label="Possible values">E.g., <code class="language-plaintext highlighter-rouge">locale=ko</code>. See <a href="../configuring-metabase/localization#supported-languages">list of locales</a></td>
+      <td data-label="Parameter name"><code class="language-plaintext highlighter-rouge">locale</code>*</td>
+      <td data-label="Possible values">E.g., <code class="language-plaintext highlighter-rouge">ko</code>. See <a href="../configuring-metabase/localization#supported-languages">list of locales</a></td>
     </tr>
     <tr>
       <td data-label="Parameter name"><code class="language-plaintext highlighter-rouge">titled</code></td>
-      <td data-label="Possible values">true (default), false.</td>
+      <td data-label="Possible values"><code class="language-plaintext highlighter-rouge">true</code> (default), <code class="language-plaintext highlighter-rouge">false</code>.</td>
     </tr>
     <tr>
       <td data-label="Parameter name"><code class="language-plaintext highlighter-rouge">theme</code></td>
-      <td data-label="Possible values">null (default), night. <code class="language-plaintext highlighter-rouge">theme=transparent</code> should work, but is deprecated (see <a href="#transparent-backgrounds-for-embeds">Transparent backgrounds</a>)</td>
+      <td data-label="Possible values"><code class="language-plaintext highlighter-rouge">null</code> (default), <code class="language-plaintext highlighter-rouge">night</code>. <code class="language-plaintext highlighter-rouge">theme=transparent</code> should work, but is deprecated (see <a href="#transparent-backgrounds-for-embeds">Transparent backgrounds</a>)</td>
     </tr>
     <tr>
       <td data-label="Parameter name"><code class="language-plaintext highlighter-rouge">refresh</code> (dashboard only)</td>
@@ -4355,7 +4393,7 @@ Roadmap</a>
     </tr>
     <tr>
       <td data-label="Parameter name"><code class="language-plaintext highlighter-rouge">downloads</code>**</td>
-      <td data-label="Possible values">true (default), false.</td>
+      <td data-label="Possible values"><code class="language-plaintext highlighter-rouge">true</code> (default), <code class="language-plaintext highlighter-rouge">false</code>, <code class="language-plaintext highlighter-rouge">results</code>, <code class="language-plaintext highlighter-rouge">pdf</code></td>
     </tr>
   </tbody>
 </table>
@@ -4386,12 +4424,12 @@ Roadmap</a>
   </div>
 </div>
 
-<p>To change the UI language for a static embed, you can set its <a href="../configuring-metabase/localization#supported-languages">locale</a>. For example, to set a public link’s language to Korean, you could append <code class="language-plaintext highlighter-rouge">#locale=ko</code>.</p>
+<p>To change the UI language for a static embed, you can set its <a href="../configuring-metabase/localization#supported-languages">locale</a>. For example, to set a public link’s language to Korean, append <code class="language-plaintext highlighter-rouge">#locale=ko</code>:</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://metabase.example.com/public/dashboard/7b6e347b-6928-4aff-a56f-6cfa5b718c6b?category=&amp;city=&amp;state=#locale=ko
 </code></pre></div></div>
 
-<p>If you have multiple params, separated them with an ampersand <code class="language-plaintext highlighter-rouge">&amp;</code>:</p>
+<p>If you have multiple parameters, separate them with an ampersand (<code class="language-plaintext highlighter-rouge">&amp;</code>):</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>category=Gadget&amp;state=Vermont#theme=night&amp;locale=ko
 </code></pre></div></div>
@@ -4427,13 +4465,26 @@ Roadmap</a>
   </div>
 </div>
 
-<p>By default, Metabase will include a <strong>Download</strong> button on embedded questions, and an <strong>Export to PDF</strong> option on embedded dashboards. You can remove the option to download results by setting <code class="language-plaintext highlighter-rouge">downloads=false</code> in the embedding URL in the iframe’s <code class="language-plaintext highlighter-rouge">src</code> attribute, see <a href="./static-embedding#customizing-the-appearance-of-static-embeds">customizing the appearance of static embeds</a>.</p>
+<p>By default, Metabase will include a <strong>Download</strong> button on embedded questions, and an <strong>Export to PDF</strong> option on embedded dashboards.</p>
 
-<p>If the download option is missing when you expected it to be available, check that the URL in the <code class="language-plaintext highlighter-rouge">src</code> attribute for your iframe has the parameter <code class="language-plaintext highlighter-rouge">downloads=true</code>.</p>
+<p>You can configure these options with the <code class="language-plaintext highlighter-rouge">downloads</code> parameter in the embedding URL in the iframe’s <code class="language-plaintext highlighter-rouge">src</code> attribute, see <a href="./static-embedding#customizing-the-appearance-of-static-embeds">customizing the appearance of static embeds</a>.</p>
+
+<p><code class="language-plaintext highlighter-rouge">downloads</code> accepts the following values:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">true</code> (default): include both the Download and Export to PDF options.</li>
+  <li><code class="language-plaintext highlighter-rouge">false</code>: hide both the Download and Export to PDF options.</li>
+  <li><code class="language-plaintext highlighter-rouge">results</code>: show the Download option.</li>
+  <li><code class="language-plaintext highlighter-rouge">pdf</code>: show the Export to PDF option (dashboards only).</li>
+</ul>
+
+<p>You can combine the explicit options: <code class="language-plaintext highlighter-rouge">downloads=results,pdf</code> is the same as <code class="language-plaintext highlighter-rouge">downloads=true</code>.</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">downloads</code> parameter replaces the legacy <code class="language-plaintext highlighter-rouge">hide_download_button</code> parameter.</p>
 
 <h2 id="maximum-request-size">Maximum request size</h2>
 
-<p>The maximum length of a static embedding URL (including all parameters) is the value of your <a href="../configuring-metabase/environment-variables#mb_jetty_request_header_size"><code class="language-plaintext highlighter-rouge">MB_JETTY_REQUEST_HEADER_SIZE</code></a> environment variable. The default is 8192 bytes.</p>
+<p>The maximum length of a static embedding URL (including all parameters) is determined by your <a href="../configuring-metabase/environment-variables#mb_jetty_request_header_size"><code class="language-plaintext highlighter-rouge">MB_JETTY_REQUEST_HEADER_SIZE</code></a> environment variable. The default is 8192 bytes.</p>
 
 <p>If your static embedding URL exceeds the maximum header size, you’ll see a log message like <code class="language-plaintext highlighter-rouge">URI too long</code>. You can update the environment variable to accept larger headers. If you’re using a proxy server, you may need to set a corresponding property on the server as well.</p>
 
@@ -4460,13 +4511,7 @@ Roadmap</a>
         <div id="sub-navigation-content">
           
         </div>
-        
-
-
-  
-    <div id="feedback-widget-container" class="bootstrap feedback-widget">
-  
-
+        <div id="was-this-helpful-widget">
   <div id="page-feedback">
     <h6>Was this helpful?</h6>
     <button id="page-feedback-vote-up" class="vote-button Button">
@@ -4486,19 +4531,15 @@ Roadmap</a>
   </div>
 
   <div id="page-comment" class="flex flex-wrap full hide">
-    <div class="flex full">
-      <h6 id="page-feedback-question"></h6>
-    </div>
+    <p id="page-feedback-question"></p>
 
-    <div id="page-comment-form" class="flex full">
-      
-      <input id="feedback-comment-text" maxlength="500" class="flex input sm-input-small bordered inline-block align-center" name="comment" placeholder="Let us know what you think">
-      
+    <form id="page-comment-form" class="flex full">
+      <textarea id="feedback-comment-text" name="comment" placeholder="Type here…"></textarea>
 
-      <button id="page-comment-submit" class="feedback-widget Button flex align-center">
+      <button id="page-comment-submit" class="Button flex align-center">
         Send
       </button>
-    </div>
+    </form>
   </div>
 
   <div id="page-feedback-message" class="fs-18 hide">
@@ -4512,34 +4553,7 @@ Roadmap</a>
   
 </div>
 
-<script type="text/javascript" src="/js/feedback-widget.js"></script>
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const iframe = document.getElementById("subscribe-to-ai-newsletter-righthandside");
-
-    // Certain collections (e.g., "docs") do not display the newsletter iframe
-    if (!iframe) {
-      return;
-    }
-    const url = new URL(iframe.src, window.location.origin);
-
-    // Copy search params from the main window
-    const currentParams = new URLSearchParams(window.location.search);
-    for (const [key, value] of currentParams.entries()) {
-      url.searchParams.set(key, value);
-    }
-
-    // Add the current pathname as signup_path
-    url.searchParams.set("signup_path", window.location.pathname);
-
-    // Apply the new src
-    iframe.src = url.toString();
-  });
-</script>
-<script type="text/javascript" src="/js/side-email-cta.js"></script>
-
-  
-
+<script type="text/javascript" src="/js/was-this-helpful-widget.js"></script>
 
       </div>
 	  </article>
