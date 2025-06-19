@@ -1,5 +1,5 @@
 ---
-version: v0.54
+version: v0.55
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: false
@@ -8,6 +8,8 @@ title: Organization overview
 source_url: >-
   https://github.com/metabase/metabase/blob/master/docs/exploration-and-organization/start.md
 layout: new-docs
+redirect_from:
+  - /docs/latest/exploration-and-organization
 latest: true
 ---
 
@@ -22,6 +24,10 @@ Find data, explore questions and dashboards, and bookmark your favorites.
 ## [Collections](./collections)
 
 Organize questions, dashboards, and models with collections.
+
+## [Keyboard shortcuts](./keyboard-shortcuts)
+
+A handy list of keyboard shortcuts to help you zip around Metabase.
 
 ## [History](./history)
 

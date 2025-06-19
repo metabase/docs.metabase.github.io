@@ -1,5 +1,5 @@
 ---
-version: v0.54
+version: v0.55
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -10,9 +10,6 @@ source_url: >-
 layout: new-docs
 redirect_from:
   - /docs/latest/questions/sharing/visualizations/funnel
-  - /learn/visualization/funnel
-  - /docs/latest/questions/visualizations/funnel
-  - /learn/metabase-basics/querying-and-dashboards/visualization/funnel
 description: >-
   Funnel charts visualize how a value is broken out by a series of steps, and
   the percent change between steps. To build a funnel chart in Metabase, you

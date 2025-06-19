@@ -7,6 +7,8 @@ category: 'Usage and Performance Tools'
 title: 'Tools overview'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/usage-and-performance-tools/start.md'
 layout: new-docs
+redirect_from:
+    - /docs/v0.55/usage-and-performance-tools
 ---
 
 # Tools overview

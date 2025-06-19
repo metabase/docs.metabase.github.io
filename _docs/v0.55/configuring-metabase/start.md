@@ -7,6 +7,8 @@ category: 'Configuring Metabase'
 title: 'Configuration overview'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/configuring-metabase/start.md'
 layout: new-docs
+redirect_from:
+    - /docs/v0.55/configuring-metabase
 ---
 
 # Configuration overview

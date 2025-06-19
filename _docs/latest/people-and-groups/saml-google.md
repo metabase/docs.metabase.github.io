@@ -1,5 +1,5 @@
 ---
-version: v0.54
+version: v0.55
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -67,6 +67,11 @@ For example, to add the attribute "First name":
    - The attribute looks like this: `http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname`.
 4. Paste the **User's first name attribute** under your Google **App attributes**.
 5. Repeat steps 1-3 for the attributes "Last name" and "Email".
+
+## Setting up synchronize group membership
+
+1. In Google Admin, setup a multi-value [custom user attribute](https://support.google.com/a/answer/6208725?hl=en#zippy=%2Cadd-a-new-custom-attribute) for your users (recommended if you manage multiple SAML app permissions in Google or do not have existing Google Groups that align with your desired Metabase groups) OR [map to existing Google Groups](https://support.google.com/a/answer/11143403?hl=en).
+2. Follow the instructions for [Configuring the group schema](/docs/latest/people-and-groups/authenticating-with-saml#configuring-the-group-schema-in-metabase) using the `App attribute` that you used in Google as the Group attribute name in Metabase.
 
 ## Troubleshooting SAML issues
 

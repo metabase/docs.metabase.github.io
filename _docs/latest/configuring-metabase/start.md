@@ -1,5 +1,5 @@
 ---
-version: v0.54
+version: v0.55
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: false
@@ -8,6 +8,8 @@ title: Configuration overview
 source_url: >-
   https://github.com/metabase/metabase/blob/master/docs/configuring-metabase/start.md
 layout: new-docs
+redirect_from:
+  - /docs/latest/configuring-metabase
 latest: true
 ---
 

@@ -39,14 +39,15 @@
     }
   </script>
 
-      
+  
+       
 
 <title>Metabase logs | Metabase Documentation</title>
 <!-- Twitter cards -->
 <meta name="twitter:site" content="@metabase">
 
 <meta name="twitter:title" content="Metabase logs | Metabase Documentation">
-<meta name="twitter:description" content="Metabase logs Metabase logs quite a bit of information by default. It uses Log4j 2 under the hood, so you can configure how much information Metabase logs. Configuring Logging Level Here is Metabase’s default logging configuration. You can...">
+<meta name="twitter:description" content="Metabase logs Metabase logs quite a bit of information by default. Metabase uses Log4j 2 under the hood, so you can configure how much information Metabase logs. View and download Metabase logs You can find Metabase logs in Admin...">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -56,11 +57,48 @@
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://www.metabase.com/docs/latest/configuring-metabase/log-configuration">
 <meta name="title" property="og:title" content="Metabase logs | Metabase Documentation">
-<meta name="description" property="og:description" content="Metabase logs Metabase logs quite a bit of information by default. It uses Log4j 2 under the hood, so you can configure how much information Metabase logs. Configuring Logging Level Here is Metabase’s default logging configuration. You can...">
+<meta name="description" property="og:description" content="Metabase logs Metabase logs quite a bit of information by default. Metabase uses Log4j 2 under the hood, so you can configure how much information Metabase logs. View and download Metabase logs You can find Metabase logs in Admin...">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
+
   
-  <link href="/images/favicon.svg" rel="shortcut icon">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "url": "https://www.metabase.com/",
+    "sameAs": [
+      "https://github.com/metabase",
+      "https://www.linkedin.com/company/metabase/",
+      "https://x.com/metabase",
+      "https://www.youtube.com/@metabasedata"
+    ],
+    "logo": "https://github.com/metabase/metabase.github.io/blob/master/images/metabase-logo.png?raw=",
+    "name": "Metabase",
+    "description": "Metabase is an open source Business Intelligence and Embedded Analytics tool. Connect to your data stack in 5 minutes to make queries, visualizations, and dashboards easy for everyone—no SQL required",
+    "email": "hello@metabase.com",
+    "foundingDate": "2015-02-01T00:00:00.000Z",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "9740 Campo Rd",
+      "addressLocality": "Spring Valley",
+      "addressCountry": "USA",
+      "addressRegion": "CA",
+      "postalCode": "91977"
+    },
+    "knowsAbout": [
+      { "@type": "Thing", "name": "Business Intelligence" },
+      { "@type": "Thing", "name": "Embedded Analytics" },
+      { "@type": "Thing", "name": "Self-service analytics" },
+      { "@type": "Thing", "name": "Open source Business Intelligence" }
+    ]
+  }
+</script>
+
+
+  
+    <link href="/images/favicon.svg" rel="shortcut icon">
   
   <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/flexboxgrid/6.3.1/flexboxgrid.min.css" rel="stylesheet" type="text/css">
@@ -4006,7 +4044,7 @@ Roadmap</a>
 <div class="version__selector cursor-pointer">
   <span class="version__current">
     
-      v0.54
+      v0.55
     
 
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="chevron">
@@ -4016,6 +4054,14 @@ Roadmap</a>
   </span>
   <ul class="version__dropdown">
     
+      
+    
+      
+        <li>
+          <a href="/docs/v0.54">
+            v0.54
+          </a>
+        </li>
       
     
       
@@ -4082,14 +4128,6 @@ Roadmap</a>
         </li>
       
     
-      
-        <li>
-          <a href="/docs/v0.45">
-            v0.45
-          </a>
-        </li>
-      
-    
     <li><a href="/docs/all">See more</a></li>
   </ul>
 </div>
@@ -4120,18 +4158,48 @@ Roadmap</a>
 
         <h1 id="metabase-logs">Metabase logs</h1>
 
-<p>Metabase logs quite a bit of information by default. It uses <a href="https://logging.apache.org/log4j/2.x/">Log4j 2</a> under the hood, so you can configure how much information Metabase logs.</p>
+<p>Metabase logs quite a bit of information by default. Metabase uses <a href="https://logging.apache.org/log4j/2.x/">Log4j 2</a> under the hood, so you can configure how much information Metabase logs.</p>
 
-<h2 id="configuring-logging-level">Configuring Logging Level</h2>
+<h2 id="view-and-download-metabase-logs">View and download Metabase logs</h2>
 
-<p>Here is Metabase’s <a href="https://github.com/metabase/metabase/blob/master/resources/log4j2.xml">default logging configuration</a>. You can override this XML file and tell Metabase to use your own logging configuration file by passing a <code class="language-plaintext highlighter-rouge">-Dlog4j.configurationFile</code> argument when running Metabase. For example, if your custom XML file is found in <code class="language-plaintext highlighter-rouge">/path/to/custom/log4j2.xml</code>, you can use it like so:</p>
+<p>You can find Metabase logs in <strong>Admin settings</strong> &gt; <strong>Troubleshooting</strong> &gt; <strong>Logs</strong>. You can filter the logs by keywords (for example, “sync”) and download them as a text file.</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>java -Dlog4j.configurationFile=file:/path/to/custom/log4j2.xml -jar metabase.jar
-</code></pre></div></div>
+<p>If you’re running self-hosted Metabase, you’ll also be able see the logs in the terminal.</p>
 
-<p>To get started customizing the logs, make a <a href="https://github.com/metabase/metabase/blob/master/resources/log4j2.xml">copy of the default <code class="language-plaintext highlighter-rouge">log4j2.xml</code> file</a> and adjust it to meet your needs. You’ll need to restart Metabase for changes to the file to take effect. See Log4j’s docs for info on <a href="https://logging.apache.org/log4j/2.x/manual/customloglevels.html">log levels</a>.</p>
+<h2 id="how-to-read-metabase-logs">How to read Metabase logs</h2>
 
-<p>You can set different log levels for different areas of the application, e.g.,:</p>
+<p>See <a href="../troubleshooting-guide/server-logs">How to read logs</a>.</p>
+
+<h2 id="configuring-logging-level">Configuring logging Level</h2>
+
+<p>Metabase uses <a href="https://logging.apache.org/log4j/2.x/">log4j</a>for logging configuration. Here is Metabase’s <a href="https://github.com/metabase/metabase/blob/master/resources/log4j2.xml">default logging configuration</a>. Some troubleshooting tasks might require you to override this logging configuration (for example, to see more details about errors). See Log4j’s docs for info on <a href="https://logging.apache.org/log4j/2.x/manual/customloglevels.html">log levels</a>.</p>
+
+<h3 id="temporary-override-logging-configuration">Temporary override logging configuration</h3>
+
+<p>To temporarily adjust the logging configuration, go to <strong>Admin settings</strong> &gt; <strong>Troubleshooting</strong> &gt; <strong>Logs</strong> and click on <strong>Customize log levels</strong>.</p>
+
+<p>You can select from log level presets for common troubleshooting tasks (for example, troubleshooting sync issues), or provide your own configuration as a JSON. For example, here’s an override configuration that increases logging for troubleshooting linked filters:</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"metabase.parameters.chain-filter"</span><span class="p">:</span><span class="w"> </span><span class="s2">"debug"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"metabase.parameters.chain-filter.dedupe-joins"</span><span class="p">:</span><span class="w"> </span><span class="s2">"debug"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>The override from Admin settings will be temporary. You can select for how long the override should be in place (e.g., 60 minutes). When the override times out, the logging configuration will revert to the default logging configuration (or a custom configuration if you’re using a <a href="#use-a-custom-log-configuration-file">custom log file</a>).</p>
+
+<h3 id="use-a-custom-log-configuration-file">Use a custom log configuration file</h3>
+
+<p>You can point Metabase to a custom log configuration file.</p>
+
+<ol>
+  <li>Make a <a href="https://github.com/metabase/metabase/blob/master/resources/log4j2.xml">copy of the default <code class="language-plaintext highlighter-rouge">log4j2.xml</code> file</a></li>
+  <li>
+    <p>Adjust it to meet your needs.</p>
+
+    <p>You can set different log levels for different areas of the application, e.g.,:</p>
+  </li>
+</ol>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;Loggers&gt;
     &lt;Logger name="metabase" level="INFO"/&gt;
@@ -4149,9 +4217,25 @@ Roadmap</a>
 &lt;/Loggers&gt;
 </code></pre></div></div>
 
-<p>Check out <a href="../troubleshooting-guide/server-logs">How to read the logs</a>.</p>
+<ol>
+  <li>Stop your Metabase and start it again using the custom log configuration file:</li>
+</ol>
 
-<h2 id="jetty-logs">Jetty logs</h2>
+<ul>
+  <li>If you’re running Metabase in Docker, you can point Metabase to your custom log file using an environment variable, <code class="language-plaintext highlighter-rouge">JAVA_OPTS=-Dlog4j.configurationFile=file:/path/to/custom/log4j2.xml</code>:</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run -p 3000:3000 -v $PWD/my_log4j2.xml:/tmp/my_log4j2.xml -e JAVA_OPTS=-Dlog4j.configurationFile=file:/tmp/my_log4j2.xml metabase/metabase`
+</code></pre></div></div>
+
+<ul>
+  <li>If you’re running Metabase as a JAR file, you can pass a <code class="language-plaintext highlighter-rouge">-Dlog4j.configurationFile</code> argument. For example, if your custom XML file is found in <code class="language-plaintext highlighter-rouge">/path/to/custom/log4j2.xml</code>, you can use it like so:</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>java -Dlog4j.configurationFile=file:/path/to/custom/log4j2.xml -jar metabase.jar
+</code></pre></div></div>
+
+<h2 id="configure-jetty-logs">Configure Jetty logs</h2>
 
 <p>You can configure Metabase’s web server to provide more detail in the logs by setting the log level to <code class="language-plaintext highlighter-rouge">DEBUG</code>. Just keep in mind that Jetty’s debug logs can be really chatty, which can make it difficult to find the data you’re looking for.</p>
 
@@ -4160,23 +4244,26 @@ Roadmap</a>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;Logger name="org.eclipse.jetty" level="DEBUG"/&gt;
 </code></pre></div></div>
 
-<h2 id="using-log4j-2-with-docker">Using Log4j 2 with Docker</h2>
+<h2 id="configure-how-logs-are-displayed">Configure how logs are displayed</h2>
 
-<p>Before running the Metabase Docker image, you’ll need to pass the custom <code class="language-plaintext highlighter-rouge">log4j.configurationFile</code> argument. Add a <code class="language-plaintext highlighter-rouge">JAVA_OPTS=-Dlog4j.configurationFile=file:/path/to/custom/log4j2.xml</code> to the environment variables of the container, like this:</p>
+<h3 id="turn-off-emojis-in-logs">Turn off emojis in logs</h3>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run -p 3000:3000 -v $PWD/my_log4j2.xml:/tmp/my_log4j2.xml -e JAVA_OPTS=-Dlog4j.configurationFile=file:/tmp/my_log4j2.xml metabase/metabase`
+<p>By default Metabase will include emoji characters in logs, like this:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>2025-06-10 21:43:00,243 INFO sync.analyze :: classify-tables Analyzed [*****************************************·········] 😊   84% Table 6 ''PUBLIC.ACCOUNTS'' {mb-quartz-job-type=SyncAndAnalyzeDatabase}
+2025-06-10 21:43:00,244 INFO sync.analyze :: classify-tables Analyzed [***********************************************···] 😎   96% Table 2 ''PUBLIC.ORDERS'' {mb-quartz-job-type=SyncAndAnalyzeDatabase}
+
 </code></pre></div></div>
 
-<h2 id="disable-emoji-or-colorized-logging">Disable emoji or colorized logging</h2>
-
-<p>By default Metabase will include emoji characters in logs. You can disable emoji by using the <code class="language-plaintext highlighter-rouge">MB_EMOJI_IN_LOGS</code> environment variable:</p>
-
-<h3 id="configuring-emoji-logging">Configuring Emoji Logging</h3>
+<p>You can disable emoji using the <a href="../configuring-metabase/environment-variables#mb_emoji_in_logs"><code class="language-plaintext highlighter-rouge">MB_EMOJI_IN_LOGS</code> environment variable</a>:</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>export MB_EMOJI_IN_LOGS="false"
 java --add-opens java.base/java.nio=ALL-UNNAMED -jar metabase.jar
 </code></pre></div></div>
 
+<h3 id="turn-off-colorized-logs">Turn off colorized logs</h3>
+
+<p>By default, Metabase will use color when displaying logs (both in the Admin <strong>Logs</strong> and in the terminal). You can disable colorized logs using the <a href="../configuring-metabase/environment-variables#mb_colorize_logs"><code class="language-plaintext highlighter-rouge">MB_COLORIZE_LOGS</code> environment variable</a>.</p>
 
 
         <div>
@@ -4193,13 +4280,7 @@ java --add-opens java.base/java.nio=ALL-UNNAMED -jar metabase.jar
         <div id="sub-navigation-content">
           
         </div>
-        
-
-
-  
-    <div id="feedback-widget-container" class="bootstrap feedback-widget">
-  
-
+        <div id="was-this-helpful-widget">
   <div id="page-feedback">
     <h6>Was this helpful?</h6>
     <button id="page-feedback-vote-up" class="vote-button Button">
@@ -4219,19 +4300,15 @@ java --add-opens java.base/java.nio=ALL-UNNAMED -jar metabase.jar
   </div>
 
   <div id="page-comment" class="flex flex-wrap full hide">
-    <div class="flex full">
-      <h6 id="page-feedback-question"></h6>
-    </div>
+    <p id="page-feedback-question"></p>
 
-    <div id="page-comment-form" class="flex full">
-      
-      <input id="feedback-comment-text" maxlength="500" class="flex input sm-input-small bordered inline-block align-center" name="comment" placeholder="Let us know what you think">
-      
+    <form id="page-comment-form" class="flex full">
+      <textarea id="feedback-comment-text" name="comment" placeholder="Type here…"></textarea>
 
-      <button id="page-comment-submit" class="feedback-widget Button flex align-center">
+      <button id="page-comment-submit" class="Button flex align-center">
         Send
       </button>
-    </div>
+    </form>
   </div>
 
   <div id="page-feedback-message" class="fs-18 hide">
@@ -4245,34 +4322,7 @@ java --add-opens java.base/java.nio=ALL-UNNAMED -jar metabase.jar
   
 </div>
 
-<script type="text/javascript" src="/js/feedback-widget.js"></script>
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const iframe = document.getElementById("subscribe-to-ai-newsletter-righthandside");
-
-    // Certain collections (e.g., "docs") do not display the newsletter iframe
-    if (!iframe) {
-      return;
-    }
-    const url = new URL(iframe.src, window.location.origin);
-
-    // Copy search params from the main window
-    const currentParams = new URLSearchParams(window.location.search);
-    for (const [key, value] of currentParams.entries()) {
-      url.searchParams.set(key, value);
-    }
-
-    // Add the current pathname as signup_path
-    url.searchParams.set("signup_path", window.location.pathname);
-
-    // Apply the new src
-    iframe.src = url.toString();
-  });
-</script>
-<script type="text/javascript" src="/js/side-email-cta.js"></script>
-
-  
-
+<script type="text/javascript" src="/js/was-this-helpful-widget.js"></script>
 
       </div>
 	  </article>

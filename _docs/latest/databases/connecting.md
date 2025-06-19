@@ -1,5 +1,5 @@
 ---
-version: v0.54
+version: v0.55
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -12,6 +12,7 @@ redirect_from:
   - /docs/latest/databases/connections/sql-server
   - /docs/latest/administration-guide/databases/h2
   - /docs/latest/databases/connections/h2
+  - /docs/latest/databases/connections
 latest: true
 ---
 
