@@ -56,7 +56,7 @@ Generally, annual billing is a great deal; it's cheaper across the board. The on
 
 ## What counts as a user account?
 
-An user account is any account which has been added to your Metabase instance (manually or via SSO) that has not been deactivated. You can view a list of user accounts in your **Admin settings** -> **People** list. Any user account which has been [deactivated](/docs/latest/people-and-groups/managing#deactivating-an-account) doesn't count toward your number of user accounts. That is to say: if an account exists, but has not been deactivated, that account will count toward your bill, _even if no one signs in and uses that account_. If an account is deactivated, that account is charged for the number of days the account was available for use during that billing period, including the day it was deactivated (since it was available for use for part of the day up until it was deactivated).
+A user account is any account which has been added to your Metabase instance (manually or via SSO) that has not been deactivated. You can view a list of user accounts in your **Admin settings** -> **People** list. Any user account which has been [deactivated](/docs/latest/people-and-groups/managing#deactivating-an-account) doesn't count toward your number of user accounts. That is to say: if an account exists, but has not been deactivated, that account will count toward your bill, _even if no one signs in and uses that account_. If an account is deactivated, that account is charged for the number of days the account was available for use during that billing period, including the day it was deactivated (since it was available for use for part of the day up until it was deactivated).
 
 ## How billing works with embedding
 
@@ -64,24 +64,26 @@ Interactive Embedding requires viewers to sign in to your Metabase, which means 
 
 Static Embedding doesn’t require viewers to sign in to your Metabase, which means they won’t count as additional users for billing purposes.
 
-## We sync your count of user accounts daily
+## How we count active user accounts each day
+
+Each day, we tally up the active users like so:
+
+- For each Metabase using a particular license token in the last 36 hours,
+- We take the maximum number of user accounts at any one time in that instance during that 36-hour period,
+- Then add those counts together across all instances with the same token.
+
+For example, say you're running two Metabase instances, A and B, that both use the same license token. If over the last 36 hours:
+
+- Metabase A had a maximum of 3 user accounts
+- Metabase B had a maximum of 5 user accounts
+
+Then the number of user accounts would total 8 for that day.
+
+If you're on Metabase Cloud, counting active users works the same: each day we count the maxium number of user accounts at any one time over the previous 36 hours.
 
 We refresh the user count you see in your [Metabase Store account page](http://store.metabase.com) every day. Since the refresh only happens once a day, there might be a delay between when you adjust the number of user accounts in your Metabase and when your accounts sync with your Store page.
 
-## Counting user accounts across multiple Metabases
-
-If you use the same token (license key) for multiple Metabase instances, Metabase will sum the number of user accounts across all instances that use that license.
-
-For example, say you're running two Metabase instances, A and B.
-
-- A has 3 user accounts
-- B has 5 user accounts
-
-Your number of user accounts would total 8.
-
 Metabase counts each user account as unique, even if that account uses the same email for multiple Metabases. For example, if person@example.com has an account in both instance A and instance B, the total will double count person@example.com (the tallying works like `COUNT`, not `COUNT DISTINCT`).
-
-Metabase checks the total number of user accounts over rolling 72-hour periods. If you start with 8 accounts, then deactivate an account from one instance, and add an account to another instance 72 hours later, your total number of user accounts would remain the same (8 accounts).
 
 ## Invoicing for Pro plans
 

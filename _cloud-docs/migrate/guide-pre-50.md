@@ -37,7 +37,7 @@ All you need to do is stop the Metabase JAR process or Docker container to make 
 
 ### Back up your application database
 
-In the unlikely event that something goes wrong, you'll want a backup. See [Backing up Metabase Application Data](/docs/latest/operations-guide/backing-up-metabase-application-data).
+In the unlikely event that something goes wrong, you'll want a backup. See [Backing up Metabase Application Data](/docs/latest/installation-and-operation/backing-up-metabase-application-data).
 
 ## Migrate your Metabase to Metabase Cloud
 
@@ -67,7 +67,7 @@ Before executing the migration script, you may need to set the environment varia
 
 The script will upload your application data to your new Metabase Cloud instance. If all goes well, the script will print `Done!`.
 
-If anything goes sideways, follow any prompts the script outputs. If you're still stuck, [send us an email](/contact) and we'll help you troubleshoot.
+If anything goes sideways, follow any prompts the script outputs. If you're still stuck, [send us an email](/help/) and we'll help you troubleshoot.
 
 ## After migrating to Metabase Cloud
 
@@ -92,4 +92,4 @@ We'll take care of your Metabase and keep it up to date from here on out. Welcom
 
 ## Need help?
 
-If you have any questions, just [send us an email](/contact).
+If you have any questions, just [send us an email](/help/).

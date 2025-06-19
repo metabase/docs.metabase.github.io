@@ -33,7 +33,7 @@ Manage your Metabase Cloud instance, subscription, and billing via the [Metabase
 
 ### Migrations
 
-- [Migration from an existing self-hosted Metabase](./migrate/guide)
+- [Migration from an existing self-hosted Metabase](/docs/latest/cloud/migrate/guide)
 - [Migration from Heroku](./migrate/heroku)
 - [Migration from Metabase Cloud to a self-hosted Metabase](./migrate/cloud-to-self-hosted)
 
@@ -44,7 +44,7 @@ Manage your Metabase Cloud instance, subscription, and billing via the [Metabase
 
 ## Metabase Cloud contact
 
-- [Send us an email](/help/premium)
+- [Send us an email](/help-premium)
 
 ## Terms of service
 

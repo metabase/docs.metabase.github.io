@@ -7,21 +7,20 @@ show_title_breadcrumb: true
 category: "Cloud"
 layout: new-docs
 redirect_from:
-- /cloud/docs/limitations
+  - /cloud/docs/limitations
 ---
 
 # Limitation of Metabase Cloud
 
 There are some limitations that could impact your migration to Metabase Cloud. These limitations apply to all [Metabase Cloud plans](/pricing/).
 
-## Metabase Cloud only supports official and partner databases
+## Metabase Cloud only supports official databases
 
 Metabase Cloud only works with:
 
 - [Metabase's officially supported databases](/docs/latest/databases/connecting#connecting-to-supported-databases) (with the exception of SQLite and H2).
-- [Metabase partner databases](/docs/latest/developers-guide/partner-and-community-drivers#partner-drivers).
 
-Metabase Cloud doesn't support [community database drivers](/docs/latest/developers-guide/partner-and-community-drivers#partner-drivers), or file-based databases (SQLite and H2), because there's currently no file storage available.
+Metabase Cloud doesn't support [community database drivers](/docs/latest/developers-guide/community-drivers), or file-based databases (SQLite and H2), because there's currently no file storage available.
 
 ## Limited custom certificate support
 
@@ -33,4 +32,8 @@ Metabase Cloud does not support customization of the "from address" for emailed 
 
 ## No access to application database
 
-You won't be able to access the application database; if you want insights into how people are using your Metabase, check out the [Auditing feature](/docs/latest/enterprise-guide/audit).
+You won't be able to access the application database; if you want insights into how people are using your Metabase, check out [Usage analytics](/docs/latest/usage-and-performance-tools/usage-analytics).
+
+## Queries time out after ten minutes
+
+If a query takes longer than ten minutes to run, it will time out.
