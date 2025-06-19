@@ -1,5 +1,5 @@
 ---
-version: v0.54
+version: v0.55
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -13,11 +13,11 @@ latest: true
 
 ```ts
 type MetabaseAuthConfigWithApiKey = {
-  fetchRequestToken: MetabaseFetchRequestTokenFn;
   metabaseInstanceUrl: string;
 } & {
   apiKey: string;
-  authProviderUri: never;
+  fetchRequestToken: never;
+  preferredAuthMethod: never;
 };
 ```
 
@@ -25,10 +25,9 @@ type MetabaseAuthConfigWithApiKey = {
 
 <!-- [<snippet type-declaration>] -->
 
-| Name                  | Type                                                                  | Description                                                                                                               |
-| :-------------------- | :-------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------ |
-| `fetchRequestToken?`  | [`MetabaseFetchRequestTokenFn`](./api/MetabaseFetchRequestTokenFn) | Specifies a function to fetch the refresh token. The refresh token should be in the format of { id: string, exp: number } |
-| `metabaseInstanceUrl` | `string`                                                              | -                                                                                                                         |
+| Name                  | Type     |
+| :-------------------- | :------- |
+| `metabaseInstanceUrl` | `string` |
 
 <!-- [<endsnippet type-declaration>] -->
 
@@ -36,9 +35,10 @@ type MetabaseAuthConfigWithApiKey = {
 
 <!-- [<snippet type-declaration>] -->
 
-| Name               | Type     |
-| :----------------- | :------- |
-| `apiKey`           | `string` |
-| `authProviderUri?` | `never`  |
+| Name                   | Type     |
+| :--------------------- | :------- |
+| `apiKey`               | `string` |
+| `fetchRequestToken?`   | `never`  |
+| `preferredAuthMethod?` | `never`  |
 
 <!-- [<endsnippet type-declaration>] -->
