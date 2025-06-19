@@ -1,5 +1,5 @@
 ---
-version: v0.54
+version: v0.55
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: false
@@ -7,6 +7,8 @@ category: Permissions
 title: Permissions overview
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/permissions/start.md'
 layout: new-docs
+redirect_from:
+  - /docs/latest/permissions
 latest: true
 ---
 

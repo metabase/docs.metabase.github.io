@@ -1,5 +1,5 @@
 ---
-version: v0.54
+version: v0.55
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: false
@@ -10,6 +10,7 @@ source_url: >-
 layout: new-docs
 redirect_from:
   - /docs/latest/administration-guide/sso
+  - /docs/latest/people-and-groups
 latest: true
 ---
 

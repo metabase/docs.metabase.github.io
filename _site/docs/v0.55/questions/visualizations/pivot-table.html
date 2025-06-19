@@ -39,7 +39,8 @@
     }
   </script>
 
-   
+  
+    
 <meta name="robots" content="noindex">
    
 
@@ -48,7 +49,7 @@
 <meta name="twitter:site" content="@metabase">
 
 <meta name="twitter:title" content="Pivot tables | Metabase Documentation">
-<meta name="twitter:description" content="Pivot tables Pivot tables allow you swap rows and columns, group data, and include subtotals in your table. You can group one or more metrics by one or more dimensions. Pivot tables are not currently available for the following databases in...">
+<meta name="twitter:description" content="Pivot tables  Pivot tables are currently only supported for questions built in the query builder. Pivot tables are not supported for NoSQL databases like MongoDB.  Pivot tables allow you swap rows and columns, group data, and include subtotals...">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -58,11 +59,48 @@
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://www.metabase.com/docs/v0.55/questions/visualizations/pivot-table">
 <meta name="title" property="og:title" content="Pivot tables | Metabase Documentation">
-<meta name="description" property="og:description" content="Pivot tables Pivot tables allow you swap rows and columns, group data, and include subtotals in your table. You can group one or more metrics by one or more dimensions. Pivot tables are not currently available for the following databases in...">
+<meta name="description" property="og:description" content="Pivot tables  Pivot tables are currently only supported for questions built in the query builder. Pivot tables are not supported for NoSQL databases like MongoDB.  Pivot tables allow you swap rows and columns, group data, and include subtotals...">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
+
   
-  <link href="/images/favicon.svg" rel="shortcut icon">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "url": "https://www.metabase.com/",
+    "sameAs": [
+      "https://github.com/metabase",
+      "https://www.linkedin.com/company/metabase/",
+      "https://x.com/metabase",
+      "https://www.youtube.com/@metabasedata"
+    ],
+    "logo": "https://github.com/metabase/metabase.github.io/blob/master/images/metabase-logo.png?raw=",
+    "name": "Metabase",
+    "description": "Metabase is an open source Business Intelligence and Embedded Analytics tool. Connect to your data stack in 5 minutes to make queries, visualizations, and dashboards easy for everyone—no SQL required",
+    "email": "hello@metabase.com",
+    "foundingDate": "2015-02-01T00:00:00.000Z",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "9740 Campo Rd",
+      "addressLocality": "Spring Valley",
+      "addressCountry": "USA",
+      "addressRegion": "CA",
+      "postalCode": "91977"
+    },
+    "knowsAbout": [
+      { "@type": "Thing", "name": "Business Intelligence" },
+      { "@type": "Thing", "name": "Embedded Analytics" },
+      { "@type": "Thing", "name": "Self-service analytics" },
+      { "@type": "Thing", "name": "Open source Business Intelligence" }
+    ]
+  }
+</script>
+
+
+  
+    <link href="/images/favicon.svg" rel="shortcut icon">
   
   <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/flexboxgrid/6.3.1/flexboxgrid.min.css" rel="stylesheet" type="text/css">
@@ -4019,6 +4057,8 @@ Roadmap</a>
   <ul class="version__dropdown">
     
       
+    
+      
         <li>
           <a href="/docs/v0.54">
             v0.54
@@ -4090,14 +4130,6 @@ Roadmap</a>
         </li>
       
     
-      
-        <li>
-          <a href="/docs/v0.45">
-            v0.45
-          </a>
-        </li>
-      
-    
     <li><a href="/docs/all">See more</a></li>
   </ul>
 </div>
@@ -4123,58 +4155,140 @@ Roadmap</a>
 
         <div>
   
-    
-      <blockquote>
-        These are the docs for Metabase v0.55.
-        Check out the <a class="text-purple text-underline" href="/docs/latest/">docs for the latest version, Metabase v0.54.</a>
-      </blockquote>
-    
-  
 </div>
 
 
         <h1 id="pivot-tables">Pivot tables</h1>
 
+<blockquote>
+  <p>Pivot tables are currently only supported for questions built in the <a href="../query-builder/editor">query builder</a>. Pivot tables are not supported for NoSQL databases like MongoDB.</p>
+</blockquote>
+
 <p>Pivot tables allow you swap rows and columns, group data, and include subtotals in your table. You can group one or more metrics by one or more dimensions.</p>
 
-<p>Pivot tables are not currently available for the following databases in Metabase:</p>
+<div style="width: ; margin-bottom: 2em;">
+    
+        <div class="youtube-container" style="position: relative;
+                    width: 100%;
+                    height: 0;
+                    padding-bottom: 56.25%">
 
-<ul>
-  <li>Druid</li>
-  <li>MongoDB</li>
-</ul>
+          <iframe class="youtube-video" style="position: absolute;
+                         top: 0;
+                         left: 0;
+                         width: 100%;
+                         height: 100%;
+                         border: 0" allowfullscreen="" src="https://www.youtube.com/embed/yTRzCQeTmO8">
+	  </iframe>
+        </div>
+    </div>
 
-<p>Pivot tables work for simple and custom questions with summarized data for all other <a href="../../databases/connecting">officially supported databases</a>. They don’t work for questions that lack aggregate data, and they don’t work for questions written in SQL, as Metabase would need to modify your SQL code in order to calculate subtotals. If you really need to use SQL, the workaround here is to create your question in two steps: first do all the complex things you need to do in SQL, save the results as a question, then use that saved SQL question as the starting point for a new GUI question which summarizes that data.</p>
+<h2 id="pivot-tables-vs-regular-tables">Pivot tables vs. regular tables</h2>
 
-<p>In the settings for the Pivot Table visualization, you can assign fields to one of three “buckets”:</p>
+<p>Your typical, basic table is a grid of cells. Every dimension (also known as attribute, “group by”) is represented by a column. Each record is represented as a row. For example, in the table below, <code class="language-plaintext highlighter-rouge">Source</code>, <code class="language-plaintext highlighter-rouge">Plan</code>, and <code class="language-plaintext highlighter-rouge">Created at</code> are dimensions/attributes for metric values <code class="language-plaintext highlighter-rouge">Sum of Seats</code> and <code class="language-plaintext highlighter-rouge">Count</code>:</p>
 
-<ul>
-  <li>Fields to use for the table <strong>rows</strong></li>
-  <li>Fields to use for the table <strong>columns</strong></li>
-  <li>Fields to use for the table <strong>values</strong></li>
-</ul>
+<p><img src="../images/unpivoted-table.png" alt="Unpivoted table"></p>
 
-<p>Let’s say we ask the following question in the notebook editor:</p>
+<p>A pivot table is a table that has dimensions in both rows and columns, and metric values in the cells. Pivot tables can include summary rows with totals across for those dimensions:</p>
 
-<p><img src="../images/pivot-table-notebook.png" alt="Pivot table notebook"></p>
+<p><img src="../images/pivoted-table.png" alt="Pivoted table"></p>
 
-<p>From the <code class="language-plaintext highlighter-rouge">Orders</code> table, we’ve summarized by the count of orders and the average order total, and grouped by <code class="language-plaintext highlighter-rouge">User → State</code>, <code class="language-plaintext highlighter-rouge">Product → Category</code>, and <code class="language-plaintext highlighter-rouge">Created At</code> binned by year. Here’s our question visualized as a pivot table:</p>
+<p>The reason they’re called pivot tables is because you can rotate (“pivot”) a column 90 degrees so that the values in that column become column headings themselves. Pivoting values into column headings is useful when analyzing data across multiple attributes, like time, location, and category. You can pivot multiple rows to columns and vice versa, or not pivot any at all.</p>
+
+<p>Pivot table is the only Metabase visualization type (besides the plain table, of course) can display several metrics simultaneously along several dimensions.</p>
+
+<h2 id="how-to-create-a-pivot-table">How to create a pivot table</h2>
+
+<p>To create a pivot table, you’ll need to use the query builder. Currently, you can’t build pivot tables for questions written in SQL, because Metabase would need to modify your SQL code in order to calculate subtotals. If you really need to use SQL, the workaround here is to create your question in two steps: first do all the complex things you need to do in SQL, save the results as a question, then use that saved SQL question as the starting point for a new query builder question which summarizes that data.</p>
+
+<ol>
+  <li>
+    <p>Create a question in the query builder that has a summary with at least one breakout, for example “<code class="language-plaintext highlighter-rouge">Count</code> of orders by <code class="language-plaintext highlighter-rouge">Category</code> and <code class="language-plaintext highlighter-rouge">Month</code>”.</p>
+
+    <p>You can have multiple metrics in the query (for example, “<code class="language-plaintext highlighter-rouge">Count</code> <em>and <code class="language-plaintext highlighter-rouge">Average of Total</code> of orders</em> by <code class="language-plaintext highlighter-rouge">Category</code> and <code class="language-plaintext highlighter-rouge">Month</code>”)</p>
+
+    <p><img src="../images/pivot-table-notebook.png" alt="Pivot table notebook"></p>
+  </li>
+  <li>Click on <strong>Visualize</strong>.</li>
+  <li>To change the visualization to the pivot table, click on the <strong>Visualization</strong> icon in the bottom left and select <strong>Pivot table</strong> in the sidebar.</li>
+  <li>
+    <p>To configure fields displayed as rows and columns in the pivot table, click on the <strong>gear</strong> icon and assign fields to one of three “buckets”: <strong>rows</strong>, <strong>columns</strong> or <strong>measures</strong>.</p>
+
+    <ul>
+      <li><strong>Rows</strong> and <strong>Columns</strong> should contain the dimensions, or breakouts - in other words, the fields you’re grouping by, like <code class="language-plaintext highlighter-rouge">Category</code> or <code class="language-plaintext highlighter-rouge">Created at</code>.</li>
+      <li><strong>Measures</strong> should contain your summaries, or metrics - things like <code class="language-plaintext highlighter-rouge">Count</code> or <code class="language-plaintext highlighter-rouge">Average of Total</code>.</li>
+    </ul>
+
+    <p><img src="../images/pivot-table-options.png" alt="Pivot table options"></p>
+
+    <p>You can put multiple fields in the “rows” and “columns” buckets, but note that the order of the fields changes how Metabase displays the table: each additional field will nest within the previous field.</p>
+  </li>
+</ol>
+
+<p>Currently, all the dimension and metrics in your query must appear as either rows, columns, or measures in the pivot table (although you can <a href="#totals-and-grand-totals">collapse rows to their totals</a>). If you don’t want to display a breakout or metric in the pivot table, you’ll need to remove it from the query - you can’t hide it from the pivot table.</p>
+
+<h2 id="totals-and-grand-totals">Totals and grand totals</h2>
+
+<p>Where it makes sense, Metabase will automatically include subtotals for grouped rows.</p>
 
 <p><img src="../images/pivot-table-options.png" alt="Pivot table options"></p>
 
-<p>We’ve assigned the fields <code class="language-plaintext highlighter-rouge">User → State</code> and <code class="language-plaintext highlighter-rouge">Created At</code> to table rows, and assigned the <code class="language-plaintext highlighter-rouge">Product -&gt; Category</code> field to generate our columns: Doohickey, Gadget, and so on. We can drag and drop dimensions between the row and column buckets, and add aggregations to the table values bucket. For example, if we assign a field to the columns bucket, Metabase will pivot that field and render each unique value of that field as a column heading.</p>
-
-<p>You can put multiple fields in the “rows” and “columns” buckets, but note that the order of the fields changes how Metabase displays the table: each additional field will nest within the previous field.</p>
-
-<p>Where it makes sense, Metabase will automatically include subtotals for grouped rows. For example, as in the image above, because we’ve grouped our rows first by <code class="language-plaintext highlighter-rouge">State</code>, then by <code class="language-plaintext highlighter-rouge">Created At</code>, Metabase will list each year for each <code class="language-plaintext highlighter-rouge">State</code>, and aggregate the metric(s) for that subgroup. For orders placed in Wisconsin, Metabase would sum the count of orders for each category, and find the average annual order total in each product category in Wisconsin.</p>
+<p>For example, as in the image above, because we’ve grouped our rows first by <code class="language-plaintext highlighter-rouge">Source</code>, then by <code class="language-plaintext highlighter-rouge">Plan</code>, Metabase will list each plan for each <code class="language-plaintext highlighter-rouge">Source</code>, and then aggregate the metric(s) for that source..</p>
 
 <p>To collapse a group on a pivot table, you can click on the minus (–) button next to the group’s heading (or the plus (+) button to expand it). When you save a pivot table, Metabase will remember which groups were expanded and which were collapsed.</p>
 
-<p>For more, check out <a href="/learn/metabase-basics/querying-and-dashboards/visualization/how-to-create-pivot-tables">How to create a pivot table to summarize your data</a>.</p>
+<p>You can ask Metabase to hide the totals by going to pivot table settings (<strong>gear</strong> icon) and toggling off “Show row/column totals”.</p>
+
+<h2 id="conditional-formatting-in-pivot-tables">Conditional formatting in pivot tables</h2>
+
+<p>You can add colors to pivot tables based on conditions, or using a range of values:</p>
+
+<p><img src="../images/pivot-conditional-formatting.png" alt="Conditional formatting"></p>
+
+<p>Metabase won’t format totals or grand totals.</p>
+
+<p>Conditional formatting for pivot tables works the same way as for regular tables, so see <a href="./table#conditional-table-formatting">Conditional formatting</a></p>
+
+<h2 id="using-pivot-tables-as-heatmaps">Using pivot tables as heatmaps</h2>
+
+<p>You can use conditional formatting in pivot tables to mimic a “heat map” of values by dimensions:</p>
+
+<ol>
+  <li>Create a query builder question with a summary block that has:</li>
+</ol>
+
+<ul>
+  <li>One metric that defines the intensity of the cells in heatmap</li>
+  <li>Two breakouts to define the horizontal and vertical components of the map</li>
+</ul>
+
+<ol>
+  <li>Visualize the query as a pivot table.</li>
+  <li>Add a <strong>“Color range”</strong> conditional formatting.</li>
+</ol>
+
+<p>For example, to build a heatmap of hourly activity by day of the week, use a query with breakouts by hour of day and day of the week:</p>
+
+<p><img src="../images/heatmap-query.png" alt="Query for the heatmap"></p>
+
+<p>Use pivot table with conditional formatting:</p>
+
+<p><img src="../images/pivot-table-as-heatmap.png" alt="Pivot table as a heatmap"></p>
 
 <h2 id="pivot-table-exports">Pivot table exports</h2>
 
-<p>See <a href="../exporting-results#exporting-pivot-tables">Exporting pivot tables</a>.</p>
+<p>There are special considerations when exporting pivot tables as XLSX files. See <a href="../exporting-results#exporting-pivot-tables">Exporting pivot tables</a>.</p>
+
+<h2 id="pivot-table-limitations">Pivot table limitations</h2>
+
+<ul>
+  <li>Pivot tables are only available for SQL databases.</li>
+  <li>All metrics and dimensions specified in the query will be displayed in the pivot table.</li>
+  <li>Pivot tables are only available for questions built with the query builder.</li>
+  <li>The query builder question must have a summary block.</li>
+</ul>
+
+<p>If you must use SQL, and your SQL query does not have parameters, you can save that SQL query , then use its <a href="../native-editor/writing-sql#explore-sql-question-results-using-the-query-builder">results as the starting point</a> for a query builder question in order to build a question. The trick here is to do your aggregation and grouping in the query builder. That is, use the SQL question to grab the raw data you want to work with (maybe <a href="../../data-modeling/models">create a model</a>), then start a new question in the query builder to filter, summarize, and group that data.</p>
 
 
         <div>
@@ -4191,13 +4305,7 @@ Roadmap</a>
         <div id="sub-navigation-content">
           
         </div>
-        
-
-
-  
-    <div id="feedback-widget-container" class="bootstrap feedback-widget">
-  
-
+        <div id="was-this-helpful-widget">
   <div id="page-feedback">
     <h6>Was this helpful?</h6>
     <button id="page-feedback-vote-up" class="vote-button Button">
@@ -4217,19 +4325,15 @@ Roadmap</a>
   </div>
 
   <div id="page-comment" class="flex flex-wrap full hide">
-    <div class="flex full">
-      <h6 id="page-feedback-question"></h6>
-    </div>
+    <p id="page-feedback-question"></p>
 
-    <div id="page-comment-form" class="flex full">
-      
-      <input id="feedback-comment-text" maxlength="500" class="flex input sm-input-small bordered inline-block align-center" name="comment" placeholder="Let us know what you think">
-      
+    <form id="page-comment-form" class="flex full">
+      <textarea id="feedback-comment-text" name="comment" placeholder="Type here…"></textarea>
 
-      <button id="page-comment-submit" class="feedback-widget Button flex align-center">
+      <button id="page-comment-submit" class="Button flex align-center">
         Send
       </button>
-    </div>
+    </form>
   </div>
 
   <div id="page-feedback-message" class="fs-18 hide">
@@ -4243,34 +4347,7 @@ Roadmap</a>
   
 </div>
 
-<script type="text/javascript" src="/js/feedback-widget.js"></script>
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const iframe = document.getElementById("subscribe-to-ai-newsletter-righthandside");
-
-    // Certain collections (e.g., "docs") do not display the newsletter iframe
-    if (!iframe) {
-      return;
-    }
-    const url = new URL(iframe.src, window.location.origin);
-
-    // Copy search params from the main window
-    const currentParams = new URLSearchParams(window.location.search);
-    for (const [key, value] of currentParams.entries()) {
-      url.searchParams.set(key, value);
-    }
-
-    // Add the current pathname as signup_path
-    url.searchParams.set("signup_path", window.location.pathname);
-
-    // Apply the new src
-    iframe.src = url.toString();
-  });
-</script>
-<script type="text/javascript" src="/js/side-email-cta.js"></script>
-
-  
-
+<script type="text/javascript" src="/js/was-this-helpful-widget.js"></script>
 
       </div>
 	  </article>
