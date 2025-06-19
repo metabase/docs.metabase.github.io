@@ -180,26 +180,4 @@ jobs:
           GH_TOKEN: ${{ secrets.METABASE_AUTOMATION_USER_TOKEN }}
           MAIN_REPO_SOURCE_BRANCH: ${{ github.event.inputs.source_branch || github.event.client_payload.source_branch }}
         run: |
-          echo "Looking for PR from branch: $MAIN_REPO_SOURCE_BRANCH"
-
-          # Check if PR exists and get details
-          PR_INFO=$(gh pr view --head "$MAIN_REPO_SOURCE_BRANCH" --json number,title,state 2>/dev/null || echo "")
-
-          if [ -z "$PR_INFO" ]; then
-            echo "No PR found for branch $MAIN_REPO_SOURCE_BRANCH"
-            exit 1
-          fi
-
-          PR_NUMBER=$(echo "$PR_INFO" | jq -r '.number')
-          PR_STATE=$(echo "$PR_INFO" | jq -r '.state')
-
-          echo "Found PR #$PR_NUMBER with state: $PR_STATE"
-
-          if [ "$PR_STATE" = "OPEN" ]; then
-            echo "Merging PR #$PR_NUMBER..."
-            gh pr merge $PR_NUMBER --merge --auto
-            echo "PR #$PR_NUMBER merged successfully"
-          else
-            echo "PR #$PR_NUMBER is not open (state: $PR_STATE)"
-            exit 1
-          fi
+          bb script/merge.clj --source-branch "$MAIN_REPO_SOURCE_BRANCH" --target-branch "$MAIN_REPO_TARGET_BRANCH"
