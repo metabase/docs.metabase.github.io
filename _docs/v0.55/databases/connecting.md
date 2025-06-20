@@ -12,6 +12,7 @@ redirect_from:
     - /docs/v0.55/databases/connections/sql-server
     - /docs/v0.55/administration-guide/databases/h2
     - /docs/v0.55/databases/connections/h2
+    - /docs/v0.55/databases/connections
 ---
 
 # Adding and managing databases

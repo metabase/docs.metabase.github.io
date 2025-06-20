@@ -9,6 +9,7 @@ source_url: 'https://github.com/metabase/metabase/blob/master/docs/questions/que
 layout: new-docs
 redirect_from:
     - /docs/v0.55/questions/query-builder/introduction
+    - /docs/v0.55/questions/query-builder
 ---
 
 # The query builder
@@ -78,7 +79,7 @@ To choose which columns to include in your query, click on the arrow next to the
 
 You can [hide columns](../visualizations/table#rearranging-adding-and-hiding-columns) from the table views.
 
-> **Hiding columns should _not_ be used to secure sensitive information**. Hiding columns in table visualization settings only affects the visibility of the columns _in the visualization_, not in the query results. Even people with only "view data" permissions to the question will be able to change the visualization settings and unhide columns. To exclude a column from the results of a specific query, uncheck the column in the "Data" block of the query builder. 
+> **Hiding columns should _not_ be used to secure sensitive information**. Hiding columns in table visualization settings only affects the visibility of the columns _in the visualization_, not in the query results. Even people with only "view data" permissions to the question will be able to change the visualization settings and unhide columns. To exclude a column from the results of a specific query, uncheck the column in the "Data" block of the query builder.
 
 ## Joining data
 

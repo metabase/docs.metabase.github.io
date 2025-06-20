@@ -8,6 +8,8 @@ title: Organization overview
 source_url: >-
   https://github.com/metabase/metabase/blob/master/docs/exploration-and-organization/start.md
 layout: new-docs
+redirect_from:
+  - /docs/latest/exploration-and-organization
 latest: true
 ---
 

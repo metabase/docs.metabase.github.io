@@ -304,5 +304,3 @@ Data jargon explained.
 ### [Metabase Experts](/partners/)
 
 If you’d like more technical resources to set up your data stack with Metabase, connect with a [Metabase Expert](/partners/).
-
-<!-- docs bump 1 -->

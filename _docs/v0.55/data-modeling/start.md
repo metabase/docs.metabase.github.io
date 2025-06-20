@@ -7,6 +7,8 @@ category: 'Data Modeling'
 title: 'Data modeling overview'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/data-modeling/start.md'
 layout: new-docs
+redirect_from:
+    - /docs/v0.55/data-modeling
 ---
 
 # Data modeling overview
