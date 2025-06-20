@@ -30,7 +30,6 @@ Database routing is useful for:
 - [MariaDB](../databases/connections/mariadb)
 - [MySQL](../databases/connections/mysql)
 - [PostgreSQL](../databases/connections/postgresql)
-- [Snowflake](../databases/connections/snowflake)
 - [SQL Server](../databases/connections/sql-server)
 - [SQLite](../databases/connections/sqlite)
 
