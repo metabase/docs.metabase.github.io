@@ -5,7 +5,6 @@ const fs = require("fs");
 const path = require("path");
 const { addFrontmatter } = require("../lib/frontmatter.js");
 const fetchDocs = require("../lib/fetch-docs.js");
-const { moveCloudDocsToLatest } = require("../lib/cloud.js");
 const { squashVersion, updateRedirectsAndLinks } = require("../lib/utils.js");
 
 var settings = {
@@ -89,9 +88,6 @@ fetchDocs(settings)
     console.log("docsVersion", docsVersion);
 
     if (settings.latest) {
-      // Before we update frontmatter for our latest (search-engine indexed) docs
-      // We should move the cloud docs into latest
-      moveCloudDocsToLatest();
       updateRedirectsAndLinks(`_docs/latest`);
       const frontmatter = JSON.parse(fs.readFileSync(path.resolve(__dirname, "../lib/latest-frontmatter.json"), 'utf8'));
       console.log("Adding frontmatter to cloud docs\n", frontmatter)
