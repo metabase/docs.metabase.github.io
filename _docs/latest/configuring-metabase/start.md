@@ -8,6 +8,8 @@ title: Configuration overview
 source_url: >-
   https://github.com/metabase/metabase/blob/master/docs/configuring-metabase/start.md
 layout: new-docs
+redirect_from:
+  - /docs/latest/configuring-metabase
 latest: true
 ---
 
