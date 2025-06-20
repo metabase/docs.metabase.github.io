@@ -14,8 +14,6 @@ summary: 'Route queries to different databases based on who''s viewing them. Gre
 
 {% include plans-blockquote.html feature="Database routing" %}
 
-> Database routing is currently unavailable for ClickHouse
-
 With database routing, an admin can build a question once using one database, and the question will run its query against a different database with the same schema depending on who is viewing the question.
 
 Database routing is useful for:
@@ -32,7 +30,6 @@ Database routing is useful for:
 - [MariaDB](../databases/connections/mariadb)
 - [MySQL](../databases/connections/mysql)
 - [PostgreSQL](../databases/connections/postgresql)
-- [Snowflake](../databases/connections/snowflake)
 - [SQL Server](../databases/connections/sql-server)
 - [SQLite](../databases/connections/sqlite)
 
