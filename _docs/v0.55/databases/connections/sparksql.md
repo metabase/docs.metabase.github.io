@@ -80,10 +80,6 @@ Turn this option **ON** to scan a sample of values every time Metabase runs a [s
 
 A fingerprinting query examines the first 10,000 rows from each column and uses that data to guesstimate how many unique values each column has, what the minimum and maximum values are for numeric and timestamp columns, and so on. If you leave this option **OFF**, Metabase will only fingerprint your columns once during setup.
 
-## Database routing
-
-See [Database routing](../../permissions/database-routing).
-
 ## Danger zone
 
 See [Danger zone](../danger-zone).
