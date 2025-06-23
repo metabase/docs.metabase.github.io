@@ -350,6 +350,14 @@ Pick one of your dashboards to serve as homepage. Users without dashboard access
 
 ID of dashboard to use as a homepage.
 
+### `MB_DASHBOARDS_SAVE_LAST_USED_PARAMETERS`
+
+- Type: boolean
+- Default: `true`
+- [Exported as](../installation-and-operation/serialization): `dashboards-save-last-used-parameters`.
+
+Whether dashboards should default to a user's last used parameters on load.
+
 ### `MB_DB_CONNECTION_TIMEOUT_MS`
 
 - Type: integer
@@ -797,7 +805,7 @@ Enable group membership synchronization with JWT.
 - Default: `null`
 - [Configuration file name](./config-file): `jwt-identity-provider-uri`
 
-URL for JWT-based login page. Optional if using JWT SSO only with the embedded analytics SDK.
+URL for JWT-based login page.
 
 ### `MB_JWT_SHARED_SECRET`
 
@@ -1450,7 +1458,7 @@ Used for encrypting and checking whether SDK requests are signed.
 ### `MB_SEARCH_ENGINE`
 
 - Type: keyword
-- Default: `:in-place`
+- Default: `:appdb`
 
 Which engine to use when performing search. Supported values are :in-place and :appdb.
 
