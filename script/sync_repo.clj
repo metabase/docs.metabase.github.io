@@ -5,25 +5,23 @@
    [babashka.fs :as fs]
    [util :as u]))
 
-
-;; bb script/sync_repo.clj --from .marketing_repo
-
-(def cli-spec
+(def ^:private cli-spec
   {:spec {:from-repo {:ref "<target-branch>"
                       :desc "The target branch of the triggering PR."
                       :require true}}
    :error-fn u/cli-error-fn})
 
-(def control-dirs
+(def ^:private control-dirs
   ["_data"
    "_includes"
    "_layouts"
    "_plugins"
    "_sass"
    "js"
+   "learn"
    "redirects"])
 
-(defn -main [& args]
+(defn- -main [& args]
   (let [{:keys [from-repo] :as x} (cli/parse-opts args cli-spec)]
     (doseq [dir control-dirs]
       (let [source-dir (fs/file from-repo dir)

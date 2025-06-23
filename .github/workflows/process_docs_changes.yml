@@ -114,7 +114,7 @@ jobs:
 
       - name: Merge control files from Marketing Repo
         run: |
-          bb script/sync-repo.clj --from .marketing_repo
+          bb script/sync-repo.clj --from-repo .marketing_repo
 
       - name: "yarn lint-markdown"
         run: |
@@ -149,7 +149,7 @@ jobs:
           echo "Time elapsed: ${SECONDS} seconds"
           echo 'checking reported links...'
           echo "htmlproofer spit out a report of length: $(wc -l < htmlproofer.out)"
-          bb script/analyze_links.clj --htmlproofer-output htmlproofer.out
+          bb script/analyze_links.clj --htmlproofer-output htmlproofer.out --limit 1
 
       - name: Update or Create the Pull Request
         if: |
