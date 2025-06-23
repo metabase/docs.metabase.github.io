@@ -114,7 +114,11 @@ jobs:
 
       - name: Merge control files from Marketing Repo
         run: |
-          bb script/sync-repo.clj --from .marketing_repo
+          cp -r .marketing_repo/_data .
+          cp -r .marketing_repo/_includes .
+          cp -r .marketing_repo/_layouts .
+          cp -r .marketing_repo/_plugins .
+          cp -r .marketing_repo/_sass .
 
       - name: "yarn lint-markdown"
         run: |
