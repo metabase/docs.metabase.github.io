@@ -1,6 +1,5 @@
 (ns sync-repo
   (:require
-   [clojure.string :as str]
    [babashka.cli :as cli]
    [babashka.fs :as fs]
    [util :as u]))
