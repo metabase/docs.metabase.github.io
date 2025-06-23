@@ -5,8 +5,11 @@
 
   <meta content="frame-ancestors 'none'" http-equiv="Content-Security-Policy">
   <meta content="deny" http-equiv="X-Frame-Options">
+  
+
+  
     
-  <link href="https://www.metabase.com/docs/v0.55/api" rel="canonical">
+    <link href="https://www.metabase.com/docs/v0.55/api" rel="canonical">
   
 
   <script type="text/javascript">
@@ -17,15 +20,14 @@
         theLocation = new URL(theLocation);
       }
 
-      var redirectionSuffixes = ["/index.html", ".html", "/index"];
+      var redirectionSuffixes = [
+        "/index.html",
+        ".html",
+        "/index"
+      ];
       for (var i = 0; i < redirectionSuffixes.length; i = i + 1) {
         var redirectionSuffix = redirectionSuffixes[i];
-        if (
-          theLocation.pathname &&
-          theLocation.pathname.length > redirectionSuffix.length &&
-          theLocation.pathname.indexOf(redirectionSuffix) ===
-            theLocation.pathname.length - redirectionSuffix.length
-        ) {
+        if (theLocation.pathname && theLocation.pathname.length > redirectionSuffix.length && theLocation.pathname.indexOf(redirectionSuffix) === theLocation.pathname.length - redirectionSuffix.length) {
           var pathname = theLocation.pathname.replace(redirectionSuffix, "");
           if (pathname[pathname.length - 1] === "/") {
             pathname = pathname.slice(0, -1);
@@ -42,7 +44,13 @@
   
     
 <meta name="robots" content="noindex">
-   
+
+
+
+
+
+
+
 
 <title>Metabase API documentation | Metabase Documentation</title>
 <!-- Twitter cards -->
@@ -51,7 +59,7 @@
 <meta name="twitter:title" content="Metabase API documentation | Metabase Documentation">
 <meta name="twitter:description" content="The official API documentation for Metabase.">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
+<meta name="twitter:image" content="https://www.metabase.com/images/twitter/default.png">
 <!-- end of Twitter cards -->
 
 <!-- Open Graph metadata -->
@@ -60,47 +68,13 @@
 <meta property="og:url" content="https://www.metabase.com/docs/v0.55/api">
 <meta name="title" property="og:title" content="Metabase API documentation | Metabase Documentation">
 <meta name="description" property="og:description" content="The official API documentation for Metabase.">
-<meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
+<meta name="image" property="og:image" content="https://www.metabase.com/images/twitter/default.png">
 <!-- end of Open Graph metadata -->
 
   
 
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "url": "https://www.metabase.com/",
-    "sameAs": [
-      "https://github.com/metabase",
-      "https://www.linkedin.com/company/metabase/",
-      "https://x.com/metabase",
-      "https://www.youtube.com/@metabasedata"
-    ],
-    "logo": "https://github.com/metabase/metabase.github.io/blob/master/images/metabase-logo.png?raw=",
-    "name": "Metabase",
-    "description": "Metabase is an open source Business Intelligence and Embedded Analytics tool. Connect to your data stack in 5 minutes to make queries, visualizations, and dashboards easy for everyone—no SQL required",
-    "email": "hello@metabase.com",
-    "foundingDate": "2015-02-01T00:00:00.000Z",
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "9740 Campo Rd",
-      "addressLocality": "Spring Valley",
-      "addressCountry": "USA",
-      "addressRegion": "CA",
-      "postalCode": "91977"
-    },
-    "knowsAbout": [
-      { "@type": "Thing", "name": "Business Intelligence" },
-      { "@type": "Thing", "name": "Embedded Analytics" },
-      { "@type": "Thing", "name": "Self-service analytics" },
-      { "@type": "Thing", "name": "Open source Business Intelligence" }
-    ]
-  }
-</script>
-
-
   
-    <link href="/images/favicon.svg" rel="shortcut icon">
+    <link href="/images/favicon-dev.svg" rel="shortcut icon">
   
   <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/flexboxgrid/6.3.1/flexboxgrid.min.css" rel="stylesheet" type="text/css">
@@ -121,12 +95,14 @@
 
   <meta content="no-referrer-when-downgrade" name="referrer">
 
-  <!-- VWO -->
+    <!-- VWO -->
   <link rel="preconnect" href="https://dev.visualwebsiteoptimizer.com">
 
+
   <!-- Syntax Highlighting -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/base16/atelier-sulphurpool-light.min.css" integrity="sha512-qrwjMzcPG1EHhhg9z2nH7VW7hj525RVx0o7GlxQc4ZhWkghp9slpnTjOUu5thnPaRfRqfAUlX7anvAqD9EonfQ==" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.10.0/styles/tokyo-night-dark.css" integrity="sha512-+2gZRUBRo65MXQNdZ/cVX90M2iDKAyb/52muHcgh6F2iarNtc0aX1FE3kAxG9fJxzsgCtxjxZ6nWecrgMTVYnQ==" crossorigin="anonymous" referrerpolicy="no-referrer">
 
   <!-- GDPR -->
   <script type="text/javascript" src="/gdpr-cookie-notice/dist/script.js"></script>
@@ -139,12 +115,8 @@
   <script type="text/javascript" src="/js/add-params-to-anchors.js"></script>
   <script type="text/javascript" src="/js/pass-referral-params-to-fillout-forms.js"></script>
 
-  
   <!-- Add Inkeep widget -->
   <script type="module" src="https://unpkg.com/@inkeep/uikit-js@0.3.10/dist/embed.js" defer=""></script>
-  
-
-  <script type="text/javascript" src="/js/ai-newsletter-subscribe-form.js" defer=""></script>
 <style>
     :root {
       --scalar-font: 'Lato', sans-serif;

@@ -1,360 +1,171 @@
-# metabase.github.io
+# metabase doc building repo
 
-The [website](/) for [Metabase](https://github.com/metabase/metabase).
+This repo is the home of the docs piece of the [Metabase
+website](https://metabase.com) for
+[Metabase](https://github.com/metabase/metabase). Docs are built in a workflow
+in this repo.
 
-## Prerequisites
+## ⚠️ Proposing Documentation Updates ⚠️
 
-This repo includes some out-of-date dependencies, so specific node/ruby versions are necessary.
+This repo is generated from the [Metabase](https://github.com/metabase/metabase)
+repo. If you have suggestions, please open [an issue
+there](https://github.com/metabase/metabase/issues/new/choose), or a PR against
+the markdown files in [Metabase](https://github.com/metabase/metabase/docs).
 
-### Node
+## Repo Description
 
-Minimum version of Node is `10.x`, specifically tested on `10.22.0`.
+This repo contains the docs + docs building mechanisms for Metabase. Docs data
+gets pulled from the [main metabase repo](https://github.com/metabase/metabase)
+and built here automatically when a PR against a publishable branch is updated
+or merged. This ends up on `metabase.com` because we merge the static assets
+(html/css/js) which live here into the [marketing
+repo](https://github.com/metabase/metabase.github.io) during a marketing build.
 
-[nodenv](https://github.com/nodenv/nodenv) can be used to maintain different versions of Node.
+With these steps in place, at anytime, the master branch of this repo should be
+publishable alongside the [marketing
+repo](https://github.com/metabase/metabase.github.io) site.
 
-### Ruby
+## Branch-based previews on Cloudflare Pages
 
-The Ruby version should be `3.3.2` as it is the latest version (as of June 2024)
+Every branch that gets built is also uploaded to cloudflare pages. A link to the
+live preview will be added to each PR.
 
-It is recommended to use an environment manager for Ruby such as [rbenv](https://github.com/rbenv/rbenv).
+## Docs Workflow Overview
 
-## Development
+[Process Docs Changes](.github/workflows/process_docs_changes.yml) is triggered
+by the
+[docs_bump_detected.yml](https://github.com/metabase/metabase/blob/master/.github/workflows/docs_bump_detected.yml)
+and
+[docs_merge_detected.yml](https://github.com/metabase/metabase/blob/master/.github/workflows/docs_merge_detected.yml)
+workflows in the main metabase repo. They trigger for PRs when a PR with docs
+changes gets opened/edited or merged respectively. This happens only for PRs
+targeting `master` or a release branche (`release-x.N.x`).
 
-### Setup
+They both open a PR in this repo reflecting the changes from the source branch
+of the PR which triggered the `Process Docs Changes` workflow.
 
-This is a [Jekyll](http://jekyllrb.com) site hosted on [GitHub Pages](http://pages.github.com). To build a Jekyll site you'll need a few things on your system so double check the [Jekyll requirements](http://jekyllrb.com/docs/installation/#requirements).
+- [docs_bump_detected.yml](https://github.com/metabase/metabase/blob/master/.github/workflows/docs_bump_detected.yml)
 
-Follow these steps to copy this repository to your computer and build the site:
+Triggered whenever a PR is opened or updated (but not merged).
 
-1. [Set up SSH on your machine](https://docs.github.com/en/authentication/connecting-to-github-with-ssh). Once set up, you'll be able to clone the repository on your local machine.
-2. Clone the repository.
+- [docs_merge_detected.yml](https://github.com/metabase/metabase/blob/master/.github/workflows/docs_merge_detected.yml)
 
-   ```bash
-   git clone git@github.com:metabase/metabase.github.io.git
+Triggered when the PR is merged.
 
-   ```
+When this happens, we merge the `{target-branch}->{source-branch}` PR into
+`master` in this repo.
 
-3. Then build the website.
+---
 
-   ```bash
-   cd metabase.github.io
-   script/bootstrap
-   script/server
-   ```
+## Workflow Scripts Overview
 
-Open your browser to http://localhost:4000.
+### [Process Docs Changes](.github/workflows/process_docs_changes.yml)
 
-On the first go around, this process will probably fail. If you're on Mac, and you run into issues with building native extensions like **ffi** and **nokogiri**, you may need to install Xcode, both the command-line tools via `xcode-select --install`, as well as the Xcode application from the app store.
+Notable steps:
 
-If you make changes to js files, you must run `npm run build`. If you get the exception `primordials is not defined` you must use node version 11 or 10 instead of anything newer. ~~You may need to use [nvm](https://github.com/nvm-sh/nvm) to install and use it. It's a bit of a mess on macos.~~ `graceful-fs` has been added to the dependencies so `primordials` is found.
+- `Update docs for branchname`:
+  - Downloads docs from metabase/metabase, adds frontmatter, and builds SDK docs
+    using cljs compiler.
 
-### Setup using Docker and VS Code
+- Builds Jekyll site
 
-This allows working, editing, and viewing the website _without_ worrying about the right version of Ruby/gems and Node.js/npm dependencies. The only requirements: working Docker and VS Code.
+- Lints markdown, styles, scripts, and links.
 
-1. Launch VS Code and install [Remote Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers).
-2. Check out this branch, open it with VS Code.
-3. VS Code prompts you to “Reopen in container”. Accept that and wait for a while (Note: VS Code will create the container for the first time and it may take some time, however it is cached so any future loading should be much faster).
-4. Open the terminal (Ctrl+J) as usual, and execute:
+- Opens PR with changes to `master` for the `_site` (html/js/css), and `_docs`
+  (markdown) directories.
 
-   ```bash
-   bundle update --bundler
-   script/bootstrap
-   script/server
-   ```
+#### Steps required for a faithful build
 
-5. Open localhost:4000.
+- Since we've split up the site into 2 jekyll instances, we cannot rely on
+  htmlproofer to check links from the docs to the marketing site. So
+  `analyze_links.clj` checks any missing links against `metabase.com`.
+  
+- Copies over control directories from marketing repo: `_data`, `_includes`,
+  `_layouts`, `_plugins`, and `_sass`. These are needed so we get a faithful
+  docs build.
 
-### Notes on installation
+#### Triggering
 
-We are using a [custom GitHub Actions workflow](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site#publishing-with-a-custom-github-actions-workflow) with `Jekyll 4.3.3` (latest as of June 2024) with `Ruby ~> 3.3.2`.
+The [Process Docs Changes](.github/workflows/process_docs_changes.yml) workflow
+is triggered from `metabase/metabase` (aka the main repo). The triggering
+workflow includes the target and source branch name, e.g.: [`my-docs-hotfix` ->
+`master`] or [`v49-new-feature-dox` -> `release-x.49.x`].
 
-#### Troubleshooting
+Building docs can be [run
+manually](https://github.com/metabase/docs.metabase.github.io/actions/workflows/process_docs_changes.yml)
+as well.
 
-##### Ruby notes
+#### New Script Docs
 
-###### Version
+Note, these scripts take an optional `--dry-run` flag that explains what they do
+without actually doing the operation.
 
-During `bundle`, if an error appears regarding Ruby version, you might need to install a different one:
+##### `check_incoming_branchname.clj`
 
-1. Run the command: `rbenv install 3.3.2`
-2. Run the command: `rbenv local 3.3.2` or `rbenv global 3.3.2`
-3. Restart your terminal (or Docker)
-4. Run the command `rbenv local` or `rbenv global` to check the Ruby version
+If the target doesn't match master or a release branch, This step stops the
+build. See
+[util/categorize-branchname](https://github.com/metabase/docs.metabase.github.io/blob/master/script/util.clj#L18-L22)
+for details.
+  
+e.g. `bb script/check_incoming_branchname.clj --target-branch master` exits 0.
 
-###### Path
+| branch | exit-code |
+|:---------------------|:----------|
+| master | 0 |
+| release-x.49.x | 0 |
+| docs-workflow-test-1 | 0 |
+| anything-else | 1 |
 
-If you run scripts outside of the `Remote-Containers` plugin for VS Code and the local Ruby version used by your OS does not match the Ruby version specified in [.ruby-version](https://github.com/metabase/metabase.github.io/blob/master/.ruby-version), that error might appear:
+##### `update_docs_for_branchname.clj`
 
-```bash
-Your Ruby version is X.X.X, but your Gemfile specified X.X.X
+Garunteed to be ran on a valid branchname (due to `check_incoming_branchname`
+above):
+
+``` shell
+$ bb script/update_docs_for_branchname.clj --dry-run --target-branch release-x.54.x --source-branch my-branch
+
+┌ Command for release-x.54.x
+│ ./script/docs release-x.54.x --set-version v0.54 --source-branch my-branch
+└
 ```
 
-Steps to set the Ruby version:
+When the release version number matches the latest docs_version number from the
+_config.yml file, it sets latest as well:
 
-1. Install the correct Ruby version by going through these [steps](https://github.com/metabase/metabase.github.io#ruby-1)
-2. Check which Ruby is being used by your OS with command: `ruby -v`
-3. If the Ruby version does not match the required one, make sure that `rbenv` is added to your paths with command:
+``` shell
+bb script/update_docs_for_branchname.clj --dry-run --source-branch cool-55-docs --target-branch release-x.55.x
 
-   ```bash
-   export PATH="$HOME/.rbenv/bin:$PATH"
-   eval "$(rbenv init -)"
-   ```
-
-   If you are on mac os, add `eval "$(rbenv init - zsh)"` to your `.zshrc` file.
-
-4. Then run the Ruby install again with commands:
-
-   1. `rbenv install 3.3.2` (skip if already installed prompt appears)
-   2. `rbenv global 3.3.2`
-   3. `rbenv local 3.3.2`
-
-##### Docker
-
-We have experienced error while trying to update an already existing install with the latest Docker setup.
-
-If such thing happens, it is recommended to reinstall fully the project by starting with the repository checkout step.
-
-##### SASS
-
-An error regarding `SASS` might appear:
-
-```bash
-Conversion error: Jekyll::Converters::Scss encountered an error while converting 'css/styles.scss': nil can't be coerced into Integer
+┌ Command for release-x.55.x
+│ ./script/docs --update --latest --source-branch cool-55-docs
+└
 ```
 
-It is related to the way SASS is parsing the entry file, solve by making sure you are using the relevant Ruby version.
+##### `analyze_links.clj`
 
-### Building and serving the site locally
+Builds ontop of our existing link checking. Since the original jekyll site has
+been split into 2, [htmlproofer](https://github.com/gjtorikian/html-proofer)
+cannot see links to the marketing site. So this step runs `htmlproofer`, and
+checks `metabase.com` for all "missing links" reported.
 
-To build the site:
+This will stop the build when there are htmlproofer-reported links that are not
+live on `metabase.com`.
 
-```bash
-script/build
+##### `update_or_create_pr.clj`
+
+Git adds, commits, and creates or updates a PR to master with files associated
+with the branch.
+
+- `bb script/update_or_create_pr.clj master`
+
+## Tests
+
+Given the non-trivial scripts run during a build, there are tests for these
+scripts to ensure they work.
+
+See: [script/_test/all.clj](script/_test/all.clj).
+
+They are run in the `Process Docs Workflow`, and can be run manually via:
+
+``` shell
+bb script/_test/all.clj
 ```
-
-To serve the site:
-
-```bash
-script/server
-```
-
-This script builds the site incrementally, and defaults to localhost:4000.
-
-### How to speed up development for metabase.github.io
-
-To avoid building all of the education pages every time:
-
-```bash
-script/marketing-pages
-```
-
-To focus just on the education pages (learn and docs):
-
-```bash
-script/ed
-```
-
-Which uses the [_config.docs.yml](./_config.docs.yml) as the config.
-
-### My changes aren't showing up
-
-If you changed something, but it's not showing up on the site, run:
-
-```bash
-script/build && script/server
-```
-
-The normal script `script/server` uses an incremental build flag, so you'll need to run the full build command first in order for the build to pick up the changes.
-
-### How to check for broken links on the website
-
-If you're working on documentation, go to the section below.
-
-```bash
-script/build && script/links
-```
-
-To check a single file, (assuming you've already run `script/build`):
-
-```bash
-script/links _site/path/to/file
-```
-
-### How to check for broken links in documentation
-
-Follow the steps under [Making changes to documentation](#making-changes-to-documentation), then run:
-
-```bash
-script/build && script/links
-```
-
-If you have broken links:
-
-- Fix them in this repo and re-run the command above to test your changes.
-- Add the fixes to your branch in the [Metabase repo](https://github.com/metabase/metabase)
-
-If you're done checking links, delete the docs you just fetched:
-
-```bash
-git add --all
-git reset HEAD --hard
-```
-
-Delete the branch:
-
-```bash
-git branch -d <website-branch-name>
-```
-
-### How to bundle javascript file under `/src`
-
-1. Set up the dependency graph for the webpack so it knows which modules needs to generates the bundle.
-
-   ```bash
-   npx webpack
-   ```
-
-2. Run this command every time you make a change in a javascript file to generate the updated bundles.
-
-   ```bash
-   npm run build
-   ```
-
-## Docs on features of the website
-
-[Promo banner](/docs/promo-banner.md)
-
-[Events](/docs/managing-events.md)
-
-## CI
-
-CI is very much a work in progress at the moment.
-
-### Legacy
-
-We are using a **legacy** command to run some tests on the [\_learn pages](https://github.com/metabase/metabase.github.io/tree/master/_learn) using:
-
-```bash
-node script/_linter/bin/index.js --learn _data/learn.yml $* all _learn
-```
-
-### FrontMatter
-
-Checks for frontMatter missing properties have been added using commands:
-
-```bash
-npm run frontMatter-learn
-npm run frontMatter-blog
-```
-
-### Opengraph images
-
-Designers use a Figma plugin called [Google Sheets Sync](https://www.figma.com/community/plugin/735770583268406934/Google-Sheets-Sync) to import any relevant data from posts/pages to generate opengraph images from those.
-
-A script was created to generate CSV files from the posts/pages so data do not have to be copy/paste manually:
-
-```bash
-npm run all-opengraphs
-```
-
-When a PR is merged into the `master` branch, we use a Github Action to create a new branch and PR with the CSV files updates so the changes can be reviewed, approved and merged manually.
-
-## Documentation
-
-Documentation is added to the site directly from the `metabase/metabase` repository's `docs` directory. This is done with [Node.js](http://www.nodejs.org/download), so you'll need that on your system and to install the dependencies used here.
-
-```bash
-$ cd metabase.github.io
-$ npm install
-```
-
-### Getting docs from `metabase/metabase`
-
-The instructions below are for manually pulling changes from the [Metabase repo](https://github.com/metabase/metabase) into this repo.
-
-To fetch documentation based on the latest release branch, check out a new branch and run:
-
-```bash
-script/docs-update
-```
-
-To fetch documentation from a specific branch and tag it with a version number:
-
-```bash
-script/docs <metabase-repo-branch> --set-version <version number>
-```
-
-### Making changes to documentation
-
-If you want to update the docs, you must work in the [Metabase repo](https://github.com/metabase/metabase), otherwise your changes will be overwritten.
-
-To see what your documentation changes in the Metabase repo will look like on the website:
-
-- Check out a new branch in this repo.
-- Fetch the branch with your changes from the [Metabase repo](https://github.com/metabase/metabase) (note that --set-version is required):
-
-```bash
-$ script/docs <metabase-repo-branch> --set-version <version number>
-# Example:
-$ script/docs docs-update-links --latest --set-version v0.41.2
-```
-
-From here, you can [test your links](#how-to-check-for-broken-links-in-documentation). Remember to make changes in the [Metabase repo](https://github.com/metabase/metabase), not this (the website) repo.
-
-When you're done testing your changes, you can clean up all uncommitted files with:
-
-```bash
-git add .
-git reset HEAD --hard
-```
-
-## Script/docs
-
-The script downloads the docs from the latest `release_branch` (as specified in `_config.yml`), and writes the docs to the latest version and the `latest` directories in the `_docs` directory.
-
-Other `script/docs` options include:
-
-### `--latest`
-
-Set this current release_branch as the latest docs version:
-
-```bash
-script/docs --latest
-```
-
-### `--set-version`
-
-Specify how you want to tag the branch.
-
-So, to set master as release `v0.41.2`:
-
-```bash
-script/docs master --latest --set-version v0.41.2
-```
-
-The above command would download the master tarball, extract the docs and put them into `_docs/v0.41` (or create the directory if this 41 marks a new major release), and set the `site.latest_version` to `v0.41.2`.
-
-
-## Linters
-
-Your PRs must pass all of the linters before merging. You can run all of the linters locally by running.
-
-```bash
-script/lint
-```
-
-Linters include:
-
-- **lint-learn**. Figures are numbered/formatted correctly and tables of contents are correct.
-- **lint-learn-data**. Articles in the data file contain the correct keys, and image references point to files that actually exist.
-- **frontMatter-blog**. Blog posts contain the required frontmatter keys.
-- **frontMatter-glossary**. Glossary entries contain the required frontmatter keys.
-
-See [package.json](package.json) for a list of scripts.
-
-For more info on the code, see [the linter README](script/README.md).
-
-## Deployment
-
-This site is automatically deployed when the `master` branch is changed.
