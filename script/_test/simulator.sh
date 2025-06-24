@@ -33,6 +33,9 @@ bb script/check_incoming_branchname.clj --target-branch "$TARGET_BRANCH"
 printf "\n\n\n================= bb script/update_docs_for_branchname.clj --source-branch %s --target-branch %s =================z\n" "$SOURCE_BRANCH" "$TARGET_BRANCH"
 bb script/update_docs_for_branchname.clj --source-branch "$SOURCE_BRANCH" --target-branch "$TARGET_BRANCH"
 
+printf "\n\n\n================= bb script/cleanup_cloud_docs.clj =================z\n"
+bb script/cleanup_cloud_docs.clj
+
 printf '\n\n\n================= copy marketing files =================z\n'
 bb script/sync_repo.clj --from-repo ../metabase.github.io
 
@@ -48,17 +51,16 @@ yarn lint-scripts
 printf '\n\n\n================= yarn lint-links =================z\n'
 yarn lint-links
 
-# Clear the existing site:
+printf '\n\n\n================= Clear the existing site: =================z\n'
 rm -rf _site
+echo "done"
 
-# Build the docs jekyll site:
+printf '\n\n\n================= Build the docs jekyll site: =================z\n'
 bundle exec jekyll build
+echo "built. docs site is now in _site"
 
-script/links || true
+printf '\n\n\n================= Run HTMLProofer on docs site: =================z\n'
+script/links || tail < htmlproofer.out -n 1
 
-printf '\n checking reported links...'
-
-echo ''
-echo "htmlproofer spit out a report of length: $(wc -l < htmlproofer.out)"
-
+printf '\n\n\n================= checking reported links... =================z\n'
 bb script/analyze_links.clj --htmlproofer-output htmlproofer.out
