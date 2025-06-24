@@ -142,10 +142,6 @@ jobs:
           # Build the jekyll site:
           script/build
 
-      - name: Reset control files from Marketing Repo
-        run: |
-          bb script/sync_repo.clj --delete
-
       - name: Run htmlproofer + metabase.com-aware link checks
         run: |
           SECONDS=0
@@ -166,11 +162,7 @@ jobs:
 
       - name: Remove control files from Marketing Repo
         run: |
-          rm -rf _data
-          rm -rf _includes
-          rm -rf _layouts
-          rm -rf _plugins
-          rm -rf _sass
+          bb script/sync_repo.clj --delete
 
       - name: Merge Updated Docs
         if: |
