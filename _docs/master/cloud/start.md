@@ -13,7 +13,7 @@ redirect_from:
 
 # Metabase Cloud
 
-Metabase Cloud is what we call our hosted service for our [Starter](/product/starter), [Pro](/product/pro), and [Enterprise](/product/enterprise) plans. We deal with running your Metabase server for you, manage uptime and backups, and handle all the upgrades so you're always on the latest version of Metabase.
+Metabase Cloud is what we call our hosted service for our [Starter](/product/starter), [Pro](https:www.metabase.com/product/pro), and [Enterprise](/product/enterprise) plans. We deal with running your Metabase server for you, manage uptime and backups, and handle all the upgrades so you're always on the latest version of Metabase.
 
 ## Metabase Cloud documentation
 
@@ -25,7 +25,7 @@ Manage your Metabase Cloud instance, subscription, and billing via the [Metabase
 - [Metabase Cloud versus self-hosting](./cloud-vs-self-hosting)
 - [Metabase Cloud Storage](./storage)
 - [Syncing Google Sheets with Metabase](./google-sheets)
-- [Limitations of Metabase Cloud](limitations)
+- [Limitations of Metabase Cloud](./limitations)
 
 ### Metabase Cloud settings
 
@@ -35,7 +35,7 @@ Manage your Metabase Cloud instance, subscription, and billing via the [Metabase
 
 ### Migrations
 
-- [Migration from an existing self-hosted Metabase](/docs/latest/cloud/migrate/guide)
+- [Migration from an existing self-hosted Metabase](./migrate/guide)
 - [Migration from Heroku](./migrate/heroku)
 - [Migration from Metabase Cloud to a self-hosted Metabase](./migrate/cloud-to-self-hosted)
 
