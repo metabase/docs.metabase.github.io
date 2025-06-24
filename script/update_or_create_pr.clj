@@ -16,7 +16,10 @@
                     :require true}
     :source-branch {:ref "<source-branch>"
                     :desc "The source branch of the triggering PR."
-                    :alias :r}}
+                    :alias :r}
+    :annotation {:ref "<annotation>"
+                 :desc "The annotation to add to the PR."
+                 :default "auto-build"}}
    :error-fn u/cli-error-fn})
 
 (defn existing-pr-by-title?
@@ -60,7 +63,7 @@
 (defn -main
   "Main function to update or create a PR. "
   [& args]
-  (let [{:keys [source-branch target-branch]
+  (let [{:keys [source-branch target-branch annotation]
          :as   opts}     (cli/parse-opts args cli-spec)
         _                   (when (or (:help opts) (:h opts))
                               (u/show-usage-and-exit cli-spec))
@@ -80,7 +83,7 @@
                               (println "Adding" ad "...")
                               (p/shell "git" "add" ad))
         {diff-exit :exit}   (p/shell {:continue true} "git" "diff" "--cached" "--quiet")
-        target-branch-title (str "[auto-build] " source-branch " -> " target-branch)]
+        target-branch-title (str "[" annotation "] " source-branch " -> " target-branch)]
     (if (zero? diff-exit)
       (println "→ No changes to commit.")
       (do
