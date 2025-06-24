@@ -33,7 +33,7 @@
 (defn- sync-dirs [source-dir target-dir]
   (when (fs/exists? source-dir)
           (println "Syncing" (str source-dir) "to" (str target-dir))
-          (fs/copy source-dir target-dir {:replace-existing true})))
+          (fs/copy-tree (str source-dir "/.") target-dir {:replace-existing true})))
 
 (defn- -main [& args]
   (let [{:keys [from-repo delete]} (cli/parse-opts args cli-spec)]
