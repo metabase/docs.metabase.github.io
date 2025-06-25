@@ -4,13 +4,11 @@ has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
 category: Cloud
-title: IP addresses to whitelist
-source_url: >-
-  https://github.com/metabase/metabase/blob/master/docs/cloud/ip-addresses-to-whitelist.md
+title: 'IP addresses to whitelist'
+source_url: 'https://github.com/metabase/metabase/blob/master/docs/cloud/ip-addresses-to-whitelist.md'
 layout: new-docs
 redirect_from:
-  - /cloud/docs/ip-addresses-to-whitelist
-latest: true
+    - /cloud/docs/ip-addresses-to-whitelist
 ---
 
 # IP addresses to whitelist
