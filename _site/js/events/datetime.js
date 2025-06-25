@@ -67,8 +67,13 @@ function checkIfIsInTheFuture(event) {
 }
 
 function parseDateTime(dateContainer) {
+  if (!dateContainer) {
+    return null;
+  }
+
   const dateDate = dateContainer.getAttribute("data-date");
   const dateTime = dateContainer.getAttribute("data-time");
+
   if (dateDate && dateTime) {
     const [year, month, day] = dateDate.split("-");
     const [hour, minute] = dateTime.split(":");

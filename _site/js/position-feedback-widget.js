@@ -1,3 +1,10 @@
+function getFeedbackWidget() {
+  return (
+    document.getElementById("right-hand-newsletter-subscribe-widget") ||
+    document.getElementById("was-this-helpful-widget")
+  );
+}
+
 function initLearnRightSidebarPositionFeedbackWidget() {
   resizeLearnRightSidebar();
 
@@ -10,9 +17,11 @@ function resizeLearnRightSidebar() {
     "sub-navigation-content",
   );
 
-  const feedbackWidgetHeight = document.getElementById(
-    "feedback-widget-container",
-  ).offsetHeight;
+  const feedbackWidget = getFeedbackWidget();
+
+  const feedbackWidgetHeight = feedbackWidget.checkVisibility()
+    ? feedbackWidget.offsetHeight
+    : 0;
 
   const bottomOfHeader = document
     .querySelector(".navigation-header")
@@ -25,21 +34,16 @@ function resizeLearnRightSidebar() {
   $subNavigationContent.style.height = `calc(100vh - ${Math.max(
     bottomOfTopBar,
     bottomOfHeader,
-  )}px - ${feedbackWidgetHeight}px - 30px)`;
+  )}px - ${feedbackWidgetHeight}px - 5px)`;
 
   maybeRestyleFeedbackWidget();
 }
 
 function maybeRestyleFeedbackWidget() {
-  // HACK: shouldRestyleFeedbackWidget was not calculated correctly
-  // when the text input is visible
-  const isTextInputVisible = document
-    .querySelector("#feedback-comment-text")
-    .checkVisibility();
+  const extraTopPadding = 0;
 
-  const extraTopPadding = isTextInputVisible ? 130 : 30;
+  const feedbackWidget = getFeedbackWidget();
 
-  const feedbackWidget = document.getElementById("feedback-widget-container");
   const subnavigationContent = document.getElementById(
     "sub-navigation-content",
   );

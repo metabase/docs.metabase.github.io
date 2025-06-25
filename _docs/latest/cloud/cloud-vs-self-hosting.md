@@ -4,11 +4,9 @@ has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
 category: Cloud
-title: Metabase Cloud versus self-hosting
-source_url: >-
-  https://github.com/metabase/metabase/blob/master/docs/cloud/cloud-vs-self-hosting.md
+title: 'Metabase Cloud versus self-hosting'
+source_url: 'https://github.com/metabase/metabase/blob/master/docs/cloud/cloud-vs-self-hosting.md'
 layout: new-docs
-latest: true
 ---
 
 # Metabase Cloud versus self-hosting

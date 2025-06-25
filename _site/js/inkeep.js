@@ -19,17 +19,17 @@ const config = {
   aiChat: {
     placeholder: "How long does it take to bake a pie chart?",
     chatSubjectName: "Metabase",
-    botName: "Metabot",
+    botName: "Metabase",
     introMessage:
-      "Hi, I'm Metabot. Ask me about Metabase. <em>(Please check the sources; I'm still learning.)</em>",
+      "Hi! You can ask me about Metabase. <em>(Please check the sources; I'm still learning.)</em>",
     guidance: "Be succinct",
-    botAvatarSrcUrl: "/images/icons/metabot-happy.svg",
-    botAvatarDarkSrcUrl: "/images/icons/metabot-happy.svg",
+    botAvatarSrcUrl: "/images/icons/metabase-icon.svg",
+    botAvatarDarkSrcUrl: "/images/icons/metabase-icon.svg",
     userAvatarSrcUrl: "/images/icons/person.svg",
   },
   modal: {
     defaultView: "SEARCH",
-    askAILabel: "Ask Metabot",
+    askAILabel: "Ask",
   },
 };
 

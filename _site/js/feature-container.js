@@ -155,7 +155,13 @@ function makeFeatureContainerColumnsSameHeightIfDesktop(containers) {
 
 function initExampleButtonHoverHighlight() {
   const picker = document.querySelector(".docs-learn-toggler");
+
   const hoverHighlight = document.querySelector(".hover-highlight");
+
+  if (!picker || !hoverHighlight) {
+    return;
+  }
+
   const buttons = picker.querySelectorAll("a");
 
   hoverHighlight.classList.remove("hidden");
@@ -199,8 +205,30 @@ function docsLearnTogglerRemoveFixedBackgroundColor() {
   activeLink.classList.add("transparent-background");
 }
 
+function initFeatureContainerCarousels() {
+  const carousels = document.querySelectorAll(".feature-container-carousel");
+  carousels.forEach((carousel) => {
+    appendProgressBarsToCarousel(carousel);
+  });
+}
+
+function appendProgressBarsToCarousel(carousel) {
+  const buttons = carousel.querySelectorAll("h4");
+
+  buttons.forEach((button) => {
+    const newDiv = document.createElement("div");
+    const innerDiv = document.createElement("div");
+
+    innerDiv.classList.add("inner");
+    newDiv.appendChild(innerDiv);
+
+    button.closest("div").prepend(newDiv);
+  });
+}
+
 window.addEventListener("DOMContentLoaded", () => {
   featureContainerSetInitialVisibleImages();
   initFeatureContainerSetNewVisibleImages();
   initExampleButtonHoverHighlight();
+  initFeatureContainerCarousels();
 });
