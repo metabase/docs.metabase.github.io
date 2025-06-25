@@ -3,7 +3,8 @@
    [babashka.fs :as fs]
    [clojure.data :refer [diff]]
    [clojure.java.io :as io]
-   [clojure.string :as str]))
+   [clojure.string :as str]
+   [util :as u]))
 
 (defn file-info
   "Extract relevant file information for comparison"
@@ -58,51 +59,43 @@
      :removed (categorize-by-type (:only-in-first diff-result))
      :common (categorize-by-type (:common diff-result))}))
 
-(do (defn path->file-sizes
-      "Takes result, returns a map of filename -> left-size right-size"
-      [result]
-      (let [all-files (distinct (concat (map first (:files-only-in-left result))
-                                        (map first (:files-only-in-right result))))
-            lh-files (set (map first (:files-only-in-left result)))
-            rh-files (set (map first (:files-only-in-right result)))
-            filled-files (reduce
-                           (fn [acc file]
-                             (let [left-file (when (contains? lh-files file)
-                                               (first (filter #(= file (first %)) (:files-only-in-left result))))
-                                   right-file (when (contains? rh-files file)
-                                                (first (filter #(= file (first %)) (:files-only-in-right result))))]
-                               (assoc acc file
-                                      [(if left-file (second left-file) nil)
-                                       (if right-file (second right-file) nil)
-                                       (- (or (second left-file) 0) (or (second right-file) 0))])))
-                           {}
-                           all-files)]
-        (->> filled-files
-             (sort-by (fn [[k [_ _ size-diff]]] (- (Math/abs size-diff)))))))
-    (path->file-sizes result))
+(defn path->file-sizes
+  "Takes result, returns a map of filename -> left-size right-size"
+  [result]
+  (let [all-files (distinct (concat (map first (:files-only-in-left result))
+                                    (map first (:files-only-in-right result))))
+        lh-files (set (map first (:files-only-in-left result)))
+        rh-files (set (map first (:files-only-in-right result)))
+        filled-files (reduce
+                       (fn [acc file]
+                         (let [left-file (when (contains? lh-files file)
+                                           (first (filter #(= file (first %)) (:files-only-in-left result))))
+                               right-file (when (contains? rh-files file)
+                                            (first (filter #(= file (first %)) (:files-only-in-right result))))]
+                           (assoc acc file
+                                  [(if left-file (second left-file) nil)
+                                   (if right-file (second right-file) nil)
+                                   (- (or (second left-file) 0) (or (second right-file) 0))])))
+                       {}
+                       all-files)]
+    (->> filled-files
+         (sort-by
+           (fn [[k [l r]]]
+             (- (if (or (not l) (not r))
+                  ;; prioritize files that are only in one side
+                  10e20
+                  (- l r))))))))
 
 ;; Example usage
 (comment
 
   ;; Compare two directory trees
   (def result (filetree-diff
-                "../metabase.github.io/_layouts"
-                "_layouts"
+                "../metabase.github.io/_docs"
+                "_docs"
                 #(str/replace % #"\.\./metabase.github.io/" "")))
 
   (u/pp
     (path->file-sizes result))
 
-  result
-
-
-  (:summary result)
-;; => {:files-only-in-left 0, :files-only-in-right 1, :common-files 52}
-
-  (u/pp
-    (group-by first
-              (concat (sort-by first (:files-only-in-left result))
-                      (sort-by first (:files-only-in-right result)))))
-
-  ;; Get categorized changes
-  (categorize-changes result))
+  )
