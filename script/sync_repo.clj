@@ -33,6 +33,13 @@
 (defn- sync-dirs [source-dir target-dir]
   (when (fs/exists? source-dir)
           (println "Syncing" (str source-dir) "to" (str target-dir))
+          ;; Delete the target directory if it exists, so we get only the files from the source directory
+          ;; This needed because we need to RESET the control directories, not merge them.
+          ;;
+          ;; Observed: a file in the target directory that is not in the source directory
+          ;; which is not deleted was causing link conflicts.
+          (fs/delete-tree target-dir)
+          (fs/create-dirs target-dir)
           (fs/copy-tree (str source-dir "/.") target-dir {:replace-existing true})))
 
 (defn- -main [& args]

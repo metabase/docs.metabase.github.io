@@ -1,19 +1,20 @@
 <head>
   <meta charset="utf-8" />
   <meta content="IE=edge" http-equiv="X-UA-Compatible" />
-  <meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport" />
+  <meta
+    content="width=device-width, initial-scale=1, maximum-scale=1"
+    name="viewport"
+  />
 
   <meta content="frame-ancestors 'none'" http-equiv="Content-Security-Policy" />
   <meta content="deny" http-equiv="X-Frame-Options" />
   {% if page.no_index_no_follow %}
   <meta name="robots" content="noindex nofollow" />
-  {% endif %}
-
-  {% if page.canonical %}
-    <link rel="canonical" href="{{ page.canonical }}" />
-  {% else %}
-    {% assign canonicalPageUrl = page.url | replace: "/index.html", "/" | replace: "/index", "/" %}
-    <link href='{{ canonicalPageUrl | prepend: site.url }}' rel="canonical" />
+  {% endif %} {% if page.canonical %}
+  <link rel="canonical" href="{{ page.canonical }}" />
+  {% else %} {% assign canonicalPageUrl = page.url | replace: "/index.html", "/"
+  | replace: "/index", "/" %}
+  <link href="{{ canonicalPageUrl | prepend: site.url }}" rel="canonical" />
   {% endif %}
 
   <script type="text/javascript">
@@ -24,14 +25,15 @@
         theLocation = new URL(theLocation);
       }
 
-      var redirectionSuffixes = [
-        "/index.html",
-        ".html",
-        "/index"
-      ];
+      var redirectionSuffixes = ["/index.html", ".html", "/index"];
       for (var i = 0; i < redirectionSuffixes.length; i = i + 1) {
         var redirectionSuffix = redirectionSuffixes[i];
-        if (theLocation.pathname && theLocation.pathname.length > redirectionSuffix.length && theLocation.pathname.indexOf(redirectionSuffix) === theLocation.pathname.length - redirectionSuffix.length) {
+        if (
+          theLocation.pathname &&
+          theLocation.pathname.length > redirectionSuffix.length &&
+          theLocation.pathname.indexOf(redirectionSuffix) ===
+            theLocation.pathname.length - redirectionSuffix.length
+        ) {
           var pathname = theLocation.pathname.replace(redirectionSuffix, "");
           if (pathname[pathname.length - 1] === "/") {
             pathname = pathname.slice(0, -1);
@@ -49,11 +51,15 @@
     {% include startup-guide-metadata.html %}
   {% elsif page.url contains "/learn/" and page.url != "/learn/index" %}
     {% include learn-metadata.html %}
-  {% elsif page.url contains "/docs/" %}
+  {% elsif  page.url contains "/docs/" %}
     {% include docs-metadata.html %}
+  {% elsif page.url contains "/glossary/" %}
+    {% include glossary-metadata.html %}
   {% else %}
     {% include metadata.html %}
   {% endif %}
+
+  {% include schema-markup.html %}
 
   {% if jekyll.environment == "development" %}
     <link href="/images/favicon-dev.svg" rel="shortcut icon" />
@@ -62,15 +68,25 @@
   {% else %}
     <link href="/images/favicon.svg" rel="shortcut icon" />
   {% endif %}
-  <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+  <link rel="apple-touch-icon" href="/images/apple-touch-icon.png" />
   <link
     href="https://cdnjs.cloudflare.com/ajax/libs/flexboxgrid/6.3.1/flexboxgrid.min.css"
     rel="stylesheet"
-    type="text/css" />
+    type="text/css"
+  />
   <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;0,900&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Roboto+Mono&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;0,900&display=swap"
+    rel="stylesheet"
+  />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap"
+    rel="stylesheet"
+  />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Roboto+Mono&display=swap"
+    rel="stylesheet"
+  />
   <link href="/gdpr-cookie-notice/dist/style.css" rel="stylesheet" />
   <link href="/css/docs.css" rel="stylesheet" />
   <link href="/css/styles.css" rel="stylesheet" />
@@ -79,46 +95,70 @@
   <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet" />
 
   {% if page.url contains "/data-stack-report-2023/" %}
-    <!-- Cooper Font -->
-    <link rel="stylesheet" href="https://use.typekit.net/tiw6flt.css">
+  <!-- Cooper Font -->
+  <link rel="stylesheet" href="https://use.typekit.net/tiw6flt.css" />
   {% endif %}
 
   <link
     href="/feed.xml"
     rel="alternate"
-    title='{{ site.title }}'
-    type="application/rss+xml" />
+    title="{{ site.title }}"
+    type="application/rss+xml"
+  />
 
   <meta content="no-referrer-when-downgrade" name="referrer" />
 
-    <!-- VWO -->
+  <!-- VWO -->
   <link rel="preconnect" href="https://dev.visualwebsiteoptimizer.com" />
 
-
   <!-- Syntax Highlighting -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/base16/atelier-sulphurpool-light.min.css"
+    integrity="sha512-qrwjMzcPG1EHhhg9z2nH7VW7hj525RVx0o7GlxQc4ZhWkghp9slpnTjOUu5thnPaRfRqfAUlX7anvAqD9EonfQ=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.10.0/styles/tokyo-night-dark.css" integrity="sha512-+2gZRUBRo65MXQNdZ/cVX90M2iDKAyb/52muHcgh6F2iarNtc0aX1FE3kAxG9fJxzsgCtxjxZ6nWecrgMTVYnQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   <!-- GDPR -->
-  <script type="text/javascript" src="/gdpr-cookie-notice/dist/script.js"></script>
+  <script
+    type="text/javascript"
+    src="/gdpr-cookie-notice/dist/script.js"
+  ></script>
   <script type="text/javascript" src="/js/cookie-consent.js"></script>
 
   <!-- Start of crisp.chat script -->
-  {% if page.url contains "/pricing" or page.url contains "/product" or page.url contains "/features" %}
-    <script type="text/javascript">
-      window.$crisp=[];window.CRISP_WEBSITE_ID="333d0a2c-cc54-49cf-8846-b61c75a35409";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();
-    </script>
+  {% if page.url contains "/pricing" or page.url contains "/product" or page.url
+  contains "/features" %}
+  <script type="text/javascript">
+    window.$crisp = [];
+    window.CRISP_WEBSITE_ID = "333d0a2c-cc54-49cf-8846-b61c75a35409";
+    (function() {
+      d = document;
+      s = d.createElement("script");
+      s.src = "https://client.crisp.chat/l.js";
+      s.async = 1;
+      d.getElementsByTagName("head")[0].appendChild(s);
+    })();
+  </script>
   {% endif %}
   <!-- End of crisp.chat script -->
 
   <script type="text/javascript" src="/js/add-params-to-anchors.js"></script>
-  <script type="text/javascript" src="/js/pass-referral-params-to-fillout-forms.js"></script>
+  <script
+    type="text/javascript"
+    src="/js/pass-referral-params-to-fillout-forms.js"
+  ></script>
 
+  {% if page.url contains "/learn" or page.url contains "/docs" or page.url contains "/search" %}
   <!-- Add Inkeep widget -->
   <script
     type="module"
     src="https://unpkg.com/@inkeep/uikit-js@0.3.10/dist/embed.js"
     defer
   ></script>
+  {% endif %}
+
+  <script type="text/javascript" src="/js/ai-newsletter-subscribe-form.js" defer></script>
 </head>
