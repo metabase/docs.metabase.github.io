@@ -48,14 +48,13 @@
              ""
              "> This PR will be merged when the PR that triggered this build is merged."]))
 
-(def artifact-dirs
-  ["_docs" "_site"])
+(def artifact-dirs ["_docs" "_site/docs"])
 
 (defn -main
   "Main function to update or create a PR. "
   [& args]
   (let [{:keys [source-branch target-branch annotation]
-         :as   opts}     (cli/parse-opts args cli-spec)
+         :as   opts}        (cli/parse-opts args cli-spec)
         _                   (when (or (:help opts) (:h opts))
                               (u/show-usage-and-exit cli-spec))
         [category
