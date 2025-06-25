@@ -7,12 +7,12 @@ function initPricingPlanCompareStickyHeader() {
 
   const headOnlyTable = document.querySelector(".plans-compare.header-only");
 
-  headOnlyTable.style.top = "62px";
+  headOnlyTable.style.top = "76px";
 
   window.addEventListener("scroll", function() {
     if (
       window.scrollY > table.offsetTop + 46 &&
-      window.scrollY < table.offsetTop + table.offsetHeight - 170
+      window.scrollY < table.offsetTop + table.offsetHeight - 143
     ) {
       headOnlyTable.classList.add("show");
     } else {

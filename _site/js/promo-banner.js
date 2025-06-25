@@ -7,6 +7,12 @@ function getMainHeader() {
 }
 
 function checkIfPromoBannerIsHidden() {
+  const promoBanner = getPromoBanner();
+
+  if (!promoBanner) {
+    return true;
+  }
+
   const hoursTillEvent = getHoursTillEvent();
 
   // eslint-disable-next-line
@@ -41,7 +47,9 @@ function initHeader() {
     mainHeader.classList.add("promo-banner-hidden");
   } else {
     const promoBanner = getPromoBanner();
-    promoBanner.classList.remove("hidden");
+    if (promoBanner) {
+      promoBanner.classList.remove("hidden");
+    }
   }
 
   const navigationNeader = document.querySelector(".navigation-header");
