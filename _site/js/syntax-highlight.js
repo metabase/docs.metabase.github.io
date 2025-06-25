@@ -26,6 +26,8 @@ window.addEventListener("DOMContentLoaded", () => {
       }
     });
 
+    hljs.configure({ ignoreUnescapedHTML: true });
+
     hljs.highlightAll();
   }
 });
