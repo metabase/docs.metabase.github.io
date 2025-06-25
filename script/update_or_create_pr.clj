@@ -37,21 +37,6 @@
     (println "→ PR info:" pr-info)
     (:number pr-info)))
 
-(defn ->artifact-dirs [category release-num]
-  (cond
-    (= category :master) ["_docs/master"
-                          "_site/docs/master"]
-
-    (= (u/config-docs-version) release-num)
-    ["_docs/latest"
-     "_site/docs/latest"
-     (str "_docs/v0." release-num)
-     (str "_site/docs/v0." release-num)]
-
-    (= category :release) [(str "_docs/v0." release-num)
-                           (str "_site/docs/v0." release-num)]
-    :else []))
-
 (defn- report-pr-body [source-branch target-branch artifact-dirs]
   (str/join "\n"
             [(str "`" source-branch "` -> `" target-branch "`")
@@ -62,6 +47,9 @@
              (str "Find the [Triggering PR](https://github.com/metabase/metabase/pulls?q=sort%3Aupdated-desc+is%3Apr+is%3Aopen+" source-branch ").")
              ""
              "> This PR will be merged when the PR that triggered this build is merged."]))
+
+(def artifact-dirs
+  ["_docs" "_site"])
 
 (defn -main
   "Main function to update or create a PR. "
@@ -81,7 +69,6 @@
                                 (println "→ Source Branch info: " source-branch))
         target-branch-name  (str source-branch "->" target-branch)
         _                   (p/shell "git" "checkout" "-B" target-branch-name)
-        artifact-dirs       (->artifact-dirs category release-num)
         _                   (doseq [ad artifact-dirs]
                               (println "Adding" ad "...")
                               (p/shell "git" "add" ad))
