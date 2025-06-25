@@ -22,10 +22,22 @@ body {
   overscroll-behavior-y: none;
 }
 
+body.dark-mode {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  li {
+    color: white;
+  }
+}
+
 body header.bootstrap {
   position: sticky;
 
-  /* if we have a promo banner, top: -48px, otherwise top: 0 */
+  /* if we have a promo banner, top: -48px, otherwise top: -78 */
 
   top: -48px;
 
@@ -34,7 +46,7 @@ body header.bootstrap {
 }
 
 header.bootstrap.has-scroll-indicator {
-  top: -64px;
+  top: -77px;
 }
 
 header.bootstrap.has-scroll-indicator.promo-banner-hidden {
@@ -3979,40 +3991,9 @@ span.subtle-heading {
 
 /* Feedback widget styling, for both learn and docs */
 
-#feedback-widget-container {
-  margin-top: 50px;
-}
-
-p.feedback-widget-option {
-  color: #fff;
-  font-size: 14px;
-  height: 16px;
-  line-height: 16px;
-  margin-bottom: 0 !important;
-  margin-left: 8px;
-  margin-top: 0 !important;
-  width: 22px;
-}
-
-button.feedback-widget {
-  height: 40px;
-  margin-top: 10px;
-  width: 78px;
-}
-
 .vote-button {
   border-radius: 6px !important;
   max-height: 40px;
-}
-
-.feedback-widget-docs,
-p.feedback-widget-option {
-  color: white !important;
-  padding-top: 1px;
-}
-
-.feedback-widget-docs h4 {
-  margin-top: 26px !important;
 }
 
 #feedback-comment-text {
@@ -4031,30 +4012,6 @@ p.page-feedback-title {
   padding-top: 4px;
 }
 
-p.feedback-widget-docs {
-  color: #22242b !important;
-  font-weight: 900;
-  margin-top: 18px !important;
-}
-
-#page-feedback-question {
-  margin-bottom: 24px;
-}
-
-#page-feedback-message {
-  margin-bottom: 75px;
-}
-
-#page-comment-submit {
-  border-radius: 6px;
-  display: flex;
-  flex-direction: row;
-  height: 100%;
-  margin: 0 8px 0 5px;
-  padding: 12px 18px;
-  width: 71px;
-}
-
 /* Newsletter CTA styling for learn pages */
 
 .widget-separator {
@@ -4062,55 +4019,6 @@ p.feedback-widget-docs {
   margin-bottom: 32px;
   margin-right: 8px;
   margin-top: 25px;
-}
-
-#mc_embed_signup-learn {
-  margin-right: 2px;
-}
-
-#newsletter-cta-learn {
-  color: #949aab;
-  font-size: 14px;
-  padding-top: 3px;
-}
-
-.cta-email-icon {
-  margin-bottom: 5px;
-  margin-right: 3px;
-  padding-top: 2px;
-  vertical-align: middle;
-}
-
-#mce-EMAIL-learn {
-  height: 41px;
-  margin-right: 5px;
-  max-height: 41px;
-  width: 248px;
-}
-
-#mc-embedded-subscribe-learn {
-  height: 41px;
-  margin-right: 5px;
-  padding: 0;
-  width: 76px;
-}
-
-.mc-field-group-learn {
-  align-items: center;
-  display: flex;
-  flex: none;
-  flex-direction: row;
-  flex-grow: 0;
-  float: right;
-  height: 40px;
-  justify-content: flex-end;
-  left: 407px;
-  margin-top: 12px;
-  order: 1;
-  padding: 0;
-  position: static;
-  top: 0;
-  width: 320px;
 }
 
 /* Sticky Header on scroll */
@@ -4122,10 +4030,6 @@ p.feedback-widget-docs {
   to {
     opacity: 1;
   }
-}
-
-.remove-fixed {
-  position: absolute;
 }
 
 .sticky-nav {
@@ -4164,14 +4068,6 @@ ol.Pricing-Tiers,
   width: auto;
 }
 
-.Upgrade-Features table tr {
-  border: none;
-}
-
-.Upgrade-Features table tr:not(.borderless):hover {
-  background: #fcfcfd;
-}
-
 .sticky-nav .Pricing-Tiers li {
   flex-basis: 21.2%;
   flex-basis: initial;
@@ -4191,10 +4087,6 @@ ol.Pricing-Tiers,
 
 .sticky-nav p {
   margin: 0;
-}
-
-.sticky-nav.Upgrade-Tier-Wrapper .Button {
-  font-size: 0.7rem;
 }
 
 .Pricing-Tiers .hide-medium p:last-child {
@@ -4225,80 +4117,7 @@ ol.Pricing-Tiers,
   padding-bottom: 8px;
 }
 
-.Upgrade-Tier-Wrapper ol.Pricing-Tiers {
-  align-items: baseline;
-  display: flex;
-  justify-content: end;
-  margin: auto;
-  padding-left: 50px;
-
-  /* mobile only */
-  padding-left: 14px;
-  padding-right: 40px;
-  padding-right: 47px;
-
-  /* width: 102%; */
-  width: auto;
-}
-
-.Upgrade-Tier-Wrapper .Pricing-Tiers li {
-  box-sizing: border-box;
-  flex-basis: initial;
-  margin: 0;
-  max-width: none;
-  padding: 0 20px 0 0;
-  width: 18.6667%;
-}
-
-.Upgrade-Tier-Wrapper .Pricing-Tiers li:first-child {
-  width: 24.6667%;
-}
-
-.sticky-nav.Upgrade-Tier-Wrapper .Pricing-Tiers li {
-  padding: 0;
-}
-
-@media screen and (min-width: 768px) {
-  .Upgrade-Tier-Wrapper .Pricing-Tiers li {
-    width: 18.6667%;
-  }
-
-  .sticky-nav.Upgrade-Tier-Wrapper .Pricing-Tiers li {
-    padding: 0 0 0 25px;
-  }
-
-  .Upgrade-Tier-Wrapper .Pricing-Tiers li:first-child {
-    width: 21%;
-  }
-
-  .Upgrade-Tier-Wrapper ol.Pricing-Tiers {
-    max-width: 1370px;
-    padding-left: 0;
-  }
-
-  .Upgrade-Tier-Wrapper .sticky-nav ol.Pricing-Tiers {
-    padding-right: 0;
-  }
-
-  .Upgrade-Tier-Wrapper .sticky-nav .Pricing-Tiers li {
-    width: 18.4%;
-  }
-}
-
 @media screen and (min-width: 1300px) {
-  .sticky-nav.Upgrade-Tier-Wrapper .Pricing-Tiers li {
-    padding: 0;
-  }
-
-  .Upgrade-Tier-Wrapper .Pricing-Tiers li {
-    padding: 0 20px 0 0;
-    width: 241px;
-  }
-
-  .Upgrade-Tier-Wrapper .Pricing-Tiers li:first-child {
-    width: 275px;
-  }
-
   .sticky-nav .Pricing-Tiers li {
     flex-basis: initial !important;
     width: 19%;
@@ -4308,13 +4127,6 @@ ol.Pricing-Tiers,
   .sticky-nav {
     padding-left: 0;
     padding-right: 0;
-  }
-
-  .Upgrade-Tier-Wrapper .sticky-nav ol.Pricing-Tiers {
-    align-items: baseline;
-    margin: auto;
-    padding-right: 11px;
-    width: 1320px;
   }
 }
 
@@ -4366,22 +4178,6 @@ ol.Pricing-Tiers,
     display: none;
     width: 0;
   }
-
-  .Upgrade-Tier-Wrapper.sticky-nav {
-    padding-right: 0;
-  }
-
-  .Upgrade-Tier-Wrapper.sticky-nav .Pricing-Tiers li {
-    width: 24.4%;
-  }
-
-  .Upgrade-Tier-Wrapper .Pricing-Tiers > li {
-    width: 24%;
-  }
-
-  .sticky-nav.Upgrade-Tier-Wrapper .Pricing-Tiers > li {
-    padding: 0 0 0 12px;
-  }
 }
 
 @media screen and (max-width: 768px) {
@@ -4390,13 +4186,11 @@ ol.Pricing-Tiers,
   }
 
   /* hide all tabs by default */
-  .Upgrade-Tier-Wrapper .Pricing-Tiers li,
   .tier-content {
     display: none;
   }
 
   /* show active tab */
-  .Pricing-Tiers li.active,
   .tier-content.active {
     display: block;
     max-width: 90%;
@@ -4408,14 +4202,6 @@ ol.Pricing-Tiers,
   .sticky-nav {
     padding-left: 0;
     padding-top: 20px;
-  }
-
-  .sticky-nav.Upgrade-Tier-Wrapper h2 {
-    margin: 24px 0 12px;
-  }
-
-  .sticky-nav.Upgrade-Tier-Wrapper .Pricing-Highlights {
-    padding: 0 0 12px;
   }
 
   .sticky-nav li {
@@ -4439,12 +4225,6 @@ ol.Pricing-Tiers,
 
   .yes-container {
     opacity: 0.7;
-
-    /* width: 130px; */
-  }
-
-  .Upgrade-Tier-Wrapper h2 {
-    margin: 24px 0 17px 12px;
   }
 }
 
@@ -4456,18 +4236,6 @@ ol.Pricing-Tiers,
 
 .upgrade h2.h1 {
   font-size: 40px;
-}
-
-.Upgrade-Tier-Wrapper .Button {
-  padding: 8px;
-}
-
-.Upgrade-Tier-Wrapper .Pricing-Highlights {
-  padding: 0 8px 12px;
-}
-
-.Upgrade-Tier-Wrapper h2 {
-  margin: 24px 8px 12px;
 }
 
 @media screen and (max-width: 60em) {

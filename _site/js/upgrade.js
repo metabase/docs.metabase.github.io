@@ -3,6 +3,7 @@ function upgradeUpdateElementsFromURLParams() {
   const { searchParams } = url;
 
   const sourcePlan = searchParams.get("source_plan");
+  const utmCampaign = searchParams.get("utm_campaign");
 
   const $starterCard = document.querySelector(".Pricing-Card.oss-tier-starter");
   const $upgradeToStarterButton = document.querySelector(
@@ -10,15 +11,14 @@ function upgradeUpdateElementsFromURLParams() {
   );
 
   const $proCard = document.querySelector(".Pricing-Card.oss-tier-pro");
-  const $upgradeToProButton = document.querySelector(
-    ".Pricing-CTA a.oss-tier-pro",
+  const $upgradeToProCloudButton = document.querySelector(
+    ".Pricing-CTA a.oss-tier-pro-cloud",
   );
 
   if (sourcePlan === "oss") {
-    $upgradeToStarterButton.href =
-      "https://store.metabase.com/checkout?plan=starter";
-
-    $upgradeToProButton.href = "https://store.metabase.com/checkout?plan=pro";
+    if (utmCampaign === "cache-granular-controls") {
+      highlightProOption();
+    }
   }
 
   if (sourcePlan === "starter") {
@@ -52,8 +52,10 @@ function upgradeUpdateElementsFromURLParams() {
 
     $upgradeToStarterButton.setAttribute("disabled", "true");
 
-    $upgradeToProButton.href =
+    $upgradeToProCloudButton.href =
       "https://store.metabase.com/account#section=pro-trial";
+
+    $upgradeToProCloudButton.classList.remove("outline");
 
     $starterTagline.textContent =
       "Starter gets you pretty far. As you grow, you may need more control over what people see and do";
@@ -64,7 +66,27 @@ function upgradeUpdateElementsFromURLParams() {
     $starterIntro.textContent = "With Starter, you’ve got:";
 
     $listItemToRemove.remove();
+
+    highlightProOption();
+
+    document
+      .querySelector(".Pricing-Card.oss-tier-pro .Pricing-CTA a.oss-tier-pro")
+      .classList.add("hide");
   }
+}
+
+function highlightProOption() {
+  const $proCard = document.querySelector(".Pricing-Card.oss-tier-pro");
+  $proCard.classList.add("highlight");
+  const $recommendedForYou = Array.from($proCard.parentNode.children).find(
+    (el) => el !== $proCard && el.classList.contains("recommended-for-you"),
+  );
+
+  $recommendedForYou.style.visibility = "visible";
+
+  // If we will show only one button in Pro,
+  // we need to remove the margin-bottom in Starter
+  document.querySelector(".only").style.marginBottom = "0px";
 }
 
 window.addEventListener("DOMContentLoaded", () => {
