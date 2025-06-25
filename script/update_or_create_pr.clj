@@ -22,17 +22,20 @@
                  :default "auto-build"}}
    :error-fn u/cli-error-fn})
 
-(defn existing-pr-by-title?
+(defn existing-pr-by-source+target?
   "Checks if a PR already exists for the given target branch name."
-  [title]
-  (let [raw-data (p/shell {:out :string :continue true}
-                           "gh" "pr" "list" "--repo" "metabase/docs.metabase.github.io" "--json" "title,number,state")
+  [source target]
+  (let [raw-data (p/sh {:out :string
+                        :continue true
+                        :extra-env {"GH_TOKEN" "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"}}
+                       "gh" "pr" "list" "--repo" "metabase/docs.metabase.github.io" "--json" "title,number,state,baseRefName,headRefName")
         ;; _ (println "→ Curl data: " (pr-str curl-data))
         pr-data (-> raw-data :out (json/parse-string true))
         _ (println "→ PR data: " (pr-str pr-data))
-        pr-info (some #(when (= title (get % :title)) %) pr-data)]
+        pr-info (first (filter #(= (:headRefName %) (str source "->" target))
+                               pr-data))]
     (println "→ PR info:" pr-info)
-    pr-info))
+    (:number pr-info)))
 
 (defn ->artifact-dirs [category release-num]
   (cond
@@ -93,7 +96,7 @@
         (println (str "→ Target Branch '" target-branch-name "' updated successfully."))
         (println "→ Checking for existing PR...")
 
-        (if-let [pr-info (existing-pr-by-title? target-branch-title)]
+        (if-let [pr-info (existing-pr-by-source+target? source-branch target-branch)]
           (println "✓ PR already exists: #" pr-info)
           (do
             (println "→ Creating new PR...")
@@ -103,7 +106,7 @@
                         "--body" (report-pr-body source-branch target-branch artifact-dirs)
                         "--head" target-branch-name]]
               (println "running: " (str/join " " args))
-              (apply p/shell args))))))
+              (apply p/shell {:continue true} args))))))
     (prn {:category            category
           :release             release-num
           :source-branch       source-branch
