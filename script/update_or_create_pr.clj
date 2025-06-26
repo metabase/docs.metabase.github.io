@@ -26,8 +26,7 @@
   "Checks if a PR already exists for the given target branch name."
   [source target]
   (let [raw-data (p/sh {:out :string
-                        :continue true
-                        :extra-env {"GH_TOKEN" "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"}}
+                        :continue true}
                        "gh" "pr" "list" "--repo" "metabase/docs.metabase.github.io" "--json" "title,number,state,baseRefName,headRefName")
         ;; _ (println "→ Curl data: " (pr-str curl-data))
         pr-data (-> raw-data :out (json/parse-string true))
@@ -59,7 +58,7 @@
              "## Updated Directories:"
              (str/join "\n" (map #(str "- `" % "`") artifact-dirs))
              ""
-             (str "Find the [Triggering PR](https://github.com/metabase/metabase/pulls?q=sort%3Aupdated-desc+is%3Apr+is%3Aopen+" source-branch ").")
+             (str "Find the [Triggering PR](https://github.com/search?q=repo%3Ametabase%2Fmetabase%20" source-branch "&type=pullrequests).")
              ""
              "> This PR will be merged when the PR that triggered this build is merged."]))
 
