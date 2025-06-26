@@ -1,6 +1,6 @@
 <div class="bootstrap">
   <footer class="body-footer">
-    {% unless page.path contains "start/oss" %}
+    {% unless page.path contains "start/oss" or page.collection == "posts" or page.layout == "learn_article" or page.hide_footer_newsletter_subscribe_form %}
       <!-- Begin MailChimp Signup Form -->
       <form
         action="//metabase.us10.list-manage.com/subscribe/post?u=869fec0e4689e8fd1db91e795&amp;id=b9664113a8"
@@ -9,6 +9,7 @@
         method="post"
         name="mc-embedded-subscribe-form"
         novalidate
+        data-form-id="1"
         target="_blank">
         <div>
           <h5>Subscribe to our newsletter</h5>
@@ -68,7 +69,7 @@
         <a href="/releases">What's New</a>
 
         <h6>Pricing</h6>
-        <a href="/pricing">Plans</a>
+        <a href="/pricing/">Plans</a>
         <a href="/start/oss/">Open Source</a>
       </div>
 
@@ -282,7 +283,10 @@
 </div>
 
 <script type="text/javascript">
-  document.getElementById('mc-embedded-subscribe-form').action = `//metabase.us10.list-manage.com/subscribe/post?u=869fec0e4689e8fd1db91e795&amp;id=b9664113a8&SIGNUP=${window.location.href}`;
+  const mcEmbeddedSubscribeForm = document.getElementById('mc-embedded-subscribe-form-footer');
+  if (mcEmbeddedSubscribeForm) {
+    mcEmbeddedSubscribeForm.action = `//metabase.us10.list-manage.com/subscribe/post?u=869fec0e4689e8fd1db91e795&amp;id=b9664113a8&SIGNUP=${window.location.href}`;
+  }
 </script>
 
 <!-- statuses -->

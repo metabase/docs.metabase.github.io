@@ -26,7 +26,7 @@ Manage your Metabase Cloud instance, subscription, and billing via the [Metabase
 - [Metabase Cloud versus self-hosting](./cloud-vs-self-hosting)
 - [Metabase Cloud Storage](./storage)
 - [Syncing Google Sheets with Metabase](./google-sheets)
-- [Limitations of Metabase Cloud](limitations)
+- [Limitations of Metabase Cloud](./limitations)
 
 ### Metabase Cloud settings
 
@@ -36,7 +36,7 @@ Manage your Metabase Cloud instance, subscription, and billing via the [Metabase
 
 ### Migrations
 
-- [Migration from an existing self-hosted Metabase](/docs/latest/cloud/migrate/guide)
+- [Migration from an existing self-hosted Metabase](./migrate/guide)
 - [Migration from Heroku](./migrate/heroku)
 - [Migration from Metabase Cloud to a self-hosted Metabase](./migrate/cloud-to-self-hosted)
 
