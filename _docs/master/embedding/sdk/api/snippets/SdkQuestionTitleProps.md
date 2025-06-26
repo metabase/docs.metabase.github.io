@@ -13,6 +13,6 @@ layout: new-docs
 type SdkQuestionTitleProps =
   | boolean
   | undefined
-  | ReactNode
-  | () => ReactNode;
+  | React.ReactNode
+  | () => React.ReactNode;
 ```
