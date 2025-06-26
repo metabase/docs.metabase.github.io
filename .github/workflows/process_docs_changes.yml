@@ -105,13 +105,19 @@ jobs:
           echo "main_repo_source_branch = '${{ env.MAIN_REPO_SOURCE_BRANCH }}'"
           echo "main_repo_target_branch = '${{ env.MAIN_REPO_TARGET_BRANCH }}'"
 
+      # observed this failing during sdk docs generation deps downloads, so adding retry logic
       - name: Update docs for branchname
+        uses: nick-fields/retry@v3
         # for docs_merge, the tarball will be gone by the time this workflow runs.
         if: |
           (github.event_name == 'repository_dispatch' && github.event.action == 'docs_update') ||
           (github.event_name == 'workflow_dispatch' && github.event.inputs.dispatch_type == 'docs_update')
-        run: |
-          bb script/update_docs_for_branchname.clj --source-branch "$MAIN_REPO_SOURCE_BRANCH" --target-branch "$MAIN_REPO_TARGET_BRANCH"
+        with:
+          timeout_seconds: 1
+          max_attempts: 3
+          retry_on: error
+          command: |
+            bb script/update_docs_for_branchname.clj --source-branch "$MAIN_REPO_SOURCE_BRANCH" --target-branch "$MAIN_REPO_TARGET_BRANCH"
 
       - name: Cleanup cloud docs (move them to latest, remove from all other versions)
         run: |
