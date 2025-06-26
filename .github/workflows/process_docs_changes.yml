@@ -113,7 +113,7 @@ jobs:
           (github.event_name == 'repository_dispatch' && github.event.action == 'docs_update') ||
           (github.event_name == 'workflow_dispatch' && github.event.inputs.dispatch_type == 'docs_update')
         with:
-          timeout_seconds: 1
+          timeout_minutes: 20
           max_attempts: 3
           retry_on: error
           command: |
