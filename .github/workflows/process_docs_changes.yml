@@ -23,13 +23,19 @@ on:
         options:
           - docs_update
           - docs_merge
+          - docs_close
+      pr_number:
+        description: 'Number of the PR in metabase/metabase that triggered this action'
+        required: false
+        type: number
   repository_dispatch:
     types: [docs_update, docs_merge]
 
 run-name: >-
   ${{
     (github.event.action == 'docs_merge' || github.event.inputs.dispatch_type == 'docs_merge') && '✅' ||
-    (github.event.action == 'docs_update' || github.event.inputs.dispatch_type == 'docs_update') && '🔄'
+    (github.event.action == 'docs_update' || github.event.inputs.dispatch_type == 'docs_update') && '🔄' ||
+    (github.event.action == 'docs_close' || github.event.inputs.dispatch_type == 'docs_close') && '🗑️'
   }}${{
     (github.event.inputs.annotation || github.event.client_payload.annotation) &&
     format(' | `{0}` | ', github.event.inputs.annotation || github.event.client_payload.annotation) ||
@@ -45,17 +51,23 @@ jobs:
       MAIN_REPO_SOURCE_BRANCH: "${{ github.event.inputs.source_branch || github.event.client_payload.source_branch }}"
       MAIN_REPO_TARGET_BRANCH: "${{ github.event.inputs.target_branch || github.event.client_payload.target_branch }}"
       ANNOTATION: "${{ github.event.inputs.annotation || github.event.client_payload.annotation || 'auto-build' }}"
+      PR_NUMBER: "${{ github.event.inputs.pr_number || github.event.client_payload.pr_number }}"
     steps:
       - uses: actions/checkout@v4
 
       - name: Set current branch name
         run: echo "LOCAL_REPO_BRANCH=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> "$GITHUB_ENV"
 
-      - name: echo branch names
+      - name: Echo Parameters
         run: |
-          echo "metabase/metabase source_branch: $MAIN_REPO_SOURCE_BRANCH"
-          echo "metabase/metabase target_branch: $MAIN_REPO_TARGET_BRANCH"
-          echo "Running on (docs.metabase.github.io) branch: $LOCAL_REPO_BRANCH"
+          echo "metabase/metabase Source Branch: $MAIN_REPO_SOURCE_BRANCH"
+          echo "metabase/metabase Target Branch: $MAIN_REPO_TARGET_BRANCH"
+          echo ""
+          echo "Action: ${{ github.event.action || github.event.inputs.dispatch_type }}"
+          echo ""
+          echo "Annotation: $ANNOTATION"
+          echo "PR Number: $PR_NUMBER"
+          echo "Local Repo (docs.metabase.github.io) Branch: $LOCAL_REPO_BRANCH"
 
       - name: Prepare java
         uses: actions/setup-java@v4
@@ -68,6 +80,14 @@ jobs:
         with:
           cli: 1.12.0.1530
           bb: 1.12.200
+
+      - name: Check for and Close PR
+        if: |
+          (github.event_name == 'repository_dispatch' && github.event.action == 'docs_close') ||
+          (github.event_name == 'workflow_dispatch' && github.event.inputs.dispatch_type == 'docs_close')
+        run: |
+          gh pr close "$LOCAL_REPO_BRANCH" --repo metabase/docs.metabase.github.io --delete-branch
+          exit 0
 
       - name: Run docs repo build tests
         run: |
@@ -177,7 +197,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.METABASE_AUTOMATION_USER_TOKEN }}
         run: |
-          bb script/update_or_create_pr.clj --source-branch "$MAIN_REPO_SOURCE_BRANCH" --target-branch "$MAIN_REPO_TARGET_BRANCH" --annotation "$ANNOTATION"
+          bb script/update_or_create_pr.clj --source-branch "$MAIN_REPO_SOURCE_BRANCH" --target-branch "$MAIN_REPO_TARGET_BRANCH" --annotation "$ANNOTATION" --pr-number "$PR_NUMBER"
 
       - name: Remove control files from Marketing Repo
         run: |
