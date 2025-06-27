@@ -131,12 +131,12 @@ jobs:
 
       # observed this failing during sdk docs generation deps downloads, so adding retry logic
       - name: Update docs for branchname
-        if: steps.check.outputs.skip != 'true'
         uses: nick-fields/retry@v3
         # for docs_merge, the tarball will be gone by the time this workflow runs.
         if: |
-          (github.event_name == 'repository_dispatch' && github.event.action == 'docs_update') ||
-          (github.event_name == 'workflow_dispatch' && github.event.inputs.dispatch_type == 'docs_update')
+          (steps.check.outputs.skip != 'true' &&
+           ((github.event_name == 'repository_dispatch' && github.event.action == 'docs_update') ||
+            (github.event_name == 'workflow_dispatch' && github.event.inputs.dispatch_type == 'docs_update')))
         with:
           timeout_minutes: 20
           max_attempts: 3
@@ -207,8 +207,8 @@ jobs:
       - name: Update or Create the Pull Request
         if: |
           (steps.check.outputs.skip != 'true' &&
-            (github.event_name == 'repository_dispatch' && github.event.action == 'docs_update') ||
-            (github.event_name == 'workflow_dispatch' && github.event.inputs.dispatch_type == 'docs_update'))
+           ((github.event_name == 'repository_dispatch' && github.event.action == 'docs_update') ||
+            (github.event_name == 'workflow_dispatch' && github.event.inputs.dispatch_type == 'docs_update')))
         run: |
           bb script/update_or_create_pr.clj --source-branch "$MAIN_REPO_SOURCE_BRANCH" --target-branch "$MAIN_REPO_TARGET_BRANCH" --annotation "$ANNOTATION" --pr-number "$PR_NUMBER"
 
@@ -219,7 +219,7 @@ jobs:
       - name: Merge Updated Docs
         if: |
           (steps.check.outputs.skip != 'true' &&
-            (github.event_name == 'repository_dispatch' && github.event.action == 'docs_merge') ||
-            (github.event_name == 'workflow_dispatch' && github.event.inputs.dispatch_type == 'docs_merge'))
+           ((github.event_name == 'repository_dispatch' && github.event.action == 'docs_merge') ||
+            (github.event_name == 'workflow_dispatch' && github.event.inputs.dispatch_type == 'docs_merge')))
         run: |
           bb script/merge.clj --source-branch "$MAIN_REPO_SOURCE_BRANCH" --target-branch "$MAIN_REPO_TARGET_BRANCH"
