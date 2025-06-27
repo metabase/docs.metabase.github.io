@@ -107,7 +107,7 @@
             (let [args ["gh" "pr" "create"
                         "--repo" "metabase/docs.metabase.github.io"
                         "--title" target-branch-title
-                        "--body" (report-pr-body source-branch target-branch artifact-dirs)
+                        "--body" (report-pr-body source-branch target-branch artifact-dirs pr-number)
                         "--head" target-branch-name]]
               (println "running: " (str/join " " args))
               (apply p/shell {:continue true} args))))))
