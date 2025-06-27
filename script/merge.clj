@@ -44,7 +44,7 @@
       (throw (ex-info (ice/p-str [:red "No PR found for source branch "] [:bold source-branch] " and target branch " [:bold target-branch] ".")
                       {:babashka/exit 1 :opts opts}))
       (do
-        (ice/p [:green "Merging PR for branch "] [:bold source-branch] " into " [:bold target-branch] " with PR number " [:bold (prn pr-number)])
+        (ice/p [:green "Merging PR for branch "] [:bold source-branch] " into " [:bold target-branch] " with PR number " [:bold (pr-str pr-number)])
         (if-not dry-run?
           (p/sh "gh" "pr" "merge" pr-number "--squash" "--delete-branch")
           (do
