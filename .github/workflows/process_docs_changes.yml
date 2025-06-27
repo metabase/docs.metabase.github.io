@@ -48,6 +48,7 @@ jobs:
      `${{ github.event.inputs.source_branch || github.event.client_payload.source_branch }}` -> ${{ github.event.inputs.target_branch || github.event.client_payload.target_branch }} | ${{ github.event.action || github.event.inputs.dispatch_type }}
     runs-on: ubuntu-latest
     env:
+      GH_TOKEN: ${{ secrets.METABASE_AUTOMATION_USER_TOKEN }}
       MAIN_REPO_SOURCE_BRANCH: "${{ github.event.inputs.source_branch || github.event.client_payload.source_branch }}"
       MAIN_REPO_TARGET_BRANCH: "${{ github.event.inputs.target_branch || github.event.client_payload.target_branch }}"
       ANNOTATION: "${{ github.event.inputs.annotation || github.event.client_payload.annotation || 'auto-build' }}"
@@ -120,11 +121,6 @@ jobs:
           git config --global user.email "metabase-bot@metabase.com"
           git remote set-url origin "https://x-access-token:${{ secrets.METABASE_AUTOMATION_USER_TOKEN }}@github.com/metabase/docs.metabase.github.io.git"
 
-      - name: Announce env vars
-        run: |
-          echo "main_repo_source_branch = '${{ env.MAIN_REPO_SOURCE_BRANCH }}'"
-          echo "main_repo_target_branch = '${{ env.MAIN_REPO_TARGET_BRANCH }}'"
-
       # observed this failing during sdk docs generation deps downloads, so adding retry logic
       - name: Update docs for branchname
         uses: nick-fields/retry@v3
@@ -194,8 +190,6 @@ jobs:
         if: |
           (github.event_name == 'repository_dispatch' && github.event.action == 'docs_update') ||
           (github.event_name == 'workflow_dispatch' && github.event.inputs.dispatch_type == 'docs_update')
-        env:
-          GH_TOKEN: ${{ secrets.METABASE_AUTOMATION_USER_TOKEN }}
         run: |
           bb script/update_or_create_pr.clj --source-branch "$MAIN_REPO_SOURCE_BRANCH" --target-branch "$MAIN_REPO_TARGET_BRANCH" --annotation "$ANNOTATION" --pr-number "$PR_NUMBER"
 
@@ -207,8 +201,5 @@ jobs:
         if: |
           (github.event_name == 'repository_dispatch' && github.event.action == 'docs_merge') ||
           (github.event_name == 'workflow_dispatch' && github.event.inputs.dispatch_type == 'docs_merge')
-        env:
-          GH_TOKEN: ${{ secrets.METABASE_AUTOMATION_USER_TOKEN }}
-          MAIN_REPO_SOURCE_BRANCH: ${{ github.event.inputs.source_branch || github.event.client_payload.source_branch }}
         run: |
           bb script/merge.clj --source-branch "$MAIN_REPO_SOURCE_BRANCH" --target-branch "$MAIN_REPO_TARGET_BRANCH"
