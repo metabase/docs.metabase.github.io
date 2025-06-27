@@ -3,13 +3,18 @@ on:
   workflow_dispatch:
     inputs:
       source_branch:
-        description: metabase/metabase branch triggered this workflow?
+        description: metabase/metabase branch triggered this workflow
         required: true
         type: string
       target_branch:
         description: metabase/metabase target branch name
         required: true
         type: string
+      annotation:
+        description: note to describe what the pr does
+        required: false
+        type: string
+        default: "auto-build"
       dispatch_type:
         description: 'Type of dispatch action to simulate'
         required: false
@@ -18,15 +23,24 @@ on:
         options:
           - docs_update
           - docs_merge
+          - docs_close
+      pr_number:
+        description: 'Number of the PR in metabase/metabase that triggered this action'
+        required: false
+        type: number
   repository_dispatch:
-    types: [docs_update, docs_merge]
+    types: [docs_update, docs_merge, docs_close]
 
 run-name: >-
   ${{
     (github.event.action == 'docs_merge' || github.event.inputs.dispatch_type == 'docs_merge') && '✅' ||
-    (github.event.action == 'docs_update' || github.event.inputs.dispatch_type == 'docs_update') && '🔄'
-  }} | `${{ github.event.inputs.source_branch || github.event.client_payload.source_branch }}`
-   -> `${{ github.event.inputs.target_branch || github.event.client_payload.target_branch }}`
+    (github.event.action == 'docs_update' || github.event.inputs.dispatch_type == 'docs_update') && '🔄' ||
+    (github.event.action == 'docs_close' || github.event.inputs.dispatch_type == 'docs_close') && '🗑️'
+  }}${{
+    (github.event.inputs.annotation || github.event.client_payload.annotation) &&
+    format(' | `{0}` | ', github.event.inputs.annotation || github.event.client_payload.annotation) ||
+    ' | '
+  }}`${{ github.event.inputs.source_branch || github.event.client_payload.source_branch }}` -> `${{ github.event.inputs.target_branch || github.event.client_payload.target_branch }}`
 
 jobs:
   build:
@@ -34,19 +48,27 @@ jobs:
      `${{ github.event.inputs.source_branch || github.event.client_payload.source_branch }}` -> ${{ github.event.inputs.target_branch || github.event.client_payload.target_branch }} | ${{ github.event.action || github.event.inputs.dispatch_type }}
     runs-on: ubuntu-latest
     env:
+      GH_TOKEN: ${{ secrets.METABASE_AUTOMATION_USER_TOKEN }}
       MAIN_REPO_SOURCE_BRANCH: "${{ github.event.inputs.source_branch || github.event.client_payload.source_branch }}"
       MAIN_REPO_TARGET_BRANCH: "${{ github.event.inputs.target_branch || github.event.client_payload.target_branch }}"
+      ANNOTATION: "${{ github.event.inputs.annotation || github.event.client_payload.annotation || 'auto-build' }}"
+      PR_NUMBER: "${{ github.event.inputs.pr_number || github.event.client_payload.pr_number }}"
     steps:
       - uses: actions/checkout@v4
 
       - name: Set current branch name
         run: echo "LOCAL_REPO_BRANCH=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> "$GITHUB_ENV"
 
-      - name: echo branch names
+      - name: Echo Parameters
         run: |
-          echo "metabase/metabase source_branch: $MAIN_REPO_SOURCE_BRANCH"
-          echo "metabase/metabase target_branch: $MAIN_REPO_TARGET_BRANCH"
-          echo "Running on (docs.metabase.github.io) branch: $LOCAL_REPO_BRANCH"
+          echo "metabase/metabase Source Branch: $MAIN_REPO_SOURCE_BRANCH"
+          echo "metabase/metabase Target Branch: $MAIN_REPO_TARGET_BRANCH"
+          echo ""
+          echo "Action: ${{ github.event.action || github.event.inputs.dispatch_type }}"
+          echo ""
+          echo "Annotation: $ANNOTATION"
+          echo "PR Number: $PR_NUMBER"
+          echo "Local Repo (docs.metabase.github.io) Branch: $LOCAL_REPO_BRANCH"
 
       - name: Prepare java
         uses: actions/setup-java@v4
@@ -60,51 +82,75 @@ jobs:
           cli: 1.12.0.1530
           bb: 1.12.200
 
+      - name: Check for PR Close
+        id: check
+        if: |
+          (github.event_name == 'repository_dispatch' && github.event.action == 'docs_close') ||
+          (github.event_name == 'workflow_dispatch' && github.event.inputs.dispatch_type == 'docs_close')
+        run: |
+          gh pr close "${MAIN_REPO_SOURCE_BRANCH}->${MAIN_REPO_TARGET_BRANCH}" --repo metabase/docs.metabase.github.io --delete-branch
+          echo "skip=true" >> "$GITHUB_OUTPUT"
+
       - name: Run docs repo build tests
+        if: steps.check.outputs.skip != 'true'
         run: |
           bb script/_test/all.clj
 
       - name: Filter non-documented branches
+        if: steps.check.outputs.skip != 'true'
         run: |
           bb script/check_incoming_branchname.clj --target-branch "$MAIN_REPO_TARGET_BRANCH"
 
       - name: Setup Node.js
+        if: steps.check.outputs.skip != 'true'
         uses: actions/setup-node@v4
         with:
           node-version: '22'
 
       - name: Install js dependencies
+        if: steps.check.outputs.skip != 'true'
         run: yarn install --frozen-lockfile --prefer-offline
 
       - name: Set up Ruby # uses version from .ruby-version
+        if: steps.check.outputs.skip != 'true'
         uses: ruby/setup-ruby@d5fb7a202fc07872cb44f00ba8e6197b70cb0c55 # v1.179.0
         with:
           bundler-cache: true
 
       - name: Install ruby dependencies
+        if: steps.check.outputs.skip != 'true'
         run: |
           bundle install
 
       - name: Setup Git Authenticatation
+        if: steps.check.outputs.skip != 'true'
         run: |
           git config --global user.name "Metabase Docs bot"
           git config --global user.email "metabase-bot@metabase.com"
           git remote set-url origin "https://x-access-token:${{ secrets.METABASE_AUTOMATION_USER_TOKEN }}@github.com/metabase/docs.metabase.github.io.git"
 
-      - name: Announce env vars
-        run: |
-          echo "main_repo_source_branch = '${{ env.MAIN_REPO_SOURCE_BRANCH }}'"
-          echo "main_repo_target_branch = '${{ env.MAIN_REPO_TARGET_BRANCH }}'"
-
+      # observed this failing during sdk docs generation deps downloads, so adding retry logic
       - name: Update docs for branchname
+        uses: nick-fields/retry@v3
         # for docs_merge, the tarball will be gone by the time this workflow runs.
         if: |
-          (github.event_name == 'repository_dispatch' && github.event.action == 'docs_update') ||
-          (github.event_name == 'workflow_dispatch' && github.event.inputs.dispatch_type == 'docs_update')
+          (steps.check.outputs.skip != 'true' &&
+           ((github.event_name == 'repository_dispatch' && github.event.action == 'docs_update') ||
+            (github.event_name == 'workflow_dispatch' && github.event.inputs.dispatch_type == 'docs_update')))
+        with:
+          timeout_minutes: 20
+          max_attempts: 3
+          retry_on: error
+          command: |
+            bb script/update_docs_for_branchname.clj --source-branch "$MAIN_REPO_SOURCE_BRANCH" --target-branch "$MAIN_REPO_TARGET_BRANCH"
+
+      - name: Cleanup cloud docs (move them to latest, remove from all other versions)
+        if: steps.check.outputs.skip != 'true'
         run: |
-          bb script/update_docs_for_branchname.clj --source-branch "$MAIN_REPO_SOURCE_BRANCH" --target-branch "$MAIN_REPO_TARGET_BRANCH"
+          bb script/cleanup_cloud_docs.clj
 
       - name: Checkout Control files from Marketing Repo
+        if: steps.check.outputs.skip != 'true'
         uses: actions/checkout@v4
         with:
           repository: metabase/metabase.github.io
@@ -113,30 +159,32 @@ jobs:
           token: ${{ secrets.METABASE_AUTOMATION_USER_TOKEN }}
 
       - name: Merge control files from Marketing Repo
+        if: steps.check.outputs.skip != 'true'
         run: |
-          cp -r .marketing_repo/_data .
-          cp -r .marketing_repo/_includes .
-          cp -r .marketing_repo/_layouts .
-          cp -r .marketing_repo/_plugins .
-          cp -r .marketing_repo/_sass .
+          bb script/sync_repo.clj --from-repo .marketing_repo
 
       - name: "yarn lint-markdown"
+        if: steps.check.outputs.skip != 'true'
         run: |
           yarn lint-markdown
 
       - name: "yarn lint-styles"
+        if: steps.check.outputs.skip != 'true'
         run: |
           yarn lint-styles
 
       - name: "yarn lint-scripts"
+        if: steps.check.outputs.skip != 'true'
         run: |
           yarn lint-scripts
 
       - name: "yarn lint-links"
+        if: steps.check.outputs.skip != 'true'
         run: |
           yarn lint-links
 
       - name: Build the Jekyll Site
+        if: steps.check.outputs.skip != 'true'
         env:
           JEKYLL_ENV: production
           NODE_ENV: production
@@ -147,37 +195,31 @@ jobs:
           script/build
 
       - name: Run htmlproofer + metabase.com-aware link checks
+        if: steps.check.outputs.skip != 'true'
         run: |
           SECONDS=0
           script/links || true
           echo "Time elapsed: ${SECONDS} seconds"
           echo 'checking reported links...'
           echo "htmlproofer spit out a report of length: $(wc -l < htmlproofer.out)"
-          bb script/analyze_links.clj --htmlproofer-output htmlproofer.out
+          bb script/analyze_links.clj --htmlproofer-output htmlproofer.out --limit 1
 
       - name: Update or Create the Pull Request
         if: |
-          (github.event_name == 'repository_dispatch' && github.event.action == 'docs_update') ||
-          (github.event_name == 'workflow_dispatch' && github.event.inputs.dispatch_type == 'docs_update')
-        env:
-          GH_TOKEN: ${{ secrets.METABASE_AUTOMATION_USER_TOKEN }}
+          (steps.check.outputs.skip != 'true' &&
+           ((github.event_name == 'repository_dispatch' && github.event.action == 'docs_update') ||
+            (github.event_name == 'workflow_dispatch' && github.event.inputs.dispatch_type == 'docs_update')))
         run: |
-          bb script/update_or_create_pr.clj --source-branch "$MAIN_REPO_SOURCE_BRANCH" --target-branch "$MAIN_REPO_TARGET_BRANCH"
+          bb script/update_or_create_pr.clj --source-branch "$MAIN_REPO_SOURCE_BRANCH" --target-branch "$MAIN_REPO_TARGET_BRANCH" --annotation "$ANNOTATION" --pr-number "$PR_NUMBER"
 
       - name: Remove control files from Marketing Repo
         run: |
-          rm -rf _data
-          rm -rf _includes
-          rm -rf _layouts
-          rm -rf _plugins
-          rm -rf _sass
+          bb script/sync_repo.clj --delete
 
       - name: Merge Updated Docs
         if: |
-          (github.event_name == 'repository_dispatch' && github.event.action == 'docs_merge') ||
-          (github.event_name == 'workflow_dispatch' && github.event.inputs.dispatch_type == 'docs_merge')
-        env:
-          GH_TOKEN: ${{ secrets.METABASE_AUTOMATION_USER_TOKEN }}
-          MAIN_REPO_SOURCE_BRANCH: ${{ github.event.inputs.source_branch || github.event.client_payload.source_branch }}
+          (steps.check.outputs.skip != 'true' &&
+           ((github.event_name == 'repository_dispatch' && github.event.action == 'docs_merge') ||
+            (github.event_name == 'workflow_dispatch' && github.event.inputs.dispatch_type == 'docs_merge')))
         run: |
           bb script/merge.clj --source-branch "$MAIN_REPO_SOURCE_BRANCH" --target-branch "$MAIN_REPO_TARGET_BRANCH"

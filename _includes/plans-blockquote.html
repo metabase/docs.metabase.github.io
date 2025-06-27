@@ -1,12 +1,21 @@
+{% if include.convert_pro_link_to_embbedding %}
+  {% assign pro_link = "https://store.metabase.com/checkout/embedding" %}
+{% else %}
+  {% assign pro_link = "/product/pro" %}
+{% endif %}
+
 <div class="bootstrap">
-    <div class="plans-blockquote bg-blue-95 rounded-3 p-6 d-flex flex-row border border-1 border-primary">
-        {% include svg-icons/info-icon.html width="24" height="24" color="#509EE3" %}
-        {% if include.enterprise-only %}
-       <p class="m-0 ms-2 paragraph-5 neutral-40">{{ include.feature | default: "This feature" }} is only available on <a class="fw-bold link-purple" href="/product/enterprise">Enterprise</a> plans
-        {% else %}
-       <p class="m-0 ms-2 paragraph-5 neutral-40">{{ include.feature | default: "This feature" }} is only available on <a class="fw-bold" href="/product/pro">Pro</a> and <a class="fw-bold link-purple" href="/product/enterprise">Enterprise</a> plans
-        {% endif %}
-        {% if include.self-hosted-only %}(only on self-hosted plans){% else %}(both self-hosted and on Metabase Cloud){% endif %}.
-        {% if include.sdk %}You can, however, play around with the SDK on your local machine without a license by using API keys to authenticate your embeds.{% endif %}</p>
-    </div>
+  <div class="plans-blockquote bg-blue-95 rounded-3 p-6 d-flex flex-row border border-1 border-primary">
+    {% include svg-icons/info-icon.html width="24" height="24" color="#509EE3" %}
+
+    {% if include.enterprise-only %}
+      <p class="m-0 ms-2 paragraph-5 neutral-40">
+        {{ include.feature | default: "This feature" }} is only available on <a class="fw-bold link-purple" href="/product/enterprise">Enterprise</a> plans
+    {% else %}
+      <p class="m-0 ms-2 paragraph-5 neutral-40">{{ include.feature | default: "This feature" }} is only available on <a class="fw-bold" href="{{ pro_link }}">Pro</a> and <a class="fw-bold link-purple" href="/product/enterprise">Enterprise</a> plans
+    {% endif %}
+
+    {% if include.self-hosted-only %}(only on self-hosted plans){% else %}(both self-hosted and on Metabase Cloud){% endif %}.
+    {% if include.sdk %}You can, however, play around with the SDK on your local machine without a license by using API keys to authenticate your embeds.{% endif %}</p>
+  </div>
 </div>

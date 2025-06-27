@@ -5,21 +5,36 @@
         <a href="/learn/">Learn</a>
       </li>
 
-      {% if track %}
+      {% if track and track.slug == "sql" %}
         <li class="breadcrumb-item m-0 d-flex align-items-baseline">
-          <a href="/learn/{{category.slug}}/{{track.slug}}">
-            {{track.name}}
-          </a>
+          <a href="/learn/sql">Learn SQL</a>
         </li>
-      {% endif %}
-
-      {% if course %}
-        {% if lesson %}
+        {% if course and course.url contains '/learn/grow-your-data-skills/learn-sql/' %}
           <li class="breadcrumb-item m-0 d-flex align-items-baseline">
-            <a href="/learn/{{category.slug}}/{{track.slug}}/{{course.slug}}">
-              {{course.name}}
+            <a href="{{ course.url }}">{{ course.name }}</a>
+          </li>
+       {% elsif course %}
+          <li class="breadcrumb-item m-0 d-flex align-items-baseline">
+            <a href="{{ course.url }}">{{ course.name }}</a>
+          </li>
+       {% endif %}
+      {% else %}
+        {% if track %}
+          <li class="breadcrumb-item m-0 d-flex align-items-baseline">
+            <a href="/learn/{{category.slug}}/{{track.slug}}">
+              {{track.name}}
             </a>
           </li>
+        {% endif %}
+
+        {% if course %}
+          {% if lesson %}
+            <li class="breadcrumb-item m-0 d-flex align-items-baseline">
+              <a href="/learn/{{category.slug}}/{{track.slug}}/{{course.slug}}">
+                {{course.name}}
+              </a>
+            </li>
+          {% endif %}
         {% endif %}
       {% endif %}
     </ol>
