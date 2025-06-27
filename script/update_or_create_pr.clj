@@ -19,7 +19,10 @@
                     :alias :r}
     :annotation {:ref "<annotation>"
                  :desc "The annotation to add to the PR."
-                 :default "auto-build"}}
+                 :default "auto-build"}
+    :pr-number {:ref "<pr-number>"
+                :desc "The PR number to update, if it exists."
+                :default nil}}
    :error-fn u/cli-error-fn})
 
 (defn existing-pr-by-source+target?
@@ -51,21 +54,23 @@
                            (str "_site/docs/v0." release-num)]
     :else []))
 
-(defn- report-pr-body [source-branch target-branch artifact-dirs]
+(defn- report-pr-body [source-branch target-branch artifact-dirs pr-number]
   (str/join "\n"
             [(str "`" source-branch "` -> `" target-branch "`")
              ""
              "## Updated Directories:"
              (str/join "\n" (map #(str "- `" % "`") artifact-dirs))
              ""
-             (str "Find the [Triggering PR](https://github.com/search?q=repo%3Ametabase%2Fmetabase%20" source-branch "&type=pullrequests).")
+             (if pr-number
+               (str "This PR was triggered by: [PR " pr-number "](https://github.com/metabase/metabase/pull/" pr-number ").")
+               (str "Find the [Triggering PR](https://github.com/search?q=repo%3Ametabase%2Fmetabase%20" source-branch "&type=pullrequests)."))
              ""
              "> This PR will be merged when the PR that triggered this build is merged."]))
 
 (defn -main
   "Main function to update or create a PR. "
   [& args]
-  (let [{:keys [source-branch target-branch annotation]
+  (let [{:keys [source-branch target-branch annotation pr-number]
          :as   opts}     (cli/parse-opts args cli-spec)
         _                   (when (or (:help opts) (:h opts))
                               (u/show-usage-and-exit cli-spec))
