@@ -7,6 +7,8 @@ category: 'Exploration and Organization'
 title: 'Organization overview'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/exploration-and-organization/start.md'
 layout: new-docs
+redirect_from:
+    - /docs/master/exploration-and-organization
 ---
 
 # Organization overview
