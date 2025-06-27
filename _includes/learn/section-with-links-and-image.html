@@ -4,11 +4,7 @@ Each section should show up to 6 links to articles.
 If there are more than 6 articles, it adds a "more" link. 
 {% endcomment %}
 
-{% if include.section.pages.first.pages %}
-  {% assign section = include.section.pages.first %}
-{% else %}
-  {% assign section = include.section %}
-{% endif %}
+{% assign section = include.section %}
 
 {% assign total_pages = 0 %}
 {% for page in section.pages %}
@@ -21,8 +17,8 @@ If there are more than 6 articles, it adds a "more" link.
 
 <div>
   <div>
-    <h4><a href="{{include.section.url}}">{{include.section.name}}</a></h4>
-    <p>{{include.section.summary | default: "We need a summary here"}}</p>
+    <h4><a href="{{section.url}}">{{section.name}}</a></h4>
+    <p>{{section.summary | default: "We need a summary here"}}</p>
 
     {% assign displayed_pages = 0 %}
     {% for page in section.pages %}
@@ -32,7 +28,11 @@ If there are more than 6 articles, it adds a "more" link.
             <a href="{{subPage.url}}" {% if displayed_pages == 5 %}class="no-border-bottom"{% endif %}>
               <span>{{subPage.name}}</span>
               {% assign page_for_read_time = site.learn | find: "url", subPage.url %}
-              <span>{{ page_for_read_time.content | number_of_words | divided_by: 238}} min</span>
+              {% if page_for_read_time.content %}
+                <span>{{ page_for_read_time.content | number_of_words | divided_by: 238}} min</span>
+              {% else %}
+                <span>— min</span>
+              {% endif %}
             </a>
             {% assign displayed_pages = displayed_pages | plus: 1 %}
           {% endif %}
@@ -42,7 +42,11 @@ If there are more than 6 articles, it adds a "more" link.
           <a href="{{page.url}}" {% if displayed_pages == 5 %}class="no-border-bottom"{% endif %}>
             <span>{{page.name}}</span>
             {% assign page_for_read_time = site.learn | find: "url", page.url %}
-            <span>{{ page_for_read_time.content | number_of_words | divided_by: 238}} min</span>
+            {% if page_for_read_time.content %}
+              <span>{{ page_for_read_time.content | number_of_words | divided_by: 238}} min</span>
+            {% else %}
+              <span>— min</span>
+            {% endif %}
           </a>
           {% assign displayed_pages = displayed_pages | plus: 1 %}
         {% endif %}
@@ -50,7 +54,7 @@ If there are more than 6 articles, it adds a "more" link.
     {% endfor %}
 
     {% if total_pages > 6 %}
-      <a href="{{include.section.url}}" class="more">
+      <a href="{{section.url}}" class="more">
         {{ total_pages | minus: 6 }} more
         {% include svg-icons/chevron.html %}
       </a>

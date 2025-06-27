@@ -9,6 +9,7 @@ source_url: 'https://github.com/metabase/metabase/blob/master/docs/questions/nat
 layout: new-docs
 redirect-from:
     - /docs/latest/users-guide/writing-sql
+    - /docs/latest/questions/native-editor
 ---
 
 # SQL editor

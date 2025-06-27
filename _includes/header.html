@@ -17,7 +17,11 @@
 
 <header class="bootstrap {{ scroll_indicator_classname }}">
   <div class="navigation-header bg-neutral-white {{ scroll_indicator_classname }}">
-    {% include promo-banner.html %}
+    {% if page.collection == "dashboards" %}
+      {% include promo-banner-is-metabase-right-for-you.html %}
+    {% else %}
+      {% include promo-banner.html %}
+    {% endif %}
 
     <div class="container d-flex h-100 align-items-center">
       <div class="row flex-grow-1">

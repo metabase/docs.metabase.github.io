@@ -1,0 +1,45 @@
+<div class="d-block d-lg-block">
+  <div class="right-hand-newsletter-subscribe-form-container bleed-right" id="right-hand-newsletter-subscribe-form-container">
+    {% include svg-icons/metabot-on-a-paper-airplane.html %}
+    <p>Get tips and tricks for working with <b>data and AI</b> in your inbox</p>
+    <iframe
+      src="/subscribe-to-ai-newsletter-righthandside"
+      id="subscribe-to-ai-newsletter-righthandside"
+      onload="javascript:(function(o){
+          o.style.height=o.contentWindow.document.getElementById('feedback-widget-newsletter-ajax-form-container').offsetHeight+'px';
+
+          const resizeObserver = new ResizeObserver(function(entries) {
+              const $firstEntry = entries[0];
+              if ($firstEntry && $firstEntry.borderBoxSize && $firstEntry.borderBoxSize[0]) {
+                  const $form = $firstEntry.borderBoxSize[0];
+                  if ($form) {
+                      o.style.height = $form.blockSize + 'px';
+                  }
+              }
+          });
+          resizeObserver.observe(o.contentWindow.document.getElementById('feedback-widget-newsletter-ajax-form-container'));
+      }(this));"
+    ></iframe>
+  </div>
+</div>
+<script type="text/javascript" src="/js/side-email-cta.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const iframe = document.getElementById(
+      "subscribe-to-ai-newsletter-righthandside",
+    );
+    const url = new URL(iframe.src, window.location.origin);
+
+    // Copy search params from the main window
+    const currentParams = new URLSearchParams(window.location.search);
+    for (const [key, value] of currentParams.entries()) {
+      url.searchParams.set(key, value);
+    }
+
+    // Add the current pathname as signup_path
+    url.searchParams.set("signup_path", window.location.pathname);
+
+    // Apply the new src
+    iframe.src = url.toString();
+  });
+</script>

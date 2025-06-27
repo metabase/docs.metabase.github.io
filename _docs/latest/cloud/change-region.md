@@ -1,10 +1,11 @@
 ---
-title: Changing which region your Metabase is hosted in
 version: latest
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
 category: Cloud
+title: Changing which region your Metabase is hosted in
+source_url: 'https://github.com/metabase/metabase/blob/master/docs/cloud/change-region.md'
 layout: new-docs
 latest: true
 ---

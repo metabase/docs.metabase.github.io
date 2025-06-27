@@ -1,10 +1,12 @@
 ---
-title: Migrate from Metabase Cloud to a self-hosted Metabase
 version: latest
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
 category: Cloud
+title: Migrate from Metabase Cloud to a self-hosted Metabase
+source_url: >-
+  https://github.com/metabase/metabase/blob/master/docs/cloud/migrate/cloud-to-self-hosted.md
 layout: new-docs
 section: Migrate
 latest: true
@@ -16,7 +18,7 @@ latest: true
 
 Migration from Metabase Cloud to self-hosted will keep all of your questions, dashboards, people, settings --- everything in your existing Metabase.
 
-To migrate, you'll need to [contact our success team](/help/premium) to get a snapshot of your Metabase's [application database](/docs/latest/installation-and-operation/migrating-from-h2#metabases-application-database). This application database contains information about all the settings, questions, dashboards, models, users, etc from your Metabase Cloud instance. The application database is distinct from any of the databases you have connected to your Metabase. You'll need to host your own PostgreSQL database and import your data by restoring from this snapshot of your application database.
+To migrate, you'll need to [contact our success team](/help-premium) to get a snapshot of your Metabase's [application database](/docs/latest/installation-and-operation/migrating-from-h2#metabases-application-database). This application database contains information about all the settings, questions, dashboards, models, users, etc from your Metabase Cloud instance. The application database is distinct from any of the databases you have connected to your Metabase. You'll need to host your own PostgreSQL database and import your data by restoring from this snapshot of your application database.
 
 ## Preparing to migrate from cloud to self-hosted
 
@@ -43,7 +45,7 @@ If you're migrating from a Metabase Cloud Pro plan to a self-hosted Pro plan, yo
 
 ## How to migrate from Metabase Cloud to a self-hosted instance
 
-1. **Request a snapshot of your application database** for your Metabase Cloud instance by [contacting our Success Engineering team](/help/premium).
+1. **Request a snapshot of your application database** for your Metabase Cloud instance by [contacting our Success Engineering team](/help-premium).
 
    Currently, you can't generate the snapshot yourself. A Metabase Success Engineer will generate a snapshot for you and email a link to download your snapshot from the Metabase Store.
 
@@ -57,7 +59,7 @@ If you're migrating from a Metabase Cloud Pro plan to a self-hosted Pro plan, yo
 
    The migration will involve running a CLI command to load the data from the H2 snapshot you downloaded to your self-hosted application database.
 
-   If you encounter any issues, check out the [troubleshooting guide](/docs/latest/troubleshooting-guide/loading-from-h2) or [contact us](/help/premium).
+   If you encounter any issues, check out the [troubleshooting guide](/docs/latest/troubleshooting-guide/loading-from-h2) or [contact us](/help-premium).
 
 4. **Pro plans will need to input a license token to activate the paid features**. If you're migrating to a Pro self-hosted plan, [activate your Enterprise Edition token](/docs/latest/installation-and-operation/activating-the-enterprise-edition).
 

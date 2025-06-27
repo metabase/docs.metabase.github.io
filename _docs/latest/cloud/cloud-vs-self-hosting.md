@@ -1,10 +1,12 @@
 ---
-title: Metabase Cloud versus self-hosting
 version: latest
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
 category: Cloud
+title: Metabase Cloud versus self-hosting
+source_url: >-
+  https://github.com/metabase/metabase/blob/master/docs/cloud/cloud-vs-self-hosting.md
 layout: new-docs
 latest: true
 ---
@@ -36,10 +38,10 @@ Infrastructure costs are tricky to estimate, so keep in mind that the above self
 
 There are some cases where you _should_ self-host.
 
-- You need an [air-gapped environment](/product/air-gapping), usually for regulatory compliance, or if you’re running your own three-letter-agency… If you’re not sure if you need an air-gapped environment, you don’t need an air-gapped environment. If you do need an air-gap, we have an [air-gap offering as well](/talk-to-a-person/) (just not for Cloud, obviously).
 - You have some regulations that stipulate how you run your software (like HIPAA).
 - You want to run a custom build of Metabase. That is, you’re running a fork of Metabase (OSS or the Enterprise/Pro version) so you can add your own customizations to the software, and you have the engineering resources to tank that level of overhead.
 - You want to use a community or custom driver. We only support [official (1st-party) and partner drivers](/docs/latest/databases/connecting#connecting-to-supported-databases) on Metabase Cloud, because we need to be able to vouch for their quality and help you with problems in a production context.
+- You need an air-gapped environment, usually for regulatory compliance, or if you’re running your own three-letter-agency… If you’re not sure if you need an air-gapped environment, you don’t need an air-gapped environment. If you do need an air-gap, we have an [air-gap offering as well](/product/air-gapping) (just not for Cloud, obviously).
 
 Otherwise, you're better off having us handle all of the overhead so you can focus on your business. The official support alone is probably worth it.
 

@@ -1,10 +1,11 @@
 ---
-title: Migrate to Metabase Cloud
 version: latest
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
 category: Cloud
+title: Migrate to Metabase Cloud
+source_url: 'https://github.com/metabase/metabase/blob/master/docs/cloud/migrate/guide.md'
 layout: new-docs
 section: Migrate
 redirect_from:
@@ -94,4 +95,4 @@ If you were self-hosting via a third-party, be sure to clean up and cancel any s
 
 ## Need help?
 
-If you run into any trouble, just [send us an email](/contact).
+If you run into any trouble, just [send us an email](/help/).
