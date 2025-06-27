@@ -82,40 +82,48 @@ jobs:
           cli: 1.12.0.1530
           bb: 1.12.200
 
-      - name: Check for and Close PR
+      - name: Check for PR Close
+        id: check
         if: |
           (github.event_name == 'repository_dispatch' && github.event.action == 'docs_close') ||
           (github.event_name == 'workflow_dispatch' && github.event.inputs.dispatch_type == 'docs_close')
         run: |
           gh pr close "${MAIN_REPO_SOURCE_BRANCH}->${MAIN_REPO_TARGET_BRANCH}" --repo metabase/docs.metabase.github.io --delete-branch
-          exit 0
+          echo "skip=true" >> "$GITHUB_OUTPUT"
 
       - name: Run docs repo build tests
+        if: steps.check.outputs.skip != 'true'
         run: |
           bb script/_test/all.clj
 
       - name: Filter non-documented branches
+        if: steps.check.outputs.skip != 'true'
         run: |
           bb script/check_incoming_branchname.clj --target-branch "$MAIN_REPO_TARGET_BRANCH"
 
       - name: Setup Node.js
+        if: steps.check.outputs.skip != 'true'
         uses: actions/setup-node@v4
         with:
           node-version: '22'
 
       - name: Install js dependencies
+        if: steps.check.outputs.skip != 'true'
         run: yarn install --frozen-lockfile --prefer-offline
 
       - name: Set up Ruby # uses version from .ruby-version
+        if: steps.check.outputs.skip != 'true'
         uses: ruby/setup-ruby@d5fb7a202fc07872cb44f00ba8e6197b70cb0c55 # v1.179.0
         with:
           bundler-cache: true
 
       - name: Install ruby dependencies
+        if: steps.check.outputs.skip != 'true'
         run: |
           bundle install
 
       - name: Setup Git Authenticatation
+        if: steps.check.outputs.skip != 'true'
         run: |
           git config --global user.name "Metabase Docs bot"
           git config --global user.email "metabase-bot@metabase.com"
@@ -126,8 +134,9 @@ jobs:
         uses: nick-fields/retry@v3
         # for docs_merge, the tarball will be gone by the time this workflow runs.
         if: |
-          (github.event_name == 'repository_dispatch' && github.event.action == 'docs_update') ||
-          (github.event_name == 'workflow_dispatch' && github.event.inputs.dispatch_type == 'docs_update')
+          (steps.check.outputs.skip != 'true' &&
+           ((github.event_name == 'repository_dispatch' && github.event.action == 'docs_update') ||
+            (github.event_name == 'workflow_dispatch' && github.event.inputs.dispatch_type == 'docs_update')))
         with:
           timeout_minutes: 20
           max_attempts: 3
@@ -136,10 +145,12 @@ jobs:
             bb script/update_docs_for_branchname.clj --source-branch "$MAIN_REPO_SOURCE_BRANCH" --target-branch "$MAIN_REPO_TARGET_BRANCH"
 
       - name: Cleanup cloud docs (move them to latest, remove from all other versions)
+        if: steps.check.outputs.skip != 'true'
         run: |
           bb script/cleanup_cloud_docs.clj
 
       - name: Checkout Control files from Marketing Repo
+        if: steps.check.outputs.skip != 'true'
         uses: actions/checkout@v4
         with:
           repository: metabase/metabase.github.io
@@ -148,26 +159,32 @@ jobs:
           token: ${{ secrets.METABASE_AUTOMATION_USER_TOKEN }}
 
       - name: Merge control files from Marketing Repo
+        if: steps.check.outputs.skip != 'true'
         run: |
           bb script/sync_repo.clj --from-repo .marketing_repo
 
       - name: "yarn lint-markdown"
+        if: steps.check.outputs.skip != 'true'
         run: |
           yarn lint-markdown
 
       - name: "yarn lint-styles"
+        if: steps.check.outputs.skip != 'true'
         run: |
           yarn lint-styles
 
       - name: "yarn lint-scripts"
+        if: steps.check.outputs.skip != 'true'
         run: |
           yarn lint-scripts
 
       - name: "yarn lint-links"
+        if: steps.check.outputs.skip != 'true'
         run: |
           yarn lint-links
 
       - name: Build the Jekyll Site
+        if: steps.check.outputs.skip != 'true'
         env:
           JEKYLL_ENV: production
           NODE_ENV: production
@@ -178,6 +195,7 @@ jobs:
           script/build
 
       - name: Run htmlproofer + metabase.com-aware link checks
+        if: steps.check.outputs.skip != 'true'
         run: |
           SECONDS=0
           script/links || true
@@ -188,8 +206,9 @@ jobs:
 
       - name: Update or Create the Pull Request
         if: |
-          (github.event_name == 'repository_dispatch' && github.event.action == 'docs_update') ||
-          (github.event_name == 'workflow_dispatch' && github.event.inputs.dispatch_type == 'docs_update')
+          (steps.check.outputs.skip != 'true' &&
+           ((github.event_name == 'repository_dispatch' && github.event.action == 'docs_update') ||
+            (github.event_name == 'workflow_dispatch' && github.event.inputs.dispatch_type == 'docs_update')))
         run: |
           bb script/update_or_create_pr.clj --source-branch "$MAIN_REPO_SOURCE_BRANCH" --target-branch "$MAIN_REPO_TARGET_BRANCH" --annotation "$ANNOTATION" --pr-number "$PR_NUMBER"
 
@@ -199,7 +218,8 @@ jobs:
 
       - name: Merge Updated Docs
         if: |
-          (github.event_name == 'repository_dispatch' && github.event.action == 'docs_merge') ||
-          (github.event_name == 'workflow_dispatch' && github.event.inputs.dispatch_type == 'docs_merge')
+          (steps.check.outputs.skip != 'true' &&
+           ((github.event_name == 'repository_dispatch' && github.event.action == 'docs_merge') ||
+            (github.event_name == 'workflow_dispatch' && github.event.inputs.dispatch_type == 'docs_merge')))
         run: |
           bb script/merge.clj --source-branch "$MAIN_REPO_SOURCE_BRANCH" --target-branch "$MAIN_REPO_TARGET_BRANCH"
