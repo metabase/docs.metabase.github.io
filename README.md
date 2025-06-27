@@ -57,6 +57,152 @@ When this happens, we merge the `{target-branch}->{source-branch}` PR into
 
 ---
 
+# Process Docs Changes Workflow
+
+This workflow handles all documentation updates triggered by changes in the main `metabase/metabase` repository. It creates/updates documentation PRs when a PR touching `/docs` is opened in metabase/metabase. It merges those PRs when a PR touching `/docs` is merged in metabase/metabase.
+
+## Running Manually
+
+It can be nice to run these by-hand, this is how you'd go about it. All these examples assume your current working directory is the root of this repo.
+
+### Update Documentation
+```bash
+# Assuming docs-update-naming-55 is a branch that exists in the main repo:
+gh workflow run "Process Docs Changes" \
+  --field source_branch="docs-update-naming-55" \
+  --field target_branch="master"
+```
+
+### Merge Documentation PR
+```bash
+gh workflow run "Process Docs Changes" \
+  --field source_branch="docs-update-naming-55" \
+  --field target_branch="master" \
+  --field dispatch_type="docs_merge"
+```
+
+## Parameters
+
+| Parameter | Required | Type | Default | Description |
+|-----------|----------|------|---------|-------------|
+| `source_branch` | ✅ | string | - | The feature/source branch from metabase/metabase that triggered this workflow |
+| `target_branch` | ✅ | string | - | The target branch in metabase/metabase (usually `master` or `release-x.MM.x` for backports) |
+| `annotation` | ❌ | string | `"auto-build"` | Optional note displayed in the build queue and PR title for data lineage |
+| `dispatch_type` | ❌ | choice | `"docs_update"` | Action type: `docs_update` (create/update PR) or `docs_merge` (merge PR) |
+
+## How It Works
+
+### Branch Mapping
+The workflow maps branches from the main repository to documentation changes:
+- **Source → Target**: `docs-update-naming-55` → `master` creates a PR with branch `docs-update-naming-55->master` targeting `master` in this repo.
+- **Backports**: `docs-hotfix-security` → `release-0.50.x` creates a PR with branch `docs-hotfix-security->release-0.50.x` targeting `master` in this repo.
+
+### Dispatch Types
+
+#### `docs_update` (Default)
+Creates or updates a documentation PR with the naming pattern `[annotation] {source-branch}->{target-branch}`. The branchname for the PR will always be `{source-branch}->{target-branch}`.
+
+**Example**: Source `docs-new-way-to-query` targeting `master` creates/updates PR named `[auto-build]docs-new-way-to-query->master`. This PR, in this repo, will have branchname `docs-new-way-to-query->master` and target `master` in this repo.
+
+#### `docs_merge`
+Merges the existing documentation PR that matches the `{source-branch}->{target-branch}` branchname pattern. Also runs linters as part of the merge process for safety.
+
+## Manual Use Cases
+
+These happen automatically for PRs in metabase/metabase, but it can still be handy to kick them off manually.
+
+### 1. Manually Update New Feature Documentation
+When adding documentation for a new feature:
+
+```bash
+gh workflow run "Process Docs Changes" \
+  --field source_branch="docs-query-builder-v2" \
+  --field target_branch="master" \
+  --field annotation="manual update"
+```
+
+### 2. Manually Update Backport Documentation
+For release backports:
+
+```bash
+gh workflow run "Process Docs Changes" \
+  --field source_branch="docs-security-patch" \
+  --field target_branch="release-0.50.x" \
+  --field annotation="manual backport update"
+```
+
+### 3. Manually Merge Completed Documentation
+
+```bash
+gh workflow run "Process Docs Changes" \
+  --field source_branch="docs-query-builder-v2" \
+  --field target_branch="master" \
+  --field dispatch_type="docs_merge"
+```
+
+## Workflow Examples
+
+### Tracking Multiple Workflows
+Use descriptive annotations to track related workflows:
+
+```bash
+# Sprint 42 features
+gh workflow run "Process Docs Changes" \
+  --field source_branch="docs-dashboards-v3" \
+  --field target_branch="master" \
+  --field annotation="Sprint 42: Dashboard v3"
+
+gh workflow run "Process Docs Changes" \
+  --field source_branch="docs-alerts-redesign" \
+  --field target_branch="master" \
+  --field annotation="Sprint 42: Alerts redesign"
+```
+
+## Tips and Best Practices
+
+### Annotations
+- Use descriptive annotations to identify workflows in the build queue and PR titles
+- Keep them concise since they appear in PR titles
+
+### Branch Naming
+- Source branch must match exactly what's in metabase/metabase
+- Target branch is typically `master`
+- Use `release-x.MM.x` format for backports (e.g., `release-0.50.x`)
+
+## Important Pitfalls
+
+### Deleted Source Branches
+**Critical**: The source branch must exist in metabase/metabase when running this workflow. If the source branch has been deleted (e.g., after merging the original PR), the workflow will fail.
+
+**Solution:**:
+1. **Restore the branch** in metabase/metabase before running the workflow
+
+**Example scenario**:
+```bash
+# ❌ This will fail if docs-update-naming-55 was deleted
+gh workflow run "Process Docs Changes" \
+  --field source_branch="docs-update-naming-55" \
+  --field target_branch="master"
+
+# ✅ First restore the branch in metabase/metabase, then run workflow
+```
+
+## Troubleshooting
+
+| Issue | Solution |
+|-------|----------|
+| "Branch not found" error | **Most common**: Source branch was deleted from metabase/metabase. Restore it first. |
+| Workflow doesn't create PR | Check if PR with same name already exists |
+| Merge fails | Ensure the docs PR exists and is ready to merge |
+| Build queue confusion | Use descriptive `annotation` values |
+| Workflow fails immediately | Verify both source and target branches exist in metabase/metabase |
+
+## Repository Dispatch
+
+This workflow also responds to repository dispatch events with types `docs_update` and `docs_merge`, allowing it to be triggered programmatically from the metabase/metabase repo.
+
+---
+
 ## Workflow Scripts Overview
 
 ### [Process Docs Changes](.github/workflows/process_docs_changes.yml)
@@ -73,6 +219,7 @@ Notable steps:
 
 - Opens PR with changes to `master` for the `_site` (html/js/css), and `_docs`
   (markdown) directories.
+
 
 #### Steps required for a faithful build
 
