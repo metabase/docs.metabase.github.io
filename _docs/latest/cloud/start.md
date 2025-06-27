@@ -1,10 +1,12 @@
 ---
-title: Metabase Cloud
 version: latest
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: false
 category: Cloud
+title: Metabase Cloud
+source_url: 'https://github.com/metabase/metabase/blob/master/docs/cloud/start.md'
+layout: new-docs
 redirect_from:
   - /cloud/docs
 latest: true
@@ -24,7 +26,7 @@ Manage your Metabase Cloud instance, subscription, and billing via the [Metabase
 - [Metabase Cloud versus self-hosting](./cloud-vs-self-hosting)
 - [Metabase Cloud Storage](./storage)
 - [Syncing Google Sheets with Metabase](./google-sheets)
-- [Limitations of Metabase Cloud](limitations)
+- [Limitations of Metabase Cloud](./limitations)
 
 ### Metabase Cloud settings
 
@@ -45,7 +47,7 @@ Manage your Metabase Cloud instance, subscription, and billing via the [Metabase
 
 ## Metabase Cloud contact
 
-- [Send us an email](/help/premium)
+- [Send us an email](/help-premium)
 
 ## Terms of service
 

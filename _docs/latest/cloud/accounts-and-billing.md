@@ -1,10 +1,12 @@
 ---
-title: Accounts and billing
 version: latest
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
 category: Cloud
+title: Accounts and billing
+source_url: >-
+  https://github.com/metabase/metabase/blob/master/docs/cloud/accounts-and-billing.md
 layout: new-docs
 latest: true
 ---
@@ -94,7 +96,7 @@ Note that you cannot switch back to monthly billing until your annual cycle has 
 
 ## W-9 form requests
 
-See Metabase's updated [W9 form](/docs/w9).
+See Metabase's updated [W9 form](/files/2024_W9_signed.pdf).
 
 ## Update your Tax ID
 

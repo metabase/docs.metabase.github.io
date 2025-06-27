@@ -1,10 +1,11 @@
 ---
-title: Migrating from Heroku to Metabase Cloud
 version: latest
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
 category: Cloud
+title: Migrating from Heroku to Metabase Cloud
+source_url: 'https://github.com/metabase/metabase/blob/master/docs/cloud/migrate/heroku.md'
 layout: new-docs
 redirect_from:
   - /cloud/docs/migrate/heroku
@@ -17,7 +18,7 @@ There are some additional steps you'll need to take to migrate from Heroku to Me
 
 ## Follow the migration guide to get the migration script
 
-You should follow along with the [migration guide](/migrate/post-signup-guide). Once you download the migration script you'll need to get shell access to your Heroku server in order to execute the migration script.
+You should follow along with the [migration guide](./guide). Once you download the migration script you'll need to get shell access to your Heroku server in order to execute the migration script.
 
 ## Install Heroku CLI for your OS
 
@@ -57,4 +58,4 @@ In the same shell session, run your [migration script](./guide).
 curl -s long-metabase-migration-script-url | bash
 ```
 
-That should be all there is to it. See the [migration guide](/migrate/guide) for details.
+That should be all there is to it. See the [migration guide](./guide) for details.

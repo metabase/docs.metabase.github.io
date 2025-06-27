@@ -1,4 +1,8 @@
-{% assign page_for_read_time = site.learn | find: "url", page_entry.url %} {%
-assign read_time = page_for_read_time.content | number_of_words | divided_by:
-238 %} {% if read_time == 0 %} {% assign read_time = 1 %} {% endif %}
-<p>{% include svg-icons/clock.html %} {{ read_time }} min read</p>
+{% assign page_for_read_time = site.learn | find: "url", page_entry.url %}
+{% if page_for_read_time.content %}
+  {% assign read_time = page_for_read_time.content | number_of_words | divided_by: 238 %}
+  {% if read_time < 1 %} {% assign read_time = 1 %} {% endif %}
+  <p>{% include svg-icons/clock.html %} {{ read_time }} min read</p>
+{% else %}
+  <p>{% include svg-icons/clock.html %} — min read</p>
+{% endif %}

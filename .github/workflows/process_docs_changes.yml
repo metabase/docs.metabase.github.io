@@ -3,13 +3,18 @@ on:
   workflow_dispatch:
     inputs:
       source_branch:
-        description: metabase/metabase branch triggered this workflow?
+        description: metabase/metabase branch triggered this workflow
         required: true
         type: string
       target_branch:
         description: metabase/metabase target branch name
         required: true
         type: string
+      annotation:
+        description: note to describe what the pr does
+        required: false
+        type: string
+        default: "auto-build"
       dispatch_type:
         description: 'Type of dispatch action to simulate'
         required: false
@@ -25,8 +30,11 @@ run-name: >-
   ${{
     (github.event.action == 'docs_merge' || github.event.inputs.dispatch_type == 'docs_merge') && '✅' ||
     (github.event.action == 'docs_update' || github.event.inputs.dispatch_type == 'docs_update') && '🔄'
-  }} | `${{ github.event.inputs.source_branch || github.event.client_payload.source_branch }}`
-   -> `${{ github.event.inputs.target_branch || github.event.client_payload.target_branch }}`
+  }}${{
+    (github.event.inputs.annotation || github.event.client_payload.annotation) &&
+    format(' | `{0}` | ', github.event.inputs.annotation || github.event.client_payload.annotation) ||
+    ' | '
+  }}`${{ github.event.inputs.source_branch || github.event.client_payload.source_branch }}` -> `${{ github.event.inputs.target_branch || github.event.client_payload.target_branch }}`
 
 jobs:
   build:
@@ -36,6 +44,7 @@ jobs:
     env:
       MAIN_REPO_SOURCE_BRANCH: "${{ github.event.inputs.source_branch || github.event.client_payload.source_branch }}"
       MAIN_REPO_TARGET_BRANCH: "${{ github.event.inputs.target_branch || github.event.client_payload.target_branch }}"
+      ANNOTATION: "${{ github.event.inputs.annotation || github.event.client_payload.annotation || 'auto-build' }}"
     steps:
       - uses: actions/checkout@v4
 
@@ -96,13 +105,23 @@ jobs:
           echo "main_repo_source_branch = '${{ env.MAIN_REPO_SOURCE_BRANCH }}'"
           echo "main_repo_target_branch = '${{ env.MAIN_REPO_TARGET_BRANCH }}'"
 
+      # observed this failing during sdk docs generation deps downloads, so adding retry logic
       - name: Update docs for branchname
+        uses: nick-fields/retry@v3
         # for docs_merge, the tarball will be gone by the time this workflow runs.
         if: |
           (github.event_name == 'repository_dispatch' && github.event.action == 'docs_update') ||
           (github.event_name == 'workflow_dispatch' && github.event.inputs.dispatch_type == 'docs_update')
+        with:
+          timeout_minutes: 20
+          max_attempts: 3
+          retry_on: error
+          command: |
+            bb script/update_docs_for_branchname.clj --source-branch "$MAIN_REPO_SOURCE_BRANCH" --target-branch "$MAIN_REPO_TARGET_BRANCH"
+
+      - name: Cleanup cloud docs (move them to latest, remove from all other versions)
         run: |
-          bb script/update_docs_for_branchname.clj --source-branch "$MAIN_REPO_SOURCE_BRANCH" --target-branch "$MAIN_REPO_TARGET_BRANCH"
+          bb script/cleanup_cloud_docs.clj
 
       - name: Checkout Control files from Marketing Repo
         uses: actions/checkout@v4
@@ -114,11 +133,7 @@ jobs:
 
       - name: Merge control files from Marketing Repo
         run: |
-          cp -r .marketing_repo/_data .
-          cp -r .marketing_repo/_includes .
-          cp -r .marketing_repo/_layouts .
-          cp -r .marketing_repo/_plugins .
-          cp -r .marketing_repo/_sass .
+          bb script/sync_repo.clj --from-repo .marketing_repo
 
       - name: "yarn lint-markdown"
         run: |
@@ -153,7 +168,7 @@ jobs:
           echo "Time elapsed: ${SECONDS} seconds"
           echo 'checking reported links...'
           echo "htmlproofer spit out a report of length: $(wc -l < htmlproofer.out)"
-          bb script/analyze_links.clj --htmlproofer-output htmlproofer.out
+          bb script/analyze_links.clj --htmlproofer-output htmlproofer.out --limit 1
 
       - name: Update or Create the Pull Request
         if: |
@@ -162,15 +177,11 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.METABASE_AUTOMATION_USER_TOKEN }}
         run: |
-          bb script/update_or_create_pr.clj --source-branch "$MAIN_REPO_SOURCE_BRANCH" --target-branch "$MAIN_REPO_TARGET_BRANCH"
+          bb script/update_or_create_pr.clj --source-branch "$MAIN_REPO_SOURCE_BRANCH" --target-branch "$MAIN_REPO_TARGET_BRANCH" --annotation "$ANNOTATION"
 
       - name: Remove control files from Marketing Repo
         run: |
-          rm -rf _data
-          rm -rf _includes
-          rm -rf _layouts
-          rm -rf _plugins
-          rm -rf _sass
+          bb script/sync_repo.clj --delete
 
       - name: Merge Updated Docs
         if: |
