@@ -7,6 +7,8 @@ category: Dashboards
 title: 'Dashboards overview'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/dashboards/start.md'
 layout: new-docs
+redirect_from:
+    - /docs/master/dashboards
 ---
 
 # Dashboards overview

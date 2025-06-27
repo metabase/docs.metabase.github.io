@@ -9,6 +9,7 @@ source_url: 'https://github.com/metabase/metabase/blob/master/docs/people-and-gr
 layout: new-docs
 redirect_from:
     - /docs/master/administration-guide/sso
+    - /docs/master/people-and-groups
 ---
 
 # People overview
