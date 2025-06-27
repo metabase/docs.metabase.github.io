@@ -7,8 +7,6 @@ category: Permissions
 title: 'Permissions overview'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/permissions/start.md'
 layout: new-docs
-redirect_from:
-    - /docs/master/permissions
 ---
 
 # Permissions overview

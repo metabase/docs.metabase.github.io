@@ -14,8 +14,6 @@ summary: 'Route queries to different databases based on who''s viewing them. Gre
 
 {% include plans-blockquote.html feature="Database routing" %}
 
-> Database routing is currently unavailable for ClickHouse
-
 With database routing, an admin can build a question once using one database, and the question will run its query against a different database with the same schema depending on who is viewing the question.
 
 Database routing is useful for:
@@ -23,17 +21,7 @@ Database routing is useful for:
 - Managing embedding setups where each customer has their own database with identical schemas.
 - Switching between dev and prod data warehouses.
 - Changing the target data warehouse for certain teams.
-- Managing separate connections to the same data warehouse, with each connection having separate privileges. This connection management is akin to [connection impersonation](./impersonation) for databases that prevent the same connection from changing roles.
-
-## Databases that support database routing
-
-- [Druid](../databases/connections/druid)
-- [MongoDB](../databases/connections/mongodb)
-- [MariaDB](../databases/connections/mariadb)
-- [MySQL](../databases/connections/mysql)
-- [PostgreSQL](../databases/connections/postgresql)
-- [SQL Server](../databases/connections/sql-server)
-- [SQLite](../databases/connections/sqlite)
+- Managing separate connections to the same data warehouse, with each connection having separate privileges. This connection management is akin to [connection impersonation](./impersonation) for databases that prevent the same connection from changing roles (e.g., to BigQuery, Athena, Databricks).
 
 ## How database routing works
 

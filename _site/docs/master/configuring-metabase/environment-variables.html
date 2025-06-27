@@ -111,7 +111,9 @@
   <link href="/gdpr-cookie-notice/dist/style.css" rel="stylesheet">
   <link href="/css/docs.css" rel="stylesheet">
   <link href="/css/styles.css" rel="stylesheet">
-  <link href="/css/main.css" rel="stylesheet">
+  
+    <link href="/css/main.css" rel="stylesheet">
+  
   <link href="/css/gdpr.css" rel="stylesheet">
   <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet">
 
@@ -4224,15 +4226,6 @@ java --add-opens java.base/java.nio=ALL-UNNAMED -jar metabase.jar
 
 <p>Must be less than 1048575. See also MB_UNAGGREGATED_QUERY_ROW_LIMIT.</p>
 
-<h3 id="mb_ai_proxy_base_url"><code class="language-plaintext highlighter-rouge">MB_AI_PROXY_BASE_URL</code></h3>
-
-<ul>
-  <li>Type: string</li>
-  <li>Default: <code class="language-plaintext highlighter-rouge">http://localhost:8000</code></li>
-</ul>
-
-<p>URL for the a AI Proxy service.</p>
-
 <h3 id="mb_allowed_iframe_hosts"><code class="language-plaintext highlighter-rouge">MB_ALLOWED_IFRAME_HOSTS</code></h3>
 
 <ul>
@@ -4288,7 +4281,7 @@ x.com</code></li>
         If the header is available, then it’s validated against MB_API_KEY.
         When it matches, the request continues; otherwise it’s blocked with a 403 Forbidden response.
         MB_API_KEY is used only for /notify endpoints and isn’t the same as Metabase API keys
-        used for authenticating other API requests. MB_API_KEY can be an arbitrary string.</p>
+        used for authenticating other API requests. MP_API_KEY can be an arbitrary string.</p>
 
 <h3 id="mb_application_colors"><code class="language-plaintext highlighter-rouge">MB_APPLICATION_COLORS</code></h3>
 
@@ -4493,8 +4486,8 @@ x.com</code></li>
   <li>Default: <code class="language-plaintext highlighter-rouge">true</code></li>
 </ul>
 
-<p>Whether to (asynchronously) sync newly created Databases during config-from-file initialization. By default, true,
-  but you can disable this behavior if you want to sync it manually or use SerDes to populate its data model.</p>
+<p>Whether to (asynchronously) sync newly created Databases during config-from-file initialization. By default, true, but you can disable
+  this behavior if you want to sync it manually or use SerDes to populate its data model.</p>
 
 <h3 id="mb_custom_formatting"><code class="language-plaintext highlighter-rouge">MB_CUSTOM_FORMATTING</code></h3>
 
@@ -4549,16 +4542,6 @@ x.com</code></li>
 
 <p>ID of dashboard to use as a homepage.</p>
 
-<h3 id="mb_dashboards_save_last_used_parameters"><code class="language-plaintext highlighter-rouge">MB_DASHBOARDS_SAVE_LAST_USED_PARAMETERS</code></h3>
-
-<ul>
-  <li>Type: boolean</li>
-  <li>Default: <code class="language-plaintext highlighter-rouge">true</code></li>
-  <li><a href="../installation-and-operation/serialization">Exported as</a>: <code class="language-plaintext highlighter-rouge">dashboards-save-last-used-parameters</code>.</li>
-</ul>
-
-<p>Whether dashboards should default to a user’s last used parameters on load.</p>
-
 <h3 id="mb_db_connection_timeout_ms"><code class="language-plaintext highlighter-rouge">MB_DB_CONNECTION_TIMEOUT_MS</code></h3>
 
 <ul>
@@ -4570,8 +4553,8 @@ x.com</code></li>
   successfully connect after this many milliseconds. By default, this is 10 seconds.</p>
 
 <p>Timeout in milliseconds for connecting to databases, both Metabase application database and data connections.
-  In case you’re connecting via an SSH tunnel and run into a timeout, you might consider increasing this value as the
-  connections via tunnels have more overhead than connections without.</p>
+        In case you’re connecting via an SSH tunnel and run into a timeout, you might consider increasing this value
+        as the connections via tunnels have more overhead than connections without.</p>
 
 <h3 id="mb_db_query_timeout_minutes"><code class="language-plaintext highlighter-rouge">MB_DB_QUERY_TIMEOUT_MINUTES</code></h3>
 
@@ -4985,7 +4968,7 @@ x.com</code></li>
 
 <ul>
   <li>Type: string</li>
-  <li>Default: <code class="language-plaintext highlighter-rouge">https://www.metabase.com/help/premium</code></li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">https://www.metabase.com/help-premium</code></li>
   <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">help-link-custom-destination</code></li>
 </ul>
 
@@ -5013,11 +4996,9 @@ x.com</code></li>
 
 <p>Change this to a higher value if you notice that regular usage consumes all or close to all connections.</p>
 
-<p>When all connections are in use then Metabase will be slower to return results for queries, since it would have to
-  wait for an available connection before processing the next query in the queue.</p>
+<p>When all connections are in use then Metabase will be slower to return results for queries, since it would have to wait for an available connection before processing the next query in the queue.</p>
 
-<p>For setting the maximum,
-  see <a href="#mb_application_db_max_connection_pool_size">MB_APPLICATION_DB_MAX_CONNECTION_POOL_SIZE</a>.</p>
+<p>For setting the maximum, see <a href="#mb_application_db_max_connection_pool_size">MB_APPLICATION_DB_MAX_CONNECTION_POOL_SIZE</a>.</p>
 
 <h3 id="mb_jwt_attribute_email"><code class="language-plaintext highlighter-rouge">MB_JWT_ATTRIBUTE_EMAIL</code></h3>
 
@@ -5134,7 +5115,7 @@ x.com</code></li>
   <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">jwt-identity-provider-uri</code></li>
 </ul>
 
-<p>URL for JWT-based login page.</p>
+<p>URL for JWT-based login page. Optional if using JWT SSO only with the embedded analytics SDK.</p>
 
 <h3 id="mb_jwt_shared_secret"><code class="language-plaintext highlighter-rouge">MB_JWT_SHARED_SECRET</code></h3>
 
@@ -5162,7 +5143,8 @@ x.com</code></li>
   <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">jwt-user-provisioning-enabled</code></li>
 </ul>
 
-<p>When a user logs in via JWT, create a Metabase account for them automatically if they don’t have one.</p>
+<p>When we enable JWT user provisioning, we automatically create a Metabase account on JWT signin for users who
+don’t have one.</p>
 
 <h3 id="mb_landing_page"><code class="language-plaintext highlighter-rouge">MB_LANDING_PAGE</code></h3>
 
@@ -5386,16 +5368,6 @@ x.com</code></li>
 <p>When we enable LDAP user provisioning, we automatically create a Metabase account on LDAP signin for users who
 don’t have one.</p>
 
-<h3 id="mb_license_token_missing_banner_dismissal_timestamp"><code class="language-plaintext highlighter-rouge">MB_LICENSE_TOKEN_MISSING_BANNER_DISMISSAL_TIMESTAMP</code></h3>
-
-<ul>
-  <li>Type: csv</li>
-  <li>Default: <code class="language-plaintext highlighter-rouge">[]</code></li>
-  <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">license-token-missing-banner-dismissal-timestamp</code></li>
-</ul>
-
-<p>The array of last two ISO8601 dates when an admin dismissed the license token missing banner.</p>
-
 <h3 id="mb_loading_message"><code class="language-plaintext highlighter-rouge">MB_LOADING_MESSAGE</code></h3>
 
 <blockquote>
@@ -5532,17 +5504,6 @@ don’t have one.</p>
 
 <p>The custom illustration for when there are no results after searching.</p>
 
-<h3 id="mb_non_table_chart_generated"><code class="language-plaintext highlighter-rouge">MB_NON_TABLE_CHART_GENERATED</code></h3>
-
-<ul>
-  <li>Type: boolean</li>
-  <li>Default: <code class="language-plaintext highlighter-rouge">false</code></li>
-  <li><a href="../installation-and-operation/serialization">Exported as</a>: <code class="language-plaintext highlighter-rouge">non-table-chart-generated</code>.</li>
-  <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">non-table-chart-generated</code></li>
-</ul>
-
-<p>Whether a non-table chart has already been generated. Required for analytics to track instance activation journey.</p>
-
 <h3 id="mb_not_behind_proxy"><code class="language-plaintext highlighter-rouge">MB_NOT_BEHIND_PROXY</code></h3>
 
 <ul>
@@ -5567,15 +5528,6 @@ don’t have one.</p>
 
 <p>The base URL where dashboard notitification links will point to instead of the Metabase base URL.
         Only applicable for users who utilize interactive embedding and subscriptions.</p>
-
-<h3 id="mb_notification_system_event_thread_pool_size"><code class="language-plaintext highlighter-rouge">MB_NOTIFICATION_SYSTEM_EVENT_THREAD_POOL_SIZE</code></h3>
-
-<ul>
-  <li>Type: integer</li>
-  <li>Default: <code class="language-plaintext highlighter-rouge">5</code></li>
-</ul>
-
-<p>The size of the thread pool used to send system event notifications.</p>
 
 <h3 id="mb_notification_thread_pool_size"><code class="language-plaintext highlighter-rouge">MB_NOTIFICATION_THREAD_POOL_SIZE</code></h3>
 
@@ -5771,7 +5723,7 @@ don’t have one.</p>
 
 <ul>
   <li>Type: string</li>
-  <li>Default: <code class="language-plaintext highlighter-rouge">null</code></li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">member_of</code></li>
   <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">saml-attribute-group</code></li>
 </ul>
 
@@ -5901,7 +5853,7 @@ using, this usually looks like <code class="language-plaintext highlighter-rouge
 
 <ul>
   <li>Type: string</li>
-  <li>Default: <code class="language-plaintext highlighter-rouge">null</code></li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">metabase</code></li>
   <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">saml-keystore-alias</code></li>
 </ul>
 
@@ -5974,33 +5926,14 @@ don’t have one.</p>
 
 <p>Is SCIM currently enabled?</p>
 
-<h3 id="mb_sdk_encryption_validation_key"><code class="language-plaintext highlighter-rouge">MB_SDK_ENCRYPTION_VALIDATION_KEY</code></h3>
-
-<ul>
-  <li>Type: string</li>
-  <li>Default: <code class="language-plaintext highlighter-rouge">null</code></li>
-</ul>
-
-<p>Used for encrypting and checking whether SDK requests are signed.</p>
-
 <h3 id="mb_search_engine"><code class="language-plaintext highlighter-rouge">MB_SEARCH_ENGINE</code></h3>
 
 <ul>
   <li>Type: keyword</li>
-  <li>Default: <code class="language-plaintext highlighter-rouge">:appdb</code></li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">:in-place</code></li>
 </ul>
 
 <p>Which engine to use when performing search. Supported values are :in-place and :appdb.</p>
-
-<h3 id="mb_search_language"><code class="language-plaintext highlighter-rouge">MB_SEARCH_LANGUAGE</code></h3>
-
-<ul>
-  <li>Type: string</li>
-  <li>Default: <code class="language-plaintext highlighter-rouge">null</code></li>
-</ul>
-
-<p>When using the appdb engine against postgresql, override the language used for stemming in to_tsvector.
-  Value must be a valid configured langauge option in your database such as ‘english’ or ‘simple’.</p>
 
 <h3 id="mb_search_typeahead_enabled"><code class="language-plaintext highlighter-rouge">MB_SEARCH_TYPEAHEAD_ENABLED</code></h3>
 
@@ -6248,6 +6181,15 @@ don’t have one.</p>
 <p>Fetch size for result sets. We want to ensure that the jdbc ResultSet objects are not realizing the entire results
   in memory.</p>
 
+<h3 id="mb_sql_parsing_enabled"><code class="language-plaintext highlighter-rouge">MB_SQL_PARSING_ENABLED</code></h3>
+
+<ul>
+  <li>Type: boolean</li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">true</code></li>
+</ul>
+
+<p>SQL Parsing is disabled.</p>
+
 <h3 id="mb_ssh_heartbeat_interval_sec"><code class="language-plaintext highlighter-rouge">MB_SSH_HEARTBEAT_INTERVAL_SEC</code></h3>
 
 <ul>
@@ -6389,20 +6331,6 @@ don’t have one.</p>
 </ul>
 
 <p>Prefix for upload table names.</p>
-
-<h3 id="mb_use_tenants"><code class="language-plaintext highlighter-rouge">MB_USE_TENANTS</code></h3>
-
-<blockquote>
-  <p>Only available on Metabase <a href="/product/pro">Pro</a> and <a href="/product/enterprise">Enterprise</a> plans.</p>
-</blockquote>
-
-<ul>
-  <li>Type: boolean</li>
-  <li>Default: <code class="language-plaintext highlighter-rouge">false</code></li>
-  <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">use-tenants</code></li>
-</ul>
-
-<p>Turn on the Tenants feature, allowing users to be assigned to a particular Tenant.</p>
 
 <h3 id="mb_user_visibility"><code class="language-plaintext highlighter-rouge">MB_USER_VISIBILITY</code></h3>
 
