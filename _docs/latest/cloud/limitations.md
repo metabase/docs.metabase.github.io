@@ -4,12 +4,11 @@ has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
 category: Cloud
-title: Limitations of Metabase Cloud
+title: 'Limitations of Metabase Cloud'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/cloud/limitations.md'
 layout: new-docs
 redirect_from:
-  - /cloud/docs/limitations
-latest: true
+    - /cloud/docs/limitations
 ---
 
 # Limitation of Metabase Cloud
