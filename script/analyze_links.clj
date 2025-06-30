@@ -37,6 +37,12 @@
     {:broken-count (count broken)
      :broken broken}))
 
+(comment
+  (u/pp (curl/get
+          "https://087b8225.docs-metabase-github-io.pages.dev/docs/master/installation-and-operation/installing-metabase-DO-NOT-MERGE"
+          {:throw false}))
+  )
+
 (defn- check-broken-links
   "High-level wrapper around `broken-links*` that retries the check up to `retries`
   times (default 2). On each retry, it only rechecks the broken paths from the
@@ -49,9 +55,12 @@
           [:cyan "Missing Path Count: " (count missing-paths)])
    (loop [trial 1
           mp (broken-links* missing-paths)]
+     (println "------------------------------")
      (ice/p "  > check-broken-links:"
             [:magenta " Trial: " trial] " | "
             [:cyan "Missing Path Count: " (:broken-count mp)])
+     (doseq [broken (:broken mp)]
+       (println "  >  Broken link:" broken))
      (cond
        (> trial retries) mp
        (>= limit (:broken-count mp)) mp
@@ -135,6 +144,7 @@
         external-or-missing-links (->> htmlproofer-links
                                        (remove redirects)
                                        (remove (into #{} (map #(str % ".html") redirects))))
+        _                         (doseq [hl (sort (distinct htmlproofer-links))] (println "htmlproofer reported: " hl))
         _                         (println (count htmlproofer-links) "missing links reported by htmlproofer.")
         _                         (println (count redirects) "unique redirect links gathered from in _docs.")
         _                         (println (count external-or-missing-links) "reported links without redirects.")
