@@ -141,6 +141,10 @@ The section to call out here is the **Set filter values for when this gets sent*
 
 See [Notification permissions](../permissions/notifications).
 
+## Removing Metabase branding from subscriptions
+
+See [Remove Metabase branding from exports](../questions/exporting-results#remove-metabase-branding-from-exports).
+
 ## Further reading
 
 - [Alerts](../questions/alerts)
