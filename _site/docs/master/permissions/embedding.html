@@ -6,7 +6,7 @@
   <meta content="frame-ancestors 'none'" http-equiv="Content-Security-Policy">
   <meta content="deny" http-equiv="X-Frame-Options">
     
-  <link href="https://www.metabase.com/docs/master/permissions/data" rel="canonical">
+  <link href="https://www.metabase.com/docs/master/permissions/embedding" rel="canonical">
   
 
   <script type="text/javascript">
@@ -44,12 +44,12 @@
 <meta name="robots" content="noindex">
    
 
-<title>Data permissions | Metabase Documentation</title>
+<title>Configuring permissions for embedding | Metabase Documentation</title>
 <!-- Twitter cards -->
 <meta name="twitter:site" content="@metabase">
 
-<meta name="twitter:title" content="Data permissions | Metabase Documentation">
-<meta name="twitter:description" content="Data permissions This page covers permissions for databases and tables. If you haven’t already, check out our Permissions overview. Setting permissions on a database, schema, or table To set data permissions on a database, schema, or table for a...">
+<meta name="twitter:title" content="Configuring permissions for embedding | Metabase Documentation">
+<meta name="twitter:description" content="Configuring permissions for embedding You can use a single Metabase to manage permissions for all of your customers. Which Metabase permissions tool you use depends on how you store your customer data.  One database for all customers (commingled setups)...">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -57,9 +57,9 @@
 <!-- Open Graph metadata -->
 <meta property="og:site_name" content="Metabase | Business Intelligence, Dashboards, and Data Visualization">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://www.metabase.com/docs/master/permissions/data">
-<meta name="title" property="og:title" content="Data permissions | Metabase Documentation">
-<meta name="description" property="og:description" content="Data permissions This page covers permissions for databases and tables. If you haven’t already, check out our Permissions overview. Setting permissions on a database, schema, or table To set data permissions on a database, schema, or table for a...">
+<meta property="og:url" content="https://www.metabase.com/docs/master/permissions/embedding">
+<meta name="title" property="og:title" content="Configuring permissions for embedding | Metabase Documentation">
+<meta name="description" property="og:description" content="Configuring permissions for embedding You can use a single Metabase to manage permissions for all of your customers. Which Metabase permissions tool you use depends on how you store your customer data.  One database for all customers (commingled setups)...">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -3555,7 +3555,7 @@ Roadmap</a>
 
       
 
-      <li class="expanded">
+      <li class="">
         <a href="/docs/master/permissions/start" class="">
         Permissions
 
@@ -3603,7 +3603,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/master/permissions/data" class="selected">
+                <a href="/docs/master/permissions/data" class="">
                   Data permissions
 
                   
@@ -4160,392 +4160,281 @@ Roadmap</a>
 </div>
 
 
-        <h1 id="data-permissions">Data permissions</h1>
+        <h1 id="configuring-permissions-for-embedding">Configuring permissions for embedding</h1>
 
-<p>This page covers permissions for databases and tables. If you haven’t already, check out our <a href="./introduction">Permissions overview</a>.</p>
-
-<h2 id="setting-permissions-on-a-database-schema-or-table">Setting permissions on a database, schema, or table</h2>
-
-<p>To set data permissions on a database, schema, or table for a group:</p>
-
-<ol>
-  <li>Hit Cmd/Ctrl + K. Search for <strong>Permissions</strong> and click on the Permissions settings result. Metabase will default to the <strong>Data</strong> tab.</li>
-</ol>
-
-<p>Or</p>
-
-<ol>
-  <li>
-    <p>Click on the <strong>gear</strong> icon in the upper right.</p>
-  </li>
-  <li>
-    <p>Select <strong>Admin settings</strong>.</p>
-  </li>
-  <li>
-    <p>Click on the <strong>Permissions</strong> tab, which defaults to the <strong>Data</strong> tab.</p>
-  </li>
-</ol>
-
-<p>You can view permissions either by group or by database.</p>
-
-<h2 id="data-permission-types">Data permission types</h2>
-
-<p>You can set the following types of permissions on a database, schema, or table:</p>
+<p>You can use a single Metabase to manage permissions for all of your customers. Which Metabase permissions tool you use depends on how you store your customer data.</p>
 
 <ul>
-  <li><a href="#view-data-permissions">View data</a></li>
-  <li><a href="#create-queries-permissions">Create queries</a></li>
-  <li><a href="#download-results-permissions">Download results</a></li>
-  <li><a href="#manage-table-metadata-permissions">Manage table metadata</a></li>
-  <li><a href="#manage-database-permissions">Manage database</a></li>
+  <li><a href="#one-database-for-all-customers-commingled-setups">One database for all customers (commingled setups)</a></li>
+  <li><a href="#one-database-per-customer-single-tenant-setups">One database per customer</a></li>
+  <li><a href="#multiple-schemas-one-schema-per-customer">One schema per customer</a></li>
 </ul>
 
-<p>If you need to change the target database based on who is logged in, check out <a href="./database-routing">Database routing</a>. Database routing is particularly useful when each of your customers has their own database.</p>
+<h2 id="one-database-for-all-customers-commingled-setups">One database for all customers (commingled setups)</h2>
 
-<h2 id="before-you-apply-specific-permissions-block-the-all-users-group">Before you apply specific permissions, block the All Users group</h2>
-
-<p>Before you apply more specific permissions, you’ll want to make sure that no one can see any data. Since everyone’s automatically in the All Users group, you’ll want to block this group from seeing any data.</p>
-
-<p>In the <strong>Admin settings</strong> &gt; <strong>Permissions</strong> &gt; <strong>Data</strong>, block the All Users group’s access to the database.</p>
-
-<p>From there, you can selectively grant privileges to different groups.</p>
-
-<h2 id="view-data-permissions">View data permissions</h2>
-
-<div class="bootstrap">
-  <div class="plans-blockquote bg-blue-95 rounded-3 p-6 d-flex flex-row border border-1 border-primary">
-    <svg class="" width="24" height="24" viewBox="0 0 26 26" fill="none">
-  <path d="M12 13V15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
-  <path d="M12 10C12.5523 10 13 9.55228 13 9C13 8.44772 12.5523 8 12 8C11.4477 8 11 8.44772 11 9C11 9.55228 11.4477 10 12 10Z" fill="#509EE3"></path>
-  <path d="M12 19.25C16.0041 19.25 19.25 16.0041 19.25 12C19.25 7.99594 16.0041 4.75 12 4.75C7.99594 4.75 4.75 7.99594 4.75 12C4.75 16.0041 7.99594 19.25 12 19.25Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
-</svg>
-
-
-    
-      <p class="m-0 ms-2 paragraph-5 neutral-40">View data permissions is only available on <a class="fw-bold" href="/product/pro">Pro</a> and <a class="fw-bold link-purple" href="/product/enterprise">Enterprise</a> plans
-    
-
-    (both self-hosted and on Metabase Cloud).
-    </p>
-  </div>
-</div>
-
-<p>The <strong>View data</strong> permission determines what data people can see when viewing questions, dashboards, models, and metrics. View data permissions also determine whether a group can view the models and metrics browsers in the sidebar. To <a href="../exploration-and-organization/exploration#browse-your-databases">browse databases</a>, a group will also need <a href="#create-queries-permissions">Create queries</a> permissions for the relevant data.</p>
-
-<p>Permission levels include:</p>
-
-<ul>
-  <li><a href="#can-view-data-permission">Can view</a></li>
-  <li><a href="#granular-view-data-permission">Granular</a></li>
-  <li><a href="#sandboxed-view-data-permission">Sandboxed</a></li>
-  <li><a href="#impersonated-view-data-permission">Impersonated</a></li>
-  <li><a href="#blocked-view-data-permission">Blocked</a></li>
-</ul>
-
-<p>View data permission settings apply to different levels in your database:</p>
+<p>If all your customer data is in the same schema and on the same tables (often referred to as “data commingling”):</p>
 
 <table>
   <thead>
     <tr>
-      <th>View data permission</th>
-      <th>Database</th>
-      <th>Schema</th>
-      <th>Table</th>
+      <th>Tenant_ID</th>
+      <th>Column 1</th>
+      <th>Column 2</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td data-label="View data permission">Can view</td>
-      <td data-label="Database">✅</td>
-      <td data-label="Schema">✅</td>
-      <td data-label="Table">✅</td>
+      <td data-label="Tenant_ID">A</td>
+      <td data-label="Column 1">…</td>
+      <td data-label="Column 2">…</td>
     </tr>
     <tr>
-      <td data-label="View data permission">Granular*</td>
-      <td data-label="Database">✅</td>
-      <td data-label="Schema">✅</td>
-      <td data-label="Table">❌</td>
+      <td data-label="Tenant_ID">B</td>
+      <td data-label="Column 1">…</td>
+      <td data-label="Column 2">…</td>
     </tr>
     <tr>
-      <td data-label="View data permission">Sandboxed</td>
-      <td data-label="Database">❌</td>
-      <td data-label="Schema">❌</td>
-      <td data-label="Table">✅</td>
-    </tr>
-    <tr>
-      <td data-label="View data permission">Impersonated</td>
-      <td data-label="Database">✅</td>
-      <td data-label="Schema">❌</td>
-      <td data-label="Table">❌</td>
-    </tr>
-    <tr>
-      <td data-label="View data permission">Blocked</td>
-      <td data-label="Database">✅</td>
-      <td data-label="Schema">✅</td>
-      <td data-label="Table">✅</td>
+      <td data-label="Tenant_ID">C</td>
+      <td data-label="Column 1">…</td>
+      <td data-label="Column 2">…</td>
     </tr>
   </tbody>
 </table>
 
-<p>* The “Granular” setting is not itself a type of permission; it just signals that permissions are set at a level below the current level. For example, you can select “Granular” at a schema level to set permissions per table for tables in that schema.</p>
-
-<p>In the free, open-source version of Metabase, the <strong>View data</strong> setting defaults to “Can view”. Since the setting’s options aren’t available in the OSS version, Metabase will only display this <strong>View data</strong> setting in the Pro/Enterprise version.</p>
-
-<p>For <em>which</em> questions, models, and dashboards a group can view, instead see <a href="collections">collection permissions</a>.</p>
-
-<h3 id="can-view-data-permission">Can view data permission</h3>
-
-<div class="bootstrap">
-  <div class="plans-blockquote bg-blue-95 rounded-3 p-6 d-flex flex-row border border-1 border-primary">
-    <svg class="" width="24" height="24" viewBox="0 0 26 26" fill="none">
-  <path d="M12 13V15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
-  <path d="M12 10C12.5523 10 13 9.55228 13 9C13 8.44772 12.5523 8 12 8C11.4477 8 11 8.44772 11 9C11 9.55228 11.4477 10 12 10Z" fill="#509EE3"></path>
-  <path d="M12 19.25C16.0041 19.25 19.25 16.0041 19.25 12C19.25 7.99594 16.0041 4.75 12 4.75C7.99594 4.75 4.75 7.99594 4.75 12C4.75 16.0041 7.99594 19.25 12 19.25Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
-</svg>
-
-
-    
-      <p class="m-0 ms-2 paragraph-5 neutral-40">Can view data permission is only available on <a class="fw-bold" href="/product/pro">Pro</a> and <a class="fw-bold link-purple" href="/product/enterprise">Enterprise</a> plans
-    
-
-    (both self-hosted and on Metabase Cloud).
-    </p>
-  </div>
-</div>
-
-<p>Setting to <strong>Can view</strong> means the group can view all the data for the data source, provided they have <a href="./collections">collection permissions</a> to view questions, models, and dashboards.</p>
-
-<p>In order to view the data in the <a href="../exploration-and-organization/exploration#browse-your-databases">Browse databases</a> section, the group would additionally need to be able to <a href="#create-queries-permissions">Create queries</a>.</p>
-
-<h3 id="granular-view-data-permission">Granular view data permission</h3>
-
-<div class="bootstrap">
-  <div class="plans-blockquote bg-blue-95 rounded-3 p-6 d-flex flex-row border border-1 border-primary">
-    <svg class="" width="24" height="24" viewBox="0 0 26 26" fill="none">
-  <path d="M12 13V15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
-  <path d="M12 10C12.5523 10 13 9.55228 13 9C13 8.44772 12.5523 8 12 8C11.4477 8 11 8.44772 11 9C11 9.55228 11.4477 10 12 10Z" fill="#509EE3"></path>
-  <path d="M12 19.25C16.0041 19.25 19.25 16.0041 19.25 12C19.25 7.99594 16.0041 4.75 12 4.75C7.99594 4.75 4.75 7.99594 4.75 12C4.75 16.0041 7.99594 19.25 12 19.25Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
-</svg>
-
-
-    
-      <p class="m-0 ms-2 paragraph-5 neutral-40">Granular view data permission is only available on <a class="fw-bold" href="/product/pro">Pro</a> and <a class="fw-bold link-purple" href="/product/enterprise">Enterprise</a> plans
-    
-
-    (both self-hosted and on Metabase Cloud).
-    </p>
-  </div>
-</div>
-
-<p>This option lets you set View data permissions for individual schemas or tables. Available only for databases and schemas. If you select Granular for a database or schema, Metabase will open that data source and ask you to set permissions for each individual schema or table.</p>
-
-<p>For tables, you have the option to set either <strong>Can view</strong> or <strong>Sandboxed</strong>.</p>
-
-<h3 id="sandboxed-view-data-permission">Sandboxed view data permission</h3>
-
-<div class="bootstrap">
-  <div class="plans-blockquote bg-blue-95 rounded-3 p-6 d-flex flex-row border border-1 border-primary">
-    <svg class="" width="24" height="24" viewBox="0 0 26 26" fill="none">
-  <path d="M12 13V15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
-  <path d="M12 10C12.5523 10 13 9.55228 13 9C13 8.44772 12.5523 8 12 8C11.4477 8 11 8.44772 11 9C11 9.55228 11.4477 10 12 10Z" fill="#509EE3"></path>
-  <path d="M12 19.25C16.0041 19.25 19.25 16.0041 19.25 12C19.25 7.99594 16.0041 4.75 12 4.75C7.99594 4.75 4.75 7.99594 4.75 12C4.75 16.0041 7.99594 19.25 12 19.25Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
-</svg>
-
-
-    
-      <p class="m-0 ms-2 paragraph-5 neutral-40">Sandboxed view data permission is only available on <a class="fw-bold" href="/product/pro">Pro</a> and <a class="fw-bold link-purple" href="/product/enterprise">Enterprise</a> plans
-    
-
-    (both self-hosted and on Metabase Cloud).
-    </p>
-  </div>
-</div>
-
-<p>Allows you to set row-level permissions based on user attributes. Can only be configured at the table level.</p>
-
-<p>See <a href="./data-sandboxes">Data sandboxes</a>.</p>
-
-<h3 id="impersonated-view-data-permission">Impersonated view data permission</h3>
-
-<div class="bootstrap">
-  <div class="plans-blockquote bg-blue-95 rounded-3 p-6 d-flex flex-row border border-1 border-primary">
-    <svg class="" width="24" height="24" viewBox="0 0 26 26" fill="none">
-  <path d="M12 13V15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
-  <path d="M12 10C12.5523 10 13 9.55228 13 9C13 8.44772 12.5523 8 12 8C11.4477 8 11 8.44772 11 9C11 9.55228 11.4477 10 12 10Z" fill="#509EE3"></path>
-  <path d="M12 19.25C16.0041 19.25 19.25 16.0041 19.25 12C19.25 7.99594 16.0041 4.75 12 4.75C7.99594 4.75 4.75 7.99594 4.75 12C4.75 16.0041 7.99594 19.25 12 19.25Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
-</svg>
-
-
-    
-      <p class="m-0 ms-2 paragraph-5 neutral-40">Impersonated view data permission is only available on <a class="fw-bold" href="/product/pro">Pro</a> and <a class="fw-bold link-purple" href="/product/enterprise">Enterprise</a> plans
-    
-
-    (both self-hosted and on Metabase Cloud).
-    </p>
-  </div>
-</div>
-
-<p>The <strong>Impersonated</strong> option lets you use a role in your database to specify what data people can view and query. Impersonation can only be set at the database level, as Metabase will defer to the permissions granted to the database role.</p>
-
-<p>See <a href="./impersonation">impersonated view data permissions</a></p>
-
-<h3 id="blocked-view-data-permission">Blocked view data permission</h3>
-
-<div class="bootstrap">
-  <div class="plans-blockquote bg-blue-95 rounded-3 p-6 d-flex flex-row border border-1 border-primary">
-    <svg class="" width="24" height="24" viewBox="0 0 26 26" fill="none">
-  <path d="M12 13V15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
-  <path d="M12 10C12.5523 10 13 9.55228 13 9C13 8.44772 12.5523 8 12 8C11.4477 8 11 8.44772 11 9C11 9.55228 11.4477 10 12 10Z" fill="#509EE3"></path>
-  <path d="M12 19.25C16.0041 19.25 19.25 16.0041 19.25 12C19.25 7.99594 16.0041 4.75 12 4.75C7.99594 4.75 4.75 7.99594 4.75 12C4.75 16.0041 7.99594 19.25 12 19.25Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
-</svg>
-
-
-    
-      <p class="m-0 ms-2 paragraph-5 neutral-40">Blocked view data permission is only available on <a class="fw-bold" href="/product/pro">Pro</a> and <a class="fw-bold link-purple" href="/product/enterprise">Enterprise</a> plans
-    
-
-    (both self-hosted and on Metabase Cloud).
-    </p>
-  </div>
-</div>
-
-<p><strong>Blocked</strong> ensures people in a group can’t see the data from this database, schema, or table, regardless of their permissions at the collection level.</p>
-
-<p>The Blocked view data permission can be set at the database, schema, or table level. Essentially, what Blocked does is make collections permissions <em>insufficient</em> to view a question. For example, even if a question is in a collection that the group has access to, but that question queries a data source that is Blocked for that group, people in that group won’t be able to view that question <em>unless</em> they’re in another group with the data permissions to that data source.</p>
-
-<p>Setting blocked access for a group ALWAYS prevents the group from viewing questions built with the native query editor that query ANY tables from the same database. So even if you only block a single table in a database, the group won’t be able to view the results of SQL questions that query ANY table in that database. The reason: Metabase doesn’t (yet) parse SQL queries, so it can’t know for sure whether the SQL queries the table you want to block.</p>
-
-<p>If a person in a Blocked group belongs to <em>another</em> group that has its View data permission set to “Can view”, that more permissive access will take precedence, and they’ll be able to view that question.</p>
-
-<h2 id="create-queries-permissions">Create queries permissions</h2>
-
-<p>Specifies whether a group can create new questions based on the data source. Creating queries includes the ability to drill-through and filter questions, or anything that involves changing the results. This permission also determines whether a group will get access to the <a href="../exploration-and-organization/exploration#browse-your-databases">database browser</a> to explore that data source.</p>
-
-<p>To enable Create queries permissions for a group, that group must be able to view the data source (“Can view” permission.)</p>
-
-<p>Create query levels include:</p>
-
-<h3 id="query-builder-and-native-create-queries-permission">Query builder and native create queries permission</h3>
-
-<p>People can use Metabase’s query builder or its native/SQL editor.</p>
-
-<h3 id="query-builder-only-create-queries-permission">Query builder only create queries permission</h3>
-
-<p>People can create new questions and drill-through existing questions using Metabase’s query builder.</p>
-
-<h3 id="granular">Granular</h3>
-
-<p>The granular option lets you define Create queries permissions for each schema and/or table in the database.</p>
-
-<h2 id="download-results-permissions">Download results permissions</h2>
-
-<div class="bootstrap">
-  <div class="plans-blockquote bg-blue-95 rounded-3 p-6 d-flex flex-row border border-1 border-primary">
-    <svg class="" width="24" height="24" viewBox="0 0 26 26" fill="none">
-  <path d="M12 13V15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
-  <path d="M12 10C12.5523 10 13 9.55228 13 9C13 8.44772 12.5523 8 12 8C11.4477 8 11 8.44772 11 9C11 9.55228 11.4477 10 12 10Z" fill="#509EE3"></path>
-  <path d="M12 19.25C16.0041 19.25 19.25 16.0041 19.25 12C19.25 7.99594 16.0041 4.75 12 4.75C7.99594 4.75 4.75 7.99594 4.75 12C4.75 16.0041 7.99594 19.25 12 19.25Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
-</svg>
-
-
-    
-      <p class="m-0 ms-2 paragraph-5 neutral-40">Download permissions is only available on <a class="fw-bold" href="/product/pro">Pro</a> and <a class="fw-bold link-purple" href="/product/enterprise">Enterprise</a> plans
-    
-
-    (both self-hosted and on Metabase Cloud).
-    </p>
-  </div>
-</div>
-
-<p>You can set permissions on whether people in a group can download results (and how many rows) from a data source. Options are:</p>
+<p>You could use:</p>
 
 <ul>
-  <li>No (they can’t download results)</li>
-  <li>Granular (you want to set access for individual tables or schemas)</li>
-  <li>10 thousand rows</li>
-  <li>1 million rows</li>
+  <li><a href="./data-sandboxes">Data sandboxing</a> to restrict rows and columns.</li>
+  <li><a href="./impersonation">Connection impersonation</a> to mimic roles set by your database. Impersonation is a good choice if you want to grant native SQL access to your data.</li>
 </ul>
 
-<h2 id="manage-table-metadata-permissions">Manage table metadata permissions</h2>
+<h3 id="restricting-rows-based-on-tenant-id">Restricting rows based on tenant ID</h3>
 
-<div class="bootstrap">
-  <div class="plans-blockquote bg-blue-95 rounded-3 p-6 d-flex flex-row border border-1 border-primary">
-    <svg class="" width="24" height="24" viewBox="0 0 26 26" fill="none">
-  <path d="M12 13V15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
-  <path d="M12 10C12.5523 10 13 9.55228 13 9C13 8.44772 12.5523 8 12 8C11.4477 8 11 8.44772 11 9C11 9.55228 11.4477 10 12 10Z" fill="#509EE3"></path>
-  <path d="M12 19.25C16.0041 19.25 19.25 16.0041 19.25 12C19.25 7.99594 16.0041 4.75 12 4.75C7.99594 4.75 4.75 7.99594 4.75 12C4.75 16.0041 7.99594 19.25 12 19.25Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
-</svg>
+<p>Let’s say you have a table called <strong>Data</strong> that looks like this:</p>
 
+<table>
+  <thead>
+    <tr>
+      <th>Tenant_ID</th>
+      <th>Metrics</th>
+      <th>Insights</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td data-label="Tenant_ID">A</td>
+      <td data-label="Metrics">…</td>
+      <td data-label="Insights">…</td>
+    </tr>
+    <tr>
+      <td data-label="Tenant_ID">B</td>
+      <td data-label="Metrics">…</td>
+      <td data-label="Insights">…</td>
+    </tr>
+    <tr>
+      <td data-label="Tenant_ID">C</td>
+      <td data-label="Metrics">…</td>
+      <td data-label="Insights">…</td>
+    </tr>
+  </tbody>
+</table>
 
-    
-      <p class="m-0 ms-2 paragraph-5 neutral-40">Data model permissions is only available on <a class="fw-bold" href="/product/pro">Pro</a> and <a class="fw-bold link-purple" href="/product/enterprise">Enterprise</a> plans
-    
+<p>To display a filtered version of <strong>Data</strong> to different tenants based on a <code class="language-plaintext highlighter-rouge">Tenant_ID</code>, you can create a <a href="./data-sandboxes#types-of-data-sandboxes">basic sandbox</a>.</p>
 
-    (both self-hosted and on Metabase Cloud).
-    </p>
-  </div>
-</div>
+<p>That means Tenant A will see the rows where <code class="language-plaintext highlighter-rouge">Tenant_ID = A</code>, and Tenant B will see the rows where <code class="language-plaintext highlighter-rouge">Tenant_ID = B</code>.</p>
 
-<p>You can define whether a group can <a href="../data-modeling/metadata-editing">edit table metadata</a>. Options are:</p>
+<p>Here’s how the basic sandbox will work:</p>
+
+<ol>
+  <li><strong>Create a group</strong>, for example “Sandboxed Tenants”, and add people’s Metabase accounts to that group.</li>
+  <li><strong>Add a user attribute</strong>. For each person’s account, <a href="../people-and-groups/managing#adding-a-user-attribute">add a user attribute</a> like <code class="language-plaintext highlighter-rouge">Tenant_ID</code>, with the user attribute value set to “A”, “B”, or “C”.</li>
+  <li><strong>Sandbox the table</strong> for the group to apply the <a href="./data-sandboxes#types-of-data-sandboxes">row-level security based on user attributes</a>.</li>
+</ol>
+
+<h3 id="restricting-columns-based-on-tenancy">Restricting columns based on tenancy</h3>
+
+<p>Let’s say your <strong>Insights</strong> column is a premium feature, and Tenant B is the only customer paying to see these <strong>Insights</strong>.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Tenant ID</th>
+      <th>Metrics</th>
+      <th>Insights</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td data-label="Tenant ID">A</td>
+      <td data-label="Metrics">…</td>
+      <td data-label="Insights"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16"><path d="M4.53 3.47a.75.75 0 0 0-1.06 1.06L6.94 8l-3.47 3.47a.75.75 0 1 0 1.06 1.06L8 9.06l3.47 3.47a.75.75 0 1 0 1.06-1.06L9.06 8l3.47-3.47a.75.75 0 0 0-1.06-1.06L8 6.94 4.53 3.47z" stroke="#EF8C8C" fill="#EF8C8C"></path></svg></td>
+    </tr>
+    <tr>
+      <td data-label="Tenant ID">B</td>
+      <td data-label="Metrics">…</td>
+      <td data-label="Insights">…</td>
+    </tr>
+    <tr>
+      <td data-label="Tenant ID">C</td>
+      <td data-label="Metrics">…</td>
+      <td data-label="Insights"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16"><path d="M4.53 3.47a.75.75 0 0 0-1.06 1.06L6.94 8l-3.47 3.47a.75.75 0 1 0 1.06 1.06L8 9.06l3.47 3.47a.75.75 0 1 0 1.06-1.06L9.06 8l3.47-3.47a.75.75 0 0 0-1.06-1.06L8 6.94 4.53 3.47z" stroke="#EF8C8C" fill="#EF8C8C"></path></svg></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>To keep A and C from viewing the <code class="language-plaintext highlighter-rouge">Insights</code> column, you can create a <a href="./data-sandboxes#types-of-data-sandboxes">custom sandbox</a> to restrict both the rows and columns they see when they view the table.</p>
+
+<ol>
+  <li><strong>Create a group</strong> called “Metrics-Only Tenants”.</li>
+  <li><strong>Add Tenants A and C to the group</strong>. Note that when you’re sandboxing the <strong>Data</strong> table in different ways for different groups, make sure that each Metabase account only belongs to a single group.</li>
+  <li><a href="../people-and-groups/managing#adding-a-user-attribute">Add a user attribute</a> like <code class="language-plaintext highlighter-rouge">Tenant_ID</code>, with the user attribute value set to “A” or “C”.</li>
+  <li>
+    <p>Next, you’ll create a SQL question using the <strong>Data</strong> table like this:</p>
+
+    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">Tenant_ID</span><span class="p">,</span> <span class="n">Metrics</span>
+<span class="k">FROM</span> <span class="k">data</span>
+<span class="k">WHERE</span> <span class="n">Tenant_ID</span> <span class="o">=</span>  <span class="p">{{</span> <span class="n">tenant_user_attribute</span> <span class="p">}}</span> 
+</code></pre></div>    </div>
+  </li>
+  <li>Save the SQL question as “Customer Metrics”.</li>
+  <li><a href="./data-sandboxes#types-of-data-sandboxes">Create a custom sandbox</a> using the “Metrics-Only Tenants” group and “Customer Metrics” SQL question.</li>
+</ol>
+
+<p>When, for example, Tenant A logs in, they’ll only see the <code class="language-plaintext highlighter-rouge">Tenant_ID</code> and <code class="language-plaintext highlighter-rouge">Metrics</code> columns, and only the rows where <code class="language-plaintext highlighter-rouge">Tenant_ID = A</code>.</p>
+
+<h3 id="impersonation-lets-you-manage-access-with-database-roles">Impersonation lets you manage access with database roles</h3>
+
+<p>Impersonation lets you map user attributes to database roles, which lets you do row-level security based on the database privileges you give each role.</p>
+
+<p>Check out this <a href="/learn/metabase-basics/administration/permissions/impersonation">article on impersonation</a>.</p>
+
+<h2 id="one-database-per-customer">One database per customer</h2>
+
+<p>If each of your customers has their own database, you can use <a href="./database-routing">database routing</a> to swap out the data source for queries. With DB routing, you just need to build a dashboard once, and Metabase will switch the database it queries depending on who’s logged in.</p>
+
+<p>For database routing to work, however, the schemas in each database must be identical.</p>
+
+<p>For more fine-grained control over what individuals can see, even within the same tenants, you can also use the other tools Metabase provides, like <a href="./data-sandboxes">data sandboxing</a> and <a href="./impersonation">connection impersonation</a>, in combination with database routing.</p>
+
+<h2 id="multiple-schemas-one-schema-per-customer">Multiple schemas (one schema per customer)</h2>
+
+<p>If your customer data is stored in separate tables in the same schema or different schemas within one database, like this:</p>
+
+<p><strong>Tenant A’s schema</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Tenant A</th>
+      <th>Column 1</th>
+      <th>Column 2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td data-label="Tenant A">Row 1</td>
+      <td data-label="Column 1">…</td>
+      <td data-label="Column 2">…</td>
+    </tr>
+    <tr>
+      <td data-label="Tenant A">Row 2</td>
+      <td data-label="Column 1">…</td>
+      <td data-label="Column 2">…</td>
+    </tr>
+    <tr>
+      <td data-label="Tenant A">Row 3</td>
+      <td data-label="Column 1">…</td>
+      <td data-label="Column 2">…</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Tenant B’s schema</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Tenant B</th>
+      <th>Column 1</th>
+      <th>Column 2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td data-label="Tenant B">Row 1</td>
+      <td data-label="Column 1">…</td>
+      <td data-label="Column 2">…</td>
+    </tr>
+    <tr>
+      <td data-label="Tenant B">Row 2</td>
+      <td data-label="Column 1">…</td>
+      <td data-label="Column 2">…</td>
+    </tr>
+    <tr>
+      <td data-label="Tenant B">Row 3</td>
+      <td data-label="Column 1">…</td>
+      <td data-label="Column 2">…</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>You could:</p>
 
 <ul>
-  <li>Yes (meaning, they can edit metadata for that data source).</li>
-  <li>No</li>
-  <li>Granular (to set permissions specific to each table).</li>
+  <li><a href="#granting-customers-self-service-or-view-only-access-to-their-schema">Grant self-service or view-only access to a schema</a>.</li>
+  <li><a href="#granting-customers-native-sql-access-to-their-schema">Grant native SQL access to a schema</a>.</li>
 </ul>
 
-<h2 id="manage-database-permissions">Manage database permissions</h2>
+<p>Unlike commingled data, one-schema-per-customer data is incompatible with data sandboxes, because a sandbox can only assign permissions at the row and column level, not the schema level.</p>
 
-<div class="bootstrap">
-  <div class="plans-blockquote bg-blue-95 rounded-3 p-6 d-flex flex-row border border-1 border-primary">
-    <svg class="" width="24" height="24" viewBox="0 0 26 26" fill="none">
-  <path d="M12 13V15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
-  <path d="M12 10C12.5523 10 13 9.55228 13 9C13 8.44772 12.5523 8 12 8C11.4477 8 11 8.44772 11 9C11 9.55228 11.4477 10 12 10Z" fill="#509EE3"></path>
-  <path d="M12 19.25C16.0041 19.25 19.25 16.0041 19.25 12C19.25 7.99594 16.0041 4.75 12 4.75C7.99594 4.75 4.75 7.99594 4.75 12C4.75 16.0041 7.99594 19.25 12 19.25Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
-</svg>
+<h3 id="granting-customers-self-service-or-view-only-access-to-their-schema">Granting customers self-service or view-only access to their schema</h3>
 
+<p>Say you have a single database with ten different tables, each corresponding to a different customer (company). You want each customer to only access their own table.</p>
 
-    
-      <p class="m-0 ms-2 paragraph-5 neutral-40">Database management permissions is only available on <a class="fw-bold" href="/product/pro">Pro</a> and <a class="fw-bold link-purple" href="/product/enterprise">Enterprise</a> plans
-    
+<ol>
+  <li>
+    <p><strong>Create a group</strong> for your first customer in <strong>Admin settings</strong> &gt; <strong>People</strong>. If you need different permission levels within a company (some employees can ask questions, others can only view), create multiple groups like <strong>Company A (Self-service)</strong> and <strong>Company A (View only)</strong>.</p>
+  </li>
+  <li>
+    <p><strong>Grant table access</strong> by going to <strong>Permissions</strong> &gt; <strong>Data</strong> &gt; <strong>Databases</strong> and granting your new group access to the customer’s table. If you want customers to create questions and dashboards within their table, set <strong>Create query</strong> permissions to <strong>Query builder</strong>.</p>
 
-    (both self-hosted and on Metabase Cloud).
-    </p>
-  </div>
-</div>
+    <p>For employees who should only view data and create collections to house those specific questions and dashboards, see <a href="./collections">collection permissions</a>.</p>
 
-<p>The <strong>Manage database</strong> permission grants access to the settings page for a given database (i.e., the page at <strong>Admin settings</strong> &gt; <strong>Databases</strong> &gt; your database).</p>
+    <p>Avoid granting native SQL editor access — it lets people query tables they shouldn’t see.</p>
 
-<p>On the database settings page, you can:</p>
+    <p>If you scope each group’s permissions to a single table, Metabase will hide any new tables you add to the database.</p>
+  </li>
+  <li>
+    <p><strong>Invite your first user</strong> and add them to the appropriate group. If you’re using <a href="../people-and-groups/google-sign-in">SSO</a>, you can skip this step.</p>
+  </li>
+  <li>
+    <p><strong>Repeat the process</strong> for each customer by following steps 1–3.</p>
+  </li>
+</ol>
 
-<ul>
-  <li>Edit any of the <a href="../databases/connecting">connection options</a> for the data source.</li>
-  <li><a href="../databases/sync-scan#manually-syncing-tables-and-columns">Sync schemas</a>.</li>
-  <li><a href="../databases/sync-scan#manually-scanning-column-values">Scan field values</a>.</li>
-</ul>
+<h3 id="granting-customers-native-sql-access-to-their-schema">Granting customers native SQL access to their schema</h3>
 
-<p>Note that only admins can delete database connections in your Metabase, so people with <strong>Manage database</strong> permissions won’t see the <strong>Remove database</strong> button.</p>
+<p>If you need native SQL queries:</p>
 
-<h2 id="revoke-access-even-though-all-users-has-greater-access">Revoke access even though “All Users” has greater access</h2>
+<ol>
+  <li>
+    <p><strong>Create a database-level user account</strong> for your first customer (in your database, not in Metabase). This database user should only have access to their specific tables or schema. For PostgreSQL for example, you could add a user via psql and only grant them permissions to their tables.</p>
+  </li>
+  <li>
+    <p><strong>Connect Metabase to your database</strong> using the database user account you just created. See <a href="../databases/connecting">databases</a>.</p>
+  </li>
+  <li>
+    <p><strong>Create a new group</strong> in Metabase and grant it access to the new database connection. Since the database user role controls what’s visible, you can grant the group <strong>Can view</strong> access to the database and <strong>Query builder and native</strong> access. See <a href="../people-and-groups/managing#groups">groups</a>.</p>
 
-<p>If you see this modal pop-up, Metabase is telling you that the people in the All Users group (that is, everyone in your Metabase), have a higher level of access to the database, schema, or table that you’re setting permissions on. To limit your current group to your preferred permission level, the All Users group must have a less permissive level of access to the data source in question.</p>
-
-<h2 id="upload-permissions">Upload permissions</h2>
-
-<p>See <a href="../databases/uploads#add-people-to-a-group-with-data-access-to-the-upload-schema">Upload permissions</a>.</p>
-
-<h2 id="further-reading">Further reading</h2>
-
-<ul>
-  <li><a href="./introduction">Permissions introduction</a></li>
-  <li><a href="./impersonation">Impersonation</a></li>
-  <li><a href="/learn/metabase-basics/administration/permissions">Learn permissions</a></li>
-  <li><a href="../troubleshooting-guide/permissions">Troubleshooting permissions</a></li>
-  <li><a href="/learn/metabase-basics/administration/permissions/data-sandboxing-row-permissions">Data sandboxing: setting row-level permissions</a></li>
-  <li><a href="/learn/metabase-basics/administration/permissions/data-sandboxing-column-permissions">Advanced data sandboxing: limiting access to columns</a></li>
-  <li><a href="../databases/users-roles-privileges">Users, roles, and privileges</a></li>
-</ul>
-
+    <p>Group members will see all tables that the database user can access. To hide tables later, you’ll need to change permissions in the database itself, not Metabase.</p>
+  </li>
+  <li>
+    <p><strong>Invite your first user</strong> and add them to the appropriate group. If you’re using <a href="../people-and-groups/google-sign-in">SSO</a>, you can skip this step.</p>
+  </li>
+  <li>
+    <p><strong>Repeat the process</strong> for each customer by following steps 1-4. You’ll end up with as many database connections as customers.</p>
+  </li>
+</ol>
 
 
         <div>
@@ -4599,7 +4488,7 @@ Roadmap</a>
 
   
     <span class="paragraph-6 fs-13 neutral-60" id="page-feedback-footer">
-      Want to improve these docs? <a href="https://github.com/metabase/metabase/blob/master/docs/permissions/data.md" target="_blank">Propose a change.</a>
+      Want to improve these docs? <a href="https://github.com/metabase/metabase/blob/master/docs/permissions/embedding.md" target="_blank">Propose a change.</a>
     </span>
   
 </div>
@@ -4621,8 +4510,8 @@ Roadmap</a>
 <script type="text/javascript" src="/js/position-feedback-widget.js"></script>
 
 <script>
-  const pageTitle = `Data permissions`;
-  const pageURL = '/docs/master/permissions/data';
+  const pageTitle = `Configuring permissions for embedding`;
+  const pageURL = '/docs/master/permissions/embedding';
   const pageURLSplit = pageURL.split('/');
 
   let pageURLPrefix = '/' + pageURLSplit[1] + '/' + pageURLSplit[2];
@@ -4944,6 +4833,8 @@ Roadmap</a>
   <script type="text/javascript" src="/js/blog.js"></script>
   <script type="text/javascript" src="/js/syntax-highlight.js"></script>
 
+  
+    <script type="text/javascript" src="/js/docs/checkpoints.js"></script>
   
 
 </body></html>

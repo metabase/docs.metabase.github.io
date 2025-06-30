@@ -11,7 +11,9 @@ layout: new-docs
 
 ```ts
 type MetabaseDashboardPluginsConfig = {
-  dashboardCardMenu?: DashboardCardMenu;
+  dashboardCardMenu?:
+    | DashboardCardMenuCustomElement
+    | DashboardCardCustomMenuItem;
 };
 ```
 
@@ -19,8 +21,8 @@ type MetabaseDashboardPluginsConfig = {
 
 <!-- [<snippet properties>] -->
 
-| Property                                            | Type                                              |
-| :-------------------------------------------------- | :------------------------------------------------ |
-| <a id="dashboardcardmenu"></a> `dashboardCardMenu?` | [`DashboardCardMenu`](./api/DashboardCardMenu) |
+| Property                                            | Type                                                                                                                                                    |
+| :-------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| <a id="dashboardcardmenu"></a> `dashboardCardMenu?` | \| [`DashboardCardMenuCustomElement`](./api/DashboardCardMenuCustomElement) \| [`DashboardCardCustomMenuItem`](./api/DashboardCardCustomMenuItem) |
 
 <!-- [<endsnippet properties>] -->
