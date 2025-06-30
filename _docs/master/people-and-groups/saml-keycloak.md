@@ -36,7 +36,7 @@ For more information, check out our guide for [authenticating with SAML](./authe
    - **Home URL**: In your Metabase, go to **Admin settings** > **Authentication** > **SAML**. You'll find your Home URL in the field **URL the IdP should redirect back to**.
    - Click **Save**.
 
-5. (Optional, but recommended on test environments) Disable key signing for SSO client. See [settings for signing SSO requests](/docs/latest/people-and-groups/authenticating-with-saml#settings-for-signing-sso-requests-optional).
+5. (Optional, but recommended on test environments) Disable key signing for SSO client. See [settings for signing SSO requests](./authenticating-with-saml#settings-for-signing-sso-requests-optional).
 
    - Click **Keys** tab.
    - **Client signature required:** Off.

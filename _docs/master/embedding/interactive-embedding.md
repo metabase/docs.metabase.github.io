@@ -30,7 +30,7 @@ To see the query builder in action, click on **Reports** > **+ New** > **Questio
 
 ## Quick start
 
-Check out the [Interactive embedding quick start](/docs/master/embedding/interactive-embedding-quick-start-guide).
+Check out the [Interactive embedding quick start](./interactive-embedding-quick-start-guide).
 
 ## Prerequisites for interactive embedding
 
@@ -39,7 +39,7 @@ Check out the [Interactive embedding quick start](/docs/master/embedding/interac
 3. Set up [permissions](../permissions/introduction) for each group.
 4. Set up [SSO](../people-and-groups/start#authentication) to automatically apply permissions and show people the right data upon sign-in. In general, **we recommend using [SSO with JWT](../people-and-groups/authenticating-with-jwt)**.
 
-If you're dealing with a [multi-tenant](/learn/metabase-basics/embedding/multi-tenant-self-service-analytics) situation, check out our recommendations for [Configuring permissions for different customer schemas](/learn/metabase-basics/administration/permissions/multi-tenant-permissions).
+If you're dealing with a [multi-tenant](/learn/metabase-basics/embedding/multi-tenant-self-service-analytics) situation, check out our recommendations for [Configuring permissions for different customer schemas](../permissions/embedding).
 
 If you have your app running locally, and you're using the Pro Cloud version, or hosting Metabase and your app in different domains, you'll need to set your Metabase environment's session cookie samesite option to "none".
 
@@ -245,12 +245,12 @@ See [interactive UI components](./interactive-ui-components)
 
 To build a sample interactive embed using SSO with JWT, see our reference apps:
 
-- [Node.js + Express](https://github.com/metabase/metabase-nodejs-express-interactive-embedding-sample) (with [quick start guide](/docs/master/embedding/interactive-embedding-quick-start-guide))
+- [Node.js + Express](https://github.com/metabase/metabase-nodejs-express-interactive-embedding-sample) (with [quick start guide](./interactive-embedding-quick-start-guide))
 - [Node.js + React](https://github.com/metabase/sso-examples/tree/master/app-embed-example)
 
 ## Further reading
 
-- [Interactive embedding quick start](/docs/master/embedding/interactive-embedding-quick-start-guide)
+- [Interactive embedding quick start](./interactive-embedding-quick-start-guide)
 - [Strategies for delivering customer-facing analytics](/learn/metabase-basics/embedding/overview).
 - [Permissions strategies](/learn/metabase-basics/administration/permissions/strategy).
 - [Customizing Metabase's appearance](../configuring-metabase/appearance).
