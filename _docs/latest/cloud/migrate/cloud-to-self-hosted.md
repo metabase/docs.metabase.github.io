@@ -4,12 +4,10 @@ has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
 category: Cloud
-title: Migrate from Metabase Cloud to a self-hosted Metabase
-source_url: >-
-  https://github.com/metabase/metabase/blob/master/docs/cloud/migrate/cloud-to-self-hosted.md
+title: 'Migrate from Metabase Cloud to a self-hosted Metabase'
+source_url: 'https://github.com/metabase/metabase/blob/master/docs/cloud/migrate/cloud-to-self-hosted.md'
 layout: new-docs
 section: Migrate
-latest: true
 ---
 
 # Migrate from Metabase Cloud to a self-hosted Metabase

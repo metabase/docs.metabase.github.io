@@ -4,12 +4,10 @@ has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
 category: Cloud
-title: Migrate to Metabase Cloud - Metabase 49 or lower
-source_url: >-
-  https://github.com/metabase/metabase/blob/master/docs/cloud/migrate/guide-pre-50.md
+title: 'Migrate to Metabase Cloud - Metabase 49 or lower'
+source_url: 'https://github.com/metabase/metabase/blob/master/docs/cloud/migrate/guide-pre-50.md'
 layout: new-docs
 section: Migrate
-latest: true
 ---
 
 # Migrate to Metabase Cloud - Metabase 49 or lower
@@ -40,7 +38,7 @@ All you need to do is stop the Metabase JAR process or Docker container to make 
 
 ### Back up your application database
 
-In the unlikely event that something goes wrong, you'll want a backup. See [Backing up Metabase Application Data](/docs/latest/installation-and-operation/backing-up-metabase-application-data).
+In the unlikely event that something goes wrong, you'll want a backup. See [Backing up Metabase Application Data](../../installation-and-operation/backing-up-metabase-application-data).
 
 ## Migrate your Metabase to Metabase Cloud
 
@@ -62,7 +60,7 @@ Before executing the migration script, you may need to set the environment varia
 
 - **Docker**: the environment variables will already be set.
 - **JAR**: set the environment variables by running `MB_DB_CONNECTION_URI=xxxxx migration_script.sh` on the server where you're running the JAR.
-- **Heroku**: please follow a [few extra steps to running the script](heroku).
+- **Heroku**: please follow a [few extra steps to running the script](./heroku).
 
 ### Execute the script in your self-hosted environment
 
@@ -77,7 +75,7 @@ If anything goes sideways, follow any prompts the script outputs. If you're stil
 After a successful upload, some finishing touches and a restart is done automatically in a couple of minutes, and then you can log into your shiny new Metabase Cloud instance. You should see all of your questions and dashboards just as you did in your self-hosted instance.
 
 - **If you're using Google Sign-in**, you'll need to go to [Google Developers Console](https://console.developers.google.com/) and add your new Metabase Cloud URL to the Authorized JavaScript Origins of the Google Auth Client ID.
-- **For Pro and Enterprise customers using SAML SSO**, you'll need to update your settings with your identity provider to change the Redirect URL and the Base URL to your new Metabase Cloud URL, otherwise your identity provider will still redirect people to your old (and shut down) Metabase instance. See [Authenticating with SAML](/docs/latest/people-and-groups/authenticating-with-saml) for details on how to set these URLs.
+- **For Pro and Enterprise customers using SAML SSO**, you'll need to update your settings with your identity provider to change the Redirect URL and the Base URL to your new Metabase Cloud URL, otherwise your identity provider will still redirect people to your old (and shut down) Metabase instance. See [Authenticating with SAML](../../people-and-groups/authenticating-with-saml).
 
 ## Tell your team about the new Metabase address
 

@@ -49,7 +49,7 @@
 <meta name="twitter:site" content="@metabase">
 
 <meta name="twitter:title" content="Driver interface changelog | Metabase Documentation">
-<meta name="twitter:description" content="Driver Interface Changelog Metabase 0.56.0  Add the testing multi-method tx/track-dataset for shared cloud dbs to track loaded datasets for more efficient sharing.  Metabase 0.55.0   Add the multi-method ->date that allows the...">
+<meta name="twitter:description" content="Driver Interface Changelog Metabase 0.56.0   Add the testing multi-method tx/track-dataset for shared cloud dbs to track loaded datasets for more efficient sharing.   Join alias escaping has been reworked; when compiling MBQL for a join...">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -59,7 +59,7 @@
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://www.metabase.com/docs/master/developers-guide/driver-changelog">
 <meta name="title" property="og:title" content="Driver interface changelog | Metabase Documentation">
-<meta name="description" property="og:description" content="Driver Interface Changelog Metabase 0.56.0  Add the testing multi-method tx/track-dataset for shared cloud dbs to track loaded datasets for more efficient sharing.  Metabase 0.55.0   Add the multi-method ->date that allows the...">
+<meta name="description" property="og:description" content="Driver Interface Changelog Metabase 0.56.0   Add the testing multi-method tx/track-dataset for shared cloud dbs to track loaded datasets for more efficient sharing.   Join alias escaping has been reworked; when compiling MBQL for a join...">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -4165,7 +4165,22 @@ Roadmap</a>
 <h2 id="metabase-0560">Metabase 0.56.0</h2>
 
 <ul>
-  <li>Add the testing multi-method <code class="language-plaintext highlighter-rouge">tx/track-dataset</code> for shared cloud dbs to track loaded datasets for more efficient sharing.</li>
+  <li>
+    <p>Add the testing multi-method <code class="language-plaintext highlighter-rouge">tx/track-dataset</code> for shared cloud dbs to track loaded datasets for more efficient sharing.</p>
+  </li>
+  <li>
+    <p>Join alias escaping has been reworked; when compiling MBQL for a join please use
+<code class="language-plaintext highlighter-rouge">metabase.driver-api.core/qp.add.alias</code> instead of <code class="language-plaintext highlighter-rouge">:join-alias</code>. (This is mostly relevant if you have a custom
+<code class="language-plaintext highlighter-rouge">metabase.driver.sql.query-processor/join-&gt;honeysql</code> implementation.)</p>
+
+    <p>Join aliases are no longer globally unique by default, but instead unique within a given level of a query. If you
+need globally unique join aliases, you can pass the new <code class="language-plaintext highlighter-rouge">{:globally-unique-join-aliases? true}</code> option to
+<code class="language-plaintext highlighter-rouge">driver-api/add-alias-info</code>.</p>
+
+    <p>Also note that <code class="language-plaintext highlighter-rouge">driver-api/add-alias-info</code> only adds additional keys to field refs and join maps, and does not
+replace existing keys like <code class="language-plaintext highlighter-rouge">:alias</code>, <code class="language-plaintext highlighter-rouge">:join-alias</code>, or <code class="language-plaintext highlighter-rouge">:name</code>; make sure you use <code class="language-plaintext highlighter-rouge">driver-api/qp.add.alias</code>,
+<code class="language-plaintext highlighter-rouge">driver-api/qp.add.source-table</code>, and <code class="language-plaintext highlighter-rouge">driver-api/qp.add.source-alias</code> respectively.</p>
+  </li>
 </ul>
 
 <h2 id="metabase-0550">Metabase 0.55.0</h2>
