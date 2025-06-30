@@ -157,6 +157,10 @@ See [Notification permissions](../permissions/notifications).
 
 See [Sending alerts and subscriptions to private Slack channels](../configuring-metabase/slack#sending-alerts-and-subscriptions-to-private-slack-channels).
 
+## Removing Metabase branding from alerts
+
+See [Remove Metabase branding from exports](./exporting-results#remove-metabase-branding-from-exports).
+
 ## Further reading
 
 - [Dashboard subscriptions](../dashboards/subscriptions)
