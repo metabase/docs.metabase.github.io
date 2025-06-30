@@ -25,7 +25,7 @@
                 :default nil}
     :update-dirs {:ref "<update-dirs>"
                   :desc "The directories to update in the PR, smart defaults based on the target branch."
-                  :default []}}
+                  :default ""}}
    :error-fn u/cli-error-fn})
 
 (defn existing-pr-num-by-source+target
