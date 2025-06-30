@@ -10,27 +10,7 @@ layout: new-docs
 ---
 
 ```ts
-function StaticDashboard(
-  props: {
-    drillThroughQuestionHeight?: Height<string | number>;
-    drillThroughQuestionProps?: DrillThroughQuestionProps;
-    plugins?: MetabasePluginsConfig;
-    renderDrillThroughQuestion?: () => ReactNode;
-  } & {
-    dashboardId: SdkDashboardId;
-    hiddenParameters?: string[];
-    initialParameters?: ParameterValues;
-    withCardTitle?: boolean;
-    withDownloads?: boolean;
-    withTitle?: boolean;
-  } & {
-    className?: string;
-    style?: CSSProperties;
-  } & {
-    onLoad?: (dashboard: null | MetabaseDashboard) => void;
-    onLoadWithoutCards?: (dashboard: null | MetabaseDashboard) => void;
-  } & {},
-): Element;
+function StaticDashboard(props: StaticDashboardProps): ReactNode;
 ```
 
 A lightweight dashboard component.
@@ -39,9 +19,9 @@ A lightweight dashboard component.
 
 <!-- [<snippet parameters>] -->
 
-| Parameter | Type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    | Description |
-| :-------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :---------- |
-| `props`   | \{ `drillThroughQuestionHeight?`: `Height`\<`string` \| `number`\>; `drillThroughQuestionProps?`: [`DrillThroughQuestionProps`](./api/DrillThroughQuestionProps); `plugins?`: [`MetabasePluginsConfig`](./api/MetabasePluginsConfig); `renderDrillThroughQuestion?`: () => [`ReactNode`](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/0b728411cd1dfb4bd26992bb35a73cf8edaa22e7/types/react/index.d.ts#L478); \} & \{ `dashboardId`: [`SdkDashboardId`](./api/SdkDashboardId); `hiddenParameters?`: `string`[]; `initialParameters?`: [`ParameterValues`](./api/ParameterValues); `withCardTitle?`: `boolean`; `withDownloads?`: `boolean`; `withTitle?`: `boolean`; \} & \{ `className?`: `string`; `style?`: [`CSSProperties`](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/0b728411cd1dfb4bd26992bb35a73cf8edaa22e7/types/react/index.d.ts#L2579); \} & \{ `onLoad?`: (`dashboard`: `null` \| [`MetabaseDashboard`](./api/MetabaseDashboard)) => `void`; `onLoadWithoutCards?`: (`dashboard`: `null` \| [`MetabaseDashboard`](./api/MetabaseDashboard)) => `void`; \} & \{ \} |             |
+| Parameter | Type                                                    |
+| :-------- | :------------------------------------------------------ |
+| `props`   | [`StaticDashboardProps`](./api/StaticDashboardProps) |
 
 <!-- [<endsnippet parameters>] -->
 
@@ -49,6 +29,6 @@ A lightweight dashboard component.
 
 <!-- [<snippet returns>] -->
 
-[`Element`](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/0b728411cd1dfb4bd26992bb35a73cf8edaa22e7/types/react/jsx-runtime.d.ts#L6)
+[`ReactNode`](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/0b728411cd1dfb4bd26992bb35a73cf8edaa22e7/types/react/index.d.ts#L478)
 
 <!-- [<endsnippet returns>] -->
