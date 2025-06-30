@@ -1,4 +1,4 @@
-(ns -test.find-broken-merge-workflows
+(ns -test.find-broken-workflows
   (:require
    [babashka.process :as p]
    [babashka.fs :as fs]
@@ -8,24 +8,30 @@
 
 (defn sh-w-gh-token [& cmd]
   (apply p/sh {:extra-env {"GH_TOKEN" ;; get gh token from ~/.zshrc
-                           (first (keep
-                                    (fn [line]
-                                      (when (str/starts-with? line "export GH_TOKEN=")
-                                        (-> line
-                                            (str/replace #"^export GH_TOKEN=" "")
-                                            (str/replace #"'" ""))))
-                                    (str/split-lines (slurp (str (fs/expand-home "~/.zshrc"))))))}}
+                           (or (System/getenv "GH_TOKEN")
+                               (first (keep
+                                        (fn [line]
+                                          (when (str/starts-with? line "export GH_TOKEN=")
+                                            (-> line
+                                                (str/replace #"^export GH_TOKEN=" "")
+                                                (str/replace #"'" ""))))
+                                        (str/split-lines (slurp (str (fs/expand-home "~/.zshrc")))))))}}
          cmd))
 
 (defn open-prs []
   (map :headRefName
        (json/parse-string
-         (:out (sh-w-gh-token "gh" "pr" "list" "--state" "open" "--json" "headRefName"))
+         (:out (sh-w-gh-token "gh" "pr" "list"
+                              "--state" "open"
+                              "--json" "headRefName"))
          true)))
 
 (defn all-runs []
   (json/parse-string
-    (:out (sh-w-gh-token "gh" "run" "list" "--limit" "500" "--workflow=process_docs_changes.yml" "--json" "conclusion,url,headBranch,headSha,name,workflowName,number,createdAt,displayTitle,status,displayTitle"))
+    (:out (sh-w-gh-token "gh" "run" "list"
+                         "--limit" "500"
+                         "--workflow" "process_docs_changes.yml"
+                         "--json" "conclusion,url,headBranch,headSha,name,workflowName,number,createdAt,displayTitle,status,displayTitle"))
     true))
 
 (defn runs-for-head-ref-name [head-ref-name all-runs]
