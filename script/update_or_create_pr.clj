@@ -5,7 +5,6 @@
    [babashka.process :as p]
    [cheshire.core :as json]
    [clojure.string :as str]
-   [ice.core :as ice]
    [util :as u]))
 
 (def cli-spec
@@ -16,16 +15,20 @@
                     :require true}
     :source-branch {:ref "<source-branch>"
                     :desc "The source branch of the triggering PR."
-                    :alias :r}
+                    :alias :r
+                    :require true}
     :annotation {:ref "<annotation>"
                  :desc "The annotation to add to the PR."
                  :default "auto-build"}
     :pr-number {:ref "<pr-number>"
                 :desc "The PR number to update, if it exists."
-                :default nil}}
+                :default nil}
+    :update-dirs {:ref "<update-dirs>"
+                  :desc "The directories to update in the PR, smart defaults based on the target branch."
+                  :default []}}
    :error-fn u/cli-error-fn})
 
-(defn existing-pr-by-source+target?
+(defn existing-pr-num-by-source+target
   "Checks if a PR already exists for the given target branch name."
   [source target]
   (let [raw-data (p/sh {:out :string
@@ -61,34 +64,42 @@
              "## Updated Directories:"
              (str/join "\n" (map #(str "- `" % "`") artifact-dirs))
              ""
-             (if pr-number
-               (str "This PR was triggered by: [PR " pr-number "](https://github.com/metabase/metabase/pull/" pr-number ").")
-               (str "Find the [Triggering PR](https://github.com/search?q=repo%3Ametabase%2Fmetabase%20" source-branch "&type=pullrequests)."))
+             (when-not (str/blank? pr-number)
+               (str "This PR was triggered by: [PR " pr-number "](https://github.com/metabase/metabase/pull/" pr-number ")."))
              ""
              "> This PR will be merged when the PR that triggered this build is merged."]))
 
 (defn -main
   "Main function to update or create a PR. "
   [& args]
-  (let [{:keys [source-branch target-branch annotation pr-number]
-         :as   opts}     (cli/parse-opts args cli-spec)
-        _                   (when (or (:help opts) (:h opts))
-                              (u/show-usage-and-exit cli-spec))
+  (let [{:keys [source-branch target-branch annotation pr-number update-dirs]
+         :as   opts}       (cli/parse-opts args cli-spec)
+        _                  (when (or (:help opts) (:h opts))
+                             (u/pp ["recieved options:" opts])
+                             (u/show-usage-and-exit cli-spec))
+
         [category
-         release-num]       (u/categorize-branchname target-branch)
-        _                   (do (println "→ Target Branch info: "
-                                         (case category
-                                           :master  "master"
-                                           :release (str "Release version:" release-num)
-                                           (throw (ex-info (str "Unpublishable branchname: " target-branch)
-                                                           {:babashka/exit 1}))))
-                                (println "→ Source Branch info: " source-branch))
-        target-branch-name  (str source-branch "->" target-branch)
-        _                   (p/shell "git" "checkout" "-B" target-branch-name)
-        artifact-dirs       (->artifact-dirs category release-num)
+         release-num]      (u/categorize-branchname target-branch)
+        _                  (do (println "→ Target Branch info: "
+                                        (case category
+                                          :master  "master"
+                                          :release (str "Release version:" release-num)
+                                          (throw (ex-info (str "Unpublishable branchname: " target-branch)
+                                                          {:babashka/exit 1}))))
+                               (println "→ Source Branch info: " source-branch))
+
+        target-branch-name (str source-branch "->" target-branch)
+        _                  (p/shell "git" "checkout" "-B" target-branch-name)
+
+        update-dirs        (remove str/blank? (str/split update-dirs #","))
+        _                  (u/pp ["update-dirs" update-dirs])
+
+        artifact-dirs       (concat
+                              update-dirs
+                              (->artifact-dirs category release-num))
         _                   (doseq [ad artifact-dirs]
                               (println "Adding" ad "...")
-                              (p/shell "git" "add" ad))
+                              (p/sh {:continue true} "git" "add" ad))
         {diff-exit :exit}   (p/shell {:continue true} "git" "diff" "--cached" "--quiet")
         target-branch-title (str "[" annotation "] " source-branch " -> " target-branch)]
     (if (zero? diff-exit)
@@ -100,7 +111,7 @@
         (println (str "→ Target Branch '" target-branch-name "' updated successfully."))
         (println "→ Checking for existing PR...")
 
-        (if-let [pr-info (existing-pr-by-source+target? source-branch target-branch)]
+        (if-let [pr-info (existing-pr-num-by-source+target source-branch target-branch)]
           (println "✓ PR already exists: #" pr-info)
           (do
             (println "→ Creating new PR...")

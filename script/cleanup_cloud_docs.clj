@@ -1,16 +1,18 @@
 (ns cleanup-cloud-docs
   (:require [babashka.fs :as fs]))
 
-(defn find-cloud-dirs []
+(defn find-cloud-dirs
   "Find all cloud directories in _docs"
+  []
   (->> (fs/glob "_docs" "*/cloud")
        (map str)
        (filter #(fs/directory? %))))
 
 (def cloud-docs-dir "_docs/latest/cloud")
 
-(defn non-latest-cloud-dirs []
+(defn non-latest-cloud-dirs
   "Find cloud directories that are not in latest"
+  []
   (->> (find-cloud-dirs)
        (remove #{cloud-docs-dir})))
 

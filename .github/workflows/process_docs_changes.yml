@@ -28,6 +28,11 @@ on:
         description: 'Number of the PR in metabase/metabase that triggered this action'
         required: false
         type: number
+      update_dirs:
+        description: comma delimited paths to git add into the generated PR
+        required: false
+        type: string
+        default: ""
   repository_dispatch:
     types: [docs_update, docs_merge, docs_close]
 
@@ -53,22 +58,9 @@ jobs:
       MAIN_REPO_TARGET_BRANCH: "${{ github.event.inputs.target_branch || github.event.client_payload.target_branch }}"
       ANNOTATION: "${{ github.event.inputs.annotation || github.event.client_payload.annotation || 'auto-build' }}"
       PR_NUMBER: "${{ github.event.inputs.pr_number || github.event.client_payload.pr_number }}"
+      UPDATE_DIRS: "${{ github.event.inputs.update_dirs || github.event.client_payload.update_dirs }}"
     steps:
       - uses: actions/checkout@v4
-
-      - name: Set current branch name
-        run: echo "LOCAL_REPO_BRANCH=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> "$GITHUB_ENV"
-
-      - name: Echo Parameters
-        run: |
-          echo "metabase/metabase Source Branch: $MAIN_REPO_SOURCE_BRANCH"
-          echo "metabase/metabase Target Branch: $MAIN_REPO_TARGET_BRANCH"
-          echo ""
-          echo "Action: ${{ github.event.action || github.event.inputs.dispatch_type }}"
-          echo ""
-          echo "Annotation: $ANNOTATION"
-          echo "PR Number: $PR_NUMBER"
-          echo "Local Repo (docs.metabase.github.io) Branch: $LOCAL_REPO_BRANCH"
 
       - name: Prepare java
         uses: actions/setup-java@v4
@@ -210,7 +202,12 @@ jobs:
            ((github.event_name == 'repository_dispatch' && github.event.action == 'docs_update') ||
             (github.event_name == 'workflow_dispatch' && github.event.inputs.dispatch_type == 'docs_update')))
         run: |
-          bb script/update_or_create_pr.clj --source-branch "$MAIN_REPO_SOURCE_BRANCH" --target-branch "$MAIN_REPO_TARGET_BRANCH" --annotation "$ANNOTATION" --pr-number "$PR_NUMBER"
+          bb script/update_or_create_pr.clj \
+          --source-branch "$MAIN_REPO_SOURCE_BRANCH" \
+          --target-branch "$MAIN_REPO_TARGET_BRANCH" \
+          --annotation "$ANNOTATION" \
+          --pr-number "$PR_NUMBER" \
+          --update-dirs "$UPDATE_DIRS"
 
       - name: Remove control files from Marketing Repo
         run: |
