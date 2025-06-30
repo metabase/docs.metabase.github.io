@@ -62,20 +62,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set current branch name
-        run: echo "LOCAL_REPO_BRANCH=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> "$GITHUB_ENV"
-
-      - name: Echo Parameters
-        run: |
-          echo "metabase/metabase Source Branch: $MAIN_REPO_SOURCE_BRANCH"
-          echo "metabase/metabase Target Branch: $MAIN_REPO_TARGET_BRANCH"
-          echo ""
-          echo "Action: ${{ github.event.action || github.event.inputs.dispatch_type }}"
-          echo ""
-          echo "Annotation: $ANNOTATION"
-          echo "PR Number: $PR_NUMBER"
-          echo "Local Repo (docs.metabase.github.io) Branch: $LOCAL_REPO_BRANCH"
-
       - name: Prepare java
         uses: actions/setup-java@v4
         with:
