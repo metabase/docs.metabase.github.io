@@ -64,7 +64,7 @@
              "## Updated Directories:"
              (str/join "\n" (map #(str "- `" % "`") artifact-dirs))
              ""
-             (when-not (str/blank? pr-number)
+             (when-not (str/blank? (str pr-number))
                (str "This PR was triggered by: [PR " pr-number "](https://github.com/metabase/metabase/pull/" pr-number ")."))
              ""
              "> This PR will be merged when the PR that triggered this build is merged."]))
