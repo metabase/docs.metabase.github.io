@@ -32,7 +32,7 @@ layout: new-docs
 | [~~CreateQuestion~~](./api/CreateQuestion)       | -           |
 | [CreateQuestionProps](./api/CreateQuestionProps) | -           |
 
-## InteractiveDashboard
+## Dashboard
 
 | Name                                                            | Description                                                                                                                                                                               |
 | :-------------------------------------------------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -40,6 +40,8 @@ layout: new-docs
 | [EditableDashboardProps](./api/EditableDashboardProps)       | -                                                                                                                                                                                         |
 | [InteractiveDashboard](./api/InteractiveDashboard)           | A dashboard component with drill downs, click behaviors, and the ability to view and click into questions.                                                                                |
 | [InteractiveDashboardProps](./api/InteractiveDashboardProps) | -                                                                                                                                                                                         |
+| [StaticDashboard](./api/StaticDashboard)                     | A lightweight dashboard component.                                                                                                                                                        |
+| [StaticDashboardProps](./api/StaticDashboardProps)           | -                                                                                                                                                                                         |
 
 ## InteractiveQuestion
 
@@ -85,13 +87,6 @@ layout: new-docs
 | :-------------------------------------------- | :---------- |
 | [~~ModifyQuestion~~](./api/ModifyQuestion) | -           |
 
-## StaticDashboard
-
-| Name                                                  | Description                        |
-| :---------------------------------------------------- | :--------------------------------- |
-| [StaticDashboard](./api/StaticDashboard)           | A lightweight dashboard component. |
-| [StaticDashboardProps](./api/StaticDashboardProps) | -                                  |
-
 ## StaticQuestion
 
 | Name                                                | Description                                 |
@@ -109,6 +104,7 @@ layout: new-docs
 | [CollectionBrowserListColumns](./api/CollectionBrowserListColumns)         | -                                                                                                                                                                                                                                                                                                                      |
 | [CustomDashboardCardMenuItem](./api/CustomDashboardCardMenuItem)           | -                                                                                                                                                                                                                                                                                                                      |
 | [DashboardCardCustomMenuItem](./api/DashboardCardCustomMenuItem)           | -                                                                                                                                                                                                                                                                                                                      |
+| [DashboardCardMenu](./api/DashboardCardMenu)                               | -                                                                                                                                                                                                                                                                                                                      |
 | [DashboardCardMenuCustomElement](./api/DashboardCardMenuCustomElement)     | -                                                                                                                                                                                                                                                                                                                      |
 | [DashCardMenuItem](./api/DashCardMenuItem)                                 | -                                                                                                                                                                                                                                                                                                                      |
 | [EmbeddingEntityType](./api/EmbeddingEntityType)                           | `question` only works on multi-stage data picker, not the simple data picker. The reason being that we want to streamline user experience for simple embedding use cases, but `question` was later added to support users who are used to selecting Saved questions in interactive embedding, so this is special case. |
