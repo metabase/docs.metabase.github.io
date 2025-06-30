@@ -5,7 +5,6 @@
    [babashka.process :as p]
    [cheshire.core :as json]
    [clojure.string :as str]
-   [ice.core :as ice]
    [util :as u]))
 
 (def cli-spec
@@ -29,7 +28,7 @@
                   :default []}}
    :error-fn u/cli-error-fn})
 
-(defn existing-pr-by-source+target?
+(defn existing-pr-num-by-source+target
   "Checks if a PR already exists for the given target branch name."
   [source target]
   (let [raw-data (p/sh {:out :string
@@ -65,9 +64,8 @@
              "## Updated Directories:"
              (str/join "\n" (map #(str "- `" % "`") artifact-dirs))
              ""
-             (if pr-number
-               (str "This PR was triggered by: [PR " pr-number "](https://github.com/metabase/metabase/pull/" pr-number ").")
-               (str "Find the [Triggering PR](https://github.com/search?q=repo%3Ametabase%2Fmetabase%20" source-branch "&type=pullrequests)."))
+             (when-not (str/blank? pr-number)
+               (str "This PR was triggered by: [PR " pr-number "](https://github.com/metabase/metabase/pull/" pr-number ")."))
              ""
              "> This PR will be merged when the PR that triggered this build is merged."]))
 
@@ -113,7 +111,7 @@
         (println (str "→ Target Branch '" target-branch-name "' updated successfully."))
         (println "→ Checking for existing PR...")
 
-        (if-let [pr-info (existing-pr-by-source+target? source-branch target-branch)]
+        (if-let [pr-info (existing-pr-num-by-source+target source-branch target-branch)]
           (println "✓ PR already exists: #" pr-info)
           (do
             (println "→ Creating new PR...")
