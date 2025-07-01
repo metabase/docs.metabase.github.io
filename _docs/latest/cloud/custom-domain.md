@@ -4,11 +4,12 @@ has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
 category: Cloud
-title: 'Changing your domain name'
+title: Changing your domain name
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/cloud/custom-domain.md'
 layout: new-docs
 redirect_from:
-    - /cloud/docs/custom-domain
+  - /cloud/docs/custom-domain
+latest: true
 ---
 
 # Changing your domain name
