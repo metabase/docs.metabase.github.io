@@ -4,10 +4,12 @@ has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
 category: Cloud
-title: 'Migrate to Metabase Cloud - Metabase 49 or lower'
-source_url: 'https://github.com/metabase/metabase/blob/master/docs/cloud/migrate/guide-pre-50.md'
+title: Migrate to Metabase Cloud - Metabase 49 or lower
+source_url: >-
+  https://github.com/metabase/metabase/blob/master/docs/cloud/migrate/guide-pre-50.md
 layout: new-docs
 section: Migrate
+latest: true
 ---
 
 # Migrate to Metabase Cloud - Metabase 49 or lower

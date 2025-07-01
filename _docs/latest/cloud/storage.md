@@ -4,9 +4,10 @@ has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
 category: Cloud
-title: 'Metabase Cloud Storage'
+title: Metabase Cloud Storage
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/cloud/storage.md'
 layout: new-docs
+latest: true
 ---
 
 # Metabase Cloud Storage

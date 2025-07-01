@@ -4,11 +4,13 @@ has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
 category: Cloud
-title: 'How Metabase billing works'
-source_url: 'https://github.com/metabase/metabase/blob/master/docs/cloud/how-billing-works.md'
+title: How Metabase billing works
+source_url: >-
+  https://github.com/metabase/metabase/blob/master/docs/cloud/how-billing-works.md
 layout: new-docs
 redirect_from:
-    - /pricing/how-billing-works
+  - /pricing/how-billing-works
+latest: true
 ---
 
 # How Metabase billing works
