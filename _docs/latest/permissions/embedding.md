@@ -18,7 +18,7 @@ latest: true
 You can use a single Metabase to manage permissions for all of your customers. Which Metabase permissions tool you use depends on how you store your customer data.
 
 - [One database for all customers (commingled setups)](#one-database-for-all-customers-commingled-setups)
-- [One database per customer](#one-database-per-customer-single-tenant-setups)
+- [One database per customer](#one-database-per-customer)
 - [One schema per customer](#multiple-schemas-one-schema-per-customer)
 
 ## One database for all customers (commingled setups)

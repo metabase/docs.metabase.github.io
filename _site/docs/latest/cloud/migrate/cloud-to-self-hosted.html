@@ -4283,12 +4283,12 @@ Roadmap</a>
         <h1 id="migrate-from-metabase-cloud-to-a-self-hosted-metabase">Migrate from Metabase Cloud to a self-hosted Metabase</h1>
 
 <blockquote>
-  <p>This guide outlines migrating <em>from</em> Metabase Cloud to a self-hosted Metabase. If you want to migrate <em>to</em> Metabase Cloud, check out <a href="/docs/latest/cloud/migrate/guide">this guide</a> instead.</p>
+  <p>This guide outlines migrating <em>from</em> Metabase Cloud to a self-hosted Metabase. If you want to migrate <em>to</em> Metabase Cloud, check out <a href="./guide">this guide</a> instead.</p>
 </blockquote>
 
 <p>Migration from Metabase Cloud to self-hosted will keep all of your questions, dashboards, people, settings — everything in your existing Metabase.</p>
 
-<p>To migrate, you’ll need to <a href="/help-premium">contact our success team</a> to get a snapshot of your Metabase’s <a href="/docs/latest/installation-and-operation/migrating-from-h2#metabases-application-database">application database</a>. This application database contains information about all the settings, questions, dashboards, models, users, etc from your Metabase Cloud instance. The application database is distinct from any of the databases you have connected to your Metabase. You’ll need to host your own PostgreSQL database and import your data by restoring from this snapshot of your application database.</p>
+<p>To migrate, you’ll need to <a href="/help-premium">contact our success team</a> to get a snapshot of your Metabase’s <a href="../../installation-and-operation/migrating-from-h2#metabases-application-database">application database</a>. This application database contains information about all the settings, questions, dashboards, models, users, etc from your Metabase Cloud instance. The application database is distinct from any of the databases you have connected to your Metabase. You’ll need to host your own PostgreSQL database and import your data by restoring from this snapshot of your application database.</p>
 
 <h2 id="preparing-to-migrate-from-cloud-to-self-hosted">Preparing to migrate from cloud to self-hosted</h2>
 
@@ -4302,7 +4302,7 @@ Roadmap</a>
 
 <p>A self-hosted Metabase comes with a built-in H2 application database (H2 is a file-based database format). H2 database is appropriate for demos and trials, but you should <strong>avoid using the built-in H2 application database for production setups!</strong></p>
 
-<p>We recommend using PostgreSQL as your application database, but you can use MySQL or MariaDB as well. Before starting the migration from Metabase Cloud, <a href="/docs/latest/installation-and-operation/configuring-application-database">configure the application database</a> for your self-hosted instance.</p>
+<p>We recommend using PostgreSQL as your application database, but you can use MySQL or MariaDB as well. Before starting the migration from Metabase Cloud, <a href="../../installation-and-operation/configuring-application-database">configure the application database</a> for your self-hosted instance.</p>
 
 <p>For more on why you should use PostgreSQL as your application database, check out <a href="/learn/metabase-basics/administration/administration-and-operation/metabase-in-production">How to run Metabase in production</a>.</p>
 
@@ -4331,14 +4331,14 @@ Roadmap</a>
     <p>Snapshots expire quickly, but don’t sweat it; if your snapshot has expired, just request a new one.</p>
   </li>
   <li>
-    <p><strong>Import your application data into your self-hosted application database</strong>. Follow the instructions to <a href="/docs/latest/installation-and-operation/migrating-from-h2">migrate from H2 to a production application database</a> using the <code class="language-plaintext highlighter-rouge">.mv.db</code> snapshot you downloaded.</p>
+    <p><strong>Import your application data into your self-hosted application database</strong>. Follow the instructions to <a href="../../installation-and-operation/migrating-from-h2">migrate from H2 to a production application database</a> using the <code class="language-plaintext highlighter-rouge">.mv.db</code> snapshot you downloaded.</p>
 
     <p>The migration will involve running a CLI command to load the data from the H2 snapshot you downloaded to your self-hosted application database.</p>
 
-    <p>If you encounter any issues, check out the <a href="/docs/latest/troubleshooting-guide/loading-from-h2">troubleshooting guide</a> or <a href="/help-premium">contact us</a>.</p>
+    <p>If you encounter any issues, check out the <a href="../../troubleshooting-guide/loading-from-h2">troubleshooting guide</a> or <a href="/help-premium">contact us</a>.</p>
   </li>
   <li>
-    <p><strong>Pro plans will need to input a license token to activate the paid features</strong>. If you’re migrating to a Pro self-hosted plan, <a href="/docs/latest/installation-and-operation/activating-the-enterprise-edition">activate your Enterprise Edition token</a>.</p>
+    <p><strong>Pro plans will need to input a license token to activate the paid features</strong>. If you’re migrating to a Pro self-hosted plan, <a href="../../installation-and-operation/activating-the-enterprise-edition">activate your Enterprise Edition token</a>.</p>
 
     <p>If you’re on a Pro Cloud plan, you’ll need to cancel that plan and start a new self-hosted Pro plan to get the token you’ll need to activate your paid features . See <a href="#preparing-to-migrate-from-cloud-to-self-hosted">Preparing to migrate from cloud to self-hosted</a>.</p>
   </li>

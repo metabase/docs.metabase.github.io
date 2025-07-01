@@ -24,7 +24,7 @@ Once added, you'll see an **Add data** button in the left navigation bar. Click 
 
 You can upload a `.csv` or `.tsv` file.
 
-Learn more about [uploads](/docs/latest/exploration-and-organization/uploads).
+Learn more about [uploads](../exploration-and-organization/uploads).
 
 ### Metabase Cloud Storage uses ClickHouse
 

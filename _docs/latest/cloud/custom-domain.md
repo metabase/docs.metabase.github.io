@@ -16,7 +16,7 @@ latest: true
 
 By default, Metabase will automatically provision a domain name for your Metabase that ends in metabaseapp.com (e.g., yourcompany.metabaseapp.com).
 
-[Pro and Enterprise](/pricing/) plans allow you to add a custom domain. Setting a custom domain will update your instance's [Site URL](/docs/latest/configuring-metabase/settings#site-url). The Site URL is used for things like creating links in emails, auth redirects, and in some embedding scenarios.
+[Pro and Enterprise](/pricing/) plans allow you to add a custom domain. Setting a custom domain will update your instance's [Site URL](../configuring-metabase/settings#site-url). The Site URL is used for things like creating links in emails, auth redirects, and in some embedding scenarios.
 
 ## How to add a custom domain to your Metabase
 
