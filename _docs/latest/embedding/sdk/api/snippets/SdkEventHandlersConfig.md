@@ -13,8 +13,8 @@ latest: true
 
 ```ts
 type SdkEventHandlersConfig = {
-  onDashboardLoad: SdkDashboardLoadEvent;
-  onDashboardLoadWithoutCards: SdkDashboardLoadEvent;
+  onDashboardLoad?: SdkDashboardLoadEvent;
+  onDashboardLoadWithoutCards?: SdkDashboardLoadEvent;
 };
 ```
 

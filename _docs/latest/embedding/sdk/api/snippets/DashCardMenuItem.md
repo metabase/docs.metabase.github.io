@@ -13,15 +13,15 @@ latest: true
 
 ```ts
 type DashCardMenuItem = {
-  children: ReactNode;
-  closeMenuOnClick: boolean;
-  color: MantineColor;
-  disabled: boolean;
+  children?: ReactNode;
+  closeMenuOnClick?: boolean;
+  color?: MantineColor;
+  disabled?: boolean;
   iconName: IconName;
   label: string;
-  leftSection: ReactNode;
+  leftSection?: ReactNode;
   onClick: () => void;
-  rightSection: ReactNode;
+  rightSection?: ReactNode;
 };
 ```
 

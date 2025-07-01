@@ -15,8 +15,8 @@ type MetabaseAuthConfigWithApiKey = {
   metabaseInstanceUrl: string;
 } & {
   apiKey: string;
-  fetchRequestToken: never;
-  preferredAuthMethod: never;
+  fetchRequestToken?: never;
+  preferredAuthMethod?: never;
 };
 ```
 

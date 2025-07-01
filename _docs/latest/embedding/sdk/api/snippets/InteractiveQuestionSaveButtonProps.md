@@ -13,7 +13,7 @@ latest: true
 
 ```ts
 type InteractiveQuestionSaveButtonProps = {
-  onClick: MouseEventHandler<HTMLButtonElement>;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
 } & ButtonProps;
 ```
 

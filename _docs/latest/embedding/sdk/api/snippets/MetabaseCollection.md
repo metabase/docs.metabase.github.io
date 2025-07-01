@@ -14,10 +14,10 @@ latest: true
 ```ts
 type MetabaseCollection = {
   description: string | null;
-  entity_id: SdkEntityId;
+  entity_id?: SdkEntityId;
   id: SdkCollectionId;
   name: string;
-  slug: string;
+  slug?: string;
 };
 ```
 

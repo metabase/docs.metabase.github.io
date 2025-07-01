@@ -12,13 +12,13 @@ latest: true
 
 ```ts
 type MetabaseDataPointObject = {
-  column: Record<string, any>;
-  data: {
+  column?: Record<string, any>;
+  data?: {
     col: Record<string, any> | null;
     value: string | number | null | boolean;
   }[];
-  event: MouseEvent;
-  value: string | number | null | boolean;
+  event?: MouseEvent;
+  value?: string | number | null | boolean;
 };
 ```
 

@@ -15,8 +15,8 @@ type ChartColor =
   | string
   | {
       base: string;
-      shade: string;
-      tint: string;
+      shade?: string;
+      tint?: string;
     };
 ```
 
@@ -29,8 +29,8 @@ type ChartColor =
 ```ts
 {
   base: string;
-  shade: string;
-  tint: string;
+  shade?: string;
+  tint?: string;
 }
 ```
 

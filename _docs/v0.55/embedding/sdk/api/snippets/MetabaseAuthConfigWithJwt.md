@@ -13,9 +13,9 @@ layout: new-docs
 type MetabaseAuthConfigWithJwt = {
   metabaseInstanceUrl: string;
 } & {
-  apiKey: never;
-  fetchRequestToken: MetabaseFetchRequestTokenFn;
-  preferredAuthMethod: "jwt";
+  apiKey?: never;
+  fetchRequestToken?: MetabaseFetchRequestTokenFn;
+  preferredAuthMethod?: "jwt";
 };
 ```
 

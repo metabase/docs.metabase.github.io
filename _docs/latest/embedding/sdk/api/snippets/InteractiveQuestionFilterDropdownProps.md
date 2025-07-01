@@ -13,7 +13,7 @@ latest: true
 
 ```ts
 type InteractiveQuestionFilterDropdownProps = {
-  withColumnItemIcon: boolean;
+  withColumnItemIcon?: boolean;
 };
 ```
 

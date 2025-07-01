@@ -13,8 +13,8 @@ latest: true
 
 ```ts
 type MetabasePluginsConfig = {
-  dashboard: MetabaseDashboardPluginsConfig;
-  mapQuestionClickActions: MetabaseClickActionPluginsConfig;
+  dashboard?: MetabaseDashboardPluginsConfig;
+  mapQuestionClickActions?: MetabaseClickActionPluginsConfig;
 };
 ```
 

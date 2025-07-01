@@ -49,7 +49,7 @@
 <meta name="twitter:site" content="@metabase">
 
 <meta name="twitter:title" content="Driver interface changelog | Metabase Documentation">
-<meta name="twitter:description" content="Driver Interface Changelog Metabase 0.55.0   Add the multi-method ->date that allows the driver to control how to cast strings and temporal types to dates.   Add the multi-method date-dbtype that allows the driver...">
+<meta name="twitter:description" content="Driver Interface Changelog Metabase 0.56.0   Add the testing multi-method tx/track-dataset for shared cloud dbs to track loaded datasets for more efficient sharing.   Join alias escaping has been reworked; when compiling MBQL for a join...">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -59,7 +59,7 @@
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://www.metabase.com/docs/v0.55/developers-guide/driver-changelog">
 <meta name="title" property="og:title" content="Driver interface changelog | Metabase Documentation">
-<meta name="description" property="og:description" content="Driver Interface Changelog Metabase 0.55.0   Add the multi-method ->date that allows the driver to control how to cast strings and temporal types to dates.   Add the multi-method date-dbtype that allows the driver...">
+<meta name="description" property="og:description" content="Driver Interface Changelog Metabase 0.56.0   Add the testing multi-method tx/track-dataset for shared cloud dbs to track loaded datasets for more efficient sharing.   Join alias escaping has been reworked; when compiling MBQL for a join...">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -1525,7 +1525,7 @@ Roadmap</a>
 
       <li class="">
         <a href="/docs/v0.55/questions/start" class="">
-        Questions
+        Queries and charts
 
           
             <div>
@@ -1635,19 +1635,19 @@ Roadmap</a>
                     
                       <li>
                         <a href="/docs/v0.55/questions/native-editor/writing-sql" class="">
-                          The SQL editor
+                          SQL editor
                         </a>
                       </li>
                     
                       <li>
                         <a href="/docs/v0.55/questions/native-editor/sql-parameters" class="">
-                          SQL parameters
+                          SQL parameters and field filters
                         </a>
                       </li>
                     
                       <li>
                         <a href="/docs/v0.55/questions/native-editor/referencing-saved-questions-in-queries" class="">
-                          Referencing models and saved questions
+                          Referencing models and questions
                         </a>
                       </li>
                     
@@ -1689,7 +1689,7 @@ Roadmap</a>
                     
                       <li>
                         <a href="/docs/v0.55/questions/visualizations/visualizing-results" class="">
-                          Visualization overview
+                          Overview
                         </a>
                       </li>
                     
@@ -1852,7 +1852,7 @@ Roadmap</a>
 
               <li class="">
                 <a href="/docs/v0.55/dashboards/introduction" class="">
-                  Introduction
+                  Overview
 
                   
                 </a>
@@ -2009,7 +2009,7 @@ Roadmap</a>
 
               <li class="">
                 <a href="/docs/v0.55/data-modeling/metadata-editing" class="">
-                  Table metadata admin settings
+                  Table metadata settings
 
                   
                 </a>
@@ -2022,7 +2022,7 @@ Roadmap</a>
 
               <li class="">
                 <a href="/docs/v0.55/data-modeling/field-types" class="">
-                  Field types
+                  Data and semantic types
 
                   
                 </a>
@@ -2090,7 +2090,7 @@ Roadmap</a>
                     
                       <li>
                         <a href="/docs/v0.55/actions/introduction" class="">
-                          Introduction
+                          Overview
                         </a>
                       </li>
                     
@@ -2144,6 +2144,19 @@ Roadmap</a>
               <li class="">
                 <a href="/docs/v0.55/exploration-and-organization/exploration" class="">
                   Basic exploration
+
+                  
+                </a>
+                
+              </li>
+            
+              
+
+              
+
+              <li class="">
+                <a href="/docs/v0.55/exploration-and-organization/keyboard-shortcuts" class="">
+                  Keyboard shortcuts
 
                   
                 </a>
@@ -2278,40 +2291,58 @@ Roadmap</a>
         Interactive embedding
 
           
-        </a>
+            <div>
+              <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="chevron">
+<path opacity="0.9" d="M3 8.96338L16 21.9634L29 8.96338" stroke="#509ee3" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
 
-        
-      </li>
-    
-      
-
-      
-
-      
-
-      <li class="">
-        <a href="/docs/v0.55/embedding/interactive-embedding-quick-start-guide" class="">
-        Interactive embedding quick start
-
+            </div>
           
         </a>
 
         
-      </li>
-    
-      
+          <ul>
+            
+              
 
-      
+              
 
-      
+              <li class="">
+                <a href="/docs/v0.55/embedding/interactive-embedding" class="">
+                  Overview
 
-      <li class="">
-        <a href="/docs/v0.55/embedding/interactive-ui-components" class="">
-        Interactive embedding UI components
+                  
+                </a>
+                
+              </li>
+            
+              
 
-          
-        </a>
+              
 
+              <li class="">
+                <a href="/docs/v0.55/embedding/interactive-embedding-quick-start-guide" class="">
+                  Quickstart
+
+                  
+                </a>
+                
+              </li>
+            
+              
+
+              
+
+              <li class="">
+                <a href="/docs/v0.55/embedding/interactive-ui-components" class="">
+                  UI components
+
+                  
+                </a>
+                
+              </li>
+            
+          </ul>
         
       </li>
     
@@ -2326,24 +2357,45 @@ Roadmap</a>
         Static embedding
 
           
-        </a>
+            <div>
+              <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="chevron">
+<path opacity="0.9" d="M3 8.96338L16 21.9634L29 8.96338" stroke="#509ee3" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
 
-        
-      </li>
-    
-      
-
-      
-
-      
-
-      <li class="">
-        <a href="/docs/v0.55/embedding/static-embedding-parameters" class="">
-        Parameters for static embeds
-
+            </div>
           
         </a>
 
+        
+          <ul>
+            
+              
+
+              
+
+              <li class="">
+                <a href="/docs/v0.55/embedding/static-embedding" class="">
+                  Overview
+
+                  
+                </a>
+                
+              </li>
+            
+              
+
+              
+
+              <li class="">
+                <a href="/docs/v0.55/embedding/static-embedding-parameters" class="">
+                  Parameters for static embeds
+
+                  
+                </a>
+                
+              </li>
+            
+          </ul>
         
       </li>
     
@@ -2355,7 +2407,7 @@ Roadmap</a>
 
       <li class="">
         <a href="/docs/v0.55/embedding/public-links" class="">
-        Public links
+        Public links and embeds
 
           
         </a>
@@ -2628,7 +2680,7 @@ Roadmap</a>
                       </li>
                     
                       <li>
-                        <a href="https://www.metabase.com/docs/v0.55/cloud/start" class="">
+                        <a href="https://www.metabase.com/docs/latest/cloud/start" class="">
                           Metabase Cloud
                         </a>
                       </li>
@@ -2686,19 +2738,6 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.55/installation-and-operation/backing-up-metabase-application-data" class="">
-                  Backing up Metabase
-
-                  
-                </a>
-                
-              </li>
-            
-              
-
-              
-
-              <li class="">
                 <a href="/docs/v0.55/installation-and-operation/activating-the-enterprise-edition" class="">
                   Activating Enterprise features
 
@@ -2720,97 +2759,6 @@ Roadmap</a>
                 
               </li>
             
-              
-
-              
-
-              <li class="">
-                <a href="/docs/v0.55/installation-and-operation/monitoring-metabase" class="">
-                  Monitoring your Metabase
-
-                  
-                </a>
-                
-              </li>
-            
-              
-
-              
-
-              <li class="">
-                <a href="/docs/v0.55/installation-and-operation/serialization" class="">
-                  Serialization
-
-                  
-                </a>
-                
-              </li>
-            
-              
-
-              
-
-              <li class="">
-                <a href="/docs/v0.55/installation-and-operation/observability-with-prometheus" class="">
-                  Observability with Prometheus
-
-                  
-                </a>
-                
-              </li>
-            
-              
-
-              
-
-              <li class="">
-                <a href="/docs/v0.55/installation-and-operation/commands" class="">
-                  Commands
-
-                  
-                </a>
-                
-              </li>
-            
-              
-
-              
-
-              <li class="">
-                <a href="/docs/v0.55/installation-and-operation/supported-browsers" class="">
-                  Supported browsers
-
-                  
-                </a>
-                
-              </li>
-            
-              
-
-              
-
-              <li class="">
-                <a href="/docs/v0.55/installation-and-operation/privacy" class="">
-                  Privacy
-
-                  
-                </a>
-                
-              </li>
-            
-              
-
-              
-
-              <li class="">
-                <a href="/docs/v0.55/installation-and-operation/information-collection" class="">
-                  About the anonymous usage data we collect
-
-                  
-                </a>
-                
-              </li>
-            
           </ul>
         
       </li>
@@ -2823,7 +2771,7 @@ Roadmap</a>
 
       <li class="">
         <a href="/docs/v0.55/databases/start" class="">
-        Databases
+        Data sources
 
           
             <div>
@@ -3086,6 +3034,32 @@ Roadmap</a>
                 
               </li>
             
+              
+
+              
+
+              <li class="">
+                <a href="/docs/latest/cloud/storage" class="">
+                  Metabase Cloud Storage
+
+                  
+                </a>
+                
+              </li>
+            
+              
+
+              
+
+              <li class="">
+                <a href="/docs/latest/cloud/google-sheets" class="">
+                  Sync Google Sheets
+
+                  
+                </a>
+                
+              </li>
+            
           </ul>
         
       </li>
@@ -3274,6 +3248,19 @@ Roadmap</a>
               
 
               <li class="">
+                <a href="/docs/v0.55/configuring-metabase/fonts" class="">
+                  Fonts
+
+                  
+                </a>
+                
+              </li>
+            
+              
+
+              
+
+              <li class="">
                 <a href="/docs/v0.55/configuring-metabase/caching" class="">
                   Caching query results
 
@@ -3319,8 +3306,8 @@ Roadmap</a>
       
 
       <li class="">
-        <a href="/docs/v0.55/usage-and-performance-tools/start" class="">
-        Tools
+        <a href="/docs/v0.55/installation-and-operation/start" class="">
+        Operations and monitoring
 
           
             <div>
@@ -3334,6 +3321,84 @@ Roadmap</a>
 
         
           <ul>
+            
+              
+
+              
+
+              <li class="">
+                <a href="/docs/v0.55/installation-and-operation/backing-up-metabase-application-data" class="">
+                  Backing up Metabase
+
+                  
+                </a>
+                
+              </li>
+            
+              
+
+              
+
+              <li class="">
+                <a href="/docs/v0.55/installation-and-operation/development-instance" class="">
+                  Development instances
+
+                  
+                </a>
+                
+              </li>
+            
+              
+
+              
+
+              <li class="">
+                <a href="/docs/v0.55/installation-and-operation/monitoring-metabase" class="">
+                  Monitoring your Metabase
+
+                  
+                </a>
+                
+              </li>
+            
+              
+
+              
+
+              <li class="">
+                <a href="/docs/v0.55/installation-and-operation/observability-with-prometheus" class="">
+                  Observability with Prometheus
+
+                  
+                </a>
+                
+              </li>
+            
+              
+
+              
+
+              <li class="">
+                <a href="/docs/v0.55/installation-and-operation/serialization" class="">
+                  Serialization
+
+                  
+                </a>
+                
+              </li>
+            
+              
+
+              
+
+              <li class="">
+                <a href="/docs/v0.55/installation-and-operation/commands" class="">
+                  Commands
+
+                  
+                </a>
+                
+              </li>
             
               
 
@@ -3484,7 +3549,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="" class="">
+                <a href="/docs/v0.55/people-and-groups/start" class="">
                   Paid SSO options
 
                   
@@ -3715,6 +3780,19 @@ Roadmap</a>
                 
               </li>
             
+              
+
+              
+
+              <li class="">
+                <a href="/docs/v0.55/permissions/embedding" class="">
+                  Configuring permissions for embedding
+
+                  
+                </a>
+                
+              </li>
+            
           </ul>
         
       </li>
@@ -3749,7 +3827,7 @@ Roadmap</a>
 
       <li class="">
         <a href="/docs/latest/cloud/start" class="">
-        Cloud docs
+        Metabase Cloud
 
           
             <div>
@@ -3782,32 +3860,6 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/latest/cloud/storage" class="">
-                  Storage
-
-                  
-                </a>
-                
-              </li>
-            
-              
-
-              
-
-              <li class="">
-                <a href="/docs/latest/cloud/google-sheets" class="">
-                  Sync Google Sheets
-
-                  
-                </a>
-                
-              </li>
-            
-              
-
-              
-
-              <li class="">
                 <a href="/docs/latest/cloud/custom-domain" class="">
                   Custom domain
 
@@ -3822,7 +3874,7 @@ Roadmap</a>
 
               <li class="">
                 <a href="/docs/latest/cloud/limitations" class="">
-                  Limitations
+                  Cloud Limitations
 
                   
                 </a>
@@ -3999,6 +4051,70 @@ Roadmap</a>
         
       </li>
     
+      
+
+      
+
+      
+
+      <li class="">
+        <a href="/docs/v0.55/installation-and-operation/accessibility" class="">
+        Accessibility
+
+          
+        </a>
+
+        
+      </li>
+    
+      
+
+      
+
+      
+
+      <li class="">
+        <a href="/docs/v0.55/installation-and-operation/supported-browsers" class="">
+        Supported browsers
+
+          
+        </a>
+
+        
+      </li>
+    
+      
+
+      
+
+      
+
+      <li class="">
+        <a href="/docs/v0.55/installation-and-operation/privacy" class="">
+        Privacy
+
+          
+        </a>
+
+        
+      </li>
+    
+      
+
+      
+
+      
+
+      <li class="">
+        <a href="/docs/v0.55/installation-and-operation/information-collection" class="">
+        About the anonymous usage data we collect
+
+          
+        </a>
+
+        
+      </li>
+    
   </ul>
 
 
@@ -4162,6 +4278,27 @@ Roadmap</a>
 
         <h1 id="driver-interface-changelog">Driver Interface Changelog</h1>
 
+<h2 id="metabase-0560">Metabase 0.56.0</h2>
+
+<ul>
+  <li>
+    <p>Add the testing multi-method <code class="language-plaintext highlighter-rouge">tx/track-dataset</code> for shared cloud dbs to track loaded datasets for more efficient sharing.</p>
+  </li>
+  <li>
+    <p>Join alias escaping has been reworked; when compiling MBQL for a join please use
+<code class="language-plaintext highlighter-rouge">metabase.driver-api.core/qp.add.alias</code> instead of <code class="language-plaintext highlighter-rouge">:join-alias</code>. (This is mostly relevant if you have a custom
+<code class="language-plaintext highlighter-rouge">metabase.driver.sql.query-processor/join-&gt;honeysql</code> implementation.)</p>
+
+    <p>Join aliases are no longer globally unique by default, but instead unique within a given level of a query. If you
+need globally unique join aliases, you can pass the new <code class="language-plaintext highlighter-rouge">{:globally-unique-join-aliases? true}</code> option to
+<code class="language-plaintext highlighter-rouge">driver-api/add-alias-info</code>.</p>
+
+    <p>Also note that <code class="language-plaintext highlighter-rouge">driver-api/add-alias-info</code> only adds additional keys to field refs and join maps, and does not
+replace existing keys like <code class="language-plaintext highlighter-rouge">:alias</code>, <code class="language-plaintext highlighter-rouge">:join-alias</code>, or <code class="language-plaintext highlighter-rouge">:name</code>; make sure you use <code class="language-plaintext highlighter-rouge">driver-api/qp.add.alias</code>,
+<code class="language-plaintext highlighter-rouge">driver-api/qp.add.source-table</code>, and <code class="language-plaintext highlighter-rouge">driver-api/qp.add.source-alias</code> respectively.</p>
+  </li>
+</ul>
+
 <h2 id="metabase-0550">Metabase 0.55.0</h2>
 
 <ul>
@@ -4201,6 +4338,7 @@ Roadmap</a>
 <code class="language-plaintext highlighter-rouge">metabase.driver/upload-type-&gt;database-type</code> or <code class="language-plaintext highlighter-rouge">metabase.driver/allowed-promotions</code> – make sure you use
 <code class="language-plaintext highlighter-rouge">:metabase.upload/varchar-255</code> rather than something like <code class="language-plaintext highlighter-rouge">::upload/varchar-255</code>.</p>
   </li>
+  <li>Added the multi-method <code class="language-plaintext highlighter-rouge">metabase.driver.sql.parameters.substitution/time-grouping-&gt;replacement-snippet-info</code>.  This is effectively <code class="language-plaintext highlighter-rouge">-&gt;replacement-snippet-info</code> for the new native query time grouping feature, but is its own separate multimethod because it needs an extra parameter.</li>
   <li>
     <p>The <code class="language-plaintext highlighter-rouge">metabase.models.secret</code> namespace has been replaced with <code class="language-plaintext highlighter-rouge">metabase.secrets.core</code>; if you were using it please
 update your usages.</p>
@@ -4237,11 +4375,9 @@ implementations of <code class="language-plaintext highlighter-rouge">metabase.d
   <li>
     <p>The namespace <code class="language-plaintext highlighter-rouge">metabase.query-processor.context</code>, deprecated in 0.50.0, has been removed.</p>
   </li>
-  <li>
-    <p>All settings formerly in a <code class="language-plaintext highlighter-rouge">metabase.driver.*</code> namespace have been moved to <code class="language-plaintext highlighter-rouge">metabase.driver.settings</code>, and all
+  <li>All settings formerly in a <code class="language-plaintext highlighter-rouge">metabase.driver.*</code> namespace have been moved to <code class="language-plaintext highlighter-rouge">metabase.driver.settings</code>, and all
 settings formerly in a <code class="language-plaintext highlighter-rouge">metabase.query-processor.*</code> namespace have been moved to
-<code class="language-plaintext highlighter-rouge">metabase.query-processor.settings</code>.</p>
-  </li>
+<code class="language-plaintext highlighter-rouge">metabase.query-processor.settings</code>.</li>
 </ul>
 
 <h2 id="metabase-05412">Metabase 0.54.12</h2>

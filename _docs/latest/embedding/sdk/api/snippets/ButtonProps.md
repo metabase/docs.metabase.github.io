@@ -13,9 +13,9 @@ latest: true
 
 ```ts
 type ButtonProps = ButtonProps_2 & {
-  animate: boolean;
-  highlightOnHover: boolean;
-  type: "button" | "submit";
+  animate?: boolean;
+  highlightOnHover?: boolean;
+  type?: "button" | "submit";
 } & HTMLAttributes<HTMLButtonElement>;
 ```
 

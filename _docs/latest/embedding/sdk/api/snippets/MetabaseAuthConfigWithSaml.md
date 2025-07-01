@@ -15,9 +15,9 @@ latest: true
 type MetabaseAuthConfigWithSaml = {
   metabaseInstanceUrl: string;
 } & {
-  apiKey: never;
-  fetchRequestToken: never;
-  preferredAuthMethod: "saml";
+  apiKey?: never;
+  fetchRequestToken?: never;
+  preferredAuthMethod?: "saml";
 };
 ```
 

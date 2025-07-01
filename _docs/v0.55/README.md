@@ -26,9 +26,10 @@ Metabase is an open-source business intelligence platform. You can use Metabase 
 
 ### Metabase Cloud
 
-The easiest way to get started with Metabase is to sign up for a free trial of [Metabase Cloud](https://store.metabase.com/checkout). You get support, backups, upgrades, an SMTP server, SSL certificate, SoC2 Type 2 security auditing, and more (plus your money goes toward improving Metabase). Check out our quick overview of [cloud vs self-hosting](/docs/latest/cloud/cloud-vs-self-hosting). If you need to, you can always switch to [self-hosting](./installation-and-operation/installing-metabase) Metabase at any time (or vice versa).
+The easiest way to get started with Metabase is to sign up for a free trial of [Metabase Cloud](https://store.metabase.com/checkout). You get support, backups, upgrades, an SMTP server, SSL certificate, SoC2 Type 2 security auditing, and more (plus your money goes toward improving Metabase). Check out our quick overview of [cloud vs self-hosting](./cloud/cloud-vs-self-hosting). If you need to, you can always switch to [self-hosting](./installation-and-operation/installing-metabase) Metabase at any time (or vice versa).
 
 ### [Installing Metabase](./installation-and-operation/installing-metabase)
+### [Installing Metabase DO NOT MERGE](./installation-and-operation/installing-metabase-DO-NOT-MERGE)
 
 Run as a JAR, using Docker, or on [Metabase Cloud](https://store.metabase.com/checkout).
 
@@ -230,9 +231,9 @@ Metabase's reference documentation.
 - [Usage analytics](./usage-and-performance-tools/usage-analytics)
 - [Admin tools](./usage-and-performance-tools/tools)
 
-### Cloud
+### Metabase Cloud
 
-- [Documentation for Metabase Cloud and Store](/docs/latest/cloud/start)
+- [Documentation for Metabase Cloud and Store](./cloud/start)
 
 ### Metabase API
 
@@ -264,10 +265,6 @@ Metabase's reference documentation.
 ### [Discussion](https://discourse.metabase.com)
 
 Share and connect with other Metabasers.
-
-### [Metabase Cloud](/docs/latest/cloud/start)
-
-For docs specific to Metabase Cloud plans.
 
 ### [Community stories](/community)
 

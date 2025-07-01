@@ -827,8 +827,7 @@ String used to seed the private key used to validate JWT messages. A hexadecimal
 - Default: `true`
 - [Configuration file name](./config-file): `jwt-user-provisioning-enabled`
 
-When we enable JWT user provisioning, we automatically create a Metabase account on JWT signin for users who
-don't have one.
+When a user logs in via JWT, create a Metabase account for them automatically if they don't have one.
 
 ### `MB_LANDING_PAGE`
 
@@ -1006,6 +1005,14 @@ User lookup filter. The placeholder '{login}' will be replaced by the user suppl
 When we enable LDAP user provisioning, we automatically create a Metabase account on LDAP signin for users who
 don't have one.
 
+### `MB_LICENSE_TOKEN_MISSING_BANNER_DISMISSAL_TIMESTAMP`
+
+- Type: csv
+- Default: `[]`
+- [Configuration file name](./config-file): `license-token-missing-banner-dismissal-timestamp`
+
+The array of last two ISO8601 dates when an admin dismissed the license token missing banner.
+
 ### `MB_LOADING_MESSAGE`
 
 > Only available on Metabase [Pro](/product/pro) and [Enterprise](/product/enterprise) plans.
@@ -1179,14 +1186,6 @@ Allow persisting models into the source database.
 
 Token for premium features. Go to the MetaStore to get yours!
 
-### `MB_QUERY_ANALYSIS_ENABLED`
-
-- Type: boolean
-- Default: `false`
-- [Configuration file name](./config-file): `query-analysis-enabled`
-
-Whether or not we analyze any queries at all.
-
 ### `MB_QUERY_CACHING_MAX_KB`
 
 - Type: integer
@@ -1302,7 +1301,7 @@ SAML attribute for the user's first name.
 > Only available on Metabase [Pro](/product/pro) and [Enterprise](/product/enterprise) plans.
 
 - Type: string
-- Default: `member_of`
+- Default: `null`
 - [Configuration file name](./config-file): `saml-attribute-group`
 
 SAML attribute for group syncing.
@@ -1396,7 +1395,7 @@ using, this usually looks like `https://your-org-name.example.com` or `https://e
 > Only available on Metabase [Pro](/product/pro) and [Enterprise](/product/enterprise) plans.
 
 - Type: string
-- Default: `metabase`
+- Default: `null`
 - [Configuration file name](./config-file): `saml-keystore-alias`
 
 Alias for the key that Metabase should use for signing SAML requests.
@@ -1669,13 +1668,6 @@ Identify the source of HTTP requests by this header's value, instead of its remo
 
 Fetch size for result sets. We want to ensure that the jdbc ResultSet objects are not realizing the entire results
   in memory.
-
-### `MB_SQL_PARSING_ENABLED`
-
-- Type: boolean
-- Default: `true`
-
-SQL Parsing is disabled.
 
 ### `MB_SSH_HEARTBEAT_INTERVAL_SEC`
 

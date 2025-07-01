@@ -13,7 +13,7 @@ latest: true
 
 ```ts
 type MetabaseDashboard = {
-  collection: MetabaseCollection | null;
+  collection?: MetabaseCollection | null;
   created_at: string;
   description: string | null;
   entity_id: SdkEntityId;
