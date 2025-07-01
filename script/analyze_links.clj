@@ -144,7 +144,7 @@
         external-or-missing-links (->> htmlproofer-links
                                        (remove redirects)
                                        (remove (into #{} (map #(str % ".html") redirects))))
-        _                         (doseq [hl (sort (distinct htmlproofer-links))] (println "htmlproofer reported: " hl))
+        _                         (doseq [hl (sort htmlproofer-links)] (println "htmlproofer reported: " hl))
         _                         (println (count htmlproofer-links) "missing links reported by htmlproofer.")
         _                         (println (count redirects) "unique redirect links gathered from in _docs.")
         _                         (println (count external-or-missing-links) "reported links without redirects.")
