@@ -4,9 +4,10 @@ has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
 category: Cloud
-title: 'Sync Google Sheets with Metabase'
+title: Sync Google Sheets with Metabase
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/cloud/google-sheets.md'
 layout: new-docs
+latest: true
 ---
 
 # Sync Google Sheets with Metabase
