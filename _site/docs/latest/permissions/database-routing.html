@@ -4319,7 +4319,7 @@ Roadmap</a>
 
 <h2 id="how-database-routing-works">How database routing works</h2>
 
-<p>You connect Metabase to a database as normal. When you turn on database routing for that database, it becomes a <strong>router database</strong> - the main database that will handle routing queries to <strong>destination databases</strong>. You’ll add these destination databases to this router database, with each destination database associated with a value for the user attribute you assign to the router database.</p>
+<p>You connect Metabase to a database as normal. When you turn on database routing for that database, it becomes a <strong>router database</strong> - the main database that will handle routing queries to <strong>destination databases</strong>. You’ll add these destination databases to this router database, with each destination database associated with a value for the user attribute you assign to the router database. You don’t need to have your customer databases as separate connections.</p>
 
 <p>With the router database set up with its destination databases, an admin can then create questions that query the router database. When other people log in and view these questions, Metabase will route the queries to the destination database specified by the person’s user attribute.</p>
 
@@ -4328,7 +4328,7 @@ Roadmap</a>
 <p><img src="./images/database-routing.png" alt="Database routing"></p>
 
 <ol>
-  <li><a href="../databases/connecting">Connect to a database</a> that has <em>the same schema as all of your customer’s databases</em>. This database should be a mock/dev database, ideally with some fake data. The name used for this router database will be the name all users will see, regardless of which destination database they’re routed to. (You can change the display name at any time).</li>
+  <li><a href="../databases/connecting">Connect to a database</a> that has <em>the same schema as all of your customer’s databases</em>. This database should be a mock/dev database, ideally with some fake data. The name used for this router database will be the name all users will see, regardless of which destination database they’re routed to, so make sure the name makes sense for everyone. (You can change the display name at any time).</li>
   <li>Once connected to this initial database (the “Router database”), go to its Database routing section and toggle on <strong>Enable database routing</strong>.</li>
   <li>Enter the user attribute you want to use to determine which database a user should be routed to.</li>
   <li>In the <strong>Destination databases</strong> section, click <strong>Add</strong>, then fill out the connection details. For each destination database, you’ll need to specify a <strong>slug</strong> - this slug is the value that Metabase will use to match against the user attribute you assigned to the router database. At run time, when a user views a question built on the router database, Metabase will check the person’s user attribute. If the value matches this slug, the question will query this destination database instead.</li>
@@ -4367,7 +4367,7 @@ Roadmap</a>
 
 <h3 id="adding-a-new-destination-database-example-with-postgresql-via-curl">Adding a new destination database: example with PostgreSQL via <code class="language-plaintext highlighter-rouge">curl</code></h3>
 
-<p>Here’s a <code class="language-plaintext highlighter-rouge">curl</code> command to add a PostgreSQL database as a destination database. Here the <code class="language-plaintext highlighter-rouge">slug</code> is defined by the <code class="language-plaintext highlighter-rouge">name</code> key (in this case, <code class="language-plaintext highlighter-rouge">Green PostgreSQL</code>).</p>
+<p>Here’s a <code class="language-plaintext highlighter-rouge">curl</code> command to add a PostgreSQL database as a destination database. Here the database’s <code class="language-plaintext highlighter-rouge">slug</code> is defined by <code class="language-plaintext highlighter-rouge">name</code> (in this case, <code class="language-plaintext highlighter-rouge">Green PostgreSQL</code>).</p>
 
 <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="s1">'http://localhost:3000/api/ee/database-routing/mirror-database?check_connection_details=true'</span> <span class="se">\</span>
   <span class="nt">--request</span> POST <span class="se">\</span>
