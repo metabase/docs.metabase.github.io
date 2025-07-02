@@ -124,7 +124,8 @@ jobs:
       # observed this failing during sdk docs generation deps downloads, so adding retry logic
       - name: Update docs for branchname
         uses: nick-fields/retry@v3
-        # for docs_merge, the tarball will be gone by the time this workflow runs.
+        # for docs_merge, the tarball will be gone by the time this workflow
+        # runs, but the docs will already be pre-computed for this branch.
         if: |
           (steps.check.outputs.skip != 'true' &&
            ((github.event_name == 'repository_dispatch' && github.event.action == 'docs_update') ||
@@ -191,7 +192,7 @@ jobs:
         run: |
           SECONDS=0
           script/links || true
-          echo "Time elapsed: ${SECONDS} seconds"
+          echo "htmlproofer took: ${SECONDS} seconds."
           echo 'checking reported links...'
           echo "htmlproofer spit out a report of length: $(wc -l < htmlproofer.out)"
           bb script/analyze_links.clj --htmlproofer-output htmlproofer.out --limit 1
