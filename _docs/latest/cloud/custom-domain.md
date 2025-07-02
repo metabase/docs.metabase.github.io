@@ -4,18 +4,19 @@ has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
 category: Cloud
-title: 'Changing your domain name'
+title: Changing your domain name
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/cloud/custom-domain.md'
 layout: new-docs
 redirect_from:
-    - /cloud/docs/custom-domain
+  - /cloud/docs/custom-domain
+latest: true
 ---
 
 # Changing your domain name
 
 By default, Metabase will automatically provision a domain name for your Metabase that ends in metabaseapp.com (e.g., yourcompany.metabaseapp.com).
 
-[Pro and Enterprise](/pricing/) plans allow you to add a custom domain. Setting a custom domain will update your instance's [Site URL](/docs/latest/configuring-metabase/settings#site-url). The Site URL is used for things like creating links in emails, auth redirects, and in some embedding scenarios.
+[Pro and Enterprise](/pricing/) plans allow you to add a custom domain. Setting a custom domain will update your instance's [Site URL](../configuring-metabase/settings#site-url). The Site URL is used for things like creating links in emails, auth redirects, and in some embedding scenarios.
 
 ## How to add a custom domain to your Metabase
 

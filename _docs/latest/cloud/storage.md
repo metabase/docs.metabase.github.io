@@ -4,9 +4,10 @@ has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
 category: Cloud
-title: 'Metabase Cloud Storage'
+title: Metabase Cloud Storage
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/cloud/storage.md'
 layout: new-docs
+latest: true
 ---
 
 # Metabase Cloud Storage
@@ -23,7 +24,7 @@ Once added, you'll see an **Add data** button in the left navigation bar. Click 
 
 You can upload a `.csv` or `.tsv` file.
 
-Learn more about [uploads](/docs/latest/exploration-and-organization/uploads).
+Learn more about [uploads](../exploration-and-organization/uploads).
 
 ### Metabase Cloud Storage uses ClickHouse
 
