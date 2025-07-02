@@ -35,11 +35,8 @@ live preview will be added to each PR.
 ### [Happy Path](https://excalidraw.com/#json=FrrNqv5QUrjYIh5EyhzGJ,jLIOJkFupN0gPuHRMHdbOw)
 ![Docs Pipeline Happy Path](readme_assets/docs_pipeline_happy.excalidraw.png)
 
-### How it works
+### How this repo builds docs from the Metabase repo
 
-We will examine the steps required to generate docs in the
-[docs.metabase.github.io](https://github.com/metabase/docs.metabase.github.io)
-repo.
 
 [Process Docs Changes](.github/workflows/process_docs_changes.yml) is triggered
 by the
@@ -114,10 +111,11 @@ Changes](https://github.com/metabase/docs.metabase.github.io/actions/workflows/p
 ##### Branch Naming
 - Source branch must match exactly what's in metabase/metabase
 - Target branch is typically `master`
-- Use `release-x.MM.x` format for backports (e.g., `release-0.50.x`)
+- Use `release-x.MM.x` format for backports (e.g., `release-x.50.x`)
 - The source branch must exist in metabase/metabase when running this workflow.
   If the source branch has been deleted (e.g., after merging the original PR),
-  the workflow will fail.
+  the workflow will fail. So follow the link to the main repo PR, and restore
+  the branch there.
 
 **Solution:**:
 1. **Restore the branch** in metabase/metabase before running the workflow
@@ -127,7 +125,7 @@ Changes](https://github.com/metabase/docs.metabase.github.io/actions/workflows/p
 The workflow maps branches from the main repository to documentation changes:
 - **Source → Target**: `docs-update-naming-55` → `master` creates a PR with
   branch `docs-update-naming-55->master` targeting `master` in this repo.
-- **Backports**: `docs-hotfix-security` → `release-0.50.x` creates a PR with
+- **Backports**: `docs-hotfix-security` → `release-x.50.x` creates a PR with
   branch `docs-hotfix-security->release-0.50.x` targeting `master` in this repo.
 
 ### Dispatch Types
@@ -137,10 +135,11 @@ Creates or updates a documentation PR with the naming pattern `[annotation]
 {source-branch}->{target-branch}`. The branchname for the PR will always be
 `{source-branch}->{target-branch}`.
 
-**Example**: Source `docs-new-way-to-query` targeting `master` creates/updates
-PR named `[auto-build]docs-new-way-to-query->master`. This PR, in this repo,
-will have branchname `docs-new-way-to-query->master` and target `master` in this
-repo.
+**Example**: 
+	
+	In the Metabase repo, someone opens a PR. For example, from a branch called `docs-edit` targeting `master`.
+	
+	The Metabase PR will trigger the `process_docs_changes` workflow in this repo to create a new PR in this repo called `docs-edit->master` and a corresponding PR for that branch named `[auto-build] docs-edit->master` in this repo.
 
 #### `docs_merge`
 Merges the existing documentation PR that matches the
@@ -176,8 +175,7 @@ e.g. `bb script/check_incoming_branchname.clj --target-branch master` exits 0.
 
 ##### `cleanup_cloud_docs.clj`
 
-Cloud docs have been moved into the main repo! This script makes sure they only
-land in latest. Why? Because cloud always runs the latest version of Metabase.
+Makes sure the Cloud docs are only in the latest docs, as the cloud docs aren't versioned.
 
 ##### `sync_repo.clj`
 
