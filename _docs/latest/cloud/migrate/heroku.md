@@ -4,12 +4,11 @@ has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
 category: Cloud
-title: Migrating from Heroku to Metabase Cloud
+title: 'Migrating from Heroku to Metabase Cloud'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/cloud/migrate/heroku.md'
 layout: new-docs
 redirect_from:
-  - /cloud/docs/migrate/heroku
-latest: true
+    - /cloud/docs/migrate/heroku
 ---
 
 # Migrating from Heroku to Metabase Cloud
