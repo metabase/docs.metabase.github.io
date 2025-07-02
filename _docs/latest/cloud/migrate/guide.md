@@ -4,15 +4,16 @@ has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
 category: Cloud
-title: 'Migrate to Metabase Cloud'
+title: Migrate to Metabase Cloud
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/cloud/migrate/guide.md'
 layout: new-docs
 section: Migrate
 redirect_from:
-    - /migrate/guide
-    - /migrate/post-signup-guide
-    - /blog/migrating-to-metabase-cloud
-    - /cloud/docs/migrate/guide
+  - /migrate/guide
+  - /migrate/post-signup-guide
+  - /blog/migrating-to-metabase-cloud
+  - /cloud/docs/migrate/guide
+latest: true
 ---
 
 # Migrate to Metabase Cloud
@@ -78,7 +79,7 @@ If the default version on Metabase Cloud is the same or lower than your current 
 ## Follow up after the migration
 
 - **If you're using Google Sign-in**, you'll need to go to [Google Developers Console](https://console.developers.google.com/) and add your new Metabase Cloud URL to the Authorized JavaScript Origins of the Google Auth Client ID.
-- **For Pro and Enterprise customers using SAML SSO**, you'll need to update your settings with your identity provider to change the Redirect URL and the Base URL to your new Metabase Cloud URL, otherwise your identity provider will still redirect people to your old Metabase instance. See [Authenticating with SAML](/docs/latest/people-and-groups/authenticating-with-saml) for details on how to set these URLs.
+- **For Pro and Enterprise customers using SAML SSO**, you'll need to update your settings with your identity provider to change the Redirect URL and the Base URL to your new Metabase Cloud URL, otherwise your identity provider will still redirect people to your old Metabase instance. See [Authenticating with SAML](../../people-and-groups/authenticating-with-saml) for details on how to set these URLs.
 
 ### Tell your team about the new Metabase address
 
