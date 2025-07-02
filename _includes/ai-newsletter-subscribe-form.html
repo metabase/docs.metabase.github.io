@@ -1,0 +1,40 @@
+<iframe
+  src="/subscribe-to-ai-newsletter-bottom-of-article"
+  id="subscribe-to-ai-newsletter-bottom-of-article"
+  class="newsletter-subscribe"
+  onload="javascript:(function(o){
+          o.style.height=o.contentWindow.document.getElementById('newsletter-ajax-form-container-below-article').offsetHeight+'px';
+
+          const resizeObserver = new ResizeObserver(function(entries) {
+              const $firstEntry = entries[0];
+              if ($firstEntry && $firstEntry.borderBoxSize && $firstEntry.borderBoxSize[0]) {
+                  const $form = $firstEntry.borderBoxSize[0];
+                  if ($form) {
+                      o.style.height = $form.blockSize + 'px';
+                  }
+              }
+          });
+          resizeObserver.observe(o.contentWindow.document.getElementById('newsletter-ajax-form-container-below-article'));
+      }(this));"
+></iframe>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const iframe = document.getElementById(
+      "subscribe-to-ai-newsletter-bottom-of-article",
+    );
+    const url = new URL(iframe.src, window.location.origin);
+
+    // Copy search params from the main window
+    const currentParams = new URLSearchParams(window.location.search);
+    for (const [key, value] of currentParams.entries()) {
+      url.searchParams.set(key, value);
+    }
+
+    // Add the current pathname as signup_path
+    url.searchParams.set("signup_path", window.location.pathname);
+
+    // Apply the new src
+    iframe.src = url.toString();
+  });
+</script>

@@ -10,6 +10,7 @@ source_url: >-
 layout: new-docs
 redirect-from:
   - /docs/latest/users-guide/writing-sql
+  - /docs/latest/questions/native-editor
 latest: true
 ---
 

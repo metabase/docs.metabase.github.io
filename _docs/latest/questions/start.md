@@ -7,6 +7,8 @@ category: Questions
 title: Questions overview
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/questions/start.md'
 layout: new-docs
+redirect_from:
+  - /docs/latest/questions
 latest: true
 ---
 

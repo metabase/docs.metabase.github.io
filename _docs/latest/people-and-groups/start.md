@@ -10,6 +10,7 @@ source_url: >-
 layout: new-docs
 redirect_from:
   - /docs/latest/administration-guide/sso
+  - /docs/latest/people-and-groups
 latest: true
 ---
 

@@ -37,24 +37,33 @@
     {:broken-count (count broken)
      :broken broken}))
 
+(comment
+  (u/pp (curl/get
+          "https://087b8225.docs-metabase-github-io.pages.dev/docs/master/installation-and-operation/installing-metabase-DO-NOT-MERGE"
+          {:throw false}))
+  )
+
 (defn- check-broken-links
   "High-level wrapper around `broken-links*` that retries the check up to `retries`
   times (default 2). On each retry, it only rechecks the broken paths from the
   previous attempt. Stops early if no broken links remain. Returns the result
   map from the final attempt."
-  ([missing-paths] (check-broken-links missing-paths {:retries 4}))
-  ([missing-paths {:keys [retries]}]
+  ([missing-paths limit] (check-broken-links missing-paths limit {:retries 4}))
+  ([missing-paths limit {:keys [retries]}]
    (ice/p "  > check-broken-links:"
           [:magenta " Trial: 0"] " | "
           [:cyan "Missing Path Count: " (count missing-paths)])
    (loop [trial 1
           mp (broken-links* missing-paths)]
+     (println "------------------------------")
      (ice/p "  > check-broken-links:"
             [:magenta " Trial: " trial] " | "
             [:cyan "Missing Path Count: " (:broken-count mp)])
+     (doseq [broken (:broken mp)]
+       (println "  >  Broken link:" broken))
      (cond
        (> trial retries) mp
-       (zero? (:broken-count mp)) mp
+       (>= limit (:broken-count mp)) mp
        :else (recur
                (inc trial)
                (broken-links* (:broken mp)))))))
@@ -102,7 +111,10 @@
   {:spec
    {:htmlproofer-output {:desc "The file that htmlproofer was piped into."
                          :require true
-                         :validate fs/regular-file?}}})
+                         :validate fs/regular-file?}
+    :limit {:desc "The maximum number of broken links to allow. Default: 1"
+            :default 1
+            :parse-fn #(Integer/parseInt %)}}})
 
 (defn- usage
   []
@@ -112,9 +124,9 @@
   #{"/events/metabase-setup-workshop" "/learn/building-analytics/dashboards/cross-filtering"})
 
 (defn -main [& args]
-  (let [opts                      (try (cli/parse-opts args cli-spec)
+  (let [{:keys [limit] :as opts}  (try (cli/parse-opts args cli-spec)
                                        (catch Exception _
-                                         (println "Usage: script/analyze_links.clj")
+                                         (println "Usage: script/analyze_links.clj --htmlproofer-output <file>")
                                          (println)
                                          (println (usage))
                                          (System/exit 1)))
@@ -126,23 +138,25 @@
         ;;
         ;; UNKNOWN: We might need to check one of the metabase.github.io
         ;;          cloudflare branch deployments for links too.
+        _                         (prn opts)
         htmlproofer-links         (gather-htmlproofer-links (:htmlproofer-output opts))
         redirects                 (gather-redirects "_docs")
         external-or-missing-links (->> htmlproofer-links
                                        (remove redirects)
                                        (remove (into #{} (map #(str % ".html") redirects))))
+        _                         (doseq [hl (sort htmlproofer-links)] (println "htmlproofer reported: " hl))
         _                         (println (count htmlproofer-links) "missing links reported by htmlproofer.")
         _                         (println (count redirects) "unique redirect links gathered from in _docs.")
         _                         (println (count external-or-missing-links) "reported links without redirects.")
         _                         (println "Checking if the missing links are live on https://metabase.com ...")
-        report                    (check-broken-links (remove excluded-links external-or-missing-links))]
-    (if (zero? (:broken-count report))
+        report                    (check-broken-links (remove excluded-links external-or-missing-links) limit)]
+    (if (>= limit (:broken-count report))
       (do
         (ice/p [:green "Done! OK."])
-        (prn {:htmlproofer-link-count (count htmlproofer-links)
-              :redirect-count (count redirects)
+        (prn {:htmlproofer-link-count         (count htmlproofer-links)
+              :redirect-count                 (count redirects)
               :external-or-missing-link-count (count external-or-missing-links)
-              :report report}))
+              :report                         report}))
       (do
         (u/pp report)
         (System/exit 1)))))
