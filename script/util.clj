@@ -1,7 +1,11 @@
 (ns util
-  (:require [clj-yaml.core :as yaml]
-            [babashka.cli :as cli]
-            [puget.printer :as puget]))
+  (:require
+   [babashka.cli :as cli]
+   [babashka.fs :as fs]
+   [babashka.process :as p]
+   [clj-yaml.core :as yaml]
+   [clojure.string :as str]
+   [puget.printer :as puget]))
 
 (def release-regex #"release-x\.(\d+)\.x")
 
@@ -46,3 +50,15 @@
       (pp data)
       (println msg)
       (show-usage-and-exit spec))))
+
+(defn sh-w-gh-token [& cmd]
+  (apply p/sh {:extra-env {"GH_TOKEN" ;; get gh token from ~/.zshrc
+                           (or (System/getenv "GH_TOKEN")
+                               (first (keep
+                                        (fn [line]
+                                          (when (str/starts-with? line "export GH_TOKEN=")
+                                            (-> line
+                                                (str/replace #"^export GH_TOKEN=" "")
+                                                (str/replace #"'" ""))))
+                                        (str/split-lines (slurp (str (fs/expand-home "~/.zshrc")))))))}}
+         cmd))
