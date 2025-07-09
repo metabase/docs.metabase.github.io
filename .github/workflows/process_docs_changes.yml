@@ -124,8 +124,6 @@ jobs:
       # observed this failing during sdk docs generation deps downloads, so adding retry logic
       - name: Update docs for branchname
         uses: nick-fields/retry@v3
-        # for docs_merge, the tarball will be gone by the time this workflow
-        # runs, but the docs will already be pre-computed for this branch.
         if: |
           (steps.check.outputs.skip != 'true' &&
            ((github.event_name == 'repository_dispatch' && github.event.action == 'docs_update') ||

@@ -50,7 +50,7 @@
               (->>
                 runz
                 (map #(dissoc % :workflowName :displayTitle :number :status))
-                (sort-by (comp ->epoch :createdAt)))))
+                (sort-by (comp - ->epoch :createdAt)))))
         (ice/p [:green [:bold "OK "] url " | " head-ref-name])))))
 
 (when (= *file* (System/getProperty "babashka.file"))
