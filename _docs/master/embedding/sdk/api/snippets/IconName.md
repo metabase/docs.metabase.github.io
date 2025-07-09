@@ -195,6 +195,7 @@ type IconName =
   | "slack"
   | "slack_colorized"
   | "smartscalar"
+  | "snail"
   | "snippet"
   | "sparkles"
   | "star_filled"

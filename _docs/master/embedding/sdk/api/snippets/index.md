@@ -81,12 +81,6 @@ layout: new-docs
 | [MetabaseProvider](./api/MetabaseProvider)                         | A component that provides the Metabase SDK context and theme. |
 | [MetabaseProviderProps](./api/MetabaseProviderProps)               | -                                                             |
 
-## ModifyQuestion
-
-| Function                                      | Description |
-| :-------------------------------------------- | :---------- |
-| [~~ModifyQuestion~~](./api/ModifyQuestion) | -           |
-
 ## StaticQuestion
 
 | Name                                                | Description                                 |
