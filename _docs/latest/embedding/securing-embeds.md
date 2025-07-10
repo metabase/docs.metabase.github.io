@@ -12,6 +12,8 @@ summary: How to hide and protect sensitive data in different types of embeds.
 latest: true
 ---
 
+# Securing embedded Metabase
+
 {% include shared/in-page-promo.html %}
 
 ## Securing embeds with authentication and authorization
