@@ -226,6 +226,7 @@ type IconName =
   | "view_archive"
   | "warning"
   | "warning_round_filled"
+  | "warning_triangle_filled"
   | "waterfall"
   | "webhook"
   | "10k"
