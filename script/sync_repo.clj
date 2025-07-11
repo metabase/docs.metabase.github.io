@@ -22,6 +22,7 @@
    "_includes"
    "_layouts"
    "_plugins"
+   "_posts"
    "_sass"
    "css"
    "files"
