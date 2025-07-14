@@ -29,6 +29,8 @@ layout: new-docs
 
 - Extend `datetime()` to accept UTF-8 encoded binary and numbers (unix timestamps) in addition to strings.
 
+- Added a feature `:expressions/today` for drivers that support generating a date for the current day.
+
 ## Metabase 0.55.0
 
 - Add the multi-method `->date` that allows the driver to control how to cast strings and temporal types to dates.
