@@ -27,6 +27,9 @@ layout: new-docs
   replace existing keys like `:alias`, `:join-alias`, or `:name`; make sure you use `driver-api/qp.add.alias`,
   `driver-api/qp.add.source-table`, and `driver-api/qp.add.source-alias` respectively.
 
+- Added the driver multi-method `driver/extra-info` for drivers to provide info such as db routing configuration details
+  from their `metabase-plugin.yaml` file.
+
 - Extend `datetime()` to accept UTF-8 encoded binary and numbers (unix timestamps) in addition to strings.
 
 - Added a feature `:expressions/today` for drivers that support generating a date for the current day.
