@@ -10,7 +10,27 @@ layout: new-docs
 ---
 
 ```ts
-function EditableDashboard(props: EditableDashboardProps): Element;
+function EditableDashboard(
+  props: {
+    drillThroughQuestionHeight: Height<string | number>;
+    drillThroughQuestionProps: DrillThroughQuestionProps;
+    plugins: MetabasePluginsConfig;
+    renderDrillThroughQuestion: () => ReactNode;
+  } & {
+    dashboardId: SdkDashboardId;
+    hiddenParameters: string[];
+    initialParameters: ParameterValues;
+    withCardTitle: boolean;
+    withDownloads: boolean;
+    withTitle: boolean;
+  } & {
+    className: string;
+    style: CSSProperties;
+  } & {
+    onLoad: (dashboard: null | MetabaseDashboard) => void;
+    onLoadWithoutCards: (dashboard: null | MetabaseDashboard) => void;
+  } & {},
+): Element;
 ```
 
 A dashboard component with the features available in the `InteractiveDashboard` component, as well as the ability to add and update questions, layout, and content within your dashboard.
@@ -19,9 +39,9 @@ A dashboard component with the features available in the `InteractiveDashboard` 
 
 <!-- [<snippet parameters>] -->
 
-| Parameter | Type                                                        | Description |
-| :-------- | :---------------------------------------------------------- | :---------- |
-| `props`   | [`EditableDashboardProps`](./api/EditableDashboardProps) |             |
+| Parameter | Type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       | Description |
+| :-------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :---------- |
+| `props`   | \{ `drillThroughQuestionHeight`: `Height`\<`string` \| `number`\>; `drillThroughQuestionProps`: [`DrillThroughQuestionProps`](./api/DrillThroughQuestionProps); `plugins`: [`MetabasePluginsConfig`](./api/MetabasePluginsConfig); `renderDrillThroughQuestion`: () => [`ReactNode`](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/0b728411cd1dfb4bd26992bb35a73cf8edaa22e7/types/react/index.d.ts#L478); \} & \{ `dashboardId`: [`SdkDashboardId`](./api/SdkDashboardId); `hiddenParameters`: `string`[]; `initialParameters`: [`ParameterValues`](./api/ParameterValues); `withCardTitle`: `boolean`; `withDownloads`: `boolean`; `withTitle`: `boolean`; \} & \{ `className`: `string`; `style`: [`CSSProperties`](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/0b728411cd1dfb4bd26992bb35a73cf8edaa22e7/types/react/index.d.ts#L2579); \} & \{ `onLoad`: (`dashboard`: `null` \| [`MetabaseDashboard`](./api/MetabaseDashboard)) => `void`; `onLoadWithoutCards`: (`dashboard`: `null` \| [`MetabaseDashboard`](./api/MetabaseDashboard)) => `void`; \} & \{ \} |             |
 
 <!-- [<endsnippet parameters>] -->
 
