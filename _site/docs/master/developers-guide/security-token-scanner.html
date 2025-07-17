@@ -6,7 +6,7 @@
   <meta content="frame-ancestors 'none'" http-equiv="Content-Security-Policy">
   <meta content="deny" http-equiv="X-Frame-Options">
     
-  <link href="https://www.metabase.com/docs/master/troubleshooting-guide/known-issues" rel="canonical">
+  <link href="https://www.metabase.com/docs/master/developers-guide/security-token-scanner" rel="canonical">
   
 
   <script type="text/javascript">
@@ -44,12 +44,12 @@
 <meta name="robots" content="noindex">
    
 
-<title>How to find a known bug or limitation | Metabase Documentation</title>
+<title>Security Token Scanner | Metabase Documentation</title>
 <!-- Twitter cards -->
 <meta name="twitter:site" content="@metabase">
 
-<meta name="twitter:title" content="How to find a known bug or limitation | Metabase Documentation">
-<meta name="twitter:description" content="How to find a known bug or limitation If you can’t find or solve your problem using the troubleshooting guides, you may be running into an issue that we’re still working on. How to find a known bug If...">
+<meta name="twitter:title" content="Security Token Scanner | Metabase Documentation">
+<meta name="twitter:description" content="Security Token Scanner Security token scanner detects potentially leaked API keys and secrets in the Metabase codebase. Runs automatically as a git precommit hook on staged files. Usage # Scan specific files ./bin/mage -token-scan...">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -57,9 +57,9 @@
 <!-- Open Graph metadata -->
 <meta property="og:site_name" content="Metabase | Business Intelligence, Dashboards, and Data Visualization">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://www.metabase.com/docs/master/troubleshooting-guide/known-issues">
-<meta name="title" property="og:title" content="How to find a known bug or limitation | Metabase Documentation">
-<meta name="description" property="og:description" content="How to find a known bug or limitation If you can’t find or solve your problem using the troubleshooting guides, you may be running into an issue that we’re still working on. How to find a known bug If...">
+<meta property="og:url" content="https://www.metabase.com/docs/master/developers-guide/security-token-scanner">
+<meta name="title" property="og:title" content="Security Token Scanner | Metabase Documentation">
+<meta name="description" property="og:description" content="Security Token Scanner Security token scanner detects potentially leaked API keys and secrets in the Metabase codebase. Runs automatically as a git precommit hook on staged files. Usage # Scan specific files ./bin/mage -token-scan...">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -4549,7 +4549,7 @@ Roadmap</a>
 
             
             
-                <li class="breadcrumb-item"><a class="blue-60" href="/docs/master/troubleshooting-guide/">Troubleshooting Guide</a></li>
+                <li class="breadcrumb-item"><a class="blue-60" href="/docs/master/developers-guide/start">Developers Guide</a></li>
             
             
         </ol>
@@ -4696,73 +4696,47 @@ Roadmap</a>
 </div>
 
 
-        <h1 id="how-to-find-a-known-bug-or-limitation">How to find a known bug or limitation</h1>
+        <h1 id="security-token-scanner">Security Token Scanner</h1>
 
-<p>If you can’t find or solve your problem using the <a href="./index">troubleshooting guides</a>, you may be running into an issue that we’re still working on.</p>
+<p>Security token scanner detects potentially leaked API keys and secrets in the Metabase codebase. Runs automatically as a git precommit hook on staged files.</p>
 
-<h2 id="how-to-find-a-known-bug">How to find a known bug</h2>
+<h2 id="usage">Usage</h2>
 
-<p>If your work in Metabase is crashing, missing, or not being saved, you might have found a bug.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Scan specific files</span>
+./bin/mage <span class="nt">-token-scan</span> deps.edn bb.edn
 
-<ol>
-  <li>
-    <p>Go to the <a href="https://github.com/metabase/metabase/issues">Metabase Github issues page</a>.</p>
-  </li>
-  <li>
-    <p>Click on the <strong>Label</strong> dropdown and select <code class="language-plaintext highlighter-rouge">Type: Bug</code>.</p>
+<span class="c"># Scan all files</span>
+./bin/mage <span class="nt">-token-scan</span> <span class="nt">-a</span>
 
-    <blockquote>
-      <p>If you’re encountering problems after your Metabase version was recently upgraded, you can add the label <code class="language-plaintext highlighter-rouge">.Regression</code>.</p>
-    </blockquote>
-  </li>
-  <li>
-    <p>Choose least one value in the <strong>Label</strong> dropdown that matches the feature you’re having trouble with.</p>
+<span class="c"># Verbose output</span>
+./bin/mage <span class="nt">-token-scan</span> <span class="nt">-v</span> deps.edn
+</code></pre></div></div>
 
-    <blockquote>
-      <p>Add additional keywords to the search bar above the list of results. Hit Enter/Return to run the search.</p>
-    </blockquote>
+<h2 id="token-types-detected">Token Types Detected</h2>
 
-    <blockquote>
-      <p>Click <strong>Sort</strong> and select the thumbs up emoji (👍) to view the most commonly encountered bugs.</p>
-    </blockquote>
-  </li>
-  <li>
-    <p>If you find an existing bug that matches your problem, add a thumbs up emoji to help the team prioritize it.</p>
-  </li>
-  <li>
-    <p>If you can’t find your problem, and you’re sure that it’s not a <a href="#how-to-find-a-known-product-limitation">product limitation</a>, you can <a href="./bugs">create a new bug report</a>.</p>
-  </li>
-</ol>
+<ul>
+  <li>Airgap tokens (<code class="language-plaintext highlighter-rouge">airgap_</code>)</li>
+  <li>Dev tokens (<code class="language-plaintext highlighter-rouge">mb_dev_</code>, 64-char hex)</li>
+  <li>OpenAI API keys (<code class="language-plaintext highlighter-rouge">sk-</code>)</li>
+  <li>JWT/JWE tokens</li>
+  <li>GitHub tokens (<code class="language-plaintext highlighter-rouge">gh[pousr]_</code>)</li>
+  <li>Slack bot tokens (<code class="language-plaintext highlighter-rouge">xoxb-</code>)</li>
+  <li>AWS access keys (<code class="language-plaintext highlighter-rouge">AKIA</code>)</li>
+</ul>
 
-<h2 id="how-to-find-a-known-product-limitation">How to find a known product limitation</h2>
+<p>The scanner uses <code class="language-plaintext highlighter-rouge">.gitignore</code> to filter files and will block commits containing detected tokens.</p>
 
-<p>If the functionality you’re looking for simply doesn’t exist (i.e., it hasn’t suddenly gone missing), you might be running into a product limitation.</p>
+<h2 id="false-positives">False positives</h2>
 
-<ol>
-  <li>
-    <p>Go to the <a href="https://github.com/metabase/metabase/issues">Metabase Github issues page</a>.</p>
-  </li>
-  <li>
-    <p>Click on the <strong>Label</strong> dropdown and select <code class="language-plaintext highlighter-rouge">Type: New Feature</code>.</p>
-  </li>
-  <li>
-    <p>Choose at least one value in the <strong>Label</strong> dropdown that matches the feature you’re looking for.</p>
+<p>If the scanner flags a non-token string, you should <strong>exclude the literal token string</strong> by adding it to: <code class="language-plaintext highlighter-rouge">mage/resources/token_scanner/token_whitelist.txt</code>.</p>
 
-    <blockquote>
-      <p>Add additional keywords to the search bar above the list of results. Hit Enter/Return to run the search.</p>
-    </blockquote>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>echo 'my-token-string' &gt;&gt; mage/resources/token_scanner/token_whitelist.txt &amp;&amp; git add mage/resources/token_scanner/token_whitelist.txt
+</code></pre></div></div>
 
-    <blockquote>
-      <p>Click <strong>Sort</strong> and select the thumbs up emoji (👍) to view the most highly requested features.</p>
-    </blockquote>
-  </li>
-  <li>
-    <p>If you find a feature request that matches what you want to do, add a thumbs up emoji to help the team prioritize it.</p>
-  </li>
-  <li>
-    <p>If a feature request doesn’t exist, and your issue isn’t <a href="#how-to-find-a-known-bug">caused by a known bug</a>, you can <a href="./requesting-new-features">submit a new feature request</a>.</p>
-  </li>
-</ol>
+<h2 id="bypassing-not-recommended">Bypassing (not recommended)</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git commit <span class="nt">--no-verify</span> <span class="nt">-m</span> <span class="s2">"commit message"</span>
+</code></pre></div></div>
 
 
         <div>
@@ -4816,7 +4790,7 @@ Roadmap</a>
 
   
     <span class="paragraph-6 fs-13 neutral-60" id="page-feedback-footer">
-      Want to improve these docs? <a href="https://github.com/metabase/metabase/blob/master/docs/troubleshooting-guide/known-issues.md" target="_blank">Propose a change.</a>
+      Want to improve these docs? <a href="https://github.com/metabase/metabase/blob/master/docs/developers-guide/security-token-scanner.md" target="_blank">Propose a change.</a>
     </span>
   
 </div>
@@ -4838,8 +4812,8 @@ Roadmap</a>
 <script type="text/javascript" src="/js/position-feedback-widget.js"></script>
 
 <script>
-  const pageTitle = `How to find a known bug or limitation`;
-  const pageURL = '/docs/master/troubleshooting-guide/known-issues';
+  const pageTitle = `Security Token Scanner`;
+  const pageURL = '/docs/master/developers-guide/security-token-scanner';
   const pageURLSplit = pageURL.split('/');
 
   let pageURLPrefix = '/' + pageURLSplit[1] + '/' + pageURLSplit[2];
