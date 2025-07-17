@@ -155,7 +155,7 @@ Make sure your SQL dialect matches the database you've selected. Common issues i
 | Database | Dialect quirk                                       | Example                    |
 | -------- | --------------------------------------------------- | -------------------------- |
 | BigQuery | Schemas and tables must be quoted with backticks.   | `` FROM `dataset.table` `` |
-| Oracle   | Schemas and tables must be quoted in double quotes. | `FROM "schema.table"`      |
+| Oracle   | Schemas and tables must be quoted in double quotes. | `FROM schema.table`        |
 
 For more help, see [Troubleshooting SQL error messages](../../troubleshooting-guide/error-message#sql-editor).
 
