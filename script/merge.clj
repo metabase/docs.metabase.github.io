@@ -3,6 +3,7 @@
    [babashka.cli :as cli]
    [babashka.process :as p]
    [cheshire.core :as json]
+   [clojure.string :as str]
    [ice.core :as ice]
    [util :as u]))
 
@@ -29,11 +30,16 @@
                          "--json" "number,headRefName")
                 :out
                 (json/parse-string true)
-                (into []))]
-    (println "→ PRs found: " (count prs))
-    (ice/p "See: " [:bold "https://github.com/metabase/docs.metabase.github.io/pulls"] " for more details")
-    (println "→ Looking for PR with headRefName:" head-ref-name)
-    (->> prs (filter #(= (:headRefName %) head-ref-name)) first :number)))
+                (into []))
+        _ (println "→ Open PR count: " (count prs))
+        _ (println "→ Open PRs: \n"
+                   (str/join "\n"
+                             (map #(str "  " %) (str/split-lines (pr-str prs)))))
+        _ (ice/p "See: " [:bold "https://github.com/metabase/docs.metabase.github.io/pulls"] " for more details")
+        _ (println "→ Looking for PR with headRefName:" head-ref-name)
+        pr-to-merge (first (filter #(= (:headRefName %) head-ref-name) prs))]
+    (println "Found PR: " (pr-str pr-to-merge))
+    (:number pr-to-merge)))
 
 (defn -main [& args]
   (let [{:keys [source-branch target-branch]
