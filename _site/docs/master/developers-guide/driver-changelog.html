@@ -49,7 +49,7 @@
 <meta name="twitter:site" content="@metabase">
 
 <meta name="twitter:title" content="Driver interface changelog | Metabase Documentation">
-<meta name="twitter:description" content="Driver Interface Changelog Metabase 0.56.0   Add the testing multi-method tx/track-dataset for shared cloud dbs to track loaded datasets for more efficient sharing.   Join alias escaping has been reworked; when compiling MBQL for a join...">
+<meta name="twitter:description" content="Driver Interface Changelog Metabase 0.57.0   Add the feature :view for drivers that support views   Add the multi-method metabase.driver/view-name-length-limit, like table-name-length-limit but for views   Add the multi-method <code class=" language-plaintext..."="">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -59,7 +59,7 @@
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://www.metabase.com/docs/master/developers-guide/driver-changelog">
 <meta name="title" property="og:title" content="Driver interface changelog | Metabase Documentation">
-<meta name="description" property="og:description" content="Driver Interface Changelog Metabase 0.56.0   Add the testing multi-method tx/track-dataset for shared cloud dbs to track loaded datasets for more efficient sharing.   Join alias escaping has been reworked; when compiling MBQL for a join...">
+<meta name="description" property="og:description" content="Driver Interface Changelog Metabase 0.57.0   Add the feature :view for drivers that support views   Add the multi-method metabase.driver/view-name-length-limit, like table-name-length-limit but for views   Add the multi-method <code class=" language-plaintext..."="">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -4698,6 +4698,23 @@ Roadmap</a>
 
         <h1 id="driver-interface-changelog">Driver Interface Changelog</h1>
 
+<h2 id="metabase-0570">Metabase 0.57.0</h2>
+
+<ul>
+  <li>
+    <p>Add the feature <code class="language-plaintext highlighter-rouge">:view</code> for drivers that support views</p>
+  </li>
+  <li>
+    <p>Add the multi-method <code class="language-plaintext highlighter-rouge">metabase.driver/view-name-length-limit</code>, like <code class="language-plaintext highlighter-rouge">table-name-length-limit</code> but for views</p>
+  </li>
+  <li>
+    <p>Add the multi-method <code class="language-plaintext highlighter-rouge">metabase.driver/create-view!</code> that allows the driver to create or replace a view</p>
+  </li>
+  <li>
+    <p>Add the multi-method <code class="language-plaintext highlighter-rouge">metabase.driver/drop-view!</code> that allows the driver to delete a view</p>
+  </li>
+</ul>
+
 <h2 id="metabase-0560">Metabase 0.56.0</h2>
 
 <ul>
@@ -4716,12 +4733,6 @@ need globally unique join aliases, you can pass the new <code class="language-pl
     <p>Also note that <code class="language-plaintext highlighter-rouge">driver-api/add-alias-info</code> only adds additional keys to field refs and join maps, and does not
 replace existing keys like <code class="language-plaintext highlighter-rouge">:alias</code>, <code class="language-plaintext highlighter-rouge">:join-alias</code>, or <code class="language-plaintext highlighter-rouge">:name</code>; make sure you use <code class="language-plaintext highlighter-rouge">driver-api/qp.add.alias</code>,
 <code class="language-plaintext highlighter-rouge">driver-api/qp.add.source-table</code>, and <code class="language-plaintext highlighter-rouge">driver-api/qp.add.source-alias</code> respectively.</p>
-  </li>
-  <li>
-    <p>Extend <code class="language-plaintext highlighter-rouge">datetime()</code> to accept UTF-8 encoded binary and numbers (unix timestamps) in addition to strings.</p>
-  </li>
-  <li>
-    <p>Added a feature <code class="language-plaintext highlighter-rouge">:expressions/today</code> for drivers that support generating a date for the current day.</p>
   </li>
 </ul>
 

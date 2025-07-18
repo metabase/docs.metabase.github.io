@@ -205,7 +205,6 @@ Metabase's reference documentation.
 - [Interactive embedding quick start](./embedding/interactive-embedding-quick-start-guide)
 - [Static embedding](./embedding/static-embedding)
 - [Parameters for static embeds](./embedding/static-embedding-parameters)
-- [Securing embedded Metabase](./embedding/securing-embeds)
 
 ### Configuration
 
@@ -301,5 +300,4 @@ Data jargon explained.
 ### [Metabase Experts](/partners/)
 
 If you’d like more technical resources to set up your data stack with Metabase, connect with a [Metabase Expert](/partners/).
-
 <!-- bump 2 -->

@@ -11,6 +11,16 @@ layout: new-docs
 
 # Driver Interface Changelog
 
+## Metabase 0.57.0
+
+- Add the feature `:view` for drivers that support views
+
+- Add the multi-method `metabase.driver/view-name-length-limit`, like `table-name-length-limit` but for views
+
+- Add the multi-method `metabase.driver/create-view!` that allows the driver to create or replace a view
+
+- Add the multi-method `metabase.driver/drop-view!` that allows the driver to delete a view
+
 ## Metabase 0.56.0
 
 - Add the testing multi-method `tx/track-dataset` for shared cloud dbs to track loaded datasets for more efficient sharing.
@@ -26,10 +36,6 @@ layout: new-docs
   Also note that `driver-api/add-alias-info` only adds additional keys to field refs and join maps, and does not
   replace existing keys like `:alias`, `:join-alias`, or `:name`; make sure you use `driver-api/qp.add.alias`,
   `driver-api/qp.add.source-table`, and `driver-api/qp.add.source-alias` respectively.
-
-- Extend `datetime()` to accept UTF-8 encoded binary and numbers (unix timestamps) in addition to strings.
-
-- Added a feature `:expressions/today` for drivers that support generating a date for the current day.
 
 ## Metabase 0.55.0
 
