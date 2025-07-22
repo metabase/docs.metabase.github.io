@@ -25,7 +25,6 @@ Database routing is useful for:
 
 ## Databases that support database routing
 
-- [BigQuery](../databases/connections/bigquery)
 - [Druid](../databases/connections/druid)
 - [MongoDB](../databases/connections/mongodb)
 - [MariaDB](../databases/connections/mariadb)

@@ -118,7 +118,7 @@ You can change the base color used for the region map, but you can't currently u
 
 ### World Map
 
-To visualize your results in the format of a map of the world broken out by country, your result must contain a column with [two-letter ISO country codes](./country-codes), like "US" or "BR", or country names like "United States of America" or "Brazil". For example:
+To visualize your results in the format of a map of the world broken out by country, your result must contain a column with [two-letter ISO country codes](/glossary/country-code), like "US" or "BR", for example:
 
 | Country code | Metric |
 | ------------ | ------ |
