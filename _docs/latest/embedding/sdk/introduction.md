@@ -90,7 +90,7 @@ View the SDK's changelog:
 
 ## Embedded analytics SDK on NPM
 
-Check out the Metabase Embedded analytics SDK on NPM: [metaba.se/sdk-npm](https://metaba.se/sdk-npm).
+Check out the Metabase Embedded analytics SDK on NPM: [metaba.se/sdk](https://metaba.se/sdk).
 
 ## SDK limitations
 
