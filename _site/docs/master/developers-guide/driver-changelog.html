@@ -4718,6 +4718,10 @@ replace existing keys like <code class="language-plaintext highlighter-rouge">:a
 <code class="language-plaintext highlighter-rouge">driver-api/qp.add.source-table</code>, and <code class="language-plaintext highlighter-rouge">driver-api/qp.add.source-alias</code> respectively.</p>
   </li>
   <li>
+    <p>Added the driver multi-method <code class="language-plaintext highlighter-rouge">driver/extra-info</code> for drivers to provide info such as db routing configuration details
+from their <code class="language-plaintext highlighter-rouge">metabase-plugin.yaml</code> file.</p>
+  </li>
+  <li>
     <p>Extend <code class="language-plaintext highlighter-rouge">datetime()</code> to accept UTF-8 encoded binary and numbers (unix timestamps) in addition to strings.</p>
   </li>
   <li>
@@ -4764,7 +4768,6 @@ replace existing keys like <code class="language-plaintext highlighter-rouge">:a
 <code class="language-plaintext highlighter-rouge">metabase.driver/upload-type-&gt;database-type</code> or <code class="language-plaintext highlighter-rouge">metabase.driver/allowed-promotions</code> – make sure you use
 <code class="language-plaintext highlighter-rouge">:metabase.upload/varchar-255</code> rather than something like <code class="language-plaintext highlighter-rouge">::upload/varchar-255</code>.</p>
   </li>
-  <li>Added the multi-method <code class="language-plaintext highlighter-rouge">metabase.driver.sql.parameters.substitution/time-grouping-&gt;replacement-snippet-info</code>.  This is effectively <code class="language-plaintext highlighter-rouge">-&gt;replacement-snippet-info</code> for the new native query time grouping feature, but is its own separate multimethod because it needs an extra parameter.</li>
   <li>
     <p>The <code class="language-plaintext highlighter-rouge">metabase.models.secret</code> namespace has been replaced with <code class="language-plaintext highlighter-rouge">metabase.secrets.core</code>; if you were using it please
 update your usages.</p>
@@ -4801,9 +4804,11 @@ implementations of <code class="language-plaintext highlighter-rouge">metabase.d
   <li>
     <p>The namespace <code class="language-plaintext highlighter-rouge">metabase.query-processor.context</code>, deprecated in 0.50.0, has been removed.</p>
   </li>
-  <li>All settings formerly in a <code class="language-plaintext highlighter-rouge">metabase.driver.*</code> namespace have been moved to <code class="language-plaintext highlighter-rouge">metabase.driver.settings</code>, and all
+  <li>
+    <p>All settings formerly in a <code class="language-plaintext highlighter-rouge">metabase.driver.*</code> namespace have been moved to <code class="language-plaintext highlighter-rouge">metabase.driver.settings</code>, and all
 settings formerly in a <code class="language-plaintext highlighter-rouge">metabase.query-processor.*</code> namespace have been moved to
-<code class="language-plaintext highlighter-rouge">metabase.query-processor.settings</code>.</li>
+<code class="language-plaintext highlighter-rouge">metabase.query-processor.settings</code>.</p>
+  </li>
 </ul>
 
 <h2 id="metabase-05412">Metabase 0.54.12</h2>
