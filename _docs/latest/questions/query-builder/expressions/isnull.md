@@ -150,6 +150,6 @@ case(isNull([Feedback]), "Unknown feedback.", [Feedback])
 [custom-expressions-doc]: ../expressions
 [custom-expressions-learn]: /learn/metabase-basics/querying-and-dashboards/questions/custom-expressions
 [data-types]: /learn/grow-your-data-skills/data-fundamentals/data-types-overview#examples-of-data-types
-[notebook-editor-def]: /glossary/query_builder
+[notebook-editor-def]: /glossary/query-builder
 [numpy]: https://numpy.org/doc/
 [pandas]: https://pandas.pydata.org/pandas-docs/stable/
