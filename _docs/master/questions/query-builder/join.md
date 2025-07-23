@@ -7,6 +7,7 @@ category: Questions
 title: 'Joining data'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/questions/query-builder/join.md'
 layout: new-docs
+summary: 'Learn how to combine data from different tables using joins. We''ll show you how to pick tables, match columns, and choose the right join type.'
 redirect_from:
     - /docs/master/users-guide/join
 ---
@@ -58,6 +59,25 @@ You can join tables on comparison conditions like:
 - `≤` (less than or equal to)
 
 ![Join operators](../images/join-operator.png)
+
+## Joins with custom expressions
+
+Sometimes people want to join data using constant values or relative dates or some other custom conditions.
+
+For example, let's say you have a table of reviews, and want to add a column that includes the average rating for all products.
+
+You could first calculate the average rating, then join the result to the reviews table on `1=1`.
+
+![Join with custom expression](../images/join-with-custom-expression.png)
+
+To use a custom expression to define a join key:
+
+1. Click on one of the join keys.
+2. Select **custom expression**.
+3. Enter your expression (including a constant like `1`).
+4. Click **Done**.
+
+See a [list of expressions](./expressions-list).
 
 ## Further reading
 
