@@ -4,8 +4,8 @@ has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
 category: Embedding
-title: InteractiveQuestionProps
-source_url: 'https://github.com/metabase/metabase/blob/master/docs/embedding/sdk/api/snippets/InteractiveQuestionProps.md'
+title: SdkQuestionProps
+source_url: 'https://github.com/metabase/metabase/blob/master/docs/embedding/sdk/api/snippets/SdkQuestionProps.md'
 layout: new-docs
 ---
 
