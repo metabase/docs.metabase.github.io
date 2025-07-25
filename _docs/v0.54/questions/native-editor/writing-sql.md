@@ -113,7 +113,7 @@ See [Caching question policies](../../configuring-metabase/caching#question-cach
 
 [learn-sql]: /learn/sql/working-with-sql
 [ref-models]: ./referencing-saved-questions-in-queries
-[sample-database-gloss]: /glossary/sample_database
+[sample-database-gloss]: /glossary/sample-database
 [sql-gloss]: /glossary/sql
 [troubleshooting-sql]: ../../troubleshooting-guide/sql
 [variable-gloss]: /glossary/variable
