@@ -3,6 +3,7 @@
    [babashka.cli :as cli]
    [babashka.process :as p]
    [cheshire.core :as json]
+   [clojure.pprint :as pp]
    [clojure.string :as str]
    [ice.core :as ice]
    [util :as u]))
@@ -23,6 +24,9 @@
 
 (defn source+target-branch->pr-number [source-branch target-branch]
   (let [head-ref-name (str source-branch "->" target-branch)
+        _ (prn {:source-branch source-branch
+                :target-branch target-branch
+                :head-ref-name head-ref-name})
         prs (-> (p/shell {:out :string}
                          "gh" "pr" "list"
                          "--limit" "1000"
@@ -34,7 +38,8 @@
         _ (println "→ Open PR count: " (count prs))
         _ (println "→ Open PRs: \n"
                    (str/join "\n"
-                             (map #(str "  " %) (str/split-lines (pr-str prs)))))
+                             (map #(str "  " %)
+                                  (str/split-lines (with-out-str (pp/pprint prs))))))
         _ (ice/p "See: " [:bold "https://github.com/metabase/docs.metabase.github.io/pulls"] " for more details")
         _ (println "→ Looking for PR with headRefName:" head-ref-name)
         pr-to-merge (first (filter #(= (:headRefName %) head-ref-name) prs))]
