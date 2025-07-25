@@ -71,12 +71,12 @@
               (if (= 0 (:exit merge-result))
                 (ice/p [:green "✓ Clean merge successful"])
                 (do
-                  ;; Resolve conflicts by taking all changes from this PR branch
-                  (ice/p [:blue "Resolving conflicts by preferring incoming changes..."])
+                  ;; Resolve conflicts by taking all changes from The PR Branch
+                  (ice/p [:blue "Resolving conflicts by preferring our changes..."])
                   (p/sh "git" "checkout" "--ours" ".")
                   (p/sh "git" "add" ".")
-                  (p/sh "git" "commit" "--no-edit" "-m" "Merge master into PR branch, preferring PR changes")
-                  (ice/p [:green "✓ Conflicts resolved, preferring master branch changes"]))))
+                  (p/sh "git" "commit" "--no-edit" "-m" (str "Merge master, preferring changes from PR #" pr-number))
+                  (ice/p [:green "✓ Conflicts resolved, preferring PR branch's changes"]))))
 
             ;; Push the updated branch
             (p/sh "git" "push" "origin" head-ref-name)
@@ -86,29 +86,26 @@
               (ice/p [:red "Git-based update also failed: " (.getMessage git-e)]))))))
     (println "Dry run mode: would update PR branch, resolving conflicts by preferring incoming changes")))
 
-
 (defn- gh-pr-merge [dry-run? pr-number]
-  (if-not dry-run?
-          (p/sh "gh" "pr" "merge" pr-number "--squash" "--delete-branch")
-          (do
-            (ice/p [:yellow "Dry run mode: not actually merging PR:"])
-            (println "Would run: gh pr merge" pr-number "--squash --delete-branch"))))
+  (let [cmd ["gh" "pr" "merge" pr-number "--squash" "--delete-branch"]]
+    (if dry-run?
+      (ice/p [:yellow "Dry run mode: not actually merging PR:\n"
+              [:white [:bold "Would run: "] [:underline (str/join " " cmd)]]])
+      (apply p/sh cmd))))
 
 (defn -main [& args]
   (let [{:keys [source-branch target-branch]
          dry-run? :dry-run
          :as   opts}     (cli/parse-opts args cli-spec)
         pr-number (source+target-branch->pr-number source-branch target-branch)]
-    (if-not pr-number
+    (when-not pr-number
       (throw (ex-info (ice/p-str [:red "No PR found for source branch "] [:bold source-branch] " and target branch " [:bold target-branch] ".")
-                      {:babashka/exit 1 :opts opts}))
-      (do
-        (update-pr-branch {:dry-run? dry-run?
-                           :pr-number pr-number
-                           :head-ref-name (str source-branch "->" target-branch)})
-        (ice/p [:green "Merging PR for branch "] [:bold source-branch] " into " [:bold target-branch] " with PR number " [:bold (pr-str pr-number)])
-        (gh-pr-merge dry-run? pr-number)))))
+                      {:babashka/exit 1 :opts opts})))
+    (update-pr-branch {:dry-run? dry-run?
+                       :pr-number pr-number
+                       :head-ref-name (str source-branch "->" target-branch)})
+    (ice/p [:green "Merging PR for branch "] [:bold source-branch] " into " [:bold target-branch] " with PR number " [:bold (pr-str pr-number)])
+    (gh-pr-merge dry-run? pr-number)))
 
 (when (= *file* (System/getProperty "babashka.file"))
-  #_(prn (p/sh "pwd"))
   (apply -main *command-line-args*))
