@@ -46,6 +46,54 @@
     (println "Found PR: " (pr-str pr-to-merge))
     (:number pr-to-merge)))
 
+(defn update-pr-branch
+  "Update the PR branch to include latest changes from base branch, resolving conflicts by taking incoming changes"
+  [{:keys [dry-run? pr-number head-ref-name]}]
+  (ice/p [:blue "Updating PR branch to latest master..."])
+  (if-not dry-run?
+    ;; First try the API approach (clean merge)
+    (let [{:keys [exit]} (p/sh "gh" "api"
+                               "--method" "PUT"
+                               (str "/repos/metabase/docs.metabase.github.io/pulls/" pr-number "/update-branch"))]
+      (if (zero? exit)
+        (ice/p [:green "✓ PR branch updated successfully via API"])
+        (do
+          (ice/p [:yellow "API update failed, likely due to conflict, trying git-based resolution..."])
+          ;; If API fails due to conflicts, resolve manually
+          (try
+            ;; Fetch latest and checkout the PR branch
+            (p/sh "git" "fetch" "origin")
+            (p/sh "git" "checkout" head-ref-name)
+            (prn (p/sh "git" "status"))
+
+            ;; Try to merge master - this will show conflicts
+            (let [merge-result (p/shell {:continue true} "git" "merge" "origin/master")]
+              (if (= 0 (:exit merge-result))
+                (ice/p [:green "✓ Clean merge successful"])
+                (do
+                  ;; Resolve conflicts by taking all changes from this PR branch
+                  (ice/p [:blue "Resolving conflicts by preferring incoming changes..."])
+                  (p/sh "git" "checkout" "--ours" ".")
+                  (p/sh "git" "add" ".")
+                  (p/sh "git" "commit" "--no-edit" "-m" "Merge master into PR branch, preferring PR changes")
+                  (ice/p [:green "✓ Conflicts resolved, preferring master branch changes"]))))
+
+            ;; Push the updated branch
+            (p/sh "git" "push" "origin" head-ref-name)
+            (ice/p [:green "✓ PR branch updated via git"])
+
+            (catch Exception git-e
+              (ice/p [:red "Git-based update also failed: " (.getMessage git-e)]))))))
+    (println "Dry run mode: would update PR branch, resolving conflicts by preferring incoming changes")))
+
+
+(defn- gh-pr-merge [dry-run? pr-number]
+  (if-not dry-run?
+          (p/sh "gh" "pr" "merge" pr-number "--squash" "--delete-branch")
+          (do
+            (ice/p [:yellow "Dry run mode: not actually merging PR:"])
+            (println "Would run: gh pr merge" pr-number "--squash --delete-branch"))))
+
 (defn -main [& args]
   (let [{:keys [source-branch target-branch]
          dry-run? :dry-run
@@ -55,12 +103,12 @@
       (throw (ex-info (ice/p-str [:red "No PR found for source branch "] [:bold source-branch] " and target branch " [:bold target-branch] ".")
                       {:babashka/exit 1 :opts opts}))
       (do
+        (update-pr-branch {:dry-run? dry-run?
+                           :pr-number pr-number
+                           :head-ref-name (str source-branch "->" target-branch)})
         (ice/p [:green "Merging PR for branch "] [:bold source-branch] " into " [:bold target-branch] " with PR number " [:bold (pr-str pr-number)])
-        (if-not dry-run?
-          (p/sh "gh" "pr" "merge" pr-number "--squash" "--delete-branch")
-          (do
-            (println "Dry run mode: not actually merging PR")
-            (println "Would run: gh pr merge" pr-number "--squash --delete-branch")))))))
+        (gh-pr-merge dry-run? pr-number)))))
 
 (when (= *file* (System/getProperty "babashka.file"))
+  #_(prn (p/sh "pwd"))
   (apply -main *command-line-args*))
