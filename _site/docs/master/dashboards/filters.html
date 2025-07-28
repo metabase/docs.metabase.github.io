@@ -49,7 +49,7 @@
 <meta name="twitter:site" content="@metabase">
 
 <meta name="twitter:title" content="Dashboard filters | Metabase Documentation">
-<meta name="twitter:description" content="Dashboard filters and parameters  Have you ever found yourself in a situation where it seems like you need to create nearly identical copies of the same dashboard, with just one different variable? Maybe you have an...">
+<meta name="twitter:description" content="Dashboard filters and parameters  Instead of creating duplicate dashboards to show different cuts of the same data (like a different dashboard for each quarter), you can add filter or parameter widgets to let people change what...">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -59,7 +59,7 @@
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://www.metabase.com/docs/master/dashboards/filters">
 <meta name="title" property="og:title" content="Dashboard filters | Metabase Documentation">
-<meta name="description" property="og:description" content="Dashboard filters and parameters  Have you ever found yourself in a situation where it seems like you need to create nearly identical copies of the same dashboard, with just one different variable? Maybe you have an...">
+<meta name="description" property="og:description" content="Dashboard filters and parameters  Instead of creating duplicate dashboards to show different cuts of the same data (like a different dashboard for each quarter), you can add filter or parameter widgets to let people change what...">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -4700,32 +4700,15 @@ Roadmap</a>
 
 <p><img src="./images/filters.png" alt="Dashboard Filters"></p>
 
-<p>Have you ever found yourself in a situation where it seems like you need to create nearly identical copies of the same dashboard, with just one different variable? Maybe you have an Earnings dashboard, but you want to see the data for each city your business is in, or maybe you have a KPI dashboard that you want to see broken out by month.</p>
+<p>Instead of creating duplicate dashboards to show different cuts of the same data (like a different dashboard for each quarter), you can add filter or parameter widgets to let people change <em>what</em> data is displayed (filter the data), or <em>how</em> its displayed (parameterize the data).</p>
 
-<p>Instead of creating duplicate dashboards, you can add filter or parameter widgets to let people change variables for cards on a dashboard.</p>
+<h2 id="filter-and-parameter-widgets">Filter and parameter widgets</h2>
 
-<h2 id="adding-a-filter-or-parameter">Adding a filter or parameter</h2>
-
-<p><img src="./images/add-filter.png" alt="Add a Filter"></p>
-
-<ul>
-  <li>Click the <strong>pencil icon</strong> to enter dashboard editing mode.</li>
-  <li>Click the <strong>filter icon</strong> that appears in the top-right to add a filter.</li>
-  <li>Select a <a href="#filter-and-parameter-types">filter type</a></li>
-  <li><a href="#connecting-a-filter-or-parameter-widget-to-dashboard-cards">Connect your filter or parameter widget to dashboard cards</a> to one or more dashboard cards on any or all tabs.</li>
-  <li><a href="#editing-a-filter">Configure your filter</a></li>
-  <li><strong>Save</strong> your changes.</li>
-</ul>
-
-<p>Metabase will display the filter only if the filter is connected to a card on the current dashboard tab.</p>
-
-<h2 id="filter-and-parameter-types">Filter and parameter types</h2>
-
-<p>The type of filter or parameter widget you choose determines how the widget works, including which fields you’ll be able to filter your cards by.</p>
+<p>There are two basic types of widgets you can add. The type of filter or parameter widget you choose determines how the widget works, including which fields you’ll can connect to the widget.</p>
 
 <h3 id="filter-widgets">Filter widgets</h3>
 
-<p><strong>Filters</strong> determine what data to show. For example, a date filter might show only data from the last 30 days, or a category filter might show only specific product categories.</p>
+<p><strong>Filters</strong> determine <em>what</em> data to show. For example, a date filter might show only data from the last 30 days, or a category filter might show only specific product categories.</p>
 
 <ul>
   <li><a href="#date-picker-filters">Date picker</a></li>
@@ -4738,15 +4721,55 @@ Roadmap</a>
 
 <h3 id="parameter-widgets">Parameter widgets</h3>
 
-<p><strong>Parameters</strong> determine how to show the data. The time grouping parameter, for example, changes the granularity of time-based visualizations (like showing data by month instead of by day) without removing any data points.</p>
+<p><strong>Parameters</strong> determine <em>how</em> to show the data. The time grouping parameter, for example, changes the granularity of time-based visualizations (like showing data by month instead of by day) without removing any data points.</p>
 
 <ul>
   <li><a href="#time-grouping-parameter">Time grouping</a></li>
 </ul>
 
+<h2 id="adding-a-filter-or-parameter-widget">Adding a filter or parameter widget</h2>
+
+<p><img src="./images/add-filter.png" alt="Add a Filter"></p>
+
+<ol>
+  <li>Click the <strong>pencil icon</strong> to enter dashboard editing mode.</li>
+  <li>
+    <p>You can add a filter or parameter widget to:</p>
+
+    <ul>
+      <li><strong>The whole dashboard</strong>. You’ll need to connect these dashboard-level filters to individual cards. Metabase will only display dashboard-level widgets if they’re connected to a card on the current tab.</li>
+      <li><strong>Heading cards</strong>. Not text cards, only <a href="./introduction#adding-headings-or-descriptions-with-text-cards">heading cards</a>. Can only be connected to cards on the current tab.</li>
+      <li><strong>Question cards</strong>. Can only be connected to cards on the current tab.</li>
+    </ul>
+
+    <p>Go to where you want to add a filter and click the <strong>filter icon</strong>.</p>
+  </li>
+  <li>Select a <a href="#filter-and-parameter-widgets">filter type</a>.</li>
+  <li><a href="#connecting-a-filter-or-parameter-widget-to-dashboard-cards">Connect your filter or parameter widget to one or more dashboard cards</a>. Only dashboard-level widgets can be connected to cards on multiple tabs.</li>
+  <li><a href="#editing-a-filter">Configure your filter</a>.</li>
+  <li><strong>Save</strong> your changes.</li>
+</ol>
+
+<p>If the filter isn’t connected any of the cards on the current tab, Metabase won’t display the filter.</p>
+
+<h3 id="when-to-add-a-widget-to-a-heading-or-card">When to add a widget to a heading or card</h3>
+
+<p>These are just rules of thumb to keep the user experience predictable. Do whatever works for your use case.</p>
+
+<p>By default, you should add widgets to the dashboard itself.</p>
+
+<p>If, however, your dashboard grows larger, and it doesn’t make sense to break the dashboard up into multiple dashboards, you can add widgets to headings and cards so people can filter in place as they scroll through sections. In these cases, you should scope the effects of a heading widget to the section immediately below. Filters on cards should generally only update the card itself.</p>
+
+<p>If you want tab-specific widgets, you could either:</p>
+
+<ul>
+  <li>Add them to the dashboard itself, but only connect the widget to cards on a specific tab.</li>
+  <li>Use a heading filter.</li>
+</ul>
+
 <h2 id="date-picker-filters">Date picker filters</h2>
 
-<p>When picking a Time filter, Metabase will prompt you to pick a specific type of date picker widget:</p>
+<p>When picking a Date picker filter, Metabase will prompt you to pick an operator:</p>
 
 <ul>
   <li>Month and Year</li>
@@ -4757,21 +4780,26 @@ Roadmap</a>
   <li>All Options</li>
 </ul>
 
-<p>Single Date and Date Range will provide a calendar widget, while the other options all provide slightly different dropdown interfaces for picking values. To get a widget that’s just like the time filter in the query builder, choose All options.</p>
+<p>Single Date and Date Range will provide a calendar widget, while the other options all provide slightly different dropdown interfaces for picking values. To get a widget that’s just like the date picker in the query builder, choose All options.</p>
+
+<h3 id="issues-with-connecting-to-a-date-variable">Issues with connecting to a date variable</h3>
+
+<p>If you get a message like “A date variable in this card can only be connectedd to a time type with the single date option”, you can handle it in a couple of ways.</p>
+
+<ul>
+  <li><strong>If you want a date picker where people can select multiple dates</strong>, you’ll need to change the variable in your SQL code to a <a href="../questions/native-editor/field-filters">field filter</a>.</li>
+  <li><strong>If you want the filter widget to just take a single date</strong>, you’ll need to change the dashboard filter widget’s type to “Single date”.</li>
+</ul>
 
 <h2 id="time-grouping-parameter">Time grouping parameter</h2>
 
 <p><img src="./images/time-grouping.png" alt="Time grouping"></p>
 
-<p>You can add a time grouping widget to a dashboard to change how charts are grouped by time. For example, you may want to look at the time series charts grouped by month by default, but give people the option to view the results by other groupings: by week, by quarter, and so on.</p>
-
-<blockquote>
-  <p>Time grouping parameter widget can only be connected to questions built with the <a href="../questions/query-builder/editor">graphical query builder</a>.</p>
-</blockquote>
+<p>You can add a time grouping widget to a dashboard to change how charts are grouped by time. This widget won’t filter the data; it’ll change how Metabase aggregates the data. For example, you may want to look at the time series charts grouped by month by default, but give people the option to view the same results by other groupings: by week, by quarter, and so on.</p>
 
 <p>This widget doesn’t filter data in the charts; the widget just changes the time granularity for any cards that have a datetime field connected to the widget.</p>
 
-<p>You can group by:</p>
+<p>Grouping options include:</p>
 
 <ul>
   <li>Minute (or minute of hour)</li>
@@ -4783,9 +4811,11 @@ Roadmap</a>
   <li>Year</li>
 </ul>
 
+<p>To connect a time grouping widget to a SQL question, you’ll need to insert time grouping parameters in your code. See <a href="../questions/native-editor/time-grouping-parameters">time grouping parameters</a>.</p>
+
 <h2 id="location-filters">Location filters</h2>
 
-<p>There are four types of Location filters to choose from:</p>
+<p>There are four types of Location filters to choose from.</p>
 
 <ul>
   <li>City</li>
@@ -4794,9 +4824,22 @@ Roadmap</a>
   <li>Country</li>
 </ul>
 
+<p>Additionally, you can select an operator for the location filter:</p>
+
+<ul>
+  <li><strong>Is</strong>. Select one or more values from a list or search box. Use <strong>Is</strong> when you just want to plug a value into a variable. For multiple values, the card must be either a question built using the query builder, a native/SQL question using a <a href="../questions/native-editor/field-filters">field filter</a>, or a basic variable set to accept <a href="../questions/native-editor/basic-sql-parameters#basic-variable-that-allows-people-to-select-multiple-values">multiple values</a>.</li>
+  <li><strong>Is not</strong>. Exclude one or more specific values.</li>
+  <li><strong>Contains</strong>. Match values that contain the entered text.</li>
+  <li><strong>Does not contain</strong>. Filter out values that contain the entered text.</li>
+  <li><strong>Starts with</strong>. Match values that begin with the entered text.</li>
+  <li><strong>Ends with</strong>. Match values that end with the entered text.</li>
+</ul>
+
 <h2 id="id-filter">ID filter</h2>
 
 <p>The ID filter provides a simple input box where you can type the ID of a user, order, etc.</p>
+
+<p>You can give people the option to pick one value or multiple values.</p>
 
 <h2 id="number-filter">Number filter</h2>
 
@@ -4812,10 +4855,10 @@ Roadmap</a>
 
 <h2 id="text-or-category-filter">Text or category filter</h2>
 
-<p>A flexible filter type that will let you create either a dropdown menu or an input box to filter on any category field in your cards. Options include:</p>
+<p>A flexible filter type that will let you create either a dropdown menu or an input box to filter on any text or category field in your cards. Options include:</p>
 
 <ul>
-  <li><strong>Is</strong>. Select one or more values from a list or search box. Use <strong>Is</strong> when you just want to plug a value into a variable. For multiple values, the card must be either a question built using the query builder, or a native/SQL question using a <a href="../questions/native-editor/sql-parameters#the-field-filter-variable-type">field filter</a>.</li>
+  <li><strong>Is</strong>. Select one or more values from a list or search box. Use <strong>Is</strong> when you just want to plug a value into a variable. For multiple values, the card must be a question built using the query builder, a native/SQL question using a <a href="../questions/native-editor/field-filters">field filter</a>, or a basic variable set to <a href="../questions/native-editor/basic-sql-parameters#basic-variable-that-allows-people-to-select-multiple-values">multiple values</a>.</li>
   <li><strong>Is not</strong>. Exclude one or more specific values.</li>
   <li><strong>Contains</strong>. Match values that contain the entered text.</li>
   <li><strong>Does not contain</strong>. Filter out values that contain the entered text.</li>
@@ -4823,13 +4866,19 @@ Roadmap</a>
   <li><strong>Ends with</strong>. Match values that end with the entered text.</li>
 </ul>
 
+<p>You can also select how people should filter on this column:</p>
+
+<ul>
+  <li>Dropdown list</li>
+  <li>Search box</li>
+  <li>Input box</li>
+</ul>
+
 <h2 id="boolean-filter">Boolean filter</h2>
 
 <p>A boolean filter allows people to filter data based on true/false values.</p>
 
 <h2 id="connecting-a-filter-or-parameter-widget-to-dashboard-cards">Connecting a filter or parameter widget to dashboard cards</h2>
-
-<p>Dashboard widgets apply across all <a href="./introduction#dashboard-tabs">dashboard tabs</a>, though they’ll only be displayed when a tab has cards connected to the widget.</p>
 
 <p>For each widget that you add, you’ll need to tell Metabase which column the filter should update for each card.</p>
 
@@ -4839,6 +4888,13 @@ Roadmap</a>
 
 <p><img src="./images/wiring-cards.png" alt="Wiring up a dashboard filter to a card"></p>
 
+<p>Which cards you can connect a filter or parameter widget to depends on:</p>
+
+<ul>
+  <li>Whether the card has a relevant field (i.e., the field the widget is filtering).</li>
+  <li>Where the widget is located: on the dashboard, heading card, or question card. Only dashboard widgets can be connected to cards across all <a href="./introduction#dashboard-tabs">dashboard tabs</a>. Widgets on heading and question cards are restricted to the cards on their respective tabs.</li>
+</ul>
+
 <h2 id="auto-connecting-filters-to-cards">Auto-connecting filters to cards</h2>
 
 <p>If there are other cards that also have the field you select, Metabase will offer to automatically connect the filter to those cards too (including to relevant cards on other tabs). If you later add a card with the selected field, Metabase will also try to connect that filter to the new card.</p>
@@ -4847,9 +4903,9 @@ Roadmap</a>
 
 <h2 id="filtering-dashboards-with-nativesql-questions">Filtering dashboards with native/SQL questions</h2>
 
-<p>If you’re trying to connect a filter to a card with a native/SQL questions, you’ll need to <a href="../questions/native-editor/sql-parameters">add a variable or field filter to your query</a>. For an in-depth article, check out <a href="/learn/metabase-basics/querying-and-dashboards/sql-in-metabase/filters">Adding filters to dashboards with SQL questions</a>.</p>
+<p>For filters, you’ll need to <a href="../questions/native-editor/sql-parameters">add a variable or field filter to your query</a>.</p>
 
-<p>You can’t connect a time grouping parameter widget to a card with a SQL question.</p>
+<p>For parameters, check out <a href="../questions/native-editor/time-grouping-parameters">Time grouping parameters</a>.</p>
 
 <h2 id="wiring-up-dashboard-filters-to-text-cards">Wiring up dashboard filters to text cards</h2>
 
@@ -4916,8 +4972,8 @@ Roadmap</a>
 <p>If you’re not seeing the <strong>Dropdown list</strong> option, and your dashboard filter is based on a column from a:</p>
 
 <ul>
-  <li>Table or GUI model: an admin will need to <a href="../data-modeling/metadata-editing#changing-a-search-box-filter-to-a-dropdown-filter">enable the dropdown widget</a> for that column from Metabase’s <strong>Admin settings</strong>.</li>
-  <li>SQL model: go to your <a href="../data-modeling/models#add-metadata-to-columns-in-a-model">model’s metadata settings</a>, find your column, and set the <strong>Database column this maps to</strong>.</li>
+  <li>Table or model built with the query builder: an admin will need to <a href="../data-modeling/metadata-editing#changing-a-search-box-filter-to-a-dropdown-filter">enable the dropdown widget</a> for that column from Metabase’s <strong>Admin settings</strong>.</li>
+  <li>Model built with a SQL query: go to your <a href="../data-modeling/models#add-metadata-to-columns-in-a-model">model’s metadata settings</a>, find your column, and set the <strong>Database column this maps to</strong>.</li>
 </ul>
 
 <h4 id="search-box">Search box</h4>
@@ -5239,12 +5295,6 @@ Roadmap</a>
           Data and Business Intelligence Glossary
         </a>
         <a href="/partners/">Partners</a>
-        <a href="/startup-guide/introduction">
-          The Startup's Guide to Financial Modeling
-        </a>
-        <a href="/data-stack-report-2023/">
-          The 2023 Metabase Community Data Stack Report
-        </a>
         <a class="more-resources">
           <span class="mr-1">Choosing Metabase</span>
           <svg class="more-resources-chevron" fill="none" height="8" viewBox="0 0 32 32" width="8">
@@ -5258,6 +5308,7 @@ Roadmap</a>
           <a href="/lp/embedded-analytics-demo">Embedded Analytics</a>
           <a href="/lp/metabase-vs-tableau">Metabase vs. Tableau</a>
           <a href="/lp/metabase-vs-looker">Metabase vs. Looker</a>
+          <a href="/lp/metabase-vs-looker-studio">Metabase vs. Looker Studio</a>
           <a href="/lp/metabase-vs-power-bi">Metabase vs. PowerBI</a>
           <a href="/lp/metabase-vs-superset">Metabase vs. Superset</a>
         </div>
@@ -5274,23 +5325,20 @@ Roadmap</a>
           <a href="/learn/sql/working-with-sql/sql-best-practices">
             SQL Best Practices
           </a>
-          <a href="/learn/grow-your-data-skills/data-landscape/which-data-warehouse">
-            Choosing a Data Warehouse
-          </a>
-          <a href="/docs/latest/questions/visualizations/pivot-table">
-            How to Create Pivot Tables
+         <a href="/learn/cheat-sheets/which-chart-to-use">
+          Which chart to use? A cheat sheet
+           </a>
+         <a href="/blog/what-is-embedded-analytics">
+          What is embedded analytics?
+           </a>
+          <a href="/learn/sql/">
+            Learn SQL
           </a>
           <a href="/learn/sql/working-with-sql/sql-join-types">
             Types of SQL Joins
           </a>
-          <a href="/blog/sql-cheatsheet-simple-sql-commands-to-get-started-in-data-analytics">
-            SQL Cheat Sheet
-          </a>
           <a href="/blog/6-most-common-type-of-data-bias-in-data-analysis">
             Data Bias Examples
-          </a>
-          <a href="/blog/the-modern-data-stack">
-            Modern Data Stack
           </a>
           <a href="/dashboards/marketing-teams">
             Dashboard for Marketing Teams
