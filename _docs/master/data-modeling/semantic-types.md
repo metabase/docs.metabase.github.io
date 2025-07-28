@@ -4,15 +4,16 @@ has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
 category: 'Data Modeling'
-title: 'Data and field types'
-source_url: 'https://github.com/metabase/metabase/blob/master/docs/data-modeling/field-types.md'
+title: 'Data types and semantic types'
+source_url: 'https://github.com/metabase/metabase/blob/master/docs/data-modeling/semantic-types.md'
 layout: new-docs
 redirect_from:
     - /docs/master/users-guide/field-types
+    - /docs/master/data-modeling/field-types
 summary: 'Metabase uses both data and semantic types to understand how to format and visualize your data.'
 ---
 
-# Data and field types
+# Data types and semantic types
 
 Metabase distinguishes between two types of column metadata: data types and field types.
 
@@ -42,7 +43,7 @@ For some fields, you can tell Metabase to [cast the field to a different data ty
 
 ## Semantic types
 
-You can think of semantic types as adding extra flavor to a field to communicate meaning and enable [additional functionality](#what-data-and-semantic-types-enable). Available semantic types depend on the underlying data types.
+You can think of semantic types as adding meaning and context to a field to communicate its purpose and enable [additional functionality](#what-data-and-semantic-types-enable). Available semantic types depend on the underlying data types.
 
 ### Semantic types for any field
 
@@ -101,19 +102,19 @@ You can think of semantic types as adding extra flavor to a field to communicate
 
 ## Editing data and semantic types
 
-Admins, and people with [permission to manage table metadata](../permissions/data#manage-table-metadata-permissions), can cast data types and edit semantic types in the Admin setting's Table Metadata tab.
+Admins, and people with [permission to manage table metadata](../permissions/data#manage-table-metadata-permissions), can cast data types and edit semantic types in the Admin settings' Table Metadata tab.
 
 ### Cast data types
 
-Data types can't be edited in Metabase directly, but you can cast certain [data types to different types](./metadata-editing#casting-to-a-specific-data-type) so that, for example, Metabase will interpret a text data type as a date type.
+Data types can't be edited in Metabase directly, but you can cast certain [data types to different types](./metadata-editing#cast-to-a-specific-data-type) so that, for example, Metabase will interpret a text data type as a date type.
 
-Changes made in Table Metadata apply across your entire Metabase. Metabase currently only supports casting to a datetime type in Metadata settings. However, if you you build a query in the query builder, in you can use type casting custom expressions like [`date()`](../questions/query-builder/expressions-list#date) or [`integer()`](../questions/query-builder/expressions-list#integer) to cast a string to a different type in your query.
+Changes made in Table Metadata apply across your entire Metabase. Metabase currently only supports casting to a datetime type in Metadata settings. However, if you build a query in the query builder, you can use type casting custom expressions like [`date()`](../questions/query-builder/expressions-list#date) or [`integer()`](../questions/query-builder/expressions-list#integer) to cast a string to a different type in your query.
 
 ### Semantic types don't change the data types
 
-You can pick a semantic type compatible with the underlying data type in [table metadata settings](./metadata-editing#field-type)
+You can pick a semantic type compatible with the underlying data type in [table metadata settings](./metadata-editing#semantic-type).
 
-Semantic types only add meaning; they should NOT be used for type casting. For example, if you set a text field's semantic type to "Quantity", Metabase will still treat the field as a text field. Instead, apply semantic types to tell Metabase how to format or visualize the field (like telling Metabase that a numeric values represents a percentage).
+Semantic types only add meaning; they should not be used for type casting. For example, if you set a text field's semantic type to "Quantity", Metabase will still treat the field as a text field. Instead, apply semantic types to tell Metabase how to format or visualize the field (like telling Metabase that a numeric value represents a percentage).
 
 ## What data and semantic types enable
 
@@ -121,11 +122,11 @@ Semantic types only add meaning; they should NOT be used for type casting. For e
 
 Some semantic types change the way the data in the field is displayed.
 
-Formatting setting from Table Metadata settings will be applied across your Metabase, but people can change them for individual charts.
+Formatting settings from Table Metadata settings will be applied across your Metabase, but people can change them for individual charts.
 
 | Semantic type          | Format                                                                                                                                                                                                                                                                   |
 | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Percentage             | Displayed as percentage, for example 0.75 will be displayed as 75\%                                                                                                                                                                                                      |
+| Percentage             | Displayed as percentage, for example 0.75 will be displayed as 75%                                                                                                                                                                                                       |
 | Currency               | On charts and in detail view, the values are prepended by the currency symbol, e.g., `$134.65`. By default in the table view, the currency symbol is only displayed in the header, but you can change the metadata formatting settings to show the symbol for every row. |
 | Latitude/Longitude     | Displayed as coordinates, e.g., `0.00000000° N`                                                                                                                                                                                                                          |
 | Email                  | Display as a `mailto` link                                                                                                                                                                                                                                               |
