@@ -47,7 +47,7 @@ If a question filter is giving you no results or the wrong results:
 If you're having trouble filtering on a:
 
 - [Custom column](../questions/query-builder/editor#custom-columns): check if the custom expression is working as expected. For example, your custom expression might be returning blank values when you expect numbers.
-- [SQL field filter](../questions/native-editor/sql-parameters#the-field-filter-variable-type): make sure you're using the correct [field filter syntax](../questions/native-editor/sql-parameters#field-filter-syntax), then see [Troubleshooting SQL variables](./sql#sql-variables-and-field-filters).
+- [SQL field filter](../questions/native-editor/field-filters): make sure you're using the correct [field filter syntax](../questions/native-editor/field-filters#field-filter-syntax), then see [Troubleshooting SQL variables](./sql#sql-variables-and-field-filters).
 
 **Explanation**
 
@@ -85,7 +85,7 @@ Timestamps, in particular, are the root of all evil, so please be patient with y
 
 ## Field filters in BigQuery and Oracle
 
-If you are getting an error when using field filters with BigQuery or Oracle, make sure you use the correct syntax for the `FROM` clause. See [Field filters in BigQuery and Oracle](../questions/native-editor/sql-parameters#field-filters-in-bigquery-and-oracle).
+If you are getting an error when using field filters with BigQuery or Oracle, make sure you use the correct syntax for the `FROM` clause. See [Field filters in BigQuery and Oracle](../questions/native-editor/field-filters#field-filters-in-bigquery-and-oracle).
 
 ## Missing or incorrect filter values
 

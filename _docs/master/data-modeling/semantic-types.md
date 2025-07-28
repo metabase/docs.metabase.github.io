@@ -174,7 +174,7 @@ When you [X-ray](../exploration-and-organization/x-rays) a table, model, or enti
 
 ### Field Filters
 
-Knowing what field types are and how they work is helpful when using [field filters](/learn/metabase-basics/querying-and-dashboards/sql-in-metabase/field-filters), as you can only create field filters for [certain field types](../questions/native-editor/sql-parameters#field-filter-compatible-types).
+Knowing what field types are and how they work is helpful when using [field filters](/learn/metabase-basics/querying-and-dashboards/sql-in-metabase/field-filters), as you can only create field filters for [certain field types](../questions/native-editor/field-filters#when-to-use-a-field-filter-variable-vs-a-basic-variable).
 
 ### JSON unfolding
 

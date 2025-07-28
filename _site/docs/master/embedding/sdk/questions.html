@@ -4795,12 +4795,17 @@ Roadmap</a>
     <tr>
       <td style="text-align: left" data-label="Property"><a id="questionid"></a> <code class="language-plaintext highlighter-rouge">questionId</code></td>
       <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">null</code> | <a href="./api/SdkQuestionId"><code class="language-plaintext highlighter-rouge">SdkQuestionId</code></a></td>
-      <td style="text-align: left" data-label="Description">The ID of the question. <br> This is either: <br> - The numerical ID when accessing a question link, e.g., <code class="language-plaintext highlighter-rouge">http://localhost:3000/question/1-my-question</code> where the ID is <code class="language-plaintext highlighter-rouge">1</code> <br> - The <code class="language-plaintext highlighter-rouge">entity_id</code> key of the question object. You can find a question’s Entity ID in the info panel when viewing a question <br> - <code class="language-plaintext highlighter-rouge">new</code> to show the notebook editor for creating new questions. <code class="language-plaintext highlighter-rouge">isSaveEnabled</code> must be <code class="language-plaintext highlighter-rouge">true</code> to allow saving the question</td>
+      <td style="text-align: left" data-label="Description">-</td>
     </tr>
     <tr>
       <td style="text-align: left" data-label="Property"><a id="style"></a> <code class="language-plaintext highlighter-rouge">style?</code></td>
       <td style="text-align: left" data-label="Type"><a href="https://github.com/DefinitelyTyped/DefinitelyTyped/blob/0b728411cd1dfb4bd26992bb35a73cf8edaa22e7/types/react/index.d.ts#L2579"><code class="language-plaintext highlighter-rouge">CSSProperties</code></a></td>
       <td style="text-align: left" data-label="Description">A custom style object to be added to the root element.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left" data-label="Property"><a id="title"></a> <code class="language-plaintext highlighter-rouge">title?</code></td>
+      <td style="text-align: left" data-label="Type"><a href="./api/SdkQuestionTitleProps"><code class="language-plaintext highlighter-rouge">SdkQuestionTitleProps</code></a></td>
+      <td style="text-align: left" data-label="Description">Determines whether the question title is displayed, and allows a custom title to be displayed instead of the default question title. Shown by default. Only applicable to interactive questions when using the default layout.</td>
     </tr>
     <tr>
       <td style="text-align: left" data-label="Property"><a id="width"></a> <code class="language-plaintext highlighter-rouge">width?</code></td>
@@ -4810,7 +4815,7 @@ Roadmap</a>
     <tr>
       <td style="text-align: left" data-label="Property"><a id="withcharttypeselector"></a> <code class="language-plaintext highlighter-rouge">withChartTypeSelector?</code></td>
       <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">boolean</code></td>
-      <td style="text-align: left" data-label="Description">-</td>
+      <td style="text-align: left" data-label="Description">Determines whether the chart type selector and corresponding settings button are shown. Only relevant when using the default layout.</td>
     </tr>
     <tr>
       <td style="text-align: left" data-label="Property"><a id="withdownloads"></a> <code class="language-plaintext highlighter-rouge">withDownloads?</code></td>
@@ -4868,14 +4873,14 @@ Roadmap</a>
   </thead>
   <tbody>
     <tr>
-      <td style="text-align: left" data-label="Property"><a id="children"></a> <code class="language-plaintext highlighter-rouge">children?</code></td>
-      <td style="text-align: left" data-label="Type"><a href="https://github.com/DefinitelyTyped/DefinitelyTyped/blob/0b728411cd1dfb4bd26992bb35a73cf8edaa22e7/types/react/index.d.ts#L478"><code class="language-plaintext highlighter-rouge">ReactNode</code></a></td>
-      <td style="text-align: left" data-label="Description">The children of the MetabaseProvider component.s</td>
-    </tr>
-    <tr>
       <td style="text-align: left" data-label="Property"><a id="classname"></a> <code class="language-plaintext highlighter-rouge">className?</code></td>
       <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">string</code></td>
       <td style="text-align: left" data-label="Description">A custom class name to be added to the root element.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left" data-label="Property"><a id="componentplugins"></a> <code class="language-plaintext highlighter-rouge">componentPlugins?</code></td>
+      <td style="text-align: left" data-label="Type"><a href="./api/MetabasePluginsConfig"><code class="language-plaintext highlighter-rouge">MetabasePluginsConfig</code></a></td>
+      <td style="text-align: left" data-label="Description">Additional mapper function to override or add drill-down menu</td>
     </tr>
     <tr>
       <td style="text-align: left" data-label="Property"><a id="entitytypes"></a> <code class="language-plaintext highlighter-rouge">entityTypes?</code></td>
@@ -4903,6 +4908,11 @@ Roadmap</a>
       <td style="text-align: left" data-label="Description">A callback function that triggers before saving. Only relevant when <code class="language-plaintext highlighter-rouge">isSaveEnabled = true</code></td>
     </tr>
     <tr>
+      <td style="text-align: left" data-label="Property"><a id="onnavigateback"></a> <code class="language-plaintext highlighter-rouge">onNavigateBack?</code></td>
+      <td style="text-align: left" data-label="Type">() =&gt; <code class="language-plaintext highlighter-rouge">void</code></td>
+      <td style="text-align: left" data-label="Description">A callback function that triggers when a user clicks the back button.</td>
+    </tr>
+    <tr>
       <td style="text-align: left" data-label="Property"><a id="onrun"></a> <code class="language-plaintext highlighter-rouge">onRun?</code></td>
       <td style="text-align: left" data-label="Type">(<code class="language-plaintext highlighter-rouge">question</code>: <code class="language-plaintext highlighter-rouge">undefined</code> | <a href="./api/MetabaseQuestion"><code class="language-plaintext highlighter-rouge">MetabaseQuestion</code></a>) =&gt; <code class="language-plaintext highlighter-rouge">void</code></td>
       <td style="text-align: left" data-label="Description">A callback function that triggers when a question is updated, including when a user clicks the <code class="language-plaintext highlighter-rouge">Visualize</code> button in the question editor</td>
@@ -4920,7 +4930,7 @@ Roadmap</a>
     <tr>
       <td style="text-align: left" data-label="Property"><a id="questionid"></a> <code class="language-plaintext highlighter-rouge">questionId</code></td>
       <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">null</code> | <a href="./api/SdkQuestionId"><code class="language-plaintext highlighter-rouge">SdkQuestionId</code></a></td>
-      <td style="text-align: left" data-label="Description">The ID of the question. <br> This is either: <br> - The numerical ID when accessing a question link, e.g., <code class="language-plaintext highlighter-rouge">http://localhost:3000/question/1-my-question</code> where the ID is <code class="language-plaintext highlighter-rouge">1</code> <br> - The <code class="language-plaintext highlighter-rouge">entity_id</code> key of the question object. You can find a question’s Entity ID in the info panel when viewing a question <br> - <code class="language-plaintext highlighter-rouge">new</code> to show the notebook editor for creating new questions. <code class="language-plaintext highlighter-rouge">isSaveEnabled</code> must be <code class="language-plaintext highlighter-rouge">true</code> to allow saving the question</td>
+      <td style="text-align: left" data-label="Description">-</td>
     </tr>
     <tr>
       <td style="text-align: left" data-label="Property"><a id="style"></a> <code class="language-plaintext highlighter-rouge">style?</code></td>
@@ -5393,12 +5403,6 @@ customize the appearance and behavior of the custom actions.</p>
           Data and Business Intelligence Glossary
         </a>
         <a href="/partners/">Partners</a>
-        <a href="/startup-guide/introduction">
-          The Startup's Guide to Financial Modeling
-        </a>
-        <a href="/data-stack-report-2023/">
-          The 2023 Metabase Community Data Stack Report
-        </a>
         <a class="more-resources">
           <span class="mr-1">Choosing Metabase</span>
           <svg class="more-resources-chevron" fill="none" height="8" viewBox="0 0 32 32" width="8">
@@ -5412,6 +5416,7 @@ customize the appearance and behavior of the custom actions.</p>
           <a href="/lp/embedded-analytics-demo">Embedded Analytics</a>
           <a href="/lp/metabase-vs-tableau">Metabase vs. Tableau</a>
           <a href="/lp/metabase-vs-looker">Metabase vs. Looker</a>
+          <a href="/lp/metabase-vs-looker-studio">Metabase vs. Looker Studio</a>
           <a href="/lp/metabase-vs-power-bi">Metabase vs. PowerBI</a>
           <a href="/lp/metabase-vs-superset">Metabase vs. Superset</a>
         </div>
@@ -5428,23 +5433,20 @@ customize the appearance and behavior of the custom actions.</p>
           <a href="/learn/sql/working-with-sql/sql-best-practices">
             SQL Best Practices
           </a>
-          <a href="/learn/grow-your-data-skills/data-landscape/which-data-warehouse">
-            Choosing a Data Warehouse
-          </a>
-          <a href="/docs/latest/questions/visualizations/pivot-table">
-            How to Create Pivot Tables
+         <a href="/learn/cheat-sheets/which-chart-to-use">
+          Which chart to use? A cheat sheet
+           </a>
+         <a href="/blog/what-is-embedded-analytics">
+          What is embedded analytics?
+           </a>
+          <a href="/learn/sql/">
+            Learn SQL
           </a>
           <a href="/learn/sql/working-with-sql/sql-join-types">
             Types of SQL Joins
           </a>
-          <a href="/blog/sql-cheatsheet-simple-sql-commands-to-get-started-in-data-analytics">
-            SQL Cheat Sheet
-          </a>
           <a href="/blog/6-most-common-type-of-data-bias-in-data-analysis">
             Data Bias Examples
-          </a>
-          <a href="/blog/the-modern-data-stack">
-            Modern Data Stack
           </a>
           <a href="/dashboards/marketing-teams">
             Dashboard for Marketing Teams

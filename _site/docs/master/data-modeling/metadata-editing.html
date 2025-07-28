@@ -4706,6 +4706,8 @@ Roadmap</a>
 
 <p>The <strong>Table metadata settings only affect the way Metabase displays the data. None of the settings change the data in your database.</strong></p>
 
+<p>Admins can grant access to these metadata settings to other groups. See <a href="../permissions/data#manage-table-metadata-permissions">table metadata permissions</a>.</p>
+
 <h2 id="table-settings">Table settings</h2>
 
 <p><em>Admin settings &gt; Table metadata &gt; Database &gt; Table</em></p>
@@ -4716,17 +4718,17 @@ Roadmap</a>
 
 <p>To edit a table’s display name or description in the table metadata tab, click into the box that contains the current table name or description and edit it. Changes will be saved automatically once you click out of the box.</p>
 
-<p>Descriptions are displayed in Metabase’s <a href="../exploration-and-organization/data-model-reference">data reference</a> to help people find the right table for their use case.</p>
+<p>Descriptions are displayed in Metabase’s <a href="../exploration-and-organization/data-model-reference">data reference</a> and tooltips when view the table. Decscriptions help people find the right table for their use case.</p>
 
 <h3 id="table-sync-options">Table sync options</h3>
 
-<p>Actions you can take to refresh the schema or field values.</p>
+<p>Actions you can take to refresh the schema or field values. For more, check out <a href="../databases/sync-scan">syncs and scans</a>.</p>
 
 <h4 id="sync-table-schema">Sync table schema</h4>
 
 <p>If you’ve made changes to this table in the underlying database that aren’t showing up in Metabase yet, re-syncing the table schema can fix that.</p>
 
-<p>To update the values in your filter dropdown menus, refresh or reset the cached values. <strong>Cache actions</strong> include:</p>
+<p>To update the values in your filter dropdown menus, refresh or reset the cached values.</p>
 
 <h4 id="scan-field-values">Scan field values</h4>
 
@@ -4734,7 +4736,7 @@ Roadmap</a>
 
 <h4 id="discard-cached-field-values">Discard cached field values</h4>
 
-<p>Clears cached values and stops them from showing up in your <a href="#filtering">filter widgets</a>.</p>
+<p>Clears cached values. Metabase will pull new values for display in your <a href="#filtering">filter widgets</a>.</p>
 
 <h3 id="table-sorting">Table sorting</h3>
 
@@ -4789,7 +4791,7 @@ Roadmap</a>
 
 <p><em>Admin settings &gt; Table Metadata &gt; Database &gt; Table &gt; Field</em></p>
 
-<p>To scan or discard field values for a specific field, click on <strong>Field values</strong>.</p>
+<p>To scan or discard field values for a specific field, click on the <strong>Field values</strong> button. Metabase uses these values to populate dropdown menus in filter widgets. (To be clear, values aren’t actually dropped from your database.)</p>
 
 <h2 id="field-data">Field data</h2>
 
@@ -4857,7 +4859,7 @@ Roadmap</a>
 
 <h3 id="semantic-type">Semantic type</h3>
 
-<p>You can change the <a href="../data-modeling/semantic-types">semantic type</a> to give people more context. For example, you could set an Integer as a “Score” so people have a better idea what those integers indicate.</p>
+<p>You can change the <a href="../data-modeling/semantic-types">semantic type</a> to give people more context and enable additional functionality, such as displaying text as an image (if the text is an image URL. Another example: you could set an Integer as a “Score” so people have a better idea what those integers indicate.</p>
 
 <p>The semantic types you can choose from depend on the data type. If none of the options describe the values in the column, you can set this setting to “No semantic type”.</p>
 
@@ -4871,7 +4873,7 @@ Roadmap</a>
 
 <ul>
   <li><strong>Everywhere</strong>: By default, users can see all of the columns in a table.</li>
-  <li><strong>Only in detail views</strong>: This will hide lengthy text from question results. This setting is applied by default if a column’s values have an average length of more than 50 characters. For example, you could use this setting on a column like “Customer Comments” if you already have a column for “Customer Rating”.</li>
+  <li><strong>Only in detail views</strong>: The detail view is the view you seen when you expand a single row in a table. This will hide lengthy text from question results. This setting is applied by default if a column’s values have an average length of more than 50 characters. For example, you could use this setting on a column like “Customer Comments” if you already have a column for “Customer Rating”.</li>
   <li><strong>Do not include</strong>: Columns won’t show up in the query builder or data reference. You can set this option on sensitive columns (such as PII) or irrelevant columns. But this visibility option is a simple omit/hide option; <strong>it’s not a permissions feature</strong>. These columns are still accessible for people with native query privileges; they can write <code class="language-plaintext highlighter-rouge">SELECT hidden_column FROM table</code> or <code class="language-plaintext highlighter-rouge">SELECT * FROM table</code> in the <a href="../questions/native-editor/writing-sql">SQL editor</a> and they’ll be able to view these fields and their values.</li>
 </ul>
 
@@ -4879,13 +4881,15 @@ Roadmap</a>
 
 <h3 id="filtering">Filtering</h3>
 
-<p>The <strong>Filtering</strong> setting changes a column’s <a href="../dashboards/filters">filter widget</a>. Options include:</p>
+<p>The <strong>Filtering</strong> setting changes a column’s default <a href="../dashboards/filters">filter widget</a>. Options include:</p>
 
 <ul>
   <li><strong>Search box</strong>: Display a search box and suggest autocompletions for values in that column that match the search term(s).</li>
   <li><strong>A list of all values</strong>: Display a search box, as well as a dropdown menu with checkboxes for values. If the number of distinct values exceeds 1000, however, Metabase will instead display a search box. See <a href="#changing-a-search-box-filter-to-a-dropdown-filter">Changing a search box filter to a dropdown filter</a>.</li>
   <li><strong>Plain input box</strong>: Display a search box, but don’t suggest autocompletions.</li>
 </ul>
+
+<p>The settings here will also affect dashboard filters. For example, if you set this to plain input box, you won’t be able to set up a dashboard filter that has a dropdown menu. See <a href="../dashboards/filters#dropdown-list">dropdown list</a>.</p>
 
 <h4 id="changing-a-search-box-filter-to-a-dropdown-filter">Changing a search box filter to a dropdown filter</h4>
 
@@ -4902,7 +4906,7 @@ Roadmap</a>
 
 <h3 id="display-values">Display values</h3>
 
-<p>On numeric and foreign key types, this setting lets you map columns to display different values.</p>
+<p>You can map another column connected by a foreign key relationship, like mapping a <code class="language-plaintext highlighter-rouge">Product_ID</code> column to instead display the name of the product.</p>
 
 <h4 id="mapping-values-to-foreign-keys">Mapping values to foreign keys</h4>
 
@@ -5148,12 +5152,6 @@ Roadmap</a>
           Data and Business Intelligence Glossary
         </a>
         <a href="/partners/">Partners</a>
-        <a href="/startup-guide/introduction">
-          The Startup's Guide to Financial Modeling
-        </a>
-        <a href="/data-stack-report-2023/">
-          The 2023 Metabase Community Data Stack Report
-        </a>
         <a class="more-resources">
           <span class="mr-1">Choosing Metabase</span>
           <svg class="more-resources-chevron" fill="none" height="8" viewBox="0 0 32 32" width="8">
@@ -5167,6 +5165,7 @@ Roadmap</a>
           <a href="/lp/embedded-analytics-demo">Embedded Analytics</a>
           <a href="/lp/metabase-vs-tableau">Metabase vs. Tableau</a>
           <a href="/lp/metabase-vs-looker">Metabase vs. Looker</a>
+          <a href="/lp/metabase-vs-looker-studio">Metabase vs. Looker Studio</a>
           <a href="/lp/metabase-vs-power-bi">Metabase vs. PowerBI</a>
           <a href="/lp/metabase-vs-superset">Metabase vs. Superset</a>
         </div>
@@ -5183,23 +5182,20 @@ Roadmap</a>
           <a href="/learn/sql/working-with-sql/sql-best-practices">
             SQL Best Practices
           </a>
-          <a href="/learn/grow-your-data-skills/data-landscape/which-data-warehouse">
-            Choosing a Data Warehouse
-          </a>
-          <a href="/docs/latest/questions/visualizations/pivot-table">
-            How to Create Pivot Tables
+         <a href="/learn/cheat-sheets/which-chart-to-use">
+          Which chart to use? A cheat sheet
+           </a>
+         <a href="/blog/what-is-embedded-analytics">
+          What is embedded analytics?
+           </a>
+          <a href="/learn/sql/">
+            Learn SQL
           </a>
           <a href="/learn/sql/working-with-sql/sql-join-types">
             Types of SQL Joins
           </a>
-          <a href="/blog/sql-cheatsheet-simple-sql-commands-to-get-started-in-data-analytics">
-            SQL Cheat Sheet
-          </a>
           <a href="/blog/6-most-common-type-of-data-bias-in-data-analysis">
             Data Bias Examples
-          </a>
-          <a href="/blog/the-modern-data-stack">
-            Modern Data Stack
           </a>
           <a href="/dashboards/marketing-teams">
             Dashboard for Marketing Teams
