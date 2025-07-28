@@ -6,7 +6,7 @@
   <meta content="frame-ancestors 'none'" http-equiv="Content-Security-Policy">
   <meta content="deny" http-equiv="X-Frame-Options">
     
-  <link href="https://www.metabase.com/docs/master/questions/query-builder/expressions/datetimediff" rel="canonical">
+  <link href="https://www.metabase.com/docs/master/data-modeling/semantic-types" rel="canonical">
   
 
   <script type="text/javascript">
@@ -44,12 +44,12 @@
 <meta name="robots" content="noindex">
    
 
-<title>DatetimeDiff | Metabase Documentation</title>
+<title>Data types and semantic types | Metabase Documentation</title>
 <!-- Twitter cards -->
 <meta name="twitter:site" content="@metabase">
 
-<meta name="twitter:title" content="DatetimeDiff | Metabase Documentation">
-<meta name="twitter:description" content="DatetimeDiff datetimeDiff gets the amount of time between two datetime values, using the specified unit of time. Note that the difference is calculated in whole units (see the example below).    Syntax Example    ...">
+<meta name="twitter:title" content="Data types and semantic types | Metabase Documentation">
+<meta name="twitter:description" content="Data types and semantic types Metabase distinguishes between two types of column metadata: data types and field types.  Data types are the underlying column type as defined in your database, like Date or Text. Metabase...">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -57,9 +57,9 @@
 <!-- Open Graph metadata -->
 <meta property="og:site_name" content="Metabase | Business Intelligence, Dashboards, and Data Visualization">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://www.metabase.com/docs/master/questions/query-builder/expressions/datetimediff">
-<meta name="title" property="og:title" content="DatetimeDiff | Metabase Documentation">
-<meta name="description" property="og:description" content="DatetimeDiff datetimeDiff gets the amount of time between two datetime values, using the specified unit of time. Note that the difference is calculated in whole units (see the example below).    Syntax Example    ...">
+<meta property="og:url" content="https://www.metabase.com/docs/master/data-modeling/semantic-types">
+<meta name="title" property="og:title" content="Data types and semantic types | Metabase Documentation">
+<meta name="description" property="og:description" content="Data types and semantic types Metabase distinguishes between two types of column metadata: data types and field types.  Data types are the underlying column type as defined in your database, like Date or Text. Metabase...">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -4549,7 +4549,7 @@ Roadmap</a>
 
             
             
-                <li class="breadcrumb-item"><a class="blue-60" href="/docs/master/questions/start">Questions</a></li>
+                <li class="breadcrumb-item"><a class="blue-60" href="/docs/master/data-modeling/start">Data Modeling</a></li>
             
             
         </ol>
@@ -4696,206 +4696,338 @@ Roadmap</a>
 </div>
 
 
-        <h1 id="datetimediff">DatetimeDiff</h1>
+        <h1 id="data-types-and-semantic-types">Data types and semantic types</h1>
 
-<p><code class="language-plaintext highlighter-rouge">datetimeDiff</code> gets the amount of time between two datetime values, using the specified unit of time. Note that the difference is calculated in <em>whole</em> units (see the example below).</p>
+<p>Metabase distinguishes between two types of column metadata: data types and field types.</p>
+
+<ul>
+  <li><a href="#data-types"><strong>Data types</strong></a> are the underlying column type as defined in your database, like <code class="language-plaintext highlighter-rouge">Date</code> or <code class="language-plaintext highlighter-rouge">Text</code>. Metabase reads the data types during the <a href="../databases/sync-scan">database sync process</a>.</li>
+  <li><a href="#semantic-types"><strong>Semantic types</strong></a>, also called <strong>field types</strong>, are labels that describe how the data should be interpreted. For example, if you have a column with a data type of <code class="language-plaintext highlighter-rouge">Text</code> that you use to store emails, you can add a semantic type of <code class="language-plaintext highlighter-rouge">Email</code> to let people (and Metabase) know what kind of text the column stores.</li>
+</ul>
+
+<p>Data and semantic types determine how Metabase formats the data, which charts are available, how the filters work, and other functionality.</p>
+
+<h2 id="data-types">Data types</h2>
+
+<p>Data types are the underlying column types as defined in your database. Metabase reads the data types during the <a href="../databases/sync-scan">database sync process</a>. Because Metabase connects to many different databases, it uses its own type hierarchy under the hood, so that it can, for example, handle date fields in databases as different as PostgreSQL and MongoDB.</p>
+
+<p>The main data types in Metabase:</p>
 
 <table>
   <thead>
     <tr>
-      <th>Syntax</th>
-      <th>Example</th>
+      <th>Data Type</th>
+      <th>Example database types</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td data-label="Syntax"><code class="language-plaintext highlighter-rouge">datetimeDiff(datetime1, datetime2, unit)</code></td>
-      <td data-label="Example"><code class="language-plaintext highlighter-rouge">datetimeDiff("2022-02-01", "2022-03-01", "month")</code></td>
+      <td data-label="Data Type">Numeric</td>
+      <td data-label="Example database types"><code class="language-plaintext highlighter-rouge">INTEGER</code>, <code class="language-plaintext highlighter-rouge">FLOAT</code></td>
     </tr>
     <tr>
-      <td data-label="Syntax">Gets the difference between two datetimes (datetime2 minus datetime 1) using the specified unit of time.</td>
-      <td data-label="Example"><code class="language-plaintext highlighter-rouge">1</code></td>
+      <td data-label="Data Type">Temporal</td>
+      <td data-label="Example database types"><code class="language-plaintext highlighter-rouge">DATE</code>, <code class="language-plaintext highlighter-rouge">TIMESTAMP</code></td>
+    </tr>
+    <tr>
+      <td data-label="Data Type">Text</td>
+      <td data-label="Example database types"><code class="language-plaintext highlighter-rouge">VARCHAR</code>, <code class="language-plaintext highlighter-rouge">TEXT</code></td>
+    </tr>
+    <tr>
+      <td data-label="Data Type">Text-like</td>
+      <td data-label="Example database types">MongoDB <code class="language-plaintext highlighter-rouge">BSONID</code>, Postgres <code class="language-plaintext highlighter-rouge">Enum</code></td>
+    </tr>
+    <tr>
+      <td data-label="Data Type">Boolean</td>
+      <td data-label="Example database types">Boolean</td>
+    </tr>
+    <tr>
+      <td data-label="Data Type">Collection</td>
+      <td data-label="Example database types"><code class="language-plaintext highlighter-rouge">JSON</code>, BigQuery <code class="language-plaintext highlighter-rouge">RECORD</code>, MongoDB <code class="language-plaintext highlighter-rouge">Object</code></td>
     </tr>
   </tbody>
 </table>
 
-<h2 id="parameters">Parameters</h2>
+<p>Metabase currently doesn’t support array types. On columns containing arrays, you’ll only be able to filter by <strong>Is empty</strong> or <strong>Is not empty</strong>.</p>
 
-<p><code class="language-plaintext highlighter-rouge">datetime1</code> and <code class="language-plaintext highlighter-rouge">datetime2</code> can be:</p>
+<p>For some fields, you can tell Metabase to <a href="#editing-data-and-semantic-types">cast the field to a different data type</a> (for example, changing a text type to a date type).</p>
 
-<ul>
-  <li>The name of a timestamp column,</li>
-  <li>a custom expression that returns a <a href="#accepted-data-types">datetime</a>, or</li>
-  <li>a string in the format <code class="language-plaintext highlighter-rouge">"YYYY-MM-DD"</code> or <code class="language-plaintext highlighter-rouge">"YYYY-MM-DDTHH:MM:SS"</code> (as shown in the example above).</li>
-</ul>
+<h2 id="semantic-types">Semantic types</h2>
 
-<p><code class="language-plaintext highlighter-rouge">unit</code> can be any of:</p>
+<p>You can think of semantic types as adding meaning and context to a field to communicate its purpose and enable <a href="#what-data-and-semantic-types-enable">additional functionality</a>. Available semantic types depend on the underlying data types.</p>
+
+<h3 id="semantic-types-for-any-field">Semantic types for any field</h3>
 
 <ul>
-  <li>“year”</li>
-  <li>“quarter”</li>
-  <li>“month”</li>
-  <li>“week”</li>
-  <li>“day”</li>
-  <li>“hour”</li>
-  <li>“minute”</li>
-  <li>“second”</li>
+  <li>
+    <p><strong>Entity key.</strong> Used to indicate that the field uniquely identifies each row. Could be a Product ID, serial number, etc.</p>
+  </li>
+  <li>
+    <p><strong>Foreign key.</strong> Used to refer to an Entity key of another table in order to connect data from different tables that are related. For example, in a Products table, you might have a Customer ID field that points to a Customers table, where Customer ID is the Entity key. If you want to use <a href="../dashboards/linked-filters">linked filters on dashboards</a>, you must set up foreign key relationships.</p>
+  </li>
 </ul>
 
-<h2 id="calculating-age">Calculating age</h2>
+<h3 id="semantic-types-for-numeric-fields">Semantic types for numeric fields</h3>
 
-<p>Let’s say you’re a cheesemaker, and you want to keep track of your ripening process:</p>
+<ul>
+  <li>Quantity</li>
+  <li>Score</li>
+  <li>Percentage</li>
+  <li>Financial
+    <ul>
+      <li>Currency</li>
+      <li>Discount</li>
+      <li>Income</li>
+    </ul>
+  </li>
+  <li>Location
+    <ul>
+      <li>Latitude</li>
+      <li>Longitude</li>
+    </ul>
+  </li>
+  <li>Category</li>
+</ul>
+
+<h3 id="semantic-types-for-temporal-fields">Semantic types for temporal fields</h3>
+
+<ul>
+  <li>Creation date</li>
+  <li>Creation time</li>
+  <li>Creation timestamp</li>
+  <li>Joined date</li>
+  <li>Joined time</li>
+  <li>Joined timestamp</li>
+  <li>Birthday</li>
+</ul>
+
+<h3 id="semantic-types-for-text-fields">Semantic types for text fields</h3>
+
+<ul>
+  <li>Entity name</li>
+  <li>Email
+    <ul>
+      <li>URL</li>
+      <li>Image URL</li>
+      <li>Avatar URL</li>
+    </ul>
+  </li>
+  <li>Category</li>
+  <li>Name</li>
+  <li>Title</li>
+  <li>Description</li>
+  <li>Product</li>
+  <li>Source</li>
+  <li>Location
+    <ul>
+      <li>City</li>
+      <li>State</li>
+      <li>Country</li>
+      <li>ZipCode</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="semantic-types-for-collection-fields">Semantic types for collection fields</h3>
+
+<ul>
+  <li>
+    <p>Field containing JSON.</p>
+
+    <p>See <a href="./json-unfolding">Working with JSON</a>.</p>
+  </li>
+</ul>
+
+<h2 id="editing-data-and-semantic-types">Editing data and semantic types</h2>
+
+<p>Admins, and people with <a href="../permissions/data#manage-table-metadata-permissions">permission to manage table metadata</a>, can cast data types and edit semantic types in the Admin settings’ Table Metadata tab.</p>
+
+<h3 id="cast-data-types">Cast data types</h3>
+
+<p>Data types can’t be edited in Metabase directly, but you can cast certain <a href="./metadata-editing#cast-to-a-specific-data-type">data types to different types</a> so that, for example, Metabase will interpret a text data type as a date type.</p>
+
+<p>Changes made in Table Metadata apply across your entire Metabase. Metabase currently only supports casting to a datetime type in Metadata settings. However, if you build a query in the query builder, you can use type casting custom expressions like <a href="../questions/query-builder/expressions-list#date"><code class="language-plaintext highlighter-rouge">date()</code></a> or <a href="../questions/query-builder/expressions-list#integer"><code class="language-plaintext highlighter-rouge">integer()</code></a> to cast a string to a different type in your query.</p>
+
+<h3 id="semantic-types-dont-change-the-data-types">Semantic types don’t change the data types</h3>
+
+<p>You can pick a semantic type compatible with the underlying data type in <a href="./metadata-editing#semantic-type">table metadata settings</a>.</p>
+
+<p>Semantic types only add meaning; they should not be used for type casting. For example, if you set a text field’s semantic type to “Quantity”, Metabase will still treat the field as a text field. Instead, apply semantic types to tell Metabase how to format or visualize the field (like telling Metabase that a numeric value represents a percentage).</p>
+
+<h2 id="what-data-and-semantic-types-enable">What data and semantic types enable</h2>
+
+<h3 id="display-format">Display format</h3>
+
+<p>Some semantic types change the way the data in the field is displayed.</p>
+
+<p>Formatting settings from Table Metadata settings will be applied across your Metabase, but people can change them for individual charts.</p>
 
 <table>
   <thead>
     <tr>
-      <th>Cheese</th>
-      <th>Aging Start</th>
-      <th>Aging End</th>
-      <th>Mature Age (Months)</th>
+      <th>Semantic type</th>
+      <th>Format</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td data-label="Cheese">Provolone</td>
-      <td data-label="Aging Start">January 19, 2022</td>
-      <td data-label="Aging End">March 17, 2022</td>
-      <td data-label="Mature Age (Months)">1</td>
+      <td data-label="Semantic type">Percentage</td>
+      <td data-label="Format">Displayed as percentage, for example 0.75 will be displayed as 75%</td>
     </tr>
     <tr>
-      <td data-label="Cheese">Feta</td>
-      <td data-label="Aging Start">January 25, 2022</td>
-      <td data-label="Aging End">May 3, 2022</td>
-      <td data-label="Mature Age (Months)">3</td>
+      <td data-label="Semantic type">Currency</td>
+      <td data-label="Format">On charts and in detail view, the values are prepended by the currency symbol, e.g., <code class="language-plaintext highlighter-rouge">$134.65</code>. By default in the table view, the currency symbol is only displayed in the header, but you can change the metadata formatting settings to show the symbol for every row.</td>
     </tr>
     <tr>
-      <td data-label="Cheese">Monterey Jack</td>
-      <td data-label="Aging Start">January 27, 2022</td>
-      <td data-label="Aging End">October 11, 2022</td>
-      <td data-label="Mature Age (Months)">8</td>
+      <td data-label="Semantic type">Latitude/Longitude</td>
+      <td data-label="Format">Displayed as coordinates, e.g., <code class="language-plaintext highlighter-rouge">0.00000000° N</code></td>
+    </tr>
+    <tr>
+      <td data-label="Semantic type">Email</td>
+      <td data-label="Format">Display as a <code class="language-plaintext highlighter-rouge">mailto</code> link</td>
+    </tr>
+    <tr>
+      <td data-label="Semantic type">URL</td>
+      <td data-label="Format">Can format as a clickable link</td>
+    </tr>
+    <tr>
+      <td data-label="Semantic type">Image URL</td>
+      <td data-label="Format">Can display as an image. See <a href="../questions/visualizations/table#display-as">table format settings</a></td>
+    </tr>
+    <tr>
+      <td data-label="Semantic type">Avatar URL</td>
+      <td data-label="Format">Can display as avatar circle image. See <a href="../questions/visualizations/table#display-as">table format settings</a></td>
+    </tr>
+    <tr>
+      <td data-label="Semantic type">Field containing JSON</td>
+      <td data-label="Format">In detail view, display as prettified JSON</td>
+    </tr>
+    <tr>
+      <td data-label="Semantic type">Entity and Foreign key</td>
+      <td data-label="Format">Highlighted in table view</td>
     </tr>
   </tbody>
 </table>
 
-<p><strong>Mature Age (Months)</strong> is a custom column with the expression:</p>
+<h3 id="visualizations">Visualizations</h3>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>datetimeDiff([Aging Start], [Aging End], "month")
-</code></pre></div></div>
-
-<p>To calculate the <em>current</em> age of a cheese in months, you use <a href="../expressions/now"><code class="language-plaintext highlighter-rouge">now</code></a> as the second datetime parameter, like this:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>datetimeDiff([Aging Start], now, "month")
-</code></pre></div></div>
-
-<p>To calculate the current age of a cheese in days, you’d use:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>datetimeDiff([Aging Start], now, "day")
-</code></pre></div></div>
-
-<h2 id="accepted-data-types">Accepted data types</h2>
+<p>When you create a question in the query builder, Metabase will automatically choose the most suitable chart for you based on the data types and the semantic types of the field in the “Group by” step (you can change the chart type later).</p>
 
 <table>
   <thead>
     <tr>
-      <th><a href="/learn/grow-your-data-skills/data-fundamentals/data-types-overview#examples-of-data-types">Data type</a></th>
-      <th>Works with <code class="language-plaintext highlighter-rouge">datetimeDiff</code></th>
+      <th>Group by data type</th>
+      <th>Automatic chart</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td data-label="Data type">String</td>
-      <td data-label="Works with datetimeDiff">❌</td>
+      <td data-label="Group by data type">Text/Category</td>
+      <td data-label="Automatic chart">Bar chart</td>
     </tr>
     <tr>
-      <td data-label="Data type">Number</td>
-      <td data-label="Works with datetimeDiff">❌</td>
+      <td data-label="Group by data type">Temporal</td>
+      <td data-label="Automatic chart">Line chart</td>
     </tr>
     <tr>
-      <td data-label="Data type">Timestamp</td>
-      <td data-label="Works with datetimeDiff">✅</td>
+      <td data-label="Group by data type">Numeric - binned</td>
+      <td data-label="Automatic chart">Bar chart</td>
     </tr>
     <tr>
-      <td data-label="Data type">Boolean</td>
-      <td data-label="Works with datetimeDiff">❌</td>
+      <td data-label="Group by data type">Numeric - not binned</td>
+      <td data-label="Automatic chart">Table</td>
     </tr>
     <tr>
-      <td data-label="Data type">JSON</td>
-      <td data-label="Works with datetimeDiff">❌</td>
+      <td data-label="Group by data type">Boolean</td>
+      <td data-label="Automatic chart">Bar chart</td>
+    </tr>
+    <tr>
+      <td data-label="Group by data type">No aggregation</td>
+      <td data-label="Automatic chart">Table</td>
     </tr>
   </tbody>
 </table>
 
-<p>We use “timestamp” and “datetime” to talk about any temporal data type that’s supported by Metabase. For more info about these data types in Metabase, see <a href="../../../configuring-metabase/timezones#data-types">Timezones</a>.</p>
+<p>Additionally, if you use location semantic types:</p>
 
-<p>If your timestamps are stored as strings or numbers in your database, an admin can <a href="../../../data-modeling/metadata-editing#cast-to-a-specific-data-type">cast them to timestamps</a> from the Table Metadata page.</p>
+<table>
+  <thead>
+    <tr>
+      <th>Group by semantic type</th>
+      <th>Functionality</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td data-label="Group by semantic type">Latitude/Longitude - binned</td>
+      <td data-label="Functionality">Grid map</td>
+    </tr>
+    <tr>
+      <td data-label="Group by semantic type">Latitude/longitude - not binned</td>
+      <td data-label="Functionality">Pin map</td>
+    </tr>
+    <tr>
+      <td data-label="Group by semantic type">Country</td>
+      <td data-label="Functionality">World region map</td>
+    </tr>
+    <tr>
+      <td data-label="Group by semantic type">State</td>
+      <td data-label="Functionality">United States region map</td>
+    </tr>
+  </tbody>
+</table>
 
-<h2 id="limitations">Limitations</h2>
+<h3 id="extract-values-from-columns">Extract values from columns</h3>
 
-<p><code class="language-plaintext highlighter-rouge">datetimeDiff</code> is currently unavailable for the following databases:</p>
+<p>For some fields, you can quickly extract values from columns using <a href="../questions/visualizations/table#extract-domain-subdomain-host-or-path">shortcuts in table view</a> or in the <a href="../questions/query-builder/expressions">custom expression editor</a> in the query builder:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Group by data type</th>
+      <th>Extract</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td data-label="Group by data type">URL semantic types</td>
+      <td data-label="Extract">Extract host, domain, subdomain, path</td>
+    </tr>
+    <tr>
+      <td data-label="Group by data type">Email semantic type</td>
+      <td data-label="Extract">Extract host, domain</td>
+    </tr>
+    <tr>
+      <td data-label="Group by data type">Temporal data types</td>
+      <td data-label="Extract">Extract date parts like month, day, etc</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="x-rays">X-rays</h3>
+
+<p>When you <a href="../exploration-and-organization/x-rays">X-ray</a> a table, model, or entity, Metabase considers both the data type and the field type to display different charts that summarize that data.</p>
+
+<h3 id="field-filters">Field Filters</h3>
+
+<p>Knowing what field types are and how they work is helpful when using <a href="/learn/metabase-basics/querying-and-dashboards/sql-in-metabase/field-filters">field filters</a>, as you can only create field filters for <a href="../questions/native-editor/sql-parameters#field-filter-compatible-types">certain field types</a>.</p>
+
+<h3 id="json-unfolding">JSON unfolding</h3>
+
+<p>See <a href="./json-unfolding">Working with JSON</a>.</p>
+
+<h2 id="set-semantic-types-in-models-to-enable-people-to-explore-results-with-the-query-builder">Set semantic types in models to enable people to explore results with the query builder</h2>
+
+<p>You can set field types for <a href="./models">models</a>, which helps Metabase understand how to work with data in models built using SQL. If you set each column type in a SQL model, people will be able to explore that model using the query builder and drill-through menus.</p>
+
+<p>With records that include integer entity keys, you can also configure text fields in models to <a href="./models#surface-individual-records-in-search-by-matching-against-this-column">surface individual records in search</a>.</p>
+
+<h2 id="further-reading">Further Reading</h2>
 
 <ul>
-  <li>Druid</li>
-</ul>
-
-<h2 id="related-functions">Related functions</h2>
-
-<p>This section covers functions and formulas that work the same way as the Metabase <code class="language-plaintext highlighter-rouge">datetimeDiff</code> expression, with notes on how to choose the best option for your use case.</p>
-
-<ul>
-  <li><a href="#sql">SQL</a></li>
-  <li><a href="#spreadsheets">Spreadsheets</a></li>
-  <li><a href="#python">Python</a></li>
-</ul>
-
-<h3 id="sql">SQL</h3>
-
-<p>When you run a question using the <a href="/glossary/query_builder">query builder</a>, Metabase will convert your graphical query settings (filters, summaries, etc.) into a query, and run that query against your database to get your results.</p>
-
-<p>If our <a href="#calculating-age">cheese sample data</a> is stored in a PostgreSQL database:</p>
-
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">DATE_PART</span><span class="p">(</span><span class="s1">'month'</span><span class="p">,</span> <span class="n">AGE</span><span class="p">(</span><span class="n">aging_end</span><span class="p">,</span> <span class="n">aging_start</span><span class="p">))</span> <span class="k">AS</span> <span class="n">mature_age_months</span>
-<span class="k">FROM</span> <span class="n">cheese</span>
-</code></pre></div></div>
-
-<p>is equivalent to the Metabase <code class="language-plaintext highlighter-rouge">datetimeDiff</code> expression:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>datetimeDiff([Aging Start], [Aging End], "month")
-</code></pre></div></div>
-
-<p>Some databases, such as Snowflake and BigQuery, support functions like <code class="language-plaintext highlighter-rouge">DATEDIFF</code> or <code class="language-plaintext highlighter-rouge">DATE_DIFF</code>. For more info, check out our list of <a href="/learn/sql/debugging-sql/sql-syntax#common-sql-reference-guides">common SQL reference guides</a>.</p>
-
-<h3 id="spreadsheets">Spreadsheets</h3>
-
-<p>If our <a href="#calculating-age">cheese sample data</a> is in a spreadsheet where “Aging Start” is in column B and “Aging End” is in column C:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>DATEDIF(B1, C1, "M")
-</code></pre></div></div>
-
-<p>produces the same result as</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>datetimeDiff([Aging Start], [Aging End], "month")
-</code></pre></div></div>
-
-<p>Yes, <code class="language-plaintext highlighter-rouge">DATEDIF</code> looks a bit wrong, but the spreadsheet function really is <code class="language-plaintext highlighter-rouge">DATEDIF()</code> with one “f”, not <code class="language-plaintext highlighter-rouge">DATEDIFF()</code>.</p>
-
-<h3 id="python">Python</h3>
-
-<p>Assuming the <a href="#calculating-age">cheese sample data</a> is in a <code class="language-plaintext highlighter-rouge">pandas</code> dataframe column called <code class="language-plaintext highlighter-rouge">df</code>, you can subtract the dates directly and use <code class="language-plaintext highlighter-rouge">numpy</code>’s <code class="language-plaintext highlighter-rouge">timedelta64</code> to convert the difference to months:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>df['Mature Age (Months)'] = (df['Aging End'] - df['Aging Start']) / np.timedelta64(1, 'M')
-</code></pre></div></div>
-
-<p>is equivalent to</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>datetimeDiff([Aging Start], [Aging End], "month")
-</code></pre></div></div>
-
-<h2 id="further-reading">Further reading</h2>
-
-<ul>
-  <li><a href="../expressions">Custom expressions documentation</a></li>
-  <li><a href="/learn/metabase-basics/querying-and-dashboards/questions/custom-expressions">Custom expressions tutorial</a></li>
-  <li><a href="/learn/metabase-basics/querying-and-dashboards/time-series/start">Time series analysis</a></li>
+  <li><a href="/learn/metabase-basics/querying-and-dashboards/data-browser">Exploring data with Metabase’s data browser</a>.</li>
+  <li><a href="./metadata-editing">The Table Metadata page: editing metadata</a>.</li>
+  <li><a href="/learn/metabase-basics/querying-and-dashboards/sql-in-metabase/field-filters">Field Filters: create smart filter widgets for SQL questions</a>.</li>
 </ul>
 
 
@@ -4950,7 +5082,7 @@ Roadmap</a>
 
   
     <span class="paragraph-6 fs-13 neutral-60" id="page-feedback-footer">
-      Want to improve these docs? <a href="https://github.com/metabase/metabase/blob/master/docs/questions/query-builder/expressions/datetimediff.md" target="_blank">Propose a change.</a>
+      Want to improve these docs? <a href="https://github.com/metabase/metabase/blob/master/docs/data-modeling/semantic-types.md" target="_blank">Propose a change.</a>
     </span>
   
 </div>
@@ -4972,8 +5104,8 @@ Roadmap</a>
 <script type="text/javascript" src="/js/position-feedback-widget.js"></script>
 
 <script>
-  const pageTitle = `DatetimeDiff`;
-  const pageURL = '/docs/master/questions/query-builder/expressions/datetimediff';
+  const pageTitle = `Data types and semantic types`;
+  const pageURL = '/docs/master/data-modeling/semantic-types';
   const pageURLSplit = pageURL.split('/');
 
   let pageURLPrefix = '/' + pageURLSplit[1] + '/' + pageURLSplit[2];

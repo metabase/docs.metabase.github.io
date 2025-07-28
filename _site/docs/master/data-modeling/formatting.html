@@ -49,7 +49,7 @@
 <meta name="twitter:site" content="@metabase">
 
 <meta name="twitter:title" content="Formatting defaults | Metabase Documentation">
-<meta name="twitter:description" content="Formatting defaults There are Metabase users around the world, each with different preferences for how dates, times, numbers, and currencies should be formatted and displayed. Metabase allows you to customize these formatting options at three different levels:  Global. Set global...">
+<meta name="twitter:description" content="Formatting defaults People all around the world use Metabase, and everyone has different preferences for how dates, times, numbers, and currencies should be formatted and displayed. Metabase lets you to customize these formatting options at three different levels:  Global. Set...">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -59,7 +59,7 @@
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://www.metabase.com/docs/master/data-modeling/formatting">
 <meta name="title" property="og:title" content="Formatting defaults | Metabase Documentation">
-<meta name="description" property="og:description" content="Formatting defaults There are Metabase users around the world, each with different preferences for how dates, times, numbers, and currencies should be formatted and displayed. Metabase allows you to customize these formatting options at three different levels:  Global. Set global...">
+<meta name="description" property="og:description" content="Formatting defaults People all around the world use Metabase, and everyone has different preferences for how dates, times, numbers, and currencies should be formatted and displayed. Metabase lets you to customize these formatting options at three different levels:  Global. Set...">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -4698,36 +4698,167 @@ Roadmap</a>
 
         <h1 id="formatting-defaults">Formatting defaults</h1>
 
-<p>There are Metabase users around the world, each with different preferences for how dates, times, numbers, and currencies should be formatted and displayed. Metabase allows you to customize these formatting options at three different levels:</p>
+<p>People all around the world use Metabase, and everyone has different preferences for how dates, times, numbers, and currencies should be formatted and displayed. Metabase lets you to customize these formatting options at three different levels:</p>
 
 <ol>
-  <li><strong>Global</strong>. Set global defaults in the <a href="../configuring-metabase/localization">Localization</a> section in Admin -&gt; Settings -&gt; Localization.</li>
+  <li><strong>Global</strong>. Set global defaults in Admin -&gt; Settings -&gt; <a href="../configuring-metabase/localization">Localization</a>.</li>
   <li><strong>Field</strong>. Set field (column) defaults in Admin -&gt; Table Metadata. Field defaults override global defaults.</li>
   <li><strong>Question</strong>. Set formatting defaults for individual questions in the visualization settings of that question. Question defaults override global and field defaults.</li>
 </ol>
 
-<h2 id="field-level-formatting">Field-level formatting</h2>
+<h2 id="field-formatting">Field formatting</h2>
 
-<p>You can override the global defaults for a specific field by going to the <code class="language-plaintext highlighter-rouge">Table Metadata</code> section of the Admin Panel, selecting the database and table of the field in question, and clicking the gear icon on the far right of the screen next to that field to go to its options page, then clicking on the <code class="language-plaintext highlighter-rouge">Formatting</code> tab.</p>
+<p><em>Admin settings &gt; Table Metadata &gt; Database &gt; Table &gt; Field &gt; Formatting</em></p>
 
-<p>The options you’ll see here will depend on the field’s type. They’re generally the same options as in the global formatting settings, with a few additions:</p>
+<p>You can override the global defaults for a specific field by going to the <code class="language-plaintext highlighter-rouge">Table Metadata</code> section of the Admin Panel. Select the database and table of the field in question, then click scroll down to the <strong>Formatting</strong>.</p>
 
-<h3 id="dates-and-times">Dates and Times</h3>
+<h2 id="formatting-options-depend-on-the-data-type-and-the-semantic-type">Formatting options depend on the data type and the semantic type</h2>
+
+<p>The options you’ll see here will depend on the field’s data type and it’s <a href="./semantic-types">semantic type</a>.</p>
+
+<h2 id="text-formatting-options">Text formatting options</h2>
+
+<p><em>Admin settings &gt; Table Metadata &gt; Database &gt; Table &gt; Field &gt; Formatting</em></p>
+
+<p>Options depend on the <a href="./semantic-types">semantic type</a> you select for the field.</p>
+
+<h3 id="align">Align</h3>
+
+<p>Whether to display the values in the middle, left, or right in table cells.</p>
+
+<h3 id="display-as">Display As</h3>
+
+<p>If you have text, like an image URL, you may need to change the semantic type before Metabase will offer you the option to display the text as an image.</p>
 
 <ul>
-  <li><code class="language-plaintext highlighter-rouge">Show the time:</code> this lets you choose if this time field should be displayed by default without the time; with hours and minutes; with hours, minutes, and seconds; or additionally with milliseconds.</li>
+  <li>Text (display “as is”).</li>
+  <li>Email link (i.e., if you have a <code class="language-plaintext highlighter-rouge">mailto</code> link).</li>
+  <li>Image. Metabase will display links to images as images in tables.</li>
+  <li>Automatic. Metabase will detect the string based on its format.</li>
+  <li>Link. You can optionally change the text that you want to display in the <strong>Link text</strong> input field. For example, if you set the <strong>Link URL</strong> for an “Adjective” column to:</li>
 </ul>
 
-<h3 id="numbers">Numbers</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://www.google.com/search?q={{adjective}}
+</code></pre></div></div>
+
+<p>When someone clicks on the value “askew” in the “Adjective” column, they’ll be taken to the Google search URL:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://www.google.com/search?q=askew
+</code></pre></div></div>
+
+<h2 id="dates-and-times">Dates and times</h2>
+
+<p><em>Admin settings &gt; Table Metadata &gt; Database &gt; Table &gt; Field &gt; Formatting</em></p>
+
+<p>Options depend on the <a href="./semantic-types">semantic type</a> you select for the field.</p>
+
+<h3 id="align-1">Align</h3>
+
+<p>Whether to display the values in the middle, left, or right in table cells.</p>
+
+<h3 id="display-as-1">Display as</h3>
 
 <ul>
-  <li><code class="language-plaintext highlighter-rouge">Show a mini bar chart:</code> only applies to table visualizations. Displays a bar for each value to show large or small it is relative to the other values in the column.</li>
-  <li><code class="language-plaintext highlighter-rouge">Style:</code> lets you choose to display the number as a plain number, a percent, in scientific notation, or as a currency.</li>
-  <li><code class="language-plaintext highlighter-rouge">Separator style:</code> this gives you various options for how commas and periods are used to separate the number.</li>
-  <li><code class="language-plaintext highlighter-rouge">Number of decimal places:</code> forces the number to be displayed with exactly this many decimal places.</li>
-  <li><code class="language-plaintext highlighter-rouge">Multiply by a number:</code> multiplies this number by whatever you type here.</li>
-  <li><code class="language-plaintext highlighter-rouge">Add a prefix/suffix:</code> lets you put a symbol, word, etc. before or after this number.</li>
+  <li><strong>Text</strong> (display “as is”).</li>
+  <li><strong>Link</strong> (display the date/time as a clickable link).</li>
 </ul>
+
+<h3 id="date-style">Date style</h3>
+
+<p>Choose how dates are displayed. Options include formats like:</p>
+
+<ul>
+  <li>January 31, 2018</li>
+  <li>31/01/2018</li>
+  <li>2018-01-31</li>
+  <li>And other regional date formats</li>
+</ul>
+
+<h3 id="abbreviate-days-and-months">Abbreviate days and months</h3>
+
+<p>Check this option to use abbreviated forms for days and months (e.g., “Jan” instead of “January”, “Mon” instead of “Monday”).</p>
+
+<h3 id="show-the-time">Show the time</h3>
+
+<p>This lets you choose if this time field should be displayed by default without the time; with hours and minutes; with hours, minutes, and seconds; or additionally with milliseconds.</p>
+
+<ul>
+  <li><strong>Off</strong> - Display only the date without time</li>
+  <li><strong>HH:MM</strong> - Display hours and minutes</li>
+  <li><strong>HH:MM:SS</strong> - Display hours, minutes, and seconds</li>
+  <li><strong>HH:MM:SS.MS</strong> - Display hours, minutes, seconds, and milliseconds</li>
+</ul>
+
+<h3 id="time-style">Time style</h3>
+
+<p>Choose between 12-hour and 24-hour time format:</p>
+
+<ul>
+  <li><strong>12-hour clock</strong> (e.g., 5:24 PM)</li>
+  <li><strong>24-hour clock</strong> (e.g., 17:24)</li>
+</ul>
+
+<h2 id="numbers">Numbers</h2>
+
+<p><em>Admin settings &gt; Table Metadata &gt; Database &gt; Table &gt; Field &gt; Formatting</em></p>
+
+<p>Options depend on the <a href="./semantic-types">semantic type</a> you select for the field.</p>
+
+<h3 id="align-2">Align</h3>
+
+<p>Whether to display the values in the middle, left, or right in table cells.</p>
+
+<h3 id="show-a-mini-bar-chart">Show a mini bar chart</h3>
+
+<p>Only applies to table visualizations. Displays a bar for each value to show large or small it is relative to the other values in the column.</p>
+
+<h3 id="display-as-2">Display as</h3>
+
+<ul>
+  <li><strong>Automatic</strong> - Metabase will automatically detect the best display format</li>
+  <li><strong>Text</strong> - Display the number as plain text</li>
+  <li><strong>Link</strong> - Display the number as a clickable link</li>
+</ul>
+
+<h3 id="style">Style</h3>
+
+<p>Lets you choose to display the number as a plain number, a percent, in scientific notation, or as a currency.</p>
+
+<ul>
+  <li><strong>Normal</strong> - Display as a regular number</li>
+  <li><strong>Percent</strong> - Display as a percentage</li>
+  <li><strong>Scientific notation</strong> - Display in scientific format (e.g., 1.23e+4)</li>
+  <li><strong>Currency</strong> - Display with currency formatting</li>
+</ul>
+
+<h3 id="where-to-display-the-unit-of-currency">Where to display the unit of currency</h3>
+
+<p>For currency fields, choose where to show the currency symbol:</p>
+
+<ul>
+  <li><strong>In the column heading</strong> - Show the currency symbol in the table header</li>
+  <li><strong>In every table cell</strong> - Show the currency symbol next to each value</li>
+</ul>
+
+<h3 id="separator-style">Separator style</h3>
+
+<p>This gives you various options for how commas and periods are used to separate the number (e.g., 100,000.00, 100.000,00, 100 000.00).</p>
+
+<h3 id="number-of-decimal-places">Number of decimal places</h3>
+
+<p>Forces the number to be displayed with exactly this many decimal places.</p>
+
+<h3 id="multiply-by-a-number">Multiply by a number</h3>
+
+<p>Multiplies this number by whatever you type here. Useful for unit conversions or scaling values.</p>
+
+<h3 id="add-a-prefix">Add a prefix</h3>
+
+<p>Lets you put a symbol, word, etc. before this number (e.g., “$” for currency).</p>
+
+<h3 id="add-a-suffix">Add a suffix</h3>
+
+<p>Lets you put a symbol, word, etc. after this number (e.g., “dollars”, “%”, “units”).</p>
 
 <h3 id="currency">Currency</h3>
 
@@ -4737,7 +4868,7 @@ Roadmap</a>
 
 <h2 id="question-level-formatting">Question-level formatting</h2>
 
-<p>Lastly, you can override all formatting settings in any specific saved question or dashboard card by clicking on the gear to open up the visualization options. To reset any overridden setting to the default, just click on the rotating arrow icon next to the setting’s label. This will reset the setting to the field-level setting if there is one; otherwise it will be reset to the global default.</p>
+<p>You can also override all formatting settings in any specific saved question or dashboard card by clicking on the gear to open the visualization options. To reset any overridden setting to the default, just click on the rotating arrow icon next to the setting’s label. This will reset the setting to the field-level setting if there is one; otherwise it will be reset to the global default.</p>
 
 <p>Formatting options vary depending on the type of visualization:</p>
 
