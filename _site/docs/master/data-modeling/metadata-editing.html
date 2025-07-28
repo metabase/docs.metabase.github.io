@@ -49,7 +49,7 @@
 <meta name="twitter:site" content="@metabase">
 
 <meta name="twitter:title" content="Table metadata admin settings | Metabase Documentation">
-<meta name="twitter:description" content="Table metadata admin settings Metabase lets you add and edit metadata to your tables and columns so that you can manage your org’s business logic as it changes. Go to the Table Metadata tab in your Admin settings to:  <a...">
+<meta name="twitter:description" content="Table metadata admin settings Admin settings > Table metadata  Metabase lets you add and edit metadata for your tables and columns. The Table metadata settings only affect the way Metabase displays the data. None of...">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -59,7 +59,7 @@
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://www.metabase.com/docs/master/data-modeling/metadata-editing">
 <meta name="title" property="og:title" content="Table metadata admin settings | Metabase Documentation">
-<meta name="description" property="og:description" content="Table metadata admin settings Metabase lets you add and edit metadata to your tables and columns so that you can manage your org’s business logic as it changes. Go to the Table Metadata tab in your Admin settings to:  <a...">
+<meta name="description" property="og:description" content="Table metadata admin settings Admin settings > Table metadata  Metabase lets you add and edit metadata for your tables and columns. The Table metadata settings only affect the way Metabase displays the data. None of...">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -4698,135 +4698,125 @@ Roadmap</a>
 
         <h1 id="table-metadata-admin-settings">Table metadata admin settings</h1>
 
-<p>Metabase lets you add and edit metadata to your tables and columns so that you can manage your org’s business logic as it changes. Go to the <strong>Table Metadata</strong> tab in your <strong>Admin settings</strong> to:</p>
+<p><em>Admin settings &gt; Table metadata</em></p>
 
-<ul>
-  <li><a href="#table-display-name">Set display names and descriptions</a>.</li>
-  <li><a href="#table-visibility">Hide outdated data</a>.</li>
-  <li><a href="#casting-to-a-specific-data-type">Cast a text or number column to a date column</a>.</li>
-  <li><a href="#changing-the-filter-widget">Change the style of a filter widget</a>.</li>
-  <li><a href="#displaying-a-column-as-a-link">Display a column as a link</a>.</li>
-</ul>
+<p><img src="./images/table-metadata-settings.png" alt="Table metadata settings"></p>
 
-<blockquote>
-  <p>The <strong>Table Metadata</strong> admin settings only affect the way data’s displayed and interpreted in Metabase. None of the settings will change the data in your database.</p>
-</blockquote>
+<p>Metabase lets you add and edit metadata for your tables and columns.</p>
+
+<p>The <strong>Table metadata settings only affect the way Metabase displays the data. None of the settings change the data in your database.</strong></p>
 
 <h2 id="table-settings">Table settings</h2>
 
-<p>Click on a table name in the left sidebar to view the table’s settings in Metabase.</p>
+<p><em>Admin settings &gt; Table metadata &gt; Database &gt; Table</em></p>
 
-<p>If you’ve got more than one database connected to Metabase, click on the database name (for example, “Sample Database”) and select another database from the dropdown menu. Once you select a database, the tables in that database will appear in the sidebar.</p>
+<p>You can search for tables, or use the tree navigation to find each of your connected databases and their tables.</p>
 
-<p><img src="./images/table-metadata.png" alt="Table metadata"></p>
+<h3 id="table-display-name-and-description">Table display name and description</h3>
+
+<p>To edit a table’s display name or description in the table metadata tab, click into the box that contains the current table name or description and edit it. Changes will be saved automatically once you click out of the box.</p>
+
+<p>Descriptions are displayed in Metabase’s <a href="../exploration-and-organization/data-model-reference">data reference</a> to help people find the right table for their use case.</p>
+
+<h3 id="table-sync-options">Table sync options</h3>
+
+<p>Actions you can take to refresh the schema or field values.</p>
+
+<h4 id="sync-table-schema">Sync table schema</h4>
+
+<p>If you’ve made changes to this table in the underlying database that aren’t showing up in Metabase yet, re-syncing the table schema can fix that.</p>
+
+<p>To update the values in your filter dropdown menus, refresh or reset the cached values. <strong>Cache actions</strong> include:</p>
+
+<h4 id="scan-field-values">Scan field values</h4>
+
+<p>Metabase uses these values to populate dropdown filters. You can also <a href="#scan-values-for-a-specific-field">scan values for a specific field</a>.</p>
+
+<h4 id="discard-cached-field-values">Discard cached field values</h4>
+
+<p>Clears cached values and stops them from showing up in your <a href="#filtering">filter widgets</a>.</p>
+
+<h3 id="table-sorting">Table sorting</h3>
+
+<p>You can sort the fields in a table in different ways:</p>
 
 <ul>
-  <li><a href="#table-display-name">Change the display name</a>.</li>
-  <li><a href="#table-description">Add or edit the description</a>.</li>
-  <li><a href="#table-visibility">Show or hide the table across Metabase</a>.</li>
-  <li><a href="#original-schema">View the original schema</a>.</li>
-  <li><a href="#column-field-settings">Edit column (field) settings</a>.</li>
+  <li>Automatically (Metabase decides for you)</li>
+  <li>By how they appear in the database</li>
+  <li>Alphabetically</li>
+  <li>Custom order (just drag and drop to rearrange, then click “Done”)</li>
 </ul>
-
-<h3 id="table-display-name">Table display name</h3>
-
-<p>To edit a table’s display name in Metabase, click into the box that contains the current table name. Changes will be saved automatically once you click out of the box.</p>
-
-<h3 id="table-description">Table description</h3>
-
-<p>To add a table description, click into the box below the table name. Descriptions are displayed in Metabase’s <a href="../exploration-and-organization/data-model-reference">data reference</a> to help people find the right table for their use case.</p>
 
 <h3 id="table-visibility">Table visibility</h3>
 
-<p><strong>Queryable</strong> tables are visible across all of Metabase.</p>
+<p>You can toggle the visibility of a table by clicking on the <strong>eye</strong> icon next to the table name in the left sidebar navigation tree in the Table metadata tab.</p>
 
-<p><strong>Hidden</strong> tables won’t show up in the <a href="../questions/query-builder/editor">query builder</a> or <a href="../exploration-and-organization/data-model-reference">data reference</a>. But this is not a security feature: hidden tables can still be used in SQL questions if someone writes <code class="language-plaintext highlighter-rouge">SELECT * FROM hidden_table</code> from the <a href="../questions/native-editor/writing-sql">SQL editor</a>. To prevent people from writing queries against specific tables, see <a href="../permissions/data">data permissions</a>.</p>
+<p><strong>Hidden tables</strong> won’t show up in the <a href="../questions/query-builder/editor">query builder</a> or <a href="../exploration-and-organization/data-model-reference">data reference</a>. <strong>But this is not a permissions feature</strong>: hidden tables can still be used in SQL questions if someone knows the name of the table. For example, <code class="language-plaintext highlighter-rouge">SELECT * FROM table_name</code> from the <a href="../questions/native-editor/writing-sql">SQL editor</a> would return results. To prevent people from writing queries against specific tables, see <a href="../permissions/data">data permissions</a>.</p>
 
-<p>Tip: To hide all of the tables in a database (say, if you’ve migrated to a new database), click on the <strong>hidden eye</strong> icon beside “# queryable tables” in the left sidebar.</p>
+<p>To hide <strong>all of the tables in a database</strong> (say, if you’ve migrated to a new database), click on the <strong>eye</strong> icon next to the database name in the sidebar.</p>
 
-<h3 id="original-schema">Original schema</h3>
+<h2 id="field-settings">Field settings</h2>
 
-<p>To remind yourself of column names and data types as they’re stored in your database, click <strong>Original schema</strong> (below <strong>Visibility</strong>).</p>
+<p><em>Admin settings &gt; Table Metadata &gt; Database &gt; Table &gt; Field</em></p>
 
-<p><img src="./images/original-schema.png" alt="Original schema"></p>
+<p>Fields are also known as Columns (see the <a href="/learn/grow-your-data-skills/data-fundamentals/database-basics#columns-vs-fields">difference between fields and columns</a>).</p>
 
-<h2 id="column-field-settings">Column (field) settings</h2>
+<h2 id="field-name-and-description">Field name and description</h2>
 
-<p>Select a database and click on a table’s name in the sidebar to bring up basic column display settings:</p>
-
-<ul>
-  <li><a href="#column-name">Change the display name</a></li>
-  <li><a href="#column-description">Add or edit the description</a></li>
-  <li><a href="#column-visibility">Show or hide the column across Metabase</a></li>
-  <li><a href="#column-order">Set a default column order</a></li>
-  <li><a href="#field-type">Change the column’s field type</a></li>
-</ul>
-
-<p>For extra column settings, click on the <strong>gear</strong> icon at the right of a column’s settings box:</p>
-
-<p><img src="./images/column-settings.png" alt="Column settings"></p>
-
-<ul>
-  <li><a href="#casting-to-a-specific-data-type">Cast text or numbers to dates</a></li>
-  <li><a href="#changing-the-filter-widget">Change the filter widget</a> (for example, to a dropdown menu)</li>
-  <li><a href="#remapping-column-values">Remap column values</a> (for example, from “5” to “Great”)</li>
-  <li><a href="#displaying-a-column-as-a-link">Display the column as a link</a></li>
-</ul>
-
-<h3 id="column-name">Column name</h3>
-
-<p>To change the <em>global</em> display name of a column in Metabase, click on the name of the column. For example, you could display “auth.user” as “User” to make the column more readable. People can use <a href="./models">models</a> to give columns a display name that’s local to the model.</p>
-
-<h3 id="column-description">Column description</h3>
+<p>To change the <em>global</em> display name of a column in Metabase, click on the name of the column. For example, you could display “auth.user” as “User” to make the column more readable. People can also use <a href="./models">models</a> to give columns a display name that’s local to the model.</p>
 
 <p>To add a description, click into the box below the column name. Descriptions are displayed in the <a href="../exploration-and-organization/data-model-reference">data reference</a> to help people interpret the column’s values. You should consider adding a description if your column contains:</p>
 
 <ul>
-  <li>abbreviations or codes</li>
-  <li>zeroes, nulls, or blank values</li>
-  <li>placeholder values, like <code class="language-plaintext highlighter-rouge">9999-99-99</code></li>
+  <li>Abbreviations or codes</li>
+  <li>Zeroes, nulls, or blank values</li>
+  <li>Placeholder values, like <code class="language-plaintext highlighter-rouge">9999-99-99</code></li>
 </ul>
 
-<h3 id="column-visibility">Column visibility</h3>
+<h2 id="field-preview">Field preview</h2>
 
-<p><strong>Everywhere</strong>: by default, users can see all of the columns in a table.</p>
+<p><img src="./images/field-filtering-preview.png" alt="Field filtering preview"></p>
 
-<p><strong>Only in detail views</strong> will hide lengthy text from question results. This setting is applied by default if a column’s values have an average length of more than 50 characters. For example, you could use this setting on a column like “Customer Comments” if you already have a column for “Customer Rating”.</p>
-
-<p><strong>Do not include</strong> columns won’t show up in the query builder or data reference. You can set “do not include” on sensitive columns (such as PII) or irrelevant columns. But this visibility option is a simple omit/hide option; it’s not a security feature. These columns are still accessible for people with native query privileges; they can write <code class="language-plaintext highlighter-rouge">SELECT hidden_column FROM table</code> or <code class="language-plaintext highlighter-rouge">SELECT * from table</code> in the <a href="../questions/native-editor/writing-sql">SQL editor</a> and they’ll be able to view these fields and their values. To prevent people from viewing certain columns, see <a href="../permissions/data-sandboxes">data sandboxing</a>.</p>
-
-<h3 id="column-order">Column order</h3>
-
-<p>Metabase defaults to the column order defined in your database schema. To reorder the column display order in question results and menus <strong>manually</strong>, click on the grab bar to the right of each column, and drag the column to a new position.</p>
-
-<p>To sort the columns <strong>automatically</strong>, click on the <strong>sort</strong> icon at the top right of the first column’s settings box. The sorting options are:</p>
+<p>Click the preview button to see sample data from that field.</p>
 
 <ul>
-  <li><strong>Database.</strong> (Default) The order of columns as they appear in the database.</li>
-  <li><strong>Alphabetical.</strong> A, B, C… however the alphabet works.</li>
-  <li><strong>Custom.</strong> You choose the order. Metabase will automatically switch the sort order to “Custom” if you rearrange any of the columns.</li>
-  <li><strong>Smart.</strong> Metabase chooses for you.</li>
+  <li>Table preview</li>
+  <li>Detail</li>
+  <li>Filtering</li>
 </ul>
 
-<h3 id="field-type">Field type</h3>
+<h2 id="scan-values-for-a-specific-field">Scan values for a specific field</h2>
 
-<p>To change the <a href="../data-modeling/field-types">field type</a> of a column, click on the <strong>Type</strong> dropdown menu in a column’s setting box. You can also use the <strong>Type</strong> dropdown to label a column as an <a href="/glossary/entity-key">entity key</a> (primary key) or <a href="/glossary/foreign-key">foreign key</a> in Metabase (with no consequence to your database).</p>
+<p><em>Admin settings &gt; Table Metadata &gt; Database &gt; Table &gt; Field</em></p>
 
-<h3 id="casting-to-a-specific-data-type">Casting to a specific data type</h3>
+<p>To scan or discard field values for a specific field, click on <strong>Field values</strong>.</p>
 
-<p>If you want Metabase to treat a text or number column as a datetime column:</p>
+<h2 id="field-data">Field data</h2>
 
-<ol>
-  <li>Go to <strong>Admin settings</strong> &gt; <strong>Table Metadata</strong>.</li>
-  <li>Find your database and table.</li>
-  <li>Click on the <strong>gear</strong> icon at the right of a column’s settings box.</li>
-  <li>Scroll to <strong>Cast to a specific data type</strong></li>
-  <li>Select a casting option.</li>
-</ol>
+<p><em>Admin settings &gt; Table Metadata &gt; Database &gt; Table &gt; Field</em></p>
 
-<blockquote>
-  <p>Metabase currently supports limited casting options in <strong>Cast to a specific data type</strong>. If you need to cast to a type that’s not available in Metabase, you can <a href="../questions/native-editor/writing-sql#starting-a-new-sql-query">create a SQL question</a> that casts the data and <a href="./models#create-a-model-from-a-saved-question">save it as a model</a>, or create a view directly in your database.</p>
-</blockquote>
+<h3 id="field-name">Field name</h3>
+
+<p>This is the name of the field in the database itself. You can’t change it in Metabase.</p>
+
+<h3 id="data-type">Data type</h3>
+
+<p>This is the data type of the field in the database. You can’t change the data type in Metabase, but you can cast certain data types to another data type.</p>
+
+<h3 id="cast-to-a-specific-data-type">Cast to a specific data type</h3>
+
+<p>If you want Metabase to treat a text or number column as a datetime column, you can cast it to that type. Casting data types won’t affect the original data types in your database.</p>
+
+<p>For example, say you have a “Created At” column with a string <a href="/learn/grow-your-data-skills/data-fundamentals/data-types-overview">data type</a> in your database. If you want to:</p>
+
+<ul>
+  <li>Create relative date filters, such as “Created At = Last week”.</li>
+  <li>Use “Created At” with formulas like <a href="../questions/query-builder/expressions/datetimeadd">datetimeAdd</a>.</li>
+</ul>
+
+<p>You can cast that string to a Date type.</p>
+
+<p>Casting options include:</p>
 
 <p><strong>Text to datetime casting options</strong>:</p>
 
@@ -4859,143 +4849,82 @@ Roadmap</a>
   <li>Datetime-&gt;Date</li>
 </ul>
 
-<p>Casting is different from setting the <a href="./field-types">field type</a>. For example, say you have a “Created At” column with a string <a href="/learn/grow-your-data-skills/data-fundamentals/data-types-overview">data type</a> in your database. You’ll need to cast “Created At” to one of the datetime types above if you want to do things like:</p>
+<p>If Metabase doesn’t support the casting option you need, you can <a href="../questions/native-editor/writing-sql#starting-a-new-sql-query">create a SQL question</a> that casts the data and <a href="./models#create-a-model-from-a-saved-question">save it as a model</a>, or create a view directly in your database.</p>
+
+<h2 id="field-metadata">Field metadata</h2>
+
+<p><em>Admin settings &gt; Table Metadata &gt; Database &gt; Table &gt; Field</em></p>
+
+<h3 id="semantic-type">Semantic type</h3>
+
+<p>You can change the <a href="../data-modeling/semantic-types">semantic type</a> to give people more context. For example, you could set an Integer as a “Score” so people have a better idea what those integers indicate.</p>
+
+<p>The semantic types you can choose from depend on the data type. If none of the options describe the values in the column, you can set this setting to “No semantic type”.</p>
+
+<p>See <a href="../data-modeling/semantic-types">semantic types</a>.</p>
+
+<h2 id="field-behavior">Field behavior</h2>
+
+<p><em>Admin settings &gt; Table Metadata &gt; Database &gt; Table &gt; Field</em></p>
+
+<h3 id="field-visibility">Field visibility</h3>
 
 <ul>
-  <li>Create relative date filters, such as “Created At = Last week”.</li>
-  <li>Use “Created At” with formulas like <a href="../questions/query-builder/expressions/datetimeadd">datetimeAdd</a>.</li>
+  <li><strong>Everywhere</strong>: By default, users can see all of the columns in a table.</li>
+  <li><strong>Only in detail views</strong>: This will hide lengthy text from question results. This setting is applied by default if a column’s values have an average length of more than 50 characters. For example, you could use this setting on a column like “Customer Comments” if you already have a column for “Customer Rating”.</li>
+  <li><strong>Do not include</strong>: Columns won’t show up in the query builder or data reference. You can set this option on sensitive columns (such as PII) or irrelevant columns. But this visibility option is a simple omit/hide option; <strong>it’s not a permissions feature</strong>. These columns are still accessible for people with native query privileges; they can write <code class="language-plaintext highlighter-rouge">SELECT hidden_column FROM table</code> or <code class="language-plaintext highlighter-rouge">SELECT * FROM table</code> in the <a href="../questions/native-editor/writing-sql">SQL editor</a> and they’ll be able to view these fields and their values.</li>
 </ul>
 
-<blockquote>
-  <p>Casting data types from the <strong>Table Metadata</strong> admin settings won’t affect the original data types in your database.</p>
-</blockquote>
+<p>To restrict what data people can view and query, see <a href="../permissions/data">data permissions</a>.</p>
 
-<h3 id="changing-the-filter-widget">Changing the filter widget</h3>
+<h3 id="filtering">Filtering</h3>
 
-<p>To change a column’s <a href="../dashboards/filters">filter widget</a>:</p>
-
-<ol>
-  <li>Go to <strong>Admin settings</strong> &gt; <strong>Table Metadata</strong>.</li>
-  <li>Find your database and table.</li>
-  <li>Click on the <strong>gear</strong> icon at the right of a column’s settings box.</li>
-  <li>Scroll to <strong>Filtering on this field</strong>.</li>
-  <li>Select a filter widget option.</li>
-</ol>
-
-<h4 id="filter-widget-options">Filter widget options</h4>
-
-<p>The default behavior for the <code class="language-plaintext highlighter-rouge">Is</code> filter for the field.</p>
+<p>The <strong>Filtering</strong> setting changes a column’s <a href="../dashboards/filters">filter widget</a>. Options include:</p>
 
 <ul>
   <li><strong>Search box</strong>: Display a search box and suggest autocompletions for values in that column that match the search term(s).</li>
-  <li><strong>A list of all values</strong>: Display a search box, as well as a list of checkboxes for values in a dropdown menu that people can select as search terms.</li>
-  <li><strong>Plain input box</strong>: Display a search box, but do NOT suggest autocompletions.</li>
+  <li><strong>A list of all values</strong>: Display a search box, as well as a dropdown menu with checkboxes for values. If the number of distinct values exceeds 1000, however, Metabase will instead display a search box. See <a href="#changing-a-search-box-filter-to-a-dropdown-filter">Changing a search box filter to a dropdown filter</a>.</li>
+  <li><strong>Plain input box</strong>: Display a search box, but don’t suggest autocompletions.</li>
 </ul>
 
-<h3 id="changing-a-search-box-filter-to-a-dropdown-filter">Changing a search box filter to a dropdown filter</h3>
+<h4 id="changing-a-search-box-filter-to-a-dropdown-filter">Changing a search box filter to a dropdown filter</h4>
 
-<p>The dropdown filter widget can be finicky, because Metabase needs to run a <a href="../databases/sync-scan#how-database-scans-work">scan</a> to get the list of values for the dropdown menu.</p>
-
-<ol>
-  <li>Go to <strong>Admin settings</strong> &gt; <strong>Table Metadata</strong>.</li>
-  <li>Find your database and table.</li>
-  <li>Scroll to your column.</li>
-  <li>In the column’s settings box, set <strong>Type</strong> to “Category”.</li>
-  <li>Set <strong>Filtering on this field</strong> to “A list of all values”.</li>
-</ol>
-
-<p>When you change a default filter to a dropdown filter, you’ll trigger a database query that gets the first 1,000 distinct values (ordered ascending) for that column. Metabase will cache the first 100kB of text to display in the dropdown menu. If you have columns with more than 1,000 distinct values, or columns with text-heavy data, we recommend setting <strong>Filtering on this field</strong> to “Search box” instead.</p>
-
-<h3 id="remapping-column-values">Remapping column values</h3>
-
-<p>Say you have a column with the values 1, 2, and 3, and you want to map each number to the values “low”, “medium” and “high”. This kind of mapping can be done on columns that have numeric or foreign key <a href="#field-type">field types</a>.</p>
-
-<h4 id="remapping-numbers">Remapping numbers</h4>
+<p>The dropdown filter widget can be finicky, because Metabase needs to run a <a href="../databases/sync-scan#how-database-scans-work">scan</a> to get the list of values for the dropdown menu. If you’re having trouble:</p>
 
 <ol>
-  <li>Go to <strong>Admin settings</strong> &gt; <strong>Table Metadata</strong>.</li>
-  <li>Find your database and table.</li>
-  <li>Click <strong>gear</strong> icon at the right of a column’s settings box.</li>
-  <li>Scroll to <strong>Display values</strong>.</li>
-  <li>Select “Custom mapping” from the dropdown menu.</li>
-  <li>Enter the display values under <strong>Mapped values</strong>.</li>
+  <li>Set the <a href="#semantic-type">Semantic type</a> to “Category”.</li>
+  <li>Set <a href="#filtering">Filtering</a> to “A list of all values”.</li>
 </ol>
 
-<h4 id="remapping-foreign-keys">Remapping foreign keys</h4>
+<p>When you change a default filter to a dropdown filter, you’ll trigger a database query that gets the first 1,000 distinct values (ordered ascending) for that column. Metabase will cache the first 100kB of text to display in the dropdown menu.</p>
 
-<ol>
-  <li>Go to <strong>Admin settings</strong> &gt; <strong>Table Metadata</strong>.</li>
-  <li>Find your database and table.</li>
-  <li>Click <strong>gear</strong> icon at the right of a column’s settings box.</li>
-  <li>Scroll to <strong>Display values</strong>.</li>
-  <li>Select “Use foreign key” from the dropdown menu.</li>
-  <li>Select a column name from the second dropdown menu.</li>
-</ol>
+<p>If you have columns with more than 1,000 distinct values, or columns with text-heavy data, we recommend setting <strong>Filtering</strong> to “Search box” instead.</p>
 
-<h3 id="displaying-a-column-as-a-link">Displaying a column as a link</h3>
+<h3 id="display-values">Display values</h3>
 
-<ol>
-  <li>Go to <strong>Admin settings</strong> &gt; <strong>Table Metadata</strong>.</li>
-  <li>Find your database and table.</li>
-  <li>Click on the <strong>gear</strong> icon at the right of a column’s settings box.</li>
-  <li>Select <strong>Formatting</strong> from the sidebar.</li>
-  <li>From <strong>Display as</strong>, select <strong>Link</strong>.</li>
-  <li>Optional: set display text under <strong>Link text</strong>.</li>
-  <li>Enter the URL in the <strong>Link URL</strong> field.</li>
-  <li>Optional: create a dynamic URL by adding the column name as a <code class="language-plaintext highlighter-rouge">{{parameter}}</code>.</li>
-</ol>
+<p>On numeric and foreign key types, this setting lets you map columns to display different values.</p>
 
-<p><img src="./images/format-as-url.png" alt="Format as URL"></p>
+<h4 id="mapping-values-to-foreign-keys">Mapping values to foreign keys</h4>
 
-<p>For example, if you set the <strong>Link URL</strong> for an “Adjective” column to:</p>
+<p>You can map another column connected by a foreign key relationship, like mapping a Product_ID column to instead display the name of the product.</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://www.google.com/search?q={{adjective}}
-</code></pre></div></div>
+<h4 id="mapping-numbers-to-custom-values">Mapping numbers to custom values</h4>
 
-<p>When someone clicks on the value “askew” in the “Adjective” column, they’ll be taken to the Google search URL:</p>
+<p>Say you have a column with values 1, 2, and 3. You could instead display “low”, “medium”, and “high”.</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://www.google.com/search?q=askew
-</code></pre></div></div>
+<p>For this option to be available, you’ll need to set the <a href="#filtering">filtering</a> settings to “A list of all values”.</p>
 
-<h2 id="refresh-or-discard-cached-values">Refresh or discard cached values</h2>
+<p>Select “Custom mapping” from the dropdown menu. For each value in the column, enter a display value under <strong>Mapped values</strong>.</p>
 
-<p>To update the values in your filter dropdown menus, refresh or reset the cached values. <strong>Cache actions</strong> include:</p>
+<h2 id="field-formatting">Field formatting</h2>
 
-<ul>
-  <li><strong>Re-scan this table or field</strong> to run a manual scan for new or updated column values. If possible, re-scan the table during off-peak hours, as <a href="../databases/sync-scan#how-database-scans-work">scans</a> can slow down your database.</li>
-  <li><strong>Discard cached field values</strong> to clear cached values and stop them from showing up in your <a href="#changing-the-filter-widget">filter widgets</a>.</li>
-</ul>
+<p><em>Admin settings &gt; Table Metadata &gt; Database &gt; Table &gt; Field</em></p>
 
-<h3 id="table-cache-actions">Table cache actions</h3>
-
-<ol>
-  <li>Go to <strong>Admin settings</strong> &gt; <strong>Table Metadata</strong>.</li>
-  <li>Find your database and table.</li>
-  <li>Click the <strong>gear</strong> icon at the top right (below <strong>Exit admin</strong>).</li>
-  <li>Select a cache action.</li>
-</ol>
-
-<h3 id="column-cache-actions">Column cache actions</h3>
-
-<ol>
-  <li>Go to <strong>Admin settings</strong> &gt; <strong>Table Metadata</strong>.</li>
-  <li>Find your database and table.</li>
-  <li>Click the <strong>gear</strong> icon at the right of a column’s settings box.</li>
-  <li>Scroll to <strong>Cached field values</strong>.</li>
-  <li>Select a cache action.</li>
-</ol>
+<p>See <a href="./formatting#field-formatting">Field formatting</a>.</p>
 
 <h2 id="unfold-json">Unfold JSON</h2>
 
-<p>If Metabase supports JSON unfolding for your database, you can decide whether to unfold JSON into component fields, where each JSON key becomes a column. You can turn this off if performance is slow.</p>
-
-<ol>
-  <li>Go to <strong>Admin settings</strong> &gt; <strong>Table Metadata</strong>.</li>
-  <li>Find your database and table.</li>
-  <li>Click the <strong>gear</strong> icon at the right of a column’s settings box.</li>
-  <li>Scroll to <strong>Unfold JSON</strong>.</li>
-  <li>Toggle JSON unfolding.</li>
-</ol>
+<p>See <a href="./json-unfolding">Working with JSON</a>.</p>
 
 <h2 id="further-reading">Further reading</h2>
 
