@@ -21,9 +21,9 @@ layout: new-docs
 | Name                                                            | Description         |
 | :-------------------------------------------------------------- | :------------------ |
 | [CreateDashboardModal](./api/CreateDashboardModal)           | Creates a dashboard |
+| [useCreateDashboardApi](./api/useCreateDashboardApi)         | Creates a dashboard |
 | [CreateDashboardModalProps](./api/CreateDashboardModalProps) | -                   |
 | [CreateDashboardValues](./api/CreateDashboardValues)         | -                   |
-| [useCreateDashboardApi](./api/useCreateDashboardApi)         | Creates a dashboard |
 
 ## CreateQuestion
 
@@ -37,49 +37,49 @@ layout: new-docs
 | Name                                                            | Description                                                                                                                                                                               |
 | :-------------------------------------------------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [EditableDashboard](./api/EditableDashboard)                 | A dashboard component with the features available in the `InteractiveDashboard` component, as well as the ability to add and update questions, layout, and content within your dashboard. |
-| [EditableDashboardProps](./api/EditableDashboardProps)       | -                                                                                                                                                                                         |
 | [InteractiveDashboard](./api/InteractiveDashboard)           | A dashboard component with drill downs, click behaviors, and the ability to view and click into questions.                                                                                |
-| [InteractiveDashboardProps](./api/InteractiveDashboardProps) | -                                                                                                                                                                                         |
 | [StaticDashboard](./api/StaticDashboard)                     | A lightweight dashboard component.                                                                                                                                                        |
+| [EditableDashboardProps](./api/EditableDashboardProps)       | -                                                                                                                                                                                         |
+| [InteractiveDashboardProps](./api/InteractiveDashboardProps) | -                                                                                                                                                                                         |
 | [StaticDashboardProps](./api/StaticDashboardProps)           | -                                                                                                                                                                                         |
 
 ## InteractiveQuestion
 
-| Name                                                                                                          | Description                                       |
-| :------------------------------------------------------------------------------------------------------------ | :------------------------------------------------ |
-| [DrillThroughQuestionProps](./api/DrillThroughQuestionProps)                                               | Props for the drill-through question              |
-| [InteractiveQuestion](./api/InteractiveQuestion)                                                           | A component that renders an interactive question. |
-| [InteractiveQuestionBackButtonProps](./api/InteractiveQuestionBackButtonProps)                             | -                                                 |
-| [InteractiveQuestionBreakoutDropdownProps](./api/InteractiveQuestionBreakoutDropdownProps)                 | -                                                 |
-| [InteractiveQuestionChartTypeDropdownProps](./api/InteractiveQuestionChartTypeDropdownProps)               | -                                                 |
-| [InteractiveQuestionChartTypeSelectorProps](./api/InteractiveQuestionChartTypeSelectorProps)               | -                                                 |
-| [InteractiveQuestionDownloadWidgetDropdownProps](./api/InteractiveQuestionDownloadWidgetDropdownProps)     | -                                                 |
-| [InteractiveQuestionDownloadWidgetProps](./api/InteractiveQuestionDownloadWidgetProps)                     | -                                                 |
-| [InteractiveQuestionEditorButtonProps](./api/InteractiveQuestionEditorButtonProps)                         | -                                                 |
-| [InteractiveQuestionEditorProps](./api/InteractiveQuestionEditorProps)                                     | -                                                 |
-| [InteractiveQuestionFilterDropdownProps](./api/InteractiveQuestionFilterDropdownProps)                     | -                                                 |
-| [InteractiveQuestionFilterProps](./api/InteractiveQuestionFilterProps)                                     | -                                                 |
-| [InteractiveQuestionProps](./api/InteractiveQuestionProps)                                                 | -                                                 |
-| [InteractiveQuestionQuestionSettingsDropdownProps](./api/InteractiveQuestionQuestionSettingsDropdownProps) | -                                                 |
-| [InteractiveQuestionQuestionSettingsProps](./api/InteractiveQuestionQuestionSettingsProps)                 | -                                                 |
-| [InteractiveQuestionQuestionVisualizationProps](./api/InteractiveQuestionQuestionVisualizationProps)       | -                                                 |
-| [InteractiveQuestionResetButtonProps](./api/InteractiveQuestionResetButtonProps)                           | -                                                 |
-| [InteractiveQuestionSaveButtonProps](./api/InteractiveQuestionSaveButtonProps)                             | -                                                 |
-| [InteractiveQuestionSaveQuestionFormProps](./api/InteractiveQuestionSaveQuestionFormProps)                 | -                                                 |
-| [InteractiveQuestionSummarizeDropdownProps](./api/InteractiveQuestionSummarizeDropdownProps)               | -                                                 |
-| [InteractiveQuestionTitleProps](./api/InteractiveQuestionTitleProps)                                       | -                                                 |
+| Name                                                                                                          | Description                          |
+| :------------------------------------------------------------------------------------------------------------ | :----------------------------------- |
+| [DrillThroughQuestionProps](./api/DrillThroughQuestionProps)                                               | Props for the drill-through question |
+| [InteractiveQuestionEditorButtonProps](./api/InteractiveQuestionEditorButtonProps)                         | -                                    |
+| [InteractiveQuestionEditorProps](./api/InteractiveQuestionEditorProps)                                     | -                                    |
+| [InteractiveQuestionProps](./api/InteractiveQuestionProps)                                                 | -                                    |
+| [InteractiveQuestionQuestionSettingsDropdownProps](./api/InteractiveQuestionQuestionSettingsDropdownProps) | -                                    |
+| [InteractiveQuestionQuestionVisualizationProps](./api/InteractiveQuestionQuestionVisualizationProps)       | -                                    |
+| [InteractiveQuestionResetButtonProps](./api/InteractiveQuestionResetButtonProps)                           | -                                    |
+| [InteractiveQuestionSaveQuestionFormProps](./api/InteractiveQuestionSaveQuestionFormProps)                 | -                                    |
+| [InteractiveQuestionTitleProps](./api/InteractiveQuestionTitleProps)                                       | -                                    |
+| [SdkQuestionProps](./api/SdkQuestionProps)                                                                 | -                                    |
+| [InteractiveQuestionBackButtonProps](./api/InteractiveQuestionBackButtonProps)                             | -                                    |
+| [InteractiveQuestionBreakoutDropdownProps](./api/InteractiveQuestionBreakoutDropdownProps)                 | -                                    |
+| [InteractiveQuestionChartTypeDropdownProps](./api/InteractiveQuestionChartTypeDropdownProps)               | -                                    |
+| [InteractiveQuestionChartTypeSelectorProps](./api/InteractiveQuestionChartTypeSelectorProps)               | -                                    |
+| [InteractiveQuestionDownloadWidgetDropdownProps](./api/InteractiveQuestionDownloadWidgetDropdownProps)     | -                                    |
+| [InteractiveQuestionDownloadWidgetProps](./api/InteractiveQuestionDownloadWidgetProps)                     | -                                    |
+| [InteractiveQuestionFilterDropdownProps](./api/InteractiveQuestionFilterDropdownProps)                     | -                                    |
+| [InteractiveQuestionFilterProps](./api/InteractiveQuestionFilterProps)                                     | -                                    |
+| [InteractiveQuestionQuestionSettingsProps](./api/InteractiveQuestionQuestionSettingsProps)                 | -                                    |
+| [InteractiveQuestionSaveButtonProps](./api/InteractiveQuestionSaveButtonProps)                             | -                                    |
+| [InteractiveQuestionSummarizeDropdownProps](./api/InteractiveQuestionSummarizeDropdownProps)               | -                                    |
 
 ## MetabaseProvider
 
 | Name                                                                  | Description                                                   |
 | :-------------------------------------------------------------------- | :------------------------------------------------------------ |
 | [defineMetabaseAuthConfig](./api/defineMetabaseAuthConfig)         | Defines a Metabase auth config.                               |
+| [MetabaseProvider](./api/MetabaseProvider)                         | A component that provides the Metabase SDK context and theme. |
+| [MetabaseProviderProps](./api/MetabaseProviderProps)               | -                                                             |
 | [MetabaseAuthConfig](./api/MetabaseAuthConfig)                     | -                                                             |
 | [MetabaseAuthConfigWithApiKey](./api/MetabaseAuthConfigWithApiKey) | -                                                             |
 | [MetabaseAuthConfigWithJwt](./api/MetabaseAuthConfigWithJwt)       | -                                                             |
 | [MetabaseAuthConfigWithSaml](./api/MetabaseAuthConfigWithSaml)     | -                                                             |
-| [MetabaseProvider](./api/MetabaseProvider)                         | A component that provides the Metabase SDK context and theme. |
-| [MetabaseProviderProps](./api/MetabaseProviderProps)               | -                                                             |
 
 ## ModifyQuestion
 
@@ -89,16 +89,18 @@ layout: new-docs
 
 ## StaticQuestion
 
-| Name                                                | Description                                 |
-| :-------------------------------------------------- | :------------------------------------------ |
-| [StaticQuestion](./api/StaticQuestion)           | A component that renders a static question. |
-| [StaticQuestionProps](./api/StaticQuestionProps) | -                                           |
+| Interface                                           | Description |
+| :-------------------------------------------------- | :---------- |
+| [StaticQuestionProps](./api/StaticQuestionProps) | -           |
 
 ## other
 
 | Name                                                                          | Description                                                                                                                                                                                                                                                                                                            |
 | :---------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [BaseInteractiveQuestionProps](./api/BaseInteractiveQuestionProps)         | -                                                                                                                                                                                                                                                                                                                      |
+| [BaseSdkQuestionProps](./api/BaseSdkQuestionProps)                         | -                                                                                                                                                                                                                                                                                                                      |
+| [MetabaseColors](./api/MetabaseColors)                                     | -                                                                                                                                                                                                                                                                                                                      |
+| [MetabaseQuestion](./api/MetabaseQuestion)                                 | -                                                                                                                                                                                                                                                                                                                      |
+| [MetabaseTheme](./api/MetabaseTheme)                                       | Theme configuration for embedded Metabase components.                                                                                                                                                                                                                                                                  |
 | [ButtonProps](./api/ButtonProps)                                           | -                                                                                                                                                                                                                                                                                                                      |
 | [ChartColor](./api/ChartColor)                                             | -                                                                                                                                                                                                                                                                                                                      |
 | [CollectionBrowserListColumns](./api/CollectionBrowserListColumns)         | -                                                                                                                                                                                                                                                                                                                      |
@@ -115,7 +117,6 @@ layout: new-docs
 | [MetabaseClickActionPluginsConfig](./api/MetabaseClickActionPluginsConfig) | -                                                                                                                                                                                                                                                                                                                      |
 | [MetabaseCollection](./api/MetabaseCollection)                             | The Collection entity                                                                                                                                                                                                                                                                                                  |
 | [MetabaseCollectionItem](./api/MetabaseCollectionItem)                     | The CollectionItem entity                                                                                                                                                                                                                                                                                              |
-| [MetabaseColors](./api/MetabaseColors)                                     | -                                                                                                                                                                                                                                                                                                                      |
 | [MetabaseComponentTheme](./api/MetabaseComponentTheme)                     | Theme options for customizing specific Metabase components and visualizations.                                                                                                                                                                                                                                         |
 | [MetabaseDashboard](./api/MetabaseDashboard)                               | The Dashboard entity                                                                                                                                                                                                                                                                                                   |
 | [MetabaseDashboardPluginsConfig](./api/MetabaseDashboardPluginsConfig)     | -                                                                                                                                                                                                                                                                                                                      |
@@ -124,8 +125,6 @@ layout: new-docs
 | [MetabaseFetchRequestTokenFn](./api/MetabaseFetchRequestTokenFn)           | -                                                                                                                                                                                                                                                                                                                      |
 | [MetabaseFontFamily](./api/MetabaseFontFamily)                             | -                                                                                                                                                                                                                                                                                                                      |
 | [MetabasePluginsConfig](./api/MetabasePluginsConfig)                       | -                                                                                                                                                                                                                                                                                                                      |
-| [MetabaseQuestion](./api/MetabaseQuestion)                                 | -                                                                                                                                                                                                                                                                                                                      |
-| [MetabaseTheme](./api/MetabaseTheme)                                       | Theme configuration for embedded Metabase components.                                                                                                                                                                                                                                                                  |
 | [MetabaseUser](./api/MetabaseUser)                                         | The User entity                                                                                                                                                                                                                                                                                                        |
 | [ParameterValues](./api/ParameterValues)                                   | -                                                                                                                                                                                                                                                                                                                      |
 | [SdkCollectionId](./api/SdkCollectionId)                                   | -                                                                                                                                                                                                                                                                                                                      |
