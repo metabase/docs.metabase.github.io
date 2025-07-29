@@ -4,9 +4,11 @@ has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
 category: Embedding
-title: BaseInteractiveQuestionProps
-source_url: 'https://github.com/metabase/metabase/blob/master/docs/embedding/sdk/api/snippets/BaseInteractiveQuestionProps.md'
+title: BaseSdkQuestionProps
+source_url: >-
+  https://github.com/metabase/metabase/blob/master/docs/embedding/sdk/api/snippets/BaseSdkQuestionProps.md
 layout: new-docs
+latest: true
 ---
 
 **`Expand`**
