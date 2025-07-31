@@ -46,6 +46,7 @@ type IconName =
   | "birthday"
   | "bookmark"
   | "bookmark_filled"
+  | "bold"
   | "bolt"
   | "bolt_filled"
   | "breakout"
