@@ -10,18 +10,18 @@ layout: new-docs
 ---
 
 ```ts
-function StaticQuestion(__namedParameters: StaticQuestionProps): null | Element;
+function StaticQuestion(props: StaticQuestionProps): ReactNode;
 ```
 
-A question component without drill-downs.
+A component that renders a static question.
 
 ## Parameters
 
 <!-- [<snippet parameters>] -->
 
-| Parameter           | Type                                                  |
-| :------------------ | :---------------------------------------------------- |
-| `__namedParameters` | [`StaticQuestionProps`](./api/StaticQuestionProps) |
+| Parameter | Type                                                  |
+| :-------- | :---------------------------------------------------- |
+| `props`   | [`StaticQuestionProps`](./api/StaticQuestionProps) |
 
 <!-- [<endsnippet parameters>] -->
 
@@ -29,7 +29,6 @@ A question component without drill-downs.
 
 <!-- [<snippet returns>] -->
 
-\| `null`
-\| [`Element`](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/0b728411cd1dfb4bd26992bb35a73cf8edaa22e7/types/react/index.d.ts#L4313)
+[`ReactNode`](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/0b728411cd1dfb4bd26992bb35a73cf8edaa22e7/types/react/index.d.ts#L478)
 
 <!-- [<endsnippet returns>] -->

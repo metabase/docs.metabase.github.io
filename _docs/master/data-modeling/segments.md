@@ -11,14 +11,7 @@ layout: new-docs
 
 # Segments
 
-Metabase allows admins to create segments so people can quickly and easily reference them in the query builder. 
-
-To manage segments:
-
-1. Click the **gear** icon in the upper right.
-2. Select **Admin setting**.
-3. Go to the **Table Metadata** tab.
-5. Click **Segments** at the bottom left.
+Metabase allows admins to create segments so people can quickly and easily reference them in the query builder. Just head over to the **Admin Panel** and select **Table Metadata** from the top menu.
 
 ## Creating a Segment
 

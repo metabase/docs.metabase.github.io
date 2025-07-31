@@ -135,7 +135,7 @@ Metabase's reference documentation.
 - [Model persistence](./data-modeling/model-persistence)
 - [Metrics](./data-modeling/metrics)
 - [Table metadata admin settings](./data-modeling/metadata-editing)
-- [Field types](./data-modeling/semantic-types)
+- [Field types](./data-modeling/field-types)
 - [Formatting defaults](./data-modeling/formatting)
 - [Working with JSON](./data-modeling/json-unfolding)
 - [Segments](./data-modeling/segments)

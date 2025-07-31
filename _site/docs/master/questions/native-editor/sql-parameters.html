@@ -49,7 +49,7 @@
 <meta name="twitter:site" content="@metabase">
 
 <meta name="twitter:title" content="SQL parameters | Metabase Documentation">
-<meta name="twitter:description" content="SQL parameters  You can create SQL templates by adding parameters (a.k.a. variables) to your SQL queries in the Native/SQL editor. These variables create widgets that people can use to plug in values for those variables. You...">
+<meta name="twitter:description" content="SQL parameters You can create SQL templates by adding variables to your SQL queries in the Native/SQL editor. These variables will create filter widgets that you can use to change the variable’s value in the query. You can also add...">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -59,7 +59,7 @@
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://www.metabase.com/docs/master/questions/native-editor/sql-parameters">
 <meta name="title" property="og:title" content="SQL parameters | Metabase Documentation">
-<meta name="description" property="og:description" content="SQL parameters  You can create SQL templates by adding parameters (a.k.a. variables) to your SQL queries in the Native/SQL editor. These variables create widgets that people can use to plug in values for those variables. You...">
+<meta name="description" property="og:description" content="SQL parameters You can create SQL templates by adding variables to your SQL queries in the Native/SQL editor. These variables will create filter widgets that you can use to change the variable’s value in the query. You can also add...">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -4803,89 +4803,441 @@ Roadmap</a>
 
         <h1 id="sql-parameters">SQL parameters</h1>
 
-<p><img src="../images/filter-and-parameter.png" alt="Variables"></p>
+<p>You can create SQL templates by adding variables to your SQL queries in the <a href="./writing-sql">Native/SQL editor</a>. These variables will create filter widgets that you can use to change the variable’s value in the query. You can also add parameters to your question’s URL to set the filters’ values, so that when the question loads, those values are inserted into the variables.</p>
 
-<p>You can create SQL templates by adding parameters (a.k.a. variables) to your SQL queries in the <a href="./writing-sql">Native/SQL editor</a>.</p>
+<p><img src="../images/02-widget.png" alt="Variables"></p>
 
-<p>These variables create widgets that people can use to plug in values for those variables. You can also connect <a href="../../dashboards/filters">dashboard widgets to these parameters</a>.</p>
+<h2 id="defining-variables">Defining variables</h2>
 
-<h2 id="sql-variable-types">SQL variable types</h2>
+<p>Typing <code class="language-plaintext highlighter-rouge">{{variable_name}}</code> in your native query creates a variable called <code class="language-plaintext highlighter-rouge">variable_name</code>.</p>
 
-<p>When you define a variable, the <strong>variables and parameters</strong> side panel will appear. You can set a type for a variable, which changes the kind of filter widget that Metabase presents.</p>
+<p>Field Filters, a special type of filter, have a <a href="#field-filter-syntax">slightly different syntax</a>.</p>
 
-<p>Variable types include:</p>
+<p>This example defines a <strong>Text</strong> variable called <code class="language-plaintext highlighter-rouge">category</code>:</p>
 
-<ul>
-  <li><strong><a href="./field-filters">Field filter variables</a></strong>: create “smart” filter widgets with date pickers or dropdown menus. To use a field filter, you’ll need to connect to a database field included in your query.</li>
-  <li><strong><a href="./basic-sql-parameters">Basic variables</a></strong>: text, number, and date variables. You’ll almost always want to use field filters instead of these basic variables, as field filters create “smart” filter widgets, but Metabase provides these basic variables for situations where you can’t use field filters.</li>
-  <li><strong><a href="./time-grouping-parameters">Time grouping parameters</a></strong>: allows people to change how the results are grouped by a date column: by month, week, day, etc.</li>
-</ul>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">SELECT</span>
+  <span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span>
+<span class="k">FROM</span>
+  <span class="n">products</span>
+<span class="k">WHERE</span>
+  <span class="n">category</span> <span class="o">=</span> <span class="p">{{</span><span class="n">category</span><span class="p">}}</span>
 
-<p>You can include multiple variables in a single query, and Metabase will add multiple widgets to the question. To rearrange the order of the widgets, enter edit mode and click on any widget and drag it around.</p>
+</code></pre></div></div>
 
-<h3 id="configure-your-filter-widget">Configure your filter widget</h3>
+<p>Metabase will read the variable and attach a filter widget to the query, which people can use to change the value inserted into the <code class="language-plaintext highlighter-rouge">cat</code> variable with quotes. So if someone entered “Gizmo” into the filter widget, the query Metabase would run would be:</p>
 
-<p>When you add a field filter variable or basic variable to your SQL code, you’ll need to configure it in the sidebar.</p>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span>
+  <span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span>
+<span class="k">FROM</span>
+  <span class="n">products</span>
+<span class="k">WHERE</span>
+  <span class="n">category</span> <span class="o">=</span> <span class="s1">'Gizmo'</span>
+</code></pre></div></div>
 
-<ol>
-  <li>Set the <strong>Filter widget type</strong>. Options will differ depending on whether you used a <a href="./field-filters">field filter</a> (preferred) or a <a href="./basic-sql-parameters">basic variable</a> (if you can’t use a field filter).</li>
-  <li>Set the <strong>Filter widget</strong> label.</li>
-  <li>Set <strong>How should users filter on this variable?</strong>:
-    <ul>
-      <li><a href="../../dashboards/filters#dropdown-list">Dropdown list</a>. A dropdown list shows all available values for the field in a selectable list.</li>
-      <li><a href="../../dashboards/filters#search-box">Search box</a>. A search box allows people to type to search for specific values.</li>
-      <li><a href="../../dashboards/filters#plain-input-box">Input box</a>. An input box provides a simple text field for entering values.</li>
-    </ul>
-  </li>
-  <li>If the filter is mapped to a field in an aliased table, you’ll need to <a href="./field-filters#specifying-the-table-and-field-alias">specify the table and field alias</a>.</li>
-  <li>Optionally, set a <strong>Default filter widget value</strong>.</li>
-</ol>
+<p>If you’re writing a native MongoDB query, your query would look more like this, with the <code class="language-plaintext highlighter-rouge">cat</code> variable being defined inside of the <code class="language-plaintext highlighter-rouge">match</code> clause.</p>
 
-<p>Check out <a href="./filter-widgets">filter widgets</a>.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[{ $match: { category: {{cat}} } }]
+</code></pre></div></div>
 
-<h2 id="setting-values-for-sql-variables">Setting values for SQL variables</h2>
+<h2 id="setting-sql-variables">Setting SQL variables</h2>
 
 <p>To set a SQL variable to a value, you can either:</p>
 
 <ul>
-  <li>Enter a value into the <a href="./filter-widgets">filter widget</a>, and re-run the question.</li>
+  <li>Enter a value into the filter widget, and re-run the question, or</li>
   <li>Add a parameter to the URL and load the page.</li>
 </ul>
-
-<h3 id="setting-a-parameter-via-url">Setting a parameter via URL</h3>
 
 <p>To add a value to the URL, follow this syntax:</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>?variable_name=value
 </code></pre></div></div>
 
-<p>For example, to set the <code class="language-plaintext highlighter-rouge">{{category}}</code> variable on a question to the value “Gizmo”, your URL would look something like:</p>
+<p>For example, to set the <code class="language-plaintext highlighter-rouge">{{cat}}</code> variable on a question to the value “Gizmo”, your URL would look something like:</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://metabase.example.com/question/42-eg-question?category=Gizmo
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://metabase.example.com/question/42-eg-question?cat=Gizmo
 </code></pre></div></div>
 
 <p>To set multiple variables, separate parameters with an ampersand (<code class="language-plaintext highlighter-rouge">&amp;</code>):</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://metabase.example.com/question/42-eg-question?category=Gizmo&amp;maxprice=50
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://metabase.example.com/question/42-eg-question?cat=Gizmo&amp;maxprice=50
+</code></pre></div></div>
+
+<h2 id="sql-variable-types">SQL variable types</h2>
+
+<p>When you define a variable, the <strong>Variables</strong> side panel will appear. You can set a type for a variable, which changes the kind of filter widget that Metabase presents.</p>
+
+<p>There are four types of variables:</p>
+
+<ul>
+  <li><strong>Text</strong>: a plain input box.</li>
+  <li><strong>Number</strong>: a plain input box.</li>
+  <li><strong>Date</strong>: a simple date picker. If you want a more expressive date picker, like specifying a range, you’ll want to use a Field Filter.</li>
+  <li><strong><a href="#the-field-filter-variable-type">Field Filter</a></strong>: different filter widgets, depending on the mapped field.</li>
+</ul>
+
+<p>That last variable type, <a href="#the-field-filter-variable-type">Field Filter</a>, is special; it lets you create “smart” filter widgets, like a search box, or a dropdown menu of values, or a dynamic date picker that allows you to specify a date range.</p>
+
+<p>You can include multiple variables in the query, and Metabase will add multiple filter widgets to the question. When you have multiple filter widgets, you can click on a filter widget and drag it around to rearrange the order.</p>
+
+<h2 id="the-field-filter-variable-type">The Field Filter variable type</h2>
+
+<p>Setting a variable to the <strong>Field Filter</strong> type allows you to map the variable to a field in any table in the current database. Field filters let you create a “smart” filter widget that makes sense for that field.</p>
+
+<p>Field Filter variables should be used inside of a <code class="language-plaintext highlighter-rouge">WHERE</code> clause in SQL, or a <code class="language-plaintext highlighter-rouge">$match</code> clause in MongoDB.</p>
+
+<h3 id="field-filter-compatible-types">Field Filter compatible types</h3>
+
+<p>Field Filters ONLY work with the following field types:</p>
+
+<ul>
+  <li>Category</li>
+  <li>Entity Name</li>
+  <li>Entity Key</li>
+  <li>Foreign Key</li>
+  <li>City</li>
+  <li>State</li>
+  <li>ZIP or Postal Code</li>
+</ul>
+
+<p>The field can also be a date or timestamp, which can be left as “No semantic type” in the <a href="../../data-modeling/metadata-editing">Table Metadata</a>.</p>
+
+<p>When you set the <strong>Variable type</strong> to “Field Filter”, Metabase will present an option to set the <strong>Field to map to</strong>, as well as the <strong>Filter widget type</strong>. The options available for the Filter widget type depend on the field’s type. For example, if you map to a field of type Category, you’ll see options for either “Category” or None. If you map to a Date Field, you’ll see options for None, Month and year, Quarter and year, Single date, Date range, or Date filter.</p>
+
+<p>If you’re not seeing the option to display a filter widget, make sure the mapped field is set to one of the above types, and then try manually syncing your database from the “Databases” section of the Admin Panel to force Metabase to scan and cache the field’s values.</p>
+
+<p>If you want to map a Field Filter to a field that isn’t one of the compatible types listed above, you’ll need an Admin to change the field type for that column. See <a href="../../data-modeling/metadata-editing">metadata editing</a>.</p>
+
+<h2 id="field-filter-syntax">Field Filter syntax</h2>
+
+<p>Let’s say you want to create a Field Filter that filters the <code class="language-plaintext highlighter-rouge">People</code> table by state, and you want people to be able to select multiple states at a time. Here’s the query:</p>
+
+<p>The syntax for Field Filters differs from a Text, Number, or Date variable.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">SELECT</span>
+  <span class="o">*</span>
+<span class="k">FROM</span>
+  <span class="n">PEOPLE</span>
+<span class="k">WHERE</span>
+  <span class="p">{{</span><span class="k">state</span><span class="p">}}</span>
+
+</code></pre></div></div>
+
+<p>Then, in the side panel, select the “Field Filter” variable type, and choose which field to map your variable to (in this case, <code class="language-plaintext highlighter-rouge">State</code>).</p>
+
+<p>Note the lack of the column and operator (like <code class="language-plaintext highlighter-rouge">=</code>). The reason you need to structure Field Filters this way is to handle cases where Metabase generates the code for you. For example, for handling cases where someone selects multiple values in the filter widget, or a range of dates. With Field Filters, you can’t control the generated SQL, so if you need greater control, you should use one (or more) Text, Number, or Date variables.</p>
+
+<p>A MongoDB native query example might look like this:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[ {$match: {{date_var}} } ]
+</code></pre></div></div>
+
+<p>For a more in-depth guide, check out <a href="/learn/metabase-basics/querying-and-dashboards/sql-in-metabase/field-filters">Field Filters: create smart filter widgets for SQL questions</a>.</p>
+
+<h3 id="field-filters-in-bigquery-and-oracle">Field filters in BigQuery and Oracle</h3>
+
+<p>Make sure your SQL dialect matches the database you’ve selected. Common issues involving how tables are quoted in the query:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Database</th>
+      <th>Dialect quirk</th>
+      <th>Example</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td data-label="Database">BigQuery</td>
+      <td data-label="Dialect quirk">Schemas and tables must be quoted with backticks.</td>
+      <td data-label="Example"><code class="language-plaintext highlighter-rouge">FROM `dataset.table`</code></td>
+    </tr>
+    <tr>
+      <td data-label="Database">Oracle</td>
+      <td data-label="Dialect quirk">Schemas and tables must be quoted in double quotes.</td>
+      <td data-label="Example"><code class="language-plaintext highlighter-rouge">FROM "schema.table"</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>For more help, see <a href="../../troubleshooting-guide/error-message#sql-editor">Troubleshooting SQL error messages</a>.</p>
+
+<h2 id="how-to-create-different-types-of-filter-widgets">How to create different types of filter widgets</h2>
+
+<p>The kind of filter widget that Metabase displays when you create a Field Filter widget depends on a setting for that field in Metabase called <strong>Filtering on this field</strong>. Admins can set this field option to:</p>
+
+<ul>
+  <li>Plain input box</li>
+  <li>Search box</li>
+  <li>A list of all values (also known as a dropdown menu)</li>
+</ul>
+
+<p>Date fields will either have a simple date filter (for Date variables) or a dynamic date picker (for Field Filters mapped to a date field).</p>
+
+<p>If you want to change the filter widget for a particular field, you’ll need to ask an Admin to update that field in <a href="../../data-modeling/metadata-editing">the Table Metadata</a> and set the desired “Filtering on this field” option.</p>
+
+<h3 id="filter-widget-with-plain-input-box">Filter widget with plain input box</h3>
+
+<p>Create a simple <strong>Text</strong> or <strong>Number</strong> variable. Additionally, you can use a Field Filter with a field that has its <strong>Filtering on this field</strong> value set to “Plain input box”.</p>
+
+<p>Note: to guard against SQL injection attacks, Metabase converts whatever is in the Search box to a string. If you want to use wildcards, check out <a href="/learn/metabase-basics/querying-and-dashboards/sql-in-metabase/sql-variables">our Learn article</a>.</p>
+
+<h3 id="filter-widget-with-search-box">Filter widget with search box</h3>
+
+<ul>
+  <li>Include a SQL variable in your query.</li>
+  <li>Set the <strong>Variable type</strong> to <strong>Field Filter</strong>.</li>
+  <li>Set the <strong>Field to map to</strong> to a field of type “Category” that has its <strong>Filtering on this field</strong> option set to “Search box”</li>
+</ul>
+
+<h3 id="filter-widget-with-dropdown-menu-and-search">Filter widget with dropdown menu and search</h3>
+
+<p>To create a dropdown menu with search and a list of all values, you need to:</p>
+
+<ul>
+  <li>Include a SQL variable in your query.</li>
+  <li>Set the <strong>Variable type</strong> to <strong>Field Filter</strong>.</li>
+  <li>Set the <strong>Field to map to</strong> to a field of type “Category” that has its <strong>Filtering on this field</strong> option set to “A list of all values”.</li>
+  <li>Set the <strong>Filter widget type</strong> to “Category”.</li>
+</ul>
+
+<p>If the field you want to create a dropdown for is not set to the type “Category” with <strong>Filtering on this field</strong> set to “A list of all values”, an Admin will need to update the settings for that field. For example, if you want to create a dropdown menu for an incompatible field type like an Email field, an admin will need to change that field type to “Category”, set the <strong>Filtering on this field</strong> option to <strong>A list of all values</strong>, then re-scan the values for that field.</p>
+
+<p>If however, there are too many different values in that column to display in a dropdown menu, Metabase will simply display a search box instead. So if you have a lot of email addresses, you may just get a search box anyway. The dropdown menu widgets work better when there’s a small set of values to choose from (like the fifty U.S. states).</p>
+
+<h2 id="field-filter-limitations">Field filter limitations</h2>
+
+<p>Some things that could trip you up when trying to set up a Field Filter variable.</p>
+
+<h3 id="field-filters-dont-work-with-table-aliases">Field Filters don’t work with table aliases</h3>
+
+<p>You won’t be able to select values from field filters in queries that use table aliases for joins or CTEs.</p>
+
+<p>The reason is that field filters generate SQL based on the mapped field; Metabase doesn’t parse the SQL, so it can’t tell what an alias refers to. You have three options for workarounds, depending on the complexity of your query.</p>
+
+<ol>
+  <li>Use full table names.</li>
+  <li>Replace CTEs with subqueries.</li>
+  <li>Create a view in your database, and use the view as the basis of your query.</li>
+</ol>
+
+<h3 id="field-filters-must-be-connected-to-fields-included-in-the-query">Field Filters must be connected to fields included in the query</h3>
+
+<p>Your main query should be aware of all the tables that your Field Filter variable is pointing to, otherwise you’ll get a SQL syntax error. For example, let’s say that your main query includes a field filter like this:</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">SELECT</span>
+  <span class="o">*</span>
+<span class="k">FROM</span>
+  <span class="n">ORDERS</span>
+<span class="k">WHERE</span>
+  <span class="p">{{</span> <span class="n">product_category</span> <span class="p">}}</span>
+
+</code></pre></div></div>
+
+<p>Let’s say the <code class="language-plaintext highlighter-rouge">{{ product_category }}</code> variable refers to another question that uses the <code class="language-plaintext highlighter-rouge">Products</code> table. For the field filter to work, you’ll need to include a join to <code class="language-plaintext highlighter-rouge">Products</code> in your main query.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">SELECT</span>
+  <span class="o">*</span>
+<span class="k">FROM</span>
+  <span class="n">ORDERS</span>
+  <span class="k">JOIN</span> <span class="n">PRODUCTS</span> <span class="k">ON</span> <span class="n">ORDERS</span><span class="p">.</span><span class="n">product_id</span> <span class="o">=</span> <span class="n">PRODUCTS</span><span class="p">.</span><span class="n">id</span>
+<span class="k">WHERE</span>
+  <span class="p">{{</span> <span class="n">product_category</span> <span class="p">}}</span>
+
+</code></pre></div></div>
+
+<h2 id="customizing-dropdown-lists-and-search-box-values">Customizing dropdown lists and search box values</h2>
+
+<p>With Text and Field filter variables, you can tell Metabase what values people can choose from when using a filter with a dropdown list or search box.</p>
+
+<ol>
+  <li>In the native editor, add a {{variable}} in double braces.</li>
+  <li>If the sidebar doesn’t open, you can click on the <strong>{x}</strong> icon on the right to open the <strong>Variables</strong> sidebar.</li>
+  <li>In the <strong>Settings</strong> tab, set the <strong>Variable type</strong> to either “Text” or “Field Filter”.</li>
+  <li>In the sidebar, go to <strong>How should users filter on this variable?</strong> Pick either <strong>Dropdown list</strong> or <strong>Search box</strong>.</li>
+  <li>Next to the option you chose, click <strong>Edit</strong>.</li>
+  <li>Metabase will pop up a modal where you can select <strong>Where the values should come from</strong>.</li>
+</ol>
+
+<p>You can choose:</p>
+
+<ul>
+  <li><strong>From connected fields</strong> If you selected the Field filter variable type, you’ll also have the option to use the connected field.</li>
+  <li><strong>From another model or question</strong>. If you select this option, you’ll need to pick a model or question, then a field from that model or question that Metabase will use to supply the values for that dropdown or search box. For example, if you want the dropdown to list the different plans an account could be on, you could select an “Account” model you created, and select the field “Plan” to power that dropdown. The dropdown would then list all of the distinct plan options that appear in the “Plan” column in the Accounts model.</li>
+  <li><strong>Custom list</strong>. Enter each item on a line. You can enter any string values you like.</li>
+</ul>
+
+<p>You can also <a href="../../dashboards/filters#change-a-filters-selectable-values">change a dashboard filter’s selectable values</a>.</p>
+
+<h2 id="setting-a-default-value-in-the-filter-widget">Setting a default value in the filter widget</h2>
+
+<p>In the variables sidebar, you can set a default value for your variable. This value will be inserted into the corresponding filter widget by default (even if the filter widget is empty). You’ll need to insert a new value into the filter widget to override the default.</p>
+
+<h2 id="setting-complex-default-values-in-the-query">Setting complex default values in the query</h2>
+
+<p>You can also define default values directly in your query by enclosing comment syntax inside the end brackets of an optional parameter.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">WHERE</span> <span class="k">column</span> <span class="o">=</span> <span class="p">[[</span> <span class="p">{{</span> <span class="n">your_parameter</span> <span class="p">}}</span> <span class="c1">--]] your_default_value</span>
+</code></pre></div></div>
+
+<p>The comment will “activate” whenever you pass a value to <code class="language-plaintext highlighter-rouge">your_parameter</code>.</p>
+
+<p>This is useful when defining complex default values (for example, if your default value is a function like <code class="language-plaintext highlighter-rouge">CURRENT_DATE</code>). Here’s a PostgreSQL example that sets the default value of a Date filter to the current date using <code class="language-plaintext highlighter-rouge">CURRENT_DATE</code>:</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">SELECT</span>
+  <span class="o">*</span>
+<span class="k">FROM</span>
+  <span class="n">orders</span>
+<span class="k">WHERE</span>
+  <span class="nb">DATE</span><span class="p">(</span><span class="n">created_at</span><span class="p">)</span> <span class="o">=</span> <span class="p">[[</span> <span class="p">{{</span><span class="n">dateOfCreation</span><span class="p">}}</span> <span class="c1">--]] CURRENT_DATE</span>
+
+</code></pre></div></div>
+
+<p>If you pass a value to the variable, the <code class="language-plaintext highlighter-rouge">WHERE</code> clause runs, including the comment syntax that comments out the default <code class="language-plaintext highlighter-rouge">CURRENT_DATE</code> function.</p>
+
+<p>Note that the hash (<code class="language-plaintext highlighter-rouge">--</code>) used to comment the text might need to be replaced by the comment syntax specific to the database you’re using.</p>
+
+<h2 id="requiring-a-value-for-a-filter-widget">Requiring a value for a filter widget</h2>
+
+<p>In the <strong>Variable</strong> settings sidebar, you can toggle the <strong>Always require a value</strong> option. If you turn this on:</p>
+
+<ul>
+  <li>You must enter a default value.</li>
+  <li>The default value will override any optional syntax in your code (like an optional <code class="language-plaintext highlighter-rouge">WHERE</code> clause). If no value is passed to the filter, Metabase will run the query using the default value. Click on the <strong>Eye</strong> icon in the editor to preview the SQL Metabase will run.</li>
+</ul>
+
+<h2 id="making-variables-optional">Making variables optional</h2>
+
+<p>You can make a clause optional in a query. For example, you can create an optional <code class="language-plaintext highlighter-rouge">WHERE</code> clause that contains a SQL variable, so that if no value is supplied to the variable (either in the filter or via the URL), the query will still run as if there were no <code class="language-plaintext highlighter-rouge">WHERE</code> clause.</p>
+
+<p>To make a variable optional in your native query, put <code class="language-plaintext highlighter-rouge">[[ .. ]]</code> brackets around the entire clause containing the <code class="language-plaintext highlighter-rouge">{{variable}}</code>. If someone inputs a value in the filter widget for the <code class="language-plaintext highlighter-rouge">variable</code>, Metabase will place the clause in the template; otherwise Metabase will ignore the clause and run the query as though the clause didn’t exist.</p>
+
+<p>In this example, if no value is given to <code class="language-plaintext highlighter-rouge">cat</code>, then the query will just select all the rows from the <code class="language-plaintext highlighter-rouge">products</code> table. But if <code class="language-plaintext highlighter-rouge">cat</code> does have a value, like “Widget”, then the query will only grab the products with a category type of Widget:</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">SELECT</span>
+  <span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span>
+<span class="k">FROM</span>
+  <span class="n">products</span>
+<span class="p">[[</span><span class="k">WHERE</span> <span class="n">category</span> <span class="o">=</span> <span class="p">{{</span><span class="n">cat</span><span class="p">}}]]</span>
+
+</code></pre></div></div>
+
+<h3 id="your-sql-must-also-be-able-to-run-without-the-optional-clause-in--">Your SQL must also be able to run without the optional clause in <code class="language-plaintext highlighter-rouge">[[ ]]</code></h3>
+
+<p>You need to make sure that your SQL is still valid when no value is passed to the variable in the bracketed clause.</p>
+
+<p>For example, excluding the <code class="language-plaintext highlighter-rouge">WHERE</code> keyword from the bracketed clause will cause an error if there’s no value given for <code class="language-plaintext highlighter-rouge">cat</code>:</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- this will cause an error:</span>
+
+<span class="k">SELECT</span>
+  <span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span>
+<span class="k">FROM</span>
+  <span class="n">products</span>
+<span class="k">WHERE</span>
+  <span class="p">[[</span><span class="n">category</span> <span class="o">=</span> <span class="p">{{</span><span class="n">cat</span><span class="p">}}]]</span>
+
+</code></pre></div></div>
+
+<p>That’s because when no value is given for <code class="language-plaintext highlighter-rouge">cat</code>, Metabase will try to execute SQL as if the clause in <code class="language-plaintext highlighter-rouge">[[ ]]</code> didn’t exist:</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span>
+  <span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span>
+<span class="k">FROM</span>
+  <span class="n">products</span>
+<span class="k">WHERE</span>
+</code></pre></div></div>
+
+<p>which is not a valid SQL query.</p>
+
+<p>Instead, put the entire <code class="language-plaintext highlighter-rouge">WHERE</code> clause in <code class="language-plaintext highlighter-rouge">[[ ]]</code>:</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">SELECT</span>
+  <span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span>
+<span class="k">FROM</span>
+  <span class="n">products</span>
+<span class="p">[[</span><span class="k">WHERE</span>
+  <span class="n">category</span> <span class="o">=</span> <span class="p">{{</span><span class="n">cat</span><span class="p">}}]]</span>
+
+</code></pre></div></div>
+
+<p>When there’s no value given for <code class="language-plaintext highlighter-rouge">cat</code>, Metabase will just execute:</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">SELECT</span>
+  <span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span>
+<span class="k">FROM</span>
+  <span class="n">products</span>
+
+</code></pre></div></div>
+
+<p>which is still a valid query.</p>
+
+<h3 id="you-need-at-least-one-where-when-using-multiple-optional-clauses">You need at least one <code class="language-plaintext highlighter-rouge">WHERE</code> when using multiple optional clauses</h3>
+
+<p>To use multiple optional clauses, you must include at least one regular <code class="language-plaintext highlighter-rouge">WHERE</code> clause followed by optional clauses, each starting with <code class="language-plaintext highlighter-rouge">AND</code>:</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">SELECT</span>
+  <span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span>
+<span class="k">FROM</span>
+  <span class="n">products</span>
+<span class="k">WHERE</span>
+  <span class="k">TRUE</span>
+  <span class="p">[[</span><span class="k">AND</span> <span class="n">id</span> <span class="o">=</span> <span class="p">{{</span><span class="n">id</span><span class="p">}}]</span>
+  <span class="p">[[</span><span class="k">AND</span> <span class="p">{{</span><span class="n">category</span><span class="p">}}]]</span>
+
+</code></pre></div></div>
+
+<p>That last clause uses a Field filter (note the lack of a column in the <code class="language-plaintext highlighter-rouge">AND</code> clause). When using a field filter, you must exclude the column in the query; you need to map the variable in the side panel.</p>
+
+<h3 id="optional-variables-in-mongodb">Optional variables in MongoDB</h3>
+
+<p>If you’re using MongoDB, you can make an clause optional like so:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+[
+    [[{
+        $match: {category: {{cat}}}
+    },]]
+    {
+        $count: "Total"
+    }
+]
+
+</code></pre></div></div>
+
+<p>Or with multiple optional filters:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+[
+    [[{ $match: {{cat}} },]]
+    [[{ $match: { price: { "$gt": {{minprice}} } } },]]
+    {
+        $count: "Total"
+    }
+]
+
 </code></pre></div></div>
 
 <h2 id="connecting-a-sql-question-to-a-dashboard-filter">Connecting a SQL question to a dashboard filter</h2>
 
-<p>In order for a SQL/native question to be usable with a <a href="../../dashboards/filters">dashboard filter</a>, the question must contain at least one variable or parameter.</p>
+<p>In order for a saved SQL/native question to be usable with a dashboard filter, the question must contain at least one variable.</p>
 
-<p>The kind of dashboard filter that can be used with the SQL question depends on the field. For example, if you have a field filter called <code class="language-plaintext highlighter-rouge">{{var}}</code> and you map it to a field with State semantic type, you can map a location dashboard filter to your SQL question. In this example, you’d:</p>
+<p>The kind of dashboard filter that can be used with the SQL question depends on the field. For example, if you have a field filter called <code class="language-plaintext highlighter-rouge">{{var}}</code> and you map it to a State field, you can map a Location dashboard filter to your SQL question. In this example, you’d create a new dashboard (or go to an existing dashboard), click the <strong>Pencil icon</strong> to enter <strong>Dashboard edit mode</strong>, add the SQL question that contains your State Field Filter variable, add a new dashboard filter (or edit an existing Location filter), then click the dropdown on the SQL question card to see the State Field Filter.</p>
 
-<ol>
-  <li>Create a new dashboard (or go to an existing dashboard).</li>
-  <li>Click the <strong>Pencil icon</strong> to enter <strong>Dashboard edit mode</strong>.</li>
-  <li>Add the SQL question that contains your <code class="language-plaintext highlighter-rouge">State</code> field filter.</li>
-  <li>Add a new dashboard filter (or edit an existing Location filter).</li>
-  <li>Click the dropdown on the SQL question card to connect the widget to the <code class="language-plaintext highlighter-rouge">State</code> field filter.</li>
-</ol>
-
-<p>If you add a basic <strong>Date</strong> variable to the question (i.e., not a field filter), then it’s only possible to use the dashboard filter option <strong>Single Date</strong>. So if you’re trying to use one of the other Time options on the dashboard, you’ll need to change the variable to a <a href="./field-filters">field filter</a> and map it to a date field.</p>
+<p>If you add a <strong>Date</strong> variable to the question, then it’s only possible to use the dashboard filter option <strong>Single Date</strong>. So if you are trying to use one of the other Time options on the dashboard, you’ll need to change the variable to a <a href="#the-field-filter-variable-type">Field Filter</a> variable and map it to a date column.</p>
 
 <p><img src="../images/state-field-filter.png" alt="Field filter"></p>
+
+<p>More on <a href="../../dashboards/filters">Dashboard filters</a>.</p>
 
 <h2 id="further-reading">Further reading</h2>
 
@@ -4896,6 +5248,7 @@ Roadmap</a>
   <li><a href="../../troubleshooting-guide/filters">Troubleshooting filters</a>.</li>
   <li><a href="../../dashboards/filters">Dashboard filters</a>.</li>
 </ul>
+
 
 
         <div>

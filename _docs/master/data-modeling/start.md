@@ -31,11 +31,11 @@ Create metrics to define the official way to calculate important numbers for you
 
 Guide people to the right data by adding display names, hiding outdated tables, configuring filter types, and more.
 
-## [Field types](./semantic-types)
+## [Field types](./field-types)
 
 Field types dictate how Metabase displays its data, as well as the column’s special functionality, if any.
 
-## [Setting default formatting for your data](./formatting)
+## [Setting default formatting for your data](./field-types)
 
 Define formatting and display defaults for numbers, currencies, datetimes, and more.
 

@@ -4813,7 +4813,7 @@ Roadmap</a>
 
 <h2 id="initial-sync-scan-and-fingerprinting">Initial sync, scan, and fingerprinting</h2>
 
-<p>When Metabase first connects to your database, it performs a <a href="#how-database-syncs-work">sync</a> to determine the metadata of the columns in your tables and automatically assign each column a <a href="../data-modeling/semantic-types">semantic type</a>.</p>
+<p>When Metabase first connects to your database, it performs a <a href="#how-database-syncs-work">sync</a> to determine the metadata of the columns in your tables and automatically assign each column a <a href="../data-modeling/field-types">semantic type</a>.</p>
 
 <p>You can follow the progress of these queries from <strong>Gear icon</strong> &gt;<strong>Admin settings</strong> &gt; <strong>Tools</strong> &gt; <strong>Tasks</strong> and filtering by the various sync tasks.</p>
 
@@ -4856,7 +4856,7 @@ Roadmap</a>
   <li><strong>Never, I’ll do this manually if I need to</strong> is an option for databases that are either prohibitively large or which never really have new values added. Use the <a href="#manually-scanning-column-values">Re-scan field values</a> button to run a manual scan and bring your filter values up to date.</li>
 </ul>
 
-<p>Regardless of which option you pick, if you <a href="../data-modeling/metadata-editing#filtering">set a field to use a dropdown list in filter widgets</a>, Metabase will need to get values for that dropdown. Whenever someone uses that filter widget, Metabase will first look for cached values (valid for fourteen days) to populate that dropdown; otherwise, it will re-scan that field for the most up-to-date values.</p>
+<p>Regardless of which option you pick, if you <a href="../data-modeling/metadata-editing#changing-the-filter-widget">set a field to use a dropdown list in filter widgets</a>, Metabase will need to get values for that dropdown. Whenever someone uses that filter widget, Metabase will first look for cached values (valid for fourteen days) to populate that dropdown; otherwise, it will re-scan that field for the most up-to-date values.</p>
 
 <h2 id="manually-syncing-tables-and-columns">Manually syncing tables and columns</h2>
 
@@ -4954,7 +4954,7 @@ Roadmap</a>
 
 <p>By default, this query runs against your database during setup and again every hour. This scanning query is fast with most relational databases but can be slower with MongoDB and some <a href="../developers-guide/community-drivers">community-built database drivers</a>. Syncing can’t be turned off completely, otherwise Metabase wouldn’t work.</p>
 
-<p>Here’s the kind of data that gets synced and why:</p>
+<p>Here’s the kind of data that syncs get and why:</p>
 
 <table>
   <thead>

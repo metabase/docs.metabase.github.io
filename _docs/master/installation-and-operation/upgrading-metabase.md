@@ -13,15 +13,11 @@ redirect_from:
 
 # Upgrading Metabase
 
-This page covers how to upgrade to a new Metabase release.
-
-- [Announcement posts for major releases](https://www.)
-- [Changelogs](/changelog).
-- [Release notes on GitHub](https://github.com/metabase/metabase/releases).
+This page covers how to upgrade to a new [Metabase release](https://github.com/metabase/metabase/releases).
 
 ## Upgrading Metabase Cloud
 
-If you're on a [Metabase Cloud](/pricing/) plan, we'll upgrade your Metabase automatically with each new release; no action needed on your end ([unless you're using the Embedded analytics SDK](#instances-using-the-embedded-analtyics-sdk-on-metabase-cloud-must-request-an-upgrade)).
+If you're on a [Metabase Cloud](/pricing/) plan, we'll upgrade your Metabase automatically with each new release; no action needed on your end. 
 
 How soon we upgrade you depends on the type of release:
 
@@ -29,14 +25,6 @@ How soon we upgrade you depends on the type of release:
 - Major releases (e.g., x.53.4 to x.54.1): Longer, usually months (just to make sure everything goes smoothly).
 
 Cloud customers can request an early upgrade by emailing support at help@metabase.com. Include the URL of the Metabase you want us to upgrade.
-
-### Instances using the Embedded analtyics SDK on Metabase Cloud must request an upgrade
-
-If you're using the [Embedded analytics SDK](../embedding/sdk/introduction) on Metabase Cloud, we pin your version so that it doesn't upgrade automatically, as you should test the changes before upgrading. 
-
-To upgrade your Metabase, you'll need to request an upgrade by [contacting support](/help-premium).
-
-See our [upgrade guide for the Embedded analytics SDK](../embedding/sdk/upgrade).
 
 ## Upgrading a self-hosted Metabase
 
@@ -146,8 +134,6 @@ If you need to downgrade after a major version upgrade, you'll either need to re
 Durning a **minor version upgrade** (e.g., 54.1 to 54.2), the new Metabase container or Jar will just work. Only in rare cases will it have to perform a migration, but, like with major version upgrades, Metabase will perform the migration automatically. And of course, you're backing up your application database each time you upgrade, right?
 
 ## Rolling back an upgrade or to an older version
-
-> **The downgrade command must be run on the JAR with the higher version number.**
 
 In general, regular backups (especially backups before upgrading), are the best policy, so we recommend reverting to a backup of your application database to roll back an upgrade.
 

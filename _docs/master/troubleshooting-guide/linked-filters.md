@@ -21,11 +21,11 @@ If you are having problems with a regular [filter widget][filter-widget-gloss], 
 
 ## Does a connected dashboard card use a SQL variable?
 
-**Root cause**: Native/SQL questions must have a [field filter](../questions/native-editor/field-filters) variable in order to be linked. Regular SQL variables won't work.
+**Root cause**: Native/SQL questions must have a [field filter](../questions/native-editor/sql-parameters#the-field-filter-variable-type) variable in order to be linked. Regular SQL variables won't work.
 
 **Steps to take**:
 
-1. Update the card's query to change the regular variable to a [field filter](../questions/native-editor/field-filters) variable.
+1. Update the card's query to change the regular variable to a [field filter](../questions/native-editor/sql-parameters#the-field-filter-variable-type) variable.
 
 See [Limitations of linking filters](../dashboards/linked-filters#limitations-of-linked-filters).
 

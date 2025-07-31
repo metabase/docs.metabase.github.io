@@ -266,6 +266,7 @@ config:
     surveys-enabled: true
     synchronous-batch-updates: false
     unaggregated-query-row-limit: null
+    update-channel: latest
     uploads-settings: null
     use-tenants: false
     user-visibility: all
