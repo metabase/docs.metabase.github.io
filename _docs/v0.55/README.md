@@ -26,7 +26,7 @@ Metabase is an open-source business intelligence platform. You can use Metabase 
 
 ### Metabase Cloud
 
-The easiest way to get started with Metabase is to sign up for a free trial of [Metabase Cloud](https://store.metabase.com/checkout). You get support, backups, upgrades, an SMTP server, SSL certificate, SoC2 Type 2 security auditing, and more (plus your money goes toward improving Metabase). Check out our quick overview of [cloud vs self-hosting](/docs/latest/cloud/cloud-vs-self-hosting). If you need to, you can always switch to [self-hosting](./installation-and-operation/installing-metabase) Metabase at any time (or vice versa).
+The easiest way to get started with Metabase is to sign up for a free trial of [Metabase Cloud](https://store.metabase.com/checkout). You get support, backups, upgrades, an SMTP server, SSL certificate, SoC2 Type 2 security auditing, and more (plus your money goes toward improving Metabase). Check out our quick overview of [cloud vs self-hosting](./cloud/cloud-vs-self-hosting). If you need to, you can always switch to [self-hosting](./installation-and-operation/installing-metabase) Metabase at any time (or vice versa).
 
 ### [Installing Metabase](./installation-and-operation/installing-metabase)
 
@@ -205,6 +205,7 @@ Metabase's reference documentation.
 - [Interactive embedding quick start](./embedding/interactive-embedding-quick-start-guide)
 - [Static embedding](./embedding/static-embedding)
 - [Parameters for static embeds](./embedding/static-embedding-parameters)
+- [Securing embedded Metabase](./embedding/securing-embeds)
 
 ### Configuration
 
@@ -230,9 +231,9 @@ Metabase's reference documentation.
 - [Usage analytics](./usage-and-performance-tools/usage-analytics)
 - [Admin tools](./usage-and-performance-tools/tools)
 
-### Cloud
+### Metabase Cloud
 
-- [Documentation for Metabase Cloud and Store](/docs/latest/cloud/start)
+- [Documentation for Metabase Cloud and Store](./cloud/start)
 
 ### Metabase API
 
@@ -264,10 +265,6 @@ Metabase's reference documentation.
 ### [Discussion](https://discourse.metabase.com)
 
 Share and connect with other Metabasers.
-
-### [Metabase Cloud](/docs/latest/cloud/start)
-
-For docs specific to Metabase Cloud plans.
 
 ### [Community stories](/community)
 
@@ -304,4 +301,5 @@ Data jargon explained.
 ### [Metabase Experts](/partners/)
 
 If you’d like more technical resources to set up your data stack with Metabase, connect with a [Metabase Expert](/partners/).
+
 <!-- bump 2 -->

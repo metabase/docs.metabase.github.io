@@ -21,10 +21,10 @@ type DashboardCardCustomMenuItem = {
 
 <!-- [<snippet properties>] -->
 
-| Property                                    | Type                                                                                                                             |
-| :------------------------------------------ | :------------------------------------------------------------------------------------------------------------------------------- |
-| <a id="customitems"></a> `customItems?`     | ( \| [`DashCardMenuItem`](./api/DashCardMenuItem) \| [`CustomDashboardCardMenuItem`](./api/CustomDashboardCardMenuItem))[] |
-| <a id="withdownloads"></a> `withDownloads?` | `boolean`                                                                                                                        |
-| <a id="witheditlink"></a> `withEditLink?`   | `boolean`                                                                                                                        |
+| Property                                    | Type                                                                                                                             | Description  |
+| :------------------------------------------ | :------------------------------------------------------------------------------------------------------------------------------- | :----------- |
+| <a id="customitems"></a> `customItems?`     | ( \| [`DashCardMenuItem`](./api/DashCardMenuItem) \| [`CustomDashboardCardMenuItem`](./api/CustomDashboardCardMenuItem))[] | **`Expand`** |
+| <a id="withdownloads"></a> `withDownloads?` | `boolean`                                                                                                                        | -            |
+| <a id="witheditlink"></a> `withEditLink?`   | `boolean`                                                                                                                        | -            |
 
 <!-- [<endsnippet properties>] -->

@@ -277,5 +277,5 @@ Metabase can only create a data sandbox using the group membership or user attri
 
 - [Data sandbox examples](./data-sandbox-examples)
 - [Permissions strategies](/learn/metabase-basics/administration/permissions/strategy)
-- [Configuring permissions for different customer schemas](/learn/metabase-basics/administration/permissions/multi-tenant-permissions)
-- [Securing embedded Metabase](/learn/metabase-basics/embedding/securing-embeds)
+- [Configuring permissions for embedding](../permissions/embedding)
+- [Securing embedded Metabase](../embedding/securing-embeds)

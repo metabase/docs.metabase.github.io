@@ -76,7 +76,7 @@ config:
   settings:
     admin-email: null
     aggregated-query-row-limit: null
-    ai-proxy-base-url: http://localhost:8000
+    ai-service-base-url: http://localhost:8000
     allowed-iframe-hosts: |-
       youtube.com,
       youtu.be,
@@ -120,6 +120,7 @@ config:
     custom-geojson-enabled: true
     custom-homepage: false
     custom-homepage-dashboard: null
+    dashboards-save-last-used-parameters: true
     db-connection-timeout-ms: 10000
     db-query-timeout-minutes: 20
     default-maps-enabled: true
@@ -237,7 +238,7 @@ config:
     saml-user-provisioning-enabled: true
     scim-enabled: null
     sdk-encryption-validation-key: null
-    search-engine: in-place
+    search-engine: appdb
     search-language: null
     search-typeahead-enabled: true
     send-new-sso-user-admin-email: null

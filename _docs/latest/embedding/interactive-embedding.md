@@ -22,7 +22,7 @@ latest: true
 
 **Interactive embedding** is what you want if you want to offer [multi-tenant, self-service analytics](/learn/metabase-basics/embedding/multi-tenant-self-service-analytics).
 
-Interactive embedding is the only type of embedding that integrates with your [permissions](../permissions/introduction) and [SSO](../people-and-groups/start#authentication) to give people the right level of access to [query](/glossary/query_builder) and [drill-down](/learn/metabase-basics/querying-and-dashboards/questions/drill-through) into your data.
+Interactive embedding is the only type of embedding that integrates with your [permissions](../permissions/introduction) and [SSO](../people-and-groups/start#authentication) to give people the right level of access to [query](/glossary/query-builder) and [drill-down](/learn/metabase-basics/querying-and-dashboards/questions/drill-through) into your data.
 
 ## Interactive embedding demo
 
@@ -32,7 +32,7 @@ To see the query builder in action, click on **Reports** > **+ New** > **Questio
 
 ## Quick start
 
-Check out the [Interactive embedding quick start](/docs/latest/embedding/interactive-embedding-quick-start-guide).
+Check out the [Interactive embedding quick start](./interactive-embedding-quick-start-guide).
 
 ## Prerequisites for interactive embedding
 
@@ -41,7 +41,7 @@ Check out the [Interactive embedding quick start](/docs/latest/embedding/interac
 3. Set up [permissions](../permissions/introduction) for each group.
 4. Set up [SSO](../people-and-groups/start#authentication) to automatically apply permissions and show people the right data upon sign-in. In general, **we recommend using [SSO with JWT](../people-and-groups/authenticating-with-jwt)**.
 
-If you're dealing with a [multi-tenant](/learn/metabase-basics/embedding/multi-tenant-self-service-analytics) situation, check out our recommendations for [Configuring permissions for different customer schemas](/learn/metabase-basics/administration/permissions/multi-tenant-permissions).
+If you're dealing with a [multi-tenant](/learn/metabase-basics/embedding/multi-tenant-self-service-analytics) situation, check out our recommendations for [Configuring permissions for different customer schemas](../permissions/embedding).
 
 If you have your app running locally, and you're using the Pro Cloud version, or hosting Metabase and your app in different domains, you'll need to set your Metabase environment's session cookie samesite option to "none".
 
@@ -84,7 +84,7 @@ To embed a specific Metabase dashboard, you'll want to use the dashboard's Entit
 src="http://metabase.yourcompany.com/dashboard/entity/[Entity ID]"
 ```
 
-To get a dashboard's Entity ID, visit the dashboard and click on the **info** button. In the **Overview** tab, copy the **Entity ID**.  Then in your iframe's `src` attribute to:
+To get a dashboard's Entity ID, visit the dashboard and click on the **info** button. In the **Overview** tab, copy the **Entity ID**. Then in your iframe's `src` attribute to:
 
 ```
 src=http://metabase.yourcompany.com/dashboard/entity/Dc_7X8N7zf4iDK9Ps1M3b
@@ -154,7 +154,7 @@ Learn more about [SameSite cookies](https://developer.mozilla.org/en-US/docs/Web
 
 ## Securing interactive embeds
 
-Metabase uses HTTP cookies to authenticate people and keep them signed into your embedded Metabase, even when someone closes their browser session. If you enjoy diagrammed auth flows, check out [Interactive embedding with SSO](/learn/metabase-basics/embedding/securing-embeds).
+Metabase uses HTTP cookies to authenticate people and keep them signed into your embedded Metabase, even when someone closes their browser session. If you enjoy diagrammed auth flows, check out [Interactive embedding with SSO](./securing-embeds).
 
 To limit the amount of time that a person stays logged in, set [`MAX_SESSION_AGE`](../configuring-metabase/environment-variables#max_session_age) to a number in minutes. The default value is 20,160 (two weeks).
 
@@ -247,12 +247,12 @@ See [interactive UI components](./interactive-ui-components)
 
 To build a sample interactive embed using SSO with JWT, see our reference apps:
 
-- [Node.js + Express](https://github.com/metabase/metabase-nodejs-express-interactive-embedding-sample) (with [quick start guide](/docs/latest/embedding/interactive-embedding-quick-start-guide))
+- [Node.js + Express](https://github.com/metabase/metabase-nodejs-express-interactive-embedding-sample) (with [quick start guide](./interactive-embedding-quick-start-guide))
 - [Node.js + React](https://github.com/metabase/sso-examples/tree/master/app-embed-example)
 
 ## Further reading
 
-- [Interactive embedding quick start](/docs/latest/embedding/interactive-embedding-quick-start-guide)
+- [Interactive embedding quick start](./interactive-embedding-quick-start-guide)
 - [Strategies for delivering customer-facing analytics](/learn/metabase-basics/embedding/overview).
 - [Permissions strategies](/learn/metabase-basics/administration/permissions/strategy).
 - [Customizing Metabase's appearance](../configuring-metabase/appearance).

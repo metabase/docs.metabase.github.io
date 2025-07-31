@@ -55,7 +55,7 @@ If you'd like to share your data with the good people of the internet, admins ca
 | Restrict data with [locked filters](./static-embedding-parameters#restricting-data-in-a-static-embed-with-locked-parameters) | ❌                                              | ❌                                        | ✅                              | ❌                                     |
 | Restrict data with [sandboxes](../permissions/data-sandboxes)                                                                | ✅                                              | ✅                                        | ❌                              | ❌                                     |
 | Use the [drill-through menu](/learn/metabase-basics/querying-and-dashboards/questions/drill-through)    | ✅                                              | ✅                                        | ❌                              | ❌                                     |
-| Self-serve via [query builder](/glossary/query_builder)                                                 | ✅                                              | ✅                                        | ❌                              | ❌                                     |
+| Self-serve via [query builder](/glossary/query-builder)                                                 | ✅                                              | ✅                                        | ❌                              | ❌                                     |
 | View usage of embeds with [usage analytics](../usage-and-performance-tools/usage-analytics)                                  | ✅                                              | ✅                                        | ❌                              | ❌                                     |
 | [Actions on dashboards](../dashboards/actions)                                                                               | ✅                                              | ✅                                        | ❌                              | ❌                                     |
 | Embed individual Metabase components                                                                                            | ✅                                              | ❌                                        | ❌                              | ❌                                     |
@@ -65,7 +65,7 @@ If you'd like to share your data with the good people of the internet, admins ca
 
 ## Switching from static to interactive embedding
 
-[Interactive embedding](./interactive-embedding) requires authentication via single sign-on (SSO), so you'll need to set that up both in your Metabase and in your application's server. Check out our [Interactive embedding quick start](/docs/latest/embedding/interactive-embedding-quick-start-guide).
+[Interactive embedding](./interactive-embedding) requires authentication via single sign-on (SSO), so you'll need to set that up both in your Metabase and in your application's server. Check out our [Interactive embedding quick start](../embedding/interactive-embedding-quick-start-guide).
 
 ## Further reading
 
@@ -73,3 +73,4 @@ If you'd like to share your data with the good people of the internet, admins ca
 - [Publishing data visualizations to the web](/learn/metabase-basics/embedding/charts-and-dashboards).
 - [Multi-tenant self-service analytics](/learn/metabase-basics/embedding/multi-tenant-self-service-analytics).
 - [Customizing Metabase's appearance](../configuring-metabase/appearance).
+- [Securing embedded Metabase](./securing-embeds)
