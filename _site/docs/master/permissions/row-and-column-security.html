@@ -4861,7 +4861,7 @@ Roadmap</a>
   </div>
 </div>
 
-<p>Row and column security lets you give granular permissions to rows and columns for different groups of people. You can change what data a group <a href="./data#can-view-data-permission">can view</a>, as well as what data a group <a href="./data#create-queries-permissions">can query</a> with the query builder.</p>
+<p>Row and column security lets you give granular permissions for different groups of people. You can change what data a group <a href="./data#can-view-data-permission">can view</a>, as well as what data a group <a href="./data#create-queries-permissions">can query</a> with the query builder.</p>
 
 <p>You can use row and column security to set up <a href="/learn/metabase-basics/embedding/multi-tenant-self-service-analytics">self-service analytics</a>, so that each of your customers can only view the rows that match their customer ID. For example, if you have an Accounts table with information about your customers, you can add permissions to the table so that each customer only sees the data relevant to them.</p>
 
@@ -4886,7 +4886,7 @@ Roadmap</a>
 
 <ul>
   <li><a href="#row-level-security-filter-by-a-column-in-the-table">Restrict <strong>rows</strong></a></li>
-  <li><a href="#custom-row-and-column-security-use-a-saved-question-to-create-a-custom-view-of-a-table">Restrict <strong>columns</strong></a> (as well as rows) for specific people.</li>
+  <li><a href="#custom-row-and-column-security-use-a-saved-question-to-create-a-custom-view-of-a-table">Restrict <strong>columns</strong> and rows</a> for specific people.</li>
 </ul>
 
 <table>
@@ -4932,9 +4932,9 @@ Roadmap</a>
   <li>A person with the user attribute value “Premium” will see the rows where <code class="language-plaintext highlighter-rouge">Plan = "Premium"</code> (rows where the Plan column matches the value “Premium”).</li>
 </ul>
 
-<h3 id="custom-row-and-column-security-use-a-saved-question-to-create-a-custom-view-of-a-table">Custom row and column security: use a saved question to create a custom “view” of a table</h3>
+<h3 id="custom-row-and-column-security-use-a-sql-question-to-create-a-custom-view-of-a-table">Custom row and column security: use a SQL question to create a custom “view” of a table</h3>
 
-<p>To <strong>restrict rows <em>and</em> columns</strong>, you can use a saved question to filter the table. When someone views that table, they’ll instead see the question’s results, not the raw table.</p>
+<p>To <strong>restrict rows <em>and</em> columns</strong>, you can use a SQL question to filter the table. When someone views that table, they’ll instead see the question’s results, not the raw table.</p>
 
 <p>For example, say your original Accounts table includes the columns: <code class="language-plaintext highlighter-rouge">ID</code>, <code class="language-plaintext highlighter-rouge">Email</code>, <code class="language-plaintext highlighter-rouge">Plan</code>, and <code class="language-plaintext highlighter-rouge">Created At</code>. If you want to hide the Email column, you can create a “Restricted Accounts” SQL question with the columns: <code class="language-plaintext highlighter-rouge">ID</code>, <code class="language-plaintext highlighter-rouge">Plan</code>, and <code class="language-plaintext highlighter-rouge">Created At</code>.</p>
 
@@ -4955,7 +4955,7 @@ Roadmap</a>
 
 <p>Row security displays a filtered table, in place of an original table, to a specific group. How Metabase filters that table depends on the value in each person’s user attribute.</p>
 
-<p>For example, you can set up a row security so that:</p>
+<p>For example, you can set up a row-level security so that:</p>
 
 <ul>
   <li>Someone with the user attribute with key of “plan” and a value of “Basic” will see a version of the Accounts table with a filter for <code class="language-plaintext highlighter-rouge">Plan = "Basic"</code> (that is, only the rows where the Plan column matches the value “Basic”).</li>
@@ -5149,7 +5149,7 @@ Roadmap</a>
 
 <h3 id="public-sharing">Public sharing</h3>
 
-<p>Row and column security permissions don’t apply to public questions or public dashboards. If somone in an unsecured group person creates a public link using an original table, the original table will be displayed to anyone who has the public link URL.</p>
+<p>Row and column security permissions don’t apply to public questions or public dashboards. If somone in an unsecured group creates a public link using an original table, the original table will be displayed to anyone who has the public link URL.</p>
 
 <p>To prevent this from happening, you’ll have to <a href="../embedding/public-links">disable public sharing</a> for your Metabase.</p>
 
@@ -5161,7 +5161,7 @@ Roadmap</a>
 
 <h3 id="groups-with-native-query-permissions-access-to-the-sql-editor-can-bypass-row-and-column-security">Groups with native query permissions (access to the SQL editor) can bypass row and column security</h3>
 
-<p>You can’t set up <a href="./data#create-queries-permissions">query builder and native</a> for groups with row and column security.</p>
+<p>You can’t set up <a href="./data#create-queries-permissions">native query persmissons</a> for groups with row and column security.</p>
 
 <p>To enforce row-level permissions with the native query editor, check out <a href="./impersonation">impersonation</a>.</p>
 
