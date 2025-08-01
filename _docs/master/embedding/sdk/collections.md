@@ -20,6 +20,7 @@ You can embed Metabase's collection browser so that people can explore items in 
 ### `CollectionBrowser`
 
 #### API Reference
+
 - [Component](./api/CollectionBrowser)
 - [Props](./api/CollectionBrowserProps)
 
