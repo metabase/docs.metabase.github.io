@@ -16,7 +16,8 @@
                     :require true}
     :source-branch {:ref "<source-branch>"
                     :desc "The source branch of the triggering PR."
-                    :alias :r}
+                    :alias :r
+                    :require true}
     :dry-run {:desc "If set, will not execute the command, just print it out."
               :coerce :boolean
               :default false}}
@@ -97,6 +98,7 @@
   (let [{:keys [source-branch target-branch]
          dry-run? :dry-run
          :as   opts}     (cli/parse-opts args cli-spec)
+        [source-branch target-branch] (mapv str/trim [source-branch target-branch])
         pr-number (source+target-branch->pr-number source-branch target-branch)]
     (when-not pr-number
       (throw (ex-info (ice/p-str [:red "No PR found for source branch "] [:bold source-branch] " and target branch " [:bold target-branch] ".")
