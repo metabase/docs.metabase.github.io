@@ -190,16 +190,16 @@ your_embedding_url#theme=night&bordered=false&titled=true
 
 You can preview appearance settings from your question or dashboard's embedded appearance settings.
 
-| Parameter name             | Possible values                                                                                                                                |
-| -------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
-| `background`               | `true` (default), `false`. Dashboards only.                                                                                                    |
-| `bordered`                 | `true` (default), `false`.                                                                                                                     |
-| `locale`\*                 | E.g., `ko`. See [list of locales](../configuring-metabase/localization#supported-languages)                                                 |
-| `titled`                   | `true` (default), `false`.                                                                                                                     |
+| Parameter name             | Possible values                                                                                                                                    |
+| -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `background`               | `true` (default), `false`. Dashboards only.                                                                                                        |
+| `bordered`                 | `true` (default), `false`.                                                                                                                         |
+| `locale`\*                 | E.g., `ko`. See [list of locales](../configuring-metabase/localization#supported-languages)                                                     |
+| `titled`                   | `true` (default), `false`.                                                                                                                         |
 | `theme`                    | `null` (default), `night`. `theme=transparent` should work, but is deprecated (see [Transparent backgrounds](#transparent-backgrounds-for-embeds)) |
-| `refresh` (dashboard only) | integer (seconds, e.g., `refresh=60`).                                                                                                         |
-| `font`\*                   | [font name](../configuring-metabase/fonts)                                                                                                  |
-| `downloads`\*\*            | `true` (default), `false`, `results`, `pdf`                                                                                                    |
+| `refresh` (dashboard only) | integer (seconds, e.g., `refresh=60`).                                                                                                             |
+| `font`\*                   | [font name](../configuring-metabase/fonts)                                                                                                      |
+| `downloads`\*\*            | `true` (default), `false`, `results`, `pdf`                                                                                                        |
 
 \* Available on [Pro](/product/pro) and [Enterprise](/product/enterprise) plans
 

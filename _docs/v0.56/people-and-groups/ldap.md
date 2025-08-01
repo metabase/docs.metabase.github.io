@@ -95,7 +95,7 @@ Group membership lookup filter. The placeholders {dn} and {uid} will be replaced
 
 {% include plans-blockquote.html feature="LDAP advanced features" %}
 
-You can manage [user attributes][user-attributes-def] such as names, emails, and roles from your LDAP directory. When you set up [data sandboxing][data-sandboxing-docs], your LDAP directory will be able to [pass these attributes][user-attributes-docs] to Metabase.
+You can manage [user attributes][user-attributes-def] such as names, emails, and roles from your LDAP directory. When you set up [row and column security][row-and-column-security], your LDAP directory will be able to [pass these attributes][user-attributes-docs] to Metabase.
 
 ## Troubleshooting login issues
 
@@ -107,9 +107,9 @@ You can manage [user attributes][user-attributes-def] such as names, emails, and
 - [Using LDAP for authentication and access control](/learn/metabase-basics/administration/permissions/ldap-auth-access-control).
 - [Permissions overview](../permissions/start).
 
-[data-sandboxing-docs]: ../permissions/data-sandboxes
+[row-and-column-security]: ../permissions/row-and-column-security
 [google-saml-docs]: ./saml-google
 [jwt-docs]: ./authenticating-with-jwt
 [saml-docs]: ./authenticating-with-saml
-[user-attributes-docs]: ../permissions/data-sandboxes#choosing-user-attributes-for-data-sandboxes
+[user-attributes-docs]: ../permissions/row-and-column-security#choosing-user-attributes-for-row-and-column-security
 [user-attributes-def]: /glossary/attribute#user-attributes-in-metabase
