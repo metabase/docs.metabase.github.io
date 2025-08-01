@@ -1788,6 +1788,13 @@ Roadmap</a>
                     
                       
                       <li>
+                        <a href="/docs/master/questions/native-editor/time-grouping-parameters" class="">
+                          Time grouping parameters
+                        </a>
+                      </li>
+                    
+                      
+                      <li>
                         <a href="/docs/master/questions/native-editor/optional-parameters" class="">
                           Optional variables
                         </a>
@@ -2885,6 +2892,21 @@ Roadmap</a>
               
 
               <li class="">
+                <a href="/docs/master/embedding/sdk/upgrade" class="">
+                  Upgrading
+
+                  
+                </a>
+                
+              </li>
+            
+              
+
+              
+
+              
+
+              <li class="">
                 <a href="/docs/master/embedding/sdk/plugins" class="">
                   Plugins
 
@@ -2923,6 +2945,24 @@ Roadmap</a>
       <li class="">
         <a href="/docs/master/embedding/securing-embeds" class="">
         Securing embedded Metabase
+
+          
+        </a>
+
+        
+      </li>
+    
+      
+
+      
+
+      
+
+      
+
+      <li class="">
+        <a href="/docs/master/embedding/translations" class="">
+        Translated embedded questions and dashboards
 
           
         </a>
@@ -4868,6 +4908,7 @@ Roadmap</a>
           <li><a href="./expressions/concat">concat</a></li>
           <li><a href="#contains">contains</a></li>
           <li><a href="#date">date</a></li>
+          <li><a href="#datetime">datetime</a></li>
           <li><a href="#doesnotcontain">doesNotContain</a></li>
           <li><a href="#domain">domain</a></li>
           <li><a href="#endswith">endsWith</a></li>
@@ -4914,6 +4955,8 @@ Roadmap</a>
           <li><a href="#quartername">quarterName</a></li>
           <li><a href="#relativedatetime">relativeDateTime</a></li>
           <li><a href="#second">second</a></li>
+          <li><a href="#timespan">timeSpan</a></li>
+          <li><a href="#today">today</a></li>
           <li><a href="#week">week</a></li>
           <li><a href="#weekday">weekday</a></li>
           <li><a href="#year">year</a></li>
@@ -5259,7 +5302,7 @@ Roadmap</a>
 
 <p>Databases that don’t support <code class="language-plaintext highlighter-rouge">sqrt</code>: SQLite.</p>
 
-<p>Related: <a href="#power">Power</a>.</p>
+<p>Related: <a href="#power">power</a>.</p>
 
 <h2 id="string-functions">String functions</h2>
 
@@ -5336,9 +5379,14 @@ You can pass an optional parameter <code class="language-plaintext highlighter-r
   <p>Available on PostgreSQL, MySQL/MariaDB, BigQuery, Redshift, ClickHouse, and Snowflake</p>
 </blockquote>
 
-<p>Converts a datetime string to a datetime.</p>
+<p>Converts a datetime string or bytes to a datetime.</p>
 
-<p>Syntax: <code class="language-plaintext highlighter-rouge">datetime(column)</code></p>
+<p>Syntax: <code class="language-plaintext highlighter-rouge">datetime(value, mode)</code></p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">value</code>: The string, bytes, or number to convert to a datetime.</li>
+  <li><code class="language-plaintext highlighter-rouge">mode</code>: Optional. The mode indicating the format. One of: <code class="language-plaintext highlighter-rouge">"simple"</code>, <code class="language-plaintext highlighter-rouge">"iso"</code>, <code class="language-plaintext highlighter-rouge">"simpleBytes"</code>, <code class="language-plaintext highlighter-rouge">"isoBytes"</code>, <code class="language-plaintext highlighter-rouge">"unixSeconds"</code>, <code class="language-plaintext highlighter-rouge">"unixMilliseconds"</code>, <code class="language-plaintext highlighter-rouge">"unixMicroseconds"</code>, <code class="language-plaintext highlighter-rouge">"unixNanoseconds"</code>. Default is <code class="language-plaintext highlighter-rouge">"iso"</code>.</li>
+</ul>
 
 <p>Example: <code class="language-plaintext highlighter-rouge">datetime("2025-03-20 12:45:04")</code></p>
 
@@ -5783,6 +5831,16 @@ You can pass an optional parameter <code class="language-plaintext highlighter-r
 <p><code class="language-plaintext highlighter-rouge">text</code>: Type of interval like <code class="language-plaintext highlighter-rouge">"day"</code>, <code class="language-plaintext highlighter-rouge">"month"</code>, <code class="language-plaintext highlighter-rouge">"year"</code></p>
 
 <p>Example: <code class="language-plaintext highlighter-rouge">[Orders → Created At] + timeSpan(7, "day")</code> will return the date 7 days after the <code class="language-plaintext highlighter-rouge">Created At</code> date.</p>
+
+<h3 id="today">today</h3>
+
+<p>Returns the current date (without time).</p>
+
+<p>Syntax: <code class="language-plaintext highlighter-rouge">today()</code></p>
+
+<p>Example: <code class="language-plaintext highlighter-rouge">today()</code> would return the current date, such as <code class="language-plaintext highlighter-rouge">2025-05-04</code>.</p>
+
+<p>Related: <a href="#now">now</a>.</p>
 
 <h3 id="week"><a href="./expressions/week">week</a></h3>
 
