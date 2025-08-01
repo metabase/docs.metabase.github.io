@@ -29,7 +29,7 @@ With the [Embedded analytics SDK](./sdk/introduction), you can embed individual 
 
 Interactive embedding is the only kind of embedding that [integrates with SSO and data permissions](./interactive-embedding) to enable true self-service access to the underlying data.
 
-**When to use interactive embedding**: you want to [offer multi-tenant, self-service analytics](/blog/why-full-app-embedding). With interactive embedding, people can create their own questions, dashboards, models, and more, all in their own data sandbox.
+**When to use interactive embedding**: you want to [offer multi-tenant, self-service analytics](/blog/why-full-app-embedding). With interactive embedding, people can create their own questions, dashboards, models, and more, with row and column security policies determining which data they can access.
 
 ## Static embedding
 
@@ -51,7 +51,7 @@ If you'd like to share your data with the good people of the internet, admins ca
 | Display interactive [filter widgets](/glossary/filter-widget)                                           | ✅                                              | ✅                                        | ✅                              | ✅                                     |
 | Export results\*                                                                                                                | ✅                                              | ✅                                        | ✅                              | ✅                                     |
 | Restrict data with [locked filters](./static-embedding-parameters#restricting-data-in-a-static-embed-with-locked-parameters) | ❌                                              | ❌                                        | ✅                              | ❌                                     |
-| Restrict data with [sandboxes](../permissions/data-sandboxes)                                                                | ✅                                              | ✅                                        | ❌                              | ❌                                     |
+| Restrict data with [row and column security](../permissions/row-and-column-security)                                         | ✅                                              | ✅                                        | ❌                              | ❌                                     |
 | Use the [drill-through menu](/learn/metabase-basics/querying-and-dashboards/questions/drill-through)    | ✅                                              | ✅                                        | ❌                              | ❌                                     |
 | Self-serve via [query builder](/glossary/query-builder)                                                 | ✅                                              | ✅                                        | ❌                              | ❌                                     |
 | View usage of embeds with [usage analytics](../usage-and-performance-tools/usage-analytics)                                  | ✅                                              | ✅                                        | ❌                              | ❌                                     |
