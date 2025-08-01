@@ -27,17 +27,18 @@ Here's an example that counts the number of orders in the `orders` table and ins
 {% raw %}
 SELECT
   COUNT(*) AS "Orders",
-  {{mb.time_grouping("Time grouping", "created_at")}} AS "Created At"
+  {{created_at_param}} AS "Created At"
 FROM
   orders
 GROUP BY
-  {{mb.time_grouping("Time grouping", "created_at")}}
+  {{created_at_param}}
 {% endraw %}
 ```
 
 Like in all SQL groupings, you must include the parameter in both the `SELECT` and `GROUP BY` clauses. You can also use the `mb.time_grouping` function on different columns in the same query, like this:
 
 ```sql
+{% raw %}
 SELECT
   COUNT(*) AS "Count",
   {{created_at_param}} AS "Created at",
@@ -47,6 +48,7 @@ FROM
 GROUP BY
   {{created_at_param}},
   {{trial_ends_at}}
+{% endraw %}
 ```
 
 Like with all parameters, you can set a default value (e.g., "month"). With time grouping parameters, you're limited to the options for the [time grouping parameter](../../dashboards/filters#time-grouping-parameter).

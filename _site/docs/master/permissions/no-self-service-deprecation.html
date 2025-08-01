@@ -49,7 +49,7 @@
 <meta name="twitter:site" content="@metabase">
 
 <meta name="twitter:title" content="Migrating from legacy permissions | Metabase Documentation">
-<meta name="twitter:description" content="Migrating from legacy permissions In Metabase 50, we overhauled our data permissions system to make it more expressive and easier to reason about. This page explains what changed and why. The TL;DR: we split the old Data access setting into two...">
+<meta name="twitter:description" content="Migrating from legacy permissions  In Metabase 56, we renamed Data sandboxing to Row and column security. The functionality is the same. Some people found the term “data sandboxing” confusing, so we changed the name of the feature to the more...">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -59,7 +59,7 @@
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://www.metabase.com/docs/master/permissions/no-self-service-deprecation">
 <meta name="title" property="og:title" content="Migrating from legacy permissions | Metabase Documentation">
-<meta name="description" property="og:description" content="Migrating from legacy permissions In Metabase 50, we overhauled our data permissions system to make it more expressive and easier to reason about. This page explains what changed and why. The TL;DR: we split the old Data access setting into two...">
+<meta name="description" property="og:description" content="Migrating from legacy permissions  In Metabase 56, we renamed Data sandboxing to Row and column security. The functionality is the same. Some people found the term “data sandboxing” confusing, so we changed the name of the feature to the more...">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -4843,6 +4843,10 @@ Roadmap</a>
 
         <h1 id="migrating-from-legacy-permissions">Migrating from legacy permissions</h1>
 
+<blockquote>
+  <p>In Metabase 56, we renamed Data sandboxing to Row and column security. The functionality is the same. Some people found the term “data sandboxing” confusing, so we changed the name of the feature to the more industry-standard Row and column security.</p>
+</blockquote>
+
 <p>In Metabase 50, we overhauled our data permissions system to make it more expressive and easier to reason about. This page explains what changed and why.</p>
 
 <p><strong>The TL;DR: we split the old Data access setting into two settings: <a href="./data#can-view-data-permission">View data</a> and <a href="./data#create-queries-permissions">Create Queries</a>. Your data permissions may look different, but the access hasn’t changed.</strong></p>
@@ -4939,7 +4943,7 @@ Roadmap</a>
       <td data-label="Data access">Sandboxed (granular)</td>
       <td data-label="Native query editing">No</td>
       <td data-label=">"><strong>&gt;</strong></td>
-      <td data-label="View data">Sandboxed (granular)</td>
+      <td data-label="View data">Row and column security (granular)</td>
       <td data-label="Create queries">Query builder (granular)</td>
     </tr>
     <tr>
@@ -4961,7 +4965,7 @@ Roadmap</a>
 <ul>
   <li><a href="./data#can-view-data-permission">Can view</a></li>
   <li><a href="./data#impersonated-view-data-permission">Impersonated</a></li>
-  <li><a href="./data#sandboxed-view-data-permission">Sandboxed</a></li>
+  <li><a href="./data#row-and-column-security">Row and column security</a></li>
   <li><a href="./data#blocked-view-data-permission">Blocked</a></li>
 </ul>
 
@@ -5024,7 +5028,7 @@ Roadmap</a>
       <td data-label="Group A">Can view</td>
       <td data-label="Group B">?</td>
       <td data-label="Group C">Blocked</td>
-      <td data-label="Group D">Sandboxed</td>
+      <td data-label="Group D">Row and column security</td>
       <td data-label="Group E">Impersonated</td>
     </tr>
     <tr>
@@ -5038,7 +5042,7 @@ Roadmap</a>
   </tbody>
 </table>
 
-<p>We can’t really make a call on what Group B’s View data should be. If we switch it to <strong>Can view</strong>, the person won’t be affected by the Blocked, Sandboxed, or Impersonated settings in their other group. If we set it to <strong>Blocked</strong>, they could lose access to data that you think they should have access to. So we created an interim setting, <code class="language-plaintext highlighter-rouge">No self-service (legacy)</code> to manage this (temporarily) awkward transition.</p>
+<p>We can’t really make a call on what Group B’s View data should be. If we switch it to <strong>Can view</strong>, the person won’t be affected by the Blocked, Row and column security, or Impersonated settings in their other group. If we set it to <strong>Blocked</strong>, they could lose access to data that you think they should have access to. So we created an interim setting, <code class="language-plaintext highlighter-rouge">No self-service (legacy)</code> to manage this (temporarily) awkward transition.</p>
 
 <h3 id="for-some-permission-setups-with-groups-that-have-no-self-service-and-sandboxed-data-access-you-may-need-to-create-a-new-group-to-replicate-the-setup-in-50-or-higher">For some permission setups with groups that have “No self-service” and “Sandboxed” data access, you may need to create a new group to replicate the setup in 50 or higher</h3>
 
@@ -5065,7 +5069,7 @@ Roadmap</a>
 
 <ul>
   <li>All users group is “Blocked” for all tables in the Sample database.</li>
-  <li>Foo group has View data permission of “Sandboxed” for all tables in the Sample database.</li>
+  <li>Foo group has View data permission of “Row and columns security” for all tables in the Sample database.</li>
   <li><strong>Create a new group</strong>, Bar, that includes everyone in the All users group <em>except for</em> people in the Foo group. Set this Bar group’s View data permission to “Can view” for the Sample database.</li>
 </ul>
 

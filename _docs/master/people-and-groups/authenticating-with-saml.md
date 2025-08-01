@@ -18,7 +18,7 @@ redirect_from:
 Integrating your SSO with Metabase allows you to:
 
 - Provision a Metabase account when someone logs in to Metabase.
-- Automatically pass user attributes from your SSO to Metabase in order to power [data sandboxes](../permissions/data-sandboxes).
+- Automatically pass user attributes from your SSO to Metabase in order to power [row and column security](../permissions/row-and-column-security).
 - Let people access Metabase without re-authenticating.
 
 ## Confirm the password for your Metabase admin account

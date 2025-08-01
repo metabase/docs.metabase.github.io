@@ -4970,7 +4970,7 @@ Roadmap</a>
 
 <p>We need to write a function to sign user JWTs, using the JWT library.</p>
 
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">signUserToken</span> <span class="o">=</span> <span class="nx">user</span> <span class="o">=&gt;</span>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">signUserToken</span> <span class="o">=</span> <span class="p">(</span><span class="nx">user</span><span class="p">)</span> <span class="o">=&gt;</span>
   <span class="nx">jwt</span><span class="p">.</span><span class="nf">sign</span><span class="p">(</span>
     <span class="p">{</span>
       <span class="na">email</span><span class="p">:</span> <span class="nx">user</span><span class="p">.</span><span class="nx">email</span><span class="p">,</span>
@@ -5041,7 +5041,7 @@ Roadmap</a>
 
 <p>Recall the <code class="language-plaintext highlighter-rouge">signUserToken</code> function used to create the JWTs. Add a <code class="language-plaintext highlighter-rouge">groups</code> key to the signed token that maps to an array. Metabase will look at the values in that array to see if any of the values map to a group in Metabase (We’ll walk through mapping groups in a bit).</p>
 
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">signUserToken</span> <span class="o">=</span> <span class="nx">user</span> <span class="o">=&gt;</span>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">signUserToken</span> <span class="o">=</span> <span class="p">(</span><span class="nx">user</span><span class="p">)</span> <span class="o">=&gt;</span>
   <span class="nx">jwt</span><span class="p">.</span><span class="nf">sign</span><span class="p">(</span>
     <span class="p">{</span>
       <span class="na">email</span><span class="p">:</span> <span class="nx">user</span><span class="p">.</span><span class="nx">email</span><span class="p">,</span>
@@ -5102,7 +5102,7 @@ Roadmap</a>
 
 <p>If you’re using our sample app, edit the <code class="language-plaintext highlighter-rouge">signUserToken</code> function used to create the JWT by adding a key <code class="language-plaintext highlighter-rouge">account_id</code> with value <code class="language-plaintext highlighter-rouge">28</code>.</p>
 
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">signUserToken</span> <span class="o">=</span> <span class="nx">user</span> <span class="o">=&gt;</span>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">signUserToken</span> <span class="o">=</span> <span class="p">(</span><span class="nx">user</span><span class="p">)</span> <span class="o">=&gt;</span>
   <span class="nx">jwt</span><span class="p">.</span><span class="nf">sign</span><span class="p">(</span>
     <span class="p">{</span>
       <span class="na">email</span><span class="p">:</span> <span class="nx">user</span><span class="p">.</span><span class="nx">email</span><span class="p">,</span>
@@ -5118,33 +5118,31 @@ Roadmap</a>
   <span class="p">);</span>
 </code></pre></div></div>
 
-<p>That user ID will correspond to the <code class="language-plaintext highlighter-rouge">Account ID</code> column in the Sample Database’s Invoices table. We’ll use this <code class="language-plaintext highlighter-rouge">account_id</code> user attribute to sandbox the Invoices table, so people will only see rows in that table that contain their account ID.</p>
+<p>That user ID will correspond to the <code class="language-plaintext highlighter-rouge">Account ID</code> column in the Sample Database’s Invoices table. We’ll use this <code class="language-plaintext highlighter-rouge">account_id</code> user attribute for row and column security on the Invoices table, so people will only see rows in that table that contain their account ID.</p>
 
 <p>Note that to persist the user attribute in Metabase, you’ll need to log in. Log in to your app as a non-admin, and visit the page with your embedded Metabase.</p>
 
-<h3 id="set-row-level-permissions-with-data-sandboxing">Set row-level permissions with data sandboxing</h3>
+<h3 id="set-row-level-permissions">Set row-level permissions</h3>
 
 <p>In Metabase, go to <strong>Admin settings</strong> &gt; <strong>Permissions</strong>. Under the <strong>Data</strong> tab on the left, click on a group. For “Sample Database”, change its <strong>Data access</strong> column to <strong>Granular</strong>.</p>
 
-<p>Metabase will display a list of the tables in the database. Next, change <strong>Data access</strong> for the “Invoices” table to <strong>Sandboxed</strong>.</p>
+<p>Metabase will display a list of the tables in the database. Next, change <strong>View data access</strong> for the “Invoices” table to <strong>Row and column security</strong>.</p>
 
-<p><img src="./images/sandboxed-invoices-table.png" alt="Sandboxing a table."></p>
+<p><img src="./images/secured-invoices-table.png" alt="Adding row and column security to a table."></p>
 
 <p>Next, Metabase will prompt you with a modal to associate a column in that table with a user attribute.</p>
 
 <p>Leave the <strong>Filter by a column in a table</strong> option checked, and associate the “Account ID” column in the Invoices table with the user attribute <code class="language-plaintext highlighter-rouge">account_id</code>. (Note that Metabase will only display the user attributes if the user has signed in through SSO before.)</p>
 
-<p><img src="./images/map-user-attribute.png" alt="Mapping a column in the sandboxed table to a user attribute."></p>
-
 <p>Click <strong>Save</strong> to confirm your select. Then click the <strong>Save changes</strong> button in the upper right.</p>
 
-<p>Metabase will ask if you’re sure you want to do this. You are sure.</p>
+<p>Metabase will ask if you’re sure you want to do this. You <em>are</em> sure.</p>
 
-<h3 id="checkpoint-view-sandboxed-dashboard">CHECKPOINT: view sandboxed dashboard</h3>
+<h3 id="checkpoint-view-secured-dashboard">CHECKPOINT: view secured dashboard</h3>
 
 <p>Make sure you’ve logged out of your previous session.</p>
 
-<p>Log in to your app, navigate to <code class="language-plaintext highlighter-rouge">/analytics</code>. The dashboard will now present different information, since only a subset of the data is visible to this person. Click on <strong>Browse Data</strong> at the bottom of the left nav. View your sandboxed <strong>Invoices</strong> table, and you should only see rows in that table that are associated with the person’s account.</p>
+<p>Log in to your app, navigate to <code class="language-plaintext highlighter-rouge">/analytics</code>. The dashboard will now present different information, since only a subset of the data is visible to this person. Click on <strong>Browse Data</strong> at the bottom of the left nav. View your secured <strong>Invoices</strong> table, and you should only see rows in that table that are associated with the person’s account.</p>
 
 <h2 id="hiding-metabase-elements">Hiding Metabase elements</h2>
 
