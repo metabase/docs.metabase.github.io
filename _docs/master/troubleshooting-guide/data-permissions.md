@@ -15,12 +15,12 @@ If a person has the wrong level of access to the data that's returned by a quest
 
 ### Row and column permissions
 
-- [Troubleshooting data sandboxing][troubleshooting-data-sandboxing].
+- [Troubleshooting row and column security][troubleshooting-row-and-column-security].
 
 ### Native query (SQL) permissions
 
 - [A user group can't access the SQL editor][sql-access].
-- [A user group with SQL permissions isn't being restricted by their data sandbox][sql-sandboxing].
+- [A user group with SQL permissions isn't being restricted by their row and column security policy](../permissions/row-and-column-security).
 
 ### Table or schema permissions
 
@@ -129,8 +129,5 @@ If you can’t solve your problem using the troubleshooting guides:
 [pricing]: /pricing
 [proxies]: ./proxies
 [sql-access]: ./data-permissions#a-user-group-cant-access-the-sql-editor
-[sql-sandboxing]: ./sandboxing#is-the-question-written-in-sql
-[troubleshooting-data-sandboxing]: ./sandboxing
-[troubleshooting-permissions]: ./permissions
 [unrestricted]: ../permissions/data#can-view-data-permission
 [view-edit]: ./cant-view-or-edit

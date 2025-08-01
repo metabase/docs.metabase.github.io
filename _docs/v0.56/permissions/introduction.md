@@ -44,7 +44,7 @@ At a high-level, Metabase provides several approaches to managing permissions fo
 
 ### Your customers share a single database
 
-[Data sandboxes](./data-sandboxes) let you apply row and column-level security, so each customer only sees their data in the tables.
+The [row and column security](./row-and-column-security) permission setting lets you restrict rows and columns based on who's logged in.
 
 ### Each customer has their own database
 
@@ -57,10 +57,7 @@ With [Connection impersonation](./impersonation), you can manage permissions wit
 [collections]: ../exploration-and-organization/collections
 [dashboard-subscriptions]: ../dashboards/subscriptions
 [data-permissions]: ./data
-[data-sandboxing]: ./data-sandboxes
 [permissions]: /learn/metabase-basics/administration/permissions
-[sandbox-columns]: /learn/metabase-basics/administration/permissions/data-sandboxing-column-permissions
-[sandbox-rows]: /learn/metabase-basics/administration/permissions/data-sandboxing-row-permissions
 [slack-integration]: ../configuring-metabase/slack
 [snippet-folders]: ../questions/native-editor/snippets
 [troubleshooting-permissions]: ../troubleshooting-guide/permissions
