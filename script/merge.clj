@@ -3,7 +3,6 @@
    [babashka.cli :as cli]
    [babashka.process :as p]
    [cheshire.core :as json]
-   [clojure.pprint :as pp]
    [clojure.string :as str]
    [ice.core :as ice]
    [util :as u]))
@@ -17,97 +16,99 @@
     :source-branch {:ref "<source-branch>"
                     :desc "The source branch of the triggering PR."
                     :alias :r
-                    :require true}
-    :dry-run {:desc "If set, will not execute the command, just print it out."
-              :coerce :boolean
-              :default false}}
+                    :require true}}
    :error-fn u/cli-error-fn})
 
-(defn source+target-branch->pr-number [source-branch target-branch]
-  (let [head-ref-name (str source-branch "->" target-branch)
-        _ (prn {:source-branch source-branch
-                :target-branch target-branch
-                :head-ref-name head-ref-name})
-        prs (-> (p/shell {:out :string}
-                         "gh" "pr" "list"
-                         "--limit" "1000"
-                         "--repo" "metabase/docs.metabase.github.io"
-                         "--json" "number,headRefName")
-                :out
-                (json/parse-string true)
-                (into []))
-        _ (println "→ Open PR count: " (count prs))
-        _ (println "→ Open PRs: \n"
-                   (str/join "\n"
-                             (map #(str "  " %)
-                                  (str/split-lines (with-out-str (pp/pprint prs))))))
-        _ (ice/p "See: " [:bold "https://github.com/metabase/docs.metabase.github.io/pulls"] " for more details")
-        _ (println "→ Looking for PR with headRefName:" head-ref-name)
-        pr-to-merge (first (filter #(= (:headRefName %) head-ref-name) prs))]
-    (println "Found PR: " (pr-str pr-to-merge))
-    (:number pr-to-merge)))
-
-(defn update-pr-branch
-  "Update the PR branch to include latest changes from base branch, resolving conflicts by taking incoming changes"
-  [{:keys [dry-run? pr-number head-ref-name]}]
-  (ice/p [:blue "Updating PR branch to latest master..."])
-  (if-not dry-run?
-    ;; First try the API approach (clean merge)
-    (let [{:keys [exit]} (p/sh "gh" "api"
-                               "--method" "PUT"
-                               (str "/repos/metabase/docs.metabase.github.io/pulls/" pr-number "/update-branch"))]
-      (if (zero? exit)
-        (ice/p [:green "✓ PR branch updated successfully via API"])
+(defn find-pr [source-branch target-branch]
+  (let [head-ref-name (str source-branch "->" target-branch)]
+    (ice/p [:blue "Looking for PR: " head-ref-name])
+    (let [prs (-> (p/shell {:out :string}
+                           "gh" "pr" "list" "--limit" "1000"
+                           "--repo" "metabase/docs.metabase.github.io"
+                           "--json" "number,headRefName")
+                  :out
+                  (json/parse-string true))
+          pr (first (filter #(= (:headRefName %) head-ref-name) prs))]
+      (if pr
         (do
-          (ice/p [:yellow "API update failed, likely due to conflict, trying git-based resolution..."])
-          ;; If API fails due to conflicts, resolve manually
-          (try
-            ;; Fetch latest and checkout the PR branch
-            (p/sh "git" "fetch" "origin")
-            (p/sh "git" "checkout" head-ref-name)
-            (prn (p/sh "git" "status"))
+          (ice/p [:green "Found PR #" (:number pr)])
+          (:number pr))
+        (throw (ex-info
+                 (str "No PR found for " head-ref-name)
+                 {:head-ref-name head-ref-name
+                  :source-branch source-branch
+                  :target-branch target-branch
+                  :babashka/exit 1}))))))
 
-            ;; Try to merge master - this will show conflicts
-            (let [merge-result (p/shell {:continue true} "git" "merge" "origin/master")]
-              (if (= 0 (:exit merge-result))
-                (ice/p [:green "✓ Clean merge successful"])
-                (do
-                  ;; Resolve conflicts by taking all changes from The PR Branch
-                  (ice/p [:blue "Resolving conflicts by preferring our changes..."])
-                  (p/sh "git" "checkout" "--ours" ".")
-                  (p/sh "git" "add" ".")
-                  (p/sh "git" "commit" "--no-edit" "-m" (str "Merge master, preferring changes from PR #" pr-number))
-                  (ice/p [:green "✓ Conflicts resolved, preferring PR branch's changes"]))))
+(defn resolve-conflicts
+  "Resolve conflicts by keeping PR changes in artifact directories"
+  [target-branch]
+  (let [conflicted-files (->> (p/shell {:out :string :continue true}
+                                       "git" "diff" "--name-only" "--diff-filter=U")
+                             :out
+                             str/trim
+                             str/split-lines
+                             (remove str/blank?))]
+    (if (empty? conflicted-files)
+      (ice/p [:green "No conflicts to resolve"])
+      (let [artifact-dirs (u/->artifact-dirs target-branch)]
+        (ice/p [:blue "Conflicted files: " (str/join ", " conflicted-files)])
+        (ice/p [:blue "Artifact directories: " (str/join ", " artifact-dirs)])
+        (doseq [dir artifact-dirs]
+          (let [files-in-dir (filter #(str/starts-with? % dir) conflicted-files)]
+            (when (seq files-in-dir)
+              (ice/p [:yellow "Resolving conflicts in directory: " dir])
+              (doseq [file files-in-dir]
+                (ice/p [:yellow "  Resolving conflict for file: " file])
+                (p/sh "git" "checkout" "--ours" file)
+                (p/sh "git" "add" file)))))))))
 
-            ;; Push the updated branch
-            (p/sh "git" "push" "origin" head-ref-name)
-            (ice/p [:green "✓ PR branch updated via git"])
+(defn update-and-merge-pr [source-branch target-branch pr-number]
+  (let [head-ref-name (str source-branch "->" target-branch)]
+    ;; Try API update first
+    (ice/p [:blue "Updating PR branch..."])
+    (let [update-result (p/shell {:continue true}
+                                 "gh" "api" "--method" "PUT"
+                                 (str "/repos/metabase/docs.metabase.github.io/pulls/" pr-number "/update-branch"))]
+      (if (zero? (:exit update-result))
+        (ice/p [:green "✓ API update successful"])
+        (do
+          ;; API failed, do git-based update
+          (ice/p [:yellow "API update failed, using git..."])
+          (p/sh "git" "fetch" "origin")
+          (p/sh "git" "checkout" head-ref-name)
 
-            (catch Exception git-e
-              (ice/p [:red "Git-based update also failed: " (.getMessage git-e)]))))))
-    (println "Dry run mode: would update PR branch, resolving conflicts by preferring incoming changes")))
+          (ice/p "Attempting merge with origin/master...")
+          (let [merge-result (p/shell {:continue true} "git" "merge" "origin/master")]
+            (when-not (zero? (:exit merge-result))
+              (ice/p [:red "✗ Merge failed: " (:err merge-result)])
+              (ice/p [:yellow "Attempting to resolve conflicts with git..."])
+              (resolve-conflicts target-branch)
+              (p/sh "git" "commit" "--no-edit" "-m"
+                    (str "Merge " target-branch " for PR #" pr-number)))
 
-(defn- gh-pr-merge [dry-run? pr-number]
-  (let [cmd ["gh" "pr" "merge" pr-number "--squash" "--delete-branch"]]
-    (if dry-run?
-      (ice/p [:yellow "Dry run mode: not actually merging PR:\n"
-              [:white [:bold "Would run: "] [:underline (str/join " " cmd)]]])
-      (apply p/sh cmd))))
+            (ice/p [:blue "Pushing changes to PR branch..."])
+            (p/sh "git" "push" "origin" head-ref-name)))))
+
+    ;; Wait a bit for GitHub to process to avoid a race condition
+    (Thread/sleep 5000)
+
+    ;; Merge the PR
+    (ice/p [:blue "Merging PR #" pr-number "..."])
+    (let [merge-result (p/shell {:continue true}
+                                "gh" "pr" "merge" (str pr-number)
+                                "--squash" "--delete-branch"
+                                "--repo" "metabase/docs.metabase.github.io")]
+      (if (zero? (:exit merge-result))
+        (ice/p [:green "✓ PR merged successfully!"])
+        (ice/p [:red "✗ Merge failed: " [:bold (:err merge-result)]])))))
 
 (defn -main [& args]
-  (let [{:keys [source-branch target-branch]
-         dry-run? :dry-run
-         :as   opts}     (cli/parse-opts args cli-spec)
+  (let [{:keys [source-branch target-branch]} (cli/parse-opts args cli-spec)
         [source-branch target-branch] (mapv str/trim [source-branch target-branch])
-        pr-number (source+target-branch->pr-number source-branch target-branch)]
-    (when-not pr-number
-      (throw (ex-info (ice/p-str [:red "No PR found for source branch "] [:bold source-branch] " and target branch " [:bold target-branch] ".")
-                      {:babashka/exit 1 :opts opts})))
-    (update-pr-branch {:dry-run? dry-run?
-                       :pr-number pr-number
-                       :head-ref-name (str source-branch "->" target-branch)})
-    (ice/p [:green "Merging PR for branch "] [:bold source-branch] " into " [:bold target-branch] " with PR number " [:bold (pr-str pr-number)])
-    (gh-pr-merge dry-run? pr-number)))
+        pr-number (find-pr source-branch target-branch)]
+    (ice/p [:green "Processing PR #" pr-number " (" source-branch " → " target-branch ")"])
+    (update-and-merge-pr source-branch target-branch pr-number)))
 
 (when (= *file* (System/getProperty "babashka.file"))
   (apply -main *command-line-args*))

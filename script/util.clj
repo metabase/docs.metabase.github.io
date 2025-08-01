@@ -62,3 +62,22 @@
                                                 (str/replace #"'" ""))))
                                         (str/split-lines (slurp (str (fs/expand-home "~/.zshrc")))))))}}
          cmd))
+
+(defn ->artifact-dirs
+  ([target-branch-name]
+   (let [[category release-num] (categorize-branchname target-branch-name)]
+     (->artifact-dirs category release-num)))
+  ([category release-num]
+   (cond
+     (= category :master) ["_docs/master"
+                           "_site/docs/master"]
+
+     (= (config-docs-version) release-num)
+     ["_docs/latest"
+      "_site/docs/latest"
+      (str "_docs/v0." release-num)
+      (str "_site/docs/v0." release-num)]
+
+     (= category :release) [(str "_docs/v0." release-num)
+                            (str "_site/docs/v0." release-num)]
+     :else [])))
