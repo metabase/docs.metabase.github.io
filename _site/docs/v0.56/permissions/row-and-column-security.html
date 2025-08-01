@@ -6,7 +6,7 @@
   <meta content="frame-ancestors 'none'" http-equiv="Content-Security-Policy">
   <meta content="deny" http-equiv="X-Frame-Options">
     
-  <link href="https://www.metabase.com/docs/v0.56/configuring-metabase/config-template" rel="canonical">
+  <link href="https://www.metabase.com/docs/v0.56/permissions/row-and-column-security" rel="canonical">
   
 
   <script type="text/javascript">
@@ -44,12 +44,12 @@
 <meta name="robots" content="noindex">
    
 
-<title>Metabase config file template | Metabase Documentation</title>
+<title>Row and column security | Metabase Documentation</title>
 <!-- Twitter cards -->
 <meta name="twitter:site" content="@metabase">
 
-<meta name="twitter:title" content="Metabase config file template | Metabase Documentation">
-<meta name="twitter:description" content="Metabase config file template You can generate the following config file template by changing into the top-level Metabase directory and running: clojure -M:doc:ee config-template  The template lists example database, user, and <code...">
+<meta name="twitter:title" content="Row and column security | Metabase Documentation">
+<meta name="twitter:description" content="Row and column security     <path d=" m12="" 10c12.5523="" 10="" 13="" 9.55228="" 9c13..."="">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -57,9 +57,9 @@
 <!-- Open Graph metadata -->
 <meta property="og:site_name" content="Metabase | Business Intelligence, Dashboards, and Data Visualization">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://www.metabase.com/docs/v0.56/configuring-metabase/config-template">
-<meta name="title" property="og:title" content="Metabase config file template | Metabase Documentation">
-<meta name="description" property="og:description" content="Metabase config file template You can generate the following config file template by changing into the top-level Metabase directory and running: clojure -M:doc:ee config-template  The template lists example database, user, and <code...">
+<meta property="og:url" content="https://www.metabase.com/docs/v0.56/permissions/row-and-column-security">
+<meta name="title" property="og:title" content="Row and column security | Metabase Documentation">
+<meta name="description" property="og:description" content="Row and column security     <path d=" m12="" 10c12.5523="" 10="" 13="" 9.55228="" 9c13..."="">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -3479,7 +3479,7 @@ Roadmap</a>
 
       
 
-      <li class="expanded">
+      <li class="">
         <a href="/docs/v0.56/configuring-metabase/start" class="">
         Configuration
 
@@ -3608,7 +3608,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.56/configuring-metabase/config-template" class="selected">
+                <a href="/docs/v0.56/configuring-metabase/config-template" class="">
                   Config file template
 
                   
@@ -4106,7 +4106,7 @@ Roadmap</a>
 
       
 
-      <li class="">
+      <li class="expanded">
         <a href="/docs/v0.56/permissions/start" class="">
         Permissions
 
@@ -4205,7 +4205,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.56/permissions/row-and-column-security" class="">
+                <a href="/docs/v0.56/permissions/row-and-column-security" class="selected">
                   Row and column security
 
                   
@@ -4694,7 +4694,7 @@ Roadmap</a>
 
             
             
-                <li class="breadcrumb-item"><a class="blue-60" href="/docs/v0.56/configuring-metabase/start">Configuring Metabase</a></li>
+                <li class="breadcrumb-item"><a class="blue-60" href="/docs/v0.56/permissions/start">Permissions</a></li>
             
             
         </ol>
@@ -4841,272 +4841,348 @@ Roadmap</a>
 </div>
 
 
-        <h1 id="metabase-config-file-template">Metabase config file template</h1>
+        <h1 id="row-and-column-security">Row and column security</h1>
 
-<p>You can generate the following config file template by changing into the top-level Metabase directory and running:</p>
+<div class="bootstrap">
+  <div class="plans-blockquote bg-blue-95 rounded-3 p-6 d-flex flex-row border border-1 border-primary">
+    <svg class="" width="24" height="24" viewBox="0 0 26 26" fill="none">
+  <path d="M12 13V15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
+  <path d="M12 10C12.5523 10 13 9.55228 13 9C13 8.44772 12.5523 8 12 8C11.4477 8 11 8.44772 11 9C11 9.55228 11.4477 10 12 10Z" fill="#509EE3"></path>
+  <path d="M12 19.25C16.0041 19.25 19.25 16.0041 19.25 12C19.25 7.99594 16.0041 4.75 12 4.75C7.99594 4.75 4.75 7.99594 4.75 12C4.75 16.0041 7.99594 19.25 12 19.25Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
+</svg>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>clojure -M:doc:ee config-template
+
+    
+      <p class="m-0 ms-2 paragraph-5 neutral-40">Row and column security is only available on <a class="fw-bold" href="/product/pro">Pro</a> and <a class="fw-bold link-purple" href="/product/enterprise">Enterprise</a> plans
+    
+
+    (both self-hosted and on Metabase Cloud).
+    </p>
+  </div>
+</div>
+
+<p>Row and column security lets you give granular permissions for different groups of people. You can change what data a group <a href="./data#can-view-data-permission">can view</a>, as well as what data a group <a href="./data#create-queries-permissions">can query</a> with the query builder.</p>
+
+<p>You can use row and column security to set up <a href="/learn/metabase-basics/embedding/multi-tenant-self-service-analytics">self-service analytics</a>, so that each of your customers can only view the rows that match their customer ID. For example, if you have an Accounts table with information about your customers, you can add permissions to the table so that each customer only sees the data relevant to them.</p>
+
+<h2 id="row-and-column-security-examples">Row and column security examples</h2>
+
+<p>You can skip the theory and go <a href="row-and-column-security-examples">straight to examples of row and column security</a>.</p>
+
+<h2 id="how-row-and-column-security-works">How row and column security works</h2>
+
+<p>You can think of row and column security as a bundle of permissions that includes:</p>
+
+<ul>
+  <li>The filtered version of a table that will replace your original table, everywhere that the original table is used in Metabase.</li>
+  <li>The <a href="../people-and-groups/managing#groups">group</a> of people who should see the filtered version of the table.</li>
+</ul>
+
+<p>You can define up to one row and column security policy for each table/group combo in your Metabase. This means you can display different versions of a table for different groups, such as “Accounts for Sales” to your salespeople, and “Accounts for Managers” for sales managers.</p>
+
+<h2 id="types-of-row-and-column-security">Types of row and column security</h2>
+
+<p>Row and column security show specific data to each person based on their <a href="../people-and-groups/managing#adding-a-user-attribute">user attributes</a>. You can:</p>
+
+<ul>
+  <li><a href="#row-level-security-filter-by-a-column-in-the-table">Restrict <strong>rows</strong></a></li>
+  <li><a href="#custom-row-and-column-security-use-a-saved-question-to-create-a-custom-view-of-a-table">Restrict <strong>columns</strong> and rows</a> for specific people.</li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th>Goal</th>
+      <th>Row (filter by a column in the table)</th>
+      <th>Custom (use a saved SQL question)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td data-label="Goal">Restrict rows by filtering on a single column</td>
+      <td data-label="Row (filter by a column in the table)">✅</td>
+      <td data-label="Custom (use a saved SQL question)">✅</td>
+    </tr>
+    <tr>
+      <td data-label="Goal">Restrict rows by filtering on multiple columns</td>
+      <td data-label="Row (filter by a column in the table)">❌</td>
+      <td data-label="Custom (use a saved SQL question)">✅</td>
+    </tr>
+    <tr>
+      <td data-label="Goal">Restrict columns</td>
+      <td data-label="Row (filter by a column in the table)">❌</td>
+      <td data-label="Custom (use a saved SQL question)">✅</td>
+    </tr>
+    <tr>
+      <td data-label="Goal">Edit columns</td>
+      <td data-label="Row (filter by a column in the table)">❌</td>
+      <td data-label="Custom (use a saved SQL question)">✅</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="row-level-security-filter-by-a-column-in-the-table">Row-level security: filter by a column in the table</h3>
+
+<p>You can <strong>restrict rows</strong> by filtering a column using a <a href="#choosing-user-attributes-for-row-and-column-security">user attribute value</a>.</p>
+
+<p>For example, you can filter the Accounts table for a group so that:</p>
+
+<ul>
+  <li>A person with the user attribute value “Basic” will see rows where <code class="language-plaintext highlighter-rouge">Plan = "Basic"</code> (rows where the Plan column matches the value “Basic”).</li>
+  <li>A person with the user attribute value “Premium” will see the rows where <code class="language-plaintext highlighter-rouge">Plan = "Premium"</code> (rows where the Plan column matches the value “Premium”).</li>
+</ul>
+
+<h3 id="custom-row-and-column-security-use-a-sql-question-to-create-a-custom-view-of-a-table">Custom row and column security: use a SQL question to create a custom “view” of a table</h3>
+
+<p>To <strong>restrict rows <em>and</em> columns</strong>, you can use a SQL question to filter the table. When someone views that table, they’ll instead see the question’s results, not the raw table.</p>
+
+<p>For example, say your original Accounts table includes the columns: <code class="language-plaintext highlighter-rouge">ID</code>, <code class="language-plaintext highlighter-rouge">Email</code>, <code class="language-plaintext highlighter-rouge">Plan</code>, and <code class="language-plaintext highlighter-rouge">Created At</code>. If you want to hide the Email column, you can create a “Restricted Accounts” SQL question with the columns: <code class="language-plaintext highlighter-rouge">ID</code>, <code class="language-plaintext highlighter-rouge">Plan</code>, and <code class="language-plaintext highlighter-rouge">Created At</code>.</p>
+
+<p>You can use a question to filter tables to:</p>
+
+<ul>
+  <li><a href="#displaying-edited-columns">Display an edited column instead of hiding the column</a>.</li>
+  <li><a href="#restricting-rows-with-user-attributes-using-a-sql-variable">Pass a user attribute to a SQL parameter</a>.</li>
+  <li><a href="/learn/metabase-basics/querying-and-dashboards/dashboards/markdown#custom-url-with-a-sandboxing-attribute">Pass a user attribute to a Markdown parameter</a>.</li>
+</ul>
+
+<h2 id="prerequisites-for-row-security">Prerequisites for row security</h2>
+
+<ul>
+  <li>A <a href="../people-and-groups/managing#groups">group</a> of people to add row security.</li>
+  <li><a href="../people-and-groups/managing#adding-a-user-attribute">User attributes</a> for each person in the group.</li>
+</ul>
+
+<p>Row security displays a filtered table, in place of an original table, to a specific group. How Metabase filters that table depends on the value in each person’s user attribute.</p>
+
+<p>For example, you can set up a row-level security so that:</p>
+
+<ul>
+  <li>Someone with the user attribute with key of “plan” and a value of “Basic” will see a version of the Accounts table with a filter for <code class="language-plaintext highlighter-rouge">Plan = "Basic"</code> (that is, only the rows where the Plan column matches the value “Basic”).</li>
+  <li>Someone with a “plan” user attribute set to “Premium” will see a different version of the Accounts table with the filter <code class="language-plaintext highlighter-rouge">Plan = "Premium"</code> applied.</li>
+</ul>
+
+<h2 id="choosing-user-attributes-for-row-and-column-security">Choosing user attributes for row and column security</h2>
+
+<p><strong>User attributes are required for row security, and optional for column security</strong>. When <a href="../people-and-groups/managing#adding-a-user-attribute">adding a new user attribute</a>, you’ll set up a key-value pair for each person.</p>
+
+<p>Metabase uses the user attribute key to look up the user attribute value for a specific person. User attribute keys can be mapped to parameters in Metabase.</p>
+
+<p>The <strong>user attribute value</strong> must be an exact, case-sensitive match for the filter value. For example, if you add row security to the Accounts table with the filter <code class="language-plaintext highlighter-rouge">Plan = "Basic"</code>, make sure that you enter “Basic” as the user attribute value. If you set the user attribute value to lowercase “basic” (a value which doesn’t exist in the Plan column of the Accounts table), the person will get an empty result instead of the table.</p>
+
+<p>Examples of user attributes in play:</p>
+
+<ul>
+  <li><a href="./row-and-column-security-examples#filtering-rows-based-on-user-attributes">Row security</a></li>
+  <li><a href="./row-and-column-security-examples#custom-example-2-filtering-rows-and-columns">Restricting rows and columns</a></li>
+  <li><a href="/learn/metabase-basics/querying-and-dashboards/dashboards/markdown#custom-url-with-a-sandboxing-attribute">Displaying custom text in Markdown dashboard cards</a></li>
+</ul>
+
+<h2 id="adding-row-level-security">Adding row-level security</h2>
+
+<ol>
+  <li>Make sure to do the <a href="#prerequisites-for-row-security">prerequisites for row security</a> first.</li>
+  <li>Go to <strong>Admin settings</strong> &gt; <strong>Permissions</strong>.</li>
+  <li>Select the database and table that you want to secure.</li>
+  <li>Find the group that you want to put in the secure.</li>
+  <li>Click on the dropdown under <strong>View data</strong> for that group.</li>
+  <li>Select “Row and column security”.</li>
+  <li>Click the dropdown under <strong>Column</strong> and enter the column to filter the table on, such as “Plan”.</li>
+  <li>Click the dropdown under <strong>User attribute</strong> and enter the user attribute <strong>key</strong>, such as “Plan”.</li>
+</ol>
+
+<blockquote>
+  <p>If you have SQL questions that query data with row-level security, make sure to move all of those questions to admin-only collections. For more info, see <a href="#you-cannot-secure-the-rows-or-columns-of-sql-results">You cannot secure the rows or columns of SQL results</a>.</p>
+</blockquote>
+
+<p>Check out <a href="./row-and-column-security-examples">row and column security examples</a>.</p>
+
+<h2 id="prerequisites-for-column-level-security">Prerequisites for column-level security</h2>
+
+<ul>
+  <li>A <a href="../people-and-groups/managing#groups">group</a> of people.</li>
+  <li>An admin-only <a href="../exploration-and-organization/collections">collection</a>, with <a href="../permissions/collections">collection permissions</a> set to <strong>No access</strong> for all groups except Administrators.</li>
+  <li>A <a href="../questions/native-editor/writing-sql">SQL question</a> with the rows and columns to be displayed to the people in the group, stored in the admin-only collection.</li>
+  <li>Optional: if you want to restrict <strong>rows</strong> as well, set up <a href="#choosing-user-attributes-for-row-and-column-security">user attributes</a> for each of the people in the group.</li>
+</ul>
+
+<h3 id="creating-a-sql-question-for-metabase-to-display-instead-of-a-table">Creating a SQL question for Metabase to display instead of a table</h3>
+
+<p>Metabase will display the results of the question in place of an original table to a particular group.</p>
+
+<p><strong>Use a SQL question</strong> to define the exact rows and columns to be included in the custom view. Avoid using a query builder (GUI) question, as you might accidentally expose extra data, since GUI questions can include data from other questions or models.</p>
+
+<blockquote>
+  <p>Make sure to save the SQL question in an admin-only collection (<a href="../permissions/collections">collection permissions</a> set to <strong>No access</strong> for all groups except Administrators). For more info, see <a href="#you-cannot-secure-the-rows-or-columns-of-sql-results">You cannot secure the rows or columns of SQL results</a>.</p>
+</blockquote>
+
+<h3 id="displaying-edited-columns">Displaying edited columns</h3>
+
+<p>Aside from excluding rows and columns, you can also <strong>display edited columns</strong> (without changing the columns in your database).</p>
+
+<p>For example, you can create a “Edited Accounts” SQL question that truncates the Email column to display usernames instead of complete email addresses.</p>
+
+<p>If you edit a column, the schema of the SQL question (the question you want to display instead of the table) must match the schema of the original table. That means the “Edited Accounts” SQL question must return the same number of columns and corresponding data types as the original Accounts table.</p>
+
+<p>You cannot add columns.</p>
+
+<h2 id="setting-up-column-security">Setting up column security</h2>
+
+<ol>
+  <li>Make sure to do the <a href="#prerequisites-for-column-level-security">prerequisites</a> first.</li>
+  <li>Go to <strong>Admin settings</strong> &gt; <strong>Permissions</strong>.</li>
+  <li>Select the database and table that you want to secure.</li>
+  <li>Find the group to restrict.</li>
+  <li>Click on the dropdown under <strong>Data access</strong> for that group.</li>
+  <li>Select “Row and column security”.</li>
+  <li>Select “Use a saved question to create a custom view for this table”.</li>
+  <li>Select your saved question. The question should be written in SQL. If the question contains parameters, those parameters must be required (they cannot be optional).</li>
+  <li>Optional: <a href="#restricting-rows-with-user-attributes-using-a-sql-variable">restrict rows based on people’s user attributes</a>.</li>
+</ol>
+
+<p>You can find sample setups in the <a href="./row-and-column-security-examples">Row and column security examples</a>.</p>
+
+<h3 id="restricting-rows-with-user-attributes-using-a-sql-variable">Restricting rows with user attributes using a SQL variable</h3>
+
+<p>If you set up column security, you can also restrict different rows for each person depending on their <a href="../people-and-groups/managing#adding-a-user-attribute">user attributes</a>. For example, you can display the “Accounts” question with the filter <code class="language-plaintext highlighter-rouge">Plan = "Basic"</code> for one group, and the filter <code class="language-plaintext highlighter-rouge">Plan = "Premium"</code> for another group.</p>
+
+<ol>
+  <li>Make sure you’ve done all the <a href="#prerequisites-for-column-level-security">prerequisites for column-level security</a>.</li>
+  <li>Go to the SQL question that will be displayed to the people in place of the table.</li>
+  <li>Add a <a href="../questions/native-editor/sql-parameters">parameterized</a> <code class="language-plaintext highlighter-rouge">WHERE</code> clause to your SQL query, such as <code class="language-plaintext highlighter-rouge">WHERE plan = {{ plan_variable }} </code>.</li>
+  <li>Save the SQL question.</li>
+  <li>Go to <strong>Admin settings</strong> &gt; <strong>Permissions</strong>.</li>
+  <li>Find the group and table you want to secure.</li>
+  <li>Open the dropdown under <strong>View data</strong>.</li>
+  <li>Click <strong>Edit row and column security</strong>.</li>
+  <li>Scroll down and set <strong>Parameter or variable</strong> to the name of the parameter in your SQL question (such as “Plan Variable”).</li>
+  <li>Set the <strong>User attribute</strong> to a <a href="#choosing-user-attributes-for-row-and-column-security">user attribute key</a> (such as the key “User’s Plan”, <em>not</em> the value “Basic”).</li>
+  <li>Click <strong>Save</strong>.</li>
+</ol>
+
+<p>For a sample SQL variable and user attribute setup, see the <a href="./row-and-column-security-examples">Row and column security examples</a>.</p>
+
+<h3 id="how-row-restriction-works-with-column-security">How row restriction works with column security</h3>
+
+<p>A standard <code class="language-plaintext highlighter-rouge">WHERE</code> clause filters a table by setting a column to a fixed value:</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">WHERE</span> <span class="k">column_name</span> <span class="o">=</span> <span class="n">column_value</span>
 </code></pre></div></div>
 
-<p>The template lists example <code class="language-plaintext highlighter-rouge">database</code>, <code class="language-plaintext highlighter-rouge">user</code>, and <code class="language-plaintext highlighter-rouge">settings</code> sections for the <a href="./config-file">config file</a>.</p>
+<p>In step 2 of the <a href="#restricting-rows-with-user-attributes-using-a-sql-variable">row restriction setup</a> above, you’ll add a SQL variable so that the <code class="language-plaintext highlighter-rouge">WHERE</code> clause will accept a dynamic value. The <a href="../questions/native-editor/sql-parameters#sql-variable-types">SQL variable type</a> must be text, number, or date:</p>
 
-<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># A config file template for Metabase.</span>
-<span class="c1"># You'll need to update (or remove) the `users` and `databases` sections.</span>
-<span class="c1"># The settings in `settings` include default values. We recommend removing</span>
-<span class="c1"># or commenting out settings that you don't set.</span>
-<span class="c1"># To use an env var, you can use a template string: ""</span>
-<span class="c1"># Note the quote marks wrapping the env var template.</span>
-<span class="c1"># For more on the configuration file, see:</span>
-<span class="c1"># https://www.metabase.com/docs/latest/configuring-metabase/config-file</span>
-<span class="c1"># For more on what each setting does, check out:</span>
-<span class="c1"># https://www.metabase.com/docs/latest/configuring-metabase/environment-variables</span>
-<span class="na">version</span><span class="pi">:</span> <span class="m">1</span>
-<span class="na">config</span><span class="pi">:</span>
-  <span class="na">users</span><span class="pi">:</span>
-  <span class="pi">-</span> <span class="na">first_name</span><span class="pi">:</span> <span class="s">First</span>
-    <span class="na">last_name</span><span class="pi">:</span> <span class="s">Person</span>
-    <span class="na">password</span><span class="pi">:</span> <span class="s">metabot1</span>
-    <span class="na">email</span><span class="pi">:</span> <span class="s">first@example.com</span>
-  <span class="pi">-</span> <span class="na">first_name</span><span class="pi">:</span> <span class="s">Normal</span>
-    <span class="na">last_name</span><span class="pi">:</span> <span class="s">Person</span>
-    <span class="na">password</span><span class="pi">:</span> <span class="s">metabot1</span>
-    <span class="na">email</span><span class="pi">:</span> <span class="s">normal@example.com</span>
-  <span class="pi">-</span> <span class="na">first_name</span><span class="pi">:</span> <span class="s">Admin</span>
-    <span class="na">last_name</span><span class="pi">:</span> <span class="s">Person</span>
-    <span class="na">password</span><span class="pi">:</span> <span class="s">metabot1</span>
-    <span class="na">is_superuser</span><span class="pi">:</span> <span class="kc">true</span>
-    <span class="na">email</span><span class="pi">:</span> <span class="s">admin@example.com</span>
-  <span class="na">databases</span><span class="pi">:</span>
-  <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Sample PostgreSQL</span>
-    <span class="na">engine</span><span class="pi">:</span> <span class="s">postgres</span>
-    <span class="na">details</span><span class="pi">:</span>
-      <span class="na">host</span><span class="pi">:</span> <span class="s">postgres-data</span>
-      <span class="na">port</span><span class="pi">:</span> <span class="m">5432</span>
-      <span class="na">user</span><span class="pi">:</span> <span class="s">metabase</span>
-      <span class="na">password</span><span class="pi">:</span> <span class="s">metasample123</span>
-      <span class="na">dbname</span><span class="pi">:</span> <span class="s">sample</span>
-  <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Sample MySQL</span>
-    <span class="na">engine</span><span class="pi">:</span> <span class="s">mysql</span>
-    <span class="na">details</span><span class="pi">:</span>
-      <span class="na">host</span><span class="pi">:</span> <span class="s">mysql-data</span>
-      <span class="na">port</span><span class="pi">:</span> <span class="m">3306</span>
-      <span class="na">user</span><span class="pi">:</span> <span class="s">metabase</span>
-      <span class="na">password</span><span class="pi">:</span> <span class="s">metasample123</span>
-      <span class="na">dbname</span><span class="pi">:</span> <span class="s">sample</span>
-  <span class="na">api-keys</span><span class="pi">:</span>
-  <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Admin API key</span>
-    <span class="na">group</span><span class="pi">:</span> <span class="s">admin</span>
-    <span class="na">creator</span><span class="pi">:</span> <span class="s">first@example.com</span>
-    <span class="na">key</span><span class="pi">:</span> <span class="s">mb_firsttestapikey123</span>
-  <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">All Users API key</span>
-    <span class="na">group</span><span class="pi">:</span> <span class="s">all-users</span>
-    <span class="na">creator</span><span class="pi">:</span> <span class="s">first@example.com</span>
-    <span class="na">key</span><span class="pi">:</span> <span class="s">mb_secondtestapikey456</span>
-  <span class="na">settings</span><span class="pi">:</span>
-    <span class="na">admin-email</span><span class="pi">:</span> <span class="kc">null</span>
-    <span class="na">aggregated-query-row-limit</span><span class="pi">:</span> <span class="kc">null</span>
-    <span class="na">ai-service-base-url</span><span class="pi">:</span> <span class="s">http://localhost:8000</span>
-    <span class="na">allowed-iframe-hosts</span><span class="pi">:</span> <span class="pi">|-</span>
-      <span class="s">youtube.com,</span>
-      <span class="s">youtu.be,</span>
-      <span class="s">loom.com,</span>
-      <span class="s">vimeo.com,</span>
-      <span class="s">docs.google.com,</span>
-      <span class="s">calendar.google.com,</span>
-      <span class="s">airtable.com,</span>
-      <span class="s">typeform.com,</span>
-      <span class="s">canva.com,</span>
-      <span class="s">codepen.io,</span>
-      <span class="s">figma.com,</span>
-      <span class="s">grafana.com,</span>
-      <span class="s">miro.com,</span>
-      <span class="s">excalidraw.com,</span>
-      <span class="s">notion.com,</span>
-      <span class="s">atlassian.com,</span>
-      <span class="s">trello.com,</span>
-      <span class="s">asana.com,</span>
-      <span class="s">gist.github.com,</span>
-      <span class="s">linkedin.com,</span>
-      <span class="s">twitter.com,</span>
-      <span class="s">x.com</span>
-    <span class="na">anon-tracking-enabled</span><span class="pi">:</span> <span class="kc">true</span>
-    <span class="na">api-key</span><span class="pi">:</span> <span class="kc">null</span>
-    <span class="na">application-colors</span><span class="pi">:</span> <span class="pi">{}</span>
-    <span class="na">application-favicon-url</span><span class="pi">:</span> <span class="s">app/assets/img/favicon.ico</span>
-    <span class="na">application-font</span><span class="pi">:</span> <span class="s">Lato</span>
-    <span class="na">application-font-files</span><span class="pi">:</span> <span class="kc">null</span>
-    <span class="na">application-logo-url</span><span class="pi">:</span> <span class="s">app/assets/img/logo.svg</span>
-    <span class="na">application-name</span><span class="pi">:</span> <span class="s">Metabase</span>
-    <span class="na">attachment-row-limit</span><span class="pi">:</span> <span class="kc">null</span>
-    <span class="na">attachment-table-row-limit</span><span class="pi">:</span> <span class="m">20</span>
-    <span class="na">bcc-enabled</span><span class="pi">:</span> <span class="kc">true</span>
-    <span class="na">breakout-bin-width</span><span class="pi">:</span> <span class="m">10.0</span>
-    <span class="na">breakout-bins-num</span><span class="pi">:</span> <span class="m">8</span>
-    <span class="na">check-for-updates</span><span class="pi">:</span> <span class="kc">true</span>
-    <span class="na">config-from-file-sync-databases</span><span class="pi">:</span> <span class="kc">true</span>
-    <span class="na">custom-formatting</span><span class="pi">:</span> <span class="pi">{}</span>
-    <span class="na">custom-geojson</span><span class="pi">:</span> <span class="kc">null</span>
-    <span class="na">custom-geojson-enabled</span><span class="pi">:</span> <span class="kc">true</span>
-    <span class="na">custom-homepage</span><span class="pi">:</span> <span class="kc">false</span>
-    <span class="na">custom-homepage-dashboard</span><span class="pi">:</span> <span class="kc">null</span>
-    <span class="na">dashboards-save-last-used-parameters</span><span class="pi">:</span> <span class="kc">true</span>
-    <span class="na">db-connection-timeout-ms</span><span class="pi">:</span> <span class="m">10000</span>
-    <span class="na">db-query-timeout-minutes</span><span class="pi">:</span> <span class="m">20</span>
-    <span class="na">default-maps-enabled</span><span class="pi">:</span> <span class="kc">true</span>
-    <span class="na">download-row-limit</span><span class="pi">:</span> <span class="kc">null</span>
-    <span class="na">ee-ai-features-enabled</span><span class="pi">:</span> <span class="kc">false</span>
-    <span class="na">ee-openai-api-key</span><span class="pi">:</span> <span class="kc">null</span>
-    <span class="na">ee-openai-model</span><span class="pi">:</span> <span class="s">gpt-4-turbo-preview</span>
-    <span class="na">email-from-address</span><span class="pi">:</span> <span class="s">notifications@metabase.com</span>
-    <span class="na">email-from-address-override</span><span class="pi">:</span> <span class="s">notifications@metabase.com</span>
-    <span class="na">email-from-name</span><span class="pi">:</span> <span class="kc">null</span>
-    <span class="na">email-max-recipients-per-second</span><span class="pi">:</span> <span class="kc">null</span>
-    <span class="na">email-reply-to</span><span class="pi">:</span> <span class="kc">null</span>
-    <span class="na">email-smtp-host</span><span class="pi">:</span> <span class="kc">null</span>
-    <span class="na">email-smtp-host-override</span><span class="pi">:</span> <span class="kc">null</span>
-    <span class="na">email-smtp-password</span><span class="pi">:</span> <span class="kc">null</span>
-    <span class="na">email-smtp-password-override</span><span class="pi">:</span> <span class="kc">null</span>
-    <span class="na">email-smtp-port</span><span class="pi">:</span> <span class="kc">null</span>
-    <span class="na">email-smtp-port-override</span><span class="pi">:</span> <span class="kc">null</span>
-    <span class="na">email-smtp-security</span><span class="pi">:</span> <span class="s">none</span>
-    <span class="na">email-smtp-security-override</span><span class="pi">:</span> <span class="s">ssl</span>
-    <span class="na">email-smtp-username</span><span class="pi">:</span> <span class="kc">null</span>
-    <span class="na">email-smtp-username-override</span><span class="pi">:</span> <span class="kc">null</span>
-    <span class="na">embedding-app-origins-interactive</span><span class="pi">:</span> <span class="kc">null</span>
-    <span class="na">embedding-app-origins-sdk</span><span class="pi">:</span> <span class="s">localhost:*</span>
-    <span class="na">embedding-homepage</span><span class="pi">:</span> <span class="s">hidden</span>
-    <span class="na">embedding-secret-key</span><span class="pi">:</span> <span class="kc">null</span>
-    <span class="na">enable-embedding-interactive</span><span class="pi">:</span> <span class="kc">false</span>
-    <span class="na">enable-embedding-sdk</span><span class="pi">:</span> <span class="kc">false</span>
-    <span class="na">enable-embedding-simple</span><span class="pi">:</span> <span class="kc">false</span>
-    <span class="na">enable-embedding-static</span><span class="pi">:</span> <span class="kc">false</span>
-    <span class="na">enable-password-login</span><span class="pi">:</span> <span class="kc">true</span>
-    <span class="na">enable-pivoted-exports</span><span class="pi">:</span> <span class="kc">true</span>
-    <span class="na">enable-public-sharing</span><span class="pi">:</span> <span class="kc">true</span>
-    <span class="na">enable-query-caching</span><span class="pi">:</span> <span class="kc">true</span>
-    <span class="na">enable-xrays</span><span class="pi">:</span> <span class="kc">true</span>
-    <span class="na">follow-up-email-sent</span><span class="pi">:</span> <span class="kc">false</span>
-    <span class="na">google-auth-auto-create-accounts-domain</span><span class="pi">:</span> <span class="kc">null</span>
-    <span class="na">google-auth-client-id</span><span class="pi">:</span> <span class="kc">null</span>
-    <span class="na">google-auth-enabled</span><span class="pi">:</span> <span class="kc">null</span>
-    <span class="na">gsheets</span><span class="pi">:</span> <span class="kc">null</span>
-    <span class="na">health-check-logging-enabled</span><span class="pi">:</span> <span class="kc">true</span>
-    <span class="na">help-link</span><span class="pi">:</span> <span class="s">metabase</span>
-    <span class="na">help-link-custom-destination</span><span class="pi">:</span> <span class="s">https://www.metabase.com/help/premium</span>
-    <span class="na">humanization-strategy</span><span class="pi">:</span> <span class="s">simple</span>
-    <span class="na">jdbc-data-warehouse-max-connection-pool-size</span><span class="pi">:</span> <span class="m">15</span>
-    <span class="na">jwt-attribute-email</span><span class="pi">:</span> <span class="s">email</span>
-    <span class="na">jwt-attribute-firstname</span><span class="pi">:</span> <span class="s">first_name</span>
-    <span class="na">jwt-attribute-groups</span><span class="pi">:</span> <span class="s">groups</span>
-    <span class="na">jwt-attribute-lastname</span><span class="pi">:</span> <span class="s">last_name</span>
-    <span class="na">jwt-enabled</span><span class="pi">:</span> <span class="kc">false</span>
-    <span class="na">jwt-group-mappings</span><span class="pi">:</span> <span class="pi">{}</span>
-    <span class="na">jwt-group-sync</span><span class="pi">:</span> <span class="kc">false</span>
-    <span class="na">jwt-identity-provider-uri</span><span class="pi">:</span> <span class="kc">null</span>
-    <span class="na">jwt-shared-secret</span><span class="pi">:</span> <span class="kc">null</span>
-    <span class="na">jwt-user-provisioning-enabled</span><span class="pi">:</span> <span class="kc">true</span>
-    <span class="na">landing-page</span><span class="pi">:</span> <span class="s1">'</span><span class="s">'</span>
-    <span class="na">landing-page-illustration</span><span class="pi">:</span> <span class="s">default</span>
-    <span class="na">landing-page-illustration-custom</span><span class="pi">:</span> <span class="kc">null</span>
-    <span class="na">ldap-attribute-email</span><span class="pi">:</span> <span class="s">mail</span>
-    <span class="na">ldap-attribute-firstname</span><span class="pi">:</span> <span class="s">givenName</span>
-    <span class="na">ldap-attribute-lastname</span><span class="pi">:</span> <span class="s">sn</span>
-    <span class="na">ldap-bind-dn</span><span class="pi">:</span> <span class="kc">null</span>
-    <span class="na">ldap-enabled</span><span class="pi">:</span> <span class="kc">false</span>
-    <span class="na">ldap-group-base</span><span class="pi">:</span> <span class="kc">null</span>
-    <span class="na">ldap-group-mappings</span><span class="pi">:</span> <span class="pi">{}</span>
-    <span class="na">ldap-group-membership-filter</span><span class="pi">:</span> <span class="s">(member={dn})</span>
-    <span class="na">ldap-group-sync</span><span class="pi">:</span> <span class="kc">false</span>
-    <span class="na">ldap-host</span><span class="pi">:</span> <span class="kc">null</span>
-    <span class="na">ldap-password</span><span class="pi">:</span> <span class="kc">null</span>
-    <span class="na">ldap-port</span><span class="pi">:</span> <span class="m">389</span>
-    <span class="na">ldap-security</span><span class="pi">:</span> <span class="s">none</span>
-    <span class="na">ldap-sync-user-attributes</span><span class="pi">:</span> <span class="kc">true</span>
-    <span class="na">ldap-sync-user-attributes-blacklist</span><span class="pi">:</span> <span class="s">userPassword,dn,distinguishedName</span>
-    <span class="na">ldap-user-base</span><span class="pi">:</span> <span class="kc">null</span>
-    <span class="na">ldap-user-filter</span><span class="pi">:</span> <span class="s">(&amp;(objectClass=inetOrgPerson)(|(uid={login})(mail={login})))</span>
-    <span class="na">ldap-user-provisioning-enabled</span><span class="pi">:</span> <span class="kc">true</span>
-    <span class="na">license-token-missing-banner-dismissal-timestamp</span><span class="pi">:</span> <span class="pi">[]</span>
-    <span class="na">loading-message</span><span class="pi">:</span> <span class="s">doing-science</span>
-    <span class="na">login-page-illustration</span><span class="pi">:</span> <span class="s">default</span>
-    <span class="na">login-page-illustration-custom</span><span class="pi">:</span> <span class="kc">null</span>
-    <span class="na">map-tile-server-url</span><span class="pi">:</span> <span class="s">https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png</span>
-    <span class="na">native-query-autocomplete-match-style</span><span class="pi">:</span> <span class="s">substring</span>
-    <span class="na">nested-field-columns-value-length-limit</span><span class="pi">:</span> <span class="m">50000</span>
-    <span class="na">no-data-illustration</span><span class="pi">:</span> <span class="s">default</span>
-    <span class="na">no-data-illustration-custom</span><span class="pi">:</span> <span class="kc">null</span>
-    <span class="na">no-object-illustration</span><span class="pi">:</span> <span class="s">default</span>
-    <span class="na">no-object-illustration-custom</span><span class="pi">:</span> <span class="kc">null</span>
-    <span class="na">non-table-chart-generated</span><span class="pi">:</span> <span class="kc">false</span>
-    <span class="na">not-behind-proxy</span><span class="pi">:</span> <span class="kc">false</span>
-    <span class="na">notification-link-base-url</span><span class="pi">:</span> <span class="kc">null</span>
-    <span class="na">notification-system-event-thread-pool-size</span><span class="pi">:</span> <span class="m">5</span>
-    <span class="na">notification-thread-pool-size</span><span class="pi">:</span> <span class="m">3</span>
-    <span class="na">persisted-model-refresh-cron-schedule</span><span class="pi">:</span> <span class="s">0 0 0/6 * * ? *</span>
-    <span class="na">persisted-models-enabled</span><span class="pi">:</span> <span class="kc">false</span>
-    <span class="na">premium-embedding-token</span><span class="pi">:</span> <span class="kc">null</span>
-    <span class="na">query-caching-max-kb</span><span class="pi">:</span> <span class="m">2000</span>
-    <span class="na">query-caching-max-ttl</span><span class="pi">:</span> <span class="m">3024000.0</span>
-    <span class="na">redirect-all-requests-to-https</span><span class="pi">:</span> <span class="kc">false</span>
-    <span class="na">report-timezone</span><span class="pi">:</span> <span class="kc">null</span>
-    <span class="na">reset-token-ttl-hours</span><span class="pi">:</span> <span class="m">48</span>
-    <span class="na">retry-initial-interval</span><span class="pi">:</span> <span class="m">500</span>
-    <span class="na">retry-max-attempts</span><span class="pi">:</span> <span class="m">7</span>
-    <span class="na">retry-max-interval-millis</span><span class="pi">:</span> <span class="m">30000</span>
-    <span class="na">retry-multiplier</span><span class="pi">:</span> <span class="m">2.0</span>
-    <span class="na">retry-randomization-factor</span><span class="pi">:</span> <span class="m">0.1</span>
-    <span class="na">saml-application-name</span><span class="pi">:</span> <span class="s">Metabase</span>
-    <span class="na">saml-attribute-email</span><span class="pi">:</span> <span class="kc">null</span>
-    <span class="na">saml-attribute-firstname</span><span class="pi">:</span> <span class="s">http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname</span>
-    <span class="na">saml-attribute-group</span><span class="pi">:</span> <span class="kc">null</span>
-    <span class="na">saml-attribute-lastname</span><span class="pi">:</span> <span class="s">http://schemas.xmlsoap.org/ws/2005/05/identity/claims/surname</span>
-    <span class="na">saml-enabled</span><span class="pi">:</span> <span class="kc">false</span>
-    <span class="na">saml-group-mappings</span><span class="pi">:</span> <span class="pi">{}</span>
-    <span class="na">saml-group-sync</span><span class="pi">:</span> <span class="kc">false</span>
-    <span class="na">saml-identity-provider-certificate</span><span class="pi">:</span> <span class="kc">null</span>
-    <span class="na">saml-identity-provider-issuer</span><span class="pi">:</span> <span class="kc">null</span>
-    <span class="na">saml-identity-provider-slo-uri</span><span class="pi">:</span> <span class="kc">null</span>
-    <span class="na">saml-identity-provider-uri</span><span class="pi">:</span> <span class="kc">null</span>
-    <span class="na">saml-keystore-alias</span><span class="pi">:</span> <span class="kc">null</span>
-    <span class="na">saml-keystore-password</span><span class="pi">:</span> <span class="s">changeit</span>
-    <span class="na">saml-keystore-path</span><span class="pi">:</span> <span class="kc">null</span>
-    <span class="na">saml-slo-enabled</span><span class="pi">:</span> <span class="kc">false</span>
-    <span class="na">saml-user-provisioning-enabled</span><span class="pi">:</span> <span class="kc">true</span>
-    <span class="na">scim-enabled</span><span class="pi">:</span> <span class="kc">null</span>
-    <span class="na">sdk-encryption-validation-key</span><span class="pi">:</span> <span class="kc">null</span>
-    <span class="na">search-engine</span><span class="pi">:</span> <span class="s">appdb</span>
-    <span class="na">search-language</span><span class="pi">:</span> <span class="kc">null</span>
-    <span class="na">search-typeahead-enabled</span><span class="pi">:</span> <span class="kc">true</span>
-    <span class="na">send-new-sso-user-admin-email</span><span class="pi">:</span> <span class="kc">null</span>
-    <span class="na">session-cookie-samesite</span><span class="pi">:</span> <span class="s">lax</span>
-    <span class="na">session-cookies</span><span class="pi">:</span> <span class="kc">null</span>
-    <span class="na">session-timeout</span><span class="pi">:</span> <span class="kc">null</span>
-    <span class="na">setup-embedding-autoenabled</span><span class="pi">:</span> <span class="kc">false</span>
-    <span class="na">setup-license-active-at-setup</span><span class="pi">:</span> <span class="kc">false</span>
-    <span class="na">show-database-syncing-modal</span><span class="pi">:</span> <span class="kc">null</span>
-    <span class="na">show-homepage-data</span><span class="pi">:</span> <span class="kc">true</span>
-    <span class="na">show-homepage-xrays</span><span class="pi">:</span> <span class="kc">true</span>
-    <span class="na">show-metabase-links</span><span class="pi">:</span> <span class="kc">true</span>
-    <span class="na">show-metabot</span><span class="pi">:</span> <span class="kc">true</span>
-    <span class="na">show-static-embed-terms</span><span class="pi">:</span> <span class="kc">true</span>
-    <span class="na">site-locale</span><span class="pi">:</span> <span class="s">en</span>
-    <span class="na">site-name</span><span class="pi">:</span> <span class="s">Metabase</span>
-    <span class="na">site-url</span><span class="pi">:</span> <span class="kc">null</span>
-    <span class="na">slack-app-token</span><span class="pi">:</span> <span class="kc">null</span>
-    <span class="na">slack-bug-report-channel</span><span class="pi">:</span> <span class="s">metabase-bugs</span>
-    <span class="na">smtp-override-enabled</span><span class="pi">:</span> <span class="kc">false</span>
-    <span class="na">source-address-header</span><span class="pi">:</span> <span class="s">X-Forwarded-For</span>
-    <span class="na">sql-jdbc-fetch-size</span><span class="pi">:</span> <span class="m">500</span>
-    <span class="na">ssh-heartbeat-interval-sec</span><span class="pi">:</span> <span class="m">180</span>
-    <span class="na">start-of-week</span><span class="pi">:</span> <span class="s">sunday</span>
-    <span class="na">subscription-allowed-domains</span><span class="pi">:</span> <span class="kc">null</span>
-    <span class="na">surveys-enabled</span><span class="pi">:</span> <span class="kc">true</span>
-    <span class="na">synchronous-batch-updates</span><span class="pi">:</span> <span class="kc">false</span>
-    <span class="na">unaggregated-query-row-limit</span><span class="pi">:</span> <span class="kc">null</span>
-    <span class="na">uploads-settings</span><span class="pi">:</span> <span class="kc">null</span>
-    <span class="na">use-tenants</span><span class="pi">:</span> <span class="kc">false</span>
-    <span class="na">user-visibility</span><span class="pi">:</span> <span class="s">all</span>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">WHERE</span> <span class="n">plan</span> <span class="o">=</span> <span class="p">{{</span> <span class="n">plan_variable</span> <span class="p">}}</span>
 </code></pre></div></div>
+
+<p>In steps 9-10 of the <a href="#restricting-rows-with-user-attributes-using-a-sql-variable">row restriction setup</a> above, you’re telling Metabase to map the SQL variable <code class="language-plaintext highlighter-rouge">plan_variable</code> to a <strong>user attribute key</strong> (such as “User’s Plan”). Metabase will use the key to look up the specific <strong>user attribute value</strong> (such as “Basic”) associated with a person’s Metabase account. When that person logs into Metabase and uses the secured table, they’ll see the query result that is filtered on:</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">WHERE</span> <span class="n">plan</span> <span class="o">=</span> <span class="nv">"Basic"</span>
+</code></pre></div></div>
+
+<p>Note that the parameters must be required for SQL questions used to create a custom views. E.g., you cannot use an optional parameter; the following won’t work:</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="p">[[</span><span class="k">WHERE</span> <span class="n">plan</span> <span class="o">=</span> <span class="p">{{</span> <span class="n">plan_variable</span> <span class="p">}}]]</span>
+
+</code></pre></div></div>
+
+<p>Learn more about <a href="../questions/native-editor/sql-parameters">SQL parameters</a></p>
+
+<h2 id="preventing-row-and-column-security-permissions-conflicts">Preventing row and column security permissions conflicts</h2>
+
+<p>Some Metabase permissions can conflict with row and column security to give more permissive or more restrictive data access than you intended.</p>
+
+<p>Say you’ve set up <a href="#custom-row-and-column-security-use-a-saved-question-to-create-a-custom-view-of-a-table">column security</a> that hides the Email column from the Accounts table (for a particular group).</p>
+
+<p>The Email column may get exposed to someone if:</p>
+
+<ul>
+  <li>The person belongs to <a href="#multiple-row-and-column-security-permissions">multiple row and column security policies</a>.</li>
+  <li>Someone else in a non-secured group shares the Email column from:
+    <ul>
+      <li>A <a href="../questions/native-editor/writing-sql">SQL question</a>.</li>
+      <li>A <a href="#public-sharing">public link</a></li>
+      <li>An <a href="../permissions/notifications">alert, or dashboard subscription</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="multiple-row-and-column-security-permissions">Multiple row and column security permissions</h3>
+
+<p>Multiple row and column security policies on the same table can create a permissions conflict. You can add a person to a maximum of one row and column security policy per table (via the person’s group).</p>
+
+<p>For example, if you have:</p>
+
+<ul>
+  <li>Set up security for the group “Basic Accounts” that filters the Accounts table on <code class="language-plaintext highlighter-rouge">Plan = "Basic"</code>.</li>
+  <li>Another setup for the group “Converted Accounts” that filters the Accounts table on <code class="language-plaintext highlighter-rouge">Trial Converted = true</code>.</li>
+</ul>
+
+<p>If you put Vincent Accountman in both groups, he’ll have conflicting permissions for the Accounts table, and get an error message whenever he tries to use Accounts in Metabase.</p>
+
+<p>To resolve row and column security permissions conflicts:</p>
+
+<ul>
+  <li>Remove the person from all but one of the groups.</li>
+  <li>Set the all but one of the group’s <a href="./data#view-data-permissions">View data</a> access to the datatabase to “Blocked”.</li>
+</ul>
+
+<h3 id="you-cannot-secure-the-rows-or-columns-of-sql-results">You cannot secure the rows or columns of SQL results</h3>
+
+<p>Row and column security permissions don’t apply to the results of SQL questions. That is, SQL questions will always display results from the original table rather than the secured table.</p>
+
+<p>Say that you’ve set up column security on the Accounts table to hide the Email column. If someone creates a SQL question that includes the Email column, <strong>anyone with collection permissions to view that SQL question</strong> will be able to:</p>
+
+<ul>
+  <li>See the Email column in the SQL question results.</li>
+  <li>Use the SQL question to start a new question that includes the Email column (if they have query permissions).</li>
+</ul>
+
+<p>To prevent the Email column from being exposed via a SQL question:</p>
+
+<ul>
+  <li>Put any SQL questions that include the Email column in a separate collection.</li>
+  <li>Set the <a href="../permissions/collections">collection permissions</a> to <strong>No access</strong> for groups with row and column security set up to hide the Email column.</li>
+</ul>
+
+<p><a href="../permissions/collections">Collection permissions</a> must be used to prevent secured groups from viewing SQL questions that reference secured tables.</p>
+
+<h3 id="public-sharing">Public sharing</h3>
+
+<p>Row and column security permissions don’t apply to public questions or public dashboards. If somone in an unsecured group creates a public link using an original table, the original table will be displayed to anyone who has the public link URL.</p>
+
+<p>To prevent this from happening, you’ll have to <a href="../embedding/public-links">disable public sharing</a> for your Metabase.</p>
+
+<p>Metabase can only create row and column security using the group membership or user attributes of people who are logged in. Since public links don’t require logins, Metabase won’t have enough info to apply permissions.</p>
+
+<h2 id="limitations">Limitations</h2>
+
+<p>Row and column security is limited to questions built with the <a href="../questions/query-builder/editor">query builder</a>.</p>
+
+<h3 id="groups-with-native-query-permissions-access-to-the-sql-editor-can-bypass-row-and-column-security">Groups with native query permissions (access to the SQL editor) can bypass row and column security</h3>
+
+<p>You can’t set up <a href="./data#create-queries-permissions">native query persmissons</a> for groups with row and column security.</p>
+
+<p>To enforce row-level permissions with the native query editor, check out <a href="./impersonation">impersonation</a>.</p>
+
+<h3 id="you-cant-apply-row-and-column-security-to-sql-questions">You can’t apply row and column security to SQL questions</h3>
+
+<p>Since Metabase can’t parse SQL queries, the results of SQL questions will always use original tables.</p>
+
+<p><a href="#you-cannot-secure-the-rows-or-columns-of-sql-results">Use collection permissions</a> to prevent groups from viewing saved SQL questions with restricted data.</p>
+
+<h3 id="non-sql-databases-have-limited-row-and-column-security">Non-SQL databases have limited row and column security</h3>
+
+<p>MongoDB only supports <a href="#row-level-security-filter-by-a-column-in-the-table">row-level security</a>. Row and column security permissions are unavailable for Apache Druid.</p>
+
+<h2 id="further-reading">Further reading</h2>
+
+<ul>
+  <li><a href="./row-and-column-security-examples">Row and column security examples</a></li>
+  <li><a href="/learn/metabase-basics/administration/permissions/strategy">Permissions strategies</a></li>
+  <li><a href="../permissions/embedding">Configuring permissions for embedding</a></li>
+  <li><a href="../embedding/securing-embeds">Securing embedded Metabase</a></li>
+</ul>
 
 
         <div>
@@ -5160,7 +5236,7 @@ Roadmap</a>
 
   
     <span class="paragraph-6 fs-13 neutral-60" id="page-feedback-footer">
-      Want to improve these docs? <a href="https://github.com/metabase/metabase/blob/master/docs/configuring-metabase/config-template.md" target="_blank">Propose a change.</a>
+      Want to improve these docs? <a href="https://github.com/metabase/metabase/blob/master/docs/permissions/row-and-column-security.md" target="_blank">Propose a change.</a>
     </span>
   
 </div>
@@ -5182,8 +5258,8 @@ Roadmap</a>
 <script type="text/javascript" src="/js/position-feedback-widget.js"></script>
 
 <script>
-  const pageTitle = `Metabase config file template`;
-  const pageURL = '/docs/v0.56/configuring-metabase/config-template';
+  const pageTitle = `Row and column security`;
+  const pageURL = '/docs/v0.56/permissions/row-and-column-security';
   const pageURLSplit = pageURL.split('/');
 
   let pageURLPrefix = '/' + pageURLSplit[1] + '/' + pageURLSplit[2];
