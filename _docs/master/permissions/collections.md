@@ -118,11 +118,7 @@ A personal collection works just like any other collection except that its permi
 [collections]: ../exploration-and-organization/collections
 [collection-permissions]: /learn/metabase-basics/administration/permissions/collection-permissions
 [dashboard-subscriptions]: ../dashboards/subscriptions
-[data-permissions]: ./data
-[data-sandboxing]: ../permissions/data-sandboxes
 [offical-collections]: ../exploration-and-organization/collections#official-collections
 [permissions]: /learn/metabase-basics/administration/permissions
-[sandbox-columns]: /learn/metabase-basics/administration/permissions/data-sandboxing-column-permissions
-[sandbox-rows]: /learn/metabase-basics/administration/permissions/data-sandboxing-row-permissions
 [slack-integration]: ../configuring-metabase/slack
 [sql-snippet-folders]: ../questions/native-editor/snippets
