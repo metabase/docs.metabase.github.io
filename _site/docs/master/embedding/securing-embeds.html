@@ -1788,6 +1788,13 @@ Roadmap</a>
                     
                       
                       <li>
+                        <a href="/docs/master/questions/native-editor/time-grouping-parameters" class="">
+                          Time grouping parameters
+                        </a>
+                      </li>
+                    
+                      
+                      <li>
                         <a href="/docs/master/questions/native-editor/optional-parameters" class="">
                           Optional variables
                         </a>
@@ -2885,6 +2892,21 @@ Roadmap</a>
               
 
               <li class="">
+                <a href="/docs/master/embedding/sdk/upgrade" class="">
+                  Upgrading
+
+                  
+                </a>
+                
+              </li>
+            
+              
+
+              
+
+              
+
+              <li class="">
                 <a href="/docs/master/embedding/sdk/plugins" class="">
                   Plugins
 
@@ -2923,6 +2945,24 @@ Roadmap</a>
       <li class="expanded">
         <a href="/docs/master/embedding/securing-embeds" class="selected">
         Securing embedded Metabase
+
+          
+        </a>
+
+        
+      </li>
+    
+      
+
+      
+
+      
+
+      
+
+      <li class="">
+        <a href="/docs/master/embedding/translations" class="">
+        Translated embedded questions and dashboards
 
           
         </a>
@@ -4936,7 +4976,7 @@ Roadmap</a>
 <p>Static embeds don’t authenticate people’s identities on the Metabase side, so people can view a static embed without creating a Metabase account. However, without a Metabase account, Metabase won’t have a way to remember a user or their session, which means:</p>
 
 <ul>
-  <li>Metabase <a href="../permissions/introduction">permissions</a> and <a href="../permissions/data-sandboxes">data sandboxes</a> won’t work — if you need to lock down sensitive data, you must set up <a href="#example-securing-data-with-locked-parameters-on-a-static-embed">locked parameters</a> for <em>each</em> of your static embeds.</li>
+  <li>Metabase <a href="../permissions/introduction">permissions</a> and <a href="../permissions/row-and-column-security">row and column security</a> won’t work — if you need to lock down sensitive data, you must set up <a href="#example-securing-data-with-locked-parameters-on-a-static-embed">locked parameters</a> for <em>each</em> of your static embeds.</li>
   <li>Any filter selections in a static embed will reset once the signed JWT expires.</li>
   <li>All Static embed usage will show up in <a href="../usage-and-performance-tools/usage-analytics">usage analytics</a> under “External user”.</li>
 </ul>
@@ -5116,8 +5156,8 @@ Roadmap</a>
 
 <ul>
   <li><a href="../permissions/data">Tables</a></li>
-  <li><a href="../permissions/data-sandboxes#creating-a-basic-sandbox">Rows</a></li>
-  <li><a href="../permissions/data-sandboxes#creating-a-custom-sandbox">Columns</a></li>
+  <li><a href="../permissions/row-and-column-security#row-level-security-filter-by-a-column-in-the-table">Rows</a></li>
+  <li><a href="../permissions/row-and-column-security#custom-row-and-column-security-use-a-saved-question-to-create-a-custom-view-of-a-table">Columns</a></li>
   <li><a href="../permissions/data">Other data permissions</a>, such as data download permissions or SQL access.</li>
 </ul>
 
@@ -5134,7 +5174,7 @@ Roadmap</a>
   <li><strong>If there’s no valid session</strong>:
     <ul>
       <li><strong>Redirect to SSO</strong>: your Metabase frontend redirects the visitor to your SSO login page.</li>
-      <li><strong>SSO auth</strong>: your SSO flow authenticates the visitor and generates a session based on their identity. The session info should encode user attributes such as group membership and <a href="../permissions/data-sandboxes">data sandboxing</a> permissions.</li>
+      <li><strong>SSO auth</strong>: your SSO flow authenticates the visitor and generates a session based on their identity. The session info should encode user attributes such as group membership and <a href="../permissions/row-and-column-security">row and column security</a> permissions.</li>
       <li><strong>Redirect to Metabase</strong>: your SSO flow redirects the visitor to your Metabase frontend with the session info.</li>
     </ul>
   </li>
@@ -5145,11 +5185,11 @@ Roadmap</a>
 
 <p>The mechanics of step 4 will vary a bit depending on whether you use <a href="../people-and-groups/authenticating-with-jwt">JWT</a> or <a href="../people-and-groups/authenticating-with-saml">SAML</a> for SSO.</p>
 
-<h3 id="example-securing-data-with-sso-and-data-sandboxing">Example: securing data with SSO and data sandboxing</h3>
+<h3 id="example-securing-data-with-sso-and-row-and-column-security">Example: securing data with SSO and row and column security</h3>
 
 <p>In our static embedding example, we used <a href="#example-securing-data-with-locked-parameters-on-a-static-embed">locked parameters</a> to display secure filtered views of the Accounts table.</p>
 
-<p>The nice thing about interactive embedding and <a href="../people-and-groups/start#sso-for-metabase-pro-and-enterprise-plans">SSO</a> integration is that we don’t have to manually manage locked parameters for each embed. Instead, we can map user attributes from our identity provider (IdP) to <a href="../permissions/introduction">permissions</a> and <a href="../permissions/data-sandboxes">data sandboxes</a> in Metabase. People can get authenticated and authorized to self-serve specific subsets of data from their very first login.</p>
+<p>The nice thing about interactive embedding and <a href="../people-and-groups/start#sso-for-metabase-pro-and-enterprise-plans">SSO</a> integration is that we don’t have to manually manage locked parameters for each embed. Instead, we can map user attributes from our identity provider (IdP) to <a href="../permissions/introduction">permissions</a> and <a href="../permissions/row-and-column-security">row and column security</a> in Metabase. People can get authenticated and authorized to self-serve specific subsets of data from their very first login.</p>
 
 <p>Let’s expand on our Accounts example to include a Tenant ID. The Tenant ID represents the parent org for a group of customers:</p>
 
@@ -5215,10 +5255,10 @@ Roadmap</a>
       <li>People with <code class="language-plaintext highlighter-rouge">role=customer</code> are assigned to the Customers group.</li>
     </ul>
   </li>
-  <li>Set up a sandboxed view of the Accounts table for each group:
+  <li>Set up row-level security on the Accounts table for each group:
     <ul>
-      <li>For the Customers group, the Accounts table will be sandboxed (filtered) to <code class="language-plaintext highlighter-rouge">Account ID = primary_id</code>.</li>
-      <li>For the Tenants group,, the Accounts table will be sandboxed to <code class="language-plaintext highlighter-rouge">Tenant ID = primary_id</code>.</li>
+      <li>For the Customers group, the Accounts table will be restricted with <code class="language-plaintext highlighter-rouge">Account ID = primary_id</code>.</li>
+      <li>For the Tenants group,, the Accounts table will be restricted with <code class="language-plaintext highlighter-rouge">Tenant ID = primary_id</code>.</li>
     </ul>
   </li>
 </ol>
@@ -5229,8 +5269,8 @@ Roadmap</a>
   <li>Metabase will create an account for them.</li>
   <li>Our IdP will send the <code class="language-plaintext highlighter-rouge">role=tenant</code> and <code class="language-plaintext highlighter-rouge">primary_id=999</code> attributes to Metabase.</li>
   <li>Metabase will automatically assign Tenant A to the Tenant group.</li>
-  <li>Tenant A will get the Tenant group’s permissions (including data sandboxes).</li>
-  <li>Tenant A will see a sandboxed view of the Accounts table everywhere in Metabase:</li>
+  <li>Tenant A will get the Tenant group’s permissions (including row and column security).</li>
+  <li>Tenant A will see a restricted view of the Accounts table everywhere in Metabase:</li>
 </ul>
 
 <table>
