@@ -45,30 +45,29 @@ layout: new-docs
 
 ## InteractiveQuestion
 
-| Name                                                                                                          | Description                                    |
-| :------------------------------------------------------------------------------------------------------------ | :--------------------------------------------- |
-| [InteractiveQuestion](./api/InteractiveQuestion)                                                           | A question component with drill-downs enabled. |
-| [DrillThroughQuestionProps](./api/DrillThroughQuestionProps)                                               | Props for the drill-through question           |
-| [InteractiveQuestionEditorButtonProps](./api/InteractiveQuestionEditorButtonProps)                         | -                                              |
-| [InteractiveQuestionEditorProps](./api/InteractiveQuestionEditorProps)                                     | -                                              |
-| [InteractiveQuestionProps](./api/InteractiveQuestionProps)                                                 | -                                              |
-| [InteractiveQuestionQuestionSettingsDropdownProps](./api/InteractiveQuestionQuestionSettingsDropdownProps) | -                                              |
-| [InteractiveQuestionQuestionVisualizationProps](./api/InteractiveQuestionQuestionVisualizationProps)       | -                                              |
-| [InteractiveQuestionResetButtonProps](./api/InteractiveQuestionResetButtonProps)                           | -                                              |
-| [InteractiveQuestionSaveQuestionFormProps](./api/InteractiveQuestionSaveQuestionFormProps)                 | -                                              |
-| [InteractiveQuestionTitleProps](./api/InteractiveQuestionTitleProps)                                       | -                                              |
-| [SdkQuestionProps](./api/SdkQuestionProps)                                                                 | -                                              |
-| [InteractiveQuestionBackButtonProps](./api/InteractiveQuestionBackButtonProps)                             | -                                              |
-| [InteractiveQuestionBreakoutDropdownProps](./api/InteractiveQuestionBreakoutDropdownProps)                 | -                                              |
-| [InteractiveQuestionChartTypeDropdownProps](./api/InteractiveQuestionChartTypeDropdownProps)               | -                                              |
-| [InteractiveQuestionChartTypeSelectorProps](./api/InteractiveQuestionChartTypeSelectorProps)               | -                                              |
-| [InteractiveQuestionDownloadWidgetDropdownProps](./api/InteractiveQuestionDownloadWidgetDropdownProps)     | -                                              |
-| [InteractiveQuestionDownloadWidgetProps](./api/InteractiveQuestionDownloadWidgetProps)                     | -                                              |
-| [InteractiveQuestionFilterDropdownProps](./api/InteractiveQuestionFilterDropdownProps)                     | -                                              |
-| [InteractiveQuestionFilterProps](./api/InteractiveQuestionFilterProps)                                     | -                                              |
-| [InteractiveQuestionQuestionSettingsProps](./api/InteractiveQuestionQuestionSettingsProps)                 | -                                              |
-| [InteractiveQuestionSaveButtonProps](./api/InteractiveQuestionSaveButtonProps)                             | -                                              |
-| [InteractiveQuestionSummarizeDropdownProps](./api/InteractiveQuestionSummarizeDropdownProps)               | -                                              |
+| Name                                                                                                          | Description                          |
+| :------------------------------------------------------------------------------------------------------------ | :----------------------------------- |
+| [DrillThroughQuestionProps](./api/DrillThroughQuestionProps)                                               | Props for the drill-through question |
+| [InteractiveQuestionEditorButtonProps](./api/InteractiveQuestionEditorButtonProps)                         | -                                    |
+| [InteractiveQuestionEditorProps](./api/InteractiveQuestionEditorProps)                                     | -                                    |
+| [InteractiveQuestionProps](./api/InteractiveQuestionProps)                                                 | -                                    |
+| [InteractiveQuestionQuestionSettingsDropdownProps](./api/InteractiveQuestionQuestionSettingsDropdownProps) | -                                    |
+| [InteractiveQuestionQuestionVisualizationProps](./api/InteractiveQuestionQuestionVisualizationProps)       | -                                    |
+| [InteractiveQuestionResetButtonProps](./api/InteractiveQuestionResetButtonProps)                           | -                                    |
+| [InteractiveQuestionSaveQuestionFormProps](./api/InteractiveQuestionSaveQuestionFormProps)                 | -                                    |
+| [InteractiveQuestionTitleProps](./api/InteractiveQuestionTitleProps)                                       | -                                    |
+| [SdkQuestionProps](./api/SdkQuestionProps)                                                                 | -                                    |
+| [InteractiveQuestionBackButtonProps](./api/InteractiveQuestionBackButtonProps)                             | -                                    |
+| [InteractiveQuestionBreakoutDropdownProps](./api/InteractiveQuestionBreakoutDropdownProps)                 | -                                    |
+| [InteractiveQuestionChartTypeDropdownProps](./api/InteractiveQuestionChartTypeDropdownProps)               | -                                    |
+| [InteractiveQuestionChartTypeSelectorProps](./api/InteractiveQuestionChartTypeSelectorProps)               | -                                    |
+| [InteractiveQuestionDownloadWidgetDropdownProps](./api/InteractiveQuestionDownloadWidgetDropdownProps)     | -                                    |
+| [InteractiveQuestionDownloadWidgetProps](./api/InteractiveQuestionDownloadWidgetProps)                     | -                                    |
+| [InteractiveQuestionFilterDropdownProps](./api/InteractiveQuestionFilterDropdownProps)                     | -                                    |
+| [InteractiveQuestionFilterProps](./api/InteractiveQuestionFilterProps)                                     | -                                    |
+| [InteractiveQuestionQuestionSettingsProps](./api/InteractiveQuestionQuestionSettingsProps)                 | -                                    |
+| [InteractiveQuestionSaveButtonProps](./api/InteractiveQuestionSaveButtonProps)                             | -                                    |
+| [InteractiveQuestionSummarizeDropdownProps](./api/InteractiveQuestionSummarizeDropdownProps)               | -                                    |
 
 ## MetabaseProvider
 
@@ -84,10 +83,9 @@ layout: new-docs
 
 ## StaticQuestion
 
-| Name                                                | Description                               |
-| :-------------------------------------------------- | :---------------------------------------- |
-| [StaticQuestion](./api/StaticQuestion)           | A question component without drill-downs. |
-| [StaticQuestionProps](./api/StaticQuestionProps) | -                                         |
+| Interface                                           | Description |
+| :-------------------------------------------------- | :---------- |
+| [StaticQuestionProps](./api/StaticQuestionProps) | -           |
 
 ## other
 
