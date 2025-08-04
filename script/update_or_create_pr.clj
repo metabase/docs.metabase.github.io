@@ -37,25 +37,10 @@
         ;; _ (println "→ Curl data: " (pr-str curl-data))
         pr-data (-> raw-data :out (json/parse-string true))
         _ (println "→ PR data: " (pr-str pr-data))
-        pr-info (first (filter #(= (:headRefName %) (str source "->" target))
+        pr-info (first (filter #(= (:headRefName %) (u/head-ref-name source target))
                                pr-data))]
     (println "→ PR info:" pr-info)
     (:number pr-info)))
-
-(defn ->artifact-dirs [category release-num]
-  (cond
-    (= category :master) ["_docs/master"
-                          "_site/docs/master"]
-
-    (= (u/config-docs-version) release-num)
-    ["_docs/latest"
-     "_site/docs/latest"
-     (str "_docs/v0." release-num)
-     (str "_site/docs/v0." release-num)]
-
-    (= category :release) [(str "_docs/v0." release-num)
-                           (str "_site/docs/v0." release-num)]
-    :else []))
 
 (defn- report-pr-body [source-branch target-branch artifact-dirs pr-number]
   (str/join "\n"
@@ -88,7 +73,7 @@
                                                           {:babashka/exit 1}))))
                                (println "→ Source Branch info: " source-branch))
 
-        target-branch-name (str source-branch "->" target-branch)
+        target-branch-name (u/head-ref-name source-branch target-branch)
         _                  (p/shell "git" "checkout" "-B" target-branch-name)
 
         update-dirs        (remove str/blank? (str/split update-dirs #","))
@@ -96,7 +81,7 @@
 
         artifact-dirs       (concat
                               update-dirs
-                              (->artifact-dirs category release-num))
+                              (u/->artifact-dirs category release-num))
         _                   (doseq [ad artifact-dirs]
                               (println "Adding" ad "...")
                               (p/sh {:continue true} "git" "add" ad))
