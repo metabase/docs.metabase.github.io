@@ -12,16 +12,16 @@ latest: true
 ---
 
 ```ts
-function ModifyQuestion(props: BaseInteractiveQuestionProps): Element;
+function ModifyQuestion(props: BaseSdkQuestionProps): Element;
 ```
 
 ## Parameters
 
 <!-- [<snippet parameters>] -->
 
-| Parameter | Type                                                                    | Description |
-| :-------- | :---------------------------------------------------------------------- | :---------- |
-| `props`   | [`BaseInteractiveQuestionProps`](./api/BaseInteractiveQuestionProps) |             |
+| Parameter | Type                                                    | Description |
+| :-------- | :------------------------------------------------------ | :---------- |
+| `props`   | [`BaseSdkQuestionProps`](./api/BaseSdkQuestionProps) |             |
 
 <!-- [<endsnippet parameters>] -->
 

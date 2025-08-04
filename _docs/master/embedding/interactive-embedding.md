@@ -20,7 +20,7 @@ redirect_from:
 
 **Interactive embedding** is what you want if you want to offer [multi-tenant, self-service analytics](/learn/metabase-basics/embedding/multi-tenant-self-service-analytics).
 
-Interactive embedding is the only type of embedding that integrates with your [permissions](../permissions/introduction) and [SSO](../people-and-groups/start#authentication) to give people the right level of access to [query](/glossary/query_builder) and [drill-down](/learn/metabase-basics/querying-and-dashboards/questions/drill-through) into your data.
+Interactive embedding is the only type of embedding that integrates with your [permissions](../permissions/introduction) and [SSO](../people-and-groups/start#authentication) to give people the right level of access to [query](/glossary/query-builder) and [drill-down](/learn/metabase-basics/querying-and-dashboards/questions/drill-through) into your data.
 
 ## Interactive embedding demo
 
@@ -229,11 +229,11 @@ To change an embedding URL, send a "location" message from your app to Metabase:
 }
 ```
 
-## Group strategies with sandboxing
+## Group strategies for row and column security
 
 If you want multiple people from a single customer account to collaborate on questions and dashboards, you'll need to set up one [group](../people-and-groups/managing#groups) per customer account.
 
-You can handle [data sandboxing](../permissions/data-sandboxes) with a single, separate group that just sandboxes your data. For example, each person could be part of a customer group that sets up data permissions with sandboxing via a certain attribute that applies to everyone across all your customer accounts.
+You can handle [row and column security](../permissions/row-and-column-security) with a single, separate group. For example, each person could be part of a customer group that sets up data permissions with row and column security via a certain attribute that applies to everyone across all your customer accounts.
 
 Additionally, each person within a single customer account could also be a member of a group specific to that customer account. That way they can collaborate on collections with other people in their organization, without seeing stuff created by people from other customers' accounts.
 

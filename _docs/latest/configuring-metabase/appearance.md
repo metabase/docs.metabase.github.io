@@ -178,4 +178,4 @@ Metabase will display this illustration when searches don't return any results.
 
 - [Customer-facing analytics](/learn/metabase-basics/embedding).
 - [Embedding introduction](../embedding/start).
-- [Brand your Metabase](/learn/metabase-basics/embedding/brand).
+- [Brand your Metabase](/docs/latest/configuring-metabase/appearance).

@@ -45,7 +45,7 @@ To create a pin map:
 
 1. Build a query with latitude and longitude columns for each data point (either in the query builder or using SQL);
 2. Select **Visualization**, and pick **Map**;
-3. If your query results have columns whose field type is set to latitude/longitude in [table metadata](../../data-modeling/metadata-editing#field-type), Metabase should build a pin map automatically.
+3. If your query results have columns whose field type is set to latitude/longitude in [table metadata](../../data-modeling/metadata-editing#semantic-type), Metabase should build a pin map automatically.
 
    Otherwise, click on the **Gear** icon to go to visualization settings, choose **Map type: Pin map**, and pick columns that contain latitude and longitude coordinates.
 
@@ -77,7 +77,7 @@ To create a grid map:
 
 1. Build a query with summary by binned latitude and longitude columns (either in the query builder or using SQL);
 2. Select **Visualization**, and pick **Map**;
-3. If your query results have columns whose field type is set to latitude/longitude in [table metadata](../../data-modeling/metadata-editing#field-type), Metabase should build a grid map automatically.
+3. If your query results have columns whose field type is set to latitude/longitude in [table metadata](../../data-modeling/metadata-editing#semantic-type), Metabase should build a grid map automatically.
 
    Otherwise, click on the **Gear** icon to go to visualization settings, choose **Map type: grid map**, and pick columns that contain latitude and longitude coordinates.
 
@@ -129,7 +129,7 @@ To visualize your results in the format of a map of the world broken out by coun
 
 The country codes in the query results must match the two-letter codes exactly: if the country codes are lowercase or contain extra spaces, Metabase won't recognize them.
 
-If your query result has columns with [semantic type](../../data-modeling/metadata-editing#field-type) "Country", Metabase should build a world map automatically. Otherwise, you can choose which columns to use as the country name in the **Region field** visualization setting.
+If your query result has columns with [semantic type](../../data-modeling/metadata-editing#semantic-type) "Country", Metabase should build a world map automatically. Otherwise, you can choose which columns to use as the country name in the **Region field** visualization setting.
 
 You can connect the country column in the world region map to a "Location" type dashboard filter.
 
@@ -144,7 +144,7 @@ Creating a map of the United States from your data requires your results to cont
 | Texas      | 34     |
 | Illinois   | 67     |
 
-If your query result has columns with [semantic type](../../data-modeling/metadata-editing#field-type) "State", Metabase should build a US map automatically. Otherwise, you can choose which columns to use as the country name in the visualization settings.
+If your query result has columns with [semantic type](../../data-modeling/metadata-editing#semantic-type) "State", Metabase should build a US map automatically. Otherwise, you can choose which columns to use as the country name in the visualization settings.
 
 You can connect the state column in the US region map to a "Location" type dashboard filter.
 
@@ -197,7 +197,6 @@ Currently, Metabase uses a single tile server per instance. You can't specify di
 - You can't combine different types of maps. For example, you can't put pins on a region map.
 - You need to use category (not location) dashboard filter types when connecting custom region maps to dashboard filters.
 - You can't specify different background tiles for different maps.
-
 
 ## When NOT to use a map to visualize geographic data
 

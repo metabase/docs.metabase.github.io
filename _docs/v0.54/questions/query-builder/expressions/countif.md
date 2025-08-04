@@ -172,7 +172,7 @@ You'll also need to set the **Group by** column to "Created Date: Month".
 
 ### SQL
 
-When you run a question using the [query builder](/glossary/query_builder), Metabase will convert your query builder settings (filters, summaries, etc.) into a SQL query, and run that query against your database to get your results.
+When you run a question using the [query builder](/glossary/query-builder), Metabase will convert your query builder settings (filters, summaries, etc.) into a SQL query, and run that query against your database to get your results.
 
 If our [sample data](#multiple-conditions) is stored in a PostgreSQL database, the SQL query:
 

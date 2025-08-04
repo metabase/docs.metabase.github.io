@@ -39,7 +39,7 @@ If a question filter is giving you no results or the wrong results:
    - asking your database admin.
 3. Ask your Metabase admin to help you check if:
    - Metabase is [up to date](../databases/sync-scan) with your database,
-   - the column is [visible](../data-modeling/metadata-editing#column-visibility) in Metabase,
+   - the column is [visible](../data-modeling/metadata-editing#field-visibility) in Metabase,
    - you have the correct [data permissions](../permissions/data) to access the column.
 
 ### Special cases
@@ -47,7 +47,7 @@ If a question filter is giving you no results or the wrong results:
 If you're having trouble filtering on a:
 
 - [Custom column](../questions/query-builder/editor#custom-columns): check if the custom expression is working as expected. For example, your custom expression might be returning blank values when you expect numbers.
-- [SQL field filter](../questions/native-editor/sql-parameters#the-field-filter-variable-type): make sure you're using the correct [field filter syntax](../questions/native-editor/sql-parameters#field-filter-syntax), then see [Troubleshooting SQL variables](./sql#sql-variables-and-field-filters).
+- [SQL field filter](../questions/native-editor/field-filters): make sure you're using the correct [field filter syntax](../questions/native-editor/field-filters#field-filter-syntax), then see [Troubleshooting SQL variables](./sql#sql-variables-and-field-filters).
 
 **Explanation**
 
@@ -72,7 +72,7 @@ To debug dashboard and question filters that involve timestamps, UUIDs, or numer
    - the [Table Metadata page](../data-modeling/metadata-editing) (admins only), or
    - directly from the database.
 2. Cast the column to a data type that matches the desired [filter type](../questions/query-builder/filters#filter-types). You can:
-   - [cast strings or numbers to dates](../data-modeling/metadata-editing#casting-to-a-specific-data-type) from the Table Metadata page, or
+   - [cast strings or numbers to dates](../data-modeling/metadata-editing#cast-to-a-specific-data-type) from the Table Metadata page, or
    - change the data type of the column in your database, and [re-sync](../databases/sync-scan#manually-syncing-tables-and-columns) the database schema.
 
 If you're not a Metabase admin, you might have to ask your admin to help you with some of these steps.
@@ -85,7 +85,7 @@ Timestamps, in particular, are the root of all evil, so please be patient with y
 
 ## Field filters in BigQuery and Oracle
 
-If you are getting an error when using field filters with BigQuery or Oracle, make sure you use the correct syntax for the `FROM` clause. See [Field filters in BigQuery and Oracle](../questions/native-editor/sql-parameters#field-filters-in-bigquery-and-oracle).
+If you are getting an error when using field filters with BigQuery or Oracle, make sure you use the correct syntax for the `FROM` clause. See [Field filters in BigQuery and Oracle](../questions/native-editor/field-filters#field-filters-in-bigquery-and-oracle).
 
 ## Missing or incorrect filter values
 

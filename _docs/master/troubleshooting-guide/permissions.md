@@ -28,12 +28,12 @@ If you have a different issue, see [related problems](#do-you-have-a-different-p
 
 ### Row and column permissions
 
-- [Troubleshooting data sandboxing][troubleshooting-data-sandboxing].
+- [Troubleshooting data row and column security](./row-and-column-security)
 
 ### Native query (SQL) permissions
 
 - [A user group can't access the SQL editor][sql-access].
-- [A user group with SQL permissions isn't being restricted by their data sandbox][sql-sandboxing].
+- [A user group with SQL permissions isn't being restricted by their row and column security](./row-and-column-security)
 
 ### Table or schema permissions
 
@@ -66,11 +66,8 @@ If you can’t solve your problem using the troubleshooting guides:
 [learn-permissions]: /learn/metabase-basics/administration/permissions
 [permission-denied]: ./data-permissions#getting-a-permission-denied-error-message
 [proxies]: ./proxies
-[sandboxing]: ./sandboxing
 [setting-collection-permissions]: ../permissions/collections#setting-permissions-for-collections
 [sql-access]: ./data-permissions#a-user-group-cant-access-the-sql-editor
-[sql-sandboxing]: ./sandboxing#is-the-question-written-in-sql
 [table-schema-access]: ./data-permissions#a-user-group-has-the-wrong-access-to-a-table-or-schema
 [troubleshooting-data-permissions]: ./data-permissions
-[troubleshooting-data-sandboxing]: ./sandboxing
 [troubleshooting-viewing-editing]: ./cant-view-or-edit
