@@ -19,36 +19,38 @@
                     :require true}}
    :error-fn u/cli-error-fn})
 
-(defn find-pr [source-branch target-branch]
-  (let [head-ref-name (u/head-ref-name source-branch target-branch)]
-    (ice/p [:blue "Looking for PR: " head-ref-name])
-    (let [prs (-> (p/shell {:out :string}
-                           "gh" "pr" "list" "--limit" "1000"
-                           "--repo" "metabase/docs.metabase.github.io"
-                           "--json" "number,headRefName")
-                  :out
-                  (json/parse-string true))
-          pr (first (filter #(= (:headRefName %) head-ref-name) prs))]
-      (if pr
-        (do
-          (ice/p [:green "Found PR #" (:number pr)])
+(defn- find-pr-list [source-branch target-branch]
+  (let [pr (-> (p/sh "gh" "pr" "list"
+                     "--head" (u/head-ref-name source-branch target-branch)
+                     "--json" "number,headRefName")
+               :out
+               (json/parse-string true)
+               first)]
+    (if pr
+      (do (ice/p [:green "Found PR #" (:number pr)])
           (:number pr))
-        (throw (ex-info
-                 (str "No PR found for " head-ref-name)
-                 {:head-ref-name head-ref-name
-                  :source-branch source-branch
-                  :target-branch target-branch
-                  :babashka/exit 1}))))))
+      (throw (ex-info
+               (str "No PR found for " (u/head-ref-name source-branch target-branch))
+               {:source-branch source-branch
+                :target-branch target-branch
+                :babashka/exit 1})))))
 
-(defn resolve-conflicts
+(defn- find-pr-view [source-branch target-branch]
+  (-> (p/sh "gh" "pr" "view" (u/head-ref-name source-branch target-branch)
+            "--json" "number"
+            "--jq" ".number")
+      :out
+      str/trim))
+
+(defn- resolve-conflicts
   "Resolve conflicts by keeping PR changes in artifact directories"
   [target-branch]
   (let [conflicted-files (->> (p/shell {:out :string :continue true}
                                        "git" "diff" "--name-only" "--diff-filter=U")
-                             :out
-                             str/trim
-                             str/split-lines
-                             (remove str/blank?))]
+                              :out
+                              str/trim
+                              str/split-lines
+                              (remove str/blank?))]
     (if (empty? conflicted-files)
       (ice/p [:green "No conflicts to resolve"])
       (let [artifact-dirs (u/->artifact-dirs target-branch)]
@@ -63,7 +65,7 @@
                 (p/sh "git" "checkout" "--ours" file)
                 (p/sh "git" "add" file)))))))))
 
-(defn update-and-merge-pr [source-branch target-branch pr-number]
+(defn- update-and-merge-pr [source-branch target-branch pr-number]
   (let [head-ref-name (u/head-ref-name source-branch target-branch)]
     ;; Try API update first
     (ice/p [:blue "Updating PR branch..."])
@@ -104,11 +106,17 @@
         (ice/p [:red "✗ Merge failed: " [:bold (:err merge-result)]])))))
 
 (defn -main [& args]
-  (println "Running at: " (java.time.Instant/now))
+  (println "Merge opertaion running at: " (java.time.Instant/now))
   (let [{:keys [source-branch target-branch]} (cli/parse-opts args cli-spec)
         [source-branch target-branch] (mapv str/trim [source-branch target-branch])
-        pr-number (find-pr source-branch target-branch)]
-    (ice/p [:green "Processing PR #" pr-number " (" source-branch " → " target-branch ")"])
+        pr-number-view (try (find-pr-view source-branch target-branch)
+                            (catch Exception e
+                              (ice/p [:red "Error finding pr-number via view: " (ex-message e)])))
+        pr-number-list (try (find-pr-list source-branch target-branch)
+                            (catch Exception e
+                              (ice/p [:red "Error finding pr-number via list: " (ex-message e)])))
+        pr-number (or pr-number-view pr-number-list)]
+    (ice/p [:green "Merging PR #" pr-number ": " (u/head-ref-name source-branch target-branch)])
     (update-and-merge-pr source-branch target-branch pr-number)))
 
 (when (= *file* (System/getProperty "babashka.file"))
