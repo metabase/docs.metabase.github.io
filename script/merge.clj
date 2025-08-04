@@ -134,16 +134,26 @@
           false))))
 
 (defn- checkout-branch! [head-ref-name]
+  ;; First, discard any local changes that would prevent checkout
+  (ice/p [:yellow "Discarding local changes..."])
+  (p/sh "git" "reset" "--hard" "HEAD")
+  (p/sh "git" "clean" "-fd")
+
+  ;; Try to checkout the branch
   (let [checkout-result (p/shell {:continue true} "git" "checkout" head-ref-name)]
     (when-not (zero? (:exit checkout-result))
-      ;; Try to create and checkout the branch if it doesn't exist locally
+      ;; Branch doesn't exist locally, create it from origin and force reset
       (ice/p [:yellow "Branch doesn't exist locally, creating from origin..."])
-      (let [create-result (p/sh {:continue true} "git" "checkout" "-b" head-ref-name (str "origin/" head-ref-name))]
+      (let [create-result (p/sh {:continue true} "git" "checkout" "-B" head-ref-name (str "origin/" head-ref-name))]
         (when-not (zero? (:exit create-result))
-          (throw (ex-info (str "Failed to checkout or create branch​ " head-ref-name)
+          (throw (ex-info (str "Failed to checkout or create branch " head-ref-name)
                           {:branch head-ref-name
                            :error (:err create-result)
-                           :babashka/exit 1})))))))
+                           :babashka/exit 1})))))
+
+    ;; Force reset to match the remote branch exactly
+    (ice/p [:yellow "Force resetting to match remote branch..."])
+    (p/sh "git" "reset" "--hard" (str "origin/" head-ref-name))))
 
 (defn -main [& args]
   (println "Merge opertaion running at: " (str (java.time.Instant/now)))
