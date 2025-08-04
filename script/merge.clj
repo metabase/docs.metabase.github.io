@@ -72,41 +72,33 @@
 
 (defn- update-and-merge-pr [source-branch target-branch pr-number merge-strategy]
   (let [head-ref-name (u/head-ref-name source-branch target-branch)]
-    ;; Try API update first
+
+
     (ice/p [:blue "Updating PR branch..."])
-    (let [update-result (p/shell {:continue true}
-                                 "gh" "api" "--method" "PUT"
-                                 (str "/repos/metabase/docs.metabase.github.io/pulls/" pr-number "/update-branch"))]
-      (if (zero? (:exit update-result))
-        (ice/p [:green "✓ API update successful"])
-        (do
-          ;; API failed, do git-based update
-          (ice/p [:yellow "API update failed, using git..."])
+    (ice/p [:blue "Attempting merge with origin/master..."])
+    (let [merge-result (p/sh {:continue true} "git" "merge" "origin/master")]
+      (when-not (zero? (:exit merge-result))
+        (ice/p [:red "✗ Merge failed: " (:err merge-result)])
+        (let [winner (if (= merge-strategy :ours) "PR" "master")]
+          (ice/p [:yellow "Attempting to resolve conflicts with git, preferring changes from " winner "..."])
+          (resolve-conflicts (u/->artifact-dirs target-branch) merge-strategy)
+          ;; Do the commit, now that we've resolved conflicts
+          (pr-str (p/sh "git" "commit" "--no-edit" "-m"
+                        (str "Merge " target-branch " for PR #(" pr-number ")"
+                             ", preferring changes from " winner)))))
 
-          (ice/p "Attempting merge with origin/master...")
-          (let [merge-result (p/shell {:continue true} "git" "merge" "origin/master")]
-            (when-not (zero? (:exit merge-result))
-              (ice/p [:red "✗ Merge failed: " (:err merge-result)])
-              (let [winner (if (= merge-strategy :ours) "PR" "master")]
-                (ice/p [:yellow "Attempting to resolve conflicts with git, preferring changes from " winner "..."])
-                (resolve-conflicts (u/->artifact-dirs target-branch) merge-strategy)
-                (pr-str (p/sh "git" "commit" "--no-edit" "-m"
-                              (str "Merge " target-branch " for PR #(" pr-number ")"
-                                   ", preferring changes from " winner)))))
-
-            (ice/p [:blue "Pushing changes to PR branch..."])
-            (ice/p "Result: " (pr-str
-                                (p/sh "git" "push" "origin" head-ref-name)))))))
+      (ice/p [:blue "Pushing changes to PR branch..."])
+      (ice/p "Result: " (pr-str (p/sh "git" "push" "origin" head-ref-name))))
 
     ;; Wait a bit for GitHub to process to avoid a race condition
     (Thread/sleep 5000)
 
     ;; Merge the PR
     (ice/p [:blue "Merging PR #" pr-number "..."])
-    (let [merge-result (p/shell {:continue true}
-                                "gh" "pr" "merge" (str pr-number)
-                                "--squash" "--delete-branch"
-                                "--repo" "metabase/docs.metabase.github.io")]
+    (let [merge-result (p/sh {:continue true}
+                             "gh" "pr" "merge" (str pr-number)
+                             "--squash" "--delete-branch"
+                             "--repo" "metabase/docs.metabase.github.io")]
       (if (zero? (:exit merge-result))
         (ice/p [:green "✓ PR merged successfully!"])
         (ice/p [:red "✗ Merge failed: " [:bold (:err merge-result)]])))))
@@ -145,7 +137,7 @@
     (when-not (zero? (:exit checkout-result))
       ;; Try to create and checkout the branch if it doesn't exist locally
       (ice/p [:yellow "Branch doesn't exist locally, creating from origin..."])
-      (let [create-result (p/shell {:continue true} "git" "checkout" "-b" head-ref-name (str "origin/" head-ref-name))]
+      (let [create-result (p/sh {:continue true} "git" "checkout" "-b" head-ref-name (str "origin/" head-ref-name))]
         (when-not (zero? (:exit create-result))
           (throw (ex-info (str "Failed to checkout or create branch​ " head-ref-name)
                           {:branch head-ref-name
@@ -153,7 +145,7 @@
                            :babashka/exit 1})))))))
 
 (defn -main [& args]
-  (println "Merge opertaion running at: " (java.time.Instant/now))
+  (println "Merge opertaion running at: " (str (java.time.Instant/now)))
   (let [{:keys [source-branch target-branch]} (cli/parse-opts args cli-spec)
         [source-branch target-branch] (mapv str/trim [source-branch target-branch])
         head-ref-name (u/head-ref-name source-branch target-branch)]
