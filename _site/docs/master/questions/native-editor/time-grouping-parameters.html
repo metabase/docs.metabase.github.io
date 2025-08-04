@@ -4860,25 +4860,27 @@ Roadmap</a>
 <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 <span class="k">SELECT</span>
   <span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="k">AS</span> <span class="nv">"Orders"</span><span class="p">,</span>
-  <span class="p">{{</span><span class="n">mb</span><span class="p">.</span><span class="n">time_grouping</span><span class="p">(</span><span class="nv">"Time grouping"</span><span class="p">,</span> <span class="nv">"created_at"</span><span class="p">)}}</span> <span class="k">AS</span> <span class="nv">"Created At"</span>
+  <span class="p">{{</span><span class="n">created_at_param</span><span class="p">}}</span> <span class="k">AS</span> <span class="nv">"Created At"</span>
 <span class="k">FROM</span>
   <span class="n">orders</span>
 <span class="k">GROUP</span> <span class="k">BY</span>
-  <span class="p">{{</span><span class="n">mb</span><span class="p">.</span><span class="n">time_grouping</span><span class="p">(</span><span class="nv">"Time grouping"</span><span class="p">,</span> <span class="nv">"created_at"</span><span class="p">)}}</span>
+  <span class="p">{{</span><span class="n">created_at_param</span><span class="p">}}</span>
 
 </code></pre></div></div>
 
 <p>Like in all SQL groupings, you must include the parameter in both the <code class="language-plaintext highlighter-rouge">SELECT</code> and <code class="language-plaintext highlighter-rouge">GROUP BY</code> clauses. You can also use the <code class="language-plaintext highlighter-rouge">mb.time_grouping</code> function on different columns in the same query, like this:</p>
 
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">SELECT</span>
   <span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="k">AS</span> <span class="nv">"Count"</span><span class="p">,</span>
-   <span class="k">AS</span> <span class="nv">"Created at"</span><span class="p">,</span>
-   <span class="k">AS</span> <span class="nv">"Trial ends at"</span>
+  <span class="p">{{</span><span class="n">created_at_param</span><span class="p">}}</span> <span class="k">AS</span> <span class="nv">"Created at"</span><span class="p">,</span>
+  <span class="p">{{</span><span class="n">trial_ends_at</span><span class="p">}}</span> <span class="k">AS</span> <span class="nv">"Trial ends at"</span>
 <span class="k">FROM</span>
   <span class="n">accounts</span>
 <span class="k">GROUP</span> <span class="k">BY</span>
-  <span class="p">,</span>
-  
+  <span class="p">{{</span><span class="n">created_at_param</span><span class="p">}},</span>
+  <span class="p">{{</span><span class="n">trial_ends_at</span><span class="p">}}</span>
+
 </code></pre></div></div>
 
 <p>Like with all parameters, you can set a default value (e.g., “month”). With time grouping parameters, you’re limited to the options for the <a href="../../dashboards/filters#time-grouping-parameter">time grouping parameter</a>.</p>
