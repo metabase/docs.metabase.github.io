@@ -37,7 +37,7 @@
         ;; _ (println "→ Curl data: " (pr-str curl-data))
         pr-data (-> raw-data :out (json/parse-string true))
         _ (println "→ PR data: " (pr-str pr-data))
-        pr-info (first (filter #(= (:headRefName %) (str source "->" target))
+        pr-info (first (filter #(= (:headRefName %) (u/head-ref-name source target))
                                pr-data))]
     (println "→ PR info:" pr-info)
     (:number pr-info)))
@@ -73,7 +73,7 @@
                                                           {:babashka/exit 1}))))
                                (println "→ Source Branch info: " source-branch))
 
-        target-branch-name (str source-branch "->" target-branch)
+        target-branch-name (u/head-ref-name source-branch target-branch)
         _                  (p/shell "git" "checkout" "-B" target-branch-name)
 
         update-dirs        (remove str/blank? (str/split update-dirs #","))

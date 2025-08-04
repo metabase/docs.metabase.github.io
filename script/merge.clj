@@ -20,7 +20,7 @@
    :error-fn u/cli-error-fn})
 
 (defn find-pr [source-branch target-branch]
-  (let [head-ref-name (str source-branch "->" target-branch)]
+  (let [head-ref-name (u/head-ref-name source-branch target-branch)]
     (ice/p [:blue "Looking for PR: " head-ref-name])
     (let [prs (-> (p/shell {:out :string}
                            "gh" "pr" "list" "--limit" "1000"
@@ -64,7 +64,7 @@
                 (p/sh "git" "add" file)))))))))
 
 (defn update-and-merge-pr [source-branch target-branch pr-number]
-  (let [head-ref-name (str source-branch "->" target-branch)]
+  (let [head-ref-name (u/head-ref-name source-branch target-branch)]
     ;; Try API update first
     (ice/p [:blue "Updating PR branch..."])
     (let [update-result (p/shell {:continue true}

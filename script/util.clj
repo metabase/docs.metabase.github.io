@@ -81,3 +81,6 @@
      (= category :release) [(str "_docs/v0." release-num)
                             (str "_site/docs/v0." release-num)]
      :else [])))
+
+(defn head-ref-name [source-branch target-branch]
+  (str source-branch "->" target-branch))
