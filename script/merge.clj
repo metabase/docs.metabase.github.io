@@ -44,8 +44,10 @@
     (when pr-num (parse-long pr-num))))
 
 (defn- resolve-conflicts
-  "Resolve conflicts by keeping PR changes in artifact directories"
-  [target-branch merge-strategy]
+  "Resolve conflicts by auto-merging changes in artifact directories based on merge-strategy.
+   If merge-strategy is :ours, prefer changes from the PR branch.
+   If merge-strategy is :theirs, prefer changes from the target branch."
+  [artifact-dirs merge-strategy]
   (let [conflicted-files (->> (p/shell {:out :string :continue true}
                                        "git" "diff" "--name-only" "--diff-filter=U")
                               :out
@@ -57,17 +59,16 @@
                 :theirs "--theirs")]
     (if (empty? conflicted-files)
       (ice/p [:green "No conflicts to resolve"])
-      (let [artifact-dirs (u/->artifact-dirs target-branch)]
-        (ice/p [:blue "Conflicted files: " (str/join ", " conflicted-files)])
-        (ice/p [:blue "Artifact directories: " (str/join ", " artifact-dirs)])
-        (doseq [dir artifact-dirs]
-          (let [files-in-dir (filter #(str/starts-with? % dir) conflicted-files)]
-            (when (seq files-in-dir)
-              (ice/p [:yellow "Resolving conflicts in directory: " dir])
-              (doseq [file files-in-dir]
-                (ice/p [:yellow "Resolving file: " file])
-                (ice/p [:yellow "  - Checking out " strat ": | " (:out (p/sh "git" "checkout" strat file))])
-                (ice/p [:yellow "  - Adding file:         | " (:out (p/sh "git" "add" file))])))))))))
+      (ice/p [:blue "Conflicted files: " (str/join ", " conflicted-files)])
+      (ice/p [:blue "Artifact directories: " (str/join ", " artifact-dirs)])
+      (doseq [dir artifact-dirs]
+        (let [files-in-dir (filter #(str/starts-with? % dir) conflicted-files)]
+          (when (seq files-in-dir)
+            (ice/p [:yellow "Resolving conflicts in directory: " dir])
+            (doseq [file files-in-dir]
+              (ice/p [:yellow "Resolving file: " file])
+              (ice/p [:yellow "  - Checking out " strat ": | " (:out (p/sh "git" "checkout" strat file))])
+              (ice/p [:yellow "  - Adding file:         | " (:out (p/sh "git" "add" file))]))))))))
 
 (defn- update-and-merge-pr [source-branch target-branch pr-number merge-strategy]
   (let [head-ref-name (u/head-ref-name source-branch target-branch)]
@@ -81,22 +82,20 @@
         (do
           ;; API failed, do git-based update
           (ice/p [:yellow "API update failed, using git..."])
-          (p/sh "git" "fetch" "origin")
-          (p/sh "git" "checkout" head-ref-name)
 
           (ice/p "Attempting merge with origin/master...")
-          (let [merge-result (p/shell {:continue true} "git" "merge" "origin/master")
-                winner (if (= merge-strategy :ours) "PR" "master")]
+          (let [merge-result (p/shell {:continue true} "git" "merge" "origin/master")]
             (when-not (zero? (:exit merge-result))
               (ice/p [:red "✗ Merge failed: " (:err merge-result)])
-              (ice/p [:yellow "Attempting to resolve conflicts with git..."])
-              (resolve-conflicts target-branch merge-strategy)
-              (u/pp (p/sh "git" "commit" "--no-edit" "-m"
-                          (str "Merge " target-branch " for PR #(" pr-number ")"
-                               ", preferring changes from " winner))))
+              (let [winner (if (= merge-strategy :ours) "PR" "master")]
+                (ice/p [:yellow "Attempting to resolve conflicts with git, preferring changes from " winner "..."])
+                (resolve-conflicts (u/->artifact-dirs target-branch) merge-strategy)
+                (pr-str (p/sh "git" "commit" "--no-edit" "-m"
+                              (str "Merge " target-branch " for PR #(" pr-number ")"
+                                   ", preferring changes from " winner)))))
 
             (ice/p [:blue "Pushing changes to PR branch..."])
-            (ice/p "Result: " (u/pp
+            (ice/p "Result: " (pr-str
                                 (p/sh "git" "push" "origin" head-ref-name)))))))
 
     ;; Wait a bit for GitHub to process to avoid a race condition
@@ -141,20 +140,40 @@
       (do (ice/p [:yellow "Current PR #" current-pr-number " is older than master PR #" master-pr-number " - master wins"])
           false))))
 
+(defn- checkout-branch! [head-ref-name]
+  (let [checkout-result (p/shell {:continue true} "git" "checkout" head-ref-name)]
+    (when-not (zero? (:exit checkout-result))
+      ;; Try to create and checkout the branch if it doesn't exist locally
+      (ice/p [:yellow "Branch doesn't exist locally, creating from origin..."])
+      (let [create-result (p/shell {:continue true} "git" "checkout" "-b" head-ref-name (str "origin/" head-ref-name))]
+        (when-not (zero? (:exit create-result))
+          (throw (ex-info (str "Failed to checkout or create branch​ " head-ref-name)
+                          {:branch head-ref-name
+                           :error (:err create-result)
+                           :babashka/exit 1})))))))
+
 (defn -main [& args]
   (println "Merge opertaion running at: " (java.time.Instant/now))
   (let [{:keys [source-branch target-branch]} (cli/parse-opts args cli-spec)
         [source-branch target-branch] (mapv str/trim [source-branch target-branch])
-        pr-number-view (try (find-pr-view source-branch target-branch)
-                            (catch Exception e
-                              (ice/p [:red "Error finding pr-number via view: " (ex-message e)])))
-        pr-number-list (try (find-pr-list source-branch target-branch)
-                            (catch Exception e
-                              (ice/p [:red "Error finding pr-number via list: " (ex-message e)])))
-        pr-number (or pr-number-view pr-number-list)
-        merge-strategy (if (should-pr-win? pr-number target-branch) :ours :theirs)]
-    (ice/p [:green "Merging PR #" pr-number ": " (u/head-ref-name source-branch target-branch) " | with strategy: " [:blue merge-strategy]])
-    (update-and-merge-pr source-branch target-branch pr-number merge-strategy)))
+        head-ref-name (u/head-ref-name source-branch target-branch)]
+
+    ;; Ensure we're working with the latest remote state
+    (ice/p [:blue "Fetching latest from origin..."]) (p/sh "git" "fetch" "origin")
+    (ice/p [:blue "Checking out branch: " head-ref-name]) (checkout-branch! head-ref-name)
+
+    (let [current-branch (:out (p/sh "git" "branch" "--show-current"))
+          _ (ice/p [:green "Currently on branch: " (str/trim current-branch)])
+          pr-number-view (try (find-pr-view source-branch target-branch)
+                              (catch Exception e
+                                (ice/p [:red "Error finding pr-number via view: " (ex-message e)])))
+          pr-number-list (try (find-pr-list source-branch target-branch)
+                              (catch Exception e
+                                (ice/p [:red "Error finding pr-number via list: " (ex-message e)])))
+          pr-number (or pr-number-view pr-number-list)
+          merge-strategy (if (should-pr-win? pr-number target-branch) : ours :theirs)]
+      (ice/p [:green "Merging PR #" pr-number ": " (u/head-ref-name source-branch target-branch) " | with strategy: " [:blue merge-strategy]])
+      (update-and-merge-pr source-branch target-branch pr-number merge-strategy))))
 
 (when (= *file* (System/getProperty "babashka.file"))
   (apply -main *command-line-args*))
