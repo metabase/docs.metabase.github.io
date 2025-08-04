@@ -104,6 +104,7 @@
         (ice/p [:red "✗ Merge failed: " [:bold (:err merge-result)]])))))
 
 (defn -main [& args]
+  (println "Running at: " (java.time.Instant/now))
   (let [{:keys [source-branch target-branch]} (cli/parse-opts args cli-spec)
         [source-branch target-branch] (mapv str/trim [source-branch target-branch])
         pr-number (find-pr source-branch target-branch)]
