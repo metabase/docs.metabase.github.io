@@ -59,16 +59,17 @@
                 :theirs "--theirs")]
     (if (empty? conflicted-files)
       (ice/p [:green "No conflicts to resolve"])
-      (ice/p [:blue "Conflicted files: " (str/join ", " conflicted-files)])
-      (ice/p [:blue "Artifact directories: " (str/join ", " artifact-dirs)])
-      (doseq [dir artifact-dirs]
-        (let [files-in-dir (filter #(str/starts-with? % dir) conflicted-files)]
-          (when (seq files-in-dir)
-            (ice/p [:yellow "Resolving conflicts in directory: " dir])
-            (doseq [file files-in-dir]
-              (ice/p [:yellow "Resolving file: " file])
-              (ice/p [:yellow "  - Checking out " strat ": | " (:out (p/sh "git" "checkout" strat file))])
-              (ice/p [:yellow "  - Adding file:         | " (:out (p/sh "git" "add" file))]))))))))
+      (do
+        (ice/p [:blue "Conflicted files: " (str/join ", " conflicted-files)])
+        (ice/p [:blue "Artifact directories: " (str/join ", " artifact-dirs)])
+        (doseq [dir artifact-dirs]
+          (let [files-in-dir (filter #(str/starts-with? % dir) conflicted-files)]
+            (when (seq files-in-dir)
+              (ice/p [:yellow "Resolving conflicts in directory: " dir])
+              (doseq [file files-in-dir]
+                (ice/p [:yellow "Resolving file: " file])
+                (ice/p [:yellow "  - Checking out " strat ": | " (:out (p/sh "git" "checkout" strat file))])
+                (ice/p [:yellow "  - Adding file:         | " (:out (p/sh "git" "add" file))])))))))))
 
 (defn- update-and-merge-pr [source-branch target-branch pr-number merge-strategy]
   (let [head-ref-name (u/head-ref-name source-branch target-branch)]
