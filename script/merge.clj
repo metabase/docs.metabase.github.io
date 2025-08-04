@@ -68,8 +68,10 @@
               (ice/p [:yellow "Resolving conflicts in directory: " dir])
               (doseq [file files-in-dir]
                 (ice/p [:yellow "Resolving file: " file])
-                (ice/p [:yellow "  - Checking out " strat ": | " (:out (p/sh "git" "checkout" strat file))])
-                (ice/p [:yellow "  - Adding file:         | " (:out (p/sh "git" "add" file))])))))))))
+                (:out (p/sh "git" "checkout" strat file))
+                (ice/p [:yellow "  - git checkout " strat " " file])
+                (:out (p/sh "git" "add" file))
+                (ice/p [:yellow "  - git add " file])))))))))
 
 (defn- update-and-merge-pr [source-branch target-branch pr-number merge-strategy]
   (let [head-ref-name (u/head-ref-name source-branch target-branch)]
