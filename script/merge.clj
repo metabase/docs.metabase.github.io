@@ -164,7 +164,7 @@
                               (catch Exception e
                                 (ice/p [:red "Error finding pr-number via list: " (ex-message e)])))
           pr-number (or pr-number-view pr-number-list)
-          merge-strategy (if (should-pr-win? pr-number target-branch) : ours :theirs)]
+          merge-strategy (if (should-pr-win? pr-number target-branch) :ours :theirs)]
       (ice/p [:green "Merging PR #" pr-number ": " (u/head-ref-name source-branch target-branch) " | with strategy: " [:blue merge-strategy]])
       (update-and-merge-pr source-branch target-branch pr-number merge-strategy))))
 
