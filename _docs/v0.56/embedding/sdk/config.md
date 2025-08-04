@@ -49,6 +49,7 @@ Accepts an object where each key is an event type and the corresponding value is
 - [Type](./api/SdkEventHandlersConfig)
 
 #### Example
+
 ```typescript
 {% include_file "{{ dirname }}/snippets/config/config-with-event-handlers.tsx" snippet="example" %}
 ```

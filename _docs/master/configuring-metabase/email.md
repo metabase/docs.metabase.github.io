@@ -146,7 +146,7 @@ Check if [email quotas](https://docs.aws.amazon.com/ses/latest/dg/quotas.html) a
 
 Allowed email address domain(s) for new [dashboard subscriptions](../dashboards/subscriptions) and [alerts](../questions/alerts).
 
-Adding approved domains allows you to restrict which email addresses people can send alerts and subscriptions to. This restriction only applies to sending email to people who lack an account with that Metabase. People with Metabase accounts who aren't [sandboxed](../permissions/data-sandboxes) will be able to email any other person with an account in that same Metabase.
+Adding approved domains allows you to restrict which email addresses people can send alerts and subscriptions to. This restriction only applies to sending email to people who lack an account with that Metabase. People with Metabase accounts who aren't [restricted by row or column security](../permissions/row-and-column-security) will be able to email any other person with an account in that same Metabase.
 
 To allow all domains, leave the field empty (allowing all domains is the default).
 
@@ -168,7 +168,7 @@ Options include:
 - Only suggest users in the same groups
 - Don't show suggestions
 
-People who are sandboxed won't see suggestions.
+People with [row or column restrictions](../permissions/row-and-column-security) won't see suggestions.
 
 ## Further reading
 
