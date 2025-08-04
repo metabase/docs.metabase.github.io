@@ -61,9 +61,9 @@
             (when (seq files-in-dir)
               (ice/p [:yellow "Resolving conflicts in directory: " dir])
               (doseq [file files-in-dir]
-                (ice/p [:yellow "  Resolving conflict for file: " file])
-                (p/sh "git" "checkout" "--ours" file)
-                (p/sh "git" "add" file)))))))))
+                (ice/p [:yellow "Resolving file: " file])
+                (ice/p [:yellow "  - Checking out --ours: | " (:out (p/sh "git" "checkout" "--ours" file))])
+                (ice/p [:yellow "  - Adding file:         | " (:out (p/sh "git" "add" file))])))))))))
 
 (defn- update-and-merge-pr [source-branch target-branch pr-number]
   (let [head-ref-name (u/head-ref-name source-branch target-branch)]
@@ -86,11 +86,12 @@
               (ice/p [:red "✗ Merge failed: " (:err merge-result)])
               (ice/p [:yellow "Attempting to resolve conflicts with git..."])
               (resolve-conflicts target-branch)
-              (p/sh "git" "commit" "--no-edit" "-m"
-                    (str "Merge " target-branch " for PR #" pr-number)))
+              (u/pp (p/sh "git" "commit" "--no-edit" "-m"
+                          (str "Merge " target-branch " for PR #" pr-number))))
 
             (ice/p [:blue "Pushing changes to PR branch..."])
-            (p/sh "git" "push" "origin" head-ref-name)))))
+            (ice/p "Result: " (u/pp
+                                (p/sh "git" "push" "origin" head-ref-name)))))))
 
     ;; Wait a bit for GitHub to process to avoid a race condition
     (Thread/sleep 5000)
