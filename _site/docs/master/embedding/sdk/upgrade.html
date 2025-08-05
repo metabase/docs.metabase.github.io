@@ -6,7 +6,7 @@
   <meta content="frame-ancestors 'none'" http-equiv="Content-Security-Policy">
   <meta content="deny" http-equiv="X-Frame-Options">
     
-  <link href="https://www.metabase.com/docs/master/questions/query-builder/expressions-list" rel="canonical">
+  <link href="https://www.metabase.com/docs/master/embedding/sdk/upgrade" rel="canonical">
   
 
   <script type="text/javascript">
@@ -44,12 +44,12 @@
 <meta name="robots" content="noindex">
    
 
-<title>List of expressions | Metabase Documentation</title>
+<title>Upgrading Metabase and the Embedded analytics SDK | Metabase Documentation</title>
 <!-- Twitter cards -->
 <meta name="twitter:site" content="@metabase">
 
-<meta name="twitter:title" content="List of expressions | Metabase Documentation">
-<meta name="twitter:description" content="List of expressions For an introduction to expressions, check out the overview of custom expressions.   Aggregations  Average Count CountIf Distinct DistinctIf Max Median Min Percentile Share...">
+<meta name="twitter:title" content="Upgrading Metabase and the Embedded analytics SDK | Metabase Documentation">
+<meta name="twitter:description" content="Upgrading Metabase and the Embedded analytics SDK Here’s a basic overview of the steps you’ll want to take when upgrading your SDK. 1. Read the release post and changelog for both Metabase and the Embedded analytics SDK  Release...">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -57,9 +57,9 @@
 <!-- Open Graph metadata -->
 <meta property="og:site_name" content="Metabase | Business Intelligence, Dashboards, and Data Visualization">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://www.metabase.com/docs/master/questions/query-builder/expressions-list">
-<meta name="title" property="og:title" content="List of expressions | Metabase Documentation">
-<meta name="description" property="og:description" content="List of expressions For an introduction to expressions, check out the overview of custom expressions.   Aggregations  Average Count CountIf Distinct DistinctIf Max Median Min Percentile Share...">
+<meta property="og:url" content="https://www.metabase.com/docs/master/embedding/sdk/upgrade">
+<meta name="title" property="og:title" content="Upgrading Metabase and the Embedded analytics SDK | Metabase Documentation">
+<meta name="description" property="og:description" content="Upgrading Metabase and the Embedded analytics SDK Here’s a basic overview of the steps you’ll want to take when upgrading your SDK. 1. Read the release post and changelog for both Metabase and the Embedded analytics SDK  Release...">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -1636,7 +1636,7 @@ Roadmap</a>
 
       
 
-      <li class="expanded">
+      <li class="">
         <a href="/docs/master/questions/start" class="">
         Queries and charts
 
@@ -1674,7 +1674,7 @@ Roadmap</a>
 
               
 
-              <li class="expanded">
+              <li class="">
                 <a href="" class="">
                   Query builder
 
@@ -1727,7 +1727,7 @@ Roadmap</a>
                     
                       
                       <li>
-                        <a href="/docs/master/questions/query-builder/expressions-list" class="selected">
+                        <a href="/docs/master/questions/query-builder/expressions-list" class="">
                           List of expressions
                         </a>
                       </li>
@@ -2688,7 +2688,7 @@ Roadmap</a>
 
       
 
-      <li class="">
+      <li class="expanded">
         <a href="" class="">
         Embedded analytics SDK
 
@@ -2892,7 +2892,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/master/embedding/sdk/upgrade" class="">
+                <a href="/docs/master/embedding/sdk/upgrade" class="selected">
                   Upgrading
 
                   
@@ -4694,7 +4694,7 @@ Roadmap</a>
 
             
             
-                <li class="breadcrumb-item"><a class="blue-60" href="/docs/master/questions/start">Questions</a></li>
+                <li class="breadcrumb-item"><a class="blue-60" href="/docs/master/embedding/start">Embedding</a></li>
             
             
         </ol>
@@ -4841,1150 +4841,76 @@ Roadmap</a>
 </div>
 
 
-        <h1 id="list-of-expressions">List of expressions</h1>
+        <h1 id="upgrading-metabase-and-the-embedded-analytics-sdk">Upgrading Metabase and the Embedded analytics SDK</h1>
 
-<p>For an introduction to expressions, check out the <a href="./expressions">overview of custom expressions</a>.</p>
+<p>Here’s a basic overview of the steps you’ll want to take when upgrading your SDK.</p>
+
+<h2 id="1-read-the-release-post-and-changelog-for-both-metabase-and-the-embedded-analytics-sdk">1. Read the release post and changelog for both Metabase and the Embedded analytics SDK</h2>
 
 <ul>
-  <li>
-    <p><a href="#aggregations">Aggregations</a></p>
-
-    <ul>
-      <li><a href="#average">Average</a></li>
-      <li><a href="#count">Count</a></li>
-      <li><a href="./expressions/countif">CountIf</a></li>
-      <li><a href="#distinct">Distinct</a></li>
-      <li><a href="#distinctif">DistinctIf</a></li>
-      <li><a href="#max">Max</a></li>
-      <li><a href="#median">Median</a></li>
-      <li><a href="#min">Min</a></li>
-      <li><a href="#percentile">Percentile</a></li>
-      <li><a href="#share">Share</a></li>
-      <li><a href="#standarddeviation">StandardDeviation</a></li>
-      <li><a href="#sum">Sum</a></li>
-      <li><a href="./expressions/sumif">SumIf</a></li>
-      <li><a href="#variance">Variance</a></li>
-      <li><a href="./expressions/cumulative">CumulativeSum</a></li>
-      <li><a href="./expressions/cumulative">CumulativeCount</a></li>
-    </ul>
-  </li>
-  <li>
-    <p>Functions</p>
-
-    <ul>
-      <li>
-        <p><a href="#logical-functions">Logical functions</a></p>
-
-        <ul>
-          <li><a href="#between">between</a></li>
-          <li><a href="./expressions/case">case</a></li>
-          <li><a href="./expressions/coalesce">coalesce</a></li>
-          <li><a href="./expressions/case">if</a></li>
-          <li><a href="#in">in</a></li>
-          <li><a href="./expressions/isnull">isNull</a></li>
-          <li><a href="#notin">notIn</a></li>
-          <li><a href="#notnull">notNull</a></li>
-        </ul>
-      </li>
-      <li>
-        <p><a href="#math-functions">Math functions</a></p>
-
-        <ul>
-          <li><a href="#abs">abs</a></li>
-          <li><a href="#ceil">ceil</a></li>
-          <li><a href="#exp">exp</a></li>
-          <li><a href="#floor">floor</a></li>
-          <li><a href="#integer">integer</a></li>
-          <li><a href="#log">log</a></li>
-          <li><a href="#power">power</a></li>
-          <li><a href="#round">round</a></li>
-          <li><a href="#sqrt">sqrt</a></li>
-        </ul>
-      </li>
-      <li>
-        <p><a href="#string-functions">String functions</a></p>
-
-        <ul>
-          <li><a href="./expressions/concat">concat</a></li>
-          <li><a href="#contains">contains</a></li>
-          <li><a href="#date">date</a></li>
-          <li><a href="#datetime">datetime</a></li>
-          <li><a href="#doesnotcontain">doesNotContain</a></li>
-          <li><a href="#domain">domain</a></li>
-          <li><a href="#endswith">endsWith</a></li>
-          <li><a href="#float">float</a></li>
-          <li><a href="#host">host</a></li>
-          <li><a href="./expressions/isempty">isEmpty</a></li>
-          <li><a href="#integer">integer</a></li>
-          <li><a href="#ltrim">lTrim</a></li>
-          <li><a href="#length">length</a></li>
-          <li><a href="#lower">lower</a></li>
-          <li><a href="#notempty">notEmpty</a></li>
-          <li><a href="#path">path</a></li>
-          <li><a href="./expressions/regexextract">regexExtract</a></li>
-          <li><a href="#replace">replace</a></li>
-          <li><a href="#splitpart">splitPart</a></li>
-          <li><a href="#rtrim">rTrim</a></li>
-          <li><a href="#startswith">startsWith</a></li>
-          <li><a href="#subdomain">subdomain</a></li>
-          <li><a href="./expressions/substring">substring</a></li>
-          <li><a href="#text">text</a></li>
-          <li><a href="#trim">trim</a></li>
-          <li><a href="#upper">upper</a></li>
-        </ul>
-      </li>
-      <li>
-        <p><a href="#date-functions">Date functions</a></p>
-
-        <ul>
-          <li><a href="./expressions/converttimezone">convertTimezone</a></li>
-          <li><a href="#date">date</a></li>
-          <li><a href="#datetime">datetime</a></li>
-          <li><a href="./expressions/datetimeadd">datetimeAdd</a></li>
-          <li><a href="./expressions/datetimediff">datetimeDiff</a></li>
-          <li><a href="./expressions/datetimesubtract">datetimeSubtract</a></li>
-          <li><a href="#day">day</a></li>
-          <li><a href="#dayname">dayName</a></li>
-          <li><a href="#hour">hour</a></li>
-          <li><a href="#interval">interval</a></li>
-          <li><a href="#minute">minute</a></li>
-          <li><a href="#month">month</a></li>
-          <li><a href="#monthname">monthName</a></li>
-          <li><a href="./expressions/now">now</a></li>
-          <li><a href="#quarter">quarter</a></li>
-          <li><a href="#quartername">quarterName</a></li>
-          <li><a href="#relativedatetime">relativeDateTime</a></li>
-          <li><a href="#second">second</a></li>
-          <li><a href="#timespan">timeSpan</a></li>
-          <li><a href="#today">today</a></li>
-          <li><a href="#week">week</a></li>
-          <li><a href="#weekday">weekday</a></li>
-          <li><a href="#year">year</a></li>
-        </ul>
-      </li>
-      <li>
-        <p><a href="#type-casting-functions">Type-casting functions</a></p>
-
-        <ul>
-          <li><a href="#date">date</a></li>
-          <li><a href="#datetime">datetime</a></li>
-          <li><a href="#float">float</a></li>
-          <li><a href="#integer">integer</a></li>
-          <li><a href="#text">text</a></li>
-        </ul>
-      </li>
-      <li>
-        <p><a href="#window-functions">Window functions</a></p>
-
-        <ul>
-          <li><a href="./expressions/offset">Offset</a></li>
-          <li><a href="./expressions/cumulative">CumulativeCount</a></li>
-          <li><a href="./expressions/cumulative">CumulativeSum</a></li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-  <li>
-    <p><a href="#limitations">Limitations</a></p>
-    <ul>
-      <li><a href="#database-limitations">Database limitations</a></li>
-    </ul>
-  </li>
+  <li><a href="/releases">Release posts</a> give a good overview of what’s in each release, and call out breaking changes (which are rare).</li>
+  <li><a href="/changelog">Metabase changelogs</a> list Metabase changes.</li>
+  <li><a href="/changelog/55">Embedded analytics SDK changelogs</a> list changes specific to the SDK package.</li>
 </ul>
 
-<h2 id="aggregations">Aggregations</h2>
+<p>Check for any relevant changes, especially breaking changes that require you to update your application’s code. If there are breaking changes, we’ll have docs that’ll walk you through what changes you’ll need to make and why.</p>
 
-<p>Aggregation expressions take into account all values in a field. They can only be used in the <strong>Summarize</strong> section of the query builder.</p>
+<h2 id="2-test-the-upgrade">2. Test the upgrade</h2>
 
-<h3 id="average">Average</h3>
+<p>When upgrading to a new major version, you’ll want to upgrade both Metabase and the SDK version in parallel, as having Metabase and the SDK major versions out of sync can cause errors.</p>
 
-<p>Returns the average of the values in the column.</p>
+<h3 id="spin-up-the-new-version-of-metabase-for-testing">Spin up the new version of Metabase for testing</h3>
 
-<p>Syntax: <code class="language-plaintext highlighter-rouge">Average(column)</code></p>
+<p>You can do this locally or in a dev instance. If your testing setup involves a lot of test user accounts, getting a <a href="../../installation-and-operation/development-instance">development instance</a> could be more cost-effective.</p>
 
-<p>Example: <code class="language-plaintext highlighter-rouge">Average([Quantity])</code> would return the mean for the <code class="language-plaintext highlighter-rouge">Quantity</code> field.</p>
+<p>See <a href="../../installation-and-operation/upgrading-metabase">upgrading Metabase</a>.</p>
 
-<h3 id="count">Count</h3>
+<h3 id="upgrade-the-sdk-with-npm-or-yarn">Upgrade the SDK with npm or yarn</h3>
 
-<p>Returns the count of rows (also known as records) in the selected data.</p>
+<p>You’ll want to test the changes locally first, as there may be breaking changes that require you to upgrade your application code.</p>
 
-<p>Syntax: <code class="language-plaintext highlighter-rouge">Count()</code></p>
+<p>Check out a new branch in your application and install the next stable version, either with npm or yarn:</p>
 
-<p>Example: <code class="language-plaintext highlighter-rouge">Count()</code> If a table or result returns 10 rows, <code class="language-plaintext highlighter-rouge">Count</code> will return <code class="language-plaintext highlighter-rouge">10</code>.</p>
+<p>Via npm:</p>
 
-<h3 id="countif"><a href="./expressions/countif">CountIf</a></h3>
-
-<p>Only counts rows where the condition is true.</p>
-
-<p>Syntax: <code class="language-plaintext highlighter-rouge">CountIf(condition)</code></p>
-
-<p>Example: <code class="language-plaintext highlighter-rouge">CountIf([Subtotal] &gt; 100)</code> would return the number of rows where the subtotal were greater than 100.</p>
-
-<h3 id="distinct">Distinct</h3>
-
-<p>The number of distinct values in this column.</p>
-
-<p>Syntax: <code class="language-plaintext highlighter-rouge">Distinct(column)</code></p>
-
-<p>Example: <code class="language-plaintext highlighter-rouge">Distinct([Last Name])</code>. Returns the count of unique last names in the column. Duplicates (of the last name “Smith” for example) are not counted.</p>
-
-<h3 id="distinctif">DistinctIf</h3>
-
-<p>Returns the count of distinct values in a column where the condition is true.</p>
-
-<p>Syntax: <code class="language-plaintext highlighter-rouge">DistinctIf(column, condition)</code></p>
-
-<p>Example: <code class="language-plaintext highlighter-rouge">DistinctIf([ID], [Category] = "Gizmo")</code> would return the count of unique IDs where the <code class="language-plaintext highlighter-rouge">Category</code> column is “Gizmo”.</p>
-
-<h3 id="max">Max</h3>
-
-<p>Returns the largest value found in the column.</p>
-
-<p>Syntax: <code class="language-plaintext highlighter-rouge">Max(column)</code></p>
-
-<p>Example: <code class="language-plaintext highlighter-rouge">Max([Age])</code> would return the oldest age found across all values in the <code class="language-plaintext highlighter-rouge">Age</code> column.</p>
-
-<p>Related: <a href="#min">Min</a>, <a href="#average">Average</a>, <a href="#median">Median</a>.</p>
-
-<h3 id="median">Median</h3>
-
-<p>Returns the median value of the specified column.</p>
-
-<p>Syntax: <code class="language-plaintext highlighter-rouge">Median(column)</code></p>
-
-<p>Example: <code class="language-plaintext highlighter-rouge">Median([Age])</code> would find the midpoint age where half of the ages are older, and half of the ages are younger.</p>
-
-<p>Databases that don’t support <code class="language-plaintext highlighter-rouge">median</code>: Druid, MariaDB, MongoDB, MySQL, SQLite, Vertica, and SQL Server. Presto only provides approximate results.</p>
-
-<p>Related: <a href="#min">Min</a>, <a href="#max">Max</a>, <a href="#average">Average</a>.</p>
-
-<h3 id="min">Min</h3>
-
-<p>Returns the smallest value found in the column.</p>
-
-<p>Syntax: <code class="language-plaintext highlighter-rouge">Min(column)</code></p>
-
-<p>Example: <code class="language-plaintext highlighter-rouge">Min([Salary])</code> would find the lowest salary among all salaries in the <code class="language-plaintext highlighter-rouge">Salary</code> column.</p>
-
-<p>Related: <a href="#max">Max</a>, <a href="#median">Median</a>, <a href="#average">Average</a>.</p>
-
-<h3 id="percentile">Percentile</h3>
-
-<p>Returns the value of the column at the percentile value.</p>
-
-<p>Syntax: <code class="language-plaintext highlighter-rouge">Percentile(column, percentile-value)</code></p>
-
-<p>Example: <code class="language-plaintext highlighter-rouge">Percentile([Score], 0.9)</code> would return the value at the 90th percentile for all values in that column.</p>
-
-<p>Databases that don’t support <code class="language-plaintext highlighter-rouge">percentile</code>: Druid, H2, MariaDB, MySQL, MongoDB, SQL Server, SQLite, Vertica. Presto only provides approximate results.</p>
-
-<h3 id="share">Share</h3>
-
-<p>Returns the percent of rows in the data that match the condition, as a decimal.</p>
-
-<p>Syntax: <code class="language-plaintext highlighter-rouge">Share(condition)</code></p>
-
-<p>Example: <code class="language-plaintext highlighter-rouge">Share([Color] = "Blue")</code> would return the number of rows with the <code class="language-plaintext highlighter-rouge">Color</code> field set to <code class="language-plaintext highlighter-rouge">Blue</code>, divided by the total number of rows.</p>
-
-<h3 id="standarddeviation">StandardDeviation</h3>
-
-<p>Calculates the standard deviation of the column, which is a measure of the variation in a set of values. Low standard deviation indicates values cluster around the mean, whereas a high standard deviation means the values are spread out over a wide range.</p>
-
-<p>Syntax: <code class="language-plaintext highlighter-rouge">StandardDeviation(column)</code></p>
-
-<p>Example: <code class="language-plaintext highlighter-rouge">StandardDeviation([Population])</code> would return the SD for the values in the <code class="language-plaintext highlighter-rouge">Population</code> column.</p>
-
-<p>Databases that don’t support <code class="language-plaintext highlighter-rouge">StandardDeviation</code>: Druid, SQLite.</p>
-
-<h3 id="sum">Sum</h3>
-
-<p>Adds up all the values of the column.</p>
-
-<p>Syntax: <code class="language-plaintext highlighter-rouge">Sum(column)</code></p>
-
-<p>Example: <code class="language-plaintext highlighter-rouge">Sum([Subtotal])</code> would add up all the values in the <code class="language-plaintext highlighter-rouge">Subtotal</code> column.</p>
-
-<h3 id="sumif"><a href="./expressions/sumif">SumIf</a></h3>
-
-<p>Sums up the specified column only for rows where the condition is true.</p>
-
-<p>Syntax: <code class="language-plaintext highlighter-rouge">SumIf(column, condition)</code></p>
-
-<p>Example:<code class="language-plaintext highlighter-rouge">SumIf([Subtotal], [Order Status] = "Valid")</code> would add up all the subtotals for orders with a status of “Valid”.</p>
-
-<h3 id="variance">Variance</h3>
-
-<p>Returns the numeric variance for a given column.</p>
-
-<p>Syntax: <code class="language-plaintext highlighter-rouge">Variance(column)</code></p>
-
-<p>Example: <code class="language-plaintext highlighter-rouge">Variance([Temperature])</code> will return a measure of the dispersion from the mean temperature for all temps in that column.</p>
-
-<p>Related: <a href="#standarddeviation">StandardDeviation</a>, <a href="#average">Average</a>.</p>
-
-<p>Databases that don’t support <code class="language-plaintext highlighter-rouge">Variance</code>: Druid, SQLite.</p>
-
-<h2 id="functions">Functions</h2>
-
-<p>Function expressions apply to each individual value. They can be used to alter or filter values in a column, or create new, custom columns.</p>
-
-<h2 id="logical-functions">Logical functions</h2>
-
-<p>Logical functions determine if a condition is satisfied or determine what value to return based on a condition.</p>
-
-<h3 id="between">between</h3>
-
-<p>Returns true if the value of a date or number column falls within a specified range. Otherwise returns false.</p>
-
-<p>Syntax: <code class="language-plaintext highlighter-rouge">between(column, start, end)</code></p>
-
-<p>Example: If you filtered with the expression <code class="language-plaintext highlighter-rouge">between([Created At], "2019-01-01", "2020-12-31")</code>, Metabase would return rows that returned true for that expression, in this case where the <code class="language-plaintext highlighter-rouge">Created At</code> date fell <em>within</em> the range of January 1, 2019 and December 31, 2020, including the start (<code class="language-plaintext highlighter-rouge">2019-01-01</code>) and end (<code class="language-plaintext highlighter-rouge">2020-12-31</code>) dates.</p>
-
-<p>Related: <a href="#interval">interval</a>.</p>
-
-<h3 id="case"><a href="./expressions/case">case</a></h3>
-
-<p><code class="language-plaintext highlighter-rouge">case</code> (alias <code class="language-plaintext highlighter-rouge">if</code>) tests an expression against a list of cases and returns the corresponding value of the first matching case, with an optional default value if nothing else is met.</p>
-
-<p>Syntax: <code class="language-plaintext highlighter-rouge">case(condition, output, …)</code></p>
-
-<p>Example: <code class="language-plaintext highlighter-rouge">case([Weight] &gt; 200, "Large", [Weight] &gt; 150, "Medium", "Small")</code> If a <code class="language-plaintext highlighter-rouge">Weight</code> is 250, the expression would return “Large”. In this case, the default value is “Small”, so any <code class="language-plaintext highlighter-rouge">Weight</code> 150 or less would return “Small”.</p>
-
-<h3 id="coalesce"><a href="./expressions/coalesce">coalesce</a></h3>
-
-<p>Looks at the values in each argument in order and returns the first non-null value for each row.</p>
-
-<p>Syntax: <code class="language-plaintext highlighter-rouge">coalesce(value1, value2, …)</code></p>
-
-<p>Example: <code class="language-plaintext highlighter-rouge">coalesce([Comments], [Notes], "No comments")</code>. If both the <code class="language-plaintext highlighter-rouge">Comments</code> and <code class="language-plaintext highlighter-rouge">Notes</code> columns are null for that row, the expression will return the string “No comments”.</p>
-
-<h3 id="if"><a href="./expressions/case">if</a></h3>
-
-<p><code class="language-plaintext highlighter-rouge">if</code> is an alias for <a href="./expressions/case">case</a>. Tests an expression against a list of conditionals and returns the corresponding value of the first matching case, with an optional default value if nothing else is met.</p>
-
-<p>Syntax: <code class="language-plaintext highlighter-rouge">if(condition, output, ...)</code></p>
-
-<p>Example: <code class="language-plaintext highlighter-rouge">if([Weight] &gt; 200, "Large", [Weight] &gt; 150, "Medium", "Small")</code> If a <code class="language-plaintext highlighter-rouge">Weight</code> is 250, the expression would return “Large”. In this case, the default value is “Small”, so any <code class="language-plaintext highlighter-rouge">Weight</code> 150 or less would return “Small”.</p>
-
-<h3 id="in">in</h3>
-
-<p>Returns true if <code class="language-plaintext highlighter-rouge">value1</code> equals <code class="language-plaintext highlighter-rouge">value2</code> (or <code class="language-plaintext highlighter-rouge">value3</code>, etc., if specified).</p>
-
-<p>Syntax: <code class="language-plaintext highlighter-rouge">in(value1, value2, ...)</code></p>
-
-<ul>
-  <li><code class="language-plaintext highlighter-rouge">value1</code>: The column or value to check.</li>
-  <li><code class="language-plaintext highlighter-rouge">value2, ...</code>: The list of columns or values to check against.</li>
-</ul>
-
-<p>You can add more values to check against.</p>
-
-<p>Example: <code class="language-plaintext highlighter-rouge">in([Category], "Widget", "Gadget")</code> would return true for rows where the <code class="language-plaintext highlighter-rouge">Category</code> is either “Widget” or “Gadget”.</p>
-
-<p>Related: <a href="#notin">notIn</a>, <a href="#contains">contains</a>, <a href="#startswith">startsWith</a>, <a href="#endswith">endsWith</a></p>
-
-<h3 id="isnull"><a href="./expressions/isnull">isNull</a></h3>
-
-<p>Returns true if the column is null.</p>
-
-<p>Syntax: <code class="language-plaintext highlighter-rouge">isNull(column)</code></p>
-
-<p>Example: <code class="language-plaintext highlighter-rouge">isNull([Tax])</code> would return true if no value were present in the column for that row.</p>
-
-<p>Related: <a href="#notnull">notNull</a>, <a href="#isempty">isEmpty</a></p>
-
-<h3 id="notnull">notNull</h3>
-
-<p>Returns true if the column contains a value.</p>
-
-<p>Syntax: <code class="language-plaintext highlighter-rouge">notNull(column)</code></p>
-
-<p>Example: <code class="language-plaintext highlighter-rouge">notNull([Tax])</code> would return true if there is a value present in the column for that row.</p>
-
-<p>Related: <a href="#isnull">isNull</a>, <a href="#notempty">notEmpty</a></p>
-
-<h3 id="notin">notIn</h3>
-
-<p>Returns true if <code class="language-plaintext highlighter-rouge">value1</code> doesn’t equal <code class="language-plaintext highlighter-rouge">value2</code> (and <code class="language-plaintext highlighter-rouge">value3</code>, etc., if specified).</p>
-
-<p>Syntax: <code class="language-plaintext highlighter-rouge">notIn(value1, value2, ...)</code></p>
-
-<ul>
-  <li><code class="language-plaintext highlighter-rouge">value1</code>: The column or value to check.</li>
-  <li><code class="language-plaintext highlighter-rouge">value2, ...</code>: The column or values to look for.</li>
-</ul>
-
-<p>You can add more values to look for.</p>
-
-<p>Example: <code class="language-plaintext highlighter-rouge">notIn([Category], "Widget", "Gadget")</code> would return true for rows where the <code class="language-plaintext highlighter-rouge">Category</code> is not “Widget” or “Gadget”.</p>
-
-<p>Related: <a href="#in">in</a>, <a href="./expressions/case">case</a></p>
-
-<h2 id="math-functions">Math functions</h2>
-
-<p>Math functions implement common mathematical operations.</p>
-
-<h3 id="abs">abs</h3>
-
-<p>Returns the absolute (positive) value of the specified column.</p>
-
-<p>Syntax: <code class="language-plaintext highlighter-rouge">abs(column)</code></p>
-
-<p>Example: <code class="language-plaintext highlighter-rouge">abs([Debt])</code>. If <code class="language-plaintext highlighter-rouge">Debt</code> were -100, <code class="language-plaintext highlighter-rouge">abs(-100)</code> would return <code class="language-plaintext highlighter-rouge">100</code>.</p>
-
-<h3 id="ceil">ceil</h3>
-
-<p>Rounds a decimal up (ceil as in ceiling).</p>
-
-<p>Syntax: <code class="language-plaintext highlighter-rouge">ceil(column)</code></p>
-
-<p>Example: <code class="language-plaintext highlighter-rouge">ceil([Price])</code>. <code class="language-plaintext highlighter-rouge">ceil(2.99)</code> would return 3.</p>
-
-<p>Related: <a href="#floor">floor</a>, <a href="#round">round</a>.</p>
-
-<h3 id="exp">exp</h3>
-
-<p>Returns <a href="https://en.wikipedia.org/wiki/E_(mathematical_constant)">Euler’s number</a>, e, raised to the power of the supplied number. (Euler sounds like “Oy-ler”).</p>
-
-<p>Syntax: <code class="language-plaintext highlighter-rouge">exp(column)</code></p>
-
-<p>Example: <code class="language-plaintext highlighter-rouge">exp([Interest Months])</code></p>
-
-<p>Related: <a href="#power">power</a>.</p>
-
-<h3 id="floor">floor</h3>
-
-<p>Rounds a decimal number down.</p>
-
-<p>Syntax: <code class="language-plaintext highlighter-rouge">floor(column)</code></p>
-
-<p>Example: <code class="language-plaintext highlighter-rouge">floor([Price])</code>. If the <code class="language-plaintext highlighter-rouge">Price</code> were 1.99, the expression would return 1.</p>
-
-<p>Related: <a href="#ceil">ceil</a>, <a href="#round">round</a>.</p>
-
-<h3 id="log">log</h3>
-
-<p>Returns the base 10 log of the number.</p>
-
-<p>Syntax: <code class="language-plaintext highlighter-rouge">log(column)</code></p>
-
-<p>Example: <code class="language-plaintext highlighter-rouge">log([Value])</code>.</p>
-
-<h3 id="power">power</h3>
-
-<p>Raises a number to the power of the exponent value.</p>
-
-<p>Syntax: <code class="language-plaintext highlighter-rouge">power(column, exponent)</code></p>
-
-<p>Example: <code class="language-plaintext highlighter-rouge">power([Length], 2)</code>. If the length were <code class="language-plaintext highlighter-rouge">3</code>, the expression would return <code class="language-plaintext highlighter-rouge">9</code> (3 to the second power is 3*3).</p>
-
-<p>Databases that don’t support <code class="language-plaintext highlighter-rouge">power</code>: SQLite.</p>
-
-<p>Related: <a href="#exp">exp</a>.</p>
-
-<h3 id="round">round</h3>
-
-<p>Rounds a decimal number either up or down to the nearest integer value.</p>
-
-<p>Syntax: <code class="language-plaintext highlighter-rouge">round(column)</code></p>
-
-<p>Example: <code class="language-plaintext highlighter-rouge">round([Temperature])</code>. If the temp were <code class="language-plaintext highlighter-rouge">13.5</code> degrees centigrade, the expression would return <code class="language-plaintext highlighter-rouge">14</code>.</p>
-
-<p>Example: <code class="language-plaintext highlighter-rouge">round([Temperature] * 10) / 10</code>. If the temp were <code class="language-plaintext highlighter-rouge">100.75</code>, the expression would return <code class="language-plaintext highlighter-rouge">100.8</code>.</p>
-
-<h3 id="sqrt">sqrt</h3>
-
-<p>Returns the square root of a value.</p>
-
-<p>Syntax: <code class="language-plaintext highlighter-rouge">sqrt(column)</code></p>
-
-<p>Example: <code class="language-plaintext highlighter-rouge">sqrt([Hypotenuse])</code>.</p>
-
-<p>Databases that don’t support <code class="language-plaintext highlighter-rouge">sqrt</code>: SQLite.</p>
-
-<p>Related: <a href="#power">power</a>.</p>
-
-<h2 id="string-functions">String functions</h2>
-
-<p>String functions manipulate or validate string data.</p>
-
-<h3 id="concat"><a href="./expressions/concat">concat</a></h3>
-
-<p>Combine two or more strings together.</p>
-
-<p>Syntax: <code class="language-plaintext highlighter-rouge">concat(value1, value2, …)</code></p>
-
-<p>Example: <code class="language-plaintext highlighter-rouge">concat([Last Name], ", ", [First Name])</code> would produce a string of the format “Last Name, First Name”, like “Palazzo, Enrico”.</p>
-
-<h3 id="contains">contains</h3>
-
-<p>Checks to see if <code class="language-plaintext highlighter-rouge">string1</code> contains <code class="language-plaintext highlighter-rouge">string2</code> within it.</p>
-
-<p>Performs case-sensitive match by default.
-You can pass an optional parameter <code class="language-plaintext highlighter-rouge">"case-insensitive"</code> to perform a case-insensitive match.</p>
-
-<p>Syntax: <code class="language-plaintext highlighter-rouge">contains(string1, string2)</code> for case-sensitive match.</p>
-
-<p><code class="language-plaintext highlighter-rouge">contains(string1, string2, "case-insensitive")</code> for case-insensitive match.</p>
-
-<p>Example: <code class="language-plaintext highlighter-rouge">contains([Status], "Class")</code>.</p>
-
-<p>If <code class="language-plaintext highlighter-rouge">Status</code> were “Classified”, the expression would return <code class="language-plaintext highlighter-rouge">true</code>. If the <code class="language-plaintext highlighter-rouge">Status</code> were “<strong>c</strong>lassified”, the expression would return <code class="language-plaintext highlighter-rouge">false</code>, because the case does not match.</p>
-
-<p>Related: <a href="#doesnotcontain">doesNotContain</a>, <a href="#regexextract">regexExtract</a>.</p>
-
-<h3 id="date">date</h3>
-
-<blockquote>
-  <p>Unavailable for Oracle or the non-JDBC Apache Druid driver.</p>
-</blockquote>
-
-<ul>
-  <li>When used on a string, converts an ISO 8601 date string to a date. The string <em>must</em> be in a valid ISO 8601 format. If the string contains time, the time part is truncated.</li>
-  <li>When used on a datetime value, truncates datetime to a date.</li>
-</ul>
-
-<p>Syntax: <code class="language-plaintext highlighter-rouge">date(value)</code></p>
-
-<p>Example: <code class="language-plaintext highlighter-rouge">date("2025-03-20")</code> would return a date value so that you can use all the date features in the query builder: group by month, filter by previous 30 days, etc.</p>
-
-<p>ISO 8601 standard format:</p>
-
-<ul>
-  <li>Year (YYYY): 2025</li>
-  <li>Month (MM): 03</li>
-  <li>Day (DD): 25</li>
-  <li>Time separator (T)</li>
-  <li>Hours (HH): 14</li>
-  <li>Minutes (MM): 30</li>
-  <li>Seconds (SS): 45</li>
-  <li>UTC timezone indicator (Z)</li>
-</ul>
-
-<p>Valid ISO 8601 examples include:</p>
-
-<ul>
-  <li>Date only: <code class="language-plaintext highlighter-rouge">2025-03-25</code></li>
-  <li>Date with time: <code class="language-plaintext highlighter-rouge">2025-03-25T14:30:45</code></li>
-  <li>Date with time and timezone offset: <code class="language-plaintext highlighter-rouge">2025-03-25T14:30:45+01:00</code></li>
-</ul>
-
-<p>Another example: <code class="language-plaintext highlighter-rouge">date(2025-04-19T17:42:53+01:00)</code> would return <code class="language-plaintext highlighter-rouge">2025-04-19</code>.</p>
-
-<p>Related: <a href="#datetime">datetime</a></p>
-
-<h3 id="datetime">datetime</h3>
-
-<blockquote>
-  <p>Available on PostgreSQL, MySQL/MariaDB, BigQuery, Redshift, ClickHouse, and Snowflake</p>
-</blockquote>
-
-<p>Converts a datetime string or bytes to a datetime.</p>
-
-<p>Syntax: <code class="language-plaintext highlighter-rouge">datetime(value, mode)</code></p>
-
-<ul>
-  <li><code class="language-plaintext highlighter-rouge">value</code>: The string, bytes, or number to convert to a datetime.</li>
-  <li><code class="language-plaintext highlighter-rouge">mode</code>: Optional. The mode indicating the format. One of: <code class="language-plaintext highlighter-rouge">"simple"</code>, <code class="language-plaintext highlighter-rouge">"iso"</code>, <code class="language-plaintext highlighter-rouge">"simpleBytes"</code>, <code class="language-plaintext highlighter-rouge">"isoBytes"</code>, <code class="language-plaintext highlighter-rouge">"unixSeconds"</code>, <code class="language-plaintext highlighter-rouge">"unixMilliseconds"</code>, <code class="language-plaintext highlighter-rouge">"unixMicroseconds"</code>, <code class="language-plaintext highlighter-rouge">"unixNanoseconds"</code>. Default is <code class="language-plaintext highlighter-rouge">"iso"</code>.</li>
-</ul>
-
-<p>Example: <code class="language-plaintext highlighter-rouge">datetime("2025-03-20 12:45:04")</code></p>
-
-<p><code class="language-plaintext highlighter-rouge">datetime</code> supports the following datetime string formats:</p>
-
-<pre><code class="language-txt">2025-05-15T22:20:01
-2025-05-15 22:20:01
-</code></pre>
-
-<p>But some databases may also work with other datetime formats.</p>
-
-<p>Related: <a href="#date">date</a></p>
-
-<h3 id="doesnotcontain">doesNotContain</h3>
-
-<p>Checks to see if <code class="language-plaintext highlighter-rouge">string1</code> contains <code class="language-plaintext highlighter-rouge">string2</code> within it.</p>
-
-<p>Performs case-sensitive match by default.
-You can pass an optional parameter <code class="language-plaintext highlighter-rouge">"case-insensitive"</code> to perform a case-insensitive match.</p>
-
-<p>Syntax: <code class="language-plaintext highlighter-rouge">doesNotContain(string1, string2)</code> for case-sensitive match.</p>
-
-<p><code class="language-plaintext highlighter-rouge">doesNotContain(string1, string2, "case-insensitive")</code> for case-insensitive match.</p>
-
-<p>Example: <code class="language-plaintext highlighter-rouge">doesNotContain([Status], "Class")</code>. If <code class="language-plaintext highlighter-rouge">Status</code> were “Classified”, the expression would return <code class="language-plaintext highlighter-rouge">false</code>.</p>
-
-<p>Related: <a href="#contains">contains</a>, <a href="#regexextract">regexExtract</a>.</p>
-
-<h3 id="domain">domain</h3>
-
-<p>Extracts the domain name from a URL or email.</p>
-
-<p>Syntax: <code class="language-plaintext highlighter-rouge">domain(urlOrEmail)</code></p>
-
-<p>Example: <code class="language-plaintext highlighter-rouge">domain([Page URL])</code>. If the <code class="language-plaintext highlighter-rouge">[Page URL]</code> column had a value of <code class="language-plaintext highlighter-rouge">https://www.metabase.com</code>, <code class="language-plaintext highlighter-rouge">domain([Page URL])</code> would return <code class="language-plaintext highlighter-rouge">metabase</code>. <code class="language-plaintext highlighter-rouge">domain([Email])</code> would extract <code class="language-plaintext highlighter-rouge">metabase</code> from <code class="language-plaintext highlighter-rouge">hello@metabase.com</code>.</p>
-
-<p>Related: <a href="#host">host</a>, <a href="#path">path</a>, <a href="#subdomain">subdomain</a>.</p>
-
-<h3 id="endswith">endsWith</h3>
-
-<p>Returns true if the end of the text matches the comparison text.</p>
-
-<p>Performs case-sensitive match by default.
-You can pass an optional parameter <code class="language-plaintext highlighter-rouge">"case-insensitive"</code> to perform a case-insensitive match.</p>
-
-<p>Syntax: <code class="language-plaintext highlighter-rouge">endsWith(text, comparison)</code> for case-sensitive match.</p>
-
-<p><code class="language-plaintext highlighter-rouge">endsWith(text, comparison, "case-insensitive")</code> for case-insensitive match.</p>
-
-<p>Example: <code class="language-plaintext highlighter-rouge">endsWith([Appetite], "hungry")</code></p>
-
-<p>Related: <a href="#startswith">startsWith</a>, <a href="#contains">contains</a>, <a href="#doesnotcontain">doesNotContain</a>.</p>
-
-<h3 id="float">float</h3>
-
-<blockquote>
-  <p>Available for PostgreSQL, MySQL/MariaDB, BigQuery, Redshift, ClickHouse, and Snowflake.</p>
-</blockquote>
-
-<p>Converts a string to a floating point value. Useful if you want to do some math on numbers, but your data is stored as strings.</p>
-
-<p>Syntax: <code class="language-plaintext highlighter-rouge">float(value)</code></p>
-
-<p>Example: <code class="language-plaintext highlighter-rouge">float("123.45")</code> would return <code class="language-plaintext highlighter-rouge">123.45</code> as a floating point value.</p>
-
-<h3 id="host">host</h3>
-
-<p>Extracts the host, which is the domain and the TLD, from a URL or email.</p>
-
-<p>Syntax: <code class="language-plaintext highlighter-rouge">host(urlOrEmail)</code></p>
-
-<p>Example: <code class="language-plaintext highlighter-rouge">host([Page URL])</code>. If the <code class="language-plaintext highlighter-rouge">[Page URL]</code> column had a value of <code class="language-plaintext highlighter-rouge">https://www.metabase.com</code>, <code class="language-plaintext highlighter-rouge">host([Page URL])</code> would return <code class="language-plaintext highlighter-rouge">metabase.com</code>. <code class="language-plaintext highlighter-rouge">host([Email])</code> would extract <code class="language-plaintext highlighter-rouge">metabase.com</code> from <code class="language-plaintext highlighter-rouge">hello@metabase.com</code>.</p>
-
-<p>Related: <a href="#domain">domain</a>, <a href="#path">path</a>, <a href="#subdomain">subdomain</a>.</p>
-
-<h3 id="isempty"><a href="./expressions/isempty">isEmpty</a></h3>
-
-<p>Returns true if a <em>string column</em> contains an empty string or is null. Calling this function on a non-string column will cause an error. You can use <a href="#isnull">isNull</a> for non-string columns.</p>
-
-<p>Syntax: <code class="language-plaintext highlighter-rouge">isEmpty(column)</code></p>
-
-<p>Example: <code class="language-plaintext highlighter-rouge">isEmpty([Feedback])</code> would return true if <code class="language-plaintext highlighter-rouge">Feedback</code> was an empty string (<code class="language-plaintext highlighter-rouge">''</code>) or did not contain a value.</p>
-
-<p>Related: <a href="#notempty">notEmpty</a>, <a href="#isnull">isNull</a>.</p>
-
-<h3 id="integer">integer</h3>
-
-<blockquote>
-  <p>Only available for BigQuery, ClickHouse, MySQL, PostgreSQL, Amazon Redshift, and Snowflake.</p>
-</blockquote>
-
-<ul>
-  <li>Converts a string to an integer value. Useful if you want to do some math on numbers, but your data is stored as strings.</li>
-  <li>Converts a floating point value by rounding it to an integer.</li>
-</ul>
-
-<p>Syntax: <code class="language-plaintext highlighter-rouge">integer(value)</code></p>
-
-<p>String example: <code class="language-plaintext highlighter-rouge">integer("123")</code> would return <code class="language-plaintext highlighter-rouge">123</code> as an integer. The string must evaluate to an integer (so <code class="language-plaintext highlighter-rouge">integer("123.45")</code> would return an error.)</p>
-
-<p>Float example: <code class="language-plaintext highlighter-rouge">integer(123.45)</code> would return <code class="language-plaintext highlighter-rouge">123</code>.</p>
-
-<p>Related: <a href="#round">round</a>.</p>
-
-<h3 id="ltrim">lTrim</h3>
-
-<p>Removes leading whitespace from a string of text.</p>
-
-<p>Syntax: <code class="language-plaintext highlighter-rouge">lTrim(text)</code></p>
-
-<p>Example: <code class="language-plaintext highlighter-rouge">lTrim([Comment])</code>. If the comment were <code class="language-plaintext highlighter-rouge">" I'd prefer not to"</code>, <code class="language-plaintext highlighter-rouge">lTrim</code> would return <code class="language-plaintext highlighter-rouge">"I'd prefer not to"</code>.</p>
-
-<p>Related: <a href="#trim">trim</a> and <a href="#rtrim">rTrim</a>.</p>
-
-<h3 id="length">length</h3>
-
-<p>Returns the number of characters in text.</p>
-
-<p>Syntax: <code class="language-plaintext highlighter-rouge">length(text)</code></p>
-
-<p>Example: <code class="language-plaintext highlighter-rouge">length([Comment])</code>. If the <code class="language-plaintext highlighter-rouge">comment</code> were “wizard”, <code class="language-plaintext highlighter-rouge">length</code> would return 6 (“wizard” has six characters).</p>
-
-<h3 id="lower">lower</h3>
-
-<p>Returns the string of text in all lower case.</p>
-
-<p>Syntax: <code class="language-plaintext highlighter-rouge">lower(text)</code></p>
-
-<p>Example: <code class="language-plaintext highlighter-rouge">lower([Status])</code>. If the <code class="language-plaintext highlighter-rouge">Status</code> were “QUIET”, the expression would return “quiet”.</p>
-
-<p>Related: <a href="#upper">upper</a>.</p>
-
-<h3 id="notempty">notEmpty</h3>
-
-<p>Returns true if a <em>string column</em> contains a value that is not the empty string. Calling this function on a non-string column will cause an error. You can use <a href="#notnull">notNull</a> on non-string columns.</p>
-
-<p>Syntax: <code class="language-plaintext highlighter-rouge">notEmpty(column)</code></p>
-
-<p>Example: <code class="language-plaintext highlighter-rouge">notEmpty([Feedback])</code> would return true if <code class="language-plaintext highlighter-rouge">Feedback</code> contains a value that isn’t the empty string (<code class="language-plaintext highlighter-rouge">''</code>).</p>
-
-<p>Related: <a href="#isempty">isEmpty</a>, <a href="#isnull">isNull</a>, <a href="#notnull">notNull</a></p>
-
-<h3 id="path">path</h3>
-
-<p>Extracts the pathname from a URL.</p>
-
-<p>Syntax: <code class="language-plaintext highlighter-rouge">path(url)</code></p>
-
-<p>Example: <code class="language-plaintext highlighter-rouge">path([Page URL])</code>. For example, <code class="language-plaintext highlighter-rouge">path("https://www.example.com/path/to/page.html?key1=value")</code> would return <code class="language-plaintext highlighter-rouge">/path/to/page.html</code>.</p>
-
-<p>Related: <a href="#domain">domain</a>, <a href="#host">host</a>, <a href="#subdomain">subdomain</a>.</p>
-
-<h3 id="regexextract"><a href="./expressions/regexextract">regexExtract</a></h3>
-
-<blockquote>
-  <p>⚠️ <code class="language-plaintext highlighter-rouge">regexExtract</code> is unavailable for MongoDB, SQLite, and SQL Server. For Druid, <code class="language-plaintext highlighter-rouge">regexExtract</code> is only available for the Druid-JDBC driver.</p>
-</blockquote>
-
-<p>Extracts matching substrings according to a regular expression.</p>
-
-<p>Syntax: <code class="language-plaintext highlighter-rouge">regexExtract(text, regular_expression)</code></p>
-
-<p>Example: <code class="language-plaintext highlighter-rouge">regexExtract([Address], "[0-9]+")</code></p>
-
-<p>Databases that don’t support <code class="language-plaintext highlighter-rouge">regexExtract</code>: H2, SQL Server, SQLite.</p>
-
-<p>Related: <a href="#contains">contains</a>, <a href="#doesnotcontain">doesNotContain</a>, <a href="#substring">substring</a>.</p>
-
-<h3 id="replace">replace</h3>
-
-<p>Replaces all occurrences of a search text in the input text with the replacement text.</p>
-
-<p>Syntax: <code class="language-plaintext highlighter-rouge">replace(text, find, replace)</code></p>
-
-<p>Example: <code class="language-plaintext highlighter-rouge">replace([Title], "Enormous", "Gigantic")</code></p>
-
-<h3 id="splitpart">splitPart</h3>
-
-<blockquote>
-  <p>Available in PostgreSQL, MySQL/MariaDB, BigQuery, Redshift, Clickhouse, and Snowflake</p>
-</blockquote>
-
-<p>Splits a string on a specified delimiter and returns the nth substring.</p>
-
-<p>Syntax: <code class="language-plaintext highlighter-rouge">splitPart(text, delimiter, position)</code></p>
-
-<p><code class="language-plaintext highlighter-rouge">text</code>: The column or text to return a portion of.</p>
-
-<p><code class="language-plaintext highlighter-rouge">delimiter</code>: The pattern describing where each split should occur.</p>
-
-<p><code class="language-plaintext highlighter-rouge">position</code>: Which substring to return after the split. Index starts at position 1.</p>
-
-<p>Example: <code class="language-plaintext highlighter-rouge">splitPart([Date string], " ", 1)</code>. If the value for <code class="language-plaintext highlighter-rouge">Date string</code> was <code class="language-plaintext highlighter-rouge">"2024-09-18 16:55:15.373733-07"</code>, <code class="language-plaintext highlighter-rouge">splitPart</code> would return <code class="language-plaintext highlighter-rouge">"2024-09-18"</code> because it split the data on space (<code class="language-plaintext highlighter-rouge">" "</code>, and took the first part (the substring at index 1)).</p>
-
-<p>Another example: <code class="language-plaintext highlighter-rouge">splitPart("First name, Middle Name, Last name", ", ", 3)</code> would return <code class="language-plaintext highlighter-rouge">"Last Name"</code> (because we used the comma and space <code class="language-plaintext highlighter-rouge">", "</code> as the delimiter to split the string into parts, and took the third substring).</p>
-
-<h3 id="rtrim">rTrim</h3>
-
-<p>Removes trailing whitespace from a string of text.</p>
-
-<p>Syntax: <code class="language-plaintext highlighter-rouge">rTrim(text)</code></p>
-
-<p>Example: <code class="language-plaintext highlighter-rouge">rTrim([Comment])</code>. If the comment were “Fear is the mindkiller. “, the expression would return “Fear is the mindkiller.”</p>
-
-<p>Related: <a href="#trim">trim</a> and <a href="#ltrim">lTrim</a>.</p>
-
-<h3 id="startswith">startsWith</h3>
-
-<p>Returns true if the beginning of the text matches the comparison text. Performs case-sensitive match by default.
-You can pass an optional parameter <code class="language-plaintext highlighter-rouge">"case-insensitive"</code> to perform a case-insensitive match.</p>
-
-<p>Syntax: <code class="language-plaintext highlighter-rouge">startsWith(text, comparison)</code> for case-sensitive match.</p>
-
-<p><code class="language-plaintext highlighter-rouge">startsWith(text, comparison, "case-insensitive")</code> for case-insensitive match.</p>
-
-<p>Example: <code class="language-plaintext highlighter-rouge">startsWith([Course Name], "Computer Science")</code> would return true for course names that began with “Computer Science”, like “Computer Science 101: An introduction”.</p>
-
-<p>It would return false for “Computer <strong>s</strong>cience 201: Data structures” because the case of “science” does not match the case in the comparison text.</p>
-
-<p><code class="language-plaintext highlighter-rouge">startsWith([Course Name], "Computer Science", "case-insensitive")</code> would return true for both “Computer Science 101: An introduction” and “Computer science 201: Data structures”.</p>
-
-<p>Related: <a href="#endswith">endsWith</a>, <a href="#contains">contains</a>, <a href="#doesnotcontain">doesNotContain</a>.</p>
-
-<h3 id="subdomain">subdomain</h3>
-
-<p>Extracts the subdomain from a URL. Ignores <code class="language-plaintext highlighter-rouge">www</code> (returns a blank string).</p>
-
-<p>Syntax: <code class="language-plaintext highlighter-rouge">subdomain(url)</code></p>
-
-<p>Example: <code class="language-plaintext highlighter-rouge">subdomain([Page URL])</code>. If the <code class="language-plaintext highlighter-rouge">[Page URL]</code> column had a value of <code class="language-plaintext highlighter-rouge">https://status.metabase.com</code>, <code class="language-plaintext highlighter-rouge">subdomain([Page URL])</code> would return <code class="language-plaintext highlighter-rouge">status</code>.</p>
-
-<p>Related: <a href="#domain">domain</a>, <a href="#host">host</a>, <a href="#path">path</a>.</p>
-
-<h3 id="substring"><a href="./expressions/substring">substring</a></h3>
-
-<p>Returns a portion of the supplied text, specified by a starting position and a length.</p>
-
-<p>Syntax: <code class="language-plaintext highlighter-rouge">substring(text, position, length)</code></p>
-
-<p>Example: <code class="language-plaintext highlighter-rouge">substring([Title], 1, 10)</code> returns the first 10 letters of a string (the string index starts at position 1).</p>
-
-<p>Related: <a href="#regexextract">regexExtract</a>, <a href="#replace">replace</a>.</p>
-
-<h3 id="text">text</h3>
-
-<blockquote>
-  <p>Unavailable for the non-JDBC Druid driver</p>
-</blockquote>
-
-<p>Converts a number or date to text (a string). Useful for applying text filters or joining with other columns based on text comparisons.</p>
-
-<p>Syntax: <code class="language-plaintext highlighter-rouge">text(value)</code></p>
-
-<p>Example: <code class="language-plaintext highlighter-rouge">text(Created At])</code> would take a datetime (<code class="language-plaintext highlighter-rouge">Created At</code>) and return that datetime converted to a string (like <code class="language-plaintext highlighter-rouge">"2024-03-17 16:55:15.373733-07"</code>).</p>
-
-<h3 id="trim">trim</h3>
-
-<p>Removes leading and trailing whitespace from a string of text.</p>
-
-<p>Syntax: <code class="language-plaintext highlighter-rouge">trim(text)</code></p>
-
-<p>Example: <code class="language-plaintext highlighter-rouge">trim([Comment])</code> will remove any whitespace characters on either side of a comment.</p>
-
-<h3 id="upper">upper</h3>
-
-<p>Returns the text in all upper case.</p>
-
-<p>Syntax: <code class="language-plaintext highlighter-rouge">upper(text)</code></p>
-
-<p>Example: <code class="language-plaintext highlighter-rouge">upper([Status])</code>. If status were “hyper”, <code class="language-plaintext highlighter-rouge">upper("hyper")</code> would return “HYPER”.</p>
-
-<p>Related: <a href="#lower">lower</a>.</p>
-
-<h2 id="date-functions">Date functions</h2>
-
-<p>Date functions manipulate, extract, or create date and time values.</p>
-
-<h3 id="converttimezone"><a href="./expressions/converttimezone">convertTimezone</a></h3>
-
-<p>Shifts a date or timestamp value into a specified time zone.</p>
-
-<p>Syntax: <code class="language-plaintext highlighter-rouge">convertTimezone(column, target, source)</code></p>
-
-<p>Example: <code class="language-plaintext highlighter-rouge">convertTimezone("2022-12-28T12:00:00", "Canada/Pacific", "Canada/Eastern")</code> would return the value <code class="language-plaintext highlighter-rouge">2022-12-28T09:00:00</code>, displayed as <code class="language-plaintext highlighter-rouge">December 28, 2022, 9:00 AM</code>.</p>
-
-<p>See the <a href="./expressions/converttimezone#limitations">database limitations</a> for <code class="language-plaintext highlighter-rouge">convertTimezone</code>.</p>
-
-<h3 id="datetimeadd"><a href="./expressions/datetimeadd">datetimeAdd</a></h3>
-
-<p>Adds some unit of time to a date or timestamp value.</p>
-
-<p>Syntax: <code class="language-plaintext highlighter-rouge">datetimeAdd(column, amount, unit)</code></p>
-
-<p>Example: <code class="language-plaintext highlighter-rouge">datetimeAdd("2021-03-25", 1, "month")</code> would return the value <code class="language-plaintext highlighter-rouge">2021-04-25</code>, displayed as <code class="language-plaintext highlighter-rouge">April 25, 2021</code>.</p>
-
-<p><code class="language-plaintext highlighter-rouge">amount</code> must be an integer, not a fractional number. For example, you cannot add “half a year” (0.5).</p>
-
-<p>Related: <a href="#between">between</a>, <a href="#datetimesubtract">datetimeSubtract</a>.</p>
-
-<h3 id="datetimediff"><a href="./expressions/datetimediff">datetimeDiff</a></h3>
-
-<p>Returns the difference between two datetimes in some unit of time. For example, <code class="language-plaintext highlighter-rouge">datetimeDiff(d1, d2, "day")</code> will return the number of days between <code class="language-plaintext highlighter-rouge">d1</code> and <code class="language-plaintext highlighter-rouge">d2</code>.</p>
-
-<p>Syntax: <code class="language-plaintext highlighter-rouge">datetimeDiff(datetime1, datetime2, unit)</code></p>
-
-<p>Example: <code class="language-plaintext highlighter-rouge">datetimeDiff("2022-02-01", "2022-03-01", "month")</code> would return <code class="language-plaintext highlighter-rouge">1</code>.</p>
-
-<p>See the <a href="./expressions/datetimediff#limitations">database limitations</a> for <code class="language-plaintext highlighter-rouge">datetimediff</code>.</p>
-
-<h3 id="datetimesubtract"><a href="./expressions/datetimesubtract">datetimeSubtract</a></h3>
-
-<p>Subtracts some unit of time from a date or timestamp value.</p>
-
-<p>Syntax: <code class="language-plaintext highlighter-rouge">datetimeSubtract(column, amount, unit)</code></p>
-
-<p>Example: <code class="language-plaintext highlighter-rouge">datetimeSubtract("2021-03-25", 1, "month")</code> would return the value <code class="language-plaintext highlighter-rouge">2021-02-25</code>, displayed as <code class="language-plaintext highlighter-rouge">February 25, 2021</code>.</p>
-
-<p><code class="language-plaintext highlighter-rouge">amount</code> must be an integer, not a fractional number. For example, you cannot subtract “half a year” (0.5).</p>
-
-<p>Related: <a href="#between">between</a>, <a href="#datetimeadd">datetimeAdd</a>.</p>
-
-<h3 id="day">day</h3>
-
-<p>Takes a datetime and returns the day of the month as an integer.</p>
-
-<p>Syntax: <code class="language-plaintext highlighter-rouge">day([datetime column])</code></p>
-
-<p>Example: <code class="language-plaintext highlighter-rouge">day("2021-03-25T12:52:37")</code> would return the day as an integer, <code class="language-plaintext highlighter-rouge">25</code>.</p>
-
-<h3 id="dayname">dayName</h3>
-
-<p>Returns the localized name of a day of the week, given the day’s number (1-7). Respects the <a href="../../configuring-metabase/localization#first-day-of-the-week">first day of the week setting</a>.</p>
-
-<p>Syntax: <code class="language-plaintext highlighter-rouge">dayName(dayNumber)</code></p>
-
-<p>Example: <code class="language-plaintext highlighter-rouge">dayName(1)</code> would return <code class="language-plaintext highlighter-rouge">Sunday</code>, unless you change the <a href="../../configuring-metabase/localization#first-day-of-the-week">first day of the week setting</a>.</p>
-
-<p>Related: <a href="#quartername">quarterName</a>, <a href="#monthname">monthName</a>.</p>
-
-<h3 id="hour">hour</h3>
-
-<p>Takes a datetime and returns the hour as an integer (0-23).</p>
-
-<p>Syntax: <code class="language-plaintext highlighter-rouge">hour([datetime column])</code></p>
-
-<p>Example: <code class="language-plaintext highlighter-rouge">hour("2021-03-25T12:52:37")</code> would return <code class="language-plaintext highlighter-rouge">12</code>.</p>
-
-<h3 id="interval">interval</h3>
-
-<p>Checks a date column’s values to see if they’re within the relative range.</p>
-
-<p>Syntax: <code class="language-plaintext highlighter-rouge">interval(column, number, text)</code></p>
-
-<p>Example: <code class="language-plaintext highlighter-rouge">interval([Created At], -1, "month")</code></p>
-
-<p>The <code class="language-plaintext highlighter-rouge">number</code> must be an integer. You cannot use a fractional value.</p>
-
-<p>Related: <a href="#between">between</a>.</p>
-
-<h3 id="minute">minute</h3>
-
-<p>Takes a datetime and returns the minute as an integer (0-59).</p>
-
-<p>Syntax: <code class="language-plaintext highlighter-rouge">minute([datetime column])</code></p>
-
-<p>Example: <code class="language-plaintext highlighter-rouge">minute("2021-03-25T12:52:37")</code> would return <code class="language-plaintext highlighter-rouge">52</code>.</p>
-
-<h3 id="month">month</h3>
-
-<p>Takes a datetime and returns the month number (1-12) as an integer.</p>
-
-<p>Syntax: <code class="language-plaintext highlighter-rouge">month([datetime column])</code></p>
-
-<p>Example: <code class="language-plaintext highlighter-rouge">month("2021-03-25T12:52:37")</code> would return the month as an integer, <code class="language-plaintext highlighter-rouge">3</code>.</p>
-
-<h3 id="monthname">monthName</h3>
-
-<p>Returns the localized short name for the given month.</p>
-
-<p>Syntax: <code class="language-plaintext highlighter-rouge">monthName([Birthday Month])</code></p>
-
-<p>Example: <code class="language-plaintext highlighter-rouge">monthName(10)</code> would return <code class="language-plaintext highlighter-rouge">Oct</code> for October.</p>
-
-<p>Related: <a href="#dayname">dayName</a>, <a href="#quartername">quarterName</a>.</p>
-
-<h3 id="now"><a href="./expressions/now">now</a></h3>
-
-<p>Returns the current date and time using your Metabase <a href="../../configuring-metabase/localization#report-timezone">report timezone</a>.</p>
-
-<p>Syntax: <code class="language-plaintext highlighter-rouge">now()</code></p>
-
-<h3 id="quarter">quarter</h3>
-
-<p>Takes a datetime and returns the number of the quarter in a year (1-4) as an integer.</p>
-
-<p>Syntax: <code class="language-plaintext highlighter-rouge">quarter([datetime column])</code></p>
-
-<p>Example: <code class="language-plaintext highlighter-rouge">quarter("2021-03-25T12:52:37")</code> would return <code class="language-plaintext highlighter-rouge">1</code> for the first quarter.</p>
-
-<h3 id="quartername">quarterName</h3>
-
-<p>Given the quarter number (1-4), returns a string like <code class="language-plaintext highlighter-rouge">Q1</code>.</p>
-
-<p>Syntax: <code class="language-plaintext highlighter-rouge">quarterName([Fiscal Quarter])</code></p>
-
-<p>Example: <code class="language-plaintext highlighter-rouge">quarterName(3)</code> would return <code class="language-plaintext highlighter-rouge">Q3</code>.</p>
-
-<p>Related: <a href="#dayname">dayName</a>, <a href="#monthname">monthName</a>.</p>
-
-<h3 id="relativedatetime">relativeDateTime</h3>
-
-<p>Gets a timestamp relative to the current time.</p>
-
-<p>Syntax: <code class="language-plaintext highlighter-rouge">relativeDateTime(number, text)</code></p>
-
-<p><code class="language-plaintext highlighter-rouge">number</code>: Period of interval, where negative values are back in time. The <code class="language-plaintext highlighter-rouge">number</code> must be an integer. You cannot use a fractional value.</p>
-
-<p><code class="language-plaintext highlighter-rouge">text</code>: Type of interval like <code class="language-plaintext highlighter-rouge">"day"</code>, <code class="language-plaintext highlighter-rouge">"month"</code>, <code class="language-plaintext highlighter-rouge">"year"</code></p>
-
-<p>Note that <code class="language-plaintext highlighter-rouge">relativeDateTime()</code> will truncate the result to the unit specified as its argument.</p>
-
-<p>Example: <code class="language-plaintext highlighter-rouge">[Orders → Created At] &lt; relativeDateTime(-30, "day")</code> will filter for orders created over 30 days ago from current date.</p>
-
-<p>Related: <a href="#datetimeadd">datetimeAdd</a>, <a href="#datetimesubtract">datetimeSubtract</a>.</p>
-
-<h3 id="second">second</h3>
-
-<p>Takes a datetime and returns the number of seconds in the minute (0-59) as an integer.</p>
-
-<p>Syntax: <code class="language-plaintext highlighter-rouge">second([datetime column])</code></p>
-
-<p>Example: <code class="language-plaintext highlighter-rouge">second("2021-03-25T12:52:37")</code> would return the integer <code class="language-plaintext highlighter-rouge">37</code>.</p>
-
-<h3 id="timespan">timeSpan</h3>
-
-<p>Gets a time interval of specified length.</p>
-
-<p>Syntax: <code class="language-plaintext highlighter-rouge">timeSpan(number, text)</code></p>
-
-<p><code class="language-plaintext highlighter-rouge">number</code>: Period of interval, where negative values are back in time. The <code class="language-plaintext highlighter-rouge">number</code> must be an integer. You cannot use a fractional value.</p>
-
-<p><code class="language-plaintext highlighter-rouge">text</code>: Type of interval like <code class="language-plaintext highlighter-rouge">"day"</code>, <code class="language-plaintext highlighter-rouge">"month"</code>, <code class="language-plaintext highlighter-rouge">"year"</code></p>
-
-<p>Example: <code class="language-plaintext highlighter-rouge">[Orders → Created At] + timeSpan(7, "day")</code> will return the date 7 days after the <code class="language-plaintext highlighter-rouge">Created At</code> date.</p>
-
-<h3 id="today">today</h3>
-
-<p>Returns the current date (without time).</p>
-
-<p>Syntax: <code class="language-plaintext highlighter-rouge">today()</code></p>
-
-<p>Example: <code class="language-plaintext highlighter-rouge">today()</code> would return the current date, such as <code class="language-plaintext highlighter-rouge">2025-05-04</code>.</p>
-
-<p>Related: <a href="#now">now</a>.</p>
-
-<h3 id="week"><a href="./expressions/week">week</a></h3>
-
-<p>Takes a datetime and returns the week as an integer.</p>
-
-<p>Syntax: <code class="language-plaintext highlighter-rouge">week(column, mode)</code></p>
-
-<p>Example: <code class="language-plaintext highlighter-rouge">week("2021-03-25T12:52:37")</code> would return the week as an integer, <code class="language-plaintext highlighter-rouge">12</code>.</p>
-
-<ul>
-  <li>column: the name of the column of the date or datetime value.</li>
-  <li>mode: Optional.
-    <ul>
-      <li>ISO: (default) Week 1 starts on the Monday before the first Thursday of January.</li>
-      <li>US: Week 1 starts on Jan 1. All other weeks start on Sunday.</li>
-      <li>Instance: Week 1 starts on Jan 1. All other weeks start on the day defined in your Metabase localization settings.</li>
-    </ul>
-  </li>
-</ul>
-
-<p>Note that summarizing by week of year in the query builder uses a different mode of determining the first week, see <a href="./expressions/week">Week of year</a> for more information.</p>
-
-<h3 id="weekday">weekday</h3>
-
-<p>Takes a datetime and returns an integer (1-7) with the number of the day of the week.</p>
-
-<p>Syntax: <code class="language-plaintext highlighter-rouge">weekday(column)</code></p>
-
-<ul>
-  <li>column: The datetime column.</li>
-</ul>
-
-<p>Example:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>case(
-  weekday([Created At]) = 1, "Sunday",
-  weekday([Created At]) = 2, "Monday",
-  weekday([Created At]) = 3, "Tuesday",
-  weekday([Created At]) = 4, "Wednesday",
-  weekday([Created At]) = 5, "Thursday",
-  weekday([Created At]) = 6, "Friday",
-  weekday([Created At]) = 7, "Saturday")
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm <span class="nb">install</span> @metabase/embedding-sdk-react@<span class="o">{</span>next-major-version-number<span class="o">}</span><span class="nt">-stable</span>
 </code></pre></div></div>
 
-<h3 id="year">year</h3>
+<p>For example, if you were upgrading to version 55 of the SDK:</p>
 
-<p>Takes a datetime and returns the year as an integer.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm <span class="nb">install</span> @metabase/embedding-sdk-react@55-stable
+</code></pre></div></div>
 
-<p>Syntax: <code class="language-plaintext highlighter-rouge">year([datetime column])</code></p>
+<p>If you’re using yarn:</p>
 
-<p>Example: <code class="language-plaintext highlighter-rouge">year("2021-03-25T12:52:37")</code> would return the year 2021 as an integer, <code class="language-plaintext highlighter-rouge">2,021</code>.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>yarn add @metabase/embedding-sdk-react@<span class="o">{</span>next-major-version-number<span class="o">}</span><span class="nt">-stable</span>
+</code></pre></div></div>
 
-<h2 id="type-casting-functions">Type-casting functions</h2>
+<p>See more on <a href="./version">SDK versions</a>.</p>
 
-<ul>
-  <li><a href="#date">date</a></li>
-  <li><a href="#datetime">datetime</a></li>
-  <li><a href="#float">float</a></li>
-  <li><a href="#integer">integer</a></li>
-  <li><a href="#text">text</a></li>
-</ul>
+<h3 id="if-there-are-breaking-changes-make-the-necessary-changes-to-your-application-code">If there are breaking changes, make the necessary changes to your application code</h3>
 
-<h2 id="window-functions">Window functions</h2>
+<p>Breaking changes are rare, but if you do need to make changes, we’ll mention it in the release notes for the new major version and have docs that walk you through the changes.</p>
 
-<p>Window functions can only be used in the <strong>Summarize</strong> section. They cannot be used to create a custom column or a custom filter.</p>
+<p>Update or add tests for any application code changes that you make.</p>
 
-<h3 id="cumulativecount">CumulativeCount</h3>
+<h3 id="deploy-to-your-staging-environment">Deploy to your staging environment</h3>
 
-<p>For more info, check out our page on <a href="./expressions/cumulative">cumulative functions</a>.</p>
+<p>Before deploying your app to your staging environment, make sure you’ve tested your app locally (manually, as well as running any automated tests).</p>
 
-<p>The additive total of rows across a breakout.</p>
+<p>If all goes well with your local tests, deploy to your staging environment. Check that the Metabase embeds in your staging app are still working as expected, and perform any other testing you normally do with your application with respect to your embedded analytics.</p>
 
-<p>Syntax: <code class="language-plaintext highlighter-rouge">CumulativeCount()</code></p>
+<h2 id="3-deploy-to-production">3. Deploy to production</h2>
 
-<h3 id="cumulativesum">CumulativeSum</h3>
+<p>If everything is working in staging, you’re ready to deploy to production.</p>
 
-<p>For more info, check out our page on <a href="./expressions/cumulative">cumulative functions</a>.</p>
+<p>Be sure to deploy your application changes and upgrade your Metabase in parallel so that the SDK version and the Metabase version stay in sync.</p>
 
-<p>The rolling sum of a column across a breakout.</p>
+<h3 id="if-your-instance-is-on-metabase-cloud-youll-need-to-request-an-upgrade">If your instance is on Metabase Cloud, you’ll need to request an upgrade</h3>
 
-<p>Syntax: <code class="language-plaintext highlighter-rouge">CumulativeSum(column)</code></p>
+<p>If you’re on Metabase Cloud, your instance version is pinned, so you’ll need to request an upgrade by <a href="/help-premium">contacting support</a>.</p>
 
-<p>Example: <code class="language-plaintext highlighter-rouge">CumulativeSum([Subtotal])</code></p>
-
-<p>Related: <a href="#sum">Sum</a> and <a href="#sumif">SumIf</a>.</p>
-
-<h3 id="offset">Offset</h3>
-
-<blockquote>
-  <p>⚠️ The <code class="language-plaintext highlighter-rouge">Offset</code> function is currently unavailable for MySQL/MariaDB, ClickHouse, MongoDB, and Druid.</p>
-</blockquote>
-
-<p>For more info, check out our page on <a href="./expressions/offset">Offset</a>.</p>
-
-<p>Returns the value of an expression in a different row. <code class="language-plaintext highlighter-rouge">Offset</code> can only be used in the query builder’s Summarize step (you cannot use <code class="language-plaintext highlighter-rouge">Offset</code> to create a custom column).</p>
-
-<p>Syntax: <code class="language-plaintext highlighter-rouge">Offset(expression, rowOffset)</code></p>
-
-<p>The <code class="language-plaintext highlighter-rouge">expression</code> is the value to get from a different row.</p>
-
-<p>The <code class="language-plaintext highlighter-rouge">rowOffset</code> is the number relative to the current row. For example, <code class="language-plaintext highlighter-rouge">-1</code> for the previous row, or <code class="language-plaintext highlighter-rouge">1</code> for the next row.</p>
-
-<p>Example: <code class="language-plaintext highlighter-rouge">Offset(Sum([Total]), -1)</code> would get the <code class="language-plaintext highlighter-rouge">Sum([Total])</code> value from the previous row.</p>
-
-<h2 id="limitations">Limitations</h2>
-
-<ul>
-  <li><a href="#aggregations">Aggregation expressions</a> can only be used in the <strong>Summarize</strong> section of the query builder.</li>
-</ul>
-
-<h2 id="database-limitations">Database limitations</h2>
-
-<p>Limitations are noted for each aggregation and function above, and here there are in summary:</p>
-
-<p><strong>H2</strong> (including Metabase Sample Database): <code class="language-plaintext highlighter-rouge">Median</code>, <code class="language-plaintext highlighter-rouge">Percentile</code>, <code class="language-plaintext highlighter-rouge">convertTimezone</code>, <code class="language-plaintext highlighter-rouge">regexExtract</code>, <code class="language-plaintext highlighter-rouge">datetime</code>, <code class="language-plaintext highlighter-rouge">float</code>, <code class="language-plaintext highlighter-rouge">splitPart</code>.</p>
-
-<p><strong>Athena</strong>: <code class="language-plaintext highlighter-rouge">convertTimezone</code>, <code class="language-plaintext highlighter-rouge">datetime</code>, <code class="language-plaintext highlighter-rouge">float</code>, <code class="language-plaintext highlighter-rouge">splitPart</code>.</p>
-
-<p><strong>Databricks</strong>: <code class="language-plaintext highlighter-rouge">convertTimezone</code>, <code class="language-plaintext highlighter-rouge">datetime</code>, <code class="language-plaintext highlighter-rouge">float</code>, <code class="language-plaintext highlighter-rouge">splitPart</code>.</p>
-
-<p><strong>Druid</strong>: <code class="language-plaintext highlighter-rouge">Median</code>, <code class="language-plaintext highlighter-rouge">Percentile</code>, <code class="language-plaintext highlighter-rouge">StandardDeviation</code>, <code class="language-plaintext highlighter-rouge">power</code>, <code class="language-plaintext highlighter-rouge">log</code>, <code class="language-plaintext highlighter-rouge">exp</code>, <code class="language-plaintext highlighter-rouge">sqrt</code>, <code class="language-plaintext highlighter-rouge">Offset</code>, <code class="language-plaintext highlighter-rouge">datetime</code>, <code class="language-plaintext highlighter-rouge">float</code>, <code class="language-plaintext highlighter-rouge">splitPart</code>. Function <code class="language-plaintext highlighter-rouge">regexExtract</code> and some <a href="#type-casting-functions">type casting functions</a> are only available for the Druid-JDBC driver.</p>
-
-<p><strong>MongoDB</strong>: <code class="language-plaintext highlighter-rouge">Median</code>, <code class="language-plaintext highlighter-rouge">Percentile</code>, <code class="language-plaintext highlighter-rouge">power</code>, <code class="language-plaintext highlighter-rouge">log</code>, <code class="language-plaintext highlighter-rouge">exp</code>, <code class="language-plaintext highlighter-rouge">sqrt</code>, <code class="language-plaintext highlighter-rouge">Offset</code>, <code class="language-plaintext highlighter-rouge">regexExtract</code>, <code class="language-plaintext highlighter-rouge">datetime</code>, <code class="language-plaintext highlighter-rouge">float</code>, <code class="language-plaintext highlighter-rouge">splitPart</code>.</p>
-
-<p><strong>MariaDB</strong>: <code class="language-plaintext highlighter-rouge">Median</code>, <code class="language-plaintext highlighter-rouge">Percentile</code>, <code class="language-plaintext highlighter-rouge">Offset</code>.</p>
-
-<p><strong>MySQL</strong>: <code class="language-plaintext highlighter-rouge">Median</code>, <code class="language-plaintext highlighter-rouge">Percentile</code>, <code class="language-plaintext highlighter-rouge">Offset</code>.</p>
-
-<p><strong>Oracle</strong>: <code class="language-plaintext highlighter-rouge">date</code>, <code class="language-plaintext highlighter-rouge">datetime</code>, <code class="language-plaintext highlighter-rouge">float</code>, <code class="language-plaintext highlighter-rouge">splitPart</code>.</p>
-
-<p><strong>Presto</strong>: <code class="language-plaintext highlighter-rouge">convertTimezone</code>, <code class="language-plaintext highlighter-rouge">datetime</code>, <code class="language-plaintext highlighter-rouge">float</code>, <code class="language-plaintext highlighter-rouge">splitPart</code>. Only provides <em>approximate</em> results for <code class="language-plaintext highlighter-rouge">Median</code> and <code class="language-plaintext highlighter-rouge">Percentile</code>.</p>
-
-<p><strong>SparkSQL</strong>: <code class="language-plaintext highlighter-rouge">convertTimezone</code>, <code class="language-plaintext highlighter-rouge">datetime</code>, <code class="language-plaintext highlighter-rouge">float</code>, <code class="language-plaintext highlighter-rouge">splitPart</code>.</p>
-
-<p><strong>SQL Server</strong>: <code class="language-plaintext highlighter-rouge">Median</code>, <code class="language-plaintext highlighter-rouge">Percentile</code>, <code class="language-plaintext highlighter-rouge">regexExtract</code>, <code class="language-plaintext highlighter-rouge">datetime</code>, <code class="language-plaintext highlighter-rouge">float</code>, <code class="language-plaintext highlighter-rouge">splitPart</code>.</p>
-
-<p><strong>SQLite</strong>: <code class="language-plaintext highlighter-rouge">exp</code>, <code class="language-plaintext highlighter-rouge">log</code>, <code class="language-plaintext highlighter-rouge">Median</code>, <code class="language-plaintext highlighter-rouge">Percentile</code>, <code class="language-plaintext highlighter-rouge">power</code>, <code class="language-plaintext highlighter-rouge">regexExtract</code>, <code class="language-plaintext highlighter-rouge">StandardDeviation</code>, <code class="language-plaintext highlighter-rouge">sqrt</code>, <code class="language-plaintext highlighter-rouge">Variance</code>, <code class="language-plaintext highlighter-rouge">datetime</code>, <code class="language-plaintext highlighter-rouge">float</code>, <code class="language-plaintext highlighter-rouge">splitPart</code>.</p>
-
-<p><strong>Vertica</strong>: <code class="language-plaintext highlighter-rouge">Median</code>, <code class="language-plaintext highlighter-rouge">Percentile</code>, <code class="language-plaintext highlighter-rouge">datetime</code>, <code class="language-plaintext highlighter-rouge">float</code>, <code class="language-plaintext highlighter-rouge">splitPart</code>.</p>
-
-<p>If you’re using or maintaining a third-party database driver, please <a href="https://github.com/metabase/metabase/wiki/What's-new-in-0.35.0-for-Metabase-driver-authors">refer to the wiki</a> to see how your driver might be impacted.</p>
-
-<p>Check out our tutorial on <a href="/learn/metabase-basics/querying-and-dashboards/questions/custom-expressions">custom expressions in the query builder</a> to learn more.</p>
-
+<p>We’ll coordinate with you so that your instance is upgraded when you deploy the changes to your application.</p>
 
 
         <div>
@@ -6038,7 +4964,7 @@ You can pass an optional parameter <code class="language-plaintext highlighter-r
 
   
     <span class="paragraph-6 fs-13 neutral-60" id="page-feedback-footer">
-      Want to improve these docs? <a href="https://github.com/metabase/metabase/blob/master/docs/questions/query-builder/expressions-list.md" target="_blank">Propose a change.</a>
+      Want to improve these docs? <a href="https://github.com/metabase/metabase/blob/master/docs/embedding/sdk/upgrade.md" target="_blank">Propose a change.</a>
     </span>
   
 </div>
@@ -6060,8 +4986,8 @@ You can pass an optional parameter <code class="language-plaintext highlighter-r
 <script type="text/javascript" src="/js/position-feedback-widget.js"></script>
 
 <script>
-  const pageTitle = `List of expressions`;
-  const pageURL = '/docs/master/questions/query-builder/expressions-list';
+  const pageTitle = `Upgrading Metabase and the Embedded analytics SDK`;
+  const pageURL = '/docs/master/embedding/sdk/upgrade';
   const pageURLSplit = pageURL.split('/');
 
   let pageURLPrefix = '/' + pageURLSplit[1] + '/' + pageURLSplit[2];
@@ -6380,6 +5306,8 @@ You can pass an optional parameter <code class="language-plaintext highlighter-r
   <script type="text/javascript" src="/js/blog.js"></script>
   <script type="text/javascript" src="/js/syntax-highlight.js"></script>
 
+  
+    <script type="text/javascript" src="/js/docs/checkpoints.js"></script>
   
 
 </body></html>
