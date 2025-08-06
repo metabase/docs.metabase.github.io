@@ -5064,7 +5064,9 @@ Roadmap</a>
 
 <p>In Metabase’s admin section, go to <strong>Settings</strong> &gt; <strong>Authentication</strong>. Scroll to the <strong>JWT</strong> card and click <strong>Edit</strong>.</p>
 
-<p>In the <strong>Group schema</strong> section, toggle on <strong>Synchronize group memberships</strong>. For each group you want to sync, add a group mapping. When you click <strong>New mapping</strong>, enter “Customer-Acme”, the string that you included in the <code class="language-plaintext highlighter-rouge">groups</code> array in your JWT payload. You can then associate that group name with the Metabase group “Customer Acme” that we created earlier.</p>
+<p>In the <strong>Group schema</strong> section, toggle on <strong>Synchronize group memberships</strong>. If the names of groups in the <code class="language-plaintext highlighter-rouge">groups</code> array match Metabase group names exactly (e.g. both are <code class="language-plaintext highlighter-rouge">"Customer Acme"</code>), then the groups will be mapped automatically.</p>
+
+<p>If the JWT group names and Metabase group names don’t match, then for each group you want to sync, add a group mapping. When you click <strong>New mapping</strong>, enter “Customer-Acme”, the string that you included in the <code class="language-plaintext highlighter-rouge">groups</code> array in your JWT payload. You can then associate that group name with the Metabase group “Customer Acme” that we created earlier.</p>
 
 <p><img src="./images/sync-groups.png" alt="Mapping user attributes to groups."></p>
 
