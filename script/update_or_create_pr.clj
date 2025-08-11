@@ -81,7 +81,7 @@
 
         artifact-dirs       (concat
                               update-dirs
-                              (u/->artifact-dirs category release-num))
+                              (u/->artifacts category release-num))
         _                   (doseq [ad artifact-dirs]
                               (println "Adding" ad "...")
                               (p/sh {:continue true} "git" "add" ad))

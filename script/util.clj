@@ -63,24 +63,30 @@
                                         (str/split-lines (slurp (str (fs/expand-home "~/.zshrc")))))))}}
          cmd))
 
-(defn ->artifact-dirs
+
+(def artifacts-to-include ["_site/docs/all.html"])
+
+(defn ->artifacts
+  "Returns a list of directories and files that are considered artifacts
+   for the given category and release number."
   ([target-branch-name]
    (let [[category release-num] (categorize-branchname target-branch-name)]
-     (->artifact-dirs category release-num)))
+     (->artifacts category release-num)))
   ([category release-num]
-   (cond
-     (= category :master) ["_docs/master"
-                           "_site/docs/master"]
+   (-> (cond
+         (= category :master) ["_docs/master"
+                               "_site/docs/master"]
 
-     (= (config-docs-version) release-num)
-     ["_docs/latest"
-      "_site/docs/latest"
-      (str "_docs/v0." release-num)
-      (str "_site/docs/v0." release-num)]
+         (= (config-docs-version) release-num)
+         ["_docs/latest"
+          "_site/docs/latest"
+          (str "_docs/v0." release-num)
+          (str "_site/docs/v0." release-num)]
 
-     (= category :release) [(str "_docs/v0." release-num)
-                            (str "_site/docs/v0." release-num)]
-     :else [])))
+         (= category :release) [(str "_docs/v0." release-num)
+                                (str "_site/docs/v0." release-num)]
+         :else [])
+       (concat artifacts-to-include))))
 
 (defn head-ref-name [source-branch target-branch]
   (str source-branch "->" target-branch))

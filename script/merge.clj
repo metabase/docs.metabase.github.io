@@ -1,6 +1,7 @@
 (ns merge
   (:require
    [babashka.cli :as cli]
+   [babashka.fs :as fs]
    [babashka.process :as p]
    [cheshire.core :as json]
    [clojure.string :as str]
@@ -43,11 +44,18 @@
                    str/trim)]
     (when pr-num (parse-long pr-num))))
 
+(defn- resolve-conflicts-for-file [file strat]
+  (ice/p [:yellow "Resolving file: " file])
+  (:out (p/sh "git" "checkout" strat file))
+  (ice/p [:yellow "  - git checkout " strat " " file])
+  (:out (p/sh "git" "add" file))
+  (ice/p [:yellow "  - git add " file]))
+
 (defn- resolve-conflicts
   "Resolve conflicts by auto-merging changes in artifact directories based on merge-strategy.
    If merge-strategy is :ours, prefer changes from the PR branch.
    If merge-strategy is :theirs, prefer changes from the target branch."
-  [artifact-dirs merge-strategy]
+  [artifacts merge-strategy]
   (let [conflicted-files (->> (p/shell {:out :string :continue true}
                                        "git" "diff" "--name-only" "--diff-filter=U")
                               :out
@@ -61,17 +69,15 @@
       (ice/p [:green "No conflicts to resolve"])
       (do
         (ice/p [:blue "Conflicted files: " (str/join ", " conflicted-files)])
-        (ice/p [:blue "Artifact directories: " (str/join ", " artifact-dirs)])
-        (doseq [dir artifact-dirs]
-          (let [files-in-dir (filter #(str/starts-with? % dir) conflicted-files)]
-            (when (seq files-in-dir)
-              (ice/p [:yellow "Resolving conflicts in directory: " dir])
-              (doseq [file files-in-dir]
-                (ice/p [:yellow "Resolving file: " file])
-                (:out (p/sh "git" "checkout" strat file))
-                (ice/p [:yellow "  - git checkout " strat " " file])
-                (:out (p/sh "git" "add" file))
-                (ice/p [:yellow "  - git add " file])))))))))
+        (ice/p [:blue "Artifact directories: " (str/join ", " artifacts)])
+        (doseq [artifact artifacts]
+          (if (fs/directory? artifact)
+            (let [files-in-dir (filter #(str/starts-with? % artifact) conflicted-files)]
+              (when (seq files-in-dir)
+                (ice/p [:yellow "Resolving conflicts in directory: " artifact])
+                (doseq [file files-in-dir]
+                  (resolve-conflicts-for-file file strat))))
+            (resolve-conflicts-for-file artifact strat)))))))
 
 (defn- update-and-merge-pr [source-branch target-branch pr-number merge-strategy]
   (let [head-ref-name (u/head-ref-name source-branch target-branch)]
@@ -84,7 +90,7 @@
         (ice/p [:red "✗ Merge failed: " (:err merge-result)])
         (let [winner (if (= merge-strategy :ours) "PR" "master")]
           (ice/p [:yellow "Attempting to resolve conflicts with git, preferring changes from " winner "..."])
-          (resolve-conflicts (u/->artifact-dirs target-branch) merge-strategy)
+          (resolve-conflicts (u/->artifacts target-branch) merge-strategy)
           ;; Do the commit, now that we've resolved conflicts
           (pr-str (p/sh "git" "commit" "--no-edit" "-m"
                         (str "Merge " target-branch " for PR #(" pr-number ")"
