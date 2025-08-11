@@ -9,7 +9,28 @@
 
 set -euo pipefail
 
+# default source branch to target branch
+
+if [[ -z "${TARGET_BRANCH:-}" ]]; then
+    echo "Please set TARGET_BRANCH environment variable to the branch you want to simulate."
+    exit 1
+fi
+echo "Running simulator.sh with target branch: $TARGET_BRANCH"
+
+if [[ -z "${SOURCE_BRANCH:-}" ]]; then
+    SOURCE_BRANCH="$TARGET_BRANCH"
+fi
+echo "Running simulator.sh with source branch: $SOURCE_BRANCH"
+
+if [[ -z "${MARKETING_REPO:-}" ]]; then
+    echo "MARKETING_REPO is not set, point it to the local path of the marketing repo (metabase.github.io)."
+    exit 1
+fi
+
+
 echo "Prerequisites"
+echo ""
+echo "Marketing Repo must exist locally. Set MARKETING_REPO: $MARKETING_REPO"
 echo ""
 echo "Installed:"
 echo "  - Ruby (>= 2.7.0)"
@@ -22,7 +43,11 @@ echo ""
 echo "Directory Structure:"
 echo "  - metabase.github.io (the marketing repo) should be at ../metabase.github.io relative to the root of this repo"
 echo ""
-echo "Running simulator.sh on branch: $TARGET_BRANCH"
+
+# TODO:
+# parameterize the from-repo (marketing repo location)
+# default source branch to target branch
+
 
 printf '\n\n\n================= bb script/_test/all.clj =================z\n'
 bb script/_test/all.clj
@@ -37,7 +62,7 @@ printf "\n\n\n================= bb script/cleanup_cloud_docs.clj ===============
 bb script/cleanup_cloud_docs.clj
 
 printf '\n\n\n================= copy marketing files =================z\n'
-bb script/sync_repo.clj --from-repo ../metabase.github.io
+bb script/sync_repo.clj --from-repo "$MARKETING_REPO"
 
 printf '\n\n\n================= yarn lint-markdown =================z\n'
 yarn lint-markdown
@@ -64,3 +89,6 @@ script/links || tail < htmlproofer.out -n 1
 
 printf '\n\n\n================= checking reported links... =================z\n'
 bb script/analyze_links.clj --htmlproofer-output htmlproofer.out
+
+printf '\n\nTo delete the marketing files, run:'
+printf 'bb script/sync_repo.clj --delete'
