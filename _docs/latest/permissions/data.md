@@ -1,5 +1,5 @@
 ---
-version: v0.55
+version: v0.56
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -62,19 +62,19 @@ Permission levels include:
 
 - [Can view](#can-view-data-permission)
 - [Granular](#granular-view-data-permission)
-- [Sandboxed](#sandboxed-view-data-permission)
+- [Row and column security](#row-and-column-security)
 - [Impersonated](#impersonated-view-data-permission)
 - [Blocked](#blocked-view-data-permission)
 
 View data permission settings apply to different levels in your database:
 
-| View data permission | Database | Schema | Table |
-| -------------------- | -------- | ------ | ----- |
-| Can view             | ✅       | ✅     | ✅    |
-| Granular\*           | ✅       | ✅     | ❌    |
-| Sandboxed            | ❌       | ❌     | ✅    |
-| Impersonated         | ✅       | ❌     | ❌    |
-| Blocked              | ✅       | ✅     | ✅    |
+| View data permission    | Database | Schema | Table |
+| ----------------------- | -------- | ------ | ----- |
+| Can view                | ✅       | ✅     | ✅    |
+| Granular\*              | ✅       | ✅     | ❌    |
+| Row and column security | ❌       | ❌     | ✅    |
+| Impersonated            | ✅       | ❌     | ❌    |
+| Blocked                 | ✅       | ✅     | ✅    |
 
 \* The "Granular" setting is not itself a type of permission; it just signals that permissions are set at a level below the current level. For example, you can select "Granular" at a schema level to set permissions per table for tables in that schema.
 
@@ -98,13 +98,13 @@ This option lets you set View data permissions for individual schemas or tables.
 
 For tables, you have the option to set either **Can view** or **Sandboxed**.
 
-### Sandboxed view data permission
+### Row and column security
 
-{% include plans-blockquote.html feature="Sandboxed view data permission" %}
+{% include plans-blockquote.html feature="Row and column security" %}
 
-Allows you to set row-level permissions based on user attributes. Can only be configured at the table level.
+Allows you to set row-level permissions based on user attributes, as well as custom views. Can only be configured at the table level.
 
-See [Data sandboxes](./data-sandboxes).
+See [Row and column security](./row-and-column-security).
 
 ### Impersonated view data permission
 
@@ -195,14 +195,9 @@ See [Upload permissions](../databases/uploads#add-people-to-a-group-with-data-ac
 - [Impersonation](./impersonation)
 - [Learn permissions](/learn/metabase-basics/administration/permissions)
 - [Troubleshooting permissions](../troubleshooting-guide/permissions)
-- [Data sandboxing: setting row-level permissions][sandbox-rows]
-- [Advanced data sandboxing: limiting access to columns][sandbox-columns]
 - [Users, roles, and privileges](../databases/users-roles-privileges)
 
 [collections]: ./collections
 [dashboard-subscriptions]: ../dashboards/subscriptions
-[data-sandboxing]: ./data-sandboxes
 [permissions-overview]: ./introduction
-[sandbox-columns]: /learn/metabase-basics/administration/permissions/data-sandboxing-column-permissions
-[sandbox-rows]: /learn/metabase-basics/administration/permissions/data-sandboxing-row-permissions
 [sql-snippet-folders]: ../questions/native-editor/snippets

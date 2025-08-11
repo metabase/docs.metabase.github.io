@@ -165,8 +165,7 @@
 <header class="bootstrap  sticky">
   <div class="navigation-header bg-neutral-white ">
     
-      
-        <div class="promo-banner hidden">
+      <div class="promo-banner hidden">
   <div>
     <span class="button">New</span>
     <span>Metabase 55: Data visualizer for dashboard cards, database connection routing, and much more!</span>
@@ -177,7 +176,6 @@
 </div>
 <script src="/js/events/datetime.js"></script>
 
-      
     
 
     <div class="container d-flex h-100 align-items-center">
@@ -4659,7 +4657,7 @@ Roadmap</a>
 <div class="version__selector cursor-pointer">
   <span class="version__current">
     
-      v0.55
+      v0.56
     
 
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="chevron">
@@ -4669,6 +4667,14 @@ Roadmap</a>
   </span>
   <ul class="version__dropdown">
     
+      
+    
+      
+        <li>
+          <a href="/docs/v0.55">
+            v0.55
+          </a>
+        </li>
       
     
       
@@ -4731,14 +4737,6 @@ Roadmap</a>
         <li>
           <a href="/docs/v0.47">
             v0.47
-          </a>
-        </li>
-      
-    
-      
-        <li>
-          <a href="/docs/v0.46">
-            v0.46
           </a>
         </li>
       
@@ -4902,7 +4900,7 @@ keytool -import -alias cacert -storepass changeit -keystore cacerts.jks -file my
 
 <h2 id="how-metabase-syncs-data-in-mongodb">How Metabase syncs data in MongoDB</h2>
 
-<p>Because MongoDB contains unstructured data, Metabase takes a different approach to syncing your database’s metadata. To get a sense of the schema, Metabase will query the first and last 500 documents (most of the calculation is done in MongoDB). This sampling helps Metabase do things like differentiate datetime fields from string fields, and provide people with pre-populated filters. The reason Metabase only scans a sample of the documents is because scanning every document in every collection on every sync would put too much strain on your database. And while the sampling does a pretty good job keeping Metabase up to date, it can also mean that new fields can sometimes fall through the cracks, leading to visualization issues, or even fields failing to appear in your results. For more info, check out our <a href="../../troubleshooting-guide/db-connection">troubleshooting guide</a>.</p>
+<p>Because MongoDB contains unstructured data, Metabase takes a different approach to syncing your database’s metadata. To get a sense of the schema, Metabase will query the first and last 500 documents (most of the calculation is done in MongoDB). This sampling helps Metabase do things like differentiate datetime fields from string fields, and provide people with pre-populated filters. Metabase also syncs 1,000 leaf fields (fields at the deepest nesting level) per MongoDB collection. The reason Metabase only scans a sample of the documents is because scanning every document in every collection on every sync would put too much strain on your database. And while the sampling does a pretty good job keeping Metabase up to date, it can also mean that new fields can sometimes fall through the cracks, leading to visualization issues, or even fields failing to appear in your results. For more info, check out our <a href="../../troubleshooting-guide/db-connection">troubleshooting guide</a>.</p>
 
 <h2 id="general-connectivity-concerns">General connectivity concerns</h2>
 
@@ -5314,6 +5312,8 @@ keytool -import -alias cacert -storepass changeit -keystore cacerts.jks -file my
   })();
   var $mcj = jQuery.noConflict(true);
 </script>
+
+
 
 
 

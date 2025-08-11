@@ -1,5 +1,5 @@
 ---
-version: v0.55
+version: v0.56
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: false
@@ -53,3 +53,7 @@ Admins can also create unsecured public links or embeds of questions and dashboa
 ## [Securing embedded Metabase](./securing-embeds)
 
 How to make sure the right people can see the right data in your embedded Metabase.
+
+## [Translating questions and dashboards](./translations)
+
+Upload a translation dictionary to translate questions and dashboards (only in static embeds).

@@ -1,5 +1,5 @@
 ---
-version: v0.55
+version: v0.56
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -95,7 +95,7 @@ MongoDB lets you "successfully connect" to any collection name, even if the coll
 ## Related topics
 
 - [Table visibility](../data-modeling/metadata-editing#table-visibility).
-- [My data sandboxes aren't working](./sandboxing).
+- [Row and column security isn't working](./row-and-column-security)
 - [I can't view or edit a question or dashboard](./cant-view-or-edit).
 - [My visualizations are wrong](./visualization).
 

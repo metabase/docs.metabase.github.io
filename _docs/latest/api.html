@@ -1,5 +1,5 @@
 ---
-version: v0.55
+version: v0.56
 has_magic_breadcrumbs: true
 show_category_breadcrumb: false
 show_title_breadcrumb: true
@@ -90,7 +90,7 @@ latest: true
   },
   "components" : {
     "schemas" : {
-      "api.tiles/route-params" : {
+      "api.tiles.route-params" : {
         "type" : "object",
         "properties" : {
           "lat-field" : {
@@ -213,6 +213,29 @@ latest: true
           } ]
         } ]
       },
+      "metabase-enterprise.action-v2.api.api-action-expression" : {
+        "description" : "A more relaxed version of ::action-expression that can still have opaque identifiers inside inside.",
+        "type" : "object",
+        "properties" : { }
+      },
+      "metabase-enterprise.action-v2.api.api-action-id" : {
+        "description" : "Primitive actions, saved actions, and packed encodings from the picker.",
+        "anyOf" : [ {
+          "description" : "value must be an integer greater than zero.",
+          "type" : "integer",
+          "minimum" : 1
+        }, {
+          "type" : "string"
+        } ]
+      },
+      "metabase-enterprise.action-v2.api.api-action-id-or-expression" : {
+        "description" : "All the various ways of referring to an action with the v2 APIs.",
+        "anyOf" : [ {
+          "$ref" : "#/components/schemas/metabase-enterprise.action-v2.api.api-action-id"
+        }, {
+          "$ref" : "#/components/schemas/metabase-enterprise.action-v2.api.api-action-expression"
+        } ]
+      },
       "metabase-enterprise.metabot-v3.client.schema.message" : {
         "allOf" : [ {
           "type" : "object",
@@ -224,7 +247,7 @@ latest: true
               "type" : "string"
             },
             "role" : {
-              "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.client.schema~1role"
+              "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.client.schema.role"
             }
           },
           "required" : [ "role" ]
@@ -233,26 +256,26 @@ latest: true
           "properties" : { }
         } ]
       },
-      "metabase-enterprise.metabot-v3.client.schema/messages" : {
+      "metabase-enterprise.metabot-v3.client.schema.messages" : {
         "type" : "array",
         "items" : {
-          "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.client.schema~1message"
+          "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.client.schema.message"
         }
       },
-      "metabase-enterprise.metabot-v3.client.schema/role" : {
+      "metabase-enterprise.metabot-v3.client.schema.role" : {
         "type" : "string",
         "enum" : [ "system", "user", "assistant", "tool" ]
       },
-      "metabase-enterprise.metabot-v3.context/context" : {
+      "metabase-enterprise.metabot-v3.context.context" : {
         "type" : "object",
         "additionalProperties" : { }
       },
-      "metabase-enterprise.metabot-v3.tools.api/aggregation" : {
+      "metabase-enterprise.metabot-v3.tools.api.aggregation" : {
         "allOf" : [ {
           "type" : "object",
           "properties" : {
             "bucket" : {
-              "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.tools.api~1bucket"
+              "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.tools.api.bucket"
             },
             "field_id" : {
               "type" : "string"
@@ -272,7 +295,7 @@ latest: true
           "properties" : { }
         } ]
       },
-      "metabase-enterprise.metabot-v3.tools.api/answer-sources-arguments" : {
+      "metabase-enterprise.metabot-v3.tools.api.answer-sources-arguments" : {
         "allOf" : [ {
           "type" : "object",
           "properties" : {
@@ -429,7 +452,7 @@ latest: true
               "type" : "string"
             },
             "schedule" : {
-              "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.tools.api~1subscription-schedule"
+              "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.tools.api.subscription-schedule"
             }
           },
           "required" : [ "dashboard_id", "email", "schedule" ]
@@ -438,7 +461,7 @@ latest: true
           "properties" : { }
         } ]
       },
-      "metabase-enterprise.metabot-v3.tools.api/disjunctive-numeric-filter" : {
+      "metabase-enterprise.metabot-v3.tools.api.disjunctive-numeric-filter" : {
         "allOf" : [ {
           "type" : "object",
           "properties" : {
@@ -466,7 +489,7 @@ latest: true
           "properties" : { }
         } ]
       },
-      "metabase-enterprise.metabot-v3.tools.api/disjunctive-string-date-filter" : {
+      "metabase-enterprise.metabot-v3.tools.api.disjunctive-string-date-filter" : {
         "allOf" : [ {
           "type" : "object",
           "properties" : {
@@ -490,7 +513,7 @@ latest: true
           "properties" : { }
         } ]
       },
-      "metabase-enterprise.metabot-v3.tools.api/disjunctive-temporal-extraction-filter" : {
+      "metabase-enterprise.metabot-v3.tools.api.disjunctive-temporal-extraction-filter" : {
         "allOf" : [ {
           "type" : "object",
           "properties" : {
@@ -514,12 +537,12 @@ latest: true
           "properties" : { }
         } ]
       },
-      "metabase-enterprise.metabot-v3.tools.api/disjunctive-temporal-filter" : {
+      "metabase-enterprise.metabot-v3.tools.api.disjunctive-temporal-filter" : {
         "allOf" : [ {
           "type" : "object",
           "properties" : {
             "bucket" : {
-              "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.tools.api~1bucket"
+              "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.tools.api.bucket"
             },
             "field_id" : {
               "type" : "string"
@@ -545,7 +568,7 @@ latest: true
           "properties" : { }
         } ]
       },
-      "metabase-enterprise.metabot-v3.tools.api/existence-filter" : {
+      "metabase-enterprise.metabot-v3.tools.api.existence-filter" : {
         "allOf" : [ {
           "type" : "object",
           "properties" : {
@@ -563,12 +586,12 @@ latest: true
           "properties" : { }
         } ]
       },
-      "metabase-enterprise.metabot-v3.tools.api/field" : {
+      "metabase-enterprise.metabot-v3.tools.api.field" : {
         "allOf" : [ {
           "type" : "object",
           "properties" : {
             "bucket" : {
-              "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.tools.api~1bucket"
+              "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.tools.api.bucket"
             },
             "field_id" : {
               "type" : "string"
@@ -660,26 +683,26 @@ latest: true
       },
       "metabase-enterprise.metabot-v3.tools.api.filter" : {
         "anyOf" : [ {
-          "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.tools.api~1existence-filter"
+          "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.tools.api.existence-filter"
         }, {
-          "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.tools.api~1temporal-extraction-filter"
+          "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.tools.api.temporal-extraction-filter"
         }, {
-          "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.tools.api~1disjunctive-temporal-extraction-filter"
+          "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.tools.api.disjunctive-temporal-extraction-filter"
         }, {
-          "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.tools.api~1temporal-filter"
+          "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.tools.api.temporal-filter"
         }, {
-          "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.tools.api~1disjunctive-temporal-filter"
+          "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.tools.api.disjunctive-temporal-filter"
         }, {
-          "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.tools.api~1string-filter"
+          "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.tools.api.string-filter"
         }, {
-          "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.tools.api~1disjunctive-string-date-filter"
+          "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.tools.api.disjunctive-string-date-filter"
         }, {
-          "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.tools.api~1numeric-filter"
+          "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.tools.api.numeric-filter"
         }, {
-          "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.tools.api~1disjunctive-numeric-filter"
+          "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.tools.api.disjunctive-numeric-filter"
         } ]
       },
-      "metabase-enterprise.metabot-v3.tools.api/filter-records-arguments" : {
+      "metabase-enterprise.metabot-v3.tools.api.filter-records-arguments" : {
         "allOf" : [ {
           "type" : "object",
           "properties" : {
@@ -727,7 +750,7 @@ latest: true
             "filters" : {
               "type" : "array",
               "items" : {
-                "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.tools.api~1filter"
+                "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.tools.api.filter"
               }
             }
           },
@@ -1239,6 +1262,22 @@ latest: true
               }, {
                 "type" : "string"
               } ]
+            },
+            "with_field_values" : {
+              "default" : true,
+              "type" : "boolean"
+            },
+            "with_fields" : {
+              "default" : true,
+              "type" : "boolean"
+            },
+            "with_metric_default_temporal_breakout" : {
+              "default" : true,
+              "type" : "boolean"
+            },
+            "with_metrics" : {
+              "default" : true,
+              "type" : "boolean"
             }
           }
         }, {
@@ -1283,7 +1322,7 @@ latest: true
           "properties" : { }
         } ]
       },
-      "metabase-enterprise.metabot-v3.tools.api/numeric-filter" : {
+      "metabase-enterprise.metabot-v3.tools.api.numeric-filter" : {
         "allOf" : [ {
           "type" : "object",
           "properties" : {
@@ -1318,13 +1357,13 @@ latest: true
             "filters" : {
               "type" : "array",
               "items" : {
-                "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.tools.api~1filter"
+                "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.tools.api.filter"
               }
             },
             "group_by" : {
               "type" : "array",
               "items" : {
-                "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.tools.api~1group-by"
+                "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.tools.api.group-by"
               }
             },
             "metric_id" : {
@@ -1337,32 +1376,32 @@ latest: true
           "properties" : { }
         } ]
       },
-      "metabase-enterprise.metabot-v3.tools.api/query-model-arguments" : {
+      "metabase-enterprise.metabot-v3.tools.api.query-model-arguments" : {
         "allOf" : [ {
           "type" : "object",
           "properties" : {
             "aggregations" : {
               "type" : "array",
               "items" : {
-                "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.tools.api~1aggregation"
+                "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.tools.api.aggregation"
               }
             },
             "fields" : {
               "type" : "array",
               "items" : {
-                "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.tools.api~1field"
+                "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.tools.api.field"
               }
             },
             "filters" : {
               "type" : "array",
               "items" : {
-                "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.tools.api~1filter"
+                "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.tools.api.filter"
               }
             },
             "group_by" : {
               "type" : "array",
               "items" : {
-                "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.tools.api~1group-by"
+                "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.tools.api.group-by"
               }
             },
             "limit" : {
@@ -1381,7 +1420,7 @@ latest: true
                     "enum" : [ "asc", "desc" ]
                   },
                   "field" : {
-                    "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.tools.api~1field"
+                    "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.tools.api.field"
                   }
                 },
                 "required" : [ "field", "direction" ]
@@ -1468,7 +1507,7 @@ latest: true
           "properties" : { }
         } ]
       },
-      "metabase-enterprise.metabot-v3.tools.api/subscription-schedule" : {
+      "metabase-enterprise.metabot-v3.tools.api.subscription-schedule" : {
         "allOf" : [ {
           "anyOf" : [ {
             "type" : "object",
@@ -1525,7 +1564,7 @@ latest: true
           "properties" : { }
         } ]
       },
-      "metabase-enterprise.metabot-v3.tools.api/temporal-extraction-filter" : {
+      "metabase-enterprise.metabot-v3.tools.api.temporal-extraction-filter" : {
         "allOf" : [ {
           "type" : "object",
           "properties" : {
@@ -1546,12 +1585,12 @@ latest: true
           "properties" : { }
         } ]
       },
-      "metabase-enterprise.metabot-v3.tools.api/temporal-filter" : {
+      "metabase-enterprise.metabot-v3.tools.api.temporal-filter" : {
         "allOf" : [ {
           "type" : "object",
           "properties" : {
             "bucket" : {
-              "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.tools.api~1bucket"
+              "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.tools.api.bucket"
             },
             "field_id" : {
               "type" : "string"
@@ -1574,7 +1613,7 @@ latest: true
           "properties" : { }
         } ]
       },
-      "metabase-enterprise.metabot-v3.tools.api/tool-request" : {
+      "metabase-enterprise.metabot-v3.tools.api.tool-request" : {
         "type" : "object",
         "properties" : {
           "conversation_id" : {
@@ -1585,6 +1624,122 @@ latest: true
         },
         "required" : [ "conversation_id" ]
       },
+      "metabase-enterprise.permission-debug.impl.group-id" : {
+        "type" : "integer"
+      },
+      "metabase-enterprise.permission-debug.impl.perm-debug-info" : {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "type" : "object",
+            "properties" : { }
+          },
+          "decision" : {
+            "type" : "string",
+            "enum" : [ "allow", "denied", "limited" ]
+          },
+          "message" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "model-id" : {
+            "type" : "string"
+          },
+          "model-type" : {
+            "type" : "string",
+            "enum" : [ "card", "invalid" ]
+          },
+          "segment" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string",
+              "enum" : [ "sandboxed", "impersonated", "routed" ]
+            },
+            "uniqueItems" : true
+          },
+          "suggestions" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            }
+          }
+        },
+        "required" : [ "model-type", "model-id", "decision", "segment", "message", "data", "suggestions" ]
+      },
+      "metabase.actions.types..scope.raw" : {
+        "anyOf" : [ {
+          "type" : "object",
+          "properties" : {
+            "dashboard-id" : {
+              "description" : "value must be an integer greater than zero.",
+              "type" : "integer",
+              "minimum" : 1
+            }
+          },
+          "required" : [ "dashboard-id" ]
+        }, {
+          "type" : "object",
+          "properties" : {
+            "dashcard-id" : {
+              "description" : "value must be an integer greater than zero.",
+              "type" : "integer",
+              "minimum" : 1
+            }
+          },
+          "required" : [ "dashcard-id" ]
+        }, {
+          "type" : "object",
+          "properties" : {
+            "card-id" : {
+              "description" : "value must be an integer greater than zero.",
+              "type" : "integer",
+              "minimum" : 1
+            }
+          },
+          "required" : [ "card-id" ]
+        }, {
+          "type" : "object",
+          "properties" : {
+            "model-id" : {
+              "description" : "value must be an integer greater than zero.",
+              "type" : "integer",
+              "minimum" : 1
+            }
+          },
+          "required" : [ "model-id" ]
+        }, {
+          "type" : "object",
+          "properties" : {
+            "table-id" : {
+              "description" : "value must be an integer greater than zero.",
+              "type" : "integer",
+              "minimum" : 1
+            }
+          },
+          "required" : [ "table-id" ]
+        }, {
+          "type" : "object",
+          "properties" : {
+            "webhook-id" : {
+              "description" : "value must be an integer greater than zero.",
+              "type" : "integer",
+              "minimum" : 1
+            }
+          },
+          "required" : [ "webhook-id" ]
+        }, {
+          "type" : "object",
+          "properties" : {
+            "unknown" : {
+              "type" : "string",
+              "enum" : [ "model-action" ]
+            }
+          },
+          "required" : [ "unknown" ]
+        } ]
+      },
       "metabase.analyze.query-results.ResultsMetadata" : {
         "type" : "array",
         "items" : {
@@ -1593,14 +1748,7 @@ latest: true
         "description" : "value must be an array of valid results column metadata maps.",
         "optional" : true
       },
-      "metabase.cache.api/cache-strategy" : {
-        "oneOf" : [ {
-          "$ref" : "#/components/schemas/metabase.cache.api~1cache-strategy.ee"
-        }, {
-          "$ref" : "#/components/schemas/metabase.cache.api~1cache-strategy.oss"
-        } ]
-      },
-      "metabase.cache.api/cache-strategy.base" : {
+      "metabase.cache.api..cache-strategy.base" : {
         "type" : "object",
         "properties" : {
           "type" : {
@@ -1610,23 +1758,23 @@ latest: true
         },
         "required" : [ "type" ]
       },
-      "metabase.cache.api/cache-strategy.ee" : {
+      "metabase.cache.api..cache-strategy.ee" : {
         "description" : "Schema for a caching strategy in EE when we have an premium token with `:cache-granular-controls`.",
         "allOf" : [ {
-          "$ref" : "#/components/schemas/metabase.cache.api~1cache-strategy.base"
+          "$ref" : "#/components/schemas/metabase.cache.api..cache-strategy.base"
         }, {
           "oneOf" : [ {
-            "$ref" : "#/components/schemas/metabase.cache.api~1cache-strategy.nocache"
+            "$ref" : "#/components/schemas/metabase.cache.api..cache-strategy.nocache"
           }, {
-            "$ref" : "#/components/schemas/metabase.cache.api~1cache-strategy.ttl"
+            "$ref" : "#/components/schemas/metabase.cache.api..cache-strategy.ttl"
           }, {
-            "$ref" : "#/components/schemas/metabase.cache.api~1cache-strategy.ee.duration"
+            "$ref" : "#/components/schemas/metabase.cache.api..cache-strategy.ee.duration"
           }, {
-            "$ref" : "#/components/schemas/metabase.cache.api~1cache-strategy.ee.schedule"
+            "$ref" : "#/components/schemas/metabase.cache.api..cache-strategy.ee.schedule"
           } ]
         } ]
       },
-      "metabase.cache.api/cache-strategy.ee.duration" : {
+      "metabase.cache.api..cache-strategy.ee.duration" : {
         "type" : "object",
         "properties" : {
           "duration" : {
@@ -1648,14 +1796,14 @@ latest: true
         "required" : [ "type", "duration", "unit" ],
         "additionalProperties" : false
       },
-      "metabase.cache.api/cache-strategy.ee.schedule" : {
+      "metabase.cache.api..cache-strategy.ee.schedule" : {
         "type" : "object",
         "properties" : {
           "refresh_automatically" : {
             "type" : "boolean"
           },
           "schedule" : {
-            "$ref" : "#/components/schemas/metabase.util.cron~1CronScheduleString"
+            "$ref" : "#/components/schemas/metabase.util.cron.CronScheduleString"
           },
           "type" : {
             "const" : "schedule"
@@ -1664,7 +1812,7 @@ latest: true
         "required" : [ "type", "schedule" ],
         "additionalProperties" : false
       },
-      "metabase.cache.api/cache-strategy.nocache" : {
+      "metabase.cache.api..cache-strategy.nocache" : {
         "type" : "object",
         "properties" : {
           "type" : {
@@ -1673,19 +1821,19 @@ latest: true
         },
         "required" : [ "type" ]
       },
-      "metabase.cache.api/cache-strategy.oss" : {
+      "metabase.cache.api..cache-strategy.oss" : {
         "description" : "Schema for a caching strategy (OSS)",
         "allOf" : [ {
-          "$ref" : "#/components/schemas/metabase.cache.api~1cache-strategy.base"
+          "$ref" : "#/components/schemas/metabase.cache.api..cache-strategy.base"
         }, {
           "oneOf" : [ {
-            "$ref" : "#/components/schemas/metabase.cache.api~1cache-strategy.nocache"
+            "$ref" : "#/components/schemas/metabase.cache.api..cache-strategy.nocache"
           }, {
-            "$ref" : "#/components/schemas/metabase.cache.api~1cache-strategy.ttl"
+            "$ref" : "#/components/schemas/metabase.cache.api..cache-strategy.ttl"
           } ]
         } ]
       },
-      "metabase.cache.api/cache-strategy.ttl" : {
+      "metabase.cache.api..cache-strategy.ttl" : {
         "type" : "object",
         "properties" : {
           "min_duration_ms" : {
@@ -1705,7 +1853,14 @@ latest: true
         "required" : [ "type", "multiplier", "min_duration_ms" ],
         "additionalProperties" : false
       },
-      "metabase.channel.models.channel/Channel" : {
+      "metabase.cache.api.cache-strategy" : {
+        "oneOf" : [ {
+          "$ref" : "#/components/schemas/metabase.cache.api..cache-strategy.ee"
+        }, {
+          "$ref" : "#/components/schemas/metabase.cache.api..cache-strategy.oss"
+        } ]
+      },
+      "metabase.channel.models.channel.Channel" : {
         "description" : "Channel schema.",
         "type" : "object",
         "properties" : {
@@ -1728,20 +1883,20 @@ latest: true
         },
         "required" : [ "name", "type", "details" ]
       },
-      "metabase.channel.models.channel/ChannelTemplate" : {
+      "metabase.channel.models.channel.ChannelTemplate" : {
         "description" : "Channel Template schema.",
         "oneOf" : [ {
           "type" : "object",
           "properties" : {
             "channel_type" : { },
             "details" : {
-              "$ref" : "#/components/schemas/metabase.channel.models.channel~1ChannelTemplateEmailDetails"
+              "$ref" : "#/components/schemas/metabase.channel.models.channel.ChannelTemplateEmailDetails"
             }
           },
           "required" : [ "channel_type", "details" ]
         }, { } ]
       },
-      "metabase.channel.models.channel/ChannelTemplateEmailDetails" : {
+      "metabase.channel.models.channel.ChannelTemplateEmailDetails" : {
         "oneOf" : [ {
           "type" : "object",
           "properties" : {
@@ -2162,14 +2317,6 @@ latest: true
           "$ref" : "#/components/schemas/metabase.legacy-mbql.schema.field-or-expression-ref"
         } ]
       },
-      "metabase.legacy-mbql.schema.Ident" : {
-        "description" : "Unique identifier string for new `:column` refs. The new refs aren't used in legacy MBQL (currently) but the\n  idents for column-introducing new clauses (joins, aggregations, breakouts, expressions) are randomly generated when\n  the clauses are created, so the idents must be preserved in legacy MBQL.\n\n  These are opaque strings under the initial design; I've made them a separate schema for documentation and\n  future-proofing.",
-        "anyOf" : [ {
-          "$ref" : "#/components/schemas/metabase.lib.schema.common.non-blank-string"
-        }, {
-          "type" : "string"
-        } ]
-      },
       "metabase.legacy-mbql.schema.IntGreaterThanZeroOrNumericExpression" : {
         "oneOf" : [ {
           "description" : "Must be a positive integer.",
@@ -2183,32 +2330,13 @@ latest: true
         "description" : "Perform the equivalent of a SQL `JOIN` with another Table or nested `:source-query`. JOINs are either explicitly\n  specified in the incoming query, or implicitly generated when one uses a `:field` clause with `:source-field`.\n\n  In the top-level query, you can reference Fields from the joined table or nested query by including `:source-field`\n  in the `:field` options (known as implicit joins); for explicit joins, you *must* specify `:join-alias` yourself; in\n  the `:field` options, e.g.\n\n    ;; for joins against other Tables/MBQL source queries\n    [:field 1 {:join-alias \"my_join_alias\"}]\n\n    ;; for joins against native queries\n    [:field \"my_field\" {:base-type :field/Integer, :join-alias \"my_join_alias\"}]",
         "type" : "object",
         "properties" : {
-          "ident" : {
-            "description" : "An opaque string used as a unique identifier for this join clause, even if it evolves. This string is randomly\n      generated when a join clause is created, so it can never be confused with another join of the same table.",
-            "$ref" : "#/components/schemas/metabase.legacy-mbql.schema.Ident"
-          },
-          "strategy" : {
-            "description" : "Defaults to `:left-join`; used for all automatically-generated JOINs\n\n  Driver implementations: this is guaranteed to be present after pre-processing.",
-            "type" : "string",
-            "enum" : [ "full-join", "right-join", "left-join", "inner-join" ]
-          },
-          "source-metadata" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "#/components/schemas/metabase.legacy-mbql.schema.legacy-column-metadata"
-            },
-            "description" : "Metadata about the source query being used, if pulled in from a Card via the\n  `:source-table \"card__id\"` syntax. added automatically by the `resolve-card-id-source-tables` middleware."
+          "alias" : {
+            "description" : "The name used to alias the joined table or query. This is usually generated automatically and generally looks\n  like `table__via__field`. You can specify this yourself if you need to reference a joined field with a `:join-alias`\n  in the options.\n\n  Driver implementations: This is guaranteed to be present after pre-processing.",
+            "$ref" : "#/components/schemas/metabase.lib.schema.join.alias"
           },
           "condition" : {
             "description" : "The condition on which to JOIN. Can be anything that is a valid `:filter` clause. For automatically-generated\n  JOINs this is usually something like\n\n    [:= <source-table-fk-field> [:field <dest-table-pk-field> {:join-alias <join-table-alias>}]]",
             "$ref" : "#/components/schemas/metabase.legacy-mbql.schema.Filter"
-          },
-          "source-query" : {
-            "$ref" : "#/components/schemas/metabase.legacy-mbql.schema.SourceQuery"
-          },
-          "fk-field-id" : {
-            "$ref" : "#/components/schemas/metabase.lib.schema.id.field",
-            "description" : "Mostly used only internally. When a join is implicitly generated via a `:field` clause with\n  `:source-field`, the ID of the foreign key field in the source Table will be recorded here. This information is used\n  to add `fk_field_id` information to the `:cols` in the query results, and also for drill-thru. When generating\n  explicit joins by hand you can usually omit this information, altho it doesn't hurt to include it if you know it.\n\n  Don't set this information yourself. It will have no effect."
           },
           "fields" : {
             "description" : "The Fields from this join to include in parent-level results. This can be either `:none`, `:all`, or a sequence\n  of `:field` clauses.\n\n  * `:none`: no Fields from the joined table or nested query are included (unless indirectly included by breakouts or\n     other clauses). This is the default, and what is used for automatically-generated joins.\n\n  * `:all`: will include all of the Field from the joined table or query\n\n  * a sequence of Field clauses: include only the Fields specified. Valid clauses are the same as the top-level\n    `:fields` clause. This should be non-empty and all elements should be distinct. The normalizer will automatically\n    remove duplicate fields for you, and replace empty clauses with `:none`.\n\n  Driver implementations: you can ignore this clause. Relevant fields will be added to top-level `:fields` clause with\n  appropriate aliases.",
@@ -2218,6 +2346,20 @@ latest: true
             }, {
               "$ref" : "#/components/schemas/metabase.legacy-mbql.schema.Fields"
             } ]
+          },
+          "fk-field-id" : {
+            "$ref" : "#/components/schemas/metabase.lib.schema.id.field",
+            "description" : "Mostly used only internally. When a join is implicitly generated via a `:field` clause with\n  `:source-field`, the ID of the foreign key field in the source Table will be recorded here. This information is used\n  to add `fk_field_id` information to the `:cols` in the query results, and also for drill-thru. When generating\n  explicit joins by hand you can usually omit this information, altho it doesn't hurt to include it if you know it.\n\n  Don't set this information yourself. It will have no effect."
+          },
+          "source-metadata" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/metabase.legacy-mbql.schema.legacy-column-metadata"
+            },
+            "description" : "Metadata about the source query being used, if pulled in from a Card via the\n  `:source-table \"card__id\"` syntax. added automatically by the `resolve-card-id-source-tables` middleware."
+          },
+          "source-query" : {
+            "$ref" : "#/components/schemas/metabase.legacy-mbql.schema.SourceQuery"
           },
           "source-table" : {
             "description" : "*What* to JOIN. Self-joins can be done by using the same `:source-table` as in the query where\n  this is specified. YOU MUST SUPPLY EITHER `:source-table` OR `:source-query`, BUT NOT BOTH!",
@@ -2229,9 +2371,10 @@ latest: true
               "pattern" : "^card__[1-9]\\d*$"
             } ]
           },
-          "alias" : {
-            "description" : "The name used to alias the joined table or query. This is usually generated automatically and generally looks\n  like `table__via__field`. You can specify this yourself if you need to reference a joined field with a `:join-alias`\n  in the options.\n\n  Driver implementations: This is guaranteed to be present after pre-processing.",
-            "$ref" : "#/components/schemas/metabase.lib.schema.join.alias"
+          "strategy" : {
+            "description" : "Defaults to `:left-join`; used for all automatically-generated JOINs\n\n  Driver implementations: this is guaranteed to be present after pre-processing.",
+            "type" : "string",
+            "enum" : [ "full-join", "right-join", "left-join", "inner-join" ]
           }
         },
         "required" : [ "condition" ]
@@ -2293,15 +2436,7 @@ latest: true
             } ]
           },
           "order-by" : {
-            "allOf" : [ {
-              "type" : "array",
-              "items" : {
-                "$ref" : "#/components/schemas/metabase.legacy-mbql.schema.OrderBy"
-              },
-              "minItems" : 1
-            }, {
-              "$ref" : "#/components/schemas/metabase.legacy-mbql.schema.helpers.distinct"
-            } ]
+            "$ref" : "#/components/schemas/metabase.legacy-mbql.schema.OrderBys"
           },
           "page" : {
             "$ref" : "#/components/schemas/metabase.legacy-mbql.schema.Page"
@@ -2443,6 +2578,17 @@ latest: true
           "$ref" : "#/components/schemas/metabase.legacy-mbql.schema.asc"
         }, {
           "$ref" : "#/components/schemas/metabase.legacy-mbql.schema.desc"
+        } ]
+      },
+      "metabase.legacy-mbql.schema.OrderBys" : {
+        "allOf" : [ {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/components/schemas/metabase.legacy-mbql.schema.OrderBy"
+          },
+          "minItems" : 1
+        }, {
+          "$ref" : "#/components/schemas/metabase.legacy-mbql.schema.helpers.distinct"
         } ]
       },
       "metabase.legacy-mbql.schema.OrderComparable" : {
@@ -3185,7 +3331,7 @@ latest: true
             "$ref" : "#/components/schemas/metabase.lib.schema.common.semantic-or-relation-type"
           },
           "display_name" : {
-            "$ref" : "#/components/schemas/metabase.lib.schema.common.non-blank-string"
+            "type" : "string"
           },
           "converted_timezone" : {
             "$ref" : "#/components/schemas/metabase.lib.schema.expression.temporal.timezone-id"
@@ -3460,13 +3606,13 @@ latest: true
       },
       "metabase.lib.schema.expression.temporal.timezone-id" : {
         "allOf" : [ {
-          "$ref" : "#/components/schemas/metabase.lib.schema.common~1non-blank-string"
+          "$ref" : "#/components/schemas/metabase.lib.schema.common.non-blank-string"
         }, {
           "anyOf" : [ {
             "type" : "string",
             "enum" : [ "Africa/Abidjan", "Africa/Accra", "Africa/Addis_Ababa", "Africa/Algiers", "Africa/Asmara", "Africa/Asmera", "Africa/Bamako", "Africa/Bangui", "Africa/Banjul", "Africa/Bissau", "Africa/Blantyre", "Africa/Brazzaville", "Africa/Bujumbura", "Africa/Cairo", "Africa/Casablanca", "Africa/Ceuta", "Africa/Conakry", "Africa/Dakar", "Africa/Dar_es_Salaam", "Africa/Djibouti", "Africa/Douala", "Africa/El_Aaiun", "Africa/Freetown", "Africa/Gaborone", "Africa/Harare", "Africa/Johannesburg", "Africa/Juba", "Africa/Kampala", "Africa/Khartoum", "Africa/Kigali", "Africa/Kinshasa", "Africa/Lagos", "Africa/Libreville", "Africa/Lome", "Africa/Luanda", "Africa/Lubumbashi", "Africa/Lusaka", "Africa/Malabo", "Africa/Maputo", "Africa/Maseru", "Africa/Mbabane", "Africa/Mogadishu", "Africa/Monrovia", "Africa/Nairobi", "Africa/Ndjamena", "Africa/Niamey", "Africa/Nouakchott", "Africa/Ouagadougou", "Africa/Porto-Novo", "Africa/Sao_Tome", "Africa/Timbuktu", "Africa/Tripoli", "Africa/Tunis", "Africa/Windhoek", "America/Adak", "America/Anchorage", "America/Anguilla", "America/Antigua", "America/Araguaina", "America/Argentina/Buenos_Aires", "America/Argentina/Catamarca", "America/Argentina/ComodRivadavia", "America/Argentina/Cordoba", "America/Argentina/Jujuy", "America/Argentina/La_Rioja", "America/Argentina/Mendoza", "America/Argentina/Rio_Gallegos", "America/Argentina/Salta", "America/Argentina/San_Juan", "America/Argentina/San_Luis", "America/Argentina/Tucuman", "America/Argentina/Ushuaia", "America/Aruba", "America/Asuncion", "America/Atikokan", "America/Atka", "America/Bahia", "America/Bahia_Banderas", "America/Barbados", "America/Belem", "America/Belize", "America/Blanc-Sablon", "America/Boa_Vista", "America/Bogota", "America/Boise", "America/Buenos_Aires", "America/Cambridge_Bay", "America/Campo_Grande", "America/Cancun", "America/Caracas", "America/Catamarca", "America/Cayenne", "America/Cayman", "America/Chicago", "America/Chihuahua", "America/Ciudad_Juarez", "America/Coral_Harbour", "America/Cordoba", "America/Costa_Rica", "America/Creston", "America/Cuiaba", "America/Curacao", "America/Danmarkshavn", "America/Dawson", "America/Dawson_Creek", "America/Denver", "America/Detroit", "America/Dominica", "America/Edmonton", "America/Eirunepe", "America/El_Salvador", "America/Ensenada", "America/Fort_Nelson", "America/Fort_Wayne", "America/Fortaleza", "America/Glace_Bay", "America/Godthab", "America/Goose_Bay", "America/Grand_Turk", "America/Grenada", "America/Guadeloupe", "America/Guatemala", "America/Guayaquil", "America/Guyana", "America/Halifax", "America/Havana", "America/Hermosillo", "America/Indiana/Indianapolis", "America/Indiana/Knox", "America/Indiana/Marengo", "America/Indiana/Petersburg", "America/Indiana/Tell_City", "America/Indiana/Vevay", "America/Indiana/Vincennes", "America/Indiana/Winamac", "America/Indianapolis", "America/Inuvik", "America/Iqaluit", "America/Jamaica", "America/Jujuy", "America/Juneau", "America/Kentucky/Louisville", "America/Kentucky/Monticello", "America/Knox_IN", "America/Kralendijk", "America/La_Paz", "America/Lima", "America/Los_Angeles", "America/Louisville", "America/Lower_Princes", "America/Maceio", "America/Managua", "America/Manaus", "America/Marigot", "America/Martinique", "America/Matamoros", "America/Mazatlan", "America/Mendoza", "America/Menominee", "America/Merida", "America/Metlakatla", "America/Mexico_City", "America/Miquelon", "America/Moncton", "America/Monterrey", "America/Montevideo", "America/Montreal", "America/Montserrat", "America/Nassau", "America/New_York", "America/Nipigon", "America/Nome", "America/Noronha", "America/North_Dakota/Beulah", "America/North_Dakota/Center", "America/North_Dakota/New_Salem", "America/Nuuk", "America/Ojinaga", "America/Panama", "America/Pangnirtung", "America/Paramaribo", "America/Phoenix", "America/Port-au-Prince", "America/Port_of_Spain", "America/Porto_Acre", "America/Porto_Velho", "America/Puerto_Rico", "America/Punta_Arenas", "America/Rainy_River", "America/Rankin_Inlet", "America/Recife", "America/Regina", "America/Resolute", "America/Rio_Branco", "America/Rosario", "America/Santa_Isabel", "America/Santarem", "America/Santiago", "America/Santo_Domingo", "America/Sao_Paulo", "America/Scoresbysund", "America/Shiprock", "America/Sitka", "America/St_Barthelemy", "America/St_Johns", "America/St_Kitts", "America/St_Lucia", "America/St_Thomas", "America/St_Vincent", "America/Swift_Current", "America/Tegucigalpa", "America/Thule", "America/Thunder_Bay", "America/Tijuana", "America/Toronto", "America/Tortola", "America/Vancouver", "America/Virgin", "America/Whitehorse", "America/Winnipeg", "America/Yakutat", "America/Yellowknife", "Antarctica/Casey", "Antarctica/Davis", "Antarctica/DumontDUrville", "Antarctica/Macquarie", "Antarctica/Mawson", "Antarctica/McMurdo", "Antarctica/Palmer", "Antarctica/Rothera", "Antarctica/South_Pole", "Antarctica/Syowa", "Antarctica/Troll", "Antarctica/Vostok", "Arctic/Longyearbyen", "Asia/Aden", "Asia/Almaty", "Asia/Amman", "Asia/Anadyr", "Asia/Aqtau", "Asia/Aqtobe", "Asia/Ashgabat", "Asia/Ashkhabad", "Asia/Atyrau", "Asia/Baghdad", "Asia/Bahrain", "Asia/Baku", "Asia/Bangkok", "Asia/Barnaul", "Asia/Beirut", "Asia/Bishkek", "Asia/Brunei", "Asia/Calcutta", "Asia/Chita", "Asia/Choibalsan", "Asia/Chongqing", "Asia/Chungking", "Asia/Colombo", "Asia/Dacca", "Asia/Damascus", "Asia/Dhaka", "Asia/Dili", "Asia/Dubai", "Asia/Dushanbe", "Asia/Famagusta", "Asia/Gaza", "Asia/Harbin", "Asia/Hebron", "Asia/Ho_Chi_Minh", "Asia/Hong_Kong", "Asia/Hovd", "Asia/Irkutsk", "Asia/Istanbul", "Asia/Jakarta", "Asia/Jayapura", "Asia/Jerusalem", "Asia/Kabul", "Asia/Kamchatka", "Asia/Karachi", "Asia/Kashgar", "Asia/Kathmandu", "Asia/Katmandu", "Asia/Khandyga", "Asia/Kolkata", "Asia/Krasnoyarsk", "Asia/Kuala_Lumpur", "Asia/Kuching", "Asia/Kuwait", "Asia/Macao", "Asia/Macau", "Asia/Magadan", "Asia/Makassar", "Asia/Manila", "Asia/Muscat", "Asia/Nicosia", "Asia/Novokuznetsk", "Asia/Novosibirsk", "Asia/Omsk", "Asia/Oral", "Asia/Phnom_Penh", "Asia/Pontianak", "Asia/Pyongyang", "Asia/Qatar", "Asia/Qostanay", "Asia/Qyzylorda", "Asia/Rangoon", "Asia/Riyadh", "Asia/Saigon", "Asia/Sakhalin", "Asia/Samarkand", "Asia/Seoul", "Asia/Shanghai", "Asia/Singapore", "Asia/Srednekolymsk", "Asia/Taipei", "Asia/Tashkent", "Asia/Tbilisi", "Asia/Tehran", "Asia/Tel_Aviv", "Asia/Thimbu", "Asia/Thimphu", "Asia/Tokyo", "Asia/Tomsk", "Asia/Ujung_Pandang", "Asia/Ulaanbaatar", "Asia/Ulan_Bator", "Asia/Urumqi", "Asia/Ust-Nera", "Asia/Vientiane", "Asia/Vladivostok", "Asia/Yakutsk", "Asia/Yangon", "Asia/Yekaterinburg", "Asia/Yerevan", "Atlantic/Azores", "Atlantic/Bermuda", "Atlantic/Canary", "Atlantic/Cape_Verde", "Atlantic/Faeroe", "Atlantic/Faroe", "Atlantic/Jan_Mayen", "Atlantic/Madeira", "Atlantic/Reykjavik", "Atlantic/South_Georgia", "Atlantic/St_Helena", "Atlantic/Stanley", "Australia/ACT", "Australia/Adelaide", "Australia/Brisbane", "Australia/Broken_Hill", "Australia/Canberra", "Australia/Currie", "Australia/Darwin", "Australia/Eucla", "Australia/Hobart", "Australia/LHI", "Australia/Lindeman", "Australia/Lord_Howe", "Australia/Melbourne", "Australia/NSW", "Australia/North", "Australia/Perth", "Australia/Queensland", "Australia/South", "Australia/Sydney", "Australia/Tasmania", "Australia/Victoria", "Australia/West", "Australia/Yancowinna", "Brazil/Acre", "Brazil/DeNoronha", "Brazil/East", "Brazil/West", "CET", "CST6CDT", "Canada/Atlantic", "Canada/Central", "Canada/Eastern", "Canada/Mountain", "Canada/Newfoundland", "Canada/Pacific", "Canada/Saskatchewan", "Canada/Yukon", "Chile/Continental", "Chile/EasterIsland", "Cuba", "EET", "EST5EDT", "Egypt", "Eire", "Etc/GMT", "Etc/GMT+0", "Etc/GMT+1", "Etc/GMT+10", "Etc/GMT+11", "Etc/GMT+12", "Etc/GMT+2", "Etc/GMT+3", "Etc/GMT+4", "Etc/GMT+5", "Etc/GMT+6", "Etc/GMT+7", "Etc/GMT+8", "Etc/GMT+9", "Etc/GMT-0", "Etc/GMT-1", "Etc/GMT-10", "Etc/GMT-11", "Etc/GMT-12", "Etc/GMT-13", "Etc/GMT-14", "Etc/GMT-2", "Etc/GMT-3", "Etc/GMT-4", "Etc/GMT-5", "Etc/GMT-6", "Etc/GMT-7", "Etc/GMT-8", "Etc/GMT-9", "Etc/GMT0", "Etc/Greenwich", "Etc/UCT", "Etc/UTC", "Etc/Universal", "Etc/Zulu", "Europe/Amsterdam", "Europe/Andorra", "Europe/Astrakhan", "Europe/Athens", "Europe/Belfast", "Europe/Belgrade", "Europe/Berlin", "Europe/Bratislava", "Europe/Brussels", "Europe/Bucharest", "Europe/Budapest", "Europe/Busingen", "Europe/Chisinau", "Europe/Copenhagen", "Europe/Dublin", "Europe/Gibraltar", "Europe/Guernsey", "Europe/Helsinki", "Europe/Isle_of_Man", "Europe/Istanbul", "Europe/Jersey", "Europe/Kaliningrad", "Europe/Kiev", "Europe/Kirov", "Europe/Kyiv", "Europe/Lisbon", "Europe/Ljubljana", "Europe/London", "Europe/Luxembourg", "Europe/Madrid", "Europe/Malta", "Europe/Mariehamn", "Europe/Minsk", "Europe/Monaco", "Europe/Moscow", "Europe/Nicosia", "Europe/Oslo", "Europe/Paris", "Europe/Podgorica", "Europe/Prague", "Europe/Riga", "Europe/Rome", "Europe/Samara", "Europe/San_Marino", "Europe/Sarajevo", "Europe/Saratov", "Europe/Simferopol", "Europe/Skopje", "Europe/Sofia", "Europe/Stockholm", "Europe/Tallinn", "Europe/Tirane", "Europe/Tiraspol", "Europe/Ulyanovsk", "Europe/Uzhgorod", "Europe/Vaduz", "Europe/Vatican", "Europe/Vienna", "Europe/Vilnius", "Europe/Volgograd", "Europe/Warsaw", "Europe/Zagreb", "Europe/Zaporozhye", "Europe/Zurich", "GB", "GB-Eire", "GMT", "GMT0", "Greenwich", "Hongkong", "Iceland", "Indian/Antananarivo", "Indian/Chagos", "Indian/Christmas", "Indian/Cocos", "Indian/Comoro", "Indian/Kerguelen", "Indian/Mahe", "Indian/Maldives", "Indian/Mauritius", "Indian/Mayotte", "Indian/Reunion", "Iran", "Israel", "Jamaica", "Japan", "Kwajalein", "Libya", "MET", "MST7MDT", "Mexico/BajaNorte", "Mexico/BajaSur", "Mexico/General", "NZ", "NZ-CHAT", "Navajo", "PRC", "PST8PDT", "Pacific/Apia", "Pacific/Auckland", "Pacific/Bougainville", "Pacific/Chatham", "Pacific/Chuuk", "Pacific/Easter", "Pacific/Efate", "Pacific/Enderbury", "Pacific/Fakaofo", "Pacific/Fiji", "Pacific/Funafuti", "Pacific/Galapagos", "Pacific/Gambier", "Pacific/Guadalcanal", "Pacific/Guam", "Pacific/Honolulu", "Pacific/Johnston", "Pacific/Kanton", "Pacific/Kiritimati", "Pacific/Kosrae", "Pacific/Kwajalein", "Pacific/Majuro", "Pacific/Marquesas", "Pacific/Midway", "Pacific/Nauru", "Pacific/Niue", "Pacific/Norfolk", "Pacific/Noumea", "Pacific/Pago_Pago", "Pacific/Palau", "Pacific/Pitcairn", "Pacific/Pohnpei", "Pacific/Ponape", "Pacific/Port_Moresby", "Pacific/Rarotonga", "Pacific/Saipan", "Pacific/Samoa", "Pacific/Tahiti", "Pacific/Tarawa", "Pacific/Tongatapu", "Pacific/Truk", "Pacific/Wake", "Pacific/Wallis", "Pacific/Yap", "Poland", "Portugal", "ROK", "Singapore", "SystemV/AST4", "SystemV/AST4ADT", "SystemV/CST6", "SystemV/CST6CDT", "SystemV/EST5", "SystemV/EST5EDT", "SystemV/HST10", "SystemV/MST7", "SystemV/MST7MDT", "SystemV/PST8", "SystemV/PST8PDT", "SystemV/YST9", "SystemV/YST9YDT", "Turkey", "UCT", "US/Alaska", "US/Aleutian", "US/Arizona", "US/Central", "US/East-Indiana", "US/Eastern", "US/Hawaii", "US/Indiana-Starke", "US/Michigan", "US/Mountain", "US/Pacific", "US/Samoa", "UTC", "Universal", "W-SU", "WET", "Zulu" ]
           }, {
-            "$ref" : "#/components/schemas/metabase.lib.schema.literal~1string.zone-offset"
+            "$ref" : "#/components/schemas/metabase.lib.schema.literal..string.zone-offset"
           } ]
         } ]
       },
@@ -3526,6 +3672,7 @@ latest: true
         "format" : "byte"
       },
       "metabase.lib.schema.info.info" : {
+        "description" : "Schema for query `:info` dictionary, which is used for informational purposes to record information about how a query\n  was executed in QueryExecution and other places. It is considered bad form for middleware to change its behavior\n  based on this information, don't do it!\n\n  TODO - this schema is somewhat misleading because if you use a function\n  like [[metabase.query-processor/userland-query]] some of these keys (e.g. `:context`) are in fact required",
         "type" : "object",
         "properties" : {
           "query-hash" : {
@@ -3540,9 +3687,6 @@ latest: true
           },
           "executed-by" : {
             "$ref" : "#/components/schemas/metabase.lib.schema.id.user"
-          },
-          "card-entity-id" : {
-            "$ref" : "#/components/schemas/metabase.lib.schema.common.non-blank-string"
           },
           "card-id" : {
             "$ref" : "#/components/schemas/metabase.lib.schema.id.card"
@@ -3631,7 +3775,7 @@ latest: true
         "enum" : [ "aggregation", "fields", "breakout", "native" ]
       },
       "metabase.lib.schema.metadata..column.remapping.external" : {
-        "description" : "External remapping (Dimension) for a column. From the [[metabase.warehouse-schema.models.dimension]] with `type =\n  external` associated with a `Field` in the application database.\n  See [[metabase.query-processor.middleware.add-dimension-projections]] for what this means.",
+        "description" : "External remapping (Dimension) for a column. From the [[metabase.warehouse-schema.models.dimension]] with `type =\n  external` associated with a `Field` in the application database.\n  See [[metabase.query-processor.middleware.add-remaps]] for what this means.",
         "type" : "object",
         "properties" : {
           "field-id" : {
@@ -3650,7 +3794,7 @@ latest: true
         "required" : [ "lib/type", "id", "name", "field-id" ]
       },
       "metabase.lib.schema.metadata..column.remapping.internal" : {
-        "description" : "Internal remapping (FieldValues) for a column. From [[metabase.warehouse-schema.models.dimension]] with `type =\n  internal` and the [[metabase.warehouse-schema.models.field-values]] associated with a `Field` in the application\n  database. See [[metabase.query-processor.middleware.add-dimension-projections]] for what this means.",
+        "description" : "Internal remapping (FieldValues) for a column. From [[metabase.warehouse-schema.models.dimension]] with `type =\n  internal` and the [[metabase.warehouse-schema.models.field-values]] associated with a `Field` in the application\n  database. See [[metabase.query-processor.middleware.add-remaps]] for what this means.",
         "type" : "object",
         "properties" : {
           "human-readable-values" : {
@@ -4215,7 +4359,7 @@ latest: true
         "type" : "string",
         "enum" : [ "days", "hours", "minutes", "seconds", "milliseconds", "microseconds", "nanoseconds" ]
       },
-      "metabase.notification.models/FullyHydratedNotification" : {
+      "metabase.notification.models.FullyHydratedNotification" : {
         "description" : "Fully hydrated notification.",
         "oneOf" : [ {
           "oneOf" : [ {
@@ -4234,7 +4378,7 @@ latest: true
                       "type" : "boolean"
                     },
                     "channel" : {
-                      "$ref" : "#/components/schemas/metabase.channel.models.channel~1Channel"
+                      "$ref" : "#/components/schemas/metabase.channel.models.channel.Channel"
                     },
                     "channel_id" : {
                       "description" : "value must be an integer greater than zero.",
@@ -4250,11 +4394,11 @@ latest: true
                     "recipients" : {
                       "type" : "array",
                       "items" : {
-                        "$ref" : "#/components/schemas/metabase.notification.models~1NotificationRecipient"
+                        "$ref" : "#/components/schemas/metabase.notification.models.NotificationRecipient"
                       }
                     },
                     "template" : {
-                      "$ref" : "#/components/schemas/metabase.channel.models.channel~1ChannelTemplate"
+                      "$ref" : "#/components/schemas/metabase.channel.models.channel.ChannelTemplate"
                     },
                     "template_id" : {
                       "description" : "value must be an integer greater than zero.",
@@ -4266,7 +4410,7 @@ latest: true
                 }
               },
               "payload" : {
-                "$ref" : "#/components/schemas/metabase.notification.models~1NotificationCard"
+                "$ref" : "#/components/schemas/metabase.notification.models.NotificationCard"
               },
               "payload_id" : {
                 "type" : "null"
@@ -4278,7 +4422,7 @@ latest: true
               "subscriptions" : {
                 "type" : "array",
                 "items" : {
-                  "$ref" : "#/components/schemas/metabase.notification.models~1NotificationSubscription"
+                  "$ref" : "#/components/schemas/metabase.notification.models.NotificationSubscription"
                 }
               }
             },
@@ -4366,7 +4510,7 @@ latest: true
                       "type" : "boolean"
                     },
                     "channel" : {
-                      "$ref" : "#/components/schemas/metabase.channel.models.channel~1Channel"
+                      "$ref" : "#/components/schemas/metabase.channel.models.channel.Channel"
                     },
                     "channel_id" : {
                       "description" : "value must be an integer greater than zero.",
@@ -4382,11 +4526,11 @@ latest: true
                     "recipients" : {
                       "type" : "array",
                       "items" : {
-                        "$ref" : "#/components/schemas/metabase.notification.models~1NotificationRecipient"
+                        "$ref" : "#/components/schemas/metabase.notification.models.NotificationRecipient"
                       }
                     },
                     "template" : {
-                      "$ref" : "#/components/schemas/metabase.channel.models.channel~1ChannelTemplate"
+                      "$ref" : "#/components/schemas/metabase.channel.models.channel.ChannelTemplate"
                     },
                     "template_id" : {
                       "description" : "value must be an integer greater than zero.",
@@ -4398,7 +4542,7 @@ latest: true
                 }
               },
               "payload" : {
-                "$ref" : "#/components/schemas/metabase.notification.models~1NotificationCard"
+                "$ref" : "#/components/schemas/metabase.notification.models.NotificationCard"
               },
               "payload_id" : {
                 "type" : "integer"
@@ -4410,7 +4554,7 @@ latest: true
               "subscriptions" : {
                 "type" : "array",
                 "items" : {
-                  "$ref" : "#/components/schemas/metabase.notification.models~1NotificationSubscription"
+                  "$ref" : "#/components/schemas/metabase.notification.models.NotificationSubscription"
                 }
               }
             },
@@ -4498,7 +4642,7 @@ latest: true
                       "type" : "boolean"
                     },
                     "channel" : {
-                      "$ref" : "#/components/schemas/metabase.channel.models.channel~1Channel"
+                      "$ref" : "#/components/schemas/metabase.channel.models.channel.Channel"
                     },
                     "channel_id" : {
                       "description" : "value must be an integer greater than zero.",
@@ -4514,11 +4658,11 @@ latest: true
                     "recipients" : {
                       "type" : "array",
                       "items" : {
-                        "$ref" : "#/components/schemas/metabase.notification.models~1NotificationRecipient"
+                        "$ref" : "#/components/schemas/metabase.notification.models.NotificationRecipient"
                       }
                     },
                     "template" : {
-                      "$ref" : "#/components/schemas/metabase.channel.models.channel~1ChannelTemplate"
+                      "$ref" : "#/components/schemas/metabase.channel.models.channel.ChannelTemplate"
                     },
                     "template_id" : {
                       "description" : "value must be an integer greater than zero.",
@@ -4530,12 +4674,12 @@ latest: true
                 }
               },
               "payload" : {
-                "$ref" : "#/components/schemas/metabase.notification.models~1NotificationCard"
+                "$ref" : "#/components/schemas/metabase.notification.models.NotificationCard"
               },
               "subscriptions" : {
                 "type" : "array",
                 "items" : {
-                  "$ref" : "#/components/schemas/metabase.notification.models~1NotificationSubscription"
+                  "$ref" : "#/components/schemas/metabase.notification.models.NotificationSubscription"
                 }
               }
             },
@@ -4597,7 +4741,7 @@ latest: true
           } ]
         } ]
       },
-      "metabase.notification.models/Notification" : {
+      "metabase.notification.models.Notification" : {
         "oneOf" : [ {
           "type" : "object",
           "properties" : {
@@ -4627,7 +4771,7 @@ latest: true
           "required" : [ "payload_type" ]
         }, { } ]
       },
-      "metabase.notification.models/NotificationCard" : {
+      "metabase.notification.models.NotificationCard" : {
         "description" : "Schema for :model/NotificationCard.",
         "type" : "object",
         "properties" : {
@@ -4650,7 +4794,7 @@ latest: true
         },
         "required" : [ "card_id" ]
       },
-      "metabase.notification.models/NotificationHandler" : {
+      "metabase.notification.models.NotificationHandler" : {
         "type" : "object",
         "properties" : {
           "active" : {
@@ -4675,7 +4819,7 @@ latest: true
         },
         "required" : [ "channel_type" ]
       },
-      "metabase.notification.models/NotificationRecipient" : {
+      "metabase.notification.models.NotificationRecipient" : {
         "description" : "Schema for :model/NotificationRecipient.",
         "oneOf" : [ {
           "type" : "object",
@@ -4774,7 +4918,7 @@ latest: true
           "required" : [ "type", "details" ]
         } ]
       },
-      "metabase.notification.models/NotificationSubscription" : {
+      "metabase.notification.models.NotificationSubscription" : {
         "description" : "Schema for :model/NotificationSubscription.",
         "oneOf" : [ {
           "type" : "object",
@@ -4816,26 +4960,26 @@ latest: true
           "required" : [ "type", "cron_schedule" ]
         } ]
       },
-      "metabase.parameters.schema/keyword-or-non-blank-string" : {
+      "metabase.parameters.schema.keyword-or-non-blank-string" : {
         "type" : "string",
         "minLength" : 1
       },
-      "metabase.parameters.schema/legacy-field-or-expression-reference" : {
+      "metabase.parameters.schema.legacy-field-or-expression-reference" : {
         "description" : "Schema for a valid legacy `:field` or `:expression` reference (possibly not yet normalized)."
       },
-      "metabase.parameters.schema/parameter" : {
+      "metabase.parameters.schema.parameter" : {
         "description" : "parameter must be a map with :id and :type keys",
         "type" : "object",
         "properties" : {
           "mappings" : { },
           "sectionId" : {
-            "$ref" : "#/components/schemas/metabase.lib.schema.common~1non-blank-string"
+            "$ref" : "#/components/schemas/metabase.lib.schema.common.non-blank-string"
           },
           "values_source_config" : {
-            "$ref" : "#/components/schemas/metabase.parameters.schema~1values-source-config"
+            "$ref" : "#/components/schemas/metabase.parameters.schema.values-source-config"
           },
           "id" : {
-            "$ref" : "#/components/schemas/metabase.lib.schema.common~1non-blank-string"
+            "$ref" : "#/components/schemas/metabase.lib.schema.common.non-blank-string"
           },
           "name" : {
             "type" : "string"
@@ -4844,12 +4988,12 @@ latest: true
             "type" : "string"
           },
           "type" : {
-            "$ref" : "#/components/schemas/metabase.parameters.schema~1keyword-or-non-blank-string"
+            "$ref" : "#/components/schemas/metabase.parameters.schema.keyword-or-non-blank-string"
           },
           "temporal_units" : {
             "type" : "array",
             "items" : {
-              "$ref" : "#/components/schemas/metabase.lib.schema.temporal-bucketing~1unit"
+              "$ref" : "#/components/schemas/metabase.lib.schema.temporal-bucketing.unit"
             }
           },
           "values_source_type" : {
@@ -4859,54 +5003,54 @@ latest: true
         },
         "required" : [ "id", "type" ]
       },
-      "metabase.parameters.schema/parameter-mapping" : {
+      "metabase.parameters.schema.parameter-mapping" : {
         "description" : "parameter_mapping must be a map with :parameter_id and :target keys",
         "type" : "object",
         "properties" : {
           "card_id" : {
-            "$ref" : "#/components/schemas/metabase.lib.schema.id~1card"
+            "$ref" : "#/components/schemas/metabase.lib.schema.id.card"
           },
           "parameter_id" : {
-            "$ref" : "#/components/schemas/metabase.lib.schema.common~1non-blank-string"
+            "$ref" : "#/components/schemas/metabase.lib.schema.common.non-blank-string"
           },
           "target" : { }
         },
         "required" : [ "parameter_id", "target" ]
       },
-      "metabase.parameters.schema/values-source-config" : {
+      "metabase.parameters.schema.values-source-config" : {
         "description" : "Schema for valid source_options within a Parameter",
         "type" : "object",
         "properties" : {
           "card_id" : {
-            "$ref" : "#/components/schemas/metabase.lib.schema.id~1card"
+            "$ref" : "#/components/schemas/metabase.lib.schema.id.card"
           },
           "label_field" : {
-            "$ref" : "#/components/schemas/metabase.parameters.schema~1legacy-field-or-expression-reference"
+            "$ref" : "#/components/schemas/metabase.parameters.schema.legacy-field-or-expression-reference"
           },
           "value_field" : {
-            "$ref" : "#/components/schemas/metabase.parameters.schema~1legacy-field-or-expression-reference"
+            "$ref" : "#/components/schemas/metabase.parameters.schema.legacy-field-or-expression-reference"
           },
           "values" : { }
         }
       },
-      "metabase.queries.schema/card-type" : {
+      "metabase.queries.schema.card-type" : {
         "type" : "string",
         "enum" : [ "question", "metric", "model" ]
       },
-      "metabase.query-processor.schema/export-format" : {
+      "metabase.query-processor.schema.export-format" : {
         "description" : "Schema for valid export formats for downloading query results.",
         "type" : "string",
         "enum" : [ "csv", "api", "xlsx", "json" ]
       },
-      "metabase.sync.schedules/ExpandedSchedulesMap" : {
+      "metabase.sync.schedules.ExpandedSchedulesMap" : {
         "description" : "value must be a valid map of schedule maps for a DB.",
         "type" : "object",
         "properties" : {
           "cache_field_values" : {
-            "$ref" : "#/components/schemas/metabase.util.cron~1ScheduleMap"
+            "$ref" : "#/components/schemas/metabase.util.cron.ScheduleMap"
           },
           "metadata_sync" : {
-            "$ref" : "#/components/schemas/metabase.util.cron~1ScheduleMap"
+            "$ref" : "#/components/schemas/metabase.util.cron.ScheduleMap"
           }
         }
       },
@@ -4924,7 +5068,7 @@ latest: true
         "type" : "string",
         "enum" : [ "events" ]
       },
-      "metabase.users.api/user-group-membership" : {
+      "metabase.users.api.user-group-membership" : {
         "description" : "Group Membership info of a User.\n  In which :is_group_manager is only included if `advanced-permissions` is enabled.",
         "type" : "object",
         "properties" : {
@@ -4940,22 +5084,22 @@ latest: true
         },
         "required" : [ "id" ]
       },
-      "metabase.util.cron/CronHour" : {
+      "metabase.util.cron.CronHour" : {
         "type" : "integer",
         "minimum" : 0,
         "maximum" : 23
       },
-      "metabase.util.cron/CronMinute" : {
+      "metabase.util.cron.CronMinute" : {
         "type" : "integer",
         "minimum" : 0,
         "maximum" : 59
       },
-      "metabase.util.cron/CronScheduleString" : {
+      "metabase.util.cron.CronScheduleString" : {
         "description" : "value must be a valid Quartz cron schedule string.",
         "type" : "string",
         "minLength" : 1
       },
-      "metabase.util.cron/ScheduleMap" : {
+      "metabase.util.cron.ScheduleMap" : {
         "description" : "value must be a valid schedule map. See schema in metabase.util.cron for details.",
         "type" : "object",
         "properties" : {
@@ -4968,10 +5112,10 @@ latest: true
             "enum" : [ "first", "mid", "last" ]
           },
           "schedule_hour" : {
-            "$ref" : "#/components/schemas/metabase.util.cron~1CronHour"
+            "$ref" : "#/components/schemas/metabase.util.cron.CronHour"
           },
           "schedule_minute" : {
-            "$ref" : "#/components/schemas/metabase.util.cron~1CronMinute"
+            "$ref" : "#/components/schemas/metabase.util.cron.CronMinute"
           },
           "schedule_type" : {
             "type" : "string",
@@ -6729,7 +6873,7 @@ latest: true
                     "minimum" : 0
                   },
                   "strategy" : {
-                    "$ref" : "#/components/schemas/metabase.cache.api~1cache-strategy"
+                    "$ref" : "#/components/schemas/metabase.cache.api.cache-strategy"
                   }
                 },
                 "required" : [ "model", "model_id", "strategy" ]
@@ -6926,7 +7070,7 @@ latest: true
                   "parameter_mappings" : {
                     "type" : "array",
                     "items" : {
-                      "$ref" : "#/components/schemas/metabase.parameters.schema~1parameter-mapping"
+                      "$ref" : "#/components/schemas/metabase.parameters.schema.parameter-mapping"
                     }
                   },
                   "name" : {
@@ -6939,7 +7083,7 @@ latest: true
                     "minimum" : 1
                   },
                   "result_metadata" : {
-                    "$ref" : "#/components/schemas/metabase.analyze.query-results~1ResultsMetadata"
+                    "$ref" : "#/components/schemas/metabase.analyze.query-results.ResultsMetadata"
                   },
                   "collection_id" : {
                     "description" : "value must be an integer greater than zero.",
@@ -6952,7 +7096,7 @@ latest: true
                     "minimum" : 1
                   },
                   "type" : {
-                    "$ref" : "#/components/schemas/metabase.queries.schema~1card-type"
+                    "$ref" : "#/components/schemas/metabase.queries.schema.card-type"
                   },
                   "display" : {
                     "type" : "string",
@@ -6961,7 +7105,7 @@ latest: true
                   "parameters" : {
                     "type" : "array",
                     "items" : {
-                      "$ref" : "#/components/schemas/metabase.parameters.schema~1parameter"
+                      "$ref" : "#/components/schemas/metabase.parameters.schema.parameter"
                     }
                   },
                   "description" : {
@@ -7316,7 +7460,7 @@ latest: true
           "name" : "export-format",
           "required" : true,
           "schema" : {
-            "$ref" : "#/components/schemas/metabase.query-processor.schema~1export-format"
+            "$ref" : "#/components/schemas/metabase.query-processor.schema.export-format"
           }
         } ],
         "responses" : {
@@ -7487,7 +7631,7 @@ latest: true
                     "description" : "value must be a valid embedding params map."
                   },
                   "result_metadata" : {
-                    "$ref" : "#/components/schemas/metabase.analyze.query-results~1ResultsMetadata"
+                    "$ref" : "#/components/schemas/metabase.analyze.query-results.ResultsMetadata"
                   },
                   "collection_id" : {
                     "description" : "value must be an integer greater than zero.",
@@ -7500,7 +7644,7 @@ latest: true
                     "minimum" : 1
                   },
                   "type" : {
-                    "$ref" : "#/components/schemas/metabase.queries.schema~1card-type"
+                    "$ref" : "#/components/schemas/metabase.queries.schema.card-type"
                   },
                   "display" : {
                     "type" : "string",
@@ -7509,7 +7653,7 @@ latest: true
                   "parameters" : {
                     "type" : "array",
                     "items" : {
-                      "$ref" : "#/components/schemas/metabase.parameters.schema~1parameter"
+                      "$ref" : "#/components/schemas/metabase.parameters.schema.parameter"
                     }
                   },
                   "description" : {
@@ -8892,7 +9036,7 @@ latest: true
                   "parameters" : {
                     "type" : "array",
                     "items" : {
-                      "$ref" : "#/components/schemas/metabase.parameters.schema~1parameter"
+                      "$ref" : "#/components/schemas/metabase.parameters.schema.parameter"
                     }
                   }
                 },
@@ -9224,7 +9368,7 @@ latest: true
           "name" : "export-format",
           "required" : true,
           "schema" : {
-            "$ref" : "#/components/schemas/metabase.query-processor.schema~1export-format"
+            "$ref" : "#/components/schemas/metabase.query-processor.schema.export-format"
           }
         } ],
         "responses" : {
@@ -9656,7 +9800,7 @@ latest: true
                   "parameters" : {
                     "type" : "array",
                     "items" : {
-                      "$ref" : "#/components/schemas/metabase.parameters.schema~1parameter"
+                      "$ref" : "#/components/schemas/metabase.parameters.schema.parameter"
                     }
                   },
                   "dashcards" : {
@@ -9672,6 +9816,13 @@ latest: true
                         },
                         "id" : {
                           "type" : "integer"
+                        },
+                        "inline_parameters" : {
+                          "type" : "array",
+                          "items" : {
+                            "type" : "string",
+                            "minLength" : 1
+                          }
                         },
                         "parameter_mappings" : {
                           "type" : "array",
@@ -9767,6 +9918,13 @@ latest: true
                         },
                         "id" : {
                           "type" : "integer"
+                        },
+                        "inline_parameters" : {
+                          "type" : "array",
+                          "items" : {
+                            "type" : "string",
+                            "minLength" : 1
+                          }
                         },
                         "parameter_mappings" : {
                           "type" : "array",
@@ -10162,7 +10320,7 @@ latest: true
                     "type" : "boolean"
                   },
                   "schedules" : {
-                    "$ref" : "#/components/schemas/metabase.sync.schedules~1ExpandedSchedulesMap"
+                    "$ref" : "#/components/schemas/metabase.sync.schedules.ExpandedSchedulesMap"
                   }
                 },
                 "required" : [ "name", "engine", "details" ]
@@ -10354,7 +10512,7 @@ latest: true
                     "type" : "boolean"
                   },
                   "schedules" : {
-                    "$ref" : "#/components/schemas/metabase.sync.schedules~1ExpandedSchedulesMap"
+                    "$ref" : "#/components/schemas/metabase.sync.schedules.ExpandedSchedulesMap"
                   },
                   "description" : {
                     "type" : "string"
@@ -11117,11 +11275,11 @@ latest: true
                   "field_ids" : {
                     "type" : "array",
                     "items" : {
-                      "$ref" : "#/components/schemas/metabase.lib.schema.id~1field"
+                      "$ref" : "#/components/schemas/metabase.lib.schema.id.field"
                     }
                   },
                   "parameter" : {
-                    "$ref" : "#/components/schemas/metabase.parameters.schema~1parameter"
+                    "$ref" : "#/components/schemas/metabase.parameters.schema.parameter"
                   },
                   "value" : { }
                 },
@@ -11166,11 +11324,11 @@ latest: true
                   "field_ids" : {
                     "type" : "array",
                     "items" : {
-                      "$ref" : "#/components/schemas/metabase.lib.schema.id~1field"
+                      "$ref" : "#/components/schemas/metabase.lib.schema.id.field"
                     }
                   },
                   "parameter" : {
-                    "$ref" : "#/components/schemas/metabase.parameters.schema~1parameter"
+                    "$ref" : "#/components/schemas/metabase.parameters.schema.parameter"
                   }
                 },
                 "required" : [ "parameter" ]
@@ -11206,11 +11364,11 @@ latest: true
                   "field_ids" : {
                     "type" : "array",
                     "items" : {
-                      "$ref" : "#/components/schemas/metabase.lib.schema.id~1field"
+                      "$ref" : "#/components/schemas/metabase.lib.schema.id.field"
                     }
                   },
                   "parameter" : {
-                    "$ref" : "#/components/schemas/metabase.parameters.schema~1parameter"
+                    "$ref" : "#/components/schemas/metabase.parameters.schema.parameter"
                   }
                 },
                 "required" : [ "parameter" ]
@@ -11302,7 +11460,7 @@ latest: true
           "name" : "export-format",
           "required" : true,
           "schema" : {
-            "$ref" : "#/components/schemas/metabase.query-processor.schema~1export-format"
+            "$ref" : "#/components/schemas/metabase.query-processor.schema.export-format"
           }
         } ],
         "responses" : {
@@ -11346,6 +11504,119 @@ latest: true
           }
         },
         "tags" : [ "/api/dataset" ]
+      }
+    },
+    "/api/ee/action-v2/execute" : {
+      "post" : {
+        "summary" : "POST /api/ee/action-v2/execute",
+        "description" : "Execute an action with a single input.\n\n   Takes:\n   - `action`            - an identifier or an expression for what we want to execute.\n   - `scope`             - where the action is being invoked from.\n   - `input`             - a single map. currently these are typically a database table row pk, or query result.\n   - `params` (optional) - a map of values for the parameters taken by the action's mapping.\n\n   The `input` and `params` are used by the relevant mapping to calculate a map argument to the underlying action fn.\n   If there is no mapping, `params` are simply used as overrides for `input`.\n\n   Returns the outputs from the performed action.",
+        "parameters" : [ ],
+        "responses" : {
+          "2XX" : {
+            "description" : "Successful response"
+          },
+          "4XX" : {
+            "description" : "Client error response"
+          },
+          "5XX" : {
+            "description" : "Server error response"
+          }
+        },
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "action" : {
+                    "$ref" : "#/components/schemas/metabase-enterprise.action-v2.api.api-action-id-or-expression"
+                  },
+                  "input" : {
+                    "type" : "object",
+                    "properties" : { }
+                  },
+                  "params" : {
+                    "type" : "object",
+                    "properties" : { }
+                  },
+                  "scope" : {
+                    "$ref" : "#/components/schemas/metabase.actions.types..scope.raw"
+                  }
+                },
+                "required" : [ "action", "scope" ]
+              }
+            }
+          }
+        },
+        "tags" : [ "/api/ee/action-v2" ]
+      }
+    },
+    "/api/ee/action-v2/execute-bulk" : {
+      "post" : {
+        "summary" : "POST /api/ee/action-v2/execute-bulk",
+        "description" : "Execute an action with multiple inputs.\n\n   This is typically more efficient than calling execute with each input individually, for example by performing batch\n   SQL operations.\n\n   Takes:\n   - `action`            - an identifier or an expression for what we want to execute.\n   - `scope`             - where the action is being invoked from.\n   - `inputs`            - a list of maps. currently these are typically a database table row pk, or query result.\n   - `params` (optional) - a map of values for the parameters taken by the action's mapping.\n\n   The `inputs` and `params` are used by the relevant mapping to calculate a list of args for the underlying action fn.\n   If there is no mapping, `params` are simply used as overrides for each map within `inputs`.\n\n   Returns the outputs from the performed action.",
+        "parameters" : [ ],
+        "responses" : {
+          "2XX" : {
+            "description" : "Successful response"
+          },
+          "4XX" : {
+            "description" : "Client error response"
+          },
+          "5XX" : {
+            "description" : "Server error response"
+          }
+        },
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "action" : {
+                    "$ref" : "#/components/schemas/metabase-enterprise.action-v2.api.api-action-id-or-expression"
+                  },
+                  "inputs" : {
+                    "type" : "array",
+                    "items" : {
+                      "type" : "object",
+                      "properties" : { }
+                    },
+                    "minItems" : 1
+                  },
+                  "params" : {
+                    "type" : "object",
+                    "additionalProperties" : { }
+                  },
+                  "scope" : {
+                    "$ref" : "#/components/schemas/metabase.actions.types..scope.raw"
+                  }
+                },
+                "required" : [ "action", "scope", "inputs" ]
+              }
+            }
+          }
+        },
+        "tags" : [ "/api/ee/action-v2" ]
+      }
+    },
+    "/api/ee/action-v2/execute-form" : {
+      "post" : {
+        "summary" : "POST /api/ee/action-v2/execute-form",
+        "description" : "Temporary endpoint for describing an actions parameters\n  such that they can be presented correctly in a modal ahead of execution.",
+        "parameters" : [ ],
+        "responses" : {
+          "2XX" : {
+            "description" : "Successful response"
+          },
+          "4XX" : {
+            "description" : "Client error response"
+          },
+          "5XX" : {
+            "description" : "Server error response"
+          }
+        },
+        "tags" : [ "/api/ee/action-v2" ]
       }
     },
     "/api/ee/advanced-permissions/application/graph" : {
@@ -11703,7 +11974,7 @@ latest: true
                   "parameter_mappings" : {
                     "type" : "array",
                     "items" : {
-                      "$ref" : "#/components/schemas/metabase.parameters.schema~1parameter-mapping"
+                      "$ref" : "#/components/schemas/metabase.parameters.schema.parameter-mapping"
                     }
                   },
                   "collection_position" : {
@@ -11712,7 +11983,7 @@ latest: true
                     "minimum" : 1
                   },
                   "result_metadata" : {
-                    "$ref" : "#/components/schemas/metabase.analyze.query-results~1ResultsMetadata"
+                    "$ref" : "#/components/schemas/metabase.analyze.query-results.ResultsMetadata"
                   },
                   "collection_id" : {
                     "description" : "value must be an integer greater than zero.",
@@ -11731,7 +12002,7 @@ latest: true
                   "parameters" : {
                     "type" : "array",
                     "items" : {
-                      "$ref" : "#/components/schemas/metabase.parameters.schema~1parameter"
+                      "$ref" : "#/components/schemas/metabase.parameters.schema.parameter"
                     }
                   },
                   "description" : {
@@ -12320,7 +12591,7 @@ latest: true
                 "type" : "object",
                 "properties" : {
                   "arguments" : {
-                    "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.tools.api~1answer-sources-arguments"
+                    "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.tools.api.answer-sources-arguments"
                   },
                   "conversation_id" : {
                     "description" : "value must be a valid UUID.",
@@ -12377,7 +12648,7 @@ latest: true
                 "type" : "object",
                 "properties" : {
                   "arguments" : {
-                    "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.tools.api~1create-dashboard-subscription-arguments"
+                    "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.tools.api.create-dashboard-subscription-arguments"
                   },
                   "conversation_id" : {
                     "description" : "value must be a valid UUID.",
@@ -12431,7 +12702,7 @@ latest: true
                 "type" : "object",
                 "properties" : {
                   "arguments" : {
-                    "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.tools.api~1field-values-arguments"
+                    "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.tools.api.field-values-arguments"
                   },
                   "conversation_id" : {
                     "description" : "value must be a valid UUID.",
@@ -12485,7 +12756,7 @@ latest: true
                 "type" : "object",
                 "properties" : {
                   "arguments" : {
-                    "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.tools.api~1filter-records-arguments"
+                    "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.tools.api.filter-records-arguments"
                   },
                   "conversation_id" : {
                     "description" : "value must be a valid UUID.",
@@ -12599,7 +12870,7 @@ latest: true
                 "type" : "object",
                 "properties" : {
                   "arguments" : {
-                    "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.tools.api~1find-outliers-arguments"
+                    "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.tools.api.find-outliers-arguments"
                   },
                   "conversation_id" : {
                     "description" : "value must be a valid UUID.",
@@ -12662,7 +12933,7 @@ latest: true
                 "type" : "object",
                 "properties" : {
                   "arguments" : {
-                    "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.tools.api~1generate-insights-arguments"
+                    "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.tools.api.generate-insights-arguments"
                   },
                   "conversation_id" : {
                     "description" : "value must be a valid UUID.",
@@ -12713,7 +12984,7 @@ latest: true
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.tools.api~1tool-request"
+                "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.tools.api.tool-request"
               }
             }
           }
@@ -12819,13 +13090,7 @@ latest: true
                 "type" : "object",
                 "properties" : {
                   "arguments" : {
-                    "type" : "object",
-                    "properties" : {
-                      "metric_id" : {
-                        "type" : "integer"
-                      }
-                    },
-                    "required" : [ "metric_id" ]
+                    "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.tools.api.get-metric-details-arguments"
                   },
                   "conversation_id" : {
                     "description" : "value must be a valid UUID.",
@@ -12940,13 +13205,7 @@ latest: true
                 "type" : "object",
                 "properties" : {
                   "arguments" : {
-                    "type" : "object",
-                    "properties" : {
-                      "report_id" : {
-                        "type" : "integer"
-                      }
-                    },
-                    "required" : [ "report_id" ]
+                    "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.tools.api.get-report-details-arguments"
                   },
                   "conversation_id" : {
                     "description" : "value must be a valid UUID.",
@@ -13000,7 +13259,7 @@ latest: true
                 "type" : "object",
                 "properties" : {
                   "arguments" : {
-                    "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.tools.api~1get-table-details-arguments"
+                    "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.tools.api.get-table-details-arguments"
                   },
                   "conversation_id" : {
                     "description" : "value must be a valid UUID.",
@@ -13054,7 +13313,7 @@ latest: true
                 "type" : "object",
                 "properties" : {
                   "arguments" : {
-                    "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.tools.api~1query-metric-arguments"
+                    "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.tools.api.query-metric-arguments"
                   },
                   "conversation_id" : {
                     "description" : "value must be a valid UUID.",
@@ -13108,7 +13367,7 @@ latest: true
                 "type" : "object",
                 "properties" : {
                   "arguments" : {
-                    "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.tools.api~1query-model-arguments"
+                    "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.tools.api.query-model-arguments"
                   },
                   "conversation_id" : {
                     "description" : "value must be a valid UUID.",
@@ -13454,7 +13713,7 @@ latest: true
                 "type" : "object",
                 "properties" : {
                   "context" : {
-                    "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.context~1context"
+                    "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.context.context"
                   },
                   "conversation_id" : {
                     "description" : "value must be a valid UUID.",
@@ -13462,7 +13721,7 @@ latest: true
                     "pattern" : "[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}"
                   },
                   "history" : {
-                    "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.client.schema~1messages"
+                    "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.client.schema.messages"
                   },
                   "message" : {
                     "type" : "string",
@@ -13507,7 +13766,7 @@ latest: true
                 "type" : "object",
                 "properties" : {
                   "context" : {
-                    "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.context~1context"
+                    "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.context.context"
                   },
                   "conversation_id" : {
                     "description" : "value must be a valid UUID.",
@@ -13515,7 +13774,7 @@ latest: true
                     "pattern" : "[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}"
                   },
                   "history" : {
-                    "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.client.schema~1messages"
+                    "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.client.schema.messages"
                   },
                   "message" : {
                     "type" : "string",
@@ -13535,6 +13794,55 @@ latest: true
           }
         },
         "tags" : [ "/api/ee/metabot-v3" ]
+      }
+    },
+    "/api/ee/permission_debug/" : {
+      "get" : {
+        "summary" : "GET /api/ee/permission_debug/",
+        "description" : "This endpoint expects a `user_id`, a `model_id` to debug permissions against, and `action_type`.\n  The type of model we are debugging against is inferred by the `action_type`.\n\n  It will return:\n  - `decision`: The overall permission decision (\"allow\", \"denied\", or \"limited\")\n  - `model-type`: The type of model being checked (e.g., \"question\")\n  - `model-id`: The ID of the model being checked\n  - `segment`: A set of segmentation types applied (e.g., \"sandboxed\", \"impersonated\", \"routed\")\n  - `message`: A sequence of strings explaining the decision\n  - `data`: A map containing details about permissions (table or collection names to group names)\n  - `suggestions`: A map of group IDs to group names that could provide access\n\n  Example requests:\n  - Check if user can read a card: `GET /api/ee/permission_debug?user_id=123&model_id=456&action_type=card/read`\n  - Check if user can query a card: `GET /api/ee/permission_debug?user_id=123&model_id=456&action_type=card/query`\n  - Check if user can download data: `GET /api/ee/permission_debug?user_id=123&model_id=456&action_type=card/download-data`\n\n  Example responses:\n  - Allowed access:\n    ```json\n    {\n      \"decision\": \"allow\",\n      \"model-type\": \"question\",\n      \"model-id\": \"456\",\n      \"segment\": [],\n      \"message\": [\"User has permission to read this card\"],\n      \"data\": {},\n      \"suggestions\": {}\n    }\n    ```\n  - Denied access with blocked table:\n    ```json\n    {\n      \"decision\": \"denied\",\n      \"model-type\": \"question\",\n      \"model-id\": \"456\",\n      \"segment\": [],\n      \"message\": [\"User does not have permission to query this card\"],\n      \"data\": {\"sample-db.PUBLIC.ORDERS\": [\"All Users\"]},\n      \"suggestions\": {}\n    }\n    ```\n  - Limited access:\n    ```json\n    {\n      \"decision\": \"limited\",\n      \"model-type\": \"question\",\n      \"model-id\": \"456\",\n      \"segment\": [],\n      \"message\": [\"User has permission to download some data from this card\"],\n      \"data\": {},\n      \"suggestions\": {}\n    }\n    ```",
+        "parameters" : [ {
+          "in" : "query",
+          "name" : "user_id",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "minimum" : 1
+          }
+        }, {
+          "in" : "query",
+          "name" : "model_id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "query",
+          "name" : "action_type",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "card/read", "card/query", "card/download-data" ]
+          }
+        } ],
+        "responses" : {
+          "2XX" : {
+            "description" : "map where {:model-type -> <enum of card, invalid>, :model-id -> <string>, :decision -> <enum of allow, denied, limited>, :segment -> <set of enum of sandboxed, impersonated, routed>, :message -> <sequence of string>, :data -> <map>, :suggestions -> <map from <integer> to <string>>}",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/metabase-enterprise.permission-debug.impl.perm-debug-info"
+                }
+              }
+            }
+          },
+          "4XX" : {
+            "description" : "Client error response"
+          },
+          "5XX" : {
+            "description" : "Server error response"
+          }
+        },
+        "tags" : [ "/api/ee/permission_debug" ]
       }
     },
     "/api/ee/scim/api_key" : {
@@ -14722,7 +15030,7 @@ latest: true
           "name" : "export-format",
           "required" : true,
           "schema" : {
-            "$ref" : "#/components/schemas/metabase.query-processor.schema~1export-format"
+            "$ref" : "#/components/schemas/metabase.query-processor.schema.export-format"
           }
         }, {
           "in" : "query",
@@ -14852,7 +15160,7 @@ latest: true
           "name" : "export-format",
           "required" : true,
           "schema" : {
-            "$ref" : "#/components/schemas/metabase.query-processor.schema~1export-format"
+            "$ref" : "#/components/schemas/metabase.query-processor.schema.export-format"
           }
         }, {
           "in" : "query",
@@ -15276,7 +15584,7 @@ latest: true
                     "description" : "value must be a valid field semantic or relation type (keyword or string)."
                   },
                   "has_field_values" : {
-                    "$ref" : "#/components/schemas/metabase.lib.schema.metadata~1column.has-field-values"
+                    "$ref" : "#/components/schemas/metabase.lib.schema.metadata..column.has-field-values"
                   },
                   "display_name" : {
                     "type" : "string",
@@ -15543,7 +15851,7 @@ latest: true
         }, {
           "in" : "query",
           "name" : "value",
-          "required" : true,
+          "required" : false,
           "schema" : {
             "type" : "string",
             "minLength" : 1
@@ -15653,15 +15961,13 @@ latest: true
                     "items" : {
                       "anyOf" : [ {
                         "type" : "array",
-                        "items" : [ { } ],
-                        "additionalItems" : false
+                        "prefixItems" : [ { } ]
                       }, {
                         "type" : "array",
-                        "items" : [ { }, {
+                        "prefixItems" : [ { }, {
                           "type" : "string",
                           "minLength" : 1
-                        } ],
-                        "additionalItems" : false
+                        } ]
                       } ]
                     }
                   }
@@ -15836,7 +16142,7 @@ latest: true
                     "type" : "integer"
                   },
                   "duration_unit" : {
-                    "$ref" : "#/components/schemas/metabase.logger.api~1time-unit"
+                    "$ref" : "#/components/schemas/metabase.logger.api.time-unit"
                   },
                   "log_levels" : { }
                 },
@@ -16604,7 +16910,7 @@ latest: true
           }
         }, {
           "in" : "query",
-          "name" : "pyaload_type",
+          "name" : "payload_type",
           "required" : false,
           "schema" : {
             "type" : "string",
@@ -16643,7 +16949,7 @@ latest: true
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/metabase.notification.models~1FullyHydratedNotification"
+                "$ref" : "#/components/schemas/metabase.notification.models.FullyHydratedNotification"
               }
             }
           }
@@ -16671,7 +16977,7 @@ latest: true
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/metabase.notification.models~1FullyHydratedNotification"
+                "$ref" : "#/components/schemas/metabase.notification.models.FullyHydratedNotification"
               }
             }
           }
@@ -16818,7 +17124,7 @@ latest: true
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/metabase.notification.models~1FullyHydratedNotification"
+                "$ref" : "#/components/schemas/metabase.notification.models.FullyHydratedNotification"
               }
             }
           }
@@ -18371,7 +18677,7 @@ latest: true
           "name" : "export-format",
           "required" : true,
           "schema" : {
-            "$ref" : "#/components/schemas/metabase.query-processor.schema~1export-format"
+            "$ref" : "#/components/schemas/metabase.query-processor.schema.export-format"
           }
         }, {
           "in" : "query",
@@ -18530,7 +18836,7 @@ latest: true
           "name" : "export-format",
           "required" : true,
           "schema" : {
-            "$ref" : "#/components/schemas/metabase.query-processor.schema~1export-format"
+            "$ref" : "#/components/schemas/metabase.query-processor.schema.export-format"
           }
         } ],
         "responses" : {
@@ -19283,11 +19589,20 @@ latest: true
     "/api/pulse/preview_card_png/{id}" : {
       "get" : {
         "summary" : "GET /api/pulse/preview_card_png/{id}",
-        "description" : "Get PNG rendering of a Card with `id`.",
+        "description" : "Get PNG rendering of a Card with `id`. Optionally specify `width` as a query parameter.",
         "parameters" : [ {
           "in" : "path",
           "name" : "id",
           "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "minimum" : 1
+          },
+          "description" : "value must be an integer greater than zero."
+        }, {
+          "in" : "query",
+          "name" : "width",
+          "required" : false,
           "schema" : {
             "type" : "integer",
             "minimum" : 1
@@ -19717,7 +20032,7 @@ latest: true
     "/api/search/" : {
       "get" : {
         "summary" : "GET /api/search/",
-        "description" : "Search for items in Metabase.\n  For the list of supported models, check [[metabase.search.config/all-models]].\n\n  Filters:\n  - `archived`: set to true to search archived items only, default is false\n  - `table_db_id`: search for tables, cards, and models of a certain DB\n  - `models`: only search for items of specific models. If not provided, search for all models\n  - `filters_items_in_personal_collection`: only search for items in personal collections\n  - `created_at`: search for items created at a specific timestamp\n  - `created_by`: search for items created by a specific user\n  - `last_edited_at`: search for items last edited at a specific timestamp\n  - `last_edited_by`: search for items last edited by a specific user\n  - `search_native_query`: set to true to search the content of native queries\n  - `verified`: set to true to search for verified items only (requires Content Management or Official Collections premium feature)\n  - `ids`: search for items with those ids, works iff single value passed to `models`\n  - `display_type`: search for cards/models with specific display types\n  - `has_temporal_dimensions`: set to true to search for cards with temporal dimensions only\n\n  Note that not all item types support all filters, and the results will include only models that support the provided filters. For example:\n  - The `created-by` filter supports dashboards, models, actions, and cards.\n  - The `verified` filter supports models and cards.\n\n  A search query that has both filters applied will only return models and cards.",
+        "description" : "Search for items in Metabase.\n  For the list of supported models, check [[metabase.search.config/all-models]].\n\n  Filters:\n  - `archived`: set to true to search archived items only, default is false\n  - `table_db_id`: search for tables, cards, and models of a certain DB\n  - `models`: only search for items of specific models. If not provided, search for all models\n  - `filters_items_in_personal_collection`: only search for items in personal collections\n  - `created_at`: search for items created at a specific timestamp\n  - `created_by`: search for items created by a specific user\n  - `last_edited_at`: search for items last edited at a specific timestamp\n  - `last_edited_by`: search for items last edited by a specific user\n  - `search_native_query`: set to true to search the content of native queries\n  - `verified`: set to true to search for verified items only (requires Content Management or Official Collections premium feature)\n  - `ids`: search for items with those ids, works iff single value passed to `models`\n  - `display_type`: search for cards/models with specific display types\n  - `non_temporal_dim_ids`: search for cards/metrics/datasets with this exact set of non temporal dimension field IDs (requires appdb engine)\n  - `has_temporal_dim`: set to true for cards/metrics/datasets with 1 or more temporal dimensions (requires appdb engine)\n\n  Note that not all item types support all filters, and the results will include only models that support the provided filters. For example:\n  - The `created-by` filter supports dashboards, models, actions, and cards.\n  - The `verified` filter supports models and cards.\n\n  A search query that has both filters applied will only return models and cards.",
         "parameters" : [ {
           "in" : "query",
           "name" : "q",
@@ -19802,13 +20117,6 @@ latest: true
           }
         }, {
           "in" : "query",
-          "name" : "has_temporal_dimensions",
-          "required" : false,
-          "schema" : {
-            "type" : "boolean"
-          }
-        }, {
-          "in" : "query",
           "name" : "last_edited_at",
           "required" : false,
           "schema" : {
@@ -19890,6 +20198,21 @@ latest: true
           "schema" : {
             "type" : "boolean",
             "default" : false
+          }
+        }, {
+          "in" : "query",
+          "name" : "non_temporal_dim_ids",
+          "required" : false,
+          "schema" : {
+            "type" : "string",
+            "minLength" : 1
+          }
+        }, {
+          "in" : "query",
+          "name" : "has_temporal_dim",
+          "required" : false,
+          "schema" : {
+            "type" : "boolean"
           }
         } ],
         "responses" : {
@@ -21474,238 +21797,6 @@ latest: true
         "tags" : [ "/api/task" ]
       }
     },
-    "/api/testing/echo" : {
-      "post" : {
-        "summary" : "POST /api/testing/echo",
-        "description" : "Simple echo hander. Fails when you POST with `?fail=true`.",
-        "parameters" : [ {
-          "in" : "query",
-          "name" : "fail",
-          "required" : true,
-          "schema" : {
-            "default" : false,
-            "type" : "boolean"
-          }
-        } ],
-        "responses" : {
-          "2XX" : {
-            "description" : "Successful response"
-          },
-          "4XX" : {
-            "description" : "Client error response"
-          },
-          "5XX" : {
-            "description" : "Server error response"
-          }
-        },
-        "tags" : [ "/api/testing" ]
-      },
-      "get" : {
-        "summary" : "GET /api/testing/echo",
-        "description" : "Simple echo hander. Fails when you GET with `?fail=true`.",
-        "parameters" : [ {
-          "in" : "query",
-          "name" : "fail",
-          "required" : true,
-          "schema" : {
-            "default" : false,
-            "type" : "boolean"
-          }
-        }, {
-          "in" : "query",
-          "name" : "body",
-          "required" : true,
-          "schema" : {
-            "type" : "string"
-          },
-          "description" : "value must be a valid JSON string."
-        } ],
-        "responses" : {
-          "2XX" : {
-            "description" : "Successful response"
-          },
-          "4XX" : {
-            "description" : "Client error response"
-          },
-          "5XX" : {
-            "description" : "Server error response"
-          }
-        },
-        "tags" : [ "/api/testing" ]
-      }
-    },
-    "/api/testing/mark-stale" : {
-      "post" : {
-        "summary" : "POST /api/testing/mark-stale",
-        "description" : "Mark the card or dashboard as stale",
-        "parameters" : [ ],
-        "responses" : {
-          "2XX" : {
-            "description" : "Successful response"
-          },
-          "4XX" : {
-            "description" : "Client error response"
-          },
-          "5XX" : {
-            "description" : "Server error response"
-          }
-        },
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "type" : "object",
-                "properties" : {
-                  "date-str" : {
-                    "type" : "string"
-                  },
-                  "id" : {
-                    "description" : "value must be an integer greater than zero.",
-                    "type" : "integer",
-                    "minimum" : 1
-                  },
-                  "model" : {
-                    "type" : "string"
-                  }
-                },
-                "required" : [ "id", "model" ]
-              }
-            }
-          }
-        },
-        "tags" : [ "/api/testing" ]
-      }
-    },
-    "/api/testing/refresh-caches" : {
-      "post" : {
-        "summary" : "POST /api/testing/refresh-caches",
-        "description" : "Manually triggers the cache refresh task, if Enterprise code is available.",
-        "parameters" : [ ],
-        "responses" : {
-          "2XX" : {
-            "description" : "Successful response"
-          },
-          "4XX" : {
-            "description" : "Client error response"
-          },
-          "5XX" : {
-            "description" : "Server error response"
-          }
-        },
-        "tags" : [ "/api/testing" ]
-      }
-    },
-    "/api/testing/restore/{name}" : {
-      "post" : {
-        "summary" : "POST /api/testing/restore/{name}",
-        "description" : "Restore a database snapshot for testing purposes.",
-        "parameters" : [ {
-          "in" : "path",
-          "name" : "name",
-          "required" : true,
-          "schema" : {
-            "type" : "string",
-            "minLength" : 1
-          }
-        } ],
-        "responses" : {
-          "2XX" : {
-            "description" : "Successful response"
-          },
-          "4XX" : {
-            "description" : "Client error response"
-          },
-          "5XX" : {
-            "description" : "Server error response"
-          }
-        },
-        "tags" : [ "/api/testing" ]
-      }
-    },
-    "/api/testing/set-time" : {
-      "post" : {
-        "summary" : "POST /api/testing/set-time",
-        "description" : "Make java-time see world at exact time.",
-        "parameters" : [ ],
-        "responses" : {
-          "2XX" : {
-            "description" : "Successful response"
-          },
-          "4XX" : {
-            "description" : "Client error response"
-          },
-          "5XX" : {
-            "description" : "Server error response"
-          }
-        },
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "type" : "object",
-                "properties" : {
-                  "add-ms" : {
-                    "description" : "value must be an integer.",
-                    "type" : "integer"
-                  },
-                  "time" : {
-                    "description" : "value must be a valid date string",
-                    "type" : "string"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "tags" : [ "/api/testing" ]
-      }
-    },
-    "/api/testing/snapshot/{name}" : {
-      "post" : {
-        "summary" : "POST /api/testing/snapshot/{name}",
-        "description" : "Snapshot the database for testing purposes.",
-        "parameters" : [ {
-          "in" : "path",
-          "name" : "name",
-          "required" : true,
-          "schema" : {
-            "type" : "string",
-            "minLength" : 1
-          }
-        } ],
-        "responses" : {
-          "2XX" : {
-            "description" : "Successful response"
-          },
-          "4XX" : {
-            "description" : "Client error response"
-          },
-          "5XX" : {
-            "description" : "Server error response"
-          }
-        },
-        "tags" : [ "/api/testing" ]
-      }
-    },
-    "/api/testing/stats" : {
-      "post" : {
-        "summary" : "POST /api/testing/stats",
-        "description" : "Triggers a send of instance usage stats",
-        "parameters" : [ ],
-        "responses" : {
-          "2XX" : {
-            "description" : "Successful response"
-          },
-          "4XX" : {
-            "description" : "Client error response"
-          },
-          "5XX" : {
-            "description" : "Server error response"
-          }
-        },
-        "tags" : [ "/api/testing" ]
-      }
-    },
     "/api/tiles/{card-id}/{zoom}/{x}/{y}/{lat-field}/{lon-field}" : {
       "get" : {
         "summary" : "GET /api/tiles/{card-id}/{zoom}/{x}/{y}/{lat-field}/{lon-field}",
@@ -22155,7 +22246,7 @@ latest: true
           "name" : "include",
           "required" : false,
           "schema" : {
-            "$ref" : "#/components/schemas/metabase.timeline.api.timeline~1include"
+            "$ref" : "#/components/schemas/metabase.timeline.api.timeline.include"
           }
         }, {
           "in" : "query",
@@ -22285,7 +22376,7 @@ latest: true
           "name" : "include",
           "required" : false,
           "schema" : {
-            "$ref" : "#/components/schemas/metabase.timeline.api.timeline~1include"
+            "$ref" : "#/components/schemas/metabase.timeline.api.timeline.include"
           }
         }, {
           "in" : "query",
@@ -22529,7 +22620,7 @@ latest: true
                 "type" : "object",
                 "properties" : {
                   "expires_at" : {
-                    "$ref" : "#/components/schemas/metabase.lib.schema.literal~1string.datetime"
+                    "$ref" : "#/components/schemas/metabase.lib.schema.literal..string.datetime"
                   },
                   "value" : { }
                 }
@@ -22680,7 +22771,7 @@ latest: true
                   "user_group_memberships" : {
                     "type" : "array",
                     "items" : {
-                      "$ref" : "#/components/schemas/metabase.users.api~1user-group-membership"
+                      "$ref" : "#/components/schemas/metabase.users.api.user-group-membership"
                     }
                   }
                 },
@@ -22818,7 +22909,7 @@ latest: true
                   "user_group_memberships" : {
                     "type" : "array",
                     "items" : {
-                      "$ref" : "#/components/schemas/metabase.users.api~1user-group-membership"
+                      "$ref" : "#/components/schemas/metabase.users.api.user-group-membership"
                     }
                   }
                 }

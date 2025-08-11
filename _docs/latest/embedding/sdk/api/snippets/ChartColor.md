@@ -1,5 +1,5 @@
 ---
-version: v0.55
+version: v0.56
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -16,8 +16,8 @@ type ChartColor =
   | string
   | {
       base: string;
-      shade: string;
-      tint: string;
+      shade?: string;
+      tint?: string;
     };
 ```
 
@@ -30,8 +30,8 @@ type ChartColor =
 ```ts
 {
   base: string;
-  shade: string;
-  tint: string;
+  shade?: string;
+  tint?: string;
 }
 ```
 

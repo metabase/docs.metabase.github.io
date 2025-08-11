@@ -1,5 +1,5 @@
 ---
-version: v0.55
+version: v0.56
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -50,6 +50,7 @@ Accepts an object where each key is an event type and the corresponding value is
 - [Type](./api/SdkEventHandlersConfig)
 
 #### Example
+
 ```typescript
 {% include_file "{{ dirname }}/snippets/config/config-with-event-handlers.tsx" snippet="example" %}
 ```

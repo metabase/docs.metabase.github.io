@@ -1,5 +1,5 @@
 ---
-version: v0.55
+version: v0.56
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -22,6 +22,7 @@ You can embed Metabase's collection browser so that people can explore items in 
 ### `CollectionBrowser`
 
 #### API Reference
+
 - [Component](./api/CollectionBrowser)
 - [Props](./api/CollectionBrowserProps)
 

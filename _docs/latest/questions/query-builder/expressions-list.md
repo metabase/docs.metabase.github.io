@@ -1,5 +1,5 @@
 ---
-version: v0.55
+version: v0.56
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -66,6 +66,7 @@ For an introduction to expressions, check out the [overview of custom expression
     - [concat](./expressions/concat)
     - [contains](#contains)
     - [date](#date)
+    - [datetime](#datetime)
     - [doesNotContain](#doesnotcontain)
     - [domain](#domain)
     - [endsWith](#endswith)
@@ -109,6 +110,8 @@ For an introduction to expressions, check out the [overview of custom expression
     - [quarterName](#quartername)
     - [relativeDateTime](#relativedatetime)
     - [second](#second)
+    - [timeSpan](#timespan)
+    - [today](#today)
     - [week](#week)
     - [weekday](#weekday)
     - [year](#year)
@@ -436,7 +439,7 @@ Example: `sqrt([Hypotenuse])`.
 
 Databases that don't support `sqrt`: SQLite.
 
-Related: [Power](#power).
+Related: [power](#power).
 
 ## String functions
 
@@ -503,9 +506,12 @@ Related: [datetime](#datetime)
 
 > Available on PostgreSQL, MySQL/MariaDB, BigQuery, Redshift, ClickHouse, and Snowflake
 
-Converts a datetime string to a datetime.
+Converts a datetime string or bytes to a datetime.
 
-Syntax: `datetime(column)`
+Syntax: `datetime(value, mode)`
+
+- `value`: The string, bytes, or number to convert to a datetime.
+- `mode`: Optional. The mode indicating the format. One of: `"simple"`, `"iso"`, `"simpleBytes"`, `"isoBytes"`, `"unixSeconds"`, `"unixMilliseconds"`, `"unixMicroseconds"`, `"unixNanoseconds"`. Default is `"iso"`.
 
 Example: `datetime("2025-03-20 12:45:04")`
 
@@ -939,6 +945,16 @@ Syntax: `timeSpan(number, text)`
 `text`: Type of interval like `"day"`, `"month"`, `"year"`
 
 Example: `[Orders → Created At] + timeSpan(7, "day")` will return the date 7 days after the `Created At` date.
+
+### today
+
+Returns the current date (without time).
+
+Syntax: `today()`
+
+Example: `today()` would return the current date, such as `2025-05-04`.
+
+Related: [now](#now).
 
 ### [week](./expressions/week)
 

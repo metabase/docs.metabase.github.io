@@ -1,5 +1,5 @@
 ---
-version: v0.55
+version: v0.56
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -19,7 +19,7 @@ Metabase can persist the results of your models so that your models (and the que
 
 Metabase will store model results in tables in a bespoke schema in your data warehouse (not the Metabase application database). When people ask questions based on your models, Metabase will use the tables with the stored results instead of re-running the model's query.
 
-> Model persistence doesn't work with [data sandboxing](../permissions/data-sandboxes) or [impersonation](../permissions/impersonation).
+> Model persistence doesn't work with [row and column security](../permissions/row-and-column-security) or [impersonation](../permissions/impersonation).
 
 ## Turn on model persistence in Metabase
 

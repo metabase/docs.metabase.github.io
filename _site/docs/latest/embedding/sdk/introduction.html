@@ -165,8 +165,7 @@
 <header class="bootstrap  sticky">
   <div class="navigation-header bg-neutral-white ">
     
-      
-        <div class="promo-banner hidden">
+      <div class="promo-banner hidden">
   <div>
     <span class="button">New</span>
     <span>Metabase 55: Data visualizer for dashboard cards, database connection routing, and much more!</span>
@@ -177,7 +176,6 @@
 </div>
 <script src="/js/events/datetime.js"></script>
 
-      
     
 
     <div class="container d-flex h-100 align-items-center">
@@ -4659,7 +4657,7 @@ Roadmap</a>
 <div class="version__selector cursor-pointer">
   <span class="version__current">
     
-      v0.55
+      v0.56
     
 
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="chevron">
@@ -4669,6 +4667,14 @@ Roadmap</a>
   </span>
   <ul class="version__dropdown">
     
+      
+    
+      
+        <li>
+          <a href="/docs/v0.55">
+            v0.55
+          </a>
+        </li>
       
     
       
@@ -4731,14 +4737,6 @@ Roadmap</a>
         <li>
           <a href="/docs/v0.47">
             v0.47
-          </a>
-        </li>
-      
-    
-      
-        <li>
-          <a href="/docs/v0.46">
-            v0.46
           </a>
         </li>
       
@@ -4839,6 +4837,30 @@ Roadmap</a>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>yarn add @metabase/embedding-sdk-react@53-stable
 </code></pre></div></div>
 
+<h3 id="resolving-typesreact-version-mismatches">Resolving <code class="language-plaintext highlighter-rouge">@types/react</code> version mismatches</h3>
+
+<p>In rare scenarios, the Embedding SDK and your application may use different major versions of <code class="language-plaintext highlighter-rouge">@types/react</code>, causing TypeScript conflicts.</p>
+
+<p>To enforce a single <code class="language-plaintext highlighter-rouge">@types/react</code> version across all dependencies, add an <code class="language-plaintext highlighter-rouge">overrides</code> (npm) or <code class="language-plaintext highlighter-rouge">resolutions</code> (Yarn) section to your <code class="language-plaintext highlighter-rouge">package.json</code> and specify the <code class="language-plaintext highlighter-rouge">@types/react</code> version your application uses.</p>
+
+<h4 id="npm-set-typesreact-version">NPM set @types/react version</h4>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"overrides"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"@types/react"</span><span class="p">:</span><span class="w"> </span><span class="s2">"..."</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<h4 id="yarn-set-typesreact-version">Yarn set @types/react version</h4>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"resolutions"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"@types/react"</span><span class="p">:</span><span class="w"> </span><span class="s2">"..."</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
 <h2 id="developing-with-the-embedded-analytics-sdk">Developing with the Embedded analytics SDK</h2>
 
 <p>Start with one of the quickstarts, then see these pages for more info on components, theming, and more.</p>
@@ -4864,6 +4886,7 @@ Roadmap</a>
 <p>View the SDK’s changelog:</p>
 
 <ul>
+  <li><a href="https://github.com/metabase/metabase/blob/release-x.56.x/enterprise/frontend/src/embedding-sdk/CHANGELOG.md">56-stable</a></li>
   <li><a href="https://github.com/metabase/metabase/blob/release-x.55.x/enterprise/frontend/src/embedding-sdk/CHANGELOG.md">55-stable</a></li>
   <li><a href="https://github.com/metabase/metabase/blob/release-x.54.x/enterprise/frontend/src/embedding-sdk/CHANGELOG.md">54-stable</a></li>
   <li><a href="https://github.com/metabase/metabase/blob/release-x.53.x/enterprise/frontend/src/embedding-sdk/CHANGELOG.md">53-stable</a></li>
@@ -5290,6 +5313,10 @@ To seek help:</p>
   var $mcj = jQuery.noConflict(true);
 </script>
 
+
+
+
+  <script src="/js/unify.js"></script>
 
 
 

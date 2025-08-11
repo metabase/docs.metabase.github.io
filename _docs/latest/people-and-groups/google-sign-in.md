@@ -1,5 +1,5 @@
 ---
-version: v0.55
+version: v0.56
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -67,9 +67,8 @@ If you're on a [pro](/product/pro) or [Enterprise](/product/enterprise) plan, yo
 
 User attributes can't be synced with regular Google Sign-In. To synchronize user attributes, you'll need to set up [Google SAML][google-saml-docs] or [JWT][jwt-docs] instead.
 
-[data-sandboxing-docs]: ../permissions/data-sandboxes
 [google-saml-docs]: ./saml-google
 [jwt-docs]: ./authenticating-with-jwt
 [saml-docs]: ./authenticating-with-saml
-[user-attributes-docs]: ../permissions/data-sandboxes#choosing-user-attributes-for-data-sandboxes
+[user-attributes-docs]: ../permissions/row-and-column-security#choosing-user-attributes-for-row-and-column-security
 [user-attributes-def]: /glossary/attribute#user-attributes-in-metabase

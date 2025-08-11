@@ -47,7 +47,7 @@
 <meta name="twitter:site" content="@metabase">
 
 <meta name="twitter:title" content="Set up email | Metabase Documentation">
-<meta name="twitter:description" content="Set up email Once you connect your database to Metabase, you’ll want to configure an email account to send system notifications to your organization’s users. Metabase uses email to reset passwords, onboard new users, and notify you when something happens. To...">
+<meta name="twitter:description" content="Set up email Once you connect your database to Metabase, you’ll want to configure an email account to send system notifications to your organization’s users. Metabase uses email to reset passwords, onboard new users, and notify you when something happens (see...">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -57,7 +57,7 @@
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://www.metabase.com/docs/latest/configuring-metabase/email">
 <meta name="title" property="og:title" content="Set up email | Metabase Documentation">
-<meta name="description" property="og:description" content="Set up email Once you connect your database to Metabase, you’ll want to configure an email account to send system notifications to your organization’s users. Metabase uses email to reset passwords, onboard new users, and notify you when something happens. To...">
+<meta name="description" property="og:description" content="Set up email Once you connect your database to Metabase, you’ll want to configure an email account to send system notifications to your organization’s users. Metabase uses email to reset passwords, onboard new users, and notify you when something happens (see...">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -165,8 +165,7 @@
 <header class="bootstrap  sticky">
   <div class="navigation-header bg-neutral-white ">
     
-      
-        <div class="promo-banner hidden">
+      <div class="promo-banner hidden">
   <div>
     <span class="button">New</span>
     <span>Metabase 55: Data visualizer for dashboard cards, database connection routing, and much more!</span>
@@ -177,7 +176,6 @@
 </div>
 <script src="/js/events/datetime.js"></script>
 
-      
     
 
     <div class="container d-flex h-100 align-items-center">
@@ -4659,7 +4657,7 @@ Roadmap</a>
 <div class="version__selector cursor-pointer">
   <span class="version__current">
     
-      v0.55
+      v0.56
     
 
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="chevron">
@@ -4669,6 +4667,14 @@ Roadmap</a>
   </span>
   <ul class="version__dropdown">
     
+      
+    
+      
+        <li>
+          <a href="/docs/v0.55">
+            v0.55
+          </a>
+        </li>
       
     
       
@@ -4735,14 +4741,6 @@ Roadmap</a>
         </li>
       
     
-      
-        <li>
-          <a href="/docs/v0.46">
-            v0.46
-          </a>
-        </li>
-      
-    
     <li><a href="/docs/all">See more</a></li>
   </ul>
 </div>
@@ -4775,31 +4773,96 @@ Roadmap</a>
 
         <h1 id="set-up-email">Set up email</h1>
 
-<p>Once you connect your database to Metabase, you’ll want to configure an email account to send system notifications to your organization’s users. Metabase uses email to reset passwords, onboard new users, and notify you when something happens.</p>
+<p>Once you connect your database to Metabase, you’ll want to configure an email account to send system notifications to your organization’s users. Metabase uses email to reset passwords, onboard new users, and notify you when something happens (see <a href="../dashboards/subscriptions">dashboard subscriptions</a> and <a href="../questions/alerts">alerts</a>).</p>
 
-<p>To edit email settings:</p>
+<h2 id="email-on-metabase-cloud">Email on Metabase Cloud</h2>
 
-<ol>
-  <li>Click on the <strong>gear</strong> icon in the upper right.</li>
-  <li>Select <strong>Admin Settings</strong>.</li>
-  <li>From the default <strong>Settings</strong> tab, click on <strong>Notification channels</strong> in the left sidebar.</li>
-  <li>Select <strong>Email</strong>.</li>
-</ol>
+<p><em>Admin settings &gt; Settings &gt; Email</em></p>
 
-<h2 id="metabase-cloud">Metabase Cloud</h2>
+<p>On Metabase Cloud, you can use the default SMTP server, or set up a custom server.</p>
 
-<p>Metabase Cloud manages an email server for you, so you don’t need to set up email (and you won’t see SMTP settings in your Admin console).</p>
+<h3 id="default-smtp-server-on-metabase-cloud">Default SMTP server on Metabase Cloud</h3>
+
+<p>By default, Metabase Cloud will manage an email server for you, so you don’t need to set up email.</p>
 
 <p>If you like, you can still set up:</p>
 
 <ul>
-  <li>A name for your Cloud email account (from name)</li>
-  <li>An email address to receive email replies (reply-to address)</li>
+  <li>A display name for your Cloud email account (the “from” name). The email will still be sent from a Metabase address, however.</li>
+  <li>An email address to receive email replies (reply-to address).</li>
 </ul>
+
+<p>When Metabase manages the SMTP server, you can’t change the from address. If you want Metabase to send emails from a different domain, you’ll need to bring your own SMTP server. See below.</p>
+
+<h3 id="custom-smtp-server-on-metabase-cloud">Custom SMTP Server on Metabase Cloud</h3>
+
+<div class="bootstrap">
+  <div class="plans-blockquote bg-blue-95 rounded-3 p-6 d-flex flex-row border border-1 border-primary">
+    <svg class="" width="24" height="24" viewBox="0 0 26 26" fill="none">
+  <path d="M12 13V15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
+  <path d="M12 10C12.5523 10 13 9.55228 13 9C13 8.44772 12.5523 8 12 8C11.4477 8 11 8.44772 11 9C11 9.55228 11.4477 10 12 10Z" fill="#509EE3"></path>
+  <path d="M12 19.25C16.0041 19.25 19.25 16.0041 19.25 12C19.25 7.99594 16.0041 4.75 12 4.75C7.99594 4.75 4.75 7.99594 4.75 12C4.75 16.0041 7.99594 19.25 12 19.25Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
+</svg>
+
+
+    
+      <p class="m-0 ms-2 paragraph-5 neutral-40">Custom SMTP server on Metabase Cloud is only available on <a class="fw-bold" href="/product/pro">Pro</a> and <a class="fw-bold link-purple" href="/product/enterprise">Enterprise</a> plans
+    
+
+    (both self-hosted and on Metabase Cloud).
+    </p>
+  </div>
+</div>
+
+<p><em>Admin settings &gt; Settings &gt; Email &gt; Set up a custom SMTP server</em></p>
+
+<p>By default, Metabase Cloud manages an SMTP server for you. But if you want to use your own SMTP server, you can bring your own.</p>
+
+<p>You may want to use your own SMTP server if you want to:</p>
+
+<ul>
+  <li>Customize the From domain (for example, if you’re <a href="./appearance">white-labeling Metabase</a>).</li>
+  <li>Avoid having emails pass through 3rd-party services.</li>
+  <li>Own IP reputation, logs, monitoring.</li>
+  <li>Own auditing.</li>
+</ul>
+
+<p>When setting up a custom SMTP server on Metabase Cloud, you’ll configure these fields:</p>
+
+<ul>
+  <li><strong>SMTP HOST</strong>: The address of the SMTP server that handles your emails (e.g., smtp.yourservice.com).</li>
+  <li><strong>SMTP PORT</strong>: The port your SMTP server uses for outgoing emails. Only encrypted email ports are supported:
+    <ul>
+      <li>465 (SSL)</li>
+      <li>587 (TLS)</li>
+      <li>2525 (STARTTLS)</li>
+    </ul>
+  </li>
+  <li><strong>SMTP SECURITY</strong>: Choose the security protocol for your connection:
+    <ul>
+      <li>SSL</li>
+      <li>TLS</li>
+      <li>STARTTLS</li>
+    </ul>
+  </li>
+  <li><strong>SMTP USERNAME</strong>: Your SMTP account username.</li>
+  <li><strong>SMTP PASSWORD</strong>: Your SMTP account password.</li>
+</ul>
+
+<p>You’ll also need to specify:</p>
+
+<ul>
+  <li><strong>From address</strong>: The email address you want to use for the sender of emails.</li>
+  <li><strong>Reply-to address</strong>: The email address you want replies to go to, if different from the From address.</li>
+</ul>
+
+<p>You can edit these settings at any time. You can also toggle between this custom SMTP server and the server managed by Metabase Cloud.</p>
 
 <h2 id="configuring-your-email-account">Configuring your email account</h2>
 
-<p>For Metabase to send messages to your organization’s users, you’ll need to set up an email account to send emails via <strong>SMTP</strong> (simple mail transfer protocol), which is an email standard that secures emails with SSL security protection.</p>
+<p><em>Admin settings &gt; Settings &gt; Email</em></p>
+
+<p>For Metabase to send messages to people, you’ll need to set up an email account to send emails via <strong>SMTP</strong> (simple mail transfer protocol). SMTP is an email standard that, when combined with SSL/TLS, provides security protection for emails.</p>
 
 <p>To start, go to the Admin Panel from the dropdown menu in the top right of Metabase, then from the Settings page, click on <strong>Email</strong> in the left menu.</p>
 
@@ -4820,15 +4883,15 @@ Roadmap</a>
       <li>STARTTLS</li>
     </ul>
   </li>
-  <li><strong>SMTP Username</strong>.</li>
-  <li><strong>SMTP Password</strong>.</li>
+  <li><strong>SMTP USERNAME</strong>: Your SMTP account username.</li>
+  <li><strong>SMTP PASSWORD</strong>: Your SMTP account password.</li>
 </ul>
 
 <p>You’ll also need to specify your:</p>
 
 <ul>
   <li><strong>From address</strong>: The email address you want to use for the sender of emails.</li>
-  <li><strong>Reply-to address</strong>: The email address you want the replies to go to, if different from the from address.</li>
+  <li><strong>Reply-to address</strong>: The email address you want replies to go to, if different from the From address.</li>
 </ul>
 
 <h2 id="add-recipients-as-cc-or-bcc">Add recipients as CC or BCC</h2>
@@ -4839,7 +4902,7 @@ Roadmap</a>
 
 <ul>
   <li>SSL is strongly recommended because it’s more secure and gives your account extra protection from threats.</li>
-  <li>If your email service has a whitelist of email addresses that are allowed to send email, be sure to whitelist the email address that you put in the <strong>From Address</strong> field to ensure you and your teammates receive all emails from Metabase.</li>
+  <li>If your email service has a whitelist of email addresses that are allowed to send email, be sure to whitelist the email address that you put in the <strong>From address</strong> field to ensure you and your teammates receive all emails from Metabase.</li>
 </ul>
 
 <h2 id="notes-for-common-email-services">Notes for common email services</h2>
@@ -4853,12 +4916,12 @@ Roadmap</a>
 <h3 id="google-apps">Google Apps</h3>
 
 <ol>
-  <li>In the <strong>SMTP host</strong> field, enter smtp.gmail.com</li>
-  <li>Fill in 465 for the <strong>SMTP port</strong> field</li>
-  <li>For the <strong>SMTP Security</strong> field, enter <strong>SSL</strong></li>
-  <li>In the <strong>SMTP username</strong> field, enter your Google Apps email address (e.g. hello@yourdomain.com)</li>
-  <li>Enter your Google Apps password in the <strong>SMTP password</strong> field</li>
-  <li>Enter the email address you would like to be used as the sender of system notifications in the *<em>From Address</em> field.</li>
+  <li>In the <strong>SMTP HOST</strong> field, enter smtp.gmail.com</li>
+  <li>Fill in 465 for the <strong>SMTP PORT</strong> field</li>
+  <li>For the <strong>SMTP SECURITY</strong> field, enter <strong>SSL</strong></li>
+  <li>In the <strong>SMTP USERNAME</strong> field, enter your Google Apps email address (e.g. hello@yourdomain.com)</li>
+  <li>Enter your Google Apps password in the <strong>SMTP PASSWORD</strong> field</li>
+  <li>Enter the email address you would like to be used as the sender of system notifications in the <strong>From address</strong> field.</li>
 </ol>
 
 <h3 id="amazon-ses">Amazon SES</h3>
@@ -4905,7 +4968,7 @@ Roadmap</a>
 
 <p>Allowed email address domain(s) for new <a href="../dashboards/subscriptions">dashboard subscriptions</a> and <a href="../questions/alerts">alerts</a>.</p>
 
-<p>Adding approved domains allows you to restrict which email addresses people can send alerts and subscriptions to. This restriction only applies to sending email to people who lack an account with that Metabase. People with accounts in a Metabase who aren’t <a href="../permissions/data-sandboxes">sandboxed</a> will be able to email any other person with an account in that same Metabase.</p>
+<p>Adding approved domains allows you to restrict which email addresses people can send alerts and subscriptions to. This restriction only applies to sending email to people who lack an account with that Metabase. People with Metabase accounts who aren’t <a href="../permissions/row-and-column-security">restricted by row or column security</a> will be able to email any other person with an account in that same Metabase.</p>
 
 <p>To allow all domains, leave the field empty (allowing all domains is the default).</p>
 
@@ -4947,7 +5010,7 @@ Roadmap</a>
   <li>Don’t show suggestions</li>
 </ul>
 
-<p>People who are sandboxed won’t see suggestions.</p>
+<p>People with <a href="../permissions/row-and-column-security">row or column restrictions</a> won’t see suggestions.</p>
 
 <h2 id="further-reading">Further reading</h2>
 
@@ -5341,6 +5404,8 @@ Roadmap</a>
   })();
   var $mcj = jQuery.noConflict(true);
 </script>
+
+
 
 
 

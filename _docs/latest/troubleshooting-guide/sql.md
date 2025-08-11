@@ -1,5 +1,5 @@
 ---
-version: v0.55
+version: v0.56
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -24,9 +24,8 @@ latest: true
 ## SQL variables and field filters
 
 - [Filter widget doesn't display a dropdown menu of values](../data-modeling/metadata-editing#changing-a-search-box-filter-to-a-dropdown-filter).
-- [SQL query contains table aliases](../questions/native-editor/sql-parameters#field-filters-dont-work-with-table-aliases).
-- [SQL syntax error: missing `FROM` clause](../questions/native-editor/sql-parameters#field-filters-must-be-connected-to-fields-included-in-the-query).
-- [No option to display a filter widget](../questions/native-editor/sql-parameters#field-filter-compatible-types).
+- [SQL query contains table aliases](../questions/native-editor/field-filters#specifying-the-table-and-field-alias).
+- [SQL syntax error: missing `FROM` clause](../questions/native-editor/field-filters#field-filters-must-be-connected-to-database-fields-included-in-the-query).
 - [I don't know the SQL variable type](/learn/metabase-basics/querying-and-dashboards/sql-in-metabase/sql-variables)
 
 ## SQL syntax errors

@@ -1,5 +1,5 @@
 ---
-version: v0.55
+version: v0.56
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: false
@@ -32,11 +32,11 @@ Create metrics to define the official way to calculate important numbers for you
 
 Guide people to the right data by adding display names, hiding outdated tables, configuring filter types, and more.
 
-## [Field types](./field-types)
+## [Field types](./semantic-types)
 
 Field types dictate how Metabase displays its data, as well as the column’s special functionality, if any.
 
-## [Setting default formatting for your data](./field-types)
+## [Setting default formatting for your data](./formatting)
 
 Define formatting and display defaults for numbers, currencies, datetimes, and more.
 

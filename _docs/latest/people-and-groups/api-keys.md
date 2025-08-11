@@ -1,5 +1,5 @@
 ---
-version: v0.55
+version: v0.56
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -119,7 +119,7 @@ async function getGroups() {
   return response.json();
 }
 
-getGroups().then(groups => console.log("Groups in your Metabase:", groups));
+getGroups().then((groups) => console.log("Groups in your Metabase:", groups));
 ```
 
 ## Further reading

@@ -1,5 +1,5 @@
 ---
-version: v0.55
+version: v0.56
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -141,7 +141,6 @@ To view your conditional counts by plan, set the **Group by** column to "Plan".
 - [SQL](#sql)
 - [Spreadsheets](#spreadsheets)
 - [Python](#python)
-
 
 ### Conditional running counts
 
