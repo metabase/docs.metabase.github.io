@@ -14,8 +14,6 @@ latest: true
 
 # Securing embedded Metabase
 
-{% include shared/in-page-promo.html %}
-
 ## Securing embeds with authentication and authorization
 
 There are two basic ways to secure stuff on the internet:
