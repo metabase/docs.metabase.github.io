@@ -1,10 +1,11 @@
 ---
 permalink: /docs/latest/paid-features/
 layout: new-docs
-title: Paid features
+title: Pro and Enterprise features
+hide_right_hand_newsletter_subscribe_widget: true
 ---
 
-# Paid features
+# Pro and Enterprise features
 
 This page lists the paid features included with the Enterprise Edition of Metabase used in both the Pro and Enterprise plans. See [Pricing](/pricing/).
 
