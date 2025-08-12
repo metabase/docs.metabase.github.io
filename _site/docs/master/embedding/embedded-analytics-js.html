@@ -4846,7 +4846,7 @@ Roadmap</a>
 <p>Embedded Analytics JS is a JavaScript library built on top of Metabase’s <a href="./sdk/introduction">Embedded Analytics React SDK</a>. But it does not require using React or setting up full SDK embedding.
 Unlike with <a href="./interactive-embedding">interactive embedding</a>, where you embed the entire Metabase app in an iframe, Embedded Analytics JS lets you choose from a set of predefined components like a single chart, a dashboard with optional drill-through, or query builder, and customize those components.</p>
 
-<p>Embedded Analytics JS leverages <a href="../people-and-groups/authenticating-with-jwt">JWT SSO</a> to authenticate people and automatically apply permissions to show people the right data upon sign-in.</p>
+<p>Embedded Analytics JS uses <a href="../people-and-groups/authenticating-with-jwt">JWT</a> or <a href="../people-and-groups/authenticating-with-saml">SAML</a> to authenticate people and automatically apply the right permissions.</p>
 
 <p>Currently you can choose to embed:</p>
 
@@ -5068,11 +5068,11 @@ Unlike with <a href="./interactive-embedding">interactive embedding</a>, where y
 
 <h3 id="set-up-sso">Set up SSO</h3>
 
-<p>SSO is required to embed in a domain other than localhost.</p>
+<p>SSO is required to embed in a domain other than localhost. You can use JWT or SAML SSO. To configure SAML, see (Authenticating with SAML)[./sdk/authentication#authenticating-with-saml-sso]. To configure JWT, see the steps below.</p>
 
-<h3 id="1-in-metabase-configure-jwt-sso">1. In Metabase, configure <a href="../people-and-groups/authenticating-with-jwt">JWT SSO</a>.</h3>
+<h4 id="1-in-metabase-configure-jwt-sso">1. In Metabase, configure <a href="../people-and-groups/authenticating-with-jwt">JWT SSO</a>.</h4>
 
-<h3 id="2-in-your-apps-backend-add-a-new-endpoint-to-handle-authentication">2. In your app’s backend, add a new endpoint to handle authentication.</h3>
+<h4 id="2-in-your-apps-backend-add-a-new-endpoint-to-handle-authentication">2. In your app’s backend, add a new endpoint to handle authentication.</h4>
 
 <p>You’ll need add a library to your backend to sign your JSON Web Tokens.</p>
 
@@ -5138,7 +5138,7 @@ Unlike with <a href="./interactive-embedding">interactive embedding</a>, where y
 
 <p>See more examples in the <a href="./sdk/authentication#2-add-a-new-endpoint-to-your-backend-to-handle-authentication">Embedding SDK docs</a>.</p>
 
-<h3 id="3-embeds-will-use-sso-automatically-by-default">3. Embeds will use SSO automatically by default</h3>
+<h4 id="3-embeds-will-use-sso-automatically-by-default">3. Embeds will use SSO automatically by default</h4>
 
 <p>Metabase will use JWT SSO by default if no other auth method is specified. Make sure you don’t use <code class="language-plaintext highlighter-rouge">apiKey</code>&nbsp;or&nbsp;<code class="language-plaintext highlighter-rouge">useExistingUserSession</code> in your configuration to enable SSO use.</p>
 
