@@ -4864,17 +4864,18 @@ Roadmap</a>
   <li>Managing separate connections to the same data warehouse, with each connection having separate privileges. This connection management is akin to <a href="./impersonation">connection impersonation</a> for databases that prevent the same connection from changing roles.</li>
 </ul>
 
-<h2 id="databases-that-support-database-routing">Databases that support database routing</h2>
+<h2 id="database-routing-limitations">Database routing limitations</h2>
+
+<blockquote>
+  <p>Database routing is <strong>not supported</strong> on ClickHouse, Oracle, Spark SQL, and Vertica.</p>
+</blockquote>
+
+<p>Different database have different setups, so <em>what</em> you can route between (database, schema, data catalog, etc.) will differ slightly depending on which data warehouse you’re using.</p>
 
 <ul>
-  <li><a href="../databases/connections/bigquery">BigQuery</a></li>
-  <li><a href="../databases/connections/druid">Druid</a></li>
-  <li><a href="../databases/connections/mongodb">MongoDB</a></li>
-  <li><a href="../databases/connections/mariadb">MariaDB</a></li>
-  <li><a href="../databases/connections/mysql">MySQL</a></li>
-  <li><a href="../databases/connections/postgresql">PostgreSQL</a></li>
-  <li><a href="../databases/connections/sql-server">SQL Server</a></li>
-  <li><a href="../databases/connections/sqlite">SQLite</a></li>
+  <li><a href="../databases/connections/athena">Athena</a>: Only routing between different connections is supported (e.g., different buckets, roles, or catalogs).</li>
+  <li><a href="../databases/connections/bigquery">BigQuery</a>: Only routing between databases in different projects is supported.</li>
+  <li><a href="../databases/connections/databricks">Databricks</a>: When multi-catalog is not enabled, you can route between catalogs on the same host. If multi-catalog is enabled, then you can only route between databases on separate hosts.</li>
 </ul>
 
 <h2 id="how-database-routing-works">How database routing works</h2>
