@@ -5361,6 +5361,8 @@ Roadmap</a>
 
 <p>Use this hook if you’d like to have total control over the UI and settings.</p>
 
+<p><em>Note</em>: until the Embedding SDK is fully loaded and initialized, the hook returns <code class="language-plaintext highlighter-rouge">null</code>.</p>
+
 <h4 id="api-reference-3">API Reference</h4>
 
 <ul>
@@ -5370,10 +5372,15 @@ Roadmap</a>
 
 <h4 id="example">Example</h4>
 
-<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="p">{</span> <span class="nx">createDashboard</span> <span class="p">}</span> <span class="o">=</span> <span class="nf">useCreateDashboardApi</span><span class="p">();</span>
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">hookResult</span> <span class="o">=</span> <span class="nf">useCreateDashboardApi</span><span class="p">();</span>
 
 <span class="kd">const</span> <span class="nx">handleDashboardCreate</span> <span class="o">=</span> <span class="k">async </span><span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
-  <span class="kd">const</span> <span class="nx">dashboard</span> <span class="o">=</span> <span class="k">await</span> <span class="nf">createDashboard</span><span class="p">(</span><span class="nx">options</span><span class="p">);</span>
+  <span class="c1">// hookResult is `null` until the SDK is fully loaded and initialized</span>
+  <span class="k">if </span><span class="p">(</span><span class="o">!</span><span class="nx">hookResult</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="kd">const</span> <span class="nx">dashboard</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">hookResult</span><span class="p">.</span><span class="nf">createDashboard</span><span class="p">(</span><span class="nx">options</span><span class="p">);</span>
 
   <span class="c1">// do something with created empty dashboard, e.g., use the dashboard in EditableDashboard component</span>
 <span class="p">};</span>
