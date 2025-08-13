@@ -105,8 +105,8 @@
     <link href="/images/favicon.svg" rel="shortcut icon">
   
   <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/flexboxgrid/6.3.1/flexboxgrid.min.css" rel="stylesheet" type="text/css">
-  <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
   <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;0,900&amp;display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;0,900;1,400;1,700&amp;family=Roboto+Mono&amp;display=swap" rel="stylesheet">
@@ -120,6 +120,11 @@
   <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet">
 
   
+
+  
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/flexboxgrid/6.3.1/flexboxgrid.min.css" rel="stylesheet" type="text/css">
+  <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet">
 
   <link href="/feed.xml" rel="alternate" title="Metabase | Business Intelligence, Dashboards, and Data Visualization" type="application/rss+xml">
 
@@ -2610,6 +2615,24 @@ Roadmap</a>
       
 
       <li class="">
+        <a href="/docs/master/embedding/embedded-analytics-js" class="">
+        Embedded analytics JS
+
+          
+        </a>
+
+        
+      </li>
+    
+      
+
+      
+
+      
+
+      
+
+      <li class="">
         <a href="/docs/master/embedding/static-embedding" class="">
         Static embedding
 
@@ -4878,108 +4901,15 @@ Roadmap</a>
 
 <p>Some notes on using the Embedded analytics SDK with <a href="https://nextjs.org/">Next.js</a>. The SDK is tested to work with Next.js 14, although it may work with other versions.</p>
 
+<p>See a <a href="https://github.com/metabase/metabase-nextjs-sdk-embedding-sample">sample Next.js app that uses the SDK</a>.</p>
+
 <h2 id="sdk-components-with-server-side-rendering-ssr-or-react-server-components">SDK components with Server Side Rendering (SSR) or React Server Components</h2>
 
-<p>For now, the SDK components are only supported for client-side rendering. To use the SDK components with server-side rendering, or with React Server components, you can either use a compatibility layer or manually wrap the components.</p>
+<p>The SDK components render only on the client side and not on the server side.</p>
 
-<h3 id="compatibility-layer-for-server-side-rendering-ssr-experimental">Compatibility layer for server-side rendering (SSR) (EXPERIMENTAL)</h3>
+<h3 id="compatibility-layer-for-server-side-rendering-ssr-deprecated">Compatibility layer for server-side rendering (SSR) (DEPRECATED)</h3>
 
-<p>To use SDK components with Next.js, the SDK provides an experimental compatibility layer that <a href="https://nextjs.org/docs/pages/building-your-application/optimizing/lazy-loading#with-no-ssr">wraps all the components with dynamic imports and disables SSR</a>. To work with the app router, this compatibility layer uses <code class="language-plaintext highlighter-rouge">use client</code>.</p>
-
-<p>To use the compatibility layer, change your imports from <code class="language-plaintext highlighter-rouge">@metabase/embedding-sdk-react</code> to <code class="language-plaintext highlighter-rouge">@metabase/embedding-sdk-react/nextjs</code>.</p>
-
-<p>See a <a href="https://github.com/metabase/metabase-nextjs-sdk-embedding-sample">sample Next.js app that uses this compatibility layer</a>.</p>
-
-<h2 id="manual-wrapping-of-the-components">Manual wrapping of the components</h2>
-
-<p>If you want to customize the loading of the components, you can create your own wrapper.</p>
-
-<p>In your app, create a <code class="language-plaintext highlighter-rouge">metabase</code> directory, and add a <code class="language-plaintext highlighter-rouge">EmbeddingSdkProvider.tsx</code> file to that directory. This file will contain the provider with the appropriate configuration.</p>
-
-<div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="dl">"</span><span class="s2">use client</span><span class="dl">"</span><span class="p">;</span>
-
-<span class="k">import</span> <span class="p">{</span>
-  <span class="nx">MetabaseProvider</span><span class="p">,</span>
-  <span class="nx">defineMetabaseAuthConfig</span><span class="p">,</span>
-<span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@metabase/embedding-sdk-react</span><span class="dl">"</span><span class="p">;</span>
-
-<span class="kd">const</span> <span class="nx">authConfig</span> <span class="o">=</span> <span class="nf">defineMetabaseAuthConfig</span><span class="p">({</span>
-  <span class="na">metabaseInstanceUrl</span><span class="p">:</span> <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">NEXT_PUBLIC_METABASE_INSTANCE_URL</span><span class="p">,</span>
-<span class="p">});</span>
-
-<span class="k">export</span> <span class="kd">const</span> <span class="nx">EmbeddingSdkProvider</span> <span class="o">=</span> <span class="p">({</span>
-  <span class="nx">children</span><span class="p">,</span>
-<span class="p">}:</span> <span class="p">{</span>
-  <span class="nl">children</span><span class="p">:</span> <span class="nx">React</span><span class="p">.</span><span class="nx">ReactNode</span><span class="p">;</span>
-<span class="p">})</span> <span class="o">=&gt;</span> <span class="p">{</span>
-  <span class="k">return </span><span class="p">(</span>
-    <span class="p">&lt;</span><span class="nc">MetabaseProvider</span> <span class="na">authConfig</span><span class="p">=</span><span class="si">{</span><span class="nx">authConfig</span><span class="si">}</span><span class="p">&gt;</span><span class="si">{</span><span class="nx">children</span><span class="si">}</span><span class="p">&lt;/</span><span class="nc">MetabaseProvider</span><span class="p">&gt;</span>
-  <span class="p">);</span>
-<span class="p">};</span>
-</code></pre></div></div>
-
-<p>Next, add an <code class="language-plaintext highlighter-rouge">index.tsx</code> file to that <code class="language-plaintext highlighter-rouge">metabase</code> directory. This file will include the <code class="language-plaintext highlighter-rouge">use client</code> directive, and it’ll export a lazy-loaded version of the <code class="language-plaintext highlighter-rouge">EmbeddingSdkProvider</code> with SSR disabled.</p>
-
-<div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="dl">"</span><span class="s2">use client</span><span class="dl">"</span><span class="p">;</span>
-
-<span class="k">import</span> <span class="nx">dynamic</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">next/dynamic</span><span class="dl">"</span><span class="p">;</span>
-
-<span class="k">import</span> <span class="kd">type</span> <span class="nx">React</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">react</span><span class="dl">"</span><span class="p">;</span>
-
-<span class="c1">// Lazy load the EmbeddingSdkProvider so and let it render children while it's being loaded</span>
-<span class="k">export</span> <span class="kd">const</span> <span class="nx">EmbeddingSdkProviderLazy</span> <span class="o">=</span> <span class="p">({</span>
-  <span class="nx">children</span><span class="p">,</span>
-<span class="p">}:</span> <span class="p">{</span>
-  <span class="nl">children</span><span class="p">:</span> <span class="nx">React</span><span class="p">.</span><span class="nx">ReactNode</span><span class="p">;</span>
-<span class="p">})</span> <span class="o">=&gt;</span> <span class="p">{</span>
-  <span class="kd">const</span> <span class="nx">EmbeddingSdkProvider</span> <span class="o">=</span> <span class="nf">dynamic</span><span class="p">(</span>
-    <span class="p">()</span> <span class="o">=&gt;</span>
-      <span class="k">import</span><span class="p">(</span><span class="dl">"</span><span class="s2">./EmbeddingSdkProvider</span><span class="dl">"</span><span class="p">).</span><span class="nf">then</span><span class="p">(</span><span class="nx">m</span> <span class="o">=&gt;</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="p">{</span> <span class="na">default</span><span class="p">:</span> <span class="nx">m</span><span class="p">.</span><span class="nx">EmbeddingSdkProvider</span> <span class="p">};</span>
-      <span class="p">}),</span>
-    <span class="p">{</span>
-      <span class="na">ssr</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
-      <span class="na">loading</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
-        <span class="c1">// render children while loading</span>
-        <span class="k">return</span> <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span><span class="si">{</span><span class="nx">children</span><span class="si">}</span><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;;</span>
-      <span class="p">},</span>
-    <span class="p">},</span>
-  <span class="p">);</span>
-
-  <span class="k">return</span> <span class="p">&lt;</span><span class="nc">EmbeddingSdkProvider</span><span class="p">&gt;</span><span class="si">{</span><span class="nx">children</span><span class="si">}</span><span class="p">&lt;/</span><span class="nc">EmbeddingSdkProvider</span><span class="p">&gt;;</span>
-<span class="p">};</span>
-
-<span class="c1">// Wrap all components that you need like this:</span>
-
-<span class="k">export</span> <span class="kd">const</span> <span class="nx">StaticQuestion</span> <span class="o">=</span> <span class="nf">dynamic</span><span class="p">(</span>
-  <span class="p">()</span> <span class="o">=&gt;</span> <span class="k">import</span><span class="p">(</span><span class="dl">"</span><span class="s2">@metabase/embedding-sdk-react</span><span class="dl">"</span><span class="p">).</span><span class="nf">then</span><span class="p">(</span><span class="nx">m</span> <span class="o">=&gt;</span> <span class="nx">m</span><span class="p">.</span><span class="nx">StaticQuestion</span><span class="p">),</span>
-  <span class="p">{</span>
-    <span class="na">ssr</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
-    <span class="na">loading</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
-      <span class="k">return</span> <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>Loading...<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;;</span>
-    <span class="p">},</span>
-  <span class="p">},</span>
-<span class="p">);</span>
-
-<span class="k">export</span> <span class="kd">const</span> <span class="nx">StaticDashboard</span> <span class="o">=</span> <span class="nf">dynamic</span><span class="p">(</span>
-  <span class="p">()</span> <span class="o">=&gt;</span> <span class="k">import</span><span class="p">(</span><span class="dl">"</span><span class="s2">@metabase/embedding-sdk-react</span><span class="dl">"</span><span class="p">).</span><span class="nf">then</span><span class="p">(</span><span class="nx">m</span> <span class="o">=&gt;</span> <span class="nx">m</span><span class="p">.</span><span class="nx">StaticDashboard</span><span class="p">),</span>
-  <span class="p">{</span>
-    <span class="na">ssr</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
-    <span class="na">loading</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
-      <span class="k">return</span> <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>Loading...<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;;</span>
-    <span class="p">},</span>
-  <span class="p">},</span>
-<span class="p">);</span>
-</code></pre></div></div>
-
-<p>You can now import components like so:</p>
-
-<div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">StaticQuestion</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@/metabase</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// path to the folder created earlier</span>
-
-<span class="k">export</span> <span class="k">default</span> <span class="kd">function</span> <span class="nf">Home</span><span class="p">()</span> <span class="p">{</span>
-  <span class="k">return</span> <span class="p">&lt;</span><span class="nc">StaticQuestion</span> <span class="na">questionId</span><span class="p">=</span><span class="si">{</span><span class="mi">123</span><span class="si">}</span> <span class="p">/&gt;;</span>
-<span class="p">}</span>
-</code></pre></div></div>
+<p><em>Note</em>: Compatibility layer for server-side rendering (SSR) is no more needed and was deprecated. If you use it, change your imports from <code class="language-plaintext highlighter-rouge">@metabase/embedding-sdk-react/next</code> to <code class="language-plaintext highlighter-rouge">@metabase/embedding-sdk-react</code>.</p>
 
 <h2 id="handling-authentication">Handling authentication</h2>
 
@@ -5015,7 +4945,7 @@ Roadmap</a>
 
 <p>Then, pass this <code class="language-plaintext highlighter-rouge">authConfig</code> to <code class="language-plaintext highlighter-rouge">MetabaseProvider</code></p>
 
-<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">defineMetabaseAuthConfig</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@metabase/embedding-sdk-react/nextjs</span><span class="dl">"</span><span class="p">;</span>
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">defineMetabaseAuthConfig</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@metabase/embedding-sdk-react</span><span class="dl">"</span><span class="p">;</span>
 
 <span class="kd">const</span> <span class="nx">authConfig</span> <span class="o">=</span> <span class="nf">defineMetabaseAuthConfig</span><span class="p">({</span>
   <span class="na">metabaseInstanceUrl</span><span class="p">:</span> <span class="dl">"</span><span class="s2">https://metabase.example.com</span><span class="dl">"</span><span class="p">,</span> <span class="c1">// Required: Your Metabase instance URL</span>
@@ -5056,7 +4986,7 @@ Roadmap</a>
 
 <p>Then, pass this <code class="language-plaintext highlighter-rouge">authConfig</code> to <code class="language-plaintext highlighter-rouge">MetabaseProvider</code></p>
 
-<div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">defineMetabaseAuthConfig</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@metabase/embedding-sdk-react/nextjs</span><span class="dl">"</span><span class="p">;</span>
+<div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">defineMetabaseAuthConfig</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@metabase/embedding-sdk-react</span><span class="dl">"</span><span class="p">;</span>
 
 <span class="kd">const</span> <span class="nx">authConfig</span> <span class="o">=</span> <span class="nf">defineMetabaseAuthConfig</span><span class="p">({</span>
   <span class="na">metabaseInstanceUrl</span><span class="p">:</span> <span class="dl">"</span><span class="s2">https://metabase.example.com</span><span class="dl">"</span><span class="p">,</span> <span class="c1">// Required: Your Metabase instance URL</span>
