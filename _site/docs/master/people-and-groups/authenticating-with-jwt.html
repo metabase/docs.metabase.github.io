@@ -105,8 +105,8 @@
     <link href="/images/favicon.svg" rel="shortcut icon">
   
   <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/flexboxgrid/6.3.1/flexboxgrid.min.css" rel="stylesheet" type="text/css">
-  <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
   <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;0,900&amp;display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;0,900;1,400;1,700&amp;family=Roboto+Mono&amp;display=swap" rel="stylesheet">
@@ -120,6 +120,11 @@
   <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet">
 
   
+
+  
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/flexboxgrid/6.3.1/flexboxgrid.min.css" rel="stylesheet" type="text/css">
+  <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet">
 
   <link href="/feed.xml" rel="alternate" title="Metabase | Business Intelligence, Dashboards, and Data Visualization" type="application/rss+xml">
 
@@ -2610,6 +2615,24 @@ Roadmap</a>
       
 
       <li class="">
+        <a href="/docs/master/embedding/embedded-analytics-js" class="">
+        Embedded analytics JS
+
+          
+        </a>
+
+        
+      </li>
+    
+      
+
+      
+
+      
+
+      
+
+      <li class="">
         <a href="/docs/master/embedding/static-embedding" class="">
         Static embedding
 
@@ -4874,22 +4897,17 @@ Roadmap</a>
   <li>Metabase verifies the JSON Web Token, logs the person in, then redirects the person to their original destination, <code class="language-plaintext highlighter-rouge">/question/1-superb-question</code>.</li>
 </ol>
 
-<h2 id="set-up-jwt-authentication">Set up JWT authentication</h2>
+<h2 id="enabling-jwt-authentication">Enabling JWT authentication</h2>
 
-<p>Navigate to the <strong>Admin</strong>&gt;<strong>Settings</strong> section of the Admin area, then click on the <strong>Authentication &gt; JWT</strong> tab.</p>
+<p>Navigate to the <strong>Admin</strong>&gt;<strong>Settings</strong> section of the Admin area, then click on the <strong>Authentication</strong> tab. Click the <strong>Configure</strong> button in the JWT section of this page, and you’ll see this form:</p>
 
 <p><img src="images/JWT-auth-form.png" alt="JWT form"></p>
 
 <p>Here’s a breakdown of each of the settings:</p>
 
-<ul>
-  <li>
-    <p><strong>JWT Identity Provider URI</strong>: This is where Metabase will redirect login requests. That is, it’s where your users go to log in through your identity provider.</p>
-  </li>
-  <li>
-    <p><strong>String Used by the JWT Signing Key</strong>: The string used to seed the private key used to validate JWT messages. Both Metabase and the authentication app should have the same JWT signing key.</p>
-  </li>
-</ul>
+<p><strong>JWT Identity Provider URI:</strong> This is where Metabase will redirect login requests. That is, it’s where your users go to log in through your identity provider.</p>
+
+<p><strong>String Used by the JWT Signing Key:</strong> The string used to seed the private key used to validate JWT messages. Both Metabase and the authentication app should have the same JWT signing key.</p>
 
 <h2 id="user-attribute-configuration-optional">User attribute configuration (optional)</h2>
 
@@ -4897,64 +4915,40 @@ Roadmap</a>
 
 <ul>
   <li><strong>Email attribute:</strong> the key to retrieve each JWT user’s email address.</li>
-  <li><strong>First name attribute:</strong> the key to retrieve each JWT user’s first name.</li>
-  <li><strong>Last name attribute:</strong> if you guessed that this is the key to retrieve each JWT user’s last name, well then you have been paying attention.</li>
-  <li><strong>Group assignment attribute:</strong> the key to retrieve each JWT user’s group assignments.</li>
+  <li><strong>First Name attribute:</strong> the key to retrieve each JWT user’s first name.</li>
+  <li><strong>Last Name attribute:</strong> if you guessed that this is the key to retrieve each JWT user’s last name, well then you have been paying attention.</li>
 </ul>
 
 <p>You can send additional user attributes to Metabase by adding the attributes as key/value pairs to your JWT. These attributes will be synced on every login.</p>
 
 <h2 id="configure-group-mappings">Configure group mappings</h2>
 
-<p>You can use your JWT to assign Metabase users to custom Metabase <a href="./managing#groups">groups</a> based on their attributes, e.g. automatically assign everyone with a certain JWT attribute to the <code class="language-plaintext highlighter-rouge">Sales</code> group in Metabase. This can be helpful for <a href="../permissions/introduction#key-points-regarding-permissions">permissions management</a> at scale.</p>
-
-<p>You can configure JWT group assignments through Metabase’s Admin interface, or by setting environment variables.</p>
-
-<h3 id="configure-group-mapping-in-metabase">Configure group mapping in Metabase</h3>
+<p>You can use your JWT to assign Metabase users to custom groups.</p>
 
 <ol>
-  <li>Add groups to your JWT: <code class="language-plaintext highlighter-rouge">groups: ["group_name"]</code>. The attribute key (e.g. <code class="language-plaintext highlighter-rouge">groups</code>) should match the <strong>Group assignment attribute</strong> in Metabase.</li>
-  <li>In Metabase JWT settings, under <strong>Group Sync</strong>, toggle on <strong>Synchronize Group Memberships</strong></li>
-  <li>
-    <p>If the group names in your JWT match the Metabase group names, they will be synced automatically, and you don’t need to set up mappings manually.</p>
-  </li>
-  <li>Otherwise, click <strong>New mapping</strong> and add the name of a JWT group.</li>
+  <li>Add groups to your JWT: <code class="language-plaintext highlighter-rouge">groups: ["group_name"]</code>.</li>
+  <li>In Metabase, go to the Admin panel and switch to <strong>Setting &gt; Authentication</strong> tab.</li>
+  <li>Click the <strong>Configure</strong> button under JWT.</li>
+  <li>Under <strong>Group Schema</strong>, turn on the toggle <strong>Synchronize Group Memberships</strong></li>
+  <li>Click <strong>New mapping</strong> and add the name of a JWT group.</li>
   <li>In the row that appears, click the dropdown to pick the Metabase group(s) that this should map to.
 <img src="./images/jwt-groups.png" alt="Metabase JWT group mappings"></li>
   <li>Repeat this for each of the groups you want to map.</li>
 </ol>
 
-<h3 id="configure-group-mapping-through-environment-variables">Configure group mapping through environment variables</h3>
+<p>Alternatively, you can define the mappings between JWT and Metabase groups using the <a href="../configuring-metabase/environment-variables#mb_jwt_group_mappings">environment variable <code class="language-plaintext highlighter-rouge">MB_JWT_GROUP_MAPPINGS</code></a>. It accepts a JSON object where the keys are JWT groups and the values are lists of Metabase groups IDs. For example:</p>
 
-<p>You can use the following environment variables to configure JTW group mappings instead of configuring them in Metabase’s Admin settings:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>MB_JWT_GROUP_MAPPINGS='{"extHR":[7], "extSales":[3,4]}'
+</code></pre></div></div>
 
-<ul>
-  <li>
-    <p><a href="../configuring-metabase/environment-variables#mb_jwt_attribute_groups"><code class="language-plaintext highlighter-rouge">MB_JWT_ATTRIBUTE_GROUPS</code></a> to specify the key to retrieve the JWT user’s groups;</p>
-  </li>
-  <li>
-    <p><a href="../configuring-metabase/environment-variables#mb_jwt_group_sync"><code class="language-plaintext highlighter-rouge">MB_JWT_GROUP_SYNC</code></a> to turn group sync on or off (sync is off by default).</p>
+<p>where <code class="language-plaintext highlighter-rouge">extHR</code>, <code class="language-plaintext highlighter-rouge">extSales</code> are names of JWT groups and 3,4,7 are IDs of Metabase groups.</p>
 
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>MB_JWT_GROUP_SYNC=true
-</code></pre></div>    </div>
-  </li>
-  <li>
-    <p><a href="../configuring-metabase/environment-variables#mb_jwt_group_mappings"><code class="language-plaintext highlighter-rouge">MB_JWT_GROUP_MAPPINGS</code></a> to configure group mapping. It accepts a JSON object where the keys are JWT groups and the values are lists of Metabase groups IDs. For example:</p>
+<p>You can find Metabase Group ID in the URL for the group page, like <code class="language-plaintext highlighter-rouge">http://your-metabase-url/admin/people/groups/&lt;ID&gt;</code>. “All Users” group has ID 1 and “Administrators” group has ID 2.</p>
 
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>MB_JWT_GROUP_MAPPINGS='{"extHR":[7], "extSales":[3,4]}'
-</code></pre></div>    </div>
+<p>You can also use the <a href="../configuring-metabase/environment-variables#mb_jwt_group_sync">environment variable <code class="language-plaintext highlighter-rouge">MB_JWT_GROUP_SYNC</code></a> to turn group sync on or off.</p>
 
-    <p>where <code class="language-plaintext highlighter-rouge">extHR</code>, <code class="language-plaintext highlighter-rouge">extSales</code> are names of JWT groups and 3,4,7 are IDs of Metabase groups.</p>
-
-    <p>You can find Metabase Group ID in the URL for the group page, like <code class="language-plaintext highlighter-rouge">http://your-metabase-url/admin/people/groups/&lt;ID&gt;</code>. “All Users” group has ID 1 and “Administrators” group has ID 2.</p>
-  </li>
-</ul>
-
-<h3 id="if-group-mappings-are-not-specified-metabase-will-match-groups-by-name">If group mappings are not specified, Metabase will match groups by name</h3>
-
-<p>If you don’t specify any group mappings in Metabase’s Admin settings or via <code class="language-plaintext highlighter-rouge">MB_JWT_GROUP_MAPPINGS</code> environment variables, then Metabase will try to assign Metabase groups to users based on the matching names. If the names of groups in the JWT group attribute array match Metabase group names exactly (e.g. both are <code class="language-plaintext highlighter-rouge">"Sales"</code>), then the groups will be mapped automatically.</p>
-
-<p>If you add group mappings manually, Metabase will <em>not</em> try to also match groups by names.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>MB_JWT_GROUP_SYNC=true
+</code></pre></div></div>
 
 <h2 id="creating-metabase-accounts-with-sso">Creating Metabase accounts with SSO</h2>
 
