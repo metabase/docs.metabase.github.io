@@ -105,8 +105,8 @@
     <link href="/images/favicon.svg" rel="shortcut icon">
   
   <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/flexboxgrid/6.3.1/flexboxgrid.min.css" rel="stylesheet" type="text/css">
-  <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
   <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;0,900&amp;display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;0,900;1,400;1,700&amp;family=Roboto+Mono&amp;display=swap" rel="stylesheet">
@@ -120,6 +120,11 @@
   <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet">
 
   
+
+  
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/flexboxgrid/6.3.1/flexboxgrid.min.css" rel="stylesheet" type="text/css">
+  <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet">
 
   <link href="/feed.xml" rel="alternate" title="Metabase | Business Intelligence, Dashboards, and Data Visualization" type="application/rss+xml">
 
@@ -2598,6 +2603,24 @@ Roadmap</a>
               </li>
             
           </ul>
+        
+      </li>
+    
+      
+
+      
+
+      
+
+      
+
+      <li class="">
+        <a href="/docs/master/embedding/embedded-analytics-js" class="">
+        Embedded analytics JS
+
+          
+        </a>
+
         
       </li>
     
@@ -5338,6 +5361,8 @@ Roadmap</a>
 
 <p>Use this hook if you’d like to have total control over the UI and settings.</p>
 
+<p><em>Note</em>: until the Embedding SDK is fully loaded and initialized, the hook returns <code class="language-plaintext highlighter-rouge">null</code>.</p>
+
 <h4 id="api-reference-3">API Reference</h4>
 
 <ul>
@@ -5347,10 +5372,15 @@ Roadmap</a>
 
 <h4 id="example">Example</h4>
 
-<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="p">{</span> <span class="nx">createDashboard</span> <span class="p">}</span> <span class="o">=</span> <span class="nf">useCreateDashboardApi</span><span class="p">();</span>
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">hookResult</span> <span class="o">=</span> <span class="nf">useCreateDashboardApi</span><span class="p">();</span>
 
 <span class="kd">const</span> <span class="nx">handleDashboardCreate</span> <span class="o">=</span> <span class="k">async </span><span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
-  <span class="kd">const</span> <span class="nx">dashboard</span> <span class="o">=</span> <span class="k">await</span> <span class="nf">createDashboard</span><span class="p">(</span><span class="nx">options</span><span class="p">);</span>
+  <span class="c1">// hookResult is `null` until the SDK is fully loaded and initialized</span>
+  <span class="k">if </span><span class="p">(</span><span class="o">!</span><span class="nx">hookResult</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="kd">const</span> <span class="nx">dashboard</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">hookResult</span><span class="p">.</span><span class="nf">createDashboard</span><span class="p">(</span><span class="nx">options</span><span class="p">);</span>
 
   <span class="c1">// do something with created empty dashboard, e.g., use the dashboard in EditableDashboard component</span>
 <span class="p">};</span>
