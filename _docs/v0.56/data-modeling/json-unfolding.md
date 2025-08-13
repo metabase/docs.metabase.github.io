@@ -73,8 +73,11 @@ For example, if you upload a CSV with JSON in it, you might need to update the d
 
 ## Databases that support JSON unfolding
 
-- [PostgreSQL](../databases/connections/postgresql)
-- [MySQL](../databases/connections/mysql)
+- [BigQuery](../databases/connections/postgresql): automatically enabled, applies to `STRUCT` types only.
+  
+  If your data is stored in the [STRUCT data type](https://cloud.google.com/bigquery/docs/reference/standard-sql/data-types#struct_type) in BigQuery, you can query the table's nested fields. This is enabled by default. However, Metabase won't unfold JSON stored in BigQuery as the `JSON` type. This is because in BigQuery, nested fields are _part of the table definition itself_, so when Metabase syncs with your BigQuery database, it'll be able to get metadata about any of your tables, including tables with nested fields. Querying nested fields, however, doesn't extend to arrays (REPEATED (STRUCT)) in BigQuery.
+  
 - [Druid (JDBC)](../databases/connections/druid)
-
-A note on [BigQuery](../databases/connections/bigquery): Metabase supports the [STRUCT data type](https://cloud.google.com/bigquery/docs/reference/standard-sql/data-types#struct_type) in BigQuery, but it won't unfold JSON stored in BigQuery as the `JSON` type. If your data is stored in the `STRUCT` type in BigQuery, you can query the table's nested fields. Some background here: BigQuery differs from other databases in that nested fields are _part of the table definition itself_. So when Metabase syncs with your BigQuery database, it'll be able to get metadata about any of your tables, including tables with nested fields. Querying nested fields, however, doesn't extend to arrays (REPEATED (STRUCT)) in BigQuery.
+- [MongoDB](../databases/connections/mysql): automatically enabled for all nested fields.
+- [MySQL](../databases/connections/mysql)
+- [PostgreSQL](../databases/connections/postgresql)
