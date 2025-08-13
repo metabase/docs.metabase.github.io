@@ -10,23 +10,28 @@ layout: new-docs
 ---
 
 ```ts
-function useCreateDashboardApi(): null | {
+function useCreateDashboardApi(): {
   createDashboard: (
     options: CreateDashboardValues,
   ) => Promise<MetabaseDashboard>;
 };
 ```
 
-Creates a dashboard.
-Returns `null` until the SDK is fully loaded and initialized.
+Creates a dashboard
 
 ## Returns
 
 <!-- [<snippet returns>] -->
 
-\| `null`
-\| \{
-`createDashboard`: (`options`: [`CreateDashboardValues`](./api/CreateDashboardValues)) => [`Promise`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<[`MetabaseDashboard`](./api/MetabaseDashboard)\>;
-\}
+```ts
+{
+  createDashboard: (options: CreateDashboardValues) =>
+    Promise<MetabaseDashboard>;
+}
+```
+
+| Name                | Type                                                                                                                                                                                                                           | Description |
+| :------------------ | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :---------- |
+| `createDashboard()` | (`options`: [`CreateDashboardValues`](./api/CreateDashboardValues)) => [`Promise`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<[`MetabaseDashboard`](./api/MetabaseDashboard)\> |             |
 
 <!-- [<endsnippet returns>] -->

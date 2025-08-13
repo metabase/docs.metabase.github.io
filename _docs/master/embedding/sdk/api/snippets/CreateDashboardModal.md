@@ -10,7 +10,7 @@ layout: new-docs
 ---
 
 ```ts
-function CreateDashboardModal(props: CreateDashboardModalProps): Element;
+function CreateDashboardModal(props: CreateDashboardModalProps): ReactNode;
 ```
 
 Creates a dashboard
@@ -29,6 +29,6 @@ Creates a dashboard
 
 <!-- [<snippet returns>] -->
 
-[`Element`](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/0b728411cd1dfb4bd26992bb35a73cf8edaa22e7/types/react/index.d.ts#L4313)
+[`ReactNode`](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/0b728411cd1dfb4bd26992bb35a73cf8edaa22e7/types/react/index.d.ts#L478)
 
 <!-- [<endsnippet returns>] -->
