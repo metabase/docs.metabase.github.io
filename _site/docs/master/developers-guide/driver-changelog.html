@@ -49,7 +49,7 @@
 <meta name="twitter:site" content="@metabase">
 
 <meta name="twitter:title" content="Driver interface changelog | Metabase Documentation">
-<meta name="twitter:description" content="Driver Interface Changelog Metabase 0.56.0   Add the testing multi-method tx/track-dataset for shared cloud dbs to track loaded datasets for more efficient sharing.   Join alias escaping has been reworked; when compiling MBQL for a join...">
+<meta name="twitter:description" content="Driver Interface Changelog Metabase 0.57.0   driver/field-reference-mlv2 is now deprecated, and is no longer used. Please remove your implementations.   The key metabase.driver-api.core/qp.add.nfc-path is now more consistently populated; other qp.add.* keys no...">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -59,7 +59,7 @@
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://www.metabase.com/docs/master/developers-guide/driver-changelog">
 <meta name="title" property="og:title" content="Driver interface changelog | Metabase Documentation">
-<meta name="description" property="og:description" content="Driver Interface Changelog Metabase 0.56.0   Add the testing multi-method tx/track-dataset for shared cloud dbs to track loaded datasets for more efficient sharing.   Join alias escaping has been reworked; when compiling MBQL for a join...">
+<meta name="description" property="og:description" content="Driver Interface Changelog Metabase 0.57.0   driver/field-reference-mlv2 is now deprecated, and is no longer used. Please remove your implementations.   The key metabase.driver-api.core/qp.add.nfc-path is now more consistently populated; other qp.add.* keys no...">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -176,8 +176,7 @@
   <div>
     <span class="button">New</span>
     <span>Metabase 56: Filters in the body of dashboards, time grouping for native queries, simpler embedding, and much more!</span>
-    <a href="/releases/metabase-56">Read the announcement</a>
-      <img alt="Chevron Blue Right" src="/images/chevron_blue_right.svg">
+    <a href="/releases/metabase-56">Read the announcement <b>›</b></a>
   </div>
   <button>×</button>
 </div>
@@ -4863,6 +4862,19 @@ Roadmap</a>
 
 
         <h1 id="driver-interface-changelog">Driver Interface Changelog</h1>
+
+<h2 id="metabase-0570">Metabase 0.57.0</h2>
+
+<ul>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">driver/field-reference-mlv2</code> is now deprecated, and is no longer used. Please remove your implementations.</p>
+  </li>
+  <li>
+    <p>The key <code class="language-plaintext highlighter-rouge">metabase.driver-api.core/qp.add.nfc-path</code> is now more consistently populated; other <code class="language-plaintext highlighter-rouge">qp.add.*</code> keys no
+longer include parent column names for drivers like MongoDB – use <code class="language-plaintext highlighter-rouge">qp.add.nfc-path</code> instead to qualify the
+<code class="language-plaintext highlighter-rouge">qp.add.source-column-alias</code> with parent column names as needed.</p>
+  </li>
+</ul>
 
 <h2 id="metabase-0560">Metabase 0.56.0</h2>
 
