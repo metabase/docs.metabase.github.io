@@ -176,8 +176,7 @@
   <div>
     <span class="button">New</span>
     <span>Metabase 56: Filters in the body of dashboards, time grouping for native queries, simpler embedding, and much more!</span>
-    <a href="/releases/metabase-56">Read the announcement</a>
-      <img alt="Chevron Blue Right" src="/images/chevron_blue_right.svg">
+    <a href="/releases/metabase-56">Read the announcement <b>›</b></a>
   </div>
   <button>×</button>
 </div>
@@ -4955,6 +4954,15 @@ Roadmap</a>
 
 <span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">people</span> <span class="n">ENABLE</span> <span class="k">ROW</span> <span class="k">LEVEL</span> <span class="k">SECURITY</span><span class="p">;</span>
 </code></pre></div></div>
+
+<h3 id="snowflake-connections-should-disable-secondary-roles-when-using-impersonation">Snowflake connections should disable secondary roles when using impersonation</h3>
+
+<p>For impersonation to work correctly with <strong>Snowflake</strong> databases, the user account Metabase uses to <a href="../databases/connections/snowflake">connect to your Snowflake database</a> must have <a href="https://docs.snowflake.com/en/user-guide/security-access-control-overview#authorization-through-primary-role-and-secondary-roles">secondary roles</a> disabled. You can disable secondary roles with:</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">ALTER</span> <span class="k">USER</span> <span class="n">metabase_user</span> <span class="k">SET</span> <span class="n">DEFAULT_SECONDARY_ROLES</span> <span class="o">=</span> <span class="p">();</span>
+</code></pre></div></div>
+
+<p>If you don’t disable secondary roles, each impersonated role will also get permissions of all other roles you’ve granted to the Metabase user.</p>
 
 <h3 id="set-up-a-metabase-group">Set up a Metabase group</h3>
 
