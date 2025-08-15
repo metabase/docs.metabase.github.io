@@ -2400,7 +2400,6 @@
       },
       "metabase.legacy-mbql.schema.IntGreaterThanZeroOrNumericExpression" : {
         "oneOf" : [ {
-          "description" : "Must be a positive integer.",
           "type" : "integer",
           "minimum" : 1
         }, {
@@ -2698,12 +2697,10 @@
         "type" : "object",
         "properties" : {
           "items" : {
-            "description" : "Must be a positive integer.",
             "type" : "integer",
             "minimum" : 1
           },
           "page" : {
-            "description" : "Must be a positive integer.",
             "type" : "integer",
             "minimum" : 1
           }
@@ -2997,9 +2994,7 @@
         "type" : "object",
         "properties" : {
           "database" : {
-            "description" : "Must be a positive integer.",
-            "type" : "integer",
-            "minimum" : 1
+            "$ref" : "#/components/schemas/metabase.lib.schema.id.database"
           },
           "display-name" : {
             "$ref" : "#/components/schemas/metabase.lib.schema.common.non-blank-string"
@@ -3011,9 +3006,7 @@
             "$ref" : "#/components/schemas/metabase.lib.schema.common.non-blank-string"
           },
           "snippet-id" : {
-            "description" : "Must be a positive integer.",
-            "type" : "integer",
-            "minimum" : 1
+            "$ref" : "#/components/schemas/metabase.lib.schema.id.snippet"
           },
           "snippet-name" : {
             "$ref" : "#/components/schemas/metabase.lib.schema.common.non-blank-string"
@@ -3029,9 +3022,7 @@
         "type" : "object",
         "properties" : {
           "card-id" : {
-            "description" : "Must be a positive integer.",
-            "type" : "integer",
-            "minimum" : 1
+            "$ref" : "#/components/schemas/metabase.lib.schema.id.card"
           },
           "display-name" : {
             "$ref" : "#/components/schemas/metabase.lib.schema.common.non-blank-string"
@@ -3736,6 +3727,10 @@
         "type" : "integer",
         "minimum" : 1
       },
+      "metabase.lib.schema.id.snippet" : {
+        "type" : "integer",
+        "minimum" : 1
+      },
       "metabase.lib.schema.id.table" : {
         "type" : "integer",
         "minimum" : 1
@@ -3903,14 +3898,49 @@
         "type" : "string",
         "enum" : [ "source/card", "source/native", "source/previous-stage", "source/table-defaults", "source/aggregations", "source/joins", "source/expressions", "source/implicitly-joinable" ]
       },
-      "metabase.lib.schema.metadata..column.validate-expression-source" : {
-        "description" : "Only allow `:lib/expression-name` when `:lib/source` is `:source/expressions`. If it's anything else, it probably\n  means it's getting incorrectly propagated from a previous stage (QUE-1342)."
+      "metabase.lib.schema.metadata..column.validate-for-source" : {
+        "description" : "Do additional validation for column metadata based on `:lib/source`.",
+        "oneOf" : [ {
+          "$ref" : "#/components/schemas/metabase.lib.schema.metadata..column.validate-for-source-card"
+        }, {
+          "$ref" : "#/components/schemas/metabase.lib.schema.metadata..column.validate-for-source-native"
+        }, {
+          "$ref" : "#/components/schemas/metabase.lib.schema.metadata..column.validate-for-source-previous-stage"
+        }, {
+          "$ref" : "#/components/schemas/metabase.lib.schema.metadata..column.validate-for-source-table-defaults"
+        }, {
+          "$ref" : "#/components/schemas/metabase.lib.schema.metadata..column.validate-for-source-aggregations"
+        }, {
+          "$ref" : "#/components/schemas/metabase.lib.schema.metadata..column.validate-for-source-joins"
+        }, {
+          "$ref" : "#/components/schemas/metabase.lib.schema.metadata..column.validate-for-source-expressions"
+        }, {
+          "$ref" : "#/components/schemas/metabase.lib.schema.metadata..column.validate-for-source-implicitly-joinable"
+        }, { } ]
       },
-      "metabase.lib.schema.metadata..column.validate-native-column" : {
-        "description" : "Certain keys cannot possibly be set when a column comes from directly from native query results, for example\n  `:lib/breakout?` or join aliases"
+      "metabase.lib.schema.metadata..column.validate-for-source-aggregations" : {
+        "allOf" : [ ]
       },
-      "metabase.lib.schema.metadata..column.validate-table-defaults-column" : {
-        "description" : "A column with :lib/source :source/table-defaults cannot possibly have a join alias."
+      "metabase.lib.schema.metadata..column.validate-for-source-card" : {
+        "allOf" : [ ]
+      },
+      "metabase.lib.schema.metadata..column.validate-for-source-expressions" : {
+        "allOf" : [ ]
+      },
+      "metabase.lib.schema.metadata..column.validate-for-source-implicitly-joinable" : {
+        "allOf" : [ ]
+      },
+      "metabase.lib.schema.metadata..column.validate-for-source-joins" : {
+        "allOf" : [ ]
+      },
+      "metabase.lib.schema.metadata..column.validate-for-source-native" : {
+        "allOf" : [ ]
+      },
+      "metabase.lib.schema.metadata..column.validate-for-source-previous-stage" : {
+        "allOf" : [ ]
+      },
+      "metabase.lib.schema.metadata..column.validate-for-source-table-defaults" : {
+        "allOf" : [ ]
       },
       "metabase.lib.schema.metadata..column.visibility-type" : {
         "type" : "string",
@@ -3925,7 +3955,7 @@
               "$ref" : "#/components/schemas/metabase.lib.schema.metadata..column.visibility-type"
             },
             "fk-join-alias" : {
-              "$ref" : "#/components/schemas/metabase.lib.schema.common.non-blank-string"
+              "$ref" : "#/components/schemas/metabase.lib.schema.join.alias"
             },
             "lib/external-remap" : {
               "$ref" : "#/components/schemas/metabase.lib.schema.metadata..column.remapping.external"
@@ -3965,7 +3995,7 @@
               "$ref" : "#/components/schemas/metabase.lib.schema.common.non-blank-string"
             },
             "fk-field-name" : {
-              "$ref" : "#/components/schemas/metabase.lib.schema.common.non-blank-string"
+              "type" : "string"
             },
             "name" : {
               "type" : "string"
@@ -4030,9 +4060,6 @@
             "lib/original-name" : {
               "$ref" : "#/components/schemas/metabase.lib.schema.metadata.original-name"
             },
-            "lib/hack-original-name" : {
-              "$ref" : "#/components/schemas/metabase.lib.schema.metadata.original-name"
-            },
             "semantic-type" : {
               "$ref" : "#/components/schemas/metabase.lib.schema.common.semantic-or-relation-type"
             },
@@ -4050,11 +4077,7 @@
         }, {
           "$ref" : "#/components/schemas/metabase.lib.schema.metadata.kebab-cased-map"
         }, {
-          "$ref" : "#/components/schemas/metabase.lib.schema.metadata..column.validate-expression-source"
-        }, {
-          "$ref" : "#/components/schemas/metabase.lib.schema.metadata..column.validate-native-column"
-        }, {
-          "$ref" : "#/components/schemas/metabase.lib.schema.metadata..column.validate-table-defaults-column"
+          "$ref" : "#/components/schemas/metabase.lib.schema.metadata..column.validate-for-source"
         } ]
       },
       "metabase.lib.schema.metadata.deduplicated-name" : {
@@ -4190,7 +4213,7 @@
                 "$ref" : "#/components/schemas/metabase.lib.schema.metadata..column.visibility-type"
               },
               "fk-join-alias" : {
-                "$ref" : "#/components/schemas/metabase.lib.schema.common.non-blank-string"
+                "$ref" : "#/components/schemas/metabase.lib.schema.join.alias"
               },
               "lib/external-remap" : {
                 "$ref" : "#/components/schemas/metabase.lib.schema.metadata..column.remapping.external"
@@ -4230,7 +4253,7 @@
                 "$ref" : "#/components/schemas/metabase.lib.schema.common.non-blank-string"
               },
               "fk-field-name" : {
-                "$ref" : "#/components/schemas/metabase.lib.schema.common.non-blank-string"
+                "type" : "string"
               },
               "name" : {
                 "type" : "string"
@@ -4295,9 +4318,6 @@
               "lib/original-name" : {
                 "$ref" : "#/components/schemas/metabase.lib.schema.metadata.original-name"
               },
-              "lib/hack-original-name" : {
-                "$ref" : "#/components/schemas/metabase.lib.schema.metadata.original-name"
-              },
               "semantic-type" : {
                 "$ref" : "#/components/schemas/metabase.lib.schema.common.semantic-or-relation-type"
               },
@@ -4315,11 +4335,7 @@
           }, {
             "$ref" : "#/components/schemas/metabase.lib.schema.metadata.kebab-cased-map"
           }, {
-            "$ref" : "#/components/schemas/metabase.lib.schema.metadata..column.validate-expression-source"
-          }, {
-            "$ref" : "#/components/schemas/metabase.lib.schema.metadata..column.validate-native-column"
-          }, {
-            "$ref" : "#/components/schemas/metabase.lib.schema.metadata..column.validate-table-defaults-column"
+            "$ref" : "#/components/schemas/metabase.lib.schema.metadata..column.validate-for-source"
           } ]
         }, {
           "$ref" : "#/components/schemas/metabase.legacy-mbql.schema.legacy-column-metadata"
@@ -20119,8 +20135,7 @@
           "name" : "q",
           "required" : false,
           "schema" : {
-            "type" : "string",
-            "minLength" : 1
+            "type" : "string"
           }
         }, {
           "in" : "query",
