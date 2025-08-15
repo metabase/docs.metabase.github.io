@@ -18,7 +18,7 @@ redirect_from:
 [Row and column security](./row-and-column-security) let you:
 
 - [Restrict **rows**](./row-and-column-security#row-level-security-filter-by-a-column-in-the-table).
-- [Restrict **columns** (and rows)](./row-and-column-security#custom-row-and-column-security-use-a-sql-question-to-create-a-custom-view-of-a-table).
+- [Restrict **columns** (and rows)](./row-and-column-security#custom-row-and-column-security-use-a-saved-question-to-create-a-custom-view-of-a-table).
 
 ## Setup for all examples below
 
