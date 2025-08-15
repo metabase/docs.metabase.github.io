@@ -208,6 +208,8 @@ type IconName =
   | "t-shirt"
   | "tab"
   | "table2"
+  | "thumbs_down"
+  | "thumbs_up"
   | "time_history"
   | "trash"
   | "trash_filled"

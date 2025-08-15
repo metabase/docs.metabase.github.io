@@ -173,7 +173,7 @@ Interactive embedding integrates with SSO ([JWT](/docs/latest/people-and-groups/
 
 - [Tables](../permissions/data)
 - [Rows](../permissions/row-and-column-security#row-level-security-filter-by-a-column-in-the-table)
-- [Columns](../permissions/row-and-column-security#custom-row-and-column-security-use-a-saved-question-to-create-a-custom-view-of-a-table)
+- [Columns](../permissions/row-and-column-security#custom-row-and-column-security-use-a-sql-question-to-create-a-custom-view-of-a-table)
 - [Other data permissions](../permissions/data), such as data download permissions or SQL access.
 
 ### Interactive embedding with SSO

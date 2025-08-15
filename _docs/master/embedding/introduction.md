@@ -25,6 +25,12 @@ With the [Embedded analytics SDK](./sdk/introduction), you can embed individual 
 
 **When to use the Embedded analytics SDK**: you want the most control over how you embed Metabase in your React app.
 
+## Embedded analytics JS
+
+With [Embedded analytics JS](./embedded-analytics-js), you can embed individual Metabase components in your web app with JavaScript — no React required. Choose from dashboards, questions, or the query builder, and configure per‑component options like drill‑through, parameters, downloads, and theming.
+
+**When to use Embedded analytics JS**: you’re not using React (or want a drop‑in script) and want to embed Metabase components with per‑component controls and theming.
+
 ## Interactive embedding
 
 Interactive embedding is the only kind of embedding that [integrates with SSO and data permissions](./interactive-embedding) to enable true self-service access to the underlying data.
@@ -45,21 +51,25 @@ If you'd like to share your data with the good people of the internet, admins ca
 
 ## Comparison of embedding types
 
-| Action                                                                                                                          | [Embedded analytics SDK](./sdk/introduction) | [Interactive](./interactive-embedding) | [Static](./static-embedding) | [Public](../embedding/public-links) |
-| ------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------- | ----------------------------------------- | ------------------------------- | -------------------------------------- |
-| Display charts and dashboards                                                                                                   | ✅                                              | ✅                                        | ✅                              | ✅                                     |
-| Display interactive [filter widgets](/glossary/filter-widget)                                           | ✅                                              | ✅                                        | ✅                              | ✅                                     |
-| Export results\*                                                                                                                | ✅                                              | ✅                                        | ✅                              | ✅                                     |
-| Restrict data with [locked filters](./static-embedding-parameters#restricting-data-in-a-static-embed-with-locked-parameters) | ❌                                              | ❌                                        | ✅                              | ❌                                     |
-| Restrict data with [row and column security](../permissions/row-and-column-security)                                         | ✅                                              | ✅                                        | ❌                              | ❌                                     |
-| Use the [drill-through menu](/learn/metabase-basics/querying-and-dashboards/questions/drill-through)    | ✅                                              | ✅                                        | ❌                              | ❌                                     |
-| Self-serve via [query builder](/glossary/query-builder)                                                 | ✅                                              | ✅                                        | ❌                              | ❌                                     |
-| View usage of embeds with [usage analytics](../usage-and-performance-tools/usage-analytics)                                  | ✅                                              | ✅                                        | ❌                              | ❌                                     |
-| [Actions on dashboards](../dashboards/actions)                                                                               | ✅                                              | ✅                                        | ❌                              | ❌                                     |
-| Embed individual Metabase components                                                                                            | ✅                                              | ❌                                        | ❌                              | ❌                                     |
-| Manage access and interactivity per component                                                                                   | ✅                                              | ❌                                        | ❌                              | ❌                                     |
+| Action                                                                                                                          | [SDK](./sdk/introduction) | [JS](./embedded-analytics-js) | [Interactive](./interactive-embedding) | [Static](./static-embedding) | [Public](../embedding/public-links) |
+| ------------------------------------------------------------------------------------------------------------------------------- | ---------------------------- | -------------------------------- | ----------------------------------------- | ------------------------------- | -------------------------------------- |
+| Display charts and dashboards                                                                                                   | ✅                           | ✅                               | ✅                                        | ✅                              | ✅                                     |
+| Display interactive [filter widgets](/glossary/filter-widget)                                           | ✅                           | ✅                               | ✅                                        | ✅                              | ✅                                     |
+| Export results\*                                                                                                                | ✅                           | ✅                               | ✅                                        | ✅                              | ✅                                     |
+| Restrict data with [locked filters](./static-embedding-parameters#restricting-data-in-a-static-embed-with-locked-parameters) | ❌                           | ❌                               | ❌                                        | ✅                              | ❌                                     |
+| Restrict data with [row and column security](../permissions/row-and-column-security)                                         | ✅                           | ✅                               | ✅                                        | ❌                              | ❌                                     |
+| Use the [drill-through menu](/learn/metabase-basics/querying-and-dashboards/questions/drill-through)    | ✅                           | ✅                               | ✅                                        | ❌                              | ❌                                     |
+| Self-serve via [query builder](/glossary/query-builder)                                                 | ✅                           | ✅                               | ✅                                        | ❌                              | ❌                                     |
+| View usage of embeds with [usage analytics](../usage-and-performance-tools/usage-analytics)                                  | ✅                           | ✅                               | ✅                                        | ❌                              | ❌                                     |
+| [Actions on dashboards](../dashboards/actions)                                                                               | ✅                           | ✅                               | ✅                                        | ❌                              | ❌                                     |
+| Embed individual Metabase components                                                                                            | ✅                           | ✅                               | ❌                                        | ❌                              | ❌                                     |
+| Manage access and interactivity per component                                                                                   | ✅                           | ✅                               | ❌                                        | ❌                              | ❌                                     |
 
 \* Each embedding type allows data downloads by default, but only [Pro and Enterprise](/pricing/) plans can disable data downloads.
+
+### Embedded analytics SDK vs JS
+
+When deciding between the Embedded analytics SDK and Embedded analytics JS: if your app uses React, you should use the SDK. Otherwise, use the JS library. The JS library uses the SDK under the hood, but you can have more control with React and the SDK.
 
 ## Switching from static to interactive embedding
 
