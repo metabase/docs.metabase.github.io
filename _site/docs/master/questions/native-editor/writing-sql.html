@@ -4945,6 +4945,18 @@ Roadmap</a>
 
 <p>When you run a query from the SQL editor, Metabase sends the query to your database exactly as it is written. Any results or errors displayed in Metabase are the same as the results or errors that you would get if you ran the query directly against your database. If the SQL syntax of your query doesn’t match the SQL dialect used by your database, your database won’t be able to run the query.</p>
 
+<h2 id="the-native-query-editor-is-designed-for-reading-data-not-writing-it">The native query editor is designed for reading data, not writing it</h2>
+
+<p>The native SQL editor is designed for asking questions about your data. Don’t use the editor for:</p>
+
+<ul>
+  <li>Multi-statement queries</li>
+  <li>Stored procedures and function calls</li>
+  <li>DDL statements (like <code class="language-plaintext highlighter-rouge">CREATE</code>, <code class="language-plaintext highlighter-rouge">ALTER</code>, or <code class="language-plaintext highlighter-rouge">DROP</code>)</li>
+</ul>
+
+<p>Depending on your connection’s privileges, some of the above actions may work, but none are officially supported, and we recommend against using the native query editor for these tasks.</p>
+
 <h2 id="question-version-history">Question version history</h2>
 
 <p>For questions, <a href="../../dashboards/start">dashboards</a>, and <a href="../../data-modeling/models">models</a>, Metabase keeps a version history for the previous fifteen versions of that item.</p>
