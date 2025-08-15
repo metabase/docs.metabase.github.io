@@ -164,7 +164,7 @@ For example, this will define the font, color, and size for text, color for back
 </script>
 ```
 
-For the full list of theme settings, see [Appearance](../sdk/appearance).
+For the full list of theme settings, see [Appearance](./sdk/appearance).
 
 ## Authentication
 
@@ -193,7 +193,7 @@ Note that this will not work in some browsers, or in incognito mode. We recommen
 
 To use an API key to test your embeds:
 
-1. Create an [API key](../../people-and-groups/api-keys)
+1. Create an [API key](../people-and-groups/api-keys)
 2. Add `apiKey: "YOUR_API_KEY"` to `defineMetabaseConfig()`:
 
 ```html
