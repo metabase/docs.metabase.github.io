@@ -13,7 +13,7 @@ latest: true
 
 # Metabase config file template
 
-You can generate the following config file template by changing into the top-level Metabase directory and running:
+You can generate the following docs by changing into the top-level Metabase directory and running:
 
 ```
 clojure -M:doc:ee config-template
@@ -112,6 +112,7 @@ config:
     application-name: Metabase
     attachment-row-limit: null
     attachment-table-row-limit: 20
+    audit-max-retention-days: null
     bcc-enabled: true
     breakout-bin-width: 10.0
     breakout-bins-num: 8
@@ -160,6 +161,7 @@ config:
     help-link: metabase
     help-link-custom-destination: https://www.metabase.com/help/premium
     humanization-strategy: simple
+    install-analytics-database: true
     jdbc-data-warehouse-max-connection-pool-size: 15
     jwt-attribute-email: email
     jwt-attribute-firstname: first_name
@@ -192,6 +194,7 @@ config:
     ldap-user-base: null
     ldap-user-filter: (&(objectClass=inetOrgPerson)(|(uid={login})(mail={login})))
     ldap-user-provisioning-enabled: true
+    load-analytics-content: true
     loading-message: doing-science
     login-page-illustration: default
     login-page-illustration-custom: null
@@ -243,6 +246,7 @@ config:
     search-engine: appdb
     search-language: null
     search-typeahead-enabled: true
+    send-email-on-first-login-from-new-device: true
     send-new-sso-user-admin-email: null
     session-cookie-samesite: lax
     session-cookies: null
@@ -250,6 +254,7 @@ config:
     setup-embedding-autoenabled: false
     setup-license-active-at-setup: false
     show-database-syncing-modal: null
+    show-google-sheets-integration: null
     show-homepage-data: true
     show-homepage-xrays: true
     show-metabase-links: true
