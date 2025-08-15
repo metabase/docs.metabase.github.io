@@ -5343,6 +5343,54 @@ If set to 0, Metabase will keep all rows.</p>
 
 <p>This feature is experimental.</p>
 
+<h3 id="mb_ee_embedding_model"><code class="language-plaintext highlighter-rouge">MB_EE_EMBEDDING_MODEL</code></h3>
+
+<ul>
+  <li>Type: string</li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">Snowflake/snowflake-arctic-embed-l-v2.0</code></li>
+  <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">ee-embedding-model</code></li>
+</ul>
+
+<p>Set the embedding model for the selected provider.</p>
+
+<p>This feature is experimental.</p>
+
+<h3 id="mb_ee_embedding_model_dimensions"><code class="language-plaintext highlighter-rouge">MB_EE_EMBEDDING_MODEL_DIMENSIONS</code></h3>
+
+<ul>
+  <li>Type: positive-integer</li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">1024</code></li>
+  <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">ee-embedding-model-dimensions</code></li>
+</ul>
+
+<p>Set the dimension size for the selected embedding model.</p>
+
+<p>This feature is experimental.</p>
+
+<h3 id="mb_ee_embedding_provider"><code class="language-plaintext highlighter-rouge">MB_EE_EMBEDDING_PROVIDER</code></h3>
+
+<ul>
+  <li>Type: string</li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">ai-service</code></li>
+  <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">ee-embedding-provider</code></li>
+</ul>
+
+<p>The embedding provider to use (:openai, :ollama, or :ai-service).</p>
+
+<p>This feature is experimental.</p>
+
+<h3 id="mb_ee_openai_api_base_url"><code class="language-plaintext highlighter-rouge">MB_EE_OPENAI_API_BASE_URL</code></h3>
+
+<ul>
+  <li>Type: string</li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">https://api.openai.com</code></li>
+  <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">ee-openai-api-base-url</code></li>
+</ul>
+
+<p>The OpenAI embeddings base URL used in Metabase Enterprise.</p>
+
+<p>This feature is experimental.</p>
+
 <h3 id="mb_ee_openai_api_key"><code class="language-plaintext highlighter-rouge">MB_EE_OPENAI_API_KEY</code></h3>
 
 <ul>
@@ -5499,7 +5547,7 @@ If set to 0, Metabase will keep all rows.</p>
 
 <ul>
   <li>Type: keyword</li>
-  <li>Default: <code class="language-plaintext highlighter-rouge">:none</code></li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">none</code></li>
   <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">email-smtp-security</code></li>
 </ul>
 
@@ -5513,7 +5561,7 @@ If set to 0, Metabase will keep all rows.</p>
 
 <ul>
   <li>Type: keyword</li>
-  <li>Default: <code class="language-plaintext highlighter-rouge">:ssl</code></li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">ssl</code></li>
   <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">email-smtp-security-override</code></li>
 </ul>
 
@@ -5593,7 +5641,7 @@ If set to 0, Metabase will keep all rows.</p>
 
 <ul>
   <li>Type: keyword</li>
-  <li>Default: <code class="language-plaintext highlighter-rouge">:hidden</code></li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">hidden</code></li>
   <li><a href="../installation-and-operation/serialization">Exported as</a>: <code class="language-plaintext highlighter-rouge">embedding-homepage</code>.</li>
   <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">embedding-homepage</code></li>
 </ul>
@@ -5788,7 +5836,7 @@ If set to 0, Metabase will keep all rows.</p>
 
 <ul>
   <li>Type: keyword</li>
-  <li>Default: <code class="language-plaintext highlighter-rouge">:metabase</code></li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">metabase</code></li>
   <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">help-link</code></li>
 </ul>
 
@@ -5812,7 +5860,7 @@ If set to 0, Metabase will keep all rows.</p>
 
 <ul>
   <li>Type: keyword</li>
-  <li>Default: <code class="language-plaintext highlighter-rouge">:external-only</code></li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">external-only</code></li>
 </ul>
 
 <p>Controls which types of hosts are allowed as HTTP channel destinations.
@@ -5828,12 +5876,23 @@ Options:</p>
 
 <ul>
   <li>Type: keyword</li>
-  <li>Default: <code class="language-plaintext highlighter-rouge">:simple</code></li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">simple</code></li>
   <li><a href="../installation-and-operation/serialization">Exported as</a>: <code class="language-plaintext highlighter-rouge">humanization-strategy</code>.</li>
   <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">humanization-strategy</code></li>
 </ul>
 
 <p>To make table and field names more human-friendly, Metabase will replace dashes and underscores in them with spaces. We’ll capitalize each word while at it, so ‘last_visited_at’ will become ‘Last Visited At’.</p>
+
+<h3 id="mb_index_update_thread_count"><code class="language-plaintext highlighter-rouge">MB_INDEX_UPDATE_THREAD_COUNT</code></h3>
+
+<ul>
+  <li>Type: integer</li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">2</code></li>
+</ul>
+
+<p>Number of threads to use for batched index updates, including embedding requests.</p>
+
+<p>Number of threads to use for batched index updates, including embedding requests</p>
 
 <h3 id="mb_install_analytics_database"><code class="language-plaintext highlighter-rouge">MB_INSTALL_ANALYTICS_DATABASE</code></h3>
 
@@ -6174,7 +6233,7 @@ Options:</p>
 
 <ul>
   <li>Type: keyword</li>
-  <li>Default: <code class="language-plaintext highlighter-rouge">:none</code></li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">none</code></li>
   <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">ldap-security</code></li>
 </ul>
 
@@ -6261,7 +6320,7 @@ don’t have one.</p>
 
 <ul>
   <li>Type: keyword</li>
-  <li>Default: <code class="language-plaintext highlighter-rouge">:doing-science</code></li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">doing-science</code></li>
   <li><a href="../installation-and-operation/serialization">Exported as</a>: <code class="language-plaintext highlighter-rouge">loading-message</code>.</li>
   <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">loading-message</code></li>
 </ul>
@@ -6312,7 +6371,7 @@ don’t have one.</p>
 
 <ul>
   <li>Type: keyword</li>
-  <li>Default: <code class="language-plaintext highlighter-rouge">:substring</code></li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">substring</code></li>
   <li><a href="../installation-and-operation/serialization">Exported as</a>: <code class="language-plaintext highlighter-rouge">native-query-autocomplete-match-style</code>.</li>
   <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">native-query-autocomplete-match-style</code></li>
 </ul>
@@ -6446,6 +6505,17 @@ don’t have one.</p>
 <p>If Metabase stops sending notifications like alerts, it may be because long-running
   queries are clogging the notification queue. You may be able to unclog the queue by
   increasing the size of the thread pool dedicated to notifications.</p>
+
+<h3 id="mb_openai_max_tokens_per_batch"><code class="language-plaintext highlighter-rouge">MB_OPENAI_MAX_TOKENS_PER_BATCH</code></h3>
+
+<ul>
+  <li>Type: integer</li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">4000</code></li>
+</ul>
+
+<p>The maximum number of tokens sent in a single embedding API call.</p>
+
+<p>The maximum number of tokens sent in a single embedding API call.</p>
 
 <h3 id="mb_persisted_model_refresh_cron_schedule"><code class="language-plaintext highlighter-rouge">MB_PERSISTED_MODEL_REFRESH_CRON_SCHEDULE</code></h3>
 
@@ -6840,15 +6910,6 @@ don’t have one.</p>
 
 <p>Used for encrypting and checking whether SDK requests are signed.</p>
 
-<h3 id="mb_search_engine"><code class="language-plaintext highlighter-rouge">MB_SEARCH_ENGINE</code></h3>
-
-<ul>
-  <li>Type: keyword</li>
-  <li>Default: <code class="language-plaintext highlighter-rouge">:appdb</code></li>
-</ul>
-
-<p>Which engine to use when performing search. Supported values are :in-place and :appdb.</p>
-
 <h3 id="mb_search_language"><code class="language-plaintext highlighter-rouge">MB_SEARCH_LANGUAGE</code></h3>
 
 <ul>
@@ -6869,6 +6930,37 @@ don’t have one.</p>
 </ul>
 
 <p>Enable typeahead search in the Metabase navbar?</p>
+
+<h3 id="mb_semantic_search_enabled"><code class="language-plaintext highlighter-rouge">MB_SEMANTIC_SEARCH_ENABLED</code></h3>
+
+<ul>
+  <li>Type: boolean</li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">true</code></li>
+</ul>
+
+<p>Enable the semantic search engine? Intended as a kill switch for the semantic search feature while dogfooding.</p>
+
+<h3 id="mb_semantic_search_min_results_threshold"><code class="language-plaintext highlighter-rouge">MB_SEMANTIC_SEARCH_MIN_RESULTS_THRESHOLD</code></h3>
+
+<ul>
+  <li>Type: integer</li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">100</code></li>
+</ul>
+
+<p>Minimum number of semantic search results required before falling back to other engines.</p>
+
+<p>Minimum number of semantic search results required before falling back to other engines.</p>
+
+<h3 id="mb_semantic_search_results_limit"><code class="language-plaintext highlighter-rouge">MB_SEMANTIC_SEARCH_RESULTS_LIMIT</code></h3>
+
+<ul>
+  <li>Type: integer</li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">1000</code></li>
+</ul>
+
+<p>Maximum number of results to return from a single semantic search query.</p>
+
+<p>Maximum number of results to return from a single semantic search query.</p>
 
 <h3 id="mb_send_email_on_first_login_from_new_device"><code class="language-plaintext highlighter-rouge">MB_SEND_EMAIL_ON_FIRST_LOGIN_FROM_NEW_DEVICE</code></h3>
 
@@ -6898,7 +6990,7 @@ don’t have one.</p>
 
 <ul>
   <li>Type: keyword</li>
-  <li>Default: <code class="language-plaintext highlighter-rouge">:lax</code></li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">lax</code></li>
   <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">session-cookie-samesite</code></li>
 </ul>
 
@@ -7159,7 +7251,7 @@ don’t have one.</p>
 
 <ul>
   <li>Type: keyword</li>
-  <li>Default: <code class="language-plaintext highlighter-rouge">:sunday</code></li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">sunday</code></li>
   <li><a href="../installation-and-operation/serialization">Exported as</a>: <code class="language-plaintext highlighter-rouge">start-of-week</code>.</li>
   <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">start-of-week</code></li>
 </ul>
@@ -7189,16 +7281,6 @@ don’t have one.</p>
 </ul>
 
 <p>Enable or disable surveys.</p>
-
-<h3 id="mb_sync_leaf_fields_limit"><code class="language-plaintext highlighter-rouge">MB_SYNC_LEAF_FIELDS_LIMIT</code></h3>
-
-<ul>
-  <li>Type: integer</li>
-  <li>Default: <code class="language-plaintext highlighter-rouge">1000</code></li>
-  <li><a href="../installation-and-operation/serialization">Exported as</a>: <code class="language-plaintext highlighter-rouge">sync-leaf-fields-limit</code>.</li>
-</ul>
-
-<p>Maximum number of leaf fields synced per collection of document database. Currently relevant for Mongo. Not to be confused with total number of synced fields. For every chosen leaf field, all intermediate fields from root to leaf are synced as well.</p>
 
 <h3 id="mb_synchronous_batch_updates"><code class="language-plaintext highlighter-rouge">MB_SYNCHRONOUS_BATCH_UPDATES</code></h3>
 
@@ -7308,7 +7390,7 @@ don’t have one.</p>
 
 <ul>
   <li>Type: keyword</li>
-  <li>Default: <code class="language-plaintext highlighter-rouge">:all</code></li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">all</code></li>
   <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">user-visibility</code></li>
 </ul>
 
