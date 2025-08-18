@@ -19,10 +19,17 @@ layout: new-docs
   longer include parent column names for drivers like MongoDB -- use `qp.add.nfc-path` instead to qualify the
   `qp.add.source-column-alias` with parent column names as needed.
 
+## Metabase 0.56.3
+
 - Added metabase.driver/compile-transform, metabase.driver/compile-drop-table, metabase.driver/execute-raw-queries!,
   metabase.driver/run-transform!, metabase.driver/drop-transform-target!, metabase.driver/native-query-deps,
   metabase.driver/connection-details, metabase.driver/table-exists?, metabase.driver.sql/normalize-name,
   metabase.driver.sql/default-schema, and metabase.driver.sql/find-table to implement sql transforms.
+
+- Added the driver multi-method `driver/describe-database*` that drivers should now implement instead of `driver/describe-database`.
+  This provides automatic resilient connection handling for better error recovery when database connections are closed
+  during metadata sync operations. Existing drivers implementing `describe-database` will continue to work but should
+  migrate to `describe-database*` to benefit from the resilient connection handling.
 
 ## Metabase 0.56.0
 
