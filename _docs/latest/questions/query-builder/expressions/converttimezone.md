@@ -1,5 +1,5 @@
 ---
-version: v0.55
+version: v0.56
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -109,7 +109,7 @@ For more gory details, see [Limitations](#limitations).
 
 We use "timestamp" and "datetime" to talk about any temporal data type that's supported by Metabase.
 
-If your timestamps are stored as strings or numbers in your database, an admin can [cast them to timestamps](../../../data-modeling/metadata-editing#casting-to-a-specific-data-type) from the Table Metadata page.
+If your timestamps are stored as strings or numbers in your database, an admin can [cast them to timestamps](../../../data-modeling/metadata-editing#cast-to-a-specific-data-type) from the Table Metadata page.
 
 To use `convertTimezone` without running into errors or pesky undetectable mistakes, you should know that there are a few varieties of `timestamp` data types:
 

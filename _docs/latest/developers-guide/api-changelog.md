@@ -1,5 +1,5 @@
 ---
-version: v0.55
+version: v0.56
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -33,13 +33,14 @@ latest: true
   thing.
 
 - `GET /api/util/diagnostic_info/connection_pool_info` has been renamed to `GET
-  /api/bug-reporting/connection-pool-details`.
+/api/bug-reporting/connection-pool-details`.
 
 ## Metabase 0.54.0
 
 - The alert system has been migrated from the legacy pulse infrastructure to the new notification system. This migration includes the following changes:
 
   - The majority of `/api/alert` endpoints have been removed in favor of the new `/api/notification` endpoints. For backward compatibility, these endpoints will remain available until the next release:
+
     - `GET /api/alert`
     - `GET /api/alert/:id`
     - `DELETE /api/alert/:id/subscription`

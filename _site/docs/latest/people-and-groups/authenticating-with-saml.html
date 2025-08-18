@@ -174,8 +174,7 @@
   <div>
     <span class="button">New</span>
     <span>Metabase 56: Filters in the body of dashboards, time grouping for native queries, simpler embedding, and much more!</span>
-    <a href="/releases/metabase-56">Read the announcement</a>
-      <img alt="Chevron Blue Right" src="/images/chevron_blue_right.svg">
+    <a href="/releases/metabase-56">Read the announcement <b>›</b></a>
   </div>
   <button>×</button>
 </div>
@@ -1769,7 +1768,42 @@ Roadmap</a>
                       
                       <li>
                         <a href="/docs/latest/questions/native-editor/sql-parameters" class="">
-                          SQL parameters and field filters
+                          SQL parameters
+                        </a>
+                      </li>
+                    
+                      
+                      <li>
+                        <a href="/docs/latest/questions/native-editor/field-filters" class="">
+                          Field filters
+                        </a>
+                      </li>
+                    
+                      
+                      <li>
+                        <a href="/docs/latest/questions/native-editor/basic-sql-parameters" class="">
+                          Basic SQL parameters
+                        </a>
+                      </li>
+                    
+                      
+                      <li>
+                        <a href="/docs/latest/questions/native-editor/time-grouping-parameters" class="">
+                          Time grouping parameters
+                        </a>
+                      </li>
+                    
+                      
+                      <li>
+                        <a href="/docs/latest/questions/native-editor/optional-variables" class="">
+                          Optional variables
+                        </a>
+                      </li>
+                    
+                      
+                      <li>
+                        <a href="/docs/latest/questions/native-editor/filter-widgets" class="">
+                          Filter widgets
                         </a>
                       </li>
                     
@@ -2859,7 +2893,7 @@ Roadmap</a>
 
               <li class="">
                 <a href="/docs/latest/embedding/sdk/upgrade" class="">
-                  Upgrade
+                  Upgrading
 
                   
                 </a>
@@ -2911,6 +2945,24 @@ Roadmap</a>
       <li class="">
         <a href="/docs/latest/embedding/securing-embeds" class="">
         Securing embedded Metabase
+
+          
+        </a>
+
+        
+      </li>
+    
+      
+
+      
+
+      
+
+      
+
+      <li class="">
+        <a href="/docs/latest/embedding/translations" class="">
+        Translated embedded questions and dashboards
 
           
         </a>
@@ -4153,8 +4205,8 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/latest/permissions/data-sandboxes" class="">
-                  Data sandboxes
+                <a href="/docs/latest/permissions/row-and-column-security" class="">
+                  Row and column security
 
                   
                 </a>
@@ -4168,8 +4220,8 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/latest/permissions/data-sandbox-examples" class="">
-                  Data sandbox examples
+                <a href="/docs/latest/permissions/row-and-column-security-examples" class="">
+                  Row and column security examples
 
                   
                 </a>
@@ -4662,7 +4714,7 @@ Roadmap</a>
 <div class="version__selector cursor-pointer">
   <span class="version__current">
     
-      v0.55
+      v0.56
     
 
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="chevron">
@@ -4673,13 +4725,13 @@ Roadmap</a>
   <ul class="version__dropdown">
     
       
+    
+      
         <li>
-          <a href="/docs/v0.56">
-            v0.56
+          <a href="/docs/v0.55">
+            v0.55
           </a>
         </li>
-      
-    
       
     
       
@@ -4800,7 +4852,7 @@ Roadmap</a>
 
 <ul>
   <li>Provision a Metabase account when someone logs in to Metabase.</li>
-  <li>Automatically pass user attributes from your SSO to Metabase in order to power <a href="../permissions/data-sandboxes">data sandboxes</a>.</li>
+  <li>Automatically pass user attributes from your SSO to Metabase in order to power <a href="../permissions/row-and-column-security">row and column security</a>.</li>
   <li>Let people access Metabase without re-authenticating.</li>
 </ul>
 
@@ -5027,6 +5079,18 @@ Roadmap</a>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://metabase.example.com/auth/sso/handle_slo
 </code></pre></div></div>
+
+<h3 id="enable-saml-slo">Enable SAML SLO</h3>
+
+<p>SLO isn’t configurable from the Metabase interface. To enable it, you’ll need to set the following options using environment variables or your Metabase configuration file:</p>
+
+<ul>
+  <li><a href="../configuring-metabase/environment-variables#mb_saml_slo_enabled"><code class="language-plaintext highlighter-rouge">MB_SAML_SLO_ENABLED</code></a> to <code class="language-plaintext highlighter-rouge">true</code>;</li>
+  <li><a href="../configuring-metabase/environment-variables#mb_saml_identity_provider_uri"><code class="language-plaintext highlighter-rouge">MB_SAML_IDENTITY_PROVIDER_URI</code></a> to your IdP’s SLO endpoint;</li>
+  <li><a href="../configuring-metabase/environment-variables#mb_session_cookie_samesite"><code class="language-plaintext highlighter-rouge">MB_SESSION_COOKIE_SAMESITE</code></a> to <code class="language-plaintext highlighter-rouge">none</code>.</li>
+</ul>
+
+<p>For the <code class="language-plaintext highlighter-rouge">MB_SESSION_COOKIE_SAMESITE</code> setting to work with <code class="language-plaintext highlighter-rouge">none</code>, Metabase must be served over HTTPS. Browsers like Chrome will block cookies in cross-site requests if SSL is not enabled. Without HTTPS, logout requests from your IdP (such as Okta) won’t include the session cookie, which means Metabase won’t be able to end the session properly.</p>
 
 <h2 id="synchronizing-group-membership-with-your-idp">Synchronizing group membership with your IdP</h2>
 

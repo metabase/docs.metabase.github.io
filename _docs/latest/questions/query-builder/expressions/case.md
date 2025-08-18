@@ -1,5 +1,5 @@
 ---
-version: v0.55
+version: v0.56
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -58,8 +58,8 @@ case([Amount] >= 0  AND [Amount] <=  9,  "0-9",
 | ----------- | --------- | -------- | ------------- |
 | 1           | True      | True     | Bird          |
 | 2           | True      | False    | Plane         |
-| 3           | False     | False    | Superman      |
-| 4           | False     | True     | Unknown       |
+| 3           | False     | True     | Superman      |
+| 4           | False     | False    | Unknown       |
 
 where **Sighting Type** is a custom column with the expression:
 
@@ -73,7 +73,7 @@ You can use the columns holding your "labels" to:
 
 - Apply [business definitions or business logic][business-logic] to your datasets.
 - [Power a filter][filter-learn].
-- [Segment data for data sandboxing][data-sandboxing-docs].
+- [Segment data for row and column security](../../../permissions/row-and-column-security).
 
 ## Aggregating data based on conditions from multiple columns
 
@@ -343,7 +343,6 @@ case([Has Wings] = TRUE  AND [Has Face] = TRUE,  "Bird",
 [custom-expressions-doc]: ../expressions
 [custom-expressions-list]: ../expressions-list
 [custom-expressions-learn]: /learn/metabase-basics/querying-and-dashboards/questions/custom-expressions
-[data-sandboxing-docs]: ../../../permissions/data-sandboxes
 [data-types]: /learn/grow-your-data-skills/data-fundamentals/data-types-overview#examples-of-data-types
 [filter-learn]: /learn/metabase-basics/querying-and-dashboards/questions/searching-tables
 [notebook-editor-def]: /glossary/notebook-editor

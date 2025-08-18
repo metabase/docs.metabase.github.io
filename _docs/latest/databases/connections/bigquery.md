@@ -1,5 +1,5 @@
 ---
-version: v0.55
+version: v0.56
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -171,6 +171,8 @@ If you're having trouble with your BigQuery connection, you can check out this [
 There aren't (yet) any model features available for BigQuery.
 
 ## Database routing
+
+With database routing, an admin can build a question once using one database, and the question will run its query against a different database with the same schema depending on who is viewing the question.
 
 Database routing for BigQuery works between BigQuery **projects** with identical schemas.
 

@@ -174,8 +174,7 @@
   <div>
     <span class="button">New</span>
     <span>Metabase 56: Filters in the body of dashboards, time grouping for native queries, simpler embedding, and much more!</span>
-    <a href="/releases/metabase-56">Read the announcement</a>
-      <img alt="Chevron Blue Right" src="/images/chevron_blue_right.svg">
+    <a href="/releases/metabase-56">Read the announcement <b>›</b></a>
   </div>
   <button>×</button>
 </div>
@@ -1769,7 +1768,42 @@ Roadmap</a>
                       
                       <li>
                         <a href="/docs/latest/questions/native-editor/sql-parameters" class="">
-                          SQL parameters and field filters
+                          SQL parameters
+                        </a>
+                      </li>
+                    
+                      
+                      <li>
+                        <a href="/docs/latest/questions/native-editor/field-filters" class="">
+                          Field filters
+                        </a>
+                      </li>
+                    
+                      
+                      <li>
+                        <a href="/docs/latest/questions/native-editor/basic-sql-parameters" class="">
+                          Basic SQL parameters
+                        </a>
+                      </li>
+                    
+                      
+                      <li>
+                        <a href="/docs/latest/questions/native-editor/time-grouping-parameters" class="">
+                          Time grouping parameters
+                        </a>
+                      </li>
+                    
+                      
+                      <li>
+                        <a href="/docs/latest/questions/native-editor/optional-variables" class="">
+                          Optional variables
+                        </a>
+                      </li>
+                    
+                      
+                      <li>
+                        <a href="/docs/latest/questions/native-editor/filter-widgets" class="">
+                          Filter widgets
                         </a>
                       </li>
                     
@@ -2859,7 +2893,7 @@ Roadmap</a>
 
               <li class="">
                 <a href="/docs/latest/embedding/sdk/upgrade" class="">
-                  Upgrade
+                  Upgrading
 
                   
                 </a>
@@ -2911,6 +2945,24 @@ Roadmap</a>
       <li class="">
         <a href="/docs/latest/embedding/securing-embeds" class="">
         Securing embedded Metabase
+
+          
+        </a>
+
+        
+      </li>
+    
+      
+
+      
+
+      
+
+      
+
+      <li class="">
+        <a href="/docs/latest/embedding/translations" class="">
+        Translated embedded questions and dashboards
 
           
         </a>
@@ -4153,8 +4205,8 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/latest/permissions/data-sandboxes" class="">
-                  Data sandboxes
+                <a href="/docs/latest/permissions/row-and-column-security" class="">
+                  Row and column security
 
                   
                 </a>
@@ -4168,8 +4220,8 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/latest/permissions/data-sandbox-examples" class="">
-                  Data sandbox examples
+                <a href="/docs/latest/permissions/row-and-column-security-examples" class="">
+                  Row and column security examples
 
                   
                 </a>
@@ -4662,7 +4714,7 @@ Roadmap</a>
 <div class="version__selector cursor-pointer">
   <span class="version__current">
     
-      v0.55
+      v0.56
     
 
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="chevron">
@@ -4673,13 +4725,13 @@ Roadmap</a>
   <ul class="version__dropdown">
     
       
+    
+      
         <li>
-          <a href="/docs/v0.56">
-            v0.56
+          <a href="/docs/v0.55">
+            v0.55
           </a>
         </li>
-      
-    
       
     
       
@@ -4788,7 +4840,7 @@ Roadmap</a>
 
 <h2 id="initial-sync-scan-and-fingerprinting">Initial sync, scan, and fingerprinting</h2>
 
-<p>When Metabase first connects to your database, it performs a <a href="#how-database-syncs-work">sync</a> to determine the metadata of the columns in your tables and automatically assign each column a <a href="../data-modeling/field-types">semantic type</a>.</p>
+<p>When Metabase first connects to your database, it performs a <a href="#how-database-syncs-work">sync</a> to determine the metadata of the columns in your tables and automatically assign each column a <a href="../data-modeling/semantic-types">semantic type</a>.</p>
 
 <p>You can follow the progress of these queries from <strong>Gear icon</strong> &gt;<strong>Admin settings</strong> &gt; <strong>Tools</strong> &gt; <strong>Tasks</strong> and filtering by the various sync tasks.</p>
 
@@ -4831,7 +4883,7 @@ Roadmap</a>
   <li><strong>Never, I’ll do this manually if I need to</strong> is an option for databases that are either prohibitively large or which never really have new values added. Use the <a href="#manually-scanning-column-values">Re-scan field values</a> button to run a manual scan and bring your filter values up to date.</li>
 </ul>
 
-<p>Regardless of which option you pick, if you <a href="../data-modeling/metadata-editing#changing-the-filter-widget">set a field to use a dropdown list in filter widgets</a>, Metabase will need to get values for that dropdown. Whenever someone uses that filter widget, Metabase will first look for cached values (valid for fourteen days) to populate that dropdown; otherwise, it will re-scan that field for the most up-to-date values.</p>
+<p>Regardless of which option you pick, if you <a href="../data-modeling/metadata-editing#filtering">set a field to use a dropdown list in filter widgets</a>, Metabase will need to get values for that dropdown. Whenever someone uses that filter widget, Metabase will first look for cached values (valid for fourteen days) to populate that dropdown; otherwise, it will re-scan that field for the most up-to-date values.</p>
 
 <h2 id="manually-syncing-tables-and-columns">Manually syncing tables and columns</h2>
 
@@ -5005,7 +5057,7 @@ Roadmap</a>
     </tr>
     <tr>
       <td data-label="What">Advanced field values (with filtering context)</td>
-      <td data-label="Why">Values when the data is sandboxed</td>
+      <td data-label="Why">Values when the data is restricted by row or column security</td>
     </tr>
   </tbody>
 </table>

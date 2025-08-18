@@ -1,5 +1,5 @@
 ---
-version: v0.55
+version: v0.56
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -83,12 +83,6 @@ latest: true
 | [MetabaseAuthConfigWithApiKey](./api/MetabaseAuthConfigWithApiKey) | -                                                             |
 | [MetabaseAuthConfigWithJwt](./api/MetabaseAuthConfigWithJwt)       | -                                                             |
 | [MetabaseAuthConfigWithSaml](./api/MetabaseAuthConfigWithSaml)     | -                                                             |
-
-## ModifyQuestion
-
-| Function                                      | Description |
-| :-------------------------------------------- | :---------- |
-| [~~ModifyQuestion~~](./api/ModifyQuestion) | -           |
 
 ## StaticQuestion
 

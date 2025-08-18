@@ -1,5 +1,5 @@
 ---
-version: v0.55
+version: v0.56
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -13,15 +13,15 @@ latest: true
 
 ```ts
 type DashCardMenuItem = {
-  children: ReactNode;
-  closeMenuOnClick: boolean;
-  color: MantineColor;
-  disabled: boolean;
+  children?: ReactNode;
+  closeMenuOnClick?: boolean;
+  color?: MantineColor;
+  disabled?: boolean;
   iconName: IconName;
   label: string;
-  leftSection: ReactNode;
+  leftSection?: ReactNode;
   onClick: () => void;
-  rightSection: ReactNode;
+  rightSection?: ReactNode;
 };
 ```
 

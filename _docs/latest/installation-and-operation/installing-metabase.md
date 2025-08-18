@@ -1,5 +1,5 @@
 ---
-version: v0.55
+version: v0.56
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -60,7 +60,7 @@ See [Upgrading Metabase](upgrading-metabase).
 - [Running on Azure Web Apps](running-metabase-on-azure)
 - [Running on Debian as a service](running-metabase-on-debian)
 
-We currently do not distribute Metabase on AWS Marketplace or Azure Marketplace. 
+We currently do not distribute Metabase on AWS Marketplace or Azure Marketplace.
 
 Metabase doesn't have an officially supported helm chart.
 

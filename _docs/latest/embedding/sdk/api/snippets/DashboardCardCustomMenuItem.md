@@ -1,5 +1,5 @@
 ---
-version: v0.55
+version: v0.56
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -13,9 +13,9 @@ latest: true
 
 ```ts
 type DashboardCardCustomMenuItem = {
-  customItems: (DashCardMenuItem | CustomDashboardCardMenuItem)[];
-  withDownloads: boolean;
-  withEditLink: boolean;
+  customItems?: (DashCardMenuItem | CustomDashboardCardMenuItem)[];
+  withDownloads?: boolean;
+  withEditLink?: boolean;
 };
 ```
 

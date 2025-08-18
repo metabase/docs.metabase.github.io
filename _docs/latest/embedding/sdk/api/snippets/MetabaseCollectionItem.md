@@ -1,5 +1,5 @@
 ---
-version: v0.55
+version: v0.56
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -14,9 +14,9 @@ latest: true
 ```ts
 type MetabaseCollectionItem = {
   description: string | null;
-  entity_id: SdkEntityId;
+  entity_id?: SdkEntityId;
   id: SdkCollectionId;
-  last-edit-info: {
+  last-edit-info?: {
      email: string;
      first_name: string;
      id: SdkUserId;
@@ -25,7 +25,7 @@ type MetabaseCollectionItem = {
   };
   model: string;
   name: string;
-  type: "instance-analytics" | "trash" | "model" | "question" | "metric" | null;
+  type?: "instance-analytics" | "trash" | "model" | "question" | "metric" | null;
 };
 ```
 

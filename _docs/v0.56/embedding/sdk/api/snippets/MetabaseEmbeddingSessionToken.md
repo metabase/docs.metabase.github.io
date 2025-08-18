@@ -7,6 +7,7 @@ category: Embedding
 title: MetabaseEmbeddingSessionToken
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/embedding/sdk/api/snippets/MetabaseEmbeddingSessionToken.md'
 layout: new-docs
+latest: true
 ---
 
 ```ts

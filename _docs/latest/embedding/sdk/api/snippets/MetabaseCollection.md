@@ -1,5 +1,5 @@
 ---
-version: v0.55
+version: v0.56
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -14,10 +14,10 @@ latest: true
 ```ts
 type MetabaseCollection = {
   description: string | null;
-  entity_id: SdkEntityId;
+  entity_id?: SdkEntityId;
   id: SdkCollectionId;
   name: string;
-  slug: string;
+  slug?: string;
 };
 ```
 

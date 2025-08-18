@@ -1,5 +1,5 @@
 ---
-version: v0.55
+version: v0.56
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -16,7 +16,7 @@ Run `./bin/mage` to list your tasks. All of them support `-h` to learn more and 
 
 All tasks support a `-h` option and will print their usage info.
 
-``` shell
+```shell
 $ ./bin/mage
    ███╗   ███╗ █████╗  ██████╗ ███████╗
    ████╗ ████║██╔══██╗██╔════╝ ██╔════╝

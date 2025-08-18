@@ -1,5 +1,5 @@
 ---
-version: v0.55
+version: v0.56
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -14,25 +14,25 @@ latest: true
 ```ts
 function InteractiveDashboard(
   props: {
-    drillThroughQuestionHeight: Height<string | number>;
-    drillThroughQuestionProps: DrillThroughQuestionProps;
-    plugins: MetabasePluginsConfig;
-    renderDrillThroughQuestion: () => ReactNode;
+    drillThroughQuestionHeight?: Height<string | number>;
+    drillThroughQuestionProps?: DrillThroughQuestionProps;
+    plugins?: MetabasePluginsConfig;
+    renderDrillThroughQuestion?: () => ReactNode;
   } & {
     dashboardId: SdkDashboardId;
-    hiddenParameters: string[];
-    initialParameters: ParameterValues;
-    withCardTitle: boolean;
-    withDownloads: boolean;
-    withTitle: boolean;
+    hiddenParameters?: string[];
+    initialParameters?: ParameterValues;
+    withCardTitle?: boolean;
+    withDownloads?: boolean;
+    withTitle?: boolean;
   } & {
-    className: string;
-    style: CSSProperties;
+    className?: string;
+    style?: CSSProperties;
   } & {
-    onLoad: (dashboard: null | MetabaseDashboard) => void;
-    onLoadWithoutCards: (dashboard: null | MetabaseDashboard) => void;
+    onLoad?: (dashboard: null | MetabaseDashboard) => void;
+    onLoadWithoutCards?: (dashboard: null | MetabaseDashboard) => void;
   } & {
-    dataPickerProps: Pick<SdkQuestionProps, "entityTypes">;
+    dataPickerProps?: Pick<SdkQuestionProps, "entityTypes">;
   } & {},
 ): Element;
 ```
@@ -43,9 +43,9 @@ A dashboard component with drill downs, click behaviors, and the ability to view
 
 <!-- [<snippet parameters>] -->
 
-| Parameter | Type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | Description |
-| :-------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :---------- |
-| `props`   | \{ `drillThroughQuestionHeight`: `Height`\<`string` \| `number`\>; `drillThroughQuestionProps`: [`DrillThroughQuestionProps`](./api/DrillThroughQuestionProps); `plugins`: [`MetabasePluginsConfig`](./api/MetabasePluginsConfig); `renderDrillThroughQuestion`: () => [`ReactNode`](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/0b728411cd1dfb4bd26992bb35a73cf8edaa22e7/types/react/index.d.ts#L478); \} & \{ `dashboardId`: [`SdkDashboardId`](./api/SdkDashboardId); `hiddenParameters`: `string`[]; `initialParameters`: [`ParameterValues`](./api/ParameterValues); `withCardTitle`: `boolean`; `withDownloads`: `boolean`; `withTitle`: `boolean`; \} & \{ `className`: `string`; `style`: [`CSSProperties`](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/0b728411cd1dfb4bd26992bb35a73cf8edaa22e7/types/react/index.d.ts#L2579); \} & \{ `onLoad`: (`dashboard`: `null` \| [`MetabaseDashboard`](./api/MetabaseDashboard)) => `void`; `onLoadWithoutCards`: (`dashboard`: `null` \| [`MetabaseDashboard`](./api/MetabaseDashboard)) => `void`; \} & \{ `dataPickerProps`: [`Pick`](https://www.typescriptlang.org/docs/handbook/utility-types.html#picktype-keys)\<[`SdkQuestionProps`](./api/SdkQuestionProps), `"entityTypes"`\>; \} & \{ \} |             |
+| Parameter | Type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | Description |
+| :-------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :---------- |
+| `props`   | \{ `drillThroughQuestionHeight?`: `Height`\<`string` \| `number`\>; `drillThroughQuestionProps?`: [`DrillThroughQuestionProps`](./api/DrillThroughQuestionProps); `plugins?`: [`MetabasePluginsConfig`](./api/MetabasePluginsConfig); `renderDrillThroughQuestion?`: () => [`ReactNode`](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/0b728411cd1dfb4bd26992bb35a73cf8edaa22e7/types/react/index.d.ts#L478); \} & \{ `dashboardId`: [`SdkDashboardId`](./api/SdkDashboardId); `hiddenParameters?`: `string`[]; `initialParameters?`: [`ParameterValues`](./api/ParameterValues); `withCardTitle?`: `boolean`; `withDownloads?`: `boolean`; `withTitle?`: `boolean`; \} & \{ `className?`: `string`; `style?`: [`CSSProperties`](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/0b728411cd1dfb4bd26992bb35a73cf8edaa22e7/types/react/index.d.ts#L2579); \} & \{ `onLoad?`: (`dashboard`: `null` \| [`MetabaseDashboard`](./api/MetabaseDashboard)) => `void`; `onLoadWithoutCards?`: (`dashboard`: `null` \| [`MetabaseDashboard`](./api/MetabaseDashboard)) => `void`; \} & \{ `dataPickerProps?`: [`Pick`](https://www.typescriptlang.org/docs/handbook/utility-types.html#picktype-keys)\<[`SdkQuestionProps`](./api/SdkQuestionProps), `"entityTypes"`\>; \} & \{ \} |             |
 
 <!-- [<endsnippet parameters>] -->
 

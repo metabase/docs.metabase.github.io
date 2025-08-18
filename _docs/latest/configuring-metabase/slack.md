@@ -1,5 +1,5 @@
 ---
-version: v0.55
+version: v0.56
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -93,6 +93,7 @@ It can take a little time for metabase to see all the channels the app has been 
 
 In order for metabase to see private channels, the app must have the `groups:read` oauth scope. Although this scope should be granted when setting up the app through metabase, older installations might not have this scope.
 If you think this might be the case [visit the app settings in slack](https://api.slack.com/apps/):
+
 - Click on the metabase app in the app listing.
 - Click on **OAuth & Permissions** in the sidebar.
 - Under **Scopes** add the `groups:read` scope.

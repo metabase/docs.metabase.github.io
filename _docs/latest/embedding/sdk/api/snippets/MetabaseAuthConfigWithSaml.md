@@ -1,5 +1,5 @@
 ---
-version: v0.55
+version: v0.56
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -15,9 +15,9 @@ latest: true
 type MetabaseAuthConfigWithSaml = {
   metabaseInstanceUrl: string;
 } & {
-  apiKey: never;
-  fetchRequestToken: never;
-  preferredAuthMethod: "saml";
+  apiKey?: never;
+  fetchRequestToken?: never;
+  preferredAuthMethod?: "saml";
 };
 ```
 

@@ -1,5 +1,5 @@
 ---
-version: v0.55
+version: v0.56
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -103,6 +103,7 @@ type IconName =
   | "folder_filled"
   | "gauge"
   | "gear"
+  | "gear_settings_filled"
   | "gem"
   | "globe"
   | "grabber"
@@ -188,6 +189,7 @@ type IconName =
   | "refresh_downstream"
   | "rocket"
   | "ruler"
+  | "schema"
   | "search"
   | "section"
   | "segment"
@@ -197,6 +199,7 @@ type IconName =
   | "slack"
   | "slack_colorized"
   | "smartscalar"
+  | "snail"
   | "snippet"
   | "sparkles"
   | "star_filled"
@@ -207,6 +210,8 @@ type IconName =
   | "t-shirt"
   | "tab"
   | "table2"
+  | "thumbs_down"
+  | "thumbs_up"
   | "time_history"
   | "trash"
   | "trash_filled"
@@ -225,6 +230,7 @@ type IconName =
   | "view_archive"
   | "warning"
   | "warning_round_filled"
+  | "warning_triangle_filled"
   | "waterfall"
   | "webhook"
   | "10k"

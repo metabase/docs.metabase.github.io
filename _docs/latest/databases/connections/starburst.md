@@ -1,5 +1,5 @@
 ---
-version: v0.55
+version: v0.56
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -101,6 +101,12 @@ A fingerprinting query examines the first 10,000 rows from each column and uses 
 ## Model features
 
 There aren't (yet) any model features for Starburst.
+
+## Database routing
+
+With database routing, an admin can build a question once using one database (data catalog), and the question will run its query against a different data catalog with the same schema depending on who is viewing the question.
+
+See [Database routing](../../permissions/database-routing).
 
 ## Danger zone
 

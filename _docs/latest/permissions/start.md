@@ -1,5 +1,5 @@
 ---
-version: v0.55
+version: v0.56
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: false
@@ -32,9 +32,9 @@ Granting group access to collections of questions, dashboards, models, and sub-c
 
 Granting group access to different Metabase features.
 
-## [Data sandboxing](./data-sandboxes)
+## [Row and column security](./row-and-column-security)
 
-Creating data sandboxes to restrict access to rows and columns in tables.
+Setting up row and column security to restrict access to rows and columns in tables.
 
 ## [Snippet folder permissions](./snippets)
 
