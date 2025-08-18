@@ -1,5 +1,5 @@
 ---
-version: v0.55
+version: v0.56
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -13,13 +13,13 @@ latest: true
 
 ```ts
 type MetabaseDataPointObject = {
-  column: Record<string, any>;
-  data: {
+  column?: Record<string, any>;
+  data?: {
     col: Record<string, any> | null;
     value: string | number | null | boolean;
   }[];
-  event: MouseEvent;
-  value: string | number | null | boolean;
+  event?: MouseEvent;
+  value?: string | number | null | boolean;
 };
 ```
 

@@ -1,5 +1,5 @@
 ---
-version: v0.55
+version: v0.56
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -18,8 +18,8 @@ latest: true
 <!-- [<snippet extends>] -->
 
 - [`Omit`](https://www.typescriptlang.org/docs/handbook/utility-types.html#omittype-keys)\<\{
-  `className`: `string`;
-  `style`: [`CSSProperties`](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/0b728411cd1dfb4bd26992bb35a73cf8edaa22e7/types/react/index.d.ts#L2579);
+  `className?`: `string`;
+  `style?`: [`CSSProperties`](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/0b728411cd1dfb4bd26992bb35a73cf8edaa22e7/types/react/index.d.ts#L2579);
   \}, `"style"`\>
 
 <!-- [<endsnippet extends>] -->

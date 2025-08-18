@@ -1,5 +1,5 @@
 ---
-version: v0.55
+version: v0.56
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -35,6 +35,7 @@ A lightweight question component. Use this component when you want to display re
 The component has a default height, which can be customized by using the `height` prop. To inherit the height from the parent container, you can pass `100%` to the height prop.
 
 #### API Reference
+
 - [Component](./api/StaticQuestion)
 - [Props](./api/StaticQuestionProps)
 
@@ -55,6 +56,7 @@ Use this component when you want to allow people to explore their data and custo
 ![Interactive question](../images/interactive-question.png)
 
 #### API Reference
+
 - [Component](./api/InteractiveQuestion)
 - [Props](./api/InteractiveQuestionProps)
 
@@ -99,6 +101,7 @@ To customize the layout, use namespaced components within the `InteractiveQuesti
 These components are available via the `InteractiveQuestion` namespace (e.g., `<InteractiveQuestion.Filter />`).
 
 #### API Reference:
+
 - [InteractiveQuestion.BackButton](./api/InteractiveQuestion#backbutton)
 - [InteractiveQuestion.Breakout](./api/InteractiveQuestion#breakout)
 - [InteractiveQuestion.BreakoutDropdown](./api/InteractiveQuestion#breakoutdropdown)

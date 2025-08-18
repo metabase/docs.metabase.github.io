@@ -1,5 +1,5 @@
 ---
-version: v0.55
+version: v0.56
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -15,7 +15,7 @@ latest: true
 type CustomDashboardCardMenuItem = ({
   question,
 }: {
-  question: MetabaseQuestion;
+  question?: MetabaseQuestion;
 }) => DashCardMenuItem;
 ```
 
@@ -23,10 +23,10 @@ type CustomDashboardCardMenuItem = ({
 
 <!-- [<snippet parameters>] -->
 
-| Parameter                 | Type                                                               |
-| :------------------------ | :----------------------------------------------------------------- |
-| `{ question, }`           | \{ `question`: [`MetabaseQuestion`](./api/MetabaseQuestion); \} |
-| `{ question, }.question?` | [`MetabaseQuestion`](./api/MetabaseQuestion)                    |
+| Parameter                 | Type                                                                |
+| :------------------------ | :------------------------------------------------------------------ |
+| `{ question, }`           | \{ `question?`: [`MetabaseQuestion`](./api/MetabaseQuestion); \} |
+| `{ question, }.question?` | [`MetabaseQuestion`](./api/MetabaseQuestion)                     |
 
 <!-- [<endsnippet parameters>] -->
 

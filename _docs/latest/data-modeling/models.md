@@ -1,5 +1,5 @@
 ---
-version: v0.55
+version: v0.56
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -93,7 +93,7 @@ For models based on SQL queries, you can tell Metabase if the column has the sam
 
 You can set the [column type][column-type]. The default is "No special type".
 
-If your model is based on a SQL query and you want people to be able to explore the results with the query builder, you'll need to set the [column type](./field-types) for each column in your model.
+If your model is based on a SQL query and you want people to be able to explore the results with the query builder, you'll need to set the [column type](./semantic-types) for each column in your model.
 
 ### This column should appear in...
 
@@ -176,7 +176,7 @@ See [Model persistence](./model-persistence)
 - [Models in Metabase][learn-models]
 - [Troubleshooting models][troubleshooting-models].
 
-[column-type]: ./field-types
+[column-type]: ./semantic-types
 [cte]: /learn/sql/working-with-sql/sql-cte
 [measures-dimensions]: /learn/grow-your-data-skills/data-fundamentals/dimensions-and-measures
 [question]: ../questions/start

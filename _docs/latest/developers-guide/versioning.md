@@ -1,5 +1,5 @@
 ---
-version: v0.55
+version: v0.56
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -70,5 +70,5 @@ E.g.,
 
 ## Further reading
 
-- [Metabase releases on Github](https://github.com/metabase/metabase/releases)
+- [Metabase releases on GitHub](https://github.com/metabase/metabase/releases)
 - [Metabase release blog posts](/releases)

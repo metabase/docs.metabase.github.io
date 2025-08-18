@@ -1,5 +1,5 @@
 ---
-version: v0.55
+version: v0.56
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -19,7 +19,7 @@ If you can't find or solve your problem using the [troubleshooting guides](./ind
 
 If your work in Metabase is crashing, missing, or not being saved, you might have found a bug.
 
-1. Go to the [Metabase Github issues page](https://github.com/metabase/metabase/issues).
+1. Go to the [Metabase GitHub issues page](https://github.com/metabase/metabase/issues).
 
 2. Click on the **Label** dropdown and select `Type: Bug`.
 
@@ -39,7 +39,7 @@ If your work in Metabase is crashing, missing, or not being saved, you might hav
 
 If the functionality you're looking for simply doesn't exist (i.e., it hasn't suddenly gone missing), you might be running into a product limitation.
 
-1. Go to the [Metabase Github issues page](https://github.com/metabase/metabase/issues).
+1. Go to the [Metabase GitHub issues page](https://github.com/metabase/metabase/issues).
 
 2. Click on the **Label** dropdown and select `Type: New Feature`.
 

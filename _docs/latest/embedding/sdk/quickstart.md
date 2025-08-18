@@ -1,5 +1,5 @@
 ---
-version: v0.55
+version: v0.56
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -75,7 +75,6 @@ yarn add @metabase/embedding-sdk-react@53-stable
 ## 4. Embed SDK components in your app
 
 In your app, import the SDK components, like so:
-
 
 ```jsx
 {% include_file "{{ dirname }}/snippets/quickstart/example.tsx" %}

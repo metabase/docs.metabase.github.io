@@ -1,5 +1,5 @@
 ---
-version: v0.55
+version: v0.56
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -70,12 +70,12 @@ To do math on timestamp columns, you can use [Date functions](expressions-list#d
 ## Conditional operators
 
 - `AND`
-- `OR`  
+- `OR`
 - `NOT`
-- `>` 
+- `>`
 - `>=` (greater than or equal to)
 - `<`
-- `<=` (less than or equal to) 
+- `<=` (less than or equal to)
 - `=`
 - `!=` (not equal to)
 

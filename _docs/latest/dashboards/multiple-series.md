@@ -1,5 +1,5 @@
 ---
-version: v0.55
+version: v0.56
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -54,7 +54,7 @@ You can layer multiple questions on a single dashboard card. You can even layer 
 
 ![Edit visualization](./images/edit-visualization.png)
 
-4. **Add more data**. In the Manage data sidebar on the left, click on **Add more data**. 
+4. **Add more data**. In the Manage data sidebar on the left, click on **Add more data**.
 
 ![Manage data sidebar](./images/add-data.png)
 

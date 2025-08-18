@@ -1,5 +1,5 @@
 ---
-version: v0.55
+version: v0.56
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -29,6 +29,8 @@ yarn dev
 ```
 
 This runs both the [frontend](#frontend) and [backend](#backend). Alternatively, you can run them separately in two terminal sessions below.
+
+To use any other database beside the default ones please take a look at [Building Drivers](#building-drivers) further down in this document.
 
 ### Frontend
 

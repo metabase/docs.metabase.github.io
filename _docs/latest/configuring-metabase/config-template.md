@@ -1,5 +1,5 @@
 ---
-version: v0.55
+version: v0.56
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -132,20 +132,27 @@ config:
     ee-openai-api-key: null
     ee-openai-model: gpt-4-turbo-preview
     email-from-address: notifications@metabase.com
+    email-from-address-override: notifications@metabase.com
     email-from-name: null
     email-max-recipients-per-second: null
     email-reply-to: null
     email-smtp-host: null
+    email-smtp-host-override: null
     email-smtp-password: null
+    email-smtp-password-override: null
     email-smtp-port: null
+    email-smtp-port-override: null
     email-smtp-security: none
+    email-smtp-security-override: ssl
     email-smtp-username: null
+    email-smtp-username-override: null
     embedding-app-origins-interactive: null
     embedding-app-origins-sdk: localhost:*
     embedding-homepage: hidden
     embedding-secret-key: null
     enable-embedding-interactive: false
     enable-embedding-sdk: false
+    enable-embedding-simple: false
     enable-embedding-static: false
     enable-password-login: true
     enable-pivoted-exports: true
@@ -160,6 +167,7 @@ config:
     health-check-logging-enabled: true
     help-link: metabase
     help-link-custom-destination: https://www.metabase.com/help/premium
+    http-channel-host-strategy: external-only
     humanization-strategy: simple
     install-analytics-database: true
     jdbc-data-warehouse-max-connection-pool-size: 15
@@ -194,6 +202,7 @@ config:
     ldap-user-base: null
     ldap-user-filter: (&(objectClass=inetOrgPerson)(|(uid={login})(mail={login})))
     ldap-user-provisioning-enabled: true
+    license-token-missing-banner-dismissal-timestamp: []
     load-analytics-content: true
     loading-message: doing-science
     login-page-illustration: default
@@ -213,7 +222,6 @@ config:
     persisted-model-refresh-cron-schedule: 0 0 0/6 * * ? *
     persisted-models-enabled: false
     premium-embedding-token: null
-    query-analysis-enabled: false
     query-caching-max-kb: 2000
     query-caching-max-ttl: 3024000.0
     redirect-all-requests-to-https: false
@@ -227,7 +235,7 @@ config:
     saml-application-name: Metabase
     saml-attribute-email: null
     saml-attribute-firstname: http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname
-    saml-attribute-group: member_of
+    saml-attribute-group: null
     saml-attribute-lastname: http://schemas.xmlsoap.org/ws/2005/05/identity/claims/surname
     saml-enabled: false
     saml-group-mappings: {}
@@ -236,7 +244,7 @@ config:
     saml-identity-provider-issuer: null
     saml-identity-provider-slo-uri: null
     saml-identity-provider-uri: null
-    saml-keystore-alias: metabase
+    saml-keystore-alias: null
     saml-keystore-password: changeit
     saml-keystore-path: null
     saml-slo-enabled: false
@@ -265,16 +273,16 @@ config:
     site-url: null
     slack-app-token: null
     slack-bug-report-channel: metabase-bugs
+    smtp-override-enabled: false
     source-address-header: X-Forwarded-For
     sql-jdbc-fetch-size: 500
-    sql-parsing-enabled: true
     ssh-heartbeat-interval-sec: 180
     start-of-week: sunday
     subscription-allowed-domains: null
     surveys-enabled: true
+    sync-leaf-fields-limit: 1000
     synchronous-batch-updates: false
     unaggregated-query-row-limit: null
-    update-channel: latest
     uploads-settings: null
     use-tenants: false
     user-visibility: all

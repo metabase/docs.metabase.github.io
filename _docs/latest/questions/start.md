@@ -1,5 +1,5 @@
 ---
-version: v0.55
+version: v0.56
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: false
@@ -49,6 +49,30 @@ Write native code (like SQL) to query your data source.
 ### [SQL templates](./native-editor/sql-parameters)
 
 Pass parameters into variables in your SQL templates.
+
+### [Field filters](./native-editor/field-filters)
+
+Create smart filter widgets by connecting field filter variables to fields in your database.
+
+### [Basic SQL parameters](./native-editor/basic-sql-parameters)
+
+Learn the basics of using parameters in SQL queries.
+
+### [Optional variables](./native-editor/optional-variables)
+
+Use brackets to create parameters that can be left empty in your queries.
+
+### [Time grouping parameters](./native-editor/time-grouping-parameters)
+
+Group your data by time periods using parameters in native queries.
+
+### [Filter widgets](./native-editor/filter-widgets)
+
+Configure filter widgets connected to variables in your native queries.
+
+### [Referencing saved questions in queries](./native-editor/referencing-saved-questions-in-queries)
+
+Use saved questions as data sources in your native queries.
 
 ### [Snippets](./native-editor/snippets)
 

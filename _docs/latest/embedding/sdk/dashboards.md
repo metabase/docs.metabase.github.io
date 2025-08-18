@@ -1,5 +1,5 @@
 ---
-version: v0.55
+version: v0.56
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -28,6 +28,7 @@ You can embed a dashboard using the one of the dashboard components:
 A lightweight dashboard component. Use this component when you want to display results without letting people interact with the data.
 
 #### API Reference
+
 - [Component](./api/StaticDashboard)
 - [Props](./api/StaticDashboardProps)
 
@@ -40,6 +41,7 @@ A lightweight dashboard component. Use this component when you want to display r
 A dashboard component with drill downs, click behaviors, and the ability to view and click into questions. Use this component when you want to allow people to explore their data.
 
 #### API Reference
+
 - [Component](./api/InteractiveDashboard)
 - [Props](./api/InteractiveDashboardProps)
 
@@ -52,6 +54,7 @@ A dashboard component with drill downs, click behaviors, and the ability to view
 A dashboard component with the features available in the `InteractiveDashboard` component, as well as the ability to add and update questions, layout, and content within your dashboard. Use this component when you want to give people the ability to modify your dashboards, for example in an admin panel in your app.
 
 #### API Reference
+
 - [Component](./api/EditableDashboard)
 - [Props](./api/EditableDashboardProps)
 
@@ -144,10 +147,12 @@ Creating a dashboard could be done with `useCreateDashboardApi` hook or `CreateD
 Use this hook if you'd like to have total control over the UI and settings.
 
 #### API Reference
+
 - [Hook](./api/useCreateDashboardApi)
 - [Options](./api/CreateDashboardValues)
 
 #### Example
+
 ```typescript
 {% include_file "{{ dirname }}/snippets/dashboards/create-dashboard.tsx" snippet="example-hook" %}
 ```
@@ -159,10 +164,12 @@ Use this hook if you'd like to have total control over the UI and settings.
 ### `CreateDashboardModal`
 
 #### API Refernce
+
 - [Component](./api/CreateDashboardModal)
 - [Props](./api/CreateDashboardModalProps)
 
 #### Example
+
 ```typescript
 {% include_file "{{ dirname }}/snippets/dashboards/create-dashboard.tsx" snippet="example-component" %}
 ```

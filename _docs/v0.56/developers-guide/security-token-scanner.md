@@ -7,6 +7,7 @@ category: 'Developers Guide'
 title: 'Security Token Scanner'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/developers-guide/security-token-scanner.md'
 layout: new-docs
+latest: true
 ---
 
 # Security Token Scanner

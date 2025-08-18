@@ -1,5 +1,5 @@
 ---
-version: v0.55
+version: v0.56
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -32,7 +32,7 @@ Version 52 is the minimum version supported for the Embedded analytics SDK.
 
 ## Instances on Metabase Cloud will be pinned to a specific version
 
-By default, if you're running on Metabase Cloud and using the Embedded analytics SDK, we'll pin your version to avoid breaking changes. 
+By default, if you're running on Metabase Cloud and using the Embedded analytics SDK, we'll pin your version to avoid breaking changes.
 
 Normally, Metabase Cloud upgrades your Metabase as new versions roll out so you don't have to deal with upgrades. But if you're using the SDK with Metabase Cloud, you'll want to upgrade manually to make sure your embeds don't break when you upgrade both your Metabase and your SDK version.
 

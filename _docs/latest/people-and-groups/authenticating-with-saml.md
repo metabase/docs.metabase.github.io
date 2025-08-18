@@ -1,5 +1,5 @@
 ---
-version: v0.55
+version: v0.56
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -20,7 +20,7 @@ latest: true
 Integrating your SSO with Metabase allows you to:
 
 - Provision a Metabase account when someone logs in to Metabase.
-- Automatically pass user attributes from your SSO to Metabase in order to power [data sandboxes](../permissions/data-sandboxes).
+- Automatically pass user attributes from your SSO to Metabase in order to power [row and column security](../permissions/row-and-column-security).
 - Let people access Metabase without re-authenticating.
 
 ## Confirm the password for your Metabase admin account
@@ -168,6 +168,16 @@ So if your Metabase is served at `metabase.example.com` the logout service POST 
 ```
 https://metabase.example.com/auth/sso/handle_slo
 ```
+
+### Enable SAML SLO
+
+SLO isn’t configurable from the Metabase interface. To enable it, you’ll need to set the following options using environment variables or your Metabase configuration file:
+
+- [`MB_SAML_SLO_ENABLED`](../configuring-metabase/environment-variables#mb_saml_slo_enabled) to `true`;
+- [`MB_SAML_IDENTITY_PROVIDER_URI`](../configuring-metabase/environment-variables#mb_saml_identity_provider_uri) to your IdP’s SLO endpoint;
+- [`MB_SESSION_COOKIE_SAMESITE`](../configuring-metabase/environment-variables#mb_session_cookie_samesite) to `none`.
+
+For the `MB_SESSION_COOKIE_SAMESITE` setting to work with `none`, Metabase must be served over HTTPS. Browsers like Chrome will block cookies in cross-site requests if SSL is not enabled. Without HTTPS, logout requests from your IdP (such as Okta) won’t include the session cookie, which means Metabase won’t be able to end the session properly.
 
 ## Synchronizing group membership with your IdP
 

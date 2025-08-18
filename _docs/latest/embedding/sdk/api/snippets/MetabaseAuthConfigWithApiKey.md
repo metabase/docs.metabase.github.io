@@ -1,5 +1,5 @@
 ---
-version: v0.55
+version: v0.56
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -16,8 +16,8 @@ type MetabaseAuthConfigWithApiKey = {
   metabaseInstanceUrl: string;
 } & {
   apiKey: string;
-  fetchRequestToken: never;
-  preferredAuthMethod: never;
+  fetchRequestToken?: never;
+  preferredAuthMethod?: never;
 };
 ```
 
