@@ -425,6 +425,46 @@ Enable AI features.
 
 This feature is experimental.
 
+### `MB_EE_EMBEDDING_MODEL`
+
+- Type: string
+- Default: `Snowflake/snowflake-arctic-embed-l-v2.0`
+- [Configuration file name](./config-file): `ee-embedding-model`
+
+Set the embedding model for the selected provider.
+
+This feature is experimental.
+
+### `MB_EE_EMBEDDING_MODEL_DIMENSIONS`
+
+- Type: positive-integer
+- Default: `1024`
+- [Configuration file name](./config-file): `ee-embedding-model-dimensions`
+
+Set the dimension size for the selected embedding model.
+
+This feature is experimental.
+
+### `MB_EE_EMBEDDING_PROVIDER`
+
+- Type: string
+- Default: `ai-service`
+- [Configuration file name](./config-file): `ee-embedding-provider`
+
+The embedding provider to use (:openai, :ollama, or :ai-service).
+
+This feature is experimental.
+
+### `MB_EE_OPENAI_API_BASE_URL`
+
+- Type: string
+- Default: `https://api.openai.com`
+- [Configuration file name](./config-file): `ee-openai-api-base-url`
+
+The OpenAI embeddings base URL used in Metabase Enterprise.
+
+This feature is experimental.
+
 ### `MB_EE_OPENAI_API_KEY`
 
 - Type: string
@@ -546,7 +586,7 @@ The port your custom SMTP server uses for outgoing emails. Only ports 465, 587, 
 ### `MB_EMAIL_SMTP_SECURITY`
 
 - Type: keyword
-- Default: `:none`
+- Default: `none`
 - [Configuration file name](./config-file): `email-smtp-security`
 
 SMTP secure connection protocol. (tls, ssl, starttls, or none).
@@ -556,7 +596,7 @@ SMTP secure connection protocol. (tls, ssl, starttls, or none).
 > Only available on Metabase [Pro](/product/pro) and [Enterprise](/product/enterprise) plans.
 
 - Type: keyword
-- Default: `:ssl`
+- Default: `ssl`
 - [Configuration file name](./config-file): `email-smtp-security-override`
 
 SMTP secure connection protocol for your custom server. (tls, ssl, or starttls).
@@ -614,7 +654,7 @@ Allow Metabase SDK access to these space delimited origins.
 ### `MB_EMBEDDING_HOMEPAGE`
 
 - Type: keyword
-- Default: `:hidden`
+- Default: `hidden`
 - [Exported as](../installation-and-operation/serialization): `embedding-homepage`.
 - [Configuration file name](./config-file): `embedding-homepage`
 
@@ -767,7 +807,7 @@ Whether to log health check requests from session middleware.
 > Only available on Metabase [Pro](/product/pro) and [Enterprise](/product/enterprise) plans.
 
 - Type: keyword
-- Default: `:metabase`
+- Default: `metabase`
 - [Configuration file name](./config-file): `help-link`
 
 Keyword setting to control whitelabeling of the help link. Valid values are `:metabase`, `:hidden`, and `:custom`. If `:custom` is set, the help link will use the URL specified in the `help-link-custom-destination`, or be hidden if it is not set.
@@ -785,7 +825,7 @@ Custom URL for the help link.
 ### `MB_HTTP_CHANNEL_HOST_STRATEGY`
 
 - Type: keyword
-- Default: `:external-only`
+- Default: `external-only`
 
 Controls which types of hosts are allowed as HTTP channel destinations.
 Options:
@@ -797,11 +837,20 @@ Options:
 ### `MB_HUMANIZATION_STRATEGY`
 
 - Type: keyword
-- Default: `:simple`
+- Default: `simple`
 - [Exported as](../installation-and-operation/serialization): `humanization-strategy`.
 - [Configuration file name](./config-file): `humanization-strategy`
 
 To make table and field names more human-friendly, Metabase will replace dashes and underscores in them with spaces. We’ll capitalize each word while at it, so ‘last_visited_at’ will become ‘Last Visited At’.
+
+### `MB_INDEX_UPDATE_THREAD_COUNT`
+
+- Type: integer
+- Default: `2`
+
+Number of threads to use for batched index updates, including embedding requests.
+
+Number of threads to use for batched index updates, including embedding requests
 
 ### `MB_INSTALL_ANALYTICS_DATABASE`
 
@@ -1063,7 +1112,7 @@ Server port, usually 389 or 636 if SSL is used.
 ### `MB_LDAP_SECURITY`
 
 - Type: keyword
-- Default: `:none`
+- Default: `none`
 - [Configuration file name](./config-file): `ldap-security`
 
 Use SSL, TLS or plain text.
@@ -1132,7 +1181,7 @@ Setting this environment variable to false can also come in handy when migrating
 > Only available on Metabase [Pro](/product/pro) and [Enterprise](/product/enterprise) plans.
 
 - Type: keyword
-- Default: `:doing-science`
+- Default: `doing-science`
 - [Exported as](../installation-and-operation/serialization): `loading-message`.
 - [Configuration file name](./config-file): `loading-message`
 
@@ -1171,7 +1220,7 @@ The map tile server URL template used in map visualizations, for example from Op
 ### `MB_NATIVE_QUERY_AUTOCOMPLETE_MATCH_STYLE`
 
 - Type: keyword
-- Default: `:substring`
+- Default: `substring`
 - [Exported as](../installation-and-operation/serialization): `native-query-autocomplete-match-style`.
 - [Configuration file name](./config-file): `native-query-autocomplete-match-style`
 
@@ -1274,6 +1323,15 @@ The size of the thread pool used to send notifications.
 If Metabase stops sending notifications like alerts, it may be because long-running
   queries are clogging the notification queue. You may be able to unclog the queue by
   increasing the size of the thread pool dedicated to notifications.
+
+### `MB_OPENAI_MAX_TOKENS_PER_BATCH`
+
+- Type: integer
+- Default: `4000`
+
+The maximum number of tokens sent in a single embedding API call.
+
+The maximum number of tokens sent in a single embedding API call.
 
 ### `MB_PERSISTED_MODEL_REFRESH_CRON_SCHEDULE`
 
@@ -1570,13 +1628,6 @@ Is SCIM currently enabled?
 
 Used for encrypting and checking whether SDK requests are signed.
 
-### `MB_SEARCH_ENGINE`
-
-- Type: keyword
-- Default: `:appdb`
-
-Which engine to use when performing search. Supported values are :in-place and :appdb.
-
 ### `MB_SEARCH_LANGUAGE`
 
 - Type: string
@@ -1593,6 +1644,31 @@ When using the appdb engine against postgresql, override the language used for s
 - [Configuration file name](./config-file): `search-typeahead-enabled`
 
 Enable typeahead search in the Metabase navbar?
+
+### `MB_SEMANTIC_SEARCH_ENABLED`
+
+- Type: boolean
+- Default: `true`
+
+Enable the semantic search engine? Intended as a kill switch for the semantic search feature while dogfooding.
+
+### `MB_SEMANTIC_SEARCH_MIN_RESULTS_THRESHOLD`
+
+- Type: integer
+- Default: `100`
+
+Minimum number of semantic search results required before falling back to other engines.
+
+Minimum number of semantic search results required before falling back to other engines.
+
+### `MB_SEMANTIC_SEARCH_RESULTS_LIMIT`
+
+- Type: integer
+- Default: `1000`
+
+Maximum number of results to return from a single semantic search query.
+
+Maximum number of results to return from a single semantic search query.
 
 ### `MB_SEND_EMAIL_ON_FIRST_LOGIN_FROM_NEW_DEVICE`
 
@@ -1617,7 +1693,7 @@ Should new email notifications be sent to admins, for all new SSO users?
 ### `MB_SESSION_COOKIE_SAMESITE`
 
 - Type: keyword
-- Default: `:lax`
+- Default: `lax`
 - [Configuration file name](./config-file): `session-cookie-samesite`
 
 Value for the session cookie's `SameSite` directive.
@@ -1826,7 +1902,7 @@ Controls how often the heartbeats are sent when an SSH tunnel is established (in
 ### `MB_START_OF_WEEK`
 
 - Type: keyword
-- Default: `:sunday`
+- Default: `sunday`
 - [Exported as](../installation-and-operation/serialization): `start-of-week`.
 - [Configuration file name](./config-file): `start-of-week`
 
@@ -1849,14 +1925,6 @@ Allowed email address domain(s) for new Dashboard Subscriptions and Alerts. To s
 - Default: `true`
 
 Enable or disable surveys.
-
-### `MB_SYNC_LEAF_FIELDS_LIMIT`
-
-- Type: integer
-- Default: `1000`
-- [Exported as](../installation-and-operation/serialization): `sync-leaf-fields-limit`.
-
-Maximum number of leaf fields synced per collection of document database. Currently relevant for Mongo. Not to be confused with total number of synced fields. For every chosen leaf field, all intermediate fields from root to leaf are synced as well.
 
 ### `MB_SYNCHRONOUS_BATCH_UPDATES`
 
@@ -1937,7 +2005,7 @@ Turn on the Tenants feature, allowing users to be assigned to a particular Tenan
 > Only available on Metabase [Pro](/product/pro) and [Enterprise](/product/enterprise) plans.
 
 - Type: keyword
-- Default: `:all`
+- Default: `all`
 - [Configuration file name](./config-file): `user-visibility`
 
 Note: Sandboxed users will never see suggestions.
