@@ -4937,22 +4937,22 @@ Roadmap</a>
 
 <p>For example, to embed your Metabase home page, set the <code class="language-plaintext highlighter-rouge">src</code> attribute to your <a href="../configuring-metabase/settings#site-url">site URL</a>, such as:</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>src="http://metabase.yourcompany.com/"
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>src="https://metabase.yourcompany.com/"
 </code></pre></div></div>
 
 <p>To embed a specific Metabase dashboard, you’ll want to use the dashboard’s Entity ID URL <code class="language-plaintext highlighter-rouge">/dashboard/entity/[Entity ID]</code>.</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>src="http://metabase.yourcompany.com/dashboard/entity/[Entity ID]"
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>src="https://metabase.yourcompany.com/dashboard/entity/[Entity ID]"
 </code></pre></div></div>
 
 <p>To get a dashboard’s Entity ID, visit the dashboard and click on the <strong>info</strong> button. In the <strong>Overview</strong> tab, copy the <strong>Entity ID</strong>. Then in your iframe’s <code class="language-plaintext highlighter-rouge">src</code> attribute to:</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>src=http://metabase.yourcompany.com/dashboard/entity/Dc_7X8N7zf4iDK9Ps1M3b
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>src=https://metabase.yourcompany.com/dashboard/entity/Dc_7X8N7zf4iDK9Ps1M3b
 </code></pre></div></div>
 
 <p>If your dashboard has more than one tab, select the tab you want people to land on and copy the Tab’s ID. Add the tab’s ID to the URL:</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>src=http://metabase.yourcompany.com/dashboard/entity/Dc_7X8N7zf4iDK9Ps1M3b?tab=YLNdEYtzuSMA0lqO7u3FD
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>src=https://metabase.yourcompany.com/dashboard/entity/Dc_7X8N7zf4iDK9Ps1M3b?tab=YLNdEYtzuSMA0lqO7u3FD
 </code></pre></div></div>
 
 <p>You <em>can</em> use a dashboard’s sequential ID, but you should prefer the Entity ID, as Entity IDs are stable across different Metabase environments (e.g., if you’re testing on a staging environment, the Entity IDs will remain the same when <a href="../installation-and-operation/serialization">exporting the data and importing it</a> into a production environment).</p>
@@ -4969,7 +4969,7 @@ Roadmap</a>
 
 <p>Use this option if you want to send people directly to your SSO login screen (i.e., skip over the Metabase login screen with an SSO button), and redirect to Metabase automatically upon authentication.</p>
 
-<p>You’ll need to set the <code class="language-plaintext highlighter-rouge">src</code> attribute to your auth endpoint, with a <code class="language-plaintext highlighter-rouge">return_to</code> parameter pointing to the encoded Metabase URL. For example, to send people to your SSO login page and automatically redirect them to <code class="language-plaintext highlighter-rouge">http://metabase.yourcompany.com/dashboard/1</code>:</p>
+<p>You’ll need to set the <code class="language-plaintext highlighter-rouge">src</code> attribute to your auth endpoint, with a <code class="language-plaintext highlighter-rouge">return_to</code> parameter pointing to the encoded Metabase URL. For example, to send people to your SSO login page and automatically redirect them to <code class="language-plaintext highlighter-rouge">https://metabase.yourcompany.com/dashboard/1</code>:</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://metabase.example.com/auth/sso?return_to=http%3A%2F%2Fmetabase.yourcompany.com%2Fdashboard%2F1
 </code></pre></div></div>
