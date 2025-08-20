@@ -5415,6 +5415,60 @@ If set to 0, Metabase will keep all rows.</p>
 
 <p>This feature is experimental.</p>
 
+<h3 id="mb_ee_search_gate_max_batch_size"><code class="language-plaintext highlighter-rouge">MB_EE_SEARCH_GATE_MAX_BATCH_SIZE</code></h3>
+
+<ul>
+  <li>Type: integer</li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">512</code></li>
+</ul>
+
+<p>The maximum number of documents that can be sent to <code class="language-plaintext highlighter-rouge">gate-documents!</code> without causing an error.</p>
+
+<h3 id="mb_ee_search_gate_write_timeout"><code class="language-plaintext highlighter-rouge">MB_EE_SEARCH_GATE_WRITE_TIMEOUT</code></h3>
+
+<ul>
+  <li>Type: integer</li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">5</code></li>
+</ul>
+
+<p>Timeout of gate write statements in seconds. Used to determine lag tolerance of the indexer (see the metabase-enterprise.semantic-search.gate/poll) in conjunction with <code class="language-plaintext highlighter-rouge">ee-search-indexer-lag-tolerance-multiplier</code>.</p>
+
+<h3 id="mb_ee_search_indexer_exit_early_cold_duration"><code class="language-plaintext highlighter-rouge">MB_EE_SEARCH_INDEXER_EXIT_EARLY_COLD_DURATION</code></h3>
+
+<ul>
+  <li>Type: integer</li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">30</code></li>
+</ul>
+
+<p>Number of seconds indexer should wait to see new data before yielding back to quartz.</p>
+
+<h3 id="mb_ee_search_indexer_lag_tolerance_multiplier"><code class="language-plaintext highlighter-rouge">MB_EE_SEARCH_INDEXER_LAG_TOLERANCE_MULTIPLIER</code></h3>
+
+<ul>
+  <li>Type: integer</li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">2</code></li>
+</ul>
+
+<p>Multiplier for computation of metabase-enterprise.semantic-search.indexer/lag-tolerance. The formula is <code class="language-plaintext highlighter-rouge">ee-search-gate-write-timeout * ee-search-indexer-lag-tolerance-multiplier</code>.</p>
+
+<h3 id="mb_ee_search_indexer_max_run_duration"><code class="language-plaintext highlighter-rouge">MB_EE_SEARCH_INDEXER_MAX_RUN_DURATION</code></h3>
+
+<ul>
+  <li>Type: integer</li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">60</code></li>
+</ul>
+
+<p>Number of minutes we expect to run the indexer loop for before yielding to quartz.</p>
+
+<h3 id="mb_ee_search_indexer_poll_limit"><code class="language-plaintext highlighter-rouge">MB_EE_SEARCH_INDEXER_POLL_LIMIT</code></h3>
+
+<ul>
+  <li>Type: integer</li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">1000</code></li>
+</ul>
+
+<p>Indexer poll limit.</p>
+
 <h3 id="mb_email_from_address"><code class="language-plaintext highlighter-rouge">MB_EMAIL_FROM_ADDRESS</code></h3>
 
 <ul>
@@ -7281,6 +7335,16 @@ don’t have one.</p>
 </ul>
 
 <p>Enable or disable surveys.</p>
+
+<h3 id="mb_sync_leaf_fields_limit"><code class="language-plaintext highlighter-rouge">MB_SYNC_LEAF_FIELDS_LIMIT</code></h3>
+
+<ul>
+  <li>Type: integer</li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">1000</code></li>
+  <li><a href="../installation-and-operation/serialization">Exported as</a>: <code class="language-plaintext highlighter-rouge">sync-leaf-fields-limit</code>.</li>
+</ul>
+
+<p>Maximum number of leaf fields synced per collection of document database. Currently relevant for Mongo. Not to be confused with total number of synced fields. For every chosen leaf field, all intermediate fields from root to leaf are synced as well.</p>
 
 <h3 id="mb_synchronous_batch_updates"><code class="language-plaintext highlighter-rouge">MB_SYNCHRONOUS_BATCH_UPDATES</code></h3>
 
