@@ -13,7 +13,7 @@ latest: true
 
 # Metabase config file template
 
-You can generate the following docs by changing into the top-level Metabase directory and running:
+You can generate this doc page by changing into the top-level Metabase directory and running:
 
 ```
 clojure -M:doc:ee config-template
