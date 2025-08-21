@@ -17,7 +17,7 @@ latest: true
 
 This page covers how to upgrade to a new Metabase release.
 
-- [Announcement posts for major releases](https://www.)
+- [Announcement posts for major releases](/releases)
 - [Changelogs](/changelog).
 - [Release notes on GitHub](https://github.com/metabase/metabase/releases).
 
