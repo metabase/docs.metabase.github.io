@@ -20,6 +20,7 @@ latest: true
 | <a id="background"></a> `background?`                     | `string`                              | Default background color.                                                               |
 | <a id="background-disabled"></a> `background-disabled?`   | `string`                              | Muted background color used for disabled elements, such as disabled buttons and inputs. |
 | <a id="background-hover"></a> `background-hover?`         | `string`                              | Slightly darker background color used for hover and accented elements.                  |
+| <a id="background-light"></a> `background-light?`         | `string`                              | Light background color used for some controls like a radiogroup.                        |
 | <a id="background-secondary"></a> `background-secondary?` | `string`                              | Slightly muted background color.                                                        |
 | <a id="border"></a> `border?`                             | `string`                              | Color used for borders                                                                  |
 | <a id="brand"></a> `brand?`                               | `string`                              | Primary brand color used for buttons and links                                          |

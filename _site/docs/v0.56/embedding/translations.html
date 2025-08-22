@@ -4872,6 +4872,8 @@ Roadmap</a>
 
 <p>You can upload a translation dictionary to translate strings both in Metabase content (like dashboard titles) and in the data itself (like column names and values).</p>
 
+<h2 id="add-a-translation-dictionary">Add a translation dictionary</h2>
+
 <p>The dictionary must be a CSV with these columns:</p>
 
 <ul>
@@ -4887,6 +4889,15 @@ Roadmap</a>
 <p>Uploading a new dictionary will replace the existing dictionary.</p>
 
 <p>To remove a translation dictionary, upload a blank dictionary.</p>
+
+<h2 id="translate-content-in-static-embeds">Translate content in static embeds</h2>
+
+<p>To translate content in a static embed using the uploaded dictionary, add the <a href="./static-embedding-parameters#setting-the-language-for-a-static-embed"><code class="language-plaintext highlighter-rouge">locale</code> parameter</a> to the embed URL:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://metabase.example.com/public/dashboard/7b6e347b-6928-4aff-a56f-6cfa5b718c6b?category=&amp;city=&amp;state=#locale=ko
+</code></pre></div></div>
+
+<p>Metabase UI elements (like button labels) will be translated automatically - you don’t need to add translations for them to your dictionary.</p>
 
 <h2 id="example-translation-dictionary">Example translation dictionary</h2>
 
@@ -4926,10 +4937,56 @@ Roadmap</a>
       <td data-label="String">Vendor</td>
       <td data-label="Translation">Vendedor</td>
     </tr>
+    <tr>
+      <td data-label="Language">IT</td>
+      <td data-label="String">Examples</td>
+      <td data-label="Translation">Esempi</td>
+    </tr>
   </tbody>
 </table>
 
-<p><a href="../configuring-metabase/localization#supported-languages">See a list of supported locales</a></p>
+<p>Prefer hyphens in your <code class="language-plaintext highlighter-rouge">pt-BR</code> in your translation dictionary. Underscores are also acceptable (if you download the dictionary <em>after</em> uploading it, Metabase will transform <code class="language-plaintext highlighter-rouge">pt-BR</code> to <code class="language-plaintext highlighter-rouge">pt_BR</code>), but since the <code class="language-plaintext highlighter-rouge">locale</code> parameter in static embedding only accepts locales with hyphens (like <code class="language-plaintext highlighter-rouge">pt-BR</code>), we recommend using hyphens for consistency.</p>
+
+<p><a href="../configuring-metabase/localization#supported-languages">See a list of supported locales</a>.</p>
+
+<h2 id="use-full-phrases-in-translation-dictionaries">Use full phrases in translation dictionaries</h2>
+
+<p>Currently, Metabase doesn’t tokenize strings for translations, so you should include exact phrases in your translation dictionary.</p>
+
+<p>For example, if you have a dashboard called “Monthly Sales”, it’s not sufficient to have translations of “Monthly” and “Sales” - you also need to include “Monthly Sales” as a full string.</p>
+
+<p>Exact translations also apply to strings that use punctuation and special characters. For example, if you have a question title “How many Widgets did we sell this week?”, you must include that exact string (with “?”) into the translation dictionary. Metabase would treat “How many Widgets did we sell this week” as a different string. Essentially, the strings are keys in a table Metabase looks up, so they must match exactly.</p>
+
+<h2 id="include-markdown-formatting-in-translation-dictionaries">Include markdown formatting in translation dictionaries</h2>
+
+<p>If the strings you want to translate include markdown formatting, you’ll need to include the formatting in the dictionary. For example:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Language</th>
+      <th>String</th>
+      <th>Translation</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td data-label="Language">pt-BR</td>
+      <td data-label="String"><code class="language-plaintext highlighter-rouge">**Examples**</code></td>
+      <td data-label="Translation"><code class="language-plaintext highlighter-rouge">**Exemplos**</code></td>
+    </tr>
+    <tr>
+      <td data-label="Language">pt-BR</td>
+      <td data-label="String"><code class="language-plaintext highlighter-rouge">_Examples_</code></td>
+      <td data-label="Translation"><code class="language-plaintext highlighter-rouge">_Exemplos_</code></td>
+    </tr>
+    <tr>
+      <td data-label="Language">pt-BR</td>
+      <td data-label="String"><code class="language-plaintext highlighter-rouge">## Examples</code></td>
+      <td data-label="Translation"><code class="language-plaintext highlighter-rouge">## Exemplos</code></td>
+    </tr>
+  </tbody>
+</table>
 
 <h2 id="further-reading">Further reading</h2>
 
@@ -5305,7 +5362,7 @@ Roadmap</a>
 </script>
 
 <!-- forms -->
-<script type="text/javascript" src="//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js"></script>
+<script type="text/javascript" src="https://s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js"></script>
 <script type="text/javascript">
   (function() {
     window.fnames = new Array();
