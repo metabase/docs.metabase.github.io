@@ -27,7 +27,7 @@ The core assumptions in this guide:
 - You will use environment variables to configure your Metabase instance
 - You have root access on your server
 
-For production setups, you must set up a [PostgreSQL or MySQL/MariaDB application database](/../installation-and-operation/configuring-application-database) as Metabase's application database.
+For production setups, you must set up a [PostgreSQL or MySQL/MariaDB application database](../installation-and-operation/configuring-application-database) as Metabase's application database.
 
 ## Create an unprivileged user to run Metabase
 
@@ -63,7 +63,7 @@ sudo -u metabase wget -O /home/metabase/metabase.jar https://downloads.metabase.
 
 We'll create a file to store these environment variables, which we'll use when creating the systemd service for Metabase.
 
-This command will create an environment variable file at `/home/metabase/.env`, which you should update to point to your [PostgreSQL application database](/docs/latest/installation-and-operation/configuring-application-database):
+This command will create an environment variable file at `/home/metabase/.env`, which you should update to point to your [PostgreSQL application database](../installation-and-operation/configuring-application-database):
 
 ```bash
 sudo -u metabase cat << EOF > /home/metabase/.env
