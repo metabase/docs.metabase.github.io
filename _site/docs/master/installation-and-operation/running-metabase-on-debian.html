@@ -44,12 +44,12 @@
 <meta name="robots" content="noindex">
    
 
-<title>Running Metabase on Debian as a service with nginx | Metabase Documentation</title>
+<title>Running Metabase as a systemd service | Metabase Documentation</title>
 <!-- Twitter cards -->
 <meta name="twitter:site" content="@metabase">
 
-<meta name="twitter:title" content="Running Metabase on Debian as a service with nginx | Metabase Documentation">
-<meta name="twitter:description" content="Running Metabase on Debian as a service with nginx For those people who don’t (or can’t) use Docker in their infrastructure, there’s still a need to easily setup and deploy Metabase in production. On Debian-based systems, this means registering Metabase as...">
+<meta name="twitter:title" content="Running Metabase as a systemd service | Metabase Documentation">
+<meta name="twitter:description" content="Running Metabase as a systemd service For those people who don’t (or can’t) use Docker in their infrastructure, you can register Metabase as a systemd service that can be started/stopped/uninstalled. We’ll use Debian as an example in this guide, but...">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -58,8 +58,8 @@
 <meta property="og:site_name" content="Metabase | Business Intelligence, Dashboards, and Data Visualization">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://www.metabase.com/docs/master/installation-and-operation/running-metabase-on-debian">
-<meta name="title" property="og:title" content="Running Metabase on Debian as a service with nginx | Metabase Documentation">
-<meta name="description" property="og:description" content="Running Metabase on Debian as a service with nginx For those people who don’t (or can’t) use Docker in their infrastructure, there’s still a need to easily setup and deploy Metabase in production. On Debian-based systems, this means registering Metabase as...">
+<meta name="title" property="og:title" content="Running Metabase as a systemd service | Metabase Documentation">
+<meta name="description" property="og:description" content="Running Metabase as a systemd service For those people who don’t (or can’t) use Docker in their infrastructure, you can register Metabase as a systemd service that can be started/stopped/uninstalled. We’ll use Debian as an example in this guide, but...">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -2137,6 +2137,65 @@ Roadmap</a>
               <li class="">
                 <a href="/docs/master/dashboards/actions" class="">
                   Actions on dashboards
+
+                  
+                </a>
+                
+              </li>
+            
+          </ul>
+        
+      </li>
+    
+      
+
+      
+
+      
+
+      
+
+      <li class="">
+        <a href="/docs/master/ai/start" class="">
+        AI
+
+          
+            <div>
+              <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="chevron">
+<path opacity="0.9" d="M3 8.96338L16 21.9634L29 8.96338" stroke="#509ee3" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+
+            </div>
+          
+        </a>
+
+        
+          <ul>
+            
+              
+
+              
+
+              
+
+              <li class="">
+                <a href="/docs/master/ai/metabot" class="">
+                  Metabot AI
+
+                  
+                </a>
+                
+              </li>
+            
+              
+
+              
+
+              
+
+              <li class="">
+                <a href="/docs/master/ai/settings" class="">
+                  Metabot settings
 
                   
                 </a>
@@ -4761,162 +4820,153 @@ Roadmap</a>
 </div>
 
 
-        <h1 id="running-metabase-on-debian-as-a-service-with-nginx">Running Metabase on Debian as a service with nginx</h1>
+        <h1 id="running-metabase-as-a-systemd-service">Running Metabase as a systemd service</h1>
 
-<p>For those people who don’t (or can’t) use Docker in their infrastructure, there’s still a need to easily setup and deploy Metabase in production. On Debian-based systems, this means registering Metabase as a service that can be started/stopped/uninstalled.</p>
+<p>For those people who don’t (or can’t) use Docker in their infrastructure, you can register Metabase as a <a href="https://wiki.debian.org/systemd">systemd</a> service that can be started/stopped/uninstalled.</p>
 
-<p><strong>Note:</strong> This is just a <em>bare-bones recipe</em> to get you started. Anyone can take it from here to do what they need to do on their systems, and should follow best practices for setting up and securing the rest of their server.</p>
+<p>We’ll use Debian as an example in this guide, but the steps should apply to most Linux distributions that use systemd. This is a <em>bare-bones recipe</em> to get you started. Anyone can take it from here to do what they need to do on their systems, and should follow best practices for setting up and securing the rest of their server.</p>
 
 <h2 id="assumptions">Assumptions</h2>
 
-<p>The core assumption in this guide:</p>
+<p>The core assumptions in this guide:</p>
 
 <ul>
+  <li>You have a <a href="./running-the-metabase-jar-file#1-install-java-jre">Java Runtime Environment (JRE)</a> installed on your system</li>
   <li>You will run Metabase using the <code class="language-plaintext highlighter-rouge">metabase.jar</code> file</li>
-  <li>You already have <code class="language-plaintext highlighter-rouge">nginx</code> and <code class="language-plaintext highlighter-rouge">postgres</code> (or another supported database) running on your server</li>
+  <li>You already have Nginx running on your server</li>
   <li>You will use environment variables to configure your Metabase instance</li>
-  <li>You have <code class="language-plaintext highlighter-rouge">sudo</code> access on your server</li>
+  <li>You have root access on your server</li>
 </ul>
 
-<h2 id="create-an-unprivileged-user-to-run-metabase-and-give-the-user-access-to-app-and-logs">Create an unprivileged user to run Metabase and give the user access to app and logs</h2>
+<p>For production setups, you must set up a <a href="./configuring-application-database">PostgreSQL or MySQL/MariaDB application database</a> as Metabase’s application database.</p>
 
-<p>For security reasons we want to have Metabase run as an unprivileged user. We will call the user simply <code class="language-plaintext highlighter-rouge">metabase</code>. Further we will create the files we will need later for logging and configuration of Metabase, and apply the correct security settings for our unprivileged user.</p>
+<h2 id="create-an-unprivileged-user-to-run-metabase">Create an unprivileged user to run Metabase</h2>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo groupadd -r metabase
-sudo useradd -r -s /bin/false -g metabase metabase
-sudo chown -R metabase:metabase &lt;/your/path/to/metabase/directory&gt;
-sudo touch /var/log/metabase.log
-sudo chown syslog:adm /var/log/metabase.log
-sudo touch /etc/default/metabase
-sudo chmod 640 /etc/default/metabase
+<p>For security reasons, we want to have Metabase run as an unprivileged user. If you don’t already have such a user, create one called <code class="language-plaintext highlighter-rouge">metabase</code>:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Create a "metabase" group</span>
+<span class="nb">sudo </span>groupadd <span class="nt">-r</span> metabase
+
+<span class="c"># Create a "metabase" user, with a home directory at /home/metabase</span>
+<span class="nb">sudo </span>useradd <span class="nt">-m</span> <span class="nt">-r</span> <span class="nt">-s</span> /bin/false <span class="nt">-g</span> metabase metabase
 </code></pre></div></div>
 
-<h2 id="create-a-metabase-service">Create a Metabase Service</h2>
+<h2 id="download-the-metabase-jar-file">Download the Metabase JAR file</h2>
 
-<p>Every service needs a script that tells <code class="language-plaintext highlighter-rouge">systemd</code> how to manage it, and what capabilities it supports. Services are typically registered at <code class="language-plaintext highlighter-rouge">/etc/systemd/system/&lt;servicename&gt;</code>. So, a Metabase service should live at <code class="language-plaintext highlighter-rouge">/etc/systemd/system/metabase.service</code>.</p>
+<p>The Metabase JAR file can be stored anywhere that the <code class="language-plaintext highlighter-rouge">metabase</code> user can read from.
+One convenient location is this user’s home directory at <code class="language-plaintext highlighter-rouge">/home/metabase</code>.</p>
+
+<p>If you prefer to use a different location for the Metabase JAR file, make sure to update any references to <code class="language-plaintext highlighter-rouge">/home/metabase/metabase.jar</code> in the following steps throughout this guide.</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Download the Metabase OSS JAR file into /home/metabase:</span>
+<span class="nb">sudo</span> <span class="nt">-u</span> metabase wget <span class="nt">-O</span> /home/metabase/metabase.jar https://downloads.metabase.com/latest/metabase.jar
+
+<span class="c"># Or, if you're using Metabase Pro/Enterprise:</span>
+<span class="nb">sudo</span> <span class="nt">-u</span> metabase wget <span class="nt">-O</span> /home/metabase/metabase.jar https://downloads.metabase.com/enterprise/latest/metabase.jar
+
+</code></pre></div></div>
+
+<h2 id="environment-variables-for-metabase">Environment variables for Metabase</h2>
+
+<p><a href="../configuring-metabase/environment-variables">Environment variables</a> let you configure and customize your Metabase instance.</p>
+
+<p>We’ll create a file to store these environment variables, which we’ll use when creating the systemd service for Metabase.</p>
+
+<p>This command will create an environment variable file at <code class="language-plaintext highlighter-rouge">/home/metabase/.env</code>, which you should update to point to your <a href="./configuring-application-database">PostgreSQL application database</a>:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo</span> <span class="nt">-u</span> metabase <span class="nb">cat</span> <span class="o">&lt;&lt;</span> <span class="no">EOF</span><span class="sh"> &gt; /home/metabase/.env
+MB_JETTY_HOST=127.0.0.1
+MB_JETTY_PORT=3000
+
+# Uncomment and update the variables below to connect to your Postgres application database
+# If not set, Metabase will use a built-in database (not suitable for production)
+# MB_DB_TYPE=postgres
+# MB_DB_HOST=your_metabase_db_hostname
+# MB_DB_PORT=5432
+# MB_DB_DBNAME=your_metabase_db_name
+# MB_DB_USER=your_metabase_db_user
+# MB_DB_PASS=your_metabase_db_password
+</span><span class="no">EOF
+</span></code></pre></div></div>
+
+<h2 id="create-a-metabase-service">Create a Metabase service</h2>
+
+<p>Every service needs a configuration file that tells systemd how to manage it and what capabilities it supports. System-wide services are typically registered at <code class="language-plaintext highlighter-rouge">/etc/systemd/system/&lt;servicename&gt;</code>. So, a Metabase service should live at <code class="language-plaintext highlighter-rouge">/etc/systemd/system/metabase.service</code>.</p>
 
 <h3 id="the-metabase-service-file">The Metabase service file</h3>
 
-<p>Create the <code class="language-plaintext highlighter-rouge">/etc/systemd/system/metabase.service</code> service file and open it in your editor:</p>
+<p>The following command will create a file at <code class="language-plaintext highlighter-rouge">/etc/systemd/system/metabase.service</code> with a simple systemd service file to run Metabase:</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo touch /etc/systemd/system/metabase.service
-sudo &lt;your-editor&gt; /etc/systemd/system/metabase.service
-</code></pre></div></div>
-
-<p>In <code class="language-plaintext highlighter-rouge">/etc/systemd/system/metabase.service</code>, replace configurable items (they look like <code class="language-plaintext highlighter-rouge">&lt;some-var-name&gt;</code>) with values sensible for your system. The Metabase script below has extra comments to help you know what everything is for.</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[Unit]
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo cat</span> <span class="o">&lt;&lt;</span> <span class="no">EOF</span><span class="sh"> &gt; /etc/systemd/system/metabase.service
+[Unit]
 Description=Metabase server
-After=syslog.target
 After=network.target
 
 [Service]
-WorkingDirectory=&lt;/your/path/to/metabase/directory/&gt;
-ExecStart=/usr/bin/java --add-opens java.base/java.nio=ALL-UNNAMED -jar &lt;/your/path/to/metabase/directory/&gt;metabase.jar
-EnvironmentFile=/etc/default/metabase
+WorkingDirectory=~
+ExecStart=/usr/bin/java --add-opens java.base/java.nio=ALL-UNNAMED -jar /home/metabase/metabase.jar
+EnvironmentFile=/home/metabase/.env
 User=metabase
 Type=simple
-StandardOutput=syslog
-StandardError=syslog
-SyslogIdentifier=metabase
 SuccessExitStatus=143
 TimeoutStopSec=120
 Restart=always
 
 [Install]
 WantedBy=multi-user.target
-</code></pre></div></div>
+</span><span class="no">EOF
+</span></code></pre></div></div>
 
-<h2 id="create-syslog-conf">Create syslog conf</h2>
+<p>The best part of setting up Metabase as a systemd service is that it will start up at every system boot, and get restarted automatically if it crashes. We only have a few more quick steps to finish registering our service and having Metabase up and running.</p>
 
-<p>Next we need to create a syslog conf to make sure systemd can handle the logs properly.</p>
+<h2 id="ensure-your-database-is-ready">Ensure your database is ready</h2>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo touch /etc/rsyslog.d/metabase.conf
-sudo &lt;your-editor&gt; /etc/rsyslog.d/metabase.conf
+<p>If you’re running a PostgreSQL application database, make sure you’ve created a database for Metabase, as well as a user that can access that database. These values should match what you’ve set in your Metabase config for the <code class="language-plaintext highlighter-rouge">MB_DB_TYPE</code>, <code class="language-plaintext highlighter-rouge">MB_DB_DBNAME</code>, <code class="language-plaintext highlighter-rouge">MB_DB_USER</code>, and <code class="language-plaintext highlighter-rouge">MB_DB_PASS</code> environment variables. If you don’t have your database properly configured, Metabase won’t be able to start.</p>
 
-if $programname == 'metabase' then /var/log/metabase.log
-&amp; stop
-</code></pre></div></div>
+<h2 id="ensure-nginx-proxies-requests-to-metabase">Ensure Nginx proxies requests to Metabase</h2>
 
-<p>Restart the syslog service to load the new config.</p>
+<p>Getting into too much detail about configuring Nginx is well outside the scope of this guide, but here’s a quick <code class="language-plaintext highlighter-rouge">nginx.conf</code> file that will get you up and running.</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo systemctl restart rsyslog.service
-</code></pre></div></div>
-
-<h2 id="environment-variables-for-metabase">Environment variables for Metabase</h2>
-
-<p><a href="../configuring-metabase/environment-variables">Environment variables</a> provide a good way to customize and configure your Metabase instance on your server. On Debian systems, services typically expect to have accompanying configs inside <code class="language-plaintext highlighter-rouge">etc/default/&lt;service-name&gt;</code>.</p>
-
-<h3 id="the-metabase-config-file">The Metabase config file</h3>
-
-<p>Open your <code class="language-plaintext highlighter-rouge">/etc/default/metabase</code> environment config file in your editor:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo &lt;your-editor&gt; /etc/default/metabase
-</code></pre></div></div>
-
-<p>In <code class="language-plaintext highlighter-rouge">/etc/default/metabase</code>, replace configurable items (they look like <code class="language-plaintext highlighter-rouge">&lt;some-var-name&gt;</code>) with values sensible for your system. Some Metabase configs have available options, some of which are shown below, separated by <code class="language-plaintext highlighter-rouge">|</code> symbols:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>MB_PASSWORD_COMPLEXITY=&lt;weak|normal|strong&gt;
-MB_PASSWORD_LENGTH=&lt;10&gt;
-MB_JETTY_HOST=&lt;0.0.0.0&gt;
-MB_JETTY_PORT=&lt;12345&gt;
-MB_DB_TYPE=&lt;postgres|mysql|h2&gt;
-MB_DB_DBNAME=&lt;your_metabase_db_name&gt;
-MB_DB_PORT=&lt;5432&gt;
-MB_DB_USER=&lt;your_metabase_db_user&gt;
-MB_DB_PASS=&lt;ssshhhh&gt;
-MB_DB_HOST=&lt;localhost&gt;
-MB_EMOJI_IN_LOGS=&lt;true|false&gt;
-# any other env vars you want available to Metabase
-</code></pre></div></div>
-
-<h2 id="final-steps">Final steps</h2>
-
-<p>The best part of setting up Metabase as a service on a Debian-based system is to be confident it will start up at every system boot. We only have a few more quick steps to finish registering our service and having Metabase up and running.</p>
-
-<h3 id="ensure-your-database-is-ready">Ensure your database is ready</h3>
-
-<p>If you’re running <code class="language-plaintext highlighter-rouge">postgres</code> or some other database, you need to ensure you’ve already followed the instructions for your database system to create a database for Metabase, as well as a user that can access that database. These values should match what you’ve set in your Metabase config for the <code class="language-plaintext highlighter-rouge">MB_DB_TYPE</code>, <code class="language-plaintext highlighter-rouge">MB_DB_DBNAME</code>, <code class="language-plaintext highlighter-rouge">MB_DB_USER</code>, and <code class="language-plaintext highlighter-rouge">MB_DB_PASS</code> environment variables. If you don’t have your database properly configured, Metabase won’t be able to start.</p>
-
-<h3 id="ensure-nginx-is-setup-to-proxy-requests-to-metabase">Ensure <code class="language-plaintext highlighter-rouge">nginx</code> is setup to proxy requests to Metabase</h3>
-
-<p>Getting into too much detail about configuring <code class="language-plaintext highlighter-rouge">nginx</code> is well outside the scope of this guide, but here’s a quick <code class="language-plaintext highlighter-rouge">nginx.conf</code> file that will get you up and running.</p>
-
-<p><strong>Note:</strong> The <code class="language-plaintext highlighter-rouge">nginx.conf</code> below assumes you are accepting incoming traffic on port 80 and want to proxy requests to Metabase, and that your Metabase instance is configured to run on <code class="language-plaintext highlighter-rouge">localhost</code> at port <code class="language-plaintext highlighter-rouge">3000</code>. There are several proxy directives you may care about, so you should check those out further in the <a href="https://nginx.org/en/docs/">Official <code class="language-plaintext highlighter-rouge">nginx</code> docs</a>.</p>
+<p><strong>Note:</strong> The <code class="language-plaintext highlighter-rouge">nginx.conf</code> below assumes you are accepting incoming traffic on port 80 and want to proxy requests to Metabase, and that your Metabase instance is configured to run on <code class="language-plaintext highlighter-rouge">localhost</code> at port 3000. There are several proxy directives you may care about, so you should check those out further in the <a href="https://nginx.org/en/docs/">official Nginx docs</a>.</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># sample nginx.conf
 # proxy requests to Metabase instance
 server {
   listen 80;
   listen [::]:80;
-  server_name your.domain.com;
+  server_name yourdomain.example.com;
   location / {
     proxy_pass http://127.0.0.1:3000;
   }
 }
 </code></pre></div></div>
 
-<h3 id="register-your-metabase-service">Register your Metabase service</h3>
+<h2 id="register-your-metabase-service">Register your Metabase service</h2>
 
-<p>Now, it’s time to register our Metabase service with <code class="language-plaintext highlighter-rouge">systemd</code> so it will start up at system boot. We’ll also ensure our log file is created and owned by the unprivileged user our service runs the <code class="language-plaintext highlighter-rouge">metabase.jar</code> as.</p>
+<p>Now, it’s time to register our Metabase service with systemd so it will start up at system boot:</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo systemctl daemon-reload
 sudo systemctl start metabase.service
 sudo systemctl status metabase.service
 </code></pre></div></div>
 
-<p>Once we are ok here, enable the service to startup during boot.</p>
+<p>To print the live Metabase service logs, you can run:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>journalctl -fxeu metabase.service
+</code></pre></div></div>
+
+<p>Once we are OK here, enable the service to start up during boot:</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo systemctl enable metabase.service
 </code></pre></div></div>
 
 <h2 id="start-stop-or-restart-metabase">Start, stop, or restart Metabase</h2>
 
-<p>Now, whenever you need to start, stop, or restart Metabase, all you need to do is:</p>
+<p>Now, whenever you need to restart, stop, or start Metabase, all you need to do is:</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo systemctl start metabase.service
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo systemctl restart metabase.service
 sudo systemctl stop metabase.service
-sudo systemctl restart metabase.service
+sudo systemctl start metabase.service
 </code></pre></div></div>
 
 
@@ -4993,7 +5043,7 @@ sudo systemctl restart metabase.service
 <script type="text/javascript" src="/js/position-feedback-widget.js"></script>
 
 <script>
-  const pageTitle = `Running Metabase on Debian as a service with nginx`;
+  const pageTitle = `Running Metabase as a systemd service`;
   const pageURL = '/docs/master/installation-and-operation/running-metabase-on-debian';
   const pageURLSplit = pageURL.split('/');
 
