@@ -127,10 +127,10 @@ On the card that says **JWT**, click the **Setup** button.
 In **JWT IDENTITY PROVIDER URI** field, paste
 
 ```txt
-http://localhost:9090/sso/metabase
+localhost:9090/sso/metabase
 ```
 
-Or substitute your Cloud URL for `http://localhost`.
+Or substitute your Cloud URL for `localhost`.
 
 ### String used by the JWT signing key
 
