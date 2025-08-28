@@ -6,7 +6,7 @@
   <meta content="frame-ancestors 'none'" http-equiv="Content-Security-Policy">
   <meta content="deny" http-equiv="X-Frame-Options">
     
-  <link href="https://www.metabase.com/docs/v0.55/questions/introduction" rel="canonical">
+  <link href="https://www.metabase.com/docs/v0.55/ai/metabot" rel="canonical">
   
 
   <script type="text/javascript">
@@ -44,12 +44,12 @@
 <meta name="robots" content="noindex">
    
 
-<title>Questions | Metabase Documentation</title>
+<title>Metabot - Metabase's AI assistant | Metabase Documentation</title>
 <!-- Twitter cards -->
 <meta name="twitter:site" content="@metabase">
 
-<meta name="twitter:title" content="Questions | Metabase Documentation">
-<meta name="twitter:description" content="Questions  Questions in Metabase are queries, their results, and their visualization. Questions are the basic analytical unit in Metabase. You can think about questions as saved queries that you can display as tables or charts. You...">
+<meta name="twitter:title" content="Metabot - Metabase's AI assistant | Metabase Documentation">
+<meta name="twitter:description" content="Metabot - Metabase’s AI assistant   ⚠️ This feature is in beta. Feel free to play around with it, but be aware that things might change (and may not work as expected).    For now, Metabot is...">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -57,9 +57,9 @@
 <!-- Open Graph metadata -->
 <meta property="og:site_name" content="Metabase | Business Intelligence, Dashboards, and Data Visualization">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://www.metabase.com/docs/v0.55/questions/introduction">
-<meta name="title" property="og:title" content="Questions | Metabase Documentation">
-<meta name="description" property="og:description" content="Questions  Questions in Metabase are queries, their results, and their visualization. Questions are the basic analytical unit in Metabase. You can think about questions as saved queries that you can display as tables or charts. You...">
+<meta property="og:url" content="https://www.metabase.com/docs/v0.55/ai/metabot">
+<meta name="title" property="og:title" content="Metabot - Metabase's AI assistant | Metabase Documentation">
+<meta name="description" property="og:description" content="Metabot - Metabase’s AI assistant   ⚠️ This feature is in beta. Feel free to play around with it, but be aware that things might change (and may not work as expected).    For now, Metabot is...">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -1638,7 +1638,7 @@ Roadmap</a>
 
       
 
-      <li class="expanded">
+      <li class="">
         <a href="/docs/v0.55/questions/start" class="">
         Queries and charts
 
@@ -1662,7 +1662,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.55/questions/introduction" class="selected">
+                <a href="/docs/v0.55/questions/introduction" class="">
                   Introduction
 
                   
@@ -4643,7 +4643,7 @@ Roadmap</a>
 
             
             
-                <li class="breadcrumb-item"><a class="blue-60" href="/docs/v0.55/questions/start">Questions</a></li>
+                <li class="breadcrumb-item"><a class="blue-60" href="/docs/v0.55/ai/start">Ai</a></li>
             
             
         </ol>
@@ -4784,137 +4784,113 @@ Roadmap</a>
 </div>
 
 
-        <h1 id="questions">Questions</h1>
+        <h1 id="metabot---metabases-ai-assistant">Metabot - Metabase’s AI assistant</h1>
 
-<p><img src="./images/question.png" alt="Metabase question"></p>
-
-<p>Questions in Metabase are queries, their results, and their visualization. Questions are the basic analytical unit in Metabase. You can think about questions as saved queries that you can display as tables or charts. You can organize questions into collections and dashboards. You can <a href="../embedding/start">embed questions</a>, share links to them, export their results, and have them alert you when results are interesting.</p>
-
-<h2 id="creating-a-new-question">Creating a new question</h2>
-
-<p>You can create a new question from scratch, or build off of an existing question. To create a question from scratch, you can click on <strong>+ New</strong> and select how you want to query your data: either with the graphical query builder, or the SQL/native editor:</p>
-
-<p>You can also use <a href="../ai/metabot">Metabot</a> to create questions using natural language. Just ask Metabot what you want to know about your data, and it can generate charts and queries for you.</p>
-
-<h3 id="query-builder">Query builder</h3>
-
-<p><img src="./images/editor.png" alt="Query builder editor"></p>
-
-<p>Selecting <strong>Question</strong> will take you to the <a href="./query-builder/editor">editor in the graphical query builder</a>.</p>
-
-<h3 id="native-editor">Native editor</h3>
-
-<p><img src="./images/native-editor.png" alt="Native editor"></p>
-
-<p>Selecting <strong>SQL/native code</strong> will open the <a href="./native-editor/writing-sql">native code editor</a>.</p>
-
-<p>Even if you know SQL, you should still check out the <a href="./query-builder/editor">graphical query builder</a>, as you can use it to build <a href="/learn/metabase-basics/querying-and-dashboards/questions/drill-through">interactive charts</a>.</p>
-
-<h3 id="from-an-existing-question">From an existing question</h3>
-
-<p>You can also build a new question from an existing question. You won’t overwrite the existing question, so feel free to play around. You can use either the <a href="./query-builder/editor">query builder</a> or the <a href="./native-editor/referencing-saved-questions-in-queries">native code editor</a>.</p>
-
-<p>Some kinds of saved questions, however, can’t be used as source data:</p>
-
-<ul>
-  <li>Druid questions</li>
-  <li>Mongo questions</li>
-  <li>Questions that use <code class="language-plaintext highlighter-rouge">Cumulative Sum</code> or <code class="language-plaintext highlighter-rouge">Cumulative Count</code> aggregations</li>
-  <li>Questions that have columns that are named the same or similar thing, like <code class="language-plaintext highlighter-rouge">Count</code> and <code class="language-plaintext highlighter-rouge">Count 2</code></li>
-</ul>
-
-<h2 id="saving-questions">Saving questions</h2>
-
-<p>Once you’ve built your query and <a href="./visualizations/visualizing-results">visualized its results</a>, you can save a question to a <a href="../dashboards/introduction">dashboard</a> (the default), or to a <a href="../exploration-and-organization/collections">collection</a>. You’ll need to name the question, include an optional description, and save it to a dashboard or a collection.</p>
-
-<h3 id="saving-questions-to-dashboards">Saving questions to dashboards</h3>
-
-<p>Questions that live in a dashboard are only visible in that dashboard. These questions can’t be used in other dashboards. When you save a question to a dashboard, you’ll need to arrange the card on one of the dashboard’s tab, then save the dashboard.</p>
-
-<h3 id="saving-questions-to-collections">Saving questions to collections</h3>
-
-<p>Questions saved to a collection can be added to multiple dashboards. Moving a question from one collection to another collection won’t have any effect on the dashboards the question has been added to. In order to save a question to a collection, you’ll need to be in a group with <a href="../permissions/collections#curate-access">curate access</a> to that collection.</p>
-
-<h2 id="moving-questions-from-collections-to-dashboards-and-vice-versa">Moving questions from collections to dashboards (and vice versa)</h2>
-
-<p>Whether you can move a question in a collection into a dashboard depends on how many other dashboards use that question.</p>
-
-<p>You can move the question from a collection into a dashboard if either:</p>
-
-<ul>
-  <li>No other dashboards use that question.</li>
-  <li>The other dashboards that use that question live in collections you have <a href="../permissions/collections#curate-access">curate access</a> to. In this case, Metabase will tell you which other dashboards use that question, and you’ll have to decide whether you’re okay with removing the question from those dashboards.</li>
-</ul>
-
-<h2 id="info-about-your-question">Info about your question</h2>
-
-<p>Once you save a question, you can click on the <strong>info</strong> icon in the upper right to see some metadata about your question:</p>
-
-<p><img src="./images/info-sidesheet.png" alt="Info sidesheet"></p>
-
-<h3 id="overview-tab">Overview tab</h3>
-
-<ul>
-  <li>Description, which you can add–descriptions even support Markdown!</li>
-  <li>Who created the question, and who edited it last</li>
-  <li>The collection or dashboard the question is saved in</li>
-  <li>The data the question is based on.</li>
-  <li>The question’s Entity ID (which you can use with <a href="../installation-and-operation/serialization">Serialization</a> to keep IDs consistent across multiple Metabases).</li>
-</ul>
-
-<h3 id="history-tab">History tab</h3>
-
-<p>See <a href="../exploration-and-organization/history">history</a>.</p>
-
-<h2 id="downloading-your-questions-results">Downloading your question’s results</h2>
-
-<p>See <a href="./exporting-results">exporting results</a>.</p>
-
-<h2 id="verifying-a-question">Verifying a question</h2>
-
-<p>See <a href="../exploration-and-organization/content-verification">content verification</a>.</p>
-
-<h2 id="bookmark-a-question">Bookmark a question</h2>
-
-<p>Click the <strong>bookmark</strong> icon to pin a question to your Metabase sidebar. See <a href="../exploration-and-organization/exploration#bookmarks">Bookmarks</a>.</p>
-
-<h2 id="turning-a-question-into-a-model">Turning a question into a model</h2>
-
-<p>You can turn a question saved to a collection into a model to let others know that the results make a good starting point for new questions. (You can’t turn a question saved to a <em>dashboard</em> into a model; you’ll first need to move the question to a collection). See <a href="../data-modeling/models">models</a>.</p>
-
-<h2 id="caching-question-results">Caching question results</h2>
-
-<div class="bootstrap">
-  <div class="plans-blockquote bg-blue-95 rounded-3 p-6 d-flex flex-row border border-1 border-primary">
-    <svg class="" width="24" height="24" viewBox="0 0 26 26" fill="none">
-  <path d="M12 13V15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
-  <path d="M12 10C12.5523 10 13 9.55228 13 9C13 8.44772 12.5523 8 12 8C11.4477 8 11 8.44772 11 9C11 9.55228 11.4477 10 12 10Z" fill="#509EE3"></path>
-  <path d="M12 19.25C16.0041 19.25 19.25 16.0041 19.25 12C19.25 7.99594 16.0041 4.75 12 4.75C7.99594 4.75 4.75 7.99594 4.75 12C4.75 16.0041 7.99594 19.25 12 19.25Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
-</svg>
-
-
-    
-      <p class="m-0 ms-2 paragraph-5 neutral-40">Caching question results is only available on <a class="fw-bold" href="/product/pro">Pro</a> and <a class="fw-bold link-purple" href="/product/enterprise">Enterprise</a> plans
-    
-
-    (both self-hosted and on Metabase Cloud).
-    </p>
-  </div>
+<div>
+  <blockquote>
+    ⚠️ This feature is in beta. Feel free to play around with it, but be aware that things might change (and may not work
+    as expected).
+  </blockquote>
 </div>
 
-<p>See <a href="../configuring-metabase/caching#question-caching-policy">caching per question</a>.</p>
+<blockquote>
+  <p>For now, <a href="/features/metabot-ai">Metabot</a> is only available as an add-on for Pro and Enterprise plans on Metabase Cloud.</p>
+</blockquote>
 
-<h2 id="setting-up-alerts">Setting up alerts</h2>
+<p><img src="./images/metabot.png" alt="Meet Metabot"></p>
 
-<p>You can set up questions to run periodically and notify you if the results are interesting. Check out <a href="./alerts">alerts</a>.</p>
+<p>Metabot helps you analyze your data by creating charts from natural language, generating SQL queries, fixing query errors, and analyzing existing visualizations.</p>
 
-<h2 id="viewing-events-on-your-chart">Viewing events on your chart</h2>
+<blockquote>
+  <p>Like with all generative AI, you’ll always need to double-check results.</p>
+</blockquote>
 
-<p>If your results are a time series, you can display events on along the x-axis. See <a href="../exploration-and-organization/events-and-timelines">events and timelines</a>.</p>
+<p>To set up Metabot, see <a href="./settings">Metabot settings</a>.</p>
 
-<h2 id="deleting-a-question">Deleting a question</h2>
+<h2 id="what-metabot-can-do">What Metabot can do</h2>
 
-<p>See <a href="../exploration-and-organization/delete-and-restore">delete and restore</a>.</p>
+<p>Metabot can help you to:</p>
+
+<ul>
+  <li>Create a chart using the <a href="../questions/query-builder/editor">query builder</a> from a natural language query.</li>
+  <li>Generate SQL in the <a href="../questions/native-editor/writing-sql">native editor</a> from natural language.</li>
+  <li><a href="#analyze-charts-with-metabot">Analyze a chart</a>.</li>
+  <li><a href="#have-metabot-fix-sql-queries">Fix errors in SQL code</a>.</li>
+  <li>Answer questions from our documentation (as in, the literature you’re reading right now).</li>
+</ul>
+
+<h2 id="the-metabot-chat-sidebar">The Metabot chat sidebar</h2>
+
+<p><img src="./images/metabot-conversation-sidebar.png" alt="Metabot chat sidebar"></p>
+
+<p>There are multiple ways to start a chat with Metabot:</p>
+
+<ul>
+  <li>Type cmd+b on Mac, ctrl+b on Windows, to open up the <a href="#the-metabot-chat-sidebar">chat sidebar</a>.</li>
+  <li>Click the Metabot icon in the search bar.</li>
+  <li>Type cmd+k on Mac, or ctrl+k on Windows, to open the <a href="../exploration-and-organization/exploration#command-palette">command palette</a>. Select the Metabot option to <strong>Ask me to do something, or ask a question</strong>.</li>
+</ul>
+
+<p>You can chat with Metabot (though predictably, it’s only interested in helping you answer questions about your data).</p>
+
+<p>Metabot will keep the context of the current question with each new prompt. Only the current conversation history is saved (you can scroll up to see it). If you start a new chat, Metabase will discard the previous conversation, so be mindful when resetting the conversation.</p>
+
+<p>Some tips:</p>
+
+<ul>
+  <li>Give Metabot as much context as you can. If you know the table or fields you want to query, tell Metabot.</li>
+  <li>Whenever you want Metabot to do something completely different, you should reset the conversation, as Metabot might find that irrelevant historical context to be confusing.</li>
+  <li>Once Metabot creates a question for you, you can follow up with more questions or take over yourself. You can drill through the chart or step into the editor to tweak the query (both in the query builder and the SQL editor).</li>
+</ul>
+
+<h3 id="metabot-response-menu">Metabot response menu</h3>
+
+<p>Hover over Metabot’s response to:</p>
+
+<ul>
+  <li>Copy the response.</li>
+  <li>Give thumbs-up/thumbs-down feedback on responses.</li>
+  <li>Re-run the prompt with Metabot. This is useful if you’ve updated the chart or just want to have Metabot take another pass (since AI responses aren’t deterministic, Metabot may give a different response on another run).</li>
+</ul>
+
+<h2 id="analyze-charts-with-metabot">Analyze charts with Metabot</h2>
+
+<p><img src="./images/metabot-response.png" alt="Metabot analyzes a chart"></p>
+
+<p>When viewing a question, you can click the Metabot icon in the upper right to analyze a visualization. You can also open the command palette to tell Metabot to analyze the chart.</p>
+
+<p>When viewing a table of results, Metabase won’t display the Metabot button, but you can open the chat to ask Metabot to analyze the table, and it will produce an <a href="../exploration-and-organization/x-rays">X-ray</a> of the results.</p>
+
+<p>You can also ask Metabot to tell you about specific tables in your database.</p>
+
+<h2 id="metabot-in-the-native-editor">Metabot in the native editor</h2>
+
+<p><img src="./images/generate-sql-from-natural-language-prompt.png" alt="Metabot will generate SQL from a highlighted prompt in natural language"></p>
+
+<p>To have Metabot generate SQL for you:</p>
+
+<ol>
+  <li>Open the <a href="../questions/native-editor/writing-sql">SQL editor</a>.</li>
+  <li>Select the database you want to query.</li>
+  <li>Type cmd+b on Mac, ctrl+b on Windows, to open up the <a href="#the-metabot-chat-sidebar">chat sidebar</a>.</li>
+  <li>Ask it to “Write a SQL query that…” and type your prompt.</li>
+</ol>
+
+<p>Metabot will generate the SQL for you, but it won’t run the query. This gives you a chance to inspect the code before running it. The native editor is designed to be read-only (so don’t worry about Metabot dropping any tables), but you should still check the query to make sure it targets the data you want.</p>
+
+<p>If you don’t specify a specific table in a natural language question, Metabot will only check the first 100 tables in the currently selected database. If your question pertains to tables other than those first 100 tables, Metabot may hallucinate the tables it needs, and the query will fail.</p>
+
+<h2 id="have-metabot-fix-sql-queries">Have Metabot fix SQL queries</h2>
+
+<p><img src="./images/have-metabot-fix-it.png" alt="Metabot can try and fix SQL query errors"></p>
+
+<p>When you get an error in a SQL query, you can click the <strong>Have Metabot fix it</strong> button, and Metabot will try to correct the query. You can also ask Metabot to fix your SQL in the chat.</p>
+
+<h2 id="navigating-after-metabot-creates-a-chart">Navigating after Metabot creates a chart</h2>
+
+<p>If Metabot creates a query or takes you to a new item but you want to return to the previous screen, you can navigate using your browser’s back button.</p>
+
+<p>You can also save any chart that Metabot creates to a dashboard or collection.</p>
 
 
         <div>
@@ -4968,7 +4944,7 @@ Roadmap</a>
 
   
     <span class="paragraph-6 fs-13 neutral-60" id="page-feedback-footer">
-      Want to improve these docs? <a href="https://github.com/metabase/metabase/blob/master/docs/questions/introduction.md" target="_blank">Propose a change.</a>
+      Want to improve these docs? <a href="https://github.com/metabase/metabase/blob/master/docs/ai/metabot.md" target="_blank">Propose a change.</a>
     </span>
   
 </div>
@@ -4990,8 +4966,8 @@ Roadmap</a>
 <script type="text/javascript" src="/js/position-feedback-widget.js"></script>
 
 <script>
-  const pageTitle = `Questions`;
-  const pageURL = '/docs/v0.55/questions/introduction';
+  const pageTitle = `Metabot - Metabase's AI assistant`;
+  const pageURL = '/docs/v0.55/ai/metabot';
   const pageURLSplit = pageURL.split('/');
 
   let pageURLPrefix = '/' + pageURLSplit[1] + '/' + pageURLSplit[2];
