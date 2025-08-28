@@ -148,6 +148,12 @@ Metabase's reference documentation.
 - [Basic actions](./actions/basic)
 - [Custom actions](./actions/custom)
 
+### AI
+
+- [AI overview](./ai/start)
+- [Metabot](./ai/metabot)
+- [Setting up Metabot](./ai/settings)
+
 ### Exploration and organization
 
 - [Organization overview](./exploration-and-organization/start)
