@@ -4941,12 +4941,12 @@ Roadmap</a>
 
 <h2 id="snowflake-error-when-running-via-jar-file">Snowflake error when running via JAR file</h2>
 
-<p>If you’re connecting to Snowflake and encounter an error like, <code class="language-plaintext highlighter-rouge">JDBC driver internal error: exception creating result</code> and are running from the JAR file, add the following option to your java command:</p>
+<p>If you’re connecting to Snowflake and encounter an error like, <code class="language-plaintext highlighter-rouge">JDBC driver internal error: exception creating result</code> and are running from the JAR file, add <code class="language-plaintext highlighter-rouge">--add-opens java.base/java.nio=ALL-UNNAMED</code> to your <code class="language-plaintext highlighter-rouge">java</code> command:</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>java --add-opens java.base/java.nio=ALL-UNNAMED -jar metabase.jar
 </code></pre></div></div>
 
-<p>See <a href="/docs/latest/installation-and-operation/running-the-metabase-jar-file">the documentation on running the Metabase jar file</a> for more details.</p>
+<p>See the docs on <a href="../installation-and-operation/running-the-metabase-jar-file">running the Metabase jar file</a>.</p>
 
 <h2 id="related-problems">Related problems</h2>
 
