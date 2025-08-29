@@ -16,13 +16,13 @@ latest: true
 
 # Metabot settings
 
-{% include beta-blockquote.html %}
-
-> For now, [Metabot](/features/metabot-ai) is only available as an add-on for Pro and Enterprise plans on Metabase Cloud.
+{% include beta-blockquote.html
+   message="For now, <a href='https://www.metabase.com/features/metabot-ai'>Metabot</a> is only available as an add-on for Pro and Enterprise plans on Metabase Cloud."
+%}
 
 _Settings > Admin settings > AI_
 
-This page covers admin settings for Metabase's AI assistant, Metabot.
+This page covers admin settings for Metabase's AI assistant, [Metabot](./metabot).
 
 ## Configure Metabot
 
