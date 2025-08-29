@@ -87,6 +87,15 @@ Must be less than 1048575. See also MB_UNAGGREGATED_QUERY_ROW_LIMIT.
 
 URL for the a AI Service.
 
+### `MB_AI_SERVICE_PROFILE_ID`
+
+> Only available on Metabase [Pro](/product/pro) and [Enterprise](/product/enterprise) plans.
+
+- Type: string
+- Default: `null`
+
+Override Metabot profile ID for agent streaming requests.
+
 ### `MB_ALLOWED_IFRAME_HOSTS`
 
 - Type: string
@@ -1169,6 +1178,15 @@ The custom illustration for the login page.
 - [Configuration file name](./config-file): `map-tile-server-url`
 
 The map tile server URL template used in map visualizations, for example from OpenStreetMaps or MapBox.
+
+### `MB_METABOT_ID`
+
+> Only available on Metabase [Pro](/product/pro) and [Enterprise](/product/enterprise) plans.
+
+- Type: string
+- Default: `null`
+
+Override Metabot ID for agent streaming requests.
 
 ### `MB_NATIVE_QUERY_AUTOCOMPLETE_MATCH_STYLE`
 
