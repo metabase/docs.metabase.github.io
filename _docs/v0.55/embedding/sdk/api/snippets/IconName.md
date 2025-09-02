@@ -7,7 +7,6 @@ category: Embedding
 title: IconName
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/embedding/sdk/api/snippets/IconName.md'
 layout: new-docs
-latest: true
 ---
 
 ```ts
@@ -206,6 +205,8 @@ type IconName =
   | "t-shirt"
   | "tab"
   | "table2"
+  | "thumbs_down"
+  | "thumbs_up"
   | "time_history"
   | "trash"
   | "trash_filled"

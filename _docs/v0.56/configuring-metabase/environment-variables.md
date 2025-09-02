@@ -78,13 +78,6 @@ Maximum number of rows to return for aggregated queries via the API.
 
 Must be less than 1048575. See also MB_UNAGGREGATED_QUERY_ROW_LIMIT.
 
-### `MB_AI_SERVICE_BASE_URL`
-
-- Type: string
-- Default: `http://localhost:8000`
-
-URL for the a AI Service.
-
 ### `MB_ALLOWED_IFRAME_HOSTS`
 
 - Type: string
@@ -415,36 +408,6 @@ Whether or not the default GeoJSON maps are enabled.
 
 Row limit in file exports excluding the header. Enforces 1048575 excluding header as minimum. xlsx downloads are inherently limited to 1048575 rows even if this limit is higher.
 
-### `MB_EE_AI_FEATURES_ENABLED`
-
-- Type: boolean
-- Default: `false`
-- [Configuration file name](./config-file): `ee-ai-features-enabled`
-
-Enable AI features.
-
-This feature is experimental.
-
-### `MB_EE_OPENAI_API_KEY`
-
-- Type: string
-- Default: `null`
-- [Configuration file name](./config-file): `ee-openai-api-key`
-
-The OpenAI API Key used in Metabase Enterprise.
-
-This feature is experimental.
-
-### `MB_EE_OPENAI_MODEL`
-
-- Type: string
-- Default: `gpt-4-turbo-preview`
-- [Configuration file name](./config-file): `ee-openai-model`
-
-The OpenAI Model (e.g. 'gpt-4', 'gpt-3.5-turbo').
-
-This feature is experimental.
-
 ### `MB_EMAIL_FROM_ADDRESS`
 
 - Type: string
@@ -546,7 +509,7 @@ The port your custom SMTP server uses for outgoing emails. Only ports 465, 587, 
 ### `MB_EMAIL_SMTP_SECURITY`
 
 - Type: keyword
-- Default: `:none`
+- Default: `none`
 - [Configuration file name](./config-file): `email-smtp-security`
 
 SMTP secure connection protocol. (tls, ssl, starttls, or none).
@@ -556,7 +519,7 @@ SMTP secure connection protocol. (tls, ssl, starttls, or none).
 > Only available on Metabase [Pro](/product/pro) and [Enterprise](/product/enterprise) plans.
 
 - Type: keyword
-- Default: `:ssl`
+- Default: `ssl`
 - [Configuration file name](./config-file): `email-smtp-security-override`
 
 SMTP secure connection protocol for your custom server. (tls, ssl, or starttls).
@@ -614,7 +577,7 @@ Allow Metabase SDK access to these space delimited origins.
 ### `MB_EMBEDDING_HOMEPAGE`
 
 - Type: keyword
-- Default: `:hidden`
+- Default: `hidden`
 - [Exported as](../installation-and-operation/serialization): `embedding-homepage`.
 - [Configuration file name](./config-file): `embedding-homepage`
 
@@ -767,7 +730,7 @@ Whether to log health check requests from session middleware.
 > Only available on Metabase [Pro](/product/pro) and [Enterprise](/product/enterprise) plans.
 
 - Type: keyword
-- Default: `:metabase`
+- Default: `metabase`
 - [Configuration file name](./config-file): `help-link`
 
 Keyword setting to control whitelabeling of the help link. Valid values are `:metabase`, `:hidden`, and `:custom`. If `:custom` is set, the help link will use the URL specified in the `help-link-custom-destination`, or be hidden if it is not set.
@@ -785,7 +748,7 @@ Custom URL for the help link.
 ### `MB_HTTP_CHANNEL_HOST_STRATEGY`
 
 - Type: keyword
-- Default: `:external-only`
+- Default: `external-only`
 
 Controls which types of hosts are allowed as HTTP channel destinations.
 Options:
@@ -797,7 +760,7 @@ Options:
 ### `MB_HUMANIZATION_STRATEGY`
 
 - Type: keyword
-- Default: `:simple`
+- Default: `simple`
 - [Exported as](../installation-and-operation/serialization): `humanization-strategy`.
 - [Configuration file name](./config-file): `humanization-strategy`
 
@@ -1063,7 +1026,7 @@ Server port, usually 389 or 636 if SSL is used.
 ### `MB_LDAP_SECURITY`
 
 - Type: keyword
-- Default: `:none`
+- Default: `none`
 - [Configuration file name](./config-file): `ldap-security`
 
 Use SSL, TLS or plain text.
@@ -1132,7 +1095,7 @@ Setting this environment variable to false can also come in handy when migrating
 > Only available on Metabase [Pro](/product/pro) and [Enterprise](/product/enterprise) plans.
 
 - Type: keyword
-- Default: `:doing-science`
+- Default: `doing-science`
 - [Exported as](../installation-and-operation/serialization): `loading-message`.
 - [Configuration file name](./config-file): `loading-message`
 
@@ -1171,7 +1134,7 @@ The map tile server URL template used in map visualizations, for example from Op
 ### `MB_NATIVE_QUERY_AUTOCOMPLETE_MATCH_STYLE`
 
 - Type: keyword
-- Default: `:substring`
+- Default: `substring`
 - [Exported as](../installation-and-operation/serialization): `native-query-autocomplete-match-style`.
 - [Configuration file name](./config-file): `native-query-autocomplete-match-style`
 
@@ -1573,7 +1536,7 @@ Used for encrypting and checking whether SDK requests are signed.
 ### `MB_SEARCH_ENGINE`
 
 - Type: keyword
-- Default: `:appdb`
+- Default: `appdb`
 
 Which engine to use when performing search. Supported values are :in-place and :appdb.
 
@@ -1617,7 +1580,7 @@ Should new email notifications be sent to admins, for all new SSO users?
 ### `MB_SESSION_COOKIE_SAMESITE`
 
 - Type: keyword
-- Default: `:lax`
+- Default: `lax`
 - [Configuration file name](./config-file): `session-cookie-samesite`
 
 Value for the session cookie's `SameSite` directive.
@@ -1711,17 +1674,6 @@ Whether or not to display x-ray suggestions on the homepage. They will also be h
 - [Configuration file name](./config-file): `show-metabase-links`
 
 Whether or not to display Metabase links outside admin settings.
-
-### `MB_SHOW_METABOT`
-
-> Only available on Metabase [Pro](/product/pro) and [Enterprise](/product/enterprise) plans.
-
-- Type: boolean
-- Default: `true`
-- [Exported as](../installation-and-operation/serialization): `show-metabot`.
-- [Configuration file name](./config-file): `show-metabot`
-
-Enables Metabot character on the home page.
 
 ### `MB_SHOW_STATIC_EMBED_TERMS`
 
@@ -1826,7 +1778,7 @@ Controls how often the heartbeats are sent when an SSH tunnel is established (in
 ### `MB_START_OF_WEEK`
 
 - Type: keyword
-- Default: `:sunday`
+- Default: `sunday`
 - [Exported as](../installation-and-operation/serialization): `start-of-week`.
 - [Configuration file name](./config-file): `start-of-week`
 
@@ -1937,7 +1889,7 @@ Turn on the Tenants feature, allowing users to be assigned to a particular Tenan
 > Only available on Metabase [Pro](/product/pro) and [Enterprise](/product/enterprise) plans.
 
 - Type: keyword
-- Default: `:all`
+- Default: `all`
 - [Configuration file name](./config-file): `user-visibility`
 
 Note: Sandboxed users will never see suggestions.

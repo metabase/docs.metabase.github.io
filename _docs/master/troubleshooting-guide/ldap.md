@@ -43,7 +43,7 @@ services:
       - "MB_LDAP_ATTRIBUTE_FIRSTNAME=uid"
       - "MB_LDAP_ATTRIBUTE_LASTNAME=sn"
   openldap:
-    image: bitnami/openldap:2.4.57
+    image: bitnamilegacy/openldap:2.4.57
     hostname: openldap
     container_name: openldap
     ports:
