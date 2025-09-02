@@ -1918,7 +1918,8 @@
           },
           "schema" : {
             "anyOf" : [ {
-              "type" : "string"
+              "type" : "string",
+              "minLength" : 1
             }, {
               "type" : "null"
             } ]
@@ -2473,6 +2474,13 @@
           "$ref" : "#/components/schemas/metabase.legacy-mbql.schema.datetime"
         }, {
           "$ref" : "#/components/schemas/metabase.legacy-mbql.schema.today"
+        } ]
+      },
+      "metabase.legacy-mbql.schema.Emptyable" : {
+        "anyOf" : [ {
+          "$ref" : "#/components/schemas/metabase.legacy-mbql.schema.StringExpressionArg"
+        }, {
+          "$ref" : "#/components/schemas/metabase.legacy-mbql.schema.field-or-expression-ref"
         } ]
       },
       "metabase.legacy-mbql.schema.EqualityComparable" : {
