@@ -569,7 +569,7 @@ Allow these space delimited origins to embed Metabase interactive.
 > Only available on Metabase [Pro](/product/pro) and [Enterprise](/product/enterprise) plans.
 
 - Type: string
-- Default: `localhost:*`
+- Default: `""`
 - [Configuration file name](./config-file): `embedding-app-origins-sdk`
 
 Allow Metabase SDK access to these space delimited origins.
