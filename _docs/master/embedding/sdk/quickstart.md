@@ -54,9 +54,9 @@ Still in the Admin's Settings tab, navigate to the **Authentication** section in
 
 ## 3. Install the SDK in your app
 
-When installing the npm package, it's critical to use the npm dist-tag that corresponds to the major version of your Metabase. For example, if your Metabase is version 1.56.x, you'd run `56-stable`. See [SDK versioning](./version).
+When installing the NPM package, it's critical to use the npm dist-tag that corresponds to the major version of your Metabase. For example, if your Metabase is version 1.53.x, you'd run `53-stable`. See [SDK versioning](./version).
 
-Via npm:
+Via NPM:
 
 ```
 npm install @metabase/embedding-sdk-react@53-stable
