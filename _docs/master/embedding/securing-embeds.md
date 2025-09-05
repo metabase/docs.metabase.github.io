@@ -169,7 +169,7 @@ For code samples, see the [static embedding reference app](https://github.com/me
 
 ## Interactive embedding authenticates and authorizes people in one flow
 
-Interactive embedding integrates with SSO ([JWT](/docs/latest/people-and-groups/authenticating-with-jwt) or [SAML](/docs/latest/people-and-groups/authenticating-with-saml)) to authenticate and authorize people in one flow. The auth integration makes it easy to map user attributes (such as a person's role or department) to granular levels of data access, including:
+Interactive embedding integrates with SSO ([JWT](../people-and-groups/authenticating-with-jwt) or [SAML](../people-and-groups/authenticating-with-saml) to authenticate and authorize people in one flow. The auth integration makes it easy to map user attributes (such as a person's role or department) to granular levels of data access, including:
 
 - [Tables](../permissions/data)
 - [Rows](../permissions/row-and-column-security#row-level-security-filter-by-a-column-in-the-table)

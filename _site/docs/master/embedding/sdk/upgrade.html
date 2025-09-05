@@ -49,7 +49,7 @@
 <meta name="twitter:site" content="@metabase">
 
 <meta name="twitter:title" content="Upgrading Metabase and the Embedded analytics SDK | Metabase Documentation">
-<meta name="twitter:description" content="Upgrading Metabase and the Embedded analytics SDK Here’s a basic overview of the steps you’ll want to take when upgrading your SDK. 1. Read the release post and changelog for both Metabase and the Embedded analytics SDK  Release...">
+<meta name="twitter:description" content="Upgrading Metabase and the Embedded analytics SDK Here’s a basic overview of the steps you’ll want to take when upgrading your SDK. 1. Read the release post and changelog for Metabase and the Embedded analytics SDK  Release posts...">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -59,7 +59,7 @@
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://www.metabase.com/docs/master/embedding/sdk/upgrade">
 <meta name="title" property="og:title" content="Upgrading Metabase and the Embedded analytics SDK | Metabase Documentation">
-<meta name="description" property="og:description" content="Upgrading Metabase and the Embedded analytics SDK Here’s a basic overview of the steps you’ll want to take when upgrading your SDK. 1. Read the release post and changelog for both Metabase and the Embedded analytics SDK  Release...">
+<meta name="description" property="og:description" content="Upgrading Metabase and the Embedded analytics SDK Here’s a basic overview of the steps you’ll want to take when upgrading your SDK. 1. Read the release post and changelog for Metabase and the Embedded analytics SDK  Release posts...">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -4828,15 +4828,15 @@ Roadmap</a>
 
 <p>Here’s a basic overview of the steps you’ll want to take when upgrading your SDK.</p>
 
-<h2 id="1-read-the-release-post-and-changelog-for-both-metabase-and-the-embedded-analytics-sdk">1. Read the release post and changelog for both Metabase and the Embedded analytics SDK</h2>
+<h2 id="1-read-the-release-post-and-changelog-for-metabase-and-the-embedded-analytics-sdk">1. Read the release post and changelog for Metabase and the Embedded analytics SDK</h2>
 
 <ul>
   <li><a href="/releases">Release posts</a> give a good overview of what’s in each release, and call out breaking changes (which are rare).</li>
   <li><a href="/changelog">Metabase changelogs</a> list Metabase changes.</li>
-  <li><a href="/changelog/55">Embedded analytics SDK changelogs</a> list changes specific to the SDK package.</li>
+  <li><a href="/changelog/56">Embedded analytics SDK changelogs</a> list changes specific to the SDK Package.</li>
 </ul>
 
-<p>Check for any relevant changes, especially breaking changes that require you to update your application’s code. If there are breaking changes, we’ll have docs that’ll walk you through what changes you’ll need to make and why.</p>
+<p>Check for any relevant changes, especially deprecations or breaking changes that require you to update your application’s code. If there are deprecation changes, we’ll have docs that’ll walk you through what changes you’ll need to make and why.</p>
 
 <h2 id="2-test-the-upgrade">2. Test the upgrade</h2>
 
@@ -4848,34 +4848,37 @@ Roadmap</a>
 
 <p>See <a href="../../installation-and-operation/upgrading-metabase">upgrading Metabase</a>.</p>
 
-<h3 id="upgrade-the-sdk-with-npm-or-yarn">Upgrade the SDK with npm or yarn</h3>
+<h3 id="upgrade-the-sdk-with-npm-or-yarn">Upgrade the SDK with npm or Yarn</h3>
 
 <p>You’ll want to test the changes locally first, as there may be breaking changes that require you to upgrade your application code.</p>
 
-<p>Check out a new branch in your application and install the next stable version, either with npm or yarn:</p>
+<p>Check out a new branch in your application and install the next stable version, either with npm or Yarn:</p>
 
 <p>Via npm:</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm <span class="nb">install</span> @metabase/embedding-sdk-react@<span class="o">{</span>next-major-version-number<span class="o">}</span><span class="nt">-stable</span>
 </code></pre></div></div>
 
-<p>For example, if you were upgrading to version 55 of the SDK:</p>
+<p>For example, if you were upgrading to version 56 of the SDK:</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm <span class="nb">install</span> @metabase/embedding-sdk-react@55-stable
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm <span class="nb">install</span> @metabase/embedding-sdk-react@56-stable
 </code></pre></div></div>
 
-<p>If you’re using yarn:</p>
+<p>If you’re using Yarn:</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>yarn add @metabase/embedding-sdk-react@<span class="o">{</span>next-major-version-number<span class="o">}</span><span class="nt">-stable</span>
 </code></pre></div></div>
 
 <p>See more on <a href="./version">SDK versions</a>.</p>
 
-<h3 id="if-there-are-breaking-changes-make-the-necessary-changes-to-your-application-code">If there are breaking changes, make the necessary changes to your application code</h3>
+<h3 id="if-there-are-deprecations-or-breaking-changes-changes-make-the-necessary-changes-to-your-application-code">If there are deprecations or breaking changes changes, make the necessary changes to your application code</h3>
 
-<p>Breaking changes are rare, but if you do need to make changes, we’ll mention it in the release notes for the new major version and have docs that walk you through the changes.</p>
+<p>Deprecations or breaking changes are rare, but if you do need to make changes, we’ll mention it in the release notes for the new major version and have docs that walk you through the changes.</p>
 
 <p>Update or add tests for any application code changes that you make.</p>
+
+<p>In most cases, a deprecated change becomes a breaking change in the release following its deprecation.
+For example, if we plan to remove a prop from an SDK React component, we first mark it as <strong>deprecated</strong>, and then remove it in the next release.</p>
 
 <h3 id="deploy-to-your-staging-environment">Deploy to your staging environment</h3>
 
@@ -4888,6 +4891,12 @@ Roadmap</a>
 <p>If everything is working in staging, you’re ready to deploy to production.</p>
 
 <p>Be sure to deploy your application changes and upgrade your Metabase in parallel so that the SDK version and the Metabase version stay in sync.</p>
+
+<h3 id="caching-may-delay-the-upgrade-by-up-to-a-minute">Caching may delay the upgrade by up to a minute</h3>
+
+<p>This is intentional. After upgrading, Metabase may still serve the previous, cached version of the SDK Bundle for up to 60 seconds (<code class="language-plaintext highlighter-rouge">Cache-Control: public, max-age=60</code>). This short cache window helps ensure fast performance while still allowing updates to propagate quickly.</p>
+
+<p>If you don’t see your changes immediately, clear your browser’s cache or just wait a minute. After that, the SDK Package will load the newly deployed SDK Bundle.</p>
 
 <h3 id="if-your-instance-is-pinned-on-metabase-cloud-youll-need-to-request-an-upgrade">If your instance is pinned on Metabase Cloud, you’ll need to request an upgrade</h3>
 
