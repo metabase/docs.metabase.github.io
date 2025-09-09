@@ -124,7 +124,6 @@ config:
     db-connection-timeout-ms: 10000
     db-query-timeout-minutes: 20
     default-maps-enabled: true
-    disable-cors-on-localhost: false
     download-row-limit: null
     email-from-address: notifications@metabase.com
     email-from-address-override: notifications@metabase.com
@@ -142,7 +141,7 @@ config:
     email-smtp-username: null
     email-smtp-username-override: null
     embedding-app-origins-interactive: null
-    embedding-app-origins-sdk: ''
+    embedding-app-origins-sdk: ""
     embedding-homepage: hidden
     embedding-secret-key: null
     enable-embedding-interactive: false
