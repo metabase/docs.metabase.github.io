@@ -81,6 +81,7 @@ type IconName =
   | "download"
   | "dyno"
   | "edit_document"
+  | "edit_document_outlined"
   | "ellipsis"
   | "embed"
   | "empty"
