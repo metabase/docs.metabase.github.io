@@ -28,8 +28,7 @@
    "files"
    "images"
    "js"
-   "learn"
-   "redirects"])
+   "learn"])
 
 (defn- sync-dirs [source-dir target-dir]
   (when (fs/exists? source-dir)
