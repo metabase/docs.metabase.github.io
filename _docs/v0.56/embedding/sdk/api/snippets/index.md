@@ -82,6 +82,12 @@ layout: new-docs
 | [MetabaseAuthConfigWithJwt](./api/MetabaseAuthConfigWithJwt)       | -                                                             |
 | [MetabaseAuthConfigWithSaml](./api/MetabaseAuthConfigWithSaml)     | -                                                             |
 
+## MetabotQuestion
+
+| Variable                                    | Description |
+| :------------------------------------------ | :---------- |
+| [MetabotQuestion](./api/MetabotQuestion) | -           |
+
 ## StaticQuestion
 
 | Name                                                | Description                               |
