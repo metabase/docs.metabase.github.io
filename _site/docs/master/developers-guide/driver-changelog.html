@@ -4836,18 +4836,12 @@ longer include parent column names for drivers like MongoDB – use <code class=
   <li>
     <p>Added metabase.driver/compile-transform, metabase.driver/compile-drop-table, metabase.driver/execute-raw-queries!,
 metabase.driver/run-transform!, metabase.driver/drop-transform-target!, metabase.driver/native-query-deps,
-metabase.driver/connection-spec, metabase.driver/table-exists?, metabase.driver.sql/normalize-name,
-and metabase.driver.sql/default-schema to implement sql transforms.</p>
+metabase.driver/connection-details, metabase.driver/table-exists?, metabase.driver.sql/normalize-name,
+metabase.driver.sql/default-schema, and metabase.driver.sql/find-table to implement sql transforms.</p>
   </li>
   <li>
-    <p>Added the driver multi-methods <code class="language-plaintext highlighter-rouge">metabase.driver/schema-exists?</code> and <code class="language-plaintext highlighter-rouge">metabase.driver/create-schema-if-needed!</code> which should be implemented by drivers that support <code class="language-plaintext highlighter-rouge">:schemas</code> and <code class="language-plaintext highlighter-rouge">:transforms/table</code>.</p>
-  </li>
-  <li>
-    <p><code class="language-plaintext highlighter-rouge">metabase.driver/humanize-connection-error-message</code> now takes a list of all messages in the exception chain,
+    <p><code class="language-plaintext highlighter-rouge">driver/humanize-connection-error-message</code> now takes a list of all messages in the exception chain,
 instead of just the top-level message as a string.</p>
-  </li>
-  <li>
-    <p>Removed <code class="language-plaintext highlighter-rouge">driver/set-database-used</code>. Drivers should set default databases in their connection specs instead.</p>
   </li>
 </ul>
 

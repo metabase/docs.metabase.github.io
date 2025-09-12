@@ -6,7 +6,7 @@
   <meta content="frame-ancestors 'none'" http-equiv="Content-Security-Policy">
   <meta content="deny" http-equiv="X-Frame-Options">
     
-  <link href="https://www.metabase.com/docs/master/databases/connections/sparksql" rel="canonical">
+  <link href="https://www.metabase.com/docs/master/embedding/sdk/ai-chat" rel="canonical">
   
 
   <script type="text/javascript">
@@ -44,12 +44,12 @@
 <meta name="robots" content="noindex">
    
 
-<title>SparkSQL | Metabase Documentation</title>
+<title>Embedded analytics SDK - AI chat | Metabase Documentation</title>
 <!-- Twitter cards -->
 <meta name="twitter:site" content="@metabase">
 
-<meta name="twitter:title" content="SparkSQL | Metabase Documentation">
-<meta name="twitter:description" content="SparkSQL To add a database connection, click on the gear icon in the top right, and navigate to Admin settings > Databases > Add a database. Settings You can edit these settings at any time. Just remember to save your...">
+<meta name="twitter:title" content="Embedded analytics SDK - AI chat | Metabase Documentation">
+<meta name="twitter:description" content="Embedded analytics SDK - AI chat     ...">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -57,9 +57,9 @@
 <!-- Open Graph metadata -->
 <meta property="og:site_name" content="Metabase | Business Intelligence, Dashboards, and Data Visualization">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://www.metabase.com/docs/master/databases/connections/sparksql">
-<meta name="title" property="og:title" content="SparkSQL | Metabase Documentation">
-<meta name="description" property="og:description" content="SparkSQL To add a database connection, click on the gear icon in the top right, and navigate to Admin settings > Databases > Add a database. Settings You can edit these settings at any time. Just remember to save your...">
+<meta property="og:url" content="https://www.metabase.com/docs/master/embedding/sdk/ai-chat">
+<meta name="title" property="og:title" content="Embedded analytics SDK - AI chat | Metabase Documentation">
+<meta name="description" property="og:description" content="Embedded analytics SDK - AI chat     ...">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -3113,7 +3113,7 @@ Roadmap</a>
 
       
 
-      <li class="expanded">
+      <li class="">
         <a href="/docs/master/databases/start" class="">
         Data sources
 
@@ -3151,7 +3151,7 @@ Roadmap</a>
 
               
 
-              <li class="expanded">
+              <li class="">
                 <a href="" class="">
                   Supported databases
 
@@ -3281,7 +3281,7 @@ Roadmap</a>
                     
                       
                       <li>
-                        <a href="/docs/master/databases/connections/sparksql" class="selected">
+                        <a href="/docs/master/databases/connections/sparksql" class="">
                           Spark SQL
                         </a>
                       </li>
@@ -4673,7 +4673,7 @@ Roadmap</a>
 
             
             
-                <li class="breadcrumb-item"><a class="blue-60" href="/docs/master/databases/start">Databases</a></li>
+                <li class="breadcrumb-item"><a class="blue-60" href="/docs/master/embedding/start">Embedding</a></li>
             
             
         </ol>
@@ -4820,95 +4820,79 @@ Roadmap</a>
 </div>
 
 
-        <h1 id="sparksql">SparkSQL</h1>
+        <h1 id="embedded-analytics-sdk---ai-chat">Embedded analytics SDK - AI chat</h1>
 
-<p>To add a database connection, click on the <strong>gear</strong> icon in the top right, and navigate to <strong>Admin settings</strong> &gt; <strong>Databases</strong> &gt; <strong>Add a database</strong>.</p>
+<p><img src="../images/ai-chat.png" alt="Embedded AI chat"></p>
 
-<h2 id="settings">Settings</h2>
+<div class="bootstrap">
+  <div class="plans-blockquote bg-blue-95 rounded-3 p-6 d-flex flex-row border border-1 border-primary">
+    <svg class="" width="24" height="24" viewBox="0 0 26 26" fill="none">
+  <path d="M12 13V15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
+  <path d="M12 10C12.5523 10 13 9.55228 13 9C13 8.44772 12.5523 8 12 8C11.4477 8 11 8.44772 11 9C11 9.55228 11.4477 10 12 10Z" fill="#509EE3"></path>
+  <path d="M12 19.25C16.0041 19.25 19.25 16.0041 19.25 12C19.25 7.99594 16.0041 4.75 12 4.75C7.99594 4.75 4.75 7.99594 4.75 12C4.75 16.0041 7.99594 19.25 12 19.25Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
+</svg>
 
-<p>You can edit these settings at any time. Just remember to save your changes.</p>
 
-<h3 id="display-name">Display name</h3>
+    
+      <p class="m-0 ms-2 paragraph-5 neutral-40">Embedded analytics SDK is only available on <a class="fw-bold" href="/product/pro">Pro</a> and <a class="fw-bold link-purple" href="/product/enterprise">Enterprise</a> plans
+    
 
-<p>The display name for the database in the Metabase interface.</p>
+    (both self-hosted and on Metabase Cloud).
+    You can, however, play around with the SDK on your local machine without a license by using API keys to authenticate your embeds.</p>
+  </div>
+</div>
 
-<h3 id="host">Host</h3>
+<p>You can embed an AI chat in your application similar to <a href="../embedded-analytics-js">Metabot</a> in Metabase.</p>
 
-<p>Your database’s IP address, or its domain name (e.g., esc.mydatabase.com).</p>
+<p>To help embedded Metabot more easily find and focus on the data you care about most, select the collection containing the models and metrics it should be able to use to create queries.</p>
 
-<h3 id="port">Port</h3>
+<p>If you’re embedding the Metabot component in an app, you can specify a different collection that embedded Metabot is allowed to use for creating queries.</p>
 
-<p>The database port. E.g., 10000</p>
+<h2 id="chat-preview">Chat preview</h2>
 
-<h3 id="username">Username</h3>
+<p>You can check out a <a href="https://embedded-analytics-sdk-demo.metabase.com/admin/analytics/new/ask-metabot">demo of the AI chat component</a> on our Shoppy demo site.</p>
 
-<p>The database username for the account that you want to use to connect to your database. You can set up multiple connections to the same database using different user accounts to connect to the same database, each with different sets of <a href="../users-roles-privileges">privileges</a>.</p>
+<h2 id="example">Example</h2>
 
-<h3 id="password">Password</h3>
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nx">React</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">react</span><span class="dl">"</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span>
+  <span class="nx">MetabotQuestion</span><span class="p">,</span>
+  <span class="nx">MetabaseProvider</span><span class="p">,</span>
+  <span class="nx">defineMetabaseAuthConfig</span><span class="p">,</span>
+<span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@metabase/embedding-sdk-react</span><span class="dl">"</span><span class="p">;</span>
 
-<p>The password for the username that you use to connect to the database.</p>
+<span class="kd">const</span> <span class="nx">authConfig</span> <span class="o">=</span> <span class="nf">defineMetabaseAuthConfig</span><span class="p">({</span>
+  <span class="na">metabaseInstanceUrl</span><span class="p">:</span> <span class="dl">"</span><span class="s2">https://your-metabase.example.com</span><span class="dl">"</span><span class="p">,</span>
+<span class="p">});</span>
 
-<h3 id="use-an-ssh-tunnel">Use an SSH tunnel</h3>
-
-<p>See our <a href="../ssh-tunnel">guide to SSH tunneling</a>.</p>
-
-<h3 id="additional-jdbc-connection-string-options">Additional JDBC connection string options</h3>
-
-<p>You can append options to the connection string that Metabase uses to connect to your database.</p>
-
-<h3 id="re-run-queries-for-simple-explorations">Re-run queries for simple explorations</h3>
-
-<p>Turn this option <strong>OFF</strong> if people want to click <strong>Run</strong> (the play button) before applying any <a href="../../questions/query-builder/summarizing-and-grouping">Summarize</a> or filter selections.</p>
-
-<p>By default, Metabase will execute a query as soon as you choose an grouping option from the <strong>Summarize</strong> menu or a filter condition from the <a href="/learn/metabase-basics/querying-and-dashboards/questions/drill-through">drill-through menu</a>. If your database is slow, you may want to disable re-running to avoid loading data on each click.</p>
-
-<h3 id="choose-when-metabase-syncs-and-scans">Choose when Metabase syncs and scans</h3>
-
-<p>Turn this option <strong>ON</strong> to manage the queries that Metabase uses to stay up to date with your database. For more information, see <a href="../sync-scan">Syncing and scanning databases</a>.</p>
-
-<h4 id="database-syncing">Database syncing</h4>
-
-<p>If you’ve selected <strong>Choose when syncs and scans happen</strong> &gt; <strong>ON</strong>, you’ll be able to set:</p>
-
-<ul>
-  <li>The frequency of the <a href="../sync-scan#how-database-syncs-work">sync</a>: hourly (default) or daily.</li>
-  <li>The time to run the sync, in the timezone of the server where your Metabase app is running.</li>
-</ul>
-
-<h4 id="scanning-for-filter-values">Scanning for filter values</h4>
-
-<p>Metabase can scan the values present in each field in this database to enable checkbox filters in dashboards and questions. This can be a somewhat resource-intensive process, particularly if you have a very large database.</p>
-
-<p>If you’ve selected <strong>Choose when syncs and scans happen</strong> &gt; <strong>ON</strong>, you’ll see the following options under <strong>Scanning for filter values</strong>:</p>
+<span class="k">export</span> <span class="k">default</span> <span class="kd">function</span> <span class="nf">App</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">return </span><span class="p">(</span>
+    <span class="o">&lt;</span><span class="nx">MetabaseProvider</span> <span class="nx">authConfig</span><span class="o">=</span><span class="p">{</span><span class="nx">authConfig</span><span class="p">}</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="nx">MetabotQuestion</span> <span class="o">/&gt;</span>
+    <span class="o">&lt;</span><span class="sr">/MetabaseProvider</span><span class="err">&gt;
+</span>  <span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<h2 id="api-reference">API reference</h2>
 
 <ul>
-  <li><strong>Regularly, on a schedule</strong> allows you to run <a href="../sync-scan#how-database-scans-work">scan queries</a> at a frequency that matches the rate of change to your database. The time is set in the timezone of the server where your Metabase app is running. This is the best option for a small database, or tables with distinct values that get updated often.</li>
-  <li><strong>Only when adding a new filter widget</strong> is a great option if you want scan queries to run on demand. Turning this option <strong>ON</strong> means that Metabase will only scan and cache the values of the field(s) that are used when a new filter is added to a dashboard or SQL question.</li>
-  <li><strong>Never, I’ll do this manually if I need to</strong> is an option for databases that are either prohibitively large, or which never really have new values added. Use the <a href="../sync-scan#manually-scanning-column-values">Re-scan field values now</a> button to run a manual scan and bring your filter values up to date.</li>
+  <li><a href="./api/MetabotQuestion">Component</a></li>
 </ul>
 
-<h3 id="periodically-refingerprint-tables">Periodically refingerprint tables</h3>
+<h2 id="setting-up-ai-chat">Setting up AI chat</h2>
 
-<blockquote>
-  <p>Periodic refingerprinting will increase the load on your database.</p>
-</blockquote>
+<p>To configure your embedded AI chat in your Metabase:</p>
 
-<p>Turn this option <strong>ON</strong> to scan a sample of values every time Metabase runs a <a href="../sync-scan#how-database-syncs-work">sync</a>.</p>
+<ol>
+  <li>Click the <strong>gear</strong> icon in the upper right.</li>
+  <li>Select <strong>Admin settings</strong>.</li>
+  <li>Click the <strong>AI</strong> tab.</li>
+  <li>In the left sidebar, click <strong>Embedded Metabot</strong>.</li>
+</ol>
 
-<p>A fingerprinting query examines the first 10,000 rows from each column and uses that data to guesstimate how many unique values each column has, what the minimum and maximum values are for numeric and timestamp columns, and so on. If you leave this option <strong>OFF</strong>, Metabase will only fingerprint your columns once during setup.</p>
+<p>When embedding the Metabot component in your app, you should specify a collection that embedded Metabot is allowed to use for creating queries. Embedded Metabot will only have access to that collection.</p>
 
-<h2 id="danger-zone">Danger zone</h2>
-
-<p>See <a href="../danger-zone">Danger zone</a>.</p>
-
-<h2 id="further-reading">Further reading</h2>
-
-<ul>
-  <li><a href="../../databases/connecting">Managing databases</a></li>
-  <li><a href="../../data-modeling/metadata-editing">Metadata editing</a></li>
-  <li><a href="../../data-modeling/models">Models</a></li>
-  <li><a href="../../permissions/data">Setting data access permissions</a></li>
-</ul>
+<p>For tips and more, see <a href="../../ai/settings">Metabot settings</a>.</p>
 
 
         <div>
@@ -4962,7 +4946,7 @@ Roadmap</a>
 
   
     <span class="paragraph-6 fs-13 neutral-60" id="page-feedback-footer">
-      Want to improve these docs? <a href="https://github.com/metabase/metabase/blob/master/docs/databases/connections/sparksql.md" target="_blank">Propose a change.</a>
+      Want to improve these docs? <a href="https://github.com/metabase/metabase/blob/master/docs/embedding/sdk/ai-chat.md" target="_blank">Propose a change.</a>
     </span>
   
 </div>
@@ -4984,8 +4968,8 @@ Roadmap</a>
 <script type="text/javascript" src="/js/position-feedback-widget.js"></script>
 
 <script>
-  const pageTitle = `SparkSQL`;
-  const pageURL = '/docs/master/databases/connections/sparksql';
+  const pageTitle = `Embedded analytics SDK - AI chat`;
+  const pageURL = '/docs/master/embedding/sdk/ai-chat';
   const pageURLSplit = pageURL.split('/');
 
   let pageURLPrefix = '/' + pageURLSplit[1] + '/' + pageURLSplit[2];
@@ -5307,6 +5291,8 @@ Roadmap</a>
   <script type="text/javascript" src="/js/blog.js"></script>
   <script type="text/javascript" src="/js/syntax-highlight.js"></script>
 
+  
+    <script type="text/javascript" src="/js/docs/checkpoints.js"></script>
   
 
 </body></html>

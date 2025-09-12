@@ -17,10 +17,6 @@ To add a database connection, click on the **gear** icon in the top right, and n
 
 You can edit these settings at any time. Just remember to save your changes.
 
-### Connection string
-
-Paste a connection string here to pre-fill the remaining fields below.
-
 ### Display name
 
 The display name for the database in the Metabase interface.
