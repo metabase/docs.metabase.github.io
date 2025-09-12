@@ -13,6 +13,6 @@ layout: new-docs
 
 Documents help you tell stories with data.
 
-## [Create documents](./create)
+## [Create documents](./introduction)
 
 Documents combine text and charts for short- or long-form analysis. Add charts from questions and models, and format text with Markdown.

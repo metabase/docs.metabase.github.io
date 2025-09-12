@@ -5,7 +5,7 @@ show_category_breadcrumb: true
 show_title_breadcrumb: true
 category: Documents
 title: Documents
-source_url: 'https://github.com/metabase/metabase/blob/master/docs/documents/create.md'
+source_url: 'https://github.com/metabase/metabase/blob/master/docs/documents/introduction.md'
 layout: new-docs
 summary: 'Create documents to combine text and charts for long-form analysis. Add charts from questions and models, and format text with Markdown.'
 ---
