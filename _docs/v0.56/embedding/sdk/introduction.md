@@ -91,6 +91,7 @@ Start with one of the quickstarts, then see these pages for more info on compone
 
 - [Authentication](./authentication)
 - [Questions](./questions)
+- [AI chat](./ai-chat)
 - [Dashboards](./dashboards)
 - [Appearance](./appearance)
 - [Collections](./collections)

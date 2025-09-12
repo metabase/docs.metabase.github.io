@@ -80,6 +80,10 @@ You can pass parameter values to questions defined with SQL via the `initialSqlP
 
 `initialSqlParameters` can't be used with questions built using the query builder.
 
+## Questions with natural language
+
+See [AI chat](./ai-chat).
+
 ## Customizing interactive questions
 
 By default, the Embedded analytics SDK provides a default layout for interactive questions that allows you to view your questions, apply filters and aggregations, and access functionality within the query builder.
