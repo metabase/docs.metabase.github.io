@@ -128,6 +128,10 @@ Metabase's reference documentation.
 - [Dashboard subscriptions](./dashboards/subscriptions)
 - [Actions on dashboards](./dashboards/actions)
 
+### Documents
+
+- [Creating documents](./documents/create)
+
 ### Data modeling
 
 - [Data modeling overview](./data-modeling/start)

@@ -6,7 +6,7 @@
   <meta content="frame-ancestors 'none'" http-equiv="Content-Security-Policy">
   <meta content="deny" http-equiv="X-Frame-Options">
     
-  <link href="https://www.metabase.com/docs/master/embedding/translations" rel="canonical">
+  <link href="https://www.metabase.com/docs/master/documents/create" rel="canonical">
   
 
   <script type="text/javascript">
@@ -44,12 +44,12 @@
 <meta name="robots" content="noindex">
    
 
-<title>Translate embedded dashboards and questions | Metabase Documentation</title>
+<title>Documents | Metabase Documentation</title>
 <!-- Twitter cards -->
 <meta name="twitter:site" content="@metabase">
 
-<meta name="twitter:title" content="Translate embedded dashboards and questions | Metabase Documentation">
-<meta name="twitter:description" content="Translate embedded dashboards and questions     <path d=" m12="" 10c12.5523="" 10="" 13="" 9.55228="" 13..."="">
+<meta name="twitter:title" content="Documents | Metabase Documentation">
+<meta name="twitter:description" content="Documents     <path d=" m12="" 10c12.5523="" 10="" 13="" 9.55228="" 9c13="" 8.44772="" 12.5523="" 8..."="">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -57,9 +57,9 @@
 <!-- Open Graph metadata -->
 <meta property="og:site_name" content="Metabase | Business Intelligence, Dashboards, and Data Visualization">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://www.metabase.com/docs/master/embedding/translations">
-<meta name="title" property="og:title" content="Translate embedded dashboards and questions | Metabase Documentation">
-<meta name="description" property="og:description" content="Translate embedded dashboards and questions     <path d=" m12="" 10c12.5523="" 10="" 13="" 9.55228="" 13..."="">
+<meta property="og:url" content="https://www.metabase.com/docs/master/documents/create">
+<meta name="title" property="og:title" content="Documents | Metabase Documentation">
+<meta name="description" property="og:description" content="Documents     <path d=" m12="" 10c12.5523="" 10="" 13="" 9.55228="" 9c13="" 8.44772="" 12.5523="" 8..."="">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -2773,7 +2773,7 @@ Roadmap</a>
 
       
 
-      <li class="expanded">
+      <li class="">
         <a href="/docs/master/embedding/static-embedding" class="">
         Static embedding
 
@@ -2827,7 +2827,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/master/embedding/translations" class="selected">
+                <a href="/docs/master/embedding/translations" class="">
                   Translate embeds
 
                   
@@ -4673,7 +4673,7 @@ Roadmap</a>
 
             
             
-                <li class="breadcrumb-item"><a class="blue-60" href="/docs/master/embedding/start">Embedding</a></li>
+                <li class="breadcrumb-item"><a class="blue-60" href="/docs/master/documents/start">Documents</a></li>
             
             
         </ol>
@@ -4820,7 +4820,7 @@ Roadmap</a>
 </div>
 
 
-        <h1 id="translate-embedded-dashboards-and-questions">Translate embedded dashboards and questions</h1>
+        <h1 id="documents">Documents</h1>
 
 <div class="bootstrap">
   <div class="plans-blockquote bg-blue-95 rounded-3 p-6 d-flex flex-row border border-1 border-primary">
@@ -4832,7 +4832,7 @@ Roadmap</a>
 
 
     
-      <p class="m-0 ms-2 paragraph-5 neutral-40">Content translation for static embeds is only available on <a class="fw-bold" href="https://store.metabase.com/checkout/embedding">Pro</a> and <a class="fw-bold link-purple" href="/product/enterprise">Enterprise</a> plans
+      <p class="m-0 ms-2 paragraph-5 neutral-40">Documents is only available on <a class="fw-bold" href="/product/pro">Pro</a> and <a class="fw-bold link-purple" href="/product/enterprise">Enterprise</a> plans
     
 
     (both self-hosted and on Metabase Cloud).
@@ -4840,131 +4840,131 @@ Roadmap</a>
   </div>
 </div>
 
-<p>For now, translations are only available for <a href="./static-embedding">static embeds</a>, not Interactive embedding or the Embedded analytics SDK.</p>
+<p>Documents let you tell a story with your data by combining text, charts, and other content.</p>
 
-<p>You can upload a translation dictionary to translate strings both in Metabase content (like dashboard titles) and in the data itself (like column names and values).</p>
+<h2 id="create-a-document">Create a document</h2>
 
-<h2 id="add-a-translation-dictionary">Add a translation dictionary</h2>
+<ol>
+  <li>Click the <strong>+ New</strong> button in the top right.</li>
+  <li>Select <strong>Document</strong>.</li>
+  <li>Do stuff.</li>
+  <li>Click the <strong>Save</strong> button.</li>
+</ol>
 
-<p>The dictionary must be a CSV with these columns:</p>
+<h2 id="list-commands-with-">List commands with <code class="language-plaintext highlighter-rouge">/</code></h2>
 
-<ul>
-  <li><strong>Language</strong> with the locale code</li>
-  <li><strong>String</strong> with the string to be translated</li>
-  <li><strong>Translation</strong></li>
-</ul>
-
-<blockquote>
-  <p>Don’t put any sensitive data in the dictionary, since anyone can see the dictionary—including viewers of public links.</p>
-</blockquote>
-
-<p>Uploading a new dictionary will replace the existing dictionary.</p>
-
-<p>To remove a translation dictionary, upload a blank dictionary.</p>
-
-<h2 id="translate-content-in-static-embeds">Translate content in static embeds</h2>
-
-<p>To translate content in a static embed using the uploaded dictionary, add the <a href="./static-embedding-parameters#setting-the-language-for-a-static-embed"><code class="language-plaintext highlighter-rouge">locale</code> parameter</a> to the embed URL:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://metabase.example.com/public/dashboard/7b6e347b-6928-4aff-a56f-6cfa5b718c6b?category=&amp;city=&amp;state=#locale=ko
-</code></pre></div></div>
-
-<p>Metabase UI elements (like button labels) will be translated automatically - you don’t need to add translations for them to your dictionary.</p>
-
-<h2 id="example-translation-dictionary">Example translation dictionary</h2>
-
-<p>Metabase uses these dictionaries to translate user-generated content, like dashboard names in <a href="./static-embedding">static embeds</a>.</p>
-
-<table>
-  <thead>
-    <tr>
-      <th>Language</th>
-      <th>String</th>
-      <th>Translation</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td data-label="Language">pt-BR</td>
-      <td data-label="String">Examples</td>
-      <td data-label="Translation">Exemplos</td>
-    </tr>
-    <tr>
-      <td data-label="Language">pt-BR</td>
-      <td data-label="String">First tab</td>
-      <td data-label="Translation">Primeira aba</td>
-    </tr>
-    <tr>
-      <td data-label="Language">pt-BR</td>
-      <td data-label="String">Another tab</td>
-      <td data-label="Translation">Outra aba</td>
-    </tr>
-    <tr>
-      <td data-label="Language">pt-BR</td>
-      <td data-label="String">Title</td>
-      <td data-label="Translation">Título</td>
-    </tr>
-    <tr>
-      <td data-label="Language">pt-BR</td>
-      <td data-label="String">Vendor</td>
-      <td data-label="Translation">Vendedor</td>
-    </tr>
-    <tr>
-      <td data-label="Language">IT</td>
-      <td data-label="String">Examples</td>
-      <td data-label="Translation">Esempi</td>
-    </tr>
-  </tbody>
-</table>
-
-<p>Prefer hyphens in your <code class="language-plaintext highlighter-rouge">pt-BR</code> in your translation dictionary. Underscores are also acceptable (if you download the dictionary <em>after</em> uploading it, Metabase will transform <code class="language-plaintext highlighter-rouge">pt-BR</code> to <code class="language-plaintext highlighter-rouge">pt_BR</code>), but since the <code class="language-plaintext highlighter-rouge">locale</code> parameter in static embedding only accepts locales with hyphens (like <code class="language-plaintext highlighter-rouge">pt-BR</code>), we recommend using hyphens for consistency.</p>
-
-<p><a href="../configuring-metabase/localization#supported-languages">See a list of supported locales</a>.</p>
-
-<h2 id="use-full-phrases-in-translation-dictionaries">Use full phrases in translation dictionaries</h2>
-
-<p>Currently, Metabase doesn’t tokenize strings for translations, so you should include exact phrases in your translation dictionary.</p>
-
-<p>For example, if you have a dashboard called “Monthly Sales”, it’s not sufficient to have translations of “Monthly” and “Sales” - you also need to include “Monthly Sales” as a full string.</p>
-
-<p>Exact translations also apply to strings that use punctuation and special characters. For example, if you have a question title “How many Widgets did we sell this week?”, you must include that exact string (with “?”) into the translation dictionary. Metabase would treat “How many Widgets did we sell this week” as a different string. Essentially, the strings are keys in a table Metabase looks up, so they must match exactly.</p>
-
-<h2 id="include-markdown-formatting-in-translation-dictionaries">Include markdown formatting in translation dictionaries</h2>
-
-<p>If the strings you want to translate include markdown formatting, you’ll need to include the formatting in the dictionary. For example:</p>
-
-<table>
-  <thead>
-    <tr>
-      <th>Language</th>
-      <th>String</th>
-      <th>Translation</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td data-label="Language">pt-BR</td>
-      <td data-label="String"><code class="language-plaintext highlighter-rouge">**Examples**</code></td>
-      <td data-label="Translation"><code class="language-plaintext highlighter-rouge">**Exemplos**</code></td>
-    </tr>
-    <tr>
-      <td data-label="Language">pt-BR</td>
-      <td data-label="String"><code class="language-plaintext highlighter-rouge">_Examples_</code></td>
-      <td data-label="Translation"><code class="language-plaintext highlighter-rouge">_Exemplos_</code></td>
-    </tr>
-    <tr>
-      <td data-label="Language">pt-BR</td>
-      <td data-label="String"><code class="language-plaintext highlighter-rouge">## Examples</code></td>
-      <td data-label="Translation"><code class="language-plaintext highlighter-rouge">## Exemplos</code></td>
-    </tr>
-  </tbody>
-</table>
-
-<h2 id="further-reading">Further reading</h2>
+<p>Type <code class="language-plaintext highlighter-rouge">/</code> in your document to see available commands:</p>
 
 <ul>
-  <li><a href="./static-embedding">Static embedding</a></li>
+  <li><strong>Ask Metabot</strong> to chat with <a href="../ai/metabot">Metabot</a> in the document.</li>
+  <li><strong>Chart</strong> to insert a table or chart from an existing question or model. You can’t add dashboards or other documents, but you can mention them (see the next section).</li>
+  <li><strong>Link</strong>. You can mention other items in your Metabase.</li>
 </ul>
+
+<h2 id="mention-items-with-">Mention items with <code class="language-plaintext highlighter-rouge">@</code></h2>
+
+<p>You can type <code class="language-plaintext highlighter-rouge">@</code> to mention items from your Metabase. (The mentions get a fancy little icon next to them).</p>
+
+<h2 id="add-charts-to-documents">Add charts to documents</h2>
+
+<p>You can add <a href="../questions/start">questions</a> and <a href="../data-modeling/models">models</a> to a document.</p>
+
+<h3 id="adding-a-chart-copies-it-to-the-document">Adding a chart copies it to the document</h3>
+
+<p>When you add a chart from a collection, Metabase creates a copy in the document. The original question remains in the collection.</p>
+
+<h3 id="charts-generated-by-metabot-only-exist-in-the-document">Charts generated by Metabot only exist in the document</h3>
+
+<p>If Metabot generates a chart, Metabase saves that question to the document itself. If you delete it, it’s gone forever. You won’t be able to recover the question from the trash.</p>
+
+<h3 id="editing-charts">Editing charts</h3>
+
+<p>To edit a chart, click the <strong>three-dot</strong> menu in the chart’s upper right. You can:</p>
+
+<ul>
+  <li>Edit visualization</li>
+  <li>Edit query</li>
+  <li>Replace the chart with another question or model</li>
+</ul>
+
+<p>Edits only affect the chart in the document. If you added the chart from a collection, Metabase will have created a copy of the chart. Any changes made to the chart in the document won’t affect the original question.</p>
+
+<h2 id="formatting-text">Formatting text</h2>
+
+<p>Documents support Markdown syntax for:</p>
+
+<ul>
+  <li>Headings: <code class="language-plaintext highlighter-rouge">#</code></li>
+  <li>Images: Use <code class="language-plaintext highlighter-rouge">![Image text](image link)</code> or paste images directly into the document.</li>
+  <li>Blockquotes: <code class="language-plaintext highlighter-rouge">&gt; This is a blockquote</code>.</li>
+  <li>Code blocks: Wrap with triple backticks (```). Syntax highlighting isn’t supported yet.</li>
+</ul>
+
+<p>You can also access formatting options by typing <code class="language-plaintext highlighter-rouge">/</code>.</p>
+
+<h2 id="links">Links</h2>
+
+<p>If you paste a link into a document, Metabase will turn it into a clickable link. For now, Markdown links aren’t supported, and you can’t change the link text.</p>
+
+<h2 id="commenting-on-documents">Commenting on documents</h2>
+
+<p>To comment on a document, click the chat bubble next to the section you want to comment on.</p>
+
+<p>You can comment on whole sections like charts, headings, or text blocks. You can’t highlight portions of text to comment on.</p>
+
+<p>You can:</p>
+
+<ul>
+  <li>React to comments with emojis (which are like pictures masquerading as words). For example, this is a gondola: 🚠.</li>
+  <li>Link to a comment. Click the <strong>three-dot</strong> menu and select <strong>Copy link</strong>.</li>
+  <li>Resolve comments. Resolved comments appear in a separate tab.</li>
+</ul>
+
+<h3 id="deleting-comments">Deleting comments</h3>
+
+<p>If you never want to see a comment again:</p>
+
+<ol>
+  <li>Resolve the comment.</li>
+  <li>Find it in the Resolved tab.</li>
+  <li>Click on the <strong>three-dot</strong> menu.</li>
+  <li>Select <strong>Delete</strong>.</li>
+</ol>
+
+<p>This deletion is permanent. You’ll never see that comment again.</p>
+
+<h2 id="printing-documents">Printing documents</h2>
+
+<p>To print a document, click on the <strong>three-dot</strong> menu and select <strong>Print document</strong>.</p>
+
+<h2 id="when-to-use-a-document-vs-a-dashboard">When to use a document vs. a dashboard</h2>
+
+<p>Documents and dashboards both have their use cases.</p>
+
+<h3 id="prefer-documents-for-exploration-and-narration">Prefer documents for exploration and narration</h3>
+
+<p>Documents work best for:</p>
+
+<ul>
+  <li>Telling a story with data</li>
+  <li>Point-in-time analysis</li>
+  <li>Opening analysis for comments</li>
+  <li>Exploratory analysis</li>
+</ul>
+
+<h3 id="use-dashboards-for-tracking-metrics">Use dashboards for tracking metrics</h3>
+
+<p>Dashboards work best for:</p>
+
+<ul>
+  <li>Regular analysis. Numbers you want to keep an eye on every day, week, or month.</li>
+  <li>Filtering results across multiple charts.</li>
+  <li>More control over presentation.</li>
+</ul>
+
+<h2 id="document-permissions">Document permissions</h2>
+
+<p>Whether someone can view or edit a document and its data depends on that person’s collection and data permissions. See <a href="../permissions/introduction">Permissions</a>.</p>
 
 
         <div>
@@ -5018,7 +5018,7 @@ Roadmap</a>
 
   
     <span class="paragraph-6 fs-13 neutral-60" id="page-feedback-footer">
-      Want to improve these docs? <a href="https://github.com/metabase/metabase/blob/master/docs/embedding/translations.md" target="_blank">Propose a change.</a>
+      Want to improve these docs? <a href="https://github.com/metabase/metabase/blob/master/docs/documents/create.md" target="_blank">Propose a change.</a>
     </span>
   
 </div>
@@ -5040,8 +5040,8 @@ Roadmap</a>
 <script type="text/javascript" src="/js/position-feedback-widget.js"></script>
 
 <script>
-  const pageTitle = `Translate embedded dashboards and questions`;
-  const pageURL = '/docs/master/embedding/translations';
+  const pageTitle = `Documents`;
+  const pageURL = '/docs/master/documents/create';
   const pageURLSplit = pageURL.split('/');
 
   let pageURLPrefix = '/' + pageURLSplit[1] + '/' + pageURLSplit[2];
@@ -5363,8 +5363,6 @@ Roadmap</a>
   <script type="text/javascript" src="/js/blog.js"></script>
   <script type="text/javascript" src="/js/syntax-highlight.js"></script>
 
-  
-    <script type="text/javascript" src="/js/docs/checkpoints.js"></script>
   
 
 </body></html>
