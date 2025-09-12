@@ -4840,7 +4840,20 @@ metabase.driver/connection-spec, metabase.driver/table-exists?, metabase.driver.
 and metabase.driver.sql/default-schema to implement sql transforms.</p>
   </li>
   <li>
+    <p>Added <code class="language-plaintext highlighter-rouge">metabase.driver/rename-tables!*</code> multimethod for atomic table renaming operations. Takes a map of {from-table to-table}
+pairs that has been topologically sorted.</p>
+  </li>
+  <li>
     <p>Added the driver multi-methods <code class="language-plaintext highlighter-rouge">metabase.driver/schema-exists?</code> and <code class="language-plaintext highlighter-rouge">metabase.driver/create-schema-if-needed!</code> which should be implemented by drivers that support <code class="language-plaintext highlighter-rouge">:schemas</code> and <code class="language-plaintext highlighter-rouge">:transforms/table</code>.</p>
+  </li>
+  <li>
+    <p>Added <code class="language-plaintext highlighter-rouge">metabase.driver/type-&gt;database-type</code> multimethod that returns the database type for a given Metabase type (from the type hierarchy) as a HoneySQL spec. Unlike <code class="language-plaintext highlighter-rouge">upload-type-&gt;database-type</code> which is specific to upload types, this method handles general Metabase base types.</p>
+  </li>
+  <li>
+    <p>Added <code class="language-plaintext highlighter-rouge">metabase.driver/rename-table!</code> multimethod to rename a table from one name to another. Both table names may be qualified by schema (e.g., <code class="language-plaintext highlighter-rouge">schema.table</code>). This is currently used for transform operations and uploads.</p>
+  </li>
+  <li>
+    <p>Added <code class="language-plaintext highlighter-rouge">metabase.driver/insert-from-source!</code> multimethod that abstracts data insertion from various sources into existing tables. This multimethod dispatches on both the driver and the data source type (<code class="language-plaintext highlighter-rouge">:rows</code> or <code class="language-plaintext highlighter-rouge">:csv-file</code>). It allows drivers to optimize based on the data source type and returns the number of rows inserted. Default implementations are provided for both <code class="language-plaintext highlighter-rouge">:rows</code> and <code class="language-plaintext highlighter-rouge">:csv-file</code> source types.</p>
   </li>
   <li>
     <p><code class="language-plaintext highlighter-rouge">metabase.driver/humanize-connection-error-message</code> now takes a list of all messages in the exception chain,
