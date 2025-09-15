@@ -4994,13 +4994,13 @@ Roadmap</a>
   <li>All Static embed usage will show up in <a href="../usage-and-performance-tools/usage-analytics">usage analytics</a> under “External user”.</li>
 </ul>
 
-<h2 id="static-embedding-security-vs-interactive-embedding-security">Static embedding security vs. interactive embedding security</h2>
+<h2 id="security-in-static-embedding-vs-modular-and-interactive-embedding">Security in static embedding vs. modular and interactive embedding</h2>
 
 <p>Static embedding only guarantees authorized access to your Metabase data (you decide <em>what</em> is accessible).</p>
 
 <p>If you want to secure your static embeds based on someone’s identity (you decide <em>who</em> gets access to <em>what</em>), you’ll need to set up your own authentication flow and manually wire that up to <a href="#example-sending-user-attributes-to-a-locked-parameter">locked parameters</a> on each of your static embeds. Note that locked parameters are essentially filters, so you can only set up <strong>row-level</strong> restrictions in a static embed.</p>
 
-<p>If you want an easier way to embed different views of data for different customers (without allowing the customers to see each other’s data), learn how <a href="#interactive-embedding-authenticates-and-authorizes-people-in-one-flow">Interactive embedding authenticates and authorizes people in one flow</a>.</p>
+<p>If you want an easier way to embed different views of data for different customers (without allowing the customers to see each other’s data), learn how <a href="#modular-and-interactive-embedding-auth-with-jwt-or-saml">Modular and interactive embedding authenticates and authorizes people in one flow</a>.</p>
 
 <h3 id="static-embedding-with-jwt-authorization">Static embedding with JWT authorization</h3>
 
@@ -5163,9 +5163,9 @@ Roadmap</a>
 
 <p>For code samples, see the <a href="https://github.com/metabase/embedding-reference-apps">static embedding reference app</a>.</p>
 
-<h2 id="interactive-embedding-authenticates-and-authorizes-people-in-one-flow">Interactive embedding authenticates and authorizes people in one flow</h2>
+<h2 id="modular-and-interactive-embedding-auth-with-jwt-or-saml">Modular and interactive embedding auth with JWT or SAML</h2>
 
-<p>Interactive embedding integrates with SSO (<a href="../people-and-groups/authenticating-with-jwt">JWT</a> or <a href="../people-and-groups/authenticating-with-saml">SAML</a> to authenticate and authorize people in one flow. The auth integration makes it easy to map user attributes (such as a person’s role or department) to granular levels of data access, including:</p>
+<p>Modular embedding (using Embedded Analytics <a href="./sdk/introduction">SDK</a> or <a href="./embedded-analytics-js">JS</a> components), and <a href="./interactive-embedding">interactive full-app embedding</a> integrate  with SSO (either <a href="../people-and-groups/authenticating-with-jwt">JWT</a> or <a href="../people-and-groups/authenticating-with-saml">SAML</a>) to authenticate and authorize people in one flow. The auth integration makes it easy to map user attributes (such as a person’s role or department) to granular levels of data access, including:</p>
 
 <ul>
   <li><a href="../permissions/data">Tables</a></li>
@@ -5174,11 +5174,9 @@ Roadmap</a>
   <li><a href="../permissions/data">Other data permissions</a>, such as data download permissions or SQL access.</li>
 </ul>
 
-<h3 id="interactive-embedding-with-sso">Interactive embedding with SSO</h3>
-
 <p><img src="./images/full-app-embedding-sso.png" alt="Interactive embedding with SSO."></p>
 
-<p>This diagram shows you how a interactive embed gets secured with <a href="../people-and-groups/start#sso-for-metabase-pro-and-enterprise-plans">SSO</a>:</p>
+<p>This diagram shows you how an interactive embed gets secured with <a href="../people-and-groups/start#sso-for-metabase-pro-and-enterprise-plans">SSO</a>:</p>
 
 <ol>
   <li><strong>Visitor arrives</strong>: your frontend gets a request to display all content, including a Metabase component (such as a React component).</li>
@@ -5202,7 +5200,7 @@ Roadmap</a>
 
 <p>In our static embedding example, we used <a href="#example-securing-data-with-locked-parameters-on-a-static-embed">locked parameters</a> to display secure filtered views of the Accounts table.</p>
 
-<p>The nice thing about interactive embedding and <a href="../people-and-groups/start#sso-for-metabase-pro-and-enterprise-plans">SSO</a> integration is that we don’t have to manually manage locked parameters for each embed. Instead, we can map user attributes from our identity provider (IdP) to <a href="../permissions/introduction">permissions</a> and <a href="../permissions/row-and-column-security">row and column security</a> in Metabase. People can get authenticated and authorized to self-serve specific subsets of data from their very first login.</p>
+<p>The nice thing about modular/interactive embedding and <a href="../people-and-groups/start#sso-for-metabase-pro-and-enterprise-plans">SSO</a> integration is that we don’t have to manually manage locked parameters for each embed. Instead, we can map user attributes from our identity provider (IdP) to <a href="../permissions/introduction">permissions</a> and <a href="../permissions/row-and-column-security">row and column security</a> in Metabase. People can get authenticated and authorized to self-serve specific subsets of data from their very first login.</p>
 
 <p>Let’s expand on our Accounts example to include a Tenant ID. The Tenant ID represents the parent org for a group of customers:</p>
 
@@ -5341,6 +5339,8 @@ Roadmap</a>
 <h2 id="sample-apps">Sample apps</h2>
 
 <ul>
+  <li><a href="https://embedded-analytics-sdk-demo.metabase.com">Modular embedding demo</a></li>
+  <li><a href="https://github.com/metabase/metabase-nodejs-react-sdk-embedding-sample">Modular embedding with SDK reference app</a></li>
   <li><a href="https://embedding-demo.metabase.com/">Interactive embedding demo</a></li>
   <li><a href="https://github.com/metabase/sso-examples/tree/master/app-embed-example">Interactive embedding reference app</a></li>
   <li><a href="https://github.com/metabase/embedding-reference-apps">Static embedding reference app</a></li>
@@ -5350,8 +5350,6 @@ Roadmap</a>
 
 <ul>
   <li><a href="../permissions/embedding">Configuring permissions for different customer schemas</a></li>
-  <li><a href="/blog/why-full-app-embedding">Why interactive embedding?</a></li>
-  <li><a href="/learn/grow-your-data-skills/analytics/embedding-mistakes">The five stages of embedding grief</a></li>
 </ul>
 
 
