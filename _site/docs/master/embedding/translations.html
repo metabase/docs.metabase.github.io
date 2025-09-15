@@ -2740,6 +2740,13 @@ Roadmap</a>
                     
                       
                       <li>
+                        <a href="/docs/master/embedding/sdk/ai-chat" class="">
+                          AI chat
+                        </a>
+                      </li>
+                    
+                      
+                      <li>
                         <a href="/docs/master/embedding/sdk/collections" class="">
                           Collections
                         </a>
@@ -4876,7 +4883,7 @@ Roadmap</a>
 
 
     
-      <p class="m-0 ms-2 paragraph-5 neutral-40">Translation of embedded content is only available on <a class="fw-bold" href="https://store.metabase.com/checkout/embedding">Pro</a> and <a class="fw-bold link-purple" href="/product/enterprise">Enterprise</a> plans
+      <p class="m-0 ms-2 paragraph-5 neutral-40">Content translation for static embeds is only available on <a class="fw-bold" href="https://store.metabase.com/checkout/embedding">Pro</a> and <a class="fw-bold link-purple" href="/product/enterprise">Enterprise</a> plans
     
 
     (both self-hosted and on Metabase Cloud).
@@ -4972,29 +4979,6 @@ Roadmap</a>
 <p>For example, if you have a dashboard called “Monthly Sales”, it’s not sufficient to have translations of “Monthly” and “Sales” - you also need to include “Monthly Sales” as a full string.</p>
 
 <p>Exact translations also apply to strings that use punctuation and special characters. For example, if you have a question title “How many Widgets did we sell this week?”, you must include that exact string (with “?”) into the translation dictionary. Metabase would treat “How many Widgets did we sell this week” as a different string. Essentially, the strings are keys in a table Metabase looks up, so they must match exactly.</p>
-
-<h2 id="translations-are-case-insensitive">Translations are case-insensitive</h2>
-
-<p>Translations are case-insensitive. For example, if your translation dictionary has a translation:</p>
-
-<table>
-  <thead>
-    <tr>
-      <th>Language</th>
-      <th>String</th>
-      <th>Translation</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td data-label="Language">pt-BR</td>
-      <td data-label="String">Examples</td>
-      <td data-label="Translation">Exemplos</td>
-    </tr>
-  </tbody>
-</table>
-
-<p><code class="language-plaintext highlighter-rouge">Examples</code>, <code class="language-plaintext highlighter-rouge">examples</code>, <code class="language-plaintext highlighter-rouge">EXAMPLES</code> would all be translated as <code class="language-plaintext highlighter-rouge">Exemplos</code>. That is, Metabase won’t preserve the original case; it will output the exact translation string in the dictionary.</p>
 
 <h2 id="include-markdown-formatting-in-translation-dictionaries">Include markdown formatting in translation dictionaries</h2>
 
