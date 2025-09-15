@@ -6,7 +6,7 @@
   <meta content="frame-ancestors 'none'" http-equiv="Content-Security-Policy">
   <meta content="deny" http-equiv="X-Frame-Options">
     
-  <link href="https://www.metabase.com/docs/latest/embedding/sdk/questions" rel="canonical">
+  <link href="https://www.metabase.com/docs/latest/embedding/sdk/ai-chat" rel="canonical">
   
 
   <script type="text/javascript">
@@ -42,12 +42,12 @@
   
        
 
-<title>Embedded analytics SDK - questions | Metabase Documentation</title>
+<title>Embedded analytics SDK - AI chat | Metabase Documentation</title>
 <!-- Twitter cards -->
 <meta name="twitter:site" content="@metabase">
 
-<meta name="twitter:title" content="Embedded analytics SDK - questions | Metabase Documentation">
-<meta name="twitter:description" content="How to embed charts in your app with the Embedded analytics SDK.">
+<meta name="twitter:title" content="Embedded analytics SDK - AI chat | Metabase Documentation">
+<meta name="twitter:description" content="Embedded analytics SDK - AI chat     ...">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -55,9 +55,9 @@
 <!-- Open Graph metadata -->
 <meta property="og:site_name" content="Metabase | Business Intelligence, Dashboards, and Data Visualization">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://www.metabase.com/docs/latest/embedding/sdk/questions">
-<meta name="title" property="og:title" content="Embedded analytics SDK - questions | Metabase Documentation">
-<meta name="description" property="og:description" content="How to embed charts in your app with the Embedded analytics SDK.">
+<meta property="og:url" content="https://www.metabase.com/docs/latest/embedding/sdk/ai-chat">
+<meta name="title" property="og:title" content="Embedded analytics SDK - AI chat | Metabase Documentation">
+<meta name="description" property="og:description" content="Embedded analytics SDK - AI chat     ...">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -2680,7 +2680,7 @@ Roadmap</a>
                     
                       
                       <li>
-                        <a href="/docs/latest/embedding/sdk/questions" class="selected">
+                        <a href="/docs/latest/embedding/sdk/questions" class="">
                           Questions
                         </a>
                       </li>
@@ -2694,7 +2694,7 @@ Roadmap</a>
                     
                       
                       <li>
-                        <a href="/docs/latest/embedding/sdk/ai-chat" class="">
+                        <a href="/docs/latest/embedding/sdk/ai-chat" class="selected">
                           AI chat
                         </a>
                       </li>
@@ -4812,7 +4812,9 @@ Roadmap</a>
 </div>
 
 
-        <h1 id="embedded-analytics-sdk---questions">Embedded analytics SDK - questions</h1>
+        <h1 id="embedded-analytics-sdk---ai-chat">Embedded analytics SDK - AI chat</h1>
+
+<p><img src="../images/ai-chat.png" alt="Embedded AI chat"></p>
 
 <div class="bootstrap">
   <div class="plans-blockquote bg-blue-95 rounded-3 p-6 d-flex flex-row border border-1 border-primary">
@@ -4832,39 +4834,22 @@ Roadmap</a>
   </div>
 </div>
 
-<p>There are different ways you can embed questions:</p>
+<p>You can embed an AI chat in your application similar to <a href="../embedded-analytics-js">Metabot</a> in Metabase.</p>
 
-<ul>
-  <li><a href="#staticquestion">Static question</a>. Embeds a chart. Clicking on the chart doesn’t do anything.</li>
-  <li><a href="#interactivequestion">Interactive question</a>. Clicking on the chart gives you the drill-through menu.</li>
-  <li><a href="#embedding-the-query-builder-for-creating-new-questions">Query builder</a>. Embeds the graphical query builder without a pre-defined query.</li>
-</ul>
+<p>To help embedded Metabot more easily find and focus on the data you care about most, select the collection containing the models and metrics it should be able to use to create queries.</p>
 
-<h2 id="embedding-a-question">Embedding a question</h2>
+<p>If you’re embedding the Metabot component in an app, you can specify a different collection that embedded Metabot is allowed to use for creating queries.</p>
 
-<p>You can embed a question using the one of the question components:</p>
+<h2 id="chat-preview">Chat preview</h2>
 
-<h3 id="staticquestion"><code class="language-plaintext highlighter-rouge">StaticQuestion</code></h3>
+<p>You can check out a <a href="https://embedded-analytics-sdk-demo.metabase.com/admin/analytics/new/ask-metabot">demo of the AI chat component</a> on our Shoppy demo site.</p>
 
-<p>A lightweight question component. Use this component when you want to display results without letting people interact with the data.</p>
-
-<p><img src="../images/static-question.png" alt="Static question"></p>
-
-<p>The component has a default height, which can be customized by using the <code class="language-plaintext highlighter-rouge">height</code> prop. To inherit the height from the parent container, you can pass <code class="language-plaintext highlighter-rouge">100%</code> to the height prop.</p>
-
-<h4 id="api-reference">API Reference</h4>
-
-<ul>
-  <li><a href="./api/StaticQuestion">Component</a></li>
-  <li><a href="./api/StaticQuestionProps">Props</a></li>
-</ul>
-
-<h4 id="example">Example</h4>
+<h2 id="example">Example</h2>
 
 <div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nx">React</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">react</span><span class="dl">"</span><span class="p">;</span>
 <span class="k">import</span> <span class="p">{</span>
+  <span class="nx">MetabotQuestion</span><span class="p">,</span>
   <span class="nx">MetabaseProvider</span><span class="p">,</span>
-  <span class="nx">StaticQuestion</span><span class="p">,</span>
   <span class="nx">defineMetabaseAuthConfig</span><span class="p">,</span>
 <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@metabase/embedding-sdk-react</span><span class="dl">"</span><span class="p">;</span>
 
@@ -4873,443 +4858,33 @@ Roadmap</a>
 <span class="p">});</span>
 
 <span class="k">export</span> <span class="k">default</span> <span class="kd">function</span> <span class="nf">App</span><span class="p">()</span> <span class="p">{</span>
-  <span class="kd">const</span> <span class="nx">questionId</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="c1">// This is the question ID you want to embed</span>
-
   <span class="k">return </span><span class="p">(</span>
     <span class="o">&lt;</span><span class="nx">MetabaseProvider</span> <span class="nx">authConfig</span><span class="o">=</span><span class="p">{</span><span class="nx">authConfig</span><span class="p">}</span><span class="o">&gt;</span>
-      <span class="o">&lt;</span><span class="nx">StaticQuestion</span> <span class="nx">questionId</span><span class="o">=</span><span class="p">{</span><span class="nx">questionId</span><span class="p">}</span> <span class="nx">withChartTypeSelector</span><span class="o">=</span><span class="p">{</span><span class="kc">false</span><span class="p">}</span> <span class="sr">/</span><span class="err">&gt;
-</span>    <span class="o">&lt;</span><span class="sr">/MetabaseProvider</span><span class="err">&gt;
+      <span class="o">&lt;</span><span class="nx">MetabotQuestion</span> <span class="o">/&gt;</span>
+    <span class="o">&lt;</span><span class="sr">/MetabaseProvider</span><span class="err">&gt;
 </span>  <span class="p">);</span>
 <span class="p">}</span>
 </code></pre></div></div>
-
-<h4 id="props">Props</h4>
-
-<table>
-  <thead>
-    <tr>
-      <th style="text-align: left">Property</th>
-      <th style="text-align: left">Type</th>
-      <th style="text-align: left">Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="classname"></a> <code class="language-plaintext highlighter-rouge">className?</code></td>
-      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">string</code></td>
-      <td style="text-align: left" data-label="Description">A custom class name to be added to the root element.</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="height"></a> <code class="language-plaintext highlighter-rouge">height?</code></td>
-      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">Height</code>&lt;<code class="language-plaintext highlighter-rouge">string</code> | <code class="language-plaintext highlighter-rouge">number</code>&gt;</td>
-      <td style="text-align: left" data-label="Description">A number or string specifying a CSS size value that specifies the height of the component</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="initialsqlparameters"></a> <code class="language-plaintext highlighter-rouge">initialSqlParameters?</code></td>
-      <td style="text-align: left" data-label="Type"><a href="./api/SqlParameterValues"><code class="language-plaintext highlighter-rouge">SqlParameterValues</code></a></td>
-      <td style="text-align: left" data-label="Description">Initial values for the SQL parameters.</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="questionid"></a> <code class="language-plaintext highlighter-rouge">questionId</code></td>
-      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">null</code> | <a href="./api/SdkQuestionId"><code class="language-plaintext highlighter-rouge">SdkQuestionId</code></a></td>
-      <td style="text-align: left" data-label="Description">-</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="style"></a> <code class="language-plaintext highlighter-rouge">style?</code></td>
-      <td style="text-align: left" data-label="Type"><a href="https://github.com/DefinitelyTyped/DefinitelyTyped/blob/0b728411cd1dfb4bd26992bb35a73cf8edaa22e7/types/react/index.d.ts#L2579"><code class="language-plaintext highlighter-rouge">CSSProperties</code></a></td>
-      <td style="text-align: left" data-label="Description">A custom style object to be added to the root element.</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="title"></a> <code class="language-plaintext highlighter-rouge">title?</code></td>
-      <td style="text-align: left" data-label="Type"><a href="./api/SdkQuestionTitleProps"><code class="language-plaintext highlighter-rouge">SdkQuestionTitleProps</code></a></td>
-      <td style="text-align: left" data-label="Description">Determines whether the question title is displayed, and allows a custom title to be displayed instead of the default question title. Shown by default. Only applicable to interactive questions when using the default layout.</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="width"></a> <code class="language-plaintext highlighter-rouge">width?</code></td>
-      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">Width</code>&lt;<code class="language-plaintext highlighter-rouge">string</code> | <code class="language-plaintext highlighter-rouge">number</code>&gt;</td>
-      <td style="text-align: left" data-label="Description">A number or string specifying a CSS size value that specifies the width of the component</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="withcharttypeselector"></a> <code class="language-plaintext highlighter-rouge">withChartTypeSelector?</code></td>
-      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">boolean</code></td>
-      <td style="text-align: left" data-label="Description">Determines whether the chart type selector and corresponding settings button are shown. Only relevant when using the default layout.</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="withdownloads"></a> <code class="language-plaintext highlighter-rouge">withDownloads?</code></td>
-      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">boolean</code></td>
-      <td style="text-align: left" data-label="Description">Enables the ability to download results in the interactive question.</td>
-    </tr>
-  </tbody>
-</table>
-
-<h3 id="interactivequestion"><code class="language-plaintext highlighter-rouge">InteractiveQuestion</code></h3>
-
-<p>Use this component when you want to allow people to explore their data and customize question layout.</p>
-
-<p><img src="../images/interactive-question.png" alt="Interactive question"></p>
-
-<h4 id="api-reference-1">API Reference</h4>
+<h2 id="api-reference">API reference</h2>
 
 <ul>
-  <li><a href="./api/InteractiveQuestion">Component</a></li>
-  <li><a href="./api/InteractiveQuestionProps">Props</a></li>
+  <li><a href="./api/MetabotQuestion">Component</a></li>
 </ul>
 
-<h4 id="example-1">Example</h4>
+<h2 id="setting-up-ai-chat">Setting up AI chat</h2>
 
-<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nx">React</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">react</span><span class="dl">"</span><span class="p">;</span>
-<span class="k">import</span> <span class="p">{</span>
-  <span class="nx">InteractiveQuestion</span><span class="p">,</span>
-  <span class="nx">MetabaseProvider</span><span class="p">,</span>
-  <span class="nx">defineMetabaseAuthConfig</span><span class="p">,</span>
-<span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@metabase/embedding-sdk-react</span><span class="dl">"</span><span class="p">;</span>
+<p>To configure your embedded AI chat in your Metabase:</p>
 
-<span class="kd">const</span> <span class="nx">authConfig</span> <span class="o">=</span> <span class="nf">defineMetabaseAuthConfig</span><span class="p">({</span>
-  <span class="na">metabaseInstanceUrl</span><span class="p">:</span> <span class="dl">"</span><span class="s2">https://your-metabase.example.com</span><span class="dl">"</span><span class="p">,</span>
-<span class="p">});</span>
+<ol>
+  <li>Click the <strong>gear</strong> icon in the upper right.</li>
+  <li>Select <strong>Admin settings</strong>.</li>
+  <li>Click the <strong>AI</strong> tab.</li>
+  <li>In the left sidebar, click <strong>Embedded Metabot</strong>.</li>
+</ol>
 
-<span class="k">export</span> <span class="k">default</span> <span class="kd">function</span> <span class="nf">App</span><span class="p">()</span> <span class="p">{</span>
-  <span class="kd">const</span> <span class="nx">questionId</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="c1">// This is the question ID you want to embed</span>
+<p>When embedding the Metabot component in your app, you should specify a collection that embedded Metabot is allowed to use for creating queries. Embedded Metabot will only have access to that collection.</p>
 
-  <span class="k">return </span><span class="p">(</span>
-    <span class="o">&lt;</span><span class="nx">MetabaseProvider</span> <span class="nx">authConfig</span><span class="o">=</span><span class="p">{</span><span class="nx">authConfig</span><span class="p">}</span><span class="o">&gt;</span>
-      <span class="o">&lt;</span><span class="nx">InteractiveQuestion</span> <span class="nx">questionId</span><span class="o">=</span><span class="p">{</span><span class="nx">questionId</span><span class="p">}</span> <span class="sr">/</span><span class="err">&gt;
-</span>    <span class="o">&lt;</span><span class="sr">/MetabaseProvider</span><span class="err">&gt;
-</span>  <span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div></div>
-
-<h4 id="props-1">Props</h4>
-
-<table>
-  <thead>
-    <tr>
-      <th style="text-align: left">Property</th>
-      <th style="text-align: left">Type</th>
-      <th style="text-align: left">Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="classname"></a> <code class="language-plaintext highlighter-rouge">className?</code></td>
-      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">string</code></td>
-      <td style="text-align: left" data-label="Description">A custom class name to be added to the root element.</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="componentplugins"></a> <code class="language-plaintext highlighter-rouge">componentPlugins?</code></td>
-      <td style="text-align: left" data-label="Type"><a href="./api/MetabasePluginsConfig"><code class="language-plaintext highlighter-rouge">MetabasePluginsConfig</code></a></td>
-      <td style="text-align: left" data-label="Description">Additional mapper function to override or add drill-down menu</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="entitytypes"></a> <code class="language-plaintext highlighter-rouge">entityTypes?</code></td>
-      <td style="text-align: left" data-label="Type"><a href="./api/EmbeddingEntityType"><code class="language-plaintext highlighter-rouge">EmbeddingEntityType</code></a>[]</td>
-      <td style="text-align: left" data-label="Description">An array that specifies which entity types are available in the data picker</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="height"></a> <code class="language-plaintext highlighter-rouge">height?</code></td>
-      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">Height</code>&lt;<code class="language-plaintext highlighter-rouge">string</code> | <code class="language-plaintext highlighter-rouge">number</code>&gt;</td>
-      <td style="text-align: left" data-label="Description">A number or string specifying a CSS size value that specifies the height of the component</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="initialsqlparameters"></a> <code class="language-plaintext highlighter-rouge">initialSqlParameters?</code></td>
-      <td style="text-align: left" data-label="Type"><a href="./api/SqlParameterValues"><code class="language-plaintext highlighter-rouge">SqlParameterValues</code></a></td>
-      <td style="text-align: left" data-label="Description">Initial values for the SQL parameters.</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="issaveenabled"></a> <code class="language-plaintext highlighter-rouge">isSaveEnabled?</code></td>
-      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">boolean</code></td>
-      <td style="text-align: left" data-label="Description">Whether to show the save button.</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="onbeforesave"></a> <code class="language-plaintext highlighter-rouge">onBeforeSave?</code></td>
-      <td style="text-align: left" data-label="Type">(<code class="language-plaintext highlighter-rouge">question</code>: <code class="language-plaintext highlighter-rouge">undefined</code> | <a href="./api/MetabaseQuestion"><code class="language-plaintext highlighter-rouge">MetabaseQuestion</code></a>, <code class="language-plaintext highlighter-rouge">context</code>: { <code class="language-plaintext highlighter-rouge">isNewQuestion</code>: <code class="language-plaintext highlighter-rouge">boolean</code>; }) =&gt; <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise"><code class="language-plaintext highlighter-rouge">Promise</code></a>&lt;<code class="language-plaintext highlighter-rouge">void</code>&gt;</td>
-      <td style="text-align: left" data-label="Description">A callback function that triggers before saving. Only relevant when <code class="language-plaintext highlighter-rouge">isSaveEnabled = true</code></td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="onnavigateback"></a> <code class="language-plaintext highlighter-rouge">onNavigateBack?</code></td>
-      <td style="text-align: left" data-label="Type">() =&gt; <code class="language-plaintext highlighter-rouge">void</code></td>
-      <td style="text-align: left" data-label="Description">A callback function that triggers when a user clicks the back button.</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="onrun"></a> <code class="language-plaintext highlighter-rouge">onRun?</code></td>
-      <td style="text-align: left" data-label="Type">(<code class="language-plaintext highlighter-rouge">question</code>: <code class="language-plaintext highlighter-rouge">undefined</code> | <a href="./api/MetabaseQuestion"><code class="language-plaintext highlighter-rouge">MetabaseQuestion</code></a>) =&gt; <code class="language-plaintext highlighter-rouge">void</code></td>
-      <td style="text-align: left" data-label="Description">A callback function that triggers when a question is updated, including when a user clicks the <code class="language-plaintext highlighter-rouge">Visualize</code> button in the question editor</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="onsave"></a> <code class="language-plaintext highlighter-rouge">onSave?</code></td>
-      <td style="text-align: left" data-label="Type">(<code class="language-plaintext highlighter-rouge">question</code>: <a href="./api/MetabaseQuestion"><code class="language-plaintext highlighter-rouge">MetabaseQuestion</code></a>, <code class="language-plaintext highlighter-rouge">context</code>: { <code class="language-plaintext highlighter-rouge">dashboardTabId?</code>: <code class="language-plaintext highlighter-rouge">number</code>; <code class="language-plaintext highlighter-rouge">isNewQuestion</code>: <code class="language-plaintext highlighter-rouge">boolean</code>; }) =&gt; <code class="language-plaintext highlighter-rouge">void</code></td>
-      <td style="text-align: left" data-label="Description">A callback function that triggers when a user saves the question. Only relevant when <code class="language-plaintext highlighter-rouge">isSaveEnabled = true</code></td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="plugins"></a> <code class="language-plaintext highlighter-rouge">plugins?</code></td>
-      <td style="text-align: left" data-label="Type"><a href="./api/MetabasePluginsConfig"><code class="language-plaintext highlighter-rouge">MetabasePluginsConfig</code></a></td>
-      <td style="text-align: left" data-label="Description">-</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="questionid"></a> <code class="language-plaintext highlighter-rouge">questionId</code></td>
-      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">null</code> | <a href="./api/SdkQuestionId"><code class="language-plaintext highlighter-rouge">SdkQuestionId</code></a></td>
-      <td style="text-align: left" data-label="Description">-</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="style"></a> <code class="language-plaintext highlighter-rouge">style?</code></td>
-      <td style="text-align: left" data-label="Type"><a href="https://github.com/DefinitelyTyped/DefinitelyTyped/blob/0b728411cd1dfb4bd26992bb35a73cf8edaa22e7/types/react/index.d.ts#L2579"><code class="language-plaintext highlighter-rouge">CSSProperties</code></a></td>
-      <td style="text-align: left" data-label="Description">A custom style object to be added to the root element.</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="targetcollection"></a> <code class="language-plaintext highlighter-rouge">targetCollection?</code></td>
-      <td style="text-align: left" data-label="Type"><a href="./api/SdkCollectionId"><code class="language-plaintext highlighter-rouge">SdkCollectionId</code></a></td>
-      <td style="text-align: left" data-label="Description">The collection to save the question to. This will hide the collection picker from the save modal. Only applicable to interactive questions.</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="title"></a> <code class="language-plaintext highlighter-rouge">title?</code></td>
-      <td style="text-align: left" data-label="Type"><a href="./api/SdkQuestionTitleProps"><code class="language-plaintext highlighter-rouge">SdkQuestionTitleProps</code></a></td>
-      <td style="text-align: left" data-label="Description">Determines whether the question title is displayed, and allows a custom title to be displayed instead of the default question title. Shown by default. Only applicable to interactive questions when using the default layout.</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="width"></a> <code class="language-plaintext highlighter-rouge">width?</code></td>
-      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">Width</code>&lt;<code class="language-plaintext highlighter-rouge">string</code> | <code class="language-plaintext highlighter-rouge">number</code>&gt;</td>
-      <td style="text-align: left" data-label="Description">A number or string specifying a CSS size value that specifies the width of the component</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="withcharttypeselector"></a> <code class="language-plaintext highlighter-rouge">withChartTypeSelector?</code></td>
-      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">boolean</code></td>
-      <td style="text-align: left" data-label="Description">Determines whether the chart type selector and corresponding settings button are shown. Only relevant when using the default layout.</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="withdownloads"></a> <code class="language-plaintext highlighter-rouge">withDownloads?</code></td>
-      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">boolean</code></td>
-      <td style="text-align: left" data-label="Description">Enables the ability to download results in the interactive question.</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="withresetbutton"></a> <code class="language-plaintext highlighter-rouge">withResetButton?</code></td>
-      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">boolean</code></td>
-      <td style="text-align: left" data-label="Description">Determines whether a reset button is displayed. Only relevant when using the default layout.</td>
-    </tr>
-  </tbody>
-</table>
-
-<h2 id="pass-sql-parameters-to-sql-questions-with-initialsqlparameters">Pass SQL parameters to SQL questions with <code class="language-plaintext highlighter-rouge">initialSqlParameters</code></h2>
-
-<p>You can pass parameter values to questions defined with SQL via the <code class="language-plaintext highlighter-rouge">initialSqlParameters</code> prop, in the format of <code class="language-plaintext highlighter-rouge">{parameter_name: parameter_value}</code>. Learn more about <a href="../../questions/native-editor/sql-parameters">SQL parameters</a>.</p>
-
-<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="nx">StaticQuestion</span>
-  <span class="nx">questionId</span><span class="o">=</span><span class="p">{</span><span class="nx">questionId</span><span class="p">}</span>
-  <span class="nx">initialSqlParameters</span><span class="o">=</span><span class="p">{{</span> <span class="na">product_id</span><span class="p">:</span> <span class="mi">50</span> <span class="p">}}</span>
-<span class="sr">/</span><span class="err">&gt;
-</span></code></pre></div></div>
-
-<p><code class="language-plaintext highlighter-rouge">initialSqlParameters</code> can’t be used with questions built using the query builder.</p>
-
-<h2 id="questions-with-natural-language">Questions with natural language</h2>
-
-<p>See <a href="./ai-chat">AI chat</a>.</p>
-
-<h2 id="customizing-interactive-questions">Customizing interactive questions</h2>
-
-<p>By default, the Embedded analytics SDK provides a default layout for interactive questions that allows you to view your questions, apply filters and aggregations, and access functionality within the query builder.</p>
-
-<p>Here’s an example of using the <code class="language-plaintext highlighter-rouge">InteractiveQuestion</code> component with its default layout:</p>
-
-<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="nx">InteractiveQuestion</span> <span class="nx">questionId</span><span class="o">=</span><span class="p">{</span><span class="mi">95</span><span class="p">}</span> <span class="sr">/</span><span class="err">&gt;
-</span></code></pre></div></div>
-
-<p>To customize the layout, use namespaced components within the <code class="language-plaintext highlighter-rouge">InteractiveQuestion</code> component. For example:</p>
-
-<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="nx">div</span>
-  <span class="nx">className</span><span class="o">=</span><span class="dl">"</span><span class="s2">App</span><span class="dl">"</span>
-  <span class="nx">style</span><span class="o">=</span><span class="p">{{</span>
-    <span class="na">width</span><span class="p">:</span> <span class="dl">"</span><span class="s2">100%</span><span class="dl">"</span><span class="p">,</span>
-    <span class="na">maxWidth</span><span class="p">:</span> <span class="dl">"</span><span class="s2">1600px</span><span class="dl">"</span><span class="p">,</span>
-    <span class="na">height</span><span class="p">:</span> <span class="dl">"</span><span class="s2">800px</span><span class="dl">"</span><span class="p">,</span>
-    <span class="na">margin</span><span class="p">:</span> <span class="dl">"</span><span class="s2">0 auto</span><span class="dl">"</span><span class="p">,</span>
-  <span class="p">}}</span>
-<span class="o">&gt;</span>
-  <span class="o">&lt;</span><span class="nx">MetabaseProvider</span> <span class="nx">authConfig</span><span class="o">=</span><span class="p">{</span><span class="nx">authConfig</span><span class="p">}</span> <span class="nx">theme</span><span class="o">=</span><span class="p">{</span><span class="nx">theme</span><span class="p">}</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="nx">InteractiveQuestion</span> <span class="nx">questionId</span><span class="o">=</span><span class="p">{</span><span class="mi">95</span><span class="p">}</span><span class="o">&gt;</span>
-      <span class="o">&lt;</span><span class="nx">div</span>
-        <span class="nx">style</span><span class="o">=</span><span class="p">{{</span>
-          <span class="na">display</span><span class="p">:</span> <span class="dl">"</span><span class="s2">flex</span><span class="dl">"</span><span class="p">,</span>
-          <span class="na">flexDirection</span><span class="p">:</span> <span class="dl">"</span><span class="s2">column</span><span class="dl">"</span><span class="p">,</span>
-          <span class="na">alignItems</span><span class="p">:</span> <span class="dl">"</span><span class="s2">center</span><span class="dl">"</span><span class="p">,</span>
-          <span class="na">justifyContent</span><span class="p">:</span> <span class="dl">"</span><span class="s2">center</span><span class="dl">"</span><span class="p">,</span>
-          <span class="na">width</span><span class="p">:</span> <span class="dl">"</span><span class="s2">100%</span><span class="dl">"</span><span class="p">,</span>
-        <span class="p">}}</span>
-      <span class="o">&gt;</span>
-        <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">style</span><span class="o">=</span><span class="p">{{</span> <span class="na">display</span><span class="p">:</span> <span class="dl">"</span><span class="s2">grid</span><span class="dl">"</span><span class="p">,</span> <span class="na">placeItems</span><span class="p">:</span> <span class="dl">"</span><span class="s2">center</span><span class="dl">"</span><span class="p">,</span> <span class="na">width</span><span class="p">:</span> <span class="dl">"</span><span class="s2">100%</span><span class="dl">"</span> <span class="p">}}</span><span class="o">&gt;</span>
-          <span class="o">&lt;</span><span class="nx">InteractiveQuestion</span><span class="p">.</span><span class="nx">Title</span> <span class="o">/&gt;</span>
-          <span class="o">&lt;</span><span class="nx">InteractiveQuestion</span><span class="p">.</span><span class="nx">ResetButton</span> <span class="o">/&gt;</span>
-        <span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
-</span>        <span class="o">&lt;</span><span class="nx">div</span>
-          <span class="nx">style</span><span class="o">=</span><span class="p">{{</span>
-            <span class="na">display</span><span class="p">:</span> <span class="dl">"</span><span class="s2">flex</span><span class="dl">"</span><span class="p">,</span>
-            <span class="na">alignItems</span><span class="p">:</span> <span class="dl">"</span><span class="s2">center</span><span class="dl">"</span><span class="p">,</span>
-            <span class="na">justifyContent</span><span class="p">:</span> <span class="dl">"</span><span class="s2">flex-start</span><span class="dl">"</span><span class="p">,</span>
-            <span class="na">overflow</span><span class="p">:</span> <span class="dl">"</span><span class="s2">hidden</span><span class="dl">"</span><span class="p">,</span>
-            <span class="na">width</span><span class="p">:</span> <span class="dl">"</span><span class="s2">100%</span><span class="dl">"</span><span class="p">,</span>
-          <span class="p">}}</span>
-        <span class="o">&gt;</span>
-          <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">style</span><span class="o">=</span><span class="p">{{</span> <span class="na">width</span><span class="p">:</span> <span class="dl">"</span><span class="s2">100%</span><span class="dl">"</span> <span class="p">}}</span><span class="o">&gt;</span>
-            <span class="o">&lt;</span><span class="nx">InteractiveQuestion</span><span class="p">.</span><span class="nx">QuestionVisualization</span> <span class="o">/&gt;</span>
-          <span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
-</span>          <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">style</span><span class="o">=</span><span class="p">{{</span> <span class="na">display</span><span class="p">:</span> <span class="dl">"</span><span class="s2">flex</span><span class="dl">"</span><span class="p">,</span> <span class="na">flex</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="na">overflow</span><span class="p">:</span> <span class="dl">"</span><span class="s2">scroll</span><span class="dl">"</span> <span class="p">}}</span><span class="o">&gt;</span>
-            <span class="o">&lt;</span><span class="nx">InteractiveQuestion</span><span class="p">.</span><span class="nx">Summarize</span> <span class="o">/&gt;</span>
-          <span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
-</span>        <span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
-</span>        <span class="o">&lt;</span><span class="nx">div</span>
-          <span class="nx">style</span><span class="o">=</span><span class="p">{{</span> <span class="na">display</span><span class="p">:</span> <span class="dl">"</span><span class="s2">flex</span><span class="dl">"</span><span class="p">,</span> <span class="na">flexDirection</span><span class="p">:</span> <span class="dl">"</span><span class="s2">column</span><span class="dl">"</span><span class="p">,</span> <span class="na">width</span><span class="p">:</span> <span class="dl">"</span><span class="s2">100%</span><span class="dl">"</span> <span class="p">}}</span>
-        <span class="o">&gt;</span>
-          <span class="o">&lt;</span><span class="nx">InteractiveQuestion</span><span class="p">.</span><span class="nx">Filter</span> <span class="o">/&gt;</span>
-        <span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
-</span>      <span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
-</span>    <span class="o">&lt;</span><span class="sr">/InteractiveQuestion</span><span class="err">&gt;
-</span>  <span class="o">&lt;</span><span class="sr">/MetabaseProvider</span><span class="err">&gt;
-</span><span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
-</span></code></pre></div></div>
-
-<h3 id="interactive-question-components">Interactive question components</h3>
-
-<p>These components are available via the <code class="language-plaintext highlighter-rouge">InteractiveQuestion</code> namespace (e.g., <code class="language-plaintext highlighter-rouge">&lt;InteractiveQuestion.Filter /&gt;</code>).</p>
-
-<h4 id="api-reference-2">API Reference:</h4>
-
-<ul>
-  <li><a href="./api/InteractiveQuestion#backbutton">InteractiveQuestion.BackButton</a></li>
-  <li><a href="./api/InteractiveQuestion#breakout">InteractiveQuestion.Breakout</a></li>
-  <li><a href="./api/InteractiveQuestion#breakoutdropdown">InteractiveQuestion.BreakoutDropdown</a></li>
-  <li><a href="./api/InteractiveQuestion#charttypedropdown">InteractiveQuestion.ChartTypeDropdown</a></li>
-  <li><a href="./api/InteractiveQuestion#charttypeselector">InteractiveQuestion.ChartTypeSelector</a></li>
-  <li><a href="./api/InteractiveQuestion#editor">InteractiveQuestion.Editor</a></li>
-  <li><a href="./api/InteractiveQuestion#editorbutton">InteractiveQuestion.EditorButton</a></li>
-  <li><a href="./api/InteractiveQuestion#filter">InteractiveQuestion.Filter</a></li>
-  <li><a href="./api/InteractiveQuestion#filterdropdown">InteractiveQuestion.FilterDropdown</a></li>
-  <li><a href="./api/InteractiveQuestion#questionsettings">InteractiveQuestion.QuestionSettings</a></li>
-  <li><a href="./api/InteractiveQuestion#questionsettingsdropdown">InteractiveQuestion.QuestionSettingsDropdown</a></li>
-  <li><a href="./api/InteractiveQuestion#questionvisualization">InteractiveQuestion.QuestionVisualization</a></li>
-  <li><a href="./api/InteractiveQuestion#resetbutton">InteractiveQuestion.ResetButton</a></li>
-  <li><a href="./api/InteractiveQuestion#savebutton">InteractiveQuestion.SaveButton</a></li>
-  <li><a href="./api/InteractiveQuestion#savequestionform">InteractiveQuestion.SaveQuestionForm</a></li>
-  <li><a href="./api/InteractiveQuestion#summarize">InteractiveQuestion.Summarize</a></li>
-  <li><a href="./api/InteractiveQuestion#summarizedropdown">InteractiveQuestion.SummarizeDropdown</a></li>
-  <li><a href="./api/InteractiveQuestion#downloadwidget">InteractiveQuestion.DownloadWidget</a></li>
-  <li><a href="./api/InteractiveQuestion#downloadwidgetdropdown">InteractiveQuestion.DownloadWidgetDropdown</a></li>
-  <li><a href="./api/InteractiveQuestion#title">InteractiveQuestion.Title</a></li>
-</ul>
-
-<h2 id="interactive-question-plugins">Interactive question plugins</h2>
-
-<p>You can use <a href="./plugins">plugins</a> to add custom functionality to your questions.</p>
-
-<h3 id="mapquestionclickactions"><code class="language-plaintext highlighter-rouge">mapQuestionClickActions</code></h3>
-
-<p>This plugin allows you to add custom actions to the click-through menu of an interactive question. You can add and
-customize the appearance and behavior of the custom actions.</p>
-
-<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// You can provide a custom action with your own `onClick` logic.</span>
-<span class="kd">const</span> <span class="nx">createCustomAction</span> <span class="o">=</span> <span class="nx">clicked</span> <span class="o">=&gt;</span> <span class="p">({</span>
-  <span class="na">buttonType</span><span class="p">:</span> <span class="dl">"</span><span class="s2">horizontal</span><span class="dl">"</span><span class="p">,</span>
-  <span class="na">name</span><span class="p">:</span> <span class="dl">"</span><span class="s2">client-custom-action</span><span class="dl">"</span><span class="p">,</span>
-  <span class="na">section</span><span class="p">:</span> <span class="dl">"</span><span class="s2">custom</span><span class="dl">"</span><span class="p">,</span>
-  <span class="na">type</span><span class="p">:</span> <span class="dl">"</span><span class="s2">custom</span><span class="dl">"</span><span class="p">,</span>
-  <span class="na">icon</span><span class="p">:</span> <span class="dl">"</span><span class="s2">chevronright</span><span class="dl">"</span><span class="p">,</span>
-  <span class="na">title</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Hello from the click app!!!</span><span class="dl">"</span><span class="p">,</span>
-  <span class="na">onClick</span><span class="p">:</span> <span class="p">({</span> <span class="nx">closePopover</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">{</span>
-    <span class="nf">alert</span><span class="p">(</span><span class="s2">`Clicked </span><span class="p">${</span><span class="nx">clicked</span><span class="p">.</span><span class="nx">column</span><span class="p">?.</span><span class="nx">name</span><span class="p">}</span><span class="s2">: </span><span class="p">${</span><span class="nx">clicked</span><span class="p">.</span><span class="nx">value</span><span class="p">}</span><span class="s2">`</span><span class="p">);</span>
-    <span class="nf">closePopover</span><span class="p">();</span>
-  <span class="p">},</span>
-<span class="p">});</span>
-
-<span class="c1">// Or customize the appearance of the custom action to suit your need.</span>
-<span class="kd">const</span> <span class="nx">createCustomActionWithView</span> <span class="o">=</span> <span class="nx">clicked</span> <span class="o">=&gt;</span> <span class="p">({</span>
-  <span class="na">name</span><span class="p">:</span> <span class="dl">"</span><span class="s2">client-custom-action-2</span><span class="dl">"</span><span class="p">,</span>
-  <span class="na">section</span><span class="p">:</span> <span class="dl">"</span><span class="s2">custom</span><span class="dl">"</span><span class="p">,</span>
-  <span class="na">type</span><span class="p">:</span> <span class="dl">"</span><span class="s2">custom</span><span class="dl">"</span><span class="p">,</span>
-  <span class="na">view</span><span class="p">:</span> <span class="p">({</span> <span class="nx">closePopover</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">(</span>
-    <span class="o">&lt;</span><span class="nx">button</span>
-      <span class="nx">className</span><span class="o">=</span><span class="dl">"</span><span class="s2">tw-text-base tw-text-yellow-900 tw-bg-slate-400 tw-rounded-lg</span><span class="dl">"</span>
-      <span class="nx">onClick</span><span class="o">=</span><span class="p">{()</span> <span class="o">=&gt;</span> <span class="p">{</span>
-        <span class="nf">alert</span><span class="p">(</span><span class="s2">`Clicked </span><span class="p">${</span><span class="nx">clicked</span><span class="p">.</span><span class="nx">column</span><span class="p">?.</span><span class="nx">name</span><span class="p">}</span><span class="s2">: </span><span class="p">${</span><span class="nx">clicked</span><span class="p">.</span><span class="nx">value</span><span class="p">}</span><span class="s2">`</span><span class="p">);</span>
-        <span class="nf">closePopover</span><span class="p">();</span>
-      <span class="p">}}</span>
-    <span class="o">&gt;</span>
-      <span class="nx">Custom</span> <span class="nx">element</span>
-    <span class="o">&lt;</span><span class="sr">/button</span><span class="err">&gt;
-</span>  <span class="p">),</span>
-<span class="p">});</span>
-
-<span class="kd">const</span> <span class="nx">plugins</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="cm">/**
-   * You will have access to default `clickActions` that Metabase renders by default.
-   * So you could decide if you want to add custom actions, remove certain actions, etc.
-   */</span>
-  <span class="na">mapQuestionClickActions</span><span class="p">:</span> <span class="p">(</span><span class="nx">clickActions</span><span class="p">,</span> <span class="nx">clicked</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="p">[</span>
-      <span class="p">...</span><span class="nx">clickActions</span><span class="p">,</span>
-      <span class="nf">createCustomAction</span><span class="p">(</span><span class="nx">clicked</span><span class="p">),</span>
-      <span class="nf">createCustomActionWithView</span><span class="p">(</span><span class="nx">clicked</span><span class="p">),</span>
-    <span class="p">];</span>
-  <span class="p">},</span>
-<span class="p">};</span>
-
-<span class="kd">const</span> <span class="nx">questionId</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="c1">// This is the question ID you want to embed</span>
-
-<span class="k">return </span><span class="p">(</span>
-  <span class="o">&lt;</span><span class="nx">MetabaseProvider</span> <span class="nx">authConfig</span><span class="o">=</span><span class="p">{</span><span class="nx">authConfig</span><span class="p">}</span> <span class="nx">pluginsConfig</span><span class="o">=</span><span class="p">{</span><span class="nx">plugins</span><span class="p">}</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="nx">InteractiveQuestion</span> <span class="nx">questionId</span><span class="o">=</span><span class="p">{</span><span class="nx">questionId</span><span class="p">}</span> <span class="sr">/</span><span class="err">&gt;
-</span>  <span class="o">&lt;</span><span class="sr">/MetabaseProvider</span><span class="err">&gt;
-</span><span class="p">);</span>
-</code></pre></div></div>
-
-<h2 id="prevent-people-from-saving-changes-to-an-interactivequestion">Prevent people from saving changes to an <code class="language-plaintext highlighter-rouge">InteractiveQuestion</code></h2>
-
-<p>To prevent people from saving changes to an interactive question, or from saving changes as a new question, you can set <code class="language-plaintext highlighter-rouge">isSaveEnabled={false}</code>:</p>
-
-<div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nx">React</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">react</span><span class="dl">"</span><span class="p">;</span>
-<span class="k">import</span> <span class="p">{</span>
-  <span class="nx">InteractiveQuestion</span><span class="p">,</span>
-  <span class="nx">MetabaseProvider</span><span class="p">,</span>
-  <span class="nx">defineMetabaseAuthConfig</span><span class="p">,</span>
-<span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@metabase/embedding-sdk-react</span><span class="dl">"</span><span class="p">;</span>
-
-<span class="kd">const</span> <span class="nx">authConfig</span> <span class="o">=</span> <span class="nf">defineMetabaseAuthConfig</span><span class="p">({</span>
-  <span class="na">metabaseInstanceUrl</span><span class="p">:</span> <span class="dl">"</span><span class="s2">https://your-metabase.example.com</span><span class="dl">"</span><span class="p">,</span>
-<span class="p">});</span>
-
-<span class="k">export</span> <span class="k">default</span> <span class="kd">function</span> <span class="nf">App</span><span class="p">()</span> <span class="p">{</span>
-  <span class="k">return </span><span class="p">(</span>
-    <span class="p">&lt;</span><span class="nc">MetabaseProvider</span> <span class="na">authConfig</span><span class="p">=</span><span class="si">{</span><span class="nx">authConfig</span><span class="si">}</span><span class="p">&gt;</span>
-      <span class="p">&lt;</span><span class="nc">InteractiveQuestion</span> <span class="na">questionId</span><span class="p">=</span><span class="si">{</span><span class="mi">1</span><span class="si">}</span> <span class="na">isSaveEnabled</span><span class="p">=</span><span class="si">{</span><span class="kc">false</span><span class="si">}</span> <span class="p">/&gt;</span>
-    <span class="p">&lt;/</span><span class="nc">MetabaseProvider</span><span class="p">&gt;</span>
-  <span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div></div>
-
-<h2 id="embedding-the-query-builder-for-creating-new-questions">Embedding the query builder for creating new questions</h2>
-
-<p><img src="../images/query-builder.png" alt="Query builder"></p>
-
-<p>You can embed the query builder for creating new questions by passing the <code class="language-plaintext highlighter-rouge">questionId="new"</code> prop to the <code class="language-plaintext highlighter-rouge">InteractiveQuestion</code> component. You can use the <a href="#customizing-interactive-questions"><code class="language-plaintext highlighter-rouge">children</code> prop</a> to customize the layout for creating new questions.</p>
-
-<div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nx">React</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">react</span><span class="dl">"</span><span class="p">;</span>
-<span class="k">import</span> <span class="p">{</span>
-  <span class="nx">InteractiveQuestion</span><span class="p">,</span>
-  <span class="nx">MetabaseProvider</span><span class="p">,</span>
-  <span class="nx">defineMetabaseAuthConfig</span><span class="p">,</span>
-<span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@metabase/embedding-sdk-react</span><span class="dl">"</span><span class="p">;</span>
-
-<span class="kd">const</span> <span class="nx">authConfig</span> <span class="o">=</span> <span class="nf">defineMetabaseAuthConfig</span><span class="p">({</span>
-  <span class="na">metabaseInstanceUrl</span><span class="p">:</span> <span class="dl">"</span><span class="s2">https://your-metabase.example.com</span><span class="dl">"</span><span class="p">,</span>
-<span class="p">});</span>
-
-<span class="k">export</span> <span class="k">default</span> <span class="kd">function</span> <span class="nf">App</span><span class="p">()</span> <span class="p">{</span>
-  <span class="k">return </span><span class="p">(</span>
-    <span class="p">&lt;</span><span class="nc">MetabaseProvider</span> <span class="na">authConfig</span><span class="p">=</span><span class="si">{</span><span class="nx">authConfig</span><span class="si">}</span><span class="p">&gt;</span>
-      <span class="p">&lt;</span><span class="nc">InteractiveQuestion</span> <span class="na">questionId</span><span class="p">=</span><span class="s">"new"</span> <span class="p">/&gt;</span>
-    <span class="p">&lt;/</span><span class="nc">MetabaseProvider</span><span class="p">&gt;</span>
-  <span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div></div>
-
-<p>To customize the question editor’s layout, use the <code class="language-plaintext highlighter-rouge">InteractiveQuestion</code> component <a href="#customizing-interactive-questions">directly with a custom <code class="language-plaintext highlighter-rouge">children</code> prop</a>.</p>
+<p>For tips and more, see <a href="../../ai/settings">Metabot settings</a>.</p>
 
 
         <div>
@@ -5363,7 +4938,7 @@ customize the appearance and behavior of the custom actions.</p>
 
   
     <span class="paragraph-6 fs-13 neutral-60" id="page-feedback-footer">
-      Want to improve these docs? <a href="https://github.com/metabase/metabase/blob/master/docs/embedding/sdk/questions.md" target="_blank">Propose a change.</a>
+      Want to improve these docs? <a href="https://github.com/metabase/metabase/blob/master/docs/embedding/sdk/ai-chat.md" target="_blank">Propose a change.</a>
     </span>
   
 </div>
@@ -5385,8 +4960,8 @@ customize the appearance and behavior of the custom actions.</p>
 <script type="text/javascript" src="/js/position-feedback-widget.js"></script>
 
 <script>
-  const pageTitle = `Embedded analytics SDK - questions`;
-  const pageURL = '/docs/latest/embedding/sdk/questions';
+  const pageTitle = `Embedded analytics SDK - AI chat`;
+  const pageURL = '/docs/latest/embedding/sdk/ai-chat';
   const pageURLSplit = pageURL.split('/');
 
   let pageURLPrefix = '/' + pageURLSplit[1] + '/' + pageURLSplit[2];
