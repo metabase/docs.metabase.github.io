@@ -8,12 +8,17 @@ title: Webhooks
 source_url: >-
   https://github.com/metabase/metabase/blob/master/docs/configuring-metabase/webhooks.md
 layout: new-docs
+summary: >-
+  Set up webhooks to send alerts to your app, a third-party service, or wherever
+  you want to send your data.
 latest: true
 ---
 
 # Webhooks
 
-Admins can set up webhooks so that people can send [alerts](../questions/alerts) to a particular URL. Which means you can set up an alert to send the results of a question to an endpoint of your choice: to your app, a third-party service, or wherever.
+Admins and people with [settings access](../permissions/application#settings-access) can set up webhooks to send [alerts](../questions/alerts) to a particular URL. This means you can set up an alert to send the results of a question to an endpoint of your choice: to your app, a third-party service, or wherever.
+
+Only admins and people with settings access can send alerts to webhooks.
 
 For now, webhooks are only available for [alerts](../questions/alerts); you can't select a webhook as the recipient of a [dashboard subscription](../dashboards/subscriptions).
 
@@ -21,11 +26,11 @@ For now, webhooks are only available for [alerts](../questions/alerts); you can'
 
 Before you can send an alert to a webhook, an admin will need to create a webhook to target.
 
-Admins can create a webhook by clicking on the **gear icon** > **Admin settings** > **Notification channels**. In the **Webhooks for alerts**, click **+ Add another**. Metabase will hand you a short form to fill out:
+Admins and people with [settings access](../permissions/application#settings-access) can create a webhook by clicking the **gear icon** > **Admin settings** > **Notification channels**. In **Webhooks for alerts**, click **+ Add another**. Metabase will show you a short form to fill out:
 
 - **Webhook URL**. Where you want Metabase to send the results of an alert. Must be a valid URL.
-- **Give it a name**. You have to name the webhook so that people can pick the right hook when setting up an alert on a question.
-- **Description**. You should probably tell people what the hook is for.
+- **Give it a name**. Name the webhook so that people can pick the right hook when setting up an alert on a question.
+- **Description**. Tell people what the hook is for.
 - **Authentication method**. See below.
 
 ## Webhook authentication method
