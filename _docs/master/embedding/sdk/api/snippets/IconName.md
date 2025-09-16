@@ -84,9 +84,6 @@ type IconName =
   | "edit_document_outlined"
   | "ellipsis"
   | "embed"
-  | "embed_interactive"
-  | "embed_modular"
-  | "embed_static"
   | "empty"
   | "enter_or_return"
   | "expand"
@@ -204,7 +201,6 @@ type IconName =
   | "section"
   | "segment"
   | "shield"
-  | "shield_outline"
   | "sidebar_closed"
   | "sidebar_open"
   | "slack"
@@ -257,6 +253,5 @@ type IconName =
   | "external"
   | "table_spaced"
   | "beaker"
-  | "test_tube"
   | "eye_filled";
 ```
