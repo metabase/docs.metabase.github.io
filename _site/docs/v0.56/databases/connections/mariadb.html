@@ -4917,6 +4917,10 @@ Roadmap</a>
 
 <p>JSON schema inference doesn’t work with MariaDB, due to implementation differences between MySQL and MariaDB.</p>
 
+<h2 id="passwords-with-special-characters">Passwords with special characters</h2>
+
+<p>If your password contains characters that aren’t UTF-8, then you might need to add an additional variable to the connection string <code class="language-plaintext highlighter-rouge">passwordCharacterEncoding=&lt;your_encoding_here&gt;</code>. This ensures that MariaDB understands the special characters in the password during authentication.</p>
+
 <h2 id="database-routing">Database routing</h2>
 
 <p>With database routing, an admin can build a question once using one database, and the question will run its query against a different database with the same schema depending on who is viewing the question.</p>
