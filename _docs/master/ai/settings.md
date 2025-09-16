@@ -95,4 +95,4 @@ To get the best results, we (the Metabase team) use internal benchmarks to deter
 
 ## We don't collect or store the prompts you send to Metabot
 
-We've intentionally limited what Metabot can do. Metabot lacks access to API keys, and it can't create assets, write data, or send data outside of your Metabase. Your questions and conversations remain private to your Metabase. We do collect some metadata to gauge and improve usage, but we don't train Metabot on your prompts or your data—because we can't see them!
+Your questions and conversations remain private to your Metabase. We do collect some metadata to gauge and improve usage, but we can't see your prompt or any of your data.
