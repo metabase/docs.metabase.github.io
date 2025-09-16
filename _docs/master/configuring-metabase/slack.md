@@ -15,8 +15,6 @@ redirect_from:
 
 If you want to have your [dashboard subscriptions](../dashboards/subscriptions) or [alerts](../questions/alerts) sent to Slack channels (or people on Slack), an admin must first integrate your Metabase with Slack.
 
-Both admins and people with [settings access](../permissions/application#settings-access) can set up Slack.
-
 ## Create your Slack App
 
 For Metabase to post to your Slack channels, you’ll need to create a Slack App and make it available to Metabase.

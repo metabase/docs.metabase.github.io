@@ -6,7 +6,7 @@
   <meta content="frame-ancestors 'none'" http-equiv="Content-Security-Policy">
   <meta content="deny" http-equiv="X-Frame-Options">
     
-  <link href="https://www.metabase.com/docs/master/documents/introduction" rel="canonical">
+  <link href="https://www.metabase.com/docs/master/data-modeling/transforms" rel="canonical">
   
 
   <script type="text/javascript">
@@ -44,12 +44,12 @@
 <meta name="robots" content="noindex">
    
 
-<title>Documents | Metabase Documentation</title>
+<title>Transforms | Metabase Documentation</title>
 <!-- Twitter cards -->
 <meta name="twitter:site" content="@metabase">
 
-<meta name="twitter:title" content="Documents | Metabase Documentation">
-<meta name="twitter:description" content="Documents     <path d=" m12="" 10c12.5523="" 10="" 13="" 9.55228="" 9c13="" 8.44772="" 12.5523="" 8..."="">
+<meta name="twitter:title" content="Transforms | Metabase Documentation">
+<meta name="twitter:description" content="Transforms     <path d=" m12="" 10c12.5523="" 10="" 13="" 9.55228="" 9c13="" 8.44772="" 12.5523="" 8..."="">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -57,9 +57,9 @@
 <!-- Open Graph metadata -->
 <meta property="og:site_name" content="Metabase | Business Intelligence, Dashboards, and Data Visualization">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://www.metabase.com/docs/master/documents/introduction">
-<meta name="title" property="og:title" content="Documents | Metabase Documentation">
-<meta name="description" property="og:description" content="Documents     <path d=" m12="" 10c12.5523="" 10="" 13="" 9.55228="" 9c13="" 8.44772="" 12.5523="" 8..."="">
+<meta property="og:url" content="https://www.metabase.com/docs/master/data-modeling/transforms">
+<meta name="title" property="og:title" content="Transforms | Metabase Documentation">
+<meta name="description" property="og:description" content="Transforms     <path d=" m12="" 10c12.5523="" 10="" 13="" 9.55228="" 9c13="" 8.44772="" 12.5523="" 8..."="">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -2155,7 +2155,7 @@ Roadmap</a>
 
       
 
-      <li class="expanded">
+      <li class="">
         <a href="/docs/master/documents/start" class="">
         Documents
 
@@ -2179,7 +2179,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/master/documents/introduction" class="selected">
+                <a href="/docs/master/documents/introduction" class="">
                   Overview
 
                   
@@ -4724,7 +4724,7 @@ Roadmap</a>
 
             
             
-                <li class="breadcrumb-item"><a class="blue-60" href="/docs/master/documents/start">Documents</a></li>
+                <li class="breadcrumb-item"><a class="blue-60" href="/docs/master/data-modeling/start">Data Modeling</a></li>
             
             
         </ol>
@@ -4871,7 +4871,7 @@ Roadmap</a>
 </div>
 
 
-        <h1 id="documents">Documents</h1>
+        <h1 id="transforms">Transforms</h1>
 
 <div class="bootstrap">
   <div class="plans-blockquote bg-blue-95 rounded-3 p-6 d-flex flex-row border border-1 border-primary">
@@ -4887,7 +4887,7 @@ Roadmap</a>
       
 
     <p class="m-0 ms-2 paragraph-5 neutral-40">
-       Documents is only available on
+       Transforms are only available on
       <a class="fw-bold" href="/product/pro">Pro</a> and
       <a class="fw-bold link-purple" href="/product/enterprise">Enterprise</a>
       plans  (both self-hosted and on Metabase Cloud). 
@@ -4895,131 +4895,136 @@ Roadmap</a>
   </div>
 </div>
 
-<p>Documents let you tell a story with your data by combining text, charts, and other content.</p>
+<p><em>Admin settings &gt; Transforms</em></p>
 
-<h2 id="create-a-document">Create a document</h2>
+<p>Transforms can be used to, well, transform your data - do stuff like preprocessing, cleaning, joining tables, pre-computing metrics. Transforms give you the ability to do the “T” of “ETL” within Metabase.</p>
+
+<p>You’ll write a query in Metabase, a transform will run this query, create a table in your target database containing the results, and sync that table to Metabase, so it can be used as a data source for questions or other transforms. You can schedule transforms to run periodically.</p>
+
+<h2 id="databases-that-support-transforms">Databases that support transforms</h2>
+
+<p>Currently, Metabase can create transforms on the following databases:</p>
+
+<ul>
+  <li>BigQuery</li>
+  <li>ClickHouse</li>
+  <li>MySQL/MariaDB</li>
+  <li>PostgreSQL</li>
+  <li>Redshift</li>
+  <li>Snowflake</li>
+  <li>SQL Server</li>
+</ul>
+
+<p>You can’t create transforms on databases that have <a href="../permissions/database-routing">Database routing</a> enabled, on Metabase <a href="../cloud/storage">Cloud Storage</a>, or on Metabase’s Sample Database.</p>
+
+<p>Transforms will create tables in your database, so the database user you use for your connection must have appropriate privileges. See <a href="../databases/users-roles-privileges">Database users, roles, and privileges</a>.</p>
+
+<h2 id="create-a-transform">Create a transform</h2>
+
+<p>Only admins can create transforms.</p>
+
+<p>To create a transform:</p>
 
 <ol>
-  <li>Click the <strong>+ New</strong> button in the top right.</li>
-  <li>Select <strong>Document</strong>.</li>
-  <li>Do stuff.</li>
-  <li>Click the <strong>Save</strong> button.</li>
+  <li>Go to Admin settings &gt; Transforms.</li>
+  <li>Click <strong>+ Create transform</strong>.</li>
+  <li>
+    <p>Select the source for your transform. You can create transforms using the query builder, SQL editor, or by copying an existing question or model.</p>
+
+    <p>If you select a question for the transform’s query, Metabase will only copy the question’s query. Later edits to that question won’t affect the transform’s query.</p>
+
+    <p>Your transform can query the target tables of other transforms.</p>
+  </li>
+  <li>
+    <p>Edit the query in the query builder or the SQL editor.</p>
+
+    <p>In SQL transforms, you can reference other saved questions and use snippets, but you can’t use SQL parameters.</p>
+
+    <p>When editing the query, you can run the query to preview the results. Previewing query results will not write data into your database.</p>
+  </li>
+  <li>Click <strong>Save</strong> in the top right corner.</li>
+  <li>
+    <p>Select a target schema for your transform and enter a name for the target table. Metabase will write create the table the results of the transform query into this table.</p>
+
+    <p>You can only transform data <em>within</em> a database; you can’t write from one database to another.</p>
+  </li>
+  <li>
+    <p>Optionally, assign tags to your transforms. Tags are used by <a href="#jobs-and-tags">jobs</a> to run transforms on schedule. By default, Metabase comes with hourly, daily, weekly, and monthly tags and jobs that are run on the corresponding schedules, but you can remove or rename those tags, or create new tags.</p>
+
+    <p>To create a new tag, just type the new tag’s name in “Tags” field and select “Create a tag”.</p>
+  </li>
 </ol>
 
-<h2 id="list-commands-with-">List commands with <code class="language-plaintext highlighter-rouge">/</code></h2>
+<h2 id="edit-a-transform">Edit a transform</h2>
 
-<p>Type <code class="language-plaintext highlighter-rouge">/</code> in your document to see available commands:</p>
+<p>You can edit the transform’s name and description, query, and target table. You can edit the transform even if it already ran or is scheduled to run.</p>
 
-<ul>
-  <li><strong>Ask Metabot</strong> to chat with <a href="../ai/metabot">Metabot</a> in the document.</li>
-  <li><strong>Chart</strong> to insert a table or chart from an existing question or model. You can’t add dashboards or other documents, but you can mention them (see the next section).</li>
-  <li><strong>Link</strong>. You can mention other items in your Metabase.</li>
-</ul>
+<h3 id="edit-transforms-query">Edit transform’s query</h3>
 
-<h2 id="mention-items-with-">Mention items with <code class="language-plaintext highlighter-rouge">@</code></h2>
+<p>To edit the transform’s query, click on “Edit query” above the query definition.</p>
 
-<p>You can type <code class="language-plaintext highlighter-rouge">@</code> to mention items from your Metabase. (The mentions get a fancy little icon next to them).</p>
+<p>Currently, you can’t convert a transform built with the query builder into a SQL-based transform. If you want to change your transform built with the query builder into a SQL transform, you’ll need to create a new transform with the same target and tags, and delete the old transform.</p>
 
-<h2 id="add-charts-to-documents">Add charts to documents</h2>
+<p>Once you change the transform’s query, the next transform run (manual or scheduled) will use the updated query and write the results into the target table. If you have questions that query the transform’s target table, they might break. For example, if your new transform query no longer includes a column that a downstream question was relying on, that question will break.</p>
 
-<p>You can add <a href="../questions/start">questions</a> and <a href="../data-modeling/models">models</a> to a document.</p>
+<h3 id="edit-transforms-target">Edit transform’s target</h3>
 
-<h3 id="adding-a-chart-copies-it-to-the-document">Adding a chart copies it to the document</h3>
+<p>To edit transform’s target table, i.e., the table where the query results are written, click on “Change target”. You’ll need to select whether you want to keep the old target table, or delete it. Deletion can’t be undone.</p>
 
-<p>When you add a chart from a collection, Metabase creates a copy in the document. The original question remains in the collection.</p>
+<h3 id="edit-transforms-name-or-description">Edit transform’s name or description</h3>
 
-<h3 id="charts-generated-by-metabot-only-exist-in-the-document">Charts generated by Metabot only exist in the document</h3>
+<p>To edit a transform’s name or description, click on the name or description at the top of the transform page.</p>
 
-<p>If Metabot generates a chart, Metabase saves that question to the document itself. If you delete it, it’s gone forever. You won’t be able to recover the question from the trash.</p>
+<h2 id="run-a-transform">Run a transform</h2>
 
-<h3 id="editing-charts">Editing charts</h3>
+<p>You can run a transform manually or on schedule (e.g., hourly).</p>
 
-<p>To edit a chart, click the <strong>three-dot</strong> menu in the chart’s upper right. You can:</p>
+<p>Running a transform for the first time will create and sync the table created by the transform, and you’ll be able to edit the table’s <a href="./metadata-editing">metadata</a> and <a href="../permissions/data">permissions</a>. Subsequent runs will drop and recreate the table. Currently, Metabase doesn’t support incremental transforms. Each transform run will recreate the target table using the entirety of the query results.</p>
 
-<ul>
-  <li>Edit visualization</li>
-  <li>Edit query</li>
-  <li>Replace the chart with another question or model</li>
-</ul>
+<p>To run a transform manually, visit the transform and click <strong>Run transform</strong>.</p>
 
-<p>Edits only affect the chart in the document. If you added the chart from a collection, Metabase will have created a copy of the chart. Any changes made to the chart in the document won’t affect the original question.</p>
+<p>To schedule a transform, you’ll need to assign one or more tags to it, then create a <a href="#jobs-and-tags">scheduled job</a> that picks up those tags.</p>
 
-<h2 id="formatting-text">Formatting text</h2>
+<p>You can see the time and status of the latest transform run on the transform’s page, or in the Runs view. The time of the run is given in the system’s timezone.</p>
 
-<p>Documents support Markdown syntax for:</p>
+<h2 id="transform-dependencies">Transform dependencies</h2>
 
-<ul>
-  <li>Headings: <code class="language-plaintext highlighter-rouge">#</code></li>
-  <li>Images: Use Markdown image syntax: <code class="language-plaintext highlighter-rouge">![Image text](image link)</code>. The image must start its own line in the document, and you may need to type out the closing parenthesis to let Metabase know to render the image. The image link must be a valid URL that your Metabase can access.</li>
-  <li>Blockquotes: <code class="language-plaintext highlighter-rouge">&gt; This is a blockquote</code>.</li>
-  <li>Code blocks: Wrap with triple backticks (```). Syntax highlighting isn’t supported yet.</li>
-</ul>
+<p>Transform queries can use the data from other transforms. For example, you can have a transform that uses data from a <code class="language-plaintext highlighter-rouge">raw_events</code> table and writes to a <code class="language-plaintext highlighter-rouge">stg_events</code> table, and then create another transform that uses data from the <code class="language-plaintext highlighter-rouge">stg_events</code> table and writes to an <code class="language-plaintext highlighter-rouge">events</code> table.</p>
 
-<p>You can also access formatting options by typing <code class="language-plaintext highlighter-rouge">/</code>.</p>
+<p>Metabase will track transform dependencies, and execute them in order. For each transform, you can see which transforms the current transform depends on.</p>
 
-<h2 id="links">Links</h2>
+<p>If a <a href="#jobs-and-tags">job</a> includes a transform that depends on a table created by another transform, then the job will run all the tagged transforms and their dependencies, even if they lack tags.</p>
 
-<p>If you paste a link into a document, Metabase will turn it into a clickable link. For now, Markdown links aren’t supported, and you can’t change the link text.</p>
+<h2 id="jobs-and-tags">Jobs and tags</h2>
 
-<h2 id="commenting-on-documents">Commenting on documents</h2>
+<p>Jobs let you run multiple transforms on a schedule.</p>
 
-<p>To comment on a document, click the chat bubble next to the section you want to comment on.</p>
+<p>You can see and filter the list of all jobs, their last and next run, and the status of the least run, in <em>Admin settings &gt; Transforms &gt; Jobs</em></p>
 
-<p>You can comment on whole sections like charts, headings, or text blocks. You can’t highlight portions of text to comment on.</p>
+<p>To create a new job, go to <em>Admin settings &gt; Transforms</em>, switch to the <strong>Jobs</strong> view, and click <strong>Create a job</strong></p>
 
-<p>You can:</p>
+<p>To edit a job, click on the job in the list of jobs.</p>
 
-<ul>
-  <li>React to comments with emojis (which are like pictures masquerading as words). For example, this is a gondola: 🚠.</li>
-  <li>Link to a comment. Click the <strong>three-dot</strong> menu and select <strong>Copy link</strong>.</li>
-  <li>Resolve comments. Resolved comments appear in a separate tab.</li>
-</ul>
+<p>Jobs have two components: schedule and tags. Metabase uses tags to locate transforms that should be run by the job, and then schedules those transforms according to the cron schedule. The times are given in the system’s timezone.</p>
 
-<h3 id="deleting-comments">Deleting comments</h3>
+<p>Job can use multiple tags, in which case, the job will run all transforms that have <em>any</em> of those tags. For example, you can have a job “Weekend job” that is scheduled run at noon on Saturdays and Sundays that picks up all transforms tagged either “Saturday”, “Sunday”, or “Weekend”.</p>
 
-<p>If you never want to see a comment again:</p>
+<p>Depended transforms will be scheduled and run intelligently: if Transform B depends on the output of Transform A, then a job will run Transform A before Transform B. A job will run all dependent transforms even if the dependencies aren’t tagged. You will see the order of transform execution on the job’s page.</p>
 
-<ol>
-  <li>Resolve the comment.</li>
-  <li>Find it in the Resolved tab.</li>
-  <li>Click on the <strong>three-dot</strong> menu.</li>
-  <li>Select <strong>Delete</strong>.</li>
-</ol>
+<p>Metabase comes with default tags and jobs for hourly, daily, weekly, and monthly scheduling. You can rename or delete those default jobs and tags.</p>
 
-<p>This deletion is permanent. You’ll never see that comment again.</p>
+<h2 id="transforms-vs-models">Transforms vs models</h2>
 
-<h2 id="printing-documents">Printing documents</h2>
-
-<p>To print a document, click on the <strong>three-dot</strong> menu and select <strong>Print document</strong>.</p>
-
-<h2 id="when-to-use-a-document-vs-a-dashboard">When to use a document vs. a dashboard</h2>
-
-<p>Documents and dashboards both have their use cases.</p>
-
-<h3 id="prefer-documents-for-exploration-and-narration">Prefer documents for exploration and narration</h3>
-
-<p>Documents work best for:</p>
+<p>Transforms are similar to models with model persistence turned on, but there are a few crucial differences:</p>
 
 <ul>
-  <li>Telling a story with data</li>
-  <li>Point-in-time analysis</li>
-  <li>Opening analysis for comments</li>
-  <li>Exploratory analysis</li>
+  <li>Transforms can only be created by admins. Models can be created by anyone with permissions to create queries on the data source (but only admins can enable model persistence).</li>
+  <li>You can choose the target schema and tables for transforms. Model persistence will create its own schema and tables.</li>
+  <li>You can’t rename columns in a transform (but you can change column metadata once they’re synced back to Metabase). You can rename columns in model metadata and then persist those column names using model persistence.</li>
+  <li>Transforms support more databases than model persistence</li>
 </ul>
 
-<h3 id="use-dashboards-for-tracking-metrics">Use dashboards for tracking metrics</h3>
-
-<p>Dashboards work best for:</p>
-
-<ul>
-  <li>Regular analysis. Numbers you want to keep an eye on every day, week, or month.</li>
-  <li>Filtering results across multiple charts.</li>
-  <li>More control over presentation.</li>
-</ul>
-
-<h2 id="document-permissions">Document permissions</h2>
-
-<p>Whether someone can view or edit a document and its data depends on that person’s collection and data permissions. See <a href="../permissions/introduction">Permissions</a>.</p>
+<p>Use models to enable non-admins to create their own datasets within Metabase, and to add context like field descriptions and semantic types. Use transforms to create persisted datasets in your database and reuse them across Metabase.</p>
 
 
         <div>
@@ -5073,7 +5078,7 @@ Roadmap</a>
 
   
     <span class="paragraph-6 fs-13 neutral-60" id="page-feedback-footer">
-      Want to improve these docs? <a href="https://github.com/metabase/metabase/blob/master/docs/documents/introduction.md" target="_blank">Propose a change.</a>
+      Want to improve these docs? <a href="https://github.com/metabase/metabase/blob/master/docs/data-modeling/transforms.md" target="_blank">Propose a change.</a>
     </span>
   
 </div>
@@ -5095,8 +5100,8 @@ Roadmap</a>
 <script type="text/javascript" src="/js/position-feedback-widget.js"></script>
 
 <script>
-  const pageTitle = `Documents`;
-  const pageURL = '/docs/master/documents/introduction';
+  const pageTitle = `Transforms`;
+  const pageURL = '/docs/master/data-modeling/transforms';
   const pageURLSplit = pageURL.split('/');
 
   let pageURLPrefix = '/' + pageURLSplit[1] + '/' + pageURLSplit[2];
