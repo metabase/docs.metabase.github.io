@@ -4897,6 +4897,7 @@ Roadmap</a>
 
 <p>Documents let you tell a story with your data by combining text, charts, and other content.</p>
 
+<<<<<<<< HEAD:_site/docs/master/documents/introduction.html
 <h2 id="create-a-document">Create a document</h2>
 
 <ol>
@@ -4904,11 +4905,148 @@ Roadmap</a>
   <li>Select <strong>Document</strong>.</li>
   <li>Do stuff.</li>
   <li>Click the <strong>Save</strong> button.</li>
+========
+<p>Transforms can be used to, well, transform your data - do stuff like preprocessing, cleaning, joining tables, pre-computing metrics. Transforms give you the ability to do the “T” of “ETL” within Metabase.</p>
+
+<p>You’ll write a query in Metabase, a transform will run this query, create a table in your target database containing the results, and sync that table to Metabase, so it can be used as a data source for questions or other transforms.</p>
+
+<h2 id="transforms-overview">Transforms overview</h2>
+
+<ul>
+  <li><strong>Transforms</strong> are queries that write back to your database as a new, persistent table. Use transforms to clean, join, or pre-aggregate data.</li>
+  <li>Transforms are scheduled and organized using <strong>tags</strong> and <strong>jobs</strong>.
+    <ul>
+      <li>You assign tags (e.g., daily, hourly) to group your transforms.</li>
+      <li>A job runs on a schedule (e.g., every day at midnight) and executes all transforms that have been assigned a specific tag.</li>
+    </ul>
+  </li>
+  <li>Each execution of a transform is a <strong>run</strong>. A run replaces the target table with fresh results. You can review the history of runs to monitor their success or failure.</li>
+</ul>
+
+<h2 id="databases-that-support-transforms">Databases that support transforms</h2>
+
+<p>Currently, Metabase can create transforms on the following databases:</p>
+
+<ul>
+  <li>BigQuery</li>
+  <li>ClickHouse</li>
+  <li>MySQL/MariaDB</li>
+  <li>PostgreSQL</li>
+  <li>Redshift</li>
+  <li>Snowflake</li>
+  <li>SQL Server</li>
+</ul>
+
+<p>You can’t create transforms on databases that have <a href="../permissions/database-routing">Database routing</a> enabled, on Metabase <a href="../cloud/storage">Cloud Storage</a>, or on Metabase’s Sample Database.</p>
+
+<p>Transforms will create tables in your database, so the database user you use for your connection must have appropriate privileges. See <a href="../databases/users-roles-privileges">Database users, roles, and privileges</a>.</p>
+
+<h2 id="create-a-transform">Create a transform</h2>
+
+<p>Only admins can create transforms.</p>
+
+<p>To create a transform:</p>
+
+<ol>
+  <li>Go to Admin settings &gt; Transforms.</li>
+  <li>Click <strong>+ Create transform</strong>.</li>
+  <li>
+    <p>Select the source for your transform. You can create transforms using the query builder, SQL editor, or by copying an existing question or model.</p>
+
+    <p>If you select a question for the transform’s query, Metabase will only copy the question’s query. Later edits to that question won’t affect the transform’s query.</p>
+
+    <p>Your transform can query the target tables of other transforms.</p>
+  </li>
+  <li>
+    <p>Edit the query in the query builder or the SQL editor.</p>
+
+    <p>In SQL transforms, you can reference other saved questions and use snippets, but you can’t use SQL parameters.</p>
+
+    <p>When editing the query, you can run the query to preview the results. Previewing query results won’t write data into your database.</p>
+  </li>
+  <li>Click <strong>Save</strong> in the top right corner.</li>
+  <li>
+    <p>Select a target schema for your transform and enter a name for the target table. Metabase will write create the table the results of the transform query into this table.</p>
+
+    <p>You can only transform data <em>within</em> a database; you can’t write from one database to another.</p>
+  </li>
+  <li>Optionally, assign tags to your transforms. Tags are used by <a href="#jobs-and-tags">jobs</a> to run transforms on schedule.</li>
+>>>>>>>> origin/master:_site/docs/master/data-modeling/transforms.html
 </ol>
 
 <h2 id="list-commands-with-">List commands with <code class="language-plaintext highlighter-rouge">/</code></h2>
 
+<<<<<<<< HEAD:_site/docs/master/documents/introduction.html
 <p>Type <code class="language-plaintext highlighter-rouge">/</code> in your document to see available commands:</p>
+========
+<p>You can edit the transform’s name and description, query, and target table. You can edit the transform even if it already ran or is scheduled to run.</p>
+
+<h3 id="edit-transforms-query">Edit transform’s query</h3>
+
+<p>To edit the transform’s query, click on “Edit query” above the query definition.</p>
+
+<p>Currently, you can’t convert a transform built with the query builder into a SQL-based transform. If you want to change your transform built with the query builder into a SQL transform, you’ll need to create a new transform with the same target and tags, and delete the old transform.</p>
+
+<p>Once you change the transform’s query, the next transform run (manual or scheduled) will use the updated query and write the results into the target table. If you have questions that query the transform’s target table, they might break. For example, if your new transform query no longer includes a column that a downstream question was relying on, that question will break.</p>
+
+<h3 id="edit-transforms-target">Edit transform’s target</h3>
+
+<p>To edit transform’s target table, i.e., the table where the query results are written, click on “Change target”. You’ll need to select whether you want to keep the old target table, or delete it. Deletion can’t be undone.</p>
+
+<h3 id="edit-transforms-name-or-description">Edit transform’s name or description</h3>
+
+<p>To edit a transform’s name or description, click on the name or description at the top of the transform page.</p>
+
+<h2 id="run-a-transform">Run a transform</h2>
+
+<p>You can run a transform manually or on schedule (e.g., hourly).</p>
+
+<p>Running a transform for the first time will create and sync the table created by the transform, and you’ll be able to edit the table’s <a href="./metadata-editing">metadata</a> and <a href="../permissions/data">permissions</a>. Subsequent runs will drop and recreate the table. Currently, Metabase doesn’t support incremental transforms. Each transform run will recreate the target table using the entirety of the query results.</p>
+
+<p>To run a transform manually, visit the transform and click <strong>Run transform</strong>.</p>
+
+<p>To schedule a transform, you’ll need to assign one or more tags to it, then create a <a href="#jobs-and-tags">scheduled job</a> that picks up those tags.</p>
+
+<p>You can see the time and status of the latest transform run on the transform’s page, or in the Runs view. The time of the run is given in the system’s timezone.</p>
+
+<h2 id="transform-dependencies">Transform dependencies</h2>
+
+<p>Transform queries can use the data from other transforms. For example, you can have a transform that uses data from a <code class="language-plaintext highlighter-rouge">raw_events</code> table and writes to a <code class="language-plaintext highlighter-rouge">stg_events</code> table, and then create another transform that uses data from the <code class="language-plaintext highlighter-rouge">stg_events</code> table and writes to an <code class="language-plaintext highlighter-rouge">events</code> table.</p>
+
+<p>Metabase will track transform dependencies, and execute them in order. For each transform, you can see which transforms the current transform depends on.</p>
+
+<p>If a <a href="#jobs-and-tags">job</a> includes a transform that depends on a table created by another transform, then the job will run all the tagged transforms and their dependencies, even if they lack tags.</p>
+
+<h2 id="jobs-and-tags">Jobs and tags</h2>
+
+<p>Jobs let you run multiple transforms on a schedule.</p>
+
+<p>You can see and filter the list of all jobs, their last and next run, and the status of the least run, in <em>Admin settings &gt; Transforms &gt; Jobs</em></p>
+
+<p>To create a new job, go to <em>Admin settings &gt; Transforms</em>, switch to the <strong>Jobs</strong> view, and click <strong>Create a job</strong></p>
+
+<p>To edit a job, click on the job in the list of jobs.</p>
+
+<p>Jobs have two components: schedule and tags.</p>
+
+<p>Metabase uses tags to locate transforms that should be run by the job, and then schedules those transforms according to the cron schedule. The times are given in the system’s timezone.</p>
+
+<h3 id="tags">Tags</h3>
+
+<p>Job can use multiple tags, in which case, the job will run all transforms that have <em>any</em> of those tags. For example, you can have a job “Weekend job” that is scheduled run at noon on Saturdays and Sundays that picks up all transforms tagged either “Saturday”, “Sunday”, or “Weekend”.</p>
+
+<p>By default, Metabase comes with hourly, daily, weekly, and monthly tags and jobs that are run on the corresponding schedules, but you can remove or rename those tags, or create new tags.</p>
+
+<p>To create a new tag, just type the new tag’s name in “Tags” field (either when viewing a transform or when viewing a job) and select “Create a tag”.</p>
+
+<h3 id="jobs-take-dependencies-into-account">Jobs take dependencies into account</h3>
+
+<p>Depended transforms will be scheduled and run intelligently: if Transform B depends on the output of Transform A, then a job will run Transform A before Transform B. A job will run all dependent transforms even if the dependencies aren’t tagged. You will see the order of transform execution on the job’s page.</p>
+
+<h2 id="transforms-vs-models">Transforms vs models</h2>
+
+<p>Transforms are similar to models with model persistence turned on, but there are a few crucial differences:</p>
+>>>>>>>> origin/master:_site/docs/master/data-modeling/transforms.html
 
 <ul>
   <li><strong>Ask Metabot</strong> to chat with <a href="../ai/metabot">Metabot</a> in the document.</li>
