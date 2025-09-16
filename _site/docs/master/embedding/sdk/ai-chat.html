@@ -6,7 +6,7 @@
   <meta content="frame-ancestors 'none'" http-equiv="Content-Security-Policy">
   <meta content="deny" http-equiv="X-Frame-Options">
     
-  <link href="https://www.metabase.com/docs/master/embedding/sdk/introduction" rel="canonical">
+  <link href="https://www.metabase.com/docs/master/embedding/sdk/ai-chat" rel="canonical">
   
 
   <script type="text/javascript">
@@ -44,12 +44,12 @@
 <meta name="robots" content="noindex">
    
 
-<title>Embedded analytics SDK | Metabase Documentation</title>
+<title>Embedded analytics SDK - AI chat | Metabase Documentation</title>
 <!-- Twitter cards -->
 <meta name="twitter:site" content="@metabase">
 
-<meta name="twitter:title" content="Embedded analytics SDK | Metabase Documentation">
-<meta name="twitter:description" content="Embedded analytics SDK     <path d=" m12="" 10c12.5523="" 10="" 13="" 9.55228="" 9c13="" 8.44772..."="">
+<meta name="twitter:title" content="Embedded analytics SDK - AI chat | Metabase Documentation">
+<meta name="twitter:description" content="Embedded analytics SDK - AI chat     ...">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -57,9 +57,9 @@
 <!-- Open Graph metadata -->
 <meta property="og:site_name" content="Metabase | Business Intelligence, Dashboards, and Data Visualization">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://www.metabase.com/docs/master/embedding/sdk/introduction">
-<meta name="title" property="og:title" content="Embedded analytics SDK | Metabase Documentation">
-<meta name="description" property="og:description" content="Embedded analytics SDK     <path d=" m12="" 10c12.5523="" 10="" 13="" 9.55228="" 9c13="" 8.44772..."="">
+<meta property="og:url" content="https://www.metabase.com/docs/master/embedding/sdk/ai-chat">
+<meta name="title" property="og:title" content="Embedded analytics SDK - AI chat | Metabase Documentation">
+<meta name="description" property="og:description" content="Embedded analytics SDK - AI chat     ...">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -2643,7 +2643,7 @@ Roadmap</a>
       
 
       <li class="expanded">
-        <a href="/docs/master/embedding/sdk/introduction" class="selected">
+        <a href="/docs/master/embedding/sdk/introduction" class="">
         Modular embedding
 
           
@@ -2698,7 +2698,7 @@ Roadmap</a>
                     
                       
                       <li>
-                        <a href="/docs/master/embedding/sdk/introduction" class="selected">
+                        <a href="/docs/master/embedding/sdk/introduction" class="">
                           Introduction
                         </a>
                       </li>
@@ -2740,7 +2740,7 @@ Roadmap</a>
                     
                       
                       <li>
-                        <a href="/docs/master/embedding/sdk/ai-chat" class="">
+                        <a href="/docs/master/embedding/sdk/ai-chat" class="selected">
                           AI chat
                         </a>
                       </li>
@@ -4871,7 +4871,9 @@ Roadmap</a>
 </div>
 
 
-        <h1 id="embedded-analytics-sdk">Embedded analytics SDK</h1>
+        <h1 id="embedded-analytics-sdk---ai-chat">Embedded analytics SDK - AI chat</h1>
+
+<p><img src="../images/ai-chat.png" alt="Embedded AI chat"></p>
 
 <div class="bootstrap">
   <div class="plans-blockquote bg-blue-95 rounded-3 p-6 d-flex flex-row border border-1 border-primary">
@@ -4896,154 +4898,57 @@ Roadmap</a>
   </div>
 </div>
 
-<p>With the Embedded analytics SDK, you can embed individual Metabase components with React (like standalone charts, dashboards, the query builder, and more). You can manage access and interactivity per component, and you have advanced customization for seamless styling.</p>
+<p>You can embed an AI chat in your application similar to <a href="../embedded-analytics-js">Metabot</a> in Metabase.</p>
 
-<h2 id="example-apps-built-with-the-embedded-analytics-sdk">Example apps built with the embedded analytics SDK</h2>
+<p>To help embedded Metabot more easily find and focus on the data you care about most, select the collection containing the models and metrics it should be able to use to create queries.</p>
 
-<p>To give you an idea of what’s possible with the SDK, we’ve put together example sites at <a href="https://metaba.se/sdk-demo">metaba.se/sdk-demo</a>. Navigate between different shop websites. Check them out and poke around their products and analytics sections, as well as the New Question and New Dashboard options.</p>
+<p>If you’re embedding the Metabot component in an app, you can specify a different collection that embedded Metabot is allowed to use for creating queries.</p>
 
-<p><img src="../images/pug-and-play.png" alt="Pug and play example app built with embedded analytics SDK"></p>
+<h2 id="chat-preview">Chat preview</h2>
 
-<p>Here’s the <a href="https://github.com/metabase/shoppy">Shoppy source code</a>.</p>
+<p>You can check out a <a href="https://embedded-analytics-sdk-demo.metabase.com/admin/analytics/new/ask-metabot">demo of the AI chat component</a> on our Shoppy demo site.</p>
 
-<h2 id="embedded-analytics-sdk-prerequisites">Embedded analytics SDK prerequisites</h2>
+<h2 id="example">Example</h2>
 
-<ul>
-  <li>React application using React 18 or React 19.</li>
-  <li>Nodejs 20.x or higher.</li>
-  <li>Metabase version 1.52 or higher.</li>
-</ul>
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nx">React</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">react</span><span class="dl">"</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span>
+  <span class="nx">MetabotQuestion</span><span class="p">,</span>
+  <span class="nx">MetabaseProvider</span><span class="p">,</span>
+  <span class="nx">defineMetabaseAuthConfig</span><span class="p">,</span>
+<span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@metabase/embedding-sdk-react</span><span class="dl">"</span><span class="p">;</span>
 
-<h2 id="quickstarts">Quickstarts</h2>
+<span class="kd">const</span> <span class="nx">authConfig</span> <span class="o">=</span> <span class="nf">defineMetabaseAuthConfig</span><span class="p">({</span>
+  <span class="na">metabaseInstanceUrl</span><span class="p">:</span> <span class="dl">"</span><span class="s2">https://your-metabase.example.com</span><span class="dl">"</span><span class="p">,</span>
+<span class="p">});</span>
 
-<ul>
-  <li><a href="./quickstart">Quickstart</a> (If you have Metabase and an app)</li>
-  <li><a href="./quickstart-cli">Quickstart CLI</a> (If you have an app, but no Metabase)</li>
-  <li><a href="./quickstart-with-sample-app">Quickstart with sample React app</a> (If you don’t have either)</li>
-</ul>
-
-<h2 id="installation">Installation</h2>
-
-<p>To use the SDK, you’ll need to enable the SDK in Metabase, and install the SDK in your React app.</p>
-
-<h3 id="enable-the-sdk-in-metabase">Enable the SDK in Metabase</h3>
-
-<p>Enable the Embedded analytics SDK by going to <strong>Admin settings &gt; Settings &gt; Embedding</strong>. Toggle on the SDK, and hit <strong>Configure</strong>. Enter the origins for your website or app where you want to allow SDK embedding, separated by a space. Localhost is automatically included.</p>
-
-<h3 id="install-the-sdk-in-your-react-application">Install the SDK in your React application</h3>
-
-<p>You can install the Embedded analytics SDK for React via npm. Make sure to use the dist-tag that corresponds to your Metabase version, example: 56-stable for Metabase 56:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm <span class="nb">install</span> @metabase/embedding-sdk-react@56-stable
+<span class="k">export</span> <span class="k">default</span> <span class="kd">function</span> <span class="nf">App</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">return </span><span class="p">(</span>
+    <span class="o">&lt;</span><span class="nx">MetabaseProvider</span> <span class="nx">authConfig</span><span class="o">=</span><span class="p">{</span><span class="nx">authConfig</span><span class="p">}</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="nx">MetabotQuestion</span> <span class="o">/&gt;</span>
+    <span class="o">&lt;</span><span class="sr">/MetabaseProvider</span><span class="err">&gt;
+</span>  <span class="p">);</span>
+<span class="p">}</span>
 </code></pre></div></div>
-
-<p>or with Yarn:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>yarn add @metabase/embedding-sdk-react@56-stable
-</code></pre></div></div>
-
-<h3 id="resolving-typesreact-version-mismatches">Resolving <code class="language-plaintext highlighter-rouge">@types/react</code> version mismatches</h3>
-
-<p>In rare scenarios, the Embedding SDK and your application may use different major versions of <code class="language-plaintext highlighter-rouge">@types/react</code>, causing TypeScript conflicts.</p>
-
-<p>To enforce a single <code class="language-plaintext highlighter-rouge">@types/react</code> version across all dependencies, add an <code class="language-plaintext highlighter-rouge">overrides</code> (npm) or <code class="language-plaintext highlighter-rouge">resolutions</code> (Yarn) section to your <code class="language-plaintext highlighter-rouge">package.json</code> and specify the <code class="language-plaintext highlighter-rouge">@types/react</code> version your application uses.</p>
-
-<h4 id="npm-set-typesreact-version">npm set @types/react version</h4>
-
-<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
-  </span><span class="nl">"overrides"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="nl">"@types/react"</span><span class="p">:</span><span class="w"> </span><span class="s2">"..."</span><span class="w">
-  </span><span class="p">}</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre></div></div>
-
-<h4 id="yarn-set-typesreact-version">Yarn set @types/react version</h4>
-
-<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
-  </span><span class="nl">"resolutions"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="nl">"@types/react"</span><span class="p">:</span><span class="w"> </span><span class="s2">"..."</span><span class="w">
-  </span><span class="p">}</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre></div></div>
-
-<h2 id="architecture">Architecture</h2>
-
-<p>Starting with Metabase 57, the SDK consists of two parts:</p>
+<h2 id="api-reference">API reference</h2>
 
 <ul>
-  <li><strong>SDK Package</strong> – The <code class="language-plaintext highlighter-rouge">@metabase/embedding-sdk-react</code> npm package is a lightweight bootstrapper library. Its primary purpose is to load and run the main SDK Bundle code.</li>
-  <li><strong>SDK Bundle</strong> – The full SDK code, served directly from your self-hosted Metabase instance or Metabase Cloud, and it’s the part of the Metabase. This ensures that the main SDK code is always compatible with its corresponding Metabase instance.</li>
+  <li><a href="./api/MetabotQuestion">Component</a></li>
 </ul>
 
-<h2 id="developing-with-the-embedded-analytics-sdk">Developing with the Embedded analytics SDK</h2>
+<h2 id="setting-up-ai-chat">Setting up AI chat</h2>
 
-<p>Start with one of the quickstarts, then see these pages for more info on components, theming, and more.</p>
+<p>To configure your embedded AI chat in your Metabase:</p>
 
-<ul>
-  <li><a href="./authentication">Authentication</a></li>
-  <li><a href="./questions">Questions</a></li>
-  <li><a href="./ai-chat">AI chat</a></li>
-  <li><a href="./dashboards">Dashboards</a></li>
-  <li><a href="./appearance">Appearance</a></li>
-  <li><a href="./collections">Collections</a></li>
-  <li><a href="./plugins">Plugins</a></li>
-  <li><a href="./config">Config</a></li>
-  <li><a href="./version">Versioning</a></li>
-  <li><a href="./next-js">Notes on Next.js</a></li>
-</ul>
+<ol>
+  <li>Click the <strong>gear</strong> icon in the upper right.</li>
+  <li>Select <strong>Admin settings</strong>.</li>
+  <li>Click the <strong>AI</strong> tab.</li>
+  <li>In the left sidebar, click <strong>Embedded Metabot</strong>.</li>
+</ol>
 
-<h2 id="embedded-analytics-sdk-source-code">Embedded analytics SDK source code</h2>
+<p>When embedding the Metabot component in your app, you should specify a collection that embedded Metabot is allowed to use for creating queries. Embedded Metabot will only have access to that collection.</p>
 
-<p>You can find the <a href="https://github.com/metabase/metabase/tree/master/enterprise/frontend/src/embedding-sdk">Embedded analytics SDK source code in the Metabase repo</a>.</p>
-
-<h2 id="changelog">Changelog</h2>
-
-<p>View the SDK’s changelog:</p>
-
-<ul>
-  <li><a href="https://github.com/metabase/metabase/blob/release-x.56.x/enterprise/frontend/src/embedding-sdk-bundle/CHANGELOG.md">56-stable</a></li>
-  <li><a href="https://github.com/metabase/metabase/blob/release-x.55.x/enterprise/frontend/src/embedding-sdk-bundle/CHANGELOG.md">55-stable</a></li>
-  <li><a href="https://github.com/metabase/metabase/blob/release-x.54.x/enterprise/frontend/src/embedding-sdk/CHANGELOG.md">54-stable</a></li>
-  <li><a href="https://github.com/metabase/metabase/blob/release-x.53.x/enterprise/frontend/src/embedding-sdk/CHANGELOG.md">53-stable</a></li>
-  <li><a href="https://github.com/metabase/metabase/blob/release-x.52.x/enterprise/frontend/src/embedding-sdk/CHANGELOG.md">52-stable</a></li>
-</ul>
-
-<h2 id="embedded-analytics-sdk-on-npm">Embedded analytics SDK on npm</h2>
-
-<p>Check out the Metabase Embedded analytics SDK on npm: <a href="https://metaba.se/sdk-npm">metaba.se/sdk-npm</a>.</p>
-
-<h2 id="sdk-limitations">SDK limitations</h2>
-
-<p>The SDK doesn’t support:</p>
-
-<ul>
-  <li>Verified content</li>
-  <li>Official collections</li>
-  <li>Subscriptions</li>
-  <li>Alerts</li>
-  <li>Server-side rendering (SSR)</li>
-</ul>
-
-<p>Other limitations:</p>
-
-<ul>
-  <li>Multiple <em>interactive</em> dashboards on the same application page. If you need to embed multiple dashboards on the same application page, you can embed static dashboards.</li>
-  <li>If you have Leaflet 1.x as a dependency in your app, you may run into compatibility issues. You can try using Leaflet 2.x instead.</li>
-</ul>
-
-<h2 id="issues-feature-requests-and-support">Issues, feature requests and support</h2>
-
-<p><a href="https://github.com/metabase/metabase/issues/?q=is%3Aissue%20state%3Aopen%20label%3AType%3ABug%20label%3AEmbedding%2FSDK">Bugs</a> and <a href="https://github.com/metabase/metabase/issues/?q=is%3Aissue%20state%3Aopen%20label%3AEmbedding%2FSDK%20label%3A%22Type%3ANew%20Feature%22">feature requests</a> are tracked on GitHub.</p>
-
-<p>You can upvote an existing feature request by leaving a thumbs up emoji reaction on the issue. Feel free to leave comments with context that could be useful. <a href="/docs/latest/troubleshooting-guide/requesting-new-features">Read more</a>.</p>
-
-<p>Before creating new issues, please make sure an issue for your problem or feature request doesn’t already exist.
-To seek help:</p>
-
-<ul>
-  <li>Paid customers can contact our success team through the usual channels.</li>
-  <li>People using the open-source edition can post on our <a href="https://discourse.metabase.com/">discussion forums</a>.</li>
-</ul>
+<p>For tips and more, see <a href="../../ai/settings">Metabot settings</a>.</p>
 
 
         <div>
@@ -5097,7 +5002,7 @@ To seek help:</p>
 
   
     <span class="paragraph-6 fs-13 neutral-60" id="page-feedback-footer">
-      Want to improve these docs? <a href="https://github.com/metabase/metabase/blob/master/docs/embedding/sdk/introduction.md" target="_blank">Propose a change.</a>
+      Want to improve these docs? <a href="https://github.com/metabase/metabase/blob/master/docs/embedding/sdk/ai-chat.md" target="_blank">Propose a change.</a>
     </span>
   
 </div>
@@ -5119,8 +5024,8 @@ To seek help:</p>
 <script type="text/javascript" src="/js/position-feedback-widget.js"></script>
 
 <script>
-  const pageTitle = `Embedded analytics SDK`;
-  const pageURL = '/docs/master/embedding/sdk/introduction';
+  const pageTitle = `Embedded analytics SDK - AI chat`;
+  const pageURL = '/docs/master/embedding/sdk/ai-chat';
   const pageURLSplit = pageURL.split('/');
 
   let pageURLPrefix = '/' + pageURLSplit[1] + '/' + pageURLSplit[2];
