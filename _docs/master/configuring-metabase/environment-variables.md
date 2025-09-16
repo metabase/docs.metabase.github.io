@@ -592,6 +592,24 @@ Allow Metabase SDK access to these space delimited origins.
 
 Embedding homepage status, indicating if it's visible, hidden or has been dismissed.
 
+### `MB_EMBEDDING_HUB_PRODUCTION_EMBED_SNIPPET_CREATED`
+
+- Type: boolean
+- Default: `false`
+- [Exported as](../installation-and-operation/serialization): `embedding-hub-production-embed-snippet-created`.
+- [Configuration file name](./config-file): `embedding-hub-production-embed-snippet-created`
+
+Indicates if a production embed snippet has been created for tracking in the embedding hub.
+
+### `MB_EMBEDDING_HUB_TEST_EMBED_SNIPPET_CREATED`
+
+- Type: boolean
+- Default: `false`
+- [Exported as](../installation-and-operation/serialization): `embedding-hub-test-embed-snippet-created`.
+- [Configuration file name](./config-file): `embedding-hub-test-embed-snippet-created`
+
+Indicates if a test embed snippet has been created for tracking in the embedding hub.
+
 ### `MB_EMBEDDING_SECRET_KEY`
 
 - Type: string
