@@ -4879,7 +4879,6 @@ Roadmap</a>
   <li><a href="#minimum-database-privileges"><code class="language-plaintext highlighter-rouge">analytics</code> for read access</a> to any schemas or tables used for analysis.</li>
   <li>Optional <a href="#privileges-to-enable-actions"><code class="language-plaintext highlighter-rouge">metabase_actions</code> for write access</a> to tables used for Metabase actions.</li>
   <li>Optional <a href="#privileges-to-enable-model-persistence"><code class="language-plaintext highlighter-rouge">metabase_model_persistence</code> for write access</a> to the schema used for Metabase model persistence.</li>
-  <li>Optional <a href="#privileges-to-enable-transforms"><code class="language-plaintext highlighter-rouge">metabase_transforms</code> for write access</a> to the schema used for Metabase transforms.</li>
 </ul>
 
 <p>Bundling your privileges into roles based on use cases makes it easier to manage privileges in the future (especially in <a href="#multi-tenant-permissions">multi-tenant situations</a>). For example, you could:</p>
@@ -4990,7 +4989,7 @@ Roadmap</a>
 
 <h2 id="privileges-to-enable-model-persistence">Privileges to enable model persistence</h2>
 
-<p><a href="../data-modeling/model-persistence">Model persistence</a> lets Metabase save query results to a specific schema in your database. Metabase’s database user will need the <code class="language-plaintext highlighter-rouge">CREATE</code> privilege to set up the dedicated schema for model persistence, as well as write access (<code class="language-plaintext highlighter-rouge">INSERT</code>, <code class="language-plaintext highlighter-rouge">UPDATE</code>, <code class="language-plaintext highlighter-rouge">DELETE</code>) to that schema.</p>
+<p><a href="../data-modeling/model-persistence">Model persistence</a> lets Metabase save query results to a specific schema in your database. Metabase’s database user will need the <code class="language-plaintext highlighter-rouge">CREATE</code> privilege to set up the dedicated schema for model caching, as well as write access (<code class="language-plaintext highlighter-rouge">INSERT</code>, <code class="language-plaintext highlighter-rouge">UPDATE</code>, <code class="language-plaintext highlighter-rouge">DELETE</code>) to that schema.</p>
 
 <p>In addition to the <a href="#minimum-database-privileges">minimum database privileges</a>:</p>
 
@@ -5015,21 +5014,6 @@ Roadmap</a>
 <span class="c1">-- Grant role to the metabase user.</span>
 <span class="k">GRANT</span> <span class="n">metabase_model_persistence</span> <span class="k">TO</span> <span class="n">metabase</span><span class="p">;</span>
 </code></pre></div></div>
-
-<h2 id="privileges-to-enable-transforms">Privileges to enable transforms</h2>
-
-<p><a href="../data-modeling/transforms">Transforms</a> let Metabase write query results back to your database. We suggest that you create a dedicated schema for your transforms. Metabase’s database user will need to be able to create and drop transform tables.</p>
-
-<p>In addition to the <a href="#minimum-database-privileges">minimum database privileges</a>:</p>
-
-<ul>
-  <li>Create a new role called <code class="language-plaintext highlighter-rouge">metabase_transforms</code>.</li>
-  <li>Create a dedicated schema for transforms.</li>
-  <li>Give the <code class="language-plaintext highlighter-rouge">metabase_transforms</code> role <code class="language-plaintext highlighter-rouge">CREATE TABLE</code> / <code class="language-plaintext highlighter-rouge">ALTER</code> / <code class="language-plaintext highlighter-rouge">DROP</code> privileges for the specified schema</li>
-  <li>Give the <code class="language-plaintext highlighter-rouge">metabase_transforms</code> role to the <code class="language-plaintext highlighter-rouge">metabase</code> user.</li>
-</ul>
-
-<p>In certain cases, Metabase will give you an option to create new schemas for transforms, in which case you’ll also need <code class="language-plaintext highlighter-rouge">CREATE SCHEMA</code> privileges for your metabase users (or <code class="language-plaintext highlighter-rouge">CREATE DATABASE</code> for ClickHouse).</p>
 
 <h2 id="privileges-to-enable-uploads">Privileges to enable uploads</h2>
 
