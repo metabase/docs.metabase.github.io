@@ -49,7 +49,7 @@
 <meta name="twitter:site" content="@metabase">
 
 <meta name="twitter:title" content="Webhooks | Metabase Documentation">
-<meta name="twitter:description" content="Webhooks Admins can set up webhooks so that people can send alerts to a particular URL. Which means you can set up an alert to send the results of a question to an endpoint of your choice: to your app,...">
+<meta name="twitter:description" content="Webhooks Admins and people with settings access can set up webhooks to send alerts to a particular URL. This means you can set up an alert to send the results of a question to an endpoint of your choice:...">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -59,7 +59,7 @@
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://www.metabase.com/docs/v0.55/configuring-metabase/webhooks">
 <meta name="title" property="og:title" content="Webhooks | Metabase Documentation">
-<meta name="description" property="og:description" content="Webhooks Admins can set up webhooks so that people can send alerts to a particular URL. Which means you can set up an alert to send the results of a question to an endpoint of your choice: to your app,...">
+<meta name="description" property="og:description" content="Webhooks Admins and people with settings access can set up webhooks to send alerts to a particular URL. This means you can set up an alert to send the results of a question to an endpoint of your choice:...">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -4845,7 +4845,9 @@ Roadmap</a>
 
         <h1 id="webhooks">Webhooks</h1>
 
-<p>Admins can set up webhooks so that people can send <a href="../questions/alerts">alerts</a> to a particular URL. Which means you can set up an alert to send the results of a question to an endpoint of your choice: to your app, a third-party service, or wherever.</p>
+<p>Admins and people with <a href="../permissions/application#settings-access">settings access</a> can set up webhooks to send <a href="../questions/alerts">alerts</a> to a particular URL. This means you can set up an alert to send the results of a question to an endpoint of your choice: to your app, a third-party service, or wherever.</p>
+
+<p>Only admins and people with settings access can send alerts to webhooks.</p>
 
 <p>For now, webhooks are only available for <a href="../questions/alerts">alerts</a>; you can’t select a webhook as the recipient of a <a href="../dashboards/subscriptions">dashboard subscription</a>.</p>
 
@@ -4853,12 +4855,12 @@ Roadmap</a>
 
 <p>Before you can send an alert to a webhook, an admin will need to create a webhook to target.</p>
 
-<p>Admins can create a webhook by clicking on the <strong>gear icon</strong> &gt; <strong>Admin settings</strong> &gt; <strong>Notification channels</strong>. In the <strong>Webhooks for alerts</strong>, click <strong>+ Add another</strong>. Metabase will hand you a short form to fill out:</p>
+<p>Admins and people with <a href="../permissions/application#settings-access">settings access</a> can create a webhook by clicking the <strong>gear icon</strong> &gt; <strong>Admin settings</strong> &gt; <strong>Notification channels</strong>. In <strong>Webhooks for alerts</strong>, click <strong>+ Add another</strong>. Metabase will show you a short form to fill out:</p>
 
 <ul>
   <li><strong>Webhook URL</strong>. Where you want Metabase to send the results of an alert. Must be a valid URL.</li>
-  <li><strong>Give it a name</strong>. You have to name the webhook so that people can pick the right hook when setting up an alert on a question.</li>
-  <li><strong>Description</strong>. You should probably tell people what the hook is for.</li>
+  <li><strong>Give it a name</strong>. Name the webhook so that people can pick the right hook when setting up an alert on a question.</li>
+  <li><strong>Description</strong>. Tell people what the hook is for.</li>
   <li><strong>Authentication method</strong>. See below.</li>
 </ul>
 
