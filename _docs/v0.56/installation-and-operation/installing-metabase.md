@@ -56,7 +56,7 @@ See [Upgrading Metabase](upgrading-metabase).
 - [Running on Podman](running-metabase-on-podman)
 - [Building Metabase from source](../developers-guide/start)
 - [Running on Azure Web Apps](running-metabase-on-azure)
-- [Running on Debian as a service](running-metabase-on-debian)
+- [Running Metabase as a systemd service](running-metabase-as-service)
 
 We currently do not distribute Metabase on AWS Marketplace or Azure Marketplace.
 
