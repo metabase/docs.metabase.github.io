@@ -132,11 +132,9 @@ Events and timelines can be archived and unarchived. See [Archiving Events and t
 
 You won't see archived Events and Timelines in Trash. To see archived events and timelines, you need to [access them from the collection's page](events-and-timelines#view-archived-events-and-timelines).
 
-## Deleting and restoring Snippets
+## Deleting and restoring snippets
 
-Snippets can be archived and unarchived. See [Archiving Snippets](../questions/native-editor/snippets#archiving-snippets).
-
-You won't see archived Snippets in Trash. To see archived Snippets, you need to [access them from the Snippet menu](../questions/native-editor/snippets#snippet-menu).
+Snippets can be archived and unarchived. See [Archiving snippets](../questions/native-editor/snippets#archive-snippets). You won't see archived snippets in Trash.
 
 ## Deleting segments
 
