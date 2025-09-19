@@ -6,7 +6,7 @@
   <meta content="frame-ancestors 'none'" http-equiv="Content-Security-Policy">
   <meta content="deny" http-equiv="X-Frame-Options">
     
-  <link href="https://www.metabase.com/docs/master/actions/introduction" rel="canonical">
+  <link href="https://www.metabase.com/docs/master/data-modeling/editable-tables" rel="canonical">
   
 
   <script type="text/javascript">
@@ -44,12 +44,12 @@
 <meta name="robots" content="noindex">
    
 
-<title>Introduction to actions | Metabase Documentation</title>
+<title>Editable tables | Metabase Documentation</title>
 <!-- Twitter cards -->
 <meta name="twitter:site" content="@metabase">
 
-<meta name="twitter:title" content="Introduction to actions | Metabase Documentation">
-<meta name="twitter:description" content="Introduction to actions  For now, actions are only available for PostgreSQL and MySQL.   What are actions? Actions are entities in Metabase that let you build custom forms and business logic. Actions let you...">
+<meta name="twitter:title" content="Editable tables | Metabase Documentation">
+<meta name="twitter:description" content="Editable tables     <path d=" m12="" 10c12.5523="" 10="" 13="" 9.55228="" 9c13="" 8.44772="" 12.5523..."="">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -57,9 +57,9 @@
 <!-- Open Graph metadata -->
 <meta property="og:site_name" content="Metabase | Business Intelligence, Dashboards, and Data Visualization">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://www.metabase.com/docs/master/actions/introduction">
-<meta name="title" property="og:title" content="Introduction to actions | Metabase Documentation">
-<meta name="description" property="og:description" content="Introduction to actions  For now, actions are only available for PostgreSQL and MySQL.   What are actions? Actions are entities in Metabase that let you build custom forms and business logic. Actions let you...">
+<meta property="og:url" content="https://www.metabase.com/docs/master/data-modeling/editable-tables">
+<meta name="title" property="og:title" content="Editable tables | Metabase Documentation">
+<meta name="description" property="og:description" content="Editable tables     <path d=" m12="" 10c12.5523="" 10="" 13="" 9.55228="" 9c13="" 8.44772="" 12.5523..."="">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -2357,7 +2357,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/master/data-modeling/editable-tables" class="">
+                <a href="/docs/master/data-modeling/editable-tables" class="selected">
                   Editable tables
 
                   
@@ -2431,7 +2431,7 @@ Roadmap</a>
 
               
 
-              <li class="expanded">
+              <li class="">
                 <a href="" class="">
                   Actions
 
@@ -2449,7 +2449,7 @@ Roadmap</a>
                     
                       
                       <li>
-                        <a href="/docs/master/actions/introduction" class="selected">
+                        <a href="/docs/master/actions/introduction" class="">
                           Overview
                         </a>
                       </li>
@@ -4754,7 +4754,7 @@ Roadmap</a>
 
             
             
-                <li class="breadcrumb-item"><a class="blue-60" href="/docs/master/actions/start">Actions</a></li>
+                <li class="breadcrumb-item"><a class="blue-60" href="/docs/master/data-modeling/start">Data Modeling</a></li>
             
             
         </ol>
@@ -4901,91 +4901,116 @@ Roadmap</a>
 </div>
 
 
-        <h1 id="introduction-to-actions">Introduction to actions</h1>
+        <h1 id="editable-tables">Editable tables</h1>
 
-<blockquote>
-  <p>For now, actions are only available for PostgreSQL and MySQL.</p>
-</blockquote>
+<div class="bootstrap">
+  <div class="plans-blockquote bg-blue-95 rounded-3 p-6 d-flex flex-row border border-1 border-primary">
+    <svg class="" width="24" height="24" viewBox="0 0 26 26" fill="none">
+  <path d="M12 13V15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
+  <path d="M12 10C12.5523 10 13 9.55228 13 9C13 8.44772 12.5523 8 12 8C11.4477 8 11 8.44772 11 9C11 9.55228 11.4477 10 12 10Z" fill="#509EE3"></path>
+  <path d="M12 19.25C16.0041 19.25 19.25 16.0041 19.25 12C19.25 7.99594 16.0041 4.75 12 4.75C7.99594 4.75 4.75 7.99594 4.75 12C4.75 16.0041 7.99594 19.25 12 19.25Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
+</svg>
 
-<p><img src="./images/example-action.png" alt="Example action"></p>
+    
+    
+    
+      
 
-<h2 id="what-are-actions">What are actions?</h2>
+    <p class="m-0 ms-2 paragraph-5 neutral-40">
+       Editable table data is only available on
+      <a class="fw-bold" href="/product/pro">Pro</a> and
+      <a class="fw-bold link-purple" href="/product/enterprise">Enterprise</a>
+      plans  (both self-hosted and on Metabase Cloud). 
+    </p>
+  </div>
+</div>
 
-<p><strong>Actions</strong> are entities in Metabase that let you build custom forms and business logic.</p>
+<p>Admins can enable editable table data in Metabase.</p>
 
-<p>Actions let you write parameterized SQL that writes back to your database. Actions can be attached to <a href="../dashboards/actions">buttons on dashboards</a> to create custom workflows. You can even publicly share the parameterized forms that actions generate to collect data.</p>
+<p><img src="./images/edit-table.png" alt="Edit table"></p>
 
-<p>Here are a few ideas for what you can do with actions:</p>
+<h2 id="setting-up-editable-tables">Setting up editable tables</h2>
 
-<ul>
-  <li>Mark the customer you’re viewing in a dashboard as a VIP.</li>
-  <li>Let team members remove redundant data.</li>
-  <li>Create a customer feedback form and embed it on your website.</li>
-</ul>
+<p><em>Currently, editable table data is only available for PostgreSQL and MySQL.</em></p>
 
-<p>Actions must be added to a <a href="../data-modeling/models">model</a>, but actions only run on the raw tables that back those models (so actions will never edit your <a href="../data-modeling/models#edit-a-models-query">model definition</a>).</p>
-
-<p>If you’re an admin who just wants to edit data in your tables, check out <a href="../data-modeling/editable-tables">Editable table data</a>.</p>
-
-<h2 id="enabling-actions-for-a-database">Enabling actions for a database</h2>
-
-<p>For actions to work, you’ll first need to do the following two things:</p>
+<p>To set up table editing, admins can:</p>
 
 <ol>
-  <li><strong>Enable model actions for the database connection</strong>. To enable actions for a database connection, admins should click on the <strong>gear</strong> icon in the upper right and navigate to <strong>Admin settings</strong> &gt; <strong>Databases</strong>, then click on the database you want to create actions for. On the right side of the connection settings form, toggle the <strong>Model actions</strong> option. For actions to work, the database user account (the account you’re using to connect to the database) must have <a href="../databases/users-roles-privileges#privileges-to-enable-actions-and-editable-table-data">write permissions</a>. And for now, actions are only supported on PostgreSQL and MySQL databases.</li>
-  <li><strong>Create at least one model from that database.</strong> Actions are associated with models, so you’ll need to have created (or have access to) at least one model before you can start creating actions.</li>
+  <li>Click the <strong>gear</strong> icon in the top right.</li>
+  <li>Select <strong>Admin settings</strong>.</li>
+  <li>Click <strong>Databases</strong>.</li>
+  <li>Select your database.</li>
+  <li>Toggle on <strong>Editable table data</strong>.</li>
 </ol>
 
-<h2 id="who-can-use-actions">Who can use actions</h2>
+<p>For this to work, Metabase’s connection to your database must support writing back to its tables. See <a href="../databases/users-roles-privileges#privileges-to-enable-actions-and-editable-table-data">privileges to enable actions and editable table data</a>.</p>
+
+<h2 id="update-or-delete-records-in-a-table">Update or delete records in a table</h2>
+
+<p>To update or delete records in a table:</p>
+
+<ol>
+  <li>Open the left sidebar.</li>
+  <li>In the Data section, click <strong>Databases</strong>.</li>
+  <li>Hover over the table you want to edit and click the <strong>Pencil</strong> icon.</li>
+  <li>Edit rows in the table just like you would in a spreadsheet.</li>
+</ol>
+
+<p>Depending on the data in the column, Metabase may show a list of values to choose from. If you need to add an option to that list, simply type out the option and add it (you may need to refresh the browser for the new option to show up in the list).</p>
+
+<p><img src="./images/add-option.png" alt="Add option"></p>
+
+<p>To remove an option from the list of values, you’ll need to change any records with that value to a different value.</p>
+
+<h2 id="create-a-new-record">Create a new record</h2>
+
+<p><img src="./images/create-new-record.png" alt="Create new record"></p>
+
+<p>You can add a row to a table by clicking <strong>+ New record</strong> in the top right of the table. Fill out the fields. Metabase will respect field constraints, so if a field is required, Metabase will prevent you from saving the record until you fill in the required field.</p>
+
+<h2 id="delete-a-record">Delete a record</h2>
+
+<p>To delete a record, check the box next to the record you want to delete and click <strong>Delete</strong>. Deletion is permanent. Metabase will prompt you to confirm the deletion.</p>
+
+<p>You can also select multiple rows and delete them all at once (nervous sweating).</p>
+
+<p>If you try to delete a row that has foreign key references from other tables, your database may prevent the deletion to maintain referential integrity. You’ll see an error message like “Other rows refer to this row so it cannot be deleted.” To delete these rows, you’ll either need to remove the referencing rows first, or change the foreign key constraints in your database.</p>
+
+<h2 id="metabase-enforces-type-constraints">Metabase enforces type constraints</h2>
 
 <ul>
-  <li><strong>To create or edit an action</strong>, a person must be in a group with <a href="../permissions/data">Native query editing</a> privileges for the relevant database.</li>
-  <li><strong>To run an action</strong>, all you need is view access to the action’s model or dashboard (or a link to a public action).</li>
+  <li>You can’t edit sequential primary keys.</li>
+  <li>If you try to add a value of a different type (like changing the number 13579 to the string “Wizard”), Metabase won’t allow it.</li>
 </ul>
 
-<h2 id="types-of-actions">Types of actions</h2>
+<h2 id="editable-table-data-vs-actions">Editable table data vs. actions</h2>
 
-<p>There are two types of actions:</p>
+<p>Metabase offers two ways to modify data in your database: <strong>editable table data</strong> and <a href="../actions/introduction">actions</a>.</p>
+
+<h3 id="when-to-use-editable-table-data">When to use editable table data</h3>
+
+<p>Use editable table data to:</p>
 
 <ul>
-  <li><a href="./basic">Basic</a></li>
-  <li><a href="./custom">Custom</a></li>
+  <li>Do data maintenance or cleanup.</li>
+  <li>Modify many records at once.</li>
+  <li>Get direct access to all table data.</li>
+  <li>Do one-off data corrections.</li>
 </ul>
 
-<h2 id="running-actions">Running actions</h2>
+<p>You need to be an admin to edit tables directly.</p>
 
-<p>There are multiple ways to run actions:</p>
+<h3 id="when-to-use-actions">When to use actions</h3>
+
+<p>Use actions to:</p>
 
 <ul>
-  <li><a href="../data-modeling/models#model-details">From the model details page</a> by clicking the <strong>run</strong> button.</li>
-  <li>From a <a href="./custom#make-public">public form</a> of an action.</li>
-  <li>From a <a href="../dashboards/actions">button on dashboard</a>.</li>
+  <li>Create custom forms.</li>
+  <li>Give non-admins the ability to modify data.</li>
+  <li>Add a button to a dashboard to trigger a form or query.</li>
 </ul>
 
-<h2 id="actions-change-data-in-tables-which-affect-models">Actions change data in tables, which affect models</h2>
-
-<p>Just something to clarify here: actions, even though they are added to models, make their changes to the underlying table that a model queries. Which means that anyone who has access to the underlying table, or to questions or other models based on that table, will be able to see the effects of an action. Tools other than Metabase that are connected to that database will also pick up these changes.</p>
-
-<p>In this sense, models are containers for actions; models are a way to organize actions. In fact, you could (in theory) add a <a href="./custom">custom action</a> to a model that performs some update unrelated to its model’s data. For example, you could write a custom action that updates the <code class="language-plaintext highlighter-rouge">Accounts</code> table, and add that action to a model that only queries an unrelated table (e.g., the <code class="language-plaintext highlighter-rouge">Orders</code> table). But, you know, maybe don’t do that (unless you have a really good reason). <a href="./basic">Basic actions</a>, however, are only be available for models that wrap a single raw table.</p>
-
-<p>Before using actions in production, consider playing around with actions on some sample data (like the Sample Database included with Metabase) to get a feel for how they work.</p>
-
-<h2 id="action-gotchas">Action gotchas</h2>
-
-<ul>
-  <li>If caching is enabled for the relevant table or model, you may not see the effects of an action in Metabase until Metabase refreshes the data (though you can always manually refresh the data).</li>
-  <li>When creating records on a table that lacks an automatically generated primary key, you’ll need to input an available ID (i.e., an ID not already in use by another record).</li>
-  <li>You can’t “undo” actions. You can, however, create and run an action to recreate a deleted record, or change an updated record back to its original values (provided you know the original values).</li>
-  <li>Actions are unavailable for public dashboards, and dashboards in <a href="../embedding/static-embedding">static embeds</a>.</li>
-</ul>
-
-<h2 id="further-reading">Further reading</h2>
-
-<ul>
-  <li><a href="./basic">Basic actions</a></li>
-  <li><a href="./custom">Custom actions</a></li>
-  <li><a href="../dashboards/actions">Actions in dashboards</a></li>
-</ul>
+<p>See <a href="../actions/introduction">actions</a>.</p>
 
 
         <div>
@@ -5039,7 +5064,7 @@ Roadmap</a>
 
   
     <span class="paragraph-6 fs-13 neutral-60" id="page-feedback-footer">
-      Want to improve these docs? <a href="https://github.com/metabase/metabase/blob/master/docs/actions/introduction.md" target="_blank">Propose a change.</a>
+      Want to improve these docs? <a href="https://github.com/metabase/metabase/blob/master/docs/data-modeling/editable-tables.md" target="_blank">Propose a change.</a>
     </span>
   
 </div>
@@ -5061,8 +5086,8 @@ Roadmap</a>
 <script type="text/javascript" src="/js/position-feedback-widget.js"></script>
 
 <script>
-  const pageTitle = `Introduction to actions`;
-  const pageURL = '/docs/master/actions/introduction';
+  const pageTitle = `Editable tables`;
+  const pageURL = '/docs/master/data-modeling/editable-tables';
   const pageURLSplit = pageURL.split('/');
 
   let pageURLPrefix = '/' + pageURLSplit[1] + '/' + pageURLSplit[2];

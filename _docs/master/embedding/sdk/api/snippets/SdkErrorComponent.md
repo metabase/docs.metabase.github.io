@@ -13,6 +13,7 @@ layout: new-docs
 type SdkErrorComponent = ({
   type,
   message,
+  error,
 }: SdkErrorComponentProps) => JSX_2.Element;
 ```
 
@@ -20,9 +21,9 @@ type SdkErrorComponent = ({
 
 <!-- [<snippet parameters>] -->
 
-| Parameter            | Type                                                        |
-| :------------------- | :---------------------------------------------------------- |
-| `{ type, message, }` | [`SdkErrorComponentProps`](./api/SdkErrorComponentProps) |
+| Parameter                   | Type                                                        |
+| :-------------------------- | :---------------------------------------------------------- |
+| `{ type, message, error, }` | [`SdkErrorComponentProps`](./api/SdkErrorComponentProps) |
 
 <!-- [<endsnippet parameters>] -->
 
