@@ -3,12 +3,15 @@ version: v0.56
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
-category: 'Installation and Operation'
-title: 'Running Metabase as a systemd service'
-source_url: 'https://github.com/metabase/metabase/blob/master/docs/installation-and-operation/running-metabase-on-debian.md'
+category: Installation and Operation
+title: Running Metabase as a systemd service
+source_url: >-
+  https://github.com/metabase/metabase/blob/master/docs/installation-and-operation/running-metabase-as-service.md
 layout: new-docs
 redirect_from:
-    - /docs/v0.56/operations-guide/running-metabase-on-debian
+  - /docs/latest/operations-guide/running-metabase-on-debian
+  - /docs/installation-and-operation/running-metabase-on-debian
+latest: true
 ---
 
 # Running Metabase as a systemd service
