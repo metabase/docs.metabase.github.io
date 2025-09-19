@@ -331,22 +331,19 @@
             "type" : "string"
           },
           "tool_calls" : {
-            "type" : "array",
-            "items" : {
-              "type" : "object",
-              "properties" : {
-                "arguments" : {
-                  "type" : "string"
-                },
-                "id" : {
-                  "type" : "string"
-                },
-                "name" : {
-                  "type" : "string"
-                }
+            "type" : "object",
+            "properties" : {
+              "arguments" : {
+                "type" : "string"
               },
-              "required" : [ "id", "name", "arguments" ]
-            }
+              "id" : {
+                "type" : "string"
+              },
+              "name" : {
+                "type" : "string"
+              }
+            },
+            "required" : [ "id", "name", "arguments" ]
           }
         },
         "required" : [ "role" ]
@@ -16797,72 +16794,6 @@
           }
         },
         "tags" : [ "/api/ee/transform" ]
-      }
-    },
-    "/api/ee/transforms-python/library/{path}" : {
-      "get" : {
-        "summary" : "GET /api/ee/transforms-python/library/{path}",
-        "description" : "Get the Python library for user modules.",
-        "parameters" : [ {
-          "in" : "path",
-          "name" : "path",
-          "required" : true,
-          "schema" : {
-            "type" : "string"
-          }
-        } ],
-        "responses" : {
-          "2XX" : {
-            "description" : "Successful response"
-          },
-          "4XX" : {
-            "description" : "Client error response"
-          },
-          "5XX" : {
-            "description" : "Server error response"
-          }
-        },
-        "tags" : [ "/api/ee/transforms-python" ]
-      },
-      "put" : {
-        "summary" : "PUT /api/ee/transforms-python/library/{path}",
-        "description" : "Update the Python library source code for user modules.",
-        "parameters" : [ {
-          "in" : "path",
-          "name" : "path",
-          "required" : true,
-          "schema" : {
-            "type" : "string"
-          }
-        } ],
-        "responses" : {
-          "2XX" : {
-            "description" : "Successful response"
-          },
-          "4XX" : {
-            "description" : "Client error response"
-          },
-          "5XX" : {
-            "description" : "Server error response"
-          }
-        },
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "type" : "object",
-                "properties" : {
-                  "source" : {
-                    "type" : "string"
-                  }
-                },
-                "required" : [ "source" ],
-                "additionalProperties" : false
-              }
-            }
-          }
-        },
-        "tags" : [ "/api/ee/transforms-python" ]
       }
     },
     "/api/ee/upload-management/tables" : {
