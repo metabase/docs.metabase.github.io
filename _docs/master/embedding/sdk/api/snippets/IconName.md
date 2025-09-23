@@ -122,7 +122,6 @@ type IconName =
   | "horizontal_bar"
   | "hourglass"
   | "info"
-  | "info_filled"
   | "info_outline"
   | "insight"
   | "int"
