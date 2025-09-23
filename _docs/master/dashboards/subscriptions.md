@@ -77,7 +77,6 @@ You can choose between the following file formats:
 
 - .csv
 - .xlsx
-- .json
 
 ### Use unformatted values in attachments
 
