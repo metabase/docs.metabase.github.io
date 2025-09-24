@@ -1,0 +1,135 @@
+name: Update Docs
+on:
+  schedule:
+    - cron: '0 1 * * *'
+
+run-name: Nightly docs update | master
+
+jobs:
+  build:
+    name: Nightly docs build
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.METABASE_AUTOMATION_USER_TOKEN }}
+      MAIN_REPO_SOURCE_BRANCH: "master"
+      MAIN_REPO_TARGET_BRANCH: "master"
+      ANNOTATION: "nightly"
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Prepare java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu' # See 'Supported distributions' for available options
+          java-version: '21'
+
+      - name: Install Clojure (needed to build cljs for SDK dox generation)
+        uses: DeLaGuardo/setup-clojure@13.2
+        with:
+          cli: 1.12.0.1530
+          bb: 1.12.200
+
+      - name: Run docs repo build tests
+        run: |
+          bb script/_test/all.clj
+
+      - name: Filter non-documented branches
+        run: |
+          bb script/check_incoming_branchname.clj --target-branch "$MAIN_REPO_TARGET_BRANCH"
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install js dependencies
+        run: yarn install --frozen-lockfile --prefer-offline
+
+      - name: Set up Ruby # uses version from .ruby-version
+        uses: ruby/setup-ruby@d5fb7a202fc07872cb44f00ba8e6197b70cb0c55 # v1.179.0
+        with:
+          bundler-cache: true
+
+      - name: Install ruby dependencies
+        run: |
+          bundle install
+
+      - name: Setup Git Authenticatation
+        run: |
+          git config --global user.name "Metabase Docs bot"
+          git config --global user.email "metabase-bot@metabase.com"
+          git remote set-url origin "https://x-access-token:${{ secrets.METABASE_AUTOMATION_USER_TOKEN }}@github.com/metabase/docs.metabase.github.io.git"
+
+      # observed this failing during sdk docs generation deps downloads, so adding retry logic
+      - name: Update docs for branchname
+        uses: nick-fields/retry@v3
+        with:
+          timeout_minutes: 20
+          max_attempts: 3
+          retry_on: error
+          command: |
+            bb script/update_docs_for_branchname.clj --source-branch "$MAIN_REPO_SOURCE_BRANCH" --target-branch "$MAIN_REPO_TARGET_BRANCH"
+
+      - name: Cleanup cloud docs (move them to latest, remove from all other versions)
+        run: |
+          bb script/cleanup_cloud_docs.clj
+
+      - name: Checkout Control files from Marketing Repo
+        uses: actions/checkout@v4
+        with:
+          repository: metabase/metabase.github.io
+          ref: master
+          path: .marketing_repo
+          token: ${{ secrets.METABASE_AUTOMATION_USER_TOKEN }}
+
+      - name: Merge control files from Marketing Repo
+        run: |
+          bb script/sync_repo.clj --from-repo .marketing_repo
+
+      - name: "yarn lint-markdown"
+        run: |
+          yarn lint-markdown
+
+      - name: "yarn lint-styles"
+        run: |
+          yarn lint-styles
+
+      - name: "yarn lint-scripts"
+        run: |
+          yarn lint-scripts
+
+      - name: "yarn lint-links"
+        run: |
+          yarn lint-links
+
+      - name: Build the Jekyll Site
+        env:
+          JEKYLL_ENV: production
+          NODE_ENV: production
+        run: |
+          # Clear the existing site:
+          rm -rf _site
+          # Build the jekyll site:
+          script/build
+
+      - name: Run htmlproofer + metabase.com-aware link checks
+        run: |
+          SECONDS=0
+          script/links || true
+          echo "htmlproofer took: ${SECONDS} seconds."
+          echo 'checking reported links...'
+          echo "htmlproofer spit out a report of length: $(wc -l < htmlproofer.out)"
+          bb script/analyze_links.clj --htmlproofer-output htmlproofer.out --limit 1
+
+      - name: Update or Create the Pull Request
+        run: |
+          bb script/update_or_create_pr.clj \
+          --source-branch "$MAIN_REPO_SOURCE_BRANCH" \
+          --target-branch "$MAIN_REPO_TARGET_BRANCH" \
+          --annotation "$ANNOTATION" \
+          --pr-number "$PR_NUMBER" \
+          --update-dirs "$UPDATE_DIRS"
+
+      - name: Remove control files from Marketing Repo
+        run: |
+          bb script/sync_repo.clj --delete
