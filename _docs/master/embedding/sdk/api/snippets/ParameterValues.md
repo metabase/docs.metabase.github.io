@@ -10,5 +10,13 @@ layout: new-docs
 ---
 
 ```ts
-type ParameterValues = Record<string, string | string[] | undefined | null>;
+type ParameterValues = Record<
+  string,
+  | string
+  | number
+  | boolean
+  | (string | number | boolean | null)[]
+  | null
+  | undefined
+>;
 ```
