@@ -22,6 +22,8 @@ latest: true
 
 **Interactive embedding** is what you want if you want to offer [multi-tenant, self-service analytics](/learn/metabase-basics/embedding/multi-tenant-self-service-analytics).
 
+> If you are just starting out with Metabase embedding, consider using [Embedded Analytics JS](./embedded-analytics-js) instead of interactive embedding - it's an improved, more customizable option for embedding interactive Metabase elements. Interactive embedding remains fully supported.
+
 Interactive embedding is the only type of embedding that integrates with your [permissions](../permissions/introduction) and [SSO](../people-and-groups/start#authentication) to give people the right level of access to [query](/glossary/query-builder) and [drill-down](/learn/metabase-basics/querying-and-dashboards/questions/drill-through) into your data.
 
 ## Interactive embedding demo

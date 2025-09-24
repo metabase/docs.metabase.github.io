@@ -13,6 +13,8 @@ latest: true
 
 # Interactive embedding quickstart
 
+> If you are just starting out with Metabase embedding, consider using [Embedded Analytics JS](./embedded-analytics-js) - an improved, more customizable option for embedding interactive Metabase elements. Interactive embedding remains fully supported.
+
 You'll embed the full Metabase application in your app. Once logged in, people can view a Metabase dashboard in your web app, and be able to use the full Metabase application to explore their data, and only their data.
 
 {% include shared/in-page-promo-embedding-workshop.html %}
