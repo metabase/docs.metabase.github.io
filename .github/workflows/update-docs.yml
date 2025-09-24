@@ -46,16 +46,13 @@ jobs:
       - name: Install js dependencies
         run: yarn install --frozen-lockfile --prefer-offline
 
-      - name: Set up Ruby # uses version from .ruby-version
-        uses: ruby/setup-ruby@d5fb7a202fc07872cb44f00ba8e6197b70cb0c55 # v1.179.0
+      - name: Setup Ruby # uses version from .ruby-version
+        uses: ruby/setup-ruby@v1
         with:
-          bundler-cache: true
+          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+          cache-version: 0
 
-      - name: Install ruby dependencies
-        run: |
-          bundle install
-
-      - name: Setup Git Authenticatation
+      - name: Setup Git Authentication
         run: |
           git config --global user.name "Metabase Docs bot"
           git config --global user.email "metabase-bot@metabase.com"
