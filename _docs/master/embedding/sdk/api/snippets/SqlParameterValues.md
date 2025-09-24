@@ -10,5 +10,13 @@ layout: new-docs
 ---
 
 ```ts
-type SqlParameterValues = Record<string, string | number>;
+type SqlParameterValues = Record<
+  string,
+  | string
+  | number
+  | boolean
+  | (string | number | boolean | null)[]
+  | null
+  | undefined
+>;
 ```
