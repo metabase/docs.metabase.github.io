@@ -2,7 +2,7 @@ name: Update Docs
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 1 * * *'
+    - cron: "0 1 * * *"
 
 run-name: Nightly docs update | master
 
@@ -21,8 +21,8 @@ jobs:
       - name: Prepare java
         uses: actions/setup-java@v4
         with:
-          distribution: 'zulu' # See 'Supported distributions' for available options
-          java-version: '21'
+          distribution: "zulu" # See 'Supported distributions' for available options
+          java-version: "21"
 
       - name: Install Clojure (needed to build cljs for SDK dox generation)
         uses: DeLaGuardo/setup-clojure@13.2
@@ -41,7 +41,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: "22"
 
       - name: Install js dependencies
         run: yarn install --frozen-lockfile --prefer-offline
@@ -131,3 +131,7 @@ jobs:
       - name: Remove control files from Marketing Repo
         run: |
           bb script/sync_repo.clj --delete
+
+      - name: Merge Updated Docs
+        run: |
+          bb script/merge.clj --source-branch "$MAIN_REPO_SOURCE_BRANCH" --target-branch "$MAIN_REPO_TARGET_BRANCH"
