@@ -5037,6 +5037,22 @@ yarn test-unit-watch # Watch for file changes
 <p>To start the server (at <code class="language-plaintext highlighter-rouge">localhost:3000</code>). This will also set up or migrate your application database. To actually
 use Metabase, don’t forget to start the frontend as well (e.g. with <code class="language-plaintext highlighter-rouge">yarn build-hot</code>).</p>
 
+<h3 id="multiple-instances">Multiple Instances</h3>
+
+<p>You can run multiple instances of Metabase on the same machine by specifying a different port for each instance.</p>
+
+<p>Frontend:</p>
+<ul>
+  <li>If you are running the frontend with <code class="language-plaintext highlighter-rouge">yarn build-hot</code>, set the <code class="language-plaintext highlighter-rouge">PORT</code> environment variable: <code class="language-plaintext highlighter-rouge">PORT=3001 MB_EDITION=ee yarn build-hot</code></li>
+  <li>If you are building the frontend statically with <code class="language-plaintext highlighter-rouge">yarn build</code>, there is nothing different to do</li>
+</ul>
+
+<p>Backend:</p>
+<ul>
+  <li>Set the <code class="language-plaintext highlighter-rouge">MB_JETTY_PORT</code> environment variable</li>
+  <li>If you are running the frontend with <code class="language-plaintext highlighter-rouge">yarn build-hot</code>, set <code class="language-plaintext highlighter-rouge">MB_WEBPACK_PORT</code> to the same port as the <code class="language-plaintext highlighter-rouge">PORT</code> variable above</li>
+</ul>
+
 <h3 id="the-application-database">The application database</h3>
 
 <p>By default, Metabase uses H2 for its application database, but we recommend using Postgres. This is configured with
