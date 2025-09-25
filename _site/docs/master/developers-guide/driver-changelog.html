@@ -4925,7 +4925,26 @@ and metabase.driver.sql/default-schema to implement sql transforms.</p>
 pairs that has been topologically sorted.</p>
   </li>
   <li>
-    <p>Added the driver multi-methods <code class="language-plaintext highlighter-rouge">metabase.driver/schema-exists?</code> and <code class="language-plaintext highlighter-rouge">metabase.driver/create-schema-if-needed!</code> which should be implemented by drivers that support <code class="language-plaintext highlighter-rouge">:schemas</code> and <code class="language-plaintext highlighter-rouge">:transforms/table</code>.</p>
+    <p>Added <code class="language-plaintext highlighter-rouge">metabase.driver/rename-table!</code> multimethod for table renaming operations. Takes a single from-table to-table pair.
+Fallbacks to singleton call to <code class="language-plaintext highlighter-rouge">rename-tables!*</code> if available.</p>
+  </li>
+  <li>
+    <p>Added the driver multi-methods <code class="language-plaintext highlighter-rouge">metabase.driver/schema-exists?</code> and <code class="language-plaintext highlighter-rouge">metabase.driver/create-schema-if-needed!</code>
+which should be implemented by drivers that support <code class="language-plaintext highlighter-rouge">:schemas</code> and <code class="language-plaintext highlighter-rouge">:transforms/table</code>.</p>
+  </li>
+  <li>
+    <p>Added <code class="language-plaintext highlighter-rouge">metabase.driver/type-&gt;database-type</code> multimethod that returns the database type for a given Metabase
+type (from the type hierarchy) as a HoneySQL spec. This method handles general Metabase base types.</p>
+  </li>
+  <li>
+    <p>Added <code class="language-plaintext highlighter-rouge">metabase.driver/insert-from-source!</code> multimethod that abstracts data insertion from various sources
+into existing tables. This multimethod dispatches on both the driver and the data source type
+(<code class="language-plaintext highlighter-rouge">:rows</code> or <code class="language-plaintext highlighter-rouge">:jsonl-file</code>). It allows drivers to optimize based on the data source type and returns the number
+of rows inserted. Default implementations are provided for both <code class="language-plaintext highlighter-rouge">:rows</code> and <code class="language-plaintext highlighter-rouge">:jsonl-file</code> source types.</p>
+  </li>
+  <li>
+    <p>Added <code class="language-plaintext highlighter-rouge">metabase.driver/insert-col-&gt;val</code> multimethod to parse values for insertion based on driver, data source type
+and column definition. Drivers should implement this when their insertion mechanism needs values converted to proper types.</p>
   </li>
   <li>
     <p><code class="language-plaintext highlighter-rouge">metabase.driver/humanize-connection-error-message</code> now takes a list of all messages in the exception chain,
