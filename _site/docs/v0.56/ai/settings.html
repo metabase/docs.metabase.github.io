@@ -44,12 +44,12 @@
 <meta name="robots" content="noindex">
    
 
-<title>Metabot settings | Metabase Documentation</title>
+<title>Metabot AI settings | Metabase Documentation</title>
 <!-- Twitter cards -->
 <meta name="twitter:site" content="@metabase">
 
-<meta name="twitter:title" content="Metabot settings | Metabase Documentation">
-<meta name="twitter:description" content="Metabot settings   ⚠️ This feature is in beta. Feel free to play around with it, but be aware that things might change (and may not work as expected).  For now, Metabot is only available as...">
+<meta name="twitter:title" content="Metabot AI settings | Metabase Documentation">
+<meta name="twitter:description" content="Metabot AI settings   ⚠️ This feature is in beta. Feel free to play around with it, but be aware that things might change (and may not work as expected).  For now, Metabot is only available...">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -58,8 +58,8 @@
 <meta property="og:site_name" content="Metabase | Business Intelligence, Dashboards, and Data Visualization">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://www.metabase.com/docs/v0.56/ai/settings">
-<meta name="title" property="og:title" content="Metabot settings | Metabase Documentation">
-<meta name="description" property="og:description" content="Metabot settings   ⚠️ This feature is in beta. Feel free to play around with it, but be aware that things might change (and may not work as expected).  For now, Metabot is only available as...">
+<meta name="title" property="og:title" content="Metabot AI settings | Metabase Documentation">
+<meta name="description" property="og:description" content="Metabot AI settings   ⚠️ This feature is in beta. Feel free to play around with it, but be aware that things might change (and may not work as expected).  For now, Metabot is only available...">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -4816,7 +4816,7 @@ Roadmap</a>
 </div>
 
 
-        <h1 id="metabot-settings">Metabot settings</h1>
+        <h1 id="metabot-ai-settings">Metabot AI settings</h1>
 
 <div>
   <blockquote>
@@ -4833,23 +4833,28 @@ Roadmap</a>
 
 <p>This page covers admin settings for Metabase’s AI assistant, <a href="./metabot">Metabot</a>.</p>
 
-<h2 id="configure-metabot">Configure Metabot</h2>
-
-<p>To help Metabot focus on the data you care about most, select the collection containing the models and metrics you’d like it to work with.</p>
-
-<h2 id="pick-a-collection-for-metabot-to-have-access-to">Pick a collection for Metabot to have access to</h2>
-
 <p><img src="./images/ai-settings.png" alt="Admin settings for AI Metabot"></p>
 
-<p>To select a collection for Metabot:</p>
+<h2 id="verified-content">Verified content</h2>
+
+<p>Admins on Pro and Enterprise plans can tell Metabot to only work with <a href="../data-modeling/models">models</a> and <a href="../data-modeling/metrics">metrics</a> that have been <a href="../exploration-and-organization/content-verification">verified</a>.</p>
+
+<p>Restricting Metabot to verified models and metrics (and only models and metrics) can help Metabot produce more reliable answers, since you know someone has at least vetted the data Metabot can use.</p>
+
+<h2 id="when-embedding-metabot-you-can-pick-a-collection-for-metabot-to-have-access-to">When embedding Metabot, you can pick a collection for Metabot to have access to</h2>
+
+<p>When embedding Metabot in your app, you can select a collection for Metabot:</p>
 
 <ol>
   <li>Go to <strong>Settings</strong> &gt; <strong>Admin settings</strong> &gt; <strong>AI</strong>.</li>
-  <li>Click the <strong>Collection</strong> dropdown.</li>
+  <li>Click <strong>Embedded Metabot</strong>.</li>
+  <li>In the <strong>Collection Embedded Metabot can use</strong> section, click <strong>Pick a collection</strong>.</li>
   <li>Select the collection that contains the models and metrics you want Metabot to use.</li>
 </ol>
 
-<p>Metabot will use the models and metrics in that collection to help answer questions and generate queries. You can change this collection at any time.</p>
+<p>Metabot will use the models and metrics in that collection to help answer questions and generate queries. You can change this collection at any time. To give Metabot access to all collections, you can set the collection to the root collection, called “Our Analytics” (the default).</p>
+
+<p>Alternatively (or additionally), you can restrict Metabot to <a href="#verified-content">verified content</a>.</p>
 
 <h2 id="tips-for-making-the-most-of-metabot">Tips for making the most of Metabot</h2>
 
@@ -4889,7 +4894,7 @@ Roadmap</a>
 
 <h3 id="curate-prompt-suggestions">Curate prompt suggestions</h3>
 
-<p>When you select a collection for Metabot to “learn”, Metabot will suggest a series of prompts based on the content it finds in that collection. These give people a feel for the kinds of things people can ask Metabot to do.</p>
+<p>When you select a collection for Metabot to “learn”, Metabot will suggest a series of prompts based on the content it finds in that collection. These prompts just give people a feel for the kinds of things people can ask Metabot to do.</p>
 
 <p>Admins can run these generated prompts to test the answers, or trash the individual prompts if they’re not useful or misleading. You can also regenerate all the prompts with a click.</p>
 
@@ -4987,7 +4992,7 @@ Roadmap</a>
 <script type="text/javascript" src="/js/position-feedback-widget.js"></script>
 
 <script>
-  const pageTitle = `Metabot settings`;
+  const pageTitle = `Metabot AI settings`;
   const pageURL = '/docs/v0.56/ai/settings';
   const pageURLSplit = pageURL.split('/');
 
