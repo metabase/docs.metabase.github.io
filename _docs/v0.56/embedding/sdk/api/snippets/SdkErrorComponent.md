@@ -10,16 +10,19 @@ layout: new-docs
 ---
 
 ```ts
-type SdkErrorComponent = ({ message }: SdkErrorComponentProps) => JSX_2.Element;
+type SdkErrorComponent = ({
+  message,
+  error,
+}: SdkErrorComponentProps) => JSX_2.Element;
 ```
 
 ## Parameters
 
 <!-- [<snippet parameters>] -->
 
-| Parameter      | Type                                                        |
-| :------------- | :---------------------------------------------------------- |
-| `{ message, }` | [`SdkErrorComponentProps`](./api/SdkErrorComponentProps) |
+| Parameter             | Type                                                        |
+| :-------------------- | :---------------------------------------------------------- |
+| `{ message, error, }` | [`SdkErrorComponentProps`](./api/SdkErrorComponentProps) |
 
 <!-- [<endsnippet parameters>] -->
 
