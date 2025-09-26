@@ -14,7 +14,7 @@ summary: 'Upload a translation dictionary to translate questions and dashboards 
 
 {% include plans-blockquote.html feature="Translation of embedded content" convert_pro_link_to_embbedding=true %}
 
-For now, translations are only available for [static embeds](./static-embedding), not Interactive embedding or the Embedded analytics SDK.
+For now, translations are only available for [static embeds](./static-embedding), not Interactive embedding or the Embedded analytics JS/SDK.
 
 You can upload a translation dictionary to translate strings both in Metabase content (like dashboard titles) and in the data itself (like column names and values).
 
@@ -27,6 +27,11 @@ The dictionary must be a CSV with these columns:
 - **Translation**
 
 > Don't put any sensitive data in the dictionary, since anyone can see the dictionary—including viewers of public links.
+
+To add a translation dictionary:
+
+1. Go to **Admin > Embedding > Static**.
+2. Under **Translate embedded dashboards and question**, click **Upload translation dictionary**.
 
 Uploading a new dictionary will replace the existing dictionary.
 
@@ -71,9 +76,9 @@ Exact translations also apply to strings that use punctuation and special charac
 
 Translations are case-insensitive. For example, if your translation dictionary has a translation:
 
-| Language | String      | Translation  |
-| -------- | ----------- | ------------ |
-| pt-BR    | Examples    | Exemplos     |
+| Language | String   | Translation |
+| -------- | -------- | ----------- |
+| pt-BR    | Examples | Exemplos    |
 
 `Examples`, `examples`, `EXAMPLES` would all be translated as `Exemplos`. That is, Metabase won't preserve the original case; it will output the exact translation string in the dictionary.
 
