@@ -172,30 +172,6 @@
   },
   "components" : {
     "schemas" : {
-      "api.tiles.route-params" : {
-        "type" : "object",
-        "properties" : {
-          "lat-field" : {
-            "type" : "string"
-          },
-          "lon-field" : {
-            "type" : "string"
-          },
-          "x" : {
-            "description" : "value must be an integer.",
-            "type" : "integer"
-          },
-          "y" : {
-            "description" : "value must be an integer.",
-            "type" : "integer"
-          },
-          "zoom" : {
-            "description" : "value must be an integer.",
-            "type" : "integer"
-          }
-        },
-        "required" : [ "zoom", "x", "y", "lat-field", "lon-field" ]
-      },
       "gsheets.response" : {
         "anyOf" : [ {
           "type" : "object",
@@ -15617,11 +15593,18 @@
         "tags" : [ "/api/embed" ]
       }
     },
-    "/api/embed/tiles/card/{token}/{zoom}/{x}/{y}/{lat-field}/{lon-field}" : {
+    "/api/embed/tiles/card/{token}/{zoom}/{x}/{y}" : {
       "get" : {
-        "summary" : "GET /api/embed/tiles/card/{token}/{zoom}/{x}/{y}/{lat-field}/{lon-field}",
+        "summary" : "GET /api/embed/tiles/card/{token}/{zoom}/{x}/{y}",
         "description" : "Generates a single tile image for an embedded Card using the map visualization.",
         "parameters" : [ {
+          "in" : "path",
+          "name" : "token",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
           "in" : "path",
           "name" : "zoom",
           "required" : true,
@@ -15646,27 +15629,6 @@
           },
           "description" : "value must be an integer."
         }, {
-          "in" : "path",
-          "name" : "lat-field",
-          "required" : true,
-          "schema" : {
-            "type" : "string"
-          }
-        }, {
-          "in" : "path",
-          "name" : "lon-field",
-          "required" : true,
-          "schema" : {
-            "type" : "string"
-          }
-        }, {
-          "in" : "path",
-          "name" : "token",
-          "required" : true,
-          "schema" : {
-            "type" : "string"
-          }
-        }, {
           "in" : "query",
           "name" : "parameters",
           "required" : false,
@@ -15674,6 +15636,20 @@
             "type" : "string"
           },
           "description" : "value must be a valid JSON string."
+        }, {
+          "in" : "query",
+          "name" : "latField",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "query",
+          "name" : "lonField",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
         } ],
         "responses" : {
           "2XX" : {
@@ -15689,49 +15665,11 @@
         "tags" : [ "/api/embed" ]
       }
     },
-    "/api/embed/tiles/dashboard/{token}/dashcard/{dashcard-id}/card/{card-id}/{zoom}/{x}/{y}/{lat-field}/{lon-field}" : {
+    "/api/embed/tiles/dashboard/{token}/dashcard/{dashcard-id}/card/{card-id}/{zoom}/{x}/{y}" : {
       "get" : {
-        "summary" : "GET /api/embed/tiles/dashboard/{token}/dashcard/{dashcard-id}/card/{card-id}/{zoom}/{x}/{y}/{lat-field}/{lon-field}",
+        "summary" : "GET /api/embed/tiles/dashboard/{token}/dashcard/{dashcard-id}/card/{card-id}/{zoom}/{x}/{y}",
         "description" : "Generates a single tile image for a Card on an embedded Dashboard using the map visualization.",
         "parameters" : [ {
-          "in" : "path",
-          "name" : "zoom",
-          "required" : true,
-          "schema" : {
-            "type" : "integer"
-          },
-          "description" : "value must be an integer."
-        }, {
-          "in" : "path",
-          "name" : "x",
-          "required" : true,
-          "schema" : {
-            "type" : "integer"
-          },
-          "description" : "value must be an integer."
-        }, {
-          "in" : "path",
-          "name" : "y",
-          "required" : true,
-          "schema" : {
-            "type" : "integer"
-          },
-          "description" : "value must be an integer."
-        }, {
-          "in" : "path",
-          "name" : "lat-field",
-          "required" : true,
-          "schema" : {
-            "type" : "string"
-          }
-        }, {
-          "in" : "path",
-          "name" : "lon-field",
-          "required" : true,
-          "schema" : {
-            "type" : "string"
-          }
-        }, {
           "in" : "path",
           "name" : "token",
           "required" : true,
@@ -15757,6 +15695,30 @@
           },
           "description" : "value must be an integer greater than zero."
         }, {
+          "in" : "path",
+          "name" : "zoom",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          },
+          "description" : "value must be an integer."
+        }, {
+          "in" : "path",
+          "name" : "x",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          },
+          "description" : "value must be an integer."
+        }, {
+          "in" : "path",
+          "name" : "y",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          },
+          "description" : "value must be an integer."
+        }, {
           "in" : "query",
           "name" : "parameters",
           "required" : false,
@@ -15764,6 +15726,20 @@
             "type" : "string"
           },
           "description" : "value must be a valid JSON string."
+        }, {
+          "in" : "query",
+          "name" : "latField",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "query",
+          "name" : "lonField",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
         } ],
         "responses" : {
           "2XX" : {
@@ -18643,11 +18619,18 @@
         "tags" : [ "/api/preview_embed" ]
       }
     },
-    "/api/preview_embed/tiles/card/{token}/{zoom}/{x}/{y}/{lat-field}/{lon-field}" : {
+    "/api/preview_embed/tiles/card/{token}/{zoom}/{x}/{y}" : {
       "get" : {
-        "summary" : "GET /api/preview_embed/tiles/card/{token}/{zoom}/{x}/{y}/{lat-field}/{lon-field}",
+        "summary" : "GET /api/preview_embed/tiles/card/{token}/{zoom}/{x}/{y}",
         "description" : "Generates a single tile image for an embedded Card using the map visualization.",
         "parameters" : [ {
+          "in" : "path",
+          "name" : "token",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
           "in" : "path",
           "name" : "zoom",
           "required" : true,
@@ -18672,27 +18655,6 @@
           },
           "description" : "value must be an integer."
         }, {
-          "in" : "path",
-          "name" : "lat-field",
-          "required" : true,
-          "schema" : {
-            "type" : "string"
-          }
-        }, {
-          "in" : "path",
-          "name" : "lon-field",
-          "required" : true,
-          "schema" : {
-            "type" : "string"
-          }
-        }, {
-          "in" : "path",
-          "name" : "token",
-          "required" : true,
-          "schema" : {
-            "type" : "string"
-          }
-        }, {
           "in" : "query",
           "name" : "parameters",
           "required" : false,
@@ -18700,6 +18662,20 @@
             "type" : "string"
           },
           "description" : "value must be a valid JSON string."
+        }, {
+          "in" : "query",
+          "name" : "latField",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "query",
+          "name" : "lonField",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
         } ],
         "responses" : {
           "2XX" : {
@@ -18715,49 +18691,11 @@
         "tags" : [ "/api/preview_embed" ]
       }
     },
-    "/api/preview_embed/tiles/dashboard/{token}/dashcard/{dashcard-id}/card/{card-id}/{zoom}/{x}/{y}/{lat-field}/{lon-field}" : {
+    "/api/preview_embed/tiles/dashboard/{token}/dashcard/{dashcard-id}/card/{card-id}/{zoom}/{x}/{y}" : {
       "get" : {
-        "summary" : "GET /api/preview_embed/tiles/dashboard/{token}/dashcard/{dashcard-id}/card/{card-id}/{zoom}/{x}/{y}/{lat-field}/{lon-field}",
+        "summary" : "GET /api/preview_embed/tiles/dashboard/{token}/dashcard/{dashcard-id}/card/{card-id}/{zoom}/{x}/{y}",
         "description" : "Generates a single tile image for a Card on an embedded Dashboard using the map visualization.",
         "parameters" : [ {
-          "in" : "path",
-          "name" : "zoom",
-          "required" : true,
-          "schema" : {
-            "type" : "integer"
-          },
-          "description" : "value must be an integer."
-        }, {
-          "in" : "path",
-          "name" : "x",
-          "required" : true,
-          "schema" : {
-            "type" : "integer"
-          },
-          "description" : "value must be an integer."
-        }, {
-          "in" : "path",
-          "name" : "y",
-          "required" : true,
-          "schema" : {
-            "type" : "integer"
-          },
-          "description" : "value must be an integer."
-        }, {
-          "in" : "path",
-          "name" : "lat-field",
-          "required" : true,
-          "schema" : {
-            "type" : "string"
-          }
-        }, {
-          "in" : "path",
-          "name" : "lon-field",
-          "required" : true,
-          "schema" : {
-            "type" : "string"
-          }
-        }, {
           "in" : "path",
           "name" : "token",
           "required" : true,
@@ -18783,6 +18721,30 @@
           },
           "description" : "value must be an integer greater than zero."
         }, {
+          "in" : "path",
+          "name" : "zoom",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          },
+          "description" : "value must be an integer."
+        }, {
+          "in" : "path",
+          "name" : "x",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          },
+          "description" : "value must be an integer."
+        }, {
+          "in" : "path",
+          "name" : "y",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          },
+          "description" : "value must be an integer."
+        }, {
           "in" : "query",
           "name" : "parameters",
           "required" : false,
@@ -18790,6 +18752,20 @@
             "type" : "string"
           },
           "description" : "value must be a valid JSON string."
+        }, {
+          "in" : "query",
+          "name" : "latField",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "query",
+          "name" : "lonField",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
         } ],
         "responses" : {
           "2XX" : {
@@ -19685,11 +19661,20 @@
         "tags" : [ "/api/public" ]
       }
     },
-    "/api/public/tiles/card/{uuid}/{zoom}/{x}/{y}/{lat-field}/{lon-field}" : {
+    "/api/public/tiles/card/{uuid}/{zoom}/{x}/{y}" : {
       "get" : {
-        "summary" : "GET /api/public/tiles/card/{uuid}/{zoom}/{x}/{y}/{lat-field}/{lon-field}",
+        "summary" : "GET /api/public/tiles/card/{uuid}/{zoom}/{x}/{y}",
         "description" : "Generates a single tile image for a publicly-accessible Card using the map visualization. Does not require auth\n  credentials. Public sharing must be enabled.",
         "parameters" : [ {
+          "in" : "path",
+          "name" : "uuid",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "pattern" : "[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}"
+          },
+          "description" : "value must be a valid UUID."
+        }, {
           "in" : "path",
           "name" : "zoom",
           "required" : true,
@@ -19714,29 +19699,6 @@
           },
           "description" : "value must be an integer."
         }, {
-          "in" : "path",
-          "name" : "lat-field",
-          "required" : true,
-          "schema" : {
-            "type" : "string"
-          }
-        }, {
-          "in" : "path",
-          "name" : "lon-field",
-          "required" : true,
-          "schema" : {
-            "type" : "string"
-          }
-        }, {
-          "in" : "path",
-          "name" : "uuid",
-          "required" : true,
-          "schema" : {
-            "type" : "string",
-            "pattern" : "[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}"
-          },
-          "description" : "value must be a valid UUID."
-        }, {
           "in" : "query",
           "name" : "parameters",
           "required" : false,
@@ -19744,6 +19706,20 @@
             "type" : "string"
           },
           "description" : "value must be a valid JSON string."
+        }, {
+          "in" : "query",
+          "name" : "latField",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "query",
+          "name" : "lonField",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
         } ],
         "responses" : {
           "2XX" : {
@@ -19759,49 +19735,11 @@
         "tags" : [ "/api/public" ]
       }
     },
-    "/api/public/tiles/dashboard/{uuid}/dashcard/{dashcard-id}/card/{card-id}/{zoom}/{x}/{y}/{lat-field}/{lon-field}" : {
+    "/api/public/tiles/dashboard/{uuid}/dashcard/{dashcard-id}/card/{card-id}/{zoom}/{x}/{y}" : {
       "get" : {
-        "summary" : "GET /api/public/tiles/dashboard/{uuid}/dashcard/{dashcard-id}/card/{card-id}/{zoom}/{x}/{y}/{lat-field}/{lon-field}",
+        "summary" : "GET /api/public/tiles/dashboard/{uuid}/dashcard/{dashcard-id}/card/{card-id}/{zoom}/{x}/{y}",
         "description" : "Generates a single tile image for a Card using the map visualization in a publicly-accessible Dashboard. Does not\n  require auth credentials. Public sharing must be enabled.",
         "parameters" : [ {
-          "in" : "path",
-          "name" : "zoom",
-          "required" : true,
-          "schema" : {
-            "type" : "integer"
-          },
-          "description" : "value must be an integer."
-        }, {
-          "in" : "path",
-          "name" : "x",
-          "required" : true,
-          "schema" : {
-            "type" : "integer"
-          },
-          "description" : "value must be an integer."
-        }, {
-          "in" : "path",
-          "name" : "y",
-          "required" : true,
-          "schema" : {
-            "type" : "integer"
-          },
-          "description" : "value must be an integer."
-        }, {
-          "in" : "path",
-          "name" : "lat-field",
-          "required" : true,
-          "schema" : {
-            "type" : "string"
-          }
-        }, {
-          "in" : "path",
-          "name" : "lon-field",
-          "required" : true,
-          "schema" : {
-            "type" : "string"
-          }
-        }, {
           "in" : "path",
           "name" : "uuid",
           "required" : true,
@@ -19829,6 +19767,30 @@
           },
           "description" : "value must be an integer greater than zero."
         }, {
+          "in" : "path",
+          "name" : "zoom",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          },
+          "description" : "value must be an integer."
+        }, {
+          "in" : "path",
+          "name" : "x",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          },
+          "description" : "value must be an integer."
+        }, {
+          "in" : "path",
+          "name" : "y",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          },
+          "description" : "value must be an integer."
+        }, {
           "in" : "query",
           "name" : "parameters",
           "required" : false,
@@ -19836,6 +19798,20 @@
             "type" : "string"
           },
           "description" : "value must be a valid JSON string."
+        }, {
+          "in" : "query",
+          "name" : "latField",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "query",
+          "name" : "lonField",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
         } ],
         "responses" : {
           "2XX" : {
@@ -22224,11 +22200,20 @@
         "tags" : [ "/api/task" ]
       }
     },
-    "/api/tiles/{card-id}/{zoom}/{x}/{y}/{lat-field}/{lon-field}" : {
+    "/api/tiles/{card-id}/{zoom}/{x}/{y}" : {
       "get" : {
-        "summary" : "GET /api/tiles/{card-id}/{zoom}/{x}/{y}/{lat-field}/{lon-field}",
+        "summary" : "GET /api/tiles/{card-id}/{zoom}/{x}/{y}",
         "description" : "Generates a single tile image for a saved Card.",
         "parameters" : [ {
+          "in" : "path",
+          "name" : "card-id",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "minimum" : 1
+          },
+          "description" : "value must be an integer greater than zero."
+        }, {
           "in" : "path",
           "name" : "zoom",
           "required" : true,
@@ -22253,29 +22238,6 @@
           },
           "description" : "value must be an integer."
         }, {
-          "in" : "path",
-          "name" : "lat-field",
-          "required" : true,
-          "schema" : {
-            "type" : "string"
-          }
-        }, {
-          "in" : "path",
-          "name" : "lon-field",
-          "required" : true,
-          "schema" : {
-            "type" : "string"
-          }
-        }, {
-          "in" : "path",
-          "name" : "card-id",
-          "required" : true,
-          "schema" : {
-            "type" : "integer",
-            "minimum" : 1
-          },
-          "description" : "value must be an integer greater than zero."
-        }, {
           "in" : "query",
           "name" : "parameters",
           "required" : false,
@@ -22283,6 +22245,20 @@
             "type" : "string"
           },
           "description" : "value must be a valid JSON string."
+        }, {
+          "in" : "query",
+          "name" : "latField",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "query",
+          "name" : "lonField",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
         } ],
         "responses" : {
           "2XX" : {
@@ -22298,49 +22274,11 @@
         "tags" : [ "/api/tiles" ]
       }
     },
-    "/api/tiles/{dashboard-id}/dashcard/{dashcard-id}/card/{card-id}/{zoom}/{x}/{y}/{lat-field}/{lon-field}" : {
+    "/api/tiles/{dashboard-id}/dashcard/{dashcard-id}/card/{card-id}/{zoom}/{x}/{y}" : {
       "get" : {
-        "summary" : "GET /api/tiles/{dashboard-id}/dashcard/{dashcard-id}/card/{card-id}/{zoom}/{x}/{y}/{lat-field}/{lon-field}",
+        "summary" : "GET /api/tiles/{dashboard-id}/dashcard/{dashcard-id}/card/{card-id}/{zoom}/{x}/{y}",
         "description" : "Generates a single tile image for a dashcard.",
         "parameters" : [ {
-          "in" : "path",
-          "name" : "zoom",
-          "required" : true,
-          "schema" : {
-            "type" : "integer"
-          },
-          "description" : "value must be an integer."
-        }, {
-          "in" : "path",
-          "name" : "x",
-          "required" : true,
-          "schema" : {
-            "type" : "integer"
-          },
-          "description" : "value must be an integer."
-        }, {
-          "in" : "path",
-          "name" : "y",
-          "required" : true,
-          "schema" : {
-            "type" : "integer"
-          },
-          "description" : "value must be an integer."
-        }, {
-          "in" : "path",
-          "name" : "lat-field",
-          "required" : true,
-          "schema" : {
-            "type" : "string"
-          }
-        }, {
-          "in" : "path",
-          "name" : "lon-field",
-          "required" : true,
-          "schema" : {
-            "type" : "string"
-          }
-        }, {
           "in" : "path",
           "name" : "dashboard-id",
           "required" : true,
@@ -22368,6 +22306,30 @@
           },
           "description" : "value must be an integer greater than zero."
         }, {
+          "in" : "path",
+          "name" : "zoom",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          },
+          "description" : "value must be an integer."
+        }, {
+          "in" : "path",
+          "name" : "x",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          },
+          "description" : "value must be an integer."
+        }, {
+          "in" : "path",
+          "name" : "y",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          },
+          "description" : "value must be an integer."
+        }, {
           "in" : "query",
           "name" : "parameters",
           "required" : false,
@@ -22375,6 +22337,20 @@
             "type" : "string"
           },
           "description" : "value must be a valid JSON string."
+        }, {
+          "in" : "query",
+          "name" : "latField",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "query",
+          "name" : "lonField",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
         } ],
         "responses" : {
           "2XX" : {
@@ -22390,11 +22366,35 @@
         "tags" : [ "/api/tiles" ]
       }
     },
-    "/api/tiles/{zoom}/{x}/{y}/{lat-field}/{lon-field}" : {
+    "/api/tiles/{zoom}/{x}/{y}" : {
       "get" : {
-        "summary" : "GET /api/tiles/{zoom}/{x}/{y}/{lat-field}/{lon-field}",
+        "summary" : "GET /api/tiles/{zoom}/{x}/{y}",
         "description" : "Generates a single tile image for an ad-hoc query.",
         "parameters" : [ {
+          "in" : "path",
+          "name" : "zoom",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          },
+          "description" : "value must be an integer."
+        }, {
+          "in" : "path",
+          "name" : "x",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          },
+          "description" : "value must be an integer."
+        }, {
+          "in" : "path",
+          "name" : "y",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          },
+          "description" : "value must be an integer."
+        }, {
           "in" : "query",
           "name" : "query",
           "required" : true,
@@ -22402,6 +22402,20 @@
             "type" : "string"
           },
           "description" : "value must be a valid JSON string."
+        }, {
+          "in" : "query",
+          "name" : "latField",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "query",
+          "name" : "lonField",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
         } ],
         "responses" : {
           "2XX" : {
