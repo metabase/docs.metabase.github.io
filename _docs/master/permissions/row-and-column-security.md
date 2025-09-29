@@ -7,7 +7,6 @@ category: Permissions
 title: 'Row and column security'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/permissions/row-and-column-security.md'
 layout: new-docs
-summary: 'Control what data different groups can see by filtering rows and columns based on user attributes. Useful for multi-tenant analytics.'
 redirect_from:
     - /docs/master/enterprise-guide/data-sandboxes
     - /docs/master/permissions/data-sandboxes
@@ -54,10 +53,10 @@ Row and column security show specific data to each person based on their [user a
 
 You can **restrict rows** by filtering a column using a [user attribute value](#choosing-user-attributes-for-row-and-column-security).
 
-For example, you can filter the Accounts table for a group so that the user attribute filters the table:
+For example, you can filter the Accounts table for a group so that:
 
-- "Basic" will see rows where `Plan = "Basic"` (rows where the Plan column matches the value "Basic").
-- "Premium" will see the rows where `Plan = "Premium"` (rows where the Plan column matches the value "Premium").
+- A person with the user attribute value "Basic" will see rows where `Plan = "Basic"` (rows where the Plan column matches the value "Basic").
+- A person with the user attribute value "Premium" will see the rows where `Plan = "Premium"` (rows where the Plan column matches the value "Premium").
 
 ### Custom row and column security: use a SQL question to create a custom "view" of a table
 
@@ -65,7 +64,7 @@ To **restrict rows _and_ columns**, you can use a SQL question to filter the tab
 
 For example, say your original Accounts table includes the columns: `ID`, `Email`, `Plan`, and `Created At`. If you want to hide the Email column, you can create a "Restricted Accounts" SQL question with the columns: `ID`, `Plan`, and `Created At`.
 
-You can use a question to:
+You can use a question to filter tables to:
 
 - [Display an edited column instead of hiding the column](#displaying-edited-columns).
 - [Pass a user attribute to a SQL parameter](#restricting-rows-with-user-attributes-using-a-sql-variable).
@@ -77,10 +76,10 @@ You can use a question to:
 
 Row security displays a filtered table, in place of an original table, to a specific group. How Metabase filters that table depends on the value in each person's user attribute.
 
-For example, you can set up a row-level security so that the user attribute `plan` shows different rows for different values:
+For example, you can set up a row-level security so that:
 
-- "Basic" will see a version of the Accounts table with a filter for `Plan = "Basic"` (that is, only the rows where the Plan column matches the value "Basic").
-- "Premium" will see a different version of the Accounts table with the filter `Plan = "Premium"` applied.
+- Someone with the user attribute with key of "plan" and a value of "Basic" will see a version of the Accounts table with a filter for `Plan = "Basic"` (that is, only the rows where the Plan column matches the value "Basic").
+- Someone with a "plan" user attribute set to "Premium" will see a different version of the Accounts table with the filter `Plan = "Premium"` applied.
 
 ## Choosing user attributes for row and column security
 
@@ -187,7 +186,7 @@ In steps 9-10 of the [row restriction setup](#restricting-rows-with-user-attribu
 WHERE plan = "Basic"
 ```
 
-Note that the parameters must be required for SQL questions used to create custom views. For example, you can't use an optional parameter; the following won't work:
+Note that the parameters must be required for SQL questions used to create a custom views. E.g., you cannot use an optional parameter; the following won't work:
 
 ```sql
 {%raw%}
@@ -196,42 +195,6 @@ Note that the parameters must be required for SQL questions used to create custo
 ```
 
 Learn more about [SQL parameters](../questions/native-editor/sql-parameters)
-
-### Advanced row-level security: filtering tables for people that have multiple IDs
-
-For example, say have a table like this:
-
-| User_ID | Value |
-|---------|-------|
-| 1       | 10    |
-| 1       | 50    |
-| 2       | 5     |
-| 2       | 50    |
-| 3       | 5     |
-| 3       | 5     |
-
-If you want to give someone access to multiple user IDs (e.g., the person should see rows for both `User_ID` 1 and 2.), you can set up a user attribute, like `user_id` that can handle comma-separated values like "1,2". 
-
-1. Create a SQL question that parses the comma-separated string and filters the table:
-
-```sql
-{%raw%}
-SELECT *
-FROM users_with_values
-WHERE user_id = ANY(STRING_TO_ARRAY(REGEXP_REPLACE(TRIM({{user_id}}), '\\s*,\\s*', ','), ','))
-{% endraw %}
-```
-
-This query:
-
-- Trims whitespace from the user attribute value
-- Replaces any spaces around commas with just commas
-- Converts the comma-separated string to an array
-- Filters rows where the user_id matches any value in the array
-
-The `STRING_TO_ARRAY()` and `REGEXP_REPLACE()` functions are PostgreSQL-specific. To see which functions your database supports, see your database's documentation.
-
-3. Set up the row and column security using this SQL question. See [setting up column security](#setting-up-column-security).
 
 ## Preventing row and column security permissions conflicts
 
@@ -243,7 +206,7 @@ The Email column may get exposed to someone if:
 
 - The person belongs to [multiple row and column security policies](#multiple-row-and-column-security-permissions).
 - Someone else in a non-secured group shares the Email column from:
-  - A [SQL question](../questions/native-editor/writing-sql)
+  - A [SQL question](../questions/native-editor/writing-sql).
   - A [public link](#public-sharing)
   - An [alert, or dashboard subscription](../permissions/notifications)
 
@@ -287,13 +250,12 @@ To prevent this from happening, you'll have to [disable public sharing](../embed
 
 Metabase can only create row and column security using the group membership or user attributes of people who are logged in. Since public links don't require logins, Metabase won't have enough info to apply permissions.
 
-## Limitations of row and column security
+## Limitations
 
-Some things to keep in mind when using row and column security.
+Row and column security is limited to questions built with the [query builder](../questions/query-builder/editor).
 
 ### Groups with native query permissions (access to the SQL editor) can bypass row and column security
 
-Row and column security is limited to the [query builder](../questions/query-builder/editor).
 You can't set up [native query persmissons](./data#create-queries-permissions) for groups with row and column security.
 
 To enforce row-level permissions with the native query editor, check out [impersonation](./impersonation).
@@ -307,22 +269,6 @@ Since Metabase can't parse SQL queries, the results of SQL questions will always
 ### Non-SQL databases have limited row and column security
 
 MongoDB only supports [row-level security](#row-level-security-filter-by-a-column-in-the-table). Row and column security permissions are unavailable for Apache Druid.
-
-### Advanced data types require a workaround
-
-If you're trying to set up row security on a column with an advanced data type (like enums or arrays), you'll need to convert that data to a basic type first. Options include:
-
-#### Option 1: Use SQL to cast the advanced data type to a basic SQL type
-
-Create a SQL question that casts the advanced data type column to a basic data type, then use that question for your row and column security setup.
-
-#### Option 2: Create a database view
-
-If you can't use SQL casting in Metabase, create a view in your database that converts the advanced data type to a basic type, then set up row and column security on that view instead of the original table. You'll also need to block the original table.
-
-#### Option 3: Use transforms 
-
- Use a [transform](../data-modeling/transforms) to create a table that casts the advanced data type to a basic type. Then set up row and column security on the transformed table instead. You'll also need to block the original table.
 
 ## Further reading
 

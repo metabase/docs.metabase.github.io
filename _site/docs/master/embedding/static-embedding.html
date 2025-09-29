@@ -4926,7 +4926,7 @@ Roadmap</a>
 
 <p>In general, embedding works by displaying a Metabase URL inside an iframe in your website. A <strong>static embed</strong> (or signed embed) is an iframe that’s loading a Metabase URL secured with a signed JSON Web Token (JWT). Metabase will only load the URL if the request supplies a JWT signed with the secret shared between your app and your Metabase. The JWT also includes a reference to the resource to load, e.g., the dashboard ID, and any values for locked parameters.</p>
 
-<p>You can’t use static embeds with <a href="../permissions/row-and-column-security">row and column security</a>, <a href="/learn/metabase-basics/querying-and-dashboards/questions/drill-through">drill-through</a>, and user-specific data isn’t captured in <a href="../usage-and-performance-tools/usage-analytics">usage analytics</a> because signed JWTs don’t create user sessions (server-side sessions). For those features, check out <a href="./embedded-analytics-js">Embedded analytics JS</a>.</p>
+<p>You can’t use static embeds with <a href="../permissions/row-and-column-security">row and column security</a>, <a href="/learn/metabase-basics/querying-and-dashboards/questions/drill-through">drill-through</a>, and user-specific data isn’t captured in <a href="../usage-and-performance-tools/usage-analytics">usage analytics</a> because signed JWTs don’t create user sessions (server-side sessions). For those features, check out <a href="./interactive-embedding">interactive embedding</a>.</p>
 
 <p>You can, however, restrict data in static embeds for specific people or groups by <a href="./static-embedding-parameters#restricting-data-in-a-static-embed-with-locked-parameters">locking parameters</a>.</p>
 
@@ -4946,13 +4946,13 @@ Roadmap</a>
 
 <p>The signed JWT is generated using your <a href="#regenerating-the-static-embedding-secret-key">Metabase secret key</a>. The secret key tells Metabase that the request for filtered data can be trusted, so it’s safe to display the results at the new embedding URL. Note that this secret key is shared for all static embeds, so whoever has access to that key will have access to all embedded artifacts.</p>
 
-<p>If you want to embed charts with additional interactive features, like <a href="/learn/metabase-basics/querying-and-dashboards/questions/drill-through">drill-down</a> and <a href="../questions/query-builder/editor">self-service querying</a>, see <a href="./embedded-analytics-js">Embedded analytics JS</a>.</p>
+<p>If you want to embed charts with additional interactive features, like <a href="/learn/metabase-basics/querying-and-dashboards/questions/drill-through">drill-down</a> and <a href="../questions/query-builder/editor">self-service querying</a>, see <a href="./interactive-embedding">Interactive embedding</a>.</p>
 
 <h2 id="turning-on-the-embedding-feature-in-metabase">Turning on the embedding feature in Metabase</h2>
 
 <ol>
-  <li>Go to <strong>Settings</strong> &gt; <strong>Admin settings</strong> &gt; <strong>Embedding &gt; Static</strong>.</li>
-  <li>Toggle <strong>Enable static embedding</strong>.</li>
+  <li>Go to <strong>Settings</strong> &gt; <strong>Admin settings</strong> &gt; <strong>Embedding</strong>.</li>
+  <li>Toggle the <strong>Enable embedding</strong>.</li>
 </ol>
 
 <h2 id="making-a-question-or-dashboard-embeddable">Making a question or dashboard embeddable</h2>
@@ -5051,7 +5051,7 @@ Roadmap</a>
 
 <h2 id="disabling-embedding-for-a-question-or-dashboard">Disabling embedding for a question or dashboard</h2>
 
-<p>You can find a list of all static embeds of questions and dashboards from <strong>Admin settings</strong> &gt; <strong>Embedding</strong> &gt; <strong>Static</strong>.</p>
+<p>You can find a list of all static embeds of questions and dashboards from <strong>Admin settings</strong> &gt; <strong>Embedding</strong> &gt; <strong>Static embedding</strong> &gt; <strong>Manage</strong>.</p>
 
 <ol>
   <li>Visit the embeddable question or dashboard.</li>
@@ -5092,7 +5092,8 @@ Roadmap</a>
 <p>Your embedding secret key is used to sign JWTs for all of your <a href="#adding-the-embedding-url-to-your-website">embedding URLs</a>.</p>
 
 <ol>
-  <li>Go to <strong>Admin</strong> &gt; <strong>Embedding</strong> &gt; <strong>Static embedding</strong>.</li>
+  <li>Go to <strong>Settings</strong> &gt; <strong>Admin settings</strong> &gt; <strong>Embedding</strong>.</li>
+  <li>On the <strong>Static embedding</strong> card, click on <strong>Manage</strong>.</li>
   <li>Under <strong>Regenerate secret key</strong>, click <strong>Regenerate key</strong>.</li>
 </ol>
 
