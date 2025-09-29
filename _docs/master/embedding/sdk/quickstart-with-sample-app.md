@@ -105,11 +105,11 @@ To enable SSO with JWT when self-hosting, you'll need to [activate your license]
 
 ## Enable embedding in Metabase
 
-From any Metabase page, click on the **gear** icon in the upper right and select **Admin Settings** > **Embedding**.
+From any Metabase page, click on the **gear** icon in the upper right and select **Admin Settings** > **Settings** > **Embedding**.
 
 Turn on:
 
-- Embedded analytics SDK (it's in in the **Modular** section)
+- Embedded analytics SDK
 - Static embedding
 
 Otherwise, this whole thing is hopeless.
