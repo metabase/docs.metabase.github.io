@@ -42,7 +42,12 @@
   
     
 <meta name="robots" content="noindex">
-   
+
+ 
+
+ 
+
+
 
 <title>Metabase API documentation | Metabase Documentation</title>
 <!-- Twitter cards -->
@@ -15060,6 +15065,35 @@
         "tags" : [ "/api/ee/metabot-v3/document" ]
       }
     },
+    "/api/ee/metabot-v3/feedback" : {
+      "post" : {
+        "summary" : "POST /api/ee/metabot-v3/feedback",
+        "description" : "Proxy Metabot feedback to Harbormaster, adding the premium embedding token.",
+        "parameters" : [ ],
+        "responses" : {
+          "2XX" : {
+            "description" : "Successful response"
+          },
+          "4XX" : {
+            "description" : "Client error response"
+          },
+          "5XX" : {
+            "description" : "Server error response"
+          }
+        },
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : { }
+              }
+            }
+          }
+        },
+        "tags" : [ "/api/ee/metabot-v3" ]
+      }
+    },
     "/api/ee/metabot-v3/metabot/" : {
       "get" : {
         "summary" : "GET /api/ee/metabot-v3/metabot/",
@@ -15910,6 +15944,16 @@
                         },
                         "value" : {
                           "anyOf" : [ {
+                            "type" : "object",
+                            "additionalProperties" : {
+                              "anyOf" : [ {
+                                "type" : "string",
+                                "minLength" : 1
+                              }, {
+                                "type" : "boolean"
+                              } ]
+                            }
+                          }, {
                             "type" : "string",
                             "minLength" : 1
                           }, {
@@ -16265,7 +16309,18 @@
           }
         }, {
           "in" : "query",
-          "name" : "transform_tag_ids",
+          "name" : "last_run_statuses",
+          "required" : false,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string",
+              "enum" : [ "started", "succeeded", "failed", "timeout" ]
+            }
+          }
+        }, {
+          "in" : "query",
+          "name" : "tag_ids",
           "required" : false,
           "schema" : {
             "type" : "array",
@@ -16587,7 +16642,38 @@
       "get" : {
         "summary" : "GET /api/ee/transform/",
         "description" : "Get a list of transforms.",
-        "parameters" : [ ],
+        "parameters" : [ {
+          "in" : "query",
+          "name" : "last_run_start_time",
+          "required" : false,
+          "schema" : {
+            "type" : "string",
+            "minLength" : 1
+          }
+        }, {
+          "in" : "query",
+          "name" : "last_run_statuses",
+          "required" : false,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string",
+              "enum" : [ "started", "succeeded", "failed", "timeout" ]
+            }
+          }
+        }, {
+          "in" : "query",
+          "name" : "tag_ids",
+          "required" : false,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "description" : "value must be an integer greater or equal to than zero.",
+              "type" : "integer",
+              "minimum" : 0
+            }
+          }
+        } ],
         "responses" : {
           "2XX" : {
             "description" : "Successful response"
