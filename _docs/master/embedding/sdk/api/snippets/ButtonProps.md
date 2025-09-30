@@ -17,7 +17,7 @@ type ButtonProps = ButtonProps_2 & {
 } & HTMLAttributes<HTMLButtonElement>;
 ```
 
-## Type declaration
+## Type Declaration
 
 <!-- [<snippet type-declaration>] -->
 

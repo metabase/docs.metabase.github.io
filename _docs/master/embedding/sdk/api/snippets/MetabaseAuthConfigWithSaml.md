@@ -19,7 +19,7 @@ type MetabaseAuthConfigWithSaml = {
 };
 ```
 
-## Type declaration
+## Type Declaration
 
 <!-- [<snippet type-declaration>] -->
 
@@ -29,7 +29,7 @@ type MetabaseAuthConfigWithSaml = {
 
 <!-- [<endsnippet type-declaration>] -->
 
-## Type declaration
+## Type Declaration
 
 <!-- [<snippet type-declaration>] -->
 
