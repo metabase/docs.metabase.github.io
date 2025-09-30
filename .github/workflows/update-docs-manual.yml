@@ -1,0 +1,35 @@
+name: Update docs - manual
+
+on:
+  workflow_dispatch:
+    inputs:
+      source_branch:
+        description: 'Source branch to pull docs from'
+        required: true
+        type: string
+        default: 'master'
+      target_branch:
+        description: 'Target branch to update'
+        required: true
+        type: string
+        default: 'master'
+      annotation:
+        description: 'Annotation for the update'
+        required: true
+        type: choice
+        options:
+          - manual
+          - hotfix
+          - release
+        default: 'manual'
+
+run-name: Manual docs update | ${{ inputs.source_branch }} -> ${{ inputs.target_branch }}
+
+jobs:
+  update-docs:
+    uses: ./.github/workflows/update-docs-reusable.yml
+    with:
+      source_branch: ${{ inputs.source_branch }}
+      target_branch: ${{ inputs.target_branch }}
+      annotation: ${{ inputs.annotation }}
+      run_name: "Manual docs build"

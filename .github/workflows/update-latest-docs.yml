@@ -1,0 +1,17 @@
+name: Update docs - latest
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 2 * * *"
+
+run-name: Nightly docs update - latest
+
+jobs:
+  update-docs:
+    uses: ./.github/workflows/update-docs-reusable.yml
+    with:
+      source_branch: "release-x.56.x"
+      target_branch: "release-x.56.x"
+      annotation: "nightly"
+      run_name: "Nightly docs build - latest"
+
