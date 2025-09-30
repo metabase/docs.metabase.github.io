@@ -61,7 +61,6 @@ If you'd like to share your data with the good people of the internet, admins ca
 | [Basic appearance customization](../configuring-metabase/appearance)\*\*                                                     | ✅                                 | ✅                               | ✅                                        | ✅                              | ✅                                     |
 | [Advanced theming](./sdk/appearance)                                                                                         | ✅                                 | ✅                               | ❌                                        | ❌                              | ❌                                     |
 | View usage of embeds with [usage analytics](../usage-and-performance-tools/usage-analytics)                                  | ✅                                 | ✅                               | ✅                                        | ❌                              | ❌                                     |
-| [Actions on dashboards](../dashboards/actions)                                                                               | ✅                                 | ✅                               | ✅                                        | ❌                              | ❌                                     |
 | Embed individual Metabase components                                                                                            | ✅                                 | ✅                               | ❌                                        | ❌                              | ❌                                     |
 | Manage access and interactivity per component                                                                                   | ✅                                 | ✅                               | ❌                                        | ❌                              | ❌                                     |
 | Custom layouts                                                                                                                  | ✅                                 | ❌                               | ❌                                        | ❌                              | ❌                                     |
@@ -69,7 +68,7 @@ If you'd like to share your data with the good people of the internet, admins ca
 
 \* Each embedding type allows data downloads by default, but only [Pro and Enterprise](/pricing/) plans can disable data downloads.
 
-\*\* Requires [Pro and Enterprise](/pricing/) for any embedding type.
+\*\* Requires a [Pro and Enterprise](/pricing/) plan for any embedding type.
 
 ### Embedded analytics SDK vs JS
 
