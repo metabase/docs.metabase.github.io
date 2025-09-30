@@ -19,7 +19,7 @@ type ChartColor =
     };
 ```
 
-## Type declaration
+## Type Declaration
 
 <!-- [<snippet type-declaration>] -->
 

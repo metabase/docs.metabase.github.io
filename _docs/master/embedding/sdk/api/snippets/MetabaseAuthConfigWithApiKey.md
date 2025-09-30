@@ -19,7 +19,7 @@ type MetabaseAuthConfigWithApiKey = {
 };
 ```
 
-## Type declaration
+## Type Declaration
 
 <!-- [<snippet type-declaration>] -->
 
@@ -29,7 +29,7 @@ type MetabaseAuthConfigWithApiKey = {
 
 <!-- [<endsnippet type-declaration>] -->
 
-## Type declaration
+## Type Declaration
 
 <!-- [<snippet type-declaration>] -->
 
