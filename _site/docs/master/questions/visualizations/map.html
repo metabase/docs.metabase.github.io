@@ -4936,7 +4936,7 @@ Roadmap</a>
 
 <h2 id="pin-map">Pin map</h2>
 
-<p>Pin maps display pins for individual data points on the map. They work best for displaying unaggregated geographical data.</p>
+<p>Pin maps display markers or tiles for individual data points on the map. They work best for displaying small amounts of unaggregated geographical data.</p>
 
 <h3 id="pin-map-data-shape">Pin map data shape</h3>
 
@@ -4945,7 +4945,7 @@ Roadmap</a>
 <p><img src="../images/pin-data-shape.png" alt="Pin map data shape">
 <img src="../images/pin-map-with-tooltip.png" alt="Pin map with a tooltip"></p>
 
-<p>Note that the tooltips will only be displayed when the map is sufficiently zoomed in using <a href="#draw-box-to-filter"><strong>Draw box to filter</strong></a>.</p>
+<p>Note that the tooltips will only be displayed when using the <a href="#choose-pin-type">marker pin type</a>.</p>
 
 <h3 id="create-a-pin-map">Create a pin map</h3>
 
@@ -4961,9 +4961,27 @@ Roadmap</a>
   </li>
 </ol>
 
-<h3 id="pin-maps-display-2000-pins-by-default">Pin maps display 2000 pins by default</h3>
+<h3 id="choose-pin-type">Choose pin type</h3>
 
-<p>By default, pin maps will display 2000 pins even if there are more rows in your query results (this limit is the same for every chart displaying unaggregated data in Metabase). You can use the environment variable <a href="../../configuring-metabase/environment-variables#mb_unaggregated_query_row_limit"><code class="language-plaintext highlighter-rouge">MB_UNAGGREGATED_QUERY_ROW_LIMIT</code></a> to increase the number of data points rendered on charts based on unaggregated queries, but keep in mind that this setting will affect all charts—not just the pin maps—and it might significantly slow down your Metabase and your browser.</p>
+<p>Metabase can display individual data points on a map as markers or tiles (small squares).</p>
+
+<p><img src="../images/pin-type.png" alt="Pin types"></p>
+
+<p>Maps default to markers for results fewer then 1,000 rows, and to tiles for results with 1,000 rows or more.</p>
+
+<p>To change the pin type:</p>
+
+<ol>
+  <li>While viewing the map, click the <strong>gear</strong> icon in the bottom left.</li>
+  <li>In the visualization settings, choose the pin type in the <strong>Pin type</strong> dropdown.
+    <ul>
+      <li><strong>Markers</strong>. Maps display up to 1,000 markers. If you choose the marker pin type for results with more than 1,000 rows, Metabase will still only display 1,000 markers. Maps default to markers for results fewer then 1,000 rows.</li>
+      <li><strong>Tiles</strong>. Maps display up to 2,000 tiles. Maps default to tiles for results greater than 1,000 rows. Tooltips will not be displayed for tiles.</li>
+    </ul>
+  </li>
+</ol>
+
+<p>By default, maps can’t display more than 2,000 individual unaggregated data points, regardless of the pin type. This limit is the same for every chart displaying unaggregated data in Metabase. To increase the number of data points rendered on charts based on unaggregated queries, you can use the environment variable <a href="../../configuring-metabase/environment-variables#mb_unaggregated_query_row_limit"><code class="language-plaintext highlighter-rouge">MB_UNAGGREGATED_QUERY_ROW_LIMIT</code></a>. This setting will affect data points on <em>all</em> charts—not just the pin maps—so increasing the limit too much could significantly slow down your Metabase and your browswer.</p>
 
 <p>If you need to display a large number of geographical data points, consider using a grid map to display the distribution instead.</p>
 
