@@ -89,4 +89,11 @@
        (concat artifacts-to-include))))
 
 (defn head-ref-name [source-branch target-branch]
-  (str source-branch "->" target-branch))
+  (if (= source-branch target-branch)
+    ;; When source and target are the same, use a datetime identifier
+    (let [now (java.time.Instant/now)
+          formatter (java.time.format.DateTimeFormatter/ofPattern "yyyyMMdd-HHmmss")
+          timestamp (.format (.atZone now (java.time.ZoneId/of "UTC")) formatter)]
+      (str target-branch "-update-" timestamp))
+    ;; Normal case: source -> target
+    (str source-branch "->" target-branch)))
