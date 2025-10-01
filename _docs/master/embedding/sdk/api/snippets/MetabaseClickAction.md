@@ -15,7 +15,7 @@ type MetabaseClickAction = {
 } & Record<string, any>;
 ```
 
-## Type declaration
+## Type Declaration
 
 <!-- [<snippet type-declaration>] -->
 
