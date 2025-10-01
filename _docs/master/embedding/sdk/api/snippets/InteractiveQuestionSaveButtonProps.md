@@ -17,7 +17,7 @@ type InteractiveQuestionSaveButtonProps = {
 
 **`Expand`**
 
-## Type Declaration
+## Type declaration
 
 <!-- [<snippet type-declaration>] -->
 
