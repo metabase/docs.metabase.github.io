@@ -19,7 +19,7 @@ type MetabaseAuthConfigWithJwt = {
 };
 ```
 
-## Type declaration
+## Type Declaration
 
 <!-- [<snippet type-declaration>] -->
 
@@ -29,7 +29,7 @@ type MetabaseAuthConfigWithJwt = {
 
 <!-- [<endsnippet type-declaration>] -->
 
-## Type declaration
+## Type Declaration
 
 <!-- [<snippet type-declaration>] -->
 
