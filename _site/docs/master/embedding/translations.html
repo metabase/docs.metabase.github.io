@@ -4910,65 +4910,27 @@ Roadmap</a>
 
         <h1 id="translate-embedded-dashboards-and-questions">Translate embedded dashboards and questions</h1>
 
-<div class="bootstrap">
-  <div class="plans-blockquote bg-blue-95 rounded-3 p-6 d-flex flex-row border border-1 border-primary">
-    <svg class="" width="24" height="24" viewBox="0 0 26 26" fill="none">
-  <path d="M12 13V15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
-  <path d="M12 10C12.5523 10 13 9.55228 13 9C13 8.44772 12.5523 8 12 8C11.4477 8 11 8.44772 11 9C11 9.55228 11.4477 10 12 10Z" fill="#509EE3"></path>
-  <path d="M12 19.25C16.0041 19.25 19.25 16.0041 19.25 12C19.25 7.99594 16.0041 4.75 12 4.75C7.99594 4.75 4.75 7.99594 4.75 12C4.75 16.0041 7.99594 19.25 12 19.25Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
-</svg>
-
-    
-    
-    
-      
-
-    <p class="m-0 ms-2 paragraph-5 neutral-40">
-       Translation of embedded content is only available on
-      <a class="fw-bold" href="/product/pro">Pro</a> and
-      <a class="fw-bold link-purple" href="/product/enterprise">Enterprise</a>
-      plans  (both self-hosted and on Metabase Cloud). 
-    </p>
-  </div>
-</div>
-
-<p>For now, translations are only available for <a href="./static-embedding">static embeds</a>, not Interactive embedding or the Embedded analytics JS/SDK.</p>
+<blockquote>
+  <p>For now, translations are only available for <a href="./static-embedding">static embeds</a>, not Interactive embedding or the Embedded analytics SDK.</p>
+</blockquote>
 
 <p>You can upload a translation dictionary to translate strings both in Metabase content (like dashboard titles) and in the data itself (like column names and values).</p>
-
-<h2 id="add-a-translation-dictionary">Add a translation dictionary</h2>
 
 <p>The dictionary must be a CSV with these columns:</p>
 
 <ul>
-  <li><strong>Language</strong> with the locale code</li>
-  <li><strong>String</strong> with the string to be translated</li>
-  <li><strong>Translation</strong></li>
+  <li>Locale Code</li>
+  <li>String</li>
+  <li>Translation</li>
 </ul>
 
 <blockquote>
   <p>Don’t put any sensitive data in the dictionary, since anyone can see the dictionary—including viewers of public links.</p>
 </blockquote>
 
-<p>To add a translation dictionary:</p>
-
-<ol>
-  <li>Go to <strong>Admin &gt; Embedding &gt; Static</strong>.</li>
-  <li>Under <strong>Translate embedded dashboards and question</strong>, click <strong>Upload translation dictionary</strong>.</li>
-</ol>
-
 <p>Uploading a new dictionary will replace the existing dictionary.</p>
 
 <p>To remove a translation dictionary, upload a blank dictionary.</p>
-
-<h2 id="translate-content-in-static-embeds">Translate content in static embeds</h2>
-
-<p>To translate content in a static embed using the uploaded dictionary, add the <a href="./static-embedding-parameters#setting-the-language-for-a-static-embed"><code class="language-plaintext highlighter-rouge">locale</code> parameter</a> to the embed URL:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://metabase.example.com/public/dashboard/7b6e347b-6928-4aff-a56f-6cfa5b718c6b?category=&amp;city=&amp;state=#locale=ko
-</code></pre></div></div>
-
-<p>Metabase UI elements (like button labels) will be translated automatically - you don’t need to add translations for them to your dictionary.</p>
 
 <h2 id="example-translation-dictionary">Example translation dictionary</h2>
 
@@ -4984,103 +4946,34 @@ Roadmap</a>
   </thead>
   <tbody>
     <tr>
-      <td data-label="Language">pt-BR</td>
+      <td data-label="Language">pt_BR</td>
       <td data-label="String">Examples</td>
       <td data-label="Translation">Exemplos</td>
     </tr>
     <tr>
-      <td data-label="Language">pt-BR</td>
+      <td data-label="Language">pt_BR</td>
       <td data-label="String">First tab</td>
       <td data-label="Translation">Primeira aba</td>
     </tr>
     <tr>
-      <td data-label="Language">pt-BR</td>
+      <td data-label="Language">pt_BR</td>
       <td data-label="String">Another tab</td>
       <td data-label="Translation">Outra aba</td>
     </tr>
     <tr>
-      <td data-label="Language">pt-BR</td>
+      <td data-label="Language">pt_BR</td>
       <td data-label="String">Title</td>
       <td data-label="Translation">Título</td>
     </tr>
     <tr>
-      <td data-label="Language">pt-BR</td>
+      <td data-label="Language">pt_BR</td>
       <td data-label="String">Vendor</td>
       <td data-label="Translation">Vendedor</td>
     </tr>
-    <tr>
-      <td data-label="Language">IT</td>
-      <td data-label="String">Examples</td>
-      <td data-label="Translation">Esempi</td>
-    </tr>
   </tbody>
 </table>
 
-<p>Prefer hyphens in your <code class="language-plaintext highlighter-rouge">pt-BR</code> in your translation dictionary. Underscores are also acceptable (if you download the dictionary <em>after</em> uploading it, Metabase will transform <code class="language-plaintext highlighter-rouge">pt-BR</code> to <code class="language-plaintext highlighter-rouge">pt_BR</code>), but since the <code class="language-plaintext highlighter-rouge">locale</code> parameter in static embedding only accepts locales with hyphens (like <code class="language-plaintext highlighter-rouge">pt-BR</code>), we recommend using hyphens for consistency.</p>
-
-<p><a href="../configuring-metabase/localization#supported-languages">See a list of supported locales</a>.</p>
-
-<h2 id="use-full-phrases-in-translation-dictionaries">Use full phrases in translation dictionaries</h2>
-
-<p>Currently, Metabase doesn’t tokenize strings for translations, so you should include exact phrases in your translation dictionary.</p>
-
-<p>For example, if you have a dashboard called “Monthly Sales”, it’s not sufficient to have translations of “Monthly” and “Sales” - you also need to include “Monthly Sales” as a full string.</p>
-
-<p>Exact translations also apply to strings that use punctuation and special characters. For example, if you have a question title “How many Widgets did we sell this week?”, you must include that exact string (with “?”) into the translation dictionary. Metabase would treat “How many Widgets did we sell this week” as a different string. Essentially, the strings are keys in a table Metabase looks up, so they must match exactly.</p>
-
-<h2 id="translations-are-case-insensitive">Translations are case-insensitive</h2>
-
-<p>Translations are case-insensitive. For example, if your translation dictionary has a translation:</p>
-
-<table>
-  <thead>
-    <tr>
-      <th>Language</th>
-      <th>String</th>
-      <th>Translation</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td data-label="Language">pt-BR</td>
-      <td data-label="String">Examples</td>
-      <td data-label="Translation">Exemplos</td>
-    </tr>
-  </tbody>
-</table>
-
-<p><code class="language-plaintext highlighter-rouge">Examples</code>, <code class="language-plaintext highlighter-rouge">examples</code>, <code class="language-plaintext highlighter-rouge">EXAMPLES</code> would all be translated as <code class="language-plaintext highlighter-rouge">Exemplos</code>. That is, Metabase won’t preserve the original case; it will output the exact translation string in the dictionary.</p>
-
-<h2 id="include-markdown-formatting-in-translation-dictionaries">Include markdown formatting in translation dictionaries</h2>
-
-<p>If the strings you want to translate include markdown formatting, you’ll need to include the formatting in the dictionary. For example:</p>
-
-<table>
-  <thead>
-    <tr>
-      <th>Language</th>
-      <th>String</th>
-      <th>Translation</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td data-label="Language">pt-BR</td>
-      <td data-label="String"><code class="language-plaintext highlighter-rouge">**Examples**</code></td>
-      <td data-label="Translation"><code class="language-plaintext highlighter-rouge">**Exemplos**</code></td>
-    </tr>
-    <tr>
-      <td data-label="Language">pt-BR</td>
-      <td data-label="String"><code class="language-plaintext highlighter-rouge">_Examples_</code></td>
-      <td data-label="Translation"><code class="language-plaintext highlighter-rouge">_Exemplos_</code></td>
-    </tr>
-    <tr>
-      <td data-label="Language">pt-BR</td>
-      <td data-label="String"><code class="language-plaintext highlighter-rouge">## Examples</code></td>
-      <td data-label="Translation"><code class="language-plaintext highlighter-rouge">## Exemplos</code></td>
-    </tr>
-  </tbody>
-</table>
+<p><a href="../configuring-metabase/localization#supported-languages">See a list of supported locales</a></p>
 
 <h2 id="further-reading">Further reading</h2>
 

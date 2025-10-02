@@ -18,9 +18,9 @@ redirect_from:
 
 {% include shared/in-page-promo-embedding-workshop.html %}
 
-**Interactive embedding** lets you embed the entire Metabase app in an iframe. Interactive embedding integrates your [permissions](../permissions/introduction) and [SSO](../people-and-groups/start#authentication) to give people the right level of access to [query](../questions/query-builder/editor) and [drill-down](/learn/metabase-basics/querying-and-dashboards/questions/drill-through) into your data.
+**Interactive embedding** is what you want if you want to offer [multi-tenant, self-service analytics](/learn/metabase-basics/embedding/multi-tenant-self-service-analytics).
 
-> If you are just starting out with Metabase embedding, consider using [Embedded Analytics JS](./embedded-analytics-js) instead of interactive embedding - it's an improved, more customizable option for embedding interactive Metabase elements. Interactive embedding remains fully supported.
+Interactive embedding is the only type of embedding that integrates with your [permissions](../permissions/introduction) and [SSO](../people-and-groups/start#authentication) to give people the right level of access to [query](/glossary/query-builder) and [drill-down](/learn/metabase-basics/querying-and-dashboards/questions/drill-through) into your data.
 
 ## Interactive embedding demo
 
@@ -45,9 +45,10 @@ If you have your app running locally, and you're using the Pro Cloud version, or
 
 ## Enabling interactive embedding in Metabase
 
-1. Go to **Admin > Embedding > Interactive**.
-2. Click **Enable interactive embedding**.
-3. Under **Authorized origins**, add the URL of the website or web app where you want to embed Metabase (such as `https://*.example.com`).
+1. Go to **Settings** > **Admin settings** > **Embedding**.
+2. Click **Enable**.
+3. Click **Interactive embedding**.
+4. Under **Authorized origins**, add the URL of the website or web app where you want to embed Metabase (such as `https://*.example.com`).
 
 ## Setting up embedding on your website
 
@@ -72,25 +73,25 @@ Go to your Metabase and find the page that you want to embed.
 For example, to embed your Metabase home page, set the `src` attribute to your [site URL](../configuring-metabase/settings#site-url), such as:
 
 ```
-src="https://metabase.yourcompany.com/"
+src="http://metabase.yourcompany.com/"
 ```
 
 To embed a specific Metabase dashboard, you'll want to use the dashboard's Entity ID URL `/dashboard/entity/[Entity ID]`.
 
 ```
-src="https://metabase.yourcompany.com/dashboard/entity/[Entity ID]"
+src="http://metabase.yourcompany.com/dashboard/entity/[Entity ID]"
 ```
 
 To get a dashboard's Entity ID, visit the dashboard and click on the **info** button. In the **Overview** tab, copy the **Entity ID**. Then in your iframe's `src` attribute to:
 
 ```
-src=https://metabase.yourcompany.com/dashboard/entity/Dc_7X8N7zf4iDK9Ps1M3b
+src=http://metabase.yourcompany.com/dashboard/entity/Dc_7X8N7zf4iDK9Ps1M3b
 ```
 
 If your dashboard has more than one tab, select the tab you want people to land on and copy the Tab's ID. Add the tab's ID to the URL:
 
 ```
-src=https://metabase.yourcompany.com/dashboard/entity/Dc_7X8N7zf4iDK9Ps1M3b?tab=YLNdEYtzuSMA0lqO7u3FD
+src=http://metabase.yourcompany.com/dashboard/entity/Dc_7X8N7zf4iDK9Ps1M3b?tab=YLNdEYtzuSMA0lqO7u3FD
 ```
 
 You _can_ use a dashboard's sequential ID, but you should prefer the Entity ID, as Entity IDs are stable across different Metabase environments (e.g., if you're testing on a staging environment, the Entity IDs will remain the same when [exporting the data and importing it](../installation-and-operation/serialization) into a production environment).
@@ -105,7 +106,7 @@ If you want to point to a question, collection, or model, visit the item, click 
 
 Use this option if you want to send people directly to your SSO login screen (i.e., skip over the Metabase login screen with an SSO button), and redirect to Metabase automatically upon authentication.
 
-You'll need to set the `src` attribute to your auth endpoint, with a `return_to` parameter pointing to the encoded Metabase URL. For example, to send people to your SSO login page and automatically redirect them to `https://metabase.yourcompany.com/dashboard/1`:
+You'll need to set the `src` attribute to your auth endpoint, with a `return_to` parameter pointing to the encoded Metabase URL. For example, to send people to your SSO login page and automatically redirect them to `http://metabase.yourcompany.com/dashboard/1`:
 
 ```
 https://metabase.example.com/auth/sso?return_to=http%3A%2F%2Fmetabase.yourcompany.com%2Fdashboard%2F1
@@ -135,7 +136,7 @@ Note that your interactive embed must be compatible with Safari to run on _any_ 
 
 If you want to embed Metabase in another domain (say, if Metabase is hosted at `metabase.yourcompany.com`, but you want to embed Metabase at `yourcompany.github.io`), you can tell Metabase to set the session cookie's SameSite value to "none".
 
-You can set session cookie's SameSite value in **Admin settings** > **Embedding** > **Interactive** > **SameSite cookie setting**.
+You can set session cookie's SameSite value in **Admin settings** > **Embedding** > **Interactive embedding** > **SameSite cookie setting**.
 
 SameSite values include:
 

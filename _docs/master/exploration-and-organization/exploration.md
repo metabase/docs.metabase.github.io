@@ -28,11 +28,10 @@ You can use the command palette to:
 - Create new things (like new questions and dashboards)
 - Find things (saved questions, dashboards, models, etc.)
 - Find and jump to Admin and account settings.
-- Ask [Metabot](../ai/metabot) to do something, or ask it a question.
 
 So anytime you want to do or find anything in Metabase, just hit `cmd/ctrl + k` and start typing what you want to do.
 
-> The command palette is currently unavailable in [Embedded analytics JS](../embedding/embedded-analytics-js) and [interactive embedding](../embedding/interactive-embedding) contexts.
+> The command palette is currently unavailable in [interactive embedding](../embedding/interactive-embedding) contexts.
 
 ## Advanced search
 

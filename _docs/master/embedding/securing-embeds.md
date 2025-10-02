@@ -12,6 +12,8 @@ summary: 'How to hide and protect sensitive data in different types of embeds.'
 
 # Securing embedded Metabase
 
+{% include shared/in-page-promo.html %}
+
 ## Securing embeds with authentication and authorization
 
 There are two basic ways to secure stuff on the internet:
@@ -19,14 +21,14 @@ There are two basic ways to secure stuff on the internet:
 1. **Authentication** looks at _who_ someone is (using standards such as [JWT](../people-and-groups/authenticating-with-jwt) or [SAML](../people-and-groups/authenticating-with-saml)).
 2. **Authorization** looks at _what_ someone has access to (using standards such as OAuth 2.0).
 
-In this guide, we'll talk primarily about authentication. 
+In this guide, we'll talk primarily about authentication.
 
 ## Public embedding
 
 [Public embedding](public-links#public-embeds) doesn't involve any authentication or authorization. A public embed displays a public link with a unique string at the end, like this:
 
 ```plaintext
-https://my-metabase.com/public/dashboard/184f819c-2c80-4b2d-80f8-26bffaae5d8b
+http://my-metabase.com/public/dashboard/184f819c-2c80-4b2d-80f8-26bffaae5d8b
 ```
 
 The string (in this example: `184f819c-2c80-4b2d-80f8-26bffaae5d8b`) uniquely identifies your Metabase question or dashboard. Since public embeds don't do any authentication or authorization, anyone with the URL can view the data.
@@ -54,13 +56,13 @@ We want to add a "Status = Active" filter and display the dashboard's public lin
 To apply and hide the "Status = Active" filter, we'll add [query parameters](public-links#public-embed-parameters) to the end of the public link in our embed:
 
 ```plaintext
-https://my-metabase.com/public/dashboard/184f819c-2c80-4b2d-80f8-26bffaae5d8b?status=active#hide_parameters=status
+http://my-metabase.com/public/dashboard/184f819c-2c80-4b2d-80f8-26bffaae5d8b?status=active#hide_parameters=status
 ```
 
 Even though we've hidden the filter from the embed, someone could take the public link used in the embed, and remove the query parameter `?status=active`:
 
 ```plaintext
-https://my-metabase.com/public/dashboard/184f819c-2c80-4b2d-80f8-26bffaae5d8b
+http://my-metabase.com/public/dashboard/184f819c-2c80-4b2d-80f8-26bffaae5d8b
 ```
 
 Loading the public link without the query parameter would remove the "Status = Active" filter from the data. The person would get access to the original Accounts data, including the rows with inactive accounts.
@@ -80,13 +82,13 @@ Static embeds don't authenticate people's identities on the Metabase side, so pe
 - Any filter selections in a static embed will reset once the signed JWT expires.
 - All Static embed usage will show up in [usage analytics](../usage-and-performance-tools/usage-analytics) under "External user".
 
-## Security in static embedding vs. modular and interactive embedding
+## Static embedding security vs. interactive embedding security
 
 Static embedding only guarantees authorized access to your Metabase data (you decide _what_ is accessible).
 
 If you want to secure your static embeds based on someone's identity (you decide _who_ gets access to _what_), you'll need to set up your own authentication flow and manually wire that up to [locked parameters](#example-sending-user-attributes-to-a-locked-parameter) on each of your static embeds. Note that locked parameters are essentially filters, so you can only set up **row-level** restrictions in a static embed.
 
-If you want an easier way to embed different views of data for different customers (without allowing the customers to see each other’s data), learn how [Modular and interactive embedding authenticates and authorizes people in one flow](#modular-and-interactive-embedding-auth-with-jwt-or-saml).
+If you want an easier way to embed different views of data for different customers (without allowing the customers to see each other’s data), learn how [Interactive embedding authenticates and authorizes people in one flow](#interactive-embedding-authenticates-and-authorizes-people-in-one-flow).
 
 ### Static embedding with JWT authorization
 
@@ -116,7 +118,7 @@ Let's go back to our Accounts example:
 Remember, we can filter the data in a public embed by including a query parameter at the end of the embedding URL:
 
 ```plaintext
-https://my-metabase.com/public/dashboard/184f819c-2c80-4b2d-80f8-26bffaae5d8b?status=active
+http://my-metabase.com/public/dashboard/184f819c-2c80-4b2d-80f8-26bffaae5d8b?status=active
 ```
 
 | Account ID | Plan    | Status |
@@ -128,13 +130,13 @@ https://my-metabase.com/public/dashboard/184f819c-2c80-4b2d-80f8-26bffaae5d8b?st
 With static embeds, we can "lock" the filter by encoding the query parameter in a signed JWT. For example, say we set up the "Status = Active" filter as a [locked parameter](./static-embedding-parameters). The `?status=active` query parameter will be encoded in the signed JWT, so it won't be visible or editable from the static embedding URL:
 
 ```plaintext
-https://my-metabase.com/dashboard/your_signed_jwt
+http://my-metabase.com/dashboard/your_signed_jwt
 ```
 
 If someone tries to add an (unsigned) query parameter to the end of the static embedding URL like this:
 
 ```plaintext
-https://my-metabase.com/dashboard/your_signed_jwt?status=inactive
+http://my-metabase.com/dashboard/your_signed_jwt?status=inactive
 ```
 
 Metabase will reject this unauthorized request for data, so the inactive account rows will remain hidden from the embed.
@@ -167,18 +169,20 @@ The flow might look something like this:
 
 For code samples, see the [static embedding reference app](https://github.com/metabase/embedding-reference-apps).
 
-## Modular and interactive embedding auth with JWT or SAML
+## Interactive embedding authenticates and authorizes people in one flow
 
-Modular embedding (using Embedded Analytics [SDK](./sdk/introduction) or [JS](./embedded-analytics-js) components), and [interactive full-app embedding](./interactive-embedding) integrate  with SSO (either [JWT](../people-and-groups/authenticating-with-jwt) or [SAML](../people-and-groups/authenticating-with-saml)) to authenticate and authorize people in one flow. The auth integration makes it easy to map user attributes (such as a person's role or department) to granular levels of data access, including:
+Interactive embedding integrates with SSO ([JWT](/docs/latest/people-and-groups/authenticating-with-jwt) or [SAML](/docs/latest/people-and-groups/authenticating-with-saml)) to authenticate and authorize people in one flow. The auth integration makes it easy to map user attributes (such as a person's role or department) to granular levels of data access, including:
 
 - [Tables](../permissions/data)
 - [Rows](../permissions/row-and-column-security#row-level-security-filter-by-a-column-in-the-table)
-- [Columns](../permissions/row-and-column-security#custom-row-and-column-security-use-a-sql-question-to-create-a-custom-view-of-a-table)
+- [Columns](../permissions/row-and-column-security#custom-row-and-column-security-use-a-saved-question-to-create-a-custom-view-of-a-table)
 - [Other data permissions](../permissions/data), such as data download permissions or SQL access.
+
+### Interactive embedding with SSO
 
 ![Interactive embedding with SSO.](./images/full-app-embedding-sso.png)
 
-This diagram shows you how an interactive embed gets secured with [SSO](../people-and-groups/start#sso-for-metabase-pro-and-enterprise-plans):
+This diagram shows you how a interactive embed gets secured with [SSO](../people-and-groups/start#sso-for-metabase-pro-and-enterprise-plans):
 
 1. **Visitor arrives**: your frontend gets a request to display all content, including a Metabase component (such as a React component).
 2. **Load embed**: your frontend component loads the Metabase frontend using your [embedding URL](./interactive-embedding#pointing-an-iframe-to-a-metabase-url).
@@ -197,7 +201,7 @@ The mechanics of step 4 will vary a bit depending on whether you use [JWT](../pe
 
 In our static embedding example, we used [locked parameters](#example-securing-data-with-locked-parameters-on-a-static-embed) to display secure filtered views of the Accounts table.
 
-The nice thing about modular/interactive embedding and [SSO](../people-and-groups/start#sso-for-metabase-pro-and-enterprise-plans) integration is that we don't have to manually manage locked parameters for each embed. Instead, we can map user attributes from our identity provider (IdP) to [permissions](../permissions/introduction) and [row and column security](../permissions/row-and-column-security) in Metabase. People can get authenticated and authorized to self-serve specific subsets of data from their very first login.
+The nice thing about interactive embedding and [SSO](../people-and-groups/start#sso-for-metabase-pro-and-enterprise-plans) integration is that we don't have to manually manage locked parameters for each embed. Instead, we can map user attributes from our identity provider (IdP) to [permissions](../permissions/introduction) and [row and column security](../permissions/row-and-column-security) in Metabase. People can get authenticated and authorized to self-serve specific subsets of data from their very first login.
 
 Let's expand on our Accounts example to include a Tenant ID. The Tenant ID represents the parent org for a group of customers:
 
@@ -248,8 +252,6 @@ When Customer 1 logs in, they'll see a different filtered version of the Account
 
 ## Sample apps
 
-- [Modular embedding demo](https://embedded-analytics-sdk-demo.metabase.com)
-- [Modular embedding with SDK reference app](https://github.com/metabase/metabase-nodejs-react-sdk-embedding-sample)
 - [Interactive embedding demo](https://embedding-demo.metabase.com/)
 - [Interactive embedding reference app](https://github.com/metabase/sso-examples/tree/master/app-embed-example)
 - [Static embedding reference app](https://github.com/metabase/embedding-reference-apps)
@@ -257,3 +259,5 @@ When Customer 1 logs in, they'll see a different filtered version of the Account
 ## Further reading
 
 - [Configuring permissions for different customer schemas](../permissions/embedding)
+- [Why interactive embedding?](/blog/why-full-app-embedding)
+- [The five stages of embedding grief](/learn/grow-your-data-skills/analytics/embedding-mistakes)

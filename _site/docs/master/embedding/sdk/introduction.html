@@ -4965,22 +4965,18 @@ Roadmap</a>
 
 <h3 id="enable-the-sdk-in-metabase">Enable the SDK in Metabase</h3>
 
-<ol>
-  <li>Enable the Embedded analytics SDK by going to <strong>Admin settings &gt; Embedding &gt; Modular</strong>.</li>
-  <li>Toggle on <strong>SDK for React</strong>.</li>
-  <li>In <strong>Cross-Origin Resource Sharing (CORS)</strong>, enter the origins for your website or app where you want to allow SDK embedding, separated by a space. Localhost is automatically included.</li>
-</ol>
+<p>Enable the Embedded analytics SDK by going to <strong>Admin settings &gt; Settings &gt; Embedding</strong>. Toggle on the SDK, and hit <strong>Configure</strong>. Enter the origins for your website or app where you want to allow SDK embedding, separated by a space. Localhost is automatically included.</p>
 
 <h3 id="install-the-sdk-in-your-react-application">Install the SDK in your React application</h3>
 
-<p>You can install the Embedded analytics SDK for React via npm. Make sure to use the dist-tag that corresponds to your Metabase version, example: 56-stable for Metabase 56:</p>
+<p>You can install the Embedded analytics SDK for React via npm. Make sure to use the dist-tag that corresponds to your Metabase version, example: 53-stable for Metabase 53:</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm <span class="nb">install</span> @metabase/embedding-sdk-react@56-stable
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm <span class="nb">install</span> @metabase/embedding-sdk-react@53-stable
 </code></pre></div></div>
 
-<p>or with Yarn:</p>
+<p>or with yarn:</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>yarn add @metabase/embedding-sdk-react@56-stable
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>yarn add @metabase/embedding-sdk-react@53-stable
 </code></pre></div></div>
 
 <h3 id="resolving-typesreact-version-mismatches">Resolving <code class="language-plaintext highlighter-rouge">@types/react</code> version mismatches</h3>
@@ -4989,7 +4985,7 @@ Roadmap</a>
 
 <p>To enforce a single <code class="language-plaintext highlighter-rouge">@types/react</code> version across all dependencies, add an <code class="language-plaintext highlighter-rouge">overrides</code> (npm) or <code class="language-plaintext highlighter-rouge">resolutions</code> (Yarn) section to your <code class="language-plaintext highlighter-rouge">package.json</code> and specify the <code class="language-plaintext highlighter-rouge">@types/react</code> version your application uses.</p>
 
-<h4 id="npm-set-typesreact-version">npm set @types/react version</h4>
+<h4 id="npm-set-typesreact-version">NPM set @types/react version</h4>
 
 <div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
   </span><span class="nl">"overrides"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -5007,15 +5003,6 @@ Roadmap</a>
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div></div>
 
-<h2 id="architecture">Architecture</h2>
-
-<p>Starting with Metabase 57, the SDK consists of two parts:</p>
-
-<ul>
-  <li><strong>SDK Package</strong> – The <code class="language-plaintext highlighter-rouge">@metabase/embedding-sdk-react</code> npm package is a lightweight bootstrapper library. Its primary purpose is to load and run the main SDK Bundle code.</li>
-  <li><strong>SDK Bundle</strong> – The full SDK code, served directly from your self-hosted Metabase instance or Metabase Cloud, and it’s the part of the Metabase. This ensures that the main SDK code is always compatible with its corresponding Metabase instance.</li>
-</ul>
-
 <h2 id="developing-with-the-embedded-analytics-sdk">Developing with the Embedded analytics SDK</h2>
 
 <p>Start with one of the quickstarts, then see these pages for more info on components, theming, and more.</p>
@@ -5023,7 +5010,6 @@ Roadmap</a>
 <ul>
   <li><a href="./authentication">Authentication</a></li>
   <li><a href="./questions">Questions</a></li>
-  <li><a href="./ai-chat">AI chat</a></li>
   <li><a href="./dashboards">Dashboards</a></li>
   <li><a href="./appearance">Appearance</a></li>
   <li><a href="./collections">Collections</a></li>
@@ -5042,16 +5028,15 @@ Roadmap</a>
 <p>View the SDK’s changelog:</p>
 
 <ul>
-  <li><a href="https://github.com/metabase/metabase/blob/release-x.56.x/enterprise/frontend/src/embedding-sdk-bundle/CHANGELOG.md">56-stable</a></li>
-  <li><a href="https://github.com/metabase/metabase/blob/release-x.55.x/enterprise/frontend/src/embedding-sdk-bundle/CHANGELOG.md">55-stable</a></li>
+  <li><a href="https://github.com/metabase/metabase/blob/release-x.55.x/enterprise/frontend/src/embedding-sdk/CHANGELOG.md">55-stable</a></li>
   <li><a href="https://github.com/metabase/metabase/blob/release-x.54.x/enterprise/frontend/src/embedding-sdk/CHANGELOG.md">54-stable</a></li>
   <li><a href="https://github.com/metabase/metabase/blob/release-x.53.x/enterprise/frontend/src/embedding-sdk/CHANGELOG.md">53-stable</a></li>
   <li><a href="https://github.com/metabase/metabase/blob/release-x.52.x/enterprise/frontend/src/embedding-sdk/CHANGELOG.md">52-stable</a></li>
 </ul>
 
-<h2 id="embedded-analytics-sdk-on-npm">Embedded analytics SDK on npm</h2>
+<h2 id="embedded-analytics-sdk-on-npm">Embedded analytics SDK on NPM</h2>
 
-<p>Check out the Metabase Embedded analytics SDK on npm: <a href="https://metaba.se/sdk-npm">metaba.se/sdk-npm</a>.</p>
+<p>Check out the Metabase Embedded analytics SDK on NPM: <a href="https://metaba.se/sdk-npm">metaba.se/sdk-npm</a>.</p>
 
 <h2 id="sdk-limitations">SDK limitations</h2>
 

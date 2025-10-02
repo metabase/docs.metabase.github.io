@@ -57,8 +57,6 @@ Metabase will only export the following entities:
 - Collections (but personal collections don't get exported unless explicitly specified them through [export options](#customize-what-gets-exported))
 - Dashboards
 - Saved questions
-- Transforms (including jobs)
-- Documents (without comments)
 - Actions
 - Models
 - Metrics
@@ -70,7 +68,7 @@ Metabase will only export the following entities:
 - Events and timelines
 - Database connection strings (only if specified through [export options](#customize-what-gets-exported))
 
-All other entities—including users, groups, permissions, alerts, subscriptions, document comments—won't get exported.
+All other entities—including users, groups, permissions, alerts, subscriptions—won't get exported.
 
 Metabase will export its artifacts to a directory of YAML files. The export includes:
 
@@ -305,7 +303,7 @@ This ID refers to the collection where the question was saved. In a real export,
 
 ### Entity IDs work with embedding
 
-Metabase supports working with [Entity IDs](#metabase-uses-entity-ids-to-identify-and-reference-metabase-items) for questions, dashboards, and collections in [Static Embedding](../embedding/static-embedding), [Embedded analytics JS](../embedding/embedded-analytics-js), [Interactive embedding](../embedding/interactive-embedding), and the [Embedded analytics SDK](../embedding/sdk/introduction).
+Metabase supports working with [Entity IDs](#metabase-uses-entity-ids-to-identify-and-reference-metabase-items) for questions, dashboards, and collections in [Static Embedding](../embedding/static-embedding), [Interactive embedding](../embedding/interactive-embedding), and the [Embedded Analytics SDK](../embedding/sdk/introduction).
 
 A high-level workflow for using Entity IDs when embedding Metabase in your app would look something like:
 
@@ -642,7 +640,7 @@ tar -xvf  metabase_data.tgz
 ```sh
 curl \
   -H 'x-api-key: YOUR_API_KEY' \
-  -X POST 'https://your-metabase-url/api/ee/serialization/export' \
+  -X POST 'http://your-metabase-url/api/ee/serialization/export' \
   -o metabase_data.tgz
 ```
 
@@ -678,7 +676,7 @@ From the directory where you've stored your GZIP-compressed file, run:
 curl -X POST \
   -H 'x-api-key: YOUR_API_KEY' \
   -F file=@metabase_data.tgz \
-  'https://your-metabase-url/api/ee/serialization/import' \
+  'http://your-metabase-url/api/ee/serialization/import' \
   -o -
 ```
 

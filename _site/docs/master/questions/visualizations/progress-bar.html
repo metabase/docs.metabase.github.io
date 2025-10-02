@@ -4920,13 +4920,15 @@ Roadmap</a>
 
 <p>Progress bars give you an option to set up an alert whenever the result of a question reaches the goal set in the progress bar settings. See <a href="../alerts#progress-bar-alerts">Progress bar alerts</a>.</p>
 
-<h2 id="data-shape-for-the-progress-bar">Data shape for the progress bar</h2>
+<h2 id="how-to-create-a-progress-bar">How to create a progress bar</h2>
 
 <p>To create a progress bar you’ll need:</p>
 
 <ul>
   <li>
-    <p>A query that returns a single row with one or more numeric columns, like “Sum of order quantity”. Progress bars don’t work with breakouts.</p>
+    <p>A query that returns a single number, like “Sum of order quantity”. Progress bar doesn’t work with breakouts.</p>
+
+    <p>You can also use a query that returns several metrics in a single row:</p>
 
     <table>
       <thead>
@@ -4945,104 +4947,19 @@ Roadmap</a>
       </tbody>
     </table>
   </li>
+</ul>
+
+<p>In this case, the progress bar chart will use the metric in the first column (“Sum of quantity”). To change the metric, go to the editor and drag the metric you want to the first position in the Summarize block.</p>
+
+<ul>
   <li>
-    <p>A goal value. The goal value can be a positive number or a value from another column in the same query, see <a href="#set-goal-for-a-progress-bar">Set progress bar goal</a>.</p>
+    <p>A goal value. The goal value should be a positive number. Currently, Metabase only supports setting a static goal (you can’t set a goal based on another query).</p>
 
     <p>The goal is set in the <a href="#progress-bar-options">chart options</a>.</p>
-
-    <p><img src="../images/progress-bar-elements.png" alt="Progress bar KPI"></p>
   </li>
 </ul>
 
-<h2 id="create-a-progress-bar">Create a progress bar</h2>
-
-<p>Once you built the query that returns data in the appropriate shape, you can create a progress bar:</p>
-
-<ol>
-  <li>
-    <p>Visualize the query results.</p>
-
-    <p>By default, Metabase might display results as a table or a number, but you can switch the visualization type.</p>
-  </li>
-  <li>
-    <p>While viewing a visualization, click the <strong>Visualization</strong> button in the bottom left of the screen and switch visualization to <strong>Progress</strong>.</p>
-  </li>
-  <li>To set the bar’s goal and metric, click the <strong>gear</strong> icon in the bottom left to open the settings sidebar.</li>
-  <li>
-    <p>In the “Display” bar in the settings sidebar, choose the column to use as a metric and the column or number to use as a goal. See <a href="#set-goal-for-a-progress-bar">Set a goal</a>.</p>
-
-    <p>If your query only returns one number, you’ll only be able to set a constant goal.</p>
-  </li>
-</ol>
-
-<h2 id="set-goal-for-a-progress-bar">Set goal for a progress bar</h2>
-
-<p>You can set a constant goal (e.g., 5000) or a custom goal based on another column.</p>
-
-<h3 id="use-a-constant-goal">Use a constant goal</h3>
-
-<p>To set a constant goal for the progress bar:</p>
-
-<ol>
-  <li>While viewing the progress bar, click the <strong>Gear</strong> icon in bottom left to open settings.</li>
-  <li>
-    <p>On the display tab, click the <strong>Goal</strong> dropdown and select <strong>Custom value</strong>.</p>
-
-    <p>If your query result contains only a single column, you won’t see the column dropdown, and instead you’ll just see a field to enter your constant goal.</p>
-  </li>
-  <li>Enter the goal value.</li>
-</ol>
-
-<h3 id="use-another-column-as-the-goal">Use another column as the goal</h3>
-
-<p>The custom goal has to come from a column in the same query, so your query has to return the result in the form of:</p>
-
-<table>
-  <thead>
-    <tr>
-      <th>Value</th>
-      <th>Goal</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td data-label="Value">4910</td>
-      <td data-label="Goal">5000</td>
-    </tr>
-  </tbody>
-</table>
-
-<p>If you’re using the query builder, you might need to compute both the metric and the goal as aggregations, so <a href="../query-builder/expressions-list#aggregations">custom aggregations</a> might be handy.</p>
-
-<p>For example, if you want to build a progress bar comparing count of orders this year (the metric) vs count of orders last year (the goal) you can make use of <a href="../query-builder/expressions/countif"><code class="language-plaintext highlighter-rouge">CountIf()</code></a> to build a query returning conditional counts based on years:</p>
-
-<p><img src="../images/progress-conditional-count.png" alt="Conditional counts as metric and goal"></p>
-
-<p>Once you have a column that you want to use, set it as a goal:</p>
-
-<ol>
-  <li>While viewing the progress bar visualization, click on the <strong>Gear</strong> icon in bottom left to open settings.</li>
-  <li>On the display tab, select the columns you want to serve as the value and the goal.</li>
-</ol>
-
-<p><img src="../images/progress-set-custom-goal.png" alt="Set custom goal for progress bar"></p>
-
-<h3 id="use-another-querys-result-as-the-goal">Use another query’s result as the goal</h3>
-
-<p>To use the result of another query as the goal value for the progress bar, you’ll first need to bring this value into your query as a column, then select that newly added column as the goal value in progress bar settings. In the query builder, you can bring in a result from another question using a join on <code class="language-plaintext highlighter-rouge">1=1</code>:</p>
-
-<ol>
-  <li>Create a separate question returning a single number: your dynamic goal.</li>
-  <li>Create a new question. This question should return the metric you want to compare to the goal. This is the question you’ll visualize as a progress bar.</li>
-  <li>
-    <p><a href="../query-builder/join">Join</a> this question to the question containing your dynamic goal from step 1. Join the question using a custom expression <code class="language-plaintext highlighter-rouge">1</code> for both sides of the join. See <a href="../query-builder/join#joins-with-custom-expressions">joins with custom expressions</a>.</p>
-
-    <p>This join should add the dynamic goal as a new column to your query.</p>
-
-    <p><img src="../images/progress-bar-dynamic.png" alt="Dynamic goal in the query builder"></p>
-  </li>
-  <li>Set the visualization to a <a href="#create-a-progress-bar">progress bar</a> and <a href="#use-another-column-as-the-goal">set the dynamic goal column as the goal</a>.</li>
-</ol>
+<p><img src="../images/progress-bar-elements.png" alt="Progress bar KPI"></p>
 
 <h2 id="progress-bar-options">Progress bar options</h2>
 
@@ -5053,10 +4970,6 @@ Roadmap</a>
 <p><img src="../images/progress-with-format.png" alt="Progress bar with format applied"></p>
 
 <p>Selecting “<strong>Style</strong>: Percent” in format options will only change how the result of the query is formatted: for example, <code class="language-plaintext highlighter-rouge">17</code> will be formatted as <code class="language-plaintext highlighter-rouge">1700%</code>. If you instead want to display the query result as a percentage of the goal, you’ll need to calculate that percentage in your query. For example, to display the count of orders as a percentage of the goal of <code class="language-plaintext highlighter-rouge">20</code>, use <a href="../query-builder/expressions">custom expressions</a> to return “Count of orders divided by 20”, and format the result as a percentage.</p>
-
-<h2 id="progress-bar-alerts">Progress bar alerts</h2>
-
-<p>You can tell Metabase to send alerts when the progress bar goes above or below the goal. See <a href="../alerts#progress-bar-alerts">progress bar alerts</a>.</p>
 
 <h2 id="limitations-and-alternatives">Limitations and alternatives</h2>
 

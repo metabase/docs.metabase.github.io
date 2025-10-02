@@ -60,7 +60,7 @@ You must be able to connect to the target application database in whatever envir
 
 ### 2. Shut down your Metabase instance
 
-You don't want people creating new stuff in your Metabase while you're migrating. Ideally, if you're running the Metabase JAR in production, you're [running Metabase as a service](./running-metabase-as-service).
+You don't want people creating new stuff in your Metabase while you're migrating. Ideally, if you're running the Metabase JAR in production, you're [running Metabase as a service](./running-metabase-on-debian).
 
 ### 3. Back up your H2 application database
 
