@@ -82,9 +82,10 @@ layout: new-docs
 
 ## MetabotQuestion
 
-| Function                                    | Description                                  |
-| :------------------------------------------ | :------------------------------------------- |
-| [MetabotQuestion](./api/MetabotQuestion) | A component that renders a metabot question. |
+| Name                                                  | Description                                  |
+| :---------------------------------------------------- | :------------------------------------------- |
+| [MetabotQuestion](./api/MetabotQuestion)           | A component that renders a metabot question. |
+| [MetabotQuestionProps](./api/MetabotQuestionProps) | Props for the MetabotQuestion component.     |
 
 ## StaticQuestion
 

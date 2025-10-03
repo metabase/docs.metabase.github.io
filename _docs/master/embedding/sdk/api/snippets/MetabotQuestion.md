@@ -10,7 +10,7 @@ layout: new-docs
 ---
 
 ```ts
-function MetabotQuestion(props: object): Element;
+function MetabotQuestion(props: MetabotQuestionProps): Element;
 ```
 
 A component that renders a metabot question.
@@ -19,9 +19,9 @@ A component that renders a metabot question.
 
 <!-- [<snippet parameters>] -->
 
-| Parameter | Type     |
-| :-------- | :------- |
-| `props`   | `object` |
+| Parameter | Type                                                    |
+| :-------- | :------------------------------------------------------ |
+| `props`   | [`MetabotQuestionProps`](./api/MetabotQuestionProps) |
 
 <!-- [<endsnippet parameters>] -->
 
