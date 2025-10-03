@@ -445,6 +445,33 @@ Button to reset question modifications. Only appears when there are unsaved chan
 
 <!-- [<endsnippet returns>] -->
 
+### SqlParametersList()
+
+<!-- [<snippet sqlparameterslist()>] -->
+
+```ts
+SqlParametersList: () =>
+  | null
+  | Element;
+```
+
+**`Function`**
+
+Parameters list for SQL questions
+
+<!-- [<endsnippet sqlparameterslist()>] -->
+
+#### Returns
+
+<!-- [<snippet returns>] -->
+
+\| `null`
+\| [`Element`](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/0b728411cd1dfb4bd26992bb35a73cf8edaa22e7/types/react/jsx-runtime.d.ts#L6)
+
+---
+
+<!-- [<endsnippet returns>] -->
+
 ### Summarize()
 
 <!-- [<snippet summarize()>] -->
