@@ -371,7 +371,7 @@ redirect_from:
                 "models" : {
                   "type" : "array",
                   "items" : {
-                    "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.tools.api.full-table"
+                    "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.tools.api.table-result"
                   }
                 }
               },
@@ -409,43 +409,6 @@ redirect_from:
           }
         },
         "required" : [ "id", "type", "name" ]
-      },
-      "metabase-enterprise.metabot-v3.tools.api.basic-table" : {
-        "type" : "object",
-        "properties" : {
-          "id" : {
-            "type" : "integer"
-          },
-          "name" : {
-            "type" : "string"
-          },
-          "database_id" : {
-            "type" : "integer"
-          },
-          "display_name" : {
-            "type" : "string"
-          },
-          "type" : {
-            "type" : "string",
-            "enum" : [ "model", "table" ]
-          },
-          "fields" : {
-            "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.tools.api.columns"
-          },
-          "database_schema" : {
-            "type" : "string"
-          },
-          "metrics" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.tools.api.basic-metric"
-            }
-          },
-          "description" : {
-            "type" : "string"
-          }
-        },
-        "required" : [ "id", "type", "name", "display_name", "database_id", "fields" ]
       },
       "metabase-enterprise.metabot-v3.tools.api.bucket" : {
         "type" : "string",
@@ -969,49 +932,6 @@ redirect_from:
         },
         "required" : [ "id", "type", "name" ]
       },
-      "metabase-enterprise.metabot-v3.tools.api.full-table" : {
-        "type" : "object",
-        "properties" : {
-          "id" : {
-            "type" : "integer"
-          },
-          "name" : {
-            "type" : "string"
-          },
-          "database_id" : {
-            "type" : "integer"
-          },
-          "display_name" : {
-            "type" : "string"
-          },
-          "queryable_foreign_key_tables" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.tools.api.basic-table"
-            }
-          },
-          "type" : {
-            "type" : "string",
-            "enum" : [ "model", "table" ]
-          },
-          "fields" : {
-            "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.tools.api.columns"
-          },
-          "database_schema" : {
-            "type" : "string"
-          },
-          "metrics" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.tools.api.basic-metric"
-            }
-          },
-          "description" : {
-            "type" : "string"
-          }
-        },
-        "required" : [ "id", "type", "name", "display_name", "database_id", "fields" ]
-      },
       "metabase-enterprise.metabot-v3.tools.api.generate-insights-arguments" : {
         "type" : "object",
         "properties" : {
@@ -1341,6 +1261,10 @@ redirect_from:
             "with_metrics" : {
               "default" : true,
               "type" : "boolean"
+            },
+            "with_related_tables" : {
+              "default" : true,
+              "type" : "boolean"
             }
           }
         }, {
@@ -1353,7 +1277,7 @@ redirect_from:
           "type" : "object",
           "properties" : {
             "structured_output" : {
-              "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.tools.api.full-table"
+              "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.tools.api.table-result"
             }
           },
           "required" : [ "structured_output" ]
@@ -1902,6 +1826,9 @@ redirect_from:
           "type" : "object",
           "properties" : { }
         } ]
+      },
+      "metabase-enterprise.metabot-v3.tools.api.table-result" : {
+        "$ref" : "#/components/schemas/metabase-enterprise.metabot-v3.tools.api.table-result"
       },
       "metabase-enterprise.metabot-v3.tools.api.temporal-extraction-filter" : {
         "allOf" : [ {
