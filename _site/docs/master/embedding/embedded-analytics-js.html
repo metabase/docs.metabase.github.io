@@ -4981,7 +4981,7 @@ Unlike with <a href="./interactive-embedding">interactive embedding</a>, where y
 
 <ol>
   <li>
-    <p>In Metabase, go to <strong>Admin &gt; Embedding &gt; Setup guide &gt; Embed in your code</strong>, and select <strong>Try it out</strong> next to <strong>Embedded analytics JS</strong>.</p>
+    <p>In Metabase, go to <strong>Admin &gt; Embedding &gt; Modular embedding</strong>, and select <strong>New embed</strong> next to <strong>Embedded analytics JS</strong>.</p>
 
     <p>If you’re planning to embed an existing question or dashboard, you can instead go straight to that question or dashboard, click on the <strong>Share</strong> button, and choose <strong>Embedded Analytics JS</strong>.</p>
   </li>
@@ -5028,6 +5028,16 @@ Unlike with <a href="./interactive-embedding">interactive embedding</a>, where y
 <p>Metabase will generate a code snippet that you can copy and paste into your app, see <a href="#embed-code-snippets">Embed code snippets</a> for an example. You can later modify this code snippet to specify additional appearance options or change the behavior of some components.</p>
 
 <p>Add the code snippet into your app, and refresh the page.</p>
+
+<h2 id="each-end-user-should-have-their-own-metabase-account">Each end user should have their own Metabase account</h2>
+
+<p>Each end-user must have their own Metabase account.</p>
+
+<p>The problem with having end-users share a Metabase account is that, even if you filter data on the client side via the Embedded analytics JS, all end-users will still have access to the session token, which they could use to access Metabase directly via the API to get data they’re not supposed to see.</p>
+
+<p>If each end-user has their own Metabase account, however, you can configure permissions in Metabase and everyone will only have access to the data they should.</p>
+
+<p>In addition to this, we consider shared accounts to be unfair usage. Fair usage of Embedded Analytics JS involves giving each end-user of the embedded analytics their own Metabase account.</p>
 
 <h2 id="embed-code-snippets">Embed code snippets</h2>
 
