@@ -13,7 +13,11 @@ layout: new-docs
 type MetabaseClickActionPluginsConfig = (
   clickActions: MetabaseClickAction[],
   clickedDataPoint: MetabaseDataPointObject,
-) => MetabaseClickAction[];
+) =>
+  | MetabaseClickAction[]
+  | {
+      onClick: () => void;
+    };
 ```
 
 ## Parameters
@@ -31,6 +35,9 @@ type MetabaseClickActionPluginsConfig = (
 
 <!-- [<snippet returns>] -->
 
-[`MetabaseClickAction`](./api/MetabaseClickAction)[]
+\| [`MetabaseClickAction`](./api/MetabaseClickAction)[]
+\| \{
+`onClick`: () => `void`;
+\}
 
 <!-- [<endsnippet returns>] -->
