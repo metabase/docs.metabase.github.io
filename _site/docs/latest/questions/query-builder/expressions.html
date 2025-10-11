@@ -4875,18 +4875,25 @@ Roadmap</a>
 
 <p>To do math on timestamp columns, you can use <a href="expressions-list#date-functions">Date functions</a> like <a href="./expressions/datetimediff">dateDiff</a>.</p>
 
-<h2 id="conditional-operators">Conditional operators</h2>
+<h2 id="conditional-operators">Conditional and Boolean logic operators</h2>
+
+<p>Comparison operators:</p>
 
 <ul>
-  <li><code class="language-plaintext highlighter-rouge">AND</code></li>
-  <li><code class="language-plaintext highlighter-rouge">OR</code></li>
-  <li><code class="language-plaintext highlighter-rouge">NOT</code></li>
   <li><code class="language-plaintext highlighter-rouge">&gt;</code></li>
   <li><code class="language-plaintext highlighter-rouge">&gt;=</code> (greater than or equal to)</li>
   <li><code class="language-plaintext highlighter-rouge">&lt;</code></li>
   <li><code class="language-plaintext highlighter-rouge">&lt;=</code> (less than or equal to)</li>
   <li><code class="language-plaintext highlighter-rouge">=</code></li>
   <li><code class="language-plaintext highlighter-rouge">!=</code> (not equal to)</li>
+</ul>
+
+<p>Boolean operators for logical conjunction, disjunction, and negation:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">AND</code></li>
+  <li><code class="language-plaintext highlighter-rouge">OR</code></li>
+  <li><code class="language-plaintext highlighter-rouge">NOT</code></li>
 </ul>
 
 <p>For example, you could create a filter for customers from California or Vermont: <code class="language-plaintext highlighter-rouge">[State] = "CA" OR [State] = "VT"</code>.</p>
@@ -4912,6 +4919,7 @@ Roadmap</a>
 
 <ul>
   <li>Filter expressions are different in that they must return a Boolean value (something that’s either true or false). For example, you could write <code class="language-plaintext highlighter-rouge">[Subtotal] + [Tax] &lt; 100</code>. Metabase would look at each row, add its subtotal and tax, the check if that sum is greater than 100. If it is, the statement evaluates as true, and Metabase will include the row in the result. If instead you were to (incorrectly) write <code class="language-plaintext highlighter-rouge">[Subtotal] + [Tax]</code>, Metabase wouldn’t know what to do, as that expression doesn’t evaluate to true or false.</li>
+  <li>The arguments of logic operators such as <code class="language-plaintext highlighter-rouge">AND</code> and <code class="language-plaintext highlighter-rouge">OR</code> must be Boolean. For example, ‘[Subtotal] &lt; 100 AND [Tax] &gt; 12`.</li>
   <li>You can use functions inside of the conditional portion of the <code class="language-plaintext highlighter-rouge">CountIf</code> and <code class="language-plaintext highlighter-rouge">SumIf</code> aggregations, like so: <code class="language-plaintext highlighter-rouge">CountIf( round([Subtotal]) &gt; 100 OR floor([Tax]) &lt; 10 )</code>.</li>
 </ul>
 
