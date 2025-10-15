@@ -7,11 +7,12 @@ category: 'Exploration and Organization'
 title: 'Delete and restore'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/exploration-and-organization/delete-and-restore.md'
 layout: new-docs
+summary: 'You can move questions, dashboards, models, and metrics to Trash where they can be restored or permanently deleted. Deleting items affects related content like dashboards and subscriptions. Other entities in Metabase can be deleted or archived, but won''t show up in Trash.'
 ---
 
 # Delete and restore
 
-Sometimes your questions, dashboards, models, or collections outlive their usefulness. You can send outdated items to **Trash**.
+Sometimes your questions, dashboards, models, metrics, or collections outlive their usefulness. You can send outdated items to **Trash**.
 
 ![Move to trash](./images/move-to-trash.png)
 
@@ -111,7 +112,7 @@ What happens to related items when you delete a collection?
 | ---------------------------------------------- | -------- | ------------------- | -------- |
 | All items and subcollections in the collection | In Trash | N/A                 | Restored |
 
-> You can't permanently delete collections
+> You can't permanently delete collections.
 
 ## Permanently deleting items
 
@@ -124,7 +125,7 @@ To permanently delete an item:
 3. Click on the checkbox next to the item to select it;
 4. Select "Permanently delete". If you click this button, you won't be able to recover the item. It'll be lost to the void.
 
-> You can't permanently delete collections
+> You can't permanently delete collections.
 
 ## Deleting and restoring events and timelines
 
@@ -138,13 +139,11 @@ Snippets can be archived and unarchived. See [Archiving snippets](../questions/n
 
 ## Deleting segments
 
-Segments can be retired. See [Retiring Segments](../data-modeling/segments#editing-and-retiring-segments).
-
-You won't see retired Segments in Trash.
+Segments can be retired. See [Retiring Segments](../data-modeling/segments#editing-and-retiring-segments). You won't see retired Segments in Trash.
 
 ## Deleting subscriptions and alerts
 
-See [Deleting a subscription](../dashboards/subscriptions#deleting-a-subscription) and [Deleting alerts](../questions/alerts#editing-and-deleting-alerts).
+See [Deleting a subscription](../dashboards/subscriptions#deleting-a-subscription) and [Deleting alerts](../questions/alerts#editing-deleting-and-unsubscribing-from-alerts).
 
 ## Deleting databases
 
