@@ -28,6 +28,7 @@ layout: new-docs
 | <a id="charts"></a> `charts?`                             | [`ChartColor`](./api/ChartColor)[] | Chart colors                                                                            |
 | <a id="error"></a> `error?`                               | `string`                              | Color used for error icons and borders. Defaults to red.                                |
 | <a id="filter"></a> `filter?`                             | `string`                              | Color used for filters context                                                          |
+| <a id="focus"></a> `focus?`                               | `string`                              | Color used to outline elements in focus                                                 |
 | <a id="negative"></a> `negative?`                         | `string`                              | Color used to indicate dangerous actions and negative values/trends                     |
 | <a id="positive"></a> `positive?`                         | `string`                              | Color used to indicate successful actions and positive values/trends                    |
 | <a id="shadow"></a> `shadow?`                             | `string`                              | Color used for popover shadows                                                          |
