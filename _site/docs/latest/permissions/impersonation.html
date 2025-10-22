@@ -4815,17 +4815,23 @@ Roadmap</a>
   </div>
 </div>
 
-<blockquote>
-  <p>For now, impersonation access is only available for ClickHouse, MySQL, PostgreSQL, Redshift, Snowflake, and SQL Server. If you want to switch database <em>connections</em> based on who is logged in, check out <a href="./database-routing">Database routing</a>.</p>
-</blockquote>
-
-<blockquote>
-  <p>If you’re using views in PostgresSQL, the row-level security policies on views will only work on Postgres versions 15 and higher.</p>
-</blockquote>
-
 <p>This page covers the <a href="./data#view-data-permissions">View data</a> permission level called Impersonation.</p>
 
 <p><strong>Impersonation access</strong> allows admins to “outsource” View data permissions to roles in your database. Admins can associate user attributes with database-defined roles and their privileges. If someone is in a group with their View data permission set to Impersonation, the person will be able to view and query data based on the privileges granted to the role specified by their user attribute.</p>
+
+<h2 id="databases-that-support-impersonation">Databases that support impersonation</h2>
+
+<p>For now, impersonation access is only available for the following databases:</p>
+<ul>
+  <li>ClickHouse</li>
+  <li>MySQL</li>
+  <li>PostgreSQL. If you’re using views in PostgresSQL, the row-level security policies on views will only work on Postgres versions 15 and higher.</li>
+  <li>Redshift</li>
+  <li>Snowflake</li>
+  <li>SQL Server.</li>
+</ul>
+
+<p>If you want to switch database <em>connections</em> based on who is logged in, check out <a href="./database-routing">Database routing</a>.</p>
 
 <h2 id="impersonation-vs-row-and-column-security">Impersonation vs row and column security</h2>
 
