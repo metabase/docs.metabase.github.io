@@ -14,5 +14,6 @@ type CollectionBrowserListColumns =
   | "type"
   | "name"
   | "lastEditedBy"
-  | "lastEditedAt";
+  | "lastEditedAt"
+  | "archive";
 ```
