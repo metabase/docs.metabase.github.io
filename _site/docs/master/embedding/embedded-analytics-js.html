@@ -4935,6 +4935,7 @@ Unlike with <a href="./interactive-embedding">interactive embedding</a>, where y
   <li>A question (chart). You can embed both questions built with the query builder and questions built with SQL.</li>
   <li>Full graphical <a href="../questions/query-builder/editor">query builder</a> to enable people to build their own charts and explorations.</li>
   <li>A browser to navigate collections and open dashboards or questions.</li>
+  <li><a href="./sdk/ai-chat">AI chat interface</a>.</li>
 </ul>
 
 <h2 id="quickstart">Quickstart</h2>
@@ -4963,10 +4964,10 @@ Unlike with <a href="./interactive-embedding">interactive embedding</a>, where y
 
     <ul>
       <li>Dashboard</li>
-      <li>Question</li>
+      <li>Chart</li>
       <li>Exploration (which will embed the Metabase query builder)</li>
       <li>Browser</li>
-      <li>Metabot question</li>
+      <li>Metabot question (which will embed AI chat)</li>
     </ul>
   </li>
   <li>
@@ -5312,7 +5313,7 @@ Unlike with <a href="./interactive-embedding">interactive embedding</a>, where y
 
 <h3 id="question">Question</h3>
 
-<p>To render a question (chart).</p>
+<p>To render a question (chart):</p>
 
 <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;metabase-question</span> <span class="na">question-id=</span><span class="s">"1"</span><span class="nt">&gt;&lt;/metabase-question&gt;</span>
 </code></pre></div></div>
@@ -5335,15 +5336,12 @@ Unlike with <a href="./interactive-embedding">interactive embedding</a>, where y
   <li><code class="language-plaintext highlighter-rouge">with-downloads</code> (default is false) - show downloads</li>
   <li><code class="language-plaintext highlighter-rouge">initial-sql-parameters</code> - default value for SQL parameters, only applicable to native SQL questions, like <code class="language-plaintext highlighter-rouge">{ "productId": "42" }</code></li>
   <li><code class="language-plaintext highlighter-rouge">is-save-enabled</code> (default is false)</li>
-  <li>
-    <p><code class="language-plaintext highlighter-rouge">target-collection</code> - this is to enforce saving into a particular collection. Values: regular ID, entity ID, <code class="language-plaintext highlighter-rouge">"personal”</code>, <code class="language-plaintext highlighter-rouge">"root”</code></p>
-  </li>
-  <li>
-    <h3 id="browser">Browser</h3>
-  </li>
+  <li><code class="language-plaintext highlighter-rouge">target-collection</code> - this is to enforce saving into a particular collection. Values: regular ID, entity ID, <code class="language-plaintext highlighter-rouge">"personal”</code>, <code class="language-plaintext highlighter-rouge">"root”</code></li>
 </ul>
 
-<p>To render a collection browser so people can navigate a collection and open dashboards or questions.</p>
+<h3 id="browser">Browser</h3>
+
+<p>To render a collection browser so people can navigate a collection and open dashboards or questions:</p>
 
 <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;metabase-browser</span> <span class="na">initial-collection=</span><span class="s">"14"</span> <span class="na">read-only=</span><span class="s">"false"</span><span class="nt">&gt;&lt;/metabase-browser&gt;</span>
 </code></pre></div></div>
@@ -5358,6 +5356,29 @@ Unlike with <a href="./interactive-embedding">interactive embedding</a>, where y
 
 <ul>
   <li><code class="language-plaintext highlighter-rouge">read-only</code> (default is true) – if true, people can interact with items (filter, summarize, drill-through) but cannot save. If false, they can create and edit items in the collection.</li>
+</ul>
+
+<h3 id="metabot">Metabot</h3>
+
+<p>To render the AI chat interface:</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;metabase-metabot&gt;&lt;/metabase-metabot&gt;</span>
+</code></pre></div></div>
+
+<p><strong>Required parameters:</strong></p>
+
+<p>None.</p>
+
+<p><strong>Optional parameters:</strong></p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">layout</code> (default is <code class="language-plaintext highlighter-rouge">auto</code>) – how should the browser position the visualization with respect to the chat interface. Possible values are:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">auto</code> (default): Metabot uses the <code class="language-plaintext highlighter-rouge">stacked</code> layout on mobile screens, and a <code class="language-plaintext highlighter-rouge">sidebar</code> layout on larger screens.</li>
+      <li><code class="language-plaintext highlighter-rouge">stacked</code>: the question visualization stacks on top of the chat interface.</li>
+      <li><code class="language-plaintext highlighter-rouge">sidebar</code>: the question visualization appears to the left of the chat interface, which is in the right sidebar.</li>
+    </ul>
+  </li>
 </ul>
 
 <h2 id="embedding-metabase-in-a-different-domain">Embedding Metabase in a different domain</h2>

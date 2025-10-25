@@ -4940,6 +4940,13 @@ instead of just the top-level message as a string.</p>
 you can pass to [[metabase.lib.core/order-by]] – for example a Lib <code class="language-plaintext highlighter-rouge">:metadata/column</code> or an [MBQL 5]
 <code class="language-plaintext highlighter-rouge">metabase.driver-api.core/order-by-clause</code>.</p>
   </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">metabase.driver-api.core/nest-query</code> no longer automatically calls <code class="language-plaintext highlighter-rouge">metabase.driver-api.core/add-alias-info</code> on its
+results, but it also no longer expect its input to have this information. If you were using both of these tools in
+your driver, make change the order in which the are applied so <code class="language-plaintext highlighter-rouge">nest-query</code> happens first, followed by
+<code class="language-plaintext highlighter-rouge">add-alias-info</code>. Note that drivers deriving from <code class="language-plaintext highlighter-rouge">:sql</code> do not need to make any changes, since this is done by the
+base <code class="language-plaintext highlighter-rouge">:sql</code> driver implementation.</p>
+  </li>
 </ul>
 
 <h2 id="metabase-0563">Metabase 0.56.3</h2>
