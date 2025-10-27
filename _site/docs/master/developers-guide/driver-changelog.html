@@ -5023,7 +5023,7 @@ from their <code class="language-plaintext highlighter-rouge">metabase-plugin.ya
     <p>Added a feature <code class="language-plaintext highlighter-rouge">:multi-level-schema</code> for drivers that support hierarchical levels between database and schema. Such as databricks’ catalog. Defaults to false.</p>
   </li>
   <li>
-    <p>Added the multi-method <code class="language-plaintext highlighter-rouge">adjust-schema-qualification</code> that allows drivers to to qualify, or unqualify table schemas based on enabling or disabling multi-level-schema support. Drivers may need to implement <code class="language-plaintext highlighter-rouge">sql.qp/-&gt;honeysql [driver ::h2x/identifier]</code> to properly quote fully qualified schemas.</p>
+    <p>Added the multi-method <code class="language-plaintext highlighter-rouge">adjust-schema-qualification</code> that allows drivers to qualify, or unqualify table schemas based on enabling or disabling multi-level-schema support. Drivers may need to implement <code class="language-plaintext highlighter-rouge">sql.qp/-&gt;honeysql [driver ::h2x/identifier]</code> to properly quote fully qualified schemas.</p>
   </li>
   <li>
     <p>Added the multi-method <code class="language-plaintext highlighter-rouge">float-dbtype</code> which returns the name of the float type we coerce to for coercion strategies and the <code class="language-plaintext highlighter-rouge">float()</code> custom expression function.</p>
@@ -5221,7 +5221,7 @@ for better performance when saving Questions. Refer to the method docstring for 
 an example implementation.</p>
   </li>
   <li>
-    <p>Prior to 0.51.0, to generate SQL queries with inline parameters, Metabase would generate a parameterized SQL string,
+    <p>Before 0.51.0, to generate SQL queries with inline parameters, Metabase would generate a parameterized SQL string,
 then attempt to parse the SQL replace and replace <code class="language-plaintext highlighter-rouge">?</code> placeholders with inline values from the driver method
 <code class="language-plaintext highlighter-rouge">metabase.driver.sql.util.unprepare/unprepare-value</code>. In 0.51.0+, Metabase instead generates these queries using
 Honey SQL 2’s <code class="language-plaintext highlighter-rouge">:inline</code> option, eliminating the need to parse and replace <code class="language-plaintext highlighter-rouge">?</code> placeholders. As such, the
@@ -5313,7 +5313,7 @@ spec.</p>
     <p>Similarly, <code class="language-plaintext highlighter-rouge">metabase.test.data.sql-jdbc.execute/execute-sql!</code> and helper functions like
 <code class="language-plaintext highlighter-rouge">metabase.test.data.sql-jdbc.execute/sequentially-execute-sql!</code> are now called with a <code class="language-plaintext highlighter-rouge">java.sql.Connection</code>
 instead of both a <code class="language-plaintext highlighter-rouge">DatabaseDefinition</code> and either <code class="language-plaintext highlighter-rouge">:server</code> or <code class="language-plaintext highlighter-rouge">:db</code> <em>context</em>; the appropriate connection type is
-created automatically and passed in in the calling code. Update your method implementations and usages
+created automatically and passed in the calling code. Update your method implementations and usages
 accordingly.</p>
   </li>
   <li>
@@ -5473,7 +5473,7 @@ Athena sets this to <code class="language-plaintext highlighter-rouge">true</cod
 column names that contains a space character. Defaults to <code class="language-plaintext highlighter-rouge">false</code>.</p>
   </li>
   <li>
-    <p>New feature <code class="language-plaintext highlighter-rouge">:uuid-type</code> has been added to indicate that this database is able to distinguish and filter against UUIDs.
+    <p>New feature <code class="language-plaintext highlighter-rouge">:uuid-type</code> has been added to indicate that this database can distinguish and filter against UUIDs.
 Only a few database support native UUID types. The default is <code class="language-plaintext highlighter-rouge">false</code>.</p>
   </li>
 </ul>
@@ -5635,7 +5635,7 @@ new function takes a Field as returned by <code class="language-plaintext highli
   </li>
   <li>
     <p>Tests should try to avoid using any of the <code class="language-plaintext highlighter-rouge">with-temp</code> helpers or application database objects; instead, use the
-metadata functions above and and the helper <em>metadata providers</em> in <code class="language-plaintext highlighter-rouge">metabase.lib</code>, <code class="language-plaintext highlighter-rouge">metabase.lib.test-util</code>, and
+metadata functions above and the helper <em>metadata providers</em> in <code class="language-plaintext highlighter-rouge">metabase.lib</code>, <code class="language-plaintext highlighter-rouge">metabase.lib.test-util</code>, and
 <code class="language-plaintext highlighter-rouge">metabase.query-processor.test-util</code> for mocking them, such as <code class="language-plaintext highlighter-rouge">mock-metadata-provider</code>,
 <code class="language-plaintext highlighter-rouge">metabase-provider-with-cards-for-queries</code>, <code class="language-plaintext highlighter-rouge">remap-metadata-provider</code>, and <code class="language-plaintext highlighter-rouge">merged-mock-metadata-provider</code>.</p>
   </li>
@@ -5923,7 +5923,7 @@ differences between the library versions.</p>
 
 <h4 id="breaking-changes-in-0460-related-to-the-honey-sql-2-transition">Breaking Changes in 0.46.0 related to the Honey SQL 2 transition</h4>
 
-<p><strong>Note: these breaking changes will hopefully be fixed before 0.46.0 ships. This will be updated if they are.</strong></p>
+<p><strong>Note: we expect these breaking changes to be fixed before 0.46.0 ships. This will be updated if they are.</strong></p>
 
 <p>The classes <code class="language-plaintext highlighter-rouge">metabase.util.honeysql_extensions.Identifer</code> and <code class="language-plaintext highlighter-rouge">metabase.util.honeysql_extensions.TypedHoneySQLForm</code>
 have been moved to <code class="language-plaintext highlighter-rouge">metabase.util.honey_sql_1.Identifer</code> and <code class="language-plaintext highlighter-rouge">metabase.util.honey_sql_1.TypedHoneySQLForm</code>,
