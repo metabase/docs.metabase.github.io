@@ -6,7 +6,7 @@
   <meta content="frame-ancestors 'none'" http-equiv="Content-Security-Policy">
   <meta content="deny" http-equiv="X-Frame-Options">
     
-  <link href="https://www.metabase.com/docs/master/embedding/sdk/config" rel="canonical">
+  <link href="https://www.metabase.com/docs/master/installation-and-operation/remote-sync" rel="canonical">
   
 
   <script type="text/javascript">
@@ -49,12 +49,12 @@
 
 
 
-<title>Embedded analytics SDK - config | Metabase Documentation</title>
+<title>Remote sync | Metabase Documentation</title>
 <!-- Twitter cards -->
 <meta name="twitter:site" content="@metabase">
 
-<meta name="twitter:title" content="Embedded analytics SDK - config | Metabase Documentation">
-<meta name="twitter:description" content="Embedded analytics SDK - config     <path d=" m12="" 10c12.5523="" 10="" 13="" 9.55228="" 13..."="">
+<meta name="twitter:title" content="Remote sync | Metabase Documentation">
+<meta name="twitter:description" content="Version control your dashboards, questions, and models with Git. Sync content between development and production instances automatically.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -62,9 +62,9 @@
 <!-- Open Graph metadata -->
 <meta property="og:site_name" content="Metabase | Business Intelligence, Dashboards, and Data Visualization">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://www.metabase.com/docs/master/embedding/sdk/config">
-<meta name="title" property="og:title" content="Embedded analytics SDK - config | Metabase Documentation">
-<meta name="description" property="og:description" content="Embedded analytics SDK - config     <path d=" m12="" 10c12.5523="" 10="" 13="" 9.55228="" 13..."="">
+<meta property="og:url" content="https://www.metabase.com/docs/master/installation-and-operation/remote-sync">
+<meta name="title" property="og:title" content="Remote sync | Metabase Documentation">
+<meta name="description" property="og:description" content="Version control your dashboards, questions, and models with Git. Sync content between development and production instances automatically.">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -2651,7 +2651,7 @@ Roadmap</a>
 
       
 
-      <li class="expanded">
+      <li class="">
         <a href="/docs/master/embedding/sdk/introduction" class="">
         Modular embedding
 
@@ -2689,7 +2689,7 @@ Roadmap</a>
 
               
 
-              <li class="expanded">
+              <li class="">
                 <a href="" class="">
                   Embedded analytics SDK
 
@@ -2777,7 +2777,7 @@ Roadmap</a>
                     
                       
                       <li>
-                        <a href="/docs/master/embedding/sdk/config" class="selected">
+                        <a href="/docs/master/embedding/sdk/config" class="">
                           Config
                         </a>
                       </li>
@@ -4733,7 +4733,7 @@ Roadmap</a>
 
             
             
-                <li class="breadcrumb-item"><a class="blue-60" href="/docs/master/embedding/start">Embedding</a></li>
+                <li class="breadcrumb-item"><a class="blue-60" href="/docs/master/installation-and-operation/start">Installation and Operation</a></li>
             
             
         </ol>
@@ -4880,7 +4880,7 @@ Roadmap</a>
 </div>
 
 
-        <h1 id="embedded-analytics-sdk---config">Embedded analytics SDK - config</h1>
+        <h1 id="remote-sync">Remote sync</h1>
 
 <div class="bootstrap">
   <div class="plans-blockquote bg-blue-95 rounded-3 p-6 d-flex flex-row border border-1 border-primary">
@@ -4896,223 +4896,523 @@ Roadmap</a>
       
 
     <p class="m-0 ms-2 paragraph-5 neutral-40">
-       Embedded analytics SDK is only available on
+       Remote sync is only available on
       <a class="fw-bold" href="/product/pro">Pro</a> and
       <a class="fw-bold link-purple" href="/product/enterprise">Enterprise</a>
-      plans  (both self-hosted and on Metabase Cloud). You can, however, play around with the SDK on your local
-      machine without a license by using API keys to authenticate your embeds.
+      plans  (both self-hosted and on Metabase Cloud). 
     </p>
   </div>
 </div>
 
-<h2 id="passing-a-configuration-object-to-metabaseprovider">Passing a configuration object to <code class="language-plaintext highlighter-rouge">MetabaseProvider</code></h2>
+<h2 id="overview">Overview</h2>
 
-<p>To use the SDK in your app, you need to import the <code class="language-plaintext highlighter-rouge">MetabaseProvider</code> component and provide it with an <code class="language-plaintext highlighter-rouge">authConfig</code> object.</p>
+<p>Remote Sync lets you develop analytics content in a development Metabase and automatically deploy it to a read-only production instance through Git.</p>
 
-<h3 id="metabaseprovider"><code class="language-plaintext highlighter-rouge">MetabaseProvider</code></h3>
+<p>You work with Remote Sync through special collections called “synced collections”. Content in these collections is automatically versioned and can be pushed to or pulled from your Git repository directly from the Metabase UI.</p>
 
-<p>A component that configures the SDK and provides the Metabase SDK’s context and theme.</p>
+<h3 id="key-concepts">Key concepts</h3>
 
-<h4 id="api-reference">API Reference</h4>
-
-<ul>
-  <li><a href="./api/MetabaseProvider">Component</a></li>
-  <li><a href="./api/MetabaseProviderProps">Props</a></li>
-</ul>
-
-<h4 id="example">Example</h4>
-
-<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nx">React</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">react</span><span class="dl">"</span><span class="p">;</span>
-<span class="k">import</span> <span class="p">{</span>
-  <span class="nx">MetabaseProvider</span><span class="p">,</span>
-  <span class="nx">defineMetabaseAuthConfig</span><span class="p">,</span>
-  <span class="nx">defineMetabaseTheme</span><span class="p">,</span>
-<span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@metabase/embedding-sdk-react</span><span class="dl">"</span><span class="p">;</span>
-
-<span class="c1">// Configure authentication</span>
-<span class="kd">const</span> <span class="nx">authConfig</span> <span class="o">=</span> <span class="nf">defineMetabaseAuthConfig</span><span class="p">({</span>
-  <span class="na">metabaseInstanceUrl</span><span class="p">:</span> <span class="dl">"</span><span class="s2">https://metabase.example.com</span><span class="dl">"</span><span class="p">,</span> <span class="c1">// Required: Your Metabase instance URL</span>
-<span class="p">});</span>
-
-<span class="c1">// See the "Customizing appearance" section for more information</span>
-<span class="kd">const</span> <span class="nx">theme</span> <span class="o">=</span> <span class="nf">defineMetabaseTheme</span><span class="p">({</span>
-  <span class="c1">// Optional: Specify a font to use from the set of fonts supported by Metabase</span>
-  <span class="na">fontFamily</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Lato</span><span class="dl">"</span><span class="p">,</span>
-
-  <span class="c1">// Optional: Match your application's color scheme</span>
-  <span class="na">colors</span><span class="p">:</span> <span class="p">{</span>
-    <span class="na">brand</span><span class="p">:</span> <span class="dl">"</span><span class="s2">#9B5966</span><span class="dl">"</span><span class="p">,</span>
-    <span class="dl">"</span><span class="s2">text-primary</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">#4C5773</span><span class="dl">"</span><span class="p">,</span>
-    <span class="dl">"</span><span class="s2">text-secondary</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">#696E7B</span><span class="dl">"</span><span class="p">,</span>
-    <span class="dl">"</span><span class="s2">text-tertiary</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">#949AAB</span><span class="dl">"</span><span class="p">,</span>
-  <span class="p">},</span>
-<span class="p">});</span>
-
-<span class="k">export</span> <span class="k">default</span> <span class="kd">function</span> <span class="nf">App</span><span class="p">()</span> <span class="p">{</span>
-  <span class="k">return </span><span class="p">(</span>
-    <span class="o">&lt;</span><span class="nx">MetabaseProvider</span>
-      <span class="nx">authConfig</span><span class="o">=</span><span class="p">{</span><span class="nx">authConfig</span><span class="p">}</span>
-      <span class="nx">theme</span><span class="o">=</span><span class="p">{</span><span class="nx">theme</span><span class="p">}</span>
-      <span class="nx">className</span><span class="o">=</span><span class="dl">"</span><span class="s2">optional-class</span><span class="dl">"</span>
-    <span class="o">&gt;</span>
-      <span class="nx">Hello</span> <span class="nx">World</span><span class="o">!</span>
-    <span class="o">&lt;</span><span class="sr">/MetabaseProvider</span><span class="err">&gt;
-</span>  <span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div></div>
-
-<h4 id="props">Props</h4>
-
-<table>
-  <thead>
-    <tr>
-      <th style="text-align: left">Property</th>
-      <th style="text-align: left">Type</th>
-      <th style="text-align: left">Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="allowconsolelog"></a> <code class="language-plaintext highlighter-rouge">allowConsoleLog?</code></td>
-      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">boolean</code></td>
-      <td style="text-align: left" data-label="Description">Whether to allow logging to the DevTools console. Defaults to true.</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="authconfig"></a> <code class="language-plaintext highlighter-rouge">authConfig</code></td>
-      <td style="text-align: left" data-label="Type"><a href="./api/MetabaseAuthConfig"><code class="language-plaintext highlighter-rouge">MetabaseAuthConfig</code></a></td>
-      <td style="text-align: left" data-label="Description">Defines how to authenticate with Metabase.</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="children"></a> <code class="language-plaintext highlighter-rouge">children</code></td>
-      <td style="text-align: left" data-label="Type"><a href="https://github.com/DefinitelyTyped/DefinitelyTyped/blob/0b728411cd1dfb4bd26992bb35a73cf8edaa22e7/types/react/index.d.ts#L478"><code class="language-plaintext highlighter-rouge">ReactNode</code></a></td>
-      <td style="text-align: left" data-label="Description">The children of the MetabaseProvider component.</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="classname"></a> <del><code class="language-plaintext highlighter-rouge">className?</code></del></td>
-      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">string</code></td>
-      <td style="text-align: left" data-label="Description">A custom class name to be added to the root element. <strong>Deprecated</strong> This prop is not used anymore.</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="errorcomponent"></a> <code class="language-plaintext highlighter-rouge">errorComponent?</code></td>
-      <td style="text-align: left" data-label="Type"><a href="./api/SdkErrorComponent"><code class="language-plaintext highlighter-rouge">SdkErrorComponent</code></a></td>
-      <td style="text-align: left" data-label="Description">A custom error component to display when the SDK encounters an error.</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="eventhandlers"></a> <code class="language-plaintext highlighter-rouge">eventHandlers?</code></td>
-      <td style="text-align: left" data-label="Type"><a href="./api/SdkEventHandlersConfig"><code class="language-plaintext highlighter-rouge">SdkEventHandlersConfig</code></a></td>
-      <td style="text-align: left" data-label="Description">See <a href="/docs/master/embedding/sdk/config#global-event-handlers">Global event handlers</a>.</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="loadercomponent"></a> <code class="language-plaintext highlighter-rouge">loaderComponent?</code></td>
-      <td style="text-align: left" data-label="Type">() =&gt; <a href="https://github.com/DefinitelyTyped/DefinitelyTyped/blob/0b728411cd1dfb4bd26992bb35a73cf8edaa22e7/types/react/index.d.ts#L4240"><code class="language-plaintext highlighter-rouge">Element</code></a></td>
-      <td style="text-align: left" data-label="Description">A custom loader component to display while the SDK is loading.</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="locale"></a> <code class="language-plaintext highlighter-rouge">locale?</code></td>
-      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">string</code></td>
-      <td style="text-align: left" data-label="Description">Defines the display language. Accepts an ISO language code such as <code class="language-plaintext highlighter-rouge">en</code> or <code class="language-plaintext highlighter-rouge">de</code>. Defaults to the instance locale.</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="pluginsconfig"></a> <code class="language-plaintext highlighter-rouge">pluginsConfig?</code></td>
-      <td style="text-align: left" data-label="Type"><a href="./api/MetabaseGlobalPluginsConfig"><code class="language-plaintext highlighter-rouge">MetabaseGlobalPluginsConfig</code></a></td>
-      <td style="text-align: left" data-label="Description">See <a href="/docs/master/embedding/sdk/plugins">Plugins</a>.</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="theme"></a> <code class="language-plaintext highlighter-rouge">theme?</code></td>
-      <td style="text-align: left" data-label="Type"><a href="./api/MetabaseTheme"><code class="language-plaintext highlighter-rouge">MetabaseTheme</code></a></td>
-      <td style="text-align: left" data-label="Description">See <a href="/docs/master/embedding/sdk/appearance">Appearance</a>.</td>
-    </tr>
-  </tbody>
-</table>
-
-<h2 id="global-event-handlers">Global event handlers</h2>
-
-<p>You can listen for events by defining the <code class="language-plaintext highlighter-rouge">eventHandlers</code> prop for <code class="language-plaintext highlighter-rouge">MetabaseProvider</code>.</p>
-
-<h3 id="sdkeventhandlersconfig"><code class="language-plaintext highlighter-rouge">SdkEventHandlersConfig</code></h3>
-
-<p>Accepts an object where each key is an event type and the corresponding value is the event handler function.</p>
-
-<h4 id="api-reference-1">API Reference</h4>
+<p><strong>Development and Production modes</strong>: Remote Sync has two configuration modes that determine how a Metabase instance interacts with your Git repository:</p>
 
 <ul>
-  <li><a href="./api/SdkEventHandlersConfig">Type</a></li>
+  <li><strong>Development mode</strong>: For creating and editing content. You can push changes to Git, pull changes from others, create branches, and work on feature branches. Multiple Metabase instances can be in Development mode, each working on different branches.</li>
+  <li><strong>Production mode</strong>: For serving approved, read-only content to users. Production instances only pull changes from Git (typically from your main branch) and don’t allow direct editing of synced content. You can set up auto-sync to automatically pull approved changes every five minutes.</li>
 </ul>
 
-<h4 id="example-1">Example</h4>
+<p><strong>Synced collections</strong>: Special collections that are tracked in Git. When you connect a Metabase instance in Development mode, it creates a “Library” collection by default. Everything inside a synced collection is versioned and synchronized with your Git repository.</p>
 
-<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">handleDashboardLoad</span><span class="p">:</span> <span class="nx">SdkDashboardLoadEvent</span> <span class="o">=</span> <span class="p">(</span><span class="nx">dashboard</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-  <span class="cm">/* do whatever you need to do - e.g. send analytics events, show notifications */</span>
-<span class="p">};</span>
+<p><strong>Serialized YAML files</strong>: Remote Sync stores your Metabase content as YAML files in your Git repository. Each dashboard, question, model, and document is represented as a YAML file that can be reviewed in pull requests and versioned like code. For more details on the YAML format and command-line workflows, see <a href="./serialization">serialization</a>.</p>
 
-<span class="kd">const</span> <span class="nx">eventHandlers</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="na">onDashboardLoad</span><span class="p">:</span> <span class="nx">handleDashboardLoad</span><span class="p">,</span>
-  <span class="na">onDashboardLoadWithoutCards</span><span class="p">:</span> <span class="nx">handleDashboardLoad</span><span class="p">,</span>
-<span class="p">};</span>
+<p><strong>Branch-based workflow</strong>: In Development mode, you can create branches, switch between them, and commit changes—all from the Metabase UI. This enables feature-branch workflows where you develop on a branch, open a pull request for review, and merge to production.</p>
 
-<span class="k">return </span><span class="p">(</span>
-  <span class="o">&lt;</span><span class="nx">MetabaseProvider</span> <span class="nx">authConfig</span><span class="o">=</span><span class="p">{</span><span class="nx">authConfig</span><span class="p">}</span> <span class="nx">eventHandlers</span><span class="o">=</span><span class="p">{</span><span class="nx">eventHandlers</span><span class="p">}</span><span class="o">&gt;</span>
-    <span class="p">{</span><span class="nx">children</span><span class="p">}</span>
-  <span class="o">&lt;</span><span class="sr">/MetabaseProvider</span><span class="err">&gt;
-</span><span class="p">);</span>
-</code></pre></div></div>
+<h3 id="why-use-remote-sync">Why use Remote Sync?</h3>
 
-<h4 id="props-1">Props</h4>
+<p>Remote Sync is designed for teams that want to maintain a <strong>read-only production environment</strong> where analytics content is created by a centralized team and deployed through a controlled process.</p>
 
-<table>
-  <thead>
-    <tr>
-      <th style="text-align: left">Property</th>
-      <th style="text-align: left">Type</th>
-      <th style="text-align: left">Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="ondashboardload"></a> <code class="language-plaintext highlighter-rouge">onDashboardLoad?</code></td>
-      <td style="text-align: left" data-label="Type"><a href="./api/SdkDashboardLoadEvent"><code class="language-plaintext highlighter-rouge">SdkDashboardLoadEvent</code></a></td>
-      <td style="text-align: left" data-label="Description">Triggers when a dashboard loads with all visible cards and their content</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="ondashboardloadwithoutcards"></a> <code class="language-plaintext highlighter-rouge">onDashboardLoadWithoutCards?</code></td>
-      <td style="text-align: left" data-label="Type"><a href="./api/SdkDashboardLoadEvent"><code class="language-plaintext highlighter-rouge">SdkDashboardLoadEvent</code></a></td>
-      <td style="text-align: left" data-label="Description">Triggers after a dashboard loads, but without its cards (at this stage only the dashboard title, tabs, and cards grid are rendered, but the contents of the cards have yet to load.</td>
-    </tr>
-  </tbody>
-</table>
+<ul>
+  <li><strong>Read-only production</strong>: Users in production can view and use dashboards, but cannot create or edit content. All content creation happens in development.</li>
+  <li><strong>Version control for new content</strong>: Add new dashboards, questions, and models to production through Git, with full version history.</li>
+  <li><strong>Peer review</strong>: Use pull requests to review new content before it goes live in production.</li>
+  <li><strong>Controlled deployment</strong>: Choose when new content appears in production by controlling when you merge to your main branch.</li>
+</ul>
 
-<h2 id="reloading-metabase-components">Reloading Metabase components</h2>
+<h3 id="how-remote-sync-works">How Remote Sync works</h3>
 
-<p>In case you need to reload a Metabase component, for example, your users modify your application data and that data is used to render a question in Metabase. If you embed this question and want to force Metabase to reload the question to show the latest data, you can do so by using the <code class="language-plaintext highlighter-rouge">key</code> prop to force a component to reload.</p>
+<p>Here’s a basic remote-sync workflow:</p>
 
-<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Inside your application component</span>
-<span class="kd">const</span> <span class="p">[</span><span class="nx">data</span><span class="p">,</span> <span class="nx">setData</span><span class="p">]</span> <span class="o">=</span> <span class="nf">useState</span><span class="p">({});</span>
-<span class="c1">// This is used to force reloading Metabase components</span>
-<span class="kd">const</span> <span class="p">[</span><span class="nx">counter</span><span class="p">,</span> <span class="nx">setCounter</span><span class="p">]</span> <span class="o">=</span> <span class="nf">useState</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<ol>
+  <li>Create a dashboard in a <strong>Metabase configured in Development mode</strong>.</li>
+  <li>Push it to a Git branch.</li>
+  <li>Open a pull request for review.</li>
+  <li>Merge the PR to production.</li>
+  <li>Your <strong>Metabase configured in Production mode</strong> automatically pulls in the changes.</li>
+</ol>
 
-<span class="c1">// This ensures we only change the `data` reference when it's actually changed</span>
-<span class="kd">const</span> <span class="nx">handleDataChange</span> <span class="o">=</span> <span class="nx">newData</span> <span class="o">=&gt;</span> <span class="p">{</span>
-  <span class="nf">setData</span><span class="p">(</span><span class="nx">prevData</span> <span class="o">=&gt;</span> <span class="p">{</span>
-    <span class="k">if </span><span class="p">(</span><span class="nf">isEqual</span><span class="p">(</span><span class="nx">prevData</span><span class="p">,</span> <span class="nx">newData</span><span class="p">))</span> <span class="p">{</span>
-      <span class="k">return</span> <span class="nx">prevData</span><span class="p">;</span>
-    <span class="p">}</span>
+<p>We’ll cover <a href="#setting-up-remote-sync">setting up Remote Sync</a>, an <a href="#an-example-dev-to-production-workflow">example dev-to-production workflow</a>, and <a href="#branch-management">branch management</a> and some other odds and ends.</p>
 
-    <span class="k">return</span> <span class="nx">newData</span><span class="p">;</span>
-  <span class="p">});</span>
-<span class="p">};</span>
+<h3 id="remote-sync-vs-serialization">Remote Sync vs. Serialization</h3>
 
-<span class="nf">useEffect</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
-  <span class="cm">/**
-   * When you set `data` as the `useEffect` hook's dependency, it will trigger the effect
-   * and increment the counter which is used in a Metabase component's `key` prop, forcing it to reload.
-   */</span>
-  <span class="k">if </span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nf">setCounter</span><span class="p">(</span><span class="nx">counter</span> <span class="o">=&gt;</span> <span class="nx">counter</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
-  <span class="p">}</span>
-<span class="p">},</span> <span class="p">[</span><span class="nx">data</span><span class="p">]);</span>
+<p>Remote Sync uses the same underlying serialization format as the <a href="./serialization">Metabase CLI serialization feature</a>, but serves a different purpose:</p>
 
-<span class="k">return</span> <span class="o">&lt;</span><span class="nx">InteractiveQuestion</span> <span class="nx">key</span><span class="o">=</span><span class="p">{</span><span class="nx">counter</span><span class="p">}</span> <span class="nx">questionId</span><span class="o">=</span><span class="p">{</span><span class="nx">yourQuestionId</span><span class="p">}</span> <span class="sr">/&gt;</span><span class="err">;
-</span></code></pre></div></div>
+<ul>
+  <li><strong>Remote Sync</strong>: Designed for adding new content to a read-only production environment through a Git-based workflow. Best when you want a centralized team creating content in development and deploying it to production automatically.</li>
+  <li><strong>Serialization</strong>: Command-line tool for exporting and importing Metabase content. Best for migrating existing content, complex multi-environment setups, and scenarios requiring full control over what gets exported and imported.</li>
+</ul>
+
+<h2 id="setting-up-remote-sync">Setting up Remote Sync</h2>
+
+<p>You’ll need to be an admin to set up Remote Sync.</p>
+
+<ol>
+  <li><a href="#1-set-up-a-repository-to-store-your-content">Set up a repository to store your content</a></li>
+  <li><a href="#2-create-a-personal-access-token-for-development">Create a personal access token for development</a></li>
+  <li><a href="#3-understand-development-and-production-modes">Understand Development and Production modes</a></li>
+  <li><a href="#4-connect-your-development-metabase-to-your-repository">Connect your development Metabase to your repository</a></li>
+  <li><a href="#5-add-an-item-to-your-synced-collection">Add an item to your synced collection</a></li>
+  <li><a href="#6-push-your-changes-to-your-repository">Push your changes to your repository</a></li>
+  <li><a href="#7-create-a-personal-access-token-for-production">Create a personal access token for production</a></li>
+  <li><a href="#8-connect-your-production-metabase-to-your-repository">Connect your production Metabase to your repository</a></li>
+</ol>
+
+<h2 id="1-set-up-a-repository-to-store-your-content">1. Set up a repository to store your content</h2>
+
+<p>Before you connect Metabase to your Git repository, create a <a href="https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-new-repository">new GitHub repository</a>. Initialize the repo with a README.md.</p>
+
+<h2 id="2-create-a-personal-access-token-for-development">2. Create a personal access token for development</h2>
+
+<p>GitHub offers two types of personal access tokens. We recommend the fine-grained token (not the classic) because you can limit their permissions to specific repositories.</p>
+
+<ol>
+  <li>Go to Settings &gt; Developer settings &gt; Personal access tokens &gt; Fine-grained tokens.</li>
+  <li>Click “Generate new token”.</li>
+  <li>Give it a descriptive name like “Metabase Remote Sync - Development”.</li>
+  <li>Select the specific repository you want Metabase to access.</li>
+  <li>Add permissions:
+    <ul>
+      <li><strong>Contents:</strong> Read and write (it defaults to Read-only, so make sure to change this to Read and write for your development Metabase).</li>
+      <li><strong>Metadata:</strong> Read-only (required)</li>
+    </ul>
+  </li>
+  <li>Click “Generate token” and copy it immediately (you won’t see it again). Store it somewhere safe; you’ll need to paste it into your Metabase.</li>
+</ol>
+
+<p>For more, see GitHub’s docs on <a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens">personal access tokens</a>.</p>
+
+<h2 id="3-understand-development-and-production-modes">3. Understand Development and Production modes</h2>
+
+<p>Remote Sync has two modes: Development and Production.</p>
+
+<p><strong>Development mode</strong> is where you create and edit content. You can have multiple development instances for different teams, projects, or workflows. Each connects to the same repository but can work on different branches. Development mode has:</p>
+
+<ul>
+  <li><strong>Bidirectional sync:</strong> Push changes to Git and pull changes from others.</li>
+  <li><strong>Full editing:</strong> Create and modify dashboards, questions, and documents in the UI in your synced collection.</li>
+  <li><strong>Branch management:</strong> Create, switch between, and work on different branches.</li>
+</ul>
+
+<p><strong>Production mode</strong> is read-only and designed for your live environment. Production Metabases:</p>
+
+<ul>
+  <li><strong>Pull changes only:</strong> Automatically or manually pull approved content from Git.</li>
+  <li><strong>Read-only content:</strong> Users can view and use synced content but can’t edit it.</li>
+  <li><strong>Auto-sync option:</strong> Automatically pull changes from your main branch every five minutes.</li>
+</ul>
+
+<p>You can use any Metabase instance in Development mode. Metabase also offers <a href="./development-instance">Development instances</a> for testing, which allow you to test with multiple users without paying per user account. You can use these Development instances in Remote Sync’s Development mode (but not in Production mode, as they’re intended for testing, not live production use).</p>
+
+<h2 id="4-connect-your-development-metabase-to-your-repository">4. Connect your development Metabase to your repository</h2>
+
+<ol>
+  <li>
+    <p>Go to <strong>Admin settings</strong> &gt; <strong>Settings</strong> &gt; <strong>Remote sync</strong>.</p>
+  </li>
+  <li>
+    <p>Enter your repository URL:</p>
+
+    <ul>
+      <li>For example, <code class="language-plaintext highlighter-rouge">https://github.com/your-org/your-repo</code>. The repository must already exist and be initialized with at least one commit.</li>
+    </ul>
+  </li>
+  <li>
+    <p>Select <strong>Development mode</strong>.</p>
+  </li>
+  <li>
+    <p>Add your access token:</p>
+
+    <ul>
+      <li>Paste the personal access token you created earlier. Make sure the token has <a href="#2-create-a-personal-access-token-for-development">read and write permissions</a>. Metabase encrypts your token before storing it.</li>
+    </ul>
+  </li>
+  <li>
+    <p>Save and test the connection:</p>
+
+    <ul>
+      <li>Click “Save changes”. Metabase will check whether it can reach your repository. If the connection fails, make sure your token has the appropriate permissions and hasn’t expired. You may also have incorrectly copied and pasted the PAT, in which case you’ll need to generate a new token.</li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="5-add-an-item-to-your-synced-collection">5. Add an item to your synced collection</h2>
+
+<p>When you first connect in Development mode, Metabase automatically creates a special collection called “Library” that’s synced with your Git repository. This is a <strong>synced collection</strong>—any content you add to it will be tracked in Git and can be pushed to your repository.</p>
+
+<p>You can rename the Library collection if you want, and you can add sub-collections within it to organize your content.</p>
+
+<ol>
+  <li>
+    <p>(Optional) Create a new branch for your work:</p>
+
+    <ul>
+      <li>Click the branch dropdown in the synced collections section.</li>
+      <li>Type a name for your new branch (e.g., <code class="language-plaintext highlighter-rouge">feature/my-dashboard</code>).</li>
+      <li>Press Enter to create the branch.</li>
+    </ul>
+
+    <p>This is useful if you want to work on changes without affecting the main branch. For more details, see <a href="#branch-management">Branch management</a>.</p>
+  </li>
+  <li>
+    <p>Navigate to the “Library” collection in your synced collections section (look for it in the left sidebar).</p>
+  </li>
+  <li>
+    <p>Create or move content into the Library collection:</p>
+    <ul>
+      <li><strong>Create new content:</strong> Click “New” and choose a dashboard, question, or document. Save it to the Library collection.</li>
+      <li><strong>Move existing content:</strong> Drag and drop items from other collections into the Library collection, or use the move option in the item’s menu.</li>
+    </ul>
+  </li>
+</ol>
+
+<p><a href="#items-in-synced-collections-cant-depend-on-items-outside-of-the-synced-collection">Items in synced collections can’t depend on items outside of synced collections</a>. For example, if you try to add a question that references a model, make sure the model is also in a synced collection.</p>
+
+<h2 id="6-push-your-changes-to-your-repository">6. Push your changes to your repository</h2>
+
+<p>Once you’ve added content, you’ll see a yellow dot on your Library collection indicating uncommitted changes.</p>
+
+<ol>
+  <li>
+    <p>Click the up arrow (push) icon next to the Library collection in the left sidebar.</p>
+  </li>
+  <li>
+    <p>Enter a commit message describing your changes (e.g., “Added dashboard on mammoth populations”).</p>
+  </li>
+  <li>
+    <p>Click “Continue” to commit and push your changes to your repository.</p>
+  </li>
+</ol>
+
+<p>Check your repository—you should see the collection with your content in it.</p>
+
+<h2 id="7-create-a-personal-access-token-for-production">7. Create a personal access token for production</h2>
+
+<p>Now that you have content in your repository, you can set up your production Metabase to pull that content.</p>
+
+<p><a href="#2-create-a-personal-access-token-for-development">Create a personal access token</a> following the same steps as before, but add Contents permissions to the token that are <strong>Read-only</strong> (NOT write), as you only want your production Metabase reading from the repo. (Contents permissions require Metadata permissions, which GitHub will add automatically).</p>
+
+<h2 id="8-connect-your-production-metabase-to-your-repository">8. Connect your production Metabase to your repository</h2>
+
+<ol>
+  <li>
+    <p>Go to <strong>Admin settings</strong> &gt; <strong>Settings</strong> &gt; <strong>Remote sync</strong>.</p>
+  </li>
+  <li>
+    <p>Enter your repository URL:</p>
+
+    <ul>
+      <li>Use the same repository as your development Metabase, for example, <code class="language-plaintext highlighter-rouge">https://github.com/your-org/your-repo.git</code>.</li>
+    </ul>
+  </li>
+  <li>
+    <p>Select <strong>Production mode</strong>.</p>
+  </li>
+  <li>
+    <p>Add your access token:</p>
+
+    <ul>
+      <li>Paste the read-only personal access token you created for this production Metabase.</li>
+    </ul>
+  </li>
+  <li>
+    <p>Save and test the connection:</p>
+
+    <ul>
+      <li>Click “Save changes”. Metabase will verify it can reach your repository. If the connection fails, verify your token has the appropriate permissions and hasn’t expired.</li>
+    </ul>
+  </li>
+  <li>
+    <p>Pull changes and/or enable auto-sync (optional):</p>
+    <ul>
+      <li>Pull changes to sync from your repo.</li>
+      <li>Toggle on “Auto-sync with Git” to automatically pull changes from your main branch every five minutes.</li>
+    </ul>
+  </li>
+</ol>
+
+<p>In Production mode, synced collections appear in the regular collections list with a special icon to indicate that they’re versioned and read-only.</p>
+
+<p>At this point, you should be all set up. Exit Admin settings, then reload your browser. You should see your synced Library collection in your production Metabase.</p>
+
+<h2 id="an-example-dev-to-production-workflow">An example dev-to-production workflow</h2>
+
+<p>Let’s say your team wants to build a new analytics dashboard. Here’s a workflow that ensures that all production content goes through a review process.</p>
+
+<h3 id="step-1-create-a-new-branch">Step 1: Create a new branch</h3>
+
+<p>In your development Metabase, click the branch dropdown in the synced collections section and <a href="#branch-management">create a new branch</a> for your work, like <code class="language-plaintext highlighter-rouge">feature/megafauna-dashboard</code>.</p>
+
+<h3 id="step-2-create-content-in-your-development-metabase">Step 2: Create content in your development Metabase</h3>
+
+<p>Create a dashboard called “Megafauna Analytics” and add some questions. The questions should be saved to the dashboard or to the synced collection. Save the dashboard to the synced collection.</p>
+
+<h3 id="step-3-push-to-your-development-branch">Step 3: Push to your development branch</h3>
+
+<ol>
+  <li>You should see a yellow dot on your synced collection (indicating local changes).</li>
+  <li>Click the up arrow (push) icon next to your synced collection.</li>
+  <li>Enter a commit message: “Add Megafauna Analytics dashboard”.</li>
+  <li>Metabase commits your changes to the branch you’re working on and pushes them to your repo.</li>
+</ol>
+
+<h3 id="step-4-create-a-pull-request">Step 4: Create a pull request</h3>
+
+<p>In your Git repository:</p>
+
+<ol>
+  <li>Create a pull request from your branch, <code class="language-plaintext highlighter-rouge">feature/megafauna-dashboard</code>, to the main branch <code class="language-plaintext highlighter-rouge">main</code>.</li>
+  <li>Review the changes to the YAML files representing your dashboards and questions.</li>
+  <li>Someone who knows what they’re doing approves and merges the PR.</li>
+</ol>
+
+<h3 id="step-5-production-automatically-updates">Step 5: Production automatically updates</h3>
+
+<p>On your production Metabase instance:</p>
+
+<ol>
+  <li>Within five minutes, the auto-sync process detects the new commits on <code class="language-plaintext highlighter-rouge">main</code> (you can also manually import the changes).</li>
+  <li>The “Megafauna Analytics” dashboard appears in production with all its questions.</li>
+  <li>The content is read-only for users (they can view and use it, but can’t edit it).</li>
+</ol>
+
+<h2 id="how-your-synced-collection-works-in-development-mode">How your synced collection works in Development mode</h2>
+
+<p>Synced collections are special collections that are tracked in Git. Content in synced collections is versioned and can be pushed to or pulled from your repository.</p>
+
+<ul>
+  <li><a href="#synced-collections-in-the-ui">Synced collections in the UI</a></li>
+  <li><a href="#moving-and-deleting-content-in-synced-collections">Moving and deleting content in synced collections</a></li>
+  <li><a href="#items-in-synced-collections-cant-depend-on-items-outside-of-the-synced-collection">Items in synced collections can’t depend on items outside of the synced collection</a></li>
+</ul>
+
+<h3 id="synced-collections-in-the-ui">Synced collections in the UI</h3>
+
+<p>When you first connect a Metabase to an initialized repository in Development mode, Metabase automatically creates a default synced collection called “Library”. You can add items to that synced collection, including sub-collections.</p>
+
+<p>In Development mode, your synced collection shows its current state with visual indicators:</p>
+
+<ul>
+  <li><strong>Yellow dot:</strong> You have unsynced local changes that need to be committed.</li>
+  <li><strong>Up/down arrows:</strong> Sync controls for pulling and pushing changes.</li>
+</ul>
+
+<p>In Production mode, synced collections appear in the regular collections list (not in a separate “Synced Collections” section) with a special icon to indicate they’re versioned and read-only.</p>
+
+<h3 id="moving-and-deleting-content-in-synced-collections">Moving and deleting content in synced collections</h3>
+
+<p>When you move content out of a synced collection, the UI may not immediately show the unpushed state. Refresh your browser to see the push indicator.</p>
+
+<p><strong>Deletions sync to production:</strong> When you remove content from a synced collection in Development mode and push that change, the content will also be removed from your Production instance when it syncs. This applies to moving content out of the synced collection or deleting it entirely.</p>
+
+<p>Content in other Metabases that depended on this item may break since the dependency will no longer be in a synced collection.</p>
+
+<h3 id="items-in-synced-collections-cant-depend-on-items-outside-of-the-synced-collection">Items in synced collections can’t depend on items outside of the synced collection</h3>
+
+<p><strong>Synced collections are self-contained.</strong> Everything a dashboard or question needs must be inside the synced collection for Remote Sync to work properly. Metabase enforces these dependency constraints to ensure all content can be properly versioned and synced between instances.</p>
+
+<p><strong>If it’s not in the collection, it won’t sync</strong>—and that includes metadata. The one critical exception: table metadata (column types, descriptions, etc.) doesn’t sync at all, even when questions that depend on it do sync. See <a href="#important-table-metadata-limitations">table metadata limitations</a> for details.</p>
+
+<p>For example:</p>
+
+<ul>
+  <li>If a question references a model, both the question and the model must be in synced collections.</li>
+  <li>If a dashboard includes questions, those questions must be saved to either the dashboard itself or to the synced collection.</li>
+  <li>If a dashboard has click behaviors that link to other dashboards or questions, those linked items must be in synced collections.</li>
+  <li>If a document contains @ mentions of other items (questions, dashboards, models, etc.), those mentioned items must be in synced collections.</li>
+</ul>
+
+<p>Questions that depend on snippets can’t be added to synced collections, as snippets aren’t stored in collections and therefore can’t be synced.</p>
+
+<p>Items can reference other items in sub-collections that are also synced.</p>
+
+<p>When you try to save an item with external dependencies to a synced collection, Metabase will show an error.</p>
+
+<p>To resolve this:</p>
+
+<ol>
+  <li>Identify which items your content depends on.</li>
+  <li>Move those dependencies into synced collections first.</li>
+  <li>Then save your item to the synced collection.</li>
+</ol>
+
+<p>Alternatively, you can modify your content to use a different source data that’s already in synced collections.</p>
+
+<h2 id="what-metabase-syncs">What Metabase syncs</h2>
+
+<p>Remote Sync uses the same serialization format as the <a href="./serialization">Metabase CLI serialization feature</a>, storing your content as YAML files in your Git repository.</p>
+
+<p><strong>What syncs:</strong></p>
+
+<ul>
+  <li>Dashboards and their cards</li>
+  <li>Questions (saved queries and models)</li>
+  <li>Model metadata (column descriptions, display settings, etc.)</li>
+  <li>Documents</li>
+  <li>Timelines and events</li>
+  <li>Collection structure and metadata</li>
+</ul>
+
+<p><strong>What doesn’t sync:</strong></p>
+
+<ul>
+  <li>Users, groups, and permissions</li>
+  <li>Alerts and subscriptions</li>
+  <li>Snippets</li>
+  <li>Database connections</li>
+  <li>Personal collections</li>
+  <li><strong>Table metadata</strong> (column types, descriptions, visibility settings, etc.)</li>
+</ul>
+
+<h3 id="important-table-metadata-limitations">Important: Table metadata limitations</h3>
+
+<p><strong>Table metadata is not synced by Remote Sync.</strong> This means any customizations you make to table metadata in your development instance—such as changing a column’s display type from “Unix timestamp” to “Date”, adding column descriptions, or adjusting visibility—will not automatically sync to production.</p>
+
+<p>If your questions or dashboards rely on customized table metadata, you must manually apply the same metadata changes in your production instance. Otherwise, content that works in development may not work correctly in production.</p>
+
+<p><strong>Why this matters:</strong> If you have a question that displays a unixtime column as a date (because you changed the column type in development’s table metadata), that question will sync to production, but the column will still appear as a unixtime in production unless you manually update the table metadata there as well.</p>
+
+<p>For more details on the serialization format and command-line workflows, see the <a href="./serialization">serialization documentation</a>.</p>
+
+<h2 id="branch-management">Branch management</h2>
+
+<p>Branching is only available in Development mode.</p>
+
+<h3 id="creating-a-branch">Creating a branch</h3>
+
+<p>You can create branches in Metabase or directly in your Git repository. Branches created in Git will appear in the Metabase branch dropdown once Metabase syncs with your repository.</p>
+
+<p>We recommend pushing an initial commit to your main branch before creating branches. Creating a branch from an empty main branch can cause unexpected behavior.</p>
+
+<p>To create a new branch in Metabase:</p>
+
+<ol>
+  <li>Click the branch dropdown in the synced collections section.</li>
+  <li>Type a name for the new branch in the search box.</li>
+  <li>Press Enter to create the branch.</li>
+</ol>
+
+<p>The new branch starts from the current commit (not the latest remote).</p>
+
+<h3 id="switching-branches">Switching branches</h3>
+
+<p>In the left sidebar under “SYNCED COLLECTIONS”, you’ll see a branch dropdown next to each synced collection name:</p>
+
+<ol>
+  <li>Click the branch dropdown to see available branches.</li>
+  <li>Select a different branch to switch to it.</li>
+</ol>
+
+<p>If the branch doesn’t appear, ensure it exists in your Git repository and that the name matches exactly (branch names are case-sensitive).</p>
+
+<p>If you have unsynced changes, Metabase will show a dialog asking what you want to do:</p>
+
+<ul>
+  <li><strong>Push changes to the current branch:</strong> Commits your changes to the current branch before switching.</li>
+  <li><strong>Create a new branch and push changes there:</strong> Saves your work to a new branch, keeping the original branch clean.</li>
+  <li><strong>Discard these changes:</strong> Throws away your uncommitted changes (can’t be undone).</li>
+</ul>
+
+<p>The dialog shows you exactly which items have changed, so you can make an informed decision.</p>
+
+<p>If you switch modes (from Development to Production or vice versa) with unpushed changes, you’ll be prompted to save or discard them. You cannot switch to Production mode with uncommitted changes.</p>
+
+<p>If changes don’t appear after switching modes: Hard refresh your browser (Cmd/Ctrl + Shift + R).</p>
+
+<h2 id="deleting-branches">Deleting branches</h2>
+
+<p>Currently, you can only delete branches in GitHub or from the command line. Metabase will pick up the branch deletions on its next pull (though you may need to refresh your browser).</p>
+
+<h2 id="pushing-changes-to-git">Pushing changes to Git</h2>
+
+<p>You can only push changes in a Metabase with Remote sync set to Development mode.</p>
+
+<h3 id="committing-your-changes">Committing your changes</h3>
+
+<p>When you make changes to items in a synced collection, a yellow dot appears on your synced collection (indicating uncommitted changes). To commit your changes:</p>
+
+<ol>
+  <li>Click the up arrow (push) icon next to the synced collection name in the left sidebar.</li>
+  <li>Enter a descriptive commit message explaining your changes.</li>
+  <li>Click “Continue” to push your changes to Git.</li>
+</ol>
+
+<p>If you see “Remote is ahead of local”, that means someone else pushed to the branch from another Metabase in Development mode. Pull the latest changes before pushing again.</p>
+
+<h2 id="pulling-changes-from-git">Pulling changes from Git</h2>
+
+<p>You can pull changes when in Development or Production mode.</p>
+
+<p>In Development mode, you can get the latest changes from your Git repository:</p>
+
+<ol>
+  <li>Click the down arrow (pull) icon next to your synced collection in the left sidebar.</li>
+  <li>Review any summary of incoming changes if shown.</li>
+  <li>Confirm the import.</li>
+  <li>Metabase updates your collections with the latest content from Git.</li>
+</ol>
+
+<p>If changes don’t appear after pulling:</p>
+
+<ul>
+  <li>Verify you’re on the correct branch.</li>
+  <li>Hard refresh your browser (Cmd/Ctrl + Shift + R).</li>
+  <li>If you encounter sync errors, review error messages in the sync dialog, manually resolve conflicts in your Git repository, then pull again.</li>
+</ul>
+
+<p>In Production mode, go to <strong>Admin settings</strong> &gt; <strong>Settings</strong> &gt; <strong>Remote sync</strong> and click <strong>Pull changes</strong>.</p>
+
+<h3 id="handling-unsynced-changes">Handling unsynced changes</h3>
+
+<p>If you have local uncommitted changes when trying to pull or switch branches, Metabase will prompt you with options:</p>
+
+<ul>
+  <li><strong>Push changes to the current branch:</strong> Commit your changes first, then proceed.</li>
+  <li><strong>Create a new branch and push changes there:</strong> Preserve your work on a new branch.</li>
+  <li><strong>Discard these changes:</strong> Throw away your uncommitted changes to accept what’s in Git.</li>
+</ul>
+
+<p>When in doubt, create a new branch and push changes to that branch. That way you won’t lose any work.</p>
+
+<h3 id="pulling-changes-automatically">Pulling changes automatically</h3>
+
+<p>In Production mode, you can set Metabase to auto-sync changes from your main branch.</p>
+
+<ol>
+  <li>Navigate to <strong>Admin settings</strong> &gt; <strong>Settings</strong> &gt; <strong>Remote sync</strong>.</li>
+  <li>Enable Auto-sync with Git.</li>
+</ol>
+
+<p>By default, Metabase will pull any changes (if any) from the branch you specify every five minutes. You can also manually sync as needed.</p>
+
+<h2 id="if-you-already-have-a-repo-with-serialized-metabase-data">If you already have a repo with serialized Metabase data</h2>
+
+<p>You can just keep doing what you’re doing.</p>
+
+<p>If you want to switch to this remote-sync setup, we still recommend you start with a new repo. In that case:</p>
+
+<ol>
+  <li>Check out a new branch in your Metabase instance in Development mode.</li>
+  <li>Import your data to your Metabase instance with the serialization command as you normally would.</li>
+  <li>Move the content you want to sync into the synced collection.</li>
+  <li>Push up your changes to the new repo.</li>
+</ol>
 
 
         <div>
@@ -5166,7 +5466,7 @@ Roadmap</a>
 
   
     <span class="paragraph-6 fs-13 neutral-60" id="page-feedback-footer">
-      Want to improve these docs? <a href="https://github.com/metabase/metabase/blob/master/docs/embedding/sdk/config.md" target="_blank">Propose a change.</a>
+      Want to improve these docs? <a href="https://github.com/metabase/metabase/blob/master/docs/installation-and-operation/remote-sync.md" target="_blank">Propose a change.</a>
     </span>
   
 </div>
@@ -5188,8 +5488,8 @@ Roadmap</a>
 <script type="text/javascript" src="/js/position-feedback-widget.js"></script>
 
 <script>
-  const pageTitle = `Embedded analytics SDK - config`;
-  const pageURL = '/docs/master/embedding/sdk/config';
+  const pageTitle = `Remote sync`;
+  const pageURL = '/docs/master/installation-and-operation/remote-sync';
   const pageURLSplit = pageURL.split('/');
 
   let pageURLPrefix = '/' + pageURLSplit[1] + '/' + pageURLSplit[2];
@@ -5511,8 +5811,6 @@ Roadmap</a>
   <script type="text/javascript" src="/js/blog.js"></script>
   <script type="text/javascript" src="/js/syntax-highlight.js"></script>
 
-  
-    <script type="text/javascript" src="/js/docs/checkpoints.js"></script>
   
 
 </body></html>
