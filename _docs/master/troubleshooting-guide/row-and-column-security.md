@@ -184,6 +184,5 @@ The administrator can [create a new group][groups] to capture precisely who's al
 [row-permissions]: /learn/metabase-basics/administration/permissions/data-sandboxing-row-permissions
 [row-and-column-security]: ../permissions/row-and-column-security
 [static-embedding]: /learn/metabase-basics/embedding/charts-and-dashboards#enable-embedding-in-other-applications
-[row-and-column-security-limitations]: ../permissions/row-and-column-security#limitations
 [troubleshooting-permissions]: ./permissions
-[unsupported-databases]: ../permissions/row-and-column-security#limitations
+[unsupported-databases]: ../permissions/row-and-column-security#limitations-of-row-and-column-security
