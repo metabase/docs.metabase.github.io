@@ -59,7 +59,6 @@ Metabase's reference documentation.
 - [Monitoring your Metabase](./installation-and-operation/monitoring-metabase)
 - [Development instances](./installation-and-operation/development-instance)
 - [Serialization](./installation-and-operation/serialization)
-- [Remote sync](./installation-and-operation/remote-sync)
 - [Commands](./installation-and-operation/commands)
 - [Supported browsers](./installation-and-operation/supported-browsers)
 - [Privacy](./installation-and-operation/privacy)
