@@ -4843,6 +4843,27 @@ Roadmap</a>
 
 <p>If you’re in the process of setting up your Metabase, you can also toggle off tracking during the <code class="language-plaintext highlighter-rouge">Usage Data Preferences</code> onboarding step. We collect a few anonymous events before that point, but won’t do so anymore if you choose to opt out.</p>
 
+<h2 id="token-validation-requests-for-paid-plans">Token validation requests for paid plans</h2>
+
+<p>If you’re on a paid plan (Pro, Enterprise, or a trial), Metabase periodically sends a token validation request to verify your license. This is separate from the anonymous usage data described above.</p>
+
+<h3 id="data-included-in-token-validation-requests">Data included in token validation requests</h3>
+
+<p>The token validation request includes:</p>
+
+<ul>
+  <li>Count of active users (used for billing)</li>
+  <li>Count of external users</li>
+  <li>Count of internal users</li>
+  <li>Count of email domains</li>
+  <li>Count of embedded dashboards and questions</li>
+  <li>Types of embedding (static, interactive, Embedded analtyics SDK, Embedded analytics JS)</li>
+  <li>Site UUID (just an identifier for your Metabase)</li>
+  <li>Metabase version</li>
+  <li>Query execution timestamp (last UTC day)</li>
+  <li>Metabot usage statistics: count of tokens, queries, users, and date (just counts and the date).</li>
+</ul>
+
 <h2 id="further-reading">Further reading</h2>
 
 <p>Check out our page on <a href="/security">data privacy and security</a>.</p>
