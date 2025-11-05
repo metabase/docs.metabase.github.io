@@ -50,4 +50,4 @@ This setting determines who can set up:
 - [Dashboard subscriptions](../dashboards/subscriptions)
 - [Alerts](../questions/alerts)
 
-People will need to be in groups with either view or edit access to the collection that contains the dashboard or question in order to set up alerts. See [Collection permissions](../permissions/collections).
+People will need to be in groups with either view or edit access to the collection that contains the dashboard or question to set up alerts. See [Collection permissions](../permissions/collections).

@@ -5090,13 +5090,13 @@ Roadmap</a>
   </tbody>
 </table>
 
-<p>We can’t really make a call on what Group B’s View data should be. If we switch it to <strong>Can view</strong>, the person won’t be affected by the Blocked, Row and column security, or Impersonated settings in their other group. If we set it to <strong>Blocked</strong>, they could lose access to data that you think they should have access to. So we created an interim setting, <code class="language-plaintext highlighter-rouge">No self-service (legacy)</code> to manage this (temporarily) awkward transition.</p>
+<p>We can’t make a call on what Group B’s View data should be. If we switch it to <strong>Can view</strong>, the person won’t be affected by the Blocked, Row and column security, or Impersonated settings in their other group. If we set it to <strong>Blocked</strong>, they could lose access to data that you think they should have access to. So we created an interim setting, <code class="language-plaintext highlighter-rouge">No self-service (legacy)</code> to manage this (temporarily) awkward transition.</p>
 
 <h3 id="for-some-permission-setups-with-groups-that-have-no-self-service-and-sandboxed-data-access-you-may-need-to-create-a-new-group-to-replicate-the-setup-in-50-or-higher">For some permission setups with groups that have “No self-service” and “Sandboxed” data access, you may need to create a new group to replicate the setup in 50 or higher</h3>
 
 <p>In Metabase 49, the (more permissive) “No self-service” data access couldn’t override the (less permissive) “Sandboxed” access, you could set up Metabase 49 in ways that were difficult to reason about.</p>
 
-<p>In the new permission system starting in Metabase 50, more permissive settings <em>always</em> override less permissive settings. This consistent behavior makes permissions a <em>lot</em> easier to reason about. One consequence of this improvement, however, is that in order to recreate certain permissions setups when upgrading to Metabase 50, you may need to create an <em>additional</em> group.</p>
+<p>In the new permission system starting in Metabase 50, more permissive settings <em>always</em> override less permissive settings. This consistent behavior makes permissions easier to reason about. One consequence of this improvement, however, is that to recreate certain permissions setups when upgrading to Metabase 50, you may need to create an <em>additional</em> group.</p>
 
 <p>For example, let’s say you have two groups in Metabase 49 under the old data access permission, the All users group and the Foo group.</p>
 
@@ -5109,7 +5109,7 @@ Roadmap</a>
 
 <p>This data access setup in 49 would allow people to view questions and dashboards in collections they have access to. People in the Foo group, however, would get a sandboxed view of the items. In this case, the less permissive “Sandboxed” data access in the Foo group overrode the more permissive “No self-service” in the All users group.</p>
 
-<p>Starting with Metabase 50, however, more permissive settings <em>always</em> override less permissive settings. So in order to keep Foo’s sandboxes in tact, we’d need to make the All users group have a View data permission setting that is <em>less</em> permissive than the “Sandboxed” setting. So we’ll need to set the View data permission for All users to “Blocked.”</p>
+<p>Starting with Metabase 50, however, more permissive settings <em>always</em> override less permissive settings. So to keep Foo’s sandboxes in tact, we’d need to make the All users group have a View data permission setting that is <em>less</em> permissive than the “Sandboxed” setting. So we’ll need to set the View data permission for All users to “Blocked.”</p>
 
 <p>But if you still want everyone else who <em>isn’t</em> in the Foo group to view items in collections they have access to, you’ll need to create an additional group, Bar, that contains everyone <em>except for</em> people in the Foo group, and grant that Bar group “Can view” access to the Sample database. The Bar group’s “Can view” access will override the All Users group’s “Blocked” setting, and they’ll be able to view the questions and dashboards. Meanwhile, Foo group still has its sandboxes. Here’s a summary of the settings for 50 that you’d need:</p>
 
