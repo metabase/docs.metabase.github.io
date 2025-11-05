@@ -4956,7 +4956,7 @@ Roadmap</a>
 <ul>
   <li><strong>Regularly, on a schedule</strong> allows you to run <a href="#how-database-scans-work">scan queries</a> at a frequency that matches the rate of change to your database. The time is set in the timezone of the server where your Metabase app is running. This is the best option for a small database or tables with distinct values that get updated often.</li>
   <li><strong>Only when adding a new filter widget</strong> is a great option if you want scan queries to run on demand. Turning this option <strong>ON</strong> means that Metabase will only scan and cache the values of the field(s) that are used when someone adds a new filter widget to a dashboard or SQL question (i.e., they add a parameter to their SQL query).</li>
-  <li><strong>Never, I’ll do this manually if I need to</strong> is an option for databases that are either prohibitively large or which never really have new values added. Use the <a href="#manually-scanning-column-values">Re-scan field values</a> button to run a manual scan and bring your filter values up to date.</li>
+  <li><strong>Never, I’ll do this manually if I need to</strong> is an option for databases that are either prohibitively large or which never have new values added. Use the <a href="#manually-scanning-column-values">Re-scan field values</a> button to run a manual scan and bring your filter values up to date.</li>
 </ul>
 
 <p>Regardless of which option you pick, if you <a href="../data-modeling/metadata-editing#filtering">set a field to use a dropdown list in filter widgets</a>, Metabase will need to get values for that dropdown. Whenever someone uses that filter widget, Metabase will first look for cached values (valid for fourteen days) to populate that dropdown; otherwise, it will re-scan that field for the most up-to-date values.</p>
@@ -5111,7 +5111,7 @@ Roadmap</a>
 
 <p>A scan is more intensive than a sync query, so it only runs once during setup and again once a day by default. If you <a href="#scanning-for-filter-values">disable scans</a> entirely, you’ll need to bring things up to date by running <a href="#manually-scanning-column-values">manual scans</a>.</p>
 
-<p>To reduce the number of tables and fields Metabase needs to scan in order to stay current with your connected database, Metabase will only scan values for fields that someone has used in the last fourteen days.</p>
+<p>To reduce the number of tables and fields Metabase needs to scan to stay current with your connected database, Metabase will only scan values for fields that someone has used in the last fourteen days.</p>
 
 <p>Here’s the kind of data that scans get and why:</p>
 
