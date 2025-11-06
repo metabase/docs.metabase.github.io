@@ -5010,7 +5010,7 @@ x.com</code></li>
   <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">anon-tracking-enabled</code></li>
 </ul>
 
-<p>Enable the collection of anonymous usage data to help Metabase improve.</p>
+<p>Enable the collection of anonymous usage data in order to help Metabase improve.</p>
 
 <h3 id="mb_api_key"><code class="language-plaintext highlighter-rouge">MB_API_KEY</code></h3>
 
@@ -5323,7 +5323,7 @@ If set to 0, Metabase will keep all rows.</p>
   <li>Default: <code class="language-plaintext highlighter-rouge">10000</code></li>
 </ul>
 
-<p>Consider metabase.driver/can-connect? / can-connect-with-details? to have failed if they were unable to
+<p>Consider metabase.driver/can-connect? / can-connect-with-details? to have failed if they were not able to
   successfully connect after this many milliseconds. By default, this is 10 seconds.</p>
 
 <p>Timeout in milliseconds for connecting to databases, both Metabase application database and data connections.
@@ -5420,7 +5420,7 @@ If set to 0, Metabase will keep all rows.</p>
 </ul>
 
 <p>The maximum number of recipients, summed across emails, that can be sent per second.
-                Note that the final email sent before reaching the limit can exceed it, if it has multiple recipients.</p>
+                Note that the final email sent before reaching the limit is able to exceed it, if it has multiple recipients.</p>
 
 <h3 id="mb_email_reply_to"><code class="language-plaintext highlighter-rouge">MB_EMAIL_REPLY_TO</code></h3>
 
@@ -5816,6 +5816,16 @@ If set to 0, Metabase will keep all rows.</p>
 </ul>
 
 <p>Custom URL for the help link.</p>
+
+<h3 id="mb_hide_stacktraces"><code class="language-plaintext highlighter-rouge">MB_HIDE_STACKTRACES</code></h3>
+
+<ul>
+  <li>Type: boolean</li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">false</code></li>
+  <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">hide-stacktraces</code></li>
+</ul>
+
+<p>Prevent the exception middleware from including stacktraces in responses.</p>
 
 <h3 id="mb_http_channel_host_strategy"><code class="language-plaintext highlighter-rouge">MB_HTTP_CHANNEL_HOST_STRATEGY</code></h3>
 
@@ -6453,7 +6463,7 @@ don’t have one.</p>
 <p>By default “Site Url” is used in notification links, but can be overridden.</p>
 
 <p>The base URL where dashboard notitification links will point to instead of the Metabase base URL.
-        Only applicable for users who use interactive embedding and subscriptions.</p>
+        Only applicable for users who utilize interactive embedding and subscriptions.</p>
 
 <h3 id="mb_notification_system_event_thread_pool_size"><code class="language-plaintext highlighter-rouge">MB_NOTIFICATION_SYSTEM_EVENT_THREAD_POOL_SIZE</code></h3>
 
@@ -6537,6 +6547,36 @@ don’t have one.</p>
 </ul>
 
 <p>Force all traffic to use HTTPS via a redirect, if the site URL is HTTPS.</p>
+
+<h3 id="mb_remote_sync_auto_import"><code class="language-plaintext highlighter-rouge">MB_REMOTE_SYNC_AUTO_IMPORT</code></h3>
+
+<ul>
+  <li>Type: boolean</li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">false</code></li>
+  <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">remote-sync-auto-import</code></li>
+</ul>
+
+<p>Whether to automatically import from the remote git repository. Only applies if remote-sync-type is :production.</p>
+
+<h3 id="mb_remote_sync_auto_import_rate"><code class="language-plaintext highlighter-rouge">MB_REMOTE_SYNC_AUTO_IMPORT_RATE</code></h3>
+
+<ul>
+  <li>Type: integer</li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">5</code></li>
+  <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">remote-sync-auto-import-rate</code></li>
+</ul>
+
+<p>If remote-sync-type is :production and remote-sync-auto-import is true, the rate (in minutes) at which to check for updates to import. Defaults to 5.</p>
+
+<h3 id="mb_remote_sync_task_time_limit_ms"><code class="language-plaintext highlighter-rouge">MB_REMOTE_SYNC_TASK_TIME_LIMIT_MS</code></h3>
+
+<ul>
+  <li>Type: integer</li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">300000</code></li>
+  <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">remote-sync-task-time-limit-ms</code></li>
+</ul>
+
+<p>The maximum amount of time a remote sync task will be given to complete.</p>
 
 <h3 id="mb_report_timezone"><code class="language-plaintext highlighter-rouge">MB_REPORT_TIMEZONE</code></h3>
 
@@ -7008,7 +7048,7 @@ don’t have one.</p>
   <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">show-homepage-data</code></li>
 </ul>
 
-<p>Whether or not to display data on the homepage. Admins might turn this off to direct users to better content than raw data.</p>
+<p>Whether or not to display data on the homepage. Admins might turn this off in order to direct users to better content than raw data.</p>
 
 <h3 id="mb_show_homepage_xrays"><code class="language-plaintext highlighter-rouge">MB_SHOW_HOMEPAGE_XRAYS</code></h3>
 
@@ -7292,20 +7332,6 @@ don’t have one.</p>
 
 <p>Prefix for upload table names.</p>
 
-<h3 id="mb_use_tenants"><code class="language-plaintext highlighter-rouge">MB_USE_TENANTS</code></h3>
-
-<blockquote>
-  <p>Only available on Metabase <a href="/product/pro">Pro</a> and <a href="/product/enterprise">Enterprise</a> plans.</p>
-</blockquote>
-
-<ul>
-  <li>Type: boolean</li>
-  <li>Default: <code class="language-plaintext highlighter-rouge">false</code></li>
-  <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">use-tenants</code></li>
-</ul>
-
-<p>Turn on the Tenants feature, allowing users to be assigned to a particular Tenant.</p>
-
 <h3 id="mb_user_visibility"><code class="language-plaintext highlighter-rouge">MB_USER_VISIBILITY</code></h3>
 
 <blockquote>
@@ -7364,7 +7390,7 @@ Since: v35.0</p>
 <p>Type: integer<br>
 Default: <code class="language-plaintext highlighter-rouge">20</code><br></p>
 
-<p>Limits the number of rows Metabase will display in tables sent with dashboard subscriptions and alerts. Range: 1-100. To limit the total number of rows included in the file attachment for an email dashboard subscription, use <a href="#mb_unaggregated_query_row_limit">MB_UNAGGREGATED_QUERY_ROW_LIMIT</a>.</p>
+<p>Limits the number of rows Metabase will display in tables sent with dashboard subscriptions and alerts. Range: 1-100. To limit the total number of rows included in the file attachment for an email dashboard subscription, use <a href="#mb_attachment_row_limit">MB_ATTACHMENT_ROW_LIMIT</a>.</p>
 
 <h3 id="mb_audit_max_retention_days-1"><code class="language-plaintext highlighter-rouge">MB_AUDIT_MAX_RETENTION_DAYS</code></h3>
 
@@ -7543,7 +7569,7 @@ Since: v51.3</p>
 Default: <code class="language-plaintext highlighter-rouge">600000</code><br>
 Since: v35.0</p>
 
-<p>Timeout of Jetty async threads, defined in milliseconds. The default is 10 minutes. Few things might reach that timeout, since they return some type of data before, but things like CSV downloads might.</p>
+<p>Timeout of Jetty async threads, defined in milliseconds. The default is 10 minutes. Very few things might reach that timeout, since they return some type of data before, but things like CSV downloads might.</p>
 
 <h3 id="mb_jetty_daemon"><code class="language-plaintext highlighter-rouge">MB_JETTY_DAEMON</code></h3>
 
