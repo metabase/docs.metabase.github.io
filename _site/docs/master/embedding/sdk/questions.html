@@ -283,7 +283,7 @@ Cloud</a>
 
             <div class="Button btn btn-transparent px-3 py-2 button-desktop" id="features-nav-button-desktop" tabindex="0">
   <div class="fs-13 d-flex align-items-center">
-    Features
+    <a href="/features">Features</a>
     <svg class="nav-button-chevron" fill="none" height="7" viewBox="0 0 11 7" width="11" xmlns="http://www.w3.org/2000/svg">
   <path d="M1.5 1L5.5 5L9.5 1" stroke-width="1.5" stroke="#509EE3"></path>
 </svg>
@@ -552,7 +552,7 @@ Cloud</a>
       </div>
       <div class="menu-footer buttons">
   <a href="/releases"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path stroke="#509EE3" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16.283 12.26 15.5 15l-.783-2.74a4.333 4.333 0 0 0-2.975-2.976L9 8.5l2.74-.783a4.333 4.333 0 0 0 2.976-2.975L15.5 2l.783 2.74a4.333 4.333 0 0 0 2.975 2.976L22 8.5l-2.74.783a4.334 4.334 0 0 0-2.976 2.975l-.001.001ZM6.5 22l.591-1.774a3.375 3.375 0 0 1 2.135-2.135L11 17.5l-1.774-.591a3.375 3.375 0 0 1-2.135-2.134L6.5 13l-.591 1.774a3.375 3.375 0 0 1-2.134 2.135L2 17.5l1.775.591a3.375 3.375 0 0 1 2.134 2.134L6.5 22Z"></path></svg>
-What’s new</a>
+What's new</a>
   <a href="/roadmap"><svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path stroke="#8D93A5" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m4.75 6.75 4.5-2v12.5l-4.5 2V6.75ZM14.75 6.75l4.5-2v12.5l-4.5 2V6.75ZM14.75 6.75l-5.5-2v12.5l5.5 2V6.75Z"></path>
 </svg>
@@ -5308,8 +5308,60 @@ Roadmap</a>
 
 <h3 id="mapquestionclickactions"><code class="language-plaintext highlighter-rouge">mapQuestionClickActions</code></h3>
 
-<p>This plugin allows you to add custom actions to the click-through menu of an interactive question. You can add and
-customize the appearance and behavior of the custom actions.</p>
+<p>When people click on a data point in the embedded interactive chart, Metabase shows them a menu of actions by default. The plugin <code class="language-plaintext highlighter-rouge">mapQuestionClickActions</code> allows you to customize this behavior. You can choose to:</p>
+
+<ul>
+  <li>Open the default Metabase menu.</li>
+  <li>Add custom actions to that click-through menu.</li>
+  <li>Perform immediate action without opening a menu.</li>
+</ul>
+
+<p>Use <code class="language-plaintext highlighter-rouge">mapQuestionClickActions</code> globally at the provider level, or on individual <code class="language-plaintext highlighter-rouge">InteractiveQuestion</code> or <code class="language-plaintext highlighter-rouge">InteractiveDashboard</code> components. For more on provider scope, see <a href="./plugins">Plugins</a></p>
+
+<p>The example below shows all the options for click action behavior. This example will:</p>
+
+<ul>
+  <li>Open a menu with custom actions when “Last Name” column is clicked.</li>
+  <li>Perform an immediate action (show an alert) when the “Plan” column is clicked.</li>
+  <li>Shows the default menu (available as <code class="language-plaintext highlighter-rouge">clickActions</code>) in all other cases.</li>
+</ul>
+
+<p>The behavior is determined by what <code class="language-plaintext highlighter-rouge">mapQuestionClickActions</code> returns: array of actions to open a menu, or a single action to trigger an immediate action.</p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="o">&lt;</span><span class="nx">MetabaseProvider</span>
+    <span class="nx">authConfig</span><span class="o">=</span><span class="p">{</span><span class="nx">authConfig</span><span class="p">}</span>
+    <span class="nx">pluginsConfig</span><span class="o">=</span><span class="p">{{</span>
+      <span class="na">mapQuestionClickActions</span><span class="p">:</span> <span class="p">(</span><span class="nx">clickActions</span><span class="p">,</span> <span class="nx">clicked</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="k">if </span><span class="p">(</span><span class="nx">clicked</span><span class="p">?.</span><span class="nx">column</span><span class="p">?.</span><span class="nx">display_name</span> <span class="o">===</span> <span class="dl">"</span><span class="s2">Last Name</span><span class="dl">"</span><span class="p">)</span> <span class="p">{</span>
+          <span class="c1">// This adds a custom action to the menu when clicked on on "Last Name" column</span>
+          <span class="k">return</span> <span class="p">[</span>
+            <span class="p">...</span><span class="nx">clickActions</span><span class="p">,</span>
+            <span class="p">{</span>
+              <span class="na">buttonType</span><span class="p">:</span> <span class="dl">"</span><span class="s2">horizontal</span><span class="dl">"</span><span class="p">,</span>
+              <span class="na">name</span><span class="p">:</span> <span class="dl">"</span><span class="s2">custom</span><span class="dl">"</span><span class="p">,</span>
+              <span class="na">title</span><span class="p">:</span> <span class="dl">"</span><span class="s2">This is the Last Name column</span><span class="dl">"</span><span class="p">,</span>
+              <span class="na">onClick</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="nf">alert</span><span class="p">(</span><span class="dl">"</span><span class="s2">You clicked the Last Name column!</span><span class="dl">"</span><span class="p">),</span>
+            <span class="p">},</span>
+          <span class="p">];</span>
+        <span class="p">}</span>
+
+        <span class="k">if </span><span class="p">(</span><span class="nx">clicked</span><span class="p">?.</span><span class="nx">column</span><span class="p">?.</span><span class="nx">display_name</span> <span class="o">===</span> <span class="dl">"</span><span class="s2">Plan</span><span class="dl">"</span><span class="p">)</span> <span class="p">{</span>
+          <span class="c1">// This performs an immediate action on "Plan" column instead of opening the menu</span>
+          <span class="k">return</span> <span class="p">{</span>
+            <span class="na">onClick</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="nf">alert</span><span class="p">(</span><span class="dl">"</span><span class="s2">You clicked the Plan column!</span><span class="dl">"</span><span class="p">),</span>
+          <span class="p">};</span>
+        <span class="p">}</span>
+        <span class="c1">// default behavior (open Metabase's default click menu) on other columns</span>
+        <span class="k">return</span> <span class="nx">clickActions</span><span class="p">;</span>
+      <span class="p">},</span>
+    <span class="p">}}</span>
+  <span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">InteractiveQuestion</span> <span class="nx">questionId</span><span class="o">=</span><span class="p">{</span><span class="mi">1</span><span class="p">}</span> <span class="sr">/</span><span class="err">&gt;
+</span>  <span class="o">&lt;</span><span class="sr">/MetabaseProvider</span><span class="err">&gt;
+</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>You can also customize the appearance of custom actions in the click menu. The example below shows an example of a click menu with default actions, a custom action, and a custom action with customized appearance:</p>
 
 <div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// You can provide a custom action with your own `onClick` logic.</span>
 <span class="kd">const</span> <span class="nx">createCustomAction</span> <span class="o">=</span> <span class="nx">clicked</span> <span class="o">=&gt;</span> <span class="p">({</span>
