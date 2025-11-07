@@ -283,7 +283,7 @@ Cloud</a>
 
             <div class="Button btn btn-transparent px-3 py-2 button-desktop" id="features-nav-button-desktop" tabindex="0">
   <div class="fs-13 d-flex align-items-center">
-    Features
+    <a href="/features">Features</a>
     <svg class="nav-button-chevron" fill="none" height="7" viewBox="0 0 11 7" width="11" xmlns="http://www.w3.org/2000/svg">
   <path d="M1.5 1L5.5 5L9.5 1" stroke-width="1.5" stroke="#509EE3"></path>
 </svg>
@@ -552,7 +552,7 @@ Cloud</a>
       </div>
       <div class="menu-footer buttons">
   <a href="/releases"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path stroke="#509EE3" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16.283 12.26 15.5 15l-.783-2.74a4.333 4.333 0 0 0-2.975-2.976L9 8.5l2.74-.783a4.333 4.333 0 0 0 2.976-2.975L15.5 2l.783 2.74a4.333 4.333 0 0 0 2.975 2.976L22 8.5l-2.74.783a4.334 4.334 0 0 0-2.976 2.975l-.001.001ZM6.5 22l.591-1.774a3.375 3.375 0 0 1 2.135-2.135L11 17.5l-1.774-.591a3.375 3.375 0 0 1-2.135-2.134L6.5 13l-.591 1.774a3.375 3.375 0 0 1-2.134 2.135L2 17.5l1.775.591a3.375 3.375 0 0 1 2.134 2.134L6.5 22Z"></path></svg>
-What’s new</a>
+What's new</a>
   <a href="/roadmap"><svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path stroke="#8D93A5" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m4.75 6.75 4.5-2v12.5l-4.5 2V6.75ZM14.75 6.75l4.5-2v12.5l-4.5 2V6.75ZM14.75 6.75l-5.5-2v12.5l5.5 2V6.75Z"></path>
 </svg>
@@ -4957,6 +4957,42 @@ Roadmap</a>
   <span class="p">}}</span>
 <span class="sr">/</span><span class="err">&gt;
 </span></code></pre></div></div>
+
+<h2 id="handlelink"><code class="language-plaintext highlighter-rouge">handleLink</code></h2>
+
+<p>To customize what happens when people click a link in your embedded questions and dashboards, use the global plugin <code class="language-plaintext highlighter-rouge">handleLink</code>:</p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">export</span> <span class="k">default</span> <span class="kd">function</span> <span class="nf">App</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">navigate</span> <span class="o">=</span> <span class="nf">useNavigate</span><span class="p">();</span> <span class="c1">// coming from whatever routing lib you're using</span>
+
+  <span class="kd">const</span> <span class="nx">plugins</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">handleLink</span><span class="p">:</span> <span class="p">(</span><span class="na">urlString</span><span class="p">:</span> <span class="kr">string</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="kd">const</span> <span class="nx">url</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">URL</span><span class="p">(</span><span class="nx">urlString</span><span class="p">,</span> <span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">origin</span><span class="p">);</span>
+      <span class="kd">const</span> <span class="nx">isInternal</span> <span class="o">=</span> <span class="nx">url</span><span class="p">.</span><span class="nx">origin</span> <span class="o">===</span> <span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">origin</span><span class="p">;</span>
+      <span class="k">if </span><span class="p">(</span><span class="nx">isInternal</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// client side navigation</span>
+        <span class="nf">navigate</span><span class="p">(</span><span class="nx">url</span><span class="p">.</span><span class="nx">pathname</span> <span class="o">+</span> <span class="nx">url</span><span class="p">.</span><span class="nx">search</span> <span class="o">+</span> <span class="nx">url</span><span class="p">.</span><span class="nx">hash</span><span class="p">);</span>
+
+        <span class="k">return</span> <span class="p">{</span> <span class="na">handled</span><span class="p">:</span> <span class="kc">true</span> <span class="p">};</span> <span class="c1">// prevent default navigation</span>
+      <span class="p">}</span>
+      <span class="k">return</span> <span class="p">{</span> <span class="na">handled</span><span class="p">:</span> <span class="kc">false</span> <span class="p">};</span> <span class="c1">// let the sdk do the default behavior</span>
+    <span class="p">},</span>
+  <span class="p">};</span>
+
+  <span class="k">return </span><span class="p">(</span>
+    <span class="o">&lt;</span><span class="nx">MetabaseProvider</span> <span class="nx">authConfig</span><span class="o">=</span><span class="p">{</span><span class="nx">authConfig</span><span class="p">}</span> <span class="nx">pluginsConfig</span><span class="o">=</span><span class="p">{</span><span class="nx">plugins</span><span class="p">}</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="nx">nav</span> <span class="nx">style</span><span class="o">=&gt;</span>
+        <span class="o">&lt;</span><span class="nx">Link</span> <span class="nx">to</span><span class="o">=</span><span class="dl">"</span><span class="s2">/</span><span class="dl">"</span><span class="o">&gt;</span><span class="nx">Home</span><span class="o">&lt;</span><span class="sr">/Link</span><span class="err">&gt;
+</span>        <span class="o">&lt;</span><span class="nx">Link</span> <span class="nx">to</span><span class="o">=</span><span class="dl">"</span><span class="s2">/question</span><span class="dl">"</span><span class="o">&gt;</span><span class="nx">Question</span><span class="o">&lt;</span><span class="sr">/Link</span><span class="err">&gt;
+</span>        <span class="o">&lt;</span><span class="nx">Link</span> <span class="nx">to</span><span class="o">=</span><span class="dl">"</span><span class="s2">/about</span><span class="dl">"</span><span class="o">&gt;</span><span class="nx">About</span><span class="o">&lt;</span><span class="sr">/Link</span><span class="err">&gt;
+</span>      <span class="o">&lt;</span><span class="sr">/nav</span><span class="err">&gt;
+</span>      <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">style</span><span class="o">=&gt;</span>
+        <span class="o">&lt;</span><span class="nx">Outlet</span> <span class="o">/&gt;</span>
+      <span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span>    <span class="o">&lt;</span><span class="sr">/MetabaseProvider</span><span class="err">&gt;
+</span>  <span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
 
 <h2 id="further-reading">Further reading</h2>
 
