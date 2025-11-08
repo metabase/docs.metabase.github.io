@@ -54,7 +54,7 @@
 <meta name="twitter:site" content="@metabase">
 
 <meta name="twitter:title" content="Model persistence | Metabase Documentation">
-<meta name="twitter:description" content="Model persistence  Currently available for PostgreSQL, MySQL, and Redshift.  Metabase can persist the results of your models so that your models (and the questions based on those models) load faster. Metabase will store model results in tables in a...">
+<meta name="twitter:description" content="Model persistence Metabase can persist the results of your models so that your models (and the questions based on those models) load faster. Metabase will store model results in tables in a bespoke schema in your data warehouse (not the Metabase...">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -64,7 +64,7 @@
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://www.metabase.com/docs/v0.56/data-modeling/model-persistence">
 <meta name="title" property="og:title" content="Model persistence | Metabase Documentation">
-<meta name="description" property="og:description" content="Model persistence  Currently available for PostgreSQL, MySQL, and Redshift.  Metabase can persist the results of your models so that your models (and the questions based on those models) load faster. Metabase will store model results in tables in a...">
+<meta name="description" property="og:description" content="Model persistence Metabase can persist the results of your models so that your models (and the questions based on those models) load faster. Metabase will store model results in tables in a bespoke schema in your data warehouse (not the Metabase...">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -283,7 +283,7 @@ Cloud</a>
 
             <div class="Button btn btn-transparent px-3 py-2 button-desktop" id="features-nav-button-desktop" tabindex="0">
   <div class="fs-13 d-flex align-items-center">
-    Features
+    <a href="/features">Features</a>
     <svg class="nav-button-chevron" fill="none" height="7" viewBox="0 0 11 7" width="11" xmlns="http://www.w3.org/2000/svg">
   <path d="M1.5 1L5.5 5L9.5 1" stroke-width="1.5" stroke="#509EE3"></path>
 </svg>
@@ -552,7 +552,7 @@ Cloud</a>
       </div>
       <div class="menu-footer buttons">
   <a href="/releases"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path stroke="#509EE3" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16.283 12.26 15.5 15l-.783-2.74a4.333 4.333 0 0 0-2.975-2.976L9 8.5l2.74-.783a4.333 4.333 0 0 0 2.976-2.975L15.5 2l.783 2.74a4.333 4.333 0 0 0 2.975 2.976L22 8.5l-2.74.783a4.334 4.334 0 0 0-2.976 2.975l-.001.001ZM6.5 22l.591-1.774a3.375 3.375 0 0 1 2.135-2.135L11 17.5l-1.774-.591a3.375 3.375 0 0 1-2.135-2.134L6.5 13l-.591 1.774a3.375 3.375 0 0 1-2.134 2.135L2 17.5l1.775.591a3.375 3.375 0 0 1 2.134 2.134L6.5 22Z"></path></svg>
-What’s new</a>
+What's new</a>
   <a href="/roadmap"><svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path stroke="#8D93A5" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m4.75 6.75 4.5-2v12.5l-4.5 2V6.75ZM14.75 6.75l4.5-2v12.5l-4.5 2V6.75ZM14.75 6.75l-5.5-2v12.5l5.5 2V6.75Z"></path>
 </svg>
@@ -4804,10 +4804,6 @@ Roadmap</a>
 
         <h1 id="model-persistence">Model persistence</h1>
 
-<blockquote>
-  <p>Currently available for PostgreSQL, MySQL, and Redshift.</p>
-</blockquote>
-
 <p>Metabase can persist the results of your models so that your models (and the questions based on those models) load faster.</p>
 
 <p>Metabase will store model results in tables in a bespoke schema in your data warehouse (not the Metabase application database). When people ask questions based on your models, Metabase will use the tables with the stored results instead of re-running the model’s query.</p>
@@ -4815,6 +4811,18 @@ Roadmap</a>
 <blockquote>
   <p>Model persistence doesn’t work with <a href="../permissions/row-and-column-security">row and column security</a> or <a href="../permissions/impersonation">impersonation</a>.</p>
 </blockquote>
+
+<h2 id="database-that-support-model-persistence">Database that support model persistence</h2>
+
+<p>Currently, model persistence is only available for the following databases:</p>
+
+<ul>
+  <li>PostgreSQL</li>
+  <li>MySQL</li>
+  <li>Redshift</li>
+</ul>
+
+<p>Model persistence doesn’t work with <a href="../permissions/row-and-column-security">row and column security</a> or <a href="../permissions/impersonation">impersonation</a>.</p>
 
 <h2 id="turn-on-model-persistence-in-metabase">Turn on model persistence in Metabase</h2>
 

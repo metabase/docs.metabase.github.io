@@ -11,13 +11,21 @@ layout: new-docs
 
 # Model persistence
 
-> Currently available for PostgreSQL, MySQL, and Redshift.
-
 Metabase can persist the results of your models so that your models (and the questions based on those models) load faster.
 
 Metabase will store model results in tables in a bespoke schema in your data warehouse (not the Metabase application database). When people ask questions based on your models, Metabase will use the tables with the stored results instead of re-running the model's query.
 
 > Model persistence doesn't work with [row and column security](../permissions/row-and-column-security) or [impersonation](../permissions/impersonation).
+
+## Database that support model persistence
+
+Currently, model persistence is only available for the following databases:
+
+- PostgreSQL
+- MySQL
+- Redshift
+
+Model persistence doesn't work with [row and column security](../permissions/row-and-column-security) or [impersonation](../permissions/impersonation).
 
 ## Turn on model persistence in Metabase
 
