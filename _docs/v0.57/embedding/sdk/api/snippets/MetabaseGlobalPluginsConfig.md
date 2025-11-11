@@ -11,6 +11,8 @@ layout: new-docs
 
 ```ts
 type MetabaseGlobalPluginsConfig = MetabasePluginsConfig & {
+  getNoDataIllustration?: () => string | null | undefined;
+  getNoObjectIllustration?: () => string | null | undefined;
   handleLink?: (url: string) => {
     handled: boolean;
   };
@@ -21,8 +23,10 @@ type MetabaseGlobalPluginsConfig = MetabasePluginsConfig & {
 
 <!-- [<snippet type-declaration>] -->
 
-| Name            | Type                                             |
-| :-------------- | :----------------------------------------------- |
-| `handleLink()?` | (`url`: `string`) => \{ `handled`: `boolean`; \} |
+| Name                         | Type                                             | Description                                                                                              |
+| :--------------------------- | :----------------------------------------------- | :------------------------------------------------------------------------------------------------------- |
+| `getNoDataIllustration()?`   | () => `string` \| `null` \| `undefined`          | Provides a custom illustration to display when there is no data.                                         |
+| `getNoObjectIllustration()?` | () => `string` \| `null` \| `undefined`          | Provides a custom illustration to display when there is no object (e.g., no dashboards, no collections). |
+| `handleLink()?`              | (`url`: `string`) => \{ `handled`: `boolean`; \} | -                                                                                                        |
 
 <!-- [<endsnippet type-declaration>] -->
