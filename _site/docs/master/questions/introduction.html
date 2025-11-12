@@ -4957,10 +4957,6 @@ Roadmap</a>
 
 <h3 id="checking-for-breaking-changes">Checking for breaking changes</h3>
 
-<blockquote>
-
-</blockquote>
-
 <div class="bootstrap">
   <div class="plans-blockquote bg-blue-95 rounded-3 p-6 d-flex flex-row border border-1 border-primary">
     <svg class="" width="24" height="24" viewBox="0 0 26 26" fill="none">
@@ -4984,6 +4980,10 @@ Roadmap</a>
 </div>
 
 <p>When a question, model, or metric is saved, Metabase will try to detect whether the changes you made would break any dependent entities. For example, if you removed a column from a question that other questions rely on, Metabase will warn you that those downstream questions will break.</p>
+
+<p><img src="./images/check-dependencies.png" alt="Check dependencies"></p>
+
+<p>Currently, Metabase will look for broken column references. If you rename or remove a column, Metabase will likely flag the change as breaking downstream entities. But Metabase can’t detect other types of changes like changing the column type or computation logic as breaking changes.</p>
 
 <h2 id="moving-questions-from-collections-to-dashboards-and-vice-versa">Moving questions from collections to dashboards (and vice versa)</h2>
 
