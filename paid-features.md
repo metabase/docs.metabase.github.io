@@ -10,7 +10,7 @@ redirect_from:
 
 # Pro and Enterprise features
 
-This page lists the features included in Metabase Pro and Enterprise Metabase. See [Pricing](/pricing/).
+This page lists the features included in Metabase Pro and Enterprise. See [Pricing](/pricing/).
 
 {% for section in site.data.feature-comparison %}
 
