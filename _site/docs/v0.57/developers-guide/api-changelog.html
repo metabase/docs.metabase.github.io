@@ -4915,6 +4915,21 @@ via the REST API (please treat it as an opaque object), to support existing usag
 can return the Card <code class="language-plaintext highlighter-rouge">dataset_query</code> as MBQL 4 if you include the query parameter <code class="language-plaintext highlighter-rouge">?legacy-mbql=true</code>.</li>
 </ul>
 
+<h2 id="metabase-05613">Metabase 0.56.13</h2>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">/api/collection/graph</code> endpoints now no longer return ‘none’ permissions in the returned graph. Missing fields in
+between group ids and collection id indicate that that the group provides no permissions for the collection. For
+example, what was returned in versions before 0.56.13:
+    <div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="nl">"revision"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="nl">"groups"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nl">"1"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nl">"root"</span><span class="p">:</span><span class="w"> </span><span class="s2">"write"</span><span class="p">,</span><span class="w"> </span><span class="nl">"1"</span><span class="p">:</span><span class="w"> </span><span class="s2">"read"</span><span class="p">,</span><span class="w"> </span><span class="nl">"2"</span><span class="p">:</span><span class="w"> </span><span class="s2">"none"</span><span class="p">}}}</span><span class="w">
+</span></code></pre></div>    </div>
+    <p>becomes:</p>
+    <div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="nl">"revision"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="nl">"groups"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nl">"1"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nl">"root"</span><span class="p">:</span><span class="w"> </span><span class="s2">"write"</span><span class="p">,</span><span class="w"> </span><span class="nl">"1"</span><span class="p">:</span><span class="w"> </span><span class="s2">"read"</span><span class="p">}}}</span><span class="w">
+</span></code></pre></div>    </div>
+    <p>in versions 0.56.13 and up.</p>
+  </li>
+</ul>
+
 <h2 id="metabase-0550">Metabase 0.55.0</h2>
 
 <ul>
