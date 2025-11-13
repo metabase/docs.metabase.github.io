@@ -2660,7 +2660,7 @@ Roadmap</a>
 
       
 
-      <li class="expanded">
+      <li class="">
         <a href="/docs/master/embedding/sdk/introduction" class="">
         Modular embedding
 
@@ -2698,7 +2698,7 @@ Roadmap</a>
 
               
 
-              <li class="expanded">
+              <li class="">
                 <a href="" class="">
                   Embedded analytics SDK
 
@@ -2717,91 +2717,28 @@ Roadmap</a>
                       
                       <li>
                         <a href="/docs/master/embedding/sdk/introduction" class="">
-                          Introduction
+                          Overview
                         </a>
                       </li>
                     
                       
                       <li>
-                        <a href="/docs/master/embedding/sdk/quickstart" class="">
-                          Quickstart
+                        <a href="/docs/master/embedding/sdk/introduction#quickstarts" class="">
+                          Quickstarts
                         </a>
                       </li>
                     
                       
                       <li>
-                        <a href="/docs/master/embedding/sdk/quickstart-cli" class="">
-                          Quickstart with CLI
+                        <a href="" class="">
+                          Components
                         </a>
                       </li>
                     
                       
                       <li>
-                        <a href="/docs/master/embedding/sdk/quickstart-with-sample-app" class="">
-                          Quickstart with sample app
-                        </a>
-                      </li>
-                    
-                      
-                      <li>
-                        <a href="/docs/master/embedding/sdk/questions" class="">
-                          Questions
-                        </a>
-                      </li>
-                    
-                      
-                      <li>
-                        <a href="/docs/master/embedding/sdk/dashboards" class="">
-                          Dashboards
-                        </a>
-                      </li>
-                    
-                      
-                      <li>
-                        <a href="/docs/master/embedding/sdk/ai-chat" class="">
-                          AI chat
-                        </a>
-                      </li>
-                    
-                      
-                      <li>
-                        <a href="/docs/master/embedding/sdk/collections" class="">
-                          Collections
-                        </a>
-                      </li>
-                    
-                      
-                      <li>
-                        <a href="/docs/master/embedding/sdk/authentication" class="">
-                          Authentication
-                        </a>
-                      </li>
-                    
-                      
-                      <li>
-                        <a href="/docs/master/embedding/sdk/appearance" class="">
-                          Appearance
-                        </a>
-                      </li>
-                    
-                      
-                      <li>
-                        <a href="/docs/master/embedding/sdk/config" class="">
-                          Config
-                        </a>
-                      </li>
-                    
-                      
-                      <li>
-                        <a href="/docs/master/embedding/sdk/next-js" class="">
-                          Working with Next.js
-                        </a>
-                      </li>
-                    
-                      
-                      <li>
-                        <a href="/docs/master/embedding/sdk/version" class="">
-                          Versioning
+                        <a href="" class="">
+                          Configuration
                         </a>
                       </li>
                     
@@ -2809,13 +2746,6 @@ Roadmap</a>
                       <li>
                         <a href="/docs/master/embedding/sdk/upgrade" class="">
                           Upgrading
-                        </a>
-                      </li>
-                    
-                      
-                      <li>
-                        <a href="/docs/master/embedding/sdk/plugins" class="selected">
-                          Plugins
                         </a>
                       </li>
                     
@@ -4931,7 +4861,9 @@ Roadmap</a>
 
 <p>The Metabase Embedded analytics SDK supports plugins to customize the behavior of components. These plugins can be used in a global context or on a per-component basis.</p>
 
-<h2 id="global-plugins">Global plugins</h2>
+<h2 id="plugin-scope">Plugin scope</h2>
+
+<h3 id="global-plugins">Global plugins</h3>
 
 <p>To use a plugin globally, add the plugin to the <code class="language-plaintext highlighter-rouge">MetabaseProvider</code>’s <code class="language-plaintext highlighter-rouge">pluginsConfig</code> prop:</p>
 
@@ -4946,7 +4878,7 @@ Roadmap</a>
 <span class="o">&lt;</span><span class="sr">/MetabaseProvider</span><span class="err">&gt;
 </span></code></pre></div></div>
 
-<h2 id="component-plugins">Component plugins</h2>
+<h3 id="component-plugins">Component plugins</h3>
 
 <p>To use a plugin on a per-component basis, pass the plugin as a prop to the component:</p>
 
@@ -4958,41 +4890,66 @@ Roadmap</a>
 <span class="sr">/</span><span class="err">&gt;
 </span></code></pre></div></div>
 
-<h2 id="handlelink"><code class="language-plaintext highlighter-rouge">handleLink</code></h2>
+<p>See docs for specific components:</p>
+
+<ul>
+  <li><a href="./questions#interactive-question-plugins">Interactive question plugins</a></li>
+  <li><a href="./dashboards#dashboard-plugins">Dashboard plugins</a></li>
+</ul>
+
+<h2 id="global-plugins-1">Global plugins</h2>
+
+<h3 id="mapquestionclickactions"><code class="language-plaintext highlighter-rouge">mapQuestionClickActions</code></h3>
+
+<p>The plugin <code class="language-plaintext highlighter-rouge">mapQuestionClickActions</code> lets you to customize what happens when people click on a data point on a dashboard or chart. <code class="language-plaintext highlighter-rouge">mapQuestionClickActions</code> can be used globally, or on component level.</p>
+
+<p>See <a href="./questions#mapquestionclickactions"><code class="language-plaintext highlighter-rouge">mapQuestionClickActions</code> plugin</a> for more information and examples.</p>
+
+<h3 id="handlelink"><code class="language-plaintext highlighter-rouge">handleLink</code></h3>
 
 <p>To customize what happens when people click a link in your embedded questions and dashboards, use the global plugin <code class="language-plaintext highlighter-rouge">handleLink</code>:</p>
 
-<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">export</span> <span class="k">default</span> <span class="kd">function</span> <span class="nf">App</span><span class="p">()</span> <span class="p">{</span>
-  <span class="kd">const</span> <span class="nx">navigate</span> <span class="o">=</span> <span class="nf">useNavigate</span><span class="p">();</span> <span class="c1">// coming from whatever routing lib you're using</span>
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">plugins</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">handleLink</span><span class="p">:</span> <span class="p">(</span><span class="na">urlString</span><span class="p">:</span> <span class="kr">string</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">url</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">URL</span><span class="p">(</span><span class="nx">urlString</span><span class="p">,</span> <span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">origin</span><span class="p">);</span>
+    <span class="kd">const</span> <span class="nx">isInternal</span> <span class="o">=</span> <span class="nx">url</span><span class="p">.</span><span class="nx">origin</span> <span class="o">===</span> <span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">origin</span><span class="p">;</span>
+    <span class="k">if </span><span class="p">(</span><span class="nx">isInternal</span><span class="p">)</span> <span class="p">{</span>
+      <span class="c1">// Handle internal navigation (e.g., with your router)</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">Navigate to:</span><span class="dl">"</span><span class="p">,</span> <span class="nx">url</span><span class="p">.</span><span class="nx">pathname</span> <span class="o">+</span> <span class="nx">url</span><span class="p">.</span><span class="nx">search</span> <span class="o">+</span> <span class="nx">url</span><span class="p">.</span><span class="nx">hash</span><span class="p">);</span>
+      <span class="k">return</span> <span class="p">{</span> <span class="na">handled</span><span class="p">:</span> <span class="kc">true</span> <span class="p">};</span> <span class="c1">// prevent default navigation</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="p">{</span> <span class="na">handled</span><span class="p">:</span> <span class="kc">false</span> <span class="p">};</span> <span class="c1">// let the SDK do the default behavior</span>
+  <span class="p">},</span>
+<span class="p">};</span>
 
-  <span class="kd">const</span> <span class="nx">plugins</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="na">handleLink</span><span class="p">:</span> <span class="p">(</span><span class="na">urlString</span><span class="p">:</span> <span class="kr">string</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-      <span class="kd">const</span> <span class="nx">url</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">URL</span><span class="p">(</span><span class="nx">urlString</span><span class="p">,</span> <span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">origin</span><span class="p">);</span>
-      <span class="kd">const</span> <span class="nx">isInternal</span> <span class="o">=</span> <span class="nx">url</span><span class="p">.</span><span class="nx">origin</span> <span class="o">===</span> <span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">origin</span><span class="p">;</span>
-      <span class="k">if </span><span class="p">(</span><span class="nx">isInternal</span><span class="p">)</span> <span class="p">{</span>
-        <span class="c1">// client side navigation</span>
-        <span class="nf">navigate</span><span class="p">(</span><span class="nx">url</span><span class="p">.</span><span class="nx">pathname</span> <span class="o">+</span> <span class="nx">url</span><span class="p">.</span><span class="nx">search</span> <span class="o">+</span> <span class="nx">url</span><span class="p">.</span><span class="nx">hash</span><span class="p">);</span>
-
-        <span class="k">return</span> <span class="p">{</span> <span class="na">handled</span><span class="p">:</span> <span class="kc">true</span> <span class="p">};</span> <span class="c1">// prevent default navigation</span>
-      <span class="p">}</span>
-      <span class="k">return</span> <span class="p">{</span> <span class="na">handled</span><span class="p">:</span> <span class="kc">false</span> <span class="p">};</span> <span class="c1">// let the sdk do the default behavior</span>
-    <span class="p">},</span>
-  <span class="p">};</span>
-
-  <span class="k">return </span><span class="p">(</span>
-    <span class="o">&lt;</span><span class="nx">MetabaseProvider</span> <span class="nx">authConfig</span><span class="o">=</span><span class="p">{</span><span class="nx">authConfig</span><span class="p">}</span> <span class="nx">pluginsConfig</span><span class="o">=</span><span class="p">{</span><span class="nx">plugins</span><span class="p">}</span><span class="o">&gt;</span>
-      <span class="o">&lt;</span><span class="nx">nav</span> <span class="nx">style</span><span class="o">=&gt;</span>
-        <span class="o">&lt;</span><span class="nx">Link</span> <span class="nx">to</span><span class="o">=</span><span class="dl">"</span><span class="s2">/</span><span class="dl">"</span><span class="o">&gt;</span><span class="nx">Home</span><span class="o">&lt;</span><span class="sr">/Link</span><span class="err">&gt;
-</span>        <span class="o">&lt;</span><span class="nx">Link</span> <span class="nx">to</span><span class="o">=</span><span class="dl">"</span><span class="s2">/question</span><span class="dl">"</span><span class="o">&gt;</span><span class="nx">Question</span><span class="o">&lt;</span><span class="sr">/Link</span><span class="err">&gt;
-</span>        <span class="o">&lt;</span><span class="nx">Link</span> <span class="nx">to</span><span class="o">=</span><span class="dl">"</span><span class="s2">/about</span><span class="dl">"</span><span class="o">&gt;</span><span class="nx">About</span><span class="o">&lt;</span><span class="sr">/Link</span><span class="err">&gt;
-</span>      <span class="o">&lt;</span><span class="sr">/nav</span><span class="err">&gt;
-</span>      <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">style</span><span class="o">=&gt;</span>
-        <span class="o">&lt;</span><span class="nx">Outlet</span> <span class="o">/&gt;</span>
-      <span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
-</span>    <span class="o">&lt;</span><span class="sr">/MetabaseProvider</span><span class="err">&gt;
-</span>  <span class="p">);</span>
-<span class="p">}</span>
+<span class="k">return </span><span class="p">(</span>
+  <span class="o">&lt;</span><span class="nx">MetabaseProvider</span> <span class="nx">authConfig</span><span class="o">=</span><span class="p">{</span><span class="nx">authConfig</span><span class="p">}</span> <span class="nx">pluginsConfig</span><span class="o">=</span><span class="p">{</span><span class="nx">plugins</span><span class="p">}</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">InteractiveDashboard</span> <span class="nx">dashboardId</span><span class="o">=</span><span class="p">{</span><span class="mi">1</span><span class="p">}</span> <span class="sr">/</span><span class="err">&gt;
+</span>  <span class="o">&lt;</span><span class="sr">/MetabaseProvider</span><span class="err">&gt;
+</span><span class="p">);</span>
 </code></pre></div></div>
+
+<p>The plugin <code class="language-plaintext highlighter-rouge">handleLink</code> can only be used <a href="#plugin-scope">globally</a> on provider level.</p>
+
+<h3 id="getnodataillustration-and-getnoobjectillustration"><code class="language-plaintext highlighter-rouge">getNoDataIllustration</code> and <code class="language-plaintext highlighter-rouge">getNoObjectIllustration</code></h3>
+
+<p>By default, Metabase displays a sailboat image when a query returns no results. To use a different image, you can use <code class="language-plaintext highlighter-rouge">getNoDataIllustration</code> and <code class="language-plaintext highlighter-rouge">getNoObjectIllustration</code> plugins which can accept a custom base64-encoded image:</p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">img_base64</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">...</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// base64-encoded image</span>
+
+<span class="kd">const</span> <span class="nx">plugins</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">getNoDataIllustration</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="nx">img_base64</span><span class="p">,</span>
+  <span class="na">getNoObjectIllustration</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="nx">img_base64</span><span class="p">,</span>
+<span class="p">};</span>
+
+<span class="k">return </span><span class="p">(</span>
+  <span class="o">&lt;</span><span class="nx">MetabaseProvider</span> <span class="nx">authConfig</span><span class="o">=</span><span class="p">{</span><span class="nx">authConfig</span><span class="p">}</span> <span class="nx">pluginsConfig</span><span class="o">=</span><span class="p">{</span><span class="nx">plugins</span><span class="p">}</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">InteractiveDashboard</span> <span class="nx">dashboardId</span><span class="o">=</span><span class="p">{</span><span class="mi">1</span><span class="p">}</span> <span class="sr">/</span><span class="err">&gt;
+</span>  <span class="o">&lt;</span><span class="sr">/MetabaseProvider</span><span class="err">&gt;
+</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>The plugins <code class="language-plaintext highlighter-rouge">getNoDataIllustration</code> and <code class="language-plaintext highlighter-rouge">getNoObjectIllustration</code> can only be used <a href="#plugin-scope">globally</a> on provider level.</p>
 
 <h2 id="further-reading">Further reading</h2>
 
