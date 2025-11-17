@@ -318,13 +318,15 @@ services:
       timeout: 5s
       retries: 5
   postgres:
-    image: postgres:latest
+    image: postgres:16
     container_name: postgres
     hostname: postgres
     environment:
       POSTGRES_USER_FILE: /run/secrets/db_user
       POSTGRES_DB: metabase
       POSTGRES_PASSWORD_FILE: /run/secrets/db_password
+    volumes:
+      - ./pg_data:/var/lib/postgresql/data
     networks:
       - metanet1
     secrets:
