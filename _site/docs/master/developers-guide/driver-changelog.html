@@ -5656,7 +5656,7 @@ settings formerly in a <code class="language-plaintext highlighter-rouge">metaba
 <h2 id="metabase-05411">Metabase 0.54.11</h2>
 
 <ul>
-  <li>The multimethods <code class="language-plaintext highlighter-rouge">metabase.driver.sql-jdbc.sync.interface/active-tables</code> and <code class="language-plaintext highlighter-rouge">metabase.driver.sql-jdbc.sync.interface/filtered-syncable-schemas</code>, aswell as the functions
+  <li>The multimethods <code class="language-plaintext highlighter-rouge">metabase.driver.sql-jdbc.sync.interface/active-tables</code> and <code class="language-plaintext highlighter-rouge">metabase.driver.sql-jdbc.sync.interface/filtered-syncable-schemas</code>, as well as the functions
 <code class="language-plaintext highlighter-rouge">metabase.driver.sql-jdbc.sync.describe_database/fast-active-tables</code>, <code class="language-plaintext highlighter-rouge">metabase.driver.sql-jdbc.sync.describe_database/have-select-privilege-fn</code> and <code class="language-plaintext highlighter-rouge">metabase.driver.sql-jdbc.sync.describe_database/db-tables</code> now take a database spec instead of a <code class="language-plaintext highlighter-rouge">java.sql.Connection</code> object.</li>
 </ul>
 
@@ -5664,7 +5664,7 @@ settings formerly in a <code class="language-plaintext highlighter-rouge">metaba
 
 <ul>
   <li>Add <code class="language-plaintext highlighter-rouge">metabase.driver/table-known-to-not-exist?</code> for drivers to test if an exception is due to a query on a table that no longer exists</li>
-  <li>Add <code class="language-plaintext highlighter-rouge">metabase.driver.sql-jdbc/impl-table-known-to-not-exist?</code> for JDBC drivers. This is the implemenation of table-known-to-not-exist for jdbc and allows testing directly against <code class="language-plaintext highlighter-rouge">java.sql.SQLException</code> throwables without worrying about the exception cause chain.</li>
+  <li>Add <code class="language-plaintext highlighter-rouge">metabase.driver.sql-jdbc/impl-table-known-to-not-exist?</code> for JDBC drivers. This is the implementation of table-known-to-not-exist for jdbc and allows testing directly against <code class="language-plaintext highlighter-rouge">java.sql.SQLException</code> throwables without worrying about the exception cause chain.</li>
 </ul>
 
 <h2 id="metabase-0540">Metabase 0.54.0</h2>
@@ -5712,7 +5712,7 @@ databases that support them.</p>
 
 <ul>
   <li>Add <code class="language-plaintext highlighter-rouge">metabase.driver/query-canceled?</code> for drivers to test if an exception is due to a query being canceled due to user action</li>
-  <li>Add <code class="language-plaintext highlighter-rouge">metabase.driver.sql-jdbc/impl-query-canceled?</code> for JDBC drivers. This is the implemenation of query-canceled for jdbc and allows testing directly against <code class="language-plaintext highlighter-rouge">java.sql.SQLException</code> throwables without worrying about the exception cause chain.</li>
+  <li>Add <code class="language-plaintext highlighter-rouge">metabase.driver.sql-jdbc/impl-query-canceled?</code> for JDBC drivers. This is the implementation of query-canceled for jdbc and allows testing directly against <code class="language-plaintext highlighter-rouge">java.sql.SQLException</code> throwables without worrying about the exception cause chain.</li>
 </ul>
 
 <h2 id="metabase-05310">Metabase 0.53.10</h2>
@@ -6274,7 +6274,7 @@ to be assigned to specific database roles which are set before any queries are e
 be restricted at the database level instead of (or in conjunction with) Metabase’s built-in permissions system.</p>
   </li>
   <li>
-    <p>The multimethod <code class="language-plaintext highlighter-rouge">metabase.driver.sql-jdbc.sync.describe-table/get-table-pks</code> is changed to return a vector instea
+    <p>The multimethod <code class="language-plaintext highlighter-rouge">metabase.driver.sql-jdbc.sync.describe-table/get-table-pks</code> is changed to return a vector instead
 of a set.</p>
   </li>
   <li>
@@ -6489,8 +6489,8 @@ differences between the library versions.</p>
 
 <p><strong>Note: we expect these breaking changes to be fixed before 0.46.0 ships. This will be updated if they are.</strong></p>
 
-<p>The classes <code class="language-plaintext highlighter-rouge">metabase.util.honeysql_extensions.Identifer</code> and <code class="language-plaintext highlighter-rouge">metabase.util.honeysql_extensions.TypedHoneySQLForm</code>
-have been moved to <code class="language-plaintext highlighter-rouge">metabase.util.honey_sql_1.Identifer</code> and <code class="language-plaintext highlighter-rouge">metabase.util.honey_sql_1.TypedHoneySQLForm</code>,
+<p>The classes <code class="language-plaintext highlighter-rouge">metabase.util.honeysql_extensions.Identifier</code> and <code class="language-plaintext highlighter-rouge">metabase.util.honeysql_extensions.TypedHoneySQLForm</code>
+have been moved to <code class="language-plaintext highlighter-rouge">metabase.util.honey_sql_1.Identifier</code> and <code class="language-plaintext highlighter-rouge">metabase.util.honey_sql_1.TypedHoneySQLForm</code>,
 respectively. On the off chance that your driver directly referencing these class names, you may need to update things
 to use the new class names.</p>
 

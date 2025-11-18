@@ -37,6 +37,7 @@ type IconName =
   | "add_column"
   | "add_data"
   | "add_folder"
+  | "add_list"
   | "add_row"
   | "add_to_dash"
   | "add_comment"

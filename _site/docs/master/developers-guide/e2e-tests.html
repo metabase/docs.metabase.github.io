@@ -5446,7 +5446,7 @@ Roadmap</a>
 
         <h1 id="end-to-end-tests-with-cypress">End-to-end tests with Cypress</h1>
 
-<p>Metabase uses Cypress for “end-to-end testing”, that is, tests that are executed against the application as a whole, including the frontend, backend, and application database. These tests are essentially scripts written in JavaScript that run in the web browser: visit different URLs, click various UI elements, type text, and assert that things happen as expected (for example, an element appearing on screen, or a network request occuring).</p>
+<p>Metabase uses Cypress for “end-to-end testing”, that is, tests that are executed against the application as a whole, including the frontend, backend, and application database. These tests are essentially scripts written in JavaScript that run in the web browser: visit different URLs, click various UI elements, type text, and assert that things happen as expected (for example, an element appearing on screen, or a network request occurring).</p>
 
 <p><em>Please, get familiar with the <a href="https://docs.cypress.io/app/core-concepts/best-practices">Cypress best practices</a> before you proceed.</em></p>
 
@@ -5602,8 +5602,6 @@ export MB_SNOWPLOW_URL=http://localhost:9090
 <p>We have a few helpers for dealing with tests involving snowplow</p>
 
 <ol>
-  <li>You can use <code class="language-plaintext highlighter-rouge">describeWithSnowplow</code> (or <code class="language-plaintext highlighter-rouge">describeWithSnowplowEE</code> for EE edition) method to define tests that only
-run when a Snowplow instance is running</li>
   <li>Use <code class="language-plaintext highlighter-rouge">resetSnowplow()</code> test helper before each test to clear the queue of processed events.</li>
   <li>Use <code class="language-plaintext highlighter-rouge">expectSnowplowEvent({ ...payload }, count=n)</code> to assert that exactly <code class="language-plaintext highlighter-rouge">count</code> snowplow events match (partially)
 the payload provided (count defaults to 1)</li>
@@ -5621,6 +5619,10 @@ partial-match the payload provided. This is simply a convenience function for co
 
 <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run <span class="nt">-d</span> <span class="nt">-p</span> 1080:1080 <span class="nt">-p</span> 1025:1025 maildev/maildev:latest
 </code></pre></div></div>
+
+<h3 id="running-tests-that-require-translation-dictionaries">Running tests that require translation dictionaries</h3>
+
+<p>Some of the tests are checking content translation functionality. These tests require to run <code class="language-plaintext highlighter-rouge">./bin/i18n/build-translation-resources</code> command before running the tests to precompile JSON files with translations.</p>
 
 <h3 id="cypress-comes-with-lodash-for-free">Cypress comes with <code class="language-plaintext highlighter-rouge">Lodash</code> for free</h3>
 
