@@ -167,7 +167,7 @@ Until the Embedded analytics SDK is fully loaded and initialized, the hook retur
 
 ### `CreateDashboardModal`
 
-#### API Refernce
+#### API Reference
 
 - [Component](./api/CreateDashboardModal)
 - [Props](./api/CreateDashboardModalProps)

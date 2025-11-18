@@ -146,4 +146,4 @@ This setting doesn't affect [SQL queries](../questions/native-editor/writing-sql
 
 ## Localizing embedded Metabase
 
-You can tranlate both Metabase UI elements (like button labels) and content (like dashboard names) in static embeds. See [Setting the language for static embeds](../embedding/static-embedding-parameters#setting-the-language-for-a-static-embed) and [Translating embedded dashboards and questions](../embedding/translations).
+You can translate both Metabase UI elements (like button labels) and content (like dashboard names) in static embeds. See [Setting the language for static embeds](../embedding/static-embedding-parameters#setting-the-language-for-a-static-embed) and [Translating embedded dashboards and questions](../embedding/translations).
