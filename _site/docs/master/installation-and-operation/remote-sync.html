@@ -5479,11 +5479,11 @@ Roadmap</a>
 <p>Here’s a basic remote-sync workflow:</p>
 
 <ol>
-  <li>Create a dashboard in a <strong>Metabase configured in Development mode</strong>.</li>
+  <li>Create a dashboard in a <strong>Metabase configured in Read-write mode</strong>.</li>
   <li>Push it to a Git branch.</li>
   <li>Open a pull request for review.</li>
   <li>Merge the PR to production.</li>
-  <li>Your <strong>Metabase configured in Production mode</strong> automatically pulls in the changes.</li>
+  <li>Your <strong>Metabase configured in Read-only mode</strong> automatically pulls in the changes.</li>
 </ol>
 
 <p>We’ll cover <a href="#setting-up-remote-sync">setting up Remote Sync</a>, an <a href="#an-example-dev-to-production-workflow">example dev-to-production workflow</a>, <a href="#branch-management">branch management</a>, and some other odds and ends.</p>
@@ -5493,11 +5493,11 @@ Roadmap</a>
 <p><strong>Remote sync has two modes for different roles</strong>:</p>
 
 <ul>
-  <li><strong>Development mode</strong>: Create and edit content. You can <a href="#pushing-changes-to-git">push</a> and <a href="#pulling-changes-from-git">pull</a> changes to and from your repository. Multiple Metabase instances can connect in Development mode, each working on <a href="#branch-management">different branches</a>.</li>
-  <li><strong>Production mode</strong>: Serves read-only content to users. Production instances only <a href="#pulling-changes-from-git">pull</a> changes (typically from your main branch) and don’t allow direct editing of synced content. You can set up <a href="#pulling-changes-automatically">auto-sync</a> to automatically pull approved changes every five minutes.</li>
+  <li><strong>Read-write mode</strong>: Create and edit content. You can <a href="#pushing-changes-to-git">push</a> and <a href="#pulling-changes-from-git">pull</a> changes to and from your repository. Multiple Metabase instances can connect in Read-write mode, each working on <a href="#branch-management">different branches</a>.</li>
+  <li><strong>Read-only mode</strong>: Serves read-only content to users. Read-only instances only <a href="#pulling-changes-from-git">pull</a> changes (typically from your main branch) and don’t allow direct editing of synced content. You can set up <a href="#pulling-changes-automatically">auto-sync</a> to automatically pull approved changes every five minutes.</li>
 </ul>
 
-<p><strong>Only the synced collection is tracked</strong>: Each Metabase connected to Remote Sync has one special <a href="#how-the-synced-collection-works-in-development-mode">collection that syncs with Git</a>. When you connect in Development mode, Metabase creates a collection called “Synced Collection” (you can rename it). Everything inside this collection (including sub-collections) is versioned and synchronized with your repository.</p>
+<p><strong>Only the synced collection is tracked</strong>: Each Metabase connected to Remote Sync has one special <a href="#how-the-synced-collection-works-in-read-write-mode">collection that syncs with Git</a>. When you connect in Read-write mode, Metabase creates a collection called “Synced Collection” (you can rename it). Everything inside this collection (including sub-collections) is versioned and synchronized with your repository.</p>
 
 <p><strong>The synced collection must be self-contained</strong>: Everything a dashboard or question needs must be <a href="#items-in-the-synced-collection-cant-depend-on-items-outside-of-it">inside the synced collection</a>. Content outside the synced collection won’t sync to your repository or appear in other Metabase instances.</p>
 
@@ -5538,7 +5538,7 @@ Roadmap</a>
 
 <p><img src="./images/development-settings.png" alt="Development settings"></p>
 
-<p>You can put any Metabase into development mode. We also offer <a href="./development-instance">Development instances</a> that you can use for Remote Sync or any other kind of development.</p>
+<p>You can put any Metabase into Read-write mode. We also offer <a href="./development-instance">Development instances</a> that you can use for Remote Sync or any other kind of development.</p>
 
 <p>In the Metabase instance that you use for development:</p>
 
@@ -5554,7 +5554,7 @@ Roadmap</a>
     </ul>
   </li>
   <li>
-    <p>Select <strong>Development mode</strong>.</p>
+    <p>Select <strong>Read-write mode</strong>.</p>
   </li>
   <li>
     <p>Add your access token:</p>
@@ -5574,7 +5574,7 @@ Roadmap</a>
 
 <h3 id="4-add-an-item-to-your-synced-collection">4. Add an item to your synced collection</h3>
 
-<p>When you first connect in Development mode, Metabase automatically creates a <strong>synced collection</strong> called “Synced Collection”—any content you add to it will be tracked in Git and can be pushed to your repository.</p>
+<p>When you first connect in Read-write mode, Metabase automatically creates a <strong>synced collection</strong> called “Synced Collection”—any content you add to it will be tracked in Git and can be pushed to your repository.</p>
 
 <p>You can rename the Synced Collection if you want, and you can add sub-collections within it to organize your content.</p>
 
@@ -5644,7 +5644,7 @@ Roadmap</a>
     </ul>
   </li>
   <li>
-    <p>Select <strong>Production mode</strong>.</p>
+    <p>Select <strong>Read-only mode</strong>.</p>
   </li>
   <li>
     <p>Add your access token:</p>
@@ -5669,7 +5669,7 @@ Roadmap</a>
   </li>
 </ol>
 
-<p>In Production mode, the synced collection appears in the regular collections list with a special icon to indicate it’s versioned and read-only.</p>
+<p>In Read-only mode, the synced collection appears in the regular collections list with a special icon to indicate it’s versioned and read-only.</p>
 
 <p><img src="./images/production-view.png" alt="Production Metabase"></p>
 
@@ -5716,7 +5716,7 @@ Roadmap</a>
   <li>The content is read-only for users (they can view and use it, but can’t edit it).</li>
 </ol>
 
-<h2 id="how-the-synced-collection-works-in-development-mode">How the synced collection works in Development mode</h2>
+<h2 id="how-the-synced-collection-works-in-read-write-mode">How the synced collection works in Read-write mode</h2>
 
 <ul>
   <li><a href="#the-synced-collection-in-the-ui">The synced collection in the UI</a></li>
@@ -5726,13 +5726,13 @@ Roadmap</a>
 
 <h3 id="the-synced-collection-in-the-ui">The synced collection in the UI</h3>
 
-<p>When you first connect in Development mode, Metabase creates a synced collection called “Synced Collection”. You can add items and sub-collections to it. The synced collection shows its current state with visual indicators: a yellow dot indicates unsynced local changes that need to be committed, and up/down arrows provide sync controls for pulling and pushing changes.</p>
+<p>When you first connect in Read-write mode, Metabase creates a synced collection called “Synced Collection”. You can add items and sub-collections to it. The synced collection shows its current state with visual indicators: a yellow dot indicates unsynced local changes that need to be committed, and up/down arrows provide sync controls for pulling and pushing changes.</p>
 
-<p>In Production mode, the synced collection appears in the regular collections list (not in a separate “Synced Collections” section) with a special icon to indicate it’s versioned and read-only.</p>
+<p>In Read-only mode, the synced collection appears in the regular collections list (not in a separate “Synced Collections” section) with a special icon to indicate it’s versioned and read-only.</p>
 
 <h3 id="moving-and-deleting-content-in-the-synced-collection">Moving and deleting content in the synced collection</h3>
 
-<p><strong>Deletions sync to production:</strong> When you remove content from the synced collection in Development mode and push that change, the content will also be removed from your Production instance when it syncs. This applies to moving content out of the synced collection or deleting it entirely.</p>
+<p><strong>Deletions sync to production:</strong> When you remove content from the synced collection in Read-write mode and push that change, the content will also be removed from your Production instance when it syncs. This applies to moving content out of the synced collection or deleting it entirely.</p>
 
 <p>Content in other Metabases that depended on this item may break since the dependency will no longer be in the synced collection.</p>
 
@@ -5771,7 +5771,7 @@ Roadmap</a>
 
 <p>For groups with these permissions, the sub-collections they can access will appear at the top level of navigation, as if they were root-level collections. They won’t see the top-level Synced Collection that you have in your development Metabase.</p>
 
-<p>What you see in Development mode:</p>
+<p>What you see in Read-write mode:</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Collections
 └── Synced Collection
@@ -5779,7 +5779,7 @@ Roadmap</a>
     ├── Giant Sloth Statistics
 </code></pre></div></div>
 
-<p>What embedding groups see in Production mode (with no access to Synced Collection, but access to Mammoth Statistics and Giant Sloth Statistics):</p>
+<p>What embedding groups see in Read-only mode (with no access to Synced Collection, but access to Mammoth Statistics and Giant Sloth Statistics):</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Collections
 ├── Mammoth Statistics
@@ -5814,7 +5814,7 @@ Roadmap</a>
 
 <h2 id="branch-management">Branch management</h2>
 
-<p>Branching is only available in Development mode.</p>
+<p>Branching is only available in Read-write mode.</p>
 
 <h3 id="creating-a-branch">Creating a branch</h3>
 
@@ -5853,13 +5853,13 @@ Roadmap</a>
 
 <p>The dialog shows you exactly which items have changed, so you can make an informed decision.</p>
 
-<p>If you switch modes (from Development to Production or vice versa) with unpushed changes, you’ll be prompted to save or discard them. You cannot switch to Production mode with uncommitted changes.</p>
+<p>If you switch modes (from Read-write to Read-only or vice versa) with unpushed changes, you’ll be prompted to save or discard them. You cannot switch to Read-only mode with uncommitted changes.</p>
 
 <p>If changes don’t appear after switching modes: Hard refresh your browser (Cmd/Ctrl + Shift + R).</p>
 
 <h2 id="pushing-changes-to-git">Pushing changes to Git</h2>
 
-<p>You can only push changes in a Metabase with Remote Sync set to Development mode.</p>
+<p>You can only push changes in a Metabase with Remote Sync set to Read-write mode.</p>
 
 <h3 id="committing-and-pushing-your-changes">Committing and pushing your changes</h3>
 
@@ -5871,13 +5871,13 @@ Roadmap</a>
   <li>Click “Continue” to push your changes to Git.</li>
 </ol>
 
-<p>If you see a message that “Remote is ahead of local”, that means someone else pushed to the branch from another Metabase in Development mode. Pull the latest changes before pushing again.</p>
+<p>If you see a message that “Remote is ahead of local”, that means someone else pushed to the branch from another Metabase in Read-write mode. Pull the latest changes before pushing again.</p>
 
 <h2 id="pulling-changes-from-git">Pulling changes from Git</h2>
 
-<p>You can pull changes when in Development or Production mode.</p>
+<p>You can pull changes when in Read-write or Read-only mode.</p>
 
-<p>In Development mode, you can get the latest changes from your Git repository:</p>
+<p>In Read-write mode, you can get the latest changes from your Git repository:</p>
 
 <ol>
   <li>Click the down arrow (pull) icon next to your synced collection in the left sidebar.</li>
@@ -5894,7 +5894,7 @@ Roadmap</a>
   <li>If you encounter sync errors, review error messages in the sync dialog, manually resolve conflicts in your Git repository, then pull again.</li>
 </ul>
 
-<p>In Production mode, go to <strong>Admin settings</strong> &gt; <strong>Settings</strong> &gt; <strong>Remote sync</strong> and click <strong>Pull changes</strong>.</p>
+<p>In Read-only mode, go to <strong>Admin settings</strong> &gt; <strong>Settings</strong> &gt; <strong>Remote sync</strong> and click <strong>Pull changes</strong>.</p>
 
 <h3 id="handling-unsynced-changes">Handling unsynced changes</h3>
 
@@ -5910,7 +5910,7 @@ Roadmap</a>
 
 <h3 id="pulling-changes-automatically">Pulling changes automatically</h3>
 
-<p>In Production mode, you can set Metabase to auto-sync changes from your main branch.</p>
+<p>In Read-only mode, you can set Metabase to auto-sync changes from your main branch.</p>
 
 <ol>
   <li>Navigate to <strong>Admin settings</strong> &gt; <strong>Settings</strong> &gt; <strong>Remote sync</strong>.</li>
@@ -5951,7 +5951,7 @@ Roadmap</a>
 <p>If you want to switch fully to Remote Sync, we recommend starting with a new repo:</p>
 
 <ol>
-  <li>Check out a new branch in your Metabase instance in Development mode.</li>
+  <li>Check out a new branch in your Metabase instance in Read-write mode.</li>
   <li>Import your data to your Metabase instance with the serialization command as you normally would.</li>
   <li>Move the content you want to sync into the synced collection.</li>
   <li>Push up your changes to the new repo.</li>
