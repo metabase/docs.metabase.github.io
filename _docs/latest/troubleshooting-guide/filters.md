@@ -1,5 +1,5 @@
 ---
-version: v0.56
+version: v0.57
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -35,7 +35,7 @@ If a dashboard filter is giving you no results or the wrong results:
 If a question filter is giving you no results or the wrong results:
 
 1. Make sure the question includes the column you want to filter on.
-2. Check that the column actually contains the value(s) you're filtering on. You can do this by:
+2. Check that the column contains the value(s) you're filtering on. You can do this by:
    - sorting number or date columns,
    - creating a "contains" filter for string columns, or
    - asking your database admin.
@@ -81,7 +81,7 @@ If you're not a Metabase admin, you might have to ask your admin to help you wit
 
 **Explanation**
 
-Metabase needs to know the data type of a column in order to present you with a curated selection of filter types. Sometimes these columns are mistyped---if a column stores your numbers as strings, Metabase will only show you text or category filters (with options like "is", "is not") instead of number filters (with options like "greater than", "less than").
+Metabase needs to know the data type of a column to present you with a curated selection of filter types. Sometimes these columns are mistyped---if a column stores your numbers as strings, Metabase will only show you text or category filters (with options like "is", "is not") instead of number filters (with options like "greater than", "less than").
 
 Timestamps, in particular, are the root of all evil, so please be patient with your Metabase admin (or yourself!) when trying to get the data type right.
 

@@ -1,5 +1,5 @@
 ---
-version: v0.56
+version: v0.57
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -60,7 +60,7 @@ Once the database status is `Available`, you need to click on the DB identifier:
 
 ![RDS DB Identifier](images/RDSDBIdentifier.png)
 
-On the page that appears after you click on the database identifer, you will see on the center of the page the **Connectivity & Security** section. This section will provide you with the **Endpoint** that Metabase needs to connect to the application database we just created.
+On the page that appears after you click on the database identifier, you will see on the center of the page the **Connectivity & Security** section. This section will provide you with the **Endpoint** that Metabase needs to connect to the application database we just created.
 
 ![RDS Connection Data](images/RDSConnectionData.png)
 

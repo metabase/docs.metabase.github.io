@@ -1,5 +1,5 @@
 ---
-version: v0.56
+version: v0.57
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -93,7 +93,7 @@ If you or someone else wrote a SQL query that includes [variables][variable-glos
 
 ![SQL filter](../images/SQL-filter-widget.png)
 
-Writing SQL queries that use variables or parameters can be very powerful, but it's also a bit more advanced, so that topic has its own page if you'd like to [learn more](./sql-parameters).
+Writing SQL queries that use variables or parameters can be powerful, but it's also a bit more advanced, so that topic has its own page if you'd like to [learn more](./sql-parameters).
 
 ## Snippets
 

@@ -1,5 +1,5 @@
 ---
-version: v0.56
+version: v0.57
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -48,7 +48,7 @@ Something may have changed on the database side (if you were previously connecte
 
 ## Check table access
 
-To make sure that your table is actually queryable by Metabase:
+To make sure that your table is queryable by Metabase:
 
 1. Go to the Metabase [SQL editor](../questions/native-editor/writing-sql).
 2. Look for your table:

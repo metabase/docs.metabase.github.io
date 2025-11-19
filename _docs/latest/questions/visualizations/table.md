@@ -1,5 +1,5 @@
 ---
-version: v0.56
+version: v0.57
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -274,11 +274,12 @@ Lets you change the unit of currency from whatever the system default is.
 
 ### Currency label style
 
-Allows you to switch between displaying the currency label as:
+Choose how to display the currency label. For example, for Canadian dollars:
 
-- a symbol (like $)
-- a code (like USD)
-- the full name of the currency (like "US dollars")
+- **Symbol**: `CA$` 
+- **Local symbol**: `$`
+- **Code**: `CAD`
+- **Name**: `Canadian dollars`
 
 ### Where to display the unit of currency
 

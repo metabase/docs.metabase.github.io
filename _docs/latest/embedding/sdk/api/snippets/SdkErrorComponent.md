@@ -1,5 +1,5 @@
 ---
-version: v0.56
+version: v0.57
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -13,6 +13,7 @@ latest: true
 
 ```ts
 type SdkErrorComponent = ({
+  type,
   message,
   error,
 }: SdkErrorComponentProps) => JSX_2.Element;
@@ -22,9 +23,9 @@ type SdkErrorComponent = ({
 
 <!-- [<snippet parameters>] -->
 
-| Parameter             | Type                                                        |
-| :-------------------- | :---------------------------------------------------------- |
-| `{ message, error, }` | [`SdkErrorComponentProps`](./api/SdkErrorComponentProps) |
+| Parameter                   | Type                                                        |
+| :-------------------------- | :---------------------------------------------------------- |
+| `{ type, message, error, }` | [`SdkErrorComponentProps`](./api/SdkErrorComponentProps) |
 
 <!-- [<endsnippet parameters>] -->
 

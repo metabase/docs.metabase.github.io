@@ -1,5 +1,5 @@
 ---
-version: v0.56
+version: v0.57
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -12,18 +12,18 @@ latest: true
 ---
 
 ```ts
-function StaticQuestion(__namedParameters: StaticQuestionProps): null | Element;
+function StaticQuestion(props: StaticQuestionProps): Element;
 ```
 
-A question component without drill-downs.
+A component that renders a static question.
 
 ## Parameters
 
 <!-- [<snippet parameters>] -->
 
-| Parameter           | Type                                                  |
-| :------------------ | :---------------------------------------------------- |
-| `__namedParameters` | [`StaticQuestionProps`](./api/StaticQuestionProps) |
+| Parameter | Type                                                  |
+| :-------- | :---------------------------------------------------- |
+| `props`   | [`StaticQuestionProps`](./api/StaticQuestionProps) |
 
 <!-- [<endsnippet parameters>] -->
 
@@ -31,7 +31,6 @@ A question component without drill-downs.
 
 <!-- [<snippet returns>] -->
 
-\| `null`
-\| [`Element`](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/0b728411cd1dfb4bd26992bb35a73cf8edaa22e7/types/react/index.d.ts#L4313)
+[`Element`](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/0b728411cd1dfb4bd26992bb35a73cf8edaa22e7/types/react/index.d.ts#L4240)
 
 <!-- [<endsnippet returns>] -->

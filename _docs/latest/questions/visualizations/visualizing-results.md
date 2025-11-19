@@ -1,5 +1,5 @@
 ---
-version: v0.56
+version: v0.57
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -45,7 +45,7 @@ To change how the answer to your question is displayed, click on the **Visualiza
 
 ![Visualization options](../images/VisualizeChoices.png)
 
-If a particular visualization doesn’t really make sense for your answer, that option will appear in the "Other charts" section. You can still select one of these other charts, though you might need to fiddle with the chart options to make the chart work with your data.
+If a particular visualization doesn't make sense for your answer, that option will appear in the "Other charts" section. You can still select one of these other charts, though you might need to fiddle with the chart options to make the chart work with your data.
 
 Not sure which visualization type to use? Check out [Which chart should you use?](/learn/metabase-basics/querying-and-dashboards/visualization/chart-guide)
 

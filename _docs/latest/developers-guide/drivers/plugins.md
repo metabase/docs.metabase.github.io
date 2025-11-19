@@ -1,5 +1,5 @@
 ---
-version: v0.56
+version: v0.57
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -168,7 +168,7 @@ driver:
 
   # Whether loading this driver can be deferred until the first
   # attempt to connect to a database of this type. Default: true. Only
-  # set this to false if absolutely neccesary.
+  # set this to false if absolutely necessary.
   lazy-load: true
 
   # Parent driver, if any.

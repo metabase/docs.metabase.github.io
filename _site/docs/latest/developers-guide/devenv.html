@@ -52,7 +52,7 @@
 <meta name="twitter:site" content="@metabase">
 
 <meta name="twitter:title" content="Development environment | Metabase Documentation">
-<meta name="twitter:description" content="Development environment The Metabase application has two basic components:  A backend written in Clojure which contains a REST API as well as all the relevant code for talking to databases and processing queries. A frontend written as a Javascript single-page...">
+<meta name="twitter:description" content="Development environment The Metabase application has two basic components:  A backend written in Clojure which contains a REST API as well as all the relevant code for talking to databases and processing queries. A frontend written as a JavaScript single-page...">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -62,7 +62,7 @@
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://www.metabase.com/docs/latest/developers-guide/devenv">
 <meta name="title" property="og:title" content="Development environment | Metabase Documentation">
-<meta name="description" property="og:description" content="Development environment The Metabase application has two basic components:  A backend written in Clojure which contains a REST API as well as all the relevant code for talking to databases and processing queries. A frontend written as a Javascript single-page...">
+<meta name="description" property="og:description" content="Development environment The Metabase application has two basic components:  A backend written in Clojure which contains a REST API as well as all the relevant code for talking to databases and processing queries. A frontend written as a JavaScript single-page...">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -185,13 +185,10 @@
     
       <div class="promo-banner hidden">
   <div>
-    <span>💙 Loving Metabase?</span>
-    <a href="https://github.com/metabase/metabase" target="_blank">
-    Share the love with a star on GitHub <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="chevron">
-<path opacity="0.9" d="M3 8.96338L16 21.9634L29 8.96338" stroke="#509ee3" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"></path>
-</svg>
-
-    </a>
+    <span class="button">New</span>
+    <span>Metabase 57: Dark mode, remote sync for versioned analytics, Documents to create and share stories with data, and more</span>
+    <a href="/releases/metabase-57">Read the announcement</a>
+    <img alt="Chevron Blue Right" src="/images/chevron_blue_right.svg">
   </div>
   <button>×</button>
 </div>
@@ -5274,7 +5271,7 @@ Roadmap</a>
 <div class="version__selector cursor-pointer">
   <span class="version__current">
     
-      v0.56
+      v0.57
     
 
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="chevron">
@@ -5284,6 +5281,14 @@ Roadmap</a>
   </span>
   <ul class="version__dropdown">
     
+      
+    
+      
+        <li>
+          <a href="/docs/v0.56">
+            v0.56
+          </a>
+        </li>
       
     
       
@@ -5350,14 +5355,6 @@ Roadmap</a>
         </li>
       
     
-      
-        <li>
-          <a href="/docs/v0.47">
-            v0.47
-          </a>
-        </li>
-      
-    
     <li><a href="/docs/all">See more</a></li>
   </ul>
 </div>
@@ -5394,7 +5391,7 @@ Roadmap</a>
 
 <ol>
   <li>A backend written in Clojure which contains a REST API as well as all the relevant code for talking to databases and processing queries.</li>
-  <li>A frontend written as a Javascript single-page application which provides the web UI.</li>
+  <li>A frontend written as a JavaScript single-page application which provides the web UI.</li>
 </ol>
 
 <p>Both components are built and assembled together into a single JAR file. In the directory where you run the JAR, you can create a JAR file (if Metabase hasn’t already created it) and add drivers in there (the drivers are also JARs).</p>
@@ -5464,7 +5461,7 @@ Roadmap</a>
 <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>yarn build-watch
 </code></pre></div></div>
 
-<p>Some systems may have trouble detecting changes to frontend files. You can enable filesystem polling by uncommenting the <code class="language-plaintext highlighter-rouge">watchOptions</code> clause in <code class="language-plaintext highlighter-rouge">webpack.config.js</code>. If you do this it may be worth making git ignore changes to webpack config, using <code class="language-plaintext highlighter-rouge">git update-index --assume-unchanged webpack.config.js</code></p>
+<p>Some systems may have trouble detecting changes to frontend files. You can enable filesystem polling by uncommenting the <code class="language-plaintext highlighter-rouge">watchOptions</code> clause in <code class="language-plaintext highlighter-rouge">rspack.main.config.js</code>. If you do this it may be worth making git ignore changes to webpack config, using <code class="language-plaintext highlighter-rouge">git update-index --assume-unchanged rspack.main.config.js</code></p>
 
 <p>We exclude ESLint loader in dev mode for seven times quicker initial builds by default. You can enable it by exporting an environment variable:</p>
 
@@ -5524,6 +5521,21 @@ yarn test-unit-watch # Watch for file changes
 <p>To start the server (at <code class="language-plaintext highlighter-rouge">localhost:3000</code>). This will also set up or migrate your application database. To actually
 use Metabase, don’t forget to start the frontend as well (e.g. with <code class="language-plaintext highlighter-rouge">yarn build-hot</code>).</p>
 
+<h3 id="multiple-instances">Multiple Instances</h3>
+
+<p>By default Rspack runs the development server on port <code class="language-plaintext highlighter-rouge">8088</code>. You can run multiple instances of Metabase on the same machine by specifying a different port for each instance.</p>
+
+<p>Frontend:</p>
+<ul>
+  <li>If you are running the frontend with <code class="language-plaintext highlighter-rouge">yarn build-hot</code>, set the <code class="language-plaintext highlighter-rouge">MB_FRONTEND_DEV_PORT</code> environment variable: <code class="language-plaintext highlighter-rouge">MB_FRONTEND_DEV_PORT=8089 MB_EDITION=ee yarn build-hot</code></li>
+  <li>If you are building the frontend statically with <code class="language-plaintext highlighter-rouge">yarn build</code>, there is nothing different to do</li>
+</ul>
+
+<p>Backend:</p>
+<ul>
+  <li>Set the <code class="language-plaintext highlighter-rouge">MB_JETTY_PORT</code> environment variable and <code class="language-plaintext highlighter-rouge">MB_FRONTEND_DEV_PORT</code> to the same one as for the frontend.</li>
+</ul>
+
 <h3 id="the-application-database">The application database</h3>
 
 <p>By default, Metabase uses H2 for its application database, but we recommend using Postgres. This is configured with
@@ -5541,7 +5553,7 @@ several properties that can be set as environment variables or in a <code class=
     "-Dmb.db.pass="]}}}
 </code></pre></div></div>
 
-<p>You could also pass a full conection string in as the <code class="language-plaintext highlighter-rouge">mb.db.connection.uri</code>:</p>
+<p>You could also pass a full connection string in as the <code class="language-plaintext highlighter-rouge">mb.db.connection.uri</code>:</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>"-Dmb.db.connection.uri=postgres://&lt;user&gt;:&lt;password&gt;@localhost:5432/&lt;dbname&gt;"
 </code></pre></div></div>

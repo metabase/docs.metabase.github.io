@@ -185,13 +185,10 @@
     
       <div class="promo-banner hidden">
   <div>
-    <span>💙 Loving Metabase?</span>
-    <a href="https://github.com/metabase/metabase" target="_blank">
-    Share the love with a star on GitHub <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="chevron">
-<path opacity="0.9" d="M3 8.96338L16 21.9634L29 8.96338" stroke="#509ee3" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"></path>
-</svg>
-
-    </a>
+    <span class="button">New</span>
+    <span>Metabase 57: Dark mode, remote sync for versioned analytics, Documents to create and share stories with data, and more</span>
+    <a href="/releases/metabase-57">Read the announcement</a>
+    <img alt="Chevron Blue Right" src="/images/chevron_blue_right.svg">
   </div>
   <button>×</button>
 </div>
@@ -5274,7 +5271,7 @@ Roadmap</a>
 <div class="version__selector cursor-pointer">
   <span class="version__current">
     
-      v0.56
+      v0.57
     
 
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="chevron">
@@ -5284,6 +5281,14 @@ Roadmap</a>
   </span>
   <ul class="version__dropdown">
     
+      
+    
+      
+        <li>
+          <a href="/docs/v0.56">
+            v0.56
+          </a>
+        </li>
       
     
       
@@ -5350,14 +5355,6 @@ Roadmap</a>
         </li>
       
     
-      
-        <li>
-          <a href="/docs/v0.47">
-            v0.47
-          </a>
-        </li>
-      
-    
     <li><a href="/docs/all">See more</a></li>
   </ul>
 </div>
@@ -5414,10 +5411,16 @@ Roadmap</a>
 
 <ol>
   <li>Save your question.</li>
-  <li>Click on the sharing icon in the top-right of the screen.</li>
+  <li>Click on the <strong>three dots</strong> in the top-right of the screen.</li>
   <li>Select <strong>Create an alert</strong>.</li>
-  <li>Select what you want to be alerted about. The alert options will depend on the question’s visualization. See <a href="#types-of-alerts">types of alerts</a>.</li>
-  <li>Select when you want Metabase to check the results. Metabase can check for results by the minute, hourly, daily, weekly, monthly, or on a custom schedule that you set using the Quartz <a href="https://www.quartz-scheduler.org/documentation/quartz-2.3.0/tutorials/crontrigger.html">cron syntax</a>.</li>
+  <li>Select what you want to be alerted about (options depend on the question type):
+    <ul>
+      <li><a href="#results-alerts">When a question returns a result</a> - for any question.</li>
+      <li><a href="#goal-line-alerts">When a time series crosses a goal line</a> - for a line, bar, or area chart displaying a time series.</li>
+      <li><a href="#progress-bar-alerts">When a progress bar reaches or goes below its goal</a> - for progress bars.</li>
+    </ul>
+  </li>
+  <li>Select when you want Metabase to check the results: by the minute, hourly, daily, weekly, monthly, or on a custom schedule that you set using the Quartz <a href="https://www.quartz-scheduler.org/documentation/quartz-2.3.0/tutorials/crontrigger.html">cron syntax</a>.</li>
   <li>Select the alert’s destination: <a href="../configuring-metabase/email">email</a>, <a href="../configuring-metabase/slack">Slack</a>, or to a <a href="../configuring-metabase/webhooks">webhook</a> (only admins and people with <a href="../permissions/application#settings-access">settings access</a> can create and send to webhooks).</li>
   <li>Configure any other options (like <a href="#send-a-one-time-alert">only sending the alert once</a>).</li>
   <li>Click <strong>Done</strong>.</li>
@@ -5432,14 +5435,6 @@ Roadmap</a>
 <p>To test the alert, first make sure that the question returns results (if the question doesn’t return any results, Metabase won’t send the alert).</p>
 
 <p>Then hit the <strong>Send now</strong> button to trigger the alert.</p>
-
-<h2 id="types-of-alerts">Types of alerts</h2>
-
-<ul>
-  <li><a href="#results-alerts">Results alerts</a>: when a question returns any result.</li>
-  <li><a href="#goal-line-alerts">Goal line alerts</a> when a time series crosses a goal line.</li>
-  <li><a href="#progress-bar-alerts">Progress bar alerts</a>: when a progress bar reaches or goes below its goal.</li>
-</ul>
 
 <h2 id="results-alerts">Results alerts</h2>
 
@@ -5457,31 +5452,27 @@ Roadmap</a>
 
 <p>Goal line alerts are useful when you’re doing things like tracking daily active users (DAU) and you want to know when you reach a certain number of DAU, or when you’re tracking orders per week and you want to know whenever the number of orders ever goes below a certain threshold.</p>
 
-<p>To start, you’ll need a line, area, or bar chart displaying a number over time.</p>
+<p>To create an alert when a time series crosses a goal line:</p>
 
-<p>Next, you need to set up a goal line on your chart. Open up the visualization settings by clicking the <strong>gear</strong> icon in the bottom-left. Then click on the <strong>Display</strong> tab, and turn on the <strong>Show goal</strong> setting. Choose a value for your goal (and optionally a label) and click Done.</p>
+<ol>
+  <li>Create a line, area, or bar chart displaying a number over time.</li>
+  <li>Open up the visualization settings by clicking the <strong>gear</strong> icon in the bottom-left.</li>
+  <li>In the <strong>Display</strong> tab, turn on the <strong>Show goal</strong> setting.</li>
+  <li>Choose a value for your goal (and optionally a label) and click Done.</li>
+  <li>Save the question.</li>
+  <li>
+    <p>Click the <strong>three dots</strong> icon in top and select “Create alert”</p>
 
-<p>You can choose:</p>
+    <p>You can choose:</p>
 
-<ul>
-  <li>Whether you want Metabase to alert you when the time series goes above the goal line or when it goes below the goal line.</li>
-  <li>Whether you want Metabase to alert you every time the time series crosses a goal line, or only the first time it crosses the goal line.</li>
-  <li>How often you want Metabase to check to see if the goal line has been crossed.</li>
-</ul>
-
-<p>Click Done, and your alert will be all set up!</p>
-
-<p>If you need to edit or unsubscribe from the alert you set up, just click that same icon. You’ll see the Edit and Unsubscribe buttons. This is also where you’ll see alerts about this question that admins might have added you to.</p>
-
-<p>Metabase will email you when:</p>
-
-<ul>
-  <li>You set up an alert</li>
-  <li>You’ve been unsubscribed from an alert</li>
-  <li>One of your alerts has stopped working</li>
-  <li>You unsubscribed from an alert</li>
-  <li>An admin added you to an alert</li>
-</ul>
+    <ul>
+      <li>Whether you want Metabase to alert you when the time series goes above the goal line or when it goes below the goal line.</li>
+      <li>Whether you want Metabase to alert you every time the time series crosses a goal line, or only the first time it crosses the goal line.</li>
+      <li>How often you want Metabase to check to see if the goal line has been crossed.</li>
+    </ul>
+  </li>
+  <li>Select the schedule and recipients for the alert, and click “Done”</li>
+</ol>
 
 <h2 id="progress-bar-alerts">Progress bar alerts</h2>
 
@@ -5490,11 +5481,11 @@ Roadmap</a>
 <p>If you want to set up an alert when a single number reaches a goal, you can use a progress bar visualization.</p>
 
 <ol>
-  <li>Create a question that returns a single number as its result,</li>
-  <li>Choose the Progress Bar chart type,</li>
-  <li>In Visualization settings, select a goal value</li>
-  <li>Save your question,</li>
-  <li>Create an alert by clicking on the Sharing icon in top right</li>
+  <li>Create a question that returns a single number as its result.</li>
+  <li>Choose the Progress Bar chart type.</li>
+  <li>In Visualization settings, select a goal value.</li>
+  <li>Save your question.</li>
+  <li>Create an alert by clicking the <strong>three dots</strong> in top right.</li>
 </ol>
 
 <p>You’ll see the options for when you want to get alerts about this progress bar:</p>
@@ -5505,9 +5496,9 @@ Roadmap</a>
   <li>How often you want Metabase to check to see if the goal has been reached.</li>
 </ul>
 
-<h2 id="editing-and-deleting-alerts">Editing and deleting alerts</h2>
+<h2 id="editing-deleting-and-unsubscribing-from-alerts">Editing, deleting, and unsubscribing from alerts</h2>
 
-<p>To edit or delete alerts on a question, click on the Sharing icon in the top right corner. What you can edit depends on whether you’re an admin.</p>
+<p>To edit or delete alerts on a question, click on the <strong>three dots</strong> icon in the top right corner and select <strong>Edit alerts</strong>. What you can edit depends on whether you’re an admin.</p>
 
 <p>Everyone:</p>
 
@@ -5522,6 +5513,16 @@ Roadmap</a>
   <li>Admins can edit and delete any alert. This can’t be undone, so be careful!</li>
   <li>Admins can add or remove recipients on any alert, even ones that they didn’t create themselves.</li>
   <li>Admins can bulk manage alerts per person from the <a href="../people-and-groups/managing#unsubscribe-from-all-subscriptions-and-alerts">People menu in Admin settings</a>.</li>
+</ul>
+
+<p>Metabase will email you when:</p>
+
+<ul>
+  <li>You set up an alert</li>
+  <li>You’ve been unsubscribed from an alert</li>
+  <li>One of your alerts has stopped working</li>
+  <li>You unsubscribed from an alert</li>
+  <li>An admin added you to an alert</li>
 </ul>
 
 <h2 id="avoid-changing-the-name-of-the-alerted-channel-in-slack">Avoid changing the name of the alerted channel in Slack</h2>

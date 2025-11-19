@@ -1,5 +1,5 @@
 ---
-version: v0.56
+version: v0.57
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -12,18 +12,18 @@ latest: true
 ---
 
 ```ts
-const MetabotQuestion: (props: object) => ReactNode;
+function MetabotQuestion(props: MetabotQuestionProps): Element;
 ```
 
-**`Interface`** **`Expand`**
+A component that renders a metabot question.
 
 ## Parameters
 
 <!-- [<snippet parameters>] -->
 
-| Parameter | Type     |
-| :-------- | :------- |
-| `props`   | `object` |
+| Parameter | Type                                                    |
+| :-------- | :------------------------------------------------------ |
+| `props`   | [`MetabotQuestionProps`](./api/MetabotQuestionProps) |
 
 <!-- [<endsnippet parameters>] -->
 
@@ -31,6 +31,6 @@ const MetabotQuestion: (props: object) => ReactNode;
 
 <!-- [<snippet returns>] -->
 
-[`ReactNode`](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/0b728411cd1dfb4bd26992bb35a73cf8edaa22e7/types/react/index.d.ts#L478)
+[`Element`](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/0b728411cd1dfb4bd26992bb35a73cf8edaa22e7/types/react/index.d.ts#L4240)
 
 <!-- [<endsnippet returns>] -->

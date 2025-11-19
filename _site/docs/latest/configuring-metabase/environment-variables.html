@@ -185,13 +185,10 @@
     
       <div class="promo-banner hidden">
   <div>
-    <span>💙 Loving Metabase?</span>
-    <a href="https://github.com/metabase/metabase" target="_blank">
-    Share the love with a star on GitHub <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="chevron">
-<path opacity="0.9" d="M3 8.96338L16 21.9634L29 8.96338" stroke="#509ee3" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"></path>
-</svg>
-
-    </a>
+    <span class="button">New</span>
+    <span>Metabase 57: Dark mode, remote sync for versioned analytics, Documents to create and share stories with data, and more</span>
+    <a href="/releases/metabase-57">Read the announcement</a>
+    <img alt="Chevron Blue Right" src="/images/chevron_blue_right.svg">
   </div>
   <button>×</button>
 </div>
@@ -5274,7 +5271,7 @@ Roadmap</a>
 <div class="version__selector cursor-pointer">
   <span class="version__current">
     
-      v0.56
+      v0.57
     
 
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="chevron">
@@ -5284,6 +5281,14 @@ Roadmap</a>
   </span>
   <ul class="version__dropdown">
     
+      
+    
+      
+        <li>
+          <a href="/docs/v0.56">
+            v0.56
+          </a>
+        </li>
       
     
       
@@ -5346,14 +5351,6 @@ Roadmap</a>
         <li>
           <a href="/docs/v0.48">
             v0.48
-          </a>
-        </li>
-      
-    
-      
-        <li>
-          <a href="/docs/v0.47">
-            v0.47
           </a>
         </li>
       
@@ -5839,6 +5836,17 @@ If set to 0, Metabase will keep all rows.</p>
 
 <p>Whether or not the default GeoJSON maps are enabled.</p>
 
+<h3 id="mb_disable_cors_on_localhost"><code class="language-plaintext highlighter-rouge">MB_DISABLE_CORS_ON_LOCALHOST</code></h3>
+
+<ul>
+  <li>Type: boolean</li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">false</code></li>
+  <li><a href="../installation-and-operation/serialization">Exported as</a>: <code class="language-plaintext highlighter-rouge">disable-cors-on-localhost</code>.</li>
+  <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">disable-cors-on-localhost</code></li>
+</ul>
+
+<p>Prevents the server from sending CORS headers for requests originating from localhost.</p>
+
 <h3 id="mb_download_row_limit"><code class="language-plaintext highlighter-rouge">MB_DOWNLOAD_ROW_LIMIT</code></h3>
 
 <ul>
@@ -6065,7 +6073,7 @@ If set to 0, Metabase will keep all rows.</p>
 
 <ul>
   <li>Type: string</li>
-  <li>Default: <code class="language-plaintext highlighter-rouge">localhost:*</code></li>
+  <li>Default: ``</li>
   <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">embedding-app-origins-sdk</code></li>
 </ul>
 
@@ -6290,6 +6298,16 @@ If set to 0, Metabase will keep all rows.</p>
 
 <p>Custom URL for the help link.</p>
 
+<h3 id="mb_hide_stacktraces"><code class="language-plaintext highlighter-rouge">MB_HIDE_STACKTRACES</code></h3>
+
+<ul>
+  <li>Type: boolean</li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">false</code></li>
+  <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">hide-stacktraces</code></li>
+</ul>
+
+<p>Prevent the exception middleware from including stacktraces in responses.</p>
+
 <h3 id="mb_http_channel_host_strategy"><code class="language-plaintext highlighter-rouge">MB_HTTP_CHANNEL_HOST_STRATEGY</code></h3>
 
 <ul>
@@ -6316,6 +6334,17 @@ Options:</p>
 </ul>
 
 <p>To make table and field names more human-friendly, Metabase will replace dashes and underscores in them with spaces. We’ll capitalize each word while at it, so ‘last_visited_at’ will become ‘Last Visited At’.</p>
+
+<h3 id="mb_index_update_thread_count"><code class="language-plaintext highlighter-rouge">MB_INDEX_UPDATE_THREAD_COUNT</code></h3>
+
+<ul>
+  <li>Type: integer</li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">2</code></li>
+</ul>
+
+<p>Number of threads to use for batched index updates, including embedding requests.</p>
+
+<p>Number of threads to use for batched index updates, including embedding requests</p>
 
 <h3 id="mb_install_analytics_database"><code class="language-plaintext highlighter-rouge">MB_INSTALL_ANALYTICS_DATABASE</code></h3>
 
@@ -6926,6 +6955,17 @@ don’t have one.</p>
 
 <p>The size of the thread pool used to send system event notifications.</p>
 
+<h3 id="mb_notification_temp_file_size_max_bytes"><code class="language-plaintext highlighter-rouge">MB_NOTIFICATION_TEMP_FILE_SIZE_MAX_BYTES</code></h3>
+
+<ul>
+  <li>Type: integer</li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">10485760</code></li>
+</ul>
+
+<p>The maximum file size that will be created when storing notification query results on disk.
+  Note this is in BYTES. Default value is 10485760 which is <code class="language-plaintext highlighter-rouge">10 * 1024 * 1024</code>. To disable this size limit set the
+  value to 0.</p>
+
 <h3 id="mb_notification_thread_pool_size"><code class="language-plaintext highlighter-rouge">MB_NOTIFICATION_THREAD_POOL_SIZE</code></h3>
 
 <ul>
@@ -6999,6 +7039,76 @@ don’t have one.</p>
 </ul>
 
 <p>Force all traffic to use HTTPS via a redirect, if the site URL is HTTPS.</p>
+
+<h3 id="mb_remote_sync_auto_import"><code class="language-plaintext highlighter-rouge">MB_REMOTE_SYNC_AUTO_IMPORT</code></h3>
+
+<ul>
+  <li>Type: boolean</li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">false</code></li>
+  <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">remote-sync-auto-import</code></li>
+</ul>
+
+<p>Whether to automatically import from the remote git repository. Only applies if remote-sync-type is :production.</p>
+
+<h3 id="mb_remote_sync_auto_import_rate"><code class="language-plaintext highlighter-rouge">MB_REMOTE_SYNC_AUTO_IMPORT_RATE</code></h3>
+
+<ul>
+  <li>Type: integer</li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">5</code></li>
+  <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">remote-sync-auto-import-rate</code></li>
+</ul>
+
+<p>If remote-sync-type is :production and remote-sync-auto-import is true, the rate (in minutes) at which to check for updates to import. Defaults to 5.</p>
+
+<h3 id="mb_remote_sync_branch"><code class="language-plaintext highlighter-rouge">MB_REMOTE_SYNC_BRANCH</code></h3>
+
+<ul>
+  <li>Type: string</li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">null</code></li>
+  <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">remote-sync-branch</code></li>
+</ul>
+
+<p>The remote branch to sync with, e.g. <code class="language-plaintext highlighter-rouge">main</code>.</p>
+
+<h3 id="mb_remote_sync_task_time_limit_ms"><code class="language-plaintext highlighter-rouge">MB_REMOTE_SYNC_TASK_TIME_LIMIT_MS</code></h3>
+
+<ul>
+  <li>Type: integer</li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">300000</code></li>
+  <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">remote-sync-task-time-limit-ms</code></li>
+</ul>
+
+<p>The maximum amount of time a remote sync task will be given to complete.</p>
+
+<h3 id="mb_remote_sync_token"><code class="language-plaintext highlighter-rouge">MB_REMOTE_SYNC_TOKEN</code></h3>
+
+<ul>
+  <li>Type: string</li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">null</code></li>
+  <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">remote-sync-token</code></li>
+</ul>
+
+<p>An Authorization Bearer token allowing access to the git repo over HTTP.</p>
+
+<h3 id="mb_remote_sync_type"><code class="language-plaintext highlighter-rouge">MB_REMOTE_SYNC_TYPE</code></h3>
+
+<ul>
+  <li>Type: keyword</li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">production</code></li>
+  <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">remote-sync-type</code></li>
+</ul>
+
+<p>Git synchronization type - :development or :production.</p>
+
+<h3 id="mb_remote_sync_url"><code class="language-plaintext highlighter-rouge">MB_REMOTE_SYNC_URL</code></h3>
+
+<ul>
+  <li>Type: string</li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">null</code></li>
+  <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">remote-sync-url</code></li>
+</ul>
+
+<p>The location of your git repository, e.g. https://github.com/acme-inco/metabase.git.</p>
 
 <h3 id="mb_report_timezone"><code class="language-plaintext highlighter-rouge">MB_REPORT_TIMEZONE</code></h3>
 
@@ -7340,7 +7450,7 @@ don’t have one.</p>
 </ul>
 
 <p>When using the appdb engine against postgresql, override the language used for stemming in to_tsvector.
-  Value must be a valid configured langauge option in your database such as ‘english’ or ‘simple’.</p>
+  Value must be a valid configured language option in your database such as ‘english’ or ‘simple’.</p>
 
 <h3 id="mb_search_typeahead_enabled"><code class="language-plaintext highlighter-rouge">MB_SEARCH_TYPEAHEAD_ENABLED</code></h3>
 

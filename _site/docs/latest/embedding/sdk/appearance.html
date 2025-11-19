@@ -185,13 +185,10 @@
     
       <div class="promo-banner hidden">
   <div>
-    <span>💙 Loving Metabase?</span>
-    <a href="https://github.com/metabase/metabase" target="_blank">
-    Share the love with a star on GitHub <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="chevron">
-<path opacity="0.9" d="M3 8.96338L16 21.9634L29 8.96338" stroke="#509ee3" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"></path>
-</svg>
-
-    </a>
+    <span class="button">New</span>
+    <span>Metabase 57: Dark mode, remote sync for versioned analytics, Documents to create and share stories with data, and more</span>
+    <a href="/releases/metabase-57">Read the announcement</a>
+    <img alt="Chevron Blue Right" src="/images/chevron_blue_right.svg">
   </div>
   <button>×</button>
 </div>
@@ -5274,7 +5271,7 @@ Roadmap</a>
 <div class="version__selector cursor-pointer">
   <span class="version__current">
     
-      v0.56
+      v0.57
     
 
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="chevron">
@@ -5284,6 +5281,14 @@ Roadmap</a>
   </span>
   <ul class="version__dropdown">
     
+      
+    
+      
+        <li>
+          <a href="/docs/v0.56">
+            v0.56
+          </a>
+        </li>
       
     
       
@@ -5346,14 +5351,6 @@ Roadmap</a>
         <li>
           <a href="/docs/v0.48">
             v0.48
-          </a>
-        </li>
-      
-    
-      
-        <li>
-          <a href="/docs/v0.47">
-            v0.47
           </a>
         </li>
       
@@ -5483,6 +5480,9 @@ Roadmap</a>
 
     <span class="c1">// Color used to indicate dangerous actions and negative values/trends</span>
     <span class="na">negative</span><span class="p">:</span> <span class="dl">"</span><span class="s2">#FF7979</span><span class="dl">"</span><span class="p">,</span>
+
+    <span class="cm">/** Color used to outline elements in focus */</span>
+    <span class="na">focus</span><span class="p">:</span> <span class="dl">"</span><span class="s2">#CAE1F7</span><span class="dl">"</span><span class="p">,</span>
 
     <span class="cm">/** Color used for popover shadows */</span>
     <span class="na">shadow</span><span class="p">:</span> <span class="dl">"</span><span class="s2">rgba(0,0,0,0.08)</span><span class="dl">"</span><span class="p">,</span>
@@ -5629,7 +5629,19 @@ Roadmap</a>
 
 <span class="p">&lt;</span><span class="nc">MetabaseProvider</span>
   <span class="na">loaderComponent</span><span class="p">=</span><span class="si">{</span><span class="p">()</span> <span class="o">=&gt;</span> <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>Analytics is loading...<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span><span class="si">}</span>
-  <span class="na">errorComponent</span><span class="p">=</span><span class="si">{</span><span class="p">({</span> <span class="nx">message</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>There was an error: <span class="si">{</span><span class="nx">message</span><span class="si">}</span><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span><span class="si">}</span>
+  <span class="na">errorComponent</span><span class="p">=</span><span class="si">{</span><span class="p">({</span> <span class="kd">type</span><span class="p">,</span> <span class="nx">message</span><span class="p">,</span> <span class="nx">onClose</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="k">switch </span><span class="p">(</span><span class="kd">type</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">case</span> <span class="dl">"</span><span class="s2">fixed</span><span class="dl">"</span><span class="p">:</span>
+        <span class="k">return </span><span class="p">(</span>
+          <span class="p">&lt;</span><span class="nt">div</span> <span class="na">style</span><span class="p">=</span><span class="si">{</span><span class="p">{</span> <span class="na">position</span><span class="p">:</span> <span class="dl">"</span><span class="s2">fixed</span><span class="dl">"</span><span class="p">,</span> <span class="na">left</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="na">right</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="na">bottom</span><span class="p">:</span> <span class="mi">0</span> <span class="p">}</span><span class="si">}</span><span class="p">&gt;</span>
+            There was an error: <span class="si">{</span><span class="nx">message</span><span class="si">}</span>. <span class="p">&lt;</span><span class="nt">span</span> <span class="na">onClick</span><span class="p">=</span><span class="si">{</span><span class="nx">onClose</span><span class="si">}</span><span class="p">&gt;</span>X<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+          <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+        <span class="p">);</span>
+      <span class="k">case</span> <span class="dl">"</span><span class="s2">relative</span><span class="dl">"</span><span class="p">:</span>
+      <span class="na">default</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>There was an error: <span class="si">{</span><span class="nx">message</span><span class="si">}</span><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;;</span>
+    <span class="p">}</span>
+  <span class="p">}</span><span class="si">}</span>
 <span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nc">StaticDashboard</span> <span class="na">dashboardId</span><span class="p">=</span><span class="si">{</span><span class="mi">1</span><span class="si">}</span> <span class="p">/&gt;</span>
 <span class="p">&lt;/</span><span class="nc">MetabaseProvider</span><span class="p">&gt;</span>

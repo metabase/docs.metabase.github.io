@@ -1,5 +1,5 @@
 ---
-version: v0.56
+version: v0.57
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -126,6 +126,7 @@ config:
     db-connection-timeout-ms: 10000
     db-query-timeout-minutes: 20
     default-maps-enabled: true
+    disable-cors-on-localhost: false
     download-row-limit: null
     email-from-address: notifications@metabase.com
     email-from-address-override: notifications@metabase.com
@@ -143,7 +144,7 @@ config:
     email-smtp-username: null
     email-smtp-username-override: null
     embedding-app-origins-interactive: null
-    embedding-app-origins-sdk: localhost:*
+    embedding-app-origins-sdk: ''
     embedding-homepage: hidden
     embedding-secret-key: null
     enable-embedding-interactive: false
@@ -163,8 +164,10 @@ config:
     health-check-logging-enabled: true
     help-link: metabase
     help-link-custom-destination: https://www.metabase.com/help/premium
+    hide-stacktraces: false
     http-channel-host-strategy: external-only
     humanization-strategy: simple
+    index-update-thread-count: 2
     install-analytics-database: true
     jdbc-data-warehouse-max-connection-pool-size: 15
     jwt-attribute-email: email
@@ -222,6 +225,13 @@ config:
     query-caching-max-kb: 2000
     query-caching-max-ttl: 3024000.0
     redirect-all-requests-to-https: false
+    remote-sync-auto-import: false
+    remote-sync-auto-import-rate: 5
+    remote-sync-branch: null
+    remote-sync-task-time-limit-ms: 300000
+    remote-sync-token: null
+    remote-sync-type: production
+    remote-sync-url: null
     report-timezone: null
     reset-token-ttl-hours: 48
     retry-initial-interval: 500

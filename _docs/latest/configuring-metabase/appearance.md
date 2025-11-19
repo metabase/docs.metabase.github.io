@@ -1,5 +1,5 @@
 ---
-version: v0.56
+version: v0.57
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -28,7 +28,7 @@ If you're looking for date, time, number, or currency formatting, see [Formattin
 
 ## Changing Metabase's appearance
 
-Hit cmd/ctrl + k to bring up the command palette and search for "Appearance" and click on Settings -> Appearance.
+Hit cmd/ctrl + k to bring up the command palette and search for "Branding" and click on Settings -> Branding.
 
 You can also click on the **gear** icon at the bottom of the navigation sidebar and click through **Admin settings** > **Settings** > **Appearance**.
 
@@ -36,6 +36,18 @@ Appearance settings are split across different tabs:
 
 - [Branding](#branding)
 - [Conceal Metabase](#conceal-metabase)
+
+## Dark mode
+
+People can display their Metabase in dark mode in their [account settings](../people-and-groups/account-settings#theme). Options are:
+
+- System default (which is also the default setting). Metabase will switch between light and dark mode when the system switches without having to reload the page.
+- Always use dark mode.
+- Always use light mode.
+
+You can quickly toggle dark mode from anywhere in Metabase by opening the [command palette](../exploration-and-organization/exploration#command-palette) and searching for "light" or "dark" or "theme".
+
+Dark mode is a user-level setting, not an instance-level setting. Currently, there's no way to change the theme to dark mode for the entire instance, but you can edit some [user interface colors](#user-interface-colors).
 
 ## Branding
 
@@ -79,7 +91,7 @@ Custom colors are unavailable for:
 
 ## Logo
 
-You can replace Metabase’s familiar, tasteful, inspired-yet-not-threateningly-avant-garde dotted M logo with your very own logo. For things to work best, the logo you upload should be an SVG file that looks good when it’s around 60px tall. (In other words, ask the nearest designer for help.)
+You can replace Metabase's familiar, tasteful, inspired-yet-not-threateningly-avant-garde dotted M logo with your very own logo. For things to work best, the logo you upload should be an SVG file that looks good when it's around 60px tall. (In other words, ask the nearest designer for help.)
 
 ## Font
 

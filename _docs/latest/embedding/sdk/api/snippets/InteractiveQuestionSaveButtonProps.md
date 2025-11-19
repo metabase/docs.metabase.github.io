@@ -1,5 +1,5 @@
 ---
-version: v0.56
+version: v0.57
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -19,7 +19,7 @@ type InteractiveQuestionSaveButtonProps = {
 
 **`Expand`**
 
-## Type declaration
+## Type Declaration
 
 <!-- [<snippet type-declaration>] -->
 

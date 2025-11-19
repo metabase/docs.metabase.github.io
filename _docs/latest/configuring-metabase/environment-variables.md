@@ -1,5 +1,5 @@
 ---
-version: v0.56
+version: v0.57
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -402,6 +402,15 @@ Timeout in minutes for databases query execution, both Metabase application data
 
 Whether or not the default GeoJSON maps are enabled.
 
+### `MB_DISABLE_CORS_ON_LOCALHOST`
+
+- Type: boolean
+- Default: `false`
+- [Exported as](../installation-and-operation/serialization): `disable-cors-on-localhost`.
+- [Configuration file name](./config-file): `disable-cors-on-localhost`
+
+Prevents the server from sending CORS headers for requests originating from localhost.
+
 ### `MB_DOWNLOAD_ROW_LIMIT`
 
 - Type: positive-integer
@@ -571,7 +580,7 @@ Allow these space delimited origins to embed Metabase interactive.
 > Only available on Metabase [Pro](/product/pro) and [Enterprise](/product/enterprise) plans.
 
 - Type: string
-- Default: `localhost:*`
+- Default: ``
 - [Configuration file name](./config-file): `embedding-app-origins-sdk`
 
 Allow Metabase SDK access to these space delimited origins.
@@ -747,6 +756,14 @@ Keyword setting to control whitelabeling of the help link. Valid values are `:me
 
 Custom URL for the help link.
 
+### `MB_HIDE_STACKTRACES`
+
+- Type: boolean
+- Default: `false`
+- [Configuration file name](./config-file): `hide-stacktraces`
+
+Prevent the exception middleware from including stacktraces in responses.
+
 ### `MB_HTTP_CHANNEL_HOST_STRATEGY`
 
 - Type: keyword
@@ -767,6 +784,15 @@ Options:
 - [Configuration file name](./config-file): `humanization-strategy`
 
 To make table and field names more human-friendly, Metabase will replace dashes and underscores in them with spaces. We’ll capitalize each word while at it, so ‘last_visited_at’ will become ‘Last Visited At’.
+
+### `MB_INDEX_UPDATE_THREAD_COUNT`
+
+- Type: integer
+- Default: `2`
+
+Number of threads to use for batched index updates, including embedding requests.
+
+Number of threads to use for batched index updates, including embedding requests
 
 ### `MB_INSTALL_ANALYTICS_DATABASE`
 
@@ -1237,6 +1263,15 @@ The base URL where dashboard notitification links will point to instead of the M
 
 The size of the thread pool used to send system event notifications.
 
+### `MB_NOTIFICATION_TEMP_FILE_SIZE_MAX_BYTES`
+
+- Type: integer
+- Default: `10485760`
+
+The maximum file size that will be created when storing notification query results on disk.
+  Note this is in BYTES. Default value is 10485760 which is `10 * 1024 * 1024`. To disable this size limit set the
+  value to 0.
+
 ### `MB_NOTIFICATION_THREAD_POOL_SIZE`
 
 - Type: integer
@@ -1296,6 +1331,62 @@ The absolute maximum time to keep any cached query results, in seconds.
 - [Configuration file name](./config-file): `redirect-all-requests-to-https`
 
 Force all traffic to use HTTPS via a redirect, if the site URL is HTTPS.
+
+### `MB_REMOTE_SYNC_AUTO_IMPORT`
+
+- Type: boolean
+- Default: `false`
+- [Configuration file name](./config-file): `remote-sync-auto-import`
+
+Whether to automatically import from the remote git repository. Only applies if remote-sync-type is :production.
+
+### `MB_REMOTE_SYNC_AUTO_IMPORT_RATE`
+
+- Type: integer
+- Default: `5`
+- [Configuration file name](./config-file): `remote-sync-auto-import-rate`
+
+If remote-sync-type is :production and remote-sync-auto-import is true, the rate (in minutes) at which to check for updates to import. Defaults to 5.
+
+### `MB_REMOTE_SYNC_BRANCH`
+
+- Type: string
+- Default: `null`
+- [Configuration file name](./config-file): `remote-sync-branch`
+
+The remote branch to sync with, e.g. `main`.
+
+### `MB_REMOTE_SYNC_TASK_TIME_LIMIT_MS`
+
+- Type: integer
+- Default: `300000`
+- [Configuration file name](./config-file): `remote-sync-task-time-limit-ms`
+
+The maximum amount of time a remote sync task will be given to complete.
+
+### `MB_REMOTE_SYNC_TOKEN`
+
+- Type: string
+- Default: `null`
+- [Configuration file name](./config-file): `remote-sync-token`
+
+An Authorization Bearer token allowing access to the git repo over HTTP.
+
+### `MB_REMOTE_SYNC_TYPE`
+
+- Type: keyword
+- Default: `production`
+- [Configuration file name](./config-file): `remote-sync-type`
+
+Git synchronization type - :development or :production.
+
+### `MB_REMOTE_SYNC_URL`
+
+- Type: string
+- Default: `null`
+- [Configuration file name](./config-file): `remote-sync-url`
+
+The location of your git repository, e.g. https://github.com/acme-inco/metabase.git.
 
 ### `MB_REPORT_TIMEZONE`
 
@@ -1549,7 +1640,7 @@ Used for encrypting and checking whether SDK requests are signed.
 - Default: `null`
 
 When using the appdb engine against postgresql, override the language used for stemming in to_tsvector.
-  Value must be a valid configured langauge option in your database such as 'english' or 'simple'.
+  Value must be a valid configured language option in your database such as 'english' or 'simple'.
 
 ### `MB_SEARCH_TYPEAHEAD_ENABLED`
 

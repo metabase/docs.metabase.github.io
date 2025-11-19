@@ -1,5 +1,5 @@
 ---
-version: v0.56
+version: v0.57
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -136,6 +136,15 @@ Lets you choose to display the number as a plain number, a percent, in scientifi
 - **Percent** - Display as a percentage
 - **Scientific notation** - Display in scientific format (e.g., 1.23e+4)
 - **Currency** - Display with currency formatting
+
+### Currency label style
+
+For fields with Style set to "Currency", choose how to display the currency label. For example, for Canadian dollars:
+
+- **Symbol**: `CA$` 
+- **Local symbol**: `$`
+- **Code**: `CAD`
+- **Name**: `Canadian dollars`
 
 ### Where to display the unit of currency
 

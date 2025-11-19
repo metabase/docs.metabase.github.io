@@ -1,5 +1,5 @@
 ---
-version: v0.56
+version: v0.57
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -12,5 +12,13 @@ latest: true
 ---
 
 ```ts
-type SqlParameterValues = Record<string, string | number>;
+type SqlParameterValues = Record<
+  string,
+  | string
+  | number
+  | boolean
+  | (string | number | boolean | null)[]
+  | null
+  | undefined
+>;
 ```
