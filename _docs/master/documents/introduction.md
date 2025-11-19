@@ -12,7 +12,7 @@ summary: 'Create documents to combine text and charts for long-form analysis. Ad
 
 # Documents
 
-{% include plans-blockquote.html feature="Documents" %}
+{% include plans-blockquote.html feature="Documents" is_plural=true%}
 
 ![Document with comment](./images/document-with-comment.png)
 
