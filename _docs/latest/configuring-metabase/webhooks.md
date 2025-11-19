@@ -1,5 +1,5 @@
 ---
-version: v0.56
+version: v0.57
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -54,7 +54,7 @@ And the data as seen in the table view, which Metabase will send as a `raw_data`
 
 ![Results as table view](./images/table-view.png)
 
-Here's an example payload for an alert (we truncated the PNG encoding because it's long and extremely boring):
+Here's an example payload for an alert (we truncated the PNG encoding because it's boring):
 
 ```JSON
 {

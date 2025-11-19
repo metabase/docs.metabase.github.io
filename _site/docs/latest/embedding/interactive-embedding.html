@@ -185,13 +185,10 @@
     
       <div class="promo-banner hidden">
   <div>
-    <span>💙 Loving Metabase?</span>
-    <a href="https://github.com/metabase/metabase" target="_blank">
-    Share the love with a star on GitHub <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="chevron">
-<path opacity="0.9" d="M3 8.96338L16 21.9634L29 8.96338" stroke="#509ee3" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"></path>
-</svg>
-
-    </a>
+    <span class="button">New</span>
+    <span>Metabase 57: Dark mode, remote sync for versioned analytics, Documents to create and share stories with data, and more</span>
+    <a href="/releases/metabase-57">Read the announcement</a>
+    <img alt="Chevron Blue Right" src="/images/chevron_blue_right.svg">
   </div>
   <button>×</button>
 </div>
@@ -5274,7 +5271,7 @@ Roadmap</a>
 <div class="version__selector cursor-pointer">
   <span class="version__current">
     
-      v0.56
+      v0.57
     
 
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="chevron">
@@ -5284,6 +5281,14 @@ Roadmap</a>
   </span>
   <ul class="version__dropdown">
     
+      
+    
+      
+        <li>
+          <a href="/docs/v0.56">
+            v0.56
+          </a>
+        </li>
       
     
       
@@ -5346,14 +5351,6 @@ Roadmap</a>
         <li>
           <a href="/docs/v0.48">
             v0.48
-          </a>
-        </li>
-      
-    
-      
-        <li>
-          <a href="/docs/v0.47">
-            v0.47
           </a>
         </li>
       
@@ -5456,14 +5453,13 @@ Roadmap</a>
 
 <p>If you’re dealing with a <a href="/learn/metabase-basics/embedding/multi-tenant-self-service-analytics">multi-tenant</a> situation, check out our recommendations for <a href="../permissions/embedding">Configuring permissions for different customer schemas</a>.</p>
 
-<p>If you have your app running locally, and you’re using the Pro Cloud version, or hosting Metabase and your app in different domains, you’ll need to set your Metabase environment’s session cookie samesite option to “none”.</p>
+<p>If you have your app running locally, and you’re using the Pro Cloud version, or hosting Metabase and your app in different domains, you’ll need to set your Metabase environment’s session cookie SameSite option to “none”.</p>
 
 <h2 id="enabling-interactive-embedding-in-metabase">Enabling interactive embedding in Metabase</h2>
 
 <ol>
-  <li>Go to <strong>Settings</strong> &gt; <strong>Admin settings</strong> &gt; <strong>Embedding</strong>.</li>
-  <li>Click <strong>Enable</strong>.</li>
-  <li>Click <strong>Interactive embedding</strong>.</li>
+  <li>Go to <strong>Admin &gt; Embedding &gt; Interactive</strong>.</li>
+  <li>Click <strong>Enable interactive embedding</strong>.</li>
   <li>Under <strong>Authorized origins</strong>, add the URL of the website or web app where you want to embed Metabase (such as <code class="language-plaintext highlighter-rouge">https://*.example.com</code>).</li>
 </ol>
 
@@ -5561,14 +5557,14 @@ Roadmap</a>
 
 <p>If you want to embed Metabase in another domain (say, if Metabase is hosted at <code class="language-plaintext highlighter-rouge">metabase.yourcompany.com</code>, but you want to embed Metabase at <code class="language-plaintext highlighter-rouge">yourcompany.github.io</code>), you can tell Metabase to set the session cookie’s SameSite value to “none”.</p>
 
-<p>You can set session cookie’s SameSite value in <strong>Admin settings</strong> &gt; <strong>Embedding</strong> &gt; <strong>Interactive embedding</strong> &gt; <strong>SameSite cookie setting</strong>.</p>
+<p>You can set session cookie’s SameSite value in <strong>Admin settings</strong> &gt; <strong>Embedding</strong> &gt; <strong>Security</strong> &gt; <strong>SameSite cookie setting</strong>.</p>
 
 <p>SameSite values include:</p>
 
 <ul>
-  <li><strong>Lax</strong> (default): Allows cookies to be sent when someone navigates to the origin site from an external site (like when following a link).</li>
-  <li><strong>None</strong>: Allows all cross-site requests. Incompatible with most Safari and iOS browsers, such as Chrome on iOS. If you set this environment variable to “None”, you must use HTTPS in Metabase to prevent browsers from rejecting the request.</li>
-  <li><strong>Strict</strong> (not recommended): Never allows cookies to be sent on a cross-site request. Warning: this will prevent users from following external links to Metabase.</li>
+  <li><strong>Lax</strong> (default): Allows Metabase session cookies to be shared on the same domain. Used for production instances on the same domain.</li>
+  <li><strong>None (requires HTTPS)</strong>: Use “None” when your app and Metabase are hosted on different domains. Incompatible with Safari and iOS-based browsers.</li>
+  <li><strong>Strict</strong> (not recommended): Does not allow Metabase session cookies to be shared with embedded instances. Use this if you do not want to enable session sharing with embedding.</li>
 </ul>
 
 <p>You can also set the <a href="../configuring-metabase/environment-variables#mb_session_cookie_samesite"><code class="language-plaintext highlighter-rouge">MB_SESSION_COOKIE_SAMESITE</code> environment variable</a>.</p>

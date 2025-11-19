@@ -52,7 +52,7 @@
 <meta name="twitter:site" content="@metabase">
 
 <meta name="twitter:title" content="Driver interface changelog | Metabase Documentation">
-<meta name="twitter:description" content="Driver Interface Changelog Metabase 0.56.0   Add the testing multi-method tx/track-dataset for shared cloud dbs to track loaded datasets for more efficient sharing.   Join alias escaping has been reworked; when compiling MBQL for a join...">
+<meta name="twitter:description" content="Driver Interface Changelog Metabase 0.57.0   driver/field-reference-mlv2 is now deprecated, and is no longer used. Please remove your implementations.   The key metabase.driver-api.core/qp.add.nfc-path is now more consistently populated; other qp.add.* keys no...">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -62,7 +62,7 @@
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://www.metabase.com/docs/latest/developers-guide/driver-changelog">
 <meta name="title" property="og:title" content="Driver interface changelog | Metabase Documentation">
-<meta name="description" property="og:description" content="Driver Interface Changelog Metabase 0.56.0   Add the testing multi-method tx/track-dataset for shared cloud dbs to track loaded datasets for more efficient sharing.   Join alias escaping has been reworked; when compiling MBQL for a join...">
+<meta name="description" property="og:description" content="Driver Interface Changelog Metabase 0.57.0   driver/field-reference-mlv2 is now deprecated, and is no longer used. Please remove your implementations.   The key metabase.driver-api.core/qp.add.nfc-path is now more consistently populated; other qp.add.* keys no...">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -185,13 +185,10 @@
     
       <div class="promo-banner hidden">
   <div>
-    <span>💙 Loving Metabase?</span>
-    <a href="https://github.com/metabase/metabase" target="_blank">
-    Share the love with a star on GitHub <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="chevron">
-<path opacity="0.9" d="M3 8.96338L16 21.9634L29 8.96338" stroke="#509ee3" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"></path>
-</svg>
-
-    </a>
+    <span class="button">New</span>
+    <span>Metabase 57: Dark mode, remote sync for versioned analytics, Documents to create and share stories with data, and more</span>
+    <a href="/releases/metabase-57">Read the announcement</a>
+    <img alt="Chevron Blue Right" src="/images/chevron_blue_right.svg">
   </div>
   <button>×</button>
 </div>
@@ -5274,7 +5271,7 @@ Roadmap</a>
 <div class="version__selector cursor-pointer">
   <span class="version__current">
     
-      v0.56
+      v0.57
     
 
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="chevron">
@@ -5284,6 +5281,14 @@ Roadmap</a>
   </span>
   <ul class="version__dropdown">
     
+      
+    
+      
+        <li>
+          <a href="/docs/v0.56">
+            v0.56
+          </a>
+        </li>
       
     
       
@@ -5350,14 +5355,6 @@ Roadmap</a>
         </li>
       
     
-      
-        <li>
-          <a href="/docs/v0.47">
-            v0.47
-          </a>
-        </li>
-      
-    
     <li><a href="/docs/all">See more</a></li>
   </ul>
 </div>
@@ -5390,6 +5387,82 @@ Roadmap</a>
 
         <h1 id="driver-interface-changelog">Driver Interface Changelog</h1>
 
+<h2 id="metabase-0570">Metabase 0.57.0</h2>
+
+<ul>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">driver/field-reference-mlv2</code> is now deprecated, and is no longer used. Please remove your implementations.</p>
+  </li>
+  <li>
+    <p>The key <code class="language-plaintext highlighter-rouge">metabase.driver-api.core/qp.add.nfc-path</code> is now more consistently populated; other <code class="language-plaintext highlighter-rouge">qp.add.*</code> keys no
+longer include parent column names for drivers like MongoDB – use <code class="language-plaintext highlighter-rouge">qp.add.nfc-path</code> instead to qualify the
+<code class="language-plaintext highlighter-rouge">qp.add.source-column-alias</code> with parent column names as needed.</p>
+  </li>
+  <li>
+    <p>Added metabase.driver/compile-transform, metabase.driver/compile-drop-table, metabase.driver/execute-raw-queries!,
+metabase.driver/run-transform!, metabase.driver/drop-transform-target!, metabase.driver/native-query-deps,
+metabase.driver/connection-spec, metabase.driver/table-exists?, metabase.driver.sql/normalize-name,
+and metabase.driver.sql/default-schema to implement sql transforms.</p>
+  </li>
+  <li>
+    <p>Added <code class="language-plaintext highlighter-rouge">metabase.driver/rename-tables!*</code> multimethod for atomic table renaming operations. Takes a map of {from-table to-table}
+pairs that has been topologically sorted.</p>
+  </li>
+  <li>
+    <p>Added <code class="language-plaintext highlighter-rouge">metabase.driver/rename-table!</code> multimethod for table renaming operations. Takes a single from-table to-table pair.
+Fallbacks to singleton call to <code class="language-plaintext highlighter-rouge">rename-tables!*</code> if available.</p>
+  </li>
+  <li>
+    <p>Added the driver multi-methods <code class="language-plaintext highlighter-rouge">metabase.driver/schema-exists?</code> and <code class="language-plaintext highlighter-rouge">metabase.driver/create-schema-if-needed!</code>
+which should be implemented by drivers that support <code class="language-plaintext highlighter-rouge">:schemas</code> and <code class="language-plaintext highlighter-rouge">:transforms/table</code>.</p>
+  </li>
+  <li>
+    <p>Added <code class="language-plaintext highlighter-rouge">metabase.driver/type-&gt;database-type</code> multimethod that returns the database type for a given Metabase
+type (from the type hierarchy) as a HoneySQL spec. This method handles general Metabase base types.</p>
+  </li>
+  <li>
+    <p>Added driver multimethods driver/native-result-metadata, driver/validate-native-query-fields, driver.sql/resolve-field, driver.sql.normalize-unquoted-name, driver.sql.normalize/reserved-literal, driver.sql.references/find-used-fields, driver.sql.references/find-returned-fields, and driver.sql.references/field-references-impl for use with the :dependencies/native feature.</p>
+  </li>
+  <li>
+    <p>Added <code class="language-plaintext highlighter-rouge">metabase.driver/insert-from-source!</code> multimethod that abstracts data insertion from various sources
+into existing tables. This multimethod dispatches on both the driver and the data source type
+(<code class="language-plaintext highlighter-rouge">:rows</code> or <code class="language-plaintext highlighter-rouge">:jsonl-file</code>). It allows drivers to optimize based on the data source type and returns the number
+of rows inserted. Default implementations are provided for both <code class="language-plaintext highlighter-rouge">:rows</code> and <code class="language-plaintext highlighter-rouge">:jsonl-file</code> source types.</p>
+  </li>
+  <li>
+    <p>Added <code class="language-plaintext highlighter-rouge">metabase.driver/insert-col-&gt;val</code> multimethod to parse values for insertion based on driver, data source type
+and column definition. Drivers should implement this when their insertion mechanism needs values converted to proper types.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">metabase.driver/humanize-connection-error-message</code> now takes a list of all messages in the exception chain,
+instead of just the top-level message as a string.</p>
+  </li>
+  <li>
+    <p>Removed <code class="language-plaintext highlighter-rouge">driver/set-database-used</code>. Drivers should set default databases in their connection specs instead.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">metabase.driver.common.table-rows-sample/table-rows-sample</code>’s optional <code class="language-plaintext highlighter-rouge">:order-by</code> option should now be something
+you can pass to [[metabase.lib.core/order-by]] – for example a Lib <code class="language-plaintext highlighter-rouge">:metadata/column</code> or an [MBQL 5]
+<code class="language-plaintext highlighter-rouge">metabase.driver-api.core/order-by-clause</code>.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">metabase.driver-api.core/nest-query</code> no longer automatically calls <code class="language-plaintext highlighter-rouge">metabase.driver-api.core/add-alias-info</code> on its
+results, but it also no longer expect its input to have this information. If you were using both of these tools in
+your driver, make change the order in which the are applied so <code class="language-plaintext highlighter-rouge">nest-query</code> happens first, followed by
+<code class="language-plaintext highlighter-rouge">add-alias-info</code>. Note that drivers deriving from <code class="language-plaintext highlighter-rouge">:sql</code> do not need to make any changes, since this is done by the
+base <code class="language-plaintext highlighter-rouge">:sql</code> driver implementation.</p>
+  </li>
+</ul>
+
+<h2 id="metabase-0563">Metabase 0.56.3</h2>
+
+<ul>
+  <li>Added the driver multi-method <code class="language-plaintext highlighter-rouge">driver/describe-database*</code> that drivers should now implement instead of <code class="language-plaintext highlighter-rouge">driver/describe-database</code>.
+This provides automatic resilient connection handling for better error recovery when database connections are closed
+during metadata sync operations. Existing drivers implementing <code class="language-plaintext highlighter-rouge">describe-database</code> will continue to work but should
+migrate to <code class="language-plaintext highlighter-rouge">describe-database*</code> to benefit from the resilient connection handling.</li>
+</ul>
+
 <h2 id="metabase-0560">Metabase 0.56.0</h2>
 
 <ul>
@@ -5421,6 +5494,9 @@ from their <code class="language-plaintext highlighter-rouge">metabase-plugin.ya
   </li>
   <li>
     <p>Added the driver multi-method <code class="language-plaintext highlighter-rouge">driver/set-database-used!</code> for drivers to set a database on the connection with statements like <code class="language-plaintext highlighter-rouge">USE DATABASE</code>.</p>
+  </li>
+  <li>
+    <p>Added the driver feature <code class="language-plaintext highlighter-rouge">:transforms/table</code> for drivers that supports transforms with table as target</p>
   </li>
 </ul>
 
@@ -5521,7 +5597,7 @@ settings formerly in a <code class="language-plaintext highlighter-rouge">metaba
 <h2 id="metabase-05411">Metabase 0.54.11</h2>
 
 <ul>
-  <li>The multimethods <code class="language-plaintext highlighter-rouge">metabase.driver.sql-jdbc.sync.interface/active-tables</code> and <code class="language-plaintext highlighter-rouge">metabase.driver.sql-jdbc.sync.interface/filtered-syncable-schemas</code>, aswell as the functions
+  <li>The multimethods <code class="language-plaintext highlighter-rouge">metabase.driver.sql-jdbc.sync.interface/active-tables</code> and <code class="language-plaintext highlighter-rouge">metabase.driver.sql-jdbc.sync.interface/filtered-syncable-schemas</code>, as well as the functions
 <code class="language-plaintext highlighter-rouge">metabase.driver.sql-jdbc.sync.describe_database/fast-active-tables</code>, <code class="language-plaintext highlighter-rouge">metabase.driver.sql-jdbc.sync.describe_database/have-select-privilege-fn</code> and <code class="language-plaintext highlighter-rouge">metabase.driver.sql-jdbc.sync.describe_database/db-tables</code> now take a database spec instead of a <code class="language-plaintext highlighter-rouge">java.sql.Connection</code> object.</li>
 </ul>
 
@@ -5529,7 +5605,7 @@ settings formerly in a <code class="language-plaintext highlighter-rouge">metaba
 
 <ul>
   <li>Add <code class="language-plaintext highlighter-rouge">metabase.driver/table-known-to-not-exist?</code> for drivers to test if an exception is due to a query on a table that no longer exists</li>
-  <li>Add <code class="language-plaintext highlighter-rouge">metabase.driver.sql-jdbc/impl-table-known-to-not-exist?</code> for JDBC drivers. This is the implemenation of table-known-to-not-exist for jdbc and allows testing directly against <code class="language-plaintext highlighter-rouge">java.sql.SQLException</code> throwables without worrying about the exception cause chain.</li>
+  <li>Add <code class="language-plaintext highlighter-rouge">metabase.driver.sql-jdbc/impl-table-known-to-not-exist?</code> for JDBC drivers. This is the implementation of table-known-to-not-exist for jdbc and allows testing directly against <code class="language-plaintext highlighter-rouge">java.sql.SQLException</code> throwables without worrying about the exception cause chain.</li>
 </ul>
 
 <h2 id="metabase-0540">Metabase 0.54.0</h2>
@@ -5577,7 +5653,7 @@ databases that support them.</p>
 
 <ul>
   <li>Add <code class="language-plaintext highlighter-rouge">metabase.driver/query-canceled?</code> for drivers to test if an exception is due to a query being canceled due to user action</li>
-  <li>Add <code class="language-plaintext highlighter-rouge">metabase.driver.sql-jdbc/impl-query-canceled?</code> for JDBC drivers. This is the implemenation of query-canceled for jdbc and allows testing directly against <code class="language-plaintext highlighter-rouge">java.sql.SQLException</code> throwables without worrying about the exception cause chain.</li>
+  <li>Add <code class="language-plaintext highlighter-rouge">metabase.driver.sql-jdbc/impl-query-canceled?</code> for JDBC drivers. This is the implementation of query-canceled for jdbc and allows testing directly against <code class="language-plaintext highlighter-rouge">java.sql.SQLException</code> throwables without worrying about the exception cause chain.</li>
 </ul>
 
 <h2 id="metabase-05310">Metabase 0.53.10</h2>
@@ -6139,7 +6215,7 @@ to be assigned to specific database roles which are set before any queries are e
 be restricted at the database level instead of (or in conjunction with) Metabase’s built-in permissions system.</p>
   </li>
   <li>
-    <p>The multimethod <code class="language-plaintext highlighter-rouge">metabase.driver.sql-jdbc.sync.describe-table/get-table-pks</code> is changed to return a vector instea
+    <p>The multimethod <code class="language-plaintext highlighter-rouge">metabase.driver.sql-jdbc.sync.describe-table/get-table-pks</code> is changed to return a vector instead
 of a set.</p>
   </li>
   <li>
@@ -6354,8 +6430,8 @@ differences between the library versions.</p>
 
 <p><strong>Note: we expect these breaking changes to be fixed before 0.46.0 ships. This will be updated if they are.</strong></p>
 
-<p>The classes <code class="language-plaintext highlighter-rouge">metabase.util.honeysql_extensions.Identifer</code> and <code class="language-plaintext highlighter-rouge">metabase.util.honeysql_extensions.TypedHoneySQLForm</code>
-have been moved to <code class="language-plaintext highlighter-rouge">metabase.util.honey_sql_1.Identifer</code> and <code class="language-plaintext highlighter-rouge">metabase.util.honey_sql_1.TypedHoneySQLForm</code>,
+<p>The classes <code class="language-plaintext highlighter-rouge">metabase.util.honeysql_extensions.Identifier</code> and <code class="language-plaintext highlighter-rouge">metabase.util.honeysql_extensions.TypedHoneySQLForm</code>
+have been moved to <code class="language-plaintext highlighter-rouge">metabase.util.honey_sql_1.Identifier</code> and <code class="language-plaintext highlighter-rouge">metabase.util.honey_sql_1.TypedHoneySQLForm</code>,
 respectively. On the off chance that your driver directly referencing these class names, you may need to update things
 to use the new class names.</p>
 

@@ -185,13 +185,10 @@
     
       <div class="promo-banner hidden">
   <div>
-    <span>💙 Loving Metabase?</span>
-    <a href="https://github.com/metabase/metabase" target="_blank">
-    Share the love with a star on GitHub <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="chevron">
-<path opacity="0.9" d="M3 8.96338L16 21.9634L29 8.96338" stroke="#509ee3" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"></path>
-</svg>
-
-    </a>
+    <span class="button">New</span>
+    <span>Metabase 57: Dark mode, remote sync for versioned analytics, Documents to create and share stories with data, and more</span>
+    <a href="/releases/metabase-57">Read the announcement</a>
+    <img alt="Chevron Blue Right" src="/images/chevron_blue_right.svg">
   </div>
   <button>×</button>
 </div>
@@ -5274,7 +5271,7 @@ Roadmap</a>
 <div class="version__selector cursor-pointer">
   <span class="version__current">
     
-      v0.56
+      v0.57
     
 
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="chevron">
@@ -5284,6 +5281,14 @@ Roadmap</a>
   </span>
   <ul class="version__dropdown">
     
+      
+    
+      
+        <li>
+          <a href="/docs/v0.56">
+            v0.56
+          </a>
+        </li>
       
     
       
@@ -5350,14 +5355,6 @@ Roadmap</a>
         </li>
       
     
-      
-        <li>
-          <a href="/docs/v0.47">
-            v0.47
-          </a>
-        </li>
-      
-    
     <li><a href="/docs/all">See more</a></li>
   </ul>
 </div>
@@ -5415,7 +5412,9 @@ Roadmap</a>
 
 <p>The Metabase Embedded analytics SDK supports plugins to customize the behavior of components. These plugins can be used in a global context or on a per-component basis.</p>
 
-<h2 id="global-plugins">Global plugins</h2>
+<h2 id="plugin-scope">Plugin scope</h2>
+
+<h3 id="global-plugins">Global plugins</h3>
 
 <p>To use a plugin globally, add the plugin to the <code class="language-plaintext highlighter-rouge">MetabaseProvider</code>’s <code class="language-plaintext highlighter-rouge">pluginsConfig</code> prop:</p>
 
@@ -5430,7 +5429,7 @@ Roadmap</a>
 <span class="o">&lt;</span><span class="sr">/MetabaseProvider</span><span class="err">&gt;
 </span></code></pre></div></div>
 
-<h2 id="component-plugins">Component plugins</h2>
+<h3 id="component-plugins">Component plugins</h3>
 
 <p>To use a plugin on a per-component basis, pass the plugin as a prop to the component:</p>
 
@@ -5441,6 +5440,67 @@ Roadmap</a>
   <span class="p">}}</span>
 <span class="sr">/</span><span class="err">&gt;
 </span></code></pre></div></div>
+
+<p>See docs for specific components:</p>
+
+<ul>
+  <li><a href="./questions#interactive-question-plugins">Interactive question plugins</a></li>
+  <li><a href="./dashboards#dashboard-plugins">Dashboard plugins</a></li>
+</ul>
+
+<h2 id="global-plugins-1">Global plugins</h2>
+
+<h3 id="mapquestionclickactions"><code class="language-plaintext highlighter-rouge">mapQuestionClickActions</code></h3>
+
+<p>The plugin <code class="language-plaintext highlighter-rouge">mapQuestionClickActions</code> lets you to customize what happens when people click on a data point on a dashboard or chart. <code class="language-plaintext highlighter-rouge">mapQuestionClickActions</code> can be used globally, or on component level.</p>
+
+<p>See <a href="./questions#mapquestionclickactions"><code class="language-plaintext highlighter-rouge">mapQuestionClickActions</code> plugin</a> for more information and examples.</p>
+
+<h3 id="handlelink"><code class="language-plaintext highlighter-rouge">handleLink</code></h3>
+
+<p>To customize what happens when people click a link in your embedded questions and dashboards, use the global plugin <code class="language-plaintext highlighter-rouge">handleLink</code>:</p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">plugins</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">handleLink</span><span class="p">:</span> <span class="p">(</span><span class="na">urlString</span><span class="p">:</span> <span class="kr">string</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">url</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">URL</span><span class="p">(</span><span class="nx">urlString</span><span class="p">,</span> <span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">origin</span><span class="p">);</span>
+    <span class="kd">const</span> <span class="nx">isInternal</span> <span class="o">=</span> <span class="nx">url</span><span class="p">.</span><span class="nx">origin</span> <span class="o">===</span> <span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">origin</span><span class="p">;</span>
+    <span class="k">if </span><span class="p">(</span><span class="nx">isInternal</span><span class="p">)</span> <span class="p">{</span>
+      <span class="c1">// Handle internal navigation (e.g., with your router)</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">Navigate to:</span><span class="dl">"</span><span class="p">,</span> <span class="nx">url</span><span class="p">.</span><span class="nx">pathname</span> <span class="o">+</span> <span class="nx">url</span><span class="p">.</span><span class="nx">search</span> <span class="o">+</span> <span class="nx">url</span><span class="p">.</span><span class="nx">hash</span><span class="p">);</span>
+      <span class="k">return</span> <span class="p">{</span> <span class="na">handled</span><span class="p">:</span> <span class="kc">true</span> <span class="p">};</span> <span class="c1">// prevent default navigation</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="p">{</span> <span class="na">handled</span><span class="p">:</span> <span class="kc">false</span> <span class="p">};</span> <span class="c1">// let the SDK do the default behavior</span>
+  <span class="p">},</span>
+<span class="p">};</span>
+
+<span class="k">return </span><span class="p">(</span>
+  <span class="o">&lt;</span><span class="nx">MetabaseProvider</span> <span class="nx">authConfig</span><span class="o">=</span><span class="p">{</span><span class="nx">authConfig</span><span class="p">}</span> <span class="nx">pluginsConfig</span><span class="o">=</span><span class="p">{</span><span class="nx">plugins</span><span class="p">}</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">InteractiveDashboard</span> <span class="nx">dashboardId</span><span class="o">=</span><span class="p">{</span><span class="mi">1</span><span class="p">}</span> <span class="sr">/</span><span class="err">&gt;
+</span>  <span class="o">&lt;</span><span class="sr">/MetabaseProvider</span><span class="err">&gt;
+</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>The plugin <code class="language-plaintext highlighter-rouge">handleLink</code> can only be used <a href="#plugin-scope">globally</a> on provider level.</p>
+
+<h3 id="getnodataillustration-and-getnoobjectillustration"><code class="language-plaintext highlighter-rouge">getNoDataIllustration</code> and <code class="language-plaintext highlighter-rouge">getNoObjectIllustration</code></h3>
+
+<p>By default, Metabase displays a sailboat image when a query returns no results. To use a different image, you can use <code class="language-plaintext highlighter-rouge">getNoDataIllustration</code> and <code class="language-plaintext highlighter-rouge">getNoObjectIllustration</code> plugins which can accept a custom base64-encoded image:</p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">img_base64</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">...</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// base64-encoded image</span>
+
+<span class="kd">const</span> <span class="nx">plugins</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">getNoDataIllustration</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="nx">img_base64</span><span class="p">,</span>
+  <span class="na">getNoObjectIllustration</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="nx">img_base64</span><span class="p">,</span>
+<span class="p">};</span>
+
+<span class="k">return </span><span class="p">(</span>
+  <span class="o">&lt;</span><span class="nx">MetabaseProvider</span> <span class="nx">authConfig</span><span class="o">=</span><span class="p">{</span><span class="nx">authConfig</span><span class="p">}</span> <span class="nx">pluginsConfig</span><span class="o">=</span><span class="p">{</span><span class="nx">plugins</span><span class="p">}</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">InteractiveDashboard</span> <span class="nx">dashboardId</span><span class="o">=</span><span class="p">{</span><span class="mi">1</span><span class="p">}</span> <span class="sr">/</span><span class="err">&gt;
+</span>  <span class="o">&lt;</span><span class="sr">/MetabaseProvider</span><span class="err">&gt;
+</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>The plugins <code class="language-plaintext highlighter-rouge">getNoDataIllustration</code> and <code class="language-plaintext highlighter-rouge">getNoObjectIllustration</code> can only be used <a href="#plugin-scope">globally</a> on provider level.</p>
 
 <h2 id="further-reading">Further reading</h2>
 

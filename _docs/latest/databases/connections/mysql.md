@@ -1,5 +1,5 @@
 ---
-version: v0.56
+version: v0.57
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -89,7 +89,7 @@ A fingerprinting query examines the first 10,000 rows from each column and uses 
 
 ## Connecting to MySQL 8+ servers
 
-Metabase uses the MariaDB connector to connect to MySQL servers. The MariaDB connector lacks support for MySQL 8's default authentication plugin. In order to connect, you'll need to change the plugin used by the Metabase user:
+Metabase uses the MariaDB connector to connect to MySQL servers. The MariaDB connector lacks support for MySQL 8's default authentication plugin. To connect, you'll need to change the plugin used by the Metabase user:
 
 ```
 mysql_native_password`: `ALTER USER 'metabase'@'%' IDENTIFIED WITH mysql_native_password BY 'thepassword';
@@ -192,11 +192,19 @@ Choose whether to enable features related to [Metabase models](../../data-modeli
 
 ### Model actions
 
-Turn this setting on to allow [actions](../../actions/introduction) from models created from this data to be run. Actions are able to read, write, and possibly delete data. Your database user will need write permissions.
+Turn this setting on to allow [actions](../../actions/introduction) from models created from this data to be run. Actions can read, write, and delete data. Your database user will need write permissions.
 
 ### Model persistence
 
 We'll create tables with model data and refresh them on a schedule you define. To enable [model persistence](../../data-modeling/model-persistence), you need to grant this connection's credentials read and write permissions on a schema Metabase provides.
+
+## Editable table data
+
+Turn this setting **ON** to enable editing of table data directly within Metabase. When enabled, Admins can create, update, and delete records in your tables through Metabase's interface.
+
+Your database connection will need Write permissions to enable this feature. Meaning: the database user account that you use to connect Metabase to your database must have appropriate privileges to modify data in the tables you want to make editable.
+
+See [privileges](../users-roles-privileges).
 
 ## Database routing
 

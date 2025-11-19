@@ -1,5 +1,5 @@
 ---
-version: v0.56
+version: v0.57
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -12,7 +12,7 @@ latest: true
 ---
 
 ```ts
-function CreateDashboardModal(props: CreateDashboardModalProps): ReactNode;
+function CreateDashboardModal(props: CreateDashboardModalProps): Element;
 ```
 
 Creates a dashboard
@@ -31,6 +31,6 @@ Creates a dashboard
 
 <!-- [<snippet returns>] -->
 
-[`ReactNode`](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/0b728411cd1dfb4bd26992bb35a73cf8edaa22e7/types/react/index.d.ts#L478)
+[`Element`](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/0b728411cd1dfb4bd26992bb35a73cf8edaa22e7/types/react/index.d.ts#L4240)
 
 <!-- [<endsnippet returns>] -->

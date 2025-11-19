@@ -1,5 +1,5 @@
 ---
-version: v0.56
+version: v0.57
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -19,15 +19,6 @@ Write SQL to update records in your databases.
 ## Creating a custom action
 
 > You must be in a group with Native query editing access to create an action.
-
-There are two ways to create a custom action:
-
-From the command palette:
-
-1. Hit command-K (mac) or ctrl-K (windows) to open the command palette.
-2. Search for **New Action**.
-
-From a model:
 
 1. First, [create a model](../data-modeling/models).
 2. Visit the model and click on the **info** button.

@@ -1,5 +1,5 @@
 ---
-version: v0.56
+version: v0.57
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -13,7 +13,7 @@ latest: true
 
 # End-to-end tests with Cypress
 
-Metabase uses Cypress for “end-to-end testing”, that is, tests that are executed against the application as a whole, including the frontend, backend, and application database. These tests are essentially scripts written in JavaScript that run in the web browser: visit different URLs, click various UI elements, type text, and assert that things happen as expected (for example, an element appearing on screen, or a network request occuring).
+Metabase uses Cypress for “end-to-end testing”, that is, tests that are executed against the application as a whole, including the frontend, backend, and application database. These tests are essentially scripts written in JavaScript that run in the web browser: visit different URLs, click various UI elements, type text, and assert that things happen as expected (for example, an element appearing on screen, or a network request occurring).
 
 _Please, get familiar with the [Cypress best practices](https://docs.cypress.io/app/core-concepts/best-practices) before you proceed._
 
@@ -164,17 +164,15 @@ export MB_SNOWPLOW_URL=http://localhost:9090
 
 We have a few helpers for dealing with tests involving snowplow
 
-1. You can use `describeWithSnowplow` (or `describeWithSnowplowEE` for EE edition) method to define tests that only
-   run when a Snowplow instance is running
 1. Use `resetSnowplow()` test helper before each test to clear the queue of processed events.
-1. Use `expectSnowplowEvent({ ...payload }, count=n)` to assert that exactly `count` snowplow events match (partially)
+2. Use `expectSnowplowEvent({ ...payload }, count=n)` to assert that exactly `count` snowplow events match (partially)
    the payload provided (count defaults to 1)
-1. Use `expectUnstructuredSnowplowEvent` to assert that exactly `count` snowplow events are unstructured events that
+3. Use `expectUnstructuredSnowplowEvent` to assert that exactly `count` snowplow events are unstructured events that
    partial-match the payload provided. This is simply a convenience function for comparing
    `event.unstruct_event.data.data` rather than the entire `event`. Most of our events are unstructured events, so this is handy.
-1. Use `assertNoUnstructuredSnowplowEvent({ ...eventData })` is the inverse of `expectUnstructuredSnowplowEvent`, and asserts that
+4. Use `assertNoUnstructuredSnowplowEvent({ ...eventData })` is the inverse of `expectUnstructuredSnowplowEvent`, and asserts that
    _no_ unstructured events match the payload.
-1. Use `expectNoBadSnowplowEvents()` after each test to assert that no invalid events have been sent.
+5. Use `expectNoBadSnowplowEvents()` after each test to assert that no invalid events have been sent.
 
 ### Running tests that require SMTP server
 
@@ -199,7 +197,7 @@ Cypress._.times(N, () => {
 
 ### Embedding SDK tests
 
-See [sdk docs about e2e](https://github.com/metabase/metabase/blob/master/enterprise/frontend/src/embedding-sdk-bundle/dev.md)
+See [sdk docs about e2e](https://github.com/metabase/metabase/blob/master/enterprise/frontend/src/embedding-sdk-package/dev.md)
 
 ## DB Snapshots
 

@@ -1,5 +1,5 @@
 ---
-version: v0.56
+version: v0.57
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -66,7 +66,7 @@ networks:
     driver: bridge
 ```
 
-If you don't pass environment variables to Metabase and you want to configure the environment manually, you can go to the Admin Panel, selectin "Settings", select "Authentication", and then select "LDAP Configuration" and enter the following values:
+If you don't pass environment variables to Metabase and you want to configure the environment manually, you can go to the Admin Panel, select "Settings", select "Authentication", and then select "LDAP Configuration" and enter the following values:
 
 - `USERNAME OR DN`: `cn=admin,dc=example,dc=org`
 - `PASSWORD`: `adminpassword`

@@ -1,5 +1,5 @@
 ---
-version: v0.56
+version: v0.57
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -21,7 +21,7 @@ There are two basic ways to secure stuff on the internet:
 1. **Authentication** looks at _who_ someone is (using standards such as [JWT](../people-and-groups/authenticating-with-jwt) or [SAML](../people-and-groups/authenticating-with-saml)).
 2. **Authorization** looks at _what_ someone has access to (using standards such as OAuth 2.0).
 
-In this guide, we'll talk primarily about authentication.
+In this guide, we'll talk primarily about authentication. 
 
 ## Public embedding
 
@@ -171,7 +171,7 @@ For code samples, see the [static embedding reference app](https://github.com/me
 
 ## Modular and interactive embedding auth with JWT or SAML
 
-Modular embedding (using Embedded Analytics [SDK](./sdk/introduction) or [JS](./embedded-analytics-js) components), and [interactive full-app embedding](./interactive-embedding) integrate with SSO (either [JWT](../people-and-groups/authenticating-with-jwt) or [SAML](../people-and-groups/authenticating-with-saml)) to authenticate and authorize people in one flow. The auth integration makes it easy to map user attributes (such as a person's role or department) to granular levels of data access, including:
+Modular embedding (using Embedded Analytics [SDK](./sdk/introduction) or [JS](./embedded-analytics-js) components), and [interactive full-app embedding](./interactive-embedding) integrate  with SSO (either [JWT](../people-and-groups/authenticating-with-jwt) or [SAML](../people-and-groups/authenticating-with-saml)) to authenticate and authorize people in one flow. The auth integration makes it easy to map user attributes (such as a person's role or department) to granular levels of data access, including:
 
 - [Tables](../permissions/data)
 - [Rows](../permissions/row-and-column-security#row-level-security-filter-by-a-column-in-the-table)

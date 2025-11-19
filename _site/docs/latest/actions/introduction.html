@@ -185,13 +185,10 @@
     
       <div class="promo-banner hidden">
   <div>
-    <span>💙 Loving Metabase?</span>
-    <a href="https://github.com/metabase/metabase" target="_blank">
-    Share the love with a star on GitHub <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="chevron">
-<path opacity="0.9" d="M3 8.96338L16 21.9634L29 8.96338" stroke="#509ee3" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"></path>
-</svg>
-
-    </a>
+    <span class="button">New</span>
+    <span>Metabase 57: Dark mode, remote sync for versioned analytics, Documents to create and share stories with data, and more</span>
+    <a href="/releases/metabase-57">Read the announcement</a>
+    <img alt="Chevron Blue Right" src="/images/chevron_blue_right.svg">
   </div>
   <button>×</button>
 </div>
@@ -5274,7 +5271,7 @@ Roadmap</a>
 <div class="version__selector cursor-pointer">
   <span class="version__current">
     
-      v0.56
+      v0.57
     
 
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="chevron">
@@ -5284,6 +5281,14 @@ Roadmap</a>
   </span>
   <ul class="version__dropdown">
     
+      
+    
+      
+        <li>
+          <a href="/docs/v0.56">
+            v0.56
+          </a>
+        </li>
       
     
       
@@ -5350,14 +5355,6 @@ Roadmap</a>
         </li>
       
     
-      
-        <li>
-          <a href="/docs/v0.47">
-            v0.47
-          </a>
-        </li>
-      
-    
     <li><a href="/docs/all">See more</a></li>
   </ul>
 </div>
@@ -5412,12 +5409,14 @@ Roadmap</a>
 
 <p>Actions must be added to a <a href="../data-modeling/models">model</a>, but actions only run on the raw tables that back those models (so actions will never edit your <a href="../data-modeling/models#edit-a-models-query">model definition</a>).</p>
 
+<p>If you’re an admin who just wants to edit data in your tables, check out <a href="../data-modeling/editable-tables">Editable table data</a>.</p>
+
 <h2 id="enabling-actions-for-a-database">Enabling actions for a database</h2>
 
 <p>For actions to work, you’ll first need to do the following two things:</p>
 
 <ol>
-  <li><strong>Enable model actions for the database connection</strong>. To enable actions for a database connection, admins should click on the <strong>gear</strong> icon in the upper right and navigate to <strong>Admin settings</strong> &gt; <strong>Databases</strong>, then click on the database you want to create actions for. On the right side of the connection settings form, toggle the <strong>Model actions</strong> option. For actions to work, the database user account (the account you’re using to connect to the database) must have <a href="../databases/users-roles-privileges#privileges-to-enable-actions">write permissions</a>. And for now, actions are only supported on PostgreSQL and MySQL databases.</li>
+  <li><strong>Enable model actions for the database connection</strong>. To enable actions for a database connection, admins should click on the <strong>gear</strong> icon in the upper right and navigate to <strong>Admin settings</strong> &gt; <strong>Databases</strong>, then click on the database you want to create actions for. On the right side of the connection settings form, toggle the <strong>Model actions</strong> option. For actions to work, the database user account (the account you’re using to connect to the database) must have <a href="../databases/users-roles-privileges#privileges-to-enable-actions-and-editable-table-data">write permissions</a>. And for now, actions are only supported on PostgreSQL and MySQL databases.</li>
   <li><strong>Create at least one model from that database.</strong> Actions are associated with models, so you’ll need to have created (or have access to) at least one model before you can start creating actions.</li>
 </ol>
 
@@ -5451,7 +5450,7 @@ Roadmap</a>
 
 <p>Just something to clarify here: actions, even though they are added to models, make their changes to the underlying table that a model queries. Which means that anyone who has access to the underlying table, or to questions or other models based on that table, will be able to see the effects of an action. Tools other than Metabase that are connected to that database will also pick up these changes.</p>
 
-<p>In this sense, models are containers for actions; models are a way to organize actions. In fact, you could (in theory) add a <a href="./custom">custom action</a> to a model that performs some update unrelated to its model’s data. For example, you could write a custom action that updates the <code class="language-plaintext highlighter-rouge">Accounts</code> table, and add that action to a model that only queries an unrelated table (e.g., the <code class="language-plaintext highlighter-rouge">Orders</code> table). But, you know, maybe don’t do that (unless you have a really good reason). <a href="./basic">Basic actions</a>, however, are only be available for models that wrap a single raw table.</p>
+<p>In this sense, models are containers for actions; models are a way to organize actions. In fact, you could (in theory) add a <a href="./custom">custom action</a> to a model that performs some update unrelated to its model’s data. For example, you could write a custom action that updates the <code class="language-plaintext highlighter-rouge">Accounts</code> table, and add that action to a model that only queries an unrelated table (e.g., the <code class="language-plaintext highlighter-rouge">Orders</code> table). But, you know, maybe don’t do that (unless you have a good reason). <a href="./basic">Basic actions</a>, however, are only be available for models that wrap a single raw table.</p>
 
 <p>Before using actions in production, consider playing around with actions on some sample data (like the Sample Database included with Metabase) to get a feel for how they work.</p>
 

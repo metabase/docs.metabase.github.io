@@ -52,7 +52,7 @@
 <meta name="twitter:site" content="@metabase">
 
 <meta name="twitter:title" content="API changelog | Metabase Documentation">
-<meta name="twitter:description" content="Breaking changes to the API interface Metabase 0.55.0   POST /api/card/from-csv has been renamed to POST /api/upload/csv.   GET /api/util/stats has been renamed to GET /api/analytics/anonymous-stats.   <code class=" language-plaintext..."="">
+<meta name="twitter:description" content="Breaking changes to the API interface Metabase 0.57.0  MBQL queries (in Cards and elsewhere) are now serialized as MBQL 5 as opposed to MBQL 4 (aka legacy MBQL) in the application database and in REST API responses. While we...">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -62,7 +62,7 @@
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://www.metabase.com/docs/latest/developers-guide/api-changelog">
 <meta name="title" property="og:title" content="API changelog | Metabase Documentation">
-<meta name="description" property="og:description" content="Breaking changes to the API interface Metabase 0.55.0   POST /api/card/from-csv has been renamed to POST /api/upload/csv.   GET /api/util/stats has been renamed to GET /api/analytics/anonymous-stats.   <code class=" language-plaintext..."="">
+<meta name="description" property="og:description" content="Breaking changes to the API interface Metabase 0.57.0  MBQL queries (in Cards and elsewhere) are now serialized as MBQL 5 as opposed to MBQL 4 (aka legacy MBQL) in the application database and in REST API responses. While we...">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -185,13 +185,10 @@
     
       <div class="promo-banner hidden">
   <div>
-    <span>💙 Loving Metabase?</span>
-    <a href="https://github.com/metabase/metabase" target="_blank">
-    Share the love with a star on GitHub <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="chevron">
-<path opacity="0.9" d="M3 8.96338L16 21.9634L29 8.96338" stroke="#509ee3" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"></path>
-</svg>
-
-    </a>
+    <span class="button">New</span>
+    <span>Metabase 57: Dark mode, remote sync for versioned analytics, Documents to create and share stories with data, and more</span>
+    <a href="/releases/metabase-57">Read the announcement</a>
+    <img alt="Chevron Blue Right" src="/images/chevron_blue_right.svg">
   </div>
   <button>×</button>
 </div>
@@ -5274,7 +5271,7 @@ Roadmap</a>
 <div class="version__selector cursor-pointer">
   <span class="version__current">
     
-      v0.56
+      v0.57
     
 
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="chevron">
@@ -5284,6 +5281,14 @@ Roadmap</a>
   </span>
   <ul class="version__dropdown">
     
+      
+    
+      
+        <li>
+          <a href="/docs/v0.56">
+            v0.56
+          </a>
+        </li>
       
     
       
@@ -5350,14 +5355,6 @@ Roadmap</a>
         </li>
       
     
-      
-        <li>
-          <a href="/docs/v0.47">
-            v0.47
-          </a>
-        </li>
-      
-    
     <li><a href="/docs/all">See more</a></li>
   </ul>
 </div>
@@ -5389,6 +5386,30 @@ Roadmap</a>
 
 
         <h1 id="breaking-changes-to-the-api-interface">Breaking changes to the API interface</h1>
+
+<h2 id="metabase-0570">Metabase 0.57.0</h2>
+
+<ul>
+  <li>MBQL queries (in Cards and elsewhere) are now serialized as MBQL 5 as opposed to MBQL 4 (aka legacy MBQL) in the
+application database and in REST API responses. While we do not officially support editing or introspection of MBQL
+via the REST API (please treat it as an opaque object), to support existing usages the <code class="language-plaintext highlighter-rouge">GET /api/card/:id</code> endpoint
+can return the Card <code class="language-plaintext highlighter-rouge">dataset_query</code> as MBQL 4 if you include the query parameter <code class="language-plaintext highlighter-rouge">?legacy-mbql=true</code>.</li>
+</ul>
+
+<h2 id="metabase-05613">Metabase 0.56.13</h2>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">/api/collection/graph</code> endpoints now no longer return ‘none’ permissions in the returned graph. Missing fields in
+between group ids and collection id indicate that that the group provides no permissions for the collection. For
+example, what was returned in versions before 0.56.13:
+    <div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="nl">"revision"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="nl">"groups"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nl">"1"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nl">"root"</span><span class="p">:</span><span class="w"> </span><span class="s2">"write"</span><span class="p">,</span><span class="w"> </span><span class="nl">"1"</span><span class="p">:</span><span class="w"> </span><span class="s2">"read"</span><span class="p">,</span><span class="w"> </span><span class="nl">"2"</span><span class="p">:</span><span class="w"> </span><span class="s2">"none"</span><span class="p">}}}</span><span class="w">
+</span></code></pre></div>    </div>
+    <p>becomes:</p>
+    <div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="nl">"revision"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="nl">"groups"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nl">"1"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nl">"root"</span><span class="p">:</span><span class="w"> </span><span class="s2">"write"</span><span class="p">,</span><span class="w"> </span><span class="nl">"1"</span><span class="p">:</span><span class="w"> </span><span class="s2">"read"</span><span class="p">}}}</span><span class="w">
+</span></code></pre></div>    </div>
+    <p>in versions 0.56.13 and up.</p>
+  </li>
+</ul>
 
 <h2 id="metabase-0550">Metabase 0.55.0</h2>
 
@@ -5477,7 +5498,7 @@ as application/x-www-form-urlencoded form content. In Metabase 0.53.0, parameter
   <li>
     <p><code class="language-plaintext highlighter-rouge">GET /:id/fields</code> now includes the Table ID.</p>
   </li>
-  <li>APIs under <code class="language-plaintext highlighter-rouge">/api/pulse</code> and <code class="language-plaintext highlighter-rouge">/api/alert</code> will be removed in a future version as we’re tranitioning to a new architecture.</li>
+  <li>APIs under <code class="language-plaintext highlighter-rouge">/api/pulse</code> and <code class="language-plaintext highlighter-rouge">/api/alert</code> will be removed in a future version as we’re transitioning to a new architecture.</li>
 </ul>
 
 <h2 id="metabase-0510">Metabase 0.51.0</h2>

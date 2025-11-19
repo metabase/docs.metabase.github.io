@@ -1,5 +1,5 @@
 ---
-version: v0.56
+version: v0.57
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -91,7 +91,7 @@ When running into memory-related issues, typically the first question to ask is:
 
 ### Thread dump
 
-Another useful picture of a running Metabase system is a Thread Dump. In cases when Metabase appears stalled or extremely slow, a thread dump will indicate what each thread is executing (or blocked on) for that specific point in time Collect a thread dump via the "Threads" tab:
+Another useful picture of a running Metabase system is a Thread Dump. In cases when Metabase appears stalled or slow, a thread dump will indicate what each thread is executing (or blocked on) for that specific point in time Collect a thread dump via the "Threads" tab:
 
 ![threaddump](images/ThreadDump.png)
 

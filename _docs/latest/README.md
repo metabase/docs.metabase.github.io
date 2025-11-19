@@ -1,5 +1,5 @@
 ---
-version: v0.56
+version: v0.57
 has_magic_breadcrumbs: true
 show_category_breadcrumb: false
 show_title_breadcrumb: true
@@ -60,6 +60,7 @@ Metabase's reference documentation.
 - [Monitoring your Metabase](./installation-and-operation/monitoring-metabase)
 - [Development instances](./installation-and-operation/development-instance)
 - [Serialization](./installation-and-operation/serialization)
+- [Remote sync](./installation-and-operation/remote-sync)
 - [Commands](./installation-and-operation/commands)
 - [Supported browsers](./installation-and-operation/supported-browsers)
 - [Privacy](./installation-and-operation/privacy)
@@ -128,6 +129,10 @@ Metabase's reference documentation.
 - [Charts with multiple series](./dashboards/multiple-series)
 - [Dashboard subscriptions](./dashboards/subscriptions)
 - [Actions on dashboards](./dashboards/actions)
+
+### Documents
+
+- [Introduction to documents](./documents/introduction)
 
 ### Data modeling
 

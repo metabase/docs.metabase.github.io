@@ -1,5 +1,5 @@
 ---
-version: v0.56
+version: v0.57
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -206,7 +206,7 @@ Learn more about [SQL parameters](../questions/native-editor/sql-parameters)
 For example, say have a table like this:
 
 | User_ID | Value |
-|---------|-------|
+| ------- | ----- |
 | 1       | 10    |
 | 1       | 50    |
 | 2       | 5     |
@@ -214,7 +214,7 @@ For example, say have a table like this:
 | 3       | 5     |
 | 3       | 5     |
 
-If you want to give someone access to multiple user IDs (e.g., the person should see rows for both `User_ID` 1 and 2.), you can set up a user attribute, like `user_id` that can handle comma-separated values like "1,2". 
+If you want to give someone access to multiple user IDs (e.g., the person should see rows for both `User_ID` 1 and 2.), you can set up a user attribute, like `user_id` that can handle comma-separated values like "1,2".
 
 1. Create a SQL question that parses the comma-separated string and filters the table:
 
@@ -285,7 +285,7 @@ To prevent the Email column from being exposed via a SQL question:
 
 ### Public sharing
 
-Row and column security permissions don't apply to public questions or public dashboards. If somone in an unsecured group creates a public link using an original table, the original table will be displayed to anyone who has the public link URL.
+Row and column security permissions don't apply to public questions or public dashboards. If someone in an unsecured group creates a public link using an original table, the original table will be displayed to anyone who has the public link URL.
 
 To prevent this from happening, you'll have to [disable public sharing](../embedding/public-links) for your Metabase.
 

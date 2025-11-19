@@ -1,5 +1,5 @@
 ---
-version: v0.56
+version: v0.57
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -128,7 +128,7 @@ produces the same result as
 datetimeDiff([Aging Start], [Aging End], "month")
 ```
 
-Yes, `DATEDIF` looks a bit wrong, but the spreadsheet function really is `DATEDIF()` with one "f", not `DATEDIFF()`.
+Yes, it's `DATEDIF` with one 'F'.
 
 ### Python
 

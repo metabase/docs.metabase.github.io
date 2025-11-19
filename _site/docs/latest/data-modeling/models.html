@@ -185,13 +185,10 @@
     
       <div class="promo-banner hidden">
   <div>
-    <span>💙 Loving Metabase?</span>
-    <a href="https://github.com/metabase/metabase" target="_blank">
-    Share the love with a star on GitHub <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="chevron">
-<path opacity="0.9" d="M3 8.96338L16 21.9634L29 8.96338" stroke="#509ee3" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"></path>
-</svg>
-
-    </a>
+    <span class="button">New</span>
+    <span>Metabase 57: Dark mode, remote sync for versioned analytics, Documents to create and share stories with data, and more</span>
+    <a href="/releases/metabase-57">Read the announcement</a>
+    <img alt="Chevron Blue Right" src="/images/chevron_blue_right.svg">
   </div>
   <button>×</button>
 </div>
@@ -5274,7 +5271,7 @@ Roadmap</a>
 <div class="version__selector cursor-pointer">
   <span class="version__current">
     
-      v0.56
+      v0.57
     
 
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="chevron">
@@ -5284,6 +5281,14 @@ Roadmap</a>
   </span>
   <ul class="version__dropdown">
     
+      
+    
+      
+        <li>
+          <a href="/docs/v0.56">
+            v0.56
+          </a>
+        </li>
       
     
       
@@ -5350,14 +5355,6 @@ Roadmap</a>
         </li>
       
     
-      
-        <li>
-          <a href="/docs/v0.47">
-            v0.47
-          </a>
-        </li>
-      
-    
     <li><a href="/docs/all">See more</a></li>
   </ul>
 </div>
@@ -5402,7 +5399,7 @@ Roadmap</a>
   <li>Can be <a href="./model-persistence">persisted for faster loading</a>.</li>
 </ul>
 
-<p>For a deep dive on why and how to use models, check out our <a href="/learn/metabase-basics/getting-started/models">Learn article on models</a>.</p>
+<p>For more on why and how to use models, check out our <a href="/learn/metabase-basics/getting-started/models">Learn article on models</a>.</p>
 
 <h2 id="how-to-use-models">How to use models</h2>
 
@@ -5520,6 +5517,81 @@ Roadmap</a>
 <h2 id="edit-a-models-query">Edit a model’s query</h2>
 
 <p>You can edit a model’s query by clicking on the down arrow next to the model’s name and clicking on <strong>Edit query definition</strong>. When you’re doing editing, be sure to save your changes. Unlike questions, which prompt you to save as a new question, any changes here will overwrite the existing model. If you want to create a new model from an existing model, select <strong>Duplicate this model</strong> from the model sidebar (the icon of two overlapping squares).</p>
+
+<h3 id="checking-for-breaking-changes">Checking for breaking changes</h3>
+
+<div class="bootstrap">
+  <div class="plans-blockquote bg-blue-95 rounded-3 p-6 d-flex flex-row border border-1 border-primary">
+    <svg class="" width="24" height="24" viewBox="0 0 26 26" fill="none">
+  <path d="M12 13V15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
+  <path d="M12 10C12.5523 10 13 9.55228 13 9C13 8.44772 12.5523 8 12 8C11.4477 8 11 8.44772 11 9C11 9.55228 11.4477 10 12 10Z" fill="#509EE3"></path>
+  <path d="M12 19.25C16.0041 19.25 19.25 16.0041 19.25 12C19.25 7.99594 16.0041 4.75 12 4.75C7.99594 4.75 4.75 7.99594 4.75 12C4.75 16.0041 7.99594 19.25 12 19.25Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
+</svg>
+
+    
+    
+    
+      
+
+    <p class="m-0 ms-2 paragraph-5 neutral-40">
+       Checking for breaking changes is only available on
+      <a class="fw-bold" href="/product/pro">Pro</a> and
+      <a class="fw-bold link-purple" href="/product/enterprise">Enterprise</a>
+      plans  (both self-hosted and on Metabase Cloud). 
+    </p>
+  </div>
+</div>
+
+<p>When you save changes to a model, Metabase will try to detect whether your changes would break any other entities that depend on that model. For example, if you remove a column from the model, but other questions based on that model rely on that column, Metabase will warn you that those downstream questions will break.</p>
+
+<p><img src="./images/check-dependencies.png" alt="Check dependencies"></p>
+
+<p>Currently, Metabase will look for broken column references. If you rename or remove a column, Metabase will likely flag the change as breaking downstream entities. But Metabase can’t detect other types of changes like changing the column type or computation logic as breaking changes.</p>
+
+<h2 id="model-list-view">Model list view</h2>
+
+<p><img src="./images/model-list.png" alt="Viewing a model as a list"></p>
+
+<p>List view helps you explore records one by one instead of sorting through big tables. You can customize the layout to highlight the most important fields.</p>
+
+<p>To view a model as a list:</p>
+
+<ol>
+  <li>Visit the model.</li>
+  <li>Click the three-dot menu.</li>
+  <li>Select <strong>Edit metadata</strong>.</li>
+  <li>Navigate to the <strong>Settings</strong> tab.</li>
+  <li>Under “What should the default view of this data be?”, toggle to <strong>List</strong>.</li>
+</ol>
+
+<p><img src="./images/model-list-edit.png" alt="Model list edit"></p>
+
+<h3 id="customize-model-list-view">Customize model list view</h3>
+
+<p><img src="./images/customize-list.png" alt="Customize list layout"></p>
+
+<p>You can customize how the data appears by clicking <strong>Customize the List layout</strong>.</p>
+
+<p>Each item in the list has:</p>
+
+<ul>
+  <li><strong>An entity icon.</strong> If the record has an image link, it shows the image, which you can hide anytime.</li>
+  <li><strong>A left column</strong> showing the title or primary identifier.</li>
+  <li><strong>A right column</strong> for up to 5 additional columns.</li>
+</ul>
+
+<p>You can:</p>
+
+<ul>
+  <li><strong>Search for columns</strong> using the “Find a column…” search box.</li>
+  <li><strong>Drag columns</strong> from the available list into either the left column or right columns areas.</li>
+  <li><strong>Reorder columns</strong> by dragging them within their respective areas.</li>
+  <li><strong>Remove columns</strong> by clicking on the X on the column.</li>
+</ul>
+
+<p>You can see a preview on the bottom with sample data from your model.</p>
+
+<p>Click <strong>Done</strong> to save your changes.</p>
 
 <h2 id="start-a-question-from-a-model">Start a question from a model</h2>
 

@@ -185,13 +185,10 @@
     
       <div class="promo-banner hidden">
   <div>
-    <span>💙 Loving Metabase?</span>
-    <a href="https://github.com/metabase/metabase" target="_blank">
-    Share the love with a star on GitHub <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="chevron">
-<path opacity="0.9" d="M3 8.96338L16 21.9634L29 8.96338" stroke="#509ee3" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"></path>
-</svg>
-
-    </a>
+    <span class="button">New</span>
+    <span>Metabase 57: Dark mode, remote sync for versioned analytics, Documents to create and share stories with data, and more</span>
+    <a href="/releases/metabase-57">Read the announcement</a>
+    <img alt="Chevron Blue Right" src="/images/chevron_blue_right.svg">
   </div>
   <button>×</button>
 </div>
@@ -5274,7 +5271,7 @@ Roadmap</a>
 <div class="version__selector cursor-pointer">
   <span class="version__current">
     
-      v0.56
+      v0.57
     
 
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="chevron">
@@ -5284,6 +5281,14 @@ Roadmap</a>
   </span>
   <ul class="version__dropdown">
     
+      
+    
+      
+        <li>
+          <a href="/docs/v0.56">
+            v0.56
+          </a>
+        </li>
       
     
       
@@ -5346,14 +5351,6 @@ Roadmap</a>
         <li>
           <a href="/docs/v0.48">
             v0.48
-          </a>
-        </li>
-      
-    
-      
-        <li>
-          <a href="/docs/v0.47">
-            v0.47
           </a>
         </li>
       
@@ -5443,31 +5440,44 @@ Unlike with <a href="./interactive-embedding">interactive embedding</a>, where y
   <li>A question (chart). You can embed both questions built with the query builder and questions built with SQL.</li>
   <li>Full graphical <a href="../questions/query-builder/editor">query builder</a> to enable people to build their own charts and explorations.</li>
   <li>A browser to navigate collections and open dashboards or questions.</li>
+  <li><a href="./sdk/ai-chat">AI chat interface</a>.</li>
 </ul>
 
 <h2 id="quickstart">Quickstart</h2>
 
+<p>You can also follow the setup guide directly in Metabase in <strong>Admin settings &gt; Embedding &gt; Setup guide</strong>. We’re recording the steps here for convenience.</p>
+
 <h3 id="1-enable-embedded-analytics-js">1. Enable Embedded Analytics JS</h3>
 
 <ol>
-  <li>In Metabase, go to <strong>Admin Settings &gt; Embedding &gt; Modular embedding</strong>.</li>
+  <li>In Metabase, go to <strong>Admin settings &gt; Embedding &gt; Modular embedding</strong>.</li>
   <li>Toggle on <strong>Embedded Analytics JS</strong>.</li>
   <li>Under <strong>Cross-Origin Resource Sharing (CORS)</strong>, add the URLs of the websites where you want to embed Metabase (such as <code class="language-plaintext highlighter-rouge">https://*.example.com</code>). For testing embeds, you can use <code class="language-plaintext highlighter-rouge">localhost</code> which is always included in CORS policy.</li>
+  <li>If you are embedding Metabase components in a domain that’s different from your Metabase’s domain (including when you’re testing the app locally but use Metabase Cloud), go to <strong>Admin settings &gt; Embedding &gt; Security</strong> and set <strong>SameSite cookie</strong> to <strong>None</strong>.</li>
 </ol>
 
 <h3 id="2-create-a-new-embed">2. Create a new embed</h3>
 
 <ol>
-  <li>In Metabase, click on <strong>+ New</strong> button in top right corner and select <strong>Embed</strong>. Note that this will only be visible to admins.</li>
-  <li>Choose the <em>type</em> of entity to embed:
+  <li>
+    <p>In Metabase, go to <strong>Admin &gt; Embedding &gt; Modular embedding</strong>, and select <strong>New embed</strong> next to <strong>Embedded analytics JS</strong>.</p>
+
+    <p>If you’re planning to embed an existing question or dashboard, you can instead go straight to that question or dashboard, click on the <strong>Share</strong> button, and choose <strong>Embedded Analytics JS</strong>.</p>
+  </li>
+  <li>
+    <p>Choose the <em>type</em> of entity to embed:</p>
+
     <ul>
       <li>Dashboard</li>
-      <li>Question</li>
+      <li>Chart</li>
       <li>Exploration (which will embed the Metabase query builder)</li>
       <li>Browser</li>
+      <li>Metabot question (which will embed AI chat)</li>
     </ul>
   </li>
-  <li>Next, select the entity you want to embed. For browser, pick the collection you want people to start from.</li>
+  <li>
+    <p>Next, select the entity you want to embed. For browser, pick the collection you want people to start from.</p>
+  </li>
 </ol>
 
 <p>Once you’ve selected what you want to embed, click Next to customize your embed.</p>
@@ -5502,6 +5512,16 @@ Unlike with <a href="./interactive-embedding">interactive embedding</a>, where y
 <p>Metabase will generate a code snippet that you can copy and paste into your app, see <a href="#embed-code-snippets">Embed code snippets</a> for an example. You can later modify this code snippet to specify additional appearance options or change the behavior of some components.</p>
 
 <p>Add the code snippet into your app, and refresh the page.</p>
+
+<h2 id="each-end-user-should-have-their-own-metabase-account">Each end user should have their own Metabase account</h2>
+
+<p>Each end-user must have their own Metabase account.</p>
+
+<p>The problem with having end-users share a Metabase account is that, even if you filter data on the client side via the Embedded analytics JS, all end-users will still have access to the session token, which they could use to access Metabase directly via the API to get data they’re not supposed to see.</p>
+
+<p>If each end-user has their own Metabase account, however, you can configure permissions in Metabase and everyone will only have access to the data they should.</p>
+
+<p>In addition to this, we consider shared accounts to be unfair usage. Fair usage of Embedded Analytics JS involves giving each end-user of the embedded analytics their own Metabase account.</p>
 
 <h2 id="embed-code-snippets">Embed code snippets</h2>
 
@@ -5546,13 +5566,13 @@ Unlike with <a href="./interactive-embedding">interactive embedding</a>, where y
 
 <p>If you’re embedding multiple entities in a single page, you only need to include the <code class="language-plaintext highlighter-rouge">&lt;script&gt;</code> tags once globally.</p>
 
-<p>You can also generate the code snippet for Embedded Analytics JS interactively in Metabase through <strong>+ New &gt; Embed</strong>. Check out the <a href="#quickstart">Quickstart</a>.</p>
+<p>You can also generate the code snippet for Embedded Analytics JS interactively in Metabase through <strong>Admin &gt; Embedding &gt; Setup guide &gt; Embed in your code</strong>. Check out the <a href="#quickstart">quickstart</a>.</p>
 
 <h2 id="customizing-embeds">Customizing embeds</h2>
 
 <p>The exact customization options you see will depend on what type of entity you’re embedding.</p>
 
-<p>When you’re creating a new embed using <strong>+ New &gt; Embed</strong>, you’ll see the following customization options in the interactive creation flow. These options correspond to parameters in <a href="#components">components</a>.</p>
+<p>When you’re creating a new embed using <strong>Admin &gt; Embedding &gt; Setup guide &gt; Embed in your code</strong>, you’ll see the following customization options in the interactive creation flow. These options correspond to parameters in <a href="#components">components</a>.</p>
 
 <ul>
   <li>
@@ -5581,7 +5601,7 @@ Unlike with <a href="./interactive-embedding">interactive embedding</a>, where y
 
 <ul>
   <li>
-    <p><code class="language-plaintext highlighter-rouge">instanceUrl: "https://your-metabase-url"</code> (required): the URL of your Metabase instance, like https://youlooknicetoday.metabaseapp.com</p>
+    <p><code class="language-plaintext highlighter-rouge">instanceUrl: "https://your-metabase-url"</code> (required): the URL of your Metabase instance, like <code class="language-plaintext highlighter-rouge">https://youlooknicetoday.metabaseapp.com</code></p>
   </li>
   <li>
     <p><code class="language-plaintext highlighter-rouge">theme: {...}</code> (optional): <a href="#theming">appearance options for the embeds</a>.</p>
@@ -5591,6 +5611,9 @@ Unlike with <a href="./interactive-embedding">interactive embedding</a>, where y
   </li>
   <li>
     <p><code class="language-plaintext highlighter-rouge">apiKey: mb_YourAPIKey</code> (optional, for development only) - another way to preview embeds locally using an API key.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">fetchRequestToken: () =&gt; Promise&lt;{ jwt: string }&gt;</code> (optional) - you can customize how the SDK fetches the refresh token for JWT authentication by specifying the <code class="language-plaintext highlighter-rouge">fetchRequestToken</code> function. See <a href="./sdk/authentication#customizing-jwt-authentication">customizing JWT authentication</a>.</p>
   </li>
 </ul>
 
@@ -5795,7 +5818,7 @@ Unlike with <a href="./interactive-embedding">interactive embedding</a>, where y
 
 <h3 id="question">Question</h3>
 
-<p>To render a question (chart).</p>
+<p>To render a question (chart):</p>
 
 <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;metabase-question</span> <span class="na">question-id=</span><span class="s">"1"</span><span class="nt">&gt;&lt;/metabase-question&gt;</span>
 </code></pre></div></div>
@@ -5818,15 +5841,12 @@ Unlike with <a href="./interactive-embedding">interactive embedding</a>, where y
   <li><code class="language-plaintext highlighter-rouge">with-downloads</code> (default is false) - show downloads</li>
   <li><code class="language-plaintext highlighter-rouge">initial-sql-parameters</code> - default value for SQL parameters, only applicable to native SQL questions, like <code class="language-plaintext highlighter-rouge">{ "productId": "42" }</code></li>
   <li><code class="language-plaintext highlighter-rouge">is-save-enabled</code> (default is false)</li>
-  <li>
-    <p><code class="language-plaintext highlighter-rouge">target-collection</code> - this is to enforce saving into a particular collection. Values: regular ID, entity ID, <code class="language-plaintext highlighter-rouge">"personal”</code>, <code class="language-plaintext highlighter-rouge">"root”</code></p>
-  </li>
-  <li>
-    <h3 id="browser">Browser</h3>
-  </li>
+  <li><code class="language-plaintext highlighter-rouge">target-collection</code> - this is to enforce saving into a particular collection. Values: regular ID, entity ID, <code class="language-plaintext highlighter-rouge">"personal”</code>, <code class="language-plaintext highlighter-rouge">"root”</code></li>
 </ul>
 
-<p>To render a collection browser so people can navigate a collection and open dashboards or questions.</p>
+<h3 id="browser">Browser</h3>
+
+<p>To render a collection browser so people can navigate a collection and open dashboards or questions:</p>
 
 <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;metabase-browser</span> <span class="na">initial-collection=</span><span class="s">"14"</span> <span class="na">read-only=</span><span class="s">"false"</span><span class="nt">&gt;&lt;/metabase-browser&gt;</span>
 </code></pre></div></div>
@@ -5842,6 +5862,49 @@ Unlike with <a href="./interactive-embedding">interactive embedding</a>, where y
 <ul>
   <li><code class="language-plaintext highlighter-rouge">read-only</code> (default is true) – if true, people can interact with items (filter, summarize, drill-through) but cannot save. If false, they can create and edit items in the collection.</li>
 </ul>
+
+<h3 id="metabot">Metabot</h3>
+
+<p>To render the AI chat interface:</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;metabase-metabot&gt;&lt;/metabase-metabot&gt;</span>
+</code></pre></div></div>
+
+<p><strong>Required parameters:</strong></p>
+
+<p>None.</p>
+
+<p><strong>Optional parameters:</strong></p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">layout</code> (default is <code class="language-plaintext highlighter-rouge">auto</code>) – how should the browser position the visualization with respect to the chat interface. Possible values are:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">auto</code> (default): Metabot uses the <code class="language-plaintext highlighter-rouge">stacked</code> layout on mobile screens, and a <code class="language-plaintext highlighter-rouge">sidebar</code> layout on larger screens.</li>
+      <li><code class="language-plaintext highlighter-rouge">stacked</code>: the question visualization stacks on top of the chat interface.</li>
+      <li><code class="language-plaintext highlighter-rouge">sidebar</code>: the question visualization appears to the left of the chat interface, which is in the right sidebar.</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="embedding-metabase-in-a-different-domain">Embedding Metabase in a different domain</h2>
+
+<p>If you want to embed Metabase in another domain (say, if Metabase is hosted at <code class="language-plaintext highlighter-rouge">metabase.yourcompany.com</code>, but you want to embed Metabase at <code class="language-plaintext highlighter-rouge">yourcompany.github.io</code>), you can tell Metabase to set the session cookie’s SameSite value to “none”.</p>
+
+<p>You can set session cookie’s SameSite value in <strong>Admin settings</strong> &gt; <strong>Embedding</strong> &gt; <strong>Security</strong> &gt; <strong>SameSite cookie setting</strong>.</p>
+
+<p>SameSite values include:</p>
+
+<ul>
+  <li><strong>Lax</strong> (default): Allows Metabase session cookies to be shared on the same domain. Used for production instances on the same domain.</li>
+  <li><strong>None (requires HTTPS)</strong>: Use “None” when your app and Metabase are hosted on different domains. Incompatible with Safari and iOS-based browsers.</li>
+  <li><strong>Strict</strong> (not recommended): Does not allow Metabase session cookies to be shared with embedded instances. Use this if you do not want to enable session sharing with embedding.</li>
+</ul>
+
+<p>You can also set the <a href="../configuring-metabase/environment-variables#mb_session_cookie_samesite"><code class="language-plaintext highlighter-rouge">MB_SESSION_COOKIE_SAMESITE</code> environment variable</a>.</p>
+
+<p>If you’re using Safari, you’ll need to <a href="https://support.apple.com/en-tj/guide/safari/sfri40732/mac">allow cross-site tracking</a>. Depending on the browser, you may also run into issues when viewing emdedded items in private/incognito tabs.</p>
+
+<p>Learn more about <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie/SameSite">SameSite cookies</a>.</p>
 
 
         <div>

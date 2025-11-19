@@ -1,5 +1,5 @@
 ---
-version: v0.56
+version: v0.57
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -25,7 +25,13 @@ type MetabaseCollectionItem = {
   };
   model: string;
   name: string;
-  type?: "instance-analytics" | "trash" | "model" | "question" | "metric" | null;
+  type?:   | "instance-analytics"
+     | "trash"
+     | "remote-synced"
+     | "model"
+     | "question"
+     | "metric"
+     | null;
 };
 ```
 
@@ -48,6 +54,6 @@ The CollectionItem entity
 | `last-edit-info.timestamp`                    | `string`                                                                                                                                |
 | <a id="model"></a> `model`                    | `string`                                                                                                                                |
 | <a id="name"></a> `name`                      | `string`                                                                                                                                |
-| <a id="type"></a> `type?`                     | `"instance-analytics"` \| `"trash"` \| `"model"` \| `"question"` \| `"metric"` \| `null`                                                |
+| <a id="type"></a> `type?`                     | \| `"instance-analytics"` \| `"trash"` \| `"remote-synced"` \| `"model"` \| `"question"` \| `"metric"` \| `null`                        |
 
 <!-- [<endsnippet properties>] -->

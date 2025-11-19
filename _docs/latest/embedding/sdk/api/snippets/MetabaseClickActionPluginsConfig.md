@@ -1,5 +1,5 @@
 ---
-version: v0.56
+version: v0.57
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -15,7 +15,11 @@ latest: true
 type MetabaseClickActionPluginsConfig = (
   clickActions: MetabaseClickAction[],
   clickedDataPoint: MetabaseDataPointObject,
-) => MetabaseClickAction[];
+) =>
+  | MetabaseClickAction[]
+  | {
+      onClick: () => void;
+    };
 ```
 
 ## Parameters
@@ -33,6 +37,9 @@ type MetabaseClickActionPluginsConfig = (
 
 <!-- [<snippet returns>] -->
 
-[`MetabaseClickAction`](./api/MetabaseClickAction)[]
+\| [`MetabaseClickAction`](./api/MetabaseClickAction)[]
+\| \{
+`onClick`: () => `void`;
+\}
 
 <!-- [<endsnippet returns>] -->

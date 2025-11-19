@@ -185,13 +185,10 @@
     
       <div class="promo-banner hidden">
   <div>
-    <span>💙 Loving Metabase?</span>
-    <a href="https://github.com/metabase/metabase" target="_blank">
-    Share the love with a star on GitHub <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="chevron">
-<path opacity="0.9" d="M3 8.96338L16 21.9634L29 8.96338" stroke="#509ee3" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"></path>
-</svg>
-
-    </a>
+    <span class="button">New</span>
+    <span>Metabase 57: Dark mode, remote sync for versioned analytics, Documents to create and share stories with data, and more</span>
+    <a href="/releases/metabase-57">Read the announcement</a>
+    <img alt="Chevron Blue Right" src="/images/chevron_blue_right.svg">
   </div>
   <button>×</button>
 </div>
@@ -5274,7 +5271,7 @@ Roadmap</a>
 <div class="version__selector cursor-pointer">
   <span class="version__current">
     
-      v0.56
+      v0.57
     
 
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="chevron">
@@ -5284,6 +5281,14 @@ Roadmap</a>
   </span>
   <ul class="version__dropdown">
     
+      
+    
+      
+        <li>
+          <a href="/docs/v0.56">
+            v0.56
+          </a>
+        </li>
       
     
       
@@ -5350,14 +5355,6 @@ Roadmap</a>
         </li>
       
     
-      
-        <li>
-          <a href="/docs/v0.47">
-            v0.47
-          </a>
-        </li>
-      
-    
     <li><a href="/docs/all">See more</a></li>
   </ul>
 </div>
@@ -5412,7 +5409,7 @@ Roadmap</a>
   </div>
 </div>
 
-<p>Once you really get rolling with Metabase, it’s often the case that you’ll have more than one Metabase instance spun up. You might have a couple of testing or development instances and a few production ones, or maybe you have a separate Metabase per office or region.</p>
+<p>Once you get rolling with Metabase, it’s often the case that you’ll have more than one Metabase instance spun up. You might have a couple of testing or development instances and a few production ones, or maybe you have a separate Metabase per office or region.</p>
 
 <p>To help you out in situations like this, Metabase has a serialization feature which lets you create an <em>export</em> of the contents of a Metabase that can then be <em>imported</em> into one or more Metabases.</p>
 
@@ -5464,6 +5461,7 @@ Roadmap</a>
   <li>Collections (but personal collections don’t get exported unless explicitly specified them through <a href="#customize-what-gets-exported">export options</a>)</li>
   <li>Dashboards</li>
   <li>Saved questions</li>
+  <li>Documents (without comments)</li>
   <li>Actions</li>
   <li>Models</li>
   <li>Metrics</li>
@@ -5476,7 +5474,7 @@ Roadmap</a>
   <li>Database connection strings (only if specified through <a href="#customize-what-gets-exported">export options</a>)</li>
 </ul>
 
-<p>All other entities—including users, groups, permissions, alerts, subscriptions—won’t get exported.</p>
+<p>All other entities—including users, groups, permissions, alerts, subscriptions, document comments—won’t get exported.</p>
 
 <p>Metabase will export its artifacts to a directory of YAML files. The export includes:</p>
 
@@ -5719,7 +5717,7 @@ KUEGiWvoBFEc5oGQCEnPg_converted_customers.yaml
 
 <h3 id="entity-ids-work-with-embedding">Entity IDs work with embedding</h3>
 
-<p>Metabase supports working with <a href="#metabase-uses-entity-ids-to-identify-and-reference-metabase-items">Entity IDs</a> for questions, dashboards, and collections in <a href="../embedding/static-embedding">Static Embedding</a>, <a href="../embedding/interactive-embedding">Interactive embedding</a>, and the <a href="../embedding/sdk/introduction">Embedded Analytics SDK</a>.</p>
+<p>Metabase supports working with <a href="#metabase-uses-entity-ids-to-identify-and-reference-metabase-items">Entity IDs</a> for questions, dashboards, and collections in <a href="../embedding/static-embedding">Static Embedding</a>, <a href="../embedding/embedded-analytics-js">Embedded analytics JS</a>, <a href="../embedding/interactive-embedding">Interactive embedding</a>, and the <a href="../embedding/sdk/introduction">Embedded analytics SDK</a>.</p>
 
 <p>A high-level workflow for using Entity IDs when embedding Metabase in your app would look something like:</p>
 

@@ -185,13 +185,10 @@
     
       <div class="promo-banner hidden">
   <div>
-    <span>💙 Loving Metabase?</span>
-    <a href="https://github.com/metabase/metabase" target="_blank">
-    Share the love with a star on GitHub <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="chevron">
-<path opacity="0.9" d="M3 8.96338L16 21.9634L29 8.96338" stroke="#509ee3" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"></path>
-</svg>
-
-    </a>
+    <span class="button">New</span>
+    <span>Metabase 57: Dark mode, remote sync for versioned analytics, Documents to create and share stories with data, and more</span>
+    <a href="/releases/metabase-57">Read the announcement</a>
+    <img alt="Chevron Blue Right" src="/images/chevron_blue_right.svg">
   </div>
   <button>×</button>
 </div>
@@ -5274,7 +5271,7 @@ Roadmap</a>
 <div class="version__selector cursor-pointer">
   <span class="version__current">
     
-      v0.56
+      v0.57
     
 
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="chevron">
@@ -5284,6 +5281,14 @@ Roadmap</a>
   </span>
   <ul class="version__dropdown">
     
+      
+    
+      
+        <li>
+          <a href="/docs/v0.56">
+            v0.56
+          </a>
+        </li>
       
     
       
@@ -5346,14 +5351,6 @@ Roadmap</a>
         <li>
           <a href="/docs/v0.48">
             v0.48
-          </a>
-        </li>
-      
-    
-      
-        <li>
-          <a href="/docs/v0.47">
-            v0.47
           </a>
         </li>
       
@@ -5437,7 +5434,37 @@ Roadmap</a>
 
 <h3 id="saving-questions-to-collections">Saving questions to collections</h3>
 
-<p>Questions saved to a collection can be added to multiple dashboards. Moving a question from one collection to another collection won’t have any effect on the dashboards the question has been added to. In order to save a question to a collection, you’ll need to be in a group with <a href="../permissions/collections#curate-access">curate access</a> to that collection.</p>
+<p>Questions saved to a collection can be added to multiple dashboards. Moving a question from one collection to another collection won’t have any effect on the dashboards the question has been added to. To save a question to a collection, you’ll need to be in a group with <a href="../permissions/collections#curate-access">curate access</a> to that collection.</p>
+
+<h3 id="checking-for-breaking-changes">Checking for breaking changes</h3>
+
+<div class="bootstrap">
+  <div class="plans-blockquote bg-blue-95 rounded-3 p-6 d-flex flex-row border border-1 border-primary">
+    <svg class="" width="24" height="24" viewBox="0 0 26 26" fill="none">
+  <path d="M12 13V15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
+  <path d="M12 10C12.5523 10 13 9.55228 13 9C13 8.44772 12.5523 8 12 8C11.4477 8 11 8.44772 11 9C11 9.55228 11.4477 10 12 10Z" fill="#509EE3"></path>
+  <path d="M12 19.25C16.0041 19.25 19.25 16.0041 19.25 12C19.25 7.99594 16.0041 4.75 12 4.75C7.99594 4.75 4.75 7.99594 4.75 12C4.75 16.0041 7.99594 19.25 12 19.25Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
+</svg>
+
+    
+    
+    
+      
+
+    <p class="m-0 ms-2 paragraph-5 neutral-40">
+       Checking for breaking changes is only available on
+      <a class="fw-bold" href="/product/pro">Pro</a> and
+      <a class="fw-bold link-purple" href="/product/enterprise">Enterprise</a>
+      plans  (both self-hosted and on Metabase Cloud). 
+    </p>
+  </div>
+</div>
+
+<p>When a question, model, or metric is saved, Metabase will try to detect whether the changes you made would break any dependent entities. For example, if you removed a column from a question that other questions rely on, Metabase will warn you that those downstream questions will break.</p>
+
+<p><img src="./images/check-dependencies.png" alt="Check dependencies"></p>
+
+<p>Currently, Metabase will look for broken column references. If you rename or remove a column, Metabase will likely flag the change as breaking downstream entities. But Metabase can’t detect other types of changes like changing the column type or computation logic as breaking changes.</p>
 
 <h2 id="moving-questions-from-collections-to-dashboards-and-vice-versa">Moving questions from collections to dashboards (and vice versa)</h2>
 

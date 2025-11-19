@@ -1,5 +1,5 @@
 ---
-version: v0.56
+version: v0.57
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -20,7 +20,7 @@ latest: true
 Integrating your SSO with Metabase allows you to:
 
 - Provision a Metabase account when someone logs in to Metabase.
-- Automatically pass user attributes from your SSO to Metabase in order to power [row and column security](../permissions/row-and-column-security).
+- Automatically pass user attributes from your SSO to Metabase to power [row and column security](../permissions/row-and-column-security).
 - Let people access Metabase without re-authenticating.
 
 ## Confirm the password for your Metabase admin account
@@ -91,7 +91,7 @@ Different IdPs use different names for the redirect URL. Here are some common ex
 
 ### User attributes
 
-Metabase will automatically log in people who've been authenticated by your SAML identity provider. In order to do so, the first assertion returned in the identity provider's SAML response _must_ contain attributes for each person's first name, last name, and email.
+Metabase will automatically log in people who've been authenticated by your SAML identity provider. To do so, the first assertion returned in the identity provider's SAML response _must_ contain attributes for each person's first name, last name, and email.
 
 Most IdPs already include these assertions by default, but some (such as [Okta](./saml-okta)) must be configured to include them.
 
@@ -135,7 +135,7 @@ We recommend that you set this value to make your SAML configuration more secure
 
 The SAML identity provider certificate is an encoded certificate that Metabase will use when connecting to the IdP URI. The certificate will look like a big blob of text that you'll want to copy and paste carefully — the spacing is important!
 
-Your IdP might have you download this certificate as a file (usually `.cer` or `.pem`), which you'll then need to open up in a text editor in order to copy the contents to then paste into the box in Metabase.
+Your IdP might have you download this certificate as a file (usually `.cer` or `.pem`), which you'll then need to open up in a text editor to copy the contents to then paste into the box in Metabase.
 
 Note that your certificate text may include header and footer comments that look like `-----BEGIN CERTIFICATE-----` and `-----END CERTIFICATE-----`. These comments should be included when pasting your certificate text into Metabase.
 

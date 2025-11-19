@@ -1,5 +1,5 @@
 ---
-version: v0.56
+version: v0.57
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -30,11 +30,13 @@ Here are a few ideas for what you can do with actions:
 
 Actions must be added to a [model](../data-modeling/models), but actions only run on the raw tables that back those models (so actions will never edit your [model definition](../data-modeling/models#edit-a-models-query)).
 
+If you're an admin who just wants to edit data in your tables, check out [Editable table data](../data-modeling/editable-tables).
+
 ## Enabling actions for a database
 
 For actions to work, you'll first need to do the following two things:
 
-1. **Enable model actions for the database connection**. To enable actions for a database connection, admins should click on the **gear** icon in the upper right and navigate to **Admin settings** > **Databases**, then click on the database you want to create actions for. On the right side of the connection settings form, toggle the **Model actions** option. For actions to work, the database user account (the account you're using to connect to the database) must have [write permissions](../databases/users-roles-privileges#privileges-to-enable-actions). And for now, actions are only supported on PostgreSQL and MySQL databases.
+1. **Enable model actions for the database connection**. To enable actions for a database connection, admins should click on the **gear** icon in the upper right and navigate to **Admin settings** > **Databases**, then click on the database you want to create actions for. On the right side of the connection settings form, toggle the **Model actions** option. For actions to work, the database user account (the account you're using to connect to the database) must have [write permissions](../databases/users-roles-privileges#privileges-to-enable-actions-and-editable-table-data). And for now, actions are only supported on PostgreSQL and MySQL databases.
 2. **Create at least one model from that database.** Actions are associated with models, so you'll need to have created (or have access to) at least one model before you can start creating actions.
 
 ## Who can use actions
@@ -61,7 +63,7 @@ There are multiple ways to run actions:
 
 Just something to clarify here: actions, even though they are added to models, make their changes to the underlying table that a model queries. Which means that anyone who has access to the underlying table, or to questions or other models based on that table, will be able to see the effects of an action. Tools other than Metabase that are connected to that database will also pick up these changes.
 
-In this sense, models are containers for actions; models are a way to organize actions. In fact, you could (in theory) add a [custom action](./custom) to a model that performs some update unrelated to its model's data. For example, you could write a custom action that updates the `Accounts` table, and add that action to a model that only queries an unrelated table (e.g., the `Orders` table). But, you know, maybe don't do that (unless you have a really good reason). [Basic actions](./basic), however, are only be available for models that wrap a single raw table.
+In this sense, models are containers for actions; models are a way to organize actions. In fact, you could (in theory) add a [custom action](./custom) to a model that performs some update unrelated to its model's data. For example, you could write a custom action that updates the `Accounts` table, and add that action to a model that only queries an unrelated table (e.g., the `Orders` table). But, you know, maybe don't do that (unless you have a good reason). [Basic actions](./basic), however, are only be available for models that wrap a single raw table.
 
 Before using actions in production, consider playing around with actions on some sample data (like the Sample Database included with Metabase) to get a feel for how they work.
 

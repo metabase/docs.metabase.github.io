@@ -52,7 +52,7 @@
 <meta name="twitter:site" content="@metabase">
 
 <meta name="twitter:title" content="Basic exploration | Metabase Documentation">
-<meta name="twitter:description" content="Basic exploration See what your teammates have made As long as you’re not the very first user in your team’s Metabase, the easiest way to start exploring your data is by looking at dashboards, charts, and lists that your teammates...">
+<meta name="twitter:description" content="Basic exploration See what your teammates have made As long as you’re not the first user in your team’s Metabase, the easiest way to start exploring your data is by looking at dashboards, charts, and lists that your teammates have...">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -62,7 +62,7 @@
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://www.metabase.com/docs/latest/exploration-and-organization/exploration">
 <meta name="title" property="og:title" content="Basic exploration | Metabase Documentation">
-<meta name="description" property="og:description" content="Basic exploration See what your teammates have made As long as you’re not the very first user in your team’s Metabase, the easiest way to start exploring your data is by looking at dashboards, charts, and lists that your teammates...">
+<meta name="description" property="og:description" content="Basic exploration See what your teammates have made As long as you’re not the first user in your team’s Metabase, the easiest way to start exploring your data is by looking at dashboards, charts, and lists that your teammates have...">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -185,13 +185,10 @@
     
       <div class="promo-banner hidden">
   <div>
-    <span>💙 Loving Metabase?</span>
-    <a href="https://github.com/metabase/metabase" target="_blank">
-    Share the love with a star on GitHub <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="chevron">
-<path opacity="0.9" d="M3 8.96338L16 21.9634L29 8.96338" stroke="#509ee3" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"></path>
-</svg>
-
-    </a>
+    <span class="button">New</span>
+    <span>Metabase 57: Dark mode, remote sync for versioned analytics, Documents to create and share stories with data, and more</span>
+    <a href="/releases/metabase-57">Read the announcement</a>
+    <img alt="Chevron Blue Right" src="/images/chevron_blue_right.svg">
   </div>
   <button>×</button>
 </div>
@@ -5274,7 +5271,7 @@ Roadmap</a>
 <div class="version__selector cursor-pointer">
   <span class="version__current">
     
-      v0.56
+      v0.57
     
 
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="chevron">
@@ -5284,6 +5281,14 @@ Roadmap</a>
   </span>
   <ul class="version__dropdown">
     
+      
+    
+      
+        <li>
+          <a href="/docs/v0.56">
+            v0.56
+          </a>
+        </li>
       
     
       
@@ -5350,14 +5355,6 @@ Roadmap</a>
         </li>
       
     
-      
-        <li>
-          <a href="/docs/v0.47">
-            v0.47
-          </a>
-        </li>
-      
-    
     <li><a href="/docs/all">See more</a></li>
   </ul>
 </div>
@@ -5392,7 +5389,7 @@ Roadmap</a>
 
 <h2 id="see-what-your-teammates-have-made">See what your teammates have made</h2>
 
-<p>As long as you’re not the very first user in your team’s Metabase, the easiest way to start exploring your data is by looking at dashboards, charts, and lists that your teammates have already created. The best place to start is by checking out any dashboards that might be pinned on your home page, or in <a href="./collections">collections</a> you have access to.</p>
+<p>As long as you’re not the first user in your team’s Metabase, the easiest way to start exploring your data is by looking at dashboards, charts, and lists that your teammates have already created. The best place to start is by checking out any dashboards that might be pinned on your home page, or in <a href="./collections">collections</a> you have access to.</p>
 
 <h2 id="command-palette">Command palette</h2>
 
@@ -5406,13 +5403,12 @@ Roadmap</a>
   <li>Create new things (like new questions and dashboards)</li>
   <li>Find things (saved questions, dashboards, models, etc.)</li>
   <li>Find and jump to Admin and account settings.</li>
-  <li>Ask <a href="../ai/metabot">Metabot</a> to do something, or ask it a question.</li>
 </ul>
 
 <p>So anytime you want to do or find anything in Metabase, just hit <code class="language-plaintext highlighter-rouge">cmd/ctrl + k</code> and start typing what you want to do.</p>
 
 <blockquote>
-  <p>The command palette is currently unavailable in <a href="../embedding/interactive-embedding">interactive embedding</a> contexts.</p>
+  <p>The command palette is currently unavailable in <a href="../embedding/embedded-analytics-js">Embedded analytics JS</a> and <a href="../embedding/interactive-embedding">interactive embedding</a> contexts.</p>
 </blockquote>
 
 <h2 id="advanced-search">Advanced search</h2>
@@ -5421,7 +5417,7 @@ Roadmap</a>
 
 <p><img src="./images/search-results.png" alt="Search results"></p>
 
-<p>Searches take into account items’ titles, descriptions, and other metadata — you can even search the contents of your SQL queries. For example, you can search for things like <code class="language-plaintext highlighter-rouge">SELECT escape_pod FROM mothership</code> and find that one question you worked on six months ago. The results will display which collection each item is saved in, what kind of object it is, and whether it’s pinned. Note that you’ll only ever see items in that are in collections you have permission to view.</p>
+<p>Searches consider items’ titles, descriptions, and other metadata — you can even search the contents of your SQL queries. For example, you can search for things like <code class="language-plaintext highlighter-rouge">SELECT escape_pod FROM mothership</code> and find that one question you worked on six months ago. The results will display which collection each item is saved in, what kind of object it is, and whether it’s pinned. Note that you’ll only ever see items in that are in collections you have permission to view.</p>
 
 <p>You can search by:</p>
 
@@ -5495,11 +5491,21 @@ Roadmap</a>
 
 <p><img src="images/comparison-operator-filters.png" alt="Comparison operator filters"></p>
 
-<p>Lastly, clicking on the ID of an item in a table gives you the option to go to a detail view for that single record. For example, you can click on a customer’s ID to see the profile view for that customer.</p>
+<p>Lastly, clicking on the ID of an item in a table gives you the option to go to a <a href="#view-details-of-a-record">detail view</a> for that single record. For example, you can click on a customer’s ID to see the profile view for that customer.</p>
 
 <p><img src="images/detail-view.png" alt="Detail view"></p>
 
 <p>When you add questions to a dashboard, you can have even more control over what happens when people click on your chart. In addition to the default drill-through menu, you can add a <a href="/learn/metabase-basics/querying-and-dashboards/dashboards/custom-destinations">custom destination</a> or <a href="/learn/metabase-basics/querying-and-dashboards/dashboards/cross-filtering">update a filter</a>. Check out <a href="../dashboards/interactive">interactive dashboards</a>.</p>
+
+<h2 id="view-details-of-a-record">View details of a record</h2>
+
+<p>To see the details of an individual record when viewing unaggregated tables, click on a record and select “View details.”</p>
+
+<p>To expand the details sidebar to a full page, click “Open in full page”. Every record has a dedicated details page which you can link to.</p>
+
+<p>Admins and people with <a href="../permissions/data#manage-table-metadata-permissions">table metadata permissions</a> can set specific fields to display only in this details view. See <a href="../data-modeling/metadata-editing">Table metadata</a>.</p>
+
+<p>If your record has a field containing <a href="../data-modeling/formatting">an image link</a>, Metabase will show the image as the record’s icon in the detail view. If the record has a field with the “Entity name” name semantic type, or a field called <code class="language-plaintext highlighter-rouge">Title</code> or <code class="language-plaintext highlighter-rouge">Name</code> , Metabase will show this field as the name of the record.</p>
 
 <h2 id="bookmarks">Bookmarks</h2>
 

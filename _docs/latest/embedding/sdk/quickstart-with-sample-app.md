@@ -1,5 +1,5 @@
 ---
-version: v0.56
+version: v0.57
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -107,7 +107,7 @@ To enable SSO with JWT when self-hosting, you'll need to [activate your license]
 
 ## Enable embedding in Metabase
 
-From any Metabase page, click on the **gear** icon in the upper right and select **Admin Settings** > **Settings** > **Embedding**.
+From any Metabase page, click on the **gear** icon in the upper right and select **Admin Settings** > **Embedding**.
 
 Turn on:
 

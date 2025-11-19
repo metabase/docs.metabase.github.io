@@ -1,5 +1,5 @@
 ---
-version: v0.56
+version: v0.57
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -80,6 +80,21 @@ By default, Metabase will export first 1048575 rows of results.
 ### Cell character limit in Excel exports
 
 When exporting results to an Excel document (.xlsx), Metabase will limit the number of characters per cell to 32,767, which is the [character limit enforced by Excel](https://support.microsoft.com/en-us/office/excel-specifications-and-limit-1672b34d-7043-467e-8e27-269d656771c3). If you have a bonkers number of characters in a single cell, Metabase will truncate the content to fit within that limit.
+
+## Exporting results from document cards
+
+You can download results from charts embedded in [documents](../documents/introduction).
+
+To export results from a chart in a document:
+
+1. Hover over the chart in the document.
+2. Click on the three dot menu (**...**).
+3. Select **Download results**.
+4. Choose your format: .csv, .xlsx, or .json.
+
+You can export results as formatted or unformatted (hold `Option` on Mac or `Alt` on Windows when clicking the format).
+
+If you don't see the **Download results** option, you may not have [permissions to download results](../permissions/data#download-results-permissions).
 
 ## Exporting data via a public link
 

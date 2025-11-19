@@ -1,5 +1,5 @@
 ---
-version: v0.56
+version: v0.57
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -49,9 +49,11 @@ Monitoring access sets permissions for the following:
 
 ## Subscriptions and alerts
 
-This setting determines who can set up:
+This setting determines who can create:
 
 - [Dashboard subscriptions](../dashboards/subscriptions)
 - [Alerts](../questions/alerts)
 
 People will need to be in groups with either view or edit access to the collection that contains the dashboard or question in order to set up alerts. See [Collection permissions](../permissions/collections).
+
+To prevent people from creating alerts and subscriptions, set the "Subscriptions and alerts" permission to "No".

@@ -1,5 +1,5 @@
 ---
-version: v0.56
+version: v0.57
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -55,7 +55,7 @@ For **Font**, select **Custom...** and enter URLs to your font files.
 
 ## Font style options
 
-You can set three different font styles with three different URLs, one for each font style (size and weight) that Metabase will use in order to display its user interface properly. The font weights are:
+You can set three different font styles with three different URLs, one for each font style (size and weight) that Metabase will use to display its user interface properly. The font weights are:
 
 - Regular 400
 - Bold 700

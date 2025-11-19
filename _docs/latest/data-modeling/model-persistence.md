@@ -1,5 +1,5 @@
 ---
-version: v0.56
+version: v0.57
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -19,7 +19,7 @@ Metabase will store model results in tables in a bespoke schema in your data war
 
 > Model persistence doesn't work with [row and column security](../permissions/row-and-column-security) or [impersonation](../permissions/impersonation).
 
-## Database that support model persistence
+## Databases that support model persistence
 
 Currently, model persistence is only available for the following databases:
 
