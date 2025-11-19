@@ -5656,6 +5656,10 @@ Roadmap</a>
 
 <p>If you have multiple snippets containing parameters with the same name, the question using those snippets will only use one instance of the parameter. For example, if <code class="language-plaintext highlighter-rouge">{{snippet: 1}}</code> contains parameter <code class="language-plaintext highlighter-rouge">{{var}}</code> and <code class="language-plaintext highlighter-rouge">{{snippet: 2}}</code> also contains parameter <code class="language-plaintext highlighter-rouge">{{var}}</code>, the question will display only one <code class="language-plaintext highlighter-rouge">{{var}}</code> parameter and use its value in both snippets.</p>
 
+<h3 id="sharing-parameters-across-questions">Sharing parameters across questions</h3>
+
+<p>You can also use snippets to share parameters across multiple SQL questions, including questions that build on one another (nested questions). For example, you have a question “Orders by date” that filters orders using <code class="language-plaintext highlighter-rouge">{{start_date}}</code>. You then create another question, say “Revenue by product,” that uses the results from “Orders by date.” To keep using the same <code class="language-plaintext highlighter-rouge">{{start_date}}</code> parameter in both questions, move the SQL that contains the parameter from “Orders by date” into a snippet and update both questions to reference that snippet. Now, both questions surface the same parameter, and a single dashboard date filter can control both cards that use the snippet.</p>
+
 <h2 id="snippet-permissions">Snippet permissions</h2>
 
 <p>Any user who has native editor permissions to at least one of your connected databases will be able to view the snippets sidebar, and will be able to create, edit, and archive or unarchive any and all snippets — even snippets intended to be used with databases the user lacks SQL editing access to.</p>
