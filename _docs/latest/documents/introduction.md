@@ -16,7 +16,7 @@ latest: true
 
 # Documents
 
-{% include plans-blockquote.html feature="Documents" %}
+{% include plans-blockquote.html feature="Documents" is_plural=true%}
 
 ![Document with comment](./images/document-with-comment.png)
 
