@@ -54,7 +54,7 @@
 <meta name="twitter:site" content="@metabase">
 
 <meta name="twitter:title" content="Metabase CLI | Metabase Documentation">
-<meta name="twitter:description" content="Metabase CLI Metabase ships with some handy CLI commands. To view a list of commands, run the Metabase jar followed by help. java --add-opens java.base/java.nio=ALL-UNNAMED -jar metabase.jar help  Metabase will print out the help...">
+<meta name="twitter:description" content="CLI commands for managing your Metabase instance, including database migrations, serialization, and administrative tasks.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -64,7 +64,7 @@
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://www.metabase.com/docs/v0.57/installation-and-operation/commands">
 <meta name="title" property="og:title" content="Metabase CLI | Metabase Documentation">
-<meta name="description" property="og:description" content="Metabase CLI Metabase ships with some handy CLI commands. To view a list of commands, run the Metabase jar followed by help. java --add-opens java.base/java.nio=ALL-UNNAMED -jar metabase.jar help  Metabase will print out the help...">
+<meta name="description" property="og:description" content="CLI commands for managing your Metabase instance, including database migrations, serialization, and administrative tasks.">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -5461,7 +5461,9 @@ Roadmap</a>
 
         <h1 id="metabase-cli">Metabase CLI</h1>
 
-<p>Metabase ships with some handy CLI commands. To view a list of commands, run the Metabase jar followed by <code class="language-plaintext highlighter-rouge">help</code>.</p>
+<p>Metabase ships with some handy CLI commands for administration, maintenance, and automation tasks. These commands let you manage your Metabase instance, migrate databases, handle serialization, and generate documentation.</p>
+
+<p>To view a list of commands, run the Metabase jar followed by <code class="language-plaintext highlighter-rouge">help</code>.</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>java --add-opens java.base/java.nio=ALL-UNNAMED -jar metabase.jar help
 </code></pre></div></div>
@@ -5470,151 +5472,82 @@ Roadmap</a>
 
 <h2 id="api-documentation"><code class="language-plaintext highlighter-rouge">api-documentation</code></h2>
 
-<p>Generate a markdown file containing documentation for all API endpoints. This is written to a file called <code class="language-plaintext highlighter-rouge">docs/api.html</code>.</p>
+<p>Generate an HTML and JSON files for all API endpoints.</p>
 
-<h2 id="driver-methods--driver-methods-_docs"><code class="language-plaintext highlighter-rouge">driver-methods</code> | <code class="language-plaintext highlighter-rouge">driver-methods _docs</code></h2>
+<h2 id="command-documentation"><code class="language-plaintext highlighter-rouge">command-documentation</code></h2>
 
-<p>Print a list of all multimethods available for a driver to implement. Add <code class="language-plaintext highlighter-rouge">_docs</code> to include their docstrings.</p>
+<p>Generates a markdown file containing documentation for all CLI commands. This is written to a file called <code class="language-plaintext highlighter-rouge">docs/installation-and-operation/commands.md</code>.</p>
 
 <h2 id="config-template"><code class="language-plaintext highlighter-rouge">config-template</code></h2>
 
-<p>Generates a Markdown file with documentation and an example configuration file in YAML. The YAML template includes Metabase settings and their defaults. Metabase will save the file as <code class="language-plaintext highlighter-rouge">docs/configuring-metabase/config-template.md</code>.</p>
+<p>Generates a markdown file with some documentation and an example configuration file in YAML. The YAML template includes Metabase settings and their defaults. Metabase will save the template as <code class="language-plaintext highlighter-rouge">docs/configuring-metabase/config-template.md</code>.</p>
+
+<h2 id="driver-methods--driver-methods-_docs"><code class="language-plaintext highlighter-rouge">driver-methods | driver-methods _docs</code></h2>
+
+<p>Print a list of all multimethods available for a driver to implement, optionally with their docstrings.</p>
 
 <h2 id="drop-entity-ids"><code class="language-plaintext highlighter-rouge">drop-entity-ids</code></h2>
 
-<p>Drop Entity IDs for instances of serializable models. Useful for migrating from v1 serialization (x.46 and earlier) to v2 (x.47+).</p>
+<p>Drop entity IDs for instances of serializable models. Useful for migrating from v1 serialization (x.46 and earlier) to v2 (x.47+).</p>
 
-<h2 id="dump-path--options"><code class="language-plaintext highlighter-rouge">dump path &amp; options</code></h2>
-
-<p><strong>Note: this command is deprecated. Use <code class="language-plaintext highlighter-rouge">export</code> instead.</strong></p>
-
-<p>Serializes Metabase instance into directory <code class="language-plaintext highlighter-rouge">path</code>.</p>
-
-<p>Options:</p>
-
-<ul>
-  <li><code class="language-plaintext highlighter-rouge">-u, --user EMAIL</code> - Export collections owned by the specified user</li>
-  <li><code class="language-plaintext highlighter-rouge">-s, --state (active|all)</code> - When set to <code class="language-plaintext highlighter-rouge">active</code>, do not dump archived entities. Default behavior is <code class="language-plaintext highlighter-rouge">all</code></li>
-  <li><code class="language-plaintext highlighter-rouge">--include-entity-id</code> - Include entity_id property in all dumped entities. Default: false</li>
-</ul>
-
-<h2 id="dump-to-h2-h2-filename--opts"><code class="language-plaintext highlighter-rouge">dump-to-h2 h2-filename &amp; opts</code></h2>
+<h2 id="dump-to-h2-h2-filename-opts"><code class="language-plaintext highlighter-rouge">dump-to-h2 h2-filename opts</code></h2>
 
 <p>Transfer data from existing database to newly created H2 DB with specified filename. Target H2 file is deleted before dump, unless the –keep-existing flag is given.</p>
 
 <p>Options:</p>
 
 <ul>
-  <li><code class="language-plaintext highlighter-rouge">-k, --keep-existing</code> - Do not delete target H2 file if it exists</li>
-  <li><code class="language-plaintext highlighter-rouge">-p, --dump-plaintext</code> - Do not encrypt dumped contents</li>
+  <li><code class="language-plaintext highlighter-rouge">-k, --keep-existing</code> - Do not delete target H2 file if it exists.</li>
+  <li><code class="language-plaintext highlighter-rouge">-p, --dump-plaintext</code> - Do not encrypt dumped contents.</li>
 </ul>
 
 <h2 id="environment-variables-documentation"><code class="language-plaintext highlighter-rouge">environment-variables-documentation</code></h2>
 
 <p>Generates a markdown file containing documentation for environment variables relevant to configuring Metabase. The command only includes environment variables registered as defsettings. For a full list of environment variables, see https://www.metabase.com/docs/latest/configuring-metabase/environment-variables.</p>
 
-<h2 id="export-path--options"><code class="language-plaintext highlighter-rouge">export path &amp; options</code></h2>
-
-<div class="bootstrap">
-  <div class="plans-blockquote bg-blue-95 rounded-3 p-6 d-flex flex-row border border-1 border-primary">
-    <svg class="" width="24" height="24" viewBox="0 0 26 26" fill="none">
-  <path d="M12 13V15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
-  <path d="M12 10C12.5523 10 13 9.55228 13 9C13 8.44772 12.5523 8 12 8C11.4477 8 11 8.44772 11 9C11 9.55228 11.4477 10 12 10Z" fill="#509EE3"></path>
-  <path d="M12 19.25C16.0041 19.25 19.25 16.0041 19.25 12C19.25 7.99594 16.0041 4.75 12 4.75C7.99594 4.75 4.75 7.99594 4.75 12C4.75 16.0041 7.99594 19.25 12 19.25Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
-</svg>
-
-    
-    
-    
-      
-
-    <p class="m-0 ms-2 paragraph-5 neutral-40">
-       Serialization is only available on
-      <a class="fw-bold" href="/product/pro">Pro</a> and
-      <a class="fw-bold link-purple" href="/product/enterprise">Enterprise</a>
-      plans  (only on self-hosted
-      plans). 
-    </p>
-  </div>
-</div>
+<h2 id="export-path-options"><code class="language-plaintext highlighter-rouge">export path options</code></h2>
 
 <p>Serialize Metabase instance into directory at <code class="language-plaintext highlighter-rouge">path</code>.</p>
 
 <p>Options:</p>
 
 <ul>
-  <li><code class="language-plaintext highlighter-rouge">-c, --collection ID</code> - Export only specified ID(s). Use commas to separate multiple IDs. You can pass Entity IDs with <code class="language-plaintext highlighter-rouge">eid:&lt;...&gt;</code> as a prefix</li>
-  <li><code class="language-plaintext highlighter-rouge">-C, --no-collections</code> - Do not export any content in collections</li>
+  <li><code class="language-plaintext highlighter-rouge">-c, --collection ID</code> - Export only specified ID(s). Use commas to separate multiple IDs. Pass either PKs or entity IDs.</li>
+  <li><code class="language-plaintext highlighter-rouge">-C, --no-collections</code> - Do not export any content in collections.</li>
   <li><code class="language-plaintext highlighter-rouge">-S, --no-settings</code> - Do not export settings.yaml</li>
-  <li><code class="language-plaintext highlighter-rouge">-D, --no-data-model</code> - Do not export any data model entities; useful for subsequent exports</li>
-  <li><code class="language-plaintext highlighter-rouge">-f, --include-field-values</code> - Include field values along with field metadata</li>
-  <li><code class="language-plaintext highlighter-rouge">-s, --include-database-secrets</code> - Include database connection details (in plain text; use caution)</li>
-  <li><code class="language-plaintext highlighter-rouge">-e, --continue-on-error</code> - Do not break execution on errors</li>
-  <li><code class="language-plaintext highlighter-rouge">--full-stacktrace</code> - Output full stacktraces on errors</li>
+  <li><code class="language-plaintext highlighter-rouge">-D, --no-data-model</code> - Do not export any data model entities; useful for subsequent exports.</li>
+  <li><code class="language-plaintext highlighter-rouge">-f, --include-field-values</code> - Include field values along with field metadata.</li>
+  <li><code class="language-plaintext highlighter-rouge">-s, --include-database-secrets</code> - Include database connection details (in plain text; use caution).</li>
+  <li><code class="language-plaintext highlighter-rouge">-e, --continue-on-error</code> - Do not break execution on errors.</li>
+  <li><code class="language-plaintext highlighter-rouge">--full-stacktrace</code> - Output full stacktraces on errors.</li>
 </ul>
 
-<h2 id="help-command-name--help"><code class="language-plaintext highlighter-rouge">help command-name</code> | <code class="language-plaintext highlighter-rouge">help</code></h2>
+<h2 id="help-command-name--help"><code class="language-plaintext highlighter-rouge">help command-name | help</code></h2>
 
-<p>Show this help message listing valid Metabase commands. Use <code class="language-plaintext highlighter-rouge">help command-name</code> for specific command details.</p>
+<p>Show this help message listing valid Metabase commands.</p>
 
-<h2 id="import-path--options"><code class="language-plaintext highlighter-rouge">import path &amp; options</code></h2>
+<h2 id="import-path-options"><code class="language-plaintext highlighter-rouge">import path options</code></h2>
 
-<div class="bootstrap">
-  <div class="plans-blockquote bg-blue-95 rounded-3 p-6 d-flex flex-row border border-1 border-primary">
-    <svg class="" width="24" height="24" viewBox="0 0 26 26" fill="none">
-  <path d="M12 13V15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
-  <path d="M12 10C12.5523 10 13 9.55228 13 9C13 8.44772 12.5523 8 12 8C11.4477 8 11 8.44772 11 9C11 9.55228 11.4477 10 12 10Z" fill="#509EE3"></path>
-  <path d="M12 19.25C16.0041 19.25 19.25 16.0041 19.25 12C19.25 7.99594 16.0041 4.75 12 4.75C7.99594 4.75 4.75 7.99594 4.75 12C4.75 16.0041 7.99594 19.25 12 19.25Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
-</svg>
-
-    
-    
-    
-      
-
-    <p class="m-0 ms-2 paragraph-5 neutral-40">
-       Serialization is only available on
-      <a class="fw-bold" href="/product/pro">Pro</a> and
-      <a class="fw-bold link-purple" href="/product/enterprise">Enterprise</a>
-      plans  (only on self-hosted
-      plans). 
-    </p>
-  </div>
-</div>
-
-<p>Load serialized Metabase instance as created by the <code class="language-plaintext highlighter-rouge">export</code> command from directory <code class="language-plaintext highlighter-rouge">path</code>.</p>
+<p>Load serialized Metabase instance as created by the [[export]] command from directory <code class="language-plaintext highlighter-rouge">path</code>.</p>
 
 <p>Options:</p>
 
 <ul>
-  <li><code class="language-plaintext highlighter-rouge">-e, --continue-on-error</code> - Do not break execution on errors</li>
-  <li><code class="language-plaintext highlighter-rouge">--full-stacktrace</code> - Output full stacktraces on errors</li>
+  <li><code class="language-plaintext highlighter-rouge">-e, --continue-on-error</code> - Do not break execution on errors.</li>
+  <li><code class="language-plaintext highlighter-rouge">--full-stacktrace</code> - Output full stacktraces on errors.</li>
 </ul>
 
-<h2 id="load-path--options"><code class="language-plaintext highlighter-rouge">load path &amp; options</code></h2>
-
-<p><strong>Note: this command is deprecated. Use <code class="language-plaintext highlighter-rouge">import</code> instead.</strong></p>
-
-<p>Load serialized Metabase instance as created by <code class="language-plaintext highlighter-rouge">dump</code> command from directory <code class="language-plaintext highlighter-rouge">path</code>.</p>
-
-<p>Options:</p>
-
-<ul>
-  <li><code class="language-plaintext highlighter-rouge">-m, --mode (skip|update)</code> - Update or skip on conflicts. Default: skip</li>
-  <li><code class="language-plaintext highlighter-rouge">-e, --on-error (continue|abort)</code> - Abort or continue on error. Default: continue</li>
-</ul>
-
-<h2 id="load-from-h2--load-from-h2-h2-connection-string"><code class="language-plaintext highlighter-rouge">load-from-h2</code> | <code class="language-plaintext highlighter-rouge">load-from-h2 h2-connection-string</code></h2>
+<h2 id="load-from-h2--load-from-h2-h2-connection-string"><code class="language-plaintext highlighter-rouge">load-from-h2 | load-from-h2 h2-connection-string</code></h2>
 
 <p>Transfer data from existing H2 database to the newly created MySQL or Postgres DB specified by env vars.</p>
 
 <h2 id="migrate-direction"><code class="language-plaintext highlighter-rouge">migrate direction</code></h2>
 
-<p>Run database migrations. Valid options for <code class="language-plaintext highlighter-rouge">direction</code> are <code class="language-plaintext highlighter-rouge">up</code>, <code class="language-plaintext highlighter-rouge">force</code>, <code class="language-plaintext highlighter-rouge">down</code>, <code class="language-plaintext highlighter-rouge">print</code>, or <code class="language-plaintext highlighter-rouge">release-locks</code>.</p>
+<p>Run database migrations. Valid options for <code class="language-plaintext highlighter-rouge">direction</code> are <code class="language-plaintext highlighter-rouge">up</code>, <code class="language-plaintext highlighter-rouge">force</code>, <code class="language-plaintext highlighter-rouge">down</code>, <code class="language-plaintext highlighter-rouge">down-force</code>, <code class="language-plaintext highlighter-rouge">print</code>, or <code class="language-plaintext highlighter-rouge">release-locks</code>.</p>
 
-<h2 id="profile"><code class="language-plaintext highlighter-rouge">profile</code></h2>
+<h2 id="remove-encryption"><code class="language-plaintext highlighter-rouge">remove-encryption</code></h2>
 
-<p>Start Metabase the usual way and exit. Useful for profiling Metabase launch time.</p>
+<p>Decrypts data in the metabase database. The MB_ENCRYPTION_SECRET_KEY environment variable has to be set to the current key</p>
 
 <h2 id="reset-password-email-address"><code class="language-plaintext highlighter-rouge">reset-password email-address</code></h2>
 
@@ -5624,13 +5557,9 @@ Roadmap</a>
 
 <p>Rotate the encryption key of a metabase database. The MB_ENCRYPTION_SECRET_KEY environment variable has to be set to the current key, and the parameter <code class="language-plaintext highlighter-rouge">new-key</code> has to be the new key. <code class="language-plaintext highlighter-rouge">new-key</code> has to be at least 16 chars.</p>
 
-<h2 id="remove-encryption"><code class="language-plaintext highlighter-rouge">remove-encryption</code></h2>
-
-<p>Decrypts data in the metabase database. The MB_ENCRYPTION_SECRET_KEY environment variable has to be set to the current key.</p>
-
 <h2 id="seed-entity-ids"><code class="language-plaintext highlighter-rouge">seed-entity-ids</code></h2>
 
-<p>Add Entity IDs for instances of serializable models that don’t already have them.</p>
+<p>Add entity IDs for instances of serializable models that don’t already have them.</p>
 
 <h2 id="version"><code class="language-plaintext highlighter-rouge">version</code></h2>
 
