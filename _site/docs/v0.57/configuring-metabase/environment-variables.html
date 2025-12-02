@@ -8005,31 +8005,6 @@ Since: v35.0</p>
 
 <p>Maximum number of async Jetty threads. If not set, then <a href="#mb_jetty_maxthreads">MB_JETTY_MAXTHREADS</a> will be used, otherwise it will use the default.</p>
 
-<h3 id="mb_attachment_table_row_limit-1"><code class="language-plaintext highlighter-rouge">MB_ATTACHMENT_TABLE_ROW_LIMIT</code></h3>
-
-<p>Type: integer<br>
-Default: <code class="language-plaintext highlighter-rouge">20</code><br></p>
-
-<p>Limits the number of rows Metabase will display in tables sent with dashboard subscriptions and alerts. Range: 1-100. To limit the total number of rows included in the file attachment for an email dashboard subscription, use <a href="#mb_attachment_row_limit">MB_ATTACHMENT_ROW_LIMIT</a>.</p>
-
-<h3 id="mb_audit_max_retention_days-1"><code class="language-plaintext highlighter-rouge">MB_AUDIT_MAX_RETENTION_DAYS</code></h3>
-
-<p>Only available on Metabase <a href="/product/pro">Pro</a> and <a href="/product/enterprise">Enterprise</a> plans.<br>
-Type: integer<br>
-Default: 720 (Metabase keeps all rows)<br></p>
-
-<p>Sets the maximum number of days Metabase preserves rows for the following application database tables:</p>
-
-<ul>
-  <li><code class="language-plaintext highlighter-rouge">query_execution</code></li>
-  <li><code class="language-plaintext highlighter-rouge">audit_log</code></li>
-  <li><code class="language-plaintext highlighter-rouge">view_log</code></li>
-</ul>
-
-<p>Twice a day, Metabase will delete rows older than this threshold.</p>
-
-<p>The minimum value is <code class="language-plaintext highlighter-rouge">30</code> days (Metabase will treat entered values of <code class="language-plaintext highlighter-rouge">1</code> to <code class="language-plaintext highlighter-rouge">29</code> the same as <code class="language-plaintext highlighter-rouge">30</code>). If set to <code class="language-plaintext highlighter-rouge">0</code>, Metabase will keep all rows.</p>
-
 <h3 id="mb_colorize_logs"><code class="language-plaintext highlighter-rouge">MB_COLORIZE_LOGS</code></h3>
 
 <p>Type: boolean<br>
@@ -8305,21 +8280,6 @@ Default: <code class="language-plaintext highlighter-rouge">null</code></p>
 
 <p>Password for Java TrustStore file.</p>
 
-<h3 id="mb_landing_page-1"><code class="language-plaintext highlighter-rouge">MB_LANDING_PAGE</code></h3>
-
-<p>Only available on Metabase <a href="/product/pro">Pro</a> and <a href="/product/enterprise">Enterprise</a> plans.<br>
-Type: string<br>
-Default: <code class="language-plaintext highlighter-rouge">""</code></p>
-
-<p>Default page to show people when they log in.</p>
-
-<h3 id="mb_load_analytics_content-1"><code class="language-plaintext highlighter-rouge">MB_LOAD_ANALYTICS_CONTENT</code></h3>
-
-<p>Type: Boolean<br>
-Default: True</p>
-
-<p>If you want to exclude the <a href="../usage-and-performance-tools/usage-analytics">Metabase analytics</a> collection, you can set <code class="language-plaintext highlighter-rouge">MB_LOAD_ANALYTICS_CONTENT=false</code>. Setting this environment variable to false can also come in handy when migrating environments, as it can simplify the migration process.</p>
-
 <h3 id="mb_load_sample_content"><code class="language-plaintext highlighter-rouge">MB_LOAD_SAMPLE_CONTENT</code></h3>
 
 <p>Type: Boolean<br>
@@ -8382,45 +8342,12 @@ Default: <code class="language-plaintext highlighter-rouge">"plugins"</code></p>
 
 <p>The location is where custom third-party drivers should be added. Then Metabase will load the driver on startup, which can be verified in the log.</p>
 
-<h3 id="mb_premium_embedding_token-1"><code class="language-plaintext highlighter-rouge">MB_PREMIUM_EMBEDDING_TOKEN</code></h3>
-
-<p>Type: string<br>
-Default: <code class="language-plaintext highlighter-rouge">null</code></p>
-
-<p>The license token used for Pro and Enterprise to enable premium features on the Enterprise edition. It is also used for the deprecated “Premium Embedding” functionality on the OSS edition.</p>
-
 <h3 id="mb_qp_cache_backend"><code class="language-plaintext highlighter-rouge">MB_QP_CACHE_BACKEND</code></h3>
 
 <p>Type: string<br>
 Default: <code class="language-plaintext highlighter-rouge">"db"</code></p>
 
 <p>Current cache backend. Dynamically rebindable primarily for test purposes.</p>
-
-<h3 id="mb_search_typeahead_enabled-1"><code class="language-plaintext highlighter-rouge">MB_SEARCH_TYPEAHEAD_ENABLED</code></h3>
-
-<p>Type: boolean<br>
-Default: <code class="language-plaintext highlighter-rouge">true</code><br>
-Since: v39.0</p>
-
-<p>Show auto-suggestions when using the global search in the top navigation bar.</p>
-
-<h3 id="mb_send_email_on_first_login_from_new_device-1"><code class="language-plaintext highlighter-rouge">MB_SEND_EMAIL_ON_FIRST_LOGIN_FROM_NEW_DEVICE</code></h3>
-
-<p>Type: boolean<br>
-Default: <code class="language-plaintext highlighter-rouge">true</code><br>
-Since: v39.0</p>
-
-<p>Send email notification to user, when they login from a new device. Set to <code class="language-plaintext highlighter-rouge">false</code> to stop sending “We’ve noticed a new login on your Metabase account” emails for all users.</p>
-
-<p>Also, this variable controls the geocoding service that Metabase uses to know the location from where your users logged in. Setting this variable to false also disables this reverse geocoding functionality.</p>
-
-<h3 id="mb_send_new_sso_user_admin_email-1"><code class="language-plaintext highlighter-rouge">MB_SEND_NEW_SSO_USER_ADMIN_EMAIL</code></h3>
-
-<p>Only available on Metabase <a href="/product/pro">Pro</a> and <a href="/product/enterprise">Enterprise</a> plans.<br>
-Type: boolean<br>
-Default: <code class="language-plaintext highlighter-rouge">true</code></p>
-
-<p>Send email notifications to users in Admin group, when a new SSO users is created on Metabase.</p>
 
 <h3 id="mb_setup_token"><code class="language-plaintext highlighter-rouge">MB_SETUP_TOKEN</code></h3>
 
@@ -8445,13 +8372,6 @@ Default: <code class="language-plaintext highlighter-rouge">"true"</code><br>
 Since: v48.4</p>
 
 <p>Setting <code class="language-plaintext highlighter-rouge">MB_JETTY_SKIP_SNI=true</code> (the default setting) turns off the Server Name Indication (SNI) checks in the Jetty web server. Normally you would leave this enabled. If, however, you’re terminating the Transport Layer Security (TLS) connection on Metabase itself, and you’re getting an error like <code class="language-plaintext highlighter-rouge">HTTP ERROR 400 Invalid SNI</code>, consider either setting <code class="language-plaintext highlighter-rouge">MB_JETTY_SKIP_SNI=false</code>, or use another SSL certificate that exactly matches the domain name of the server.</p>
-
-<h3 id="mb_source_address_header-1"><code class="language-plaintext highlighter-rouge">MB_SOURCE_ADDRESS_HEADER</code></h3>
-
-<p>Type: string<br>
-Default: <code class="language-plaintext highlighter-rouge">X-Forwarded-For</code></p>
-
-<p>Identify the source of HTTP requests by this header’s value, instead of its remote address. Related to <a href="#mb_disable_session_throttle">MB_DISABLE_SESSION_THROTTLE</a>.</p>
 
 <h3 id="mb_ssl_certificate_public_key"><code class="language-plaintext highlighter-rouge">MB_SSL_CERTIFICATE_PUBLIC_KEY</code></h3>
 
