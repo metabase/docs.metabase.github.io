@@ -5509,6 +5509,24 @@ Roadmap</a>
   <li>(Optional): <a href="https://www.docker.com/">Docker</a></li>
 </ul>
 
+<h2 id="clone-the-sample-app-repo">Clone the sample app repo</h2>
+
+<ol>
+  <li>Clone the <a href="https://github.com/metabase/metabase-nodejs-react-sdk-embedding-sample/tree/57-stable">sample React app</a>.</li>
+</ol>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone git@github.com:metabase/metabase-nodejs-react-sdk-embedding-sample.git
+</code></pre></div></div>
+
+<ol>
+  <li>Check out the branch in the <a href="https://github.com/metabase/metabase-nodejs-react-sdk-embedding-sample/tree/57-stable">metabase-nodejs-react-sdk-embedding-sample</a> repo that corresponds to your Metabase version.</li>
+</ol>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git checkout v0.57-stable
+</code></pre></div></div>
+
+<p>E.g., if you’re running Metabase 1.57 make sure the sample app repo is on the <code class="language-plaintext highlighter-rouge">57-stable</code> branch. You can find your Metabase version in the Metabase UI by clicking on the gears icon in the upper right and selecting <strong>About Metabase</strong>.</p>
+
 <h2 id="two-ways-to-set-up-the-sample-app-with-metabase">Two ways to set up the sample app with Metabase</h2>
 
 <ul>
@@ -5518,31 +5536,47 @@ Roadmap</a>
 
 <h2 id="quick-setup-with-docker">Quick setup with Docker</h2>
 
-<p>This quick setup will run a Docker container with the sample app and a sample Metabase.</p>
+<p>This setup will run a Docker container with the sample app and a sample Metabase.</p>
 
 <ol>
-  <li>Copy <code class="language-plaintext highlighter-rouge">.env.docker.example</code> to <code class="language-plaintext highlighter-rouge">.env.docker</code>.</li>
-  <li>In the <code class="language-plaintext highlighter-rouge">.env.docker</code> file, replace <code class="language-plaintext highlighter-rouge">&lt;your_enterprise_token&gt;</code> with your premium embedding token.</li>
-  <li>In the top-level directory, run:
-    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>yarn start
-</code></pre></div>    </div>
+  <li>
+    <p>Copy the environment template file:</p>
+
+    <p>In the cloned directory, run:</p>
   </li>
 </ol>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cp</span> .env.docker.example .env.docker
+</code></pre></div></div>
+
+<ol>
+  <li>
+    <p>In the <code class="language-plaintext highlighter-rouge">.env.docker</code> file, replace <code class="language-plaintext highlighter-rouge">&lt;your_enterprise_token&gt;</code> with your premium embedding token.</p>
+  </li>
+  <li>
+    <p>In the top-level directory, run:</p>
+  </li>
+</ol>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>yarn start
+</code></pre></div></div>
 
 <p>This script will:</p>
 
 <ul>
   <li>Pull a Metabase Docker image and run it in a container.</li>
-  <li>Set up JWT SSO in Metabase.</li>
-  <li>Build and run the sample application with an embedded interactive question.</li>
+  <li>Set up <a href="../../people-and-groups/authenticating-with-jwt">JWT SSO in Metabase</a></li>
+  <li>Build and run the sample application with an embedded question.</li>
 </ul>
 
-<p>The app will start on <a href="http://localhost:4400">http://localhost:4400</a>.</p>
+<ol>
+  <li>The app will start on <a href="http://localhost:4400">http://localhost:4400</a>.</li>
+</ol>
 
-<p>That’s it! You should be <a href="#at-this-point-you-should-be-up-and-running">up and running</a>.</p>
+<p>That’s it!</p>
 
-<p>If you want to log in to the sample Metabase this command set up, visit <a href="http://localhost:4300">http://localhost:4300</a>. You can log in with email and password as Rene Descartes:</p>
-
+<p>If you want to log in to the sample Metabase this command set up, visit <a href="http://localhost:4300">http://localhost:4300</a>. You can log in with email and password as Rene Descartes:
+E</p>
 <ul>
   <li>email: rene@example.com</li>
   <li>password: foobarbaz</li>
@@ -5566,9 +5600,8 @@ Roadmap</a>
 <h3 id="start-up-the-sample-application">Start up the sample application</h3>
 
 <ol>
-  <li><a href="#set-up-the-sample-application">Get the sample application</a>.</li>
-  <li><a href="#set-up-the-application-environment">Set up the application environment</a>.</li>
-  <li><a href="#set-up-the-application-server">Run the app server</a> to handle authentication with JWT and serve the embedded Metabase components.</li>
+  <li><a href="#set-up-the-application-environment">Set up the application environment</a>.
+6.. <a href="#set-up-the-application-server">Run the app server</a> to handle authentication with JWT and serve the embedded Metabase components.</li>
   <li><a href="#set-up-the-client-application">Run the client application</a> that will contain Metabase components built with the SDK.</li>
 </ol>
 
@@ -5580,14 +5613,14 @@ Roadmap</a>
 
 <p>You can run Metabase Pro on a Cloud plan with a <a href="/pricing/">free trial</a>.</p>
 
-<p>Or run it locally. Here’s a docker one-liner:</p>
+<p>Or run it locally. Here’s a <a href="../../installation-and-operation/running-metabase-on-docker">docker</a> one-liner:</p>
 
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run <span class="nt">-d</span> <span class="nt">-p</span> 3000:3000 <span class="nt">--name</span> metabase metabase/metabase-enterprise:latest
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run <span class="nt">-d</span> <span class="nt">-p</span> 3000:3000 <span class="nt">--name</span> metabase metabase/metabase-enterprise:latest
 </code></pre></div></div>
 
 <p>You can also <a href="https://downloads.metabase.com/enterprise/latest/metabase.jar">download the JAR</a>, and run it like so:</p>
 
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>java <span class="nt">--add-opens</span> java.base/java.nio<span class="o">=</span>ALL-UNNAMED <span class="nt">-jar</span> metabase.jar
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>java <span class="nt">--add-opens</span> java.base/java.nio<span class="o">=</span>ALL-UNNAMED <span class="nt">-jar</span> metabase.jar
 </code></pre></div></div>
 
 <p>By default, Metabase will run at <code class="language-plaintext highlighter-rouge">http://localhost:3000</code>.</p>
@@ -5642,23 +5675,9 @@ Roadmap</a>
 
 <h2 id="set-up-the-sample-application">Set up the sample application</h2>
 
-<p>Clone the <a href="https://github.com/metabase/metabase-nodejs-react-sdk-embedding-sample/tree/57-stable">Metabase Node JS React SDK embedding sample app</a>.</p>
-
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone git@github.com:metabase/metabase-nodejs-react-sdk-embedding-sample.git
-</code></pre></div></div>
-
-<h3 id="check-out-the-branch-that-corresponds-to-your-metabase-version">Check out the branch that corresponds to your Metabase version</h3>
-
-<p>Check out the branch in the <a href="https://github.com/metabase/metabase-nodejs-react-sdk-embedding-sample/tree/57-stable">metabase-nodejs-react-sdk-embedding-sample</a> repo that corresponds to your Metabase version.</p>
-
-<p>E.g., if you’re running Metabase 1.53, make sure the sample app repo is on the <code class="language-plaintext highlighter-rouge">53-stable</code> branch. You can find your Metabase version in the Metabase UI by clicking on the gears icon in the upper right and selecting <strong>About Metabase</strong>.</p>
-
-<p>To switch to another branch, run <code class="language-plaintext highlighter-rouge">git checkout &lt;branch-name&gt;</code>, e.g.:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git checkout 52-stable
-</code></pre></div></div>
-
 <h2 id="set-up-the-application-environment">Set up the application environment</h2>
+
+<p><a href="#clone-the-sample-app-repo">Clone the sample app</a> and <code class="language-plaintext highlighter-rouge">cd</code> into it.</p>
 
 <p>In the sample app’s main directory, copy the <code class="language-plaintext highlighter-rouge">.env.example</code> template to <code class="language-plaintext highlighter-rouge">.env</code>.</p>
 
@@ -5717,7 +5736,7 @@ METABASE_JWT_SHARED_SECRET="TODO"
 <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm start
 </code></pre></div></div>
 
-<p>Your browser should automatically open the app. By default, the app runs on <a href="localhost:3100">http://localhost:3100</a>.</p>
+<p>Your browser should automatically open the app. By default, the app runs on <a href="http://localhost:3100">http://localhost:3100</a>.</p>
 
 <h2 id="at-this-point-you-should-be-up-and-running">At this point, you should be up and running</h2>
 
