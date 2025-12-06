@@ -5590,13 +5590,15 @@ Roadmap</a>
       <span class="na">timeout</span><span class="pi">:</span> <span class="s">5s</span>
       <span class="na">retries</span><span class="pi">:</span> <span class="m">5</span>
   <span class="na">postgres</span><span class="pi">:</span>
-    <span class="na">image</span><span class="pi">:</span> <span class="s">postgres:latest</span>
+    <span class="na">image</span><span class="pi">:</span> <span class="s">postgres:16</span>
     <span class="na">container_name</span><span class="pi">:</span> <span class="s">postgres</span>
     <span class="na">hostname</span><span class="pi">:</span> <span class="s">postgres</span>
     <span class="na">environment</span><span class="pi">:</span>
       <span class="na">POSTGRES_USER</span><span class="pi">:</span> <span class="s">metabase</span>
       <span class="na">POSTGRES_DB</span><span class="pi">:</span> <span class="s">metabaseappdb</span>
       <span class="na">POSTGRES_PASSWORD</span><span class="pi">:</span> <span class="s">mysecretpassword</span>
+    <span class="na">volumes</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">./pg_data:/var/lib/postgresql/data</span>
     <span class="na">networks</span><span class="pi">:</span>
       <span class="pi">-</span> <span class="s">metanet1</span>
 <span class="na">networks</span><span class="pi">:</span>
