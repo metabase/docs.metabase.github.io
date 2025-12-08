@@ -123,6 +123,12 @@ jobs:
           cd _docs/master/embedding/sdk/
           ls -lR
 
+      - name: Upload Master doc files (debugging)
+        uses: actions/upload-artifact@v4
+        with:
+          name: sdk-files-debug
+          path: _docs/master/
+
       - name: Build the Jekyll Site
         env:
           JEKYLL_ENV: production
