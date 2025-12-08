@@ -118,6 +118,17 @@ jobs:
         run: |
           yarn lint-links
 
+      - name: List SDK files (debugging)
+        run: |
+          cd _docs/v0.57/embedding/sdk/
+          ls -lR
+
+      - name: Upload Master doc files (debugging)
+        uses: actions/upload-artifact@v4
+        with:
+          name: sdk-files-debug
+          path: _docs/v0.57/
+
       - name: Build the Jekyll Site
         env:
           JEKYLL_ENV: production
