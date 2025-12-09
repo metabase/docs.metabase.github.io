@@ -13,5 +13,6 @@ layout: new-docs
 type MetabaseAuthConfig =
   | MetabaseAuthConfigWithApiKey
   | MetabaseAuthConfigWithJwt
-  | MetabaseAuthConfigWithSaml;
+  | MetabaseAuthConfigWithSaml
+  | MetabaseIsGuestAuthConfig;
 ```

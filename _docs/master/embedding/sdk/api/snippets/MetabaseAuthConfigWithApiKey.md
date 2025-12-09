@@ -15,6 +15,7 @@ type MetabaseAuthConfigWithApiKey = {
 } & {
   apiKey: string;
   fetchRequestToken?: never;
+  isGuest?: false;
   preferredAuthMethod?: never;
 };
 ```
@@ -37,6 +38,7 @@ type MetabaseAuthConfigWithApiKey = {
 | :--------------------- | :------- |
 | `apiKey`               | `string` |
 | `fetchRequestToken?`   | `never`  |
+| `isGuest?`             | `false`  |
 | `preferredAuthMethod?` | `never`  |
 
 <!-- [<endsnippet type-declaration>] -->
