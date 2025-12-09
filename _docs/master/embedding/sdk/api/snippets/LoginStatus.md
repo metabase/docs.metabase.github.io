@@ -10,18 +10,5 @@ layout: new-docs
 ---
 
 ```ts
-type LoginStatus =
-  | {
-      status: "uninitialized";
-    }
-  | {
-      status: "success";
-    }
-  | {
-      status: "loading";
-    }
-  | {
-      error: Error;
-      status: "error";
-    };
+type LoginStatus = InitializationStatus;
 ```
