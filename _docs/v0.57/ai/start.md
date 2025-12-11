@@ -11,9 +11,7 @@ layout: new-docs
 
 # AI in Metabase
 
-{% include beta-blockquote.html %}
-
-> For now, [Metabot](/features/metabot-ai) is only available as an add-on for Pro and Enterprise plans on Metabase Cloud.
+> Metabot is only available as an add-on for Metabase Cloud.
 
 ## [Metabot](./metabot)
 
