@@ -16,6 +16,7 @@ type MetabaseAuthConfigWithJwt = {
   apiKey?: never;
   fetchRequestToken?: MetabaseFetchRequestTokenFn;
   isGuest?: false;
+  jwtProviderUri?: string;
   preferredAuthMethod?: "jwt";
 };
 ```
@@ -39,6 +40,7 @@ type MetabaseAuthConfigWithJwt = {
 | `apiKey?`              | `never`                                                               | -                                                                                                                                                       |
 | `fetchRequestToken?`   | [`MetabaseFetchRequestTokenFn`](./api/MetabaseFetchRequestTokenFn) | Specifies a function to fetch the refresh token. The refresh token should be in the format of [UserBackendJwtResponse](./api/UserBackendJwtResponse) |
 | `isGuest?`             | `false`                                                               | -                                                                                                                                                       |
+| `jwtProviderUri?`      | `string`                                                              | Uri of the jwt provider. If provided the sdk will use jwt and will skip the first `/auth/sso` discovery request.                                        |
 | `preferredAuthMethod?` | `"jwt"`                                                               | Which authentication method to use. If both SAML and JWT are enabled at the same time, it defaults to SAML unless the preferredAuthMethod is specified. |
 
 <!-- [<endsnippet type-declaration>] -->
