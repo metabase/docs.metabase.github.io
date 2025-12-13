@@ -17,15 +17,15 @@ redirect_from:
 
 What is embedding, and how does it work?
 
-## [Embedded analytics SDK](./sdk/introduction)
+## [Modular embedding](./modular-embedding)
 
-With the Embedded analytics SDK, you can embed individual Metabase components with React (like standalone charts, dashboards, the query builder, and more). You can manage access and interactivity per component, and you have advanced customization for seamless styling.
+Embed individual dashboards, questions, or the query builder in your app with an interactive wizard and simple drop-in script, with minimal or no coding required. Control component UI and theming. Integrate your app's auth with Metabase SSO.
 
-## [Embedded analytics JS](./embedded-analytics-js)
+## [Modular embedding SDK](./sdk/introduction)
 
-Embed dashboards, questions, or the query builder in your app with JavaScript (no React required). Built on the Embedded analytics SDK with per-component controls and theming. Integrate your app's auth with Metabase SSO.
+With the Modular embedding SDK, you can embed individual Metabase components with React (like standalone charts, dashboards, the query builder, and more). You can manage access and interactivity per component, and you have advanced customization for seamless styling.
 
-## [Embedded analytics SDK quickstart](./sdk/quickstart)
+## [Modular embedding SDK quickstart](./sdk/quickstart)
 
 Jump to a SDK quickstart with a sample React application.
 
@@ -37,17 +37,17 @@ Also known as Signed Embedding, Static embedding is a secure way to embed charts
 
 You can pass parameters between Metabase and your website via the embedding URL to specify how Metabase items should look and behave inside the iframe on your website.
 
-## [Interactive embedding](./interactive-embedding)
+## [Full app embedding](./full-app-embedding)
 
-Interactive embedding allows you to embed full Metabase app in an iframe. Interactive embedding integrates with your data permissions to let people slice and dice data on their own using Metabase's query builder.
+Full app embedding allows you to embed full Metabase app in an iframe. Full app embedding integrates with your data permissions to let people slice and dice data on their own using Metabase's query builder.
 
-## [Interactive embedding quickstart](./interactive-embedding-quick-start-guide)
+## [Full app embedding quickstart](./full-app-embedding-quick-start-guide)
 
 You'll embed the full Metabase application in your app. Once logged in, people can view a Metabase dashboard in your web app, and be able to use the full Metabase application to explore their data, and only their data.
 
-## [Interactive UI components](./interactive-ui-components)
+## [Full app UI components](./full-app-ui-components)
 
-Customize the UI components in your interactive embed by adding parameters to the embedding URL.
+Customize the UI components in your full app embed by adding parameters to the embedding URL.
 
 ## [Public embeds](./public-links)
 

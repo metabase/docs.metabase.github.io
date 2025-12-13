@@ -5613,13 +5613,13 @@ Roadmap</a>
 <span class="p">}</span>
 </code></pre></div></div>
 
-<h4 id="handling-interactive-and-sdk-embeds-with-the-same-endpoint">Handling interactive and SDK embeds with the same endpoint</h4>
+<h4 id="handling-full-app-and-sdk-embeds-with-the-same-endpoint">Handling full app and SDK embeds with the same endpoint</h4>
 
-<p>If you have an existing backend endpoint configured for interactive embedding and want to use the same endpoint for SDK embedding, you can differentiate between the requests by checking for the <code class="language-plaintext highlighter-rouge">response=json</code> query parameter that the SDK adds to its requests.</p>
+<p>If you have an existing backend endpoint configured for full app embedding and want to use the same endpoint for SDK embedding, you can differentiate between the requests by checking for the <code class="language-plaintext highlighter-rouge">response=json</code> query parameter that the SDK adds to its requests.</p>
 
 <ul>
   <li>For SDK requests, you should return a JSON object with the JWT (<code class="language-plaintext highlighter-rouge">{ jwt: string }</code>).</li>
-  <li>For interactive embedding requests, you would proceed with the redirect.</li>
+  <li>For full app embedding requests, you would proceed with the redirect.</li>
 </ul>
 
 <p>Here’s an example of an Express.js endpoint that handles both:</p>
@@ -5941,7 +5941,7 @@ Roadmap</a>
 
 <h3 id="update-your-jwt-endpoint-to-handle-sdk-requests">Update your JWT endpoint to handle SDK requests</h3>
 
-<p>Your JWT endpoint must now handle both SDK requests and interactive embedding requests. The SDK adds a <code class="language-plaintext highlighter-rouge">response=json</code> query parameter to distinguish its requests. For SDK requests, return a JSON object with the JWT. For interactive embedding, continue redirecting as before.</p>
+<p>Your JWT endpoint must now handle both SDK requests and full app embedding requests. The SDK adds a <code class="language-plaintext highlighter-rouge">response=json</code> query parameter to distinguish its requests. For SDK requests, return a JSON object with the JWT. For full app embedding, continue redirecting as before.</p>
 
 <p>If you were using a custom <code class="language-plaintext highlighter-rouge">fetchRequestToken</code>, you’ll need to update the endpoint to detect <code class="language-plaintext highlighter-rouge">req.query.response === "json"</code> for SDK requests.</p>
 
@@ -5966,7 +5966,7 @@ Roadmap</a>
     <span class="c1">// For SDK requests, return JSON object with jwt property</span>
     <span class="nx">res</span><span class="p">.</span><span class="nf">status</span><span class="p">(</span><span class="mi">200</span><span class="p">).</span><span class="nf">json</span><span class="p">({</span> <span class="na">jwt</span><span class="p">:</span> <span class="nx">token</span> <span class="p">});</span>
   <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-    <span class="c1">// For interactive embedding, redirect as before</span>
+    <span class="c1">// For full app embedding, redirect as before</span>
     <span class="kd">const</span> <span class="nx">ssoUrl</span> <span class="o">=</span> <span class="s2">`</span><span class="p">${</span><span class="nx">METABASE_INSTANCE_URL</span><span class="p">}</span><span class="s2">/auth/sso?token=true&amp;jwt=</span><span class="p">${</span><span class="nx">token</span><span class="p">}</span><span class="s2">`</span><span class="p">;</span>
     <span class="nx">res</span><span class="p">.</span><span class="nf">redirect</span><span class="p">(</span><span class="nx">ssoUrl</span><span class="p">);</span>
   <span class="p">}</span>

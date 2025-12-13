@@ -34,6 +34,7 @@ type IconName =
   | "list"
   | "revert"
   | "add"
+  | "add_collection"
   | "add_column"
   | "add_data"
   | "add_folder"
@@ -283,7 +284,6 @@ type IconName =
   | "zoom_out"
   | "cake"
   | "external"
-  | "table_spaced"
   | "beaker"
   | "test_tube"
   | "eye_filled";

@@ -4,14 +4,15 @@ has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
 category: Embedding
-title: 'Embedded analytics SDK - CLI quickstart'
+title: 'Modular embedding SDK - CLI quickstart'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/embedding/sdk/quickstart-cli.md'
 layout: new-docs
+summary: 'Get started with the Modular embedding SDK using a single CLI command. Automatically set up Metabase with Docker, create dashboards, and generate React components.'
 ---
 
-# Embedded analytics SDK - CLI quickstart
+# Modular embedding SDK - CLI quickstart
 
-{% include plans-blockquote.html feature="Embedded analytics SDK" sdk=true convert_pro_link_to_embbedding=true %}
+{% include plans-blockquote.html feature="Modular embedding SDK" sdk=true convert_pro_link_to_embbedding=true %}
 
 We built a single command to spin up a Metabase and help you get an embedded dashboard in your app. This setup with API keys won't work in production; it's only intended for you to quickly try out the SDK on your local machine. A production setup requires a Pro/Enterprise license, and SSO with JWT.
 
