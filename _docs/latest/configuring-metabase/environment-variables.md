@@ -1412,13 +1412,13 @@ Number of hours a password reset is considered valid.
 
 The initial retry delay in milliseconds.
 
-### `MB_RETRY_MAX_ATTEMPTS`
+### `MB_RETRY_MAX_RETRIES`
 
 - Type: integer
-- Default: `7`
-- [Configuration file name](./config-file): `retry-max-attempts`
+- Default: `6`
+- [Configuration file name](./config-file): `retry-max-retries`
 
-The maximum number of attempts for an event.
+The maximum number of retries for a failed event.
 
 ### `MB_RETRY_MAX_INTERVAL_MILLIS`
 
@@ -1440,7 +1440,7 @@ The delay multiplier between attempts.
 
 - Type: double
 - Default: `0.1`
-- [Configuration file name](./config-file): `retry-randomization-factor`
+- [Configuration file name](./config-file): `retry-jitter-factor`
 
 The randomization factor of the retry delay.
 
