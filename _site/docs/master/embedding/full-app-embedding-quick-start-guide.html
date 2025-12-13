@@ -6,7 +6,7 @@
   <meta content="frame-ancestors 'none'" http-equiv="Content-Security-Policy">
   <meta content="deny" http-equiv="X-Frame-Options">
     
-  <link href="https://www.metabase.com/docs/master/embedding/interactive-embedding-quick-start-guide" rel="canonical">
+  <link href="https://www.metabase.com/docs/master/embedding/full-app-embedding-quick-start-guide" rel="canonical">
   
 
   <script type="text/javascript">
@@ -49,12 +49,12 @@
 
 
 
-<title>Interactive embedding quickstart | Metabase Documentation</title>
+<title>Full app embedding quickstart | Metabase Documentation</title>
 <!-- Twitter cards -->
 <meta name="twitter:site" content="@metabase">
 
-<meta name="twitter:title" content="Interactive embedding quickstart | Metabase Documentation">
-<meta name="twitter:description" content="Interactive embedding quickstart  If you are just starting out with Metabase embedding, consider using Embedded Analytics JS - an improved, more customizable option for embedding interactive Metabase elements. Interactive embedding remains fully supported.  You’ll embed the full Metabase...">
+<meta name="twitter:title" content="Full app embedding quickstart | Metabase Documentation">
+<meta name="twitter:description" content="Full app embedding quickstart  If you are just starting out with Metabase embedding, consider using Modular embedding - an improved, more customizable option for embedding Metabase components.  You’ll embed the full Metabase application in your app. Once logged...">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -62,9 +62,9 @@
 <!-- Open Graph metadata -->
 <meta property="og:site_name" content="Metabase | Business Intelligence, Dashboards, and Data Visualization">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://www.metabase.com/docs/master/embedding/interactive-embedding-quick-start-guide">
-<meta name="title" property="og:title" content="Interactive embedding quickstart | Metabase Documentation">
-<meta name="description" property="og:description" content="Interactive embedding quickstart  If you are just starting out with Metabase embedding, consider using Embedded Analytics JS - an improved, more customizable option for embedding interactive Metabase elements. Interactive embedding remains fully supported.  You’ll embed the full Metabase...">
+<meta property="og:url" content="https://www.metabase.com/docs/master/embedding/full-app-embedding-quick-start-guide">
+<meta name="title" property="og:title" content="Full app embedding quickstart | Metabase Documentation">
+<meta name="description" property="og:description" content="Full app embedding quickstart  If you are just starting out with Metabase embedding, consider using Modular embedding - an improved, more customizable option for embedding Metabase components.  You’ll embed the full Metabase application in your app. Once logged...">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -3223,7 +3223,7 @@ Roadmap</a>
 
       
 
-      <li class="expanded">
+      <li class="">
         <a href="/docs/master/embedding/interactive-embedding" class="">
         Interactive embedding
 
@@ -3262,7 +3262,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/master/embedding/interactive-embedding-quick-start-guide" class="selected">
+                <a href="/docs/master/embedding/interactive-embedding-quick-start-guide" class="">
                   Quickstart
 
                   
@@ -5435,10 +5435,10 @@ Roadmap</a>
 </div>
 
 
-        <h1 id="interactive-embedding-quickstart">Interactive embedding quickstart</h1>
+        <h1 id="full-app-embedding-quickstart">Full app embedding quickstart</h1>
 
 <blockquote>
-  <p>If you are just starting out with Metabase embedding, consider using <a href="./embedded-analytics-js">Embedded Analytics JS</a> - an improved, more customizable option for embedding interactive Metabase elements. Interactive embedding remains fully supported.</p>
+  <p>If you are just starting out with Metabase embedding, consider using <a href="./modular-embedding">Modular embedding</a> - an improved, more customizable option for embedding Metabase components.</p>
 </blockquote>
 
 <p>You’ll embed the full Metabase application in your app. Once logged in, people can view a Metabase dashboard in your web app, and be able to use the full Metabase application to explore their data, and only their data.</p>
@@ -5469,7 +5469,7 @@ Roadmap</a>
 
 <p>The code featured in this guide can be found in our <a href="https://github.com/metabase/metabase-nodejs-express-interactive-embedding-sample">sample repo</a>.</p>
 
-<h2 id="set-up-sso-and-interactive-embedding-in-metabase">Set up SSO and interactive embedding in Metabase</h2>
+<h2 id="set-up-sso-and-full-app-embedding-in-metabase">Set up SSO and full app embedding in Metabase</h2>
 
 <h3 id="have-a-dashboard-ready-to-embed">Have a dashboard ready to embed</h3>
 
@@ -5479,21 +5479,21 @@ Roadmap</a>
 
 <p>You could also use the dashboard’s <a href="../installation-and-operation/serialization#metabase-uses-entity-ids-to-identify-and-reference-metabase-items">Entity ID</a>. On the dashboard, click on the <strong>info</strong> button. On the <strong>Overview</strong> tab, look for the dashboard’s <strong>Entity ID</strong>. Copy that Entity ID. You’ll use that Entity ID in the iframe’s <code class="language-plaintext highlighter-rouge">src</code> URL: (e.g., <code class="language-plaintext highlighter-rouge">src=/dashboard/entity/[Entity ID]</code>).</p>
 
-<h3 id="enable-interactive-embedding">Enable interactive embedding</h3>
+<h3 id="enable-full-app-embedding">Enable full app embedding</h3>
 
-<p>In Metabase, click on the <strong>gear</strong> icon in the upper right and go to <strong>Admin &gt; Embedding &gt; Interactive Embedding</strong> and toggle on <strong>Enable interactive embedding</strong>.</p>
+<p>In Metabase, click on the <strong>gear</strong> icon in the upper right and go to <strong>Admin &gt; Embedding</strong> and toggle on <strong>Enable full app embedding</strong>.</p>
 
 <p>Under <strong>Authorized origins</strong>, add the URL of the website or web app where you want to embed Metabase. If you’re running your app locally, you can add localhost and specify the port number, e.g. <code class="language-plaintext highlighter-rouge">http://localhost:8080</code>.</p>
 
 <h4 id="samesite-configuration">SameSite configuration</h4>
 
-<p>If you’re embedding Metabase in a different domain, you may need to <a href="./interactive-embedding#embedding-metabase-in-a-different-domain">set the session cookie’s SameSite value to <code class="language-plaintext highlighter-rouge">none</code></a></p>
+<p>If you’re embedding Metabase in a different domain, you may need to <a href="./full-app-embedding#embedding-metabase-in-a-different-domain">set the session cookie’s SameSite value to <code class="language-plaintext highlighter-rouge">none</code></a>.</p>
 
 <h3 id="set-up-sso-with-jwt-in-your-metabase">Set up SSO with JWT in your Metabase</h3>
 
 <h4 id="enable-authentication-with-jwt">Enable authentication with JWT</h4>
 
-<p>While still in the <strong>Interactive embedding</strong> section, click on <strong>Authentication</strong> under <strong>Related settings</strong>.</p>
+<p>While still in the <strong>Embedding settings</strong> section, scroll down and click on <strong>Authentication</strong> under <strong>Related settings</strong>.</p>
 
 <p>On the card that says <strong>JWT</strong>, click the <strong>Setup</strong> button (you may have to scroll down to view the JWT card).</p>
 
@@ -5630,7 +5630,7 @@ Roadmap</a>
 
 <h2 id="set-up-a-group-in-metabase">Set up a group in Metabase</h2>
 
-<p>Now that you have SSO and interactive embedding set up, it’s time to set up groups so that you can apply permissions to your embedded Metabase entities (questions, dashboards, collections, and so on).</p>
+<p>Now that you have SSO and full app embedding set up, it’s time to set up groups so that you can apply permissions to your embedded Metabase entities (questions, dashboards, collections, and so on).</p>
 
 <h3 id="add-a-groups-key-to-your-token">Add a <code class="language-plaintext highlighter-rouge">groups</code> key to your token</h3>
 
@@ -5743,7 +5743,7 @@ Roadmap</a>
 
 <h2 id="hiding-metabase-elements">Hiding Metabase elements</h2>
 
-<p>You can decide to <a href="./interactive-embedding#showing-or-hiding-metabase-ui-components">show or hide various Metabase elements</a>, like whether to show the nav bar, search or the <strong>+New</strong> button, and so on.</p>
+<p>You can decide to <a href="./full-app-embedding#showing-or-hiding-metabase-ui-components">show or hide various Metabase elements</a>, like whether to show the nav bar, search or the <strong>+New</strong> button, and so on.</p>
 
 <p>For example, to hide the logo and the top navigation bar of your embedded Metabase, you’d append the query string parameters <code class="language-plaintext highlighter-rouge">?logo=false&amp;top_nav=false</code> to the <code class="language-plaintext highlighter-rouge">return_to</code> URL that you include in the SSO redirect.</p>
 
@@ -5815,7 +5815,7 @@ Roadmap</a>
 
   
     <span class="paragraph-6 fs-13 neutral-60" id="page-feedback-footer">
-      Want to improve these docs? <a href="https://github.com/metabase/metabase/blob/master/docs/embedding/interactive-embedding-quick-start-guide.md" target="_blank">Propose a change.</a>
+      Want to improve these docs? <a href="https://github.com/metabase/metabase/blob/master/docs/embedding/full-app-embedding-quick-start-guide.md" target="_blank">Propose a change.</a>
     </span>
   
 </div>
@@ -5837,8 +5837,8 @@ Roadmap</a>
 <script type="text/javascript" src="/js/position-feedback-widget.js"></script>
 
 <script>
-  const pageTitle = `Interactive embedding quickstart`;
-  const pageURL = '/docs/master/embedding/interactive-embedding-quick-start-guide';
+  const pageTitle = `Full app embedding quickstart`;
+  const pageURL = '/docs/master/embedding/full-app-embedding-quick-start-guide';
   const pageURLSplit = pageURL.split('/');
 
   let pageURLPrefix = '/' + pageURLSplit[1] + '/' + pageURLSplit[2];

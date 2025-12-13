@@ -7150,15 +7150,15 @@ don’t have one.</p>
 
 <p>The initial retry delay in milliseconds.</p>
 
-<h3 id="mb_retry_max_retries"><code class="language-plaintext highlighter-rouge">MB_RETRY_MAX_RETRIES</code></h3>
+<h3 id="mb_retry_jitter_factor"><code class="language-plaintext highlighter-rouge">MB_RETRY_JITTER_FACTOR</code></h3>
 
 <ul>
-  <li>Type: integer</li>
-  <li>Default: <code class="language-plaintext highlighter-rouge">6</code></li>
-  <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">retry-max-retries</code></li>
+  <li>Type: double</li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">0.1</code></li>
+  <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">retry-jitter-factor</code></li>
 </ul>
 
-<p>The maximum number of retries for a failed event.</p>
+<p>The jitter factor of the retry delay.</p>
 
 <h3 id="mb_retry_max_interval_millis"><code class="language-plaintext highlighter-rouge">MB_RETRY_MAX_INTERVAL_MILLIS</code></h3>
 
@@ -7170,6 +7170,16 @@ don’t have one.</p>
 
 <p>The maximum delay between attempts.</p>
 
+<h3 id="mb_retry_max_retries"><code class="language-plaintext highlighter-rouge">MB_RETRY_MAX_RETRIES</code></h3>
+
+<ul>
+  <li>Type: integer</li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">6</code></li>
+  <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">retry-max-retries</code></li>
+</ul>
+
+<p>The maximum number of retries for an event.</p>
+
 <h3 id="mb_retry_multiplier"><code class="language-plaintext highlighter-rouge">MB_RETRY_MULTIPLIER</code></h3>
 
 <ul>
@@ -7179,16 +7189,6 @@ don’t have one.</p>
 </ul>
 
 <p>The delay multiplier between attempts.</p>
-
-<h3 id="mb_retry_randomization_factor"><code class="language-plaintext highlighter-rouge">MB_RETRY_RANDOMIZATION_FACTOR</code></h3>
-
-<ul>
-  <li>Type: double</li>
-  <li>Default: <code class="language-plaintext highlighter-rouge">0.1</code></li>
-  <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">retry-jitter-factor</code></li>
-</ul>
-
-<p>The randomization factor of the retry delay.</p>
 
 <h3 id="mb_saml_application_name"><code class="language-plaintext highlighter-rouge">MB_SAML_APPLICATION_NAME</code></h3>
 
@@ -7507,8 +7507,8 @@ don’t have one.</p>
 
 <p>Value for the session cookie’s <code class="language-plaintext highlighter-rouge">SameSite</code> directive.</p>
 
-<p>See <a href="../embedding/interactive-embedding#embedding-metabase-in-a-different-domain">Embedding Metabase in a different domain</a>.
-        Read more about <a href="../embedding/interactive-embedding">interactive Embedding</a>.
+<p>See <a href="../embedding/full-app-embedding#embedding-metabase-in-a-different-domain">Embedding Metabase in a different domain</a>.
+        Read more about <a href="../embedding/full-app-embedding">modular embedding</a>.
         Learn more about <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie/SameSite">SameSite cookies</a>.</p>
 
 <h3 id="mb_session_cookies"><code class="language-plaintext highlighter-rouge">MB_SESSION_COOKIES</code></h3>

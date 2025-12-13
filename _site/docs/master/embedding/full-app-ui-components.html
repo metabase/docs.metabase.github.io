@@ -6,7 +6,7 @@
   <meta content="frame-ancestors 'none'" http-equiv="Content-Security-Policy">
   <meta content="deny" http-equiv="X-Frame-Options">
     
-  <link href="https://www.metabase.com/docs/master/installation-and-operation/upgrading-metabase" rel="canonical">
+  <link href="https://www.metabase.com/docs/master/embedding/full-app-ui-components" rel="canonical">
   
 
   <script type="text/javascript">
@@ -49,12 +49,12 @@
 
 
 
-<title>Upgrading Metabase | Metabase Documentation</title>
+<title>Full app embedding UI components | Metabase Documentation</title>
 <!-- Twitter cards -->
 <meta name="twitter:site" content="@metabase">
 
-<meta name="twitter:title" content="Upgrading Metabase | Metabase Documentation">
-<meta name="twitter:description" content="Upgrading Metabase This page covers how to upgrade to a new Metabase release.  Announcement posts for major releases Changelogs. Release notes on GitHub.  Upgrading Metabase Cloud If you’re on a Metabase Cloud plan, we’ll...">
+<meta name="twitter:title" content="Full app embedding UI components | Metabase Documentation">
+<meta name="twitter:description" content="Customize the UI components in your full app Metabase embed by adding parameters to the embedding URL.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -62,9 +62,9 @@
 <!-- Open Graph metadata -->
 <meta property="og:site_name" content="Metabase | Business Intelligence, Dashboards, and Data Visualization">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://www.metabase.com/docs/master/installation-and-operation/upgrading-metabase">
-<meta name="title" property="og:title" content="Upgrading Metabase | Metabase Documentation">
-<meta name="description" property="og:description" content="Upgrading Metabase This page covers how to upgrade to a new Metabase release.  Announcement posts for major releases Changelogs. Release notes on GitHub.  Upgrading Metabase Cloud If you’re on a Metabase Cloud plan, we’ll...">
+<meta property="og:url" content="https://www.metabase.com/docs/master/embedding/full-app-ui-components">
+<meta name="title" property="og:title" content="Full app embedding UI components | Metabase Documentation">
+<meta name="description" property="og:description" content="Customize the UI components in your full app Metabase embed by adding parameters to the embedding URL.">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -3339,7 +3339,7 @@ Roadmap</a>
 
       
 
-      <li class="expanded">
+      <li class="">
         <a href="/docs/master/installation-and-operation/start" class="">
         Installation
 
@@ -3459,7 +3459,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/master/installation-and-operation/upgrading-metabase" class="selected">
+                <a href="/docs/master/installation-and-operation/upgrading-metabase" class="">
                   Upgrading Metabase
 
                   
@@ -5288,7 +5288,7 @@ Roadmap</a>
 
             
             
-                <li class="breadcrumb-item"><a class="blue-60" href="/docs/master/installation-and-operation/start">Installation and Operation</a></li>
+                <li class="breadcrumb-item"><a class="blue-60" href="/docs/master/embedding/start">Embedding</a></li>
             
             
         </ol>
@@ -5435,211 +5435,219 @@ Roadmap</a>
 </div>
 
 
-        <h1 id="upgrading-metabase">Upgrading Metabase</h1>
+        <h1 id="full-app-embedding-ui-components">Full app embedding UI components</h1>
 
-<p>This page covers how to upgrade to a new Metabase release.</p>
-
-<ul>
-  <li><a href="/releases">Announcement posts for major releases</a></li>
-  <li><a href="/changelog">Changelogs</a>.</li>
-  <li><a href="https://github.com/metabase/metabase/releases">Release notes on GitHub</a>.</li>
-</ul>
-
-<h2 id="upgrading-metabase-cloud">Upgrading Metabase Cloud</h2>
-
-<p>If you’re on a <a href="/pricing/">Metabase Cloud</a> plan, we’ll upgrade your Metabase automatically with each new release; no action needed on your end (<a href="#instances-using-the-modular-embedding-sdk-on-metabase-cloud-must-request-an-upgrade">unless you’re using the modular embedding SDK</a>).</p>
-
-<p>How soon we upgrade you depends on the type of release:</p>
-
-<ul>
-  <li>Minor releases (e.g., x.54.4 to x.54.5): Usually about a week.</li>
-  <li>Major releases (e.g., x.53.4 to x.54.1): Longer, usually months (just to make sure everything goes smoothly).</li>
-</ul>
-
-<p>Cloud customers can request an early upgrade by emailing support at help@metabase.com. Include the URL of the Metabase you want us to upgrade.</p>
-
-<h3 id="instances-using-the-modular-embedding-sdk-on-metabase-cloud-must-request-an-upgrade">Instances using the modular embedding SDK on Metabase Cloud must request an upgrade</h3>
-
-<p>If you’re using the <a href="../embedding/sdk/introduction">modular embedding SDK</a> on Metabase Cloud, we pin your version so that it doesn’t upgrade automatically, as you should test the changes before upgrading.</p>
-
-<p>To upgrade your Metabase, you’ll need to request an upgrade by <a href="/help-premium">contacting support</a>.</p>
-
-<p>See our <a href="../embedding/sdk/upgrade">upgrade guide for the modular embedding SDK</a>.</p>
-
-<h2 id="upgrading-a-self-hosted-metabase">Upgrading a self-hosted Metabase</h2>
-
-<p>Here are the steps for upgrading to a new Metabase version (major or minor):</p>
-
-<h3 id="1-back-up-of-your-application-database">1. Back up of your application database</h3>
-
-<p>The application database keeps track of every single thing (but the data of your connected database) of your Metabase instance. While it’s unlikely you’ll need to roll back to your current version, a backup will do wonders for your peace of mind in case something goes wrong.</p>
-
-<p>See <a href="backing-up-metabase-application-data">Backing up Metabase application data</a>.</p>
-
-<h3 id="2-swap-in-the-new-metabase-version">2. Swap in the new Metabase version</h3>
-
-<p>Steps differ depending on whether you’re running the container image or the JAR.</p>
-
-<p><strong>Upgrading the container image</strong></p>
-
-<ol>
-  <li>
-    <p>Stop the current container.</p>
-  </li>
-  <li>
-    <p>Pull the latest Metabase Docker image (though we recommend that you pull a specific tag instead of using <code class="language-plaintext highlighter-rouge">latest</code>).</p>
-
-    <p>Metabase Open Source:</p>
-
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker pull metabase/metabase:latest
-</code></pre></div>    </div>
-
-    <p>Metabase Pro or Enterprise:</p>
-
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker pull metabase/metabase-enterprise:latest
-</code></pre></div>    </div>
-  </li>
-  <li>
-    <p>Start the new container image. Depending on the ports and container name, the command will look something like:</p>
-
-    <p>Metabase Open Source:</p>
-
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run -d -p 3000:3000 -e MB_DB_CONNECTION_URI="jdbc:postgresql://&lt;host&gt;:5432/metabase?user=&lt;username&gt;&amp;password=&lt;password&gt;" --name metabase metabase/metabase:latest
-</code></pre></div>    </div>
-
-    <p>Metabase Pro or Enterprise:</p>
-
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run -d -p 3000:3000 -e MB_DB_CONNECTION_URI="jdbc:postgresql://&lt;host&gt;:5432/metabase?user=&lt;username&gt;&amp;password=&lt;password&gt;" --name metabase metabase/metabase-enterprise:latest
-</code></pre></div>    </div>
-  </li>
-</ol>
-
-<p>On startup, Metabase will perform the upgrade automatically. Once Metabase has completed the upgrade, you’ll be running the new version.</p>
-
-<p><strong>Upgrading the JAR</strong></p>
-
-<p>To upgrade, you’ll need to stop the service, replace the JAR with the newer version, and restart the service.</p>
-
-<p>E.g., if you’re running Metabase on Debian as a service using Nginx.</p>
-
-<ol>
-  <li>
-    <p>Stop the Metabase service. Assuming you called your service <code class="language-plaintext highlighter-rouge">metabase.service</code>, you’ll run:</p>
-
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo systemctl stop metabase.service
-</code></pre></div>    </div>
-  </li>
-  <li>
-    <p>Download the latest version of the JAR file:</p>
-
-    <ul>
-      <li><a href="/start/oss/jar">Metabase Open Source JAR</a></li>
-      <li><a href="https://downloads.metabase.com/enterprise/latest/metabase.jar">Metabase Pro or Enterprise JAR</a></li>
-    </ul>
-  </li>
-</ol>
-
-<p>And replace the current (older) Metabase JAR file with the newer JAR you downloaded.</p>
-
-<ol>
-  <li>
-    <p>Restart the service:</p>
-
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo systemctl restart metabase.service
-</code></pre></div>    </div>
-  </li>
-</ol>
-
-<h2 id="upgrading-from-older-versions-of-metabase">Upgrading from older versions of Metabase</h2>
-
-<p>If you’re on a Metabase version older than Metabase 40, you’ll need to upgrade release by release until you’re on the latest version of Metabase 40. From the latest version of Metabase 40, you can then jump to the current version of Metabase.</p>
-
-<p>For example, if you’re running Metabase 1.38, your upgrade path would look like:</p>
-
-<ul>
-  <li>1.38.X</li>
-  <li>1.39.X</li>
-  <li>1.40.X</li>
-  <li>Latest</li>
-</ul>
-
-<p>With X being the latest version available for each release.</p>
-
-<p>Check out a list of <a href="https://github.com/metabase/metabase/releases">Metabase releases</a>.</p>
-
-<p>When upgrading between major versions (e.g. v53.x to v54.x), use the latest minor version available for that major version. E.g., if you want to upgrade from v50 to v51, use the latest point version available for 51.</p>
-
-<h2 id="upgrading-metabase-on-other-platforms">Upgrading Metabase on other platforms</h2>
-
-<ul>
-  <li><a href="running-metabase-on-azure#additional-configurations">Upgrading Azure Web Apps deployments</a></li>
-</ul>
-
-<h2 id="what-happens-during-an-upgrade-or-downgrade">What happens during an upgrade or downgrade?</h2>
-
-<p>During a <strong>major version</strong> upgrade (e.g., 53.1 or 54.1), Metabase will:</p>
-
-<ul>
-  <li>Perform all the migrations needed to upgrade to the new version, such as any schema changes to the application database between the two versions.</li>
-  <li>Keep all the metadata it needs to work on the application database.</li>
-</ul>
-
-<p>Metabase will do all this automatically.</p>
-
-<p>If you need to downgrade after a major version upgrade, you’ll either need to restore from a backup, or manually migrate to a lower version, otherwise Metabase may refuse to start (see the next section).</p>
-
-<p>During a <strong>minor version upgrade</strong> (e.g., 54.1 to 54.2), the new Metabase container or Jar will just work. Only in rare cases will it have to perform a migration, but, like with major version upgrades, Metabase will perform the migration automatically. And of course, you’re backing up your application database each time you upgrade, right?</p>
-
-<h2 id="rolling-back-an-upgrade-or-to-an-older-version">Rolling back an upgrade or to an older version</h2>
+<p>To change the interface of your full app embed, you can add parameters to the end of your embedding URL. If you want to change the colors or fonts in your embed, see <a href="../configuring-metabase/appearance">Customizing appearance</a>.</p>
 
 <blockquote>
-  <p><strong>The downgrade command must be run on the JAR with the higher version number.</strong></p>
+  <p>For more granular control of embedded components, consider using <a href="./modular-embedding">Modular embedding</a> instead of full app embedding - it’s an improved, more customizable option for embedding Metabase elements.</p>
 </blockquote>
 
-<p>In general, regular backups (especially backups before upgrading), are the best policy, so we recommend reverting to a backup of your application database to roll back an upgrade.</p>
+<p>For example, you can disable Metabase’s <a href="#top_nav">top nav bar</a> and <a href="#side_nav">side nav menu</a> like this:</p>
 
-<p>But if you’ve made any change (adding new questions/dashboards, etc) since upgrading that you want to keep, you may be able to use the <code class="language-plaintext highlighter-rouge">migrate down</code> command to roll back your Metabase application database to support the previous Metabase version you were running. When Metabase upgrades to a new version, it runs migrations that may change the application database schema. The <code class="language-plaintext highlighter-rouge">migrate down</code> command undoes those schema changes. In general, we recommend restoring from a backup (the backup that you remembered to generate before upgrading), and only using the <code class="language-plaintext highlighter-rouge">migrate down</code> command if you need to keep changes made after your upgrade.</p>
-
-<h3 id="using-the-migrate-down-command">Using the migrate down command</h3>
-
-<p>Stop your Metabase and use the current, upgraded Metabase JAR (not the Metabase JAR you want to roll back to) to complete the rollback with the <code class="language-plaintext highlighter-rouge">migrate down</code> command. Make sure that the connection details for your application database are set in the environment variables, for example:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>export MB_DB_TYPE=postgres
-export MB_DB_DBNAME=metabaseappdb
-export MB_DB_PORT=5432
-export MB_DB_USER=username
-export MB_DB_PASS=password
-export MB_DB_HOST=localhost
-java --add-opens java.base/java.nio=ALL-UNNAMED -jar metabase.jar migrate down
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>your_embedding_url?top_nav=false&amp;side_nav=false
 </code></pre></div></div>
 
-<p>If you’re running Docker, use the command <code class="language-plaintext highlighter-rouge">"migrate down"</code> (with the quotes around <code class="language-plaintext highlighter-rouge">"migrate down"</code>), and include the connection details for your application database, for example:</p>
+<p><img src="./images/no-top-no-side.png" alt="Top nav and side nav disabled"></p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run
-  -e "MB_DB_TYPE=postgres" \
-  -e "MB_DB_DBNAME=metabaseappdb" \
-  -e "MB_DB_PORT=5432" \
-  -e "MB_DB_USER=name" \
-  -e "MB_DB_PASS=password" \
-  -e "MB_DB_HOST=my-database-host" \
---rm metabase/metabase:&lt;tag&gt; "migrate down"
+<p>Here’s an example using the URL constructor to add parameters to the URL for the iframe:</p>
+
+<div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">mods</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">logo=false&amp;top_nav=true&amp;search=true&amp;new_button=true</span><span class="dl">"</span><span class="p">;</span>
+
+<span class="nx">app</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="dl">"</span><span class="s2">/sso/metabase</span><span class="dl">"</span><span class="p">,</span> <span class="nx">restrict</span><span class="p">,</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">ssoUrl</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">URL</span><span class="p">(</span><span class="dl">"</span><span class="s2">/auth/sso</span><span class="dl">"</span><span class="p">,</span> <span class="nx">METABASE_SITE_URL</span><span class="p">);</span>
+  <span class="nx">ssoUrl</span><span class="p">.</span><span class="nx">searchParams</span><span class="p">.</span><span class="nf">set</span><span class="p">(</span><span class="dl">"</span><span class="s2">jwt</span><span class="dl">"</span><span class="p">,</span> <span class="nf">signUserToken</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">session</span><span class="p">.</span><span class="nx">user</span><span class="p">));</span>
+  <span class="nx">ssoUrl</span><span class="p">.</span><span class="nx">searchParams</span><span class="p">.</span><span class="nf">set</span><span class="p">(</span><span class="dl">"</span><span class="s2">return_to</span><span class="dl">"</span><span class="p">,</span> <span class="s2">`</span><span class="p">${</span><span class="nx">req</span><span class="p">.</span><span class="nx">query</span><span class="p">.</span><span class="nx">return_to</span> <span class="o">??</span> <span class="dl">"</span><span class="s2">/</span><span class="dl">"</span><span class="p">}</span><span class="s2">?</span><span class="p">${</span><span class="nx">mods</span><span class="p">}</span><span class="s2">`</span><span class="p">);</span>
+
+  <span class="nx">res</span><span class="p">.</span><span class="nf">redirect</span><span class="p">(</span><span class="nx">ssoUrl</span><span class="p">);</span>
+<span class="p">});</span>
 </code></pre></div></div>
 
-<p>Note the quotes around <code class="language-plaintext highlighter-rouge">"migrate down"</code>. You can also just open a shell into the container and run the migrate command inside it.</p>
+<p>Parameters include:</p>
 
-<p>Once the migration process completes, start up Metabase using the JAR or container image for the version you want to run.</p>
+<ul>
+  <li><a href="#action_buttons">Action buttons</a></li>
+  <li><a href="#additional_info">Additional info</a></li>
+  <li><a href="#breadcrumbs">Breadcrumbs</a></li>
+  <li><a href="#entity_types">Entity types</a></li>
+  <li><a href="#header">Header</a></li>
+  <li><a href="#locale">Locale</a></li>
+  <li><a href="#logo">Logo</a></li>
+  <li><a href="#new_button">New button</a></li>
+  <li><a href="#search">Search</a></li>
+  <li><a href="#side_nav">Side nav</a></li>
+  <li><a href="#top_nav">Top nav</a></li>
+</ul>
 
-<h2 id="upgrading-metabase-running-in-a-cluster">Upgrading Metabase running in a cluster</h2>
+<blockquote>
+  <p>To make sure that query parameters are preserved when using <a href="../dashboards/interactive#customizing-click-behavior">click behavior</a>, configure the <a href="../configuring-metabase/settings#site-url">Site URL</a> Admin setting to be your Metabase server URL.</p>
+</blockquote>
 
-<p>If you’re running Metabase in a cluster:</p>
+<h2 id="action_buttons"><code class="language-plaintext highlighter-rouge">action_buttons</code></h2>
 
-<ol>
-  <li>Reduce the number of nodes to a single node. You can’t upgrade all nodes at the same time because the upgrade process works by acquiring a migration lock on the application database from a single client, which performs the migration. If you keep more than one node active when you do a major version upgrade, the application won’t behave correctly, as schema changes to the application database could cause problems for nodes that are still running the older version of Metabase.</li>
-  <li>Perform the upgrade as normal (as outlined above).</li>
-  <li>Raise the number of nodes to the same number you had before.</li>
-</ol>
+<p>Visible by default on question pages when the <a href="#header">header</a> is enabled.</p>
 
-<p>Make sure you container orchestrator or cluster manager doesn’t kill the Metabase process while it’s performing the migrations, otherwise you’ll may end up with a corrupted application database and you’ll need to restore from a backup.</p>
+<p>To hide the action buttons such as <strong>Filter</strong>, <strong>Summarize</strong>, the query builder button, and so on:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>header=false&amp;action_buttons=false
+</code></pre></div></div>
+
+<p><img src="./images/action-buttons.png" alt="Action buttons"></p>
+
+<h2 id="additional_info"><code class="language-plaintext highlighter-rouge">additional_info</code></h2>
+
+<p>Visible by default on question and dashboard pages when the <a href="#header">header</a> is enabled.</p>
+
+<p>To hide the gray text “Edited X days ago by FirstName LastName”, as well as the breadcrumbs with collection, database, and table names:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>header=false&amp;additional_info=false
+</code></pre></div></div>
+
+<p><img src="./images/additional-info.png" alt="Additional info"></p>
+
+<h2 id="breadcrumbs"><code class="language-plaintext highlighter-rouge">breadcrumbs</code></h2>
+
+<p>Shown by default in the top nav bar. Collection breadcrumbs show the path to the item (i.e., the collection(s) the item is in). This does not effect Data breadcrumbs if the user has Query Builder permissions. To hide the breadcrumbs:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>breadcrumbs=false
+</code></pre></div></div>
+
+<h2 id="data_picker"><code class="language-plaintext highlighter-rouge">data_picker</code></h2>
+
+<p><code class="language-plaintext highlighter-rouge">data_picker</code> controls the menu for selecting data sources in questions.</p>
+
+<p><img src="./images/data-picker.png" alt="Simple data picker"></p>
+
+<p>The default behavior for the data picker is:</p>
+
+<ul>
+  <li>Show tables and models.</li>
+  <li>Exclude metrics and questions.</li>
+  <li>Display a simple dropdown menu. If there are 100 or more items, Metabase will display a souped-up data picker.</li>
+</ul>
+
+<p>You can opt for the full data picker by setting <code class="language-plaintext highlighter-rouge">data_picker=staged</code>:</p>
+
+<p><img src="./images/full-data-picker.png" alt="Full data picker"></p>
+
+<p>The above data picker has three entity types selected:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>data_picker=staged&amp;entity_types=table,model,question
+</code></pre></div></div>
+
+<h2 id="entity_types"><code class="language-plaintext highlighter-rouge">entity_types</code></h2>
+
+<p>You can show or hide different entity types in the data picker, sidebar, and the New button menu. For example, you may only want to show tables:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>entity_types=table
+</code></pre></div></div>
+
+<p>If only tables are allowed, the sidebar won’t show models:</p>
+
+<p><img src="./images/sidebar-without-models.png" alt="Sidebar without models"></p>
+
+<p>Available entity types are:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">table</code></li>
+  <li><code class="language-plaintext highlighter-rouge">model</code></li>
+  <li><code class="language-plaintext highlighter-rouge">question</code> (only works with <code class="language-plaintext highlighter-rouge">data_picker=staged</code>)</li>
+</ul>
+
+<p>You can separate entity types with a comma:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>entity_types=table,model
+</code></pre></div></div>
+
+<h2 id="header"><code class="language-plaintext highlighter-rouge">header</code></h2>
+
+<p>Visible by default on question and dashboard pages.</p>
+
+<p>To hide a question or dashboard’s title, <a href="#additional_info">additional info</a>, and <a href="#action_buttons">action buttons</a>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>header=false
+</code></pre></div></div>
+
+<h2 id="locale"><code class="language-plaintext highlighter-rouge">locale</code></h2>
+
+<p>You can change the language of the user interface via a parameter. For example, to set the locale to Spanish:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>locale=es
+</code></pre></div></div>
+
+<p>Read more about <a href="../configuring-metabase/localization">localization</a>.</p>
+
+<h2 id="logo"><code class="language-plaintext highlighter-rouge">logo</code></h2>
+
+<p>Whether to show the logo that opens and closes the sidebar nav. Default is true. The logo’s behavior depends on the <code class="language-plaintext highlighter-rouge">side_nav</code> setting:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th><code class="language-plaintext highlighter-rouge">logo</code></th>
+      <th><code class="language-plaintext highlighter-rouge">side_nav</code></th>
+      <th>Result</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td data-label="logo">true</td>
+      <td data-label="side_nav">true</td>
+      <td data-label="Result">Shows your configured logo in the sidebar</td>
+    </tr>
+    <tr>
+      <td data-label="logo">true</td>
+      <td data-label="side_nav">false</td>
+      <td data-label="Result">No sidebar or logo functionality</td>
+    </tr>
+    <tr>
+      <td data-label="logo">false</td>
+      <td data-label="side_nav">true</td>
+      <td data-label="Result">Shows a generic sidebar icon (gray when normal, brand color on hover)</td>
+    </tr>
+    <tr>
+      <td data-label="logo">false</td>
+      <td data-label="side_nav">false</td>
+      <td data-label="Result">No sidebar or logo, with breadcrumbs aligned to the left edge</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="new_button"><code class="language-plaintext highlighter-rouge">new_button</code></h2>
+
+<p>Hidden by default. To show the <strong>+ New</strong> button used to create queries or dashboards:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>top_nav=true&amp;new_button=true
+</code></pre></div></div>
+
+<h2 id="search"><code class="language-plaintext highlighter-rouge">search</code></h2>
+
+<p>Hidden by default. To show the search box in the top nav:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>top_nav=true&amp;search=true
+</code></pre></div></div>
+
+<h2 id="side_nav"><code class="language-plaintext highlighter-rouge">side_nav</code></h2>
+
+<p>The navigation sidebar is shown on <code class="language-plaintext highlighter-rouge">/collection</code> and home page routes, and hidden everywhere else by default.</p>
+
+<p>To allow people to minimize the sidebar:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>top_nav=true&amp;side_nav=true
+</code></pre></div></div>
+
+<p><img src="./images/side-nav.png" alt="Side nav"></p>
+
+<h2 id="top_nav"><code class="language-plaintext highlighter-rouge">top_nav</code></h2>
+
+<p>Shown by default. To hide the top navigation bar:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>top_nav=false
+</code></pre></div></div>
+
+<p><img src="./images/top-nav.png" alt="Top nav bar"></p>
+
+<p>The <code class="language-plaintext highlighter-rouge">top_nav</code> parameter controls the visibility of the entire top navigation bar. When <code class="language-plaintext highlighter-rouge">top_nav</code> is set to <code class="language-plaintext highlighter-rouge">false</code>, all child elements (<code class="language-plaintext highlighter-rouge">search</code>, <code class="language-plaintext highlighter-rouge">new_button</code>, and <code class="language-plaintext highlighter-rouge">breadcrumbs</code>) are automatically hidden. When <code class="language-plaintext highlighter-rouge">top_nav</code> is set to <code class="language-plaintext highlighter-rouge">true</code>, you can individually control the visibility of these child elements.</p>
 
 
         <div>
@@ -5693,7 +5701,7 @@ java --add-opens java.base/java.nio=ALL-UNNAMED -jar metabase.jar migrate down
 
   
     <span class="paragraph-6 fs-13 neutral-60" id="page-feedback-footer">
-      Want to improve these docs? <a href="https://github.com/metabase/metabase/blob/master/docs/installation-and-operation/upgrading-metabase.md" target="_blank">Propose a change.</a>
+      Want to improve these docs? <a href="https://github.com/metabase/metabase/blob/master/docs/embedding/full-app-ui-components.md" target="_blank">Propose a change.</a>
     </span>
   
 </div>
@@ -5715,8 +5723,8 @@ java --add-opens java.base/java.nio=ALL-UNNAMED -jar metabase.jar migrate down
 <script type="text/javascript" src="/js/position-feedback-widget.js"></script>
 
 <script>
-  const pageTitle = `Upgrading Metabase`;
-  const pageURL = '/docs/master/installation-and-operation/upgrading-metabase';
+  const pageTitle = `Full app embedding UI components`;
+  const pageURL = '/docs/master/embedding/full-app-ui-components';
   const pageURLSplit = pageURL.split('/');
 
   let pageURLPrefix = '/' + pageURLSplit[1] + '/' + pageURLSplit[2];
@@ -6034,6 +6042,8 @@ java --add-opens java.base/java.nio=ALL-UNNAMED -jar metabase.jar migrate down
   <script type="text/javascript" src="/js/blog.js"></script>
   <script type="text/javascript" src="/js/syntax-highlight.js"></script>
 
+  
+    <script type="text/javascript" src="/js/docs/checkpoints.js"></script>
   
 
 </body></html>

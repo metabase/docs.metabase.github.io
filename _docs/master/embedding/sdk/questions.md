@@ -4,15 +4,15 @@ has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
 category: Embedding
-title: 'Embedded analytics SDK - questions'
+title: 'Modular embedding SDK - questions'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/embedding/sdk/questions.md'
 layout: new-docs
-description: 'How to embed charts in your app with the Embedded analytics SDK.'
+description: 'How to embed charts in your app with the Modular embedding SDK.'
 ---
 
-# Embedded analytics SDK - questions
+# Modular embedding SDK - questions
 
-{% include plans-blockquote.html feature="Embedded analytics SDK" sdk=true %}
+{% include plans-blockquote.html feature="Modular embedding SDK" sdk=true %}
 
 There are different ways you can embed questions:
 
@@ -84,7 +84,7 @@ See [AI chat](./ai-chat).
 
 ## Customizing interactive questions
 
-By default, the Embedded analytics SDK provides a default layout for interactive questions that allows you to view your questions, apply filters and aggregations, and access functionality within the query builder.
+By default, the modular embedding SDK provides a default layout for interactive questions that allows you to view your questions, apply filters and aggregations, and access functionality within the query builder.
 
 Here's an example of using the `InteractiveQuestion` component with its default layout:
 

@@ -6,7 +6,7 @@
   <meta content="frame-ancestors 'none'" http-equiv="Content-Security-Policy">
   <meta content="deny" http-equiv="X-Frame-Options">
     
-  <link href="https://www.metabase.com/docs/master/installation-and-operation/upgrading-metabase" rel="canonical">
+  <link href="https://www.metabase.com/docs/master/people-and-groups/assigning-users-to-tenants" rel="canonical">
   
 
   <script type="text/javascript">
@@ -49,12 +49,12 @@
 
 
 
-<title>Upgrading Metabase | Metabase Documentation</title>
+<title>Assigning tenant users to tenants | Metabase Documentation</title>
 <!-- Twitter cards -->
 <meta name="twitter:site" content="@metabase">
 
-<meta name="twitter:title" content="Upgrading Metabase | Metabase Documentation">
-<meta name="twitter:description" content="Upgrading Metabase This page covers how to upgrade to a new Metabase release.  Announcement posts for major releases Changelogs. Release notes on GitHub.  Upgrading Metabase Cloud If you’re on a Metabase Cloud plan, we’ll...">
+<meta name="twitter:title" content="Assigning tenant users to tenants | Metabase Documentation">
+<meta name="twitter:description" content="How to automatically assign users to tenants using SSO authentication (JWT and SAML).">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -62,9 +62,9 @@
 <!-- Open Graph metadata -->
 <meta property="og:site_name" content="Metabase | Business Intelligence, Dashboards, and Data Visualization">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://www.metabase.com/docs/master/installation-and-operation/upgrading-metabase">
-<meta name="title" property="og:title" content="Upgrading Metabase | Metabase Documentation">
-<meta name="description" property="og:description" content="Upgrading Metabase This page covers how to upgrade to a new Metabase release.  Announcement posts for major releases Changelogs. Release notes on GitHub.  Upgrading Metabase Cloud If you’re on a Metabase Cloud plan, we’ll...">
+<meta property="og:url" content="https://www.metabase.com/docs/master/people-and-groups/assigning-users-to-tenants">
+<meta name="title" property="og:title" content="Assigning tenant users to tenants | Metabase Documentation">
+<meta name="description" property="og:description" content="How to automatically assign users to tenants using SSO authentication (JWT and SAML).">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -3339,7 +3339,7 @@ Roadmap</a>
 
       
 
-      <li class="expanded">
+      <li class="">
         <a href="/docs/master/installation-and-operation/start" class="">
         Installation
 
@@ -3459,7 +3459,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/master/installation-and-operation/upgrading-metabase" class="selected">
+                <a href="/docs/master/installation-and-operation/upgrading-metabase" class="">
                   Upgrading Metabase
 
                   
@@ -5288,7 +5288,7 @@ Roadmap</a>
 
             
             
-                <li class="breadcrumb-item"><a class="blue-60" href="/docs/master/installation-and-operation/start">Installation and Operation</a></li>
+                <li class="breadcrumb-item"><a class="blue-60" href="/docs/master/people-and-groups/start">People and Groups</a></li>
             
             
         </ol>
@@ -5435,211 +5435,80 @@ Roadmap</a>
 </div>
 
 
-        <h1 id="upgrading-metabase">Upgrading Metabase</h1>
+        <h1 id="assigning-tenant-users-to-tenants">Assigning tenant users to tenants</h1>
 
-<p>This page covers how to upgrade to a new Metabase release.</p>
+<div class="bootstrap">
+  <div class="plans-blockquote bg-blue-95 rounded-3 p-6 d-flex flex-row border border-1 border-primary">
+    <svg class="" width="24" height="24" viewBox="0 0 26 26" fill="none">
+  <path d="M12 13V15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
+  <path d="M12 10C12.5523 10 13 9.55228 13 9C13 8.44772 12.5523 8 12 8C11.4477 8 11 8.44772 11 9C11 9.55228 11.4477 10 12 10Z" fill="#509EE3"></path>
+  <path d="M12 19.25C16.0041 19.25 19.25 16.0041 19.25 12C19.25 7.99594 16.0041 4.75 12 4.75C7.99594 4.75 4.75 7.99594 4.75 12C4.75 16.0041 7.99594 19.25 12 19.25Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
+</svg>
+
+    
+    
+    
+      
+
+    <p class="m-0 ms-2 paragraph-5 neutral-40">
+       Tenants is only available on
+      <a class="fw-bold" href="/product/pro">Pro</a> and
+      <a class="fw-bold link-purple" href="/product/enterprise">Enterprise</a>
+      plans  (both self-hosted and on Metabase Cloud).
+    </p>
+  </div>
+</div>
+
+<p>If you’re running a multi-tenant application, you can assign users to tenants based on a claim in the JWT token.</p>
+
+<h2 id="prerequisites">Prerequisites</h2>
 
 <ul>
-  <li><a href="/releases">Announcement posts for major releases</a></li>
-  <li><a href="/changelog">Changelogs</a>.</li>
-  <li><a href="https://github.com/metabase/metabase/releases">Release notes on GitHub</a>.</li>
+  <li>Multi-tenant user strategy must be enabled in Metabase</li>
+  <li>JWT authentication must be configured</li>
 </ul>
 
-<h2 id="upgrading-metabase-cloud">Upgrading Metabase Cloud</h2>
+<h2 id="how-it-works">How it works</h2>
 
-<p>If you’re on a <a href="/pricing/">Metabase Cloud</a> plan, we’ll upgrade your Metabase automatically with each new release; no action needed on your end (<a href="#instances-using-the-modular-embedding-sdk-on-metabase-cloud-must-request-an-upgrade">unless you’re using the modular embedding SDK</a>).</p>
-
-<p>How soon we upgrade you depends on the type of release:</p>
-
-<ul>
-  <li>Minor releases (e.g., x.54.4 to x.54.5): Usually about a week.</li>
-  <li>Major releases (e.g., x.53.4 to x.54.1): Longer, usually months (just to make sure everything goes smoothly).</li>
-</ul>
-
-<p>Cloud customers can request an early upgrade by emailing support at help@metabase.com. Include the URL of the Metabase you want us to upgrade.</p>
-
-<h3 id="instances-using-the-modular-embedding-sdk-on-metabase-cloud-must-request-an-upgrade">Instances using the modular embedding SDK on Metabase Cloud must request an upgrade</h3>
-
-<p>If you’re using the <a href="../embedding/sdk/introduction">modular embedding SDK</a> on Metabase Cloud, we pin your version so that it doesn’t upgrade automatically, as you should test the changes before upgrading.</p>
-
-<p>To upgrade your Metabase, you’ll need to request an upgrade by <a href="/help-premium">contacting support</a>.</p>
-
-<p>See our <a href="../embedding/sdk/upgrade">upgrade guide for the modular embedding SDK</a>.</p>
-
-<h2 id="upgrading-a-self-hosted-metabase">Upgrading a self-hosted Metabase</h2>
-
-<p>Here are the steps for upgrading to a new Metabase version (major or minor):</p>
-
-<h3 id="1-back-up-of-your-application-database">1. Back up of your application database</h3>
-
-<p>The application database keeps track of every single thing (but the data of your connected database) of your Metabase instance. While it’s unlikely you’ll need to roll back to your current version, a backup will do wonders for your peace of mind in case something goes wrong.</p>
-
-<p>See <a href="backing-up-metabase-application-data">Backing up Metabase application data</a>.</p>
-
-<h3 id="2-swap-in-the-new-metabase-version">2. Swap in the new Metabase version</h3>
-
-<p>Steps differ depending on whether you’re running the container image or the JAR.</p>
-
-<p><strong>Upgrading the container image</strong></p>
+<p>When a user logs in with JWT:</p>
 
 <ol>
-  <li>
-    <p>Stop the current container.</p>
-  </li>
-  <li>
-    <p>Pull the latest Metabase Docker image (though we recommend that you pull a specific tag instead of using <code class="language-plaintext highlighter-rouge">latest</code>).</p>
-
-    <p>Metabase Open Source:</p>
-
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker pull metabase/metabase:latest
-</code></pre></div>    </div>
-
-    <p>Metabase Pro or Enterprise:</p>
-
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker pull metabase/metabase-enterprise:latest
-</code></pre></div>    </div>
-  </li>
-  <li>
-    <p>Start the new container image. Depending on the ports and container name, the command will look something like:</p>
-
-    <p>Metabase Open Source:</p>
-
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run -d -p 3000:3000 -e MB_DB_CONNECTION_URI="jdbc:postgresql://&lt;host&gt;:5432/metabase?user=&lt;username&gt;&amp;password=&lt;password&gt;" --name metabase metabase/metabase:latest
-</code></pre></div>    </div>
-
-    <p>Metabase Pro or Enterprise:</p>
-
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run -d -p 3000:3000 -e MB_DB_CONNECTION_URI="jdbc:postgresql://&lt;host&gt;:5432/metabase?user=&lt;username&gt;&amp;password=&lt;password&gt;" --name metabase metabase/metabase-enterprise:latest
-</code></pre></div>    </div>
-  </li>
+  <li>Metabase reads the tenant identifier from the JWT claim. By default, this is the <code class="language-plaintext highlighter-rouge">tenant</code> key.</li>
+  <li>If the tenant doesn’t exist, Metabase automatically creates it</li>
+  <li>New users are automatically assigned to the tenant from their JWT</li>
 </ol>
 
-<p>On startup, Metabase will perform the upgrade automatically. Once Metabase has completed the upgrade, you’ll be running the new version.</p>
+<h2 id="example-jwt-with-tenant-claim">Example JWT with tenant claim</h2>
 
-<p><strong>Upgrading the JAR</strong></p>
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"user@example.com"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"first_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Jane"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"last_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Doe"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"tenant"</span><span class="p">:</span><span class="w"> </span><span class="s2">"acme-corp"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
 
-<p>To upgrade, you’ll need to stop the service, replace the JAR with the newer version, and restart the service.</p>
+<h2 id="important-restrictions">Important restrictions</h2>
 
-<p>E.g., if you’re running Metabase on Debian as a service using Nginx.</p>
+<p><strong>Users cannot change tenants.</strong> Once an external user is assigned to a tenant, they cannot switch to other tenant.</p>
 
-<ol>
-  <li>
-    <p>Stop the Metabase service. Assuming you called your service <code class="language-plaintext highlighter-rouge">metabase.service</code>, you’ll run:</p>
-
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo systemctl stop metabase.service
-</code></pre></div>    </div>
-  </li>
-  <li>
-    <p>Download the latest version of the JAR file:</p>
-
-    <ul>
-      <li><a href="/start/oss/jar">Metabase Open Source JAR</a></li>
-      <li><a href="https://downloads.metabase.com/enterprise/latest/metabase.jar">Metabase Pro or Enterprise JAR</a></li>
-    </ul>
-  </li>
-</ol>
-
-<p>And replace the current (older) Metabase JAR file with the newer JAR you downloaded.</p>
-
-<ol>
-  <li>
-    <p>Restart the service:</p>
-
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo systemctl restart metabase.service
-</code></pre></div>    </div>
-  </li>
-</ol>
-
-<h2 id="upgrading-from-older-versions-of-metabase">Upgrading from older versions of Metabase</h2>
-
-<p>If you’re on a Metabase version older than Metabase 40, you’ll need to upgrade release by release until you’re on the latest version of Metabase 40. From the latest version of Metabase 40, you can then jump to the current version of Metabase.</p>
-
-<p>For example, if you’re running Metabase 1.38, your upgrade path would look like:</p>
+<p>If a user attempts to log in with mismatched tenant information, they will receive one of these errors:</p>
 
 <ul>
-  <li>1.38.X</li>
-  <li>1.39.X</li>
-  <li>1.40.X</li>
-  <li>Latest</li>
+  <li><code class="language-plaintext highlighter-rouge">Cannot add tenant claim to internal user</code> - JWT includes a tenant, but the user is an internal user. Only tenant users can have a tenant.</li>
+  <li><code class="language-plaintext highlighter-rouge">Tenant claim required for external user</code> - JWT lacks a tenant claim, but the user is an external user.</li>
+  <li><code class="language-plaintext highlighter-rouge">Tenant ID mismatch with existing user</code> - JWT has a different tenant than the user’s assigned tenant</li>
+  <li><code class="language-plaintext highlighter-rouge">Tenant is not active</code> - The tenant exists but has been deactivated</li>
 </ul>
 
-<p>With X being the latest version available for each release.</p>
+<h1 id="configuring-the-tenant-claim">Configuring the tenant claim</h1>
 
-<p>Check out a list of <a href="https://github.com/metabase/metabase/releases">Metabase releases</a>.</p>
-
-<p>When upgrading between major versions (e.g. v53.x to v54.x), use the latest minor version available for that major version. E.g., if you want to upgrade from v50 to v51, use the latest point version available for 51.</p>
-
-<h2 id="upgrading-metabase-on-other-platforms">Upgrading Metabase on other platforms</h2>
-
-<ul>
-  <li><a href="running-metabase-on-azure#additional-configurations">Upgrading Azure Web Apps deployments</a></li>
-</ul>
-
-<h2 id="what-happens-during-an-upgrade-or-downgrade">What happens during an upgrade or downgrade?</h2>
-
-<p>During a <strong>major version</strong> upgrade (e.g., 53.1 or 54.1), Metabase will:</p>
-
-<ul>
-  <li>Perform all the migrations needed to upgrade to the new version, such as any schema changes to the application database between the two versions.</li>
-  <li>Keep all the metadata it needs to work on the application database.</li>
-</ul>
-
-<p>Metabase will do all this automatically.</p>
-
-<p>If you need to downgrade after a major version upgrade, you’ll either need to restore from a backup, or manually migrate to a lower version, otherwise Metabase may refuse to start (see the next section).</p>
-
-<p>During a <strong>minor version upgrade</strong> (e.g., 54.1 to 54.2), the new Metabase container or Jar will just work. Only in rare cases will it have to perform a migration, but, like with major version upgrades, Metabase will perform the migration automatically. And of course, you’re backing up your application database each time you upgrade, right?</p>
-
-<h2 id="rolling-back-an-upgrade-or-to-an-older-version">Rolling back an upgrade or to an older version</h2>
-
-<blockquote>
-  <p><strong>The downgrade command must be run on the JAR with the higher version number.</strong></p>
-</blockquote>
-
-<p>In general, regular backups (especially backups before upgrading), are the best policy, so we recommend reverting to a backup of your application database to roll back an upgrade.</p>
-
-<p>But if you’ve made any change (adding new questions/dashboards, etc) since upgrading that you want to keep, you may be able to use the <code class="language-plaintext highlighter-rouge">migrate down</code> command to roll back your Metabase application database to support the previous Metabase version you were running. When Metabase upgrades to a new version, it runs migrations that may change the application database schema. The <code class="language-plaintext highlighter-rouge">migrate down</code> command undoes those schema changes. In general, we recommend restoring from a backup (the backup that you remembered to generate before upgrading), and only using the <code class="language-plaintext highlighter-rouge">migrate down</code> command if you need to keep changes made after your upgrade.</p>
-
-<h3 id="using-the-migrate-down-command">Using the migrate down command</h3>
-
-<p>Stop your Metabase and use the current, upgraded Metabase JAR (not the Metabase JAR you want to roll back to) to complete the rollback with the <code class="language-plaintext highlighter-rouge">migrate down</code> command. Make sure that the connection details for your application database are set in the environment variables, for example:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>export MB_DB_TYPE=postgres
-export MB_DB_DBNAME=metabaseappdb
-export MB_DB_PORT=5432
-export MB_DB_USER=username
-export MB_DB_PASS=password
-export MB_DB_HOST=localhost
-java --add-opens java.base/java.nio=ALL-UNNAMED -jar metabase.jar migrate down
-</code></pre></div></div>
-
-<p>If you’re running Docker, use the command <code class="language-plaintext highlighter-rouge">"migrate down"</code> (with the quotes around <code class="language-plaintext highlighter-rouge">"migrate down"</code>), and include the connection details for your application database, for example:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run
-  -e "MB_DB_TYPE=postgres" \
-  -e "MB_DB_DBNAME=metabaseappdb" \
-  -e "MB_DB_PORT=5432" \
-  -e "MB_DB_USER=name" \
-  -e "MB_DB_PASS=password" \
-  -e "MB_DB_HOST=my-database-host" \
---rm metabase/metabase:&lt;tag&gt; "migrate down"
-</code></pre></div></div>
-
-<p>Note the quotes around <code class="language-plaintext highlighter-rouge">"migrate down"</code>. You can also just open a shell into the container and run the migrate command inside it.</p>
-
-<p>Once the migration process completes, start up Metabase using the JAR or container image for the version you want to run.</p>
-
-<h2 id="upgrading-metabase-running-in-a-cluster">Upgrading Metabase running in a cluster</h2>
-
-<p>If you’re running Metabase in a cluster:</p>
+<p>By default, Metabase looks for a <code class="language-plaintext highlighter-rouge">tenant</code> key in your JWT. You can customize this:</p>
 
 <ol>
-  <li>Reduce the number of nodes to a single node. You can’t upgrade all nodes at the same time because the upgrade process works by acquiring a migration lock on the application database from a single client, which performs the migration. If you keep more than one node active when you do a major version upgrade, the application won’t behave correctly, as schema changes to the application database could cause problems for nodes that are still running the older version of Metabase.</li>
-  <li>Perform the upgrade as normal (as outlined above).</li>
-  <li>Raise the number of nodes to the same number you had before.</li>
+  <li>Go to <strong>Admin</strong> &gt; <strong>Settings</strong> &gt; <strong>Authentication</strong> &gt; <strong>JWT</strong> &gt; <strong>User attribute configuration</strong></li>
+  <li>Change the <strong>Tenant assignment attribute</strong> key to your preferred identifier.</li>
 </ol>
-
-<p>Make sure you container orchestrator or cluster manager doesn’t kill the Metabase process while it’s performing the migrations, otherwise you’ll may end up with a corrupted application database and you’ll need to restore from a backup.</p>
 
 
         <div>
@@ -5693,7 +5562,7 @@ java --add-opens java.base/java.nio=ALL-UNNAMED -jar metabase.jar migrate down
 
   
     <span class="paragraph-6 fs-13 neutral-60" id="page-feedback-footer">
-      Want to improve these docs? <a href="https://github.com/metabase/metabase/blob/master/docs/installation-and-operation/upgrading-metabase.md" target="_blank">Propose a change.</a>
+      Want to improve these docs? <a href="https://github.com/metabase/metabase/blob/master/docs/people-and-groups/assigning-users-to-tenants.md" target="_blank">Propose a change.</a>
     </span>
   
 </div>
@@ -5715,8 +5584,8 @@ java --add-opens java.base/java.nio=ALL-UNNAMED -jar metabase.jar migrate down
 <script type="text/javascript" src="/js/position-feedback-widget.js"></script>
 
 <script>
-  const pageTitle = `Upgrading Metabase`;
-  const pageURL = '/docs/master/installation-and-operation/upgrading-metabase';
+  const pageTitle = `Assigning tenant users to tenants`;
+  const pageURL = '/docs/master/people-and-groups/assigning-users-to-tenants';
   const pageURLSplit = pageURL.split('/');
 
   let pageURLPrefix = '/' + pageURLSplit[1] + '/' + pageURLSplit[2];

@@ -4,17 +4,19 @@ has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
 category: Embedding
-title: 'Interactive embedding UI components'
-source_url: 'https://github.com/metabase/metabase/blob/master/docs/embedding/interactive-ui-components.md'
+title: 'Full app embedding UI components'
+source_url: 'https://github.com/metabase/metabase/blob/master/docs/embedding/full-app-ui-components.md'
 layout: new-docs
-description: 'Customize the UI components in your interactive Metabase embed by adding parameters to the embedding URL.'
+description: 'Customize the UI components in your full app Metabase embed by adding parameters to the embedding URL.'
+redirect_from:
+    - /docs/master/embedding/interactive-ui-components
 ---
 
-# Interactive embedding UI components
+# Full app embedding UI components
 
-To change the interface of your interactive embed, you can add parameters to the end of your embedding URL. If you want to change the colors or fonts in your embed, see [Customizing appearance](../configuring-metabase/appearance).
+To change the interface of your full app embed, you can add parameters to the end of your embedding URL. If you want to change the colors or fonts in your embed, see [Customizing appearance](../configuring-metabase/appearance).
 
-> If you are just starting out with Metabase embedding, consider using [Embedded Analytics JS](./embedded-analytics-js) instead of interactive embedding - it's an improved, more customizable option for embedding interactive Metabase elements. Interactive embedding remains fully supported.
+> For more granular control of embedded components, consider using [Modular embedding](./modular-embedding) instead of full app embedding - it's an improved, more customizable option for embedding Metabase elements.
 
 For example, you can disable Metabase's [top nav bar](#top_nav) and [side nav menu](#side_nav) like this:
 

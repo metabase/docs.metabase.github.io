@@ -4,16 +4,17 @@ has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
 category: Embedding
-title: 'Embedded analytics SDK - plugins'
+title: 'Modular embedding SDK - plugins'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/embedding/sdk/plugins.md'
 layout: new-docs
+summary: 'Customize modular embedding SDK components with plugins. Control click actions, link handling, and no-data illustrations globally or per-component.'
 ---
 
-# Embedded analytics SDK - plugins
+# Modular embedding SDK - plugins
 
-{% include plans-blockquote.html feature="Embedded analytics SDK" sdk=true %}
+{% include plans-blockquote.html feature="Modular embedding SDK" sdk=true %}
 
-The Metabase Embedded analytics SDK supports plugins to customize the behavior of components. These plugins can be used in a global context or on a per-component basis.
+The Metabase modular embedding SDK supports plugins to customize the behavior of components. These plugins can be used in a global context or on a per-component basis.
 
 ## Plugin scope
 

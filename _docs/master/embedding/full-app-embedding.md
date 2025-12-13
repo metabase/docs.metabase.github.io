@@ -4,35 +4,36 @@ has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
 category: Embedding
-title: 'Interactive embedding'
-source_url: 'https://github.com/metabase/metabase/blob/master/docs/embedding/interactive-embedding.md'
+title: 'Full app embedding'
+source_url: 'https://github.com/metabase/metabase/blob/master/docs/embedding/full-app-embedding.md'
 layout: new-docs
 redirect_from:
     - /docs/master/enterprise-guide/full-app-embedding
     - /docs/master/embedding/full-app-embedding
+    - /docs/master/embedding/interactive-embedding
 ---
 
-# Interactive embedding
+# Full app embedding
 
-{% include plans-blockquote.html feature="Interactive embedding" convert_pro_link_to_embbedding=true %}
+{% include plans-blockquote.html feature="Full app embedding" convert_pro_link_to_embbedding=true %}
 
 {% include shared/in-page-promo-embedding-workshop.html %}
 
-**Interactive embedding** lets you embed the entire Metabase app in an iframe. Interactive embedding integrates your [permissions](../permissions/introduction) and [SSO](../people-and-groups/start#authentication) to give people the right level of access to [query](../questions/query-builder/editor) and [drill-down](/learn/metabase-basics/querying-and-dashboards/questions/drill-through) into your data.
+**Full app embedding** (previously called "interactive embedding") lets you embed the entire Metabase app in an iframe. Full app embedding integrates your [permissions](../permissions/introduction) and [SSO](../people-and-groups/start#authentication) to give people the right level of access to [query](../questions/query-builder/editor) and [drill-down](/learn/metabase-basics/querying-and-dashboards/questions/drill-through) into your data.
 
-> If you are just starting out with Metabase embedding, consider using [Embedded Analytics JS](./embedded-analytics-js) instead of interactive embedding - it's an improved, more customizable option for embedding interactive Metabase elements. Interactive embedding remains fully supported.
+> If you are just starting out with Metabase embedding, consider using [Modular embedding](./modular-embedding) instead of full app embedding - it's an improved, more customizable option for embedding individual Metabase components.
 
-## Interactive embedding demo
+## Full app embedding demo
 
-To get a feel for what you can do with interactive embedding, check out our [interactive embedding demo](/embedding-demo).
+To get a feel for what you can do with full app embedding, check out our [Full app embedding demo](/embedding-demo).
 
 To see the query builder in action, click on **Reports** > **+ New** > **Question**.
 
 ## Quick start
 
-Check out the [Interactive embedding quick start](./interactive-embedding-quick-start-guide).
+Check out the [Full app embedding quick start](./full-app-embedding-quick-start-guide).
 
-## Prerequisites for interactive embedding
+## Prerequisites for full app embedding
 
 1. Make sure you have a [license token](../installation-and-operation/activating-the-enterprise-edition) for a [Pro or Enterprise plan](https://store.metabase.com/checkout/login-details).
 2. Organize people into Metabase [groups](../people-and-groups/start).
@@ -43,10 +44,10 @@ If you're dealing with a [multi-tenant](/learn/metabase-basics/embedding/multi-t
 
 If you have your app running locally, and you're using the Pro Cloud version, or hosting Metabase and your app in different domains, you'll need to set your Metabase environment's session cookie SameSite option to "none".
 
-## Enabling interactive embedding in Metabase
+## Enabling full app embedding in Metabase
 
-1. Go to **Admin > Embedding > Interactive**.
-2. Click **Enable interactive embedding**.
+1. Go to **Admin > Embedding**.
+2. Click **Enable Full app embedding**.
 3. Under **Authorized origins**, add the URL of the website or web app where you want to embed Metabase (such as `https://*.example.com`).
 
 ## Setting up embedding on your website
@@ -57,13 +58,13 @@ If you have your app running locally, and you're using the Pro Cloud version, or
 2. Optional: Depending on the way your web app is set up, set [environment variables](../configuring-metabase/environment-variables) to:
    - [Add your license token](../configuring-metabase/environment-variables#mb_premium_embedding_token).
    - [Embed Metabase in a different domain](#embedding-metabase-in-a-different-domain).
-   - [Secure your interactive embed](#securing-interactive-embeds).
+   - [Secure your embed](#securing-full-app-embeds).
 3. Optional: Enable communication to and from the embedded Metabase using supported [`postMessage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage) messages:
    - [From Metabase](#supported-postmessage-messages-from-embedded-metabase)
    - [To Metabase](#supported-postmessage-messages-to-embedded-metabase)
 4. Optional: Set parameters to [show or hide Metabase UI components](#showing-or-hiding-metabase-ui-components).
 
-Once you're ready to roll out your interactive embed, make sure that people **allow** browser cookies from Metabase, otherwise they won't be able to log in.
+Once you're ready to roll out your full app embed, make sure that people **allow** browser cookies from Metabase, otherwise they won't be able to log in.
 
 ### Pointing an iframe to a Metabase URL
 
@@ -127,7 +128,7 @@ https://metabase.example.com/auth/sso?jwt=<token>&redirect=%2Fdashboard%2F1%3Ffi
 
 To make sure that your embedded Metabase works in all browsers, put Metabase and the embedding app in the same top-level domain (TLD). The TLD is indicated by the last part of a web address, like `.com` or `.org`.
 
-Note that your interactive embed must be compatible with Safari to run on _any_ browser in iOS (such as Chrome on iOS).
+Note that your full app embed must be compatible with Safari to run on _any_ browser in iOS (such as Chrome on iOS).
 
 ## Embedding Metabase in a different domain
 
@@ -149,9 +150,9 @@ If you're using Safari, you'll need to [allow cross-site tracking](https://suppo
 
 Learn more about [SameSite cookies](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie/SameSite).
 
-## Securing interactive embeds
+## Securing full app embeds
 
-Metabase uses HTTP cookies to authenticate people and keep them signed into your embedded Metabase, even when someone closes their browser session. If you enjoy diagrammed auth flows, check out [Interactive embedding with SSO](./securing-embeds).
+Metabase uses HTTP cookies to authenticate people and keep them signed into your embedded Metabase, even when someone closes their browser session. If you enjoy diagrammed auth flows, check out [Full app embedding with SSO](./securing-embeds).
 
 To limit the amount of time that a person stays logged in, set [`MAX_SESSION_AGE`](../configuring-metabase/environment-variables#max_session_age) to a number in minutes. The default value is 20,160 (two weeks).
 
@@ -238,18 +239,18 @@ Additionally, each person within a single customer account could also be a membe
 
 ## Showing or hiding Metabase UI components
 
-See [interactive UI components](./interactive-ui-components)
+See [full app UI components](./full-app-ui-components). For more granular control over embedded components, consider using [Modular embedding](./modular-embedding) instead.
 
 ## Reference apps
 
-To build a sample interactive embed using SSO with JWT, see our reference apps:
+To build a sample full app embed using SSO with JWT, see our reference apps:
 
-- [Node.js + Express](https://github.com/metabase/metabase-nodejs-express-interactive-embedding-sample) (with [quick start guide](./interactive-embedding-quick-start-guide))
+- [Node.js + Express](https://github.com/metabase/metabase-nodejs-express-interactive-embedding-sample) (with [quick start guide](./full-app-embedding-quick-start-guide))
 - [Node.js + React](https://github.com/metabase/sso-examples/tree/master/app-embed-example)
 
 ## Further reading
 
-- [Interactive embedding quick start](./interactive-embedding-quick-start-guide)
+- [Full app embedding quick start](./full-app-embedding-quick-start-guide)
 - [Strategies for delivering customer-facing analytics](/learn/metabase-basics/embedding/overview).
 - [Permissions strategies](/learn/metabase-basics/administration/permissions/strategy).
 - [Customizing Metabase's appearance](../configuring-metabase/appearance).

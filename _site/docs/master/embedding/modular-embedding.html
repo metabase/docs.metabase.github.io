@@ -6,7 +6,7 @@
   <meta content="frame-ancestors 'none'" http-equiv="Content-Security-Policy">
   <meta content="deny" http-equiv="X-Frame-Options">
     
-  <link href="https://www.metabase.com/docs/master/installation-and-operation/upgrading-metabase" rel="canonical">
+  <link href="https://www.metabase.com/docs/master/embedding/modular-embedding" rel="canonical">
   
 
   <script type="text/javascript">
@@ -49,12 +49,12 @@
 
 
 
-<title>Upgrading Metabase | Metabase Documentation</title>
+<title>Modular embedding | Metabase Documentation</title>
 <!-- Twitter cards -->
 <meta name="twitter:site" content="@metabase">
 
-<meta name="twitter:title" content="Upgrading Metabase | Metabase Documentation">
-<meta name="twitter:description" content="Upgrading Metabase This page covers how to upgrade to a new Metabase release.  Announcement posts for major releases Changelogs. Release notes on GitHub.  Upgrading Metabase Cloud If you’re on a Metabase Cloud plan, we’ll...">
+<meta name="twitter:title" content="Modular embedding | Metabase Documentation">
+<meta name="twitter:description" content="Getting started with modular embedding for embedding Metabase entities into external applications">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -62,9 +62,9 @@
 <!-- Open Graph metadata -->
 <meta property="og:site_name" content="Metabase | Business Intelligence, Dashboards, and Data Visualization">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://www.metabase.com/docs/master/installation-and-operation/upgrading-metabase">
-<meta name="title" property="og:title" content="Upgrading Metabase | Metabase Documentation">
-<meta name="description" property="og:description" content="Upgrading Metabase This page covers how to upgrade to a new Metabase release.  Announcement posts for major releases Changelogs. Release notes on GitHub.  Upgrading Metabase Cloud If you’re on a Metabase Cloud plan, we’ll...">
+<meta property="og:url" content="https://www.metabase.com/docs/master/embedding/modular-embedding">
+<meta name="title" property="og:title" content="Modular embedding | Metabase Documentation">
+<meta name="description" property="og:description" content="Getting started with modular embedding for embedding Metabase entities into external applications">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -3339,7 +3339,7 @@ Roadmap</a>
 
       
 
-      <li class="expanded">
+      <li class="">
         <a href="/docs/master/installation-and-operation/start" class="">
         Installation
 
@@ -3459,7 +3459,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/master/installation-and-operation/upgrading-metabase" class="selected">
+                <a href="/docs/master/installation-and-operation/upgrading-metabase" class="">
                   Upgrading Metabase
 
                   
@@ -5288,7 +5288,7 @@ Roadmap</a>
 
             
             
-                <li class="breadcrumb-item"><a class="blue-60" href="/docs/master/installation-and-operation/start">Installation and Operation</a></li>
+                <li class="breadcrumb-item"><a class="blue-60" href="/docs/master/embedding/start">Embedding</a></li>
             
             
         </ol>
@@ -5435,211 +5435,527 @@ Roadmap</a>
 </div>
 
 
-        <h1 id="upgrading-metabase">Upgrading Metabase</h1>
+        <h1 id="modular-embedding">Modular embedding</h1>
 
-<p>This page covers how to upgrade to a new Metabase release.</p>
+<div class="bootstrap">
+  <div class="plans-blockquote bg-blue-95 rounded-3 p-6 d-flex flex-row border border-1 border-primary">
+    <svg class="" width="24" height="24" viewBox="0 0 26 26" fill="none">
+  <path d="M12 13V15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
+  <path d="M12 10C12.5523 10 13 9.55228 13 9C13 8.44772 12.5523 8 12 8C11.4477 8 11 8.44772 11 9C11 9.55228 11.4477 10 12 10Z" fill="#509EE3"></path>
+  <path d="M12 19.25C16.0041 19.25 19.25 16.0041 19.25 12C19.25 7.99594 16.0041 4.75 12 4.75C7.99594 4.75 4.75 7.99594 4.75 12C4.75 16.0041 7.99594 19.25 12 19.25Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
+</svg>
+
+    
+    
+    
+      
+
+    <p class="m-0 ms-2 paragraph-5 neutral-40">
+       Modular embedding is only available on
+      <a class="fw-bold" href="/product/pro">Pro</a> and
+      <a class="fw-bold link-purple" href="/product/enterprise">Enterprise</a>
+      plans  (both self-hosted and on Metabase Cloud).
+    </p>
+  </div>
+</div>
+
+<p>Modular embedding lets you embed Metabase entities like questions, dashboards, or even the query builder into your own application using customizable components.</p>
+
+<div>
+  <a href="/events/interactive-embedding-workshop" class="in-page-promo">
+    <img alt="interactive-embedding-workshop" class="no-zoom" src="/images/events/categories/embedding-workshop.png" loading="lazy">
+    <div>
+      <p>
+        Embed a real dashboard in just 30 minutes.
+      </p>
+      <p class="anchor-like">
+        Join our next Embedded Analytics Workshop<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="chevron">
+<path opacity="0.9" d="M3 8.96338L16 21.9634L29 8.96338" stroke="#509ee3" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+
+      </p>
+    </div>
+  </a>
+</div>
+
+<p>Modular embedding allows you to embed individual Metabase components (like questions, dashboards, or a query builder) using a simple drop-in script. You don’t need to write embedding code on your own - just use the built-in wizard to create a code snippet, and paste it into your app.</p>
+
+<p>Unlike with <a href="./full-app-embedding">full app embedding</a>, where you embed the entire Metabase app in an iframe, modular embedding lets you choose from a set of predefined components like a single chart, a dashboard with optional drill-through, or query builder, and customize those components.</p>
+
+<p>Modular embedding uses <a href="../people-and-groups/authenticating-with-jwt">JWT</a> or <a href="../people-and-groups/authenticating-with-saml">SAML</a> to authenticate people and automatically apply the right permissions.</p>
+
+<p>Currently you can choose to embed:</p>
 
 <ul>
-  <li><a href="/releases">Announcement posts for major releases</a></li>
-  <li><a href="/changelog">Changelogs</a>.</li>
-  <li><a href="https://github.com/metabase/metabase/releases">Release notes on GitHub</a>.</li>
+  <li>A dashboard</li>
+  <li>A question (chart). You can embed both questions built with the query builder and questions built with SQL.</li>
+  <li>Full graphical <a href="../questions/query-builder/editor">query builder</a> to enable people to build their own charts and explorations.</li>
+  <li>A browser to navigate collections and open dashboards or questions.</li>
+  <li><a href="./sdk/ai-chat">AI chat interface</a>.</li>
 </ul>
 
-<h2 id="upgrading-metabase-cloud">Upgrading Metabase Cloud</h2>
+<h2 id="quickstart">Quickstart</h2>
 
-<p>If you’re on a <a href="/pricing/">Metabase Cloud</a> plan, we’ll upgrade your Metabase automatically with each new release; no action needed on your end (<a href="#instances-using-the-modular-embedding-sdk-on-metabase-cloud-must-request-an-upgrade">unless you’re using the modular embedding SDK</a>).</p>
+<p>You can also follow the setup guide directly in Metabase in <strong>Admin settings &gt; Embedding &gt; Setup guide</strong>. We’re recording the steps here for convenience.</p>
 
-<p>How soon we upgrade you depends on the type of release:</p>
-
-<ul>
-  <li>Minor releases (e.g., x.54.4 to x.54.5): Usually about a week.</li>
-  <li>Major releases (e.g., x.53.4 to x.54.1): Longer, usually months (just to make sure everything goes smoothly).</li>
-</ul>
-
-<p>Cloud customers can request an early upgrade by emailing support at help@metabase.com. Include the URL of the Metabase you want us to upgrade.</p>
-
-<h3 id="instances-using-the-modular-embedding-sdk-on-metabase-cloud-must-request-an-upgrade">Instances using the modular embedding SDK on Metabase Cloud must request an upgrade</h3>
-
-<p>If you’re using the <a href="../embedding/sdk/introduction">modular embedding SDK</a> on Metabase Cloud, we pin your version so that it doesn’t upgrade automatically, as you should test the changes before upgrading.</p>
-
-<p>To upgrade your Metabase, you’ll need to request an upgrade by <a href="/help-premium">contacting support</a>.</p>
-
-<p>See our <a href="../embedding/sdk/upgrade">upgrade guide for the modular embedding SDK</a>.</p>
-
-<h2 id="upgrading-a-self-hosted-metabase">Upgrading a self-hosted Metabase</h2>
-
-<p>Here are the steps for upgrading to a new Metabase version (major or minor):</p>
-
-<h3 id="1-back-up-of-your-application-database">1. Back up of your application database</h3>
-
-<p>The application database keeps track of every single thing (but the data of your connected database) of your Metabase instance. While it’s unlikely you’ll need to roll back to your current version, a backup will do wonders for your peace of mind in case something goes wrong.</p>
-
-<p>See <a href="backing-up-metabase-application-data">Backing up Metabase application data</a>.</p>
-
-<h3 id="2-swap-in-the-new-metabase-version">2. Swap in the new Metabase version</h3>
-
-<p>Steps differ depending on whether you’re running the container image or the JAR.</p>
-
-<p><strong>Upgrading the container image</strong></p>
+<h3 id="1-enable-modular-embedding">1. Enable modular embedding</h3>
 
 <ol>
-  <li>
-    <p>Stop the current container.</p>
-  </li>
-  <li>
-    <p>Pull the latest Metabase Docker image (though we recommend that you pull a specific tag instead of using <code class="language-plaintext highlighter-rouge">latest</code>).</p>
-
-    <p>Metabase Open Source:</p>
-
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker pull metabase/metabase:latest
-</code></pre></div>    </div>
-
-    <p>Metabase Pro or Enterprise:</p>
-
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker pull metabase/metabase-enterprise:latest
-</code></pre></div>    </div>
-  </li>
-  <li>
-    <p>Start the new container image. Depending on the ports and container name, the command will look something like:</p>
-
-    <p>Metabase Open Source:</p>
-
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run -d -p 3000:3000 -e MB_DB_CONNECTION_URI="jdbc:postgresql://&lt;host&gt;:5432/metabase?user=&lt;username&gt;&amp;password=&lt;password&gt;" --name metabase metabase/metabase:latest
-</code></pre></div>    </div>
-
-    <p>Metabase Pro or Enterprise:</p>
-
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run -d -p 3000:3000 -e MB_DB_CONNECTION_URI="jdbc:postgresql://&lt;host&gt;:5432/metabase?user=&lt;username&gt;&amp;password=&lt;password&gt;" --name metabase metabase/metabase-enterprise:latest
-</code></pre></div>    </div>
-  </li>
+  <li>In Metabase, go to <strong>Admin settings &gt; Embedding</strong>.</li>
+  <li>Toggle on <strong>Enable modular embedding</strong>.</li>
+  <li>Under <strong>Cross-Origin Resource Sharing (CORS)</strong>, add the URLs of the websites where you want to embed Metabase (such as <code class="language-plaintext highlighter-rouge">https://*.example.com</code>). For testing embeds, you can use <code class="language-plaintext highlighter-rouge">localhost</code> which is always included in CORS policy.</li>
+  <li>If you are embedding Metabase components in a domain that’s different from your Metabase’s domain (including when you’re testing the app locally but use Metabase Cloud), go to <strong>Admin settings &gt; Embedding &gt; Security</strong> and set <strong>SameSite cookie</strong> to <strong>None</strong>.</li>
 </ol>
 
-<p>On startup, Metabase will perform the upgrade automatically. Once Metabase has completed the upgrade, you’ll be running the new version.</p>
-
-<p><strong>Upgrading the JAR</strong></p>
-
-<p>To upgrade, you’ll need to stop the service, replace the JAR with the newer version, and restart the service.</p>
-
-<p>E.g., if you’re running Metabase on Debian as a service using Nginx.</p>
+<h3 id="2-create-a-new-embed">2. Create a new embed</h3>
 
 <ol>
   <li>
-    <p>Stop the Metabase service. Assuming you called your service <code class="language-plaintext highlighter-rouge">metabase.service</code>, you’ll run:</p>
+    <p>In Metabase, open a command palette with Ctrl/Cmd+K, type “New embed” and select “new embed” command. This will open the interactive wizard that you can use to set up your embed.</p>
 
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo systemctl stop metabase.service
-</code></pre></div>    </div>
+    <p>If you’re planning to embed an existing question or dashboard, you can instead go straight to that question or dashboard, click on the <strong>Share</strong> button, and choose <strong>Embed</strong>.</p>
   </li>
   <li>
-    <p>Download the latest version of the JAR file:</p>
+    <p>Choose the <em>type</em> of entity to embed:</p>
 
     <ul>
-      <li><a href="/start/oss/jar">Metabase Open Source JAR</a></li>
-      <li><a href="https://downloads.metabase.com/enterprise/latest/metabase.jar">Metabase Pro or Enterprise JAR</a></li>
+      <li>Dashboard</li>
+      <li>Chart</li>
+      <li>Exploration (which will embed the Metabase query builder)</li>
+      <li>Browser</li>
+      <li>Metabot question (which will embed AI chat)</li>
     </ul>
   </li>
-</ol>
-
-<p>And replace the current (older) Metabase JAR file with the newer JAR you downloaded.</p>
-
-<ol>
   <li>
-    <p>Restart the service:</p>
-
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo systemctl restart metabase.service
-</code></pre></div>    </div>
+    <p>Next, select the entity you want to embed. For browser, pick the collection you want people to start from.</p>
   </li>
 </ol>
 
-<h2 id="upgrading-from-older-versions-of-metabase">Upgrading from older versions of Metabase</h2>
+<p>Once you’ve selected what you want to embed, click Next to customize your embed.</p>
 
-<p>If you’re on a Metabase version older than Metabase 40, you’ll need to upgrade release by release until you’re on the latest version of Metabase 40. From the latest version of Metabase 40, you can then jump to the current version of Metabase.</p>
+<h3 id="3-customize-your-embed">3. Customize your embed</h3>
 
-<p>For example, if you’re running Metabase 1.38, your upgrade path would look like:</p>
+<p>The exact customization options you see will depend on what type of entity you’re embedding. You’ll see a live preview of how the embed will look with your chosen options. Check out <a href="#customizing-embeds">Customizing embeds</a> for more details on customization options.</p>
 
-<ul>
-  <li>1.38.X</li>
-  <li>1.39.X</li>
-  <li>1.40.X</li>
-  <li>Latest</li>
-</ul>
+<p><img src="./images/embed-flow-options.png" alt="Customizing embeds"></p>
 
-<p>With X being the latest version available for each release.</p>
+<p>You’ll also be able to pick brand, text, and background color used for all your embeds. To configure other colors (e.g. secondary colors, query builder colors etc), as well as font, you can specify a <a href="#theming">theme</a> in your embed code snippet.</p>
 
-<p>Check out a list of <a href="https://github.com/metabase/metabase/releases">Metabase releases</a>.</p>
+<p>All the customization options you select in this interactive flow will be reflected in the parameter values in the embed code, so you’ll be able to adjust them later by editing the embed snippet.</p>
 
-<p>When upgrading between major versions (e.g. v53.x to v54.x), use the latest minor version available for that major version. E.g., if you want to upgrade from v50 to v51, use the latest point version available for 51.</p>
+<p>Once you’re done customizing your embed, click “Next”.</p>
 
-<h2 id="upgrading-metabase-on-other-platforms">Upgrading Metabase on other platforms</h2>
+<h3 id="4-select-authentication-method">4. Select authentication method</h3>
+
+<p>You’ll get a choice between “Existing Metabase session” and “Single sign-on (SSO)”.</p>
 
 <ul>
-  <li><a href="running-metabase-on-azure#additional-configurations">Upgrading Azure Web Apps deployments</a></li>
+  <li>
+    <p>If you select <strong>Existing Metabase session</strong>, you’ll be able to preview your embeds as the user you’re currently logged into Metabase, and only in the same browser as your current session. Not all browsers are supported - we recommend using Google Chrome. To test out embedding in other contexts, you can use <a href="#use-api-keys-to-test-embeds">API keys</a> instead. For production usage, use <a href="#set-up-sso">SSO</a>.</p>
+  </li>
+  <li>
+    <p>If you set up JWT in your Metabase instance, you’ll be able to select <strong>Single sign-on (SSO)</strong>, see <a href="#set-up-sso">Set up SSO</a>.</p>
+  </li>
 </ul>
 
-<h2 id="what-happens-during-an-upgrade-or-downgrade">What happens during an upgrade or downgrade?</h2>
+<h3 id="5-add-the-embedding-script-into-your-app">5. Add the embedding script into your app</h3>
 
-<p>During a <strong>major version</strong> upgrade (e.g., 53.1 or 54.1), Metabase will:</p>
+<p>Metabase will generate a code snippet that you can copy and paste into your app, see <a href="#embed-code-snippets">Embed code snippets</a> for an example. You can later modify this code snippet to specify additional appearance options or change the behavior of some components.</p>
 
-<ul>
-  <li>Perform all the migrations needed to upgrade to the new version, such as any schema changes to the application database between the two versions.</li>
-  <li>Keep all the metadata it needs to work on the application database.</li>
-</ul>
+<p>Add the code snippet into your app, and refresh the page.</p>
 
-<p>Metabase will do all this automatically.</p>
+<h2 id="each-end-user-should-have-their-own-metabase-account">Each end user should have their own Metabase account</h2>
 
-<p>If you need to downgrade after a major version upgrade, you’ll either need to restore from a backup, or manually migrate to a lower version, otherwise Metabase may refuse to start (see the next section).</p>
+<p>Each end-user must have their own Metabase account.</p>
 
-<p>During a <strong>minor version upgrade</strong> (e.g., 54.1 to 54.2), the new Metabase container or Jar will just work. Only in rare cases will it have to perform a migration, but, like with major version upgrades, Metabase will perform the migration automatically. And of course, you’re backing up your application database each time you upgrade, right?</p>
+<p>The problem with having end-users share a Metabase account is that, even if you filter data on the client side via the modular embedding, all end-users will still have access to the session token, which they could use to access Metabase directly via the API to get data they’re not supposed to see.</p>
 
-<h2 id="rolling-back-an-upgrade-or-to-an-older-version">Rolling back an upgrade or to an older version</h2>
+<p>If each end-user has their own Metabase account, however, you can configure permissions in Metabase and everyone will only have access to the data they should.</p>
 
-<blockquote>
-  <p><strong>The downgrade command must be run on the JAR with the higher version number.</strong></p>
-</blockquote>
+<p>In addition to this, we consider shared accounts to be unfair usage. Fair usage of modular embedding involves giving each end-user of the embedded analytics their own Metabase account.</p>
 
-<p>In general, regular backups (especially backups before upgrading), are the best policy, so we recommend reverting to a backup of your application database to roll back an upgrade.</p>
+<h2 id="embed-code-snippets">Embed code snippets</h2>
 
-<p>But if you’ve made any change (adding new questions/dashboards, etc) since upgrading that you want to keep, you may be able to use the <code class="language-plaintext highlighter-rouge">migrate down</code> command to roll back your Metabase application database to support the previous Metabase version you were running. When Metabase upgrades to a new version, it runs migrations that may change the application database schema. The <code class="language-plaintext highlighter-rouge">migrate down</code> command undoes those schema changes. In general, we recommend restoring from a backup (the backup that you remembered to generate before upgrading), and only using the <code class="language-plaintext highlighter-rouge">migrate down</code> command if you need to keep changes made after your upgrade.</p>
-
-<h3 id="using-the-migrate-down-command">Using the migrate down command</h3>
-
-<p>Stop your Metabase and use the current, upgraded Metabase JAR (not the Metabase JAR you want to roll back to) to complete the rollback with the <code class="language-plaintext highlighter-rouge">migrate down</code> command. Make sure that the connection details for your application database are set in the environment variables, for example:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>export MB_DB_TYPE=postgres
-export MB_DB_DBNAME=metabaseappdb
-export MB_DB_PORT=5432
-export MB_DB_USER=username
-export MB_DB_PASS=password
-export MB_DB_HOST=localhost
-java --add-opens java.base/java.nio=ALL-UNNAMED -jar metabase.jar migrate down
-</code></pre></div></div>
-
-<p>If you’re running Docker, use the command <code class="language-plaintext highlighter-rouge">"migrate down"</code> (with the quotes around <code class="language-plaintext highlighter-rouge">"migrate down"</code>), and include the connection details for your application database, for example:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run
-  -e "MB_DB_TYPE=postgres" \
-  -e "MB_DB_DBNAME=metabaseappdb" \
-  -e "MB_DB_PORT=5432" \
-  -e "MB_DB_USER=name" \
-  -e "MB_DB_PASS=password" \
-  -e "MB_DB_HOST=my-database-host" \
---rm metabase/metabase:&lt;tag&gt; "migrate down"
-</code></pre></div></div>
-
-<p>Note the quotes around <code class="language-plaintext highlighter-rouge">"migrate down"</code>. You can also just open a shell into the container and run the migrate command inside it.</p>
-
-<p>Once the migration process completes, start up Metabase using the JAR or container image for the version you want to run.</p>
-
-<h2 id="upgrading-metabase-running-in-a-cluster">Upgrading Metabase running in a cluster</h2>
-
-<p>If you’re running Metabase in a cluster:</p>
+<p>The code snippets to embed Metabase entities using modular embedding should have three parts:</p>
 
 <ol>
-  <li>Reduce the number of nodes to a single node. You can’t upgrade all nodes at the same time because the upgrade process works by acquiring a migration lock on the application database from a single client, which performs the migration. If you keep more than one node active when you do a major version upgrade, the application won’t behave correctly, as schema changes to the application database could cause problems for nodes that are still running the older version of Metabase.</li>
-  <li>Perform the upgrade as normal (as outlined above).</li>
-  <li>Raise the number of nodes to the same number you had before.</li>
+  <li>Loading the modular embedding library from your Metabase instance.</li>
+  <li>Global configuration settings to be used for all embeds, like the URL of your Metabase instance, appearance themes, etc. See <a href="#configuring-embeds">Configuring embeds</a>.</li>
+  <li>Components for Metabase entities to be embedded, with their parameters. See <a href="#components">Components</a>.</li>
 </ol>
 
-<p>Make sure you container orchestrator or cluster manager doesn’t kill the Metabase process while it’s performing the migrations, otherwise you’ll may end up with a corrupted application database and you’ll need to restore from a backup.</p>
+<p>Here’s an example of a script:</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">&lt;!-- Load embedding library --&gt;</span>
+<span class="c">&lt;!-- REPLACE WITH YOUR METABASE URL HERE --&gt;</span>
+<span class="nt">&lt;script </span><span class="na">defer</span> <span class="na">src=</span><span class="s">"https://your-metabase-url/app/embed.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script&gt;</span>
+  <span class="kd">function</span> <span class="nf">defineMetabaseConfig</span><span class="p">(</span><span class="nx">config</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nb">window</span><span class="p">.</span><span class="nx">metabaseConfig</span> <span class="o">=</span> <span class="nx">config</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="nt">&lt;/script&gt;</span>
+
+<span class="c">&lt;!-- Embedding configuration --&gt;</span>
+<span class="nt">&lt;script&gt;</span>
+  <span class="nf">defineMetabaseConfig</span><span class="p">({</span>
+    <span class="na">instanceUrl</span><span class="p">:</span> <span class="dl">"</span><span class="s2">https://your-metabase-url</span><span class="dl">"</span><span class="p">,</span>
+    <span class="na">theme</span><span class="p">:</span> <span class="p">{</span>
+      <span class="na">colors</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">background</span><span class="p">:</span> <span class="dl">"</span><span class="s2">#ffffff</span><span class="dl">"</span><span class="p">,</span>
+      <span class="p">},</span>
+    <span class="p">},</span>
+  <span class="p">});</span>
+<span class="nt">&lt;/script&gt;</span>
+
+<span class="c">&lt;!--Embedded entities --&gt;</span>
+<span class="nt">&lt;metabase-question</span> <span class="na">question-id=</span><span class="s">"1"</span><span class="nt">&gt;&lt;/metabase-question&gt;</span>
+
+<span class="nt">&lt;metabase-dashboard</span> <span class="na">dashboard-id=</span><span class="s">"2"</span> <span class="na">with-title=</span><span class="s">"false"</span><span class="nt">&gt;&lt;/metabase-dashboard&gt;</span>
+</code></pre></div></div>
+
+<p>Note the <code class="language-plaintext highlighter-rouge">defer</code> attribute and the reference to your Metabase URL in the script that loads <code class="language-plaintext highlighter-rouge">embed.js</code> library.</p>
+
+<p>If you’re embedding multiple entities in a single page, you only need to include the <code class="language-plaintext highlighter-rouge">&lt;script&gt;</code> tags once globally.</p>
+
+<p>You can also generate the code snippet for modular embedding interactively in Metabase through <strong>Admin &gt; Embedding &gt; Setup guide &gt; Embed in your code</strong>. Check out the <a href="#quickstart">quickstart</a>.</p>
+
+<h2 id="customizing-embeds">Customizing embeds</h2>
+
+<p>The exact customization options you see will depend on what type of entity you’re embedding.</p>
+
+<p>When you’re creating a new embed using <strong>Admin &gt; Embedding &gt; Setup guide &gt; Embed in your code</strong>, you’ll see the following customization options in the interactive creation flow. These options correspond to parameters in <a href="#components">components</a>.</p>
+
+<ul>
+  <li>
+    <p><strong>Allow people to drill through on data points</strong>: determines whether people can interact with the chart (or charts on a dashboard). Interactivity includes <a href="/learn/metabase-basics/querying-and-dashboards/questions/drill-through">drilling down</a> to individual records from aggregated questions, filtering on click, zooming in, etc. Disabling drill-through for an embedded <em>question</em> also disables people’s ability to add filters and summaries.</p>
+  </li>
+  <li>
+    <p><strong>Allow downloads</strong>: determines whether people can download question results and save dashboards as PDFs.</p>
+  </li>
+  <li>
+    <p><strong>Allow people to save new questions</strong>. If you embed the query builder but disable this option, people can still do their own explorations, they just won’t be able to save them.</p>
+  </li>
+  <li>
+    <p><strong>Parameters</strong>: for dashboard filters, SQL variables, and time grouping parameters, you can add default values. Default values set here override the default values set at the dashboard or question level. For dashboard filters and parameters, you can choose whether to hide the parameter.</p>
+  </li>
+  <li>
+    <p><strong>Show title</strong>: what it says on the tin.</p>
+  </li>
+  <li>
+    <p><strong>Allow editing dashboards and questions</strong>: lets people create and edit dashboards or questions in the current collection. When disabled, they can still perform actions like filter, summarize, and drill-through, but won’t be able to save results.</p>
+  </li>
+</ul>
+
+<h2 id="configuring-embeds">Configuring embeds</h2>
+
+<p>To define the configuration that applies to every embed on the page, use the <code class="language-plaintext highlighter-rouge">defineMetabaseConfig()</code> function. Its parameters include:</p>
+
+<ul>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">instanceUrl: "https://your-metabase-url"</code> (required): the URL of your Metabase instance, like <code class="language-plaintext highlighter-rouge">https://youlooknicetoday.metabaseapp.com</code></p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">theme: {...}</code> (optional): <a href="#theming">appearance options for the embeds</a>.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">useExistingUserSession: true|false</code> (optional, for development only) - lets you preview the embed locally using your Metabase admin account session. Only supported in Google Chrome.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">apiKey: mb_YourAPIKey</code> (optional, for development only) - another way to preview embeds locally using an API key.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">fetchRequestToken: () =&gt; Promise&lt;{ jwt: string }&gt;</code> (optional) - you can customize how the SDK fetches the refresh token for JWT authentication by specifying the <code class="language-plaintext highlighter-rouge">fetchRequestToken</code> function. See <a href="./sdk/authentication#customizing-jwt-authentication">customizing JWT authentication</a>.</p>
+  </li>
+</ul>
+
+<h3 id="theming">Theming</h3>
+
+<p>You can specify colors, fonts, spacing, and other appearance options using the <code class="language-plaintext highlighter-rouge">theme</code> parameter in your embed configuration.</p>
+
+<p>For example, this code defines the font, color, and size for text, background colors, and colors for filters and summaries:</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;script&gt;</span>
+  <span class="nf">defineMetabaseConfig</span><span class="p">({</span>
+    <span class="na">instanceUrl</span><span class="p">:</span> <span class="dl">"</span><span class="s2">https://your-metabase-url</span><span class="dl">"</span><span class="p">,</span>
+    <span class="na">theme</span><span class="p">:</span> <span class="p">{</span>
+      <span class="na">fontFamily</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Lato</span><span class="dl">"</span><span class="p">,</span>
+      <span class="na">fontSize</span><span class="p">:</span> <span class="dl">"</span><span class="s2">16px</span><span class="dl">"</span><span class="p">,</span>
+      <span class="na">colors</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">background</span><span class="p">:</span> <span class="dl">"</span><span class="s2">#11123d</span><span class="dl">"</span><span class="p">,</span>
+        <span class="dl">"</span><span class="s2">text-primary</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">#f9f9fc</span><span class="dl">"</span><span class="p">,</span>
+        <span class="na">brand</span><span class="p">:</span> <span class="dl">"</span><span class="s2">#50e397</span><span class="dl">"</span><span class="p">,</span>
+        <span class="na">filter</span><span class="p">:</span> <span class="dl">"</span><span class="s2">#7172AD</span><span class="dl">"</span><span class="p">,</span>
+        <span class="na">summarize</span><span class="p">:</span> <span class="dl">"</span><span class="s2">#88BF4D</span><span class="dl">"</span><span class="p">,</span>
+      <span class="p">},</span>
+    <span class="p">},</span>
+  <span class="p">});</span>
+<span class="nt">&lt;/script&gt;</span>
+</code></pre></div></div>
+
+<p>See <a href="./sdk/appearance">appearance</a>.</p>
+
+<h2 id="authentication">Authentication</h2>
+
+<h3 id="use-existing-user-session-to-test-embeds">Use existing user session to test embeds</h3>
+
+<blockquote>
+  <p>Existing sessions can only be used for testing embeds locally. To make your embeds production-ready, you’ll need to implement SSO.</p>
+</blockquote>
+
+<p>If you’re signed into Metabase, you can use that existing session cookie to preview and test your embeds. This only works in the same browser (we recommend Chrome) you’re using for your Metabase session (so it won’t work in Incognito mode).</p>
+
+<p>Add <code class="language-plaintext highlighter-rouge">useExistingUserSession: true</code> to <code class="language-plaintext highlighter-rouge">defineMetabaseConfig()</code> in your embed code. Check out <a href="#configuring-embeds">Configuring embeds</a>.</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;script&gt;</span>
+  <span class="nf">defineMetabaseConfig</span><span class="p">({</span>
+    <span class="na">instanceUrl</span><span class="p">:</span> <span class="dl">"</span><span class="s2">https://your-metabase-url</span><span class="dl">"</span><span class="p">,</span>
+    <span class="na">useExistingUserSession</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+  <span class="p">});</span>
+<span class="nt">&lt;/script&gt;</span>
+</code></pre></div></div>
+
+<p>Note that this will not work in some browsers, or in incognito mode. We recommend using Chrome if you’d like to use existing Metabase sessions to test your embeds.</p>
+
+<h3 id="use-api-keys-to-test-embeds">Use API keys to test embeds</h3>
+
+<blockquote>
+  <p>API keys can only be used for testing embeds locally. To make your embeds production-ready or deploy them to another domain, you’ll need to implement SSO.</p>
+</blockquote>
+
+<p>To use an API key to test your embeds:</p>
+
+<ol>
+  <li>Create an <a href="../people-and-groups/api-keys">API key</a></li>
+  <li>Add <code class="language-plaintext highlighter-rouge">apiKey: "YOUR_API_KEY"</code> to <code class="language-plaintext highlighter-rouge">defineMetabaseConfig()</code>:</li>
+</ol>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;script&gt;</span>
+  <span class="nf">defineMetabaseConfig</span><span class="p">({</span>
+    <span class="na">instanceUrl</span><span class="p">:</span> <span class="dl">"</span><span class="s2">https://your-metabase-url</span><span class="dl">"</span><span class="p">,</span>
+    <span class="na">apiKey</span><span class="p">:</span> <span class="dl">"</span><span class="s2">mb_hopeyouhaveaniceday</span><span class="dl">"</span><span class="p">,</span>
+  <span class="p">});</span>
+<span class="nt">&lt;/script&gt;</span>
+</code></pre></div></div>
+
+<p>API keys should only be used for testing with trusted people. Anyone with access to the front-end can grab the API key and use it to make requests against the Metabase API. For this reason, we only allow using API keys on localhost.</p>
+
+<h3 id="set-up-sso">Set up SSO</h3>
+
+<p>SSO is required to embed in a domain other than localhost. You can use JWT or SAML SSO. To configure SAML, check out <a href="./sdk/authentication#authenticating-with-saml-sso">Authenticating with SAML</a>. To configure JWT, follow the steps below.</p>
+
+<h4 id="1-in-metabase-configure-jwt-sso">1. In Metabase, configure <a href="../people-and-groups/authenticating-with-jwt">JWT SSO</a>.</h4>
+
+<h4 id="2-in-your-apps-backend-add-a-new-endpoint-to-handle-authentication">2. In your app’s backend, add a new endpoint to handle authentication.</h4>
+
+<p>You’ll need to add a library to your backend to sign your JSON Web Tokens.</p>
+
+<p>For Node.js, we recommend jsonwebtoken:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm <span class="nb">install </span>jsonwebtoken <span class="nt">--save</span>
+</code></pre></div></div>
+
+<p>Next, set up an endpoint on your backend (like <code class="language-plaintext highlighter-rouge">/sso/metabase</code>) that uses your Metabase JWT shared secret to generate a JWT for the authenticated person. <strong>This endpoint must return a JSON object with a <code class="language-plaintext highlighter-rouge">jwt</code> property containing the signed JWT.</strong> For example: <code class="language-plaintext highlighter-rouge">{ "jwt": "your-signed-jwt" }</code>.</p>
+
+<p>This example code for Node.js sets up an endpoint using Express:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nx">express</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">express</span><span class="dl">"</span><span class="p">;</span>
+<span class="k">import</span> <span class="nx">cors</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">cors</span><span class="dl">"</span><span class="p">;</span>
+<span class="k">import</span> <span class="nx">session</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">express-session</span><span class="dl">"</span><span class="p">;</span>
+<span class="k">import</span> <span class="nx">jwt</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">jsonwebtoken</span><span class="dl">"</span><span class="p">;</span>
+<span class="k">import</span> <span class="nx">fetch</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">node-fetch</span><span class="dl">"</span><span class="p">;</span>
+
+<span class="c1">// Replace this with your Metabase URL</span>
+<span class="kd">const</span> <span class="nx">METABASE_INSTANCE_URL</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">YOUR_METABASE_URL_HERE</span><span class="dl">"</span><span class="p">;</span>
+<span class="c1">// Replace this with the JWT signing secret you generated when enabling</span>
+<span class="c1">// JWT SSO in your Metabase.</span>
+<span class="kd">const</span> <span class="nx">METABASE_JWT_SHARED_SECRET</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">YOUR_SECRET_HERE</span><span class="dl">"</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">app</span> <span class="o">=</span> <span class="nf">express</span><span class="p">();</span>
+
+<span class="nx">app</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="dl">"</span><span class="s2">/sso/metabase</span><span class="dl">"</span><span class="p">,</span> <span class="k">async </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="c1">// Usually, you'd grab the user from the current session</span>
+  <span class="c1">// Here it's hardcoded for demonstration purposes</span>
+  <span class="c1">// Example:</span>
+  <span class="c1">// const { user } = req.session;</span>
+  <span class="kd">const</span> <span class="nx">user</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">email</span><span class="p">:</span> <span class="dl">"</span><span class="s2">rene@example.com</span><span class="dl">"</span><span class="p">,</span>
+    <span class="na">firstName</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Rene</span><span class="dl">"</span><span class="p">,</span>
+    <span class="na">lastName</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Descartes</span><span class="dl">"</span><span class="p">,</span>
+    <span class="na">group</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Customer</span><span class="dl">"</span><span class="p">,</span>
+  <span class="p">};</span>
+
+  <span class="k">if </span><span class="p">(</span><span class="o">!</span><span class="nx">user</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">no user</span><span class="dl">"</span><span class="p">);</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nf">status</span><span class="p">(</span><span class="mi">401</span><span class="p">).</span><span class="nf">json</span><span class="p">({</span>
+      <span class="na">status</span><span class="p">:</span> <span class="dl">"</span><span class="s2">error</span><span class="dl">"</span><span class="p">,</span>
+      <span class="na">message</span><span class="p">:</span> <span class="dl">"</span><span class="s2">not authenticated</span><span class="dl">"</span><span class="p">,</span>
+    <span class="p">});</span>
+
+    <span class="k">return</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="kd">const</span> <span class="nx">token</span> <span class="o">=</span> <span class="nx">jwt</span><span class="p">.</span><span class="nf">sign</span><span class="p">(</span>
+    <span class="p">{</span>
+      <span class="na">email</span><span class="p">:</span> <span class="nx">user</span><span class="p">.</span><span class="nx">email</span><span class="p">,</span>
+      <span class="na">first_name</span><span class="p">:</span> <span class="nx">user</span><span class="p">.</span><span class="nx">firstName</span><span class="p">,</span>
+      <span class="na">last_name</span><span class="p">:</span> <span class="nx">user</span><span class="p">.</span><span class="nx">lastName</span><span class="p">,</span>
+      <span class="na">groups</span><span class="p">:</span> <span class="p">[</span><span class="nx">user</span><span class="p">.</span><span class="nx">group</span><span class="p">],</span>
+      <span class="na">exp</span><span class="p">:</span> <span class="nb">Math</span><span class="p">.</span><span class="nf">round</span><span class="p">(</span><span class="nb">Date</span><span class="p">.</span><span class="nf">now</span><span class="p">()</span> <span class="o">/</span> <span class="mi">1000</span><span class="p">)</span> <span class="o">+</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">10</span><span class="p">,</span> <span class="c1">// 10 minutes expiration</span>
+    <span class="p">},</span>
+    <span class="nx">METABASE_JWT_SHARED_SECRET</span><span class="p">,</span>
+  <span class="p">);</span>
+  <span class="c1">// The user backend should return a JSON object with the JWT.</span>
+  <span class="nx">res</span><span class="p">.</span><span class="nf">status</span><span class="p">(</span><span class="mi">200</span><span class="p">).</span><span class="nf">json</span><span class="p">({</span> <span class="na">jwt</span><span class="p">:</span> <span class="nx">token</span> <span class="p">});</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<p>See more examples in the <a href="./sdk/authentication#2-add-a-new-endpoint-to-your-backend-to-handle-authentication">Embedding SDK docs</a>.</p>
+
+<h4 id="3-embeds-will-use-sso-automatically-by-default">3. Embeds will use SSO automatically by default</h4>
+
+<p>By default, Metabase uses JWT SSO, but you can specify another auth method. To turn on SSO, make sure you <em>don’t</em> set your configuration to <code class="language-plaintext highlighter-rouge">apiKey</code> or <code class="language-plaintext highlighter-rouge">useExistingUserSession</code>.</p>
+
+<h2 id="components">Components</h2>
+
+<p>There are different components available that enable different experiences for the end-user.</p>
+
+<blockquote>
+  <p>While you can use component parameters to show or hide parts of the embedded component, these parameters are <em>not</em> a substitute for <a href="../permissions/start">permissions</a>. Even if you hide stuff, people could still grab their token from the frontend and use it to query the Metabase API.</p>
+</blockquote>
+
+<h3 id="dashboard">Dashboard</h3>
+
+<p>To render a dashboard:</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;metabase-dashboard</span> <span class="na">dashboard-id=</span><span class="s">"1"</span> <span class="na">with-title=</span><span class="s">"true"</span> <span class="na">with-downloads=</span><span class="s">"false"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;/metabase-dashboard&gt;</span>
+</code></pre></div></div>
+
+<p><strong>Required parameters:</strong></p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">dashboard-id</code> - This can be a regular ID or an entity ID. <a href="../installation-and-operation/serialization#entity-ids-work-with-embedding">Using Entity IDs</a> in your embeds ensures that the IDs stay stable when exporting from one Metabase and importing to another.</li>
+</ul>
+
+<p><strong>Optional parameters:</strong></p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">with-title</code> (default is true) - show the dashboard title in the embed</li>
+  <li><code class="language-plaintext highlighter-rouge">with-downloads</code> (default is false) - show the button to download the dashboard as PDF and download question results</li>
+  <li><code class="language-plaintext highlighter-rouge">drills</code> (default is true) - lets you drill through the dashboard</li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">initial-parameters</code> - default value for dashboard filters, like <code class="language-plaintext highlighter-rouge">{ 'productId': '42' }</code>.</p>
+
+    <p>Make sure to use single quotes if you are surrounding your attribute value with double quotes:</p>
+
+    <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;metabase-dashboard</span>
+  <span class="na">dashboard-id=</span><span class="s">"1"</span>
+  <span class="na">initial-parameters=</span><span class="s">"{ 'productId': '42' }"</span>
+<span class="nt">&gt;&lt;/metabase-dashboard&gt;</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">hidden-parameters</code> - list of filter names to hide from the dashboard, like <code class="language-plaintext highlighter-rouge">['productId']</code></p>
+
+    <p>Make sure to use single quotes if you are surrounding your attribute value with double quotes:</p>
+
+    <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;metabase-dashboard</span>
+  <span class="na">dashboard-id=</span><span class="s">"1"</span>
+  <span class="na">hidden-parameters=</span><span class="s">"['productId']"</span>
+<span class="nt">&gt;&lt;/metabase-dashboard&gt;</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3 id="question">Question</h3>
+
+<p>To render a question (chart):</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;metabase-question</span> <span class="na">question-id=</span><span class="s">"1"</span><span class="nt">&gt;&lt;/metabase-question&gt;</span>
+</code></pre></div></div>
+
+<p><strong>Required parameters:</strong></p>
+
+<ul>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">question-id</code> - This can be a regular ID or an entity ID. <a href="../installation-and-operation/serialization#entity-ids-work-with-embedding">Using Entity IDs</a> in your embeds ensures that the IDs stay stable when exporting from one Metabase and importing to another.</p>
+
+    <p>Use <code class="language-plaintext highlighter-rouge">question-id="new"</code> to embed the query builder exploration interface.</p>
+  </li>
+</ul>
+
+<p><strong>Optional parameters:</strong></p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">drills</code> (default is true) - lets you drill through the question</li>
+  <li><code class="language-plaintext highlighter-rouge">with-title</code> (default is true) - show the title</li>
+  <li><code class="language-plaintext highlighter-rouge">with-downloads</code> (default is false) - show downloads</li>
+  <li><code class="language-plaintext highlighter-rouge">initial-sql-parameters</code> - default value for SQL parameters, only applicable to native SQL questions, like <code class="language-plaintext highlighter-rouge">{ "productId": "42" }</code></li>
+  <li><code class="language-plaintext highlighter-rouge">is-save-enabled</code> (default is false)</li>
+  <li><code class="language-plaintext highlighter-rouge">target-collection</code> - this is to enforce saving into a particular collection. Values: regular ID, entity ID, <code class="language-plaintext highlighter-rouge">"personal”</code>, <code class="language-plaintext highlighter-rouge">"root”</code></li>
+</ul>
+
+<h3 id="browser">Browser</h3>
+
+<p>To render a collection browser so people can navigate a collection and open dashboards or questions:</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;metabase-browser</span> <span class="na">initial-collection=</span><span class="s">"14"</span> <span class="na">read-only=</span><span class="s">"false"</span><span class="nt">&gt;&lt;/metabase-browser&gt;</span>
+</code></pre></div></div>
+
+<p><strong>Required parameters:</strong></p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">initial-collection</code> - This can be a collection ID or <code class="language-plaintext highlighter-rouge">root</code>. Use a collection ID (e.g., <code class="language-plaintext highlighter-rouge">14</code>) to start in a specific collection. Use <code class="language-plaintext highlighter-rouge">root</code> to start at the top-level, “Our Analytics” collection.</li>
+</ul>
+
+<p><strong>Optional parameters:</strong></p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">read-only</code> (default is true) – if true, people can interact with items (filter, summarize, drill-through) but cannot save. If false, they can create and edit items in the collection.</li>
+</ul>
+
+<h3 id="metabot">Metabot</h3>
+
+<p>To render the AI chat interface:</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;metabase-metabot&gt;&lt;/metabase-metabot&gt;</span>
+</code></pre></div></div>
+
+<p><strong>Required parameters:</strong></p>
+
+<p>None.</p>
+
+<p><strong>Optional parameters:</strong></p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">layout</code> (default is <code class="language-plaintext highlighter-rouge">auto</code>) – how should the browser position the visualization with respect to the chat interface. Possible values are:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">auto</code> (default): Metabot uses the <code class="language-plaintext highlighter-rouge">stacked</code> layout on mobile screens, and a <code class="language-plaintext highlighter-rouge">sidebar</code> layout on larger screens.</li>
+      <li><code class="language-plaintext highlighter-rouge">stacked</code>: the question visualization stacks on top of the chat interface.</li>
+      <li><code class="language-plaintext highlighter-rouge">sidebar</code>: the question visualization appears to the left of the chat interface, which is in the right sidebar.</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="embedding-metabase-in-a-different-domain">Embedding Metabase in a different domain</h2>
+
+<p>If you want to embed Metabase in another domain (say, if Metabase is hosted at <code class="language-plaintext highlighter-rouge">metabase.yourcompany.com</code>, but you want to embed Metabase at <code class="language-plaintext highlighter-rouge">yourcompany.github.io</code>), you can tell Metabase to set the session cookie’s SameSite value to “none”.</p>
+
+<p>You can set session cookie’s SameSite value in <strong>Admin settings</strong> &gt; <strong>Embedding</strong> &gt; <strong>Security</strong> &gt; <strong>SameSite cookie setting</strong>.</p>
+
+<p>SameSite values include:</p>
+
+<ul>
+  <li><strong>Lax</strong> (default): Allows Metabase session cookies to be shared on the same domain. Used for production instances on the same domain.</li>
+  <li><strong>None (requires HTTPS)</strong>: Use “None” when your app and Metabase are hosted on different domains. Incompatible with Safari and iOS-based browsers.</li>
+  <li><strong>Strict</strong> (not recommended): Does not allow Metabase session cookies to be shared with embedded instances. Use this if you do not want to enable session sharing with embedding.</li>
+</ul>
+
+<p>You can also set the <a href="../configuring-metabase/environment-variables#mb_session_cookie_samesite"><code class="language-plaintext highlighter-rouge">MB_SESSION_COOKIE_SAMESITE</code> environment variable</a>.</p>
+
+<p>If you’re using Safari, you’ll need to <a href="https://support.apple.com/en-tj/guide/safari/sfri40732/mac">allow cross-site tracking</a>. Depending on the browser, you may also run into issues when viewing emdedded items in private/incognito tabs.</p>
+
+<p>Learn more about <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie/SameSite">SameSite cookies</a>.</p>
 
 
         <div>
@@ -5693,7 +6009,7 @@ java --add-opens java.base/java.nio=ALL-UNNAMED -jar metabase.jar migrate down
 
   
     <span class="paragraph-6 fs-13 neutral-60" id="page-feedback-footer">
-      Want to improve these docs? <a href="https://github.com/metabase/metabase/blob/master/docs/installation-and-operation/upgrading-metabase.md" target="_blank">Propose a change.</a>
+      Want to improve these docs? <a href="https://github.com/metabase/metabase/blob/master/docs/embedding/modular-embedding.md" target="_blank">Propose a change.</a>
     </span>
   
 </div>
@@ -5715,8 +6031,8 @@ java --add-opens java.base/java.nio=ALL-UNNAMED -jar metabase.jar migrate down
 <script type="text/javascript" src="/js/position-feedback-widget.js"></script>
 
 <script>
-  const pageTitle = `Upgrading Metabase`;
-  const pageURL = '/docs/master/installation-and-operation/upgrading-metabase';
+  const pageTitle = `Modular embedding`;
+  const pageURL = '/docs/master/embedding/modular-embedding';
   const pageURLSplit = pageURL.split('/');
 
   let pageURLPrefix = '/' + pageURLSplit[1] + '/' + pageURLSplit[2];
@@ -6034,6 +6350,8 @@ java --add-opens java.base/java.nio=ALL-UNNAMED -jar metabase.jar migrate down
   <script type="text/javascript" src="/js/blog.js"></script>
   <script type="text/javascript" src="/js/syntax-highlight.js"></script>
 
+  
+    <script type="text/javascript" src="/js/docs/checkpoints.js"></script>
   
 
 </body></html>

@@ -4,14 +4,15 @@ has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
 category: Embedding
-title: 'Embedded analytics SDK - config'
+title: 'Modular embedding SDK - config'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/embedding/sdk/config.md'
 layout: new-docs
+summary: 'Configure the Metabase modular embedding SDK with MetabaseProvider, set up authentication, handle global events, and reload embedded components.'
 ---
 
-# Embedded analytics SDK - config
+# Modular embedding SDK - config
 
-{% include plans-blockquote.html feature="Embedded analytics SDK" sdk=true %}
+{% include plans-blockquote.html feature="Modular embedding SDK" sdk=true %}
 
 ## Passing a configuration object to `MetabaseProvider`
 
