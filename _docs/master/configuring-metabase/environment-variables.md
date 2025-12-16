@@ -633,7 +633,7 @@ Allow admins to embed Metabase via the SDK?
 - Default: `false`
 - [Configuration file name](./config-file): `enable-embedding-simple`
 
-Allow admins to embed Metabase via Embedded Analytics JS?
+Allow admins to embed Metabase via modular embedding?
 
 ### `MB_ENABLE_EMBEDDING_STATIC`
 
@@ -856,6 +856,16 @@ Key to retrieve the JWT user's groups.
 - [Configuration file name](./config-file): `jwt-attribute-lastname`
 
 Key to retrieve the JWT user's last name.
+
+### `MB_JWT_ATTRIBUTE_TENANT`
+
+> Only available on Metabase [Pro](/product/pro) and [Enterprise](/product/enterprise) plans.
+
+- Type: string
+- Default: `@tenant`
+- [Configuration file name](./config-file): `jwt-attribute-tenant`
+
+Key to retrieve the JWT user's tenant.
 
 ### `MB_JWT_ENABLED`
 
@@ -1460,6 +1470,16 @@ SAML attribute for group syncing.
 
 SAML attribute for the user's last name.
 
+### `MB_SAML_ATTRIBUTE_TENANT`
+
+> Only available on Metabase [Pro](/product/pro) and [Enterprise](/product/enterprise) plans.
+
+- Type: string
+- Default: `null`
+- [Configuration file name](./config-file): `saml-attribute-tenant`
+
+SAML attribute for the user's tenant slug.
+
 ### `MB_SAML_ENABLED`
 
 > Only available on Metabase [Pro](/product/pro) and [Enterprise](/product/enterprise) plans.
@@ -1646,7 +1666,7 @@ Should new email notifications be sent to admins, for all new SSO users?
 Value for the session cookie's `SameSite` directive.
 
 See [Embedding Metabase in a different domain](../embedding/full-app-embedding#embedding-metabase-in-a-different-domain).
-        Read more about [modular embedding](../embedding/full-app-embedding).
+        Read more about [Full app embedding](../embedding/full-app-embedding).
         Learn more about [SameSite cookies](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie/SameSite).
 
 ### `MB_SESSION_COOKIES`
