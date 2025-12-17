@@ -1,0 +1,18 @@
+name: Update docs - 58
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 3 * * *"
+
+run-name: Nightly docs update - 58
+
+jobs:
+  update-docs:
+    uses: ./.github/workflows/update-docs-base.yml
+    with:
+      source_branch: "release-x.58.x"
+      target_branch: "release-x.58.x"
+      annotation: "nightly"
+      run_name: "Nightly docs build - 58"
+    secrets:
+      METABASE_AUTOMATION_USER_TOKEN: ${{ secrets.METABASE_AUTOMATION_USER_TOKEN }}
