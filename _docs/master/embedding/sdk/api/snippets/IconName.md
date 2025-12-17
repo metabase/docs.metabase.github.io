@@ -126,6 +126,7 @@ type IconName =
   | "formula"
   | "funnel_outline"
   | "folder"
+  | "folder_database"
   | "folder_filled"
   | "gear"
   | "gear_settings_filled"
