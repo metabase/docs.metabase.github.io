@@ -7,7 +7,6 @@ category: Embedding
 title: SdkLoadingError
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/embedding/sdk/api/snippets/SdkLoadingError.md'
 layout: new-docs
-latest: true
 ---
 
 ```ts
