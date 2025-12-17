@@ -7,7 +7,6 @@ category: Embedding
 title: MetabotQuestion
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/embedding/sdk/api/snippets/MetabotQuestion.md'
 layout: new-docs
-latest: true
 ---
 
 ```ts
