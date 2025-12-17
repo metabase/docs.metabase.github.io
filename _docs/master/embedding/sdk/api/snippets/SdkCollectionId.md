@@ -10,5 +10,5 @@ layout: new-docs
 ---
 
 ```ts
-type SdkCollectionId = number | "personal" | "root" | SdkEntityId;
+type SdkCollectionId = number | "personal" | "root" | "tenant" | SdkEntityId;
 ```
