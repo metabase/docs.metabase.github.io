@@ -7,35 +7,61 @@ category: Embedding
 title: 'Embedding introduction'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/embedding/introduction.md'
 layout: new-docs
+summary: 'Different ways you can embed charts and dashboards, or all of Metabase, in your app.'
 redirect_from:
     - /docs/v0.58/administration-guide/13-embedding
 ---
 
 # Embedding introduction
 
-You can embed Metabase tables, charts, and dashboards—even Metabase's query builder—in your website or application.
-
-Here are the different ways you can embed Metabase.
-
 {% include shared/in-page-promo-embedding-workshop.html %}
+
+You can embed Metabase tables, charts, and dashboards—even Metabase's query builder—in your website or application. Here are the different ways you can embed Metabase:
+
+- [Modular embedding](#modular-embedding)
+- [Full app embedding](#full-app-embedding)
+- [Public links](#public-links-and-embeds)
 
 ## Modular embedding
 
-With [modular embedding](./modular-embedding), you can embed individual Metabase components in your web app. Choose from dashboards, questions, or the query builder, and configure per‑component options like drill‑through, parameters, downloads, and theming. Modular embedding integrates with [SSO](securing-embeds) and [data permissions](../permissions/embedding).
+With [modular embedding](./modular-embedding), you can embed individual Metabase components in your web app. You can use guest embeds for basic functionality, or use SSO to take full advantage of Metabase.
 
-**When to use modular embedding**: You want to [offer multi-tenant, self-service analytics](/blog/why-full-app-embedding), you want a drop‑in script, and want to embed Metabase components with per‑component controls and theming.
+You can use two different ways to authenticate modular embeds:
 
-## Static embedding
+- [SSO](#modular-embedding)
+- [Guest](#guest-embedding)
 
-Also known as signed embedding, [static embedding](./static-embedding) is a secure way to embed charts and dashboards.
+Here's a basic breakdown of what each auth type enables:
 
-**When to use static embedding**: you don't want to offer ad-hoc querying or chart drill-through. To filter data relevant to the viewer, you can use static embeds with [locked parameters](./static-embedding-parameters#locked-parameters-limit-the-values-available-to-other-editable-parameters).
+| Component                                             | SSO | Guest |
+| ----------------------------------------------------- | --- | ----- |
+| Chart                                                 | ✅  | ✅    |
+| Chart with drill-through                              | ✅  | ❌    |
+| Dashboard                                             | ✅  | ✅    |
+| Dashboard with drill-through                          | ✅  | ❌    |
+| [Query builder](../questions/query-builder/editor) | ✅  | ❌    |
+| Browser to navigate collections                       | ✅  | ❌    |
+| Metabot AI chat                                       | ✅  | ❌    |
+
+Currently, you can't embed [documents](../documents/introduction).
+
+### SSO embeds
+
+With SSO, Metabase can know who's viewing what, which unlocks a lot of power. You can automatically apply [data permissions](../permissions/embedding), which means you can give people access to all the cool tools Metabase provides, and everyone will only ever see the data they're allowed to.
+
+**When to use SSO**: You want to offer multi-tenant, self-service analytics, or you want to include the query builder, AI chat, drill-through, or a collection browser.
+
+### Guest embedding
+
+[Guest embeds](./guest-embedding) are a secure way to embed charts and dashboards.
+
+**When to use guest embeds**: simple embedding use cases where you don't want to offer ad-hoc querying or chart drill-through. To filter data relevant to the viewer, you can use guest embeds with [locked parameters](./static-embedding-parameters#locked-parameters-limit-the-values-available-to-other-editable-parameters).
 
 ## Public links and embeds
 
 If you'd like to share your data with the good people of the internet, admins can create a [public link](./public-links) or embed a question or dashboard directly in your website.
 
-**When to use public links and embeds**: public links and embeds are good for one-off charts and dashboards. Admins can use them when you just need to show someone a chart or dashboard without giving people access to your Metabase. And you don't care who sees the data; you want to make those stats available to everyone.
+**When to use public links and embeds**: One-off charts and dashboards. Admins can use public links when you just need to show someone a chart or dashboard without giving people access to your Metabase. And you don't care who sees the data; you want to make the item available to everyone.
 
 ## Full app embedding
 
@@ -43,30 +69,27 @@ If you'd like to share your data with the good people of the internet, admins ca
 
 ## Comparison of embedding types
 
-| Action                                                                                                                          | [React SDK](./sdk/introduction) | [Modular](./modular-embedding) | [Full app](./full-app-embedding) | [Static](./static-embedding) | [Public](../embedding/public-links) |
-| ------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------- | --------------------------------- | ----------------------------------- | ------------------------------- | -------------------------------------- |
-| Display charts and dashboards                                                                                                   | ✅                                 | ✅                                | ✅                                  | ✅                              | ✅                                     |
-| Display interactive [filter widgets](/glossary/filter-widget)                                           | ✅                                 | ✅                                | ✅                                  | ✅                              | ✅                                     |
-| Export results\*                                                                                                                | ✅                                 | ✅                                | ✅                                  | ✅                              | ✅                                     |
-| Restrict data with [locked filters](./static-embedding-parameters#restricting-data-in-a-static-embed-with-locked-parameters) | ❌                                 | ❌                                | ❌                                  | ✅                              | ❌                                     |
-| [Data segregation](../permissions/embedding)                                                                                 | ✅                                 | ✅                                | ✅                                  | ❌                              | ❌                                     |
-| Use the [drill-through menu](/learn/metabase-basics/querying-and-dashboards/questions/drill-through)    | ✅                                 | ✅                                | ✅                                  | ❌                              | ❌                                     |
-| Self-serve via [query builder](../questions/query-builder/editor)                                                            | ✅                                 | ✅                                | ✅                                  | ❌                              | ❌                                     |
-| [Basic appearance customization](../configuring-metabase/appearance)\*\*                                                     | ✅                                 | ✅                                | ✅                                  | ✅                              | ✅                                     |
-| [Advanced theming](./sdk/appearance)                                                                                         | ✅                                 | ✅                                | ❌                                  | ❌                              | ❌                                     |
-| View usage of embeds with [usage analytics](../usage-and-performance-tools/usage-analytics)                                  | ✅                                 | ✅                                | ✅                                  | ❌                              | ❌                                     |
-| Embed individual Metabase components                                                                                            | ✅                                 | ✅                                | ❌                                  | ❌                              | ❌                                     |
-| Manage access and interactivity per component                                                                                   | ✅                                 | ✅                                | ❌                                  | ❌                              | ❌                                     |
-| Custom layouts                                                                                                                  | ✅                                 | ❌                                | ❌                                  | ❌                              | ❌                                     |
-| Customize behavior with [plugins](./sdk/plugins)                                                                             | ✅                                 | ❌                                | ❌                                  | ❌                              | ❌                                     |
+| Action                                                                                                               | [Modular SDK](./sdk/introduction) | [Modular SSO](./modular-embedding) | [Modular Guest](./guest-embedding) | [Full app](./full-app-embedding) | [Public](../embedding/public-links) |
+| -------------------------------------------------------------------------------------------------------------------- | ------------------------------------ | ------------------------------------- | ------------------------------------- | ----------------------------------- | -------------------------------------- |
+| Charts and dashboards                                                                                                | ✅                                   | ✅                                    | ✅                                    | ✅                                  | ✅                                     |
+| [Filter widgets](/glossary/filter-widget)                                                    | ✅                                   | ✅                                    | ✅                                    | ✅                                  | ✅                                     |
+| Export results\*                                                                                                     | ✅                                   | ✅                                    | ✅                                    | ✅                                  | ✅                                     |
+| [Locked filters](./static-embedding-parameters#restricting-data-in-a-static-embed-with-locked-parameters)          | ❌                                   | ❌                                    | ✅                                    | ❌                                  | ❌                                     |
+| [Data segregation](../permissions/embedding)                                                                      | ✅                                   | ✅                                    | ❌                                    | ✅                                  | ❌                                     |
+| [Drill-through menu](/learn/metabase-basics/querying-and-dashboards/questions/drill-through) | ✅                                   | ✅                                    | ❌                                    | ✅                                  | ❌                                     |
+| [Query builder](../questions/query-builder/editor)                                                                | ✅                                   | ✅                                    | ❌                                    | ✅                                  | ❌                                     |
+| [Basic appearance customization](../configuring-metabase/appearance)\*\*                                          | ✅                                   | ✅                                    | ✅                                    | ✅                                  | ✅                                     |
+| [Advanced theming](./appearance)                                                                                  | ✅                                   | ✅                                    | ❌                                    | ❌                                  | ❌                                     |
+| [Usage analytics](../usage-and-performance-tools/usage-analytics)                                                 | ✅                                   | ✅                                    | ❌                                    | ✅                                  | ❌                                     |
+| Embed individual Metabase components                                                                                 | ✅                                   | ✅                                    | ❌                                    | ❌                                  | ❌                                     |
+| Manage access and interactivity per component                                                                        | ✅                                   | ✅                                    | ❌                                    | ❌                                  | ❌                                     |
+| Custom layouts                                                                                                       | ✅                                   | ❌                                    | ❌                                    | ❌                                  | ❌                                     |
+| Customize behavior with [plugins](./sdk/plugins)                                                                  | ✅                                   | ❌                                    | ❌                                    | ❌                                  | ❌                                     |
+| AI chat                                                                                                              | ✅                                   | ✅                                    | ❌                                    | ✅                                  | ❌                                     |
 
 \* Each embedding type allows data downloads by default, but only [Pro and Enterprise](/pricing/) plans can disable data downloads.
 
 \*\* Requires a [Pro and Enterprise](/pricing/) plan for any embedding type.
-
-## Switching from static embedding to Modular embedding
-
-[Modular embedding](./modular-embedding) requires authentication via single sign-on (SSO), so you'll need to set that up both in your Metabase and in your application's server. Check out our [Modular embedding authentication](../embedding/sdk/authentication).
 
 ## Further reading
 
@@ -74,4 +97,4 @@ If you'd like to share your data with the good people of the internet, admins ca
 - [Publishing data visualizations to the web](/learn/metabase-basics/embedding/charts-and-dashboards).
 - [Multi-tenant self-service analytics](/learn/metabase-basics/embedding/multi-tenant-self-service-analytics).
 - [Customizing Metabase's appearance](../configuring-metabase/appearance).
-- [Securing embedded Metabase](./securing-embeds)
+- [Securing embedded Metabase](./securing-embeds).
