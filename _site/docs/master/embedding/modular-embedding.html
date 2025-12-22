@@ -5453,15 +5453,13 @@ Roadmap</a>
       
 
     <p class="m-0 ms-2 paragraph-5 neutral-40">
-       Modular embedding is only available on
+       Modular embedding with SSO is only available on
       <a class="fw-bold" href="/product/pro">Pro</a> and
       <a class="fw-bold link-purple" href="/product/enterprise">Enterprise</a>
       plans  (both self-hosted and on Metabase Cloud).
     </p>
   </div>
 </div>
-
-<p>Modular embedding lets you embed Metabase entities like questions, dashboards, or even the query builder into your own application using customizable components.</p>
 
 <div>
   <a href="/events/interactive-embedding-workshop" class="in-page-promo">
@@ -5480,117 +5478,106 @@ Roadmap</a>
   </a>
 </div>
 
-<p>Modular embedding allows you to embed individual Metabase components (like questions, dashboards, or a query builder) using a simple drop-in script. You don’t need to write embedding code on your own - just use the built-in wizard to create a code snippet, and paste it into your app.</p>
+<p><img src="./images/modular-embedding-wizard.png" alt="Modular embedding wizard"></p>
 
-<p>Unlike with <a href="./full-app-embedding">full app embedding</a>, where you embed the entire Metabase app in an iframe, modular embedding lets you choose from a set of predefined components like a single chart, a dashboard with optional drill-through, or query builder, and customize those components.</p>
+<p>Modular embedding lets you embed and customize Metabase <a href="./components">components</a> (like dashboards, the query builder, AI chat, and more) into your own application. You don’t need to write embedding code on your own - just use the wizard to create a code snippet and paste it into your app.</p>
 
-<p>Modular embedding uses <a href="../people-and-groups/authenticating-with-jwt">JWT</a> or <a href="../people-and-groups/authenticating-with-saml">SAML</a> to authenticate people and automatically apply the right permissions.</p>
+<p>If you’re using React, check out the <a href="./sdk/introduction">Modular embedding SDK</a>.</p>
 
-<p>Currently you can choose to embed:</p>
-
-<ul>
-  <li>A dashboard</li>
-  <li>A question (chart). You can embed both questions built with the query builder and questions built with SQL.</li>
-  <li>Full graphical <a href="../questions/query-builder/editor">query builder</a> to enable people to build their own charts and explorations.</li>
-  <li>A browser to navigate collections and open dashboards or questions.</li>
-  <li><a href="./sdk/ai-chat">AI chat interface</a>.</li>
-</ul>
-
-<h2 id="quickstart">Quickstart</h2>
-
-<p>You can also follow the setup guide directly in Metabase in <strong>Admin settings &gt; Embedding &gt; Setup guide</strong>. We’re recording the steps here for convenience.</p>
-
-<h3 id="1-enable-modular-embedding">1. Enable modular embedding</h3>
+<h2 id="enable-modular-embedding">Enable modular embedding</h2>
 
 <ol>
   <li>In Metabase, go to <strong>Admin settings &gt; Embedding</strong>.</li>
   <li>Toggle on <strong>Enable modular embedding</strong>.</li>
   <li>Under <strong>Cross-Origin Resource Sharing (CORS)</strong>, add the URLs of the websites where you want to embed Metabase (such as <code class="language-plaintext highlighter-rouge">https://*.example.com</code>). For testing embeds, you can use <code class="language-plaintext highlighter-rouge">localhost</code> which is always included in CORS policy.</li>
-  <li>If you are embedding Metabase components in a domain that’s different from your Metabase’s domain (including when you’re testing the app locally but use Metabase Cloud), go to <strong>Admin settings &gt; Embedding &gt; Security</strong> and set <strong>SameSite cookie</strong> to <strong>None</strong>.</li>
+  <li>If you’re embedding Metabase components in a domain that’s different from your Metabase’s domain (including when you’re testing the app locally but use Metabase Cloud), go to <strong>Admin settings &gt; Embedding &gt; Security</strong> and set <strong>SameSite cookie</strong> to <strong>None</strong>.</li>
 </ol>
 
-<h3 id="2-create-a-new-embed">2. Create a new embed</h3>
+<h2 id="create-a-new-embed">Create a new embed</h2>
+
+<p>In your Metabase:</p>
 
 <ol>
-  <li>
-    <p>In Metabase, open a command palette with Ctrl/Cmd+K, type “New embed” and select “new embed” command. This will open the interactive wizard that you can use to set up your embed.</p>
-
-    <p>If you’re planning to embed an existing question or dashboard, you can instead go straight to that question or dashboard, click on the <strong>Share</strong> button, and choose <strong>Embed</strong>.</p>
-  </li>
-  <li>
-    <p>Choose the <em>type</em> of entity to embed:</p>
-
-    <ul>
-      <li>Dashboard</li>
-      <li>Chart</li>
-      <li>Exploration (which will embed the Metabase query builder)</li>
-      <li>Browser</li>
-      <li>Metabot question (which will embed AI chat)</li>
-    </ul>
-  </li>
-  <li>
-    <p>Next, select the entity you want to embed. For browser, pick the collection you want people to start from.</p>
-  </li>
+  <li>Visit the item you want to embed.</li>
+  <li>Click the sharing icon.</li>
+  <li>Select <strong>Embed</strong>.</li>
 </ol>
 
-<p>Once you’ve selected what you want to embed, click Next to customize your embed.</p>
+<p><img src="./images/embed-share-button.png" alt="Embed share button"></p>
 
-<h3 id="3-customize-your-embed">3. Customize your embed</h3>
+<p>You can also open a command palette with Ctrl/Cmd+K, type “New embed”. You’ll get a wizard to help you set up your embed.</p>
 
-<p>The exact customization options you see will depend on what type of entity you’re embedding. You’ll see a live preview of how the embed will look with your chosen options. Check out <a href="#customizing-embeds">Customizing embeds</a> for more details on customization options.</p>
+<p>You can also go to <strong>Admin settings &gt; Embedding &gt; Modular embedding</strong> and click <strong>New embed</strong>.</p>
 
-<p><img src="./images/embed-flow-options.png" alt="Customizing embeds"></p>
+<p><img src="./images/new-modular-embed-from-admin-settings.png" alt="New modular embed from the admin settings"></p>
 
-<p>You’ll also be able to pick brand, text, and background color used for all your embeds. To configure other colors (e.g. secondary colors, query builder colors etc), as well as font, you can specify a <a href="#theming">theme</a> in your embed code snippet.</p>
+<h2 id="pick-how-to-authenticate-the-embed">Pick how to authenticate the embed</h2>
 
-<p>All the customization options you select in this interactive flow will be reflected in the parameter values in the embed code, so you’ll be able to adjust them later by editing the embed snippet.</p>
+<p>How you authenticate the embed determines how cool the embed can get. This page covers the SSO setup, which lets you do everything. This setup requires you to have <a href="./authentication">set up SSO for your Metabase</a>. You can check out a <a href="./introduction#comparison-of-embedding-types">comparison between SSO and guest</a>, or jump straight to the <a href="./guest-embedding">guest embed docs</a>. But we recommend setting up modular embedding with SSO.</p>
 
-<p>Once you’re done customizing your embed, click “Next”.</p>
+<h2 id="customize-your-embed">Customize your embed</h2>
 
-<h3 id="4-select-authentication-method">4. Select authentication method</h3>
+<p>The exact customization options you see will depend on what type of entity you’re embedding. You’ll see a live preview of the embed with your customizations.</p>
 
-<p>You’ll get a choice between “Existing Metabase session” and “Single sign-on (SSO)”.</p>
+<p><img src="./images/embed-flow-options.png" alt="Embed flow options for AI chat"></p>
+
+<p>You’ll also be able to pick colors for:</p>
 
 <ul>
-  <li>
-    <p>If you select <strong>Existing Metabase session</strong>, you’ll be able to preview your embeds as the user you’re currently logged into Metabase, and only in the same browser as your current session. Not all browsers are supported - we recommend using Google Chrome. To test out embedding in other contexts, you can use <a href="#use-api-keys-to-test-embeds">API keys</a> instead. For production usage, use <a href="#set-up-sso">SSO</a>.</p>
-  </li>
-  <li>
-    <p>If you set up JWT in your Metabase instance, you’ll be able to select <strong>Single sign-on (SSO)</strong>, see <a href="#set-up-sso">Set up SSO</a>.</p>
-  </li>
+  <li>Brand</li>
+  <li>Text</li>
+  <li>Background</li>
 </ul>
 
-<h3 id="5-add-the-embedding-script-into-your-app">5. Add the embedding script into your app</h3>
+<p>But you can customize a lot more later. To configure other colors (like secondary colors, query builder colors, and more), as well as font, you can specify a <code class="language-plaintext highlighter-rouge">theme</code> in your embed code snippet.</p>
 
-<p>Metabase will generate a code snippet that you can copy and paste into your app, see <a href="#embed-code-snippets">Embed code snippets</a> for an example. You can later modify this code snippet to specify additional appearance options or change the behavior of some components.</p>
+<p>All the customization options you select in this interactive flow will be reflected in code snippet, which you can edit as you see fit.</p>
 
-<p>Add the code snippet into your app, and refresh the page.</p>
+<p>For example, this code defines the font, color, and size for text, background colors, and colors for filters and summaries:</p>
 
-<h2 id="each-end-user-should-have-their-own-metabase-account">Each end user should have their own Metabase account</h2>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;script&gt;</span>
+  <span class="nf">defineMetabaseConfig</span><span class="p">({</span>
+    <span class="na">instanceUrl</span><span class="p">:</span> <span class="dl">"</span><span class="s2">https://your-metabase-url</span><span class="dl">"</span><span class="p">,</span>
+    <span class="na">theme</span><span class="p">:</span> <span class="p">{</span>
+      <span class="na">fontFamily</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Lato</span><span class="dl">"</span><span class="p">,</span>
+      <span class="na">fontSize</span><span class="p">:</span> <span class="dl">"</span><span class="s2">16px</span><span class="dl">"</span><span class="p">,</span>
+      <span class="na">colors</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">background</span><span class="p">:</span> <span class="dl">"</span><span class="s2">#11123d</span><span class="dl">"</span><span class="p">,</span>
+        <span class="dl">"</span><span class="s2">text-primary</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">#f9f9fc</span><span class="dl">"</span><span class="p">,</span>
+        <span class="na">brand</span><span class="p">:</span> <span class="dl">"</span><span class="s2">#50e397</span><span class="dl">"</span><span class="p">,</span>
+        <span class="na">filter</span><span class="p">:</span> <span class="dl">"</span><span class="s2">#7172AD</span><span class="dl">"</span><span class="p">,</span>
+        <span class="na">summarize</span><span class="p">:</span> <span class="dl">"</span><span class="s2">#88BF4D</span><span class="dl">"</span><span class="p">,</span>
+      <span class="p">},</span>
+    <span class="p">},</span>
+  <span class="p">});</span>
+<span class="nt">&lt;/script&gt;</span>
+</code></pre></div></div>
 
-<p>Each end-user must have their own Metabase account.</p>
+<p>For more look-and-feel twiddling, see <a href="./appearance">appearance</a>.</p>
 
-<p>The problem with having end-users share a Metabase account is that, even if you filter data on the client side via the modular embedding, all end-users will still have access to the session token, which they could use to access Metabase directly via the API to get data they’re not supposed to see.</p>
+<p>Once you’re done customizing your embed, click <strong>Next</strong>.</p>
 
-<p>If each end-user has their own Metabase account, however, you can configure permissions in Metabase and everyone will only have access to the data they should.</p>
+<h2 id="add-the-embedding-script-to-your-app">Add the embedding script to your app</h2>
 
-<p>In addition to this, we consider shared accounts to be unfair usage. Fair usage of modular embedding involves giving each end-user of the embedded analytics their own Metabase account.</p>
+<p>Metabase will generate a code snippet that you can copy and paste into your app. See the example below. You can later modify this code snippet to specify additional appearance options or change the behavior of some components.</p>
 
-<h2 id="embed-code-snippets">Embed code snippets</h2>
+<p>You’ll add this code snippet to your app and refresh the page.</p>
 
-<p>The code snippets to embed Metabase entities using modular embedding should have three parts:</p>
+<p>The code snippets:</p>
 
-<ol>
+<ul>
   <li>Loading the modular embedding library from your Metabase instance.</li>
-  <li>Global configuration settings to be used for all embeds, like the URL of your Metabase instance, appearance themes, etc. See <a href="#configuring-embeds">Configuring embeds</a>.</li>
-  <li>Components for Metabase entities to be embedded, with their parameters. See <a href="#components">Components</a>.</li>
-</ol>
+  <li>Set global configuration settings, like the URL of your Metabase and the <code class="language-plaintext highlighter-rouge">theme</code>. See <a href="#page-level-config">Page-level config</a>.</li>
+  <li>The component(s) to embed, with their parameters. See <a href="./components">Components</a>.</li>
+</ul>
 
-<p>Here’s an example of a script:</p>
+<p>Here’s an example snippet:</p>
 
 <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">&lt;!-- Load embedding library --&gt;</span>
 <span class="c">&lt;!-- REPLACE WITH YOUR METABASE URL HERE --&gt;</span>
+
 <span class="nt">&lt;script </span><span class="na">defer</span> <span class="na">src=</span><span class="s">"https://your-metabase-url/app/embed.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+
 <span class="nt">&lt;script&gt;</span>
   <span class="kd">function</span> <span class="nf">defineMetabaseConfig</span><span class="p">(</span><span class="nx">config</span><span class="p">)</span> <span class="p">{</span>
     <span class="nb">window</span><span class="p">.</span><span class="nx">metabaseConfig</span> <span class="o">=</span> <span class="nx">config</span><span class="p">;</span>
@@ -5617,15 +5604,23 @@ Roadmap</a>
 
 <p>Note the <code class="language-plaintext highlighter-rouge">defer</code> attribute and the reference to your Metabase URL in the script that loads <code class="language-plaintext highlighter-rouge">embed.js</code> library.</p>
 
-<p>If you’re embedding multiple entities in a single page, you only need to include the <code class="language-plaintext highlighter-rouge">&lt;script&gt;</code> tags once globally.</p>
+<p>If you’re embedding multiple components in a single page, you only need to include the <code class="language-plaintext highlighter-rouge">&lt;script&gt;</code> tags once globally.</p>
 
-<p>You can also generate the code snippet for modular embedding interactively in Metabase through <strong>Admin &gt; Embedding &gt; Setup guide &gt; Embed in your code</strong>. Check out the <a href="#quickstart">quickstart</a>.</p>
+<h2 id="each-end-user-should-have-their-own-metabase-account">Each end user should have their own Metabase account</h2>
+
+<p>With SSO embeds, each end-user must have their own Metabase account.</p>
+
+<p>The problem with having end-users share a Metabase account is that, even if you filter data on the client side via the modular embedding, all end-users will still have access to the session token, which they could use to access Metabase directly via the API to get data they’re not supposed to see.</p>
+
+<p>If each end-user has their own Metabase account, however, you can configure permissions in Metabase and everyone will only have access to the data they should.</p>
+
+<p>In addition to this, we consider shared accounts to be unfair usage. Fair usage of modular embedding involves giving each end-user of the embedded analytics their own Metabase account.</p>
 
 <h2 id="customizing-embeds">Customizing embeds</h2>
 
 <p>The exact customization options you see will depend on what type of entity you’re embedding.</p>
 
-<p>When you’re creating a new embed using <strong>Admin &gt; Embedding &gt; Setup guide &gt; Embed in your code</strong>, you’ll see the following customization options in the interactive creation flow. These options correspond to parameters in <a href="#components">components</a>.</p>
+<p>When you’re creating a new embed using <strong>Admin &gt; Embedding &gt; Setup guide &gt; Embed in your code</strong>, you’ll see the following customization options in the interactive creation flow. These options correspond to parameters in <a href="./components">components</a>.</p>
 
 <ul>
   <li>
@@ -5648,7 +5643,7 @@ Roadmap</a>
   </li>
 </ul>
 
-<h2 id="configuring-embeds">Configuring embeds</h2>
+<h2 id="page-level-config">Page-level config</h2>
 
 <p>To define the configuration that applies to every embed on the page, use the <code class="language-plaintext highlighter-rouge">defineMetabaseConfig()</code> function. Its parameters include:</p>
 
@@ -5657,7 +5652,7 @@ Roadmap</a>
     <p><code class="language-plaintext highlighter-rouge">instanceUrl: "https://your-metabase-url"</code> (required): the URL of your Metabase instance, like <code class="language-plaintext highlighter-rouge">https://youlooknicetoday.metabaseapp.com</code></p>
   </li>
   <li>
-    <p><code class="language-plaintext highlighter-rouge">theme: {...}</code> (optional): <a href="#theming">appearance options for the embeds</a>.</p>
+    <p><code class="language-plaintext highlighter-rouge">theme: {...}</code> (optional): <a href="./appearance">appearance options for the embeds</a>.</p>
   </li>
   <li>
     <p><code class="language-plaintext highlighter-rouge">useExistingUserSession: true|false</code> (optional, for development only) - lets you preview the embed locally using your Metabase admin account session. Only supported in Google Chrome.</p>
@@ -5666,57 +5661,11 @@ Roadmap</a>
     <p><code class="language-plaintext highlighter-rouge">apiKey: mb_YourAPIKey</code> (optional, for development only) - another way to preview embeds locally using an API key.</p>
   </li>
   <li>
-    <p><code class="language-plaintext highlighter-rouge">fetchRequestToken: () =&gt; Promise&lt;{ jwt: string }&gt;</code> (optional) - you can customize how the SDK fetches the refresh token for JWT authentication by specifying the <code class="language-plaintext highlighter-rouge">fetchRequestToken</code> function. See <a href="./sdk/authentication#customizing-jwt-authentication">customizing JWT authentication</a>.</p>
+    <p><code class="language-plaintext highlighter-rouge">fetchRequestToken: () =&gt; Promise&lt;{ jwt: string }&gt;</code> (optional) - you can customize how the SDK fetches the refresh token for JWT authentication by specifying the <code class="language-plaintext highlighter-rouge">fetchRequestToken</code> function. See <a href="./authentication#customizing-jwt-authentication">customizing JWT authentication</a>.</p>
   </li>
 </ul>
 
-<h3 id="theming">Theming</h3>
-
-<p>You can specify colors, fonts, spacing, and other appearance options using the <code class="language-plaintext highlighter-rouge">theme</code> parameter in your embed configuration.</p>
-
-<p>For example, this code defines the font, color, and size for text, background colors, and colors for filters and summaries:</p>
-
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;script&gt;</span>
-  <span class="nf">defineMetabaseConfig</span><span class="p">({</span>
-    <span class="na">instanceUrl</span><span class="p">:</span> <span class="dl">"</span><span class="s2">https://your-metabase-url</span><span class="dl">"</span><span class="p">,</span>
-    <span class="na">theme</span><span class="p">:</span> <span class="p">{</span>
-      <span class="na">fontFamily</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Lato</span><span class="dl">"</span><span class="p">,</span>
-      <span class="na">fontSize</span><span class="p">:</span> <span class="dl">"</span><span class="s2">16px</span><span class="dl">"</span><span class="p">,</span>
-      <span class="na">colors</span><span class="p">:</span> <span class="p">{</span>
-        <span class="na">background</span><span class="p">:</span> <span class="dl">"</span><span class="s2">#11123d</span><span class="dl">"</span><span class="p">,</span>
-        <span class="dl">"</span><span class="s2">text-primary</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">#f9f9fc</span><span class="dl">"</span><span class="p">,</span>
-        <span class="na">brand</span><span class="p">:</span> <span class="dl">"</span><span class="s2">#50e397</span><span class="dl">"</span><span class="p">,</span>
-        <span class="na">filter</span><span class="p">:</span> <span class="dl">"</span><span class="s2">#7172AD</span><span class="dl">"</span><span class="p">,</span>
-        <span class="na">summarize</span><span class="p">:</span> <span class="dl">"</span><span class="s2">#88BF4D</span><span class="dl">"</span><span class="p">,</span>
-      <span class="p">},</span>
-    <span class="p">},</span>
-  <span class="p">});</span>
-<span class="nt">&lt;/script&gt;</span>
-</code></pre></div></div>
-
-<p>See <a href="./sdk/appearance">appearance</a>.</p>
-
 <h2 id="authentication">Authentication</h2>
-
-<h3 id="use-existing-user-session-to-test-embeds">Use existing user session to test embeds</h3>
-
-<blockquote>
-  <p>Existing sessions can only be used for testing embeds locally. To make your embeds production-ready, you’ll need to implement SSO.</p>
-</blockquote>
-
-<p>If you’re signed into Metabase, you can use that existing session cookie to preview and test your embeds. This only works in the same browser (we recommend Chrome) you’re using for your Metabase session (so it won’t work in Incognito mode).</p>
-
-<p>Add <code class="language-plaintext highlighter-rouge">useExistingUserSession: true</code> to <code class="language-plaintext highlighter-rouge">defineMetabaseConfig()</code> in your embed code. Check out <a href="#configuring-embeds">Configuring embeds</a>.</p>
-
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;script&gt;</span>
-  <span class="nf">defineMetabaseConfig</span><span class="p">({</span>
-    <span class="na">instanceUrl</span><span class="p">:</span> <span class="dl">"</span><span class="s2">https://your-metabase-url</span><span class="dl">"</span><span class="p">,</span>
-    <span class="na">useExistingUserSession</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
-  <span class="p">});</span>
-<span class="nt">&lt;/script&gt;</span>
-</code></pre></div></div>
-
-<p>Note that this will not work in some browsers, or in incognito mode. We recommend using Chrome if you’d like to use existing Metabase sessions to test your embeds.</p>
 
 <h3 id="use-api-keys-to-test-embeds">Use API keys to test embeds</h3>
 
@@ -5741,204 +5690,6 @@ Roadmap</a>
 
 <p>API keys should only be used for testing with trusted people. Anyone with access to the front-end can grab the API key and use it to make requests against the Metabase API. For this reason, we only allow using API keys on localhost.</p>
 
-<h3 id="set-up-sso">Set up SSO</h3>
-
-<p>SSO is required to embed in a domain other than localhost. You can use JWT or SAML SSO. To configure SAML, check out <a href="./sdk/authentication#authenticating-with-saml-sso">Authenticating with SAML</a>. To configure JWT, follow the steps below.</p>
-
-<h4 id="1-in-metabase-configure-jwt-sso">1. In Metabase, configure <a href="../people-and-groups/authenticating-with-jwt">JWT SSO</a>.</h4>
-
-<h4 id="2-in-your-apps-backend-add-a-new-endpoint-to-handle-authentication">2. In your app’s backend, add a new endpoint to handle authentication.</h4>
-
-<p>You’ll need to add a library to your backend to sign your JSON Web Tokens.</p>
-
-<p>For Node.js, we recommend jsonwebtoken:</p>
-
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm <span class="nb">install </span>jsonwebtoken <span class="nt">--save</span>
-</code></pre></div></div>
-
-<p>Next, set up an endpoint on your backend (like <code class="language-plaintext highlighter-rouge">/sso/metabase</code>) that uses your Metabase JWT shared secret to generate a JWT for the authenticated person. <strong>This endpoint must return a JSON object with a <code class="language-plaintext highlighter-rouge">jwt</code> property containing the signed JWT.</strong> For example: <code class="language-plaintext highlighter-rouge">{ "jwt": "your-signed-jwt" }</code>.</p>
-
-<p>This example code for Node.js sets up an endpoint using Express:</p>
-
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nx">express</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">express</span><span class="dl">"</span><span class="p">;</span>
-<span class="k">import</span> <span class="nx">cors</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">cors</span><span class="dl">"</span><span class="p">;</span>
-<span class="k">import</span> <span class="nx">session</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">express-session</span><span class="dl">"</span><span class="p">;</span>
-<span class="k">import</span> <span class="nx">jwt</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">jsonwebtoken</span><span class="dl">"</span><span class="p">;</span>
-<span class="k">import</span> <span class="nx">fetch</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">node-fetch</span><span class="dl">"</span><span class="p">;</span>
-
-<span class="c1">// Replace this with your Metabase URL</span>
-<span class="kd">const</span> <span class="nx">METABASE_INSTANCE_URL</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">YOUR_METABASE_URL_HERE</span><span class="dl">"</span><span class="p">;</span>
-<span class="c1">// Replace this with the JWT signing secret you generated when enabling</span>
-<span class="c1">// JWT SSO in your Metabase.</span>
-<span class="kd">const</span> <span class="nx">METABASE_JWT_SHARED_SECRET</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">YOUR_SECRET_HERE</span><span class="dl">"</span><span class="p">;</span>
-
-<span class="kd">const</span> <span class="nx">app</span> <span class="o">=</span> <span class="nf">express</span><span class="p">();</span>
-
-<span class="nx">app</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="dl">"</span><span class="s2">/sso/metabase</span><span class="dl">"</span><span class="p">,</span> <span class="k">async </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-  <span class="c1">// Usually, you'd grab the user from the current session</span>
-  <span class="c1">// Here it's hardcoded for demonstration purposes</span>
-  <span class="c1">// Example:</span>
-  <span class="c1">// const { user } = req.session;</span>
-  <span class="kd">const</span> <span class="nx">user</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="na">email</span><span class="p">:</span> <span class="dl">"</span><span class="s2">rene@example.com</span><span class="dl">"</span><span class="p">,</span>
-    <span class="na">firstName</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Rene</span><span class="dl">"</span><span class="p">,</span>
-    <span class="na">lastName</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Descartes</span><span class="dl">"</span><span class="p">,</span>
-    <span class="na">group</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Customer</span><span class="dl">"</span><span class="p">,</span>
-  <span class="p">};</span>
-
-  <span class="k">if </span><span class="p">(</span><span class="o">!</span><span class="nx">user</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">no user</span><span class="dl">"</span><span class="p">);</span>
-    <span class="nx">res</span><span class="p">.</span><span class="nf">status</span><span class="p">(</span><span class="mi">401</span><span class="p">).</span><span class="nf">json</span><span class="p">({</span>
-      <span class="na">status</span><span class="p">:</span> <span class="dl">"</span><span class="s2">error</span><span class="dl">"</span><span class="p">,</span>
-      <span class="na">message</span><span class="p">:</span> <span class="dl">"</span><span class="s2">not authenticated</span><span class="dl">"</span><span class="p">,</span>
-    <span class="p">});</span>
-
-    <span class="k">return</span><span class="p">;</span>
-  <span class="p">}</span>
-
-  <span class="kd">const</span> <span class="nx">token</span> <span class="o">=</span> <span class="nx">jwt</span><span class="p">.</span><span class="nf">sign</span><span class="p">(</span>
-    <span class="p">{</span>
-      <span class="na">email</span><span class="p">:</span> <span class="nx">user</span><span class="p">.</span><span class="nx">email</span><span class="p">,</span>
-      <span class="na">first_name</span><span class="p">:</span> <span class="nx">user</span><span class="p">.</span><span class="nx">firstName</span><span class="p">,</span>
-      <span class="na">last_name</span><span class="p">:</span> <span class="nx">user</span><span class="p">.</span><span class="nx">lastName</span><span class="p">,</span>
-      <span class="na">groups</span><span class="p">:</span> <span class="p">[</span><span class="nx">user</span><span class="p">.</span><span class="nx">group</span><span class="p">],</span>
-      <span class="na">exp</span><span class="p">:</span> <span class="nb">Math</span><span class="p">.</span><span class="nf">round</span><span class="p">(</span><span class="nb">Date</span><span class="p">.</span><span class="nf">now</span><span class="p">()</span> <span class="o">/</span> <span class="mi">1000</span><span class="p">)</span> <span class="o">+</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">10</span><span class="p">,</span> <span class="c1">// 10 minutes expiration</span>
-    <span class="p">},</span>
-    <span class="nx">METABASE_JWT_SHARED_SECRET</span><span class="p">,</span>
-  <span class="p">);</span>
-  <span class="c1">// The user backend should return a JSON object with the JWT.</span>
-  <span class="nx">res</span><span class="p">.</span><span class="nf">status</span><span class="p">(</span><span class="mi">200</span><span class="p">).</span><span class="nf">json</span><span class="p">({</span> <span class="na">jwt</span><span class="p">:</span> <span class="nx">token</span> <span class="p">});</span>
-<span class="p">});</span>
-</code></pre></div></div>
-
-<p>See more examples in the <a href="./sdk/authentication#2-add-a-new-endpoint-to-your-backend-to-handle-authentication">Embedding SDK docs</a>.</p>
-
-<h4 id="3-embeds-will-use-sso-automatically-by-default">3. Embeds will use SSO automatically by default</h4>
-
-<p>By default, Metabase uses JWT SSO, but you can specify another auth method. To turn on SSO, make sure you <em>don’t</em> set your configuration to <code class="language-plaintext highlighter-rouge">apiKey</code> or <code class="language-plaintext highlighter-rouge">useExistingUserSession</code>.</p>
-
-<h2 id="components">Components</h2>
-
-<p>There are different components available that enable different experiences for the end-user.</p>
-
-<blockquote>
-  <p>While you can use component parameters to show or hide parts of the embedded component, these parameters are <em>not</em> a substitute for <a href="../permissions/start">permissions</a>. Even if you hide stuff, people could still grab their token from the frontend and use it to query the Metabase API.</p>
-</blockquote>
-
-<h3 id="dashboard">Dashboard</h3>
-
-<p>To render a dashboard:</p>
-
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;metabase-dashboard</span> <span class="na">dashboard-id=</span><span class="s">"1"</span> <span class="na">with-title=</span><span class="s">"true"</span> <span class="na">with-downloads=</span><span class="s">"false"</span><span class="nt">&gt;</span>
-<span class="nt">&lt;/metabase-dashboard&gt;</span>
-</code></pre></div></div>
-
-<p><strong>Required parameters:</strong></p>
-
-<ul>
-  <li><code class="language-plaintext highlighter-rouge">dashboard-id</code> - This can be a regular ID or an entity ID. <a href="../installation-and-operation/serialization#entity-ids-work-with-embedding">Using Entity IDs</a> in your embeds ensures that the IDs stay stable when exporting from one Metabase and importing to another.</li>
-</ul>
-
-<p><strong>Optional parameters:</strong></p>
-
-<ul>
-  <li><code class="language-plaintext highlighter-rouge">with-title</code> (default is true) - show the dashboard title in the embed</li>
-  <li><code class="language-plaintext highlighter-rouge">with-downloads</code> (default is false) - show the button to download the dashboard as PDF and download question results</li>
-  <li><code class="language-plaintext highlighter-rouge">drills</code> (default is true) - lets you drill through the dashboard</li>
-  <li>
-    <p><code class="language-plaintext highlighter-rouge">initial-parameters</code> - default value for dashboard filters, like <code class="language-plaintext highlighter-rouge">{ 'productId': '42' }</code>.</p>
-
-    <p>Make sure to use single quotes if you are surrounding your attribute value with double quotes:</p>
-
-    <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;metabase-dashboard</span>
-  <span class="na">dashboard-id=</span><span class="s">"1"</span>
-  <span class="na">initial-parameters=</span><span class="s">"{ 'productId': '42' }"</span>
-<span class="nt">&gt;&lt;/metabase-dashboard&gt;</span>
-</code></pre></div>    </div>
-  </li>
-  <li>
-    <p><code class="language-plaintext highlighter-rouge">hidden-parameters</code> - list of filter names to hide from the dashboard, like <code class="language-plaintext highlighter-rouge">['productId']</code></p>
-
-    <p>Make sure to use single quotes if you are surrounding your attribute value with double quotes:</p>
-
-    <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;metabase-dashboard</span>
-  <span class="na">dashboard-id=</span><span class="s">"1"</span>
-  <span class="na">hidden-parameters=</span><span class="s">"['productId']"</span>
-<span class="nt">&gt;&lt;/metabase-dashboard&gt;</span>
-</code></pre></div>    </div>
-  </li>
-</ul>
-
-<h3 id="question">Question</h3>
-
-<p>To render a question (chart):</p>
-
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;metabase-question</span> <span class="na">question-id=</span><span class="s">"1"</span><span class="nt">&gt;&lt;/metabase-question&gt;</span>
-</code></pre></div></div>
-
-<p><strong>Required parameters:</strong></p>
-
-<ul>
-  <li>
-    <p><code class="language-plaintext highlighter-rouge">question-id</code> - This can be a regular ID or an entity ID. <a href="../installation-and-operation/serialization#entity-ids-work-with-embedding">Using Entity IDs</a> in your embeds ensures that the IDs stay stable when exporting from one Metabase and importing to another.</p>
-
-    <p>Use <code class="language-plaintext highlighter-rouge">question-id="new"</code> to embed the query builder exploration interface.</p>
-  </li>
-</ul>
-
-<p><strong>Optional parameters:</strong></p>
-
-<ul>
-  <li><code class="language-plaintext highlighter-rouge">drills</code> (default is true) - lets you drill through the question</li>
-  <li><code class="language-plaintext highlighter-rouge">with-title</code> (default is true) - show the title</li>
-  <li><code class="language-plaintext highlighter-rouge">with-downloads</code> (default is false) - show downloads</li>
-  <li><code class="language-plaintext highlighter-rouge">initial-sql-parameters</code> - default value for SQL parameters, only applicable to native SQL questions, like <code class="language-plaintext highlighter-rouge">{ "productId": "42" }</code></li>
-  <li><code class="language-plaintext highlighter-rouge">is-save-enabled</code> (default is false)</li>
-  <li><code class="language-plaintext highlighter-rouge">target-collection</code> - this is to enforce saving into a particular collection. Values: regular ID, entity ID, <code class="language-plaintext highlighter-rouge">"personal”</code>, <code class="language-plaintext highlighter-rouge">"root”</code></li>
-</ul>
-
-<h3 id="browser">Browser</h3>
-
-<p>To render a collection browser so people can navigate a collection and open dashboards or questions:</p>
-
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;metabase-browser</span> <span class="na">initial-collection=</span><span class="s">"14"</span> <span class="na">read-only=</span><span class="s">"false"</span><span class="nt">&gt;&lt;/metabase-browser&gt;</span>
-</code></pre></div></div>
-
-<p><strong>Required parameters:</strong></p>
-
-<ul>
-  <li><code class="language-plaintext highlighter-rouge">initial-collection</code> - This can be a collection ID or <code class="language-plaintext highlighter-rouge">root</code>. Use a collection ID (e.g., <code class="language-plaintext highlighter-rouge">14</code>) to start in a specific collection. Use <code class="language-plaintext highlighter-rouge">root</code> to start at the top-level, “Our Analytics” collection.</li>
-</ul>
-
-<p><strong>Optional parameters:</strong></p>
-
-<ul>
-  <li><code class="language-plaintext highlighter-rouge">read-only</code> (default is true) – if true, people can interact with items (filter, summarize, drill-through) but cannot save. If false, they can create and edit items in the collection.</li>
-</ul>
-
-<h3 id="metabot">Metabot</h3>
-
-<p>To render the AI chat interface:</p>
-
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;metabase-metabot&gt;&lt;/metabase-metabot&gt;</span>
-</code></pre></div></div>
-
-<p><strong>Required parameters:</strong></p>
-
-<p>None.</p>
-
-<p><strong>Optional parameters:</strong></p>
-
-<ul>
-  <li><code class="language-plaintext highlighter-rouge">layout</code> (default is <code class="language-plaintext highlighter-rouge">auto</code>) – how should the browser position the visualization with respect to the chat interface. Possible values are:
-    <ul>
-      <li><code class="language-plaintext highlighter-rouge">auto</code> (default): Metabot uses the <code class="language-plaintext highlighter-rouge">stacked</code> layout on mobile screens, and a <code class="language-plaintext highlighter-rouge">sidebar</code> layout on larger screens.</li>
-      <li><code class="language-plaintext highlighter-rouge">stacked</code>: the question visualization stacks on top of the chat interface.</li>
-      <li><code class="language-plaintext highlighter-rouge">sidebar</code>: the question visualization appears to the left of the chat interface, which is in the right sidebar.</li>
-    </ul>
-  </li>
-</ul>
-
 <h2 id="embedding-metabase-in-a-different-domain">Embedding Metabase in a different domain</h2>
 
 <p>If you want to embed Metabase in another domain (say, if Metabase is hosted at <code class="language-plaintext highlighter-rouge">metabase.yourcompany.com</code>, but you want to embed Metabase at <code class="language-plaintext highlighter-rouge">yourcompany.github.io</code>), you can tell Metabase to set the session cookie’s SameSite value to “none”.</p>
@@ -5955,9 +5706,17 @@ Roadmap</a>
 
 <p>You can also set the <a href="../configuring-metabase/environment-variables#mb_session_cookie_samesite"><code class="language-plaintext highlighter-rouge">MB_SESSION_COOKIE_SAMESITE</code> environment variable</a>.</p>
 
-<p>If you’re using Safari, you’ll need to <a href="https://support.apple.com/en-tj/guide/safari/sfri40732/mac">allow cross-site tracking</a>. Depending on the browser, you may also run into issues when viewing emdedded items in private/incognito tabs.</p>
+<p>If you’re using Safari, you’ll need to <a href="https://support.apple.com/en-tj/guide/safari/sfri40732/mac">allow cross-site tracking</a>. Depending on the browser, you may also run into issues when viewing embedded items in private/incognito tabs.</p>
 
 <p>Learn more about <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie/SameSite">SameSite cookies</a>.</p>
+
+<h2 id="setting-up-sso">Setting up SSO</h2>
+
+<p>For production use, you’ll need to set up SSO authentication. See <a href="./authentication">Modular embedding - authentication</a> for details on setting up JWT or SAML authentication.</p>
+
+<h2 id="example-app-with-sso-embed-and-theming">Example app with SSO embed and theming</h2>
+
+<p>Check out our <a href="https://github.com/metabase/modular-embedding-sample-app">sample app</a>. Bring your Metabase, embed a dashboard, and play around with changing colors.</p>
 
 
         <div>

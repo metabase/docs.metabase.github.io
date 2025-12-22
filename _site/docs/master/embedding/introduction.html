@@ -54,7 +54,7 @@
 <meta name="twitter:site" content="@metabase">
 
 <meta name="twitter:title" content="Embedding introduction | Metabase Documentation">
-<meta name="twitter:description" content="Embedding introduction You can embed Metabase tables, charts, and dashboards—even Metabase’s query builder—in your website or application. Here are the different ways you can embed Metabase.      Embed a real...">
+<meta name="twitter:description" content="Different ways you can embed charts and dashboards, or all of Metabase, in your app.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -64,7 +64,7 @@
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://www.metabase.com/docs/master/embedding/introduction">
 <meta name="title" property="og:title" content="Embedding introduction | Metabase Documentation">
-<meta name="description" property="og:description" content="Embedding introduction You can embed Metabase tables, charts, and dashboards—even Metabase’s query builder—in your website or application. Here are the different ways you can embed Metabase.      Embed a real...">
+<meta name="description" property="og:description" content="Different ways you can embed charts and dashboards, or all of Metabase, in your app.">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -5439,10 +5439,6 @@ Roadmap</a>
 
         <h1 id="embedding-introduction">Embedding introduction</h1>
 
-<p>You can embed Metabase tables, charts, and dashboards—even Metabase’s query builder—in your website or application.</p>
-
-<p>Here are the different ways you can embed Metabase.</p>
-
 <div>
   <a href="/events/interactive-embedding-workshop" class="in-page-promo">
     <img alt="interactive-embedding-workshop" class="no-zoom" src="/images/events/categories/embedding-workshop.png" loading="lazy">
@@ -5460,23 +5456,93 @@ Roadmap</a>
   </a>
 </div>
 
+<p>You can embed Metabase tables, charts, and dashboards—even Metabase’s query builder—in your website or application. Here are the different ways you can embed Metabase:</p>
+
+<ul>
+  <li><a href="#modular-embedding">Modular embedding</a></li>
+  <li><a href="#full-app-embedding">Full app embedding</a></li>
+  <li><a href="#public-links-and-embeds">Public links</a></li>
+</ul>
+
 <h2 id="modular-embedding">Modular embedding</h2>
 
-<p>With <a href="./modular-embedding">modular embedding</a>, you can embed individual Metabase components in your web app. Choose from dashboards, questions, or the query builder, and configure per‑component options like drill‑through, parameters, downloads, and theming. Modular embedding integrates with <a href="securing-embeds">SSO</a> and <a href="../permissions/embedding">data permissions</a>.</p>
+<p>With <a href="./modular-embedding">modular embedding</a>, you can embed individual Metabase components in your web app. You can use guest embeds for basic functionality, or use SSO to take full advantage of Metabase.</p>
 
-<p><strong>When to use modular embedding</strong>: You want to <a href="/blog/why-full-app-embedding">offer multi-tenant, self-service analytics</a>, you want a drop‑in script, and want to embed Metabase components with per‑component controls and theming.</p>
+<p>You can use two different ways to authenticate modular embeds:</p>
 
-<h2 id="static-embedding">Static embedding</h2>
+<ul>
+  <li><a href="#modular-embedding">SSO</a></li>
+  <li><a href="#guest-embedding">Guest</a></li>
+</ul>
 
-<p>Also known as signed embedding, <a href="./static-embedding">static embedding</a> is a secure way to embed charts and dashboards.</p>
+<p>Here’s a basic breakdown of what each auth type enables:</p>
 
-<p><strong>When to use static embedding</strong>: you don’t want to offer ad-hoc querying or chart drill-through. To filter data relevant to the viewer, you can use static embeds with <a href="./static-embedding-parameters#locked-parameters-limit-the-values-available-to-other-editable-parameters">locked parameters</a>.</p>
+<table>
+  <thead>
+    <tr>
+      <th>Component</th>
+      <th>SSO</th>
+      <th>Guest</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td data-label="Component">Chart</td>
+      <td data-label="SSO">✅</td>
+      <td data-label="Guest">✅</td>
+    </tr>
+    <tr>
+      <td data-label="Component">Chart with drill-through</td>
+      <td data-label="SSO">✅</td>
+      <td data-label="Guest">❌</td>
+    </tr>
+    <tr>
+      <td data-label="Component">Dashboard</td>
+      <td data-label="SSO">✅</td>
+      <td data-label="Guest">✅</td>
+    </tr>
+    <tr>
+      <td data-label="Component">Dashboard with drill-through</td>
+      <td data-label="SSO">✅</td>
+      <td data-label="Guest">❌</td>
+    </tr>
+    <tr>
+      <td data-label="Component"><a href="../questions/query-builder/editor">Query builder</a></td>
+      <td data-label="SSO">✅</td>
+      <td data-label="Guest">❌</td>
+    </tr>
+    <tr>
+      <td data-label="Component">Browser to navigate collections</td>
+      <td data-label="SSO">✅</td>
+      <td data-label="Guest">❌</td>
+    </tr>
+    <tr>
+      <td data-label="Component">Metabot AI chat</td>
+      <td data-label="SSO">✅</td>
+      <td data-label="Guest">❌</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Currently, you can’t embed <a href="../documents/introduction">documents</a>.</p>
+
+<h3 id="sso-embeds">SSO embeds</h3>
+
+<p>With SSO, Metabase can know who’s viewing what, which unlocks a lot of power. You can automatically apply <a href="../permissions/embedding">data permissions</a>, which means you can give people access to all the cool tools Metabase provides, and everyone will only ever see the data they’re allowed to.</p>
+
+<p><strong>When to use SSO</strong>: You want to offer multi-tenant, self-service analytics, or you want to include the query builder, AI chat, drill-through, or a collection browser.</p>
+
+<h3 id="guest-embedding">Guest embedding</h3>
+
+<p><a href="./guest-embedding">Guest embeds</a> are a secure way to embed charts and dashboards.</p>
+
+<p><strong>When to use guest embeds</strong>: simple embedding use cases where you don’t want to offer ad-hoc querying or chart drill-through. To filter data relevant to the viewer, you can use guest embeds with <a href="./static-embedding-parameters#locked-parameters-limit-the-values-available-to-other-editable-parameters">locked parameters</a>.</p>
 
 <h2 id="public-links-and-embeds">Public links and embeds</h2>
 
 <p>If you’d like to share your data with the good people of the internet, admins can create a <a href="./public-links">public link</a> or embed a question or dashboard directly in your website.</p>
 
-<p><strong>When to use public links and embeds</strong>: public links and embeds are good for one-off charts and dashboards. Admins can use them when you just need to show someone a chart or dashboard without giving people access to your Metabase. And you don’t care who sees the data; you want to make those stats available to everyone.</p>
+<p><strong>When to use public links and embeds</strong>: One-off charts and dashboards. Admins can use public links when you just need to show someone a chart or dashboard without giving people access to your Metabase. And you don’t care who sees the data; you want to make the item available to everyone.</p>
 
 <h2 id="full-app-embedding">Full app embedding</h2>
 
@@ -5488,124 +5554,132 @@ Roadmap</a>
   <thead>
     <tr>
       <th>Action</th>
-      <th><a href="./sdk/introduction">React SDK</a></th>
-      <th><a href="./modular-embedding">Modular</a></th>
+      <th><a href="./sdk/introduction">Modular SDK</a></th>
+      <th><a href="./modular-embedding">Modular SSO</a></th>
+      <th><a href="./guest-embedding">Modular Guest</a></th>
       <th><a href="./full-app-embedding">Full app</a></th>
-      <th><a href="./static-embedding">Static</a></th>
       <th><a href="../embedding/public-links">Public</a></th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td data-label="Action">Display charts and dashboards</td>
-      <td data-label="React SDK">✅</td>
-      <td data-label="Modular">✅</td>
+      <td data-label="Action">Charts and dashboards</td>
+      <td data-label="Modular SDK">✅</td>
+      <td data-label="Modular SSO">✅</td>
+      <td data-label="Modular Guest">✅</td>
       <td data-label="Full app">✅</td>
-      <td data-label="Static">✅</td>
       <td data-label="Public">✅</td>
     </tr>
     <tr>
-      <td data-label="Action">Display interactive <a href="/glossary/filter-widget">filter widgets</a></td>
-      <td data-label="React SDK">✅</td>
-      <td data-label="Modular">✅</td>
+      <td data-label="Action"><a href="/glossary/filter-widget">Filter widgets</a></td>
+      <td data-label="Modular SDK">✅</td>
+      <td data-label="Modular SSO">✅</td>
+      <td data-label="Modular Guest">✅</td>
       <td data-label="Full app">✅</td>
-      <td data-label="Static">✅</td>
       <td data-label="Public">✅</td>
     </tr>
     <tr>
       <td data-label="Action">Export results*</td>
-      <td data-label="React SDK">✅</td>
-      <td data-label="Modular">✅</td>
+      <td data-label="Modular SDK">✅</td>
+      <td data-label="Modular SSO">✅</td>
+      <td data-label="Modular Guest">✅</td>
       <td data-label="Full app">✅</td>
-      <td data-label="Static">✅</td>
       <td data-label="Public">✅</td>
     </tr>
     <tr>
-      <td data-label="Action">Restrict data with <a href="./static-embedding-parameters#restricting-data-in-a-static-embed-with-locked-parameters">locked filters</a></td>
-      <td data-label="React SDK">❌</td>
-      <td data-label="Modular">❌</td>
+      <td data-label="Action"><a href="./static-embedding-parameters#restricting-data-in-a-static-embed-with-locked-parameters">Locked filters</a></td>
+      <td data-label="Modular SDK">❌</td>
+      <td data-label="Modular SSO">❌</td>
+      <td data-label="Modular Guest">✅</td>
       <td data-label="Full app">❌</td>
-      <td data-label="Static">✅</td>
       <td data-label="Public">❌</td>
     </tr>
     <tr>
       <td data-label="Action"><a href="../permissions/embedding">Data segregation</a></td>
-      <td data-label="React SDK">✅</td>
-      <td data-label="Modular">✅</td>
+      <td data-label="Modular SDK">✅</td>
+      <td data-label="Modular SSO">✅</td>
+      <td data-label="Modular Guest">❌</td>
       <td data-label="Full app">✅</td>
-      <td data-label="Static">❌</td>
       <td data-label="Public">❌</td>
     </tr>
     <tr>
-      <td data-label="Action">Use the <a href="/learn/metabase-basics/querying-and-dashboards/questions/drill-through">drill-through menu</a></td>
-      <td data-label="React SDK">✅</td>
-      <td data-label="Modular">✅</td>
+      <td data-label="Action"><a href="/learn/metabase-basics/querying-and-dashboards/questions/drill-through">Drill-through menu</a></td>
+      <td data-label="Modular SDK">✅</td>
+      <td data-label="Modular SSO">✅</td>
+      <td data-label="Modular Guest">❌</td>
       <td data-label="Full app">✅</td>
-      <td data-label="Static">❌</td>
       <td data-label="Public">❌</td>
     </tr>
     <tr>
-      <td data-label="Action">Self-serve via <a href="../questions/query-builder/editor">query builder</a></td>
-      <td data-label="React SDK">✅</td>
-      <td data-label="Modular">✅</td>
+      <td data-label="Action"><a href="../questions/query-builder/editor">Query builder</a></td>
+      <td data-label="Modular SDK">✅</td>
+      <td data-label="Modular SSO">✅</td>
+      <td data-label="Modular Guest">❌</td>
       <td data-label="Full app">✅</td>
-      <td data-label="Static">❌</td>
       <td data-label="Public">❌</td>
     </tr>
     <tr>
       <td data-label="Action"><a href="../configuring-metabase/appearance">Basic appearance customization</a>**</td>
-      <td data-label="React SDK">✅</td>
-      <td data-label="Modular">✅</td>
+      <td data-label="Modular SDK">✅</td>
+      <td data-label="Modular SSO">✅</td>
+      <td data-label="Modular Guest">✅</td>
       <td data-label="Full app">✅</td>
-      <td data-label="Static">✅</td>
       <td data-label="Public">✅</td>
     </tr>
     <tr>
-      <td data-label="Action"><a href="./sdk/appearance">Advanced theming</a></td>
-      <td data-label="React SDK">✅</td>
-      <td data-label="Modular">✅</td>
+      <td data-label="Action"><a href="./appearance">Advanced theming</a></td>
+      <td data-label="Modular SDK">✅</td>
+      <td data-label="Modular SSO">✅</td>
+      <td data-label="Modular Guest">❌</td>
       <td data-label="Full app">❌</td>
-      <td data-label="Static">❌</td>
       <td data-label="Public">❌</td>
     </tr>
     <tr>
-      <td data-label="Action">View usage of embeds with <a href="../usage-and-performance-tools/usage-analytics">usage analytics</a></td>
-      <td data-label="React SDK">✅</td>
-      <td data-label="Modular">✅</td>
+      <td data-label="Action"><a href="../usage-and-performance-tools/usage-analytics">Usage analytics</a></td>
+      <td data-label="Modular SDK">✅</td>
+      <td data-label="Modular SSO">✅</td>
+      <td data-label="Modular Guest">❌</td>
       <td data-label="Full app">✅</td>
-      <td data-label="Static">❌</td>
       <td data-label="Public">❌</td>
     </tr>
     <tr>
       <td data-label="Action">Embed individual Metabase components</td>
-      <td data-label="React SDK">✅</td>
-      <td data-label="Modular">✅</td>
+      <td data-label="Modular SDK">✅</td>
+      <td data-label="Modular SSO">✅</td>
+      <td data-label="Modular Guest">❌</td>
       <td data-label="Full app">❌</td>
-      <td data-label="Static">❌</td>
       <td data-label="Public">❌</td>
     </tr>
     <tr>
       <td data-label="Action">Manage access and interactivity per component</td>
-      <td data-label="React SDK">✅</td>
-      <td data-label="Modular">✅</td>
+      <td data-label="Modular SDK">✅</td>
+      <td data-label="Modular SSO">✅</td>
+      <td data-label="Modular Guest">❌</td>
       <td data-label="Full app">❌</td>
-      <td data-label="Static">❌</td>
       <td data-label="Public">❌</td>
     </tr>
     <tr>
       <td data-label="Action">Custom layouts</td>
-      <td data-label="React SDK">✅</td>
-      <td data-label="Modular">❌</td>
+      <td data-label="Modular SDK">✅</td>
+      <td data-label="Modular SSO">❌</td>
+      <td data-label="Modular Guest">❌</td>
       <td data-label="Full app">❌</td>
-      <td data-label="Static">❌</td>
       <td data-label="Public">❌</td>
     </tr>
     <tr>
       <td data-label="Action">Customize behavior with <a href="./sdk/plugins">plugins</a></td>
-      <td data-label="React SDK">✅</td>
-      <td data-label="Modular">❌</td>
+      <td data-label="Modular SDK">✅</td>
+      <td data-label="Modular SSO">❌</td>
+      <td data-label="Modular Guest">❌</td>
       <td data-label="Full app">❌</td>
-      <td data-label="Static">❌</td>
+      <td data-label="Public">❌</td>
+    </tr>
+    <tr>
+      <td data-label="Action">AI chat</td>
+      <td data-label="Modular SDK">✅</td>
+      <td data-label="Modular SSO">✅</td>
+      <td data-label="Modular Guest">❌</td>
+      <td data-label="Full app">✅</td>
       <td data-label="Public">❌</td>
     </tr>
   </tbody>
@@ -5615,10 +5689,6 @@ Roadmap</a>
 
 <p>** Requires a <a href="/pricing/">Pro and Enterprise</a> plan for any embedding type.</p>
 
-<h2 id="switching-from-static-embedding-to-modular-embedding">Switching from static embedding to Modular embedding</h2>
-
-<p><a href="./modular-embedding">Modular embedding</a> requires authentication via single sign-on (SSO), so you’ll need to set that up both in your Metabase and in your application’s server. Check out our <a href="../embedding/sdk/authentication">Modular embedding authentication</a>.</p>
-
 <h2 id="further-reading">Further reading</h2>
 
 <ul>
@@ -5626,7 +5696,7 @@ Roadmap</a>
   <li><a href="/learn/metabase-basics/embedding/charts-and-dashboards">Publishing data visualizations to the web</a>.</li>
   <li><a href="/learn/metabase-basics/embedding/multi-tenant-self-service-analytics">Multi-tenant self-service analytics</a>.</li>
   <li><a href="../configuring-metabase/appearance">Customizing Metabase’s appearance</a>.</li>
-  <li><a href="./securing-embeds">Securing embedded Metabase</a></li>
+  <li><a href="./securing-embeds">Securing embedded Metabase</a>.</li>
 </ul>
 
 
