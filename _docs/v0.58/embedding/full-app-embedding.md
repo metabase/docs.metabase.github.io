@@ -19,7 +19,7 @@ redirect_from:
 
 {% include shared/in-page-promo-embedding-workshop.html %}
 
-**Full app embedding** (previously called "interactive embedding") lets you embed the entire Metabase app in an iframe. Full app embedding integrates your [permissions](../permissions/introduction) and [SSO](../people-and-groups/start#authentication) to give people the right level of access to [query](../questions/query-builder/editor) and [drill-down](/learn/metabase-basics/querying-and-dashboards/questions/drill-through) into your data.
+**Full app embedding** lets you embed the entire Metabase app in an iframe. Full app embedding integrates your [permissions](../permissions/introduction) and [SSO](../people-and-groups/start#authentication) to give people the right level of access to [query](../questions/query-builder/editor) and [drill-down](/learn/metabase-basics/querying-and-dashboards/questions/drill-through) into your data.
 
 > If you are just starting out with Metabase embedding, consider using [Modular embedding](./modular-embedding) instead of full app embedding - it's an improved, more customizable option for embedding individual Metabase components.
 
@@ -146,7 +146,7 @@ SameSite values include:
 
 You can also set the [`MB_SESSION_COOKIE_SAMESITE` environment variable](../configuring-metabase/environment-variables#mb_session_cookie_samesite).
 
-If you're using Safari, you'll need to [allow cross-site tracking](https://support.apple.com/en-tj/guide/safari/sfri40732/mac). Depending on the browser, you may also run into issues when viewing emdedded items in private/incognito tabs.
+If you're using Safari, you'll need to [allow cross-site tracking](https://support.apple.com/en-tj/guide/safari/sfri40732/mac). Depending on the browser, you may also run into issues when viewing embedded items in private/incognito tabs.
 
 Learn more about [SameSite cookies](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie/SameSite).
 

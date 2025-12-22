@@ -212,16 +212,12 @@ Metabase's reference documentation.
 
 - [Embedding overview](./embedding/start)
 - [Embedding introduction](./embedding/introduction)
-- [Modular embedding](./embedding/modular-embedding)
-- [Modular embedding SDK](./embedding/sdk/introduction)
-- Full app embedding
-  - [Full app embedding overview](./embedding/full-app-embedding)
-  - [Full app embedding quick start](./embedding/full-app-embedding-quick-start-guide)
-- Static embedding
-  - [Static embedding overview](./embedding/static-embedding)
-  - [Parameters for static embeds](./embedding/static-embedding-parameters)
-  - [Translate embedded dashboards and questions](./embedding/translations)
-- [Securing embedded Metabase](./embedding/securing-embeds)
+- Modular embedding
+  - [SSO](./embedding/modular-embedding)
+  - [Guest](./embedding/guest-embedding)
+  - [SDK](./embedding/sdk/introduction)
+- [Full app embedding](./embedding/full-app-embedding)
+- [Securing embeds](./embedding/securing-embeds)
 
 ### Configuration
 

@@ -54,7 +54,7 @@
 <meta name="twitter:site" content="@metabase">
 
 <meta name="twitter:title" content="Translate embedded dashboards and questions | Metabase Documentation">
-<meta name="twitter:description" content="Upload a translation dictionary to translate questions and dashboards into different languages. Only available for static embeds.">
+<meta name="twitter:description" content="Upload a translation dictionary to translate questions and dashboards into different languages. Only available for guest embeds.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -64,7 +64,7 @@
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://www.metabase.com/docs/v0.58/embedding/translations">
 <meta name="title" property="og:title" content="Translate embedded dashboards and questions | Metabase Documentation">
-<meta name="description" property="og:description" content="Upload a translation dictionary to translate questions and dashboards into different languages. Only available for static embeds.">
+<meta name="description" property="og:description" content="Upload a translation dictionary to translate questions and dashboards into different languages. Only available for guest embeds.">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -5440,7 +5440,7 @@ Roadmap</a>
   </div>
 </div>
 
-<p>For now, translations are only available for <a href="./static-embedding">guest embed</a>. Translations aren’t available for SSO-based modular embedding or full app embedding.</p>
+<p>For now, translations are only available for <a href="./guest-embedding">guest embeds</a>. Translations aren’t available for SSO-based modular embedding or full app embedding.</p>
 
 <p>You can upload a translation dictionary to translate strings both in Metabase content (like dashboard titles) and in the data itself (like column names and values).</p>
 
@@ -5461,7 +5461,7 @@ Roadmap</a>
 <p>To add a translation dictionary:</p>
 
 <ol>
-  <li>Go to <strong>Admin &gt; Embedding &gt; Static</strong>.</li>
+  <li>Go to <strong>Admin settings &gt; Embedding</strong>.</li>
   <li>Under <strong>Translate embedded dashboards and question</strong>, click <strong>Upload translation dictionary</strong>.</li>
 </ol>
 
@@ -5469,18 +5469,23 @@ Roadmap</a>
 
 <p>To remove a translation dictionary, upload a blank dictionary.</p>
 
-<h2 id="translate-content-in-static-embeds">Translate content in static embeds</h2>
+<h2 id="translate-content-in-guest-embeds">Translate content in guest embeds</h2>
 
-<p>To translate content in a static embed using the uploaded dictionary, add the <a href="./static-embedding-parameters#setting-the-language-for-a-static-embed"><code class="language-plaintext highlighter-rouge">locale</code> parameter</a> to the embed URL:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://metabase.example.com/public/dashboard/7b6e347b-6928-4aff-a56f-6cfa5b718c6b?category=&amp;city=&amp;state=#locale=ko
+<p>To translate content in a guest embed using the uploaded dictionary, add the <a href="./components"><code class="language-plaintext highlighter-rouge">locale</code> parameter</a>.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;metabase-dashboard
+    dashboard-id="1"
+    with-title="false"
+    with-subscriptions="true"
+    drills="true"
+    locale="es"
+ &lt;/metabase-dashboard&gt;
 </code></pre></div></div>
 
 <p>Metabase UI elements (like button labels) will be translated automatically - you don’t need to add translations for them to your dictionary.</p>
 
 <h2 id="example-translation-dictionary">Example translation dictionary</h2>
 
-<p>Metabase uses these dictionaries to translate user-generated content, like dashboard names in <a href="./static-embedding">static embeds</a>.</p>
+<p>Metabase uses these dictionaries to translate user-generated content, like dashboard names in <a href="./guest-embedding">guest embeds</a>.</p>
 
 <table>
   <thead>
@@ -5524,7 +5529,7 @@ Roadmap</a>
   </tbody>
 </table>
 
-<p>Prefer hyphens in your <code class="language-plaintext highlighter-rouge">pt-BR</code> in your translation dictionary. Underscores are also acceptable (if you download the dictionary <em>after</em> uploading it, Metabase will transform <code class="language-plaintext highlighter-rouge">pt-BR</code> to <code class="language-plaintext highlighter-rouge">pt_BR</code>), but since the <code class="language-plaintext highlighter-rouge">locale</code> parameter in static embedding only accepts locales with hyphens (like <code class="language-plaintext highlighter-rouge">pt-BR</code>), we recommend using hyphens for consistency.</p>
+<p>Prefer hyphens in your <code class="language-plaintext highlighter-rouge">pt-BR</code> in your translation dictionary. Underscores are also acceptable (if you download the dictionary <em>after</em> uploading it, Metabase will transform <code class="language-plaintext highlighter-rouge">pt-BR</code> to <code class="language-plaintext highlighter-rouge">pt_BR</code>), but since the <code class="language-plaintext highlighter-rouge">locale</code> parameter in guest embeds only accepts locales with hyphens (like <code class="language-plaintext highlighter-rouge">pt-BR</code>), we recommend using hyphens for consistency.</p>
 
 <p><a href="../configuring-metabase/localization#supported-languages">See a list of supported locales</a>.</p>
 
@@ -5593,7 +5598,7 @@ Roadmap</a>
 <h2 id="further-reading">Further reading</h2>
 
 <ul>
-  <li><a href="./static-embedding">Static embedding</a></li>
+  <li><a href="./guest-embedding">Guest embedding</a></li>
 </ul>
 
 

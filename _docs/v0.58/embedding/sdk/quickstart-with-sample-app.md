@@ -135,7 +135,6 @@ From any Metabase page, click on the **gear** icon in the upper right and select
 Turn on:
 
 - Modular embedding SDK
-- Static embedding
 
 Otherwise, this whole thing is hopeless.
 
@@ -254,4 +253,4 @@ In your app, you'll see an embedded `InteractiveQuestion` component.
 
 ## Next steps
 
-To style the components, try changing some of the `theme` options in the client app at `client/src/App.jsx`. For more on theming, check out [Appearance](./appearance).
+To style the components, try changing some of the `theme` options in the client app at `client/src/App.jsx`. For more on theming, check out [Appearance](../appearance).
