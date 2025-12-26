@@ -28,7 +28,11 @@ Jekyll::Hooks.register :site, :post_write do |site|
 
     # Strip YAML frontmatter
     content_without_frontmatter = content.sub(/\A---\s*\n.*?\n---\s*\n/m, '')
-    File.write(dest_file, content_without_frontmatter)
+
+    # Strip Liquid templates in {% ... %} tags
+    content_clean = content_without_frontmatter.gsub(/\{%.*?%\}/m, '')
+
+    File.write(dest_file, content_clean)
 
     Jekyll.logger.debug "Copied raw markdown:", "#{relative_source_path} -> #{dest_path}"
   end
