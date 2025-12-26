@@ -21,12 +21,14 @@ Jekyll::Hooks.register :site, :post_write do |site|
     source_file = File.join(source_dir, relative_source_path)
     dest_path = relative_source_path.sub(/^_docs\//, 'docs/')
     dest_file = File.join(dest_dir, dest_path)
+    content = File.read(source_file)
 
     # Create the destination directory
     FileUtils.mkdir_p(File.dirname(dest_file))
 
-    # Copy the markdown file
-    FileUtils.cp(source_file, dest_file)
+    # Strip YAML frontmatter
+    content_without_frontmatter = content.sub(/\A---\s*\n.*?\n---\s*\n/m, '')
+    File.write(dest_file, content_without_frontmatter)
 
     Jekyll.logger.debug "Copied raw markdown:", "#{relative_source_path} -> #{dest_path}"
   end
