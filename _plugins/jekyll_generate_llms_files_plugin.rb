@@ -104,6 +104,8 @@ def generate_llms_full_txt(source_dir, dest_dir, version, section, docs)
   lines = []
   lines << "# Metabase #{section.capitalize} - Complete Reference"
   lines << ''
+  lines << "> Table of contents: https://metabase.com/docs/#{version}/llms.txt"
+  lines << ''
 
   # Add special note for embedding section (v58+ only)
   add_embedding_v58_notes(lines) if section == 'embedding' && above_version?(version, 58)
