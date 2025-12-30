@@ -54,7 +54,7 @@
 <meta name="twitter:site" content="@metabase">
 
 <meta name="twitter:title" content="Driver interface changelog | Metabase Documentation">
-<meta name="twitter:description" content="Driver Interface Changelog Metabase 0.57.0   driver/field-reference-mlv2 is now deprecated, and is no longer used. Please remove your implementations.   The key metabase.driver-api.core/qp.add.nfc-path is now more consistently populated; other qp.add.* keys no...">
+<meta name="twitter:description" content="Driver Interface Changelog Metabase 0.57.8  Added the new :regex/lookaheads-and-lookbehinds driver feature flag; by default this is true for all drivers that support :regex and false for all drivers that do not. If your driver supports...">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -64,7 +64,7 @@
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://www.metabase.com/docs/v0.57/developers-guide/driver-changelog">
 <meta name="title" property="og:title" content="Driver interface changelog | Metabase Documentation">
-<meta name="description" property="og:description" content="Driver Interface Changelog Metabase 0.57.0   driver/field-reference-mlv2 is now deprecated, and is no longer used. Please remove your implementations.   The key metabase.driver-api.core/qp.add.nfc-path is now more consistently populated; other qp.add.* keys no...">
+<meta name="description" property="og:description" content="Driver Interface Changelog Metabase 0.57.8  Added the new :regex/lookaheads-and-lookbehinds driver feature flag; by default this is true for all drivers that support :regex and false for all drivers that do not. If your driver supports...">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -5458,6 +5458,15 @@ Roadmap</a>
 
 
         <h1 id="driver-interface-changelog">Driver Interface Changelog</h1>
+
+<h2 id="metabase-0578">Metabase 0.57.8</h2>
+
+<ul>
+  <li>Added the new <code class="language-plaintext highlighter-rouge">:regex/lookaheads-and-lookbehinds</code> driver feature flag; by default this is true for all drivers that
+support <code class="language-plaintext highlighter-rouge">:regex</code> and false for all drivers that do not. If your driver supports regular expressions but does not
+support lookaheads or lookbehinds, add a <code class="language-plaintext highlighter-rouge">metabase.driver/database-supports?</code> method implementation – see the
+<code class="language-plaintext highlighter-rouge">:bigquery-cloud-sdk</code> driver for example.</li>
+</ul>
 
 <h2 id="metabase-0570">Metabase 0.57.0</h2>
 
