@@ -142,8 +142,9 @@ def add_embedding_v57_notes(lines)
   lines << '> 4. `fetchRequestToken` is not needed by default. This is only used to customize ' \
            'how the SDK fetches the request token.'
   lines << '> 5. Numeric IDs must be integers not strings, e.g. `dashboardId={1}`. When the ID is ' \
-           'retrieved from the URL, make sure to convert it to an integer via `parseInt` before ' \
-           'passing it to the SDK.'
+           'retrieved from the URL and it is numeric, convert it to an integer via `parseInt` before ' \
+           'passing it to the SDK. IDs can also be strings for entity ids, so you should not ' \
+           'parse all IDs as numbers if entity ids are also to be expected.'
   lines << ''
 end
 
