@@ -24,14 +24,12 @@ Jekyll::Hooks.register :site, :post_write do |site|
   docs_by_version = Hash.new { |h, k| h[k] = [] }
 
   docs_collection.docs.each do |doc|
-    next unless doc.relative_path.end_with?('.md')
+    # Extract version from path: _docs/VERSION/path/to/file.md
+    # Skip files directly under _docs/ like _docs/index.md
+    match = doc.relative_path.match(%r{^_docs/(?<version>[^/]+)/.+\.md$})
+    next unless match
 
-    # Extract version from path: _docs/VERSION/...
-    path_parts = doc.relative_path.split('/')
-    next if path_parts.length < 2
-
-    # _docs/VERSION/...
-    version = path_parts[1]
+    version = match[:version]
     docs_by_version[version] << doc
   end
 
@@ -107,8 +105,8 @@ def generate_llms_full_txt(source_dir, dest_dir, version, section, docs)
   lines << "> Table of contents: https://metabase.com/docs/#{version}/llms.txt"
   lines << ''
 
-  # Add special note for embedding section (v58+ only)
-  add_embedding_v58_notes(lines) if section == 'embedding' && above_version?(version, 58)
+  # Add special note for embedding section (v57+ only)
+  add_embedding_v57_notes(lines) if section == 'embedding' && above_version?(version, 57)
 
   # Concatenate all documents into llms-full.txt
   llms_full_concatenate_documents(lines, section_docs, source_dir)
@@ -132,15 +130,15 @@ def above_version?(source_version, target_version)
   version_num >= target_version
 end
 
-def add_embedding_v58_notes(lines)
+def add_embedding_v57_notes(lines)
   lines << '> **Important Version Notes+**'
   lines << '>'
-  lines << '> Watch out for these deprecated props and gotchas for Metabase 58 onwards:'
+  lines << '> Watch out for these deprecated props and gotchas for Metabase 57 onwards:'
   lines << '>'
   lines << '> 1. `config` prop on MetabaseProvider no longer exist - it is replaced by `authConfig`.'
   lines << '> 2. `authProviderUri` field no longer exist.'
-  lines << '> 3. `jwtProviderUri` field is not needed by default. This is only used to speed up ' \
-           'JWT authentication by skipping the `GET /auth/sso` discovery request, not usually needed.'
+  lines << '> 3. `jwtProviderUri` optional field only exists in v58+. This is used to make' \
+           'JWT auth faster by skipping the `GET /auth/sso` discovery request. Not needed for initial implementation.'
   lines << '> 4. `fetchRequestToken` is not needed by default. This is only used to customize ' \
            'how the SDK fetches the request token.'
   lines << '> 5. Numeric IDs must be integers not strings, e.g. `dashboardId={1}`. When the ID is ' \
