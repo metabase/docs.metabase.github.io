@@ -1,10 +1,10 @@
 ---
-version: v0.57
+version: v0.58
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
 category: Embedding
-title: Embedded analytics SDK - AI chat
+title: Modular embedding SDK - AI chat
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/embedding/sdk/ai-chat.md'
 layout: new-docs
 summary: >-
@@ -13,19 +13,20 @@ summary: >-
 latest: true
 ---
 
-# Embedded analytics SDK - AI chat
+# Modular embedding SDK - AI chat
 
 ![Embedded AI chat](../images/ai-chat.png)
 
-{% include plans-blockquote.html feature="Embedded analytics SDK" sdk=true %}
+{% include plans-blockquote.html feature="Modular embedding SDK" sdk=true %}
 
-You can embed an AI chat in your application similar to [Metabot](../embedded-analytics-js) in Metabase.
+You can embed an AI chat in your application similar to [Metabot](../modular-embedding) in Metabase.
 
 Embedded Metabot is a more focused version of [Metabot](../../ai/metabot) designed to work well in an embedded context. Embedded Metabot can only display ad-hoc questions and metrics; it doesn't know about dashboards.
 
 To help embedded Metabot more easily find and focus on the data you care about most, select the collection containing the models and metrics it should be able to use to create queries.
 
 If you're embedding the Metabot component in an app, you can specify a different collection that embedded Metabot is allowed to use for creating queries.
+
 ## Chat preview
 
 You can check out a [demo of the AI chat component](https://embedded-analytics-sdk-demo.metabase.com/admin/analytics/new/ask-metabot) on our Shoppy demo site.

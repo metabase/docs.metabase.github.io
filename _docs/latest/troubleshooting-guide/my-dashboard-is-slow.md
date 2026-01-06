@@ -1,5 +1,5 @@
 ---
-version: v0.57
+version: v0.58
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -53,7 +53,7 @@ Caching takes less effort because it doesn't involve any changes to your schemas
 
 One of the easiest ways to make a question or dashboard run faster is to work with a smaller dataset. Your Metabase admin can apply automatic data limitations using things like [SSO](../people-and-groups/start#authentication), [data permissions](../permissions/data), and [row and column security](../permissions/row-and-column-security).
 
-When someone loads a question or a dashboard in a static embed, however, that question or dashboard will query the full dataset (rather than a smaller dataset limited by permissions). Static, [signed embeds](../embedding/static-embedding) don't require people to be logged in, and unauthenticated people viewing the signed embed won't be subject to the permissions and data restrictions set up by your admin.
+When someone loads a question or a dashboard in a guest embed, however, that question or dashboard will query the full dataset (rather than a smaller dataset limited by permissions). [Guest embeds](../embedding/guest-embedding) don't require people to be logged in, and unauthenticated people viewing the guest embed won't be subject to the permissions and data restrictions set up by your admin.
 
 ## Dashboard is slow compared to similar dashboards
 

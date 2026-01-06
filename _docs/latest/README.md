@@ -1,5 +1,5 @@
 ---
-version: v0.57
+version: v0.58
 has_magic_breadcrumbs: true
 show_category_breadcrumb: false
 show_title_breadcrumb: true
@@ -213,11 +213,12 @@ Metabase's reference documentation.
 
 - [Embedding overview](./embedding/start)
 - [Embedding introduction](./embedding/introduction)
-- [Interactive embedding](./embedding/interactive-embedding)
-- [Interactive embedding quick start](./embedding/interactive-embedding-quick-start-guide)
-- [Static embedding](./embedding/static-embedding)
-- [Parameters for static embeds](./embedding/static-embedding-parameters)
-- [Securing embedded Metabase](./embedding/securing-embeds)
+- Modular embedding
+  - [SSO](./embedding/modular-embedding)
+  - [Guest](./embedding/guest-embedding)
+  - [SDK](./embedding/sdk/introduction)
+- [Full app embedding](./embedding/full-app-embedding)
+- [Securing embeds](./embedding/securing-embeds)
 
 ### Configuration
 

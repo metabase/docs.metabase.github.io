@@ -1,5 +1,5 @@
 ---
-version: v0.57
+version: v0.58
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -12,5 +12,5 @@ latest: true
 ---
 
 ```ts
-type SdkCollectionId = number | "personal" | "root" | SdkEntityId;
+type SdkCollectionId = number | "personal" | "root" | "tenant" | SdkEntityId;
 ```

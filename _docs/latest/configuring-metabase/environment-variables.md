@@ -1,5 +1,5 @@
 ---
-version: v0.57
+version: v0.58
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -637,7 +637,7 @@ Allow admins to embed Metabase via the SDK?
 - Default: `false`
 - [Configuration file name](./config-file): `enable-embedding-simple`
 
-Allow admins to embed Metabase via Embedded Analytics JS?
+Allow admins to embed Metabase via modular embedding?
 
 ### `MB_ENABLE_EMBEDDING_STATIC`
 
@@ -821,6 +821,17 @@ Change this to a higher value if you notice that regular usage consumes all or c
   For setting the maximum,
   see [MB_APPLICATION_DB_MAX_CONNECTION_POOL_SIZE](#mb_application_db_max_connection_pool_size).
 
+### `MB_JDBC_NETWORKOUT_TIMEOUT_MS`
+
+- Type: integer
+- Default: `1800000`
+
+By default, this is 30 minutes.
+
+Timeout in milliseconds to wait for database operations to complete. This is used to free up threads that
+        are stuck waiting for a database response in a socket read. See the documentation for more details:
+        https://docs.oracle.com/javase/8/docs/api/java/sql/Connection.html#setNetworkTimeout-java.util.concurrent.Executor-int-
+
 ### `MB_JWT_ATTRIBUTE_EMAIL`
 
 > Only available on Metabase [Pro](/product/pro) and [Enterprise](/product/enterprise) plans.
@@ -860,6 +871,16 @@ Key to retrieve the JWT user's groups.
 - [Configuration file name](./config-file): `jwt-attribute-lastname`
 
 Key to retrieve the JWT user's last name.
+
+### `MB_JWT_ATTRIBUTE_TENANT`
+
+> Only available on Metabase [Pro](/product/pro) and [Enterprise](/product/enterprise) plans.
+
+- Type: string
+- Default: `@tenant`
+- [Configuration file name](./config-file): `jwt-attribute-tenant`
+
+Key to retrieve the JWT user's tenant.
 
 ### `MB_JWT_ENABLED`
 
@@ -1340,7 +1361,7 @@ Force all traffic to use HTTPS via a redirect, if the site URL is HTTPS.
 - Default: `false`
 - [Configuration file name](./config-file): `remote-sync-auto-import`
 
-Whether to automatically import from the remote git repository. Only applies if remote-sync-type is :production.
+Whether to automatically import from the remote git repository. Only applies if remote-sync-type is :read-only.
 
 ### `MB_REMOTE_SYNC_AUTO_IMPORT_RATE`
 
@@ -1348,15 +1369,7 @@ Whether to automatically import from the remote git repository. Only applies if 
 - Default: `5`
 - [Configuration file name](./config-file): `remote-sync-auto-import-rate`
 
-If remote-sync-type is :production and remote-sync-auto-import is true, the rate (in minutes) at which to check for updates to import. Defaults to 5.
-
-### `MB_REMOTE_SYNC_BRANCH`
-
-- Type: string
-- Default: `null`
-- [Configuration file name](./config-file): `remote-sync-branch`
-
-The remote branch to sync with, e.g. `main`.
+If remote-sync-type is :read-only and remote-sync-auto-import is true, the rate (in minutes) at which to check for updates to import. Defaults to 5.
 
 ### `MB_REMOTE_SYNC_TASK_TIME_LIMIT_MS`
 
@@ -1365,30 +1378,6 @@ The remote branch to sync with, e.g. `main`.
 - [Configuration file name](./config-file): `remote-sync-task-time-limit-ms`
 
 The maximum amount of time a remote sync task will be given to complete.
-
-### `MB_REMOTE_SYNC_TOKEN`
-
-- Type: string
-- Default: `null`
-- [Configuration file name](./config-file): `remote-sync-token`
-
-An Authorization Bearer token allowing access to the git repo over HTTP.
-
-### `MB_REMOTE_SYNC_TYPE`
-
-- Type: keyword
-- Default: `production`
-- [Configuration file name](./config-file): `remote-sync-type`
-
-Git synchronization type - :development or :production.
-
-### `MB_REMOTE_SYNC_URL`
-
-- Type: string
-- Default: `null`
-- [Configuration file name](./config-file): `remote-sync-url`
-
-The location of your git repository, e.g. https://github.com/acme-inco/metabase.git.
 
 ### `MB_REPORT_TIMEZONE`
 
@@ -1495,6 +1484,16 @@ SAML attribute for group syncing.
 - [Configuration file name](./config-file): `saml-attribute-lastname`
 
 SAML attribute for the user's last name.
+
+### `MB_SAML_ATTRIBUTE_TENANT`
+
+> Only available on Metabase [Pro](/product/pro) and [Enterprise](/product/enterprise) plans.
+
+- Type: string
+- Default: `null`
+- [Configuration file name](./config-file): `saml-attribute-tenant`
+
+SAML attribute for the user's tenant slug.
 
 ### `MB_SAML_ENABLED`
 
@@ -1681,8 +1680,8 @@ Should new email notifications be sent to admins, for all new SSO users?
 
 Value for the session cookie's `SameSite` directive.
 
-See [Embedding Metabase in a different domain](../embedding/interactive-embedding#embedding-metabase-in-a-different-domain).
-        Read more about [interactive Embedding](../embedding/interactive-embedding).
+See [Embedding Metabase in a different domain](../embedding/full-app-embedding#embedding-metabase-in-a-different-domain).
+        Read more about [Full app embedding](../embedding/full-app-embedding).
         Learn more about [SameSite cookies](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie/SameSite).
 
 ### `MB_SESSION_COOKIES`
@@ -1969,16 +1968,6 @@ Upload settings.
 - Default: `null`
 
 Prefix for upload table names.
-
-### `MB_USE_TENANTS`
-
-> Only available on Metabase [Pro](/product/pro) and [Enterprise](/product/enterprise) plans.
-
-- Type: boolean
-- Default: `false`
-- [Configuration file name](./config-file): `use-tenants`
-
-Turn on the Tenants feature, allowing users to be assigned to a particular Tenant.
 
 ### `MB_USER_VISIBILITY`
 

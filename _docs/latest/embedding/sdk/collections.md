@@ -1,19 +1,22 @@
 ---
-version: v0.57
+version: v0.58
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
 category: Embedding
-title: Embedded analytics SDK - collections
+title: Modular embedding SDK - collections
 source_url: >-
   https://github.com/metabase/metabase/blob/master/docs/embedding/sdk/collections.md
 layout: new-docs
+summary: >-
+  Embed Metabase collection browser in your application using the
+  MetabaseProvider SDK component.
 latest: true
 ---
 
-# Embedded analytics SDK - collections
+# Modular embedding SDK - collections
 
-{% include plans-blockquote.html feature="Embedded analytics SDK" sdk=true %}
+{% include plans-blockquote.html feature="Modular embedding SDK" sdk=true %}
 
 ## Embedding a collection browser
 

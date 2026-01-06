@@ -1,18 +1,21 @@
 ---
-version: v0.57
+version: v0.58
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
 category: Embedding
-title: Embedded analytics SDK - versions
+title: Modular embedding SDK - versions
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/embedding/sdk/version.md'
 layout: new-docs
+summary: >-
+  Learn about Modular embedding SDK versioning and compatibility with Metabase.
+  Install compatible versions and pin your Metabase Cloud instance version.
 latest: true
 ---
 
-# Embedded analytics SDK - versions
+# Modular embedding SDK - versions
 
-{% include plans-blockquote.html feature="Embedded analytics SDK" sdk=true %}
+{% include plans-blockquote.html feature="Modular embedding SDK" sdk=true %}
 
 The SDK stable version tracks with the Metabase version.
 
@@ -28,7 +31,7 @@ To grab the latest version of the SDK that works with Metabase nightly builds, u
 
 ## Minimum SDK version
 
-Version 52 is the minimum version supported for the Embedded analytics SDK.
+Version 52 is the minimum version supported for the Modular embedding SDK.
 
 ## You can pin instances to a version on Metabase Cloud
 

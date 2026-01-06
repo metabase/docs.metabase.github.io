@@ -1,5 +1,5 @@
 ---
-version: v0.57
+version: v0.58
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -179,8 +179,6 @@ Because Metabase doesn't display locked parameters as filter widgets, you can us
 - Reuse one dashboard in different ways in different parts of your app. For example, you may have a dashboard with multiple locked parameters, and use one parameter in one case, and another parameter in another case. Like a sales dashboard that in one part of your app is locked by "region", in another by "team".
 
 ## Customizing the appearance of a static embed
-
-![Look and feel: appearance settings on static embed](./images/04-preview.png)
 
 You can change the appearance of an embedded item by adding hash parameters (e.g., `#theme=night`) to the end of the URL in your iframe's `src` attribute.
 

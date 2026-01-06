@@ -1,5 +1,5 @@
 ---
-version: v0.57
+version: v0.58
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -33,7 +33,7 @@ You can use the command palette to:
 
 So anytime you want to do or find anything in Metabase, just hit `cmd/ctrl + k` and start typing what you want to do.
 
-> The command palette is currently unavailable in [Embedded analytics JS](../embedding/embedded-analytics-js) and [interactive embedding](../embedding/interactive-embedding) contexts.
+> The command palette is currently unavailable in [Modular embedding](../embedding/modular-embedding) and [full app embedding](../embedding/full-app-embedding) contexts.
 
 ## Advanced search
 

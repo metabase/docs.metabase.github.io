@@ -1,5 +1,5 @@
 ---
-version: v0.57
+version: v0.58
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -68,7 +68,7 @@ Supported languages include:
 | Ukrainian              | `uk`    |
 | Vietnamese             | `vi`    |
 
-The locale codes are relevant for setting the language in [static embeds](../embedding/static-embedding-parameters#setting-the-language-for-a-static-embed).
+The locale codes are relevant for setting the language in [guest embeds](../embedding/guest-embedding).
 
 > While Metabase can support languages that read right to left, the Metabase UI is designed around languages that read left to right.
 
@@ -148,4 +148,4 @@ This setting doesn't affect [SQL queries](../questions/native-editor/writing-sql
 
 ## Localizing embedded Metabase
 
-You can translate both Metabase UI elements (like button labels) and content (like dashboard names) in static embeds. See [Setting the language for static embeds](../embedding/static-embedding-parameters#setting-the-language-for-a-static-embed) and [Translating embedded dashboards and questions](../embedding/translations).
+You can translate both Metabase UI elements (like button labels) and content (like dashboard names) in guest embeds. See [Setting the language for guest embeds](../embedding/guest-embedding) and [Translating embedded dashboards and questions](../embedding/translations).

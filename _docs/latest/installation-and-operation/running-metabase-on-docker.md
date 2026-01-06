@@ -1,5 +1,5 @@
 ---
-version: v0.57
+version: v0.58
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -309,6 +309,8 @@ services:
       MB_DB_USER_FILE: /run/secrets/db_user
       MB_DB_PASS_FILE: /run/secrets/db_password
       MB_DB_HOST: postgres
+    logging:
+      driver: local
     networks:
       - metanet1
     secrets:

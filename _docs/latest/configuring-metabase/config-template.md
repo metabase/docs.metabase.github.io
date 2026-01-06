@@ -1,5 +1,5 @@
 ---
-version: v0.57
+version: v0.58
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -170,10 +170,12 @@ config:
     index-update-thread-count: 2
     install-analytics-database: true
     jdbc-data-warehouse-max-connection-pool-size: 15
+    jdbc-networkout-timeout-ms: 1800000
     jwt-attribute-email: email
     jwt-attribute-firstname: first_name
     jwt-attribute-groups: groups
     jwt-attribute-lastname: last_name
+    jwt-attribute-tenant: '@tenant'
     jwt-enabled: false
     jwt-group-mappings: {}
     jwt-group-sync: false
@@ -228,11 +230,7 @@ config:
     redirect-all-requests-to-https: false
     remote-sync-auto-import: false
     remote-sync-auto-import-rate: 5
-    remote-sync-branch: null
     remote-sync-task-time-limit-ms: 300000
-    remote-sync-token: null
-    remote-sync-type: production
-    remote-sync-url: null
     report-timezone: null
     reset-token-ttl-hours: 48
     retry-initial-interval: 500
@@ -245,6 +243,7 @@ config:
     saml-attribute-firstname: http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname
     saml-attribute-group: null
     saml-attribute-lastname: http://schemas.xmlsoap.org/ws/2005/05/identity/claims/surname
+    saml-attribute-tenant: null
     saml-enabled: false
     saml-group-mappings: {}
     saml-group-sync: false
@@ -290,6 +289,5 @@ config:
     synchronous-batch-updates: false
     unaggregated-query-row-limit: null
     uploads-settings: null
-    use-tenants: false
     user-visibility: all
 ```

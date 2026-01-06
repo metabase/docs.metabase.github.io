@@ -1,5 +1,5 @@
 ---
-version: v0.57
+version: v0.58
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -50,6 +50,16 @@ The database username for the account that you want to use to connect to your da
 ### Password
 
 The password for the username that you use to connect to the database.
+
+### Use an authentication provider
+
+{% include plans-blockquote.html feature="Authenticating with a provider" %}
+
+Instead of a password, you can authenticate with a supported provider. Only for self-hosted Pro and Enterprise plans.
+
+#### IAM authentication
+
+To connect to Amazon RDS instances using IAM authentication instead of a password, see [IAM authentication for AWS RDS](./aws-rds#iam-authentication).
 
 ### Use a secure connection (SSL)
 
