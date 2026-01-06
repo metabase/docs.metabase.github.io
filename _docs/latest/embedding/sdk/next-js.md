@@ -1,36 +1,39 @@
 ---
-version: v0.57
+version: v0.58
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
 category: Embedding
-title: Embedded analytics SDK - Using the SDK with Next.js
+title: Using the modular embedding SDK with Next.js
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/embedding/sdk/next-js.md'
 layout: new-docs
+summary: >-
+  Set up the Modular embedding SDK with Next.js using App Router or Pages
+  Router. Learn how to handle JWT authentication and server-side rendering.
 latest: true
 ---
 
-# Embedded analytics SDK - Using the SDK with Next.js
+# Using the modular embedding SDK with Next.js
 
-{% include plans-blockquote.html feature="Embedded analytics SDK" sdk=true %}
+{% include plans-blockquote.html feature="Modular embedding SDK" sdk=true %}
 
 {% include youtube.html id='UfL8okz36d0' %}
 
-Some notes on using the Embedded analytics SDK with [Next.js](https://nextjs.org/). The SDK is tested to work with Next.js 14, although it may work with other versions.
+Some notes on using the modular embedding SDK with [Next.js](https://nextjs.org/). The SDK is tested to work with Next.js 14, although it may work with other versions.
 
 See a [sample Next.js app that uses the SDK](https://github.com/metabase/metabase-nextjs-sdk-embedding-sample).
 
 ## SDK components with Server Side Rendering (SSR) or React Server Components
 
-As of Embedded Analytics SDK v57, SDK components automatically skip server-side rendering (SSR) and render only on the client.
+As of modular embedding SDK v57, SDK components automatically skip server-side rendering (SSR) and render only on the client.
 
 ### Compatibility layer for Server Side Rendering (SSR) (DEPRECATED)
 
-As of Embedded Analytics SDK 57, the compatibility layer for server-side rendering (SSR) is deprecated and no longer required. If you use the compatibility layer, change your imports from `@metabase/embedding-sdk-react/next` to `@metabase/embedding-sdk-react`.
+As of modular embedding SDK 57, the compatibility layer for server-side rendering (SSR) is deprecated and no longer required. If you use the compatibility layer, change your imports from `@metabase/embedding-sdk-react/next` to `@metabase/embedding-sdk-react`.
 
 ## Handling authentication
 
-App Router and Pages Router have different ways to define API routes. If you want to authenticate users from your server with JWT, you can follow the instructions below. But if you want to authenticate with API keys for local development, see [Authenticating locally with API keys](./authentication#authenticating-locally-with-api-keys).
+App Router and Pages Router have different ways to define API routes. If you want to authenticate users from your server with JWT, you can follow the instructions below. But if you want to authenticate with API keys for local development, see [Authenticating locally with API keys](../authentication#authenticating-locally-with-api-keys).
 
 ### Using App Router
 

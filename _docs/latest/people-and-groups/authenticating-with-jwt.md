@@ -1,5 +1,5 @@
 ---
-version: v0.57
+version: v0.58
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -53,6 +53,7 @@ These are additional settings you can fill in to pass user attributes to Metabas
 - **First name attribute:** the key to retrieve each JWT user's first name.
 - **Last name attribute:** if you guessed that this is the key to retrieve each JWT user's last name, well then you have been paying attention.
 - **Group assignment attribute:** the key to retrieve each JWT user's group assignments.
+- **Tenant attribute:** the key to retrieve each JWT user's tenant. Default is `@tenant`. See [Tenants](../embedding/tenants).
 
 You can send additional user attributes to Metabase by adding the attributes as key/value pairs to your JWT. These attributes will be synced on every login.
 
@@ -116,6 +117,10 @@ Metabase accounts created with an external identity provider login don't have pa
 To require people to log in with SSO, disable password authentication from **Admin settings** > **Authentication**.
 
 ![Password disable](images/password-disable.png)
+
+## Assigning tenant users to tenants
+
+If you're running a multi-tenant application, you can use JWT to automatically assign users to tenants based on a claim in the JWT token. See [Tenants](../embedding/tenants) for details.
 
 ## Note about Azure
 

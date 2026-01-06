@@ -1,5 +1,5 @@
 ---
-version: v0.57
+version: v0.58
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -15,13 +15,13 @@ latest: true
 
 # Static embedding
 
-Also known as: standalone embedding, or signed embedding.
+> We recommend you use the new [Guest embedding](./guest-embedding) approach instead of static embedding.
 
 {% include shared/in-page-promo-embedding-workshop.html %}
 
 In general, embedding works by displaying a Metabase URL inside an iframe in your website. A **static embed** (or signed embed) is an iframe that's loading a Metabase URL secured with a signed JSON Web Token (JWT). Metabase will only load the URL if the request supplies a JWT signed with the secret shared between your app and your Metabase. The JWT also includes a reference to the resource to load, e.g., the dashboard ID, and any values for locked parameters.
 
-You can't use static embeds with [row and column security](../permissions/row-and-column-security), [drill-through](/learn/metabase-basics/querying-and-dashboards/questions/drill-through), and user-specific data isn't captured in [usage analytics](../usage-and-performance-tools/usage-analytics) because signed JWTs don't create user sessions (server-side sessions). For those features, check out [Embedded analytics JS](./embedded-analytics-js).
+You can't use static embeds with [row and column security](../permissions/row-and-column-security), [drill-through](/learn/metabase-basics/querying-and-dashboards/questions/drill-through), and user-specific data isn't captured in [usage analytics](../usage-and-performance-tools/usage-analytics) because signed JWTs don't create user sessions (server-side sessions). For those features, check out [Modular embedding](./modular-embedding).
 
 You can, however, restrict data in static embeds for specific people or groups by [locking parameters](./static-embedding-parameters#restricting-data-in-a-static-embed-with-locked-parameters).
 
@@ -43,7 +43,7 @@ your_metabase_embedding_url/your_signed_jwt?filter=true
 
 The signed JWT is generated using your [Metabase secret key](#regenerating-the-static-embedding-secret-key). The secret key tells Metabase that the request for filtered data can be trusted, so it's safe to display the results at the new embedding URL. Note that this secret key is shared for all static embeds, so whoever has access to that key will have access to all embedded artifacts.
 
-If you want to embed charts with additional interactive features, like [drill-down](/learn/metabase-basics/querying-and-dashboards/questions/drill-through) and [self-service querying](../questions/query-builder/editor), see [Embedded analytics JS](./embedded-analytics-js).
+If you want to embed charts with additional interactive features, like [drill-down](/learn/metabase-basics/querying-and-dashboards/questions/drill-through) and [self-service querying](../questions/query-builder/editor), see [Modular embedding](./modular-embedding).
 
 ## Turning on the embedding feature in Metabase
 
@@ -63,8 +63,6 @@ To create a static embed:
 5. Optional: [customize the appearance of the embed](./static-embedding-parameters#customizing-the-appearance-of-a-static-embed)
 6. Optional: [Add parameters to the embed](./static-embedding-parameters).
 7. Click **Publish**.
-
-![Preview](./images/04-preview.png)
 
 ## Adding the embedding URL to your website
 
@@ -91,8 +89,6 @@ For more examples, see our [reference apps repo](https://github.com/metabase/emb
 3. In the top code block, you'll find the sample code for your web server. You'll also find the iframe snippet to plug into your HTML template or single page app.
 
 When you make changes to the look and feel or parameter preview settings, Metabase will update the code and highlight the changes. Make sure to copy these changes to your actual server code.
-
-![Code samples for embedding](./images/05-code.png)
 
 Metabase generates server code for:
 

@@ -1,5 +1,5 @@
 ---
-version: v0.57
+version: v0.58
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -85,6 +85,10 @@ To use Oauth as a provider, you'll need to input your:
 
 - Auth token URL
 - Auth token request headers (a JSON map)
+
+#### IAM authentication
+
+To connect to Amazon RDS instances using IAM authentication instead of a password, see [IAM authentication for AWS RDS](./aws-rds#iam-authentication).
 
 ### Schemas
 

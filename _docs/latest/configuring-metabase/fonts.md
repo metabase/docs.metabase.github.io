@@ -1,5 +1,5 @@
 ---
-version: v0.57
+version: v0.58
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -130,7 +130,7 @@ To support multiple character sets, for example both Latin and Cyrillic, you'll 
 
 ## Customizing the font for individual embedded items
 
-In addition to the [included fonts](#included-fonts), if you set a custom font for your Metabase, that font will be selectable from "Use instance font" in [static embeds](../embedding/static-embedding).
+When configuring [guest embeds](../embedding/guest-embedding), you can select from any of the [included fonts](#included-fonts). If you've set a custom font for your Metabase, you can also select "Use instance font" to use your custom font in the embed.
 
 ## Further reading
 

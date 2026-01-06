@@ -1,5 +1,5 @@
 ---
-version: v0.57
+version: v0.58
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -81,6 +81,7 @@ latest: true
 | [MetabaseAuthConfigWithApiKey](./api/MetabaseAuthConfigWithApiKey) | -                                                             |
 | [MetabaseAuthConfigWithJwt](./api/MetabaseAuthConfigWithJwt)       | -                                                             |
 | [MetabaseAuthConfigWithSaml](./api/MetabaseAuthConfigWithSaml)     | -                                                             |
+| [MetabaseIsGuestAuthConfig](./api/MetabaseIsGuestAuthConfig)       | -                                                             |
 
 ## MetabotQuestion
 
@@ -115,6 +116,7 @@ latest: true
 | [DashCardMenuItem](./api/DashCardMenuItem)                                 | -                                                                              |
 | [EntityTypeFilterKeys](./api/EntityTypeFilterKeys)                         | -                                                                              |
 | [IconName](./api/IconName)                                                 | -                                                                              |
+| [InitializationStatus](./api/InitializationStatus)                         | -                                                                              |
 | [LoginStatus](./api/LoginStatus)                                           | -                                                                              |
 | [MetabaseClickAction](./api/MetabaseClickAction)                           | -                                                                              |
 | [MetabaseClickActionPluginsConfig](./api/MetabaseClickActionPluginsConfig) | -                                                                              |
@@ -128,16 +130,20 @@ latest: true
 | [MetabaseFontFamily](./api/MetabaseFontFamily)                             | -                                                                              |
 | [MetabaseGlobalPluginsConfig](./api/MetabaseGlobalPluginsConfig)           | -                                                                              |
 | [MetabasePluginsConfig](./api/MetabasePluginsConfig)                       | -                                                                              |
+| [MetabaseThemePreset](./api/MetabaseThemePreset)                           | -                                                                              |
 | [MetabaseUser](./api/MetabaseUser)                                         | The User entity                                                                |
 | [ModularEmbeddingEntityType](./api/ModularEmbeddingEntityType)             | -                                                                              |
 | [ParameterValues](./api/ParameterValues)                                   | -                                                                              |
 | [SdkCollectionId](./api/SdkCollectionId)                                   | -                                                                              |
+| [SdkDashboardEntityPublicProps](./api/SdkDashboardEntityPublicProps)       | -                                                                              |
 | [SdkDashboardId](./api/SdkDashboardId)                                     | -                                                                              |
 | [SdkDashboardLoadEvent](./api/SdkDashboardLoadEvent)                       | -                                                                              |
 | [SdkEntityId](./api/SdkEntityId)                                           | -                                                                              |
+| [SdkEntityToken](./api/SdkEntityToken)                                     | -                                                                              |
 | [SdkErrorComponent](./api/SdkErrorComponent)                               | -                                                                              |
 | [SdkErrorComponentProps](./api/SdkErrorComponentProps)                     | -                                                                              |
 | [SdkEventHandlersConfig](./api/SdkEventHandlersConfig)                     | -                                                                              |
+| [SdkQuestionEntityPublicProps](./api/SdkQuestionEntityPublicProps)         | -                                                                              |
 | [SdkQuestionId](./api/SdkQuestionId)                                       | -                                                                              |
 | [SdkQuestionTitleProps](./api/SdkQuestionTitleProps)                       | -                                                                              |
 | [SdkUserId](./api/SdkUserId)                                               | -                                                                              |

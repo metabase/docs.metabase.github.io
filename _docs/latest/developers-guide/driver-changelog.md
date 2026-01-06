@@ -1,5 +1,5 @@
 ---
-version: v0.57
+version: v0.58
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -13,7 +13,16 @@ latest: true
 
 # Driver Interface Changelog
 
-## Metabase 0.57.8
+## Metabase 0.58.0
+
+- Added a `:collate` feature for drivers that support collation settings on text fields
+
+- Added `metabase.driver/compile-insert` to implement incremental transforms.
+
+- All tests in `metabase.query-processor-test.*` namespaces have been moved to `metabase.query-processor.*` (This is
+  only relevant if you run individual test namespaces as part of your development workflow).
+
+## Metabase 0.57.7
 
 - Added the new `:regex/lookaheads-and-lookbehinds` driver feature flag; by default this is true for all drivers that
   support `:regex` and false for all drivers that do not. If your driver supports regular expressions but does not
