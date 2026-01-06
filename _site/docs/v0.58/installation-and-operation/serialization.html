@@ -5479,7 +5479,6 @@ Roadmap</a>
   <li>Collections (but personal collections don’t get exported unless explicitly specified them through <a href="#customize-what-gets-exported">export options</a>)</li>
   <li>Dashboards</li>
   <li>Saved questions</li>
-  <li>Transforms (including jobs)</li>
   <li>Documents (without comments)</li>
   <li>Actions</li>
   <li>Models</li>
@@ -6071,10 +6070,10 @@ If you are using the CLI serialization commands, the version of the .jar file th
   <li>
     <p>Send a <code class="language-plaintext highlighter-rouge">curl</code> request to export data:</p>
 
-    <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code> curl <span class="se">\</span>
-   <span class="nt">-H</span> <span class="s1">'x-api-key: YOUR_API_KEY'</span> <span class="se">\</span>
-   <span class="nt">-X</span> POST <span class="s1">'https://your-metabase-url/api/ee/serialization/export'</span> <span class="se">\</span>
-   <span class="nt">-o</span> metabase_data.tgz
+    <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="se">\</span>
+  <span class="nt">-H</span> <span class="s1">'x-api-key: YOUR_API_KEY'</span> <span class="se">\</span>
+  <span class="nt">-X</span> POST <span class="s1">'https://your-metabase-url/api/ee/serialization/export'</span> <span class="se">\</span>
+  <span class="nt">-o</span> metabase_data.tgz
 </code></pre></div>    </div>
 
     <p>substituting <code class="language-plaintext highlighter-rouge">YOUR_API_KEY</code> with your API key and <code class="language-plaintext highlighter-rouge">your-metabase-url</code> with the URL of your Metabase instance.</p>
@@ -6088,7 +6087,7 @@ If you are using the CLI serialization commands, the version of the .jar file th
   <li>
     <p>Unzip the compressed file:</p>
 
-    <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nb">tar</span> <span class="nt">-xvf</span> metabase_data.tgz
+    <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">tar</span> <span class="nt">-xvf</span> metabase_data.tgz
 </code></pre></div>    </div>
 
     <p>The extracted directory will be called something like <code class="language-plaintext highlighter-rouge">metabase-yyyy-MM-dd_HH-mm</code>, with the date and time of the export.</p>
@@ -6103,7 +6102,7 @@ If you are using the CLI serialization commands, the version of the .jar file th
 
     <p>Let’s say you have your YAML files with Metabase application data in a directory called <code class="language-plaintext highlighter-rouge">metabase_data</code>. Before importing those files to your target Metabase, you’ll need to compress those files.</p>
 
-    <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nb">tar</span> <span class="nt">-czf</span> metabase_data.tgz metabase_data
+    <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">tar</span> <span class="nt">-czf</span> metabase_data.tgz metabase_data
 </code></pre></div>    </div>
   </li>
   <li>
@@ -6111,15 +6110,15 @@ If you are using the CLI serialization commands, the version of the .jar file th
 
     <p>From the directory where you’ve stored your GZIP-compressed file, run:</p>
 
-    <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code> curl <span class="nt">-X</span> POST <span class="se">\</span>
-   <span class="nt">-H</span> <span class="s1">'x-api-key: YOUR_API_KEY'</span> <span class="se">\</span>
-   <span class="nt">-F</span> <span class="s1">'file=@metabase_data.tgz'</span> <span class="se">\</span>
-   <span class="s1">'https://your-metabase-url/api/ee/serialization/import'</span> <span class="se">\</span>
-   <span class="nt">-o</span> -
+    <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-X</span> POST <span class="se">\</span>
+  <span class="nt">-H</span> <span class="s1">'x-api-key: YOUR_API_KEY'</span> <span class="se">\</span>
+  <span class="nt">-F</span> <span class="s1">'file=@metabase_data.tgz'</span> <span class="se">\</span>
+  <span class="s1">'https://your-metabase-url/api/ee/serialization/import'</span> <span class="se">\</span>
+  <span class="nt">-o</span> -
 </code></pre></div>    </div>
 
     <p>substituting <code class="language-plaintext highlighter-rouge">YOUR_API_KEY</code> with your API key and <code class="language-plaintext highlighter-rouge">your-metabase-url</code> with your Metabase instance URL.
- The <code class="language-plaintext highlighter-rouge">-o -</code> option will output logs in the terminal.</p>
+The <code class="language-plaintext highlighter-rouge">-o -</code> option will output logs in the terminal.</p>
 
     <blockquote>
       <p>If you import Metabase data into the same Metabase as you exported it from, you will overwrite your existing questions, dashboards, etc. See <a href="#how-import-works">How import works</a>.</p>
@@ -6626,6 +6625,8 @@ You can run a Metabase command to <a href="./commands#drop-entity-ids">drop Enti
     });
   });
 </script>
+
+<script src="/js/fillout-form-fallback.js"></script>
 
 <!-- forms -->
 <script type="text/javascript" src="https://s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js"></script>
