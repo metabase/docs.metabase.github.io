@@ -9,6 +9,8 @@ source_url: 'https://github.com/metabase/metabase/blob/master/docs/embedding/ful
 layout: new-docs
 redirect_from:
     - /docs/v0.58/embedding/interactive-embedding-quickstart
+    - /docs/v0.58/embedding/interactive-embedding-quickstart-guide
+    - /docs/v0.58/embedding/interactive-embedding-quick-start-guide
 ---
 
 # Full app embedding quickstart

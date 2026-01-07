@@ -10,6 +10,8 @@ source_url: >-
 layout: new-docs
 redirect_from:
   - /docs/latest/embedding/interactive-embedding-quickstart
+  - /docs/latest/embedding/interactive-embedding-quickstart-guide
+  - /docs/latest/embedding/interactive-embedding-quick-start-guide
 latest: true
 ---
 
