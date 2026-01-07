@@ -6,7 +6,7 @@
   <meta content="frame-ancestors 'none'" http-equiv="Content-Security-Policy">
   <meta content="deny" http-equiv="X-Frame-Options">
     
-  <link href="https://www.metabase.com/docs/master/data-modeling/python-transforms" rel="canonical">
+  <link href="https://www.metabase.com/docs/master/embedding/tenants" rel="canonical">
   
 
   <script type="text/javascript">
@@ -49,12 +49,12 @@
 
 
 
-<title>Python transforms | Metabase Documentation</title>
+<title>Tenants | Metabase Documentation</title>
 <!-- Twitter cards -->
 <meta name="twitter:site" content="@metabase">
 
-<meta name="twitter:title" content="Python transforms | Metabase Documentation">
-<meta name="twitter:description" content="Use Python to wrangle your data in Metabase and write the results back to your database.">
+<meta name="twitter:title" content="Tenants | Metabase Documentation">
+<meta name="twitter:description" content="Tenants let you serve multiple customers from a single Metabase while keeping their data isolated. Configure tenant users, groups, and shared collections, then use row-level security or impersonation to ensure each tenant only sees their own data.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -62,9 +62,9 @@
 <!-- Open Graph metadata -->
 <meta property="og:site_name" content="Metabase | Business Intelligence, Dashboards, and Data Visualization">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://www.metabase.com/docs/master/data-modeling/python-transforms">
-<meta name="title" property="og:title" content="Python transforms | Metabase Documentation">
-<meta name="description" property="og:description" content="Use Python to wrangle your data in Metabase and write the results back to your database.">
+<meta property="og:url" content="https://www.metabase.com/docs/master/embedding/tenants">
+<meta name="title" property="og:title" content="Tenants | Metabase Documentation">
+<meta name="description" property="og:description" content="Tenants let you serve multiple customers from a single Metabase while keeping their data isolated. Configure tenant users, groups, and shared collections, then use row-level security or impersonation to ensure each tenant only sees their own data.">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -2905,7 +2905,7 @@ Roadmap</a>
 
       
 
-      <li class="">
+      <li class="expanded">
         <a href="" class="">
         Modular embedding
 
@@ -2976,6 +2976,21 @@ Roadmap</a>
               <li class="">
                 <a href="/docs/master/embedding/authentication" class="">
                   Authentication
+
+                  
+                </a>
+                
+              </li>
+            
+              
+
+              
+
+              
+
+              <li class="">
+                <a href="/docs/master/embedding/tenants" class="selected">
+                  Tenants
 
                   
                 </a>
@@ -5277,7 +5292,7 @@ Roadmap</a>
 
             
             
-                <li class="breadcrumb-item"><a class="blue-60" href="/docs/master/data-modeling/start">Data Modeling</a></li>
+                <li class="breadcrumb-item"><a class="blue-60" href="/docs/master/embedding/start">Embedding</a></li>
             
             
         </ol>
@@ -5417,116 +5432,519 @@ Roadmap</a>
     
       <blockquote>
         These are the docs for the Metabase master branch. Some features documented here may not yet be available in the current release.
-        Check out the <a class="text-purple text-underline" href="/docs/latest/">docs for the current stable version, Metabase v0.57.</a>
+        Check out the <a class="text-purple text-underline" href="/docs/latest/">docs for the current stable version, Metabase v0.58.</a>
       </blockquote>
     
   
 </div>
 
 
-        <h1 id="python-transforms">Python transforms</h1>
+        <h1 id="tenants">Tenants</h1>
 
-<blockquote>
-  <p>Python transforms are only available on Metabase Cloud <a href="/pricing">Pro and Enterprise plans</a> with the <strong>Python execution add-on</strong>.</p>
-</blockquote>
+<div class="bootstrap">
+  <div class="plans-blockquote bg-blue-95 rounded-3 p-6 d-flex flex-row border border-1 border-primary">
+    <svg class="" width="24" height="24" viewBox="0 0 26 26" fill="none">
+  <path d="M12 13V15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
+  <path d="M12 10C12.5523 10 13 9.55228 13 9C13 8.44772 12.5523 8 12 8C11.4477 8 11 8.44772 11 9C11 9.55228 11.4477 10 12 10Z" fill="#509EE3"></path>
+  <path d="M12 19.25C16.0041 19.25 19.25 16.0041 19.25 12C19.25 7.99594 16.0041 4.75 12 4.75C7.99594 4.75 4.75 7.99594 4.75 12C4.75 16.0041 7.99594 19.25 12 19.25Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
+</svg>
 
-<p>You can write a Python script to transform the data from your database, and write the result back into the database as another table.</p>
+    
+    
+    
+      
 
-<p>For general information about Metabase transforms, see <a href="transforms">Transforms</a>.</p>
+    <p class="m-0 ms-2 paragraph-5 neutral-40">
+       Tenants are only available on
+      <a class="fw-bold" href="/product/pro">Pro</a> and
+      <a class="fw-bold link-purple" href="/product/enterprise">Enterprise</a>
+      plans  (both self-hosted and on Metabase Cloud).
+    </p>
+  </div>
+</div>
 
-<h2 id="create-a-python-transform">Create a Python transform</h2>
+<p>A Tenant is a named set of attributes you can assign to a user to isolate them from other tenants. If you’re building a SaaS app with embedded Metabase dashboards, you can assign the customers of your SaaS to tenants.</p>
 
-<p>To write Python transforms, you’ll need to have the Python execution add-on. Once you’ve enabled the add-on:</p>
+<p>The big advantage of grouping users into tenants is that you can use the same content and group permissions for all tenants, so you don’t have to create all new stuff for each tenant, and each tenant only ever sees their own data.</p>
 
-<ol>
-  <li>
-    <p>Go to <strong>Admin settings &gt; Transforms</strong> and click <strong>Create a transform &gt; Python script</strong>.</p>
-  </li>
-  <li>
-    <p>Select a database that has the data you want to transform. See <a href="transforms#databases-that-support-transforms">Databases that support transforms</a>.</p>
-  </li>
-  <li>
-    <p>Select one or more tables with the data that you’d like to transform. Optionally, assign aliases to the tables.</p>
+<p><img src="./images/tenants.png" alt="Tenants"></p>
 
-    <p>The tables you select will be available as DataFrames in your Python code with your chosen aliases, and will be passed to the <code class="language-plaintext highlighter-rouge">transform()</code> function as parameters.</p>
-  </li>
-  <li>Create a function <code class="language-plaintext highlighter-rouge">transform()</code> that does the data wrangling and returns a <a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html">pandas DataFrame</a>. The DataFrame returned by the function will be written back to your database when the transform is run.</li>
-  <li>Click <strong>Save</strong> in the top right corner.</li>
-  <li>
-    <p>Select a target schema for your transform and enter a name for the target table. Metabase will write the results of the transform into this table.</p>
-
-    <p>You can only write back to the same database as you chose for the transform source.</p>
-  </li>
-  <li>Optionally, assign tags to your transforms. Tags are used by <a href="transforms#jobs-and-tags">jobs</a> to run transforms on schedule.</li>
-</ol>
-
-<h2 id="tips-for-python-transforms">Tips for Python transforms</h2>
+<p>You can use tenants to:</p>
 
 <ul>
-  <li>A Python transform must have a function <code class="language-plaintext highlighter-rouge">transform()</code> that returns a single <code class="language-plaintext highlighter-rouge">pandas</code> DataFrame.</li>
-  <li>You can use aliases to include tables from your database as DataFrames inside the <code class="language-plaintext highlighter-rouge">transform()</code> function. The tables will <em>only</em> be available in the transform function. Other functions won’t have access to the tables.</li>
-  <li>Only <code class="language-plaintext highlighter-rouge">pandas</code> will be imported by default, but you can import <a href="#available-python-packages">certain other packages</a>. You can also use functions from the <a href="#common-python-library">common library</a>.</li>
-  <li>You’ll see the output of <code class="language-plaintext highlighter-rouge">print()</code> statements in the transform’s logs.</li>
-  <li>Metabase won’t write DataFrame indexes to the database, including indexes created by <code class="language-plaintext highlighter-rouge">groupby()</code>. If you’re using a custom index that you’d like to include in the target table, you’ll need to <a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.reset_index.html">reset index</a> on your DataFrame inside the <code class="language-plaintext highlighter-rouge">transform()</code> function.</li>
+  <li>Simplify bulk permissions through tenant groups and attributes.</li>
+  <li>Create collections of shared assets to avoid duplicating dashboards.</li>
+  <li>Provision tenants with SSO.</li>
 </ul>
 
-<h2 id="run-a-python-transform">Run a Python transform</h2>
+<p>To get started with tenants:</p>
 
-<p>See <a href="transforms#run-a-transform">Run a transform</a>. You’ll see logs for a transform run (including the output of any <code class="language-plaintext highlighter-rouge">print()</code> statements you included in the <code class="language-plaintext highlighter-rouge">transform()</code> code) on the transform’s page.</p>
+<ol>
+  <li><a href="#concepts">Get familiar with tenant concepts</a>.</li>
+  <li><a href="#enable-multi-tenant-strategy">Enable tenants</a>.</li>
+  <li>Create a <a href="#create-new-tenants-in-metabase">tenant</a> and <a href="#create-tenant-users-in-metabase">tenant users</a>, or <a href="#provisioning-and-assigning-tenants-with-jwt">provision them with SSO</a>.</li>
+  <li><a href="#create-shared-collections-for-tenants">Create shared collections</a>.</li>
+  <li>Set up <a href="#data-permission-overview">data</a> and <a href="#collection-permissions-for-tenants">collection</a> permissions.</li>
+</ol>
 
-<h2 id="available-python-packages">Available Python packages</h2>
+<h2 id="concepts">Concepts</h2>
 
-<p>You can import any of the following Python packages in Python transforms:</p>
+<p><strong>Tenant</strong> is an abstraction representing groups of users that share some properties but should be isolated from other users. For example, if you’re building a SaaS app with embedded Metabase dashboards, the customers of your SaaS are tenants.</p>
+
+<p>While working with tenants in Metabase, you’ll encounter different user and group types, and some special collection types. Let’s establish some terminology.</p>
+
+<h3 id="user-types">User types</h3>
 
 <ul>
-  <li><a href="https://pandas.pydata.org/"><code class="language-plaintext highlighter-rouge">pandas</code></a>;</li>
-  <li>Any dependencies of <code class="language-plaintext highlighter-rouge">pandas</code>, e.g. <a href="https://numpy.org/"><code class="language-plaintext highlighter-rouge">numpy</code></a>;</li>
-  <li>Any packages from the <a href="https://docs.python.org/3/library/index.html">Python standard library</a>, e.g. <code class="language-plaintext highlighter-rouge">json</code> or <code class="language-plaintext highlighter-rouge">datetime</code>.</li>
+  <li>
+    <p><strong>Tenant users</strong> are the end users. In a B2B SaaS context, these are the your customer’s users. Usually tenant users interact with Metabase through an intermediate app (for example, through an embedded dashboard).</p>
+  </li>
+  <li>
+    <p><strong>Internal users</strong> are “normal” Metabase users who don’t belong to any tenant. Think Metabase admins, or devs building the dashboards that will be shared with tenants.</p>
+  </li>
 </ul>
 
-<p>Due to security considerations for the Python execution environment, you won’t be able to install or import any other packages.</p>
+<h3 id="group-types">Group types</h3>
 
-<p>You can also write your own functions and add them to the <a href="#common-python-library">common library</a> in Metabase, which will be available across all your Python transforms.</p>
+<p>Tenant users and and internal users can be organized into Metabase <a href="../people-and-groups/managing#groups">groups</a>.</p>
 
-<h2 id="common-python-library">Common Python library</h2>
-
-<p>If you have functions or classes you’d like to reuse across multiple transforms, you can add them to the common library that will be available across all Python transforms.</p>
-
-<p>To add things to the common Python library:</p>
-
-<ol>
-  <li>
-    <p>Go to <strong>Admin &gt; Transforms &gt; Python library</strong>.</p>
-  </li>
-  <li>
-    <p>Add a Python function or class.</p>
-
-    <p>Functions in this library can’t access any data in your database.</p>
-  </li>
-</ol>
-
-<p>To use functions or classes from your Python library:</p>
-
-<ol>
-  <li>
-    <p>When editing your Python transform script, check <strong>Import common library</strong> in the top right.</p>
-
-    <p>This will add an aptly named import <code class="language-plaintext highlighter-rouge">import common</code> to the transform’s code.</p>
-  </li>
-  <li>
-    <p>Reference functions or classes from the common library in your code like <code class="language-plaintext highlighter-rouge">common.manifest_kittens()</code>.</p>
-  </li>
-</ol>
-
-<h2 id="current-limitations-of-python-transforms">Current limitations of Python transforms</h2>
+<p><img src="./images/tenant-groups.png" alt="Tenant groups types"></p>
 
 <ul>
-  <li>Currently, Python transforms are only available on Metabase Cloud.</li>
-  <li>The transform function must return a single <code class="language-plaintext highlighter-rouge">pandas</code> DataFrame. Other data manipulation and DataFrame libraries like <code class="language-plaintext highlighter-rouge">polars</code> or <code class="language-plaintext highlighter-rouge">pyspark</code> are not supported.</li>
-  <li>DataFrame indexes, including indexes created by <code class="language-plaintext highlighter-rouge">groupby()</code>, are ignored from writing back to the database. If you’re using a custom index that you’d like to include in the target table, you’ll need to <a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.reset_index.html">reset index</a> on your DataFrame inside the <code class="language-plaintext highlighter-rouge">transform()</code> function to make the index into a real column.</li>
-  <li>You can’t preview the results of a Python transform.</li>
-  <li>Only a <a href="#available-python-packages">limited set of packages</a> are available for import. You can’t install additional packages.</li>
-  <li>Because Python transforms use <code class="language-plaintext highlighter-rouge">pandas</code>, all data manipulation is done in memory. The available memory is determined by the Python execution add-on. For large datasets, consider using <a href="transforms#query-based-transforms">query-based transforms</a> that run in your database.</li>
+  <li>
+    <p><strong>All tenant users</strong> is a special group representing all individual end users across all tenants.</p>
+
+    <p>This group can be used to <a href="#data-permissions-for-tenants">configure permissions</a> for all tenant users. If you need more granular permission controls within each tenant, you can also create tenant groups.</p>
+  </li>
+  <li>
+    <p><strong>Tenant groups</strong> can be used to create additional permission levels for tenant users.</p>
+
+    <p>For example, if you’re making recruiting software, every end user can be a recruiter (with access to all data about all open roles) or a hiring manager (with access to analytics for a specific role). So in Metabase, you can create two tenant groups - “Recruiters” and “Hiring managers” and configure appropriate permissions.</p>
+
+    <p>Every tenant will be able to use tenant groups (so for example, every customer can have “Recruiters” and “Hiring managers”).</p>
+  </li>
+  <li>
+    <p><strong>All internal users</strong> is a special group for all people who <em>aren’t</em> members of a tenant.</p>
+
+    <p>These are the people working directly in Metabase. This group is equivalent to “All users” group when multi-tenancy is not enabled.</p>
+  </li>
+  <li>
+    <p><strong>Internal groups</strong> are additional groups for internal users.</p>
+
+    <p>For example, you might have a special group for your internal group “Analytics developers” who only have access to create dashboards that will be later shared with tenants, but don’t have full admin access to your whole Metabase.</p>
+  </li>
+</ul>
+
+<p>Tenant users are completely isolated from internal users: tenant users can’t be added to internal user groups, and internal users can’t be added to tenant groups.</p>
+
+<h3 id="collection-types">Collection types</h3>
+
+<p>Collections are like folders that can contain charts, dashboard, and models. They also serve as an organizational unit for permission management: if a certain group of people should have access to a certain set of assets, you should put those assets into a collection.</p>
+
+<p><img src="./images/tenant-collections.png" alt="Tenant collections"></p>
+
+<ul>
+  <li>
+    <p><strong>Shared collections</strong> contain dashboards and charts that are shared between all tenants.</p>
+
+    <p>For example, every tenant of a recruiting app should be able to see the number of job applications by date. You can create a <a href="../questions/start">Metabase question</a> for “Count of applications by date” and save it into a shared collection.</p>
+
+    <p>You’ll need to <a href="#data-permissions-for-tenants">configure data permissions</a> so that each tenant only sees <em>their</em> job applications, and not <em>everyone’s</em> job applications (that would be bad).</p>
+
+    <p>You can create many shared collections (or no shared collections at all, for that matter). For example, you can have a shared collection for analytics around recruitment and a separate shared collection for analytics around interviews.</p>
+
+    <p>Shared collections can be optionally <a href="#sync-shared-collections-to-github">synced to GitHub</a>.</p>
+  </li>
+  <li>
+    <p><strong>Tenant collections</strong> are collection specific to each tenant. They are created automatically for each tenant.</p>
+
+    <p>If you have special customers with bespoke analytics that only this customer gets, you can put those bespoke dashboards and charts into the tenant’s collection. Tenant collections can also serve as a place for the tenant users to create and save new questions that can be shared with their fellow tenant users (but not with users from other tenants).</p>
+  </li>
+  <li>
+    <p><strong>Internal collections</strong>. Internal collections are exclusively an internal user concern. These are “normal” collections where you and other users internal to your Metabase can put the stuff that you don’t want your end users to see (dashboards in development, internal metrics, maybe even analytics <em>about</em> your tenants). Tenant users can’t access any internal collections.</p>
+  </li>
+  <li>
+    <p><strong>Personal collection</strong>. Every Metabase user, including tenant users, gets a personal collection - their own space to save new questions and dashboards (of course, if they otherwise have the permissions to build and save new questions).</p>
+  </li>
+</ul>
+
+<p>See <a href="#collection-permissions-for-tenants">Collection permissions</a> for configuring access to different collection types.</p>
+
+<h2 id="end-user-experience">End user experience</h2>
+
+<p>End users who are members of tenants will not know that they are members of tenants.
+In the experiences that expose users to to Metabase collections (e.g. when using full-app embedding, modular embedding components with save enabled, or if tenant users are logging in directly into metabase), tenant users see all the tenant and shared collections they have access to as just collections.</p>
+
+<h3 id="enable-multi-tenant-strategy">Enable multi-tenant strategy</h3>
+
+<p><em>Admin setting &gt; People</em></p>
+
+<p>You can create and manage you tenants exclusively through Metabase UI, or, if that’s not your jam, <a href="#provisioning-and-assigning-tenants-with-jwt">through SSO</a>. Regardless of how you manage your tenants, you’ll need to enable multi-tenant strategy in Metabase first.</p>
+
+<p><img src="./images/edit-tenant-strategy.png" alt="Edit tenant strategy"></p>
+
+<ol>
+  <li>Go to <strong>Admin settings &gt; People</strong>.</li>
+  <li>Click on the <strong>gear</strong> icon above the list of people.</li>
+  <li>Choose <strong>Multi-tenant strategy</strong>.</li>
+</ol>
+
+<p>Changing Metabase to multi-tenant strategy enables special <a href="#user-types">user</a> and <a href="#collection-types">collection</a> types. You can create new tenants, tenant groups, and collection, and you get some additional admin settings in the People and Permissions tabs.</p>
+
+<p>If you have an existing permissions and collection setup that you’d like to translate to use tenants, see <a href="#changing-tenant-strategy">Changing tenant strategy</a>.</p>
+
+<p>Once you enable multi-tenant strategy, keep in mind that switching <em>from</em> multi-tenant to single-tenant is a destructive action: all your tenant users and your tenant and shared collections will be disabled. See <a href="#changing-tenant-strategy">Changing tenant strategy</a>.</p>
+
+<h2 id="create-new-tenants-in-metabase">Create new tenants in Metabase</h2>
+
+<p><em>Admin setting &gt; People &gt; Tenant</em></p>
+
+<p><img src="./images/new-tenant.png" alt="New tenant user"></p>
+
+<p>To create new tenants in Metabase:</p>
+
+<ol>
+  <li><a href="#enable-multi-tenant-strategy">Enable multi-tenant strategy</a>, if you haven’t yet.</li>
+  <li>Go to <strong>Admin settings &gt; People</strong> .</li>
+  <li>Select <strong>Tenants</strong> on the left sidebar and click <strong>New tenant</strong></li>
+  <li>Fill out the information for the tenant:
+    <ul>
+      <li><strong>Tenant name</strong>: Display name for the tenant that will be displayed to <em>internal</em> users. Not exposed to external users. This name can be changed later.</li>
+      <li><strong>Tenant slug</strong>: unique identifier of the tenant. It can be used to <a href="#use-tenant-claim-to-sign-in-users">match JWT claims</a> and for setting up <a href="#use-tenant-attributes-for-data-permissions">data permissions</a>. See <a href="#special-tenant-slug-attribute">Tenant slug</a> for more information.</li>
+      <li><strong>Tenant attributes</strong>: you can define tenant attributes that will be inherited by every tenant user, see <a href="#tenant-attributes">Tenant attributes</a>.</li>
+    </ul>
+  </li>
+</ol>
+
+<p>You can avoid manually setting up tenants in Metabase by <a href="#provisioning-and-assigning-tenants-with-jwt">provisioning tenants with JWT</a>.</p>
+
+<h2 id="create-tenant-groups">Create tenant groups</h2>
+
+<p><em>Admin setting &gt; People &gt; Tenant groups</em></p>
+
+<p>Tenant groups are applicable across tenants. For example, you can have tenant groups “Basic users” and “Premium users”, and every tenant will be able to use those groups. Groups can be used to configure permissions so that, among the tenant’s users, some get Basic permissions while others get Premium. See <a href="#concepts">Tenant concepts</a> for more information.</p>
+
+<p>To create a tenant group:</p>
+
+<ol>
+  <li><a href="#enable-multi-tenant-strategy">Enable multi-tenant strategy</a>, if you haven’t yet.</li>
+  <li>Go to <strong>Admin settings &gt; People</strong>.</li>
+  <li>Select <strong>Tenant groups</strong> on the left sidebar and click <strong>Create a group</strong>.</li>
+  <li>Name your group.</li>
+</ol>
+
+<p>To add people to tenant groups, see <a href="../people-and-groups/managing#adding-people-to-groups">Add people to groups</a>.</p>
+
+<h2 id="create-tenant-users-in-metabase">Create tenant users in Metabase</h2>
+
+<p><em>Admin setting &gt; People &gt; Tenant users</em></p>
+
+<p>Tenant users are the end users in tenants. In a B2B SaaS context, these are the your customer’s users. Usually tenant users interact with Metabase through an intermediate app (for example, through an embedded dashboard).
+To add tenant users in Metabase:</p>
+
+<ol>
+  <li><a href="#create-tenant-users-in-metabase">Create a tenant</a>.</li>
+  <li>Go to <strong>Admin settings &gt; People</strong> .</li>
+  <li>Select <strong>Tenants users</strong> on the left sidebar and click <strong>New tenant user</strong>.</li>
+  <li>
+    <p>Fill out the user information, including the tenant and tenant groups.</p>
+
+    <p>If your tenant has <a href="#tenant-attributes">tenant attributes</a>, they’ll be inherited by the user, but you can override the value in “Attributes”.</p>
+  </li>
+</ol>
+
+<p>You can also <a href="#tenant-attributes">provision tenant users with JWT</a>.</p>
+
+<h2 id="create-shared-collections-for-tenants">Create shared collections for tenants</h2>
+
+<p><img src="./images/create-shared-collection.png" alt="Create shared collection"></p>
+
+<p>Shared collections contain dashboards and charts that are shared between all tenants. If you’re using shared collections, make sure that you configure <a href="#data-permissions-for-tenants">data permissions</a> so that tenants can only see <em>their data</em> in the shared collections. See <a href="#concepts">Tenant concepts</a> for more information.</p>
+
+<p>To create a shared collection:</p>
+
+<ol>
+  <li><a href="#enable-multi-tenant-strategy">Enable multi-tenant strategy</a>, if you haven’t yet.</li>
+  <li>Open Metabase navigation sidebar by clicking on the <strong>three lines</strong> in top left (that’s regular Metabase, not Admin settings).</li>
+  <li>You should see “External collections” in the sidebar. If you don’t make sure you have enabled multi-tenant strategy.</li>
+  <li>Click on the <strong>+</strong> next to “External collections” to create a shared collection.</li>
+</ol>
+
+<p>You can have multiple shared collections and nested shared collections. You can also <a href="#sync-shared-collections-to-github">sync shared collections to GitHub</a>.</p>
+
+<h2 id="sync-shared-collections-to-github">Sync shared collections to GitHub</h2>
+
+<p><em>Admin setting &gt; Remote Sync</em></p>
+
+<p>You can set up <a href="../installation-and-operation/remote-sync">Remote sync</a> for shared collections. This means you’ll be able to develop shared content in one Metabase, push it to a GitHub repo, and then have the shared content in your production Metabase always synced with that repo. See <a href="../installation-and-operation/remote-sync">Remote sync docs</a> for more details.</p>
+
+<h2 id="tenant-attributes">Tenant attributes</h2>
+
+<p><em>Admin setting &gt; People &gt; Tenants</em></p>
+
+<p>You can create tenant-level <a href="#tenant-attributes">user attributes</a> which all users of the tenant inherit. This is useful for configuring attribute-based data permissions like <a href="../permissions/row-and-column-security">row-level security</a>, <a href="../permissions/impersonation">impersonation</a>, or <a href="../permissions/database-routing">database routing</a>.</p>
+
+<p><img src="./images/edit-tenant.png" alt="Edit tenant"></p>
+
+<p>To add a tenant attribute:</p>
+
+<ol>
+  <li>Go to <strong>Admin setting &gt; People</strong></li>
+  <li>Select <strong>Tenants</strong> on the left sidebar.</li>
+  <li>Click on <strong>three dots</strong> next to the tenant.</li>
+  <li>Input the attribute key and value.</li>
+</ol>
+
+<p>Once you add a tenant attribute, all users of that tenant will inherit the attribute, but the value can overridden for any particular user, see <a href="../people-and-groups/managing#adding-a-user-attribute">Edit user attributes</a>.</p>
+
+<p>Currently, you can’t assign custom tenant attributes with SSO. The only way to assign attributes is through the Metabase UI (but you can provision attributes for <em>individual users</em> through SSO, see <a href="../people-and-groups/authenticating-with-jwt">JWT user attributes</a>). However, if you’re using user attribute to set permissions, then you can use the <a href="#special-tenant-slug-attribute">special slug attribute</a> which Metabase creates automatically.</p>
+
+<h3 id="special-tenant-slug-attribute">Special tenant slug attribute</h3>
+
+<p>Each tenant user will get system-defined attribute <code class="language-plaintext highlighter-rouge">@tenant.slug</code> that corresponds to the slug of the tenant. For example, if you created a tenant “Meowdern Solutions” with the slug <code class="language-plaintext highlighter-rouge">meowdern_solutions</code>, then every user from this tenant will get a special attribute <code class="language-plaintext highlighter-rouge">@tenant.slug : "meowdern_solutions"</code>.</p>
+
+<p><img src="./images/slug-attribute.png" alt="Slug attribute"></p>
+
+<p>If you create Metabase tenants through Metabase UI, you can choose the slug when creating the tenant. If you’re <a href="#provisioning-and-assigning-tenants-with-jwt">using JWT to provision tenants</a>, tenant slug is the value of the <code class="language-plaintext highlighter-rouge">@tenant</code> claim for JWT (or another tenant assignment attribute you selected). Slug cannot be changed later.</p>
+
+<p>The special <code class="language-plaintext highlighter-rouge">@tenant.slug</code> attribute can be used just like a normal attribute to configure attribute-based permissions like <a href="../permissions/row-and-column-security">row-level security</a>, <a href="../permissions/impersonation">impersonation</a>, or <a href="../permissions/database-routing">database routing</a>. Your chosen tenant slug should correspond to how the tenant is actually identified in your setup.</p>
+
+<p>For example, if you want to use row-level security, and tenants are identified in your tables by their IDs (instead of names), then your tenant slug should be an ID as well.</p>
+
+<p>For example, if your data looks like this</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>| Customer ID | Order number | Order date | Order total |
+| ----------- | ------------ | ---------- | ----------- |
+| 175924      | 3            | 2025-10-13 | 175.34      |
+| 680452      | 7            | 2025-10-13 | 34.56       |
+</code></pre></div></div>
+
+<p>and you want to enforce row-level security by <code class="language-plaintext highlighter-rouge">Customer ID</code>, then the tenant slug should have the form <code class="language-plaintext highlighter-rouge">175924</code> so that it could be matched to the Customer ID in your table.</p>
+
+<p>Similarly, if you want to use tenant slug for impersonation, you’ll have to map the tenant slug to a database role, and for database routing - to a database.</p>
+
+<h2 id="provisioning-and-assigning-tenants-with-jwt">Provisioning and assigning tenants with JWT</h2>
+
+<h3 id="use-tenant-claim-to-sign-in-users">Use tenant claim to sign in users</h3>
+
+<p>You can <a href="../people-and-groups/authenticating-with-jwt">set up JWT SSO</a> and use the JWT to sign in tenant users.</p>
+
+<p>Once you <a href="#enable-multi-tenant-strategy">enable multi-tenant user strategy</a>, Metabase will look for a <code class="language-plaintext highlighter-rouge">@tenant</code> claim in your JWT to determine if the user is a tenant user, and which tenant the user belongs to. The value of <code class="language-plaintext highlighter-rouge">@tenant</code> key should be the tenant’s slug. Here’s an example of a JWT claim to sign in a tenant user:</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mittens@example.com"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"first_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Mister"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"last_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Mittens"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"@tenant"</span><span class="p">:</span><span class="w"> </span><span class="s2">"meowdern_solutions"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>If the user has already been assigned to a tenant (for example, through Metabase UI), then the JWT <em>must</em> contain the tenant claim to sign the user in.</p>
+
+<h3 id="customize-tenant-claim">Customize tenant claim</h3>
+
+<p>By default, Metabase looks for a <code class="language-plaintext highlighter-rouge">@tenant</code> key in your JWT. To set up a different key</p>
+
+<ol>
+  <li>Go to <strong>Admin</strong> &gt; <strong>Settings</strong> &gt; <strong>Authentication</strong> &gt; <strong>JWT</strong> &gt; <strong>User attribute configuration</strong></li>
+  <li>Change the <strong>Tenant assignment attribute</strong> key to your preferred identifier.</li>
+</ol>
+
+<h3 id="provisioning-tenants-and-users">Provisioning tenants and users</h3>
+
+<p>You can <a href="../people-and-groups/authenticating-with-jwt">turn on JWT user provisioning</a> so that Metabase will automatically create users and tenants mentioned in the JWT.</p>
+
+<p>When user provisioning with JWT is enabled:</p>
+
+<ol>
+  <li>Metabase reads the tenant identifier from the JWT claim. By default, this is the <code class="language-plaintext highlighter-rouge">@tenant</code> key (you can configure this).</li>
+  <li>If the tenant doesn’t exist, Metabase automatically creates it. Metabase will use the value of the <code class="language-plaintext highlighter-rouge">@tenant</code> key (or your chosen assignment attribute) as the tenant slug.</li>
+  <li>New users are automatically assigned to the tenant from their JWT.</li>
+</ol>
+
+<h3 id="troubleshooting-jwt-authentication-with-tenants">Troubleshooting JWT authentication with tenants</h3>
+
+<p>Some auth common error messages and what they mean:</p>
+
+<ul>
+  <li><strong>Cannot add tenant claim to internal user</strong>: JWT includes a tenant, but the user is an internal user. Only tenant users can have a tenant.</li>
+  <li><strong>Tenant claim required for external user</strong>: JWT lacks a tenant claim, but the user is an external user.</li>
+  <li><strong>Tenant ID mismatch with existing user</strong>: JWT has a different tenant than the user’s assigned tenant.</li>
+  <li><strong>Tenant is not active</strong>: The tenant exists but has been deactivated.</li>
+</ul>
+
+<h2 id="data-permissions-for-tenants">Data permissions for tenants</h2>
+
+<p><em>Admin setting &gt; Permissions</em></p>
+
+<p>Data permissions control what data people can see on charts and dashboards, and what they can do with that data. To control <em>which</em> charts people see, you can use <a href="#collection-permissions-for-tenants">collection permissions</a> instead.</p>
+
+<h3 id="data-permission-overview">Data permission overview</h3>
+
+<p>For an overview of how data permissions work in Metabase, see <a href="../permissions/data">Data permissions</a>. Here are the highlights (but please do read the full <a href="../permissions/data">Data permissions</a> documentation):</p>
+
+<ul>
+  <li>
+    <p><strong>“View data”</strong> controls which data each user group can see in the on on charts.</p>
+
+    <p>For example, if your tenant data is commingled in one database, then you can use <a href="../permissions/row-and-column-security"><strong>Row and column security</strong></a> or <a href="../permissions/impersonation"><strong>Impersonation</strong></a> “View data” permissions to provide tenant users with access to only certain rows and columns.</p>
+
+    <p>If every tenant has their data in a separate database, then instead of using permissions for data access control, you can use <a href="../permissions/database-routing"><strong>database routing</strong></a> to route queries to appropriate databases directly.</p>
+  </li>
+  <li>
+    <p><strong>Create queries</strong> controls whether tenant users can create queries on the data they see. If you want to give your tenant users the ability to drill through (e.g., through <code class="language-plaintext highlighter-rouge">drills</code> parameter in <a href="../embedding/modular-embedding">modular embedding</a>), you need to give them “Create queries” permissions, because a drill through is a new query.</p>
+  </li>
+  <li>
+    <p><strong>Download results</strong> controls, unsurprisingly, whether people can download results of queries. You need to set download permissions if you want to give your users the option to download their data as a spreadsheet (for example, through <code class="language-plaintext highlighter-rouge">with-downloads</code> parameter in <a href="../embedding/modular-embedding">modular embedding</a>)</p>
+  </li>
+</ul>
+
+<p>Data permissions in Metabase are can be specified on database or table level and are granted to groups. You’ll need to use the special <strong>All tenant users</strong>, and your tenant groups (if any) to assign data permissions. Keep in mind that Metabase permissions are additive, so if someone is a member of two different groups, they will be granted the <em>most</em> permissive access. In particular, if “All tenant users” has “Can view” access to an entire table, but another tenant group has restricted access (e.g. “Row and column security”), then the users of the tenant group will still see all the data in the table because they get it via the “All tenant users” group. If you’re using tenant groups, we recommend revoking access for “All tenant users” and configuring access on group-by-group basis.</p>
+
+<p>Please review <a href="../permissions/data">Data permissions documentation</a> for more details on permissions setup.</p>
+
+<h3 id="use-tenant-attributes-for-data-permissions">Use tenant attributes for data permissions</h3>
+
+<p><a href="../permissions/row-and-column-security">Row and column security</a>, <a href="../permissions/impersonation">Impersonation</a>, and Database routing require user attributes. You can <a href="#tenant-attributes">specify custom tenant attributes</a> to configure data permissions based on attribute values. See <a href="#tenant-attributes">Tenant attributes</a>. Alternatively, you can use the special tenant slug attribute, see <a href="#special-tenant-slug-attribute">Special slug attribute</a>.</p>
+
+<h2 id="collection-permissions-for-tenants">Collection permissions for tenants</h2>
+
+<p>Collection permissions control which entities (dashboards, questions, models etc) people can see.</p>
+
+<p>To configure what <em>data</em> can people see in those entities, and what they can do with that data, see <a href="#data-permissions-for-tenants">Data permissions</a> instead.</p>
+
+<p>In Metabase, there are different levels of collection permissions: <strong>No</strong> access, <strong>View</strong>-only access, and <strong>Curate</strong> access (allows for creating and saving new entities like dashboards). For more general information about collection permissions in Metabase, see <a href="#collection-permissions-for-tenants">Collection permissions</a>.</p>
+
+<p>Permissions are granted to groups. Which permissions are available to each group depend on the type of the group (external/tenant or internal) and the type of the collection.</p>
+
+<h3 id="tenant-user-collection-permissions">Tenant user collection permissions</h3>
+
+<ul>
+  <li>For <strong>internal collections</strong>, tenant users will have <strong>No</strong> access.</li>
+  <li>
+    <p>For <strong>shared collections</strong>, tenant users can only have <strong>View</strong> or <strong>No</strong> access. This means that at <em>most</em>, tenant users can see existing entities but not create new ones.</p>
+
+    <p>Different tenant groups can have different levels access to different shared collections. For example, you can have a “Basic analytics” shared collection viewable by all users, and “Advanced analytics” collection only viewable by tenant group “Premium users”.</p>
+
+    <p>See <a href="#configuring-shared-collections-permissions">Configuring shared collection permissions</a>.</p>
+  </li>
+  <li>
+    <p>For <strong>tenant collections</strong>, tenant users will always have <strong>Curate</strong> permissions, which means that tenant users will always be able to save new questions in their tenant collection.</p>
+
+    <p>If you don’t want your tenant users to create and save their own charts, you’ll need to disable “Create queries” <a href="#data-permissions-for-tenants">data permissions</a> for tenant users, and, if you’re embedding Metabase, configure the embedded UI components to disable saving.</p>
+  </li>
+  <li>For their own <strong>personal collections</strong>, tenant users will always have <strong>Curate</strong> permissions.</li>
+</ul>
+
+<h3 id="internal-user-collection-permissions">Internal user collection permissions</h3>
+
+<ul>
+  <li>Metabase Admins will have <strong>Curate</strong> access to all shared collections and all tenant collections.</li>
+  <li>Other internal groups can be granted <strong>View</strong> or <strong>Curate</strong> access to <strong>shared collections</strong>, see <a href="#configuring-shared-collections-permissions">Configuring shared collection permissions</a>,</li>
+  <li>Non-admin internal users will have <strong>No</strong> access to tenant-specific collections. Currently, this can’t be configured.</li>
+</ul>
+
+<p>For configuring permissions to <em>internal</em> collections for internal users, see <a href="../permissions/collections">general docs on collection permissions</a></p>
+
+<h3 id="configuring-shared-collections-permissions">Configuring shared collections permissions</h3>
+
+<p><em>Admin setting &gt; Permissions</em></p>
+
+<p>To configure access to shared collections for tenant and internal groups, go to <strong>Admin settings &gt; Permissions &gt; Shared collections</strong>.</p>
+
+<p>You can configure access for each shared collections and their subcollections for both internal and external users. See general docs on <a href="#collection-permissions-for-tenants">collection permissions</a>.</p>
+
+<p>Special <strong>Root shared collection</strong> controls who has access to <em>all</em> shared collections. For example, if you want to make sure your internal users don’t have access to any tenant shared collections, you can revoke permissions from the Root shared collection.</p>
+
+<p>When configuring permissions, remember that in Metabase, all permissions are additive, so if someone is a member of two different groups, they will be granted the <em>most</em> permissive access. In particular, if “All tenant users” has “View” access to a shared collection, but another tenant group has “No” access to that collection specified in the permission settings, the users of the tenant group will still get “View” access because they have it via the “All tenant groups”. If you’re using tenant groups, we recommend revoking access for “All tenant users” and configuring access on group-by-group basis.</p>
+
+<h2 id="subscription-permissions-for-tenants">Subscription permissions for tenants</h2>
+
+<p><em>Admin setting &gt; Permissions</em></p>
+
+<p>By default, all tenant users will be created with <strong>No</strong> <a href="../permissions/application#subscriptions-and-alerts">subscription permissions</a>. If you want your users to be able to create subscriptions (either in full-app embedding, modular embedding, or by logging in directly to Metabase), you’ll need to change the Subscription and alerts permissions to “Yes”.</p>
+
+<h2 id="deactivate-a-tenant">Deactivate a tenant</h2>
+
+<p><em>Admin setting &gt; People &gt; Tenants</em></p>
+
+<p><strong>Deactivating a tenant will also deactivate all users who belong to this tenant</strong>.</p>
+
+<p>To deactivate a tenant:</p>
+
+<ol>
+  <li>Go to <strong>Admin settings &gt; People</strong>.</li>
+  <li>Select <strong>Tenants</strong> on the left sidebar.</li>
+  <li>Click on <strong>three dots</strong> next to the tenant.</li>
+  <li>Choose <strong>Deactivate tenant</strong></li>
+</ol>
+
+<p>All tenant users will be deactivated and won’t be able to sign in anymore. Tenant users will not be permanently deleted (Metabase does not delete users, only deactivates), so even though the tenant users will be deactivated, you won’t be able to create new users with the same email.</p>
+
+<h2 id="changing-tenant-strategy">Changing tenant strategy</h2>
+
+<h3 id="from-single-tenant-to-multi-tenant">From single-tenant to multi-tenant</h3>
+
+<p>When you enable multi-tenant strategy, all users that currently exist in Metabase will be considered “internal” users. If you don’t want any of those users to become <a href="#concepts">tenant users</a>, you can just proceed with tenant setup as if you had a fresh new instance (create tenants, create collections, set up permissions, etc).</p>
+
+<p>However, if you want to assign some existing users to tenants, you’ll need to:</p>
+
+<ol>
+  <li>
+    <p>Mark them as tenant users using the API call:</p>
+
+    <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PUT /api/user/:id
+<span class="o">{</span><span class="s2">"tenant_id"</span>: 1<span class="o">}</span>
+</code></pre></div>    </div>
+  </li>
+  <li>If you’re using JWT for SSO, <a href="#provisioning-and-assigning-tenants-with-jwt">add a <code class="language-plaintext highlighter-rouge">@tenant</code> claim to your JWT</a>.</li>
+  <li>Set up <a href="#concepts">tenant groups</a>, <a href="#data-permissions-for-tenants">data permissions</a>, and <a href="#collection-permissions-for-tenants">collection permissions</a> because you won’t be able to use existing internal groups for tenant permissions.</li>
+</ol>
+
+<h3 id="from-multi-tenant-to-single-tenant">From multi-tenant to single-tenant</h3>
+
+<p>If you disable multi-tenant strategy, <em>all your tenant users will be deactivated</em> and <em>all collections will be deleted</em> (although you’ll get both users and collections back if you reactivate multi-tenant strategy later). So if you want to wish to keep the active users but just disable tenancy features, you’ll need some extra prep.</p>
+
+<ol>
+  <li>Replicate the tenant setup you have with regular groups and collections (instead of tenant groups and shared collections). Review documentation for Data permissions, Collection permissions, and User groups. Make sure to thoroughly test your setup with test users. A <a href="../installation-and-operation/development-instance">development instance</a> might come in handy.</li>
+  <li>If you’re using any tenant groups, remove the tenant group memberships of all tenant users.</li>
+  <li>
+    <p>Change the tenant users to internal users using API:</p>
+
+    <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PUT /api/user/:id
+<span class="o">{</span><span class="s2">"tenant_id"</span>: null<span class="o">}</span>
+</code></pre></div>    </div>
+
+    <p><strong>If you don’t do this step, all your users will be deactivated.</strong></p>
+  </li>
+  <li>Finally, disable the feature once everything is verified to work</li>
+</ol>
+
+<h2 id="limitations">Limitations</h2>
+
+<ul>
+  <li>
+    <p><strong>Tenant collections and personal collections can’t be disabled</strong>.</p>
+
+    <p>If you don’t want your tenant users to create and save their own charts, you can disable “Create queries” <a href="#data-permissions-for-tenants">data permissions</a>, and, if you’re embedding Metabase, configure the embedded UI components to disable saving.</p>
+  </li>
+  <li>
+    <p><strong>Tenant users can’t change tenants.</strong> Once an external user is assigned to a tenant, they cannot switch to another tenant.</p>
+  </li>
+  <li>
+    <p><strong>If you disable multi-tenant strategy, deactivated tenant users will not show up in ‘Deactivated users</strong>, but Metabase will still keep track of them and won’t allow creating new users with the same email. If you want to</p>
+  </li>
+  <li>
+    <p><strong>There are no tenant-specific groups</strong>. Tenant groups are are shared between all tenants. If you need a special group for just some of your tenants, create a tenant group but don’t add any members from the tenants that the group isn’t applicable to.</p>
+  </li>
+</ul>
+
+<h2 id="further-reading">Further reading</h2>
+
+<ul>
+  <li><a href="./start">Embedding overview</a></li>
+  <li><a href="../people-and-groups/authenticating-with-jwt">JWT authentication</a></li>
+  <li><a href="../permissions/start">Permissions overview</a></li>
 </ul>
 
 
@@ -5581,7 +5999,7 @@ Roadmap</a>
 
   
     <span class="paragraph-6 fs-13 neutral-60" id="page-feedback-footer">
-      Want to improve these docs? <a href="https://github.com/metabase/metabase/blob/master/docs/data-modeling/python-transforms.md" target="_blank">Propose a change.</a>
+      Want to improve these docs? <a href="https://github.com/metabase/metabase/blob/master/docs/embedding/tenants.md" target="_blank">Propose a change.</a>
     </span>
   
 </div>
@@ -5603,8 +6021,8 @@ Roadmap</a>
 <script type="text/javascript" src="/js/position-feedback-widget.js"></script>
 
 <script>
-  const pageTitle = `Python transforms`;
-  const pageURL = '/docs/master/data-modeling/python-transforms';
+  const pageTitle = `Tenants`;
+  const pageURL = '/docs/master/embedding/tenants';
   const pageURLSplit = pageURL.split('/');
 
   let pageURLPrefix = '/' + pageURLSplit[1] + '/' + pageURLSplit[2];
@@ -5893,6 +6311,8 @@ Roadmap</a>
   });
 </script>
 
+<script src="/js/fillout-form-fallback.js"></script>
+
 <!-- forms -->
 <script type="text/javascript" src="https://s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js"></script>
 <script type="text/javascript">
@@ -5922,6 +6342,8 @@ Roadmap</a>
   <script type="text/javascript" src="/js/blog.js"></script>
   <script type="text/javascript" src="/js/syntax-highlight.js"></script>
 
+  
+    <script type="text/javascript" src="/js/docs/checkpoints.js"></script>
   
 
 </body></html>
