@@ -6,7 +6,7 @@
   <meta content="frame-ancestors 'none'" http-equiv="Content-Security-Policy">
   <meta content="deny" http-equiv="X-Frame-Options">
     
-  <link href="https://www.metabase.com/docs/master/databases/users-roles-privileges" rel="canonical">
+  <link href="https://www.metabase.com/docs/master/data-modeling/python-transforms" rel="canonical">
   
 
   <script type="text/javascript">
@@ -49,12 +49,12 @@
 
 
 
-<title>Database users, roles, and privileges | Metabase Documentation</title>
+<title>Python transforms | Metabase Documentation</title>
 <!-- Twitter cards -->
 <meta name="twitter:site" content="@metabase">
 
-<meta name="twitter:title" content="Database users, roles, and privileges | Metabase Documentation">
-<meta name="twitter:description" content="Database users, roles, and privileges We recommend creating a metabase database user with the following database roles:  analytics for read access to any schemas or tables used for analysis. Optional metabase_actions for...">
+<meta name="twitter:title" content="Python transforms | Metabase Documentation">
+<meta name="twitter:description" content="Use Python to wrangle your data in Metabase and write the results back to your database.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -62,9 +62,9 @@
 <!-- Open Graph metadata -->
 <meta property="og:site_name" content="Metabase | Business Intelligence, Dashboards, and Data Visualization">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://www.metabase.com/docs/master/databases/users-roles-privileges">
-<meta name="title" property="og:title" content="Database users, roles, and privileges | Metabase Documentation">
-<meta name="description" property="og:description" content="Database users, roles, and privileges We recommend creating a metabase database user with the following database roles:  analytics for read access to any schemas or tables used for analysis. Optional metabase_actions for...">
+<meta property="og:url" content="https://www.metabase.com/docs/master/data-modeling/python-transforms">
+<meta name="title" property="og:title" content="Python transforms | Metabase Documentation">
+<meta name="description" property="og:description" content="Use Python to wrangle your data in Metabase and write the results back to your database.">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -3514,7 +3514,7 @@ Roadmap</a>
 
       
 
-      <li class="expanded">
+      <li class="">
         <a href="/docs/master/databases/start" class="">
         Data sources
 
@@ -3859,7 +3859,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/master/databases/users-roles-privileges" class="selected">
+                <a href="/docs/master/databases/users-roles-privileges" class="">
                   Database users, roles, and privileges
 
                   
@@ -5278,7 +5278,7 @@ Roadmap</a>
 
             
             
-                <li class="breadcrumb-item"><a class="blue-60" href="/docs/master/databases/start">Databases</a></li>
+                <li class="breadcrumb-item"><a class="blue-60" href="/docs/master/data-modeling/start">Data Modeling</a></li>
             
             
         </ol>
@@ -5425,250 +5425,109 @@ Roadmap</a>
 </div>
 
 
-        <h1 id="database-users-roles-and-privileges">Database users, roles, and privileges</h1>
+        <h1 id="python-transforms">Python transforms</h1>
 
-<p>We recommend creating a <code class="language-plaintext highlighter-rouge">metabase</code> database user with the following database roles:</p>
+<blockquote>
+  <p>Python transforms are only available on Metabase Cloud <a href="/pricing">Pro and Enterprise plans</a> with the <strong>Python execution add-on</strong>.</p>
+</blockquote>
 
-<ul>
-  <li><a href="#minimum-database-privileges"><code class="language-plaintext highlighter-rouge">analytics</code> for read access</a> to any schemas or tables used for analysis.</li>
-  <li>Optional <a href="#privileges-to-enable-actions-and-editable-table-data"><code class="language-plaintext highlighter-rouge">metabase_actions</code> for write access</a> to tables used for Metabase actions.</li>
-  <li>Optional <a href="#privileges-to-enable-model-persistence"><code class="language-plaintext highlighter-rouge">metabase_model_persistence</code> for write access</a> to the schema used for Metabase model persistence.</li>
-  <li>Optional <a href="#privileges-to-enable-transforms"><code class="language-plaintext highlighter-rouge">metabase_transforms</code> for write access</a> to the schema used for Metabase transforms.</li>
-</ul>
+<p>You can write a Python script to transform the data from your database, and write the result back into the database as another table.</p>
 
-<p>Bundling your privileges into roles based on use cases makes it easier to manage privileges in the future (especially in <a href="#multi-tenant-permissions">multi-tenant situations</a>). For example, you could:</p>
+<p>For general information about Metabase transforms, see <a href="transforms">Transforms</a>.</p>
 
-<ul>
-  <li>Use the same <code class="language-plaintext highlighter-rouge">analytics</code> role for other BI tools in your <a href="/learn/grow-your-data-skills/data-fundamentals/data-landscape">data stack</a> that need read-only access to the analytics tables in your database.</li>
-  <li>Revoke the write access for <code class="language-plaintext highlighter-rouge">metabase_model_persistence</code> without affecting the write access for <code class="language-plaintext highlighter-rouge">metabase_actions</code>.</li>
-</ul>
+<h2 id="create-a-python-transform">Create a Python transform</h2>
 
-<h2 id="minimum-database-privileges">Minimum database privileges</h2>
+<p>To write Python transforms, you’ll need to have the Python execution add-on. Once you’ve enabled the add-on:</p>
 
-<p>In order to view and query your tables in Metabase, you’ll have to give Metabase’s database user:</p>
-
-<ul>
-  <li><code class="language-plaintext highlighter-rouge">CONNECT</code> to your database.</li>
-  <li><code class="language-plaintext highlighter-rouge">SELECT</code> privileges to any schemas or tables that you want to use in Metabase.</li>
-</ul>
-
-<p>To organize these privileges (and make maintenance easier down the line):</p>
-
-<ul>
-  <li>Create a database role called <code class="language-plaintext highlighter-rouge">analytics</code>.</li>
-  <li>Create a database user called <code class="language-plaintext highlighter-rouge">metabase</code>.</li>
-  <li>Add <code class="language-plaintext highlighter-rouge">metabase</code> to the <code class="language-plaintext highlighter-rouge">analytics</code> role.</li>
-  <li>Add privileges to the <code class="language-plaintext highlighter-rouge">analytics</code> role.</li>
-</ul>
-
-<p>For example, if you’re using a Postgres database, you’d log in as an admin and run the SQL statements:</p>
-
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- Create a role named "analytics".</span>
-<span class="k">CREATE</span> <span class="k">ROLE</span> <span class="n">analytics</span> <span class="k">WITH</span> <span class="n">LOGIN</span><span class="p">;</span>
-
-<span class="c1">-- Add the CONNECT privilege to the role.</span>
-<span class="k">GRANT</span> <span class="k">CONNECT</span> <span class="k">ON</span> <span class="k">DATABASE</span> <span class="nv">"your_database"</span> <span class="k">TO</span> <span class="n">analytics</span><span class="p">;</span>
-
-<span class="c1">-- Create a database user named "metabase".</span>
-<span class="k">CREATE</span> <span class="k">USER</span> <span class="n">metabase</span> <span class="k">WITH</span> <span class="n">PASSWORD</span> <span class="nv">"your_password"</span><span class="p">;</span>
-
-<span class="c1">-- Give the role to the metabase user.</span>
-<span class="k">GRANT</span> <span class="n">analytics</span> <span class="k">TO</span> <span class="n">metabase</span><span class="p">;</span>
-
-<span class="c1">-- Add query privileges to the role (options 1-4):</span>
-
-<span class="c1">-- Option 1: Uncomment the line below to let users with the analytics role query ALL DATA (In Postgres 14 or higher. See [Predefined Roles](https://www.postgresql.org/docs/current/predefined-roles.html#PREDEFINED-ROLES)).</span>
-<span class="c1">-- GRANT pg_read_all_data TO analytics;</span>
-
-<span class="c1">-- Option 2: Uncomment the line below to let users with the analytics role query anything in the DATABASE.</span>
-<span class="c1">-- GRANT USAGE ON DATABASE "your_schema" TO analytics;</span>
-<span class="c1">-- GRANT SELECT ON DATABASE "your_schema"  TO analytics;</span>
-
-<span class="c1">-- Option 3: Uncomment the line below to let users with the analytics role query anything in a specific SCHEMA.</span>
-<span class="c1">-- GRANT USAGE ON SCHEMA "your_schema" TO analytics;</span>
-<span class="c1">-- GRANT SELECT ON ALL TABLES IN SCHEMA "your_schema" TO analytics;</span>
-
-<span class="c1">-- Option 4: Uncomment the line below to let users with the analytics role query anything in a specific TABLE.</span>
-<span class="c1">-- GRANT USAGE ON SCHEMA "your_schema" TO analytics;</span>
-<span class="c1">-- GRANT SELECT ON "your_table" IN SCHEMA "your_schema" TO analytics;</span>
-</code></pre></div></div>
-
-<p>Depending on how you use Metabase, you can also additionally grant:</p>
-
-<ul>
-  <li><code class="language-plaintext highlighter-rouge">TEMPORARY</code> privileges to create temp tables.</li>
-  <li><code class="language-plaintext highlighter-rouge">EXECUTE</code> privileges to use stored procedures or user-defined functions.</li>
-</ul>
-
-<p>Remember that when you grant privileges to a role, all users with that role will get those privileges.</p>
-
-<h2 id="grant-all-database-privileges">Grant all database privileges</h2>
-
-<p>If you don’t want to structure your database privileges yet:</p>
-
-<ul>
-  <li>Create a <code class="language-plaintext highlighter-rouge">metabase</code> database user.</li>
-  <li>Give <code class="language-plaintext highlighter-rouge">metabase</code> all privileges to the database.</li>
-</ul>
-
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- Create a database user named "metabase".</span>
-<span class="k">CREATE</span> <span class="k">USER</span> <span class="n">metabase</span> <span class="k">WITH</span> <span class="n">PASSWORD</span> <span class="nv">"your_password"</span><span class="p">;</span>
-
-<span class="c1">-- Give the user read and write privileges to anything in the database.</span>
-<span class="k">GRANT</span> <span class="k">ALL</span> <span class="k">PRIVILEGES</span> <span class="k">ON</span> <span class="nv">"database"</span> <span class="k">TO</span> <span class="n">metabase</span><span class="p">;</span>
-</code></pre></div></div>
-
-<p>This is a good option if you’re connecting to a local database for development or testing.</p>
-
-<h2 id="privileges-to-enable-actions-and-editable-table-data">Privileges to enable actions and editable table data</h2>
-
-<p>Both <a href="../actions/introduction">actions</a> and the <a href="../data-modeling/editable-tables">editable table data</a> let Metabase write back to specific tables in your database.</p>
-
-<p>In addition to the <a href="#minimum-database-privileges">minimum database privileges</a>, you’ll need to grant write access to any tables you want to be able to write to.</p>
-
-<ul>
-  <li>Create a new role called <code class="language-plaintext highlighter-rouge">metabase_writer</code>.</li>
-  <li>Give the role <code class="language-plaintext highlighter-rouge">INSERT</code>, <code class="language-plaintext highlighter-rouge">UPDATE</code>, and <code class="language-plaintext highlighter-rouge">DELETE</code> privileges to the relevant tables.</li>
-  <li>Give the <code class="language-plaintext highlighter-rouge">metabase_writer</code> role to the <code class="language-plaintext highlighter-rouge">metabase</code> user.</li>
-</ul>
-
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- Create a role to bundle database privileges for Metabase writing to your database.</span>
-<span class="k">CREATE</span> <span class="k">ROLE</span> <span class="n">metabase_writer</span> <span class="k">WITH</span> <span class="n">LOGIN</span><span class="p">;</span>
-
-<span class="c1">-- Grant write privileges to the TABLE</span>
-<span class="k">GRANT</span> <span class="k">INSERT</span><span class="p">,</span> <span class="k">UPDATE</span><span class="p">,</span> <span class="k">DELETE</span> <span class="k">ON</span> <span class="nv">"your_table"</span> <span class="k">IN</span> <span class="k">SCHEMA</span> <span class="nv">"your_schema"</span> <span class="k">TO</span> <span class="n">metabase_writer</span><span class="p">;</span>
-
-<span class="c1">-- Grant role to the metabase user.</span>
-<span class="k">GRANT</span> <span class="n">metabase_writer</span> <span class="k">TO</span> <span class="n">metabase</span><span class="p">;</span>
-</code></pre></div></div>
-
-<h2 id="privileges-to-enable-model-persistence">Privileges to enable model persistence</h2>
-
-<p><a href="../data-modeling/model-persistence">Model persistence</a> lets Metabase save query results to a specific schema in your database. Metabase’s database user will need the <code class="language-plaintext highlighter-rouge">CREATE</code> privilege to set up the dedicated schema for model persistence, as well as write access (<code class="language-plaintext highlighter-rouge">INSERT</code>, <code class="language-plaintext highlighter-rouge">UPDATE</code>, <code class="language-plaintext highlighter-rouge">DELETE</code>) to that schema.</p>
-
-<p>In addition to the <a href="#minimum-database-privileges">minimum database privileges</a>:</p>
-
-<ul>
-  <li>Create a new role called <code class="language-plaintext highlighter-rouge">metabase_model_persistence</code>.</li>
-  <li>Give the role <code class="language-plaintext highlighter-rouge">CREATE</code> access to the database.</li>
-  <li>Give the role <code class="language-plaintext highlighter-rouge">INSERT</code>, <code class="language-plaintext highlighter-rouge">UPDATE</code>, and <code class="language-plaintext highlighter-rouge">DELETE</code> privileges to the schema used for model persistence.</li>
-  <li>Give the <code class="language-plaintext highlighter-rouge">metabase_model_persistence</code> role to the <code class="language-plaintext highlighter-rouge">metabase</code> user.</li>
-</ul>
-
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- Create a role to bundle database privileges for Metabase model persistence.</span>
-<span class="k">CREATE</span> <span class="k">ROLE</span> <span class="n">metabase_model_persistence</span> <span class="k">WITH</span> <span class="n">LOGIN</span><span class="p">;</span>
-
-<span class="c1">-- If you don't want to give CREATE access to your database,</span>
-<span class="c1">-- add the schema manually before enabling modeling persistence.</span>
-<span class="k">GRANT</span> <span class="k">CREATE</span> <span class="k">ON</span> <span class="nv">"database"</span> <span class="k">TO</span> <span class="n">metabase_model_persistence</span><span class="p">;</span>
-
-<span class="c1">-- Grant write privileges to the SCHEMA used for model persistence.</span>
-<span class="k">GRANT</span> <span class="k">USAGE</span> <span class="k">ON</span> <span class="nv">"your_schema"</span> <span class="k">TO</span> <span class="n">metabase_model_persistence</span><span class="p">;</span>
-<span class="k">GRANT</span> <span class="k">INSERT</span><span class="p">,</span> <span class="k">UPDATE</span><span class="p">,</span> <span class="k">DELETE</span> <span class="k">ON</span> <span class="nv">"your_model's_table"</span> <span class="k">IN</span> <span class="k">SCHEMA</span> <span class="nv">"your_schema"</span> <span class="k">TO</span> <span class="n">metabase_model_persistence</span><span class="p">;</span>
-
-<span class="c1">-- Grant role to the metabase user.</span>
-<span class="k">GRANT</span> <span class="n">metabase_model_persistence</span> <span class="k">TO</span> <span class="n">metabase</span><span class="p">;</span>
-</code></pre></div></div>
-
-<h2 id="privileges-to-enable-transforms">Privileges to enable transforms</h2>
-
-<p><a href="../data-modeling/transforms">Transforms</a> let Metabase write query results back to your database. We suggest that you create a dedicated schema for your transforms. Metabase’s database user will need to be able to create and drop transform tables.</p>
-
-<p>In addition to the <a href="#minimum-database-privileges">minimum database privileges</a>:</p>
-
-<ul>
-  <li>Create a new role called <code class="language-plaintext highlighter-rouge">metabase_transforms</code>.</li>
-  <li>Create a dedicated schema for transforms.</li>
-  <li>Give the <code class="language-plaintext highlighter-rouge">metabase_transforms</code> role <code class="language-plaintext highlighter-rouge">CREATE TABLE</code> / <code class="language-plaintext highlighter-rouge">ALTER</code> / <code class="language-plaintext highlighter-rouge">DROP</code> privileges for the specified schema</li>
-  <li>Give the <code class="language-plaintext highlighter-rouge">metabase_transforms</code> role to the <code class="language-plaintext highlighter-rouge">metabase</code> user.</li>
-</ul>
-
-<p>In certain cases, Metabase will give you an option to create new schemas for transforms, in which case you’ll also need <code class="language-plaintext highlighter-rouge">CREATE SCHEMA</code> privileges for your metabase users (or <code class="language-plaintext highlighter-rouge">CREATE DATABASE</code> for ClickHouse).</p>
-
-<h2 id="privileges-to-enable-uploads">Privileges to enable uploads</h2>
-
-<p>You can <a href="../databases/uploads">upload CSVs</a> to supported databases. Metabase’s database user should have write access (<code class="language-plaintext highlighter-rouge">INSERT</code>, <code class="language-plaintext highlighter-rouge">UPDATE</code>, <code class="language-plaintext highlighter-rouge">DELETE</code>) to the schema where you want to store the uploads.</p>
-
-<p>You’ll first need to create a schema to store uploads (or use an existing schema) and tell Metabase that you want to <a href="./uploads#select-the-database-and-schema-that-you-want-to-store-the-data-in">use that schema to store uploads</a>.</p>
-
-<p>In addition to the <a href="#minimum-database-privileges">minimum database privileges</a>:</p>
-
-<ul>
-  <li>Create a new role called <code class="language-plaintext highlighter-rouge">metabase_uploads</code>.</li>
-  <li>Give the role <code class="language-plaintext highlighter-rouge">INSERT</code>, <code class="language-plaintext highlighter-rouge">UPDATE</code>, and <code class="language-plaintext highlighter-rouge">DELETE</code> privileges to the schema where you want to store uploads.</li>
-  <li>Give the <code class="language-plaintext highlighter-rouge">metabase_uploads</code> role to the <code class="language-plaintext highlighter-rouge">metabase</code> user.</li>
-</ul>
-
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- Create a role to bundle database privileges for uploads.</span>
-<span class="k">CREATE</span> <span class="k">ROLE</span> <span class="n">metabase_uploads</span> <span class="k">WITH</span> <span class="n">LOGIN</span><span class="p">;</span>
-
-<span class="c1">-- Grant write privileges to the SCHEMA used for uploads.</span>
-<span class="k">GRANT</span> <span class="k">USAGE</span> <span class="k">ON</span> <span class="nv">"your_schema"</span> <span class="k">TO</span> <span class="n">metabase_uploads</span><span class="p">;</span>
-<span class="k">GRANT</span> <span class="k">INSERT</span><span class="p">,</span> <span class="k">UPDATE</span><span class="p">,</span> <span class="k">DELETE</span> <span class="k">ON</span> <span class="k">ALL</span> <span class="n">TABLES</span> <span class="k">IN</span> <span class="k">SCHEMA</span> <span class="nv">"your_schema"</span> <span class="k">TO</span> <span class="n">metabase_uploads</span><span class="p">;</span>
-
-<span class="c1">-- Grant role to the metabase user.</span>
-<span class="k">GRANT</span> <span class="n">metabase_uploads</span> <span class="k">TO</span> <span class="n">metabase</span><span class="p">;</span>
-</code></pre></div></div>
-
-<h2 id="multi-tenant-permissions">Multi-tenant permissions</h2>
-
-<p>If you’re setting up multi-tenant permissions for customers who need SQL access, you can <a href="../permissions/embedding#granting-customers-native-sql-access-to-their-schema">create one database connection per customer</a>. That means each customer will connect to the database using their own database user.</p>
-
-<p>Let’s say you have customers named Tangerine and Lemon:</p>
-
-<ul>
-  <li>Create new database users <code class="language-plaintext highlighter-rouge">metabase_tangerine</code> and <code class="language-plaintext highlighter-rouge">metabase_lemon</code>.</li>
-  <li>Create a <code class="language-plaintext highlighter-rouge">customer_facing_analytics</code> role with the <code class="language-plaintext highlighter-rouge">CONNECT</code> privilege.</li>
-  <li>Create roles to bundle privileges specific to each customer’s use case. For example:
-    <ul>
-      <li><code class="language-plaintext highlighter-rouge">tangerine_queries</code> to bundle read privileges for people to query and create stored procedures against the Tangerine schema.</li>
-      <li><code class="language-plaintext highlighter-rouge">lemon_queries</code> to bundle read privileges for people to query tables in the Lemon schema.</li>
-      <li><code class="language-plaintext highlighter-rouge">lemon_actions</code> to bundle the write privileges needed to create <a href="#privileges-to-enable-actions-and-editable-table-data">actions</a> on a Lemonade table in the Lemon schema.</li>
-    </ul>
+<ol>
+  <li>
+    <p>Go to <strong>Admin settings &gt; Transforms</strong> and click <strong>Create a transform &gt; Python script</strong>.</p>
   </li>
-  <li>Add each user to their respective roles.</li>
-</ul>
+  <li>
+    <p>Select a database that has the data you want to transform. See <a href="transforms#databases-that-support-transforms">Databases that support transforms</a>.</p>
+  </li>
+  <li>
+    <p>Select one or more tables with the data that you’d like to transform. Optionally, assign aliases to the tables.</p>
 
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- Create one database user per customer.</span>
-<span class="k">CREATE</span> <span class="k">USER</span> <span class="n">metabase_tangerine</span> <span class="k">WITH</span> <span class="n">PASSWORD</span> <span class="nv">"orange"</span><span class="p">;</span>
-<span class="k">CREATE</span> <span class="k">USER</span> <span class="n">metabase_lemon</span> <span class="k">WITH</span> <span class="n">PASSWORD</span> <span class="nv">"yellow"</span><span class="p">;</span>
+    <p>The tables you select will be available as DataFrames in your Python code with your chosen aliases, and will be passed to the <code class="language-plaintext highlighter-rouge">transform()</code> function as parameters.</p>
+  </li>
+  <li>Create a function <code class="language-plaintext highlighter-rouge">transform()</code> that does the data wrangling and returns a <a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html">pandas DataFrame</a>. The DataFrame returned by the function will be written back to your database when the transform is run.</li>
+  <li>Click <strong>Save</strong> in the top right corner.</li>
+  <li>
+    <p>Select a target schema for your transform and enter a name for the target table. Metabase will write the results of the transform into this table.</p>
 
-<span class="c1">-- Create a role to bundle privileges for all customers.</span>
-<span class="k">CREATE</span> <span class="k">ROLE</span> <span class="n">customer_facing_analytics</span><span class="p">;</span>
-<span class="k">GRANT</span> <span class="k">CONNECT</span> <span class="k">ON</span> <span class="k">DATABASE</span> <span class="nv">"citrus"</span> <span class="k">TO</span> <span class="n">customer_facing_analytics</span><span class="p">;</span>
-<span class="k">GRANT</span> <span class="n">customer_facing_analytics</span> <span class="k">TO</span> <span class="n">metabase_tangerine</span><span class="p">,</span> <span class="n">metabase_lemon</span><span class="p">;</span>
+    <p>You can only write back to the same database as you chose for the transform source.</p>
+  </li>
+  <li>Optionally, assign tags to your transforms. Tags are used by <a href="transforms#jobs-and-tags">jobs</a> to run transforms on schedule.</li>
+</ol>
 
-<span class="c1">-- Create a role to bundle analytics read access for customer Tangerine.</span>
-<span class="k">CREATE</span> <span class="k">ROLE</span> <span class="n">tangerine_queries</span><span class="p">;</span>
-<span class="k">GRANT</span> <span class="k">USAGE</span> <span class="k">ON</span> <span class="k">SCHEMA</span> <span class="nv">"tangerine"</span> <span class="k">TO</span> <span class="n">tangerine_queries</span><span class="p">;</span>
-<span class="k">GRANT</span> <span class="k">SELECT</span><span class="p">,</span> <span class="k">EXECUTE</span> <span class="k">ON</span> <span class="k">ALL</span> <span class="n">TABLES</span> <span class="k">IN</span> <span class="k">SCHEMA</span> <span class="nv">"tangerine"</span> <span class="k">TO</span> <span class="n">tangerine_queries</span><span class="p">;</span>
-<span class="k">GRANT</span> <span class="n">tangerine_queries</span> <span class="k">TO</span> <span class="n">metabase_tangerine</span><span class="p">;</span>
-
-<span class="c1">-- Create a role to bundle analytics read access for customer Lemon.</span>
-<span class="k">CREATE</span> <span class="k">ROLE</span> <span class="n">lemon_queries</span><span class="p">;</span>
-<span class="k">GRANT</span> <span class="k">USAGE</span> <span class="k">ON</span> <span class="k">SCHEMA</span> <span class="nv">"lemon"</span> <span class="k">TO</span> <span class="n">lemon_queries</span><span class="p">;</span>
-<span class="k">GRANT</span> <span class="k">SELECT</span> <span class="k">ON</span> <span class="k">ALL</span> <span class="n">TABLES</span> <span class="k">IN</span> <span class="k">SCHEMA</span> <span class="nv">"lemon"</span> <span class="k">TO</span> <span class="n">lemon_queries</span><span class="p">;</span>
-<span class="k">GRANT</span> <span class="n">lemon_queries</span> <span class="k">TO</span> <span class="n">metabase_lemon</span><span class="p">;</span>
-
-<span class="c1">-- Create a role to bundle privileges to Metabase actions for customer Lemon.</span>
-<span class="k">CREATE</span> <span class="k">ROLE</span> <span class="n">lemon_actions</span><span class="p">;</span>
-<span class="k">GRANT</span> <span class="k">INSERT</span><span class="p">,</span> <span class="k">UPDATE</span><span class="p">,</span> <span class="k">DELETE</span> <span class="k">ON</span> <span class="k">TABLE</span> <span class="nv">"lemonade"</span> <span class="k">IN</span> <span class="k">SCHEMA</span> <span class="nv">"lemon"</span> <span class="k">TO</span> <span class="n">lemon_actions</span><span class="p">;</span>
-<span class="k">GRANT</span> <span class="n">lemon_actions</span> <span class="k">TO</span> <span class="n">metabase_lemon</span><span class="p">;</span>
-</code></pre></div></div>
-
-<p>We recommend bundling privileges into roles based on use cases per customer. That way, you can reuse common privileges across customers while still being able to grant or revoke granular privileges per customer. For example:</p>
+<h2 id="tips-for-python-transforms">Tips for Python transforms</h2>
 
 <ul>
-  <li>If customer Tangerine needs to query the Tangerine schema from another analytics tool, you can use the <code class="language-plaintext highlighter-rouge">tangerine_queries</code> role when setting up that tool.</li>
-  <li>If customer Lemon decides that they don’t want to use Metabase actions anymore (but they still want to ask questions), you can simply revoke or drop the <code class="language-plaintext highlighter-rouge">lemon_actions</code> role.</li>
+  <li>A Python transform must have a function <code class="language-plaintext highlighter-rouge">transform()</code> that returns a single <code class="language-plaintext highlighter-rouge">pandas</code> DataFrame.</li>
+  <li>You can use aliases to include tables from your database as DataFrames inside the <code class="language-plaintext highlighter-rouge">transform()</code> function. The tables will <em>only</em> be available in the transform function. Other functions won’t have access to the tables.</li>
+  <li>Only <code class="language-plaintext highlighter-rouge">pandas</code> will be imported by default, but you can import <a href="#available-python-packages">certain other packages</a>. You can also use functions from the <a href="#common-python-library">common library</a>.</li>
+  <li>You’ll see the output of <code class="language-plaintext highlighter-rouge">print()</code> statements in the transform’s logs.</li>
+  <li>Metabase won’t write DataFrame indexes to the database, including indexes created by <code class="language-plaintext highlighter-rouge">groupby()</code>. If you’re using a custom index that you’d like to include in the target table, you’ll need to <a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.reset_index.html">reset index</a> on your DataFrame inside the <code class="language-plaintext highlighter-rouge">transform()</code> function.</li>
 </ul>
 
-<h2 id="further-reading">Further reading</h2>
+<h2 id="run-a-python-transform">Run a Python transform</h2>
+
+<p>See <a href="transforms#run-a-transform">Run a transform</a>. You’ll see logs for a transform run (including the output of any <code class="language-plaintext highlighter-rouge">print()</code> statements you included in the <code class="language-plaintext highlighter-rouge">transform()</code> code) on the transform’s page.</p>
+
+<h2 id="available-python-packages">Available Python packages</h2>
+
+<p>You can import any of the following Python packages in Python transforms:</p>
 
 <ul>
-  <li><a href="/learn/metabase-basics/administration/permissions/strategy">Permissions strategies</a></li>
-  <li><a href="../permissions/introduction">Permissions introduction</a></li>
-  <li><a href="../people-and-groups/start">People overview</a></li>
+  <li><a href="https://pandas.pydata.org/"><code class="language-plaintext highlighter-rouge">pandas</code></a>;</li>
+  <li>Any dependencies of <code class="language-plaintext highlighter-rouge">pandas</code>, e.g. <a href="https://numpy.org/"><code class="language-plaintext highlighter-rouge">numpy</code></a>;</li>
+  <li>Any packages from the <a href="https://docs.python.org/3/library/index.html">Python standard library</a>, e.g. <code class="language-plaintext highlighter-rouge">json</code> or <code class="language-plaintext highlighter-rouge">datetime</code>.</li>
+</ul>
+
+<p>Due to security considerations for the Python execution environment, you won’t be able to install or import any other packages.</p>
+
+<p>You can also write your own functions and add them to the <a href="#common-python-library">common library</a> in Metabase, which will be available across all your Python transforms.</p>
+
+<h2 id="common-python-library">Common Python library</h2>
+
+<p>If you have functions or classes you’d like to reuse across multiple transforms, you can add them to the common library that will be available across all Python transforms.</p>
+
+<p>To add things to the common Python library:</p>
+
+<ol>
+  <li>
+    <p>Go to <strong>Admin &gt; Transforms &gt; Python library</strong>.</p>
+  </li>
+  <li>
+    <p>Add a Python function or class.</p>
+
+    <p>Functions in this library can’t access any data in your database.</p>
+  </li>
+</ol>
+
+<p>To use functions or classes from your Python library:</p>
+
+<ol>
+  <li>
+    <p>When editing your Python transform script, check <strong>Import common library</strong> in the top right.</p>
+
+    <p>This will add an aptly named import <code class="language-plaintext highlighter-rouge">import common</code> to the transform’s code.</p>
+  </li>
+  <li>
+    <p>Reference functions or classes from the common library in your code like <code class="language-plaintext highlighter-rouge">common.manifest_kittens()</code>.</p>
+  </li>
+</ol>
+
+<h2 id="current-limitations-of-python-transforms">Current limitations of Python transforms</h2>
+
+<ul>
+  <li>Currently, Python transforms are only available on Metabase Cloud.</li>
+  <li>The transform function must return a single <code class="language-plaintext highlighter-rouge">pandas</code> DataFrame. Other data manipulation and DataFrame libraries like <code class="language-plaintext highlighter-rouge">polars</code> or <code class="language-plaintext highlighter-rouge">pyspark</code> are not supported.</li>
+  <li>DataFrame indexes, including indexes created by <code class="language-plaintext highlighter-rouge">groupby()</code>, are ignored from writing back to the database. If you’re using a custom index that you’d like to include in the target table, you’ll need to <a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.reset_index.html">reset index</a> on your DataFrame inside the <code class="language-plaintext highlighter-rouge">transform()</code> function to make the index into a real column.</li>
+  <li>You can’t preview the results of a Python transform.</li>
+  <li>Only a <a href="#available-python-packages">limited set of packages</a> are available for import. You can’t install additional packages.</li>
+  <li>Because Python transforms use <code class="language-plaintext highlighter-rouge">pandas</code>, all data manipulation is done in memory. The available memory is determined by the Python execution add-on. For large datasets, consider using <a href="transforms#query-based-transforms">query-based transforms</a> that run in your database.</li>
 </ul>
 
 
@@ -5723,7 +5582,7 @@ Roadmap</a>
 
   
     <span class="paragraph-6 fs-13 neutral-60" id="page-feedback-footer">
-      Want to improve these docs? <a href="https://github.com/metabase/metabase/blob/master/docs/databases/users-roles-privileges.md" target="_blank">Propose a change.</a>
+      Want to improve these docs? <a href="https://github.com/metabase/metabase/blob/master/docs/data-modeling/python-transforms.md" target="_blank">Propose a change.</a>
     </span>
   
 </div>
@@ -5745,8 +5604,8 @@ Roadmap</a>
 <script type="text/javascript" src="/js/position-feedback-widget.js"></script>
 
 <script>
-  const pageTitle = `Database users, roles, and privileges`;
-  const pageURL = '/docs/master/databases/users-roles-privileges';
+  const pageTitle = `Python transforms`;
+  const pageURL = '/docs/master/data-modeling/python-transforms';
   const pageURLSplit = pageURL.split('/');
 
   let pageURLPrefix = '/' + pageURLSplit[1] + '/' + pageURLSplit[2];
