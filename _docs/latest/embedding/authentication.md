@@ -16,7 +16,7 @@ latest: true
 
 # Modular embedding - authentication
 
-{% include plans-blockquote.html feature="Modular embedding" sdk=true %}
+{% include plans-blockquote.html feature="Authenticated embeds" sdk=true is_plural=true%}
 
 For using modular embedding with SSO in production, you'll need to set up authentication.
 
