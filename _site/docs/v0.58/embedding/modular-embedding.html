@@ -5399,28 +5399,6 @@ Roadmap</a>
 
         <h1 id="modular-embedding">Modular embedding</h1>
 
-<div class="bootstrap">
-  <div class="plans-blockquote bg-blue-95 rounded-3 p-6 d-flex flex-row border border-1 border-primary">
-    <svg class="" width="24" height="24" viewBox="0 0 26 26" fill="none">
-  <path d="M12 13V15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
-  <path d="M12 10C12.5523 10 13 9.55228 13 9C13 8.44772 12.5523 8 12 8C11.4477 8 11 8.44772 11 9C11 9.55228 11.4477 10 12 10Z" fill="#509EE3"></path>
-  <path d="M12 19.25C16.0041 19.25 19.25 16.0041 19.25 12C19.25 7.99594 16.0041 4.75 12 4.75C7.99594 4.75 4.75 7.99594 4.75 12C4.75 16.0041 7.99594 19.25 12 19.25Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
-</svg>
-
-    
-    
-    
-      
-
-    <p class="m-0 ms-2 paragraph-5 neutral-40">
-       Modular embedding with SSO is only available on
-      <a class="fw-bold" href="/product/pro">Pro</a> and
-      <a class="fw-bold link-purple" href="/product/enterprise">Enterprise</a>
-      plans  (both self-hosted and on Metabase Cloud).
-    </p>
-  </div>
-</div>
-
 <div>
   <a href="/events/interactive-embedding-workshop" class="in-page-promo">
     <img alt="interactive-embedding-workshop" class="no-zoom" src="/images/events/categories/embedding-workshop.png" loading="lazy">
@@ -5455,6 +5433,10 @@ Roadmap</a>
 
 <h2 id="create-a-new-embed">Create a new embed</h2>
 
+<p>You can generate a code snippet for embedding a component by going through the embed wizard.</p>
+
+<h3 id="1-open-the-embed-wizard">1. Open the embed wizard</h3>
+
 <p>In your Metabase:</p>
 
 <ol>
@@ -5471,27 +5453,41 @@ Roadmap</a>
 
 <p><img src="./images/new-modular-embed-from-admin-settings.png" alt="New modular embed from the admin settings"></p>
 
-<h2 id="pick-how-to-authenticate-the-embed">Pick how to authenticate the embed</h2>
+<h3 id="2-pick-how-to-authenticate-the-embed">2. Pick how to authenticate the embed</h3>
+
+<div class="bootstrap">
+  <div class="plans-blockquote bg-blue-95 rounded-3 p-6 d-flex flex-row border border-1 border-primary">
+    <svg class="" width="24" height="24" viewBox="0 0 26 26" fill="none">
+  <path d="M12 13V15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
+  <path d="M12 10C12.5523 10 13 9.55228 13 9C13 8.44772 12.5523 8 12 8C11.4477 8 11 8.44772 11 9C11 9.55228 11.4477 10 12 10Z" fill="#509EE3"></path>
+  <path d="M12 19.25C16.0041 19.25 19.25 16.0041 19.25 12C19.25 7.99594 16.0041 4.75 12 4.75C7.99594 4.75 4.75 7.99594 4.75 12C4.75 16.0041 7.99594 19.25 12 19.25Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
+</svg>
+
+    
+    
+    
+      
+
+    <p class="m-0 ms-2 paragraph-5 neutral-40">
+       Authenticated modular embedding is only available on
+      <a class="fw-bold" href="/product/pro">Pro</a> and
+      <a class="fw-bold link-purple" href="/product/enterprise">Enterprise</a>
+      plans  (both self-hosted and on Metabase Cloud).
+    </p>
+  </div>
+</div>
 
 <p>How you authenticate the embed determines how cool the embed can get. This page covers the SSO setup, which lets you do everything. This setup requires you to have <a href="./authentication">set up SSO for your Metabase</a>. You can check out a <a href="./introduction#comparison-of-embedding-types">comparison between SSO and guest</a>, or jump straight to the <a href="./guest-embedding">guest embed docs</a>. But we recommend setting up modular embedding with SSO.</p>
 
-<h2 id="customize-your-embed">Customize your embed</h2>
+<h3 id="3-customize-your-embed">3. Customize your embed</h3>
 
-<p>The exact customization options you see will depend on what type of entity you’re embedding. You’ll see a live preview of the embed with your customizations.</p>
+<p>The exact customization options you see will depend on what type of entity you’re embedding and which <a href="/plans">Metabase plan</a> you’re on. You’ll see a live preview of the embed with your customizations.</p>
 
 <p><img src="./images/embed-flow-options.png" alt="Embed flow options for AI chat"></p>
 
-<p>You’ll also be able to pick colors for:</p>
+<p>If you are on Metabase OSS/Starter plans, you’ll be able to select light or dark themes for your components. On Metabase Pro/Enterprise, you’ll be also be able to pick specific colors for brand, text, and background in the embed wizard, and add more customization options through <a href="./appearance">appearance settings</a> later.</p>
 
-<ul>
-  <li>Brand</li>
-  <li>Text</li>
-  <li>Background</li>
-</ul>
-
-<p>But you can customize a lot more later. To configure other colors (like secondary colors, query builder colors, and more), as well as font, you can specify a <code class="language-plaintext highlighter-rouge">theme</code> in your embed code snippet.</p>
-
-<p>All the customization options you select in this interactive flow will be reflected in code snippet, which you can edit as you see fit.</p>
+<p>All the customization options you select in this wizard will be reflected in code snippet that the embed wizard will generate for you, and you’ll be able to add more options later.</p>
 
 <p>For example, this code defines the font, color, and size for text, background colors, and colors for filters and summaries:</p>
 
@@ -5519,7 +5515,7 @@ Roadmap</a>
 
 <h2 id="add-the-embedding-script-to-your-app">Add the embedding script to your app</h2>
 
-<p>Metabase will generate a code snippet that you can copy and paste into your app. See the example below. You can later modify this code snippet to specify additional appearance options or change the behavior of some components.</p>
+<p>If you <a href="#create-a-new-embed">create an embed through the built-in embed wizard</a>, Metabase will generate a code snippet that you can copy and paste into your app. See the example below. You can later modify this code snippet to specify additional appearance options or change the behavior of some components.</p>
 
 <p>You’ll add this code snippet to your app and refresh the page.</p>
 
@@ -5538,13 +5534,13 @@ Roadmap</a>
 
 <span class="nt">&lt;script </span><span class="na">defer</span> <span class="na">src=</span><span class="s">"https://your-metabase-url/app/embed.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
 
+<span class="c">&lt;!-- Embedding configuration --&gt;</span>
 <span class="nt">&lt;script&gt;</span>
   <span class="kd">function</span> <span class="nf">defineMetabaseConfig</span><span class="p">(</span><span class="nx">config</span><span class="p">)</span> <span class="p">{</span>
     <span class="nb">window</span><span class="p">.</span><span class="nx">metabaseConfig</span> <span class="o">=</span> <span class="nx">config</span><span class="p">;</span>
   <span class="p">}</span>
 <span class="nt">&lt;/script&gt;</span>
 
-<span class="c">&lt;!-- Embedding configuration --&gt;</span>
 <span class="nt">&lt;script&gt;</span>
   <span class="nf">defineMetabaseConfig</span><span class="p">({</span>
     <span class="na">instanceUrl</span><span class="p">:</span> <span class="dl">"</span><span class="s2">https://your-metabase-url</span><span class="dl">"</span><span class="p">,</span>
@@ -5568,7 +5564,29 @@ Roadmap</a>
 
 <h2 id="each-end-user-should-have-their-own-metabase-account">Each end user should have their own Metabase account</h2>
 
-<p>With SSO embeds, each end-user must have their own Metabase account.</p>
+<div class="bootstrap">
+  <div class="plans-blockquote bg-blue-95 rounded-3 p-6 d-flex flex-row border border-1 border-primary">
+    <svg class="" width="24" height="24" viewBox="0 0 26 26" fill="none">
+  <path d="M12 13V15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
+  <path d="M12 10C12.5523 10 13 9.55228 13 9C13 8.44772 12.5523 8 12 8C11.4477 8 11 8.44772 11 9C11 9.55228 11.4477 10 12 10Z" fill="#509EE3"></path>
+  <path d="M12 19.25C16.0041 19.25 19.25 16.0041 19.25 12C19.25 7.99594 16.0041 4.75 12 4.75C7.99594 4.75 4.75 7.99594 4.75 12C4.75 16.0041 7.99594 19.25 12 19.25Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
+</svg>
+
+    
+    
+    
+      
+
+    <p class="m-0 ms-2 paragraph-5 neutral-40">
+       Modular embedding with SSO is only available on
+      <a class="fw-bold" href="/product/pro">Pro</a> and
+      <a class="fw-bold link-purple" href="/product/enterprise">Enterprise</a>
+      plans  (both self-hosted and on Metabase Cloud).
+    </p>
+  </div>
+</div>
+
+<p>With SSO embeds, each end-user must have their own Metabase account. If you can’t provision accounts for every end user, you have to use <a href="./guest-embedding">Guest embeds</a> instead.</p>
 
 <p>The problem with having end-users share a Metabase account is that, even if you filter data on the client side via the modular embedding, all end-users will still have access to the session token, which they could use to access Metabase directly via the API to get data they’re not supposed to see.</p>
 
@@ -5578,9 +5596,9 @@ Roadmap</a>
 
 <h2 id="customizing-embeds">Customizing embeds</h2>
 
-<p>The exact customization options you see will depend on what type of entity you’re embedding.</p>
+<p>The exact customization options you see will depend on what type of entity you’re embedding and which plan you’re on.</p>
 
-<p>When you’re creating a new embed using <strong>Admin &gt; Embedding &gt; Setup guide &gt; Embed in your code</strong>, you’ll see the following customization options in the interactive creation flow. These options correspond to parameters in <a href="./components">components</a>.</p>
+<p>When you’re creating a new embed using <strong>Admin &gt; Embedding &gt; Setup guide &gt; Embed in your code</strong>, you’ll see some or all the following customization options in the interactive creation flow. These options correspond to parameters in <a href="./components">components</a>.</p>
 
 <ul>
   <li>
@@ -5652,6 +5670,28 @@ Roadmap</a>
 
 <h2 id="embedding-metabase-in-a-different-domain">Embedding Metabase in a different domain</h2>
 
+<div class="bootstrap">
+  <div class="plans-blockquote bg-blue-95 rounded-3 p-6 d-flex flex-row border border-1 border-primary">
+    <svg class="" width="24" height="24" viewBox="0 0 26 26" fill="none">
+  <path d="M12 13V15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
+  <path d="M12 10C12.5523 10 13 9.55228 13 9C13 8.44772 12.5523 8 12 8C11.4477 8 11 8.44772 11 9C11 9.55228 11.4477 10 12 10Z" fill="#509EE3"></path>
+  <path d="M12 19.25C16.0041 19.25 19.25 16.0041 19.25 12C19.25 7.99594 16.0041 4.75 12 4.75C7.99594 4.75 4.75 7.99594 4.75 12C4.75 16.0041 7.99594 19.25 12 19.25Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
+</svg>
+
+    
+    
+    
+      
+
+    <p class="m-0 ms-2 paragraph-5 neutral-40">
+       Authenticated modular embeds are only available on
+      <a class="fw-bold" href="/product/pro">Pro</a> and
+      <a class="fw-bold link-purple" href="/product/enterprise">Enterprise</a>
+      plans  (both self-hosted and on Metabase Cloud).
+    </p>
+  </div>
+</div>
+
 <p>If you want to embed Metabase in another domain (say, if Metabase is hosted at <code class="language-plaintext highlighter-rouge">metabase.yourcompany.com</code>, but you want to embed Metabase at <code class="language-plaintext highlighter-rouge">yourcompany.github.io</code>), you can tell Metabase to set the session cookie’s SameSite value to “none”.</p>
 
 <p>You can set session cookie’s SameSite value in <strong>Admin settings</strong> &gt; <strong>Embedding</strong> &gt; <strong>Security</strong> &gt; <strong>SameSite cookie setting</strong>.</p>
@@ -5672,9 +5712,53 @@ Roadmap</a>
 
 <h2 id="setting-up-sso">Setting up SSO</h2>
 
+<div class="bootstrap">
+  <div class="plans-blockquote bg-blue-95 rounded-3 p-6 d-flex flex-row border border-1 border-primary">
+    <svg class="" width="24" height="24" viewBox="0 0 26 26" fill="none">
+  <path d="M12 13V15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
+  <path d="M12 10C12.5523 10 13 9.55228 13 9C13 8.44772 12.5523 8 12 8C11.4477 8 11 8.44772 11 9C11 9.55228 11.4477 10 12 10Z" fill="#509EE3"></path>
+  <path d="M12 19.25C16.0041 19.25 19.25 16.0041 19.25 12C19.25 7.99594 16.0041 4.75 12 4.75C7.99594 4.75 4.75 7.99594 4.75 12C4.75 16.0041 7.99594 19.25 12 19.25Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
+</svg>
+
+    
+    
+    
+      
+
+    <p class="m-0 ms-2 paragraph-5 neutral-40">
+       Authenticated modular embeds are only available on
+      <a class="fw-bold" href="/product/pro">Pro</a> and
+      <a class="fw-bold link-purple" href="/product/enterprise">Enterprise</a>
+      plans  (both self-hosted and on Metabase Cloud).
+    </p>
+  </div>
+</div>
+
 <p>For production use, you’ll need to set up SSO authentication. See <a href="./authentication">Modular embedding - authentication</a> for details on setting up JWT or SAML authentication.</p>
 
 <h2 id="example-app-with-sso-embed-and-theming">Example app with SSO embed and theming</h2>
+
+<div class="bootstrap">
+  <div class="plans-blockquote bg-blue-95 rounded-3 p-6 d-flex flex-row border border-1 border-primary">
+    <svg class="" width="24" height="24" viewBox="0 0 26 26" fill="none">
+  <path d="M12 13V15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
+  <path d="M12 10C12.5523 10 13 9.55228 13 9C13 8.44772 12.5523 8 12 8C11.4477 8 11 8.44772 11 9C11 9.55228 11.4477 10 12 10Z" fill="#509EE3"></path>
+  <path d="M12 19.25C16.0041 19.25 19.25 16.0041 19.25 12C19.25 7.99594 16.0041 4.75 12 4.75C7.99594 4.75 4.75 7.99594 4.75 12C4.75 16.0041 7.99594 19.25 12 19.25Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
+</svg>
+
+    
+    
+    
+      
+
+    <p class="m-0 ms-2 paragraph-5 neutral-40">
+       Authenticated modular embeds are only available on
+      <a class="fw-bold" href="/product/pro">Pro</a> and
+      <a class="fw-bold link-purple" href="/product/enterprise">Enterprise</a>
+      plans  (both self-hosted and on Metabase Cloud).
+    </p>
+  </div>
+</div>
 
 <p>Check out our <a href="https://github.com/metabase/modular-embedding-sample-app">sample app</a>. Bring your Metabase, embed a dashboard, and play around with changing colors.</p>
 

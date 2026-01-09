@@ -18,6 +18,8 @@ latest: true
 
 # Full app embedding UI components
 
+{% include plans-blockquote.html feature="Full app embedding" convert_pro_link_to_embbedding=true%}
+
 To change the interface of your full app embed, you can add parameters to the end of your embedding URL. If you want to change the colors or fonts in your embed, see [Customizing appearance](../configuring-metabase/appearance).
 
 > For more granular control of embedded components, consider using [Modular embedding](./modular-embedding) instead of full app embedding - it's an improved, more customizable option for embedding Metabase elements.

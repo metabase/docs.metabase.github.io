@@ -169,6 +169,8 @@ The flow might look something like this:
 
 ## Modular and full app embedding auth with JWT or SAML
 
+{% include plans-blockquote.html feature="Authenticated embeds" is_plural=true %}
+
 Modular embedding (including using the [SDK](./sdk/introduction)), and [full-app embedding](./full-app-embedding) integrate with SSO (either [JWT](../people-and-groups/authenticating-with-jwt) or [SAML](../people-and-groups/authenticating-with-saml)) to authenticate and authorize people in one flow. The auth integration makes it easy to map user attributes (such as a person's role or department) to granular levels of data access, including:
 
 - [Tables](../permissions/data)

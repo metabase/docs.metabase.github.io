@@ -5450,7 +5450,7 @@ Roadmap</a>
 
 <h2 id="notes-on-the-code-the-wizard-generates">Notes on the code the wizard generates</h2>
 
-<p>You can edit the code (see <a href="./components">components</a> and <a href="./appearance">appearance</a>. But here’s an overview of the code the wizard generates, and where to put it.</p>
+<p>You can edit the code (see <a href="./components">components</a> and <a href="./appearance">appearance</a>). But here’s an overview of the code the wizard generates, and where to put it.</p>
 
 <h3 id="client-side-code">Client-side code</h3>
 
@@ -5503,6 +5503,7 @@ Roadmap</a>
 <p>Replace <code class="language-plaintext highlighter-rouge">YOUR_METABASE_SECRET_KEY</code> with your <a href="#regenerating-the-embedding-secret-key">embedding secret key</a>.</p>
 
 <h3 id="component-attributes">Component attributes</h3>
+
 <p>You can set different attributes to enable/disable UI. Here are some example attributes:</p>
 
 <table>
@@ -5533,6 +5534,10 @@ Roadmap</a>
 </table>
 
 <p>Attributes will differ based on the type of thing you’re embedding. Guest embeds have fewer options that embeds that use SSO. See more on <a href="./components">components and their attributes</a>.</p>
+
+<h3 id="customizing-appearance-of-guest-embeds">Customizing appearance of guest embeds</h3>
+
+<p>Appearance settings available for guest embeds depend on your Metabase plan. If you’re running Metabase OSS/Starter, you can select light or dark theme. If you’re running Metabase Pro/Enterprise, you’ll have access to granular customization options, see <a href="./appearance">Appearance</a></p>
 
 <h2 id="editing-parameters-on-an-embedded-question-or-dashboard">Editing parameters on an embedded question or dashboard</h2>
 
@@ -5581,7 +5586,18 @@ Roadmap</a>
 
 <h2 id="translating-guest-embeds">Translating guest embeds</h2>
 
-<p>See <a href="./translations">Translating embedded questions and dashboards</a>.</p>
+<p>To translate an embed, set the <code class="language-plaintext highlighter-rouge">locale</code> in <code class="language-plaintext highlighter-rouge">window.metabaseConfig</code>:</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;script&gt;</span>
+  <span class="nb">window</span><span class="p">.</span><span class="nx">metabaseConfig</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">isGuest</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="na">instanceUrl</span><span class="p">:</span> <span class="dl">"</span><span class="s2">YOUR_METABASE_URL</span><span class="dl">"</span><span class="p">,</span>
+    <span class="na">locale</span><span class="p">:</span> <span class="dl">"</span><span class="s2">es</span><span class="dl">"</span><span class="p">,</span>
+  <span class="p">};</span>
+<span class="nt">&lt;/script&gt;</span>
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">locale</code> setting works for all modular embeds (guest and SSO). Metabase will automatically translate UI elements (like menus and buttons). To also translate content like dashboard titles and filter labels, you’ll need to upload a translation dictionary. Translation dictionaries only work with guest embeds. See <a href="./translations">Translating embedded questions and dashboards</a>.</p>
 
 <h2 id="how-guest-embedding-works">How guest embedding works</h2>
 
