@@ -54,7 +54,7 @@
 <meta name="twitter:site" content="@metabase">
 
 <meta name="twitter:title" content="Translate embedded dashboards and questions | Metabase Documentation">
-<meta name="twitter:description" content="Upload a translation dictionary to translate questions and dashboards into different languages. Only available for guest embeds.">
+<meta name="twitter:description" content="Upload a translation dictionary to translate questions and dashboards into different languages. Translation dictionaries are only available for guest embeds.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -64,7 +64,7 @@
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://www.metabase.com/docs/master/embedding/translations">
 <meta name="title" property="og:title" content="Translate embedded dashboards and questions | Metabase Documentation">
-<meta name="description" property="og:description" content="Upload a translation dictionary to translate questions and dashboards into different languages. Only available for guest embeds.">
+<meta name="description" property="og:description" content="Upload a translation dictionary to translate questions and dashboards into different languages. Translation dictionaries are only available for guest embeds.">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -5449,9 +5449,41 @@ Roadmap</a>
   </div>
 </div>
 
-<p>For now, translations are only available for <a href="./guest-embedding">guest embeds</a>. Translations aren’t available for SSO-based modular embedding or full app embedding.</p>
+<p>You can set a locale on all modular embeds (guest and SSO) to translate Metabase’s UI. Translation dictionaries, however, are only available for <a href="./guest-embedding">guest embeds</a>.</p>
 
-<p>You can upload a translation dictionary to translate strings both in Metabase content (like dashboard titles) and in the data itself (like column names and values).</p>
+<h2 id="set-a-locale-to-translate-ui-and-upload-a-dictionary-to-translate-content">Set a locale to translate UI, and upload a dictionary to translate content</h2>
+
+<p>To translate an embed’s user interface, set the locale in the config. The <code class="language-plaintext highlighter-rouge">locale</code> setting works for all modular embeds (guest and SSO). Metabase UI elements (like menus) will be translated automatically - you don’t need to add translations for them to your dictionary.</p>
+
+<p>For guest and SSO embeds (not the SDK), set the <code class="language-plaintext highlighter-rouge">locale</code> in <code class="language-plaintext highlighter-rouge">window.metabaseConfig</code>:</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;script&gt;</span>
+  <span class="nb">window</span><span class="p">.</span><span class="nx">metabaseConfig</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">isGuest</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="na">instanceUrl</span><span class="p">:</span> <span class="dl">"</span><span class="s2">YOUR_METABASE_URL</span><span class="dl">"</span><span class="p">,</span>
+    <span class="c1">// Translates UI elements to the locale's language.</span>
+    <span class="c1">// For guest embeds, if you've uploaded a translation dictionary,</span>
+    <span class="c1">// Metabase will also translate content strings</span>
+    <span class="c1">// to this locale from that dictionary.</span>
+    <span class="na">locale</span><span class="p">:</span> <span class="dl">"</span><span class="s2">es</span><span class="dl">"</span>
+  <span class="p">};</span>
+<span class="nt">&lt;/script&gt;</span>
+
+<span class="nt">&lt;metabase-dashboard</span> <span class="na">token=</span><span class="s">"YOUR_JWT_TOKEN"</span><span class="nt">&gt;&lt;/metabase-dashboard&gt;</span>
+</code></pre></div></div>
+
+<p>For guest embeds (and only guest embeds), if you also want to translate content (like item titles, headings, filter labels—even data), you’ll need to add a translation dictionary.</p>
+
+<h3 id="sdk-translations">SDK translations</h3>
+
+<p>For the SDK, set the <code class="language-plaintext highlighter-rouge">locale</code> prop on the <code class="language-plaintext highlighter-rouge">MetabaseProvider</code> component:</p>
+
+<div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">&lt;</span><span class="nc">MetabaseProvider</span>
+  <span class="na">authConfig</span><span class="p">=</span><span class="si">{</span><span class="nx">authConfig</span><span class="si">}</span>
+  <span class="na">locale</span><span class="p">=</span><span class="s">"es"</span>
+<span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nc">MetabaseProvider</span><span class="p">&gt;</span>
+</code></pre></div></div>
 
 <h2 id="add-a-translation-dictionary">Add a translation dictionary</h2>
 
@@ -5477,20 +5509,6 @@ Roadmap</a>
 <p>Uploading a new dictionary will replace the existing dictionary.</p>
 
 <p>To remove a translation dictionary, upload a blank dictionary.</p>
-
-<h2 id="translate-content-in-guest-embeds">Translate content in guest embeds</h2>
-
-<p>To translate content in a guest embed using the uploaded dictionary, add the <a href="./components"><code class="language-plaintext highlighter-rouge">locale</code> parameter</a>.</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;metabase-dashboard
-    dashboard-id="1"
-    with-title="false"
-    with-subscriptions="true"
-    drills="true"
-    locale="es"
- &lt;/metabase-dashboard&gt;
-</code></pre></div></div>
-
-<p>Metabase UI elements (like button labels) will be translated automatically - you don’t need to add translations for them to your dictionary.</p>
 
 <h2 id="example-translation-dictionary">Example translation dictionary</h2>
 
