@@ -5427,6 +5427,28 @@ Roadmap</a>
 
         <h1 id="customizing-the-appearance-of-modular-embeds">Customizing the appearance of modular embeds</h1>
 
+<p>You can style your embedded <a href="./components">Metabase components</a> with a <strong>theme</strong>.</p>
+
+<p><img src="./images/embed-share-button.png" alt="Embed share button"></p>
+
+<p>Guest embeds on OSS/Starter plans come with two theme presets - light and dark. On Metabase Pro/Enterprise plans, you can customize individual colors, fonts, etc.</p>
+
+<h2 id="basic-theming">Basic theming</h2>
+
+<p>You can choose light or dark theme for your embeds. On Pro/Enterprise plans, you can also configure granular appearance settings like background, fonts etc, see <a href="#advanced-theming">Advanced theming</a>.</p>
+
+<p>To add a light or dark theme, pass a <code class="language-plaintext highlighter-rouge">theme</code> parameter with <code class="language-plaintext highlighter-rouge">preset</code> to the <code class="language-plaintext highlighter-rouge">defineMetabaseConfig()</code> function in your <a href="./modular-embedding#add-the-embedding-script-to-your-app">embedding code snippet</a>. For example, to specify a dark theme:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">defineMetabaseConfig</span><span class="p">({</span>
+  <span class="na">theme</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">preset</span><span class="p">:</span> <span class="dl">"</span><span class="s2">dark</span><span class="dl">"</span><span class="p">,</span>
+  <span class="p">},</span>
+  <span class="na">instanceUrl</span><span class="p">:</span> <span class="dl">"</span><span class="s2">http://localhost:3000</span><span class="dl">"</span><span class="p">,</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<h2 id="advanced-theming">Advanced theming</h2>
+
 <div class="bootstrap">
   <div class="plans-blockquote bg-blue-95 rounded-3 p-6 d-flex flex-row border border-1 border-primary">
     <svg class="" width="24" height="24" viewBox="0 0 26 26" fill="none">
@@ -5441,7 +5463,7 @@ Roadmap</a>
       
 
     <p class="m-0 ms-2 paragraph-5 neutral-40">
-       Modular embedding is only available on
+       Advanced theming modular embeds are only available on
       <a class="fw-bold" href="/product/pro">Pro</a> and
       <a class="fw-bold link-purple" href="/product/enterprise">Enterprise</a>
       plans  (both self-hosted and on Metabase Cloud).
@@ -5449,34 +5471,80 @@ Roadmap</a>
   </div>
 </div>
 
-<p>You can style your embedded <a href="./components">Metabase components</a> with a <strong>theme</strong>.</p>
+<p>On Pro/Enterprise plan, you can configure granular appearance options, like background colors, font sizes etc. See the <a href="">list of all theming options</a>.</p>
 
-<p><img src="./images/embed-share-button.png" alt="Embed share button"></p>
+<h3 id="add-an-advanced-theme-to-your-embed">Add an advanced theme to your embed</h3>
 
-<p>Change the colors, and the code snippet will include a <code class="language-plaintext highlighter-rouge">theme</code> object in the object passed to the <code class="language-plaintext highlighter-rouge">defineMetabaseConfig</code> function.</p>
+<p><img src="./images/behavior-and-appearance.png" alt="Behavior and appearance"></p>
 
-<h2 id="theme-options">Theme options</h2>
+<p>Some appearance options like brand, text, and background color are configurable in in the <a href="./modular-embedding#create-a-new-embed">embed wizard</a>.</p>
 
-<p>Here’s an example that includes the various styling options available via the <a href="./sdk/introduction">modular embedding React SDK</a>:</p>
+<p>For other appearance settings, use the <code class="language-plaintext highlighter-rouge">theme</code> parameter with <code class="language-plaintext highlighter-rouge">preset</code> in the <code class="language-plaintext highlighter-rouge">defineMetabaseConfig()</code> function in your <a href="./modular-embedding#add-the-embedding-script-to-your-app">embedding code snippet</a>. For example:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">defineMetabaseConfig</span><span class="p">({</span>
+  <span class="na">theme</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">colors</span><span class="p">:</span> <span class="p">{</span>
+      <span class="na">background</span><span class="p">:</span> <span class="dl">"</span><span class="s2">#FFFFFF</span><span class="dl">"</span><span class="p">,</span>
+      <span class="dl">"</span><span class="s2">text-primary</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">hsla(204, 66%, 8%, 0.84)</span><span class="dl">"</span><span class="p">,</span>
+      <span class="na">brand</span><span class="p">:</span> <span class="dl">"</span><span class="s2">hsla(208, 72%, 60%, 1.00)</span><span class="dl">"</span><span class="p">,</span>
+      <span class="dl">"</span><span class="s2">background-hover</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">rgb(236, 236, 236)</span><span class="dl">"</span><span class="p">,</span>
+      <span class="dl">"</span><span class="s2">background-disabled</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">rgb(231, 231, 231)</span><span class="dl">"</span><span class="p">,</span>
+      <span class="dl">"</span><span class="s2">background-secondary</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">rgb(233, 233, 233)</span><span class="dl">"</span><span class="p">,</span>
+      <span class="dl">"</span><span class="s2">background-light</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">rgb(233, 233, 233)</span><span class="dl">"</span><span class="p">,</span>
+      <span class="dl">"</span><span class="s2">text-secondary</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">rgba(9, 30, 44, 0.84)</span><span class="dl">"</span><span class="p">,</span>
+      <span class="dl">"</span><span class="s2">text-tertiary</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">rgba(11, 37, 54, 0.84)</span><span class="dl">"</span><span class="p">,</span>
+      <span class="dl">"</span><span class="s2">brand-hover</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">rgb(185, 216, 244)</span><span class="dl">"</span><span class="p">,</span>
+      <span class="dl">"</span><span class="s2">brand-hover-light</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">rgb(238, 245, 252)</span><span class="dl">"</span><span class="p">,</span>
+    <span class="p">},</span>
+  <span class="p">},</span>
+  <span class="na">instanceUrl</span><span class="p">:</span> <span class="dl">"</span><span class="s2">http://localhost:3000</span><span class="dl">"</span><span class="p">,</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<h3 id="theme-options">Theme options</h3>
+
+<div class="bootstrap">
+  <div class="plans-blockquote bg-blue-95 rounded-3 p-6 d-flex flex-row border border-1 border-primary">
+    <svg class="" width="24" height="24" viewBox="0 0 26 26" fill="none">
+  <path d="M12 13V15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
+  <path d="M12 10C12.5523 10 13 9.55228 13 9C13 8.44772 12.5523 8 12 8C11.4477 8 11 8.44772 11 9C11 9.55228 11.4477 10 12 10Z" fill="#509EE3"></path>
+  <path d="M12 19.25C16.0041 19.25 19.25 16.0041 19.25 12C19.25 7.99594 16.0041 4.75 12 4.75C7.99594 4.75 4.75 7.99594 4.75 12C4.75 16.0041 7.99594 19.25 12 19.25Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
+</svg>
+
+    
+    
+    
+      
+
+    <p class="m-0 ms-2 paragraph-5 neutral-40">
+       Advanced theme options are only available on
+      <a class="fw-bold" href="/product/pro">Pro</a> and
+      <a class="fw-bold link-purple" href="/product/enterprise">Enterprise</a>
+      plans  (both self-hosted and on Metabase Cloud).
+    </p>
+  </div>
+</div>
+
+<p>For advanced theme configuration options, you can configure the <code class="language-plaintext highlighter-rouge">theme</code> object in the object passed to the <code class="language-plaintext highlighter-rouge">defineMetabaseConfig</code> function, see <a href="#add-an-advanced-theme-to-your-embed">Add an advanced theme to your embed</a>. Here’s the list of all options available for customization:</p>
 
 <div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
   </span><span class="err">//</span><span class="w"> </span><span class="err">Specify</span><span class="w"> </span><span class="err">a</span><span class="w"> </span><span class="err">font</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">use</span><span class="w"> </span><span class="err">from</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">set</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">fonts</span><span class="w"> </span><span class="err">supported</span><span class="w"> </span><span class="err">by</span><span class="w"> </span><span class="err">Metabase.</span><span class="w">
   </span><span class="err">//</span><span class="w"> </span><span class="err">You</span><span class="w"> </span><span class="err">can</span><span class="w"> </span><span class="err">set</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">font</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="s2">"Custom"</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">use</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">custom</span><span class="w"> </span><span class="err">font</span><span class="w">
   </span><span class="err">//</span><span class="w"> </span><span class="err">configured</span><span class="w"> </span><span class="err">in</span><span class="w"> </span><span class="err">your</span><span class="w"> </span><span class="err">Metabase</span><span class="w"> </span><span class="err">instance.</span><span class="w">
-  </span><span class="err">fontFamily:</span><span class="w"> </span><span class="s2">"Lato"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"fontFamily"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Lato"</span><span class="p">,</span><span class="w">
 
   </span><span class="err">//</span><span class="w"> </span><span class="err">Override</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">base</span><span class="w"> </span><span class="err">font</span><span class="w"> </span><span class="err">size</span><span class="w"> </span><span class="err">for</span><span class="w"> </span><span class="err">every</span><span class="w"> </span><span class="err">component.</span><span class="w">
   </span><span class="err">//</span><span class="w"> </span><span class="err">This</span><span class="w"> </span><span class="err">does</span><span class="w"> </span><span class="err">not</span><span class="w"> </span><span class="err">usually</span><span class="w"> </span><span class="err">need</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">be</span><span class="w"> </span><span class="err">set</span><span class="p">,</span><span class="w"> </span><span class="err">as</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">components</span><span class="w">
   </span><span class="err">//</span><span class="w"> </span><span class="err">inherit</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">font</span><span class="w"> </span><span class="err">size</span><span class="w"> </span><span class="err">from</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">parent</span><span class="w"> </span><span class="err">container</span><span class="p">,</span><span class="w"> </span><span class="err">such</span><span class="w"> </span><span class="err">as</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">body.</span><span class="w">
-  </span><span class="err">fontSize:</span><span class="w"> </span><span class="s2">"16px"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"fontSize"</span><span class="p">:</span><span class="w"> </span><span class="s2">"16px"</span><span class="p">,</span><span class="w">
 
   </span><span class="err">//</span><span class="w"> </span><span class="err">Override</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">base</span><span class="w"> </span><span class="err">line</span><span class="w"> </span><span class="err">height</span><span class="w"> </span><span class="err">for</span><span class="w"> </span><span class="err">every</span><span class="w"> </span><span class="err">component.</span><span class="w">
-  </span><span class="err">lineHeight:</span><span class="w"> </span><span class="mf">1.5</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"lineHeight"</span><span class="p">:</span><span class="w"> </span><span class="mf">1.5</span><span class="p">,</span><span class="w">
 
   </span><span class="err">//</span><span class="w"> </span><span class="err">Match</span><span class="w"> </span><span class="err">your</span><span class="w"> </span><span class="err">application's</span><span class="w"> </span><span class="err">color</span><span class="w"> </span><span class="err">scheme</span><span class="w">
-  </span><span class="err">colors:</span><span class="w"> </span><span class="p">{</span><span class="w">
+  </span><span class="nl">"colors"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="err">//</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">primary</span><span class="w"> </span><span class="err">color</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">your</span><span class="w"> </span><span class="err">application</span><span class="w">
-    </span><span class="err">brand:</span><span class="w"> </span><span class="s2">"#9B5966"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"brand"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#9B5966"</span><span class="p">,</span><span class="w">
 
     </span><span class="err">//</span><span class="w"> </span><span class="err">Lighter</span><span class="w"> </span><span class="err">variation</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">brand</span><span class="w"> </span><span class="err">color.</span><span class="w"> </span><span class="err">Used</span><span class="w"> </span><span class="err">for</span><span class="w"> </span><span class="err">hover</span><span class="w"> </span><span class="err">and</span><span class="w"> </span><span class="err">accented</span><span class="w"> </span><span class="err">elements.</span><span class="w">
     </span><span class="nl">"brand-hover"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#DDECFA"</span><span class="p">,</span><span class="w">
@@ -5494,7 +5562,7 @@ Roadmap</a>
     </span><span class="nl">"text-tertiary"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#949AAB"</span><span class="p">,</span><span class="w">
 
     </span><span class="err">//</span><span class="w"> </span><span class="err">Default</span><span class="w"> </span><span class="err">background</span><span class="w"> </span><span class="err">color</span><span class="w">
-    </span><span class="err">background:</span><span class="w"> </span><span class="s2">"#FFFFFF"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"background"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#FFFFFF"</span><span class="p">,</span><span class="w">
 
     </span><span class="err">//</span><span class="w"> </span><span class="err">Light</span><span class="w"> </span><span class="err">background</span><span class="w"> </span><span class="err">color</span><span class="w"> </span><span class="err">for</span><span class="w"> </span><span class="err">some</span><span class="w"> </span><span class="err">control</span><span class="w"> </span><span class="err">backgrounds.</span><span class="w">
     </span><span class="err">//</span><span class="w"> </span><span class="err">Defaults</span><span class="w"> </span><span class="err">are</span><span class="w"> </span><span class="err">derived</span><span class="w"> </span><span class="err">from</span><span class="w"> </span><span class="err">`background`</span><span class="w"> </span><span class="err">(slightly</span><span class="w"> </span><span class="err">darker</span><span class="w"> </span><span class="err">in</span><span class="w"> </span><span class="err">light</span><span class="w"> </span><span class="err">mode</span><span class="p">,</span><span class="w"> </span><span class="err">much</span><span class="w"> </span><span class="err">lighter</span><span class="w"> </span><span class="err">in</span><span class="w"> </span><span class="err">dark</span><span class="w"> </span><span class="err">mode).</span><span class="w">
@@ -5510,241 +5578,156 @@ Roadmap</a>
     </span><span class="nl">"background-disabled"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#F3F5F7"</span><span class="p">,</span><span class="w">
 
     </span><span class="err">//</span><span class="w"> </span><span class="err">Color</span><span class="w"> </span><span class="err">used</span><span class="w"> </span><span class="err">for</span><span class="w"> </span><span class="err">borders</span><span class="w">
-    </span><span class="err">border:</span><span class="w"> </span><span class="s2">"#EEECEC"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"border"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#EEECEC"</span><span class="p">,</span><span class="w">
 
     </span><span class="err">//</span><span class="w"> </span><span class="err">Color</span><span class="w"> </span><span class="err">used</span><span class="w"> </span><span class="err">for</span><span class="w"> </span><span class="err">filters</span><span class="w"> </span><span class="err">context</span><span class="w">
-    </span><span class="err">filter:</span><span class="w"> </span><span class="s2">"#7172AD"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"filter"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#7172AD"</span><span class="p">,</span><span class="w">
 
     </span><span class="err">//</span><span class="w"> </span><span class="err">Color</span><span class="w"> </span><span class="err">used</span><span class="w"> </span><span class="err">for</span><span class="w"> </span><span class="err">aggregations</span><span class="w"> </span><span class="err">and</span><span class="w"> </span><span class="err">breakouts</span><span class="w"> </span><span class="err">context</span><span class="w">
-    </span><span class="err">summarize:</span><span class="w"> </span><span class="s2">"#88BF4D"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"summarize"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#88BF4D"</span><span class="p">,</span><span class="w">
 
     </span><span class="err">//</span><span class="w"> </span><span class="err">Color</span><span class="w"> </span><span class="err">used</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">indicate</span><span class="w"> </span><span class="err">successful</span><span class="w"> </span><span class="err">actions</span><span class="w"> </span><span class="err">and</span><span class="w"> </span><span class="err">positive</span><span class="w"> </span><span class="err">values/trends</span><span class="w">
-    </span><span class="err">positive:</span><span class="w"> </span><span class="s2">"#BADC58"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"positive"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#BADC58"</span><span class="p">,</span><span class="w">
 
     </span><span class="err">//</span><span class="w"> </span><span class="err">Color</span><span class="w"> </span><span class="err">used</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">indicate</span><span class="w"> </span><span class="err">dangerous</span><span class="w"> </span><span class="err">actions</span><span class="w"> </span><span class="err">and</span><span class="w"> </span><span class="err">negative</span><span class="w"> </span><span class="err">values/trends</span><span class="w">
-    </span><span class="err">negative:</span><span class="w"> </span><span class="s2">"#FF7979"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"negative"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#FF7979"</span><span class="p">,</span><span class="w">
 
     </span><span class="err">/**</span><span class="w"> </span><span class="err">Color</span><span class="w"> </span><span class="err">used</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">outline</span><span class="w"> </span><span class="err">elements</span><span class="w"> </span><span class="err">in</span><span class="w"> </span><span class="err">focus</span><span class="w"> </span><span class="err">*/</span><span class="w">
-    </span><span class="err">focus:</span><span class="w"> </span><span class="s2">"#CAE1F7"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"focus"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#CAE1F7"</span><span class="p">,</span><span class="w">
 
     </span><span class="err">/**</span><span class="w"> </span><span class="err">Color</span><span class="w"> </span><span class="err">used</span><span class="w"> </span><span class="err">for</span><span class="w"> </span><span class="err">popover</span><span class="w"> </span><span class="err">shadows</span><span class="w"> </span><span class="err">*/</span><span class="w">
-    </span><span class="err">shadow:</span><span class="w"> </span><span class="s2">"rgba(0,0,0,0.08)"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"shadow"</span><span class="p">:</span><span class="w"> </span><span class="s2">"rgba(0,0,0,0.08)"</span><span class="p">,</span><span class="w">
 
     </span><span class="err">//</span><span class="w"> </span><span class="err">Overrides</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">chart</span><span class="w"> </span><span class="err">colors.</span><span class="w"> </span><span class="err">Supports</span><span class="w"> </span><span class="err">up</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="err">colors</span><span class="w">
     </span><span class="err">//</span><span class="w"> </span><span class="err">Limitation:</span><span class="w"> </span><span class="err">this</span><span class="w"> </span><span class="err">does</span><span class="w"> </span><span class="err">not</span><span class="w"> </span><span class="err">affect</span><span class="w"> </span><span class="err">charts</span><span class="w"> </span><span class="err">with</span><span class="w"> </span><span class="err">custom</span><span class="w"> </span><span class="err">series</span><span class="w"> </span><span class="err">color</span><span class="w">
-    </span><span class="err">charts:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="nl">"charts"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
       </span><span class="err">//</span><span class="w"> </span><span class="err">can</span><span class="w"> </span><span class="err">either</span><span class="w"> </span><span class="err">be</span><span class="w"> </span><span class="err">a</span><span class="w"> </span><span class="err">hex</span><span class="w"> </span><span class="err">code</span><span class="w">
       </span><span class="s2">"#9B59B6"</span><span class="p">,</span><span class="w">
 
       </span><span class="err">//</span><span class="w"> </span><span class="err">or</span><span class="w"> </span><span class="err">a</span><span class="w"> </span><span class="err">color</span><span class="w"> </span><span class="err">object.</span><span class="w"> </span><span class="err">tint</span><span class="w"> </span><span class="err">and</span><span class="w"> </span><span class="err">shade</span><span class="w"> </span><span class="err">represents</span><span class="w"> </span><span class="err">lighter</span><span class="w"> </span><span class="err">and</span><span class="w"> </span><span class="err">darker</span><span class="w"> </span><span class="err">variations</span><span class="w">
       </span><span class="err">//</span><span class="w"> </span><span class="err">only</span><span class="w"> </span><span class="err">base</span><span class="w"> </span><span class="err">color</span><span class="w"> </span><span class="err">is</span><span class="w"> </span><span class="err">required</span><span class="p">,</span><span class="w"> </span><span class="err">while</span><span class="w"> </span><span class="err">tint</span><span class="w"> </span><span class="err">and</span><span class="w"> </span><span class="err">shade</span><span class="w"> </span><span class="err">are</span><span class="w"> </span><span class="err">optional</span><span class="w">
-      </span><span class="p">{</span><span class="w"> </span><span class="err">base:</span><span class="w"> </span><span class="s2">"#E74C3C"</span><span class="p">,</span><span class="w"> </span><span class="err">tint:</span><span class="w"> </span><span class="s2">"#EE6B56"</span><span class="p">,</span><span class="w"> </span><span class="err">shade:</span><span class="w"> </span><span class="s2">"#CB4436"</span><span class="w"> </span><span class="p">},</span><span class="w">
-    </span><span class="p">],</span><span class="w">
+      </span><span class="p">{</span><span class="w"> </span><span class="nl">"base"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#E74C3C"</span><span class="p">,</span><span class="w"> </span><span class="nl">"tint"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#EE6B56"</span><span class="p">,</span><span class="w"> </span><span class="nl">"shade"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#CB4436"</span><span class="w"> </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
   </span><span class="p">},</span><span class="w">
 
-  </span><span class="err">components:</span><span class="w"> </span><span class="p">{</span><span class="w">
+  </span><span class="nl">"components"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="err">//</span><span class="w"> </span><span class="err">Dashboard</span><span class="w">
-    </span><span class="err">dashboard:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"dashboard"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
       </span><span class="err">//</span><span class="w"> </span><span class="err">Background</span><span class="w"> </span><span class="err">color</span><span class="w"> </span><span class="err">for</span><span class="w"> </span><span class="err">all</span><span class="w"> </span><span class="err">dashboards</span><span class="w">
-      </span><span class="err">backgroundColor:</span><span class="w"> </span><span class="s2">"#2F3640"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"backgroundColor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#2F3640"</span><span class="p">,</span><span class="w">
 
       </span><span class="err">//</span><span class="w"> </span><span class="err">Border</span><span class="w"> </span><span class="err">color</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">dashboard</span><span class="w"> </span><span class="err">grid</span><span class="p">,</span><span class="w"> </span><span class="err">shown</span><span class="w"> </span><span class="err">only</span><span class="w"> </span><span class="err">when</span><span class="w"> </span><span class="err">editing</span><span class="w"> </span><span class="err">dashboards.</span><span class="w">
       </span><span class="err">//</span><span class="w"> </span><span class="err">Defaults</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">`colors.border`</span><span class="w">
-      </span><span class="err">gridBorderColor:</span><span class="w"> </span><span class="s2">"#EEECEC"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"gridBorderColor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#EEECEC"</span><span class="p">,</span><span class="w">
 
-      </span><span class="err">card:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"card"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="err">//</span><span class="w"> </span><span class="err">Background</span><span class="w"> </span><span class="err">color</span><span class="w"> </span><span class="err">for</span><span class="w"> </span><span class="err">all</span><span class="w"> </span><span class="err">dashboard</span><span class="w"> </span><span class="err">cards</span><span class="w">
-        </span><span class="err">backgroundColor:</span><span class="w"> </span><span class="s2">"#2D2D30"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"backgroundColor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#2D2D30"</span><span class="p">,</span><span class="w">
 
         </span><span class="err">//</span><span class="w"> </span><span class="err">Apply</span><span class="w"> </span><span class="err">a</span><span class="w"> </span><span class="err">border</span><span class="w"> </span><span class="err">color</span><span class="w"> </span><span class="err">instead</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">shadow</span><span class="w"> </span><span class="err">for</span><span class="w"> </span><span class="err">dashboard</span><span class="w"> </span><span class="err">cards.</span><span class="w">
         </span><span class="err">//</span><span class="w"> </span><span class="err">Unset</span><span class="w"> </span><span class="err">by</span><span class="w"> </span><span class="err">default.</span><span class="w">
-        </span><span class="err">border:</span><span class="w"> </span><span class="s2">"1px solid #EEECEC"</span><span class="p">,</span><span class="w">
-      </span><span class="p">},</span><span class="w">
+        </span><span class="nl">"border"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1px solid #EEECEC"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
     </span><span class="p">},</span><span class="w">
 
     </span><span class="err">//</span><span class="w"> </span><span class="err">Question</span><span class="w">
-    </span><span class="err">question:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"question"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
       </span><span class="err">//</span><span class="w"> </span><span class="err">Background</span><span class="w"> </span><span class="err">color</span><span class="w"> </span><span class="err">for</span><span class="w"> </span><span class="err">all</span><span class="w"> </span><span class="err">questions</span><span class="w">
-      </span><span class="err">backgroundColor:</span><span class="w"> </span><span class="s2">"#2E353B"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"backgroundColor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#2E353B"</span><span class="p">,</span><span class="w">
 
       </span><span class="err">//</span><span class="w"> </span><span class="err">Toolbar</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">default</span><span class="w"> </span><span class="err">interactive</span><span class="w"> </span><span class="err">question</span><span class="w"> </span><span class="err">layout</span><span class="w">
-      </span><span class="err">toolbar:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="err">backgroundColor:</span><span class="w"> </span><span class="s2">"#F3F5F7"</span><span class="p">,</span><span class="w">
-      </span><span class="p">},</span><span class="w">
+      </span><span class="nl">"toolbar"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"backgroundColor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#F3F5F7"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
     </span><span class="p">},</span><span class="w">
 
     </span><span class="err">//</span><span class="w"> </span><span class="err">Tooltips</span><span class="w">
-    </span><span class="err">tooltip:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"tooltip"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
       </span><span class="err">//</span><span class="w"> </span><span class="err">Tooltip</span><span class="w"> </span><span class="err">text</span><span class="w"> </span><span class="err">color.</span><span class="w">
-      </span><span class="err">textColor:</span><span class="w"> </span><span class="s2">"#FFFFFF"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"textColor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#FFFFFF"</span><span class="p">,</span><span class="w">
 
       </span><span class="err">//</span><span class="w"> </span><span class="err">Secondary</span><span class="w"> </span><span class="err">text</span><span class="w"> </span><span class="err">color</span><span class="w"> </span><span class="err">shown</span><span class="w"> </span><span class="err">in</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">tooltip</span><span class="p">,</span><span class="w"> </span><span class="err">e.g.</span><span class="w"> </span><span class="err">for</span><span class="w"> </span><span class="err">tooltip</span><span class="w"> </span><span class="err">headers</span><span class="w"> </span><span class="err">and</span><span class="w"> </span><span class="err">percentage</span><span class="w"> </span><span class="err">changes.</span><span class="w">
-      </span><span class="err">secondaryTextColor:</span><span class="w"> </span><span class="s2">"#949AAB"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"secondaryTextColor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#949AAB"</span><span class="p">,</span><span class="w">
 
       </span><span class="err">//</span><span class="w"> </span><span class="err">Tooltip</span><span class="w"> </span><span class="err">background</span><span class="w"> </span><span class="err">color.</span><span class="w">
-      </span><span class="err">backgroundColor:</span><span class="w"> </span><span class="s2">"#2E353B"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"backgroundColor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#2E353B"</span><span class="p">,</span><span class="w">
 
       </span><span class="err">//</span><span class="w"> </span><span class="err">Tooltip</span><span class="w"> </span><span class="err">background</span><span class="w"> </span><span class="err">color</span><span class="w"> </span><span class="err">for</span><span class="w"> </span><span class="err">focused</span><span class="w"> </span><span class="err">rows.</span><span class="w">
-      </span><span class="err">focusedBackgroundColor:</span><span class="w"> </span><span class="s2">"#0A0E10"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"focusedBackgroundColor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#0A0E10"</span><span class="w">
     </span><span class="p">},</span><span class="w">
 
     </span><span class="err">//</span><span class="w"> </span><span class="err">Data</span><span class="w"> </span><span class="err">table</span><span class="w">
-    </span><span class="err">table:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="err">cell:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"table"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"cell"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="err">//</span><span class="w"> </span><span class="err">Text</span><span class="w"> </span><span class="err">color</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">cells</span><span class="p">,</span><span class="w"> </span><span class="err">defaults</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">`text-primary`</span><span class="w">
-        </span><span class="err">textColor:</span><span class="w"> </span><span class="s2">"#4C5773"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"textColor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#4C5773"</span><span class="p">,</span><span class="w">
 
         </span><span class="err">//</span><span class="w"> </span><span class="err">Default</span><span class="w"> </span><span class="err">background</span><span class="w"> </span><span class="err">color</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">cells</span><span class="p">,</span><span class="w"> </span><span class="err">defaults</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">`background`</span><span class="w">
-        </span><span class="err">backgroundColor:</span><span class="w"> </span><span class="s2">"#FFFFFF"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"backgroundColor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#FFFFFF"</span><span class="p">,</span><span class="w">
 
         </span><span class="err">//</span><span class="w"> </span><span class="err">Font</span><span class="w"> </span><span class="err">size</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">cell</span><span class="w"> </span><span class="err">values</span><span class="p">,</span><span class="w"> </span><span class="err">defaults</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">~</span><span class="mf">12.5</span><span class="err">px</span><span class="w">
-        </span><span class="err">fontSize:</span><span class="w"> </span><span class="s2">"12.5px"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"fontSize"</span><span class="p">:</span><span class="w"> </span><span class="s2">"12.5px"</span><span class="w">
       </span><span class="p">},</span><span class="w">
 
-      </span><span class="err">idColumn:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"idColumn"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="err">//</span><span class="w"> </span><span class="err">Text</span><span class="w"> </span><span class="err">color</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">ID</span><span class="w"> </span><span class="err">column</span><span class="p">,</span><span class="w"> </span><span class="err">defaults</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">`brand`</span><span class="w">
-        </span><span class="err">textColor:</span><span class="w"> </span><span class="s2">"#9B5966"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"textColor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#9B5966"</span><span class="p">,</span><span class="w">
 
         </span><span class="err">//</span><span class="w"> </span><span class="err">Background</span><span class="w"> </span><span class="err">color</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">ID</span><span class="w"> </span><span class="err">column</span><span class="p">,</span><span class="w"> </span><span class="err">defaults</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">a</span><span class="w"> </span><span class="err">lighter</span><span class="w"> </span><span class="err">shade</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">`brand`</span><span class="w">
-        </span><span class="err">backgroundColor:</span><span class="w"> </span><span class="s2">"#F5E9EB"</span><span class="p">,</span><span class="w">
-      </span><span class="p">},</span><span class="w">
+        </span><span class="nl">"backgroundColor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#F5E9EB"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
     </span><span class="p">},</span><span class="w">
 
     </span><span class="err">//</span><span class="w"> </span><span class="err">Number</span><span class="w"> </span><span class="err">chart</span><span class="w">
-    </span><span class="err">number:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"number"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
       </span><span class="err">//</span><span class="w"> </span><span class="err">Value</span><span class="w"> </span><span class="err">displayed</span><span class="w"> </span><span class="err">on</span><span class="w"> </span><span class="err">number</span><span class="w"> </span><span class="err">charts.</span><span class="w">
       </span><span class="err">//</span><span class="w"> </span><span class="err">This</span><span class="w"> </span><span class="err">also</span><span class="w"> </span><span class="err">applies</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">primary</span><span class="w"> </span><span class="err">value</span><span class="w"> </span><span class="err">in</span><span class="w"> </span><span class="err">trend</span><span class="w"> </span><span class="err">charts.</span><span class="w">
-      </span><span class="err">value:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="err">fontSize:</span><span class="w"> </span><span class="s2">"24px"</span><span class="p">,</span><span class="w">
-        </span><span class="err">lineHeight:</span><span class="w"> </span><span class="s2">"21px"</span><span class="p">,</span><span class="w">
-      </span><span class="p">},</span><span class="w">
+      </span><span class="nl">"value"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"fontSize"</span><span class="p">:</span><span class="w"> </span><span class="s2">"24px"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"lineHeight"</span><span class="p">:</span><span class="w"> </span><span class="s2">"21px"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
     </span><span class="p">},</span><span class="w">
 
     </span><span class="err">//</span><span class="w"> </span><span class="err">Cartesian</span><span class="w"> </span><span class="err">chart</span><span class="w">
-    </span><span class="err">cartesian:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"cartesian"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
       </span><span class="err">//</span><span class="w"> </span><span class="err">Padding</span><span class="w"> </span><span class="err">around</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">cartesian</span><span class="w"> </span><span class="err">charts.</span><span class="w">
       </span><span class="err">//</span><span class="w"> </span><span class="err">Uses</span><span class="w"> </span><span class="err">CSS's</span><span class="w"> </span><span class="err">`padding`</span><span class="w"> </span><span class="err">property</span><span class="w"> </span><span class="err">format.</span><span class="w">
-      </span><span class="err">padding:</span><span class="w"> </span><span class="s2">"4px 8px"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"padding"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4px 8px"</span><span class="w">
     </span><span class="p">},</span><span class="w">
 
     </span><span class="err">//</span><span class="w"> </span><span class="err">Pivot</span><span class="w"> </span><span class="err">table</span><span class="w">
-    </span><span class="err">pivotTable:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="err">cell:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"pivotTable"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"cell"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="err">//</span><span class="w"> </span><span class="err">Font</span><span class="w"> </span><span class="err">size</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">cell</span><span class="w"> </span><span class="err">values</span><span class="p">,</span><span class="w"> </span><span class="err">defaults</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">~</span><span class="mi">12</span><span class="err">px</span><span class="w">
-        </span><span class="err">fontSize:</span><span class="w"> </span><span class="s2">"12px"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"fontSize"</span><span class="p">:</span><span class="w"> </span><span class="s2">"12px"</span><span class="w">
       </span><span class="p">},</span><span class="w">
 
       </span><span class="err">//</span><span class="w"> </span><span class="err">Pivot</span><span class="w"> </span><span class="err">row</span><span class="w"> </span><span class="err">toggle</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">expand</span><span class="w"> </span><span class="err">or</span><span class="w"> </span><span class="err">collapse</span><span class="w"> </span><span class="err">row</span><span class="w">
-      </span><span class="err">rowToggle:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="err">textColor:</span><span class="w"> </span><span class="s2">"#FFFFFF"</span><span class="p">,</span><span class="w">
-        </span><span class="err">backgroundColor:</span><span class="w"> </span><span class="s2">"#95A5A6"</span><span class="p">,</span><span class="w">
-      </span><span class="p">},</span><span class="w">
+      </span><span class="nl">"rowToggle"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"textColor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#FFFFFF"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"backgroundColor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#95A5A6"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
     </span><span class="p">},</span><span class="w">
 
-    </span><span class="err">collectionBrowser:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="err">breadcrumbs:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="err">expandButton:</span><span class="w"> </span><span class="p">{</span><span class="w">
-          </span><span class="err">textColor:</span><span class="w"> </span><span class="s2">"#8118F4"</span><span class="p">,</span><span class="w">
-          </span><span class="err">backgroundColor:</span><span class="w"> </span><span class="s2">"#767D7C"</span><span class="p">,</span><span class="w">
-          </span><span class="err">hoverTextColor:</span><span class="w"> </span><span class="s2">"#CE8C8C"</span><span class="p">,</span><span class="w">
-          </span><span class="err">hoverBackgroundColor:</span><span class="w"> </span><span class="s2">"#69264B"</span><span class="p">,</span><span class="w">
-        </span><span class="p">},</span><span class="w">
-      </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"collectionBrowser"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"breadcrumbs"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"expandButton"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"textColor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#8118F4"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"backgroundColor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#767D7C"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"hoverTextColor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#CE8C8C"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"hoverBackgroundColor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#69264B"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">}</span><span class="w">
     </span><span class="p">},</span><span class="w">
 
     </span><span class="err">//</span><span class="w"> </span><span class="err">Popover</span><span class="w"> </span><span class="err">are</span><span class="w"> </span><span class="err">used</span><span class="w"> </span><span class="err">in</span><span class="w"> </span><span class="err">components</span><span class="w"> </span><span class="err">such</span><span class="w"> </span><span class="err">as</span><span class="w"> </span><span class="err">click</span><span class="w"> </span><span class="err">actions</span><span class="w"> </span><span class="err">in</span><span class="w"> </span><span class="err">interactive</span><span class="w"> </span><span class="err">questions.</span><span class="w">
-    </span><span class="err">popover:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"popover"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
       </span><span class="err">//</span><span class="w"> </span><span class="err">z-index</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">popover.</span><span class="w"> </span><span class="err">Useful</span><span class="w"> </span><span class="err">for</span><span class="w"> </span><span class="err">embedding</span><span class="w"> </span><span class="err">components</span><span class="w"> </span><span class="err">in</span><span class="w"> </span><span class="err">a</span><span class="w"> </span><span class="err">modal.</span><span class="w"> </span><span class="err">defaults</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="mi">4</span><span class="err">.</span><span class="w">
-      </span><span class="err">zIndex:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-  </span><span class="p">},</span><span class="w">
+      </span><span class="nl">"zIndex"</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div></div>
-
-<h2 id="customizing-the-appearance-of-an-sso-embed">Customizing the appearance of an SSO embed</h2>
-
-<p><img src="./images/embed-with-sso.png" alt="Behavior and appearance with sso"></p>
-
-<p>Add a <code class="language-plaintext highlighter-rouge">theme</code> object to your config object:</p>
-
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;script </span><span class="na">defer</span> <span class="na">src=</span><span class="s">"http://localhost:3000/app/embed.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
-<span class="nt">&lt;script&gt;</span>
-<span class="kd">function</span> <span class="nf">defineMetabaseConfig</span><span class="p">(</span><span class="nx">config</span><span class="p">)</span> <span class="p">{</span>
-  <span class="nb">window</span><span class="p">.</span><span class="nx">metabaseConfig</span> <span class="o">=</span> <span class="nx">config</span><span class="p">;</span>
-<span class="p">}</span>
-<span class="nt">&lt;/script&gt;</span>
-
-<span class="nt">&lt;script&gt;</span>
-  <span class="nf">defineMetabaseConfig</span><span class="p">({</span>
-    <span class="dl">"</span><span class="s2">theme</span><span class="dl">"</span><span class="p">:</span> <span class="p">{</span>
-      <span class="dl">"</span><span class="s2">colors</span><span class="dl">"</span><span class="p">:</span> <span class="p">{</span>
-        <span class="dl">"</span><span class="s2">background</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">#FFFFFF</span><span class="dl">"</span><span class="p">,</span>
-        <span class="dl">"</span><span class="s2">text-primary</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">hsla(204, 66%, 8%, 0.84)</span><span class="dl">"</span><span class="p">,</span>
-        <span class="dl">"</span><span class="s2">brand</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">hsla(208, 72%, 60%, 1.00)</span><span class="dl">"</span><span class="p">,</span>
-        <span class="dl">"</span><span class="s2">background-hover</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">rgb(236, 236, 236)</span><span class="dl">"</span><span class="p">,</span>
-        <span class="dl">"</span><span class="s2">background-disabled</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">rgb(231, 231, 231)</span><span class="dl">"</span><span class="p">,</span>
-        <span class="dl">"</span><span class="s2">background-secondary</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">rgb(233, 233, 233)</span><span class="dl">"</span><span class="p">,</span>
-        <span class="dl">"</span><span class="s2">background-light</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">rgb(233, 233, 233)</span><span class="dl">"</span><span class="p">,</span>
-        <span class="dl">"</span><span class="s2">text-secondary</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">rgba(9, 30, 44, 0.84)</span><span class="dl">"</span><span class="p">,</span>
-        <span class="dl">"</span><span class="s2">text-tertiary</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">rgba(11, 37, 54, 0.84)</span><span class="dl">"</span><span class="p">,</span>
-        <span class="dl">"</span><span class="s2">brand-hover</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">rgb(185, 216, 244)</span><span class="dl">"</span><span class="p">,</span>
-        <span class="dl">"</span><span class="s2">brand-hover-light</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">rgb(238, 245, 252)</span><span class="dl">"</span>
-      <span class="p">}</span>
-    <span class="p">},</span>
-    <span class="dl">"</span><span class="s2">instanceUrl</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">http://localhost:3000</span><span class="dl">"</span>
-  <span class="p">});</span>
-<span class="nt">&lt;/script&gt;</span>
-
-<span class="nt">&lt;metabase-dashboard</span> <span class="na">dashboard-id=</span><span class="s">"10"</span>
-  <span class="na">with-title=</span><span class="s">"true"</span>
-  <span class="na">with-downloads=</span><span class="s">"false"</span>
-  <span class="na">with-subscriptions=</span><span class="s">"false"</span>
-  <span class="na">hidden-parameters=</span><span class="s">'["category"]'</span>
-  <span class="na">drills=</span><span class="s">"true"</span><span class="nt">&gt;</span>
-<span class="nt">&lt;/metabase-dashboard&gt;</span>
-</code></pre></div></div>
-
-<h2 id="customizing-the-appearance-of-a-guest-embed">Customizing the appearance of a guest embed</h2>
-
-<p><img src="./images/behavior-and-appearance.png" alt="Behavior and appearance"></p>
-
-<p>Add a <code class="language-plaintext highlighter-rouge">theme</code> object to your config object:</p>
-
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;script </span><span class="na">defer</span> <span class="na">src=</span><span class="s">"http://localhost:3000/app/embed.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
-<span class="nt">&lt;script&gt;</span>
-<span class="kd">function</span> <span class="nf">defineMetabaseConfig</span><span class="p">(</span><span class="nx">config</span><span class="p">)</span> <span class="p">{</span>
-  <span class="nb">window</span><span class="p">.</span><span class="nx">metabaseConfig</span> <span class="o">=</span> <span class="nx">config</span><span class="p">;</span>
-<span class="p">}</span>
-<span class="nt">&lt;/script&gt;</span>
-
-<span class="nt">&lt;script&gt;</span>
-  <span class="nf">defineMetabaseConfig</span><span class="p">({</span>
-    <span class="dl">"</span><span class="s2">theme</span><span class="dl">"</span><span class="p">:</span> <span class="p">{</span>
-      <span class="dl">"</span><span class="s2">colors</span><span class="dl">"</span><span class="p">:</span> <span class="p">{</span>
-        <span class="dl">"</span><span class="s2">background</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">#FFFFFF</span><span class="dl">"</span><span class="p">,</span>
-        <span class="dl">"</span><span class="s2">text-primary</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">hsla(204, 66%, 8%, 0.84)</span><span class="dl">"</span><span class="p">,</span>
-        <span class="dl">"</span><span class="s2">brand</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">hsla(208, 72%, 60%, 1.00)</span><span class="dl">"</span><span class="p">,</span>
-        <span class="dl">"</span><span class="s2">background-hover</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">rgb(236, 236, 236)</span><span class="dl">"</span><span class="p">,</span>
-        <span class="dl">"</span><span class="s2">background-disabled</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">rgb(231, 231, 231)</span><span class="dl">"</span><span class="p">,</span>
-        <span class="dl">"</span><span class="s2">background-secondary</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">rgb(233, 233, 233)</span><span class="dl">"</span><span class="p">,</span>
-        <span class="dl">"</span><span class="s2">background-light</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">rgb(233, 233, 233)</span><span class="dl">"</span><span class="p">,</span>
-        <span class="dl">"</span><span class="s2">text-secondary</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">rgba(9, 30, 44, 0.84)</span><span class="dl">"</span><span class="p">,</span>
-        <span class="dl">"</span><span class="s2">text-tertiary</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">rgba(11, 37, 54, 0.84)</span><span class="dl">"</span><span class="p">,</span>
-        <span class="dl">"</span><span class="s2">brand-hover</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">rgb(185, 216, 244)</span><span class="dl">"</span><span class="p">,</span>
-        <span class="dl">"</span><span class="s2">brand-hover-light</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">rgb(238, 245, 252)</span><span class="dl">"</span>
-      <span class="p">}</span>
-    <span class="p">},</span>
-    <span class="dl">"</span><span class="s2">isGuest</span><span class="dl">"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
-    <span class="dl">"</span><span class="s2">instanceUrl</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">http://localhost:3000</span><span class="dl">"</span>
-  <span class="p">});</span>
-<span class="nt">&lt;/script&gt;</span>
-
-<span class="nt">&lt;metabase-dashboard</span>
-  <span class="na">token=</span><span class="s">&lt;TODO:</span> <span class="na">Fetch</span> <span class="na">the</span> <span class="na">JWT</span> <span class="na">token</span> <span class="na">from</span> <span class="na">your</span> <span class="na">backend</span> <span class="na">and</span> <span class="na">programmatically</span> <span class="na">pass</span> <span class="na">it</span> <span class="na">to</span> <span class="na">this</span> <span class="err">'</span><span class="na">metabase-dashboard</span><span class="err">'</span> <span class="na">component</span><span class="nt">&gt;</span>
-  with-title="true"
-  with-downloads="false"&gt;
-<span class="nt">&lt;/metabase-dashboard&gt;</span>
-</code></pre></div></div>
 
 <h2 id="example-app-with-theming">Example app with theming</h2>
 
