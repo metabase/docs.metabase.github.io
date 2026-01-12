@@ -5412,6 +5412,13 @@ Roadmap</a>
     <p>All tests in <code class="language-plaintext highlighter-rouge">metabase.query-processor-test.*</code> namespaces have been moved to <code class="language-plaintext highlighter-rouge">metabase.query-processor.*</code> (This is
 only relevant if you run individual test namespaces as part of your development workflow).</p>
   </li>
+  <li>
+    <p>Added <code class="language-plaintext highlighter-rouge">metabase.driver/create-index!</code>, <code class="language-plaintext highlighter-rouge">metabase.driver/drop-index!</code> multimethods.
+For JDBC databases, a default implementation is provided - and <code class="language-plaintext highlighter-rouge">metabase.driver.sql-jdbc/create-index-sql</code>,
+<code class="language-plaintext highlighter-rouge">metabase.driver.sql-jdbc/drop-index-sql</code> can be used to specialize the DDL.
+Creating indexes can accelerate the <code class="language-plaintext highlighter-rouge">MAX</code> queries that incremental transforms use to determine watermark position.
+These methods run only when the <code class="language-plaintext highlighter-rouge">:transforms/index-ddl</code> feature is enabled, making them opt-in.</p>
+  </li>
 </ul>
 
 <h2 id="metabase-0577">Metabase 0.57.7</h2>
