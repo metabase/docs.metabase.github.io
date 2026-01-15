@@ -229,9 +229,3 @@ Learn more about [SameSite cookies](https://developer.mozilla.org/en-US/docs/Web
 {% include plans-blockquote.html feature="Authenticated modular embeds" convert_pro_link_to_embbedding=true is_plural=true %}
 
 For production use, you'll need to set up SSO authentication. See [Modular embedding - authentication](./authentication) for details on setting up JWT or SAML authentication.
-
-## Example app with SSO embed and theming
-
-{% include plans-blockquote.html feature="Authenticated modular embeds" convert_pro_link_to_embbedding=true is_plural=true %}
-
-Check out our [sample app](https://github.com/metabase/modular-embedding-sample-app). Bring your Metabase, embed a dashboard, and play around with changing colors.
