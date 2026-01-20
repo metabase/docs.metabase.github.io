@@ -264,7 +264,7 @@ Provides a button that contains a dropdown that shows the `DownloadWidget`.
 
 ```ts
 Editor: (props: InteractiveQuestionEditorProps) =>
-  | undefined
+  | null
   | Element;
 ```
 
@@ -289,7 +289,7 @@ Includes filtering, aggregation, custom expressions, and joins.
 
 <!-- [<snippet returns>] -->
 
-\| `undefined`
+\| `null`
 \| [`Element`](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/0b728411cd1dfb4bd26992bb35a73cf8edaa22e7/types/react/jsx-runtime.d.ts#L6)
 
 ---
@@ -414,7 +414,7 @@ A dropdown button for the Filter component.
 
 ```ts
 Notebook: (props: InteractiveQuestionEditorProps) =>
-  | undefined
+  | null
   | Element;
 ```
 
@@ -439,7 +439,7 @@ Includes filtering, aggregation, custom expressions, and joins.
 
 <!-- [<snippet returns>] -->
 
-\| `undefined`
+\| `null`
 \| [`Element`](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/0b728411cd1dfb4bd26992bb35a73cf8edaa22e7/types/react/jsx-runtime.d.ts#L6)
 
 <!-- [<endsnippet returns>] -->

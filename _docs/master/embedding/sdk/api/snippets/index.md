@@ -142,7 +142,7 @@ layout: new-docs
 | [SdkErrorComponentProps](./api/SdkErrorComponentProps)                     | -                                                                              |
 | [SdkEventHandlersConfig](./api/SdkEventHandlersConfig)                     | -                                                                              |
 | [SdkQuestionEntityPublicProps](./api/SdkQuestionEntityPublicProps)         | -                                                                              |
-| [SdkQuestionId](./api/SdkQuestionId)                                       | -                                                                              |
+| [SdkQuestionId](./api/SdkQuestionId)                                       | Represents the identifier for a question in the Metabase SDK.                  |
 | [SdkQuestionTitleProps](./api/SdkQuestionTitleProps)                       | -                                                                              |
 | [SdkUserId](./api/SdkUserId)                                               | -                                                                              |
 | [SqlParameterValues](./api/SqlParameterValues)                             | -                                                                              |
