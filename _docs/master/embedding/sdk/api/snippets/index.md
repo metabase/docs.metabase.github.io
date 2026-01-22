@@ -95,6 +95,15 @@ layout: new-docs
 | [StaticQuestion](./api/StaticQuestion)           | A component that renders a static question. |
 | [StaticQuestionProps](./api/StaticQuestionProps) | -                                           |
 
+## Theming
+
+| Name                                                          | Description                                                     |
+| :------------------------------------------------------------ | :-------------------------------------------------------------- |
+| [MetabaseEmbeddingThemeV2](./api/MetabaseEmbeddingThemeV2) | Version 2 theme configuration for embedded Metabase components. |
+| [ChartColorV2](./api/ChartColorV2)                         | Chart color definition for V2 themes.                           |
+| [MetabaseColorKey](./api/MetabaseColorKey)                 | All color keys available in Metabase themes.                    |
+| [MetabaseEmbeddingTheme](./api/MetabaseEmbeddingTheme)     | Theme configuration for embedded Metabase components.           |
+
 ## other
 
 | Name                                                                          | Description                                                                    |
@@ -124,6 +133,7 @@ layout: new-docs
 | [MetabaseDashboard](./api/MetabaseDashboard)                               | The Dashboard entity                                                           |
 | [MetabaseDashboardPluginsConfig](./api/MetabaseDashboardPluginsConfig)     | -                                                                              |
 | [MetabaseDataPointObject](./api/MetabaseDataPointObject)                   | -                                                                              |
+| [MetabaseEmbeddingColorKeyV2](./api/MetabaseEmbeddingColorKeyV2)           | Color keys available for theming in modular embedding.                         |
 | [MetabaseFetchRequestTokenFn](./api/MetabaseFetchRequestTokenFn)           | -                                                                              |
 | [MetabaseFontFamily](./api/MetabaseFontFamily)                             | -                                                                              |
 | [MetabaseGlobalPluginsConfig](./api/MetabaseGlobalPluginsConfig)           | -                                                                              |
@@ -132,6 +142,7 @@ layout: new-docs
 | [MetabaseUser](./api/MetabaseUser)                                         | The User entity                                                                |
 | [ModularEmbeddingEntityType](./api/ModularEmbeddingEntityType)             | -                                                                              |
 | [ParameterValues](./api/ParameterValues)                                   | -                                                                              |
+| [ProtectedColorKey](./api/ProtectedColorKey)                               | Color keys that are protected and should not be exposed to embedding.          |
 | [SdkCollectionId](./api/SdkCollectionId)                                   | -                                                                              |
 | [SdkDashboardEntityPublicProps](./api/SdkDashboardEntityPublicProps)       | -                                                                              |
 | [SdkDashboardId](./api/SdkDashboardId)                                     | -                                                                              |
