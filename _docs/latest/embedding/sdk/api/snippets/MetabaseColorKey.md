@@ -1,0 +1,117 @@
+---
+version: v0.58
+has_magic_breadcrumbs: true
+show_category_breadcrumb: true
+show_title_breadcrumb: true
+category: Embedding
+title: MetabaseColorKey
+source_url: >-
+  https://github.com/metabase/metabase/blob/master/docs/embedding/sdk/api/snippets/MetabaseColorKey.md
+layout: new-docs
+latest: true
+---
+
+```ts
+type MetabaseColorKey =
+  |
+  | "accent0"
+  | "accent0-light"
+  | "accent0-dark"
+  | "accent1"
+  | "accent1-light"
+  | "accent1-dark"
+  | "accent2"
+  | "accent2-light"
+  | "accent2-dark"
+  | "accent3"
+  | "accent3-light"
+  | "accent3-dark"
+  | "accent4"
+  | "accent4-light"
+  | "accent4-dark"
+  | "accent5"
+  | "accent5-light"
+  | "accent5-dark"
+  | "accent6"
+  | "accent6-light"
+  | "accent6-dark"
+  | "accent7"
+  | "accent7-light"
+  | "accent7-dark"
+  | "accent-gray"
+  | "accent-gray-light"
+  | "accent-gray-dark"
+  | ProtectedColorKey
+  | "background-brand"
+  | "background-disabled"
+  | "background-disabled-inverse"
+  | "background-error"
+  | "background-error-secondary"
+  | "background-hover"
+  | "background-hover-light"
+  | "background-info"
+  | "background-primary"
+  | "background-primary-inverse"
+  | "background-secondary"
+  | "background-secondary-inverse"
+  | "background-selected"
+  | "background-success"
+  | "background-tertiary"
+  | "background-tertiary-inverse"
+  | "background-warning"
+  | "border"
+  | "border-strong"
+  | "border-subtle"
+  | "brand"
+  | "brand-alpha-04"
+  | "brand-alpha-88"
+  | "brand-dark"
+  | "brand-darker"
+  | "brand-light"
+  | "brand-lighter"
+  | "bronze"
+  | "copper"
+  | "danger"
+  | "error"
+  | "filter"
+  | "focus"
+  | "gold"
+  | "icon-disabled"
+  | "icon-primary"
+  | "icon-secondary"
+  | "info"
+  | "overlay"
+  | "saturated-blue"
+  | "saturated-green"
+  | "saturated-purple"
+  | "saturated-red"
+  | "saturated-yellow"
+  | "shadow"
+  | "silver"
+  | "success"
+  | "success-secondary"
+  | "summarize"
+  | "switch-off"
+  | "syntax-parameters"
+  | "syntax-parameters-active"
+  | "text-brand"
+  | "text-hover"
+  | "text-primary"
+  | "text-primary-inverse"
+  | "text-secondary"
+  | "text-secondary-inverse"
+  | "text-secondary-opaque"
+  | "text-selected"
+  | "text-tertiary"
+  | "text-tertiary-inverse"
+  | "tooltip-background"
+  | "tooltip-background-focused"
+  | "tooltip-text"
+  | "tooltip-text-secondary"
+  | "warning"
+  | "white";
+```
+
+All color keys available in Metabase themes.
+
+Both the light and dark theme must define all of these colors.
