@@ -130,6 +130,8 @@ def generate_index_llms_txt(dest_dir, version, docs)
   lines << '# Metabase Documentation'
   lines << 'Metabase - The simplest, fastest way to get business intelligence and analytics to everyone in your company.'
   lines << ''
+  lines << get_version_detection_instructions
+  lines << ''
   lines << '## Table of Contents'
   lines << ''
 
@@ -187,6 +189,8 @@ def generate_llms_full_txt(source_dir, dest_dir, version, section, docs)
   lines << ''
   lines << "> Table of contents: #{base_url}/#{OUTPUT_FILE}"
   lines << ''
+  lines << get_version_detection_instructions
+  lines << ''
 
   # Add preamble for embedding section (v57+ only)
   if section == 'embedding' && above_version?(version, 57)
@@ -215,6 +219,31 @@ def above_version?(source_version, target_version)
 
   version_num = match[1].to_i
   version_num >= target_version
+end
+
+# Instructions for AI tools to detect the correct Metabase version.
+# This is placed at the very top of generated files so LLMs see it first.
+def get_version_detection_instructions
+  <<~INSTRUCTIONS.chomp
+    > **IMPORTANT: Detect Metabase Version First**
+    >
+    > Before using this documentation, you MUST query the Metabase instance to detect its version:
+    >
+    > ```bash
+    > curl <METABASE_INSTANCE_URL>/api/session/properties | jq .version
+    > ```
+    >
+    > This returns the version info (no authentication required):
+    > ```json
+    > { "date": "2025-01-10", "tag": "v1.55.19", "hash": "8e44dd8" }
+    > ```
+    >
+    > Use the major version number (e.g., `55` from `v1.55.x` or `v0.55.x`) to:
+    > 1. Install the correct SDK version: `@metabase/embedding-sdk-react@0.{VERSION}.x` (e.g., `@0.55.x` for Metabase 55)
+    > 2. Use version-specific docs: `https://metabase.com/docs/v0.{VERSION}/llms.txt` (e.g., `/docs/v0.55/llms.txt`)
+    >
+    > **Do NOT guess the SDK version or use a version from your training data. Always query the API first.**
+  INSTRUCTIONS
 end
 
 # LLMs are likely to pay attention to the very first lines.
