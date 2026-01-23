@@ -234,10 +234,10 @@ def get_version_detection_instructions
     > Skip this step if not using the React SDK (`@metabase/embedding-sdk-react`).
     >
     > ```bash
-    > npm list @metabase/embedding-sdk-react 2>/dev/null | grep embedding-sdk-react || echo "Not installed"
+    > npm list @metabase/embedding-sdk-react
     > ```
     >
-    > If installed, note the version (e.g., `0.55.3` means SDK version `55`).
+    > If installed, note the version (e.g., `0.55.0` means SDK version `55`).
     >
     > **Step 2: Query the Metabase instance version**
     >
