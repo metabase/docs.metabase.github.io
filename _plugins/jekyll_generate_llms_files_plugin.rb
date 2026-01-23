@@ -17,7 +17,35 @@ OUTPUT_FILE = 'llms.txt'
 # Add more sections to let AI agents understand Metabase better.
 LLMS_FULL_TO_GENERATE = ['embedding'].freeze
 
-# Paths to exclude from llms.txt generation
+# Paths to include in llms.txt generation (allowlist approach).
+# We focus on content relevant to coding with Metabase:
+# 1. Embedding integration guides (modular embedding & SDK)
+# 2. Embedding related setup and config (auth, SSO)
+#
+# Use prefix matching - a path matches if it starts with any of these.
+# For specific files, include the full path. For directories, include trailing slash.
+INCLUDED_PATHS = [
+  # All embedding docs (SDK, modular embedding, integration guides)
+  'embedding/',
+
+  # Auth/SSO configuration for embedding
+  'people-and-groups/api-keys.md',
+  'people-and-groups/authenticating-with-jwt.md',
+  'people-and-groups/authenticating-with-saml.md',
+  'people-and-groups/saml-auth0.md',
+  'people-and-groups/saml-azure.md',
+  'people-and-groups/saml-google.md',
+  'people-and-groups/saml-keycloak.md',
+  'people-and-groups/saml-okta.md',
+  'people-and-groups/google-sign-in.md',
+  'people-and-groups/ldap.md',
+
+  # Configuration reference
+  'configuring-metabase/environment-variables.md',
+  'configuring-metabase/config-file.md'
+].freeze
+
+# Paths to exclude from llms.txt generation (applied after allowlist)
 EXCLUDED_PATHS = ['embedding/sdk/api/snippets'].freeze
 
 Jekyll::Hooks.register :site, :post_write do |site|
@@ -76,10 +104,25 @@ def generate_index_llms_txt(dest_dir, version, docs)
   branch = version_to_branch(version)
   base_url = "https://raw.githubusercontent.com/#{REPO}/refs/heads/#{branch}"
 
-  # Filter out excluded paths
-  filtered_docs = sorted_docs.reject do |doc|
+  # Filter docs: must match allowlist and not match excludelist
+  filtered_docs = sorted_docs.select do |doc|
     relative_path = doc.relative_path.sub(%r{^_docs/[^/]+/}, '')
-    EXCLUDED_PATHS.any? { |excluded| relative_path.start_with?(excluded) }
+
+    # Must match at least one included path
+    included = INCLUDED_PATHS.any? do |pattern|
+      if pattern.end_with?('/')
+        # Directory pattern: check if path starts with it
+        relative_path.start_with?(pattern)
+      else
+        # File pattern: exact match
+        relative_path == pattern
+      end
+    end
+
+    # Must not match any excluded path
+    excluded = EXCLUDED_PATHS.any? { |pattern| relative_path.start_with?(pattern) }
+
+    included && !excluded
   end
 
   # Build table of contents
