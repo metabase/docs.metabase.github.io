@@ -87,6 +87,19 @@ Jekyll::Hooks.register :site, :post_write do |site|
   Jekyll.logger.info 'llms.txt files:', 'Generated all llms.txt and llms-{section}-full.txt files'
 end
 
+# Format version for display in generated files
+# Examples: "v0.58" -> "58", "master" -> "latest (master)", "latest" -> "latest"
+def format_version_for_display(version)
+  return 'latest (master)' if version == 'master'
+  return 'latest' if version == 'latest'
+
+  # Parse version like "v0.58" -> "58"
+  match = version.match(/^v0\.(\d+)$/)
+  return version unless match
+
+  match[1]
+end
+
 # Convert Jekyll version format to branch name for raw GitHub URLs
 # Examples: "v0.58" -> "release-x.58.x", "master" -> "master", "latest" -> "master"
 def version_to_branch(version)
@@ -128,7 +141,8 @@ def generate_index_llms_txt(dest_dir, version, docs)
   # Build table of contents
   lines = []
   lines << '# Metabase Documentation'
-  lines << 'Metabase - The simplest, fastest way to get business intelligence and analytics to everyone in your company.'
+  lines << ''
+  lines << "> **This documentation is for Metabase #{format_version_for_display(version)}.**"
   lines << ''
   lines << get_version_detection_instructions
   lines << ''
@@ -160,7 +174,9 @@ def generate_index_llms_txt(dest_dir, version, docs)
     next unless has_section
 
     capitalized = section.capitalize
-    lines << "- [#{capitalized} - Complete Reference](#{base_url}/llms-#{section}-full.txt)"
+    # Link to metabase.com where the file is actually hosted
+    docs_url = "https://metabase.com/docs/#{version}/llms-#{section}-full.txt"
+    lines << "- [#{capitalized} - Complete Reference](#{docs_url})"
   end
 
   # Write llms.txt file
@@ -179,15 +195,15 @@ def generate_llms_full_txt(source_dir, dest_dir, version, section, docs)
   # Sort by path for consistent ordering
   section_docs.sort_by!(&:relative_path)
 
-  branch = version_to_branch(version)
-  base_url = "https://raw.githubusercontent.com/#{REPO}/refs/heads/#{branch}"
-
   # Build content
   section_capitalized = section.capitalize
+  docs_base_url = "https://metabase.com/docs/#{version}"
   lines = []
   lines << "# Metabase #{section_capitalized} - Complete Reference for AI agents"
   lines << ''
-  lines << "> Table of contents: #{base_url}/#{OUTPUT_FILE}"
+  lines << "> **This documentation is for Metabase #{format_version_for_display(version)}.**"
+  lines << '>'
+  lines << "> Table of contents: #{docs_base_url}/#{OUTPUT_FILE}"
   lines << ''
   lines << get_version_detection_instructions
   lines << ''
