@@ -225,24 +225,39 @@ end
 # This is placed at the very top of generated files so LLMs see it first.
 def get_version_detection_instructions
   <<~INSTRUCTIONS.chomp
-    > **IMPORTANT: Detect Metabase Version First**
+    > **IMPORTANT: Verify SDK and Metabase Version Compatibility**
     >
-    > Before using this documentation, you MUST query the Metabase instance to detect its version:
+    > The SDK version MUST match the Metabase instance version. Mismatched versions cause errors.
+    >
+    > **Step 1: Check if SDK is already installed (React SDK / Modular Embedding only)**
+    >
+    > Skip this step if not using the React SDK (`@metabase/embedding-sdk-react`).
+    >
+    > ```bash
+    > npm list @metabase/embedding-sdk-react 2>/dev/null | grep embedding-sdk-react || echo "Not installed"
+    > ```
+    >
+    > If installed, note the version (e.g., `0.55.3` means SDK version `55`).
+    >
+    > **Step 2: Query the Metabase instance version**
     >
     > ```bash
     > curl <METABASE_INSTANCE_URL>/api/session/properties | jq .version
     > ```
     >
-    > This returns the version info (no authentication required):
+    > This returns (no authentication required):
     > ```json
     > { "date": "2025-01-10", "tag": "v1.55.19", "hash": "8e44dd8" }
     > ```
     >
-    > Use the major version number (e.g., `55` from `v1.55.x` or `v0.55.x`) to:
-    > 1. Install the correct SDK version: `@metabase/embedding-sdk-react@0.{VERSION}.x` (e.g., `@0.55.x` for Metabase 55)
-    > 2. Use version-specific docs: `https://metabase.com/docs/v0.{VERSION}/llms.txt` (e.g., `/docs/v0.55/llms.txt`)
+    > Extract the major version: `55` from `v1.55.x` or `v0.55.x`.
     >
-    > **Do NOT guess the SDK version or use a version from your training data. Always query the API first.**
+    > **Step 3: Ensure versions match (React SDK / Modular Embedding only)**
+    >
+    > - Install/update SDK: `npm install @metabase/embedding-sdk-react@{VERSION}-stable` (e.g., `@55-stable` for Metabase 55)
+    > - Use version-specific docs: `https://metabase.com/docs/v0.{VERSION}/llms.txt` (e.g., `/docs/v0.55/llms.txt`)
+    >
+    > **Do NOT guess versions or use versions from your training data. Always verify first.**
   INSTRUCTIONS
 end
 
