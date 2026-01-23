@@ -237,7 +237,7 @@ def get_version_detection_instructions
     > npm list @metabase/embedding-sdk-react
     > ```
     >
-    > If installed, note the version (e.g., `0.55.0` means SDK version `55`).
+    > If installed, note the version (e.g., `0.58.0` means this is for Metabase 58).
     >
     > **Step 2: Query the Metabase instance version**
     >
@@ -247,15 +247,15 @@ def get_version_detection_instructions
     >
     > This returns (no authentication required):
     > ```json
-    > { "date": "2025-01-10", "tag": "v1.55.19", "hash": "8e44dd8" }
+    > { "date": "2025-01-10", "tag": "v1.58.0", "hash": "8e44dd8" }
     > ```
     >
-    > Extract the major version: `55` from `v1.55.x` or `v0.55.x`.
+    > Extract the major version: `58` from `v1.58.x` or `v0.58.x`.
     >
     > **Step 3: Ensure versions match (React SDK / Modular Embedding only)**
     >
-    > - Install/update SDK: `npm install @metabase/embedding-sdk-react@{VERSION}-stable` (e.g., `@55-stable` for Metabase 55)
-    > - Use version-specific docs: `https://metabase.com/docs/v0.{VERSION}/llms.txt` (e.g., `/docs/v0.55/llms.txt`)
+    > - Install/update SDK: `npm install @metabase/embedding-sdk-react@{VERSION}-stable` (e.g., `@58-stable` for Metabase 58)
+    > - Use version-specific docs: `https://metabase.com/docs/v0.{VERSION}/llms.txt` (e.g., `/docs/v0.58/llms.txt`)
     >
     > **Do NOT guess versions or use versions from your training data. Always verify first.**
   INSTRUCTIONS
