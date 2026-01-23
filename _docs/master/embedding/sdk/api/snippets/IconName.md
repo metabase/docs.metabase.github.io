@@ -230,6 +230,7 @@ type IconName =
   | "ruler"
   | "schema"
   | "search"
+  | "search_check"
   | "section"
   | "segment"
   | "segment2"
