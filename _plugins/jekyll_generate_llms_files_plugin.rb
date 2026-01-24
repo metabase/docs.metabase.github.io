@@ -17,7 +17,8 @@ OUTPUT_FILE = 'llms.txt'
 # Add more sections to let AI agents understand Metabase better.
 LLMS_FULL_TO_GENERATE = ['embedding'].freeze
 
-# Paths to include in llms.txt generation (allowlist approach).
+# Paths to include in llms.txt generation.
+# 
 # We focus on content relevant to coding with Metabase:
 # 1. Embedding integration guides (modular embedding & SDK)
 # 2. Embedding related setup and config (auth, SSO)
@@ -52,6 +53,9 @@ Jekyll::Hooks.register :site, :post_write do |site|
   source_dir = site.source
   dest_dir = site.dest
 
+  # latest branch
+  latest_branch = site.config['release_branch'] || 'master'
+
   # Get the docs collection
   docs_collection = site.collections['docs']
   next unless docs_collection
@@ -74,13 +78,27 @@ Jekyll::Hooks.register :site, :post_write do |site|
 
   # Generate llms.txt for each version
   docs_by_version.each do |version, docs|
-    generate_index_llms_txt(dest_dir, version, docs)
+    generate_index_llms_txt(dest_dir, version, docs, latest_branch)
   end
 
   # Generate llms-{section}-full.txt for specified sections
   LLMS_FULL_TO_GENERATE.each do |section|
     docs_by_version.each do |version, docs|
       generate_llms_full_txt(source_dir, dest_dir, version, section, docs)
+    end
+  end
+
+  # Copy "latest" version files to root /docs/ for convenience URLs
+  latest_version = 'latest'
+  if docs_by_version.key?(latest_version)
+    latest_llms_txt = File.join(dest_dir, 'docs', latest_version, OUTPUT_FILE)
+    root_llms_txt = File.join(dest_dir, 'docs', OUTPUT_FILE)
+    FileUtils.cp(latest_llms_txt, root_llms_txt) if File.exist?(latest_llms_txt)
+
+    LLMS_FULL_TO_GENERATE.each do |section|
+      latest_full = File.join(dest_dir, 'docs', latest_version, "llms-#{section}-full.txt")
+      root_full = File.join(dest_dir, 'docs', "llms-#{section}-full.txt")
+      FileUtils.cp(latest_full, root_full) if File.exist?(latest_full)
     end
   end
 
@@ -101,9 +119,10 @@ def format_version_for_display(version)
 end
 
 # Convert Jekyll version format to branch name for raw GitHub URLs
-# Examples: "v0.58" -> "release-x.58.x", "master" -> "master", "latest" -> "master"
-def version_to_branch(version)
-  return 'master' if %w[master latest].include?(version)
+# Examples: "v0.58" -> "release-x.58.x", "master" -> "master", "latest" -> release_branch from config
+def version_to_branch(version, latest_branch)
+  return 'master' if version == 'master'
+  return latest_branch if version == 'latest'
 
   # Parse version like "v0.58" -> "release-x.58.x"
   match = version.match(/^v0\.(\d+)$/)
@@ -112,9 +131,9 @@ def version_to_branch(version)
   "release-x.#{match[1]}.x"
 end
 
-def generate_index_llms_txt(dest_dir, version, docs)
+def generate_index_llms_txt(dest_dir, version, docs, latest_branch)
   sorted_docs = docs.sort_by(&:relative_path)
-  branch = version_to_branch(version)
+  branch = version_to_branch(version, latest_branch)
   base_url = "https://raw.githubusercontent.com/#{REPO}/refs/heads/#{branch}"
 
   # Filter docs: must match allowlist and not match excludelist
@@ -146,6 +165,13 @@ def generate_index_llms_txt(dest_dir, version, docs)
   lines << ''
   lines << get_version_detection_instructions
   lines << ''
+
+  # Add modular embedding gotchas for v57+ (same as in llms-full.txt)
+  if above_version?(version, 57)
+    lines << get_modular_embedding_gotcha_notes
+    lines << ''
+  end
+
   lines << '## Table of Contents'
   lines << ''
 
@@ -266,12 +292,12 @@ def get_version_detection_instructions
     > { "date": "2025-01-10", "tag": "v1.58.0", "hash": "8e44dd8" }
     > ```
     >
-    > Extract the major version: `58` from `v1.58.x` or `v0.58.x`.
+    > If `jq` is not installed, you can grep the version. Extract the major version: `58` from `v1.58.x` or `v0.58.x`.
     >
-    > **Step 3: Ensure versions match (React SDK / Modular Embedding only)**
+    > **Step 3: Ensure versions match (React SDK only)**
     >
     > - Install/update SDK: `npm install @metabase/embedding-sdk-react@{VERSION}-stable` (e.g., `@58-stable` for Metabase 58)
-    > - Use version-specific docs: `https://metabase.com/docs/v0.{VERSION}/llms.txt` (e.g., `/docs/v0.58/llms.txt`)
+    > - Use version-specific docs: `https://metabase.com/docs/v0.{VERSION}/llms.txt` (e.g., `/docs/v0.58/llms.txt` for Metabase 58)
     >
     > **Do NOT guess versions or use versions from your training data. Always verify first.**
   INSTRUCTIONS
@@ -282,15 +308,16 @@ end
 # confusion and pitfalls like out-of-date APIs in trained data.
 def get_modular_embedding_gotcha_notes
   <<~NOTES.chomp
-    > **Important Version Notes**
+    > **Modular Embedding Gotchas**
     >
     > Watch out for these deprecated props and gotchas for Metabase 57 onwards, for modular embedding:
     >
-    > 1. `config` prop on MetabaseProvider no longer exist - it is replaced by `authConfig`.
+    > 1. `config` prop on MetabaseProvider no longer exist as it is replaced by `authConfig`.
     > 2. `authProviderUri` field no longer exist.
-    > 3. `jwtProviderUri` optional field only exists in v58+. This is used to make JWT auth faster by skipping the `GET /auth/sso` discovery request. Not needed for initial implementation.
+    > 3. `jwtProviderUri` is an optional field that only exists in v58+. This is used to make JWT auth faster by skipping the `GET /auth/sso` discovery request. Not needed for initial implementation.
     > 4. `fetchRequestToken` is not needed by default. This is only used to customize how the SDK fetches the request token.
-    > 5. Numeric IDs must be integers not strings, e.g. `dashboardId={1}`. When the ID is retrieved from the URL and it is numeric, convert it to an integer via `parseInt` before passing it to the SDK. IDs can also be strings for entity ids, so you should not parse all IDs as numbers if entity ids are also to be expected.
+    > 5. Numeric IDs must be integers not strings, e.g. `dashboardId={1}`. When the ID is retrieved from the router as a string AND it is numeric, `parseInt` it before passing it to the SDK.
+    > 6. IDs can also be strings for entity ids, so you should NOT parse all IDs as numbers if entity ids are also to be expected.
   NOTES
 end
 
