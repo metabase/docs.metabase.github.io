@@ -106,9 +106,9 @@ Jekyll::Hooks.register :site, :post_write do |site|
 end
 
 # Format version for display in generated files
-# Examples: "v0.58" -> "58", "master" -> "latest (master)", "latest" -> "58 (latest)"
+# Examples: "v0.58" -> "58", "master" -> "development (unreleased)", "latest" -> "58 (latest)"
 def format_version_for_display(version, latest_branch = nil)
-  return 'latest (master)' if version == 'master'
+  return 'development (unreleased)' if version == 'master'
 
   if version == 'latest' && latest_branch
     # Parse version from branch like "release-x.58.x" -> "58"
