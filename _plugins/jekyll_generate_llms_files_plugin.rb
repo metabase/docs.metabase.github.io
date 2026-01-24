@@ -84,7 +84,7 @@ Jekyll::Hooks.register :site, :post_write do |site|
   # Generate llms-{section}-full.txt for specified sections
   LLMS_FULL_TO_GENERATE.each do |section|
     docs_by_version.each do |version, docs|
-      generate_llms_full_txt(source_dir, dest_dir, version, section, docs)
+      generate_llms_full_txt(source_dir, dest_dir, version, section, docs, latest_branch)
     end
   end
 
@@ -106,9 +106,18 @@ Jekyll::Hooks.register :site, :post_write do |site|
 end
 
 # Format version for display in generated files
-# Examples: "v0.58" -> "58", "master" -> "latest (master)", "latest" -> "latest"
-def format_version_for_display(version)
+# Examples: "v0.58" -> "58", "master" -> "latest (master)", "latest" -> "58 (latest)"
+def format_version_for_display(version, latest_branch = nil)
   return 'latest (master)' if version == 'master'
+
+  if version == 'latest' && latest_branch
+    # Parse version from branch like "release-x.58.x" -> "58"
+    branch_match = latest_branch.match(/^release-x\.(\d+)\.x$/)
+
+    return "#{branch_match[1]} (latest)" if branch_match
+  end
+
+  # Fallback in case the latest branch is not provided
   return 'latest' if version == 'latest'
 
   # Parse version like "v0.58" -> "58"
@@ -161,7 +170,7 @@ def generate_index_llms_txt(dest_dir, version, docs, latest_branch)
   lines = []
   lines << '# Metabase Documentation'
   lines << ''
-  lines << "> **This documentation is for Metabase #{format_version_for_display(version)}.**"
+  lines << "> **This documentation is for Metabase #{format_version_for_display(version, latest_branch)}.**"
   lines << ''
   lines << get_version_detection_instructions
   lines << ''
@@ -213,7 +222,7 @@ def generate_index_llms_txt(dest_dir, version, docs, latest_branch)
   Jekyll.logger.debug 'Generated llms.txt:', "docs/#{version}/#{OUTPUT_FILE}"
 end
 
-def generate_llms_full_txt(source_dir, dest_dir, version, section, docs)
+def generate_llms_full_txt(source_dir, dest_dir, version, section, docs, latest_branch)
   # Filter docs for this section
   section_docs = docs.select { |doc| doc.relative_path.include?("/#{section}/") }
   return if section_docs.empty?
@@ -227,7 +236,7 @@ def generate_llms_full_txt(source_dir, dest_dir, version, section, docs)
   lines = []
   lines << "# Metabase #{section_capitalized} - Complete Reference for AI agents"
   lines << ''
-  lines << "> **This documentation is for Metabase #{format_version_for_display(version)}.**"
+  lines << "> **This documentation is for Metabase #{format_version_for_display(version, latest_branch)}.**"
   lines << '>'
   lines << "> Table of contents: #{docs_base_url}/#{OUTPUT_FILE}"
   lines << ''
