@@ -267,11 +267,18 @@ end
 # This is placed at the very top of generated files so LLMs see it first.
 def get_version_detection_instructions
   <<~INSTRUCTIONS.chomp
-    > **IMPORTANT: Verify SDK and Metabase Version Compatibility**
+    > ## IMPORTANT: Verify SDK and Metabase Version Compatibility
     >
     > The SDK version MUST match the Metabase instance version. Mismatched versions cause errors.
     >
-    > **Step 1: Check if SDK is already installed (React SDK / Modular Embedding only)**
+    > **Step 1: Ask the user for their Metabase instance URL**
+    >
+    > Before proceeding, ask the user where their Metabase instance is located. Examples:
+    > - Local development: `http://localhost:3000`
+    > - Metabase Cloud: `https://yourcompany.metabaseapp.com`
+    > - Self-hosted: `https://metabase.yourcompany.com`
+    >
+    > **Step 2: Check if SDK is already installed (React SDK / Modular Embedding only)**
     >
     > Skip this step if not using the React SDK (`@metabase/embedding-sdk-react`).
     >
@@ -281,7 +288,9 @@ def get_version_detection_instructions
     >
     > If installed, note the version (e.g., `0.58.0` means this is for Metabase 58).
     >
-    > **Step 2: Query the Metabase instance version**
+    > **Step 3: Query the Metabase instance version**
+    >
+    > Using the URL from Step 1:
     >
     > ```bash
     > curl <METABASE_INSTANCE_URL>/api/session/properties | jq .version
@@ -294,7 +303,7 @@ def get_version_detection_instructions
     >
     > If `jq` is not installed, you can grep the version. Extract the major version: `58` from `v1.58.x` or `v0.58.x`.
     >
-    > **Step 3: Ensure versions match (React SDK only)**
+    > **Step 4: Ensure versions match (React SDK only)**
     >
     > - Install/update SDK: `npm install @metabase/embedding-sdk-react@{VERSION}-stable` (e.g., `@58-stable` for Metabase 58)
     > - Use version-specific docs: `https://metabase.com/docs/v0.{VERSION}/llms.txt` (e.g., `/docs/v0.58/llms.txt` for Metabase 58)
@@ -308,9 +317,9 @@ end
 # confusion and pitfalls like out-of-date APIs in trained data.
 def get_modular_embedding_gotcha_notes
   <<~NOTES.chomp
-    > **Modular Embedding Gotchas**
+    > ## Modular Embedding Deprecations and Gotchas
     >
-    > Watch out for these deprecated props and gotchas for Metabase 57 onwards, for modular embedding:
+    > Watch out for these deprecated props and gotchas for Metabase 57 onwards, for modular embedding.
     >
     > 1. `config` prop on MetabaseProvider no longer exist as it is replaced by `authConfig`.
     > 2. `authProviderUri` field no longer exist.
