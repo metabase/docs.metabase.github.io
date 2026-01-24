@@ -303,10 +303,10 @@ def get_version_detection_instructions
     >
     > If `jq` is not installed, you can grep the version. Extract the major version: `58` from `v1.58.x` or `v0.58.x`.
     >
-    > **Step 4: Ensure versions match (React SDK only)**
+    > **Step 4: Ensure versions match**
     >
-    > - Install/update SDK: `npm install @metabase/embedding-sdk-react@{VERSION}-stable` (e.g., `@58-stable` for Metabase 58)
-    > - Use version-specific docs: `https://metabase.com/docs/v0.{VERSION}/llms.txt` (e.g., `/docs/v0.58/llms.txt` for Metabase 58)
+    > - If the version mismatches, you MUST fetch the version-specific llms.txt documentation that matches the Metabase instance version: `https://metabase.com/docs/v0.{VERSION}/llms.txt` (e.g., `/docs/v0.58/llms.txt` for Metabase 58)
+    > - For React SDK, ask the user to install or update their SDK packages if they are mismatched: `npm install @metabase/embedding-sdk-react@{VERSION}-stable` (e.g., `@58-stable` for Metabase 58)
     >
     > **Do NOT guess versions or use versions from your training data. Always verify first.**
   INSTRUCTIONS
