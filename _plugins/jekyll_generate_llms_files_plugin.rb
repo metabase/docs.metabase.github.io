@@ -6,8 +6,6 @@
 # This plugin generates:
 # 1. llms.txt index file for each version (table of contents with links to docs)
 # 2. llms-{section}-full.txt concatenated documentation for specific sections
-#
-# This plugin mirrors the behavior of the generate-llms-txt.js script in the main repo.
 
 REPO = 'metabase/metabase'
 OUTPUT_FILE = 'llms.txt'
