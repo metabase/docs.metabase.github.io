@@ -320,7 +320,7 @@ def get_modular_embedding_gotcha_notes
     2. `authProviderUri` field no longer exist.
     3. `jwtProviderUri` is an optional field that only exists in v58+. This is used to make JWT auth faster by skipping the `GET /auth/sso` discovery request. This field is not required for the initial implementation.
     4. Numeric IDs must be integers not strings, e.g. `dashboardId={1}`. When the ID is retrieved from the router as a string AND it is numeric, `parseInt` it before passing it to the SDK.
-    5. IDs can also be strings for entity ids, so you should NOT parse all IDs as numbers if entity ids are also to be expected.
+    5. IDs can also be strings for entity IDs, so you should NOT parse all IDs as numbers if entity IDs are also to be expected.
     6. `fetchRequestToken` is not needed by default in most implementations. This is only used to customize how the SDK fetches the request token. For example, if the `/sso/metabase` endpoint in the user's backend requires passing custom auth tokens or headers.
     7. When using `fetchRequestToken`, you MUST return the token in the shape of `{jwt: "<jwt string>"}`. Example: `return {jwt: await response.json()}`. 
   NOTES
