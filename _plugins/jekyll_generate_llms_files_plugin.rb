@@ -152,10 +152,8 @@ def generate_index_llms_txt(dest_dir, version, docs, latest_branch)
     # Must match at least one included path
     included = INCLUDED_PATHS.any? do |pattern|
       if pattern.end_with?('/')
-        # Directory pattern: check if path starts with it
         relative_path.start_with?(pattern)
       else
-        # File pattern: exact match
         relative_path == pattern
       end
     end
@@ -166,58 +164,51 @@ def generate_index_llms_txt(dest_dir, version, docs, latest_branch)
     included && !excluded
   end
 
-  # Build table of contents
-  lines = []
-  lines << '# Metabase Documentation'
-  lines << ''
-  lines << "> **This documentation is for Metabase #{format_version_for_display(version, latest_branch)}.**"
-  lines << ''
-  lines << get_version_detection_instructions
-  lines << ''
-
-  # Add modular embedding gotchas for v57+ (same as in llms-full.txt)
-  if above_version?(version, 57)
-    lines << get_modular_embedding_gotcha_notes
-    lines << ''
-  end
-
-  lines << '## Table of Contents'
-  lines << ''
-
-  filtered_docs.each do |doc|
-    # Get the title using the same logic as the JS script
+  # links to documentation
+  doc_links = filtered_docs.map do |doc|
     title = extract_title(doc)
-
-    # Remove _docs/VERSION/ prefix to get the relative path
     relative_path = doc.relative_path.sub(%r{^_docs/[^/]+/}, '')
-
-    # Create markdown link with raw GitHub URL
     url = "#{base_url}/docs/#{relative_path}"
-    lines << "- [#{title}](#{url})"
-  end
 
-  # Add reference to llms-full.txt files
-  lines << ''
-  lines << '## Complete References'
-  lines << ''
-  lines << 'These files are very large and are around 90,000 tokens. Do not use by default unless the context window is huge or RAG is supported in your editor.'
-  lines << ''
+    "- [#{title}](#{url})"
+  end.join("\n")
 
-  LLMS_FULL_TO_GENERATE.each do |section|
-    # Check if this version has docs in this section
-    has_section = docs.any? { |doc| doc.relative_path.include?("/#{section}/") }
-    next unless has_section
+  # links to full references
+  section_links = LLMS_FULL_TO_GENERATE.filter_map do |section|
+    next unless docs.any? { |doc| doc.relative_path.include?("/#{section}/") }
 
-    capitalized = section.capitalize
-    # Link to metabase.com where the file is actually hosted
     docs_url = "https://metabase.com/docs/#{version}/llms-#{section}-full.txt"
-    lines << "- [#{capitalized} - Complete Reference](#{docs_url})"
-  end
+
+    "- [#{section.capitalize} - Complete Reference](#{docs_url})"
+  end.join("\n")
+
+  # Conditional gotcha notes for v57+
+  gotcha_section = above_version?(version, 57) ? "#{get_modular_embedding_gotcha_notes}\n\n" : ''
+
+  content = <<~LLMS_TXT
+    # Metabase Documentation
+
+    > **This documentation is for Metabase #{format_version_for_display(version, latest_branch)}.**
+
+    #{get_version_detection_instructions}
+
+    #{gotcha_section}
+
+    ## Table of Contents
+
+    #{doc_links}
+
+    ## Complete References
+
+    These files are very large and are around 90,000 tokens. Do not use by default unless the context window is huge or RAG is supported in your editor.
+
+    #{section_links}
+  LLMS_TXT
 
   # Write llms.txt file
   llms_txt_path = File.join(dest_dir, 'docs', version, OUTPUT_FILE)
   FileUtils.mkdir_p(File.dirname(llms_txt_path))
-  File.write(llms_txt_path, lines.join("\n") + "\n")
+  File.write(llms_txt_path, content)
 
   Jekyll.logger.debug 'Generated llms.txt:', "docs/#{version}/#{OUTPUT_FILE}"
 end
@@ -227,32 +218,30 @@ def generate_llms_full_txt(source_dir, dest_dir, version, section, docs, latest_
   section_docs = docs.select { |doc| doc.relative_path.include?("/#{section}/") }
   return if section_docs.empty?
 
-  # Build content
-  section_capitalized = section.capitalize
   docs_base_url = "https://metabase.com/docs/#{version}"
-  lines = []
-  lines << "# Metabase #{section_capitalized} - Complete Reference for AI agents"
-  lines << ''
-  lines << "> **This documentation is for Metabase #{format_version_for_display(version, latest_branch)}.**"
-  lines << '>'
-  lines << "> Table of contents: #{docs_base_url}/#{OUTPUT_FILE}"
-  lines << ''
-  lines << get_version_detection_instructions
-  lines << ''
 
-  # Add preamble for embedding section (v57+ only)
-  if section == 'embedding' && above_version?(version, 57)
-    lines << get_modular_embedding_gotcha_notes
-    lines << ''
-  end
+  # Add gotcha notes for the "embedding" section if version is 57 or above
+  gotcha_section = (section == 'embedding' && above_version?(version, 57)) ? "#{get_modular_embedding_gotcha_notes}\n\n" : ''
 
-  # Concatenate all documents into llms-full.txt
-  llms_full_concatenate_documents(lines, section_docs, source_dir)
+  # Concatenate all document contents
+  documents_content = concatenate_documents(section_docs, source_dir)
+
+  content = <<~LLMS_FULL_TXT
+    # Metabase #{section.capitalize} - Complete Reference for AI agents
+
+    > **This documentation is for Metabase #{format_version_for_display(version, latest_branch)}.**
+    >
+    > Table of contents: #{docs_base_url}/#{OUTPUT_FILE}
+
+    #{get_version_detection_instructions}
+
+    #{gotcha_section}#{documents_content}
+  LLMS_FULL_TXT
 
   # Write llms-{section}-full.txt file at version root (not inside section directory)
   llms_full_path = File.join(dest_dir, 'docs', version, "llms-#{section}-full.txt")
   FileUtils.mkdir_p(File.dirname(llms_full_path))
-  File.write(llms_full_path, lines.join("\n"))
+  File.write(llms_full_path, content)
 
   Jekyll.logger.debug 'Generated llms-full.txt:', "docs/#{version}/llms-#{section}-full.txt"
 end
@@ -273,48 +262,48 @@ end
 # This is placed at the very top of generated files so LLMs see it first.
 def get_version_detection_instructions
   <<~INSTRUCTIONS.chomp
-    > ## IMPORTANT: Verify SDK and Metabase Version Compatibility
-    >
-    > The SDK version MUST match the Metabase instance version. Mismatched versions cause errors.
-    >
-    > **Step 1: Ask the user for their Metabase instance URL**
-    >
-    > Before proceeding, ask the user where their Metabase instance is located. Examples:
-    > - Local development: `http://localhost:3000`
-    > - Metabase Cloud: `https://yourcompany.metabaseapp.com`
-    > - Self-hosted: `https://metabase.yourcompany.com`
-    >
-    > **Step 2: Check if SDK is already installed (React SDK / Modular Embedding only)**
-    >
-    > Skip this step if not using the React SDK (`@metabase/embedding-sdk-react`).
-    >
-    > ```bash
-    > npm list @metabase/embedding-sdk-react
-    > ```
-    >
-    > If installed, note the version (e.g., `0.58.0` means this is for Metabase 58).
-    >
-    > **Step 3: Query the Metabase instance version**
-    >
-    > Using the URL from Step 1:
-    >
-    > ```bash
-    > curl <METABASE_INSTANCE_URL>/api/session/properties | jq .version
-    > ```
-    >
-    > This returns (no authentication required):
-    > ```json
-    > { "date": "2025-01-10", "tag": "v1.58.0", "hash": "8e44dd8" }
-    > ```
-    >
-    > If `jq` is not installed, you can grep the version. Extract the major version: `58` from `v1.58.x` or `v0.58.x`.
-    >
-    > **Step 4: Ensure versions match**
-    >
-    > - If the version mismatches, you MUST fetch the version-specific llms.txt documentation that matches the Metabase instance version: `https://metabase.com/docs/v0.{VERSION}/llms.txt` (e.g., `/docs/v0.58/llms.txt` for Metabase 58)
-    > - For React SDK, ask the user to install or update their SDK packages if they are mismatched: `npm install @metabase/embedding-sdk-react@{VERSION}-stable` (e.g., `@58-stable` for Metabase 58)
-    >
-    > **Do NOT guess versions or use versions from your training data. Always verify first.**
+    ## IMPORTANT: Verify SDK and Metabase Version Compatibility
+    
+    The SDK version MUST match the Metabase instance version. Mismatched versions cause errors.
+    
+    **Step 1: Ask the user for their Metabase instance URL**
+    
+    Before proceeding, ask the user where their Metabase instance is located. Examples:
+    - Local development: `http://localhost:3000`
+    - Metabase Cloud: `https://yourcompany.metabaseapp.com`
+    - Self-hosted: `https://metabase.yourcompany.com`
+    
+    **Step 2: Check if SDK is already installed (React SDK / Modular Embedding only)**
+    
+    Skip this step if not using the React SDK (`@metabase/embedding-sdk-react`).
+    
+    ```bash
+    npm list @metabase/embedding-sdk-react
+    ```
+    
+    If installed, note the version (e.g., `0.58.0` means this is for Metabase 58).
+    
+    **Step 3: Query the Metabase instance version**
+    
+    Using the URL from Step 1:
+    
+    ```bash
+    curl <METABASE_INSTANCE_URL>/api/session/properties | jq .version
+    ```
+    
+    This returns (no authentication required):
+    ```json
+    { "date": "2025-01-10", "tag": "v1.58.0", "hash": "8e44dd8" }
+    ```
+    
+    If `jq` is not installed, you can grep the version. Extract the major version: `58` from `v1.58.x` or `v0.58.x`.
+    
+    **Step 4: Ensure versions match**
+    
+    - If the version mismatches, you MUST fetch the version-specific llms.txt documentation that matches the Metabase instance version: `https://metabase.com/docs/v0.{VERSION}/llms.txt` (e.g., `/docs/v0.58/llms.txt` for Metabase 58)
+    - For React SDK, ask the user to install or update their SDK packages if they are mismatched: `npm install @metabase/embedding-sdk-react@{VERSION}-stable` (e.g., `@58-stable` for Metabase 58)
+    
+    **Do NOT guess versions or use versions from your training data. Always verify first.**
   INSTRUCTIONS
 end
 
@@ -323,17 +312,17 @@ end
 # confusion and pitfalls like out-of-date APIs in trained data.
 def get_modular_embedding_gotcha_notes
   <<~NOTES.chomp
-    > ## Modular Embedding Deprecations and Gotchas
-    >
-    > Watch out for these deprecated props and gotchas for Metabase 57 onwards, for modular embedding.
-    >
-    > 1. `config` prop on MetabaseProvider no longer exist as it is replaced by `authConfig`.
-    > 2. `authProviderUri` field no longer exist.
-    > 3. `jwtProviderUri` is an optional field that only exists in v58+. This is used to make JWT auth faster by skipping the `GET /auth/sso` discovery request. This field is not required for the initial implementation.
-    > 4. Numeric IDs must be integers not strings, e.g. `dashboardId={1}`. When the ID is retrieved from the router as a string AND it is numeric, `parseInt` it before passing it to the SDK.
-    > 5. IDs can also be strings for entity ids, so you should NOT parse all IDs as numbers if entity ids are also to be expected.
-    > 6. `fetchRequestToken` is not needed by default in most implementations. This is only used to customize how the SDK fetches the request token. For example, if the `/sso/metabase` endpoint in the user's backend requires passing custom auth tokens or headers.
-    > 7. When using `fetchRequestToken`, you MUST return the token in the shape of `{jwt: "<jwt string>"}`. Example: `return {jwt: await response.json()}`. 
+    ## Modular Embedding Deprecations and Gotchas
+    
+    Watch out for these deprecated props and gotchas for Metabase 57 onwards, for modular embedding.
+    
+    1. `config` prop on MetabaseProvider no longer exist as it is replaced by `authConfig`.
+    2. `authProviderUri` field no longer exist.
+    3. `jwtProviderUri` is an optional field that only exists in v58+. This is used to make JWT auth faster by skipping the `GET /auth/sso` discovery request. This field is not required for the initial implementation.
+    4. Numeric IDs must be integers not strings, e.g. `dashboardId={1}`. When the ID is retrieved from the router as a string AND it is numeric, `parseInt` it before passing it to the SDK.
+    5. IDs can also be strings for entity ids, so you should NOT parse all IDs as numbers if entity ids are also to be expected.
+    6. `fetchRequestToken` is not needed by default in most implementations. This is only used to customize how the SDK fetches the request token. For example, if the `/sso/metabase` endpoint in the user's backend requires passing custom auth tokens or headers.
+    7. When using `fetchRequestToken`, you MUST return the token in the shape of `{jwt: "<jwt string>"}`. Example: `return {jwt: await response.json()}`. 
   NOTES
 end
 
@@ -352,12 +341,13 @@ def extract_title(doc)
 
   # Fallback to filename
   filename = File.basename(doc.relative_path, '.md')
+
   # Convert kebab-case or snake_case to Title Case
   filename.split(/[-_]/).map(&:capitalize).join(' ')
 end
 
-def llms_full_concatenate_documents(lines, section_docs, source_dir)
-  section_docs.each do |doc|
+def concatenate_documents(section_docs, source_dir)
+  section_docs.map do |doc|
     # Read the source file
     source_file = File.join(source_dir, doc.relative_path)
     content = File.read(source_file)
@@ -369,7 +359,7 @@ def llms_full_concatenate_documents(lines, section_docs, source_dir)
     content = content.gsub(/\{%.*?%\}/m, '')
     content = content.gsub(/\{\{.*?\}\}/m, '')
 
-    # Add document section with separator (matching JS format)
-    lines << "#{content.strip}\n\n---\n"
-  end
+    # Return document with separator (matching JS format)
+    "#{content.strip}\n\n---"
+  end.join("\n\n")
 end
