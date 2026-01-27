@@ -300,7 +300,7 @@ def get_version_detection_instructions
     
     **Step 4: Ensure versions match**
     
-    - If the version mismatches, you MUST fetch the version-specific llms.txt documentation that matches the Metabase instance version: `https://metabase.com/docs/v0.{VERSION}/llms.txt` (e.g., `/docs/v0.58/llms.txt` for Metabase 58)
+    - If the versions mismatch, you MUST fetch the version-specific llms.txt documentation that matches the Metabase instance version: `https://metabase.com/docs/v0.{VERSION}/llms.txt` (e.g., `/docs/v0.58/llms.txt` for Metabase 58)
     - For React SDK, ask the user to install or update their SDK packages if they are mismatched: `npm install @metabase/embedding-sdk-react@{VERSION}-stable` (e.g., `@58-stable` for Metabase 58)
     
     **Do NOT guess versions or use versions from your training data. Always verify first.**
