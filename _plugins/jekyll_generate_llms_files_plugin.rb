@@ -74,6 +74,9 @@ Jekyll::Hooks.register :site, :post_write do |site|
     docs_by_version[version] << doc
   end
 
+  # Sort docs once per version for consistent ordering across all generated files
+  docs_by_version.each_value { |docs| docs.sort_by!(&:relative_path) }
+
   # Generate llms.txt for each version
   docs_by_version.each do |version, docs|
     generate_index_llms_txt(dest_dir, version, docs, latest_branch)
@@ -139,12 +142,11 @@ def version_to_branch(version, latest_branch)
 end
 
 def generate_index_llms_txt(dest_dir, version, docs, latest_branch)
-  sorted_docs = docs.sort_by(&:relative_path)
   branch = version_to_branch(version, latest_branch)
   base_url = "https://raw.githubusercontent.com/#{REPO}/refs/heads/#{branch}"
 
   # Filter docs: must match allowlist and not match excludelist
-  filtered_docs = sorted_docs.select do |doc|
+  filtered_docs = docs.select do |doc|
     relative_path = doc.relative_path.sub(%r{^_docs/[^/]+/}, '')
 
     # Must match at least one included path
@@ -224,9 +226,6 @@ def generate_llms_full_txt(source_dir, dest_dir, version, section, docs, latest_
   # Filter docs for this section
   section_docs = docs.select { |doc| doc.relative_path.include?("/#{section}/") }
   return if section_docs.empty?
-
-  # Sort by path for consistent ordering
-  section_docs.sort_by!(&:relative_path)
 
   # Build content
   section_capitalized = section.capitalize
