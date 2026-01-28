@@ -116,7 +116,7 @@ Allowed iframe hosts.
 - Default: `true`
 - [Configuration file name](./config-file): `anon-tracking-enabled`
 
-Enable the collection of anonymous usage data in order to help Metabase improve.
+Enable the collection of anonymous usage data in order to help us improve.
 
 ### `MB_API_KEY`
 
