@@ -177,6 +177,7 @@ type IconName =
   | "metabot"
   | "metabot_sad"
   | "metric"
+  | "mode"
   | "model_with_badge"
   | "moon"
   | "move"
