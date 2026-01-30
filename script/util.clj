@@ -64,7 +64,9 @@
          cmd))
 
 
-(def artifacts-to-include ["_site/docs/all.html"])
+(def artifacts-to-include ["_site/docs/all.html"
+                           "_site/docs/llms.txt"
+                           "_site/docs/llms-embedding-full.txt"])
 
 (defn ->artifacts
   "Returns a list of directories and files that are considered artifacts
