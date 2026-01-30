@@ -185,8 +185,9 @@
   <div>
     <span class="button">Upcoming</span>
     <span>JOIN: the first Metabase online conference, March 25.</span>
-    <a href="/join">Register for Metabase JOIN</a>
-    <img alt="Chevron Blue Right" src="/images/chevron_blue_right.svg" <="" a="">
+    <a href="/join">
+      Register for Metabase JOIN<img alt="Chevron Blue Right" src="/images/chevron_blue_right.svg">
+    </a>
   </div>
   <button>×</button>
 </div>
@@ -5436,13 +5437,24 @@ Roadmap</a>
 
 <p>If you’re using React, check out the <a href="./sdk/introduction">Modular embedding SDK</a>.</p>
 
+<blockquote>
+  <p><strong>Want guest embeds?</strong> For modular embedding without authentication (available on all plans), see <a href="./guest-embedding">Guest Embeds</a>.</p>
+</blockquote>
+
 <h2 id="enable-modular-embedding">Enable modular embedding</h2>
 
 <ol>
   <li>In Metabase, go to <strong>Admin settings &gt; Embedding</strong>.</li>
   <li>Toggle on <strong>Enable modular embedding</strong>.</li>
+</ol>
+
+<p><strong>For guest embeds</strong>: You’re done! Skip to <a href="#create-a-new-embed">Create a new embed</a> or see the <a href="./guest-embedding">Guest embedding guide</a> for detailed setup instructions.</p>
+
+<p><strong>For authenticated embeds</strong> (Pro/Enterprise only), some more steps:</p>
+
+<ol>
   <li>Under <strong>Cross-Origin Resource Sharing (CORS)</strong>, add the URLs of the websites where you want to embed Metabase (such as <code class="language-plaintext highlighter-rouge">https://*.example.com</code>). For testing embeds, you can use <code class="language-plaintext highlighter-rouge">localhost</code> which is always included in CORS policy.</li>
-  <li>If you’re embedding Metabase components in a domain that’s different from your Metabase’s domain (including when you’re testing the app locally but use Metabase Cloud), go to <strong>Admin settings &gt; Embedding &gt; Security</strong> and set <strong>SameSite cookie</strong> to <strong>None</strong>.</li>
+  <li>If embedding on a different domain, see <a href="./authentication#embedding-metabase-in-a-different-domain">Embedding Metabase in a different domain</a>.</li>
 </ol>
 
 <h2 id="create-a-new-embed">Create a new embed</h2>
@@ -5491,7 +5503,9 @@ Roadmap</a>
   </div>
 </div>
 
-<p>How you authenticate the embed determines how cool the embed can get. This page covers the SSO setup, which lets you do everything. This setup requires you to have <a href="./authentication">set up SSO for your Metabase</a>. You can check out a <a href="./introduction#comparison-of-embedding-types">comparison between SSO and guest</a>, or jump straight to the <a href="./guest-embedding">guest embed docs</a>. But we recommend setting up modular embedding with SSO.</p>
+<p>With SSO, Metabase can know who is viewing the embed, and it can unlock all of its bells and whistles (see this <a href="./introduction#comparison-of-embedding-types">comparison between SSO and guest embeds</a>).</p>
+
+<p>This page covers the <a href="./authentication">SSO setup for your Metabase</a>. If you don’t need to set up SSO, check out the <a href="./guest-embedding">guest embed docs</a>.</p>
 
 <h3 id="3-customize-your-embed">3. Customize your embed</h3>
 
@@ -5659,96 +5673,7 @@ Roadmap</a>
 
 <h2 id="authentication">Authentication</h2>
 
-<h3 id="use-api-keys-to-test-embeds">Use API keys to test embeds</h3>
-
-<blockquote>
-  <p>API keys can only be used for testing embeds locally. To make your embeds production-ready or deploy them to another domain, you’ll need to implement SSO.</p>
-</blockquote>
-
-<p>To use an API key to test your embeds:</p>
-
-<ol>
-  <li>Create an <a href="../people-and-groups/api-keys">API key</a></li>
-  <li>Add <code class="language-plaintext highlighter-rouge">apiKey: "YOUR_API_KEY"</code> to <code class="language-plaintext highlighter-rouge">defineMetabaseConfig()</code>:</li>
-</ol>
-
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;script&gt;</span>
-  <span class="nf">defineMetabaseConfig</span><span class="p">({</span>
-    <span class="na">instanceUrl</span><span class="p">:</span> <span class="dl">"</span><span class="s2">https://your-metabase-url</span><span class="dl">"</span><span class="p">,</span>
-    <span class="na">apiKey</span><span class="p">:</span> <span class="dl">"</span><span class="s2">mb_hopeyouhaveaniceday</span><span class="dl">"</span><span class="p">,</span>
-  <span class="p">});</span>
-<span class="nt">&lt;/script&gt;</span>
-</code></pre></div></div>
-
-<p>API keys should only be used for testing with trusted people. Anyone with access to the front-end can grab the API key and use it to make requests against the Metabase API. For this reason, we only allow using API keys on localhost.</p>
-
-<h2 id="embedding-metabase-in-a-different-domain">Embedding Metabase in a different domain</h2>
-
-<div class="bootstrap">
-  <div class="plans-blockquote bg-blue-95 rounded-3 p-6 d-flex flex-row border border-1 border-primary">
-    <svg class="" width="24" height="24" viewBox="0 0 26 26" fill="none">
-  <path d="M12 13V15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
-  <path d="M12 10C12.5523 10 13 9.55228 13 9C13 8.44772 12.5523 8 12 8C11.4477 8 11 8.44772 11 9C11 9.55228 11.4477 10 12 10Z" fill="#509EE3"></path>
-  <path d="M12 19.25C16.0041 19.25 19.25 16.0041 19.25 12C19.25 7.99594 16.0041 4.75 12 4.75C7.99594 4.75 4.75 7.99594 4.75 12C4.75 16.0041 7.99594 19.25 12 19.25Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
-</svg>
-
-    
-    
-    
-      
-
-    <p class="m-0 ms-2 paragraph-5 neutral-40">
-       Authenticated modular embeds are only available on
-      <a class="fw-bold" href="/product/pro">Pro</a> and
-      <a class="fw-bold link-purple" href="/product/enterprise">Enterprise</a>
-      plans  (both self-hosted and on Metabase Cloud).
-    </p>
-  </div>
-</div>
-
-<p>If you want to embed Metabase in another domain (say, if Metabase is hosted at <code class="language-plaintext highlighter-rouge">metabase.yourcompany.com</code>, but you want to embed Metabase at <code class="language-plaintext highlighter-rouge">yourcompany.github.io</code>), you can tell Metabase to set the session cookie’s SameSite value to “none”.</p>
-
-<p>You can set session cookie’s SameSite value in <strong>Admin settings</strong> &gt; <strong>Embedding</strong> &gt; <strong>Security</strong> &gt; <strong>SameSite cookie setting</strong>.</p>
-
-<p>SameSite values include:</p>
-
-<ul>
-  <li><strong>Lax</strong> (default): Allows Metabase session cookies to be shared on the same domain. Used for production instances on the same domain.</li>
-  <li><strong>None (requires HTTPS)</strong>: Use “None” when your app and Metabase are hosted on different domains. Incompatible with Safari and iOS-based browsers.</li>
-  <li><strong>Strict</strong> (not recommended): Does not allow Metabase session cookies to be shared with embedded instances. Use this if you do not want to enable session sharing with embedding.</li>
-</ul>
-
-<p>You can also set the <a href="../configuring-metabase/environment-variables#mb_session_cookie_samesite"><code class="language-plaintext highlighter-rouge">MB_SESSION_COOKIE_SAMESITE</code> environment variable</a>.</p>
-
-<p>If you’re using Safari, you’ll need to <a href="https://support.apple.com/en-tj/guide/safari/sfri40732/mac">allow cross-site tracking</a>. Depending on the browser, you may also run into issues when viewing embedded items in private/incognito tabs.</p>
-
-<p>Learn more about <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie/SameSite">SameSite cookies</a>.</p>
-
-<h2 id="setting-up-sso">Setting up SSO</h2>
-
-<div class="bootstrap">
-  <div class="plans-blockquote bg-blue-95 rounded-3 p-6 d-flex flex-row border border-1 border-primary">
-    <svg class="" width="24" height="24" viewBox="0 0 26 26" fill="none">
-  <path d="M12 13V15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
-  <path d="M12 10C12.5523 10 13 9.55228 13 9C13 8.44772 12.5523 8 12 8C11.4477 8 11 8.44772 11 9C11 9.55228 11.4477 10 12 10Z" fill="#509EE3"></path>
-  <path d="M12 19.25C16.0041 19.25 19.25 16.0041 19.25 12C19.25 7.99594 16.0041 4.75 12 4.75C7.99594 4.75 4.75 7.99594 4.75 12C4.75 16.0041 7.99594 19.25 12 19.25Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
-</svg>
-
-    
-    
-    
-      
-
-    <p class="m-0 ms-2 paragraph-5 neutral-40">
-       Authenticated modular embeds are only available on
-      <a class="fw-bold" href="/product/pro">Pro</a> and
-      <a class="fw-bold link-purple" href="/product/enterprise">Enterprise</a>
-      plans  (both self-hosted and on Metabase Cloud).
-    </p>
-  </div>
-</div>
-
-<p>For production use, you’ll need to set up SSO authentication. See <a href="./authentication">Modular embedding - authentication</a> for details on setting up JWT or SAML authentication.</p>
+<p>For authentication setup including API keys for local testing, SSO with JWT/SAML, and cross-domain configuration, see <a href="./authentication">Modular embedding - authentication</a>.</p>
 
 
         <div>
