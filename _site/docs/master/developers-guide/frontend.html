@@ -5462,6 +5462,7 @@ Roadmap</a>
 <h2 id="redux">Redux</h2>
 
 <p>We use Redux for global state. You will find domain-specific actions, reducers, and selectors generally grouped with the components that use them. e.g:</p>
+
 <ul>
   <li><a href="https://github.com/metabase/metabase/tree/master/frontend/src/metabase/query_builder">query_builder</a></li>
   <li><a href="https://github.com/metabase/metabase/tree/master/frontend/src/metabase/dashboard">dashboard</a></li>
@@ -5484,6 +5485,7 @@ Roadmap</a>
 <h2 id="styling">Styling</h2>
 
 <p>You’ll note several styling patterns in the codebase. Currently you should prefer</p>
+
 <ol>
   <li><a href="https://mantine.dev/styles/style-props/">Mantine Style Props</a> for most simple styling</li>
   <li><a href="https://github.com/css-modules/css-modules">CSS Modules</a> for more complex styling</li>
@@ -5495,7 +5497,7 @@ Roadmap</a>
 
 <h2 id="colors">Colors</h2>
 
-<p>You may not define new bespoke colors or use any color literals like <code class="language-plaintext highlighter-rouge">black</code> or <code class="language-plaintext highlighter-rouge">white</code>. Colors can be referenced directly in components using mantine color props like <code class="language-plaintext highlighter-rouge">c="text-primary"</code> or in css modules using variables <code class="language-plaintext highlighter-rouge">color: var(--mb-color-text-primary);</code> Using these colors ensures consistent visual design and user experience across both dark and light modes. The full palette is defined in <code class="language-plaintext highlighter-rouge">metabase/lib/colors.ts</code>.</p>
+<p>Colors should only be used in the form of mantine color props (primarily <code class="language-plaintext highlighter-rouge">c</code> and <code class="language-plaintext highlighter-rouge">bg</code>), or in css modules using variables eg: <code class="language-plaintext highlighter-rouge">color: var(--mb-color-text-primary);</code>. Using these colors ensures consistent visual design and user experience across both dark and light modes. Literal color values such as <code class="language-plaintext highlighter-rouge">black</code> or <code class="language-plaintext highlighter-rouge">#FFF</code> are not allowed, as well as using <code class="language-plaintext highlighter-rouge">color-mix</code> in your CSS modules to adjust the color or transparency of a variable. The full list of keys can be found in <code class="language-plaintext highlighter-rouge">frontend/src/metabase/lib/colors/types/color-keys.ts</code>, with their light and dark values found in <code class="language-plaintext highlighter-rouge">frontend/src/metabase/lib/colors/constants/themes</code>. If you find yourself requiring a color that does not already exist but is present in designs, reach out to the design team for guidance.</p>
 
 <h2 id="unit-testing">Unit testing</h2>
 
@@ -5616,7 +5618,6 @@ Roadmap</a>
 <span class="c1">// 😍</span>
 <span class="kd">const</span> <span class="nx">output</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="dl">"</span><span class="s2">{0} and {2} are people's names, and {1} is a place</span><span class="dl">"</span><span class="p">)</span>
   <span class="p">.</span><span class="nx">t</span><span class="s2">`</span><span class="p">${</span><span class="nx">name</span><span class="p">}</span><span class="s2"> is going to the </span><span class="p">${</span><span class="nx">place</span><span class="p">}</span><span class="s2"> with </span><span class="p">${</span><span class="nx">anotherName</span><span class="p">}</span><span class="s2">`</span><span class="p">;</span>
-
 </code></pre></div></div>
 
 <h2 id="style-guide">Style Guide</h2>
@@ -5660,6 +5661,7 @@ Roadmap</a>
 </span>  <span class="p">);</span>
 <span class="p">}</span>
 </code></pre></div></div>
+
 <ul>
   <li>Avoid complex logical expressions inside of if statements. Often extracting logic to a well-named boolean variable can make code much easier to read.</li>
 </ul>
@@ -5676,6 +5678,7 @@ Roadmap</a>
   <span class="c1">// ...</span>
 <span class="p">}</span>
 </code></pre></div></div>
+
 <ul>
   <li>Use ALL_CAPS for constants</li>
 </ul>
@@ -5689,6 +5692,7 @@ Roadmap</a>
   <span class="na">abc</span><span class="p">:</span> <span class="mi">123</span><span class="p">,</span>
 <span class="p">};</span>
 </code></pre></div></div>
+
 <ul>
   <li>Avoid magic strings and numbers</li>
 </ul>
@@ -5700,25 +5704,24 @@ Roadmap</a>
 <span class="k">export</span> <span class="kd">const</span> <span class="nx">MAX_NUM_OPTIONS</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
 <span class="kd">const</span> <span class="nx">options</span> <span class="o">=</span> <span class="nx">_</span><span class="p">.</span><span class="nf">times</span><span class="p">(</span><span class="nx">MAX_NUM_OPTIONS</span><span class="p">,</span>  <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">...);</span>
 </code></pre></div></div>
-<ul>
-  <li>
-    <p>prefer declarative over imperative patterns where possible. You should write code with other engineers in mind as other engineers will spend more time reading than you spend writing (and re-writing). Code is more readable when it tells the computer “what to do” versus “how to do.” Avoid imperative patterns like for loops:
-```javascript
-// don’t do this
-let foo = [];
-for (let i = 0; i &lt; list.length; i++) {
-if (list[i].bar === false) {
-  continue;
-}</p>
 
-    <p>foo.push(list[i]);
-}</p>
-  </li>
+<ul>
+  <li>prefer declarative over imperative patterns where possible. You should write code with other engineers in mind as other engineers will spend more time reading than you spend writing (and re-writing). Code is more readable when it tells the computer “what to do” versus “how to do.” Avoid imperative patterns like for loops:</li>
 </ul>
 
-<p>// do this
-const foo = list.filter((entry) =&gt; entry.bar !== false);
-```</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// don't do this</span>
+<span class="kd">let</span> <span class="nx">foo</span> <span class="o">=</span> <span class="p">[];</span>
+<span class="k">for </span><span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">list</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if </span><span class="p">(</span><span class="nx">list</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">bar</span> <span class="o">===</span> <span class="kc">false</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">continue</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="nx">foo</span><span class="p">.</span><span class="nf">push</span><span class="p">(</span><span class="nx">list</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span>
+<span class="p">}</span>
+
+<span class="c1">// do this</span>
+<span class="kd">const</span> <span class="nx">foo</span> <span class="o">=</span> <span class="nx">list</span><span class="p">.</span><span class="nf">filter</span><span class="p">((</span><span class="nx">entry</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">entry</span><span class="p">.</span><span class="nx">bar</span> <span class="o">!==</span> <span class="kc">false</span><span class="p">);</span>
+</code></pre></div></div>
 
 
         <div>

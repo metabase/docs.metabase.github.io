@@ -5584,6 +5584,8 @@ This flag can be used to run all specs within a folder, or to run multiple assor
 
 <h3 id="running-tests-that-depend-on-docker-images">Running tests that depend on Docker images</h3>
 
+<p>Due to the requirement to use privileged ports for some tests in hosted environments, it is not possible to utilize <strong>podman</strong> or the <strong>rootless Docker</strong>. Stick to the classic Docker, or use OrbStack.</p>
+
 <p>A large portion of our tests depend on the external services that are available through the Docker images. At the time of this writing, those are the three supported external QA databases, Webmail, Snowplow and LDAP servers. See <code class="language-plaintext highlighter-rouge">e2e/test/scenarios/docker-compose.yml</code> for up to date information. The default cypress command will spin up all necessary Docker containers for the tests to function properly. You can manually set up the e2e environment without them but be aware that you will run into test failures.</p>
 
 <h3 id="running-tests-with-snowplow-involved">Running tests with Snowplow involved</h3>

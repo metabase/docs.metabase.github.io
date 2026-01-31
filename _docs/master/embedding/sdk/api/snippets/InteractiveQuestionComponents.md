@@ -229,7 +229,9 @@ Provides a UI widget for downloading data in different formats (`CSV`, `XLSX`, `
 <!-- [<snippet downloadwidgetdropdown()>] -->
 
 ```ts
-DownloadWidgetDropdown: (props: PopoverProps) => Element;
+DownloadWidgetDropdown: (props: PopoverProps) =>
+  | null
+  | Element;
 ```
 
 **`Function`**
@@ -252,7 +254,8 @@ Provides a button that contains a dropdown that shows the `DownloadWidget`.
 
 <!-- [<snippet returns>] -->
 
-[`Element`](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/0b728411cd1dfb4bd26992bb35a73cf8edaa22e7/types/react/jsx-runtime.d.ts#L6)
+\| `null`
+\| [`Element`](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/0b728411cd1dfb4bd26992bb35a73cf8edaa22e7/types/react/jsx-runtime.d.ts#L6)
 
 ---
 
@@ -886,5 +889,29 @@ A button that triggers the visualization of the current question.
 
 \| `null`
 \| [`Element`](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/0b728411cd1dfb4bd26992bb35a73cf8edaa22e7/types/react/jsx-runtime.d.ts#L6)
+
+<!-- [<endsnippet returns>] -->
+
+## other
+
+<!-- [<snippet other>] -->
+
+<!-- [<endsnippet other>] -->
+
+### AlertsButton()
+
+<!-- [<snippet alertsbutton()>] -->
+
+```ts
+AlertsButton: () => Element;
+```
+
+<!-- [<endsnippet alertsbutton()>] -->
+
+#### Returns
+
+<!-- [<snippet returns>] -->
+
+[`Element`](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/0b728411cd1dfb4bd26992bb35a73cf8edaa22e7/types/react/jsx-runtime.d.ts#L6)
 
 <!-- [<endsnippet returns>] -->
