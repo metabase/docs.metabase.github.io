@@ -13,7 +13,7 @@ OUTPUT_FILE = 'llms.txt'
 # Sections to generate llms-{section}-full.txt for.
 # These huge files are used by AI tools like Cursor for RAG chunking and indexing.
 # Add more sections to let AI agents understand Metabase better.
-LLMS_FULL_TO_GENERATE = ['embedding'].freeze
+LLMS_FULL_TO_GENERATE = ['embedding', 'agent-api'].freeze
 
 # Paths to include in llms.txt generation.
 # 
@@ -41,7 +41,10 @@ INCLUDED_PATHS = [
 
   # Configuration reference
   'configuring-metabase/environment-variables.md',
-  'configuring-metabase/config-file.md'
+  'configuring-metabase/config-file.md',
+
+  # Agent API reference
+  'agent-api/'
 ].freeze
 
 # Paths to exclude from llms.txt generation (applied after allowlist)
