@@ -54,7 +54,7 @@
 <meta name="twitter:site" content="@metabase">
 
 <meta name="twitter:title" content="Driver interface changelog | Metabase Documentation">
-<meta name="twitter:description" content="Driver Interface Changelog Metabase 0.59.0   Added metabase.driver/llm-sql-dialect-resource multimethod. Returns the resource path for dialect-specific LLM prompt instructions, or nil if no dialect-specific instructions exist for this driver.   Added sql-jdbc.execute/db-type-name multimethod. Override this...">
+<meta name="twitter:description" content="Driver Interface Changelog Metabase 0.59.0   Added sql-jdbc.execute/db-type-name multimethod. Override this method to customize how your SQL JDBC driver retrieves database type names from result set metadata. See the :mysql implementation for an example of...">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -64,7 +64,7 @@
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://www.metabase.com/docs/master/developers-guide/driver-changelog">
 <meta name="title" property="og:title" content="Driver interface changelog | Metabase Documentation">
-<meta name="description" property="og:description" content="Driver Interface Changelog Metabase 0.59.0   Added metabase.driver/llm-sql-dialect-resource multimethod. Returns the resource path for dialect-specific LLM prompt instructions, or nil if no dialect-specific instructions exist for this driver.   Added sql-jdbc.execute/db-type-name multimethod. Override this...">
+<meta name="description" property="og:description" content="Driver Interface Changelog Metabase 0.59.0   Added sql-jdbc.execute/db-type-name multimethod. Override this method to customize how your SQL JDBC driver retrieves database type names from result set metadata. See the :mysql implementation for an example of...">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -803,13 +803,17 @@ Roadmap</a>
       <div class="menu-links-wrapper bg-neutral-95 blog-posts-wrapper">
         <span class="menu-heading">Recent Blog Posts</span>
         
-          <a class="w-100 post-with-image recent-blog-link mt-1" href="/blog/we-simplified-metabase-embedding">
+          <a class="w-100 post-with-image recent-blog-link mt-1" href="/blog/lessons-learned-building-ai-analytics-agents">
             <div class="d-flex align-items-center position-relative overflow-hidden rounded-2 mb-3" id="recent-blog-image-wrapper">
-              <img alt="Resources Image" class="position-absolute w-100" src="/images/posts/embedding-changes/modular-embedding.png" loading="lazy">
+              <img alt="Resources Image" class="position-absolute w-100" src="/images/posts/metabot-ai-talk-og.png" loading="lazy">
             </div>
-            <span class="h6 neutral-40 recent-blog-link-heading mb-3">We simplified embedding</span>
+            <span class="h6 neutral-40 recent-blog-link-heading mb-3">Lessons learned from building AI analytics agents: build for chaos</span>
           </a>
         
+        
+          <a class="w-100 recent-blog-link" href="/blog/we-simplified-metabase-embedding">
+            <span class="h6 neutral-40 recent-blog-link-heading mb-3">We simplified embedding</span>
+          </a>
         
           <a class="w-100 recent-blog-link" href="/blog/data-analyst-roadmap">
             <span class="h6 neutral-40 recent-blog-link-heading mb-3">Become a data analyst in 2026: a practical roadmap</span>
@@ -821,10 +825,6 @@ Roadmap</a>
         
           <a class="w-100 recent-blog-link" href="/blog/metabase-community-data-stack-report-2025-key-analysis">
             <span class="h6 neutral-40 recent-blog-link-heading mb-3">Metabase Community Data Stack Report 2025</span>
-          </a>
-        
-          <a class="w-100 recent-blog-link" href="/blog/story-behind-ai-dataset-generator">
-            <span class="h6 neutral-40 recent-blog-link-heading mb-3">The story behind our AI Dataset Generator</span>
           </a>
         
       </div>
@@ -5448,10 +5448,21 @@ Roadmap</a>
 
 <ul>
   <li>
+    <p>Added <code class="language-plaintext highlighter-rouge">sql-jdbc.execute/db-type-name</code> multimethod. Override this method to customize how your SQL JDBC driver
+retrieves database type names from result set metadata. See the <code class="language-plaintext highlighter-rouge">:mysql</code> implementation for an example of remapping
+<code class="language-plaintext highlighter-rouge">TINYINT</code> to <code class="language-plaintext highlighter-rouge">BIT</code> based on precision.</p>
+  </li>
+  <li>
     <p>Added <code class="language-plaintext highlighter-rouge">metabase.driver/llm-sql-dialect-resource</code> multimethod. Returns the resource path for dialect-specific LLM prompt instructions, or nil if no dialect-specific instructions exist for this driver.</p>
   </li>
   <li>
-    <p>Added <code class="language-plaintext highlighter-rouge">sql-jdbc.execute/db-type-name</code> multimethod. Override this if something more than the default is needed in your sql-jdbc-based driver. See the <code class="language-plaintext highlighter-rouge">:mysql</code> implementation as an example.</p>
+    <p>Added workspace isolation multimethods for the enterprise workspaces feature:</p>
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">init-workspace-isolation!</code>    - Create an isolated schema or database with user credentials for workspace usage.</li>
+      <li><code class="language-plaintext highlighter-rouge">destroy-workspace-isolation!</code> - Destroy all database resources created for workspace isolation.</li>
+      <li><code class="language-plaintext highlighter-rouge">grant-workspace-read-access!</code> - Grant read access on specified tables to a workspace’s isolated user.</li>
+      <li><code class="language-plaintext highlighter-rouge">check-isolation-permissions</code>  - Test whether the database connection has sufficient permissions.</li>
+    </ul>
   </li>
 </ul>
 
@@ -5497,11 +5508,19 @@ support lookaheads or lookbehinds, add a <code class="language-plaintext highlig
 longer include parent column names for drivers like MongoDB – use <code class="language-plaintext highlighter-rouge">qp.add.nfc-path</code> instead to qualify the
 <code class="language-plaintext highlighter-rouge">qp.add.source-column-alias</code> with parent column names as needed.</p>
   </li>
-  <li>
-    <p>Added metabase.driver/compile-transform, metabase.driver/compile-drop-table, metabase.driver/execute-raw-queries!,
-metabase.driver/run-transform!, metabase.driver/drop-transform-target!, metabase.driver/native-query-deps,
-metabase.driver/connection-spec, metabase.driver/table-exists?, metabase.driver.sql/normalize-name,
-and metabase.driver.sql/default-schema to implement sql transforms.</p>
+  <li>Added the following driver methods to implement sql transforms.
+    <ul>
+      <li>metabase.driver/compile-drop-table</li>
+      <li>metabase.driver/compile-transform</li>
+      <li>metabase.driver/connection-spec</li>
+      <li>metabase.driver/drop-transform-target!</li>
+      <li>metabase.driver/execute-raw-queries!</li>
+      <li>metabase.driver/native-query-deps</li>
+      <li>metabase.driver/run-transform!</li>
+      <li>metabase.driver/table-exists?</li>
+      <li>metabase.driver.sql/default-schema</li>
+      <li>metabase.driver.sql/normalize-name</li>
+    </ul>
   </li>
   <li>
     <p>Added <code class="language-plaintext highlighter-rouge">metabase.driver/rename-tables!*</code> multimethod for atomic table renaming operations. Takes a map of {from-table to-table}
@@ -5519,8 +5538,17 @@ which should be implemented by drivers that support <code class="language-plaint
     <p>Added <code class="language-plaintext highlighter-rouge">metabase.driver/type-&gt;database-type</code> multimethod that returns the database type for a given Metabase
 type (from the type hierarchy) as a HoneySQL spec. This method handles general Metabase base types.</p>
   </li>
-  <li>
-    <p>Added driver multimethods driver/native-result-metadata, driver/validate-native-query-fields, driver.sql/resolve-field, driver.sql.normalize-unquoted-name, driver.sql.normalize/reserved-literal, driver.sql.references/find-used-fields, driver.sql.references/find-returned-fields, and driver.sql.references/field-references-impl for use with the :dependencies/native feature.</p>
+  <li>Added the following driver multimethods for use with the :dependencies/native feature:
+    <ul>
+      <li>driver/native-result-metadata</li>
+      <li>driver/validate-native-query-fields</li>
+      <li>driver.sql.normalize-unquoted-name</li>
+      <li>driver.sql.normalize/reserved-literal</li>
+      <li>driver.sql.references/field-references-impl</li>
+      <li>driver.sql.references/find-returned-fields</li>
+      <li>driver.sql.references/find-used-fields</li>
+      <li>driver.sql/resolve-field</li>
+    </ul>
   </li>
   <li>
     <p>Added <code class="language-plaintext highlighter-rouge">metabase.driver/insert-from-source!</code> multimethod that abstracts data insertion from various sources
@@ -5544,13 +5572,11 @@ instead of just the top-level message as a string.</p>
 you can pass to [[metabase.lib.core/order-by]] – for example a Lib <code class="language-plaintext highlighter-rouge">:metadata/column</code> or an [MBQL 5]
 <code class="language-plaintext highlighter-rouge">metabase.driver-api.core/order-by-clause</code>.</p>
   </li>
-  <li>
-    <p><code class="language-plaintext highlighter-rouge">metabase.driver-api.core/nest-query</code> no longer automatically calls <code class="language-plaintext highlighter-rouge">metabase.driver-api.core/add-alias-info</code> on its
+  <li><code class="language-plaintext highlighter-rouge">metabase.driver-api.core/nest-query</code> no longer automatically calls <code class="language-plaintext highlighter-rouge">metabase.driver-api.core/add-alias-info</code> on its
 results, but it also no longer expect its input to have this information. If you were using both of these tools in
 your driver, make change the order in which the are applied so <code class="language-plaintext highlighter-rouge">nest-query</code> happens first, followed by
 <code class="language-plaintext highlighter-rouge">add-alias-info</code>. Note that drivers deriving from <code class="language-plaintext highlighter-rouge">:sql</code> do not need to make any changes, since this is done by the
-base <code class="language-plaintext highlighter-rouge">:sql</code> driver implementation.</p>
-  </li>
+base <code class="language-plaintext highlighter-rouge">:sql</code> driver implementation.</li>
 </ul>
 
 <h2 id="metabase-0563">Metabase 0.56.3</h2>
