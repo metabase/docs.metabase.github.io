@@ -269,7 +269,7 @@ def get_version_detection_instructions
   <<~INSTRUCTIONS.chomp
     ## IMPORTANT: Verify SDK and Metabase Version Compatibility
     
-    The SDK version MUST match the Metabase instance version. Mismatched versions can cause errors. NEVER assume Metabase version when looking up documentation, check first if unsure.
+    The SDK version MUST match the Metabase instance version. Mismatched versions can cause errors. When looking up documentation, ALWAYS check the Metabase version.
     
     **Step 1: Ask the user for their Metabase instance URL**
     
