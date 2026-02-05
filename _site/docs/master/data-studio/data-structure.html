@@ -6,7 +6,7 @@
   <meta content="frame-ancestors 'none'" http-equiv="Content-Security-Policy">
   <meta content="deny" http-equiv="X-Frame-Options">
     
-  <link href="https://www.metabase.com/docs/master/data-modeling/python-transforms" rel="canonical">
+  <link href="https://www.metabase.com/docs/master/data-studio/data-structure" rel="canonical">
   
 
   <script type="text/javascript">
@@ -49,12 +49,12 @@
 
 
 
-<title>Python transforms | Metabase Documentation</title>
+<title>Data structure | Metabase Documentation</title>
 <!-- Twitter cards -->
 <meta name="twitter:site" content="@metabase">
 
-<meta name="twitter:title" content="Python transforms | Metabase Documentation">
-<meta name="twitter:description" content="Use Python to wrangle your data in Metabase and write the results back to your database.">
+<meta name="twitter:title" content="Data structure | Metabase Documentation">
+<meta name="twitter:description" content="See all the tables in your Metabase, edit and sync metadata, edit column types, set visibility, publish tables, and more.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -62,9 +62,9 @@
 <!-- Open Graph metadata -->
 <meta property="og:site_name" content="Metabase | Business Intelligence, Dashboards, and Data Visualization">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://www.metabase.com/docs/master/data-modeling/python-transforms">
-<meta name="title" property="og:title" content="Python transforms | Metabase Documentation">
-<meta name="description" property="og:description" content="Use Python to wrangle your data in Metabase and write the results back to your database.">
+<meta property="og:url" content="https://www.metabase.com/docs/master/data-studio/data-structure">
+<meta name="title" property="og:title" content="Data structure | Metabase Documentation">
+<meta name="description" property="og:description" content="See all the tables in your Metabase, edit and sync metadata, edit column types, set visibility, publish tables, and more.">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -5291,7 +5291,7 @@ Roadmap</a>
 
             
             
-                <li class="breadcrumb-item"><a class="blue-60" href="/docs/master/data-modeling/start">Data Modeling</a></li>
+                <li class="breadcrumb-item"><a class="blue-60" href="/docs/master/data-studio/start">Data Studio</a></li>
             
             
         </ol>
@@ -5438,110 +5438,183 @@ Roadmap</a>
 </div>
 
 
-        <h1 id="python-transforms">Python transforms</h1>
+        <h2 id="data-structure">Data structure</h2>
 
-<blockquote>
-  <p>Python transforms are only available on Metabase Cloud <a href="/pricing">Pro and Enterprise plans</a> with the <strong>Python execution add-on</strong>.</p>
-</blockquote>
+<p><em>Data studio &gt; Data structure</em></p>
 
-<p>You can write a Python script to transform the data from your database, and write the result back into the database as another table.</p>
+<p>The <strong>Data structure</strong> area of <a href="overview">Data Studio</a> is where you can manage table metadata to make it easier for people to work with your data.</p>
 
-<p>For general information about Metabase transforms, see <a href="transforms">Transforms</a>.</p>
-
-<h2 id="create-a-python-transform">Create a Python transform</h2>
-
-<p>To write Python transforms, you’ll need to have the Python execution add-on. Once you’ve enabled the add-on:</p>
-
-<ol>
-  <li>
-    <p>Go to <strong>Admin settings &gt; Transforms</strong> and click <strong>Create a transform &gt; Python script</strong>.</p>
-  </li>
-  <li>
-    <p>Select a database that has the data you want to transform. See <a href="transforms#databases-that-support-transforms">Databases that support transforms</a>.</p>
-  </li>
-  <li>
-    <p>Select one or more tables with the data that you’d like to transform. Optionally, assign aliases to the tables.</p>
-
-    <p>The tables you select will be available as DataFrames in your Python code with your chosen aliases, and will be passed to the <code class="language-plaintext highlighter-rouge">transform()</code> function as parameters.</p>
-  </li>
-  <li>Create a function <code class="language-plaintext highlighter-rouge">transform()</code> that does the data wrangling and returns a <a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html">pandas DataFrame</a>. The DataFrame returned by the function will be written back to your database when the transform is run.</li>
-  <li>Click <strong>Save</strong> in the top right corner.</li>
-  <li>
-    <p>Select a target schema for your transform and enter a name for the target table. Metabase will write the results of the transform into this table.</p>
-
-    <p>You can only write back to the same database as you chose for the transform source.</p>
-  </li>
-  <li>Optionally, assign tags to your transforms. Tags are used by <a href="transforms#jobs-and-tags">jobs</a> to run transforms on schedule.</li>
-</ol>
-
-<h2 id="tips-for-python-transforms">Tips for Python transforms</h2>
+<p>You can do things like:</p>
 
 <ul>
-  <li>A Python transform must have a function <code class="language-plaintext highlighter-rouge">transform()</code> that returns a single <code class="language-plaintext highlighter-rouge">pandas</code> DataFrame.</li>
-  <li>You can use aliases to include tables from your database as DataFrames inside the <code class="language-plaintext highlighter-rouge">transform()</code> function. The tables will <em>only</em> be available in the transform function. Other functions won’t have access to the tables.</li>
-  <li>Only <code class="language-plaintext highlighter-rouge">pandas</code> will be imported by default, but you can import <a href="#available-python-packages">certain other packages</a>. You can also use functions from the <a href="#common-python-library">common library</a>.</li>
-  <li>You’ll see the output of <code class="language-plaintext highlighter-rouge">print()</code> statements in the transform’s logs.</li>
-  <li>Metabase won’t write DataFrame indexes to the database, including indexes created by <code class="language-plaintext highlighter-rouge">groupby()</code>. If you’re using a custom index that you’d like to include in the target table, you’ll need to <a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.reset_index.html">reset index</a> on your DataFrame inside the <code class="language-plaintext highlighter-rouge">transform()</code> function.</li>
+  <li>Browse all the tables in your Metabase</li>
+  <li>Publish tables to the Library</li>
+  <li>Sync and scan tables</li>
+  <li>Assign owners and other attributes to tables</li>
+  <li>Set table and field visibility</li>
+  <li>Edit table and column names and types</li>
+  <li>Set data formatting settings</li>
+  <li>Create measures and segments</li>
 </ul>
 
-<h2 id="run-a-python-transform">Run a Python transform</h2>
+<h2 id="permissions-for-data-structure">Permissions for Data Structure</h2>
 
-<p>See <a href="transforms#run-a-transform">Run a transform</a>. You’ll see logs for a transform run (including the output of any <code class="language-plaintext highlighter-rouge">print()</code> statements you included in the <code class="language-plaintext highlighter-rouge">transform()</code> code) on the transform’s page.</p>
+<p>To access the Data Structure area of Data Studio, you need to be a members of the Admin group or the Data Analyst group (Data Analyst group is only available on Pro/Enterprise plans).</p>
 
-<h2 id="available-python-packages">Available Python packages</h2>
+<p>People in the Data Analyst group will have table metadata and data structure access to <em>all</em> tables in your Metabase, even if they have limited View Data permissions for those tables. If you only want to give someone access to table metadata for some - but not all - tables, use the table metadata permissions and access the Table Metadata through Admin &gt; Table metadata instead of Data Studio.</p>
 
-<p>You can import any of the following Python packages in Python transforms:</p>
+<h2 id="browse-tables">Browse tables</h2>
+
+<p>The Data Structure tab gives you an overview of all tables in all databases connected to your Metabase, together with their owner, row count, and published state. For now, Metabase only displays row counts for PostgreSQL tables.</p>
+
+<p>You can search for table names, but the search will only match beginnings of words in table names. So for example, if you search for “base”, results will include names like “Baseball stats” and “All your base are belong to us”, but the results won’t include tables like “Metabase secrets”.</p>
+
+<p>You can also filter tables by attributes like owners, visibility, or source - for example, if you wanted to find all hidden tables, or all tables created from CSV uploads.</p>
+
+<p>You can set <a href="#table-attributes">table attributes</a>, <a href="#table-and-field-metadata">edit metadata</a>, <a href="#publishing-and-unpublishing-tables">publish the table</a> or create <a href="#segments">segments</a> or <a href="#measures">measures</a> on the table. You can also select tables in bulk to publish or assign attributes (including visibility) to multiple tables at once.</p>
+
+<h2 id="publishing-and-unpublishing-tables">Publishing and unpublishing tables</h2>
+
+<div class="bootstrap">
+  <div class="plans-blockquote bg-blue-95 rounded-3 p-6 d-flex flex-row border border-1 border-primary">
+    <svg class="" width="24" height="24" viewBox="0 0 26 26" fill="none">
+  <path d="M12 13V15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
+  <path d="M12 10C12.5523 10 13 9.55228 13 9C13 8.44772 12.5523 8 12 8C11.4477 8 11 8.44772 11 9C11 9.55228 11.4477 10 12 10Z" fill="#509EE3"></path>
+  <path d="M12 19.25C16.0041 19.25 19.25 16.0041 19.25 12C19.25 7.99594 16.0041 4.75 12 4.75C7.99594 4.75 4.75 7.99594 4.75 12C4.75 16.0041 7.99594 19.25 12 19.25Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
+</svg>
+
+    
+    
+    
+      
+
+    <p class="m-0 ms-2 paragraph-5 neutral-40">
+       Publishing tables to the Library is only available on
+      <a class="fw-bold" href="/product/pro">Pro</a> and
+      <a class="fw-bold link-purple" href="/product/enterprise">Enterprise</a>
+      plans  (both self-hosted and on Metabase Cloud).
+    </p>
+  </div>
+</div>
+
+<p>Once you select a table in Data Structure, you can publish the table to add it to the Library. The Library is a special collection that helps you create a source of truth for analytics by providing a centrally managed set of curated content.</p>
+
+<p>See <a href="./library#publishing-tables">Publishing tables</a> in the <a href="./library">Library docs</a>.</p>
+
+<h2 id="sync-settings">Sync settings</h2>
+
+<p>You can trigger manual re-sync of the table schema. Re-syncing can be useful if you have added or removed columns from the table, and you don’t see those changes reflected in Metabase.</p>
+
+<p>You can also re-scan field values for the table or discard cached field values, which is useful if you need to retrieve updated values for dropdown filters.</p>
+
+<p>See <a href="../databases/sync-scan">syncs and scans</a> for more information.</p>
+
+<h2 id="table-attributes">Table attributes</h2>
+
+<h3 id="owner">Owner</h3>
+
+<p>Table <strong>owner</strong> can be a Metabase user or an arbitrary email address. Use this owner attribute to let people know who on your team is responsible for which table.</p>
+
+<p>Table owner attribute is not exposed to people outside Data Studio.</p>
+
+<h3 id="visibility-layer">Visibility layer</h3>
+
+<p>The <strong>Visibility layer</strong> attribute controls whether people in your Metabase can see the table when building new queries. You can also use it to tag tables according to how ready for end-user consumption they are (for example, if you’re using medallion architecture).</p>
+
+<p>The options are:</p>
 
 <ul>
-  <li><a href="https://pandas.pydata.org/"><code class="language-plaintext highlighter-rouge">pandas</code></a>;</li>
-  <li>Any dependencies of <code class="language-plaintext highlighter-rouge">pandas</code>, e.g. <a href="https://numpy.org/"><code class="language-plaintext highlighter-rouge">numpy</code></a>;</li>
-  <li>Any packages from the <a href="https://docs.python.org/3/library/index.html">Python standard library</a>, e.g. <code class="language-plaintext highlighter-rouge">json</code> or <code class="language-plaintext highlighter-rouge">datetime</code>.</li>
+  <li><strong>Hidden</strong>: the table isn’t available in the query builder and isn’t <a href="../databases/sync-scan">synced</a>. People with SQL access can still query the table.</li>
+  <li><strong>Internal</strong>: table visible in the query builder and synced.</li>
+  <li><strong>Final</strong>: table is visible in the query builder and synced.</li>
 </ul>
 
-<p>Due to security considerations for the Python execution environment, you won’t be able to install or import any other packages.</p>
+<p>Table visibility layer can be used as a tool to improve user experience of people working in you Metabase, and it should <em>not be used to control access</em> - use <a href="../permissions/data">data permissions</a> to control access instead.</p>
 
-<p>You can also write your own functions and add them to the <a href="#common-python-library">common library</a> in Metabase, which will be available across all your Python transforms.</p>
+<h3 id="entity-type">Entity type</h3>
 
-<h2 id="common-python-library">Common Python library</h2>
+<p>You can use <strong>entity type</strong> to tell people what kind of information is contained in the table, for example “Transaction” or “Event”. Metabase will try to detect and automatically assign appropriate entity types (like entity type “Person” for a <code class="language-plaintext highlighter-rouge">Users</code> table”), but you can always change it later.</p>
 
-<p>If you have functions or classes you’d like to reuse across multiple transforms, you can add them to the common library that will be available across all Python transforms.</p>
+<p>Outside Data Studio, entity type determines the record icons in the <a href="../exploration-and-organization/exploration#view-details-of-a-record">details view</a>.</p>
 
-<p>To add things to the common Python library:</p>
+<h3 id="source">Source</h3>
+
+<p><strong>Source</strong> describes where the data comes from. It can be useful when you want to identify tables that are, for example, ingested tables, or tables coming from CSV uploads.</p>
+
+<p>Metabase will automatically assign the source “Metabase transforms” to tables created by <a href="./transforms/transforms-overview">Metabase transforms</a>, and source “Uploaded data” to tables created by new <a href="../databases/uploads">CSV uploads</a> (CSV uploads that you created before getting Data Studio will not be automatically tagged).</p>
+
+<h2 id="table-and-field-metadata">Table and field metadata</h2>
+
+<p>You can edit field descriptions, types, visibility settings, and formatting. For example, you can choose to display a filter on a field as a dropdown, or display days as <code class="language-plaintext highlighter-rouge">21.03.2026</code> instead of <code class="language-plaintext highlighter-rouge">03/21/2026</code>.</p>
+
+<p>See <a href="../data-modeling/metadata-editing">Table metadata editing</a>.</p>
+
+<h2 id="segments">Segments</h2>
+
+<p>Segments are saved filters on tables. You can use segments to create an official definition of a subset of customers, users, or products that everyone on your team can refer to consistently (for example what constitutes an “active user”).</p>
+
+<p>People will see segments as options in the Filter block of the <a href="../questions/query-builder/editor">query builder</a>.</p>
+
+<p>For now, in addition to Data Studio, segments can also be managed through <strong>Admin settings &gt; Table Metadata</strong>, see <a href="../data-modeling/segments">Segments in table metadata</a>.</p>
+
+<p>To see all segments on a table, select the table in <strong>Data Structure</strong> and switch to <strong>Segments</strong> tab.</p>
+
+<h3 id="create-a-segment">Create a segment</h3>
 
 <ol>
-  <li>
-    <p>Go to <strong>Admin &gt; Transforms &gt; Python library</strong>.</p>
-  </li>
-  <li>
-    <p>Add a Python function or class.</p>
-
-    <p>Functions in this library can’t access any data in your database.</p>
-  </li>
+  <li>Select the table in <strong>Data structure</strong>.</li>
+  <li>Scroll down and switch to <strong>Segments</strong>.</li>
+  <li>Click on <strong>+New Segment</strong>. You’ll see an abridged version of Metabase’s query builder.</li>
+  <li>Add the filters describing the segment (e.g. <code class="language-plaintext highlighter-rouge">Active = true</code>) and name the segment.</li>
+  <li>To preview the records in the segment, click on the <strong>three dots</strong> icon next to the segment’s name and select <strong>Preview</strong>.</li>
+  <li>Save.</li>
 </ol>
 
-<p>To use functions or classes from your Python library:</p>
+<h3 id="use-a-segment-in-the-query-builder">Use a segment in the query builder</h3>
+
+<p>To use a segment in the query builder, start a new question from the table that the segment is based on, and select the segment in the <strong>Filter</strong> block. The segment’s filters will be applied behind the scenes.</p>
+
+<h3 id="delete-a-segment">Delete a segment</h3>
+
+<p>Deleting a segment will not break questions using it. The questions that use the segment will keep using the same filters as before.</p>
 
 <ol>
-  <li>
-    <p>When editing your Python transform script, check <strong>Import common library</strong> in the top right.</p>
-
-    <p>This will add an aptly named import <code class="language-plaintext highlighter-rouge">import common</code> to the transform’s code.</p>
-  </li>
-  <li>
-    <p>Reference functions or classes from the common library in your code like <code class="language-plaintext highlighter-rouge">common.manifest_kittens()</code>.</p>
-  </li>
+  <li>Select the table in <strong>Data structure</strong>.</li>
+  <li>Scroll down and switch to <strong>Segments</strong> and choose your segment.</li>
+  <li>On the segment’s page, click on the <strong>three dots</strong> icon next to the segment’s name and select <strong>Remove segment</strong>.</li>
 </ol>
 
-<h2 id="current-limitations-of-python-transforms">Current limitations of Python transforms</h2>
+<h2 id="measures">Measures</h2>
 
-<ul>
-  <li>Currently, Python transforms are only available on Metabase Cloud.</li>
-  <li>The transform function must return a single <code class="language-plaintext highlighter-rouge">pandas</code> DataFrame. Other data manipulation and DataFrame libraries like <code class="language-plaintext highlighter-rouge">polars</code> or <code class="language-plaintext highlighter-rouge">pyspark</code> are not supported.</li>
-  <li>DataFrame indexes, including indexes created by <code class="language-plaintext highlighter-rouge">groupby()</code>, are ignored from writing back to the database. If you’re using a custom index that you’d like to include in the target table, you’ll need to <a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.reset_index.html">reset index</a> on your DataFrame inside the <code class="language-plaintext highlighter-rouge">transform()</code> function to make the index into a real column.</li>
-  <li>You can’t preview the results of a Python transform.</li>
-  <li>Only a <a href="#available-python-packages">limited set of packages</a> are available for import. You can’t install additional packages.</li>
-  <li>Because Python transforms use <code class="language-plaintext highlighter-rouge">pandas</code>, all data manipulation is done in memory. The available memory is determined by the Python execution add-on. For large datasets, consider using <a href="transforms#query-based-transforms">query-based transforms</a> that run in your database.</li>
-</ul>
+<p>Measures are saved aggregations on tables. You can use measures to create an official saved calculation, like what “Net Promoter Score” is calculated.</p>
+
+<p>People will see measures as options in the Summarize block of the <a href="../questions/query-builder/editor">query builder</a>.</p>
+
+<p>To see all measures on a table, select the table in <strong>Data structure</strong> and switch to <strong>Measures</strong> tab.</p>
+
+<h3 id="create-a-measure">Create a measure</h3>
+
+<ol>
+  <li>Select the table in <strong>Data structure</strong>.</li>
+  <li>Scroll down and switch to <strong>Measures</strong>.</li>
+  <li>Click on <strong>+New measure</strong>. You’ll see an abridged version of Metabase’s query builder that focuses on aggregation.</li>
+  <li>Add your aggregation. For more complex aggregations, check out <a href="../questions/query-builder/expressions">custom expressions</a>.</li>
+  <li>To preview the results of the measure, click on the <strong>three dots</strong> icon next to the measure’s name and select <strong>Preview</strong>.</li>
+</ol>
+
+<h3 id="use-a-measure-in-the-query-builder">Use a measure in the query builder</h3>
+
+<p>To use a measure in the query builder, start a new question from the table that the measure is based on, and select the measure in the <strong>Summarize</strong> block. Measure’s saved aggregation will be applied behind the scenes. You can use breakouts with a saved measure.</p>
+
+<h3 id="delete-a-measure">Delete a measure</h3>
+
+<p>Deleting a measure will not break questions using it. The questions that use the measure will keep using the same aggregations as before.</p>
+
+<ol>
+  <li>Select the table in <strong>Data structure</strong>.</li>
+  <li>Scroll down and switch to <strong>Measures</strong> and choose your measure.</li>
+  <li>On the measure’s page, click on the <strong>three dots</strong> icon next to the measure’s name and select <strong>Remove measure</strong>.</li>
+</ol>
 
 
         <div>
@@ -5595,7 +5668,7 @@ Roadmap</a>
 
   
     <span class="paragraph-6 fs-13 neutral-60" id="page-feedback-footer">
-      Want to improve these docs? <a href="https://github.com/metabase/metabase/blob/master/docs/data-modeling/python-transforms.md" target="_blank">Propose a change.</a>
+      Want to improve these docs? <a href="https://github.com/metabase/metabase/blob/master/docs/data-studio/data-structure.md" target="_blank">Propose a change.</a>
     </span>
   
 </div>
@@ -5617,8 +5690,8 @@ Roadmap</a>
 <script type="text/javascript" src="/js/position-feedback-widget.js"></script>
 
 <script>
-  const pageTitle = `Python transforms`;
-  const pageURL = '/docs/master/data-modeling/python-transforms';
+  const pageTitle = `Data structure`;
+  const pageURL = '/docs/master/data-studio/data-structure';
   const pageURLSplit = pageURL.split('/');
 
   let pageURLPrefix = '/' + pageURLSplit[1] + '/' + pageURLSplit[2];

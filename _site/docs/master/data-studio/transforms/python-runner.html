@@ -6,7 +6,7 @@
   <meta content="frame-ancestors 'none'" http-equiv="Content-Security-Policy">
   <meta content="deny" http-equiv="X-Frame-Options">
     
-  <link href="https://www.metabase.com/docs/master/installation-and-operation/remote-sync" rel="canonical">
+  <link href="https://www.metabase.com/docs/master/data-studio/transforms/python-runner" rel="canonical">
   
 
   <script type="text/javascript">
@@ -49,12 +49,12 @@
 
 
 
-<title>Remote sync | Metabase Documentation</title>
+<title>Python runner | Metabase Documentation</title>
 <!-- Twitter cards -->
 <meta name="twitter:site" content="@metabase">
 
-<meta name="twitter:title" content="Remote sync | Metabase Documentation">
-<meta name="twitter:description" content="Version control your dashboards, questions, and transforms. Sync your Library and other collections between development and production.">
+<meta name="twitter:title" content="Python runner | Metabase Documentation">
+<meta name="twitter:description" content="Configure self-hosted Python execution environment to run Python transforms in Metabase.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -62,9 +62,9 @@
 <!-- Open Graph metadata -->
 <meta property="og:site_name" content="Metabase | Business Intelligence, Dashboards, and Data Visualization">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://www.metabase.com/docs/master/installation-and-operation/remote-sync">
-<meta name="title" property="og:title" content="Remote sync | Metabase Documentation">
-<meta name="description" property="og:description" content="Version control your dashboards, questions, and transforms. Sync your Library and other collections between development and production.">
+<meta property="og:url" content="https://www.metabase.com/docs/master/data-studio/transforms/python-runner">
+<meta name="title" property="og:title" content="Python runner | Metabase Documentation">
+<meta name="description" property="og:description" content="Configure self-hosted Python execution environment to run Python transforms in Metabase.">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -4281,7 +4281,7 @@ Roadmap</a>
 
       
 
-      <li class="expanded">
+      <li class="">
         <a href="/docs/master/installation-and-operation/start" class="">
         Operations and monitoring
 
@@ -4380,7 +4380,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/master/installation-and-operation/remote-sync" class="selected">
+                <a href="/docs/master/installation-and-operation/remote-sync" class="">
                   Remote Sync
 
                   
@@ -5291,7 +5291,7 @@ Roadmap</a>
 
             
             
-                <li class="breadcrumb-item"><a class="blue-60" href="/docs/master/installation-and-operation/start">Installation and Operation</a></li>
+                <li class="breadcrumb-item"><a class="blue-60" href="/docs/master/data-studio/start">Data Studio</a></li>
             
             
         </ol>
@@ -5438,538 +5438,262 @@ Roadmap</a>
 </div>
 
 
-        <h1 id="remote-sync">Remote sync</h1>
+        <h1 id="python-runner">Python runner</h1>
 
-<div class="bootstrap">
-  <div class="plans-blockquote bg-blue-95 rounded-3 p-6 d-flex flex-row border border-1 border-primary">
-    <svg class="" width="24" height="24" viewBox="0 0 26 26" fill="none">
-  <path d="M12 13V15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
-  <path d="M12 10C12.5523 10 13 9.55228 13 9C13 8.44772 12.5523 8 12 8C11.4477 8 11 8.44772 11 9C11 9.55228 11.4477 10 12 10Z" fill="#509EE3"></path>
-  <path d="M12 19.25C16.0041 19.25 19.25 16.0041 19.25 12C19.25 7.99594 16.0041 4.75 12 4.75C7.99594 4.75 4.75 7.99594 4.75 12C4.75 16.0041 7.99594 19.25 12 19.25Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
-</svg>
+<blockquote>
+  <p>Self-hosted Python transforms require self-hosted Pro or Enterprise plan with the Transforms add-on.</p>
+</blockquote>
 
-    
-    
-    
-      
+<p>To run Python transforms from a self-hosted Metabase, you’ll need to configure a separate self-hosted execution environment. If you’re using Metabase Cloud, you’ll need to buy the Transforms add-on.</p>
 
-    <p class="m-0 ms-2 paragraph-5 neutral-40">
-       Remote sync is only available on
-      <a class="fw-bold" href="/product/pro">Pro</a> and
-      <a class="fw-bold link-purple" href="/product/enterprise">Enterprise</a>
-      plans  (both self-hosted and on Metabase Cloud).
-    </p>
-  </div>
-</div>
-
-<h2 id="overview">Overview</h2>
-
-<p>Remote Sync lets you develop analytics content in your Metabase and automatically deploy it to a read-only production Metabase through Git. Remote Sync can sync:</p>
+<h2 id="prerequisites">Prerequisites</h2>
 
 <ul>
-  <li>Top-level collections (dashboards, questions, models, metrics)</li>
-  <li>Library content (published tables and their segments and measures)</li>
-  <li>Snippets</li>
-  <li>Transforms</li>
+  <li>Docker installed and running.</li>
+  <li><strong>Metabase Pro or Enterprise license</strong> (Python Runner requires a Pro/Enterprise plan).</li>
+  <li>For production: an S3-compatible storage bucket (AWS S3, MinIO, etc.).</li>
 </ul>
 
-<p>Metabase doesn’t sync any of your data. What it stores in Git are <a href="./serialization#example-of-a-serialized-question">YAML files</a> describing your analytics content. Your actual data stays in your databases and never goes to GitHub.</p>
-
-<h3 id="how-remote-sync-works">How Remote Sync works</h3>
-
-<p>Here’s a basic remote-sync workflow:</p>
-
-<ol>
-  <li>Create a dashboard in a <strong>Metabase configured in Read-write mode</strong>.</li>
-  <li>Push it to a Git branch.</li>
-  <li>Open a pull request for review.</li>
-  <li>Merge the PR to production.</li>
-  <li>Your <strong>Metabase configured in Read-only mode</strong> automatically pulls in the changes.</li>
-</ol>
-
-<p>We’ll cover <a href="#setting-up-remote-sync">setting up Remote Sync</a>, an <a href="#an-example-dev-to-production-workflow">example dev-to-production workflow</a>, <a href="#branch-management">branch management</a>, and some other odds and ends.</p>
-
-<h3 id="key-concepts">Key concepts</h3>
-
-<p><strong>Remote Sync has two modes for different roles</strong>:</p>
-
-<ul>
-  <li><strong>Read-write mode</strong>: Create and edit content. You can <a href="#pushing-changes-to-git">push</a> and <a href="#pulling-changes-from-git">pull</a> changes to and from your repository. Multiple Metabase instances can connect in Read-write mode, each working on <a href="#branch-management">different branches</a>.</li>
-  <li><strong>Read-only mode</strong>: Read-only instances only <a href="#pulling-changes-from-git">pull</a> changes (typically from your main branch) and don’t allow direct editing of synced content. In Read-only mode, you also can’t edit transforms (even if transforms syncing wasn’t enabled in read-write mode), can’t edit Library content, and can’t create segments or measures on published tables. You can set up <a href="#pulling-changes-automatically">auto-sync</a> to automatically pull approved changes every five minutes.</li>
-</ul>
-
-<p><strong>You choose what to sync</strong>: You can sync the Library, any top-level collections, and transforms. Everything inside selected collections (including sub-collections) is versioned and synchronized with your repository. If you use <a href="../embedding/tenants">Tenants</a>, you can also sync shared collections.</p>
-
-<p><strong>Items in synced collections must be self-contained</strong>: Everything a dashboard or question needs must be <a href="#items-in-synced-collections-cant-depend-on-items-outside-of-synced-collections">inside a synced collection</a>.</p>
-
-<p><strong>Content is stored as <a href="./serialization#example-of-a-serialized-question">YAML files</a></strong>: Remote Sync stores your content as YAML files in your Git repository. Each dashboard, question, model, and document becomes a YAML file that can be reviewed in pull requests and versioned like code.</p>
-
-<p><strong>Remote Sync excludes table metadata</strong>: Column types, descriptions, and visibility settings don’t sync. If you need to version table metadata, use <a href="./serialization">serialization</a> instead.</p>
-
-<h2 id="setting-up-remote-sync">Setting up Remote Sync</h2>
-
-<p>You’ll need to be an admin to set up Remote Sync.</p>
-
-<ol>
-  <li><a href="#1-set-up-a-repository-to-store-your-content">Set up a repository to store your content</a></li>
-  <li><a href="#2-create-a-personal-access-token-for-development">Create a personal access token for development</a></li>
-  <li><a href="#3-connect-your-development-metabase-to-your-repository">Connect your development Metabase to your repository</a></li>
-  <li><a href="#4-select-collections-to-sync">Select collections to sync</a></li>
-  <li><a href="#5-push-your-changes-to-your-repository">Push your changes to your repository</a></li>
-  <li><a href="#6-create-a-personal-access-token-for-production">Create a personal access token for production</a></li>
-  <li><a href="#7-connect-your-production-metabase-to-your-repository">Connect your production Metabase to your repository</a></li>
-  <li><a href="#8-configure-transforms-syncing-optional">Configure transforms syncing (optional)</a></li>
-</ol>
-
-<h3 id="1-set-up-a-repository-to-store-your-content">1. Set up a repository to store your content</h3>
-
-<p>Before you connect Metabase to your Git repository, create a <a href="https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-new-repository">new GitHub repository</a>. Initialize the repo with a README.md.</p>
-
-<h3 id="2-create-a-personal-access-token-for-development">2. Create a personal access token for development</h3>
-
-<p>Create a <a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens">GitHub fine-grained personal access token</a> for your repository with these permissions:</p>
-
-<ul>
-  <li><strong>Contents:</strong> Read and write</li>
-  <li><strong>Metadata:</strong> Read-only (required)</li>
-</ul>
-
-<p>Copy the token immediately after generating it.</p>
-
-<h3 id="3-connect-your-development-metabase-to-your-repository">3. Connect your development Metabase to your repository</h3>
-
-<p><img src="./images/read-write-settings.png" alt="Development settings"></p>
-
-<p>You can put any Metabase into Read-write mode. We also offer <a href="./development-instance">Development instances</a> that you can use for Remote Sync or any other kind of development.</p>
-
-<p>In the Metabase instance that you use for development:</p>
-
-<ol>
-  <li>
-    <p>Go to <strong>Admin settings</strong> &gt; <strong>Settings</strong> &gt; <strong>Remote sync</strong>.</p>
-  </li>
-  <li>
-    <p>Enter your repository URL:</p>
-
-    <ul>
-      <li>For example, <code class="language-plaintext highlighter-rouge">https://github.com/your-org/your-repo</code>. The repository must already exist and be initialized with at least one commit.</li>
-    </ul>
-  </li>
-  <li>
-    <p>Select <strong>Read-write mode</strong>.</p>
-  </li>
-  <li>
-    <p>Add your access token:</p>
-
-    <ul>
-      <li>Paste the personal access token (PAT) you created earlier. Make sure the token has <a href="#2-create-a-personal-access-token-for-development">read and write permissions</a>. Metabase encrypts your token before storing it.</li>
-    </ul>
-  </li>
-  <li>
-    <p>Save and test the connection:</p>
-
-    <ul>
-      <li>Click “Save changes”. Metabase will check whether it can reach your repository. If the connection fails, make sure your token has the appropriate permissions and hasn’t expired. If you copied the token incorrectly, generate a new one.</li>
-    </ul>
-  </li>
-  <li>
-    <p>(Optional) If you have <a href="../embedding/tenants#enable-multi-tenant-strategy">multi-tenant user strategy enabled</a>, you can also choose which <a href="../embedding/tenants#changing-tenant-strategy">shared collection</a> to sync.</p>
-  </li>
-</ol>
-
-<h3 id="4-select-collections-to-sync">4. Select collections to sync</h3>
-
-<p>You can select any top-level collection under Our Analytics to sync with Git. In the Remote Sync settings, choose which collections you want to track.</p>
-
-<p>Collections you select for syncing must pass referential integrity checks—they need to be self-contained, meaning all dependencies (like models referenced by questions) must also be in synced collections.</p>
-
-<p>If you use <a href="../embedding/tenants">tenants</a>, you can also choose to sync <a href="../embedding/tenants#collection-types">shared collections</a>.</p>
-
-<h3 id="5-push-your-changes-to-your-repository">5. Push your changes to your repository</h3>
-
-<p><img src="./images/push-changes.png" alt="Push your changes"></p>
-
-<p>Once you’ve added content, you’ll see a yellow dot on the synced collections indicating uncommitted changes.</p>
-
-<ol>
-  <li>
-    <p>At the top of the screen, choose which branch to push to and click the up arrow (push) icon.</p>
-  </li>
-  <li>
-    <p>Enter a commit message describing your changes (e.g., “Added dashboard on mammoth populations”).</p>
-  </li>
-  <li>
-    <p>Click “Push changes” to commit and push your changes to your repository.</p>
-  </li>
-</ol>
-
-<p>Check your repository; you should see the collection.</p>
-
-<p>By default, you’re pushing to your repository’s main branch. However, you can choose (or create) a different branch so you can open pull requests for review. See <a href="#branch-management">Branch management</a> for details on creating and switching branches.</p>
-
-<h3 id="6-create-a-personal-access-token-for-production">6. Create a personal access token for production</h3>
-
-<p>Create a <a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens">GitHub fine-grained personal access token</a> for your repository with these permissions:</p>
-
-<ul>
-  <li><strong>Contents:</strong> Read-only</li>
-  <li><strong>Metadata:</strong> Read-only (required)</li>
-</ul>
-
-<p>Copy the token immediately after generating it — you’ll need to paste it into your production Metabase.</p>
-
-<h3 id="7-connect-your-production-metabase-to-your-repository">7. Connect your production Metabase to your repository</h3>
-
-<p><img src="./images/read-only-settings.png" alt="Production settings"></p>
-
-<p>In your production Metabase instance:</p>
-
-<ol>
-  <li>
-    <p>Go to <strong>Admin settings</strong> &gt; <strong>Settings</strong> &gt; <strong>Remote sync</strong>.</p>
-  </li>
-  <li>
-    <p>Enter your repository URL:</p>
-
-    <ul>
-      <li>Use the same repository as your development Metabase, for example, <code class="language-plaintext highlighter-rouge">https://github.com/your-org/your-repo</code>.</li>
-    </ul>
-  </li>
-  <li>
-    <p>Select <strong>Read-only mode</strong>.</p>
-  </li>
-  <li>
-    <p>Add your access token:</p>
-
-    <ul>
-      <li>Paste the read-only personal access token you created for this production Metabase.</li>
-    </ul>
-  </li>
-  <li>
-    <p>Save and test the connection:</p>
-
-    <ul>
-      <li>Click “Save changes”. Metabase will verify it can reach your repository. If the connection fails, verify your token has the appropriate permissions and hasn’t expired.</li>
-    </ul>
-  </li>
-  <li>
-    <p>Sync your content:</p>
-    <ul>
-      <li>Click “Pull changes” to immediately sync content from your repository.</li>
-      <li>To keep your production instance automatically updated, toggle on “Auto-sync with Git”. Metabase will pull changes from your main branch every five minutes.</li>
-    </ul>
-  </li>
-</ol>
-
-<p>In Read-only mode, synced collections appear in the regular collections list with a special icon to indicate that they’re versioned and read-only.</p>
-
-<p><img src="./images/read-only-view.png" alt="Production Metabase"></p>
-
-<p>At this point, you should be all set up. Exit Admin settings, then reload your browser. You should see your synced collections in your production Metabase.</p>
-
-<h3 id="8-configure-transforms-syncing-optional">8. Configure transforms syncing (optional)</h3>
-
-<p>To version control your data transformation logic, you can sync your <a href="../data-studio/transforms/transforms-overview">Transforms</a> including all your tags and jobs. Transform syncing is all or nothing: Metabase will sync your entire transforms namespace. You can’t selectively sync specific transform folders.</p>
-
-<h2 id="an-example-dev-to-production-workflow">An example dev-to-production workflow</h2>
-
-<p>Let’s say your team wants to build a new analytics dashboard. Here’s a workflow that ensures all production content goes through a review process.</p>
-
-<h3 id="step-1-create-a-new-branch">Step 1: Create a new branch</h3>
-
-<p>In your development Metabase, click the branch dropdown at the top of the screen to <a href="#branch-management">create a new branch</a> for your work, like <code class="language-plaintext highlighter-rouge">feature/megafauna-dashboard</code>.</p>
-
-<h3 id="step-2-create-content-in-your-development-metabase">Step 2: Create content in your development Metabase</h3>
-
-<p>Create a dashboard called “Megafauna Analytics” and add some questions. Save the questions either to the dashboard itself or to a synced collection. Save the dashboard to a synced collection.</p>
-
-<h3 id="step-3-push-to-your-development-branch">Step 3: Push to your development branch</h3>
-
-<ol>
-  <li>You should see a yellow dot on your synced collection (indicating local changes).</li>
-  <li>Click the up arrow (push) icon at the top of the screen.</li>
-  <li>Enter a commit message: “Add Megafauna Analytics dashboard”.</li>
-  <li>Metabase commits your changes to the branch you’re working on and pushes them to your repo.</li>
-</ol>
-
-<h3 id="step-4-create-a-pull-request">Step 4: Create a pull request</h3>
-
-<p>In your Git repository:</p>
-
-<ol>
-  <li>Create a pull request from your branch, <code class="language-plaintext highlighter-rouge">feature/megafauna-dashboard</code>, to the main branch <code class="language-plaintext highlighter-rouge">main</code>.</li>
-  <li>Review the changes to the YAML files representing your dashboards and questions.</li>
-  <li>Someone who knows what they’re doing approves and merges the PR.</li>
-</ol>
-
-<h3 id="step-5-production-automatically-updates">Step 5: Production automatically updates</h3>
-
-<p>On your production Metabase instance:</p>
-
-<ol>
-  <li>Within five minutes, Auto-sync detects the new commits on <code class="language-plaintext highlighter-rouge">main</code> (you can also manually import the changes).</li>
-  <li>The “Megafauna Analytics” dashboard appears in production with all its questions.</li>
-  <li>The content is read-only (people can view and use it, but can’t edit it).</li>
-</ol>
-
-<h2 id="how-synced-collections-work-in-read-write-mode">How synced collections work in Read-write mode</h2>
-
-<ul>
-  <li><a href="#synced-collections-in-the-ui">Synced collections in the UI</a></li>
-  <li><a href="#moving-and-deleting-content-in-synced-collections">Moving and deleting content in synced collections</a></li>
-  <li><a href="#items-in-synced-collections-cant-depend-on-items-outside-of-synced-collections">Items in synced collections can’t depend on items outside of synced collections</a></li>
-</ul>
-
-<h3 id="synced-collections-in-the-ui">Synced collections in the UI</h3>
-
-<p>You can select any top-level collection under Our Analytics to sync with Git. Synced collections show their current state with visual indicators: a yellow dot indicates unsynced local changes that need to be committed. At the top of the screen, you’ll see up/down arrows that provide sync controls for pulling and pushing changes.</p>
-
-<p>If you are using <a href="../embedding/tenants">tenants</a>, you can also sync shared collections. You’ll see the same yellow dot indicator for shared collections.</p>
-
-<p>In Read-only mode, synced collections appear in the regular collections list (not in a separate “Synced Collections” section) with a special icon to indicate they’re versioned and read-only.</p>
-
-<p>When transforms syncing is enabled, you’ll find your transforms in the Transforms section of the Admin settings. Synced transforms are also read-only in Read-only mode.</p>
-
-<h3 id="moving-and-deleting-content-in-synced-collections">Moving and deleting content in synced collections</h3>
-
-<p>When you remove content from a synced collection in Read-write mode and push that change, the content will also be removed from your production instance when it syncs. This applies to moving content out of a synced collection or deleting it entirely.</p>
-
-<p>Content in other Metabases that depended on this item may break since the dependency will no longer be in a synced collection.</p>
-
-<h3 id="items-in-synced-collections-cant-depend-on-items-outside-of-synced-collections">Items in synced collections can’t depend on items outside of synced collections</h3>
-
-<p>For Remote Sync to work properly, synced collections must be self-contained. Everything a dashboard or question needs must be inside one of the synced collections. This includes:</p>
-
-<ul>
-  <li>Questions that reference models</li>
-  <li>Dashboards with questions</li>
-  <li>Click behaviors linking to other items</li>
-  <li>Filters that pick values from other questions</li>
-  <li>@ mentions in documents</li>
-</ul>
-
-<h3 id="making-sub-collections-appear-at-the-top-level">Making sub-collections appear at the top level</h3>
-
-<p>Sometimes you might want synced content to appear at the top level of your navigation rather than nested under a synced collection. If you use <a href="../embedding/tenants">Tenants</a>, you can accomplish that with synced shared collections.</p>
-
-<p>If you aren’t using tenants, you can use permissions to control how the collection hierarchy appears to different groups.</p>
-
-<ol>
-  <li>
-    <p><strong>Organize content in sub-collections of your synced collection</strong>. For example, you might have <code class="language-plaintext highlighter-rouge">Analytics/Mammoth Statistics</code> and <code class="language-plaintext highlighter-rouge">Analytics/Giant Sloth Statistics</code>.</p>
-  </li>
-  <li>
-    <p>In your production Metabase, <strong>set up permissions for embedded groups:</strong> Groups should have:</p>
-    <ul>
-      <li><strong>No view access</strong> to the top-level synced collection itself</li>
-      <li><strong>View access</strong> to specific sub-collections within the synced collection</li>
-    </ul>
-  </li>
-</ol>
-
-<p>For groups with these permissions, the sub-collections they can access will appear at the top level of navigation, as if they were root-level collections. They won’t see the top-level synced collection that you have in your development Metabase.</p>
-
-<p>What you see in Read-write mode:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Collections
-└── Analytics
-    ├── Mammoth Statistics
-    ├── Giant Sloth Statistics
+<h2 id="quickstart">Quickstart</h2>
+
+<p>The simplest way to try the Python Runner is to use the built-in S3 server (not for production):</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Create a Docker network for the containers to communicate</span>
+docker network create metabase-network
+
+<span class="c"># Start the Python Runner with internal S3</span>
+docker run <span class="nt">-d</span> <span class="se">\</span>
+  <span class="nt">--network</span> metabase-network <span class="se">\</span>
+  <span class="nt">-e</span> <span class="nv">AUTH_TOKEN</span><span class="o">=</span>your-secure-token-here <span class="se">\</span>
+  <span class="nt">-e</span> <span class="nv">ENABLE_INTERNAL_S3</span><span class="o">=</span><span class="nb">true</span> <span class="se">\</span>
+  <span class="nt">--name</span> python-runner metabase/python-runner:latest
+
+<span class="c"># Start Metabase Enterprise</span>
+docker run <span class="nt">-d</span> <span class="se">\</span>
+  <span class="nt">--network</span> metabase-network <span class="se">\</span>
+  <span class="nt">-p</span> 3000:3000 <span class="se">\</span>
+  <span class="nt">-e</span> <span class="nv">MB_PYTHON_RUNNER_URL</span><span class="o">=</span>http://python-runner:5000 <span class="se">\</span>
+  <span class="nt">-e</span> <span class="nv">MB_PYTHON_RUNNER_API_TOKEN</span><span class="o">=</span>your-secure-token-here <span class="se">\</span>
+  <span class="nt">-e</span> <span class="nv">MB_PYTHON_STORAGE_S_3_ENDPOINT</span><span class="o">=</span>http://python-runner:4566 <span class="se">\</span>
+  <span class="nt">-e</span> <span class="nv">MB_PYTHON_STORAGE_S_3_BUCKET</span><span class="o">=</span>metabase-python-runner <span class="se">\</span>
+  <span class="nt">-e</span> <span class="nv">MB_PYTHON_STORAGE_S_3_REGION</span><span class="o">=</span>us-east-1 <span class="se">\</span>
+  <span class="nt">-e</span> <span class="nv">MB_PYTHON_STORAGE_S_3_PATH_STYLE_ACCESS</span><span class="o">=</span><span class="nb">true</span> <span class="se">\</span>
+  <span class="nt">-e</span> <span class="nv">MB_PYTHON_STORAGE_S_3_ACCESS_KEY</span><span class="o">=</span><span class="nb">test</span> <span class="se">\</span>
+  <span class="nt">-e</span> <span class="nv">MB_PYTHON_STORAGE_S_3_SECRET_KEY</span><span class="o">=</span><span class="nb">test</span> <span class="se">\</span>
+  <span class="nt">--name</span> metabase metabase/metabase-enterprise:latest
 </code></pre></div></div>
 
-<p>What embedding groups see in Read-only mode (with no access to Analytics, but access to Mammoth Statistics and Giant Sloth Statistics):</p>
+<h2 id="production-setup">Production setup</h2>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Collections
-├── Mammoth Statistics
-└── Giant Sloth Statistics
+<p>For production, use an external S3-compatible storage service:</p>
+
+<h3 id="step-1-generate-a-secure-authentication-token">Step 1: Generate a secure authentication token</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>openssl rand <span class="nt">-hex</span> 32
 </code></pre></div></div>
 
-<h2 id="remote-sync-uses-serialization">Remote Sync uses serialization</h2>
+<p>Save this token securely - you’ll need it for both containers.</p>
 
-<p>Remote Sync serializes your Metabase content as YAML files in your repo. YAML files use Metabase <a href="./serialization">serialization format</a>. See <a href="./serialization">Serialization docs</a> for more information on the format.</p>
+<h3 id="step-2-set-up-s3-storage">Step 2: Set up S3 storage</h3>
 
-<h2 id="what-metabase-syncs">What Metabase syncs</h2>
+<p>Create a bucket in your S3-compatible storage service (AWS S3, MinIO, etc.) and note your access credentials.</p>
 
-<p>Remote Sync uses the same serialization format as the <a href="./serialization">Metabase CLI serialization feature</a>, storing your content as YAML files in your Git repository.</p>
+<h3 id="step-3-start-the-containers">Step 3: Start the containers</h3>
 
-<p><strong>What syncs:</strong></p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker network create metabase-network
 
-<ul>
-  <li>Dashboards and their cards</li>
-  <li>Questions (saved queries and models)</li>
-  <li>Model metadata (column descriptions, display settings, etc.)</li>
-  <li>Documents</li>
-  <li>Timelines and events</li>
-  <li>Collection structure and metadata</li>
-  <li>Library content (published tables, metrics, snippets, segments, measures)</li>
-  <li>Transforms (including jobs and folders)</li>
-</ul>
+docker run <span class="nt">-d</span> <span class="se">\</span>
+  <span class="nt">--network</span> metabase-network <span class="se">\</span>
+  <span class="nt">-e</span> <span class="nv">AUTH_TOKEN</span><span class="o">=</span>your-secure-token-here <span class="se">\</span>
+  <span class="nt">--name</span> python-runner metabase/python-runner:latest
 
-<p><strong>What doesn’t sync:</strong></p>
+docker run <span class="nt">-d</span> <span class="se">\</span>
+  <span class="nt">--network</span> metabase-network <span class="se">\</span>
+  <span class="nt">-p</span> 3000:3000 <span class="se">\</span>
+  <span class="nt">-e</span> <span class="nv">MB_PYTHON_RUNNER_URL</span><span class="o">=</span>http://python-runner:5000 <span class="se">\</span>
+  <span class="nt">-e</span> <span class="nv">MB_PYTHON_RUNNER_API_TOKEN</span><span class="o">=</span>your-secure-token-here <span class="se">\</span>
+  <span class="nt">-e</span> <span class="nv">MB_PYTHON_STORAGE_S_3_ENDPOINT</span><span class="o">=</span>https://s3.amazonaws.com <span class="se">\</span>
+  <span class="nt">-e</span> <span class="nv">MB_PYTHON_STORAGE_S_3_BUCKET</span><span class="o">=</span>your-bucket-name <span class="se">\</span>
+  <span class="nt">-e</span> <span class="nv">MB_PYTHON_STORAGE_S_3_REGION</span><span class="o">=</span>us-east-1 <span class="se">\</span>
+  <span class="nt">-e</span> <span class="nv">MB_PYTHON_STORAGE_S_3_ACCESS_KEY</span><span class="o">=</span>your-access-key <span class="se">\</span>
+  <span class="nt">-e</span> <span class="nv">MB_PYTHON_STORAGE_S_3_SECRET_KEY</span><span class="o">=</span>your-secret-key <span class="se">\</span>
+  <span class="nt">--name</span> metabase metabase/metabase-enterprise:latest
+</code></pre></div></div>
 
-<ul>
-  <li>Users, groups, and permissions</li>
-  <li>Alerts and subscriptions</li>
-  <li>Database connections</li>
-  <li>Personal collections</li>
-  <li>Table metadata (column types, descriptions, visibility settings, etc.)</li>
-</ul>
+<h2 id="configuration-reference">Configuration reference</h2>
 
-<h2 id="branch-management">Branch management</h2>
+<h3 id="python-runner-environment-variables">Python Runner environment variables</h3>
 
-<p>Branching is only available in Read-write mode.</p>
+<table>
+  <thead>
+    <tr>
+      <th>Variable</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td data-label="Variable"><code class="language-plaintext highlighter-rouge">AUTH_TOKEN</code></td>
+      <td data-label="Description">Authentication token for API requests. Must match <code class="language-plaintext highlighter-rouge">MB_PYTHON_RUNNER_API_TOKEN</code> in Metabase.</td>
+    </tr>
+    <tr>
+      <td data-label="Variable"><code class="language-plaintext highlighter-rouge">ENABLE_INTERNAL_S3</code></td>
+      <td data-label="Description">Set to <code class="language-plaintext highlighter-rouge">true</code> to enable built-in S3 server on port 4566. Not for production.</td>
+    </tr>
+  </tbody>
+</table>
 
-<h3 id="creating-a-branch">Creating a branch</h3>
+<h3 id="metabase-environment-variables">Metabase environment variables</h3>
 
-<p>You can create branches in Metabase or directly in your Git repository. Branches created in Git will appear in the Metabase branch dropdown once Metabase syncs with your repository.</p>
+<p>These settings can also be configured in the Metabase UI at <strong>Admin Settings</strong> &gt; <strong>Settings</strong> &gt; <strong>Python Runner</strong> (<code class="language-plaintext highlighter-rouge">/admin/settings/python-runner</code>). Note that environment variables take precedence over UI settings.</p>
 
-<p>Before creating branches, push an initial commit to your main branch.</p>
+<table>
+  <thead>
+    <tr>
+      <th>Variable</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td data-label="Variable"><code class="language-plaintext highlighter-rouge">MB_PYTHON_RUNNER_URL</code></td>
+      <td data-label="Description">URL where Metabase can reach the Python Runner (e.g., <code class="language-plaintext highlighter-rouge">http://python-runner:5000</code>)</td>
+    </tr>
+    <tr>
+      <td data-label="Variable"><code class="language-plaintext highlighter-rouge">MB_PYTHON_RUNNER_API_TOKEN</code></td>
+      <td data-label="Description">Authentication token. Must match <code class="language-plaintext highlighter-rouge">AUTH_TOKEN</code> in the Python Runner.</td>
+    </tr>
+    <tr>
+      <td data-label="Variable"><code class="language-plaintext highlighter-rouge">MB_PYTHON_STORAGE_S_3_ENDPOINT</code></td>
+      <td data-label="Description">S3 endpoint URL.</td>
+    </tr>
+    <tr>
+      <td data-label="Variable"><code class="language-plaintext highlighter-rouge">MB_PYTHON_STORAGE_S_3_BUCKET</code></td>
+      <td data-label="Description">S3 bucket name for storing Python artifacts</td>
+    </tr>
+    <tr>
+      <td data-label="Variable"><code class="language-plaintext highlighter-rouge">MB_PYTHON_STORAGE_S_3_REGION</code></td>
+      <td data-label="Description">AWS region (e.g., <code class="language-plaintext highlighter-rouge">us-east-1</code>)</td>
+    </tr>
+    <tr>
+      <td data-label="Variable"><code class="language-plaintext highlighter-rouge">MB_PYTHON_STORAGE_S_3_ACCESS_KEY</code></td>
+      <td data-label="Description">S3 access key</td>
+    </tr>
+    <tr>
+      <td data-label="Variable"><code class="language-plaintext highlighter-rouge">MB_PYTHON_STORAGE_S_3_SECRET_KEY</code></td>
+      <td data-label="Description">S3 secret key</td>
+    </tr>
+    <tr>
+      <td data-label="Variable"><code class="language-plaintext highlighter-rouge">MB_PYTHON_STORAGE_S_3_PATH_STYLE_ACCESS</code></td>
+      <td data-label="Description">(Optional) Set to <code class="language-plaintext highlighter-rouge">true</code> for S3-compatible services like MinIO or LocalStack</td>
+    </tr>
+  </tbody>
+</table>
 
-<p>To create a new branch in Metabase:</p>
+<hr>
 
-<ol>
-  <li>Click the branch dropdown at the top of the screen.</li>
-  <li>Type a name for the new branch in the search box.</li>
-  <li>Press Enter to create the branch.</li>
-</ol>
+<h2 id="using-docker-compose">Using Docker Compose</h2>
 
-<p>The new branch is created from your current commit (not the latest commit from the remote).</p>
+<p>Docker Compose simplifies managing multiple containers. Below are example configurations for different scenarios.</p>
 
-<h3 id="switching-branches">Switching branches</h3>
+<h3 id="simple-setup-with-localstack">Simple setup with LocalStack</h3>
 
-<p>At the top of the screen, you’ll see a branch dropdown:</p>
+<p>For simple setup and local testing, you can use LocalStack to simulate S3:</p>
 
-<p><img src="./images/branch-dropdown.png" alt="Choose branches from the dropdown"></p>
+<div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">name</span><span class="pi">:</span> <span class="s">metabase-python-runner</span>
+<span class="na">services</span><span class="pi">:</span>
+  <span class="na">metabase</span><span class="pi">:</span>
+    <span class="na">image</span><span class="pi">:</span> <span class="s">metabase/metabase-enterprise:latest</span>
+    <span class="na">ports</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">3000:3000"</span>
+    <span class="na">environment</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">MB_PYTHON_RUNNER_URL=http://python-runner:5000</span>
+      <span class="pi">-</span> <span class="s">MB_PYTHON_RUNNER_API_TOKEN=your-secure-token-here</span>
+      <span class="pi">-</span> <span class="s">MB_PYTHON_STORAGE_S_3_ENDPOINT=http://localstack:4566</span>
+      <span class="pi">-</span> <span class="s">MB_PYTHON_STORAGE_S_3_BUCKET=metabase-python-runner</span>
+      <span class="pi">-</span> <span class="s">MB_PYTHON_STORAGE_S_3_REGION=us-east-1</span>
+      <span class="pi">-</span> <span class="s">MB_PYTHON_STORAGE_S_3_PATH_STYLE_ACCESS=true</span>
+      <span class="pi">-</span> <span class="s">MB_PYTHON_STORAGE_S_3_ACCESS_KEY=test</span>
+      <span class="pi">-</span> <span class="s">MB_PYTHON_STORAGE_S_3_SECRET_KEY=test</span>
+    <span class="na">depends_on</span><span class="pi">:</span>
+      <span class="na">localstack-init</span><span class="pi">:</span>
+        <span class="na">condition</span><span class="pi">:</span> <span class="s">service_completed_successfully</span>
+      <span class="na">python-runner</span><span class="pi">:</span>
+        <span class="na">condition</span><span class="pi">:</span> <span class="s">service_started</span>
 
-<ol>
-  <li>Click the branch dropdown to see available branches.</li>
-  <li>Select a different branch to switch to it.</li>
-</ol>
+  <span class="na">python-runner</span><span class="pi">:</span>
+    <span class="na">image</span><span class="pi">:</span> <span class="s">metabase/python-runner:latest</span>
+    <span class="na">environment</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">AUTH_TOKEN=your-secure-token-here</span>
 
-<p>If the branch doesn’t appear, ensure it exists in your Git repository and that the name matches exactly (branch names are case-sensitive).</p>
+  <span class="na">localstack</span><span class="pi">:</span>
+    <span class="na">image</span><span class="pi">:</span> <span class="s">localstack/localstack:latest</span>
+    <span class="na">environment</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">SERVICES=s3</span>
+    <span class="na">healthcheck</span><span class="pi">:</span>
+      <span class="na">test</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">CMD"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">curl"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">-f"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">http://localhost:4566/_localstack/health"</span><span class="pi">]</span>
+      <span class="na">interval</span><span class="pi">:</span> <span class="s">5s</span>
+      <span class="na">timeout</span><span class="pi">:</span> <span class="s">5s</span>
+      <span class="na">retries</span><span class="pi">:</span> <span class="m">10</span>
 
-<p>If you have unsynced changes, Metabase will show a dialog asking what you want to do:</p>
+  <span class="na">localstack-init</span><span class="pi">:</span>
+    <span class="na">image</span><span class="pi">:</span> <span class="s">localstack/localstack:latest</span>
+    <span class="na">entrypoint</span><span class="pi">:</span>
+      <span class="pi">[</span><span class="s2">"</span><span class="s">/bin/sh"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">-c"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">awslocal</span><span class="nv"> </span><span class="s">s3</span><span class="nv"> </span><span class="s">mb</span><span class="nv"> </span><span class="s">s3://metabase-python-runner</span><span class="nv"> </span><span class="s">||</span><span class="nv"> </span><span class="s">true"</span><span class="pi">]</span>
+    <span class="na">environment</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">AWS_ENDPOINT_URL=http://localstack:4566</span>
+    <span class="na">depends_on</span><span class="pi">:</span>
+      <span class="na">localstack</span><span class="pi">:</span>
+        <span class="na">condition</span><span class="pi">:</span> <span class="s">service_healthy</span>
+</code></pre></div></div>
 
-<ul>
-  <li><strong>Push changes to the current branch:</strong> Commits your changes to the current branch before switching.</li>
-  <li><strong>Create a new branch and push changes there:</strong> Saves your work to a new branch, keeping the original branch clean.</li>
-  <li><strong>Discard these changes:</strong> Throws away your uncommitted changes (can’t be undone).</li>
-</ul>
+<p>Then run:</p>
 
-<p>The dialog shows you exactly which items have changed, so you can make an informed decision.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker compose up <span class="nt">-d</span>
+</code></pre></div></div>
 
-<p>If you switch modes (from Read-write to Read-only or vice versa) with unpushed changes, you’ll be prompted to save or discard them. You cannot switch to Read-only mode with uncommitted changes.</p>
+<h3 id="production-setup-1">Production setup</h3>
 
-<p>If changes don’t appear after switching modes: Hard refresh your browser (Cmd/Ctrl + Shift + R).</p>
+<p>For production, use an external S3-compatible storage service:</p>
 
-<h2 id="pushing-changes-to-git">Pushing changes to Git</h2>
+<div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">name</span><span class="pi">:</span> <span class="s">metabase-python-runner</span>
+<span class="na">services</span><span class="pi">:</span>
+  <span class="na">metabase</span><span class="pi">:</span>
+    <span class="na">image</span><span class="pi">:</span> <span class="s">metabase/metabase-enterprise:latest</span>
+    <span class="na">ports</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">3000:3000"</span>
+    <span class="na">environment</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">MB_PYTHON_RUNNER_URL=http://python-runner:5000</span>
+      <span class="pi">-</span> <span class="s">MB_PYTHON_RUNNER_API_TOKEN=${AUTH_TOKEN}</span>
+      <span class="pi">-</span> <span class="s">MB_PYTHON_STORAGE_S_3_ENDPOINT=${S3_ENDPOINT}</span>
+      <span class="pi">-</span> <span class="s">MB_PYTHON_STORAGE_S_3_BUCKET=${S3_BUCKET}</span>
+      <span class="pi">-</span> <span class="s">MB_PYTHON_STORAGE_S_3_REGION=${S3_REGION:-us-east-1}</span>
+      <span class="pi">-</span> <span class="s">MB_PYTHON_STORAGE_S_3_ACCESS_KEY=${S3_ACCESS_KEY}</span>
+      <span class="pi">-</span> <span class="s">MB_PYTHON_STORAGE_S_3_SECRET_KEY=${S3_SECRET_KEY}</span>
+    <span class="na">depends_on</span><span class="pi">:</span>
+      <span class="na">python-runner</span><span class="pi">:</span>
+        <span class="na">condition</span><span class="pi">:</span> <span class="s">service_started</span>
 
-<p>You can only push changes in a Metabase with Remote Sync set to Read-write mode.</p>
+  <span class="na">python-runner</span><span class="pi">:</span>
+    <span class="na">image</span><span class="pi">:</span> <span class="s">metabase/python-runner:latest</span>
+    <span class="na">environment</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">AUTH_TOKEN=${AUTH_TOKEN}</span>
+</code></pre></div></div>
 
-<h3 id="committing-and-pushing-your-changes">Committing and pushing your changes</h3>
+<p>Create a <code class="language-plaintext highlighter-rouge">.env</code> file with your configuration:</p>
 
-<p>When you make changes to items in a synced collection, a yellow dot appears on your synced collection (indicating uncommitted changes). To commit and push your changes:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">AUTH_TOKEN</span><span class="o">=</span>your-secure-token-here
+<span class="nv">S3_ENDPOINT</span><span class="o">=</span>https://s3.amazonaws.com
+<span class="nv">S3_BUCKET</span><span class="o">=</span>metabase-python-runner
+<span class="nv">S3_REGION</span><span class="o">=</span>us-east-1
+<span class="nv">S3_ACCESS_KEY</span><span class="o">=</span>your-access-key
+<span class="nv">S3_SECRET_KEY</span><span class="o">=</span>your-secret-key
+</code></pre></div></div>
 
-<ol>
-  <li>Click the up arrow (push) icon at the top of the screen (make sure you’re pushing to the right branch).</li>
-  <li>Enter a descriptive commit message explaining your changes.</li>
-  <li>Click “Continue” to push your changes to Git.</li>
-</ol>
+<p>Then run:</p>
 
-<p>If you see a message that “Remote is ahead of local”, that means someone else pushed to the branch from another Metabase in Read-write mode. Pull the latest changes before pushing again.</p>
-
-<h2 id="pulling-changes-from-git">Pulling changes from Git</h2>
-
-<p>You can pull changes when in Read-write or Read-only mode.</p>
-
-<p>In Read-write mode, you can get the latest changes from your Git repository:</p>
-
-<ol>
-  <li>Click the down arrow (pull) icon at the top of the screen.</li>
-  <li>Review any summary of incoming changes if shown.</li>
-  <li>Confirm the import.</li>
-  <li>Metabase updates your collections with the latest content from Git.</li>
-</ol>
-
-<p>If changes don’t appear after pulling:</p>
-
-<ul>
-  <li>Verify you’re on the correct branch.</li>
-  <li>Hard refresh your browser (Cmd/Ctrl + Shift + R).</li>
-  <li>If you encounter sync errors, review error messages in the sync dialog, manually resolve conflicts in your Git repository, then pull again.</li>
-</ul>
-
-<p>In Read-only mode, go to <strong>Admin settings</strong> &gt; <strong>Settings</strong> &gt; <strong>Remote sync</strong> and click <strong>Pull changes</strong>.</p>
-
-<h3 id="handling-unsynced-changes">Handling unsynced changes</h3>
-
-<p>If you have local uncommitted changes when trying to pull or switch branches, Metabase will prompt you with options:</p>
-
-<ul>
-  <li><strong>Push changes to the current branch:</strong> Commit your changes first, then proceed.</li>
-  <li><strong>Create a new branch and push changes there:</strong> Preserve your work on a new branch.</li>
-  <li><strong>Discard these changes:</strong> Throw away your uncommitted changes to accept what’s in Git.</li>
-</ul>
-
-<p>When in doubt, create a new branch and push changes to that branch. That way you won’t lose any work.</p>
-
-<h3 id="pulling-changes-automatically">Pulling changes automatically</h3>
-
-<p>In Read-only mode, you can set Metabase to auto-sync changes from your main branch.</p>
-
-<ol>
-  <li>Navigate to <strong>Admin settings</strong> &gt; <strong>Settings</strong> &gt; <strong>Remote sync</strong>.</li>
-  <li>Enable Auto-sync with Git.</li>
-</ol>
-
-<p>By default, Metabase will check for and pull changes from the branch you specify every five minutes. You can also manually sync as needed.</p>
-
-<h2 id="disabling-remote-sync">Disabling Remote Sync</h2>
-
-<p>To disable Remote Sync, go to the Remote Sync settings page in Admin settings.</p>
-
-<p>To disable Remote Sync:</p>
-
-<ol>
-  <li>Go to <strong>Admin settings</strong> &gt; <strong>Settings</strong> &gt; <strong>Remote sync</strong>.</li>
-  <li>Click <strong>Disable Remote Sync</strong>.</li>
-  <li>In the confirmation dialog, click <strong>Disable</strong>.</li>
-</ol>
-
-<ul>
-  <li>All remote sync settings are cleared, including the repository URL, access token, and branch information.</li>
-  <li>Your synced collections and their content remain in your Metabase (they’re not deleted).</li>
-  <li>Synced collections become regular collections that you can edit like any other collection.</li>
-  <li>You can re-enable Remote Sync later by reconnecting to a repository, but any changes you made to the collection after disabling can be overwritten if you enable sync again.</li>
-</ul>
-
-<h2 id="migrating-existing-content-to-remote-sync">Migrating existing content to Remote Sync</h2>
-
-<p>If you already have content in your Metabase, you can gradually adopt Remote Sync. Content that lives outside synced collections remains unaffected—you can continue working with it normally while you migrate content into a synced collection over time.</p>
-
-<p>Make sure you move any dependencies (like models referenced by questions) into synced collections, since <a href="#key-concepts">synced content must be self-contained</a>.</p>
-
-<h3 id="if-you-already-have-a-repo-with-serialized-metabase-data">If you already have a repo with serialized Metabase data</h3>
-
-<p>Keep doing what you’re doing.</p>
-
-<p>If you want to switch fully to Remote Sync, we recommend starting with a new repo:</p>
-
-<ol>
-  <li>Check out a new branch in your Metabase instance in Read-write mode.</li>
-  <li>Import your data to your Metabase instance with the serialization command as you normally would.</li>
-  <li>Move the content you want to sync into a synced collection.</li>
-  <li>Push up your changes to the new repo.</li>
-</ol>
-
-<p>Remote Sync does NOT sync table metadata, so if you’re importing and exporting your <a href="../data-modeling/metadata-editing">table metadata</a>, you should stick with serialization.</p>
-
-<h2 id="further-reading">Further reading</h2>
-
-<ul>
-  <li><a href="../data-studio/library">Library</a></li>
-  <li><a href="./serialization">Serialization</a></li>
-</ul>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker compose up <span class="nt">-d</span>
+</code></pre></div></div>
 
 
         <div>
@@ -6023,7 +5747,7 @@ Roadmap</a>
 
   
     <span class="paragraph-6 fs-13 neutral-60" id="page-feedback-footer">
-      Want to improve these docs? <a href="https://github.com/metabase/metabase/blob/master/docs/installation-and-operation/remote-sync.md" target="_blank">Propose a change.</a>
+      Want to improve these docs? <a href="https://github.com/metabase/metabase/blob/master/docs/data-studio/transforms/python-runner.md" target="_blank">Propose a change.</a>
     </span>
   
 </div>
@@ -6045,8 +5769,8 @@ Roadmap</a>
 <script type="text/javascript" src="/js/position-feedback-widget.js"></script>
 
 <script>
-  const pageTitle = `Remote sync`;
-  const pageURL = '/docs/master/installation-and-operation/remote-sync';
+  const pageTitle = `Python runner`;
+  const pageURL = '/docs/master/data-studio/transforms/python-runner';
   const pageURLSplit = pageURL.split('/');
 
   let pageURLPrefix = '/' + pageURLSplit[1] + '/' + pageURLSplit[2];
