@@ -14,9 +14,13 @@ latest: true
 ```ts
 type ProtectedColorKey =
   | "metabase-brand"
+  | "metabase-brand-hover"
   | "admin-navbar"
   | "admin-navbar-secondary"
   | "admin-navbar-inverse"
+  | "upsell-primary"
+  | "upsell-secondary"
+  | "upsell-gem"
   | "accent0"
   | "accent1"
   | "accent2"
