@@ -6,7 +6,7 @@
   <meta content="frame-ancestors 'none'" http-equiv="Content-Security-Policy">
   <meta content="deny" http-equiv="X-Frame-Options">
     
-  <link href="https://www.metabase.com/docs/master/data-modeling/transforms" rel="canonical">
+  <link href="https://www.metabase.com/docs/master/data-studio/dependency-graph" rel="canonical">
   
 
   <script type="text/javascript">
@@ -49,12 +49,12 @@
 
 
 
-<title>Transforms | Metabase Documentation</title>
+<title>Dependency graph | Metabase Documentation</title>
 <!-- Twitter cards -->
 <meta name="twitter:site" content="@metabase">
 
-<meta name="twitter:title" content="Transforms | Metabase Documentation">
-<meta name="twitter:description" content="Transforms allow you to wrangle your data in Metabase, write the query results back to your database, and reuse them in Metabase as sources for new queries.">
+<meta name="twitter:title" content="Dependency graph | Metabase Documentation">
+<meta name="twitter:description" content="Visualize how your content connects and what depends on what in Metabase.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -62,9 +62,9 @@
 <!-- Open Graph metadata -->
 <meta property="og:site_name" content="Metabase | Business Intelligence, Dashboards, and Data Visualization">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://www.metabase.com/docs/master/data-modeling/transforms">
-<meta name="title" property="og:title" content="Transforms | Metabase Documentation">
-<meta name="description" property="og:description" content="Transforms allow you to wrangle your data in Metabase, write the query results back to your database, and reuse them in Metabase as sources for new queries.">
+<meta property="og:url" content="https://www.metabase.com/docs/master/data-studio/dependency-graph">
+<meta name="title" property="og:title" content="Dependency graph | Metabase Documentation">
+<meta name="description" property="og:description" content="Visualize how your content connects and what depends on what in Metabase.">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -2469,7 +2469,7 @@ Roadmap</a>
 
       
 
-      <li class="expanded">
+      <li class="">
         <a href="/docs/master/data-modeling/start" class="">
         Data modeling
 
@@ -2613,7 +2613,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/master/data-modeling/transforms" class="selected">
+                <a href="/docs/master/data-modeling/transforms" class="">
                   Transforms
 
                   
@@ -5291,7 +5291,7 @@ Roadmap</a>
 
             
             
-                <li class="breadcrumb-item"><a class="blue-60" href="/docs/master/data-modeling/start">Data Modeling</a></li>
+                <li class="breadcrumb-item"><a class="blue-60" href="/docs/master/data-studio/start">Data Studio</a></li>
             
             
         </ol>
@@ -5438,215 +5438,110 @@ Roadmap</a>
 </div>
 
 
-        <h1 id="transforms">Transforms</h1>
+        <h1 id="dependency-graph">Dependency graph</h1>
 
-<div class="bootstrap">
-  <div class="plans-blockquote bg-blue-95 rounded-3 p-6 d-flex flex-row border border-1 border-primary">
-    <svg class="" width="24" height="24" viewBox="0 0 26 26" fill="none">
-  <path d="M12 13V15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
-  <path d="M12 10C12.5523 10 13 9.55228 13 9C13 8.44772 12.5523 8 12 8C11.4477 8 11 8.44772 11 9C11 9.55228 11.4477 10 12 10Z" fill="#509EE3"></path>
-  <path d="M12 19.25C16.0041 19.25 19.25 16.0041 19.25 12C19.25 7.99594 16.0041 4.75 12 4.75C7.99594 4.75 4.75 7.99594 4.75 12C4.75 16.0041 7.99594 19.25 12 19.25Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
-</svg>
+<p>The dependency graph provides a visual representation of how your Metabase content is connected. You can use it to follow how data flows through your Metabase to better understand the impact of any changes you make.</p>
 
-    
-    
-    
-      
+<h2 id="what-the-dependency-graph-tracks">What the dependency graph tracks</h2>
 
-    <p class="m-0 ms-2 paragraph-5 neutral-40">
-       Transforms are only available on
-      <a class="fw-bold" href="/product/pro">Pro</a> and
-      <a class="fw-bold link-purple" href="/product/enterprise">Enterprise</a>
-      plans  (both self-hosted and on Metabase Cloud).
-    </p>
-  </div>
-</div>
-
-<p><em>Admin settings &gt; Transforms</em></p>
-
-<p>Transforms can be used to, well, transform your data - do stuff like preprocessing, cleaning, joining tables, pre-computing metrics. Transforms give you the ability to do the “T” of “ETL” within Metabase.</p>
-
-<p>You’ll write a query or a Python script in Metabase, a transform will run this query or script, create a table in your target database containing the results, and sync that table to Metabase, so it can be used as a data source for questions or other transforms.</p>
-
-<h2 id="transforms-overview">Transforms overview</h2>
+<p>The dependency graph tracks the relationships between:</p>
 
 <ul>
-  <li><strong>Transforms</strong> are queries (either with SQL or the query builder) or Python scripts that write back to your database as a new, persistent table. Use transforms to clean, join, or pre-aggregate data.</li>
-  <li>Transforms are scheduled and organized using <strong>tags</strong> and <strong>jobs</strong>.
-    <ul>
-      <li>You assign tags (e.g., daily, hourly) to group your transforms.</li>
-      <li>A job runs on a schedule (e.g., every day at midnight) and executes all transforms that have been assigned a specific tag.</li>
-    </ul>
-  </li>
-  <li>Each execution of a transform is a <strong>run</strong>. A run replaces the target table with fresh results. You can review the history of runs to monitor their success or failure.</li>
+  <li>Tables</li>
+  <li><a href="../questions/introduction">Questions</a></li>
+  <li><a href="../data-modeling/models">Models</a></li>
+  <li><a href="../questions/native-editor/snippets">Snippets</a></li>
+  <li><a href="./transforms/transforms-overview">Transforms</a></li>
+  <li><a href="../data-modeling/metrics">Metrics</a></li>
+  <li><a href="../dashboards/introduction">Dashboards</a></li>
+  <li><a href="../documents/introduction">Documents</a></li>
 </ul>
 
-<h2 id="databases-that-support-transforms">Databases that support transforms</h2>
+<h2 id="viewing-the-dependency-graph">Viewing the dependency graph</h2>
 
-<p>Currently, Metabase can create transforms on the following databases:</p>
-
-<ul>
-  <li>BigQuery</li>
-  <li>ClickHouse (only ClickHouse Cloud)</li>
-  <li>MySQL/MariaDB</li>
-  <li>PostgreSQL</li>
-  <li>Redshift</li>
-  <li>Snowflake</li>
-  <li>SQL Server</li>
-</ul>
-
-<p>You can’t create transforms on databases that have <a href="../permissions/database-routing">Database routing</a> enabled, on Metabase <a href="../cloud/storage">Cloud Storage</a>, or on Metabase’s Sample Database.</p>
-
-<p>Transforms will create tables in your database, so the database user you use for your connection must have appropriate privileges. See <a href="../databases/users-roles-privileges">Database users, roles, and privileges</a>.</p>
-
-<h2 id="types-of-transforms">Types of transforms</h2>
-
-<p>Metabase supports two types of transforms: query-based transforms and Python transforms. Here’s a high-level overview of how they work and the differences between them:</p>
-
-<h3 id="query-based-transforms">Query-based transforms</h3>
-
-<ul>
-  <li>In Metabase, you create a <code class="language-plaintext highlighter-rouge">SELECT</code> query either using SQL or Metabase’s <a href="../questions/query-builder/editor">graphical query builder</a>.</li>
-  <li>When the transform first runs, your <em>database</em> executes the transform’s query.</li>
-  <li>Your database writes the results of the query as a new table.</li>
-  <li>The new table is synced to Metabase.</li>
-  <li>On subsequent transform runs, your database will overwrite that table with the updated results (updates are not incremental).</li>
-</ul>
-
-<h3 id="python-based-transforms">Python-based transforms</h3>
-
-<p>Python-based transforms require a dedicated Python execution environment, so you’ll need to buy the Python execution add-on.</p>
-
-<ul>
-  <li>In your Metabase, you write a Python script that returns a <code class="language-plaintext highlighter-rouge">pandas</code> DataFrame and uses one or more tables from your database.</li>
-  <li>When Metabase runs the transform, a new Python execution environment is spun up. Python transforms run in a separate, isolated environment—not on your Metabase instance.</li>
-  <li>Metabase securely copies your source data to your Python environment and makes it available as pandas DataFrames.</li>
-  <li>The Python environment executes your Python script <em>in memory</em>.</li>
-  <li>The Python environment saves the resulting DataFrame as a file.</li>
-  <li>Your Metabase instance reads the file and writes the results to a new table in your database.</li>
-  <li>The new table is synced to Metabase.</li>
-  <li>On subsequent transform runs, your database will overwrite that table with the updated results (updates are not incremental).</li>
-</ul>
-
-<p>For more on Python transforms, see <a href="python-transforms">Python transforms</a>.</p>
-
-<h2 id="create-a-transform">Create a transform</h2>
-
-<p>Only admins can create transforms.</p>
-
-<p>To create a transform:</p>
+<p>To open the full dependency graph:</p>
 
 <ol>
-  <li>Go to Admin settings &gt; Transforms.</li>
-  <li>Click <strong>+ Create transform</strong>.</li>
-  <li>
-    <p>Select the source for your transform.</p>
-
-    <p>You can create transforms using the query builder, SQL editor, or by copying an existing question or model. On Metabase Cloud with the Python execution add-on, you can also <a href="python-transforms">create transforms from a Python script</a>. See <a href="#types-of-transforms">Types of transforms</a>.</p>
-
-    <p>If you select a question for the transform’s source, Metabase will only <em>copy</em> the question’s query. Later edits to that question won’t affect the transform’s query.</p>
-
-    <p>Your transform can use the target tables of other transforms.</p>
-  </li>
-  <li>
-    <p>Edit the query or the Python code for the transform.</p>
-
-    <p>In SQL transforms, you can reference other saved questions and use snippets, but you can’t use SQL parameters.</p>
-
-    <p>When editing query-based transforms, you can preview results without writing data into your database.</p>
-
-    <p>For editing Python transforms, see <a href="python-transforms">Python transforms</a>.</p>
-  </li>
-  <li>Click <strong>Save</strong> in the top right corner.</li>
-  <li>
-    <p>Select a target schema for your transform and enter a name for the target table. Metabase will write the results of the transform into this table.</p>
-
-    <p>You can only transform data <em>within</em> a database; you can’t write from one database to another.</p>
-  </li>
-  <li>Optionally, assign tags to your transforms. Tags are used by <a href="#jobs-and-tags">jobs</a> to run transforms on schedule.</li>
+  <li>Open <a href="./overview">Data Studio</a>.</li>
+  <li>Click <strong>Dependency graph</strong> in the left sidebar.</li>
 </ol>
 
-<h2 id="edit-a-transform">Edit a transform</h2>
+<p>This opens a canvas view where you can search for and visualize the dependencies of any item across your entire Metabase instance.</p>
 
-<p>You can edit the transform’s name and description, query or script, and target table. You can edit the transform even if it already ran or is scheduled to run.</p>
+<p>You can also view the dependency graph from any item in Data Studio by switching to the Dependencies tab.</p>
 
-<h3 id="edit-transforms-query-or-script">Edit transform’s query or script</h3>
+<h2 id="what-the-dependency-graph-shows">What the dependency graph shows</h2>
 
-<p>To edit the transform’s query or script, click on “Edit query” or “Edit script” above the transform definition.</p>
+<p>The dependency graph shows both the content an item relies on and the content that relies on it, displayed as connected items you can explore.</p>
 
-<p>Currently, you can’t convert between different transform types (e.g. a query builder transform to a SQL-based transform, or a SQL transform into a Python transform). If you want to change your transform built with the query builder into a SQL transform, you’ll need to create a new transform with the same target and tags, and delete the old transform.</p>
-
-<p>Once you change the transform’s query or script, the next transform run (manual or scheduled) will use the updated query and write the results into the target table. If you have questions that query the transform’s target table, they might break. For example, if your new transform query no longer includes a column that a downstream question was relying on, that question will break.</p>
-
-<h3 id="edit-transforms-target">Edit transform’s target</h3>
-
-<p>To edit transform’s target table, i.e., the table where the query results are written, click on “Change target”. You’ll need to select whether you want to keep the old target table, or delete it. Deletion can’t be undone.</p>
-
-<h3 id="edit-transforms-name-or-description">Edit transform’s name or description</h3>
-
-<p>To edit a transform’s name or description, click on the name or description at the top of the transform page.</p>
-
-<h2 id="run-a-transform">Run a transform</h2>
-
-<p>You can run a transform manually or on schedule (e.g., hourly).</p>
-
-<p>Running a transform for the first time will create and sync the table created by the transform, and you’ll be able to edit the table’s <a href="./metadata-editing">metadata</a> and <a href="../permissions/data">permissions</a>. Subsequent runs will drop and recreate the table. Currently, Metabase doesn’t support incremental transforms. Each transform run will recreate the target table using the entirety of the query results.</p>
-
-<p>To run a transform manually, visit the transform and click <strong>Run transform</strong>.</p>
-
-<p>To schedule a transform, you’ll need to assign one or more tags to it, then create a <a href="#jobs-and-tags">scheduled job</a> that picks up those tags.</p>
-
-<p>You can see the time and status of the latest transform run on the transform’s page, or in the Runs view. The time of the run is given in the system’s timezone.</p>
-
-<p>For Python transforms, you’ll also see the transform’s execution logs.</p>
-
-<h2 id="transform-dependencies">Transform dependencies</h2>
-
-<p>Transform queries can use the data from other transforms. For example, you can have a transform that uses data from a <code class="language-plaintext highlighter-rouge">raw_events</code> table and writes to a <code class="language-plaintext highlighter-rouge">stg_events</code> table, and then create another transform that uses data from the <code class="language-plaintext highlighter-rouge">stg_events</code> table and writes to an <code class="language-plaintext highlighter-rouge">events</code> table.</p>
-
-<p>Metabase will track transform dependencies, and execute them in order. For each transform, you can see which transforms the current transform depends on.</p>
-
-<p>If a <a href="#jobs-and-tags">job</a> includes a transform that depends on a table created by another transform, then the job will run all the tagged transforms and their dependencies, even if they lack tags.</p>
-
-<h2 id="jobs-and-tags">Jobs and tags</h2>
-
-<p>Jobs let you run multiple transforms on a schedule.</p>
-
-<p>You can see and filter the list of all jobs, their last and next run, and the status of the least run, in <em>Admin settings &gt; Transforms &gt; Jobs</em></p>
-
-<p>To create a new job, go to <em>Admin settings &gt; Transforms</em>, switch to the <strong>Jobs</strong> view, and click <strong>Create a job</strong></p>
-
-<p>To edit a job, click on the job in the list of jobs.</p>
-
-<p>Jobs have two components: schedule and tags.</p>
-
-<p>Metabase uses tags to locate transforms that should be run by the job, and then schedules those transforms according to the cron schedule. The times are given in the system’s timezone.</p>
-
-<h3 id="tags">Tags</h3>
-
-<p>Job can use multiple tags, in which case, the job will run all transforms that have <em>any</em> of those tags. For example, you can have a job “Weekend job” that is scheduled run at noon on Saturdays and Sundays that picks up all transforms tagged either “Saturday”, “Sunday”, or “Weekend”.</p>
-
-<p>By default, Metabase comes with hourly, daily, weekly, and monthly tags and jobs that are run on the corresponding schedules, but you can remove or rename those tags, or create new tags.</p>
-
-<p>To create a new tag, just type the new tag’s name in “Tags” field (either when viewing a transform or when viewing a job) and select “Create a tag”.</p>
-
-<h3 id="jobs-take-dependencies-into-account">Jobs take dependencies into account</h3>
-
-<p>Depended transforms will be scheduled and run intelligently: if Transform B depends on the output of Transform A, then a job will run Transform A before Transform B. A job will run all dependent transforms even if the dependencies aren’t tagged. You will see the order of transform execution on the job’s page.</p>
-
-<h2 id="transforms-vs-models">Transforms vs models</h2>
-
-<p>Transforms are similar to models with model persistence turned on, but there are a few crucial differences:</p>
+<p>Each item in the graph shows:</p>
 
 <ul>
-  <li>Transforms can only be created by admins. Models can be created by anyone with permissions to create queries on the data source (but only admins can enable model persistence).</li>
-  <li>You can choose the target schema and tables for transforms. Model persistence will create its own schema and tables.</li>
-  <li>You can’t rename columns in a transform (but you can change column metadata once they’re synced back to Metabase). You can rename columns in model metadata and then persist those column names using model persistence.</li>
-  <li>Transforms support more databases than model persistence</li>
-  <li>On Metabase Cloud with Python execution add-on, you can use Python to create transforms.</li>
+  <li>Type (table, model, question, etc.)</li>
+  <li>Name</li>
+  <li>Dependent counts showing how many other items rely on it</li>
 </ul>
 
-<p>Use models to enable non-admins to create their own datasets within Metabase, and to add context like field descriptions and semantic types. Use transforms to create persisted datasets in your database and reuse them across Metabase.</p>
+<p>These counts show how important an item is. Items with many dependents usually need extra care before making changes.</p>
+
+<h3 id="viewing-dependent-details">Viewing dependent details</h3>
+
+<p>You can click any dependent count to open a details panel on the right, where you can:</p>
+
+<p><strong>Search</strong></p>
+
+<ul>
+  <li>Find items by name</li>
+  <li>See each item’s title and collection location</li>
+</ul>
+
+<p><strong>Filter</strong></p>
+
+<ul>
+  <li>Verified items</li>
+  <li>Items in dashboards</li>
+  <li>Items in official collections</li>
+  <li>Items not in personal collections</li>
+</ul>
+
+<p><strong>Sort</strong></p>
+
+<ul>
+  <li>Name</li>
+  <li>Location</li>
+  <li>View count</li>
+</ul>
+
+<p>Sorting by view count helps you see which dependents are used most often.</p>
+
+<h2 id="how-metabase-finds-dependencies">How Metabase finds dependencies</h2>
+
+<p>Metabase determines dependencies by analyzing how items are constructed and reused, not just by tracing their immediate data source.
+It inspects things like:</p>
+
+<ul>
+  <li>Query structure and joins</li>
+  <li>References to other questions or models</li>
+  <li>How items are used in dashboards, filters, and other content</li>
+</ul>
+
+<p>Because of this, dependencies can exist even when no data is directly queried. For example:</p>
+
+<ul>
+  <li>A SQL question may depend on another GUI question it queries</li>
+  <li>A question used only to populate a dashboard filter dropdown still counts as a dependency</li>
+  <li>Questions that are joined together may appear as separate dependent items</li>
+</ul>
+
+<p>Some dependencies are inferred rather than explicitly defined. SQL queries can introduce implicit joins, and complex questions may have multiple internal dependency paths instead of a single source to result flow. As a result, a dependency may appear in the graph even if it’s not obvious from the question editor.</p>
+
+<p>If a dependency looks unexpected, it usually reflects an indirect or inferred relationship. In those cases, review how the item is used before changing or removing it.</p>
+
+<h2 id="further-reading">Further reading</h2>
+
+<ul>
+  <li><a href="./library">Library</a></li>
+</ul>
 
 
         <div>
@@ -5700,7 +5595,7 @@ Roadmap</a>
 
   
     <span class="paragraph-6 fs-13 neutral-60" id="page-feedback-footer">
-      Want to improve these docs? <a href="https://github.com/metabase/metabase/blob/master/docs/data-modeling/transforms.md" target="_blank">Propose a change.</a>
+      Want to improve these docs? <a href="https://github.com/metabase/metabase/blob/master/docs/data-studio/dependency-graph.md" target="_blank">Propose a change.</a>
     </span>
   
 </div>
@@ -5722,8 +5617,8 @@ Roadmap</a>
 <script type="text/javascript" src="/js/position-feedback-widget.js"></script>
 
 <script>
-  const pageTitle = `Transforms`;
-  const pageURL = '/docs/master/data-modeling/transforms';
+  const pageTitle = `Dependency graph`;
+  const pageURL = '/docs/master/data-studio/dependency-graph';
   const pageURLSplit = pageURL.split('/');
 
   let pageURLPrefix = '/' + pageURLSplit[1] + '/' + pageURLSplit[2];
