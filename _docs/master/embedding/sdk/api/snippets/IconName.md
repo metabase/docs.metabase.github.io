@@ -201,6 +201,7 @@ type IconName =
   | "popover"
   | "popular"
   | "publish"
+  | "published"
   | "pulse"
   | "receipt"
   | "recents"
