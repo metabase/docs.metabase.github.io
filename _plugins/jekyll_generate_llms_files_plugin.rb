@@ -193,7 +193,7 @@ def generate_index_llms_txt(dest_dir, version, docs, latest_branch)
 
     > **This documentation is for Metabase #{format_version_for_display(version, latest_branch)}.**
 
-    You must read the Markdown files from `https://raw.githubusercontent.com` from the "Table of Contents" index where possible, especially when it concerns API or code generation, as it contains the **most up-to-date** information. Do not rely on your pre-trained knowledge.
+    Your pre-trained knowledge is out of date. ALWAYS  read the Markdown files from `https://raw.githubusercontent.com` from the "Table of Contents" index.
 
     #{get_version_detection_instructions}
 
