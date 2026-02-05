@@ -10,7 +10,7 @@ layout: new-docs
 summary: 'See all the tables in your Metabase, edit and sync metadata, edit column types, set visibility, publish tables, and more.'
 ---
 
-## Data structure
+# Data structure
 
 _Data studio > Data structure_
 
