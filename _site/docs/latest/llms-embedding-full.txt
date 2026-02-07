@@ -1601,8 +1601,10 @@ You can set different attributes to enable/disable UI. Here are some example att
 | -------------------- | --------------------------------------------------------------------- |
 | `token`              | Required. The signed JWT token from your server.                      |
 | `with-title`         | Show or hide the title. Values: `"true"` or `"false"`.                |
-| `with-downloads`     | Enable or disable downloads. Values: `"true"` or `"false"`.           |
+| `with-downloads`\*   | Enable or disable downloads. Values: `"true"` or `"false"`.           |
 | `initial-parameters` | JSON string of parameter values. Example: `'{"category":["Gizmo"]}'`. |
+
+\* Disabling downloads is only available on [Pro](/product/pro) and [Enterprise](/product/enterprise) plans.
 
 Attributes will differ based on the type of thing you're embedding. Guest embeds have fewer options than embeds that use SSO. See more on [components and their attributes](./components).
 
@@ -2071,15 +2073,16 @@ If each end-user has their own Metabase account, however, you can configure perm
 
 In addition to this, we consider shared accounts to be unfair usage. Fair usage of modular embedding involves giving each end-user of the embedded analytics their own Metabase account.
 
-## Customizing embeds
+## Customizing authenticated embeds
 
-The exact customization options you see will depend on what type of entity you're embedding and which plan you're on.
+The exact customization options you see will depend on which type of entity you're embedding. These are the settings for authenticated embeds available on [Pro](/product/pro) and [Enterprise](/product/enterprise) plans. For guest embeds (OSS and paid), see [guest embedding options](./guest-embedding#component-attributes).
+
 
 When you're creating a new embed using **Admin > Embedding > Setup guide > Embed in your code**, you'll see some or all the following customization options in the interactive creation flow. These options correspond to parameters in [components](./components).
 
 - **Allow people to drill through on data points**: determines whether people can interact with the chart (or charts on a dashboard). Interactivity includes [drilling down](/learn/metabase-basics/querying-and-dashboards/questions/drill-through) to individual records from aggregated questions, filtering on click, zooming in, etc. Disabling drill-through for an embedded _question_ also disables people's ability to add filters and summaries.
 
-- **Allow downloads**: determines whether people can download question results and save dashboards as PDFs.
+- **Allow downloads**. Determines whether people can download question results and save dashboards as PDFs.
 
 - **Allow people to save new questions**. If you embed the query builder but disable this option, people can still do their own explorations, they just won't be able to save them.
 
@@ -2088,6 +2091,7 @@ When you're creating a new embed using **Admin > Embedding > Setup guide > Embed
 - **Show title**: what it says on the tin.
 
 - **Allow editing dashboards and questions**: lets people create and edit dashboards or questions in the current collection. When disabled, they can still perform actions like filter, summarize, and drill-through, but won't be able to save results.
+
 
 ## Page-level config
 
