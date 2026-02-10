@@ -49,12 +49,12 @@
 
 
 
-<title>Translate embedded dashboards and questions | Metabase Documentation</title>
+<title>Translate embedded components | Metabase Documentation</title>
 <!-- Twitter cards -->
 <meta name="twitter:site" content="@metabase">
 
-<meta name="twitter:title" content="Translate embedded dashboards and questions | Metabase Documentation">
-<meta name="twitter:description" content="Upload a translation dictionary to translate questions and dashboards into different languages. Translation dictionaries are only available for guest embeds.">
+<meta name="twitter:title" content="Translate embedded components | Metabase Documentation">
+<meta name="twitter:description" content="Upload a translation dictionary to translate the UI and content of embedded components like questions and dashboards into different languages.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -63,8 +63,8 @@
 <meta property="og:site_name" content="Metabase | Business Intelligence, Dashboards, and Data Visualization">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://www.metabase.com/docs/master/embedding/translations">
-<meta name="title" property="og:title" content="Translate embedded dashboards and questions | Metabase Documentation">
-<meta name="description" property="og:description" content="Upload a translation dictionary to translate questions and dashboards into different languages. Translation dictionaries are only available for guest embeds.">
+<meta name="title" property="og:title" content="Translate embedded components | Metabase Documentation">
+<meta name="description" property="og:description" content="Upload a translation dictionary to translate the UI and content of embedded components like questions and dashboards into different languages.">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -5638,7 +5638,7 @@ Roadmap</a>
 </div>
 
 
-        <h1 id="translate-embedded-dashboards-and-questions">Translate embedded dashboards and questions</h1>
+        <h1 id="translate-embedded-components">Translate embedded components</h1>
 
 <div class="bootstrap">
   <div class="plans-blockquote bg-blue-95 rounded-3 p-6 d-flex flex-row border border-1 border-primary">
@@ -5662,11 +5662,11 @@ Roadmap</a>
   </div>
 </div>
 
-<p>You can set a locale on all modular embeds (guest and SSO) to translate Metabase’s UI. Translation dictionaries, however, are only available for <a href="./guest-embedding">guest embeds</a>.</p>
+<p>You can set a locale on modular embeds (guest, SSO, and SDK) to translate Metabase’s UI. If you’ve uploaded a translation dictionary, Metabase will also translate content strings (like dashboard names and filter labels) for all <a href="./modular-embedding">modular embeds</a>.</p>
 
 <h2 id="set-a-locale-to-translate-ui-and-upload-a-dictionary-to-translate-content">Set a locale to translate UI, and upload a dictionary to translate content</h2>
 
-<p>To translate an embed’s user interface, set the locale in the config. The <code class="language-plaintext highlighter-rouge">locale</code> setting works for all modular embeds (guest and SSO). Metabase UI elements (like menus) will be translated automatically - you don’t need to add translations for them to your dictionary.</p>
+<p>To translate an embed’s user interface, set the locale in the config. The <code class="language-plaintext highlighter-rouge">locale</code> setting works for all modular embeds (guest, SSO, and SDK). Metabase UI elements (like menus) will be translated automatically - you don’t need to add translations for them to your dictionary.</p>
 
 <p>For guest and SSO embeds (not the SDK), set the <code class="language-plaintext highlighter-rouge">locale</code> in <code class="language-plaintext highlighter-rouge">window.metabaseConfig</code>:</p>
 
@@ -5675,7 +5675,7 @@ Roadmap</a>
     <span class="na">isGuest</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
     <span class="na">instanceUrl</span><span class="p">:</span> <span class="dl">"</span><span class="s2">YOUR_METABASE_URL</span><span class="dl">"</span><span class="p">,</span>
     <span class="c1">// Translates UI elements to the locale's language.</span>
-    <span class="c1">// For guest embeds, if you've uploaded a translation dictionary,</span>
+    <span class="c1">// If you've uploaded a translation dictionary,</span>
     <span class="c1">// Metabase will also translate content strings</span>
     <span class="c1">// to this locale from that dictionary.</span>
     <span class="na">locale</span><span class="p">:</span> <span class="dl">"</span><span class="s2">es</span><span class="dl">"</span>
@@ -5685,7 +5685,7 @@ Roadmap</a>
 <span class="nt">&lt;metabase-dashboard</span> <span class="na">token=</span><span class="s">"YOUR_JWT_TOKEN"</span><span class="nt">&gt;&lt;/metabase-dashboard&gt;</span>
 </code></pre></div></div>
 
-<p>For guest embeds (and only guest embeds), if you also want to translate content (like item titles, headings, filter labels—even data), you’ll need to add a translation dictionary.</p>
+<p>If you also want to translate content (like item titles, headings, filter labels, or data), you’ll need to add a translation dictionary.</p>
 
 <h3 id="sdk-translations">SDK translations</h3>
 
@@ -5697,6 +5697,8 @@ Roadmap</a>
 <span class="p">&gt;</span>
 <span class="p">&lt;/</span><span class="nc">MetabaseProvider</span><span class="p">&gt;</span>
 </code></pre></div></div>
+
+<p>If you’ve uploaded a translation dictionary, the SDK will also translate content strings (like dashboard names and filter labels) to this locale from that dictionary.</p>
 
 <h2 id="add-a-translation-dictionary">Add a translation dictionary</h2>
 
@@ -5725,7 +5727,7 @@ Roadmap</a>
 
 <h2 id="example-translation-dictionary">Example translation dictionary</h2>
 
-<p>Metabase uses these dictionaries to translate user-generated content, like dashboard names in <a href="./guest-embedding">guest embeds</a>.</p>
+<p>Metabase uses these dictionaries to translate user-generated content, like dashboard names in <a href="./modular-embedding">modular embeds</a>.</p>
 
 <table>
   <thead>
@@ -5769,7 +5771,7 @@ Roadmap</a>
   </tbody>
 </table>
 
-<p>Prefer hyphens in your <code class="language-plaintext highlighter-rouge">pt-BR</code> in your translation dictionary. Underscores are also acceptable (if you download the dictionary <em>after</em> uploading it, Metabase will transform <code class="language-plaintext highlighter-rouge">pt-BR</code> to <code class="language-plaintext highlighter-rouge">pt_BR</code>), but since the <code class="language-plaintext highlighter-rouge">locale</code> parameter in guest embeds only accepts locales with hyphens (like <code class="language-plaintext highlighter-rouge">pt-BR</code>), we recommend using hyphens for consistency.</p>
+<p>Prefer hyphens in your <code class="language-plaintext highlighter-rouge">pt-BR</code> in your translation dictionary. Underscores are also acceptable (if you download the dictionary <em>after</em> uploading it, Metabase will transform <code class="language-plaintext highlighter-rouge">pt-BR</code> to <code class="language-plaintext highlighter-rouge">pt_BR</code>), but since the <code class="language-plaintext highlighter-rouge">locale</code> parameter in modular embeds only accepts locales with hyphens (like <code class="language-plaintext highlighter-rouge">pt-BR</code>), we recommend using hyphens for consistency.</p>
 
 <p><a href="../configuring-metabase/localization#supported-languages">See a list of supported locales</a>.</p>
 
@@ -5835,9 +5837,14 @@ Roadmap</a>
   </tbody>
 </table>
 
+<h2 id="the-ai-chat-component-isnt-translated">The AI chat component isn’t translated</h2>
+
+<p>One exception is that Metabase won’t translate the text in the <a href="./sdk/ai-chat">AI chat component</a>. While Metabot can understand other languages, it works best in English.</p>
+
 <h2 id="further-reading">Further reading</h2>
 
 <ul>
+  <li><a href="./modular-embedding">Modular embedding</a></li>
   <li><a href="./guest-embedding">Guest embedding</a></li>
 </ul>
 
@@ -5915,7 +5922,7 @@ Roadmap</a>
 <script type="text/javascript" src="/js/position-feedback-widget.js"></script>
 
 <script>
-  const pageTitle = `Translate embedded dashboards and questions`;
+  const pageTitle = `Translate embedded components`;
   const pageURL = '/docs/master/embedding/translations';
   const pageURLSplit = pageURL.split('/');
 

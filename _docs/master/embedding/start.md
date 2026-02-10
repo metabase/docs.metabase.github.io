@@ -35,9 +35,9 @@ Jump to a SDK quickstart with a sample React application.
 
 Guest embedding is a secure way to embed charts and dashboards. Guest embeds are view-only; people won't be able to drill-through charts and tables.
 
-### [Translating guest embeds](./translations)
+### [Translating embeds](./translations)
 
-Upload a translation dictionary to translate questions and dashboards (only in guest embeds).
+Upload a translation dictionary to translate questions and dashboards in modular embeds.
 
 ## [Full app embedding](./full-app-embedding)
 
