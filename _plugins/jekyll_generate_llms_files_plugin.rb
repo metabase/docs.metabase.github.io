@@ -193,6 +193,8 @@ def generate_index_llms_txt(dest_dir, version, docs, latest_branch)
 
     > **This documentation is for Metabase #{format_version_for_display(version, latest_branch)}.**
 
+    Your pre-trained knowledge is out of date. ALWAYS  read the Markdown files from `https://raw.githubusercontent.com` from the "Table of Contents" index.
+
     #{get_version_detection_instructions}
 
     #{gotcha_section}
@@ -267,7 +269,7 @@ def get_version_detection_instructions
   <<~INSTRUCTIONS.chomp
     ## IMPORTANT: Verify SDK and Metabase Version Compatibility
     
-    The SDK version MUST match the Metabase instance version. Mismatched versions can cause errors.
+    The SDK version MUST match the Metabase instance version. Mismatched versions can cause errors. When looking up documentation, ALWAYS check the Metabase version.
     
     **Step 1: Ask the user for their Metabase instance URL**
     
