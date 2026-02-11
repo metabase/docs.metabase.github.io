@@ -5523,6 +5523,14 @@ Roadmap</a>
     
       
         <li>
+          <a href="/docs/v0.59">
+            v0.59
+          </a>
+        </li>
+      
+    
+      
+        <li>
           <a href="/docs/v0.58">
             v0.58
           </a>
@@ -5593,14 +5601,6 @@ Roadmap</a>
         </li>
       
     
-      
-        <li>
-          <a href="/docs/v0.49">
-            v0.49
-          </a>
-        </li>
-      
-    
     <li><a href="/docs/all">See more</a></li>
   </ul>
 </div>
@@ -5651,8 +5651,7 @@ retrieves database type names from result set metadata. See the <code class="lan
   <li>
     <p>Added <code class="language-plaintext highlighter-rouge">metabase.driver/llm-sql-dialect-resource</code> multimethod. Returns the resource path for dialect-specific LLM prompt instructions, or nil if no dialect-specific instructions exist for this driver.</p>
   </li>
-  <li>
-    <p>Added workspace isolation multimethods for the enterprise workspaces feature:</p>
+  <li>Added workspace isolation multimethods for the enterprise workspaces feature:
     <ul>
       <li><code class="language-plaintext highlighter-rouge">init-workspace-isolation!</code>    - Create an isolated schema or database with user credentials for workspace usage.</li>
       <li><code class="language-plaintext highlighter-rouge">destroy-workspace-isolation!</code> - Destroy all database resources created for workspace isolation.</li>
@@ -5660,6 +5659,16 @@ retrieves database type names from result set metadata. See the <code class="lan
       <li><code class="language-plaintext highlighter-rouge">check-isolation-permissions</code>  - Test whether the database connection has sufficient permissions.</li>
     </ul>
   </li>
+  <li>Added support for escaping <code class="language-plaintext highlighter-rouge">LIKE</code> metacharacters to <code class="language-plaintext highlighter-rouge">:sql</code> driver’s handling of <code class="language-plaintext highlighter-rouge">LIKE</code> clauses, which are used to
+implement the <code class="language-plaintext highlighter-rouge">:starts-with</code>, <code class="language-plaintext highlighter-rouge">:ends-with</code> and <code class="language-plaintext highlighter-rouge">:contains</code> filters. The default implementation uses backslashes to
+escape backslashes, <code class="language-plaintext highlighter-rouge">%</code> and <code class="language-plaintext highlighter-rouge">_</code>, the <code class="language-plaintext highlighter-rouge">LIKE</code> metacharacters, when the RHS of one of these filters is a literal string.
+Drivers which can handle <code class="language-plaintext highlighter-rouge">x LIKE y ESCAPE '\'</code> should just work. If a different way of escaping is needed, you can
+override the new multimethod <code class="language-plaintext highlighter-rouge">metabase.driver.sql.query-processor/escape-like-pattern</code>; see <code class="language-plaintext highlighter-rouge">:sqlserver</code> which uses
+<code class="language-plaintext highlighter-rouge">[%]</code> regex character classes. For drivers which already have backslash as the <code class="language-plaintext highlighter-rouge">ESCAPE</code> default, or don’t support
+that <code class="language-plaintext highlighter-rouge">ESCAPE</code> syntax, override the new multimethod <code class="language-plaintext highlighter-rouge">metabase.driver.sql.query-processor/transform-literal-like-pattern-honeysql</code>,
+or as a shortcut if the override is an identity function, add the abstract driver
+<code class="language-plaintext highlighter-rouge">:metabase.driver.sql.query-processor.like-escape-char-built-in/like-escape-char-built-in</code> as a parent of your driver.
+See <code class="language-plaintext highlighter-rouge">metabase.driver.mysql</code> for an example of using the abstract driver.</li>
 </ul>
 
 <h2 id="metabase-0580">Metabase 0.58.0</h2>

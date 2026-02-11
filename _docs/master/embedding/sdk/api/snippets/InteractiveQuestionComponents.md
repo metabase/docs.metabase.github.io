@@ -15,9 +15,9 @@ layout: new-docs
 
 <!-- [<endsnippet interactivequestion>] -->
 
-### BackButton()
+### ~~BackButton()~~
 
-<!-- [<snippet backbutton()>] -->
+<!-- [<snippet ~~backbutton()~~>] -->
 
 ```ts
 BackButton: (props: InteractiveQuestionBackButtonProps) =>
@@ -30,7 +30,7 @@ BackButton: (props: InteractiveQuestionBackButtonProps) =>
 A navigation button that returns to the previous view.
 Only visible when rendered within the [InteractiveDashboardProps.renderDrillThroughQuestion](./api/InteractiveDashboardProps#renderdrillthroughquestion) prop.
 
-<!-- [<endsnippet backbutton()>] -->
+<!-- [<endsnippet ~~backbutton()~~>] -->
 
 #### Parameters
 
@@ -49,9 +49,17 @@ Only visible when rendered within the [InteractiveDashboardProps.renderDrillThro
 \| `null`
 \| [`Element`](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/0b728411cd1dfb4bd26992bb35a73cf8edaa22e7/types/react/jsx-runtime.d.ts#L6)
 
+<!-- [<endsnippet returns>] -->
+
+#### Deprecated
+
+<!-- [<snippet deprecated>] -->
+
+Use `InteractiveQuestion.NavigationBackButton` instead
+
 ---
 
-<!-- [<endsnippet returns>] -->
+<!-- [<endsnippet deprecated>] -->
 
 ### Breakout()
 
@@ -913,5 +921,40 @@ AlertsButton: () => Element;
 <!-- [<snippet returns>] -->
 
 [`Element`](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/0b728411cd1dfb4bd26992bb35a73cf8edaa22e7/types/react/jsx-runtime.d.ts#L6)
+
+---
+
+<!-- [<endsnippet returns>] -->
+
+### NavigationBackButton()
+
+<!-- [<snippet navigationbackbutton()>] -->
+
+```ts
+NavigationBackButton: (props: { className?: string; style?: CSSProperties }) =>
+  ReactNode;
+```
+
+Back button to navigate back after drills and internal navigation. It will render null if there's nothing to go back to
+
+<!-- [<endsnippet navigationbackbutton()>] -->
+
+#### Parameters
+
+<!-- [<snippet parameters>] -->
+
+| Parameter          | Type                                                                                                                                                                                      |
+| :----------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `props`            | \{ `className?`: `string`; `style?`: [`CSSProperties`](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/0b728411cd1dfb4bd26992bb35a73cf8edaa22e7/types/react/index.d.ts#L2579); \} |
+| `props.className?` | `string`                                                                                                                                                                                  |
+| `props.style?`     | [`CSSProperties`](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/0b728411cd1dfb4bd26992bb35a73cf8edaa22e7/types/react/index.d.ts#L2579)                                          |
+
+<!-- [<endsnippet parameters>] -->
+
+#### Returns
+
+<!-- [<snippet returns>] -->
+
+[`ReactNode`](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/0b728411cd1dfb4bd26992bb35a73cf8edaa22e7/types/react/index.d.ts#L478)
 
 <!-- [<endsnippet returns>] -->
