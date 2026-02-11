@@ -5523,6 +5523,14 @@ Roadmap</a>
     
       
         <li>
+          <a href="/docs/v0.59">
+            v0.59
+          </a>
+        </li>
+      
+    
+      
+        <li>
           <a href="/docs/v0.58">
             v0.58
           </a>
@@ -5593,14 +5601,6 @@ Roadmap</a>
         </li>
       
     
-      
-        <li>
-          <a href="/docs/v0.49">
-            v0.49
-          </a>
-        </li>
-      
-    
     <li><a href="/docs/all">See more</a></li>
   </ul>
 </div>
@@ -5656,12 +5656,12 @@ Roadmap</a>
   <li>
     <p>Continuously build the frontend</p>
 
-    <p>a. If you need only the frontend, run <code class="language-plaintext highlighter-rouge">yarn build-hot</code></p>
+    <p>a. If you need only the frontend, run <code class="language-plaintext highlighter-rouge">bun run build-hot</code></p>
 
-    <p>b. If you want to run a local Metabase instance alongside Cypress, the easiest way to achieve this is by using <code class="language-plaintext highlighter-rouge">yarn dev</code> or <code class="language-plaintext highlighter-rouge">yarn dev-ee</code> (both rely on frontend hot reloading under the hood)</p>
+    <p>b. If you want to run a local Metabase instance alongside Cypress, the easiest way to achieve this is by using <code class="language-plaintext highlighter-rouge">bun run dev</code> or <code class="language-plaintext highlighter-rouge">bun run dev-ee</code> (both rely on frontend hot reloading under the hood)</p>
   </li>
   <li>
-    <p>In a separate terminal session (without killing the previous one) run <code class="language-plaintext highlighter-rouge">yarn test-cypress</code>. This will open a Cypress GUI that will let you choose which tests to run. Alternatively, take a look at <code class="language-plaintext highlighter-rouge">run_cypress_local.js</code> and <code class="language-plaintext highlighter-rouge">e2e/test/scenarios/docker-compose.yml</code> for all possible options.</p>
+    <p>In a separate terminal session (without killing the previous one) run <code class="language-plaintext highlighter-rouge">bun run test-cypress</code>. This will open a Cypress GUI that will let you choose which tests to run. Alternatively, take a look at <code class="language-plaintext highlighter-rouge">run_cypress_local.js</code> and <code class="language-plaintext highlighter-rouge">e2e/test/scenarios/docker-compose.yml</code> for all possible options.</p>
   </li>
 </ol>
 
@@ -5669,13 +5669,13 @@ Roadmap</a>
 
 <p>To run all Cypress tests headlessly in the terminal:</p>
 
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">CYPRESS_GUI</span><span class="o">=</span><span class="nb">false </span>yarn run test-cypress
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">CYPRESS_GUI</span><span class="o">=</span><span class="nb">false </span>bun run test-cypress
 </code></pre></div></div>
 
 <p>You can quickly test a single file only by using the official <code class="language-plaintext highlighter-rouge">--spec</code> flag.
 This flag can be used to run all specs within a folder, or to run multiple assorted specs. Consult <a href="https://docs.cypress.io/app/references/command-line#cypress-run-spec-lt-spec-gt">the official documentation</a> for instructions.</p>
 
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">CYPRESS_GUI</span><span class="o">=</span><span class="nb">false </span>yarn test-cypress <span class="nt">--spec</span> e2e/test/scenarios/question/new.cy.spec.js
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">CYPRESS_GUI</span><span class="o">=</span><span class="nb">false </span>bun run test-cypress <span class="nt">--spec</span> e2e/test/scenarios/question/new.cy.spec.js
 </code></pre></div></div>
 
 <p>You can specify a browser to execute Cypress tests in using the <code class="language-plaintext highlighter-rouge">--browser</code> flag. For more details, please consult <a href="https://docs.cypress.io/guides/guides/launching-browsers">the official documentation</a>.</p>
@@ -5755,7 +5755,7 @@ This flag can be used to run all specs within a folder, or to run multiple assor
 
 <h3 id="code-reloading-vs-test-reloading">Code reloading vs test reloading</h3>
 
-<p>When you edit a Cypress test file, the tests will refresh and run again. However, when you edit a code file, Cypress won’t detect that change. If you’re running <code class="language-plaintext highlighter-rouge">yarn build-hot</code>, the code will rebuild and update within Cypress. You’ll have to manually click rerun after the new code has loaded.</p>
+<p>When you edit a Cypress test file, the tests will refresh and run again. However, when you edit a code file, Cypress won’t detect that change. If you’re running <code class="language-plaintext highlighter-rouge">bun run build-hot</code>, the code will rebuild and update within Cypress. You’ll have to manually click rerun after the new code has loaded.</p>
 
 <h3 id="inspecting-while-the-contains-helper-is-open">Inspecting while the “contains helper” is open</h3>
 
@@ -5763,7 +5763,7 @@ This flag can be used to run all specs within a folder, or to run multiple assor
 
 <h3 id="putting-the-wrong-html-template-in-the-uberjar">Putting the wrong HTML template in the Uberjar</h3>
 
-<p><code class="language-plaintext highlighter-rouge">yarn build</code> and <code class="language-plaintext highlighter-rouge">yarn build-hot</code> each overwrite an HTML template to reference the correct JavaScript files. If you run <code class="language-plaintext highlighter-rouge">yarn build</code> before building an Uberjar for Cypress tests, you won’t see changes to your JavaScript reflected even if you then start <code class="language-plaintext highlighter-rouge">yarn build-hot</code>.</p>
+<p><code class="language-plaintext highlighter-rouge">bun run build</code> and <code class="language-plaintext highlighter-rouge">bun run build-hot</code> each overwrite an HTML template to reference the correct JavaScript files. If you run <code class="language-plaintext highlighter-rouge">bun run build</code> before building an Uberjar for Cypress tests, you won’t see changes to your JavaScript reflected even if you then start <code class="language-plaintext highlighter-rouge">bun run build-hot</code>.</p>
 
 <h3 id="running-cypress-on-apple-silicon">Running Cypress on Apple Silicon</h3>
 
@@ -5883,7 +5883,7 @@ You should provide 4 tokens:</p>
 
 <h2 id="tags">Tags</h2>
 
-<p>Cypress allows us to <a href="https://github.com/cypress-io/cypress/tree/develop/npm/grep#tags-in-the-test-config-object">tag</a> tests, to easily find certain categories of tags. For example, we can tag all tests that require an external database with <code class="language-plaintext highlighter-rouge">@external</code> and then run only those tests with <code class="language-plaintext highlighter-rouge">yarn test-cypress --env grepTags="@external"</code>. Tags should start with <code class="language-plaintext highlighter-rouge">@</code> just to make it easier to distinguish them from other strings in searches.</p>
+<p>Cypress allows us to <a href="https://github.com/cypress-io/cypress/tree/develop/npm/grep#tags-in-the-test-config-object">tag</a> tests, to easily find certain categories of tags. For example, we can tag all tests that require an external database with <code class="language-plaintext highlighter-rouge">@external</code> and then run only those tests with <code class="language-plaintext highlighter-rouge">bun run test-cypress --env grepTags="@external"</code>. Tags should start with <code class="language-plaintext highlighter-rouge">@</code> just to make it easier to distinguish them from other strings in searches.</p>
 
 <p>These are the tags currently in use:</p>
 
@@ -5936,7 +5936,7 @@ keep in mind that CI needs to fully finish running first. The workflow uses GitH
 
 <p>When tests run <em>in CI</em> we do some extra steps by merging these individual reports (using <code class="language-plaintext highlighter-rouge">mochawesome-merge</code>), formatting them, and then generating customized GitHub Actions job summaries.</p>
 
-<p>On an off chance that you need a unified test report <em>while running tests locally</em>, you can achieve that by invoking <code class="language-plaintext highlighter-rouge">yarn generate-cypress-html-report</code>.</p>
+<p>On an off chance that you need a unified test report <em>while running tests locally</em>, you can achieve that by invoking <code class="language-plaintext highlighter-rouge">bun run generate-cypress-html-report</code>.</p>
 
 
         <div>

@@ -178,6 +178,7 @@ When you're creating a new embed using **Admin > Embedding > Setup guide > Embed
 
 - **Allow editing dashboards and questions**: lets people create and edit dashboards or questions in the current collection. When disabled, they can still perform actions like filter, summarize, and drill-through, but won't be able to save results.
 
+- **Allow alerts**: lets people set up [alerts](../questions/alerts) on embedded questions. Requires [email setup](../configuring-metabase/email). Only for authenticated (SSO) question embeds.
 
 ## Page-level config
 
@@ -192,6 +193,9 @@ To define the configuration that applies to every embed on the page, use the `de
 - `apiKey: mb_YourAPIKey` (optional, for development only) - another way to preview embeds locally using an API key.
 
 - `fetchRequestToken: () => Promise<{ jwt: string }>` (optional) - you can customize how the SDK fetches the refresh token for JWT authentication by specifying the `fetchRequestToken` function. See [customizing JWT authentication](./authentication#customizing-jwt-authentication).
+
+- `pluginsConfig` : plugins to customize the behavior of embedded components. Use the `handleLink` function to customize what happens when people click a link in your embedded questions and dashboards. For details on the `handleLink` API, including code examples, see [`handleLink` plugin](./sdk/plugins#handlelink).
+
 
 ## Authentication
 

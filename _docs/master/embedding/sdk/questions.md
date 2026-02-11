@@ -78,6 +78,16 @@ You can pass parameter values to questions defined with SQL via the `initialSqlP
 
 `initialSqlParameters` can't be used with questions built using the query builder.
 
+## Enable alerts on embedded questions
+
+You can let people set up [alerts](../../questions/alerts) on embedded questions by passing the `withAlerts` prop to `StaticQuestion` or `InteractiveQuestion`. Alerts require [email setup](../../configuring-metabase/email), and the question must be saved (not a new question).
+
+Alerts created in an embedded context only send to the logged-in user and exclude links to Metabase items.
+
+```tsx
+<StaticQuestion questionId={42} withAlerts />
+```
+
 ## Questions with natural language
 
 See [AI chat](./ai-chat).

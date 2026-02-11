@@ -5523,6 +5523,14 @@ Roadmap</a>
     
       
         <li>
+          <a href="/docs/v0.59">
+            v0.59
+          </a>
+        </li>
+      
+    
+      
+        <li>
           <a href="/docs/v0.58">
             v0.58
           </a>
@@ -5589,14 +5597,6 @@ Roadmap</a>
         <li>
           <a href="/docs/v0.50">
             v0.50
-          </a>
-        </li>
-      
-    
-      
-        <li>
-          <a href="/docs/v0.49">
-            v0.49
           </a>
         </li>
       
@@ -6454,16 +6454,6 @@ If set to 0, Metabase will keep all rows.</p>
 
 <p>Enable admins to create publicly viewable links (and embeddable iframes) for Questions and Dashboards?</p>
 
-<h3 id="mb_enable_query_caching"><code class="language-plaintext highlighter-rouge">MB_ENABLE_QUERY_CACHING</code></h3>
-
-<ul>
-  <li>Type: boolean</li>
-  <li>Default: <code class="language-plaintext highlighter-rouge">true</code></li>
-  <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">enable-query-caching</code></li>
-</ul>
-
-<p>Allow caching results of queries that take a long time to run.</p>
-
 <h3 id="mb_enable_xrays"><code class="language-plaintext highlighter-rouge">MB_ENABLE_XRAYS</code></h3>
 
 <ul>
@@ -6721,6 +6711,20 @@ Options:</p>
 </ul>
 
 <p>Key to retrieve the JWT user’s tenant.</p>
+
+<h3 id="mb_jwt_attribute_tenant_attributes"><code class="language-plaintext highlighter-rouge">MB_JWT_ATTRIBUTE_TENANT_ATTRIBUTES</code></h3>
+
+<blockquote>
+  <p>Only available on Metabase <a href="/product/pro">Pro</a> and <a href="/product/enterprise">Enterprise</a> plans.</p>
+</blockquote>
+
+<ul>
+  <li>Type: string</li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">@tenant.attributes</code></li>
+  <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">jwt-attribute-tenant-attributes</code></li>
+</ul>
+
+<p>Key to retrieve the JWT user’s tenant attributes.</p>
 
 <h3 id="mb_jwt_enabled"><code class="language-plaintext highlighter-rouge">MB_JWT_ENABLED</code></h3>
 
@@ -8158,6 +8162,28 @@ don’t have one.</p>
 
 <p>Process batches updates synchronously. If true, all <code class="language-plaintext highlighter-rouge">submit!</code> calls will be processed immediately. Default is false.</p>
 
+<h3 id="mb_thread_interrupt_escalation_timeout_ms"><code class="language-plaintext highlighter-rouge">MB_THREAD_INTERRUPT_ESCALATION_TIMEOUT_MS</code></h3>
+
+<ul>
+  <li>Type: integer</li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">0</code></li>
+</ul>
+
+<p>By default, this is 0 and the thread interrupt escalation does not run.</p>
+
+<p>Timeout in milliseconds to wait after query cancellation before escalating to thread interruption.
+        This is used to free up threads that are stuck waiting for a DB response after a query has been cancelled.</p>
+
+<h3 id="mb_transforms_enabled"><code class="language-plaintext highlighter-rouge">MB_TRANSFORMS_ENABLED</code></h3>
+
+<ul>
+  <li>Type: boolean</li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">false</code></li>
+  <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">transforms-enabled</code></li>
+</ul>
+
+<p>Enable transforms for instances that have not explicitly purchased the transform add-on.</p>
+
 <h3 id="mb_unaggregated_query_row_limit"><code class="language-plaintext highlighter-rouge">MB_UNAGGREGATED_QUERY_ROW_LIMIT</code></h3>
 
 <ul>
@@ -8567,6 +8593,22 @@ Default: <code class="language-plaintext highlighter-rouge">null</code></p>
 Default: True</p>
 
 <p>Whether to include the Sample Database in your Metabase. To exclude the Sample Database, set <code class="language-plaintext highlighter-rouge">MB_LOAD_SAMPLE_CONTENT=false</code>.</p>
+
+<h3 id="mb_monitor_performance"><code class="language-plaintext highlighter-rouge">MB_MONITOR_PERFORMANCE</code></h3>
+
+<p>Type: string<br>
+Default: <code class="language-plaintext highlighter-rouge">""</code></p>
+
+<p>When set, starts a Java Flight Recorder (JFR) recording at startup that can be analyzed with JDK Mission Control or other JFR tools.</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">"true"</code> generates a timestamped output file like <code class="language-plaintext highlighter-rouge">metabase-2026_01_15.jfr</code></li>
+  <li>Any other non-empty value is used as the output filename (<code class="language-plaintext highlighter-rouge">.jfr</code> extension is appended if missing)</li>
+  <li><code class="language-plaintext highlighter-rouge">""</code> or <code class="language-plaintext highlighter-rouge">"false"</code> disables monitoring (the default)</li>
+</ul>
+
+<p>The performance recording stores only method signature calls and other code execution metrics.
+It does not store any sensitive information such as environment variables, system properties, or other machine information.</p>
 
 <h3 id="mb_no_surveys"><code class="language-plaintext highlighter-rouge">MB_NO_SURVEYS</code></h3>
 

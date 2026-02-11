@@ -153,7 +153,6 @@ config:
     enable-password-login: true
     enable-pivoted-exports: true
     enable-public-sharing: true
-    enable-query-caching: true
     enable-xrays: true
     follow-up-email-sent: false
     google-auth-auto-create-accounts-domain: null
@@ -175,6 +174,7 @@ config:
     jwt-attribute-groups: groups
     jwt-attribute-lastname: last_name
     jwt-attribute-tenant: '@tenant'
+    jwt-attribute-tenant-attributes: '@tenant.attributes'
     jwt-enabled: false
     jwt-group-mappings: {}
     jwt-group-sync: false
@@ -294,6 +294,8 @@ config:
     surveys-enabled: true
     sync-leaf-fields-limit: 1000
     synchronous-batch-updates: false
+    thread-interrupt-escalation-timeout-ms: 0
+    transforms-enabled: false
     unaggregated-query-row-limit: null
     uploads-settings: null
     user-visibility: all

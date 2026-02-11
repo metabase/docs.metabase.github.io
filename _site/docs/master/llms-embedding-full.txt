@@ -6,7 +6,7 @@
 
 ## IMPORTANT: Verify SDK and Metabase Version Compatibility
 
-The SDK version MUST match the Metabase instance version. Mismatched versions can cause errors.
+The SDK version MUST match the Metabase instance version. Mismatched versions can cause errors. When looking up documentation, ALWAYS check the Metabase version.
 
 **Step 1: Ask the user for their Metabase instance URL**
 
@@ -674,6 +674,7 @@ To render a dashboard:
 - `with-subscriptions` - let people set up [dashboard subscriptions](../dashboards/subscriptions). Unlike subscriptions sent from non-embedded dashboards, subscriptions sent from embedded dashboards exclude links to Metabase items, as Metabase assumes the recipient lacks access to the embedded Metabase.
 - `refresh` - auto-refreshes the dashboard. `refresh="60"` will refresh the dashboard every 60 seconds.
 - `hidden-parameters` - list of filter names to hide from the dashboard, like `['productId']`
+- `enable-entity-navigation` (default is false) - preserves dashboard custom [click behaviors](../dashboards/interactive#customizing-click-behavior) that navigate to other dashboards and questions within the embed. Requires `drills` to be true (which is the default). When disabled, only external URL links are kept. See also [`handleLink`](./sdk/plugins#handlelink) for customizing what happens when people click URL links.
 
 For all modular embeds, you can also set a `locale` in your page-level configuration to [translate embedded content](./translations), including content from translation dictionaries.
 
@@ -725,7 +726,8 @@ To render a question (chart):
 - `with-downloads` (default is true on OSS/Starter and false on Pro/Enterprise) - show downloads
 - `initial-sql-parameters` - default value for SQL parameters, only applicable to native SQL questions, like `{ "productId": "42" }`
 - `is-save-enabled` (default is false)
-- `target-collection` - this is to enforce saving into a particular collection. Values: regular ID, entity ID, `"personal”`, `"root”`
+- `target-collection` - this is to enforce saving into a particular collection. Values: regular ID, entity ID, `"personal"`, `"root"`
+- `with-alerts` (default is false) - let people set up [alerts](../questions/alerts) on embedded questions. Requires [email setup](../configuring-metabase/email). Unlike alerts on non-embedded questions, alerts on embedded questions only send to the logged-in user and exclude links to Metabase items. Not available for models.
 
 Only `with-title` and `with-downloads` are supported in [guest embeds](./guest-embedding).
 
@@ -2096,6 +2098,7 @@ When you're creating a new embed using **Admin > Embedding > Setup guide > Embed
 
 - **Allow editing dashboards and questions**: lets people create and edit dashboards or questions in the current collection. When disabled, they can still perform actions like filter, summarize, and drill-through, but won't be able to save results.
 
+- **Allow alerts**: lets people set up [alerts](../questions/alerts) on embedded questions. Requires [email setup](../configuring-metabase/email). Only for authenticated (SSO) question embeds.
 
 ## Page-level config
 
@@ -2110,6 +2113,9 @@ To define the configuration that applies to every embed on the page, use the `de
 - `apiKey: mb_YourAPIKey` (optional, for development only) - another way to preview embeds locally using an API key.
 
 - `fetchRequestToken: () => Promise<{ jwt: string }>` (optional) - you can customize how the SDK fetches the refresh token for JWT authentication by specifying the `fetchRequestToken` function. See [customizing JWT authentication](./authentication#customizing-jwt-authentication).
+
+- `pluginsConfig` : plugins to customize the behavior of embedded components. Use the `handleLink` function to customize what happens when people click a link in your embedded questions and dashboards. For details on the `handleLink` API, including code examples, see [`handleLink` plugin](./sdk/plugins#handlelink).
+
 
 ## Authentication
 
@@ -2748,9 +2754,7 @@ The SDK doesn't support:
 
 - Verified content
 - Official collections
-- Subscriptions
-- Alerts
-- Click behavior with custom destinations to other items in the same Metabase (like to other questions or dashboards)
+- Dashboard link cards
 - Server-side rendering (SSR)
 
 Other limitations:
@@ -2877,7 +2881,13 @@ To customize what happens when people click a link in your embedded questions an
 
 ```
 
-The plugin `handleLink` can only be used [globally](#plugin-scope) on provider level.
+By default, links open in a new tab. Use `handleLink` to intercept link clicks — for example, to open a URL in a modal or navigate within your app using your router.
+
+The function receives a URL string. Return `{ handled: true }` to prevent default navigation, or `{ handled: false }` to open the link in a new tab.
+
+The plugin `handleLink` can only be used [globally](#plugin-scope) on provider level. `handleLink` is also available in [modular embedding](../modular-embedding#page-level-config) via `pluginsConfig` in `defineMetabaseConfig`, with the same API.
+
+To create clickable links in your table columns, set the column's formatting to [display as link](../../data-modeling/formatting#display-as).
 
 ### `getNoDataIllustration` and `getNoObjectIllustration`
 
@@ -2963,6 +2973,16 @@ You can pass parameter values to questions defined with SQL via the `initialSqlP
 ```
 
 `initialSqlParameters` can't be used with questions built using the query builder.
+
+## Enable alerts on embedded questions
+
+You can let people set up [alerts](../../questions/alerts) on embedded questions by passing the `withAlerts` prop to `StaticQuestion` or `InteractiveQuestion`. Alerts require [email setup](../../configuring-metabase/email), and the question must be saved (not a new question).
+
+Alerts created in an embedded context only send to the logged-in user and exclude links to Metabase items.
+
+```tsx
+<StaticQuestion questionId={42} withAlerts />
+```
 
 ## Questions with natural language
 

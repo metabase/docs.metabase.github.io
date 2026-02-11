@@ -21,5 +21,6 @@ layout: new-docs
 | <a id="isopen"></a> `isOpen?`                           | `boolean`                                                                  | Whether the modal is open or not.                                                                                  |
 | <a id="onclose"></a> `onClose?`                         | () => `void`                                                               | Handler to close modal component                                                                                   |
 | <a id="oncreate"></a> `onCreate`                        | (`dashboard`: [`MetabaseDashboard`](./api/MetabaseDashboard)) => `void` | Handler to react on dashboard creation.                                                                            |
+| <a id="targetcollection"></a> `targetCollection?`       | [`SdkCollectionId`](./api/SdkCollectionId)                              | The collection to save the dashboard to. This will hide the collection picker from the save modal.                 |
 
 <!-- [<endsnippet properties>] -->
