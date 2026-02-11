@@ -23,7 +23,7 @@
     "lint-markdown": "npx markdownlint '**/*.{md,markdown}' --ignore-path=.markdownlintignore",
     "lint-markdown-fix": "npx markdownlint '**/*.{md,markdown}' --ignore-path=.markdownlintignore --fix",
     "lint-html": "npx linthtml '**/*.{html,htm}'",
-    "lint-markups": "yarn lint-markdown && yarn lint-html",
+    "lint-markups": "bun run lint-markdown && bun run lint-html",
     "lint-fix": "lint-scripts-fix && lint-styles-fix && lint-markdown-fix",
     "test": "tape spec/*.js | tap-spec",
     "test-linter": "jest",
@@ -38,10 +38,10 @@
     "opengraph-docs": "node script/_data/bin/opengraph.js --folder _docs --properties version,category,title",
     "opengraph-glossary": "node script/_data/bin/opengraph.js --folder _glossary --properties title",
     "opengraph-learn": "node script/_data/bin/opengraph.js --folder _learn --properties title,image,categories",
-    "all-opengraphs": "yarn opengraph-community && yarn opengraph-case-studies && yarn opengraph-dashboards && yarn opengraph-data-sources && yarn opengraph-docs && yarn opengraph-glossary && yarn opengraph-learn",
+    "all-opengraphs": "bun run opengraph-community && bun run opengraph-case-studies && bun run opengraph-dashboards && bun run opengraph-data-sources && bun run opengraph-docs && bun run opengraph-glossary && bun run opengraph-learn",
     "jekyll:clean": "rm -f -r _site && rm -f -r .sass-cache && rm -f .jekyll-metadata",
     "jekyll:start": "bundle exec jekyll serve --config _config.dev.yml --livereload --incremental --port=4321",
-    "jekyll:clean-start": "yarn jekyll:clean && yarn jekyll:start",
+    "jekyll:clean-start": "bun run jekyll:clean && bun run jekyll:start",
     "jekyll:build": "bundle exec jekyll build --config _config.yml",
     "frontend:dev": "webpack --watch --mode=development --stats-error-details",
     "frontend:build": "webpack --progress --mode=production",
@@ -119,5 +119,5 @@
   "overrides": {
     "graceful-fs": "^4.2.9"
   },
-  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
+  "packageManager": "bun"
 }
