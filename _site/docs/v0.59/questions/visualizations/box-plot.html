@@ -6,7 +6,7 @@
   <meta content="frame-ancestors 'none'" http-equiv="Content-Security-Policy">
   <meta content="deny" http-equiv="X-Frame-Options">
     
-  <link href="https://www.metabase.com/docs/v0.59/embedding/sdk/questions" rel="canonical">
+  <link href="https://www.metabase.com/docs/v0.59/questions/visualizations/box-plot" rel="canonical">
   
 
   <script type="text/javascript">
@@ -49,12 +49,12 @@
 
 
 
-<title>Modular embedding SDK - questions | Metabase Documentation</title>
+<title>Box plots | Metabase Documentation</title>
 <!-- Twitter cards -->
 <meta name="twitter:site" content="@metabase">
 
-<meta name="twitter:title" content="Modular embedding SDK - questions | Metabase Documentation">
-<meta name="twitter:description" content="How to embed charts in your app with the Modular embedding SDK.">
+<meta name="twitter:title" content="Box plots | Metabase Documentation">
+<meta name="twitter:description" content="Box plots, also known as box and whisker plots, show the distribution of numeric data across groups, displaying the median, quartiles, and outliers.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -62,9 +62,9 @@
 <!-- Open Graph metadata -->
 <meta property="og:site_name" content="Metabase | Business Intelligence, Dashboards, and Data Visualization">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://www.metabase.com/docs/v0.59/embedding/sdk/questions">
-<meta name="title" property="og:title" content="Modular embedding SDK - questions | Metabase Documentation">
-<meta name="description" property="og:description" content="How to embed charts in your app with the Modular embedding SDK.">
+<meta property="og:url" content="https://www.metabase.com/docs/v0.59/questions/visualizations/box-plot">
+<meta name="title" property="og:title" content="Box plots | Metabase Documentation">
+<meta name="description" property="og:description" content="Box plots, also known as box and whisker plots, show the distribution of numeric data across groups, displaying the median, quartiles, and outliers.">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -3256,7 +3256,7 @@ Roadmap</a>
 
       
 
-      <li class="expanded">
+      <li class="">
         <a href="" class="">
         Modular embedding
 
@@ -3354,7 +3354,7 @@ Roadmap</a>
 
               
 
-              <li class="expanded">
+              <li class="">
                 <a href="" class="">
                   Modular embedding SDK
 
@@ -3403,7 +3403,7 @@ Roadmap</a>
                       
 
                       
-                      <li class="expanded">
+                      <li class="">
                         <a href="" class="">
                           Components
 
@@ -3421,7 +3421,7 @@ Roadmap</a>
                             
                               
                               <li>
-                                <a href="/docs/v0.59/embedding/sdk/questions" class="selected">
+                                <a href="/docs/v0.59/embedding/sdk/questions" class="">
                                   Questions
                                 </a>
                               </li>
@@ -5643,7 +5643,7 @@ Roadmap</a>
 
             
             
-                <li class="breadcrumb-item"><a class="blue-60" href="/docs/v0.59/embedding/start">Embedding</a></li>
+                <li class="breadcrumb-item"><a class="blue-60" href="/docs/v0.59/questions/start">Questions</a></li>
             
             
         </ol>
@@ -5784,615 +5784,207 @@ Roadmap</a>
 </div>
 
 
-        <h1 id="modular-embedding-sdk---questions">Modular embedding SDK - questions</h1>
+        <h1 id="box-plots">Box plots</h1>
 
-<div class="bootstrap">
-  <div class="plans-blockquote bg-blue-95 rounded-3 p-6 d-flex flex-row border border-1 border-primary">
-    <svg class="" width="24" height="24" viewBox="0 0 26 26" fill="none">
-  <path d="M12 13V15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
-  <path d="M12 10C12.5523 10 13 9.55228 13 9C13 8.44772 12.5523 8 12 8C11.4477 8 11 8.44772 11 9C11 9.55228 11.4477 10 12 10Z" fill="#509EE3"></path>
-  <path d="M12 19.25C16.0041 19.25 19.25 16.0041 19.25 12C19.25 7.99594 16.0041 4.75 12 4.75C7.99594 4.75 4.75 7.99594 4.75 12C4.75 16.0041 7.99594 19.25 12 19.25Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
-</svg>
+<p><img src="../images/box-plot.png" alt="Box plot"></p>
 
-    
-    
-    
-      
+<p>Box plots, also known as box and whisker plots, show the distribution of numeric data across groups. Box plots are great for comparing how values are spread out across categories or time periods.</p>
 
-    <p class="m-0 ms-2 paragraph-5 neutral-40">
-       Modular embedding SDK is only available on
-      <a class="fw-bold" href="/product/pro">Pro</a> and
-      <a class="fw-bold link-purple" href="/product/enterprise">Enterprise</a>
-      plans  (both self-hosted and on Metabase Cloud).
-    </p>
-  </div>
-</div>
-
-<p>There are different ways you can embed questions:</p>
+<p>Each plot displays:</p>
 
 <ul>
-  <li><a href="#staticquestion">Static question</a>. Embeds a chart. Clicking on the chart doesn’t do anything.</li>
-  <li><a href="#interactivequestion">Interactive question</a>. Clicking on the chart gives you the drill-through menu.</li>
-  <li><a href="#embedding-the-query-builder-for-creating-new-questions">Query builder</a>. Embeds the graphical query builder without a pre-defined query.</li>
+  <li>The <strong>mean</strong> as a diamond.</li>
+  <li><strong>Q1</strong> (25th percentile) and <strong>Q3</strong> (75th percentile) as the bottom and top of a box.</li>
+  <li>The <strong>median</strong> bisecting the box.</li>
+  <li>Whiskers extend to either 1.5x the interquartile range (the box), in which case points outside of the whiskers are outliers, or the whiskers can plot the full range of values, from the minimum value to the maximum value.</li>
 </ul>
 
-<h2 id="embedding-a-question">Embedding a question</h2>
+<h2 id="when-to-use-box-plots">When to use box plots</h2>
 
-<p>You can embed a question using the one of the question components:</p>
+<p>Box plots need multiple data points per group to compute meaningful statistics like median and quartiles. For example, if you summarize “Count of Orders” grouped by “Created At” and “State,” Metabase has enough data points per time period to compute quartiles and show outliers.</p>
 
-<h3 id="staticquestion"><code class="language-plaintext highlighter-rouge">StaticQuestion</code></h3>
+<p>If your question returns a single aggregated value per group (like total orders per year), you’ll want a <a href="./line-bar-and-area-charts">bar chart</a> instead.</p>
 
-<p>A lightweight question component. Use this component when you want to display results without letting people interact with the data.</p>
+<p>Compared to <a href="./scatterplot-or-bubble-chart">scatter plots</a>, which show individual data points, box plots summarize the distribution so you can quickly spot differences between groups.</p>
 
-<p><img src="../images/static-question.png" alt="Static question"></p>
+<h2 id="box-plot-data-shape">Box plot data shape</h2>
 
-<p>The component has a default height, which can be customized by using the <code class="language-plaintext highlighter-rouge">height</code> prop. To inherit the height from the parent container, you can pass <code class="language-plaintext highlighter-rouge">100%</code> to the height prop.</p>
+<p>To create a box plot, you’ll need a metric plus one or two grouping dimensions. You don’t need to include the mean or median calculations in your results; Metabase will include those calculations in the box plot visualization itself.</p>
 
-<h4 id="api-reference">API Reference</h4>
-
-<ul>
-  <li><a href="./api/StaticQuestion">Component</a></li>
-  <li><a href="./api/StaticQuestionProps">Props</a></li>
-</ul>
-
-<h4 id="example">Example</h4>
-
-<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nx">React</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">react</span><span class="dl">"</span><span class="p">;</span>
-<span class="k">import</span> <span class="p">{</span>
-  <span class="nx">MetabaseProvider</span><span class="p">,</span>
-  <span class="nx">StaticQuestion</span><span class="p">,</span>
-  <span class="nx">defineMetabaseAuthConfig</span><span class="p">,</span>
-<span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@metabase/embedding-sdk-react</span><span class="dl">"</span><span class="p">;</span>
-
-<span class="kd">const</span> <span class="nx">authConfig</span> <span class="o">=</span> <span class="nf">defineMetabaseAuthConfig</span><span class="p">({</span>
-  <span class="na">metabaseInstanceUrl</span><span class="p">:</span> <span class="dl">"</span><span class="s2">https://your-metabase.example.com</span><span class="dl">"</span><span class="p">,</span>
-<span class="p">});</span>
-
-<span class="k">export</span> <span class="k">default</span> <span class="kd">function</span> <span class="nf">App</span><span class="p">()</span> <span class="p">{</span>
-  <span class="kd">const</span> <span class="nx">questionId</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="c1">// This is the question ID you want to embed</span>
-
-  <span class="k">return </span><span class="p">(</span>
-    <span class="o">&lt;</span><span class="nx">MetabaseProvider</span> <span class="nx">authConfig</span><span class="o">=</span><span class="p">{</span><span class="nx">authConfig</span><span class="p">}</span><span class="o">&gt;</span>
-      <span class="o">&lt;</span><span class="nx">StaticQuestion</span> <span class="nx">questionId</span><span class="o">=</span><span class="p">{</span><span class="nx">questionId</span><span class="p">}</span> <span class="nx">withChartTypeSelector</span><span class="o">=</span><span class="p">{</span><span class="kc">false</span><span class="p">}</span> <span class="sr">/</span><span class="err">&gt;
-</span>    <span class="o">&lt;</span><span class="sr">/MetabaseProvider</span><span class="err">&gt;
-</span>  <span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div></div>
-
-<h4 id="props">Props</h4>
+<p>For example, “Count of Orders” grouped by “Created At” and “State” produces a result like:</p>
 
 <table>
   <thead>
     <tr>
-      <th style="text-align: left">Property</th>
-      <th style="text-align: left">Type</th>
-      <th style="text-align: left">Description</th>
+      <th>Created At</th>
+      <th>State</th>
+      <th>Count</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td style="text-align: left" data-label="Property"><a id="classname"></a> <code class="language-plaintext highlighter-rouge">className?</code></td>
-      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">string</code></td>
-      <td style="text-align: left" data-label="Description">A custom class name to be added to the root element.</td>
+      <td data-label="Created At">2024</td>
+      <td data-label="State">AZ</td>
+      <td data-label="Count">487</td>
     </tr>
     <tr>
-      <td style="text-align: left" data-label="Property"><a id="height"></a> <code class="language-plaintext highlighter-rouge">height?</code></td>
-      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">Height</code>&lt;<code class="language-plaintext highlighter-rouge">string</code> | <code class="language-plaintext highlighter-rouge">number</code>&gt;</td>
-      <td style="text-align: left" data-label="Description">A number or string specifying a CSS size value that specifies the height of the component</td>
+      <td data-label="Created At">2024</td>
+      <td data-label="State">CA</td>
+      <td data-label="Count">1,302</td>
     </tr>
     <tr>
-      <td style="text-align: left" data-label="Property"><a id="hiddenparameters"></a> <code class="language-plaintext highlighter-rouge">hiddenParameters?</code></td>
-      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">string</code>[]</td>
-      <td style="text-align: left" data-label="Description">A list of parameters to hide.</td>
+      <td data-label="Created At">2024</td>
+      <td data-label="State">CO</td>
+      <td data-label="Count">253</td>
     </tr>
     <tr>
-      <td style="text-align: left" data-label="Property"><a id="initialsqlparameters"></a> <code class="language-plaintext highlighter-rouge">initialSqlParameters?</code></td>
-      <td style="text-align: left" data-label="Type"><a href="./api/SqlParameterValues"><code class="language-plaintext highlighter-rouge">SqlParameterValues</code></a></td>
-      <td style="text-align: left" data-label="Description">Initial values for the SQL parameters.</td>
+      <td data-label="Created At">2024</td>
+      <td data-label="State">NY</td>
+      <td data-label="Count">1,118</td>
     </tr>
     <tr>
-      <td style="text-align: left" data-label="Property"><a id="questionid"></a> <code class="language-plaintext highlighter-rouge">questionId?</code></td>
-      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">null</code> | <a href="./api/SdkQuestionId"><code class="language-plaintext highlighter-rouge">SdkQuestionId</code></a></td>
-      <td style="text-align: left" data-label="Description">The ID of the question. <br> This is either: <br> - the numerical ID when accessing a question link, i.e. <code class="language-plaintext highlighter-rouge">http://localhost:3000/question/1-my-question</code> where the ID is <code class="language-plaintext highlighter-rouge">1</code> <br> - the string ID found in the <code class="language-plaintext highlighter-rouge">entity_id</code> key of the question object when using the API directly or using the SDK Collection Browser to return data <br> - <code class="language-plaintext highlighter-rouge">new</code> to show the notebook editor for creating new questions <br> - <code class="language-plaintext highlighter-rouge">new-native</code> to show the SQL editor for creating new native questions</td>
+      <td data-label="Created At">2025</td>
+      <td data-label="State">AZ</td>
+      <td data-label="Count">512</td>
     </tr>
     <tr>
-      <td style="text-align: left" data-label="Property"><a id="style"></a> <code class="language-plaintext highlighter-rouge">style?</code></td>
-      <td style="text-align: left" data-label="Type"><a href="https://github.com/DefinitelyTyped/DefinitelyTyped/blob/0b728411cd1dfb4bd26992bb35a73cf8edaa22e7/types/react/index.d.ts#L2579"><code class="language-plaintext highlighter-rouge">CSSProperties</code></a></td>
-      <td style="text-align: left" data-label="Description">A custom style object to be added to the root element.</td>
+      <td data-label="Created At">2025</td>
+      <td data-label="State">CA</td>
+      <td data-label="Count">1,450</td>
     </tr>
     <tr>
-      <td style="text-align: left" data-label="Property"><a id="title"></a> <code class="language-plaintext highlighter-rouge">title?</code></td>
-      <td style="text-align: left" data-label="Type"><a href="./api/SdkQuestionTitleProps"><code class="language-plaintext highlighter-rouge">SdkQuestionTitleProps</code></a></td>
-      <td style="text-align: left" data-label="Description">Determines whether the question title is displayed, and allows a custom title to be displayed instead of the default question title. Shown by default.</td>
+      <td data-label="Created At">2025</td>
+      <td data-label="State">CO</td>
+      <td data-label="Count">301</td>
     </tr>
     <tr>
-      <td style="text-align: left" data-label="Property"><a id="token"></a> <code class="language-plaintext highlighter-rouge">token?</code></td>
-      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">null</code> | <code class="language-plaintext highlighter-rouge">string</code></td>
-      <td style="text-align: left" data-label="Description">A valid JWT token for the guest embed.</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="width"></a> <code class="language-plaintext highlighter-rouge">width?</code></td>
-      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">Width</code>&lt;<code class="language-plaintext highlighter-rouge">string</code> | <code class="language-plaintext highlighter-rouge">number</code>&gt;</td>
-      <td style="text-align: left" data-label="Description">A number or string specifying a CSS size value that specifies the width of the component</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="withalerts"></a> <code class="language-plaintext highlighter-rouge">withAlerts?</code></td>
-      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">boolean</code></td>
-      <td style="text-align: left" data-label="Description">Enables the ability to set up alerts on the question.</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="withcharttypeselector"></a> <code class="language-plaintext highlighter-rouge">withChartTypeSelector?</code></td>
-      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">boolean</code></td>
-      <td style="text-align: left" data-label="Description">Determines whether the chart type selector and corresponding settings button are shown. Only relevant when using the default layout.</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="withdownloads"></a> <code class="language-plaintext highlighter-rouge">withDownloads?</code></td>
-      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">boolean</code></td>
-      <td style="text-align: left" data-label="Description">Enables the ability to download results in the question.</td>
+      <td data-label="Created At">2025</td>
+      <td data-label="State">NY</td>
+      <td data-label="Count">1,200</td>
     </tr>
   </tbody>
 </table>
 
-<h3 id="interactivequestion"><code class="language-plaintext highlighter-rouge">InteractiveQuestion</code></h3>
+<p>The first grouping dimension (Created At) defines the x-axis categories, and the second (State) provides the individual data points within each category that Metabase uses to compute the box plot statistics.</p>
 
-<p>Use this component when you want to allow people to explore their data and customize question layout.</p>
-
-<p><img src="../images/interactive-question.png" alt="Interactive question"></p>
-
-<h4 id="api-reference-1">API Reference</h4>
-
-<ul>
-  <li><a href="./api/InteractiveQuestion">Component</a></li>
-  <li><a href="./api/InteractiveQuestionProps">Props</a></li>
-</ul>
-
-<h4 id="example-1">Example</h4>
-
-<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nx">React</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">react</span><span class="dl">"</span><span class="p">;</span>
-<span class="k">import</span> <span class="p">{</span>
-  <span class="nx">InteractiveQuestion</span><span class="p">,</span>
-  <span class="nx">MetabaseProvider</span><span class="p">,</span>
-  <span class="nx">defineMetabaseAuthConfig</span><span class="p">,</span>
-<span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@metabase/embedding-sdk-react</span><span class="dl">"</span><span class="p">;</span>
-
-<span class="kd">const</span> <span class="nx">authConfig</span> <span class="o">=</span> <span class="nf">defineMetabaseAuthConfig</span><span class="p">({</span>
-  <span class="na">metabaseInstanceUrl</span><span class="p">:</span> <span class="dl">"</span><span class="s2">https://your-metabase.example.com</span><span class="dl">"</span><span class="p">,</span>
-<span class="p">});</span>
-
-<span class="k">export</span> <span class="k">default</span> <span class="kd">function</span> <span class="nf">App</span><span class="p">()</span> <span class="p">{</span>
-  <span class="kd">const</span> <span class="nx">questionId</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="c1">// This is the question ID you want to embed</span>
-
-  <span class="k">return </span><span class="p">(</span>
-    <span class="o">&lt;</span><span class="nx">MetabaseProvider</span> <span class="nx">authConfig</span><span class="o">=</span><span class="p">{</span><span class="nx">authConfig</span><span class="p">}</span><span class="o">&gt;</span>
-      <span class="o">&lt;</span><span class="nx">InteractiveQuestion</span> <span class="nx">questionId</span><span class="o">=</span><span class="p">{</span><span class="nx">questionId</span><span class="p">}</span> <span class="sr">/</span><span class="err">&gt;
-</span>    <span class="o">&lt;</span><span class="sr">/MetabaseProvider</span><span class="err">&gt;
-</span>  <span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div></div>
-
-<h4 id="props-1">Props</h4>
+<p>Another example with a single grouping dimension: product prices grouped by category (assuming you have a lot of products in each of the categories):</p>
 
 <table>
   <thead>
     <tr>
-      <th style="text-align: left">Property</th>
-      <th style="text-align: left">Type</th>
-      <th style="text-align: left">Description</th>
+      <th>Category</th>
+      <th>Price ($)</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td style="text-align: left" data-label="Property"><a id="classname"></a> <code class="language-plaintext highlighter-rouge">className?</code></td>
-      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">string</code></td>
-      <td style="text-align: left" data-label="Description">A custom class name to be added to the root element.</td>
+      <td data-label="Category">Gizmo</td>
+      <td data-label="Price ($)">29.46</td>
     </tr>
     <tr>
-      <td style="text-align: left" data-label="Property"><a id="entitytypes"></a> <code class="language-plaintext highlighter-rouge">entityTypes?</code></td>
-      <td style="text-align: left" data-label="Type"><a href="./api/ModularEmbeddingEntityType"><code class="language-plaintext highlighter-rouge">ModularEmbeddingEntityType</code></a>[]</td>
-      <td style="text-align: left" data-label="Description">An array that specifies which entity types are available in the data picker</td>
+      <td data-label="Category">Doohickey</td>
+      <td data-label="Price ($)">70.08</td>
     </tr>
     <tr>
-      <td style="text-align: left" data-label="Property"><a id="height"></a> <code class="language-plaintext highlighter-rouge">height?</code></td>
-      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">Height</code>&lt;<code class="language-plaintext highlighter-rouge">string</code> | <code class="language-plaintext highlighter-rouge">number</code>&gt;</td>
-      <td style="text-align: left" data-label="Description">A number or string specifying a CSS size value that specifies the height of the component</td>
+      <td data-label="Category">Doohickey</td>
+      <td data-label="Price ($)">35.39</td>
     </tr>
     <tr>
-      <td style="text-align: left" data-label="Property"><a id="hiddenparameters"></a> <code class="language-plaintext highlighter-rouge">hiddenParameters?</code></td>
-      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">string</code>[]</td>
-      <td style="text-align: left" data-label="Description">A list of parameters to hide.</td>
+      <td data-label="Category">Doohickey</td>
+      <td data-label="Price ($)">73.99</td>
     </tr>
     <tr>
-      <td style="text-align: left" data-label="Property"><a id="initialsqlparameters"></a> <code class="language-plaintext highlighter-rouge">initialSqlParameters?</code></td>
-      <td style="text-align: left" data-label="Type"><a href="./api/SqlParameterValues"><code class="language-plaintext highlighter-rouge">SqlParameterValues</code></a></td>
-      <td style="text-align: left" data-label="Description">Initial values for the SQL parameters.</td>
+      <td data-label="Category">Gadget</td>
+      <td data-label="Price ($)">82.75</td>
     </tr>
     <tr>
-      <td style="text-align: left" data-label="Property"><a id="issaveenabled"></a> <code class="language-plaintext highlighter-rouge">isSaveEnabled?</code></td>
-      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">boolean</code></td>
-      <td style="text-align: left" data-label="Description">Whether to show the save button.</td>
+      <td data-label="Category">Doohickey</td>
+      <td data-label="Price ($)">64.96</td>
     </tr>
     <tr>
-      <td style="text-align: left" data-label="Property"><a id="onbeforesave"></a> <code class="language-plaintext highlighter-rouge">onBeforeSave?</code></td>
-      <td style="text-align: left" data-label="Type">(<code class="language-plaintext highlighter-rouge">question</code>: <code class="language-plaintext highlighter-rouge">undefined</code> | <a href="./api/MetabaseQuestion"><code class="language-plaintext highlighter-rouge">MetabaseQuestion</code></a>, <code class="language-plaintext highlighter-rouge">context</code>: { <code class="language-plaintext highlighter-rouge">isNewQuestion</code>: <code class="language-plaintext highlighter-rouge">boolean</code>; }) =&gt; <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise"><code class="language-plaintext highlighter-rouge">Promise</code></a>&lt;<code class="language-plaintext highlighter-rouge">void</code>&gt;</td>
-      <td style="text-align: left" data-label="Description">A callback function that triggers before saving. Only relevant when <code class="language-plaintext highlighter-rouge">isSaveEnabled = true</code></td>
+      <td data-label="Category">Doohickey</td>
+      <td data-label="Price ($)">98.82</td>
     </tr>
     <tr>
-      <td style="text-align: left" data-label="Property"><a id="onnavigateback"></a> <code class="language-plaintext highlighter-rouge">onNavigateBack?</code></td>
-      <td style="text-align: left" data-label="Type">() =&gt; <code class="language-plaintext highlighter-rouge">void</code></td>
-      <td style="text-align: left" data-label="Description">A callback function that triggers when a user clicks the back button.</td>
+      <td data-label="Category">Doohickey</td>
+      <td data-label="Price ($)">65.89</td>
     </tr>
     <tr>
-      <td style="text-align: left" data-label="Property"><a id="onrun"></a> <code class="language-plaintext highlighter-rouge">onRun?</code></td>
-      <td style="text-align: left" data-label="Type">(<code class="language-plaintext highlighter-rouge">question</code>: <code class="language-plaintext highlighter-rouge">undefined</code> | <a href="./api/MetabaseQuestion"><code class="language-plaintext highlighter-rouge">MetabaseQuestion</code></a>) =&gt; <code class="language-plaintext highlighter-rouge">void</code></td>
-      <td style="text-align: left" data-label="Description">A callback function that triggers when a question is updated, including when a user clicks the <code class="language-plaintext highlighter-rouge">Visualize</code> button in the question editor</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="onsave"></a> <code class="language-plaintext highlighter-rouge">onSave?</code></td>
-      <td style="text-align: left" data-label="Type">(<code class="language-plaintext highlighter-rouge">question</code>: <a href="./api/MetabaseQuestion"><code class="language-plaintext highlighter-rouge">MetabaseQuestion</code></a>, <code class="language-plaintext highlighter-rouge">context</code>: { <code class="language-plaintext highlighter-rouge">dashboardTabId?</code>: <code class="language-plaintext highlighter-rouge">number</code>; <code class="language-plaintext highlighter-rouge">isNewQuestion</code>: <code class="language-plaintext highlighter-rouge">boolean</code>; }) =&gt; <code class="language-plaintext highlighter-rouge">void</code></td>
-      <td style="text-align: left" data-label="Description">A callback function that triggers when a user saves the question. Only relevant when <code class="language-plaintext highlighter-rouge">isSaveEnabled = true</code></td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="onvisualizationchange"></a> <code class="language-plaintext highlighter-rouge">onVisualizationChange?</code></td>
-      <td style="text-align: left" data-label="Type">(<code class="language-plaintext highlighter-rouge">display</code>: | <code class="language-plaintext highlighter-rouge">"object"</code> | <code class="language-plaintext highlighter-rouge">"table"</code> | <code class="language-plaintext highlighter-rouge">"bar"</code> | <code class="language-plaintext highlighter-rouge">"line"</code> | <code class="language-plaintext highlighter-rouge">"pie"</code> | <code class="language-plaintext highlighter-rouge">"scalar"</code> | <code class="language-plaintext highlighter-rouge">"row"</code> | <code class="language-plaintext highlighter-rouge">"area"</code> | <code class="language-plaintext highlighter-rouge">"combo"</code> | <code class="language-plaintext highlighter-rouge">"pivot"</code> | <code class="language-plaintext highlighter-rouge">"smartscalar"</code> | <code class="language-plaintext highlighter-rouge">"gauge"</code> | <code class="language-plaintext highlighter-rouge">"progress"</code> | <code class="language-plaintext highlighter-rouge">"funnel"</code> | <code class="language-plaintext highlighter-rouge">"map"</code> | <code class="language-plaintext highlighter-rouge">"scatter"</code> | <code class="language-plaintext highlighter-rouge">"boxplot"</code> | <code class="language-plaintext highlighter-rouge">"waterfall"</code> | <code class="language-plaintext highlighter-rouge">"sankey"</code> | <code class="language-plaintext highlighter-rouge">"list"</code>) =&gt; <code class="language-plaintext highlighter-rouge">void</code></td>
-      <td style="text-align: left" data-label="Description">A callback function that triggers when the visualization type changes.</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="plugins"></a> <code class="language-plaintext highlighter-rouge">plugins?</code></td>
-      <td style="text-align: left" data-label="Type"><a href="./api/MetabasePluginsConfig"><code class="language-plaintext highlighter-rouge">MetabasePluginsConfig</code></a></td>
-      <td style="text-align: left" data-label="Description">-</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="questionid"></a> <code class="language-plaintext highlighter-rouge">questionId?</code></td>
-      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">null</code> | <a href="./api/SdkQuestionId"><code class="language-plaintext highlighter-rouge">SdkQuestionId</code></a></td>
-      <td style="text-align: left" data-label="Description">-</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="style"></a> <code class="language-plaintext highlighter-rouge">style?</code></td>
-      <td style="text-align: left" data-label="Type"><a href="https://github.com/DefinitelyTyped/DefinitelyTyped/blob/0b728411cd1dfb4bd26992bb35a73cf8edaa22e7/types/react/index.d.ts#L2579"><code class="language-plaintext highlighter-rouge">CSSProperties</code></a></td>
-      <td style="text-align: left" data-label="Description">A custom style object to be added to the root element.</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="targetcollection"></a> <code class="language-plaintext highlighter-rouge">targetCollection?</code></td>
-      <td style="text-align: left" data-label="Type"><a href="./api/SdkCollectionId"><code class="language-plaintext highlighter-rouge">SdkCollectionId</code></a></td>
-      <td style="text-align: left" data-label="Description">The collection to save the question to. This will hide the collection picker from the save modal. Only applicable to interactive questions.</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="title"></a> <code class="language-plaintext highlighter-rouge">title?</code></td>
-      <td style="text-align: left" data-label="Type"><a href="./api/SdkQuestionTitleProps"><code class="language-plaintext highlighter-rouge">SdkQuestionTitleProps</code></a></td>
-      <td style="text-align: left" data-label="Description">Determines whether the question title is displayed, and allows a custom title to be displayed instead of the default question title. Shown by default.</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="width"></a> <code class="language-plaintext highlighter-rouge">width?</code></td>
-      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">Width</code>&lt;<code class="language-plaintext highlighter-rouge">string</code> | <code class="language-plaintext highlighter-rouge">number</code>&gt;</td>
-      <td style="text-align: left" data-label="Description">A number or string specifying a CSS size value that specifies the width of the component</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="withalerts"></a> <code class="language-plaintext highlighter-rouge">withAlerts?</code></td>
-      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">boolean</code></td>
-      <td style="text-align: left" data-label="Description">Enables the ability to set up alerts on the question.</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="withcharttypeselector"></a> <code class="language-plaintext highlighter-rouge">withChartTypeSelector?</code></td>
-      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">boolean</code></td>
-      <td style="text-align: left" data-label="Description">Determines whether the chart type selector and corresponding settings button are shown. Only relevant when using the default layout.</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="withdownloads"></a> <code class="language-plaintext highlighter-rouge">withDownloads?</code></td>
-      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">boolean</code></td>
-      <td style="text-align: left" data-label="Description">Enables the ability to download results in the question.</td>
+      <td data-label="Category">…</td>
+      <td data-label="Price ($)">…</td>
     </tr>
   </tbody>
 </table>
 
-<h2 id="pass-sql-parameters-to-sql-questions-with-initialsqlparameters">Pass SQL parameters to SQL questions with <code class="language-plaintext highlighter-rouge">initialSqlParameters</code></h2>
+<p>You can add multiple metrics to create multiple box plot series, or use a second breakout dimension to create colored series per category.</p>
 
-<p>You can pass parameter values to questions defined with SQL via the <code class="language-plaintext highlighter-rouge">initialSqlParameters</code> prop, in the format of <code class="language-plaintext highlighter-rouge">{parameter_name: parameter_value}</code>. Learn more about <a href="../../questions/native-editor/sql-parameters">SQL parameters</a>.</p>
+<h2 id="box-plot-settings">Box plot settings</h2>
 
-<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="nx">StaticQuestion</span>
-  <span class="nx">questionId</span><span class="o">=</span><span class="p">{</span><span class="nx">questionId</span><span class="p">}</span>
-  <span class="nx">initialSqlParameters</span><span class="o">=</span><span class="p">{{</span> <span class="na">product_id</span><span class="p">:</span> <span class="mi">50</span> <span class="p">}}</span>
-<span class="sr">/</span><span class="err">&gt;
-</span></code></pre></div></div>
+<p>To configure your box plot, click the <strong>gear</strong> icon in the bottom left of the visualization.</p>
 
-<p><code class="language-plaintext highlighter-rouge">initialSqlParameters</code> can’t be used with questions built using the query builder.</p>
+<p><img src="../images/box-plot-settings.png" alt="Box plot settings"></p>
 
-<h2 id="enable-alerts-on-embedded-questions">Enable alerts on embedded questions</h2>
+<h3 id="whisker-type">Whisker type</h3>
 
-<p>You can let people set up <a href="../../questions/alerts">alerts</a> on embedded questions by passing the <code class="language-plaintext highlighter-rouge">withAlerts</code> prop to <code class="language-plaintext highlighter-rouge">StaticQuestion</code> or <code class="language-plaintext highlighter-rouge">InteractiveQuestion</code>. Alerts require <a href="../../configuring-metabase/email">email setup</a>, and the question must be saved (not a new question).</p>
-
-<p>Alerts created in an embedded context only send to the logged-in user and exclude links to Metabase items.</p>
-
-<div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">&lt;</span><span class="nc">StaticQuestion</span> <span class="na">questionId</span><span class="p">=</span><span class="si">{</span><span class="mi">42</span><span class="si">}</span> <span class="na">withAlerts</span> <span class="p">/&gt;</span>
-</code></pre></div></div>
-
-<h2 id="questions-with-natural-language">Questions with natural language</h2>
-
-<p>See <a href="./ai-chat">AI chat</a>.</p>
-
-<h2 id="customizing-interactive-questions">Customizing interactive questions</h2>
-
-<p>By default, the modular embedding SDK provides a default layout for interactive questions that allows you to view your questions, apply filters and aggregations, and access functionality within the query builder.</p>
-
-<p>Here’s an example of using the <code class="language-plaintext highlighter-rouge">InteractiveQuestion</code> component with its default layout:</p>
-
-<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="nx">InteractiveQuestion</span> <span class="nx">questionId</span><span class="o">=</span><span class="p">{</span><span class="mi">95</span><span class="p">}</span> <span class="sr">/</span><span class="err">&gt;
-</span></code></pre></div></div>
-
-<p>To customize the layout, use namespaced components within the <code class="language-plaintext highlighter-rouge">InteractiveQuestion</code> component. For example:</p>
-
-<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="nx">div</span>
-  <span class="nx">className</span><span class="o">=</span><span class="dl">"</span><span class="s2">App</span><span class="dl">"</span>
-  <span class="nx">style</span><span class="o">=</span><span class="p">{{</span>
-    <span class="na">width</span><span class="p">:</span> <span class="dl">"</span><span class="s2">100%</span><span class="dl">"</span><span class="p">,</span>
-    <span class="na">maxWidth</span><span class="p">:</span> <span class="dl">"</span><span class="s2">1600px</span><span class="dl">"</span><span class="p">,</span>
-    <span class="na">height</span><span class="p">:</span> <span class="dl">"</span><span class="s2">800px</span><span class="dl">"</span><span class="p">,</span>
-    <span class="na">margin</span><span class="p">:</span> <span class="dl">"</span><span class="s2">0 auto</span><span class="dl">"</span><span class="p">,</span>
-  <span class="p">}}</span>
-<span class="o">&gt;</span>
-  <span class="o">&lt;</span><span class="nx">MetabaseProvider</span> <span class="nx">authConfig</span><span class="o">=</span><span class="p">{</span><span class="nx">authConfig</span><span class="p">}</span> <span class="nx">theme</span><span class="o">=</span><span class="p">{</span><span class="nx">theme</span><span class="p">}</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="nx">InteractiveQuestion</span> <span class="nx">questionId</span><span class="o">=</span><span class="p">{</span><span class="mi">95</span><span class="p">}</span><span class="o">&gt;</span>
-      <span class="o">&lt;</span><span class="nx">div</span>
-        <span class="nx">style</span><span class="o">=</span><span class="p">{{</span>
-          <span class="na">display</span><span class="p">:</span> <span class="dl">"</span><span class="s2">flex</span><span class="dl">"</span><span class="p">,</span>
-          <span class="na">flexDirection</span><span class="p">:</span> <span class="dl">"</span><span class="s2">column</span><span class="dl">"</span><span class="p">,</span>
-          <span class="na">alignItems</span><span class="p">:</span> <span class="dl">"</span><span class="s2">center</span><span class="dl">"</span><span class="p">,</span>
-          <span class="na">justifyContent</span><span class="p">:</span> <span class="dl">"</span><span class="s2">center</span><span class="dl">"</span><span class="p">,</span>
-          <span class="na">width</span><span class="p">:</span> <span class="dl">"</span><span class="s2">100%</span><span class="dl">"</span><span class="p">,</span>
-        <span class="p">}}</span>
-      <span class="o">&gt;</span>
-        <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">style</span><span class="o">=</span><span class="p">{{</span> <span class="na">display</span><span class="p">:</span> <span class="dl">"</span><span class="s2">grid</span><span class="dl">"</span><span class="p">,</span> <span class="na">placeItems</span><span class="p">:</span> <span class="dl">"</span><span class="s2">center</span><span class="dl">"</span><span class="p">,</span> <span class="na">width</span><span class="p">:</span> <span class="dl">"</span><span class="s2">100%</span><span class="dl">"</span> <span class="p">}}</span><span class="o">&gt;</span>
-          <span class="o">&lt;</span><span class="nx">InteractiveQuestion</span><span class="p">.</span><span class="nx">Title</span> <span class="o">/&gt;</span>
-          <span class="o">&lt;</span><span class="nx">InteractiveQuestion</span><span class="p">.</span><span class="nx">ResetButton</span> <span class="o">/&gt;</span>
-        <span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
-</span>        <span class="o">&lt;</span><span class="nx">div</span>
-          <span class="nx">style</span><span class="o">=</span><span class="p">{{</span>
-            <span class="na">display</span><span class="p">:</span> <span class="dl">"</span><span class="s2">flex</span><span class="dl">"</span><span class="p">,</span>
-            <span class="na">alignItems</span><span class="p">:</span> <span class="dl">"</span><span class="s2">center</span><span class="dl">"</span><span class="p">,</span>
-            <span class="na">justifyContent</span><span class="p">:</span> <span class="dl">"</span><span class="s2">flex-start</span><span class="dl">"</span><span class="p">,</span>
-            <span class="na">overflow</span><span class="p">:</span> <span class="dl">"</span><span class="s2">hidden</span><span class="dl">"</span><span class="p">,</span>
-            <span class="na">width</span><span class="p">:</span> <span class="dl">"</span><span class="s2">100%</span><span class="dl">"</span><span class="p">,</span>
-          <span class="p">}}</span>
-        <span class="o">&gt;</span>
-          <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">style</span><span class="o">=</span><span class="p">{{</span> <span class="na">width</span><span class="p">:</span> <span class="dl">"</span><span class="s2">100%</span><span class="dl">"</span> <span class="p">}}</span><span class="o">&gt;</span>
-            <span class="o">&lt;</span><span class="nx">InteractiveQuestion</span><span class="p">.</span><span class="nx">QuestionVisualization</span> <span class="o">/&gt;</span>
-          <span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
-</span>          <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">style</span><span class="o">=</span><span class="p">{{</span> <span class="na">display</span><span class="p">:</span> <span class="dl">"</span><span class="s2">flex</span><span class="dl">"</span><span class="p">,</span> <span class="na">flex</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="na">overflow</span><span class="p">:</span> <span class="dl">"</span><span class="s2">scroll</span><span class="dl">"</span> <span class="p">}}</span><span class="o">&gt;</span>
-            <span class="o">&lt;</span><span class="nx">InteractiveQuestion</span><span class="p">.</span><span class="nx">Summarize</span> <span class="o">/&gt;</span>
-          <span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
-</span>        <span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
-</span>        <span class="o">&lt;</span><span class="nx">div</span>
-          <span class="nx">style</span><span class="o">=</span><span class="p">{{</span> <span class="na">display</span><span class="p">:</span> <span class="dl">"</span><span class="s2">flex</span><span class="dl">"</span><span class="p">,</span> <span class="na">flexDirection</span><span class="p">:</span> <span class="dl">"</span><span class="s2">column</span><span class="dl">"</span><span class="p">,</span> <span class="na">width</span><span class="p">:</span> <span class="dl">"</span><span class="s2">100%</span><span class="dl">"</span> <span class="p">}}</span>
-        <span class="o">&gt;</span>
-          <span class="o">&lt;</span><span class="nx">InteractiveQuestion</span><span class="p">.</span><span class="nx">Filter</span> <span class="o">/&gt;</span>
-        <span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
-</span>      <span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
-</span>    <span class="o">&lt;</span><span class="sr">/InteractiveQuestion</span><span class="err">&gt;
-</span>  <span class="o">&lt;</span><span class="sr">/MetabaseProvider</span><span class="err">&gt;
-</span><span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
-</span></code></pre></div></div>
-
-<h3 id="interactive-question-components">Interactive question components</h3>
-
-<p>These components are available via the <code class="language-plaintext highlighter-rouge">InteractiveQuestion</code> namespace (e.g., <code class="language-plaintext highlighter-rouge">&lt;InteractiveQuestion.Filter /&gt;</code>).</p>
-
-<h4 id="api-reference-2">API Reference:</h4>
+<p>The <strong>Whiskers extend to</strong> setting controls how far the whiskers reach:</p>
 
 <ul>
-  <li><a href="./api/InteractiveQuestion#backbutton">InteractiveQuestion.BackButton</a></li>
-  <li><a href="./api/InteractiveQuestion#breakout">InteractiveQuestion.Breakout</a></li>
-  <li><a href="./api/InteractiveQuestion#breakoutdropdown">InteractiveQuestion.BreakoutDropdown</a></li>
-  <li><a href="./api/InteractiveQuestion#charttypedropdown">InteractiveQuestion.ChartTypeDropdown</a></li>
-  <li><a href="./api/InteractiveQuestion#charttypeselector">InteractiveQuestion.ChartTypeSelector</a></li>
-  <li><a href="./api/InteractiveQuestion#editor">InteractiveQuestion.Editor</a></li>
-  <li><a href="./api/InteractiveQuestion#editorbutton">InteractiveQuestion.EditorButton</a></li>
-  <li><a href="./api/InteractiveQuestion#filter">InteractiveQuestion.Filter</a></li>
-  <li><a href="./api/InteractiveQuestion#filterdropdown">InteractiveQuestion.FilterDropdown</a></li>
-  <li><a href="./api/InteractiveQuestion#questionsettings">InteractiveQuestion.QuestionSettings</a></li>
-  <li><a href="./api/InteractiveQuestion#questionsettingsdropdown">InteractiveQuestion.QuestionSettingsDropdown</a></li>
-  <li><a href="./api/InteractiveQuestion#questionvisualization">InteractiveQuestion.QuestionVisualization</a></li>
-  <li><a href="./api/InteractiveQuestion#resetbutton">InteractiveQuestion.ResetButton</a></li>
-  <li><a href="./api/InteractiveQuestion#savebutton">InteractiveQuestion.SaveButton</a></li>
-  <li><a href="./api/InteractiveQuestion#savequestionform">InteractiveQuestion.SaveQuestionForm</a></li>
-  <li><a href="./api/InteractiveQuestion#summarize">InteractiveQuestion.Summarize</a></li>
-  <li><a href="./api/InteractiveQuestion#summarizedropdown">InteractiveQuestion.SummarizeDropdown</a></li>
-  <li><a href="./api/InteractiveQuestion#downloadwidget">InteractiveQuestion.DownloadWidget</a></li>
-  <li><a href="./api/InteractiveQuestion#downloadwidgetdropdown">InteractiveQuestion.DownloadWidgetDropdown</a></li>
-  <li><a href="./api/InteractiveQuestion#title">InteractiveQuestion.Title</a></li>
+  <li><strong>1.5 × interquartile range</strong> (default): Whiskers extend to the farthest data point within 1.5 × IQR from the first and third quartiles. Points beyond this range appear as outliers. This is the standard Tukey method.</li>
+  <li><strong>Min/Max</strong>: Whiskers extend to the actual minimum and maximum values. No outliers are shown.</li>
 </ul>
 
-<h2 id="interactive-question-plugins">Interactive question plugins</h2>
+<h3 id="show-points">Show points</h3>
 
-<p>You can use <a href="./plugins">plugins</a> to add custom functionality to your questions.</p>
-
-<h3 id="mapquestionclickactions"><code class="language-plaintext highlighter-rouge">mapQuestionClickActions</code></h3>
-
-<p>When people click on a data point in the embedded interactive chart, Metabase shows them a menu of actions by default. The plugin <code class="language-plaintext highlighter-rouge">mapQuestionClickActions</code> allows you to customize this behavior. You can choose to:</p>
+<p>Controls whether individual data points appear on the chart:</p>
 
 <ul>
-  <li>Open the default Metabase menu.</li>
-  <li>Add custom actions to that click-through menu.</li>
-  <li>Perform immediate action without opening a menu.</li>
+  <li><strong>None</strong>: No data points shown.</li>
+  <li><strong>Outliers only</strong> (default with 1.5 × IQR whiskers): Only outlier points are displayed. This option isn’t available when whiskers are set to Min/Max.</li>
+  <li><strong>All points</strong>: All raw data points are shown. Non-outlier points have reduced opacity so the box remains prominent.</li>
 </ul>
 
-<p>Use <code class="language-plaintext highlighter-rouge">mapQuestionClickActions</code> globally at the provider level, or on individual <code class="language-plaintext highlighter-rouge">InteractiveQuestion</code> or <code class="language-plaintext highlighter-rouge">InteractiveDashboard</code> components. For more on provider scope, see <a href="./plugins">Plugins</a></p>
+<h3 id="show-mean">Show mean</h3>
 
-<p>The example below shows all the options for click action behavior. This example will:</p>
+<p>Toggle the diamond-shaped mean marker on or off. Enabled by default. The mean marker helps you compare the average to the median — if they differ noticeably, the data is skewed.</p>
+
+<h3 id="show-values">Show values</h3>
+
+<p>Toggle numeric labels on or off. When enabled, you can configure:</p>
 
 <ul>
-  <li>Open a menu with custom actions when “Last Name” column is clicked.</li>
-  <li>Perform an immediate action (show an alert) when the “Plan” column is clicked.</li>
-  <li>Shows the default menu (available as <code class="language-plaintext highlighter-rouge">clickActions</code>) in all other cases.</li>
+  <li><strong>Values to display</strong>: “Median only” (default) or “All” (min, Q1, median, Q3, max).</li>
+  <li>Labels automatically reposition based on available space: side layout when there’s room, column layout when the chart is dense.</li>
+  <li><strong>Hide overlapping values</strong>: Prevents overlapping labels in tight layouts.</li>
+  <li><strong>Auto formatting</strong>: Either full or compact (e.g., 42,000 → 42K).</li>
 </ul>
 
-<p>The behavior is determined by what <code class="language-plaintext highlighter-rouge">mapQuestionClickActions</code> returns: array of actions to open a menu, or a single action to trigger an immediate action.</p>
+<h3 id="goal-line">Goal line</h3>
 
-<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="o">&lt;</span><span class="nx">MetabaseProvider</span>
-    <span class="nx">authConfig</span><span class="o">=</span><span class="p">{</span><span class="nx">authConfig</span><span class="p">}</span>
-    <span class="nx">pluginsConfig</span><span class="o">=</span><span class="p">{{</span>
-      <span class="na">mapQuestionClickActions</span><span class="p">:</span> <span class="p">(</span><span class="nx">clickActions</span><span class="p">,</span> <span class="nx">clicked</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-        <span class="k">if </span><span class="p">(</span><span class="nx">clicked</span><span class="p">?.</span><span class="nx">column</span><span class="p">?.</span><span class="nx">display_name</span> <span class="o">===</span> <span class="dl">"</span><span class="s2">Last Name</span><span class="dl">"</span><span class="p">)</span> <span class="p">{</span>
-          <span class="c1">// This adds a custom action to the menu when clicked on on "Last Name" column</span>
-          <span class="k">return</span> <span class="p">[</span>
-            <span class="p">...</span><span class="nx">clickActions</span><span class="p">,</span>
-            <span class="p">{</span>
-              <span class="na">buttonType</span><span class="p">:</span> <span class="dl">"</span><span class="s2">horizontal</span><span class="dl">"</span><span class="p">,</span>
-              <span class="na">name</span><span class="p">:</span> <span class="dl">"</span><span class="s2">custom</span><span class="dl">"</span><span class="p">,</span>
-              <span class="na">title</span><span class="p">:</span> <span class="dl">"</span><span class="s2">This is the Last Name column</span><span class="dl">"</span><span class="p">,</span>
-              <span class="na">onClick</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="nf">alert</span><span class="p">(</span><span class="dl">"</span><span class="s2">You clicked the Last Name column!</span><span class="dl">"</span><span class="p">),</span>
-            <span class="p">},</span>
-          <span class="p">];</span>
-        <span class="p">}</span>
+<p>You can add a goal line to your box plot. Toggle <strong>Show goal</strong>, then set the goal value and an optional label. Note that goal-based alerts aren’t available for box plots.</p>
 
-        <span class="k">if </span><span class="p">(</span><span class="nx">clicked</span><span class="p">?.</span><span class="nx">column</span><span class="p">?.</span><span class="nx">display_name</span> <span class="o">===</span> <span class="dl">"</span><span class="s2">Plan</span><span class="dl">"</span><span class="p">)</span> <span class="p">{</span>
-          <span class="c1">// This performs an immediate action on "Plan" column instead of opening the menu</span>
-          <span class="k">return</span> <span class="p">{</span>
-            <span class="na">onClick</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="nf">alert</span><span class="p">(</span><span class="dl">"</span><span class="s2">You clicked the Plan column!</span><span class="dl">"</span><span class="p">),</span>
-          <span class="p">};</span>
-        <span class="p">}</span>
-        <span class="c1">// default behavior (open Metabase's default click menu) on other columns</span>
-        <span class="k">return</span> <span class="nx">clickActions</span><span class="p">;</span>
-      <span class="p">},</span>
-    <span class="p">}}</span>
-  <span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="nx">InteractiveQuestion</span> <span class="nx">questionId</span><span class="o">=</span><span class="p">{</span><span class="mi">1</span><span class="p">}</span> <span class="sr">/</span><span class="err">&gt;
-</span>  <span class="o">&lt;</span><span class="sr">/MetabaseProvider</span><span class="err">&gt;
-</span><span class="p">);</span>
-</code></pre></div></div>
+<h2 id="axes">Axes</h2>
 
-<p>You can also customize the appearance of custom actions in the click menu. The example below shows an example of a click menu with default actions, a custom action, and a custom action with customized appearance:</p>
+<h3 id="x-axis">X-axis</h3>
 
-<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// You can provide a custom action with your own `onClick` logic.</span>
-<span class="kd">const</span> <span class="nx">createCustomAction</span> <span class="o">=</span> <span class="nx">clicked</span> <span class="o">=&gt;</span> <span class="p">({</span>
-  <span class="na">buttonType</span><span class="p">:</span> <span class="dl">"</span><span class="s2">horizontal</span><span class="dl">"</span><span class="p">,</span>
-  <span class="na">name</span><span class="p">:</span> <span class="dl">"</span><span class="s2">client-custom-action</span><span class="dl">"</span><span class="p">,</span>
-  <span class="na">section</span><span class="p">:</span> <span class="dl">"</span><span class="s2">custom</span><span class="dl">"</span><span class="p">,</span>
-  <span class="na">type</span><span class="p">:</span> <span class="dl">"</span><span class="s2">custom</span><span class="dl">"</span><span class="p">,</span>
-  <span class="na">icon</span><span class="p">:</span> <span class="dl">"</span><span class="s2">chevronright</span><span class="dl">"</span><span class="p">,</span>
-  <span class="na">title</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Hello from the click app!!!</span><span class="dl">"</span><span class="p">,</span>
-  <span class="na">onClick</span><span class="p">:</span> <span class="p">({</span> <span class="nx">closePopover</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">{</span>
-    <span class="nf">alert</span><span class="p">(</span><span class="s2">`Clicked </span><span class="p">${</span><span class="nx">clicked</span><span class="p">.</span><span class="nx">column</span><span class="p">?.</span><span class="nx">name</span><span class="p">}</span><span class="s2">: </span><span class="p">${</span><span class="nx">clicked</span><span class="p">.</span><span class="nx">value</span><span class="p">}</span><span class="s2">`</span><span class="p">);</span>
-    <span class="nf">closePopover</span><span class="p">();</span>
-  <span class="p">},</span>
-<span class="p">});</span>
+<ul>
+  <li><strong>Label</strong>: Add or rename the axis label.</li>
+  <li><strong>Line and marks</strong>: Show or hide the axis line and tick marks.</li>
+</ul>
 
-<span class="c1">// Or customize the appearance of the custom action to suit your need.</span>
-<span class="kd">const</span> <span class="nx">createCustomActionWithView</span> <span class="o">=</span> <span class="nx">clicked</span> <span class="o">=&gt;</span> <span class="p">({</span>
-  <span class="na">name</span><span class="p">:</span> <span class="dl">"</span><span class="s2">client-custom-action-2</span><span class="dl">"</span><span class="p">,</span>
-  <span class="na">section</span><span class="p">:</span> <span class="dl">"</span><span class="s2">custom</span><span class="dl">"</span><span class="p">,</span>
-  <span class="na">type</span><span class="p">:</span> <span class="dl">"</span><span class="s2">custom</span><span class="dl">"</span><span class="p">,</span>
-  <span class="na">view</span><span class="p">:</span> <span class="p">({</span> <span class="nx">closePopover</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">(</span>
-    <span class="o">&lt;</span><span class="nx">button</span>
-      <span class="nx">className</span><span class="o">=</span><span class="dl">"</span><span class="s2">tw-text-base tw-text-yellow-900 tw-bg-slate-400 tw-rounded-lg</span><span class="dl">"</span>
-      <span class="nx">onClick</span><span class="o">=</span><span class="p">{()</span> <span class="o">=&gt;</span> <span class="p">{</span>
-        <span class="nf">alert</span><span class="p">(</span><span class="s2">`Clicked </span><span class="p">${</span><span class="nx">clicked</span><span class="p">.</span><span class="nx">column</span><span class="p">?.</span><span class="nx">name</span><span class="p">}</span><span class="s2">: </span><span class="p">${</span><span class="nx">clicked</span><span class="p">.</span><span class="nx">value</span><span class="p">}</span><span class="s2">`</span><span class="p">);</span>
-        <span class="nf">closePopover</span><span class="p">();</span>
-      <span class="p">}}</span>
-    <span class="o">&gt;</span>
-      <span class="nx">Custom</span> <span class="nx">element</span>
-    <span class="o">&lt;</span><span class="sr">/button</span><span class="err">&gt;
-</span>  <span class="p">),</span>
-<span class="p">});</span>
+<h3 id="y-axis">Y-axis</h3>
 
-<span class="kd">const</span> <span class="nx">plugins</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="cm">/**
-   * You will have access to default `clickActions` that Metabase renders by default.
-   * So you could decide if you want to add custom actions, remove certain actions, etc.
-   */</span>
-  <span class="na">mapQuestionClickActions</span><span class="p">:</span> <span class="p">(</span><span class="nx">clickActions</span><span class="p">,</span> <span class="nx">clicked</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="p">[</span>
-      <span class="p">...</span><span class="nx">clickActions</span><span class="p">,</span>
-      <span class="nf">createCustomAction</span><span class="p">(</span><span class="nx">clicked</span><span class="p">),</span>
-      <span class="nf">createCustomActionWithView</span><span class="p">(</span><span class="nx">clicked</span><span class="p">),</span>
-    <span class="p">];</span>
-  <span class="p">},</span>
-<span class="p">};</span>
+<ul>
+  <li><strong>Label</strong>: Add or rename the axis label.</li>
+  <li><strong>Auto y-axis range</strong>: When toggled off, you can set custom minimum and maximum values.</li>
+  <li><strong>Scale</strong>: Linear, power, or log.</li>
+  <li><strong>Split y-axis</strong>: Available when you have multiple series assigned to different axes.</li>
+</ul>
 
-<span class="kd">const</span> <span class="nx">questionId</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="c1">// This is the question ID you want to embed</span>
+<h2 id="multiple-series">Multiple series</h2>
 
-<span class="k">return </span><span class="p">(</span>
-  <span class="o">&lt;</span><span class="nx">MetabaseProvider</span> <span class="nx">authConfig</span><span class="o">=</span><span class="p">{</span><span class="nx">authConfig</span><span class="p">}</span> <span class="nx">pluginsConfig</span><span class="o">=</span><span class="p">{</span><span class="nx">plugins</span><span class="p">}</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="nx">InteractiveQuestion</span> <span class="nx">questionId</span><span class="o">=</span><span class="p">{</span><span class="nx">questionId</span><span class="p">}</span> <span class="sr">/</span><span class="err">&gt;
-</span>  <span class="o">&lt;</span><span class="sr">/MetabaseProvider</span><span class="err">&gt;
-</span><span class="p">);</span>
-</code></pre></div></div>
+<p><img src="../images/box-plot-second-breakout.png" alt="Box plot settings"></p>
 
-<h2 id="prevent-people-from-saving-changes-to-an-interactivequestion">Prevent people from saving changes to an <code class="language-plaintext highlighter-rouge">InteractiveQuestion</code></h2>
-
-<p>To prevent people from saving changes to an interactive question, or from saving changes as a new question, you can set <code class="language-plaintext highlighter-rouge">isSaveEnabled={false}</code>:</p>
-
-<div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nx">React</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">react</span><span class="dl">"</span><span class="p">;</span>
-<span class="k">import</span> <span class="p">{</span>
-  <span class="nx">InteractiveQuestion</span><span class="p">,</span>
-  <span class="nx">MetabaseProvider</span><span class="p">,</span>
-  <span class="nx">defineMetabaseAuthConfig</span><span class="p">,</span>
-<span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@metabase/embedding-sdk-react</span><span class="dl">"</span><span class="p">;</span>
-
-<span class="kd">const</span> <span class="nx">authConfig</span> <span class="o">=</span> <span class="nf">defineMetabaseAuthConfig</span><span class="p">({</span>
-  <span class="na">metabaseInstanceUrl</span><span class="p">:</span> <span class="dl">"</span><span class="s2">https://your-metabase.example.com</span><span class="dl">"</span><span class="p">,</span>
-<span class="p">});</span>
-
-<span class="k">export</span> <span class="k">default</span> <span class="kd">function</span> <span class="nf">App</span><span class="p">()</span> <span class="p">{</span>
-  <span class="k">return </span><span class="p">(</span>
-    <span class="p">&lt;</span><span class="nc">MetabaseProvider</span> <span class="na">authConfig</span><span class="p">=</span><span class="si">{</span><span class="nx">authConfig</span><span class="si">}</span><span class="p">&gt;</span>
-      <span class="p">&lt;</span><span class="nc">InteractiveQuestion</span> <span class="na">questionId</span><span class="p">=</span><span class="si">{</span><span class="mi">1</span><span class="si">}</span> <span class="na">isSaveEnabled</span><span class="p">=</span><span class="si">{</span><span class="kc">false</span><span class="si">}</span> <span class="p">/&gt;</span>
-    <span class="p">&lt;/</span><span class="nc">MetabaseProvider</span><span class="p">&gt;</span>
-  <span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div></div>
-
-<h2 id="embedding-the-query-builder-for-creating-new-questions">Embedding the query builder for creating new questions</h2>
-
-<p><img src="../images/query-builder.png" alt="Query builder"></p>
-
-<h3 id="embed-the-visual-query-builder">Embed the visual query builder</h3>
-
-<p>You can embed the query builder for creating new questions by passing the <code class="language-plaintext highlighter-rouge">questionId="new"</code> prop to the <code class="language-plaintext highlighter-rouge">InteractiveQuestion</code> component. You can use the <a href="#customizing-interactive-questions"><code class="language-plaintext highlighter-rouge">children</code> prop</a> to customize the layout for creating new questions.</p>
-
-<div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nx">React</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">react</span><span class="dl">"</span><span class="p">;</span>
-<span class="k">import</span> <span class="p">{</span>
-  <span class="nx">InteractiveQuestion</span><span class="p">,</span>
-  <span class="nx">MetabaseProvider</span><span class="p">,</span>
-  <span class="nx">defineMetabaseAuthConfig</span><span class="p">,</span>
-<span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@metabase/embedding-sdk-react</span><span class="dl">"</span><span class="p">;</span>
-
-<span class="kd">const</span> <span class="nx">authConfig</span> <span class="o">=</span> <span class="nf">defineMetabaseAuthConfig</span><span class="p">({</span>
-  <span class="na">metabaseInstanceUrl</span><span class="p">:</span> <span class="dl">"</span><span class="s2">https://your-metabase.example.com</span><span class="dl">"</span><span class="p">,</span>
-<span class="p">});</span>
-
-<span class="k">export</span> <span class="k">default</span> <span class="kd">function</span> <span class="nf">App</span><span class="p">()</span> <span class="p">{</span>
-  <span class="k">return </span><span class="p">(</span>
-    <span class="p">&lt;</span><span class="nc">MetabaseProvider</span> <span class="na">authConfig</span><span class="p">=</span><span class="si">{</span><span class="nx">authConfig</span><span class="si">}</span><span class="p">&gt;</span>
-      <span class="p">&lt;</span><span class="nc">InteractiveQuestion</span> <span class="na">questionId</span><span class="p">=</span><span class="s">"new"</span> <span class="p">/&gt;</span>
-    <span class="p">&lt;/</span><span class="nc">MetabaseProvider</span><span class="p">&gt;</span>
-  <span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div></div>
-
-<h3 id="embed-the-sql-editor">Embed the SQL editor</h3>
-
-<p>You can also embed the SQL editor to enable people to build questions with SQL by passing <code class="language-plaintext highlighter-rouge">questionId="new-native"</code> to the <code class="language-plaintext highlighter-rouge">InteractiveQuestion</code> component:</p>
-
-<div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nx">React</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">react</span><span class="dl">"</span><span class="p">;</span>
-<span class="k">import</span> <span class="p">{</span>
-  <span class="nx">InteractiveQuestion</span><span class="p">,</span>
-  <span class="nx">MetabaseProvider</span><span class="p">,</span>
-  <span class="nx">defineMetabaseAuthConfig</span><span class="p">,</span>
-<span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@metabase/embedding-sdk-react</span><span class="dl">"</span><span class="p">;</span>
-
-<span class="kd">const</span> <span class="nx">authConfig</span> <span class="o">=</span> <span class="nf">defineMetabaseAuthConfig</span><span class="p">({</span>
-  <span class="na">metabaseInstanceUrl</span><span class="p">:</span> <span class="dl">"</span><span class="s2">https://your-metabase.example.com</span><span class="dl">"</span><span class="p">,</span>
-<span class="p">});</span>
-
-<span class="k">export</span> <span class="k">default</span> <span class="kd">function</span> <span class="nf">App</span><span class="p">()</span> <span class="p">{</span>
-  <span class="k">return </span><span class="p">(</span>
-    <span class="p">&lt;</span><span class="nc">MetabaseProvider</span> <span class="na">authConfig</span><span class="p">=</span><span class="si">{</span><span class="nx">authConfig</span><span class="si">}</span><span class="p">&gt;</span>
-      <span class="p">&lt;</span><span class="nc">InteractiveQuestion</span> <span class="na">questionId</span><span class="p">=</span><span class="s">"new-native"</span> <span class="p">/&gt;</span>
-    <span class="p">&lt;/</span><span class="nc">MetabaseProvider</span><span class="p">&gt;</span>
-  <span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div></div>
-
-<p>To customize the question editor’s layout, use the <code class="language-plaintext highlighter-rouge">InteractiveQuestion</code> component <a href="#customizing-interactive-questions">directly with a custom <code class="language-plaintext highlighter-rouge">children</code> prop</a>.</p>
+<p>You can add more metrics to display side-by-side box plots, or use a second dimension as a breakout to create a colored series for each category. When you have multiple series, you can assign each to the left or right y-axis.</p>
 
 
         <div>
@@ -6446,7 +6038,7 @@ Roadmap</a>
 
   
     <span class="paragraph-6 fs-13 neutral-60" id="page-feedback-footer">
-      Want to improve these docs? <a href="https://github.com/metabase/metabase/blob/master/docs/embedding/sdk/questions.md" target="_blank">Propose a change.</a>
+      Want to improve these docs? <a href="https://github.com/metabase/metabase/blob/master/docs/questions/visualizations/box-plot.md" target="_blank">Propose a change.</a>
     </span>
   
 </div>
@@ -6468,8 +6060,8 @@ Roadmap</a>
 <script type="text/javascript" src="/js/position-feedback-widget.js"></script>
 
 <script>
-  const pageTitle = `Modular embedding SDK - questions`;
-  const pageURL = '/docs/v0.59/embedding/sdk/questions';
+  const pageTitle = `Box plots`;
+  const pageURL = '/docs/v0.59/questions/visualizations/box-plot';
   const pageURLSplit = pageURL.split('/');
 
   let pageURLPrefix = '/' + pageURLSplit[1] + '/' + pageURLSplit[2];
@@ -6789,8 +6381,6 @@ Roadmap</a>
   <script type="text/javascript" src="/js/blog.js"></script>
   <script type="text/javascript" src="/js/syntax-highlight.js"></script>
 
-  
-    <script type="text/javascript" src="/js/docs/checkpoints.js"></script>
   
 
 </body></html>
