@@ -29,6 +29,7 @@ type IconName =
   | "gauge"
   | "progress"
   | "funnel"
+  | "boxplot"
   | "waterfall"
   | "sankey"
   | "list"
