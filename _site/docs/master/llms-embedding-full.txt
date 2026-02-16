@@ -649,6 +649,8 @@ There are different components you can embed, each with various options.
 
 This page covers what you can embed. For theming your embeds, see [Appearance](./appearance).
 
+> Depending on the framework you're using, you may need to stringify attributes before passing them to the embedded components.
+
 ## Dashboard
 
 To render a dashboard:
@@ -658,27 +660,11 @@ To render a dashboard:
 </metabase-dashboard>
 ```
 
-### Required parameters
-
-- `dashboard-id` - This can be a regular ID or an entity ID. [Using Entity IDs](../installation-and-operation/serialization#entity-ids-work-with-embedding) in your embeds ensures that the IDs stay stable when exporting from one Metabase and importing to another. Only for SSO. Guest embeds set the id with token.
-
-### Optional parameters
-
-- `with-title` (default is true) - show the dashboard title in the embed
+### Attributes
 
 
-
-- `with-downloads` (default is true on OSS/Starter and false on Pro/Enterprise) - show the button to download the dashboard as PDF and download question results
-- `drills` (default is true) - lets you drill through the dashboard
-- `initial-parameters` - default value for dashboard filters, like `{ 'productId': '42' }`.
-- `with-subscriptions` - let people set up [dashboard subscriptions](../dashboards/subscriptions). Unlike subscriptions sent from non-embedded dashboards, subscriptions sent from embedded dashboards exclude links to Metabase items, as Metabase assumes the recipient lacks access to the embedded Metabase.
-- `refresh` - auto-refreshes the dashboard. `refresh="60"` will refresh the dashboard every 60 seconds.
-- `hidden-parameters` - list of filter names to hide from the dashboard, like `['productId']`
-- `enable-entity-navigation` (default is false) - preserves dashboard custom [click behaviors](../dashboards/interactive#customizing-click-behavior) that navigate to other dashboards and questions within the embed. Requires `drills` to be true (which is the default). When disabled, only external URL links are kept. See also [`handleLink`](./sdk/plugins#handlelink) for customizing what happens when people click URL links.
 
 For all modular embeds, you can also set a `locale` in your page-level configuration to [translate embedded content](./translations), including content from translation dictionaries.
-
-Only `with-title` and `with-downloads` are supported in [guest embeds](./guest-embedding).
 
 If you surround your attribute value with double quotes, make sure to use single quotes:
 
@@ -710,26 +696,9 @@ To render a question (chart):
 <metabase-question question-id="1"></metabase-question>
 ```
 
-### Required parameters
-
-- `question-id` - This can be a regular ID or an entity ID. [Using Entity IDs](../installation-and-operation/serialization#entity-ids-work-with-embedding) in your embeds ensures that the IDs stay stable when exporting from one Metabase and importing to another. Only for SSO embeds. Guest embeds set the id with a token.
-
-  Use `question-id="new"` to embed the query builder exploration interface.
-
-### Optional parameters
-
-- `with-title` (default is true) - show the title
+### Attributes
 
 
-
-- `drills` (default is true) - lets you drill through the question
-- `with-downloads` (default is true on OSS/Starter and false on Pro/Enterprise) - show downloads
-- `initial-sql-parameters` - default value for SQL parameters, only applicable to native SQL questions, like `{ "productId": "42" }`
-- `is-save-enabled` (default is false)
-- `target-collection` - this is to enforce saving into a particular collection. Values: regular ID, entity ID, `"personal"`, `"root"`
-- `with-alerts` (default is false) - let people set up [alerts](../questions/alerts) on embedded questions. Requires [email setup](../configuring-metabase/email). Unlike alerts on non-embedded questions, alerts on embedded questions only send to the logged-in user and exclude links to Metabase items. Not available for models.
-
-Only `with-title` and `with-downloads` are supported in [guest embeds](./guest-embedding).
 
 ## Browser
 
@@ -748,19 +717,9 @@ To render a collection browser so people can navigate a collection and open dash
 </metabase-browser>
 ```
 
-### Required parameters
+### Attributes
 
-- `initial-collection` - This can be a collection ID or `root`. Use a collection ID (e.g., `14`) to start in a specific collection. Use `root` to start at the top-level, "Our Analytics" collection.
 
-### Optional parameters
-
-- `read-only` (default is true) – if true, people can interact with items (filter, summarize, drill-through) but can't save. If `false`, they can create and edit items in the collection.
-- `collection-visible-columns` – an array of columns to show in the collection browser: `type`, `name`, `description`, `lastEditedBy`, `lastEditedAt`, `archive`. For example, `collection-visible-columns="['type', 'name']"` shows only the type and name columns.
-- `collection-page-size` – how many items to show per page in the collection browser.
-- `collection-entity-types` – an array of entity types to show in the collection browser: `collection`, `dashboard`, `question`, `model`. For example, `collection-entity-types="['collection', 'dashboard']"` shows only collections and dashboards.
-- `data-picker-entity-types` – an array of entity types to show in the question's data picker: `model`, `table`. For example, `data-picker-entity-types="['model']"` shows only models.
-- `with-new-question` (default is true) – whether to show the "New exploration" button.
-- `with-new-dashboard` (default is true) – whether to show the "New dashboard" button. Only applies when `read-only` is false.
 
 ## AI chat
 
@@ -774,16 +733,9 @@ To render the AI chat interface:
 <metabase-metabot></metabase-metabot>
 ```
 
-### Required parameters
+### Attributes
 
-None.
 
-### Optional parameters
-
-- `layout` (default is `auto`) – how should the browser position the visualization with respect to the chat interface. Possible values are:
-  - `auto` (default): Metabot uses the `stacked` layout on mobile screens, and a `sidebar` layout on larger screens.
-  - `stacked`: the question visualization stacks on top of the chat interface.
-  - `sidebar`: the question visualization appears to the left of the chat interface, which is in the right sidebar.
 
 ## Customizing loader and error components
 
@@ -801,6 +753,135 @@ If you're using the [modular embedding SDK](./sdk/introduction), you can provide
 
 - [Appearance](./appearance)
 - [Modular embedding SDK](./sdk/introduction).
+
+---
+
+Attributes for the `<metabase-browser>` web component.
+
+Embeds a collection browser so people can navigate collections and open
+dashboards or questions. Only available for authenticated (SSO) modular embeds.
+
+## Remarks
+
+<!-- [<snippet remarks>] -->
+
+Pro/Enterprise
+
+<!-- [<endsnippet remarks>] -->
+
+## Properties
+
+<!-- [<snippet properties>] -->
+
+| Property                                                              | Type                                                                                                   | Default value | Description                                                                                                                                                                                    |
+| :-------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------- | :------------ | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| <a id="collection-entity-types"></a> `collection-entity-types?`       | (`"model"` \| `"collection"` \| `"dashboard"` \| `"question"`)[]                                       | `undefined`   | An array of entity types to show in the collection browser: `collection`, `dashboard`, `question`, `model`.                                                                                    |
+| <a id="collection-page-size"></a> `collection-page-size?`             | `number`                                                                                               | `undefined`   | How many items to show per page in the collection browser.                                                                                                                                     |
+| <a id="collection-visible-columns"></a> `collection-visible-columns?` | ( \| `"type"` \| `"name"` \| `"description"` \| `"lastEditedBy"` \| `"lastEditedAt"` \| `"archive"`)[] | `undefined`   | An array of columns to show in the collection browser: `type`, `name`, `description`, `lastEditedBy`, `lastEditedAt`, `archive`.                                                               |
+| <a id="data-picker-entity-types"></a> `data-picker-entity-types?`     | (`"model"` \| `"table"`)[]                                                                             | `undefined`   | An array of entity types to show in the question's data picker: `model`, `table`.                                                                                                              |
+| <a id="enable-entity-navigation"></a> `enable-entity-navigation?`     | `boolean`                                                                                              | `false`       | Whether to enable internal entity navigation (links to dashboards/questions).                                                                                                                  |
+| <a id="initial-collection"></a> `initial-collection`                  | `string` \| `number`                                                                                   | `undefined`   | Which collection to start from. Use a collection ID (e.g., `14`) to start in a specific collection, or `"root"` for the top-level "Our Analytics" collection.                                  |
+| <a id="read-only"></a> `read-only?`                                   | `boolean`                                                                                              | `true`        | Whether the content manager is in read-only mode. When `true`, people can interact with items (filter, summarize, drill-through) but can't save. When `false`, they can create and edit items. |
+| <a id="with-new-dashboard"></a> `with-new-dashboard?`                 | `boolean`                                                                                              | `true`        | Whether to show the "New dashboard" button. Only applies when `read-only` is `false`.                                                                                                          |
+| <a id="with-new-question"></a> `with-new-question?`                   | `boolean`                                                                                              | `true`        | Whether to show the "New exploration" button.                                                                                                                                                  |
+
+<!-- [<endsnippet properties>] -->
+
+---
+
+Attributes for the `<metabase-dashboard>` web component.
+
+Embeds a Metabase dashboard. Provide either `dashboard-id` (for SSO embeds)
+or `token` (for guest embeds), plus optional display configuration.
+
+## Properties
+
+<!-- [<snippet properties>] -->
+
+| Property                                                          | Type                 | Default value                                    | Description                                                                                                                                                                                                                                        |
+| :---------------------------------------------------------------- | :------------------- | :----------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| <a id="auto-refresh-interval"></a> `auto-refresh-interval?`       | `number`             | `undefined`                                      | Auto-refresh interval in seconds. For example, `60` refreshes the dashboard every 60 seconds. **Remarks** Pro/Enterprise, Guest embed                                                                                                              |
+| <a id="dashboard-id"></a> `dashboard-id`                          | `string` \| `number` | `undefined`                                      | The ID of the dashboard to embed. Can be a regular ID or an [entity ID](/docs/latest/installation-and-operation/serialization#entity-ids-work-with-embedding). Only for SSO embeds — guest embeds set the ID with `token`. |
+| <a id="drills"></a> `drills?`                                     | `boolean`            | `true`                                           | Whether to enable drill-through on the dashboard. **Remarks** Pro/Enterprise                                                                                                                                                                       |
+| <a id="enable-entity-navigation"></a> `enable-entity-navigation?` | `boolean`            | `false`                                          | Whether to enable internal entity navigation (links to dashboards/questions). Requires `drills` to be `true` **Remarks** Pro/Enterprise                                                                                                            |
+| <a id="hidden-parameters"></a> `hidden-parameters?`               | `string`[]           | `undefined`                                      | List of filter names to hide from the dashboard, e.g. `['productId']`. **Remarks** Pro/Enterprise                                                                                                                                                  |
+| <a id="initial-parameters"></a> `initial-parameters?`             | `object`             | `undefined`                                      | Default values for dashboard filters, e.g. `{ 'productId': '42' }`. **Remarks** Pro/Enterprise, Guest embed                                                                                                                                        |
+| <a id="token"></a> `token?`                                       | `string`             | `undefined`                                      | The token for guest embeds. Set automatically by the guest embed flow. **Remarks** Guest embed                                                                                                                                                     |
+| <a id="with-downloads"></a> `with-downloads?`                     | `boolean`            | `true` on OSS/Starter, `false` on Pro/Enterprise | Whether to show the button to download the dashboard as PDF and download question results. **Remarks** Guest embed                                                                                                                                 |
+| <a id="with-subscriptions"></a> `with-subscriptions?`             | `boolean`            | `undefined`                                      | Whether to let people set up [dashboard subscriptions](/docs/latest/dashboards/subscriptions). Subscriptions sent from embedded dashboards exclude links to Metabase items. **Remarks** Pro/Enterprise                     |
+| <a id="with-title"></a> `with-title?`                             | `boolean`            | `true`                                           | Whether to show the dashboard title in the embed. **Remarks** Guest embed                                                                                                                                                                          |
+
+<!-- [<endsnippet properties>] -->
+
+---
+
+Attributes for the `<metabase-metabot>` web component.
+
+Embeds the AI chat interface. Only available for authenticated (SSO) modular embeds.
+
+## Remarks
+
+<!-- [<snippet remarks>] -->
+
+Pro/Enterprise
+
+<!-- [<endsnippet remarks>] -->
+
+## Properties
+
+<!-- [<snippet properties>] -->
+
+| Property                                            | Type                                   | Default value | Description                                                                                                                                            |
+| :-------------------------------------------------- | :------------------------------------- | :------------ | :----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| <a id="is-save-enabled"></a> `is-save-enabled?`     | `boolean`                              | `false`       | Whether the save button is enabled.                                                                                                                    |
+| <a id="layout"></a> `layout?`                       | `"auto"` \| `"sidebar"` \| `"stacked"` | `"auto"`      | How should the browser position the visualization with respect to the chat interface. `auto` uses `stacked` on mobile and `sidebar` on larger screens. |
+| <a id="target-collection"></a> `target-collection?` | `string` \| `number`                   | `undefined`   | The collection to save a question to.                                                                                                                  |
+
+<!-- [<endsnippet properties>] -->
+
+---
+
+Attributes for the `<metabase-question>` web component.
+
+Embeds a Metabase question (chart). Provide either `question-id` (for SSO embeds)
+or `token` (for guest embeds), plus optional display configuration.
+Use `question-id="new"` to embed the query builder exploration interface.
+Use `question-id="new-native"` to embed the SQL editor interface.
+
+## Properties
+
+<!-- [<snippet properties>] -->
+
+| Property                                                      | Type                       | Default value                                    | Description                                                                                                                                                                                                                                                                   |
+| :------------------------------------------------------------ | :------------------------- | :----------------------------------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| <a id="drills"></a> `drills?`                                 | `boolean`                  | `true`                                           | Whether to enable drill-through on the question. **Remarks** Pro/Enterprise                                                                                                                                                                                                   |
+| <a id="entity-types"></a> `entity-types?`                     | (`"model"` \| `"table"`)[] | `undefined`                                      | Which entity types to show in the question's data picker, e.g. `["model", "table"]`. **Remarks** Pro/Enterprise, Guest embed                                                                                                                                                  |
+| <a id="hidden-parameters"></a> `hidden-parameters?`           | `string`[]                 | `undefined`                                      | List of parameter names to hide from the question. **Remarks** Pro/Enterprise                                                                                                                                                                                                 |
+| <a id="initial-sql-parameters"></a> `initial-sql-parameters?` | `object`                   | `undefined`                                      | Default values for SQL parameters, only applicable to native SQL questions, e.g. `{ "productId": "42" }`. **Remarks** Pro/Enterprise, Guest embed                                                                                                                             |
+| <a id="is-save-enabled"></a> `is-save-enabled?`               | `boolean`                  | `false`                                          | Whether the save button is enabled. **Remarks** Pro/Enterprise                                                                                                                                                                                                                |
+| <a id="question-id"></a> `question-id`                        | `string` \| `number`       | `undefined`                                      | The ID of the question to embed. Can be a regular ID or an [entity ID](/docs/latest/installation-and-operation/serialization#entity-ids-work-with-embedding). Use `"new"` to embed the query builder. Only for SSO embeds — guest embeds use `token`. |
+| <a id="target-collection"></a> `target-collection?`           | `string` \| `number`       | `undefined`                                      | The collection to save a question to. Values: regular ID, entity ID, `"personal"`, `"root"`. **Remarks** Pro/Enterprise                                                                                                                                                       |
+| <a id="token"></a> `token?`                                   | `string`                   | `undefined`                                      | The token for guest embeds. Set automatically by the guest embed flow. **Remarks** Guest embed                                                                                                                                                                                |
+| <a id="with-alerts"></a> `with-alerts?`                       | `boolean`                  | `false`                                          | Whether to show the alerts button. **Remarks** Pro/Enterprise                                                                                                                                                                                                                 |
+| <a id="with-downloads"></a> `with-downloads?`                 | `boolean`                  | `true` on OSS/Starter, `false` on Pro/Enterprise | Whether to show download buttons for question results. **Remarks** Guest embed                                                                                                                                                                                                |
+| <a id="with-title"></a> `with-title?`                         | `boolean`                  | `true`                                           | Whether to show the question title in the embed. **Remarks** Guest embed                                                                                                                                                                                                      |
+
+<!-- [<endsnippet properties>] -->
+
+---
+
+Types for modular embedding web-components.
+
+This is the source of truth for all attributes accepted by modular embedding components.
+
+## Interfaces
+
+| Interface                                                     | Description                                              |
+| :------------------------------------------------------------ | :------------------------------------------------------- |
+| [MetabaseBrowserAttributes](MetabaseBrowserAttributes)     | Attributes for the `<metabase-browser>` web component.   |
+| [MetabaseDashboardAttributes](MetabaseDashboardAttributes) | Attributes for the `<metabase-dashboard>` web component. |
+| [MetabaseMetabotAttributes](MetabaseMetabotAttributes)     | Attributes for the `<metabase-metabot>` web component.   |
+| [MetabaseQuestionAttributes](MetabaseQuestionAttributes)   | Attributes for the `<metabase-question>` web component.  |
 
 ---
 
