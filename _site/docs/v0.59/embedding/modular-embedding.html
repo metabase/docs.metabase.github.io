@@ -12,31 +12,32 @@
   <script type="text/javascript">
     window.HELP_IMPROVE_VIDEOJS = false;
 
-    function redirectTo(theLocation) {
-      if (typeof theLocation === "string") {
-        theLocation = new URL(theLocation);
+window.redirectTo = function redirectTo(theLocation) {
+  if (typeof theLocation === "string") {
+    theLocation = new URL(theLocation);
+  }
+
+  var redirectionSuffixes = ["/index.html", ".html", "/index"];
+  for (var i = 0; i < redirectionSuffixes.length; i = i + 1) {
+    var redirectionSuffix = redirectionSuffixes[i];
+    if (
+      theLocation.pathname &&
+      theLocation.pathname.length > redirectionSuffix.length &&
+      theLocation.pathname.indexOf(redirectionSuffix) ===
+        theLocation.pathname.length - redirectionSuffix.length
+    ) {
+      var pathname = theLocation.pathname.replace(redirectionSuffix, "");
+      if (pathname[pathname.length - 1] === "/") {
+        pathname = pathname.slice(0, -1);
       }
 
-      var redirectionSuffixes = ["/index.html", ".html", "/index"];
-      for (var i = 0; i < redirectionSuffixes.length; i = i + 1) {
-        var redirectionSuffix = redirectionSuffixes[i];
-        if (
-          theLocation.pathname &&
-          theLocation.pathname.length > redirectionSuffix.length &&
-          theLocation.pathname.indexOf(redirectionSuffix) ===
-            theLocation.pathname.length - redirectionSuffix.length
-        ) {
-          var pathname = theLocation.pathname.replace(redirectionSuffix, "");
-          if (pathname[pathname.length - 1] === "/") {
-            pathname = pathname.slice(0, -1);
-          }
-
-          return `${pathname}${theLocation.search}${theLocation.hash}`;
-        }
-      }
-
-      return null;
+      return `${pathname}${theLocation.search}${theLocation.hash}`;
     }
+  }
+
+  return null;
+};
+
   </script>
 
   
@@ -5845,7 +5846,7 @@ Roadmap</a>
 <h2 id="enable-modular-embedding">Enable modular embedding</h2>
 
 <ol>
-  <li>In Metabase, go to <strong>Admin settings &gt; Embedding</strong>.</li>
+  <li>In Metabase, go to <strong>Admin &gt; Embedding</strong>.</li>
   <li>Toggle on <strong>Enable modular embedding</strong>.</li>
 </ol>
 
@@ -5876,7 +5877,7 @@ Roadmap</a>
 
 <p>You can also open a command palette with Ctrl/Cmd+K, type “New embed”. You’ll get a wizard to help you set up your embed.</p>
 
-<p>You can also go to <strong>Admin settings &gt; Embedding &gt; Modular embedding</strong> and click <strong>New embed</strong>.</p>
+<p>You can also go to <strong>Admin &gt; Embedding &gt; Modular embedding</strong> and click <strong>New embed</strong>.</p>
 
 <p><img src="./images/new-modular-embed-from-admin-settings.png" alt="New modular embed from the admin settings"></p>
 
@@ -6037,7 +6038,7 @@ Roadmap</a>
     <p><strong>Allow downloads</strong>. Determines whether people can download question results and save dashboards as PDFs.</p>
   </li>
   <li>
-    <p><strong>Allow people to save new questions</strong>. If you embed the query builder but disable this option, people can still do their own explorations, they just won’t be able to save them.</p>
+    <p><strong>Allow people to save new questions</strong>. If you embed the query builder (visual or SQL) but disable this option, people can still do their own explorations, they just won’t be able to save them.</p>
   </li>
   <li>
     <p><strong>Parameters</strong>: for dashboard filters, SQL variables, and time grouping parameters, you can add default values. Default values set here override the default values set at the dashboard or question level. For dashboard filters and parameters, you can choose whether to hide the parameter.</p>
@@ -6046,7 +6047,7 @@ Roadmap</a>
     <p><strong>Show title</strong>: what it says on the tin.</p>
   </li>
   <li>
-    <p><strong>Allow editing dashboards and questions</strong>: lets people create and edit dashboards or questions in the current collection. When disabled, they can still perform actions like filter, summarize, and drill-through, but won’t be able to save results.</p>
+    <p><strong>Allow editing dashboards and questions</strong>: lets people create and edit dashboards or questions in the current collection, including both visual and native (SQL) questions. When disabled, they can still perform actions like filter, summarize, and drill-through, but won’t be able to save results.</p>
   </li>
   <li>
     <p><strong>Allow alerts</strong>: lets people set up <a href="../questions/alerts">alerts</a> on embedded questions. Requires <a href="../configuring-metabase/email">email setup</a>. Only for authenticated (SSO) question embeds.</p>

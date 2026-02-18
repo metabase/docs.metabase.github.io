@@ -12,31 +12,32 @@
   <script type="text/javascript">
     window.HELP_IMPROVE_VIDEOJS = false;
 
-    function redirectTo(theLocation) {
-      if (typeof theLocation === "string") {
-        theLocation = new URL(theLocation);
+window.redirectTo = function redirectTo(theLocation) {
+  if (typeof theLocation === "string") {
+    theLocation = new URL(theLocation);
+  }
+
+  var redirectionSuffixes = ["/index.html", ".html", "/index"];
+  for (var i = 0; i < redirectionSuffixes.length; i = i + 1) {
+    var redirectionSuffix = redirectionSuffixes[i];
+    if (
+      theLocation.pathname &&
+      theLocation.pathname.length > redirectionSuffix.length &&
+      theLocation.pathname.indexOf(redirectionSuffix) ===
+        theLocation.pathname.length - redirectionSuffix.length
+    ) {
+      var pathname = theLocation.pathname.replace(redirectionSuffix, "");
+      if (pathname[pathname.length - 1] === "/") {
+        pathname = pathname.slice(0, -1);
       }
 
-      var redirectionSuffixes = ["/index.html", ".html", "/index"];
-      for (var i = 0; i < redirectionSuffixes.length; i = i + 1) {
-        var redirectionSuffix = redirectionSuffixes[i];
-        if (
-          theLocation.pathname &&
-          theLocation.pathname.length > redirectionSuffix.length &&
-          theLocation.pathname.indexOf(redirectionSuffix) ===
-            theLocation.pathname.length - redirectionSuffix.length
-        ) {
-          var pathname = theLocation.pathname.replace(redirectionSuffix, "");
-          if (pathname[pathname.length - 1] === "/") {
-            pathname = pathname.slice(0, -1);
-          }
-
-          return `${pathname}${theLocation.search}${theLocation.hash}`;
-        }
-      }
-
-      return null;
+      return `${pathname}${theLocation.search}${theLocation.hash}`;
     }
+  }
+
+  return null;
+};
+
   </script>
 
   
@@ -5817,6 +5818,8 @@ Roadmap</a>
 
 <p><em>Data studio &gt; Data structure</em></p>
 
+<p><img src="./images/data-structure.png" alt="Data structure"></p>
+
 <p>The <strong>Data structure</strong> area of <a href="overview">Data Studio</a> is where you can manage table metadata to make it easier for people to work with your data.</p>
 
 <p>You can do things like:</p>
@@ -5849,6 +5852,8 @@ Roadmap</a>
 <p>You can set <a href="#table-attributes">table attributes</a>, <a href="#table-and-field-metadata">edit metadata</a>, <a href="#publishing-and-unpublishing-tables">publish the table</a> or create <a href="#segments">segments</a> or <a href="#measures">measures</a> on the table. You can also select tables in bulk to publish or assign attributes (including visibility) to multiple tables at once.</p>
 
 <h2 id="publishing-and-unpublishing-tables">Publishing and unpublishing tables</h2>
+
+<p><img src="./images/data-structure-publish.png" alt="Publishing a table from Data structure"></p>
 
 <div class="bootstrap">
   <div class="plans-blockquote bg-blue-95 rounded-3 p-6 d-flex flex-row border border-1 border-primary">
@@ -5930,7 +5935,7 @@ Roadmap</a>
 
 <p>People will see segments as options in the Filter block of the <a href="../questions/query-builder/editor">query builder</a>.</p>
 
-<p>For now, in addition to Data Studio, segments can also be managed through <strong>Admin settings &gt; Table Metadata</strong>, see <a href="../data-modeling/segments">Segments in table metadata</a>.</p>
+<p>For now, in addition to Data Studio, segments can also be managed through <strong>Admin &gt; Table Metadata</strong>, see <a href="../data-modeling/segments">Segments in table metadata</a>.</p>
 
 <p>To see all segments on a table, select the table in <strong>Data Structure</strong> and switch to <strong>Segments</strong> tab.</p>
 

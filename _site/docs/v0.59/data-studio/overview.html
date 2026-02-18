@@ -12,31 +12,32 @@
   <script type="text/javascript">
     window.HELP_IMPROVE_VIDEOJS = false;
 
-    function redirectTo(theLocation) {
-      if (typeof theLocation === "string") {
-        theLocation = new URL(theLocation);
+window.redirectTo = function redirectTo(theLocation) {
+  if (typeof theLocation === "string") {
+    theLocation = new URL(theLocation);
+  }
+
+  var redirectionSuffixes = ["/index.html", ".html", "/index"];
+  for (var i = 0; i < redirectionSuffixes.length; i = i + 1) {
+    var redirectionSuffix = redirectionSuffixes[i];
+    if (
+      theLocation.pathname &&
+      theLocation.pathname.length > redirectionSuffix.length &&
+      theLocation.pathname.indexOf(redirectionSuffix) ===
+        theLocation.pathname.length - redirectionSuffix.length
+    ) {
+      var pathname = theLocation.pathname.replace(redirectionSuffix, "");
+      if (pathname[pathname.length - 1] === "/") {
+        pathname = pathname.slice(0, -1);
       }
 
-      var redirectionSuffixes = ["/index.html", ".html", "/index"];
-      for (var i = 0; i < redirectionSuffixes.length; i = i + 1) {
-        var redirectionSuffix = redirectionSuffixes[i];
-        if (
-          theLocation.pathname &&
-          theLocation.pathname.length > redirectionSuffix.length &&
-          theLocation.pathname.indexOf(redirectionSuffix) ===
-            theLocation.pathname.length - redirectionSuffix.length
-        ) {
-          var pathname = theLocation.pathname.replace(redirectionSuffix, "");
-          if (pathname[pathname.length - 1] === "/") {
-            pathname = pathname.slice(0, -1);
-          }
-
-          return `${pathname}${theLocation.search}${theLocation.hash}`;
-        }
-      }
-
-      return null;
+      return `${pathname}${theLocation.search}${theLocation.hash}`;
     }
+  }
+
+  return null;
+};
+
   </script>
 
   
@@ -5829,11 +5830,11 @@ Roadmap</a>
 
 <ul>
   <li><strong><a href="./library">Library</a></strong>*: A curated space for your organization’s most trusted analytics content—tables, metrics, and SQL snippets that your data team recommends.</li>
-  <li><strong><a href="./data-structure">Data structure</a></strong>. Add table metadata to make tables easier to work with.</li>
-  <li><strong><a href="../exploration-and-organization/data-model-reference#glossary">Glossary</a></strong>. Define terms relevant to your business, both for people and agents trying to understand your data.</li>
+  <li><strong><a href="./data-structure">Data structure</a></strong>: Add table metadata to make tables easier to work with.</li>
+  <li><strong><a href="../exploration-and-organization/data-model-reference#glossary">Glossary</a></strong>: Define terms relevant to your business, both for people and agents trying to understand your data.</li>
   <li><strong><a href="./dependency-graph">Dependency graph</a></strong>*: A visual map of how your content connects, so you can understand the impact of changes before you make them.</li>
-  <li><strong><a href="./dependency-diagnostics">Dependency diagnostics</a></strong>*. See which items have broken dependencies, or that aren’t used.</li>
-  <li><strong><a href="./transforms/transforms-overview">Transforms</a></strong>. Wrangle your data in Metabase, write the query results back to your database, and reuse them in Metabase as sources for new queries.</li>
+  <li><strong><a href="./dependency-diagnostics">Dependency diagnostics</a></strong>*: See which items have broken dependencies, or that aren’t used.</li>
+  <li><strong><a href="./transforms/transforms-overview">Transforms</a></strong>: Wrangle your data in Metabase, write the query results back to your database, and reuse them in Metabase as sources for new queries.</li>
 </ul>
 
 <p>* Available on <a href="/pricing/">Pro and Enterprise plans</a>.</p>

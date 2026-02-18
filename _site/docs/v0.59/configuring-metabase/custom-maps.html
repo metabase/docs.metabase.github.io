@@ -12,31 +12,32 @@
   <script type="text/javascript">
     window.HELP_IMPROVE_VIDEOJS = false;
 
-    function redirectTo(theLocation) {
-      if (typeof theLocation === "string") {
-        theLocation = new URL(theLocation);
+window.redirectTo = function redirectTo(theLocation) {
+  if (typeof theLocation === "string") {
+    theLocation = new URL(theLocation);
+  }
+
+  var redirectionSuffixes = ["/index.html", ".html", "/index"];
+  for (var i = 0; i < redirectionSuffixes.length; i = i + 1) {
+    var redirectionSuffix = redirectionSuffixes[i];
+    if (
+      theLocation.pathname &&
+      theLocation.pathname.length > redirectionSuffix.length &&
+      theLocation.pathname.indexOf(redirectionSuffix) ===
+        theLocation.pathname.length - redirectionSuffix.length
+    ) {
+      var pathname = theLocation.pathname.replace(redirectionSuffix, "");
+      if (pathname[pathname.length - 1] === "/") {
+        pathname = pathname.slice(0, -1);
       }
 
-      var redirectionSuffixes = ["/index.html", ".html", "/index"];
-      for (var i = 0; i < redirectionSuffixes.length; i = i + 1) {
-        var redirectionSuffix = redirectionSuffixes[i];
-        if (
-          theLocation.pathname &&
-          theLocation.pathname.length > redirectionSuffix.length &&
-          theLocation.pathname.indexOf(redirectionSuffix) ===
-            theLocation.pathname.length - redirectionSuffix.length
-        ) {
-          var pathname = theLocation.pathname.replace(redirectionSuffix, "");
-          if (pathname[pathname.length - 1] === "/") {
-            pathname = pathname.slice(0, -1);
-          }
-
-          return `${pathname}${theLocation.search}${theLocation.hash}`;
-        }
-      }
-
-      return null;
+      return `${pathname}${theLocation.search}${theLocation.hash}`;
     }
+  }
+
+  return null;
+};
+
   </script>
 
   
@@ -54,7 +55,7 @@
 <meta name="twitter:site" content="@metabase">
 
 <meta name="twitter:title" content="Custom maps | Metabase Documentation">
-<meta name="twitter:description" content="Custom maps By default, Metabase uses OpenStreetMaps for map visualizations, but there are a few customization options. Map settings To find the map settings:  At the top right of the screen, click gear icon > Admin settings > Settings....">
+<meta name="twitter:description" content="Custom maps By default, Metabase uses OpenStreetMaps for map visualizations, but there are a few customization options. Map settings To find the map settings:  At the top right of the screen, click grid icon > Admin > Settings. Select...">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -64,7 +65,7 @@
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://www.metabase.com/docs/v0.59/configuring-metabase/custom-maps">
 <meta name="title" property="og:title" content="Custom maps | Metabase Documentation">
-<meta name="description" property="og:description" content="Custom maps By default, Metabase uses OpenStreetMaps for map visualizations, but there are a few customization options. Map settings To find the map settings:  At the top right of the screen, click gear icon > Admin settings > Settings....">
+<meta name="description" property="og:description" content="Custom maps By default, Metabase uses OpenStreetMaps for map visualizations, but there are a few customization options. Map settings To find the map settings:  At the top right of the screen, click grid icon > Admin > Settings. Select...">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -5822,7 +5823,7 @@ Roadmap</a>
 <p>To find the map settings:</p>
 
 <ol>
-  <li>At the top right of the screen, click <strong>gear</strong> icon &gt; <strong>Admin settings</strong> &gt; <strong>Settings</strong>.</li>
+  <li>At the top right of the screen, click <strong>grid</strong> icon &gt; <strong>Admin</strong> &gt; <strong>Settings</strong>.</li>
   <li>Select <code class="language-plaintext highlighter-rouge">Maps</code> from the navigation on the left.</li>
 </ol>
 
@@ -5855,7 +5856,7 @@ look or level of detail in your map visualizations, you can change the map tile 
 <p>To add a custom map:</p>
 
 <ol>
-  <li>Go to <strong>Admin Settings &gt; Maps &gt; Custom Maps</strong>.</li>
+  <li>Click the <strong>grid icon</strong>, then go to <strong>Admin</strong> &gt; <strong>Settings</strong> &gt; <strong>Maps</strong> &gt; <strong>Custom Maps</strong>.</li>
   <li>Click <strong>Add a Map</strong>.</li>
   <li>Enter a name for your map.</li>
   <li>Provide the URL to your GeoJSON file.</li>

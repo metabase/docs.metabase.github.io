@@ -12,31 +12,32 @@
   <script type="text/javascript">
     window.HELP_IMPROVE_VIDEOJS = false;
 
-    function redirectTo(theLocation) {
-      if (typeof theLocation === "string") {
-        theLocation = new URL(theLocation);
+window.redirectTo = function redirectTo(theLocation) {
+  if (typeof theLocation === "string") {
+    theLocation = new URL(theLocation);
+  }
+
+  var redirectionSuffixes = ["/index.html", ".html", "/index"];
+  for (var i = 0; i < redirectionSuffixes.length; i = i + 1) {
+    var redirectionSuffix = redirectionSuffixes[i];
+    if (
+      theLocation.pathname &&
+      theLocation.pathname.length > redirectionSuffix.length &&
+      theLocation.pathname.indexOf(redirectionSuffix) ===
+        theLocation.pathname.length - redirectionSuffix.length
+    ) {
+      var pathname = theLocation.pathname.replace(redirectionSuffix, "");
+      if (pathname[pathname.length - 1] === "/") {
+        pathname = pathname.slice(0, -1);
       }
 
-      var redirectionSuffixes = ["/index.html", ".html", "/index"];
-      for (var i = 0; i < redirectionSuffixes.length; i = i + 1) {
-        var redirectionSuffix = redirectionSuffixes[i];
-        if (
-          theLocation.pathname &&
-          theLocation.pathname.length > redirectionSuffix.length &&
-          theLocation.pathname.indexOf(redirectionSuffix) ===
-            theLocation.pathname.length - redirectionSuffix.length
-        ) {
-          var pathname = theLocation.pathname.replace(redirectionSuffix, "");
-          if (pathname[pathname.length - 1] === "/") {
-            pathname = pathname.slice(0, -1);
-          }
-
-          return `${pathname}${theLocation.search}${theLocation.hash}`;
-        }
-      }
-
-      return null;
+      return `${pathname}${theLocation.search}${theLocation.hash}`;
     }
+  }
+
+  return null;
+};
+
   </script>
 
   
@@ -5828,8 +5829,8 @@ Roadmap</a>
 <p>To create an API key:</p>
 
 <ol>
-  <li>Click on the <strong>gear</strong> icon in the upper right.</li>
-  <li>Select <strong>Admin settings</strong>.</li>
+  <li>Click the <strong>grid</strong> icon in the upper right.</li>
+  <li>Select <strong>Admin</strong>.</li>
   <li>Go to the <strong>Settings</strong> tab.</li>
   <li>Click on the <strong>Authentication</strong> tab on the left menu.</li>
   <li>Scroll to <strong>API Keys</strong> and click <strong>Manage</strong>.</li>
@@ -5849,8 +5850,8 @@ Roadmap</a>
 <p>To view and manage existing API keys:</p>
 
 <ol>
-  <li>Click on the <strong>gear</strong> icon in the upper right.</li>
-  <li>Select <strong>Admin settings</strong>.</li>
+  <li>Click the <strong>grid</strong> icon in the upper right.</li>
+  <li>Select <strong>Admin</strong>.</li>
   <li>Go to the <strong>Settings</strong> tab.</li>
   <li>Click on the <strong>Authentication</strong> tab on the left menu.</li>
   <li>Scroll to <strong>API Keys</strong> and click <strong>Manage</strong>.</li>
@@ -5873,8 +5874,8 @@ Roadmap</a>
 <p>To delete an API Key:</p>
 
 <ol>
-  <li>Click on the <strong>gear</strong> icon in the upper right.</li>
-  <li>Select <strong>Admin settings</strong>.</li>
+  <li>Click the <strong>grid</strong> icon in the upper right.</li>
+  <li>Select <strong>Admin</strong>.</li>
   <li>Go to the <strong>Settings</strong> tab.</li>
   <li>Click on the <strong>Authentication</strong> tab on the left menu.</li>
   <li>Scroll to <strong>API Keys</strong> and click <strong>Manage</strong>.</li>
