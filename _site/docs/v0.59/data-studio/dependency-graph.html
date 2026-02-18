@@ -12,31 +12,32 @@
   <script type="text/javascript">
     window.HELP_IMPROVE_VIDEOJS = false;
 
-    function redirectTo(theLocation) {
-      if (typeof theLocation === "string") {
-        theLocation = new URL(theLocation);
+window.redirectTo = function redirectTo(theLocation) {
+  if (typeof theLocation === "string") {
+    theLocation = new URL(theLocation);
+  }
+
+  var redirectionSuffixes = ["/index.html", ".html", "/index"];
+  for (var i = 0; i < redirectionSuffixes.length; i = i + 1) {
+    var redirectionSuffix = redirectionSuffixes[i];
+    if (
+      theLocation.pathname &&
+      theLocation.pathname.length > redirectionSuffix.length &&
+      theLocation.pathname.indexOf(redirectionSuffix) ===
+        theLocation.pathname.length - redirectionSuffix.length
+    ) {
+      var pathname = theLocation.pathname.replace(redirectionSuffix, "");
+      if (pathname[pathname.length - 1] === "/") {
+        pathname = pathname.slice(0, -1);
       }
 
-      var redirectionSuffixes = ["/index.html", ".html", "/index"];
-      for (var i = 0; i < redirectionSuffixes.length; i = i + 1) {
-        var redirectionSuffix = redirectionSuffixes[i];
-        if (
-          theLocation.pathname &&
-          theLocation.pathname.length > redirectionSuffix.length &&
-          theLocation.pathname.indexOf(redirectionSuffix) ===
-            theLocation.pathname.length - redirectionSuffix.length
-        ) {
-          var pathname = theLocation.pathname.replace(redirectionSuffix, "");
-          if (pathname[pathname.length - 1] === "/") {
-            pathname = pathname.slice(0, -1);
-          }
-
-          return `${pathname}${theLocation.search}${theLocation.hash}`;
-        }
-      }
-
-      return null;
+      return `${pathname}${theLocation.search}${theLocation.hash}`;
     }
+  }
+
+  return null;
+};
+
   </script>
 
   
@@ -5815,6 +5816,8 @@ Roadmap</a>
 
         <h1 id="dependency-graph">Dependency graph</h1>
 
+<p><img src="./images/dependency-graph.png" alt="Dependency graph"></p>
+
 <p>The dependency graph provides a visual representation of how your Metabase content is connected. You can use it to follow how data flows through your Metabase to better understand the impact of any changes you make.</p>
 
 <h2 id="what-the-dependency-graph-tracks">What the dependency graph tracks</h2>
@@ -5859,36 +5862,6 @@ Roadmap</a>
 
 <p>These counts show how important an item is. Items with many dependents usually need extra care before making changes.</p>
 
-<h3 id="viewing-dependent-details">Viewing dependent details</h3>
-
-<p>You can click any dependent count to open a details panel on the right, where you can:</p>
-
-<p><strong>Search</strong></p>
-
-<ul>
-  <li>Find items by name</li>
-  <li>See each item’s title and collection location</li>
-</ul>
-
-<p><strong>Filter</strong></p>
-
-<ul>
-  <li>Verified items</li>
-  <li>Items in dashboards</li>
-  <li>Items in official collections</li>
-  <li>Items not in personal collections</li>
-</ul>
-
-<p><strong>Sort</strong></p>
-
-<ul>
-  <li>Name</li>
-  <li>Location</li>
-  <li>View count</li>
-</ul>
-
-<p>Sorting by view count helps you see which dependents are used most often.</p>
-
 <h2 id="how-metabase-finds-dependencies">How Metabase finds dependencies</h2>
 
 <p>Metabase determines dependencies by analyzing how items are constructed and reused, not just by tracing their immediate data source.
@@ -5916,6 +5889,7 @@ It inspects things like:</p>
 
 <ul>
   <li><a href="./library">Library</a></li>
+  <li><a href="./dependency-graph">Dependency graph</a></li>
 </ul>
 
 

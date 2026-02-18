@@ -13,7 +13,7 @@ layout: new-docs
 
 Metabase supports authentication with Lightweight Directory Access Protocol (LDAP).
 
-You can find SSO options under **Admin settings** > **Settings** > **Authentication**.
+You can find SSO options under **Admin** > **Settings** > **Authentication**.
 
 ## Required LDAP attributes
 
@@ -31,7 +31,7 @@ Your LDAP directory must have the email field populated for each entry that will
 
 ## Enabling LDAP authentication
 
-In the **Admin settings** > **Settings** > **Authentication** tab, go to the LDAP section and click **Set up**. Click the toggle at the top of the form to enable LDAP, then fill out the form with the relevant details.
+In the **Admin** > **Settings** > **Authentication** > **LDAP**. Click the toggle at the top of the form to enable LDAP, then fill out the form with the relevant details.
 
 ## User provisioning
 

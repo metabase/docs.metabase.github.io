@@ -12,31 +12,32 @@
   <script type="text/javascript">
     window.HELP_IMPROVE_VIDEOJS = false;
 
-    function redirectTo(theLocation) {
-      if (typeof theLocation === "string") {
-        theLocation = new URL(theLocation);
+window.redirectTo = function redirectTo(theLocation) {
+  if (typeof theLocation === "string") {
+    theLocation = new URL(theLocation);
+  }
+
+  var redirectionSuffixes = ["/index.html", ".html", "/index"];
+  for (var i = 0; i < redirectionSuffixes.length; i = i + 1) {
+    var redirectionSuffix = redirectionSuffixes[i];
+    if (
+      theLocation.pathname &&
+      theLocation.pathname.length > redirectionSuffix.length &&
+      theLocation.pathname.indexOf(redirectionSuffix) ===
+        theLocation.pathname.length - redirectionSuffix.length
+    ) {
+      var pathname = theLocation.pathname.replace(redirectionSuffix, "");
+      if (pathname[pathname.length - 1] === "/") {
+        pathname = pathname.slice(0, -1);
       }
 
-      var redirectionSuffixes = ["/index.html", ".html", "/index"];
-      for (var i = 0; i < redirectionSuffixes.length; i = i + 1) {
-        var redirectionSuffix = redirectionSuffixes[i];
-        if (
-          theLocation.pathname &&
-          theLocation.pathname.length > redirectionSuffix.length &&
-          theLocation.pathname.indexOf(redirectionSuffix) ===
-            theLocation.pathname.length - redirectionSuffix.length
-        ) {
-          var pathname = theLocation.pathname.replace(redirectionSuffix, "");
-          if (pathname[pathname.length - 1] === "/") {
-            pathname = pathname.slice(0, -1);
-          }
-
-          return `${pathname}${theLocation.search}${theLocation.hash}`;
-        }
-      }
-
-      return null;
+      return `${pathname}${theLocation.search}${theLocation.hash}`;
     }
+  }
+
+  return null;
+};
+
   </script>
 
   
@@ -5841,8 +5842,7 @@ Roadmap</a>
 
 <ul>
   <li><a href="#staticquestion">Static question</a>. Embeds a chart. Clicking on the chart doesn’t do anything.</li>
-  <li><a href="#interactivequestion">Interactive question</a>. Clicking on the chart gives you the drill-through menu.</li>
-  <li><a href="#embedding-the-query-builder-for-creating-new-questions">Query builder</a>. Embeds the graphical query builder without a pre-defined query.</li>
+  <li><a href="#interactivequestion">Interactive question</a>. Create new questions or edit existing ones with the visual query builder or SQL editor. Clicking on the chart gives you the drill-through menu.</li>
 </ul>
 
 <h2 id="embedding-a-question">Embedding a question</h2>
@@ -6369,13 +6369,21 @@ Roadmap</a>
 <span class="p">}</span>
 </code></pre></div></div>
 
-<h2 id="embedding-the-query-builder-for-creating-new-questions">Embedding the query builder for creating new questions</h2>
+<h2 id="create-and-edit-questions-with-the-query-builder">Create and edit questions with the query builder</h2>
 
 <p><img src="../images/query-builder.png" alt="Query builder"></p>
 
+<p>The <code class="language-plaintext highlighter-rouge">InteractiveQuestion</code> component supports three modes:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">questionId="new"</code> — opens the visual query builder for creating new questions.</li>
+  <li><code class="language-plaintext highlighter-rouge">questionId="new-native"</code> — opens the SQL editor for creating new questions.</li>
+  <li>A numeric <code class="language-plaintext highlighter-rouge">questionId</code> (e.g., <code class="language-plaintext highlighter-rouge">questionId={42}</code>) — embeds an existing question. People can click the edit button to modify it, which opens the appropriate editor (visual or SQL) based on the question type.</li>
+</ul>
+
 <h3 id="embed-the-visual-query-builder">Embed the visual query builder</h3>
 
-<p>You can embed the query builder for creating new questions by passing the <code class="language-plaintext highlighter-rouge">questionId="new"</code> prop to the <code class="language-plaintext highlighter-rouge">InteractiveQuestion</code> component. You can use the <a href="#customizing-interactive-questions"><code class="language-plaintext highlighter-rouge">children</code> prop</a> to customize the layout for creating new questions.</p>
+<p>To embed the query builder for creating new questions, pass <code class="language-plaintext highlighter-rouge">questionId="new"</code> to the <code class="language-plaintext highlighter-rouge">InteractiveQuestion</code> component. You can use the <a href="#customizing-interactive-questions"><code class="language-plaintext highlighter-rouge">children</code> prop</a> to customize the layout.</p>
 
 <div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nx">React</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">react</span><span class="dl">"</span><span class="p">;</span>
 <span class="k">import</span> <span class="p">{</span>
@@ -6399,7 +6407,7 @@ Roadmap</a>
 
 <h3 id="embed-the-sql-editor">Embed the SQL editor</h3>
 
-<p>You can also embed the SQL editor to enable people to build questions with SQL by passing <code class="language-plaintext highlighter-rouge">questionId="new-native"</code> to the <code class="language-plaintext highlighter-rouge">InteractiveQuestion</code> component:</p>
+<p>To embed the SQL editor for creating new questions, pass <code class="language-plaintext highlighter-rouge">questionId="new-native"</code> to the <code class="language-plaintext highlighter-rouge">InteractiveQuestion</code> component:</p>
 
 <div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nx">React</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">react</span><span class="dl">"</span><span class="p">;</span>
 <span class="k">import</span> <span class="p">{</span>
