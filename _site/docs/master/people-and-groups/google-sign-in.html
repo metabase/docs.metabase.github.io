@@ -12,31 +12,32 @@
   <script type="text/javascript">
     window.HELP_IMPROVE_VIDEOJS = false;
 
-    function redirectTo(theLocation) {
-      if (typeof theLocation === "string") {
-        theLocation = new URL(theLocation);
+window.redirectTo = function redirectTo(theLocation) {
+  if (typeof theLocation === "string") {
+    theLocation = new URL(theLocation);
+  }
+
+  var redirectionSuffixes = ["/index.html", ".html", "/index"];
+  for (var i = 0; i < redirectionSuffixes.length; i = i + 1) {
+    var redirectionSuffix = redirectionSuffixes[i];
+    if (
+      theLocation.pathname &&
+      theLocation.pathname.length > redirectionSuffix.length &&
+      theLocation.pathname.indexOf(redirectionSuffix) ===
+        theLocation.pathname.length - redirectionSuffix.length
+    ) {
+      var pathname = theLocation.pathname.replace(redirectionSuffix, "");
+      if (pathname[pathname.length - 1] === "/") {
+        pathname = pathname.slice(0, -1);
       }
 
-      var redirectionSuffixes = ["/index.html", ".html", "/index"];
-      for (var i = 0; i < redirectionSuffixes.length; i = i + 1) {
-        var redirectionSuffix = redirectionSuffixes[i];
-        if (
-          theLocation.pathname &&
-          theLocation.pathname.length > redirectionSuffix.length &&
-          theLocation.pathname.indexOf(redirectionSuffix) ===
-            theLocation.pathname.length - redirectionSuffix.length
-        ) {
-          var pathname = theLocation.pathname.replace(redirectionSuffix, "");
-          if (pathname[pathname.length - 1] === "/") {
-            pathname = pathname.slice(0, -1);
-          }
-
-          return `${pathname}${theLocation.search}${theLocation.hash}`;
-        }
-      }
-
-      return null;
+      return `${pathname}${theLocation.search}${theLocation.hash}`;
     }
+  }
+
+  return null;
+};
+
   </script>
 
   
@@ -5821,7 +5822,7 @@ Roadmap</a>
 
         <h1 id="google-sign-in">Google Sign-In</h1>
 
-<p>Enabling <a href="https://developers.google.com/identity/sign-in/web/sign-in">Google Sign-In</a> for single sign-on (SSO) lets your team log in with a click instead of using email and password. SSO can also be used to let people create Metabase accounts without asking an admin to add each person manually. You can find SSO options under <strong>Settings</strong> &gt; <strong>Admin settings</strong> &gt; <strong>Authentication</strong>.</p>
+<p>Enabling <a href="https://developers.google.com/identity/sign-in/web/sign-in">Google Sign-In</a> for single sign-on (SSO) lets your team log in with a click instead of using email and password. SSO can also be used to let people create Metabase accounts without asking an admin to add each person manually. You can find SSO options under <strong>Settings</strong> &gt; <strong>Admin</strong> &gt; <strong>Authentication</strong>.</p>
 
 <p>If you’d like to have people authenticate with <a href="./authenticating-with-saml">SAML</a> or <a href="./authenticating-with-jwt">JWT</a>, Metabase’s <a href="/pricing/">Pro and Enterprise</a> let you do just that.</p>
 
@@ -5851,8 +5852,8 @@ Roadmap</a>
 <p>Once you have your Google API <code class="language-plaintext highlighter-rouge">Client ID</code> (ending in <code class="language-plaintext highlighter-rouge">.apps.googleusercontent.com</code>), visit your Metabase and:</p>
 
 <ol>
-  <li>Click on the settings <strong>Gear</strong> icon in the upper right.</li>
-  <li>Select <strong>Admin settings</strong>.</li>
+  <li>Click on the settings <strong>grid</strong> icon in the upper right.</li>
+  <li>Select <strong>Admin</strong>.</li>
   <li>In the <strong>Settings</strong> tab, click on <strong>Authentication</strong>.</li>
   <li>On the <strong>Sign in with Google</strong> card, click <strong>Set up</strong>.</li>
   <li>In the <strong>Client ID</strong> field, paste your Google API Client ID.</li>

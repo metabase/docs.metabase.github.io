@@ -11,7 +11,7 @@ layout: new-docs
 
 # Databricks
 
-To add a database connection, click on the **gear** icon in the top right, and navigate to **Admin settings** > **Databases** > **Add a database**. Then select **Databricks**.
+To add a database connection, click the **grid** icon in the top right, and navigate to **Admin** > **Databases** > **Add a database**. Then select **Databricks**.
 
 You can edit these settings at any time. Just remember to save your changes.
 

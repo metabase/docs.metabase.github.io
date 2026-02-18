@@ -12,31 +12,32 @@
   <script type="text/javascript">
     window.HELP_IMPROVE_VIDEOJS = false;
 
-    function redirectTo(theLocation) {
-      if (typeof theLocation === "string") {
-        theLocation = new URL(theLocation);
+window.redirectTo = function redirectTo(theLocation) {
+  if (typeof theLocation === "string") {
+    theLocation = new URL(theLocation);
+  }
+
+  var redirectionSuffixes = ["/index.html", ".html", "/index"];
+  for (var i = 0; i < redirectionSuffixes.length; i = i + 1) {
+    var redirectionSuffix = redirectionSuffixes[i];
+    if (
+      theLocation.pathname &&
+      theLocation.pathname.length > redirectionSuffix.length &&
+      theLocation.pathname.indexOf(redirectionSuffix) ===
+        theLocation.pathname.length - redirectionSuffix.length
+    ) {
+      var pathname = theLocation.pathname.replace(redirectionSuffix, "");
+      if (pathname[pathname.length - 1] === "/") {
+        pathname = pathname.slice(0, -1);
       }
 
-      var redirectionSuffixes = ["/index.html", ".html", "/index"];
-      for (var i = 0; i < redirectionSuffixes.length; i = i + 1) {
-        var redirectionSuffix = redirectionSuffixes[i];
-        if (
-          theLocation.pathname &&
-          theLocation.pathname.length > redirectionSuffix.length &&
-          theLocation.pathname.indexOf(redirectionSuffix) ===
-            theLocation.pathname.length - redirectionSuffix.length
-        ) {
-          var pathname = theLocation.pathname.replace(redirectionSuffix, "");
-          if (pathname[pathname.length - 1] === "/") {
-            pathname = pathname.slice(0, -1);
-          }
-
-          return `${pathname}${theLocation.search}${theLocation.hash}`;
-        }
-      }
-
-      return null;
+      return `${pathname}${theLocation.search}${theLocation.hash}`;
     }
+  }
+
+  return null;
+};
+
   </script>
 
   
@@ -5850,7 +5851,7 @@ Roadmap</a>
 <p>For actions to work, you’ll first need to do the following two things:</p>
 
 <ol>
-  <li><strong>Enable model actions for the database connection</strong>. To enable actions for a database connection, admins should click on the <strong>gear</strong> icon in the upper right and navigate to <strong>Admin settings</strong> &gt; <strong>Databases</strong>, then click on the database you want to create actions for. On the right side of the connection settings form, toggle the <strong>Model actions</strong> option. For actions to work, the database user account (the account you’re using to connect to the database) must have <a href="../databases/users-roles-privileges#privileges-to-enable-actions-and-editable-table-data">write permissions</a>. And for now, actions are only supported on PostgreSQL and MySQL databases.</li>
+  <li><strong>Enable model actions for the database connection</strong>. To enable actions for a database connection, admins should click on the <strong>grid</strong> icon in the upper right and navigate to <strong>Admin</strong> &gt; <strong>Databases</strong>, then click on the database you want to create actions for. On the right side of the connection settings form, toggle the <strong>Model actions</strong> option. For actions to work, the database user account (the account you’re using to connect to the database) must have <a href="../databases/users-roles-privileges#privileges-to-enable-actions-and-editable-table-data">write permissions</a>. And for now, actions are only supported on PostgreSQL and MySQL databases.</li>
   <li><strong>Create at least one model from that database.</strong> Actions are associated with models, so you’ll need to have created (or have access to) at least one model before you can start creating actions.</li>
 </ol>
 

@@ -12,31 +12,32 @@
   <script type="text/javascript">
     window.HELP_IMPROVE_VIDEOJS = false;
 
-    function redirectTo(theLocation) {
-      if (typeof theLocation === "string") {
-        theLocation = new URL(theLocation);
+window.redirectTo = function redirectTo(theLocation) {
+  if (typeof theLocation === "string") {
+    theLocation = new URL(theLocation);
+  }
+
+  var redirectionSuffixes = ["/index.html", ".html", "/index"];
+  for (var i = 0; i < redirectionSuffixes.length; i = i + 1) {
+    var redirectionSuffix = redirectionSuffixes[i];
+    if (
+      theLocation.pathname &&
+      theLocation.pathname.length > redirectionSuffix.length &&
+      theLocation.pathname.indexOf(redirectionSuffix) ===
+        theLocation.pathname.length - redirectionSuffix.length
+    ) {
+      var pathname = theLocation.pathname.replace(redirectionSuffix, "");
+      if (pathname[pathname.length - 1] === "/") {
+        pathname = pathname.slice(0, -1);
       }
 
-      var redirectionSuffixes = ["/index.html", ".html", "/index"];
-      for (var i = 0; i < redirectionSuffixes.length; i = i + 1) {
-        var redirectionSuffix = redirectionSuffixes[i];
-        if (
-          theLocation.pathname &&
-          theLocation.pathname.length > redirectionSuffix.length &&
-          theLocation.pathname.indexOf(redirectionSuffix) ===
-            theLocation.pathname.length - redirectionSuffix.length
-        ) {
-          var pathname = theLocation.pathname.replace(redirectionSuffix, "");
-          if (pathname[pathname.length - 1] === "/") {
-            pathname = pathname.slice(0, -1);
-          }
-
-          return `${pathname}${theLocation.search}${theLocation.hash}`;
-        }
-      }
-
-      return null;
+      return `${pathname}${theLocation.search}${theLocation.hash}`;
     }
+  }
+
+  return null;
+};
+
   </script>
 
   
@@ -5881,7 +5882,7 @@ Roadmap</a>
 
 <h2 id="disabling-x-rays">Disabling X-rays</h2>
 
-<p>If for some reason X-rays aren’t a good fit for your team or your data, administrators can turn them off completely by clicking on the gear icon in the upper right and going to <strong>Admin settings</strong> &gt; <strong>Settings</strong> &gt; <strong>General</strong> and toggling the option to <strong>Enable X-ray features</strong>.</p>
+<p>If for some reason X-rays aren’t a good fit for your team or your data, administrators can turn them off completely by clicking on the grid icon in the upper right and going to <strong>Admin</strong> &gt; <strong>Settings</strong> &gt; <strong>General</strong> and toggling the option to <strong>Enable X-ray features</strong>.</p>
 
 <p>If you pin any dashboards in the “Our Analytics” collection, Metabase will hide the X-ray suggestions that appear on the homepage.</p>
 

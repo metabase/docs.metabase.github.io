@@ -12,31 +12,32 @@
   <script type="text/javascript">
     window.HELP_IMPROVE_VIDEOJS = false;
 
-    function redirectTo(theLocation) {
-      if (typeof theLocation === "string") {
-        theLocation = new URL(theLocation);
+window.redirectTo = function redirectTo(theLocation) {
+  if (typeof theLocation === "string") {
+    theLocation = new URL(theLocation);
+  }
+
+  var redirectionSuffixes = ["/index.html", ".html", "/index"];
+  for (var i = 0; i < redirectionSuffixes.length; i = i + 1) {
+    var redirectionSuffix = redirectionSuffixes[i];
+    if (
+      theLocation.pathname &&
+      theLocation.pathname.length > redirectionSuffix.length &&
+      theLocation.pathname.indexOf(redirectionSuffix) ===
+        theLocation.pathname.length - redirectionSuffix.length
+    ) {
+      var pathname = theLocation.pathname.replace(redirectionSuffix, "");
+      if (pathname[pathname.length - 1] === "/") {
+        pathname = pathname.slice(0, -1);
       }
 
-      var redirectionSuffixes = ["/index.html", ".html", "/index"];
-      for (var i = 0; i < redirectionSuffixes.length; i = i + 1) {
-        var redirectionSuffix = redirectionSuffixes[i];
-        if (
-          theLocation.pathname &&
-          theLocation.pathname.length > redirectionSuffix.length &&
-          theLocation.pathname.indexOf(redirectionSuffix) ===
-            theLocation.pathname.length - redirectionSuffix.length
-        ) {
-          var pathname = theLocation.pathname.replace(redirectionSuffix, "");
-          if (pathname[pathname.length - 1] === "/") {
-            pathname = pathname.slice(0, -1);
-          }
-
-          return `${pathname}${theLocation.search}${theLocation.hash}`;
-        }
-      }
-
-      return null;
+      return `${pathname}${theLocation.search}${theLocation.hash}`;
     }
+  }
+
+  return null;
+};
+
   </script>
 
   
@@ -5829,7 +5830,7 @@ Roadmap</a>
 
 <h2 id="managing-upload-settings">Managing upload settings</h2>
 
-<p>To manage upload settings, admins can hit cmd/ctrl + K and search for “Settings - Uploads”, or click on the <strong>gear</strong> icon in the upper right and click through <strong>Admin settings</strong> &gt; <strong>Settings</strong> &gt; <strong>Uploads</strong>.</p>
+<p>To manage upload settings, admins can hit cmd/ctrl + K and search for “Settings - Uploads”, or click the <strong>grid</strong> icon in the upper right and click through <strong>Admin</strong> &gt; <strong>Settings</strong> &gt; <strong>Uploads</strong>.</p>
 
 <h2 id="databases-that-support-uploads">Databases that support uploads</h2>
 
@@ -5869,7 +5870,7 @@ Roadmap</a>
 <p>If Metabase is connected to a database using a database user account with write access, Admins can enable uploads by:</p>
 
 <ul>
-  <li>Clicking on the <strong>gear</strong> icon in the upper right on the home page and navigating to <strong>Admin settings</strong> &gt; <strong>Settings</strong> &gt; <strong>Uploads</strong>.</li>
+  <li>Clicking on the <strong>grid</strong> icon in the upper right on the home page and navigating to <strong>Admin</strong> &gt; <strong>Settings</strong> &gt; <strong>Uploads</strong>.</li>
   <li>Selecting the database Metabase should use to store the data.</li>
 </ul>
 

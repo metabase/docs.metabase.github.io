@@ -12,31 +12,32 @@
   <script type="text/javascript">
     window.HELP_IMPROVE_VIDEOJS = false;
 
-    function redirectTo(theLocation) {
-      if (typeof theLocation === "string") {
-        theLocation = new URL(theLocation);
+window.redirectTo = function redirectTo(theLocation) {
+  if (typeof theLocation === "string") {
+    theLocation = new URL(theLocation);
+  }
+
+  var redirectionSuffixes = ["/index.html", ".html", "/index"];
+  for (var i = 0; i < redirectionSuffixes.length; i = i + 1) {
+    var redirectionSuffix = redirectionSuffixes[i];
+    if (
+      theLocation.pathname &&
+      theLocation.pathname.length > redirectionSuffix.length &&
+      theLocation.pathname.indexOf(redirectionSuffix) ===
+        theLocation.pathname.length - redirectionSuffix.length
+    ) {
+      var pathname = theLocation.pathname.replace(redirectionSuffix, "");
+      if (pathname[pathname.length - 1] === "/") {
+        pathname = pathname.slice(0, -1);
       }
 
-      var redirectionSuffixes = ["/index.html", ".html", "/index"];
-      for (var i = 0; i < redirectionSuffixes.length; i = i + 1) {
-        var redirectionSuffix = redirectionSuffixes[i];
-        if (
-          theLocation.pathname &&
-          theLocation.pathname.length > redirectionSuffix.length &&
-          theLocation.pathname.indexOf(redirectionSuffix) ===
-            theLocation.pathname.length - redirectionSuffix.length
-        ) {
-          var pathname = theLocation.pathname.replace(redirectionSuffix, "");
-          if (pathname[pathname.length - 1] === "/") {
-            pathname = pathname.slice(0, -1);
-          }
-
-          return `${pathname}${theLocation.search}${theLocation.hash}`;
-        }
-      }
-
-      return null;
+      return `${pathname}${theLocation.search}${theLocation.hash}`;
     }
+  }
+
+  return null;
+};
+
   </script>
 
   
@@ -54,7 +55,7 @@
 <meta name="twitter:site" content="@metabase">
 
 <meta name="twitter:title" content="General settings | Metabase Documentation">
-<meta name="twitter:description" content="General settings This section contains settings for your whole instance, like its URL, the reporting timezone, and toggles for disabling or enabling some of Metabase’s optional features. You can configure these settings from Settings > Admin Settings > General. Site...">
+<meta name="twitter:description" content="General settings This section contains settings for your whole instance, like its URL, the reporting timezone, and toggles for disabling or enabling some of Metabase’s optional features. You can configure these settings by clicking the grid icon in the upper right,...">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -64,7 +65,7 @@
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://www.metabase.com/docs/master/configuring-metabase/settings">
 <meta name="title" property="og:title" content="General settings | Metabase Documentation">
-<meta name="description" property="og:description" content="General settings This section contains settings for your whole instance, like its URL, the reporting timezone, and toggles for disabling or enabling some of Metabase’s optional features. You can configure these settings from Settings > Admin Settings > General. Site...">
+<meta name="description" property="og:description" content="General settings This section contains settings for your whole instance, like its URL, the reporting timezone, and toggles for disabling or enabling some of Metabase’s optional features. You can configure these settings by clicking the grid icon in the upper right,...">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -5823,7 +5824,7 @@ Roadmap</a>
 
 <p>This section contains settings for your whole instance, like its URL, the reporting timezone, and toggles for disabling or enabling some of Metabase’s optional features.</p>
 
-<p>You can configure these settings from <strong>Settings</strong> &gt; <strong>Admin Settings</strong> &gt; <strong>General</strong>.</p>
+<p>You can configure these settings by clicking the <strong>grid icon</strong> in the upper right, then going to <strong>Admin</strong> &gt; <strong>Settings</strong> &gt; <strong>General</strong>.</p>
 
 <h2 id="site-name">Site name</h2>
 
@@ -5861,11 +5862,11 @@ Roadmap</a>
 
 <h2 id="friendly-table-and-field-names">Friendly table and field names</h2>
 
-<p>By default, Metabase attempts to make field and table names more readable by changing things like <code class="language-plaintext highlighter-rouge">somehorriblename</code> to <code class="language-plaintext highlighter-rouge">Some Horrible Name</code>. This does not work well for languages other than English, or for fields that have lots of abbreviations or codes in them. If you’d like to turn this setting off, you can do so from the Admin Panel under <strong>Settings</strong> &gt; <strong>Admin settings</strong> &gt; <strong>General</strong>.</p>
+<p>By default, Metabase attempts to make field and table names more readable by changing things like <code class="language-plaintext highlighter-rouge">somehorriblename</code> to <code class="language-plaintext highlighter-rouge">Some Horrible Name</code>. This does not work well for languages other than English, or for fields that have lots of abbreviations or codes in them. If you’d like to turn this setting off, you can do so from the Admin Panel under <strong>Admin</strong> <strong>&gt; Settings</strong> &gt; <strong>General</strong>.</p>
 
 <p>If you re-enable this setting, Metabase will run a <a href="../databases/sync-scan#how-database-scans-work">scan</a> against your database to review your table and column names again.</p>
 
-<p>To manually label field or table names in Metabase, check out the <a href="../data-modeling/metadata-editing">Table Metadata</a> section in your admin settings. Metadata in the Table Metadata can be further curated in <a href="../data-modeling/models">models</a>.</p>
+<p>To manually label field or table names in Metabase, check out the <a href="../data-modeling/metadata-editing">Table Metadata</a> section in your admin panel. Metadata in the Table Metadata can be further curated in <a href="../data-modeling/models">models</a>.</p>
 
 <h2 id="enable-x-rays">Enable X-rays</h2>
 

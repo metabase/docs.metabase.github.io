@@ -12,31 +12,32 @@
   <script type="text/javascript">
     window.HELP_IMPROVE_VIDEOJS = false;
 
-    function redirectTo(theLocation) {
-      if (typeof theLocation === "string") {
-        theLocation = new URL(theLocation);
+window.redirectTo = function redirectTo(theLocation) {
+  if (typeof theLocation === "string") {
+    theLocation = new URL(theLocation);
+  }
+
+  var redirectionSuffixes = ["/index.html", ".html", "/index"];
+  for (var i = 0; i < redirectionSuffixes.length; i = i + 1) {
+    var redirectionSuffix = redirectionSuffixes[i];
+    if (
+      theLocation.pathname &&
+      theLocation.pathname.length > redirectionSuffix.length &&
+      theLocation.pathname.indexOf(redirectionSuffix) ===
+        theLocation.pathname.length - redirectionSuffix.length
+    ) {
+      var pathname = theLocation.pathname.replace(redirectionSuffix, "");
+      if (pathname[pathname.length - 1] === "/") {
+        pathname = pathname.slice(0, -1);
       }
 
-      var redirectionSuffixes = ["/index.html", ".html", "/index"];
-      for (var i = 0; i < redirectionSuffixes.length; i = i + 1) {
-        var redirectionSuffix = redirectionSuffixes[i];
-        if (
-          theLocation.pathname &&
-          theLocation.pathname.length > redirectionSuffix.length &&
-          theLocation.pathname.indexOf(redirectionSuffix) ===
-            theLocation.pathname.length - redirectionSuffix.length
-        ) {
-          var pathname = theLocation.pathname.replace(redirectionSuffix, "");
-          if (pathname[pathname.length - 1] === "/") {
-            pathname = pathname.slice(0, -1);
-          }
-
-          return `${pathname}${theLocation.search}${theLocation.hash}`;
-        }
-      }
-
-      return null;
+      return `${pathname}${theLocation.search}${theLocation.hash}`;
     }
+  }
+
+  return null;
+};
+
   </script>
 
   
@@ -54,7 +55,7 @@
 <meta name="twitter:site" content="@metabase">
 
 <meta name="twitter:title" content="Admin tools | Metabase Documentation">
-<meta name="twitter:description" content="Admin tools The Admin Tools tab contains features for troubleshooting. To get to the Admin tools sections, go to the top right of the screen and click on the gear icon > Admin settings > Tools. Question error logs <div...">
+<meta name="twitter:description" content="Admin tools The Admin Tools tab contains features for troubleshooting. To get to the Admin tools sections, go to the top right of the screen and click the grid icon > Admin > Tools. Question error logs  <div...">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -64,7 +65,7 @@
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://www.metabase.com/docs/master/usage-and-performance-tools/tools">
 <meta name="title" property="og:title" content="Admin tools | Metabase Documentation">
-<meta name="description" property="og:description" content="Admin tools The Admin Tools tab contains features for troubleshooting. To get to the Admin tools sections, go to the top right of the screen and click on the gear icon > Admin settings > Tools. Question error logs <div...">
+<meta name="description" property="og:description" content="Admin tools The Admin Tools tab contains features for troubleshooting. To get to the Admin tools sections, go to the top right of the screen and click the grid icon > Admin > Tools. Question error logs  <div...">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -5821,7 +5822,7 @@ Roadmap</a>
 
         <h1 id="admin-tools">Admin tools</h1>
 
-<p>The Admin <strong>Tools</strong> tab contains features for troubleshooting. To get to the Admin tools sections, go to the top right of the screen and click on the <strong>gear</strong> icon &gt; <strong>Admin settings</strong> &gt; <strong>Tools</strong>.</p>
+<p>The Admin <strong>Tools</strong> tab contains features for troubleshooting. To get to the Admin tools sections, go to the top right of the screen and click the <strong>grid</strong> icon &gt; <strong>Admin</strong> &gt; <strong>Tools</strong>.</p>
 
 <h2 id="question-error-logs">Question error logs</h2>
 

@@ -12,31 +12,32 @@
   <script type="text/javascript">
     window.HELP_IMPROVE_VIDEOJS = false;
 
-    function redirectTo(theLocation) {
-      if (typeof theLocation === "string") {
-        theLocation = new URL(theLocation);
+window.redirectTo = function redirectTo(theLocation) {
+  if (typeof theLocation === "string") {
+    theLocation = new URL(theLocation);
+  }
+
+  var redirectionSuffixes = ["/index.html", ".html", "/index"];
+  for (var i = 0; i < redirectionSuffixes.length; i = i + 1) {
+    var redirectionSuffix = redirectionSuffixes[i];
+    if (
+      theLocation.pathname &&
+      theLocation.pathname.length > redirectionSuffix.length &&
+      theLocation.pathname.indexOf(redirectionSuffix) ===
+        theLocation.pathname.length - redirectionSuffix.length
+    ) {
+      var pathname = theLocation.pathname.replace(redirectionSuffix, "");
+      if (pathname[pathname.length - 1] === "/") {
+        pathname = pathname.slice(0, -1);
       }
 
-      var redirectionSuffixes = ["/index.html", ".html", "/index"];
-      for (var i = 0; i < redirectionSuffixes.length; i = i + 1) {
-        var redirectionSuffix = redirectionSuffixes[i];
-        if (
-          theLocation.pathname &&
-          theLocation.pathname.length > redirectionSuffix.length &&
-          theLocation.pathname.indexOf(redirectionSuffix) ===
-            theLocation.pathname.length - redirectionSuffix.length
-        ) {
-          var pathname = theLocation.pathname.replace(redirectionSuffix, "");
-          if (pathname[pathname.length - 1] === "/") {
-            pathname = pathname.slice(0, -1);
-          }
-
-          return `${pathname}${theLocation.search}${theLocation.hash}`;
-        }
-      }
-
-      return null;
+      return `${pathname}${theLocation.search}${theLocation.hash}`;
     }
+  }
+
+  return null;
+};
+
   </script>
 
   
@@ -5887,7 +5888,7 @@ Roadmap</a>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git checkout master-stable
 </code></pre></div></div>
 
-<p>E.g., if you’re running Metabase 1.57 make sure the sample app repo is on the <code class="language-plaintext highlighter-rouge">57-stable</code> branch. You can find your Metabase version in the Metabase UI by clicking on the gears icon in the upper right and selecting <strong>About Metabase</strong>.</p>
+<p>E.g., if you’re running Metabase 1.57 make sure the sample app repo is on the <code class="language-plaintext highlighter-rouge">57-stable</code> branch. You can find your Metabase version in the Metabase UI by clicking the <strong>grid icon</strong> in the upper right, selecting <strong>Help</strong>, then choosing <strong>About Metabase</strong>.</p>
 
 <h2 id="two-ways-to-set-up-the-sample-app-with-metabase">Two ways to set up the sample app with Metabase</h2>
 
@@ -5995,7 +5996,7 @@ Roadmap</a>
 
 <h2 id="enable-embedding-in-metabase">Enable embedding in Metabase</h2>
 
-<p>From any Metabase page, click on the <strong>gear</strong> icon in the upper right and select <strong>Admin Settings</strong> &gt; <strong>Embedding</strong>.</p>
+<p>From any Metabase page, click the <strong>grid</strong> icon in the upper right and select <strong>Admin</strong> &gt; <strong>Embedding</strong>.</p>
 
 <p>Turn on:</p>
 
@@ -6009,7 +6010,7 @@ Roadmap</a>
 
 <p>We’ll also need to update our JWT Provider URI in Metabase. By default, this URI is where the SDK will redirect login requests.</p>
 
-<p>From any Metabase page, click on the <strong>gear</strong> icon in the upper right and select <strong>Admin Settings</strong> &gt; <strong>Settings</strong> &gt; <strong>Authentication</strong>.</p>
+<p>From any Metabase page, click the <strong>grid</strong> icon in the upper right and select <strong>Admin</strong> &gt; <strong>Settings</strong> &gt; <strong>Authentication</strong>.</p>
 
 <p>On the card that says <strong>JWT</strong>, click the <strong>Setup</strong> button.</p>
 

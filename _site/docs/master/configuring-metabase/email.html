@@ -12,31 +12,32 @@
   <script type="text/javascript">
     window.HELP_IMPROVE_VIDEOJS = false;
 
-    function redirectTo(theLocation) {
-      if (typeof theLocation === "string") {
-        theLocation = new URL(theLocation);
+window.redirectTo = function redirectTo(theLocation) {
+  if (typeof theLocation === "string") {
+    theLocation = new URL(theLocation);
+  }
+
+  var redirectionSuffixes = ["/index.html", ".html", "/index"];
+  for (var i = 0; i < redirectionSuffixes.length; i = i + 1) {
+    var redirectionSuffix = redirectionSuffixes[i];
+    if (
+      theLocation.pathname &&
+      theLocation.pathname.length > redirectionSuffix.length &&
+      theLocation.pathname.indexOf(redirectionSuffix) ===
+        theLocation.pathname.length - redirectionSuffix.length
+    ) {
+      var pathname = theLocation.pathname.replace(redirectionSuffix, "");
+      if (pathname[pathname.length - 1] === "/") {
+        pathname = pathname.slice(0, -1);
       }
 
-      var redirectionSuffixes = ["/index.html", ".html", "/index"];
-      for (var i = 0; i < redirectionSuffixes.length; i = i + 1) {
-        var redirectionSuffix = redirectionSuffixes[i];
-        if (
-          theLocation.pathname &&
-          theLocation.pathname.length > redirectionSuffix.length &&
-          theLocation.pathname.indexOf(redirectionSuffix) ===
-            theLocation.pathname.length - redirectionSuffix.length
-        ) {
-          var pathname = theLocation.pathname.replace(redirectionSuffix, "");
-          if (pathname[pathname.length - 1] === "/") {
-            pathname = pathname.slice(0, -1);
-          }
-
-          return `${pathname}${theLocation.search}${theLocation.hash}`;
-        }
-      }
-
-      return null;
+      return `${pathname}${theLocation.search}${theLocation.hash}`;
     }
+  }
+
+  return null;
+};
+
   </script>
 
   
@@ -5827,7 +5828,7 @@ Roadmap</a>
 
 <h2 id="email-on-metabase-cloud">Email on Metabase Cloud</h2>
 
-<p><em>Admin settings &gt; Settings &gt; Email</em></p>
+<p><em>Admin &gt; Settings &gt; Email</em></p>
 
 <p>On Metabase Cloud, you can use the default SMTP server, or set up a custom server.</p>
 
@@ -5868,7 +5869,7 @@ Roadmap</a>
   </div>
 </div>
 
-<p><em>Admin settings &gt; Settings &gt; Email &gt; Set up a custom SMTP server</em></p>
+<p><em>Admin &gt; Settings &gt; Email &gt; Set up a custom SMTP server</em></p>
 
 <p>By default, Metabase Cloud manages an SMTP server for you. But if you want to use your own SMTP server, you can bring your own.</p>
 
@@ -5914,7 +5915,7 @@ Roadmap</a>
 
 <h2 id="configuring-your-email-account">Configuring your email account</h2>
 
-<p><em>Admin settings &gt; Settings &gt; Email</em></p>
+<p><em>Admin &gt; Settings &gt; Email</em></p>
 
 <p>For Metabase to send messages to people, you’ll need to set up an email account to send emails via <strong>SMTP</strong> (simple mail transfer protocol). SMTP is an email standard that, when combined with SSL/TLS, provides security protection for emails.</p>
 

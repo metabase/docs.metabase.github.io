@@ -12,31 +12,32 @@
   <script type="text/javascript">
     window.HELP_IMPROVE_VIDEOJS = false;
 
-    function redirectTo(theLocation) {
-      if (typeof theLocation === "string") {
-        theLocation = new URL(theLocation);
+window.redirectTo = function redirectTo(theLocation) {
+  if (typeof theLocation === "string") {
+    theLocation = new URL(theLocation);
+  }
+
+  var redirectionSuffixes = ["/index.html", ".html", "/index"];
+  for (var i = 0; i < redirectionSuffixes.length; i = i + 1) {
+    var redirectionSuffix = redirectionSuffixes[i];
+    if (
+      theLocation.pathname &&
+      theLocation.pathname.length > redirectionSuffix.length &&
+      theLocation.pathname.indexOf(redirectionSuffix) ===
+        theLocation.pathname.length - redirectionSuffix.length
+    ) {
+      var pathname = theLocation.pathname.replace(redirectionSuffix, "");
+      if (pathname[pathname.length - 1] === "/") {
+        pathname = pathname.slice(0, -1);
       }
 
-      var redirectionSuffixes = ["/index.html", ".html", "/index"];
-      for (var i = 0; i < redirectionSuffixes.length; i = i + 1) {
-        var redirectionSuffix = redirectionSuffixes[i];
-        if (
-          theLocation.pathname &&
-          theLocation.pathname.length > redirectionSuffix.length &&
-          theLocation.pathname.indexOf(redirectionSuffix) ===
-            theLocation.pathname.length - redirectionSuffix.length
-        ) {
-          var pathname = theLocation.pathname.replace(redirectionSuffix, "");
-          if (pathname[pathname.length - 1] === "/") {
-            pathname = pathname.slice(0, -1);
-          }
-
-          return `${pathname}${theLocation.search}${theLocation.hash}`;
-        }
-      }
-
-      return null;
+      return `${pathname}${theLocation.search}${theLocation.hash}`;
     }
+  }
+
+  return null;
+};
+
   </script>
 
   
@@ -5833,17 +5834,17 @@ Roadmap</a>
 
 <p>When Metabase first connects to your database, it performs a <a href="#how-database-syncs-work">sync</a> to determine the metadata of the columns in your tables and automatically assign each column a <a href="../data-modeling/semantic-types">semantic type</a>.</p>
 
-<p>You can follow the progress of these queries from <strong>Gear icon</strong> &gt;<strong>Admin settings</strong> &gt; <strong>Tools</strong> &gt; <strong>Tasks</strong> and filtering by the various sync tasks.</p>
+<p>You can follow the progress of these queries from <strong>grid icon</strong> &gt;<strong>Admin</strong> &gt; <strong>Tools</strong> &gt; <strong>Tasks</strong> and filtering by the various sync tasks.</p>
 
-<p>Once the queries are done running, you can view and edit the synced metadata from <strong>Admin settings</strong> &gt; <strong>Table Metadata</strong>. For more info, see <a href="../data-modeling/metadata-editing">editing metadata</a>.</p>
+<p>Once the queries are done running, you can view and edit the synced metadata from <strong>Admin</strong> &gt; <strong>Table Metadata</strong>. For more info, see <a href="../data-modeling/metadata-editing">editing metadata</a>.</p>
 
 <h2 id="choose-when-syncs-and-scans-happen">Choose when syncs and scans happen</h2>
 
 <p>By default, Metabase does a lightweight hourly sync and an intensive daily scan of field values. If you have a large database, you might want to choose when syncs and scans happen.</p>
 
 <ol>
-  <li>Click on the <strong>Gear icon</strong>.</li>
-  <li>Select <strong>Admin settings</strong>.</li>
+  <li>Click on the <strong>grid icon</strong>.</li>
+  <li>Select <strong>Admin</strong>.</li>
   <li>Go to <strong>Databases</strong>.</li>
   <li>Select your database.</li>
   <li>In the <strong>Connection and sync</strong> section, click on <strong>Edit connection details</strong>.</li>
@@ -5879,7 +5880,7 @@ Roadmap</a>
 <h2 id="manually-syncing-tables-and-columns">Manually syncing tables and columns</h2>
 
 <ol>
-  <li>Go to <strong>Admin settings</strong> &gt; <strong>Databases</strong> &gt; your database.</li>
+  <li>Go to <strong>Admin</strong> &gt; <strong>Databases</strong> &gt; your database.</li>
   <li>Click <strong>Sync database schema</strong>.</li>
 </ol>
 
@@ -5888,7 +5889,7 @@ Roadmap</a>
 <p>To scan values from all the columns in a table:</p>
 
 <ol>
-  <li>Go to <strong>Admin settings</strong> &gt; <strong>Table Metadata</strong> &gt; your database.</li>
+  <li>Go to <strong>Admin</strong> &gt; <strong>Table Metadata</strong> &gt; your database.</li>
   <li>Select the table that you want to bring up to date with your database.</li>
   <li>Click the <strong>gear icon</strong> at the top of the page.</li>
   <li>Click <strong>Re-scan this table</strong>.</li>
@@ -5897,7 +5898,7 @@ Roadmap</a>
 <p>To scan values from a specific column:</p>
 
 <ol>
-  <li>Go to <strong>Admin settings</strong> &gt; <strong>Table Metadata</strong> &gt; your database.</li>
+  <li>Go to <strong>Admin</strong> &gt; <strong>Table Metadata</strong> &gt; your database.</li>
   <li>Select the table.</li>
   <li>Find the column you want to bring up to date with your database.</li>
   <li>Click the <strong>gear icon</strong> in the panel for that column.</li>
@@ -5909,7 +5910,7 @@ Roadmap</a>
 <p>To clear the <a href="#syncing-and-scanning-databases">scanned field values for a table</a>:</p>
 
 <ol>
-  <li>Go to <strong>Admin settings</strong> &gt; <strong>Table Metadata</strong>.</li>
+  <li>Go to <strong>Admin</strong> &gt; <strong>Table Metadata</strong>.</li>
   <li>Select the database and table.</li>
   <li>Click the <strong>gear icon</strong> in the upper right.</li>
   <li>Click <strong>Discard cached field values</strong>.</li>
@@ -5922,7 +5923,7 @@ Roadmap</a>
 <p>To prevent Metabase from running syncs and scans against a specific table, change the <a href="../data-modeling/metadata-editing#table-visibility">table visibility</a> to <strong>Hidden</strong>:</p>
 
 <ol>
-  <li>Go to <strong>Admin settings</strong> &gt; <strong>Table Metadata</strong> &gt; your database.</li>
+  <li>Go to <strong>Admin</strong> &gt; <strong>Table Metadata</strong> &gt; your database.</li>
   <li>Hover over the table name in the sidebar.</li>
   <li>Click the <strong>eye</strong> icon.</li>
 </ol>

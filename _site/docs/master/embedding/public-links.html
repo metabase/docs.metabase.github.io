@@ -12,31 +12,32 @@
   <script type="text/javascript">
     window.HELP_IMPROVE_VIDEOJS = false;
 
-    function redirectTo(theLocation) {
-      if (typeof theLocation === "string") {
-        theLocation = new URL(theLocation);
+window.redirectTo = function redirectTo(theLocation) {
+  if (typeof theLocation === "string") {
+    theLocation = new URL(theLocation);
+  }
+
+  var redirectionSuffixes = ["/index.html", ".html", "/index"];
+  for (var i = 0; i < redirectionSuffixes.length; i = i + 1) {
+    var redirectionSuffix = redirectionSuffixes[i];
+    if (
+      theLocation.pathname &&
+      theLocation.pathname.length > redirectionSuffix.length &&
+      theLocation.pathname.indexOf(redirectionSuffix) ===
+        theLocation.pathname.length - redirectionSuffix.length
+    ) {
+      var pathname = theLocation.pathname.replace(redirectionSuffix, "");
+      if (pathname[pathname.length - 1] === "/") {
+        pathname = pathname.slice(0, -1);
       }
 
-      var redirectionSuffixes = ["/index.html", ".html", "/index"];
-      for (var i = 0; i < redirectionSuffixes.length; i = i + 1) {
-        var redirectionSuffix = redirectionSuffixes[i];
-        if (
-          theLocation.pathname &&
-          theLocation.pathname.length > redirectionSuffix.length &&
-          theLocation.pathname.indexOf(redirectionSuffix) ===
-            theLocation.pathname.length - redirectionSuffix.length
-        ) {
-          var pathname = theLocation.pathname.replace(redirectionSuffix, "");
-          if (pathname[pathname.length - 1] === "/") {
-            pathname = pathname.slice(0, -1);
-          }
-
-          return `${pathname}${theLocation.search}${theLocation.hash}`;
-        }
-      }
-
-      return null;
+      return `${pathname}${theLocation.search}${theLocation.hash}`;
     }
+  }
+
+  return null;
+};
+
   </script>
 
   
@@ -5971,8 +5972,8 @@ Roadmap</a>
 <p>To disable public sharing:</p>
 
 <ol>
-  <li>Click on the <strong>Gear</strong> icon in the upper right.</li>
-  <li>Select <strong>Admin settings</strong>.</li>
+  <li>Click the <strong>grid</strong> icon in the upper right.</li>
+  <li>Select <strong>Admin</strong>.</li>
   <li>In the <strong>Settings</strong> tab, select <strong>Public sharing</strong>.</li>
   <li>Toggle off <strong>Public sharing</strong>.</li>
 </ol>
@@ -5997,8 +5998,8 @@ Roadmap</a>
 <p>Admins can view and deactivate all public links for a Metabase.</p>
 
 <ol>
-  <li>Click on the <strong>gear</strong> icon in the upper right.</li>
-  <li>Select <strong>Admin settings</strong>.</li>
+  <li>Click the <strong>grid</strong> icon in the upper right.</li>
+  <li>Select <strong>Admin</strong>.</li>
   <li>Go to the <strong>Settings</strong> tab.</li>
   <li>Go to the <strong>Public sharing</strong> tab in the left sidebar.</li>
   <li>For each item you want to deactivate, click on the <strong>X</strong> to revoke its public link.</li>
@@ -6006,7 +6007,7 @@ Roadmap</a>
 
 <h2 id="see-all-publicly-shared-content">See all publicly shared content</h2>
 
-<p>Admins can see all publicly shared questions, dashboards, documents, and actions in <strong>Admin Settings &gt; Public Sharing</strong>.</p>
+<p>Admins can see all publicly shared questions, dashboards, documents, and actions in <strong>Admin &gt; Public Sharing</strong>.</p>
 
 <p><img src="./images/see-shared-content.png" alt="See shared content"></p>
 

@@ -12,31 +12,32 @@
   <script type="text/javascript">
     window.HELP_IMPROVE_VIDEOJS = false;
 
-    function redirectTo(theLocation) {
-      if (typeof theLocation === "string") {
-        theLocation = new URL(theLocation);
+window.redirectTo = function redirectTo(theLocation) {
+  if (typeof theLocation === "string") {
+    theLocation = new URL(theLocation);
+  }
+
+  var redirectionSuffixes = ["/index.html", ".html", "/index"];
+  for (var i = 0; i < redirectionSuffixes.length; i = i + 1) {
+    var redirectionSuffix = redirectionSuffixes[i];
+    if (
+      theLocation.pathname &&
+      theLocation.pathname.length > redirectionSuffix.length &&
+      theLocation.pathname.indexOf(redirectionSuffix) ===
+        theLocation.pathname.length - redirectionSuffix.length
+    ) {
+      var pathname = theLocation.pathname.replace(redirectionSuffix, "");
+      if (pathname[pathname.length - 1] === "/") {
+        pathname = pathname.slice(0, -1);
       }
 
-      var redirectionSuffixes = ["/index.html", ".html", "/index"];
-      for (var i = 0; i < redirectionSuffixes.length; i = i + 1) {
-        var redirectionSuffix = redirectionSuffixes[i];
-        if (
-          theLocation.pathname &&
-          theLocation.pathname.length > redirectionSuffix.length &&
-          theLocation.pathname.indexOf(redirectionSuffix) ===
-            theLocation.pathname.length - redirectionSuffix.length
-        ) {
-          var pathname = theLocation.pathname.replace(redirectionSuffix, "");
-          if (pathname[pathname.length - 1] === "/") {
-            pathname = pathname.slice(0, -1);
-          }
-
-          return `${pathname}${theLocation.search}${theLocation.hash}`;
-        }
-      }
-
-      return null;
+      return `${pathname}${theLocation.search}${theLocation.hash}`;
     }
+  }
+
+  return null;
+};
+
   </script>
 
   
@@ -5851,7 +5852,7 @@ Roadmap</a>
 
 <p>Hit cmd/ctrl + k to bring up the command palette and search for “Branding” and click on Settings -&gt; Branding.</p>
 
-<p>You can also click on the <strong>gear</strong> icon at the bottom of the navigation sidebar and click through <strong>Admin settings</strong> &gt; <strong>Settings</strong> &gt; <strong>Appearance</strong>.</p>
+<p>You can also click the <strong>grid</strong> icon at the bottom of the navigation sidebar and click through <strong>Admin</strong> &gt; <strong>Settings</strong> &gt; <strong>Appearance</strong>.</p>
 
 <p>Appearance settings are split across different tabs:</p>
 
@@ -5967,7 +5968,7 @@ Roadmap</a>
 
 <h2 id="help-link-in-the-settings-menu">Help link in the settings menu</h2>
 
-<p>The Settings menu (the “gear” menu in the upper right of your Metabase) includes a <strong>Help</strong> option that links to a <a href="/help/">Metabase help page</a> by default. You can change this menu Help item by selecting one of the following options:</p>
+<p>The Settings menu (the “grid” menu in the upper right of your Metabase) includes a <strong>Help</strong> option that links to a <a href="/help/">Metabase help page</a> by default. You can change this menu Help item by selecting one of the following options:</p>
 
 <ul>
   <li>Link to <a href="/help/">Metabase help</a> (default)</li>
