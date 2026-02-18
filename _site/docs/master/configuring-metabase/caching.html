@@ -5955,12 +5955,23 @@ Roadmap</a>
   </div>
 </div>
 
-<blockquote>
-  <p><strong>Refreshing the cache automatically doesn’t apply when <a href="../permissions/row-and-column-security">row and column security</a> or <a href="../permissions/impersonation">connection impersonation</a> permissions are in effect.</strong> In those permissions setups, Metabase ignores the automatically generated cache and runs a fresh query (which it will then cache). So <em>caching</em> still works for row and column security and impersonation, it’s just that this preemptive, automatic caching doesn’t apply in these cases, as those permissions setups filter data specific to each viewer.</p>
-</blockquote>
+<p>If you turn on “Refresh cache automatically” for a question or dashboard, Metabase will rerun the query/queries as soon as the cache is invalidated by whichever caching policy you’ve set.</p>
 
-<p>If you turn on refresh cache automatically for a question or dashboard, Metabase will rerun the query/queries as soon as the cache is invalidated by whichever caching policy you’ve set. Normally, Metabase only refreshes the cache when someone views the item <em>after</em> its cache has expired. So, normally, when the cache has expired, the next person to view the question will be stuck waiting for the query to run and refresh the cache. But by automatically refreshing results to update the cache, the loading times will always be as fast as possible, and people will always get valid, cached results.</p>
+<p>Normally, Metabase only refreshes the cache when someone views the item <em>after</em> its cache has expired. Which means that the first person to view a question after the cache has expired will be stuck waiting for the query to run and refresh the cache.</p>
 
+<p>If you turn on “Refresh cache automatically”, Metabase will refresh the cache as soon as it expires, so the loading times will always be from a valid cache.</p>
+
+<h3 id="some-permissions-setups-are-incompatible-with-automatic-cache-refreshing">Some permissions setups are incompatible with automatic cache refreshing</h3>
+
+<p>Automatic cache refresh is NOT available when certain permission setups are in effect:</p>
+
+<ul>
+  <li><a href="../permissions/row-and-column-security">Row and column security</a></li>
+  <li><a href="../permissions/impersonation">Connection impersonation</a></li>
+  <li><a href="../permissions/database-routing">Database routing</a></li>
+</ul>
+
+<p>Caching will still work for queries that people run, but Metabase won’t automatically refresh the cache, as these setups create many different queries, each returning data specific to each user’s permissions.</p>
 <h3 id="how-metabase-handles-parameter-values-when-automatically-refreshing-the-cache">How Metabase handles parameter values when automatically refreshing the cache</h3>
 
 <p>When automatically refreshing results, Metabase will apply the default parameter values (if any). Metabase will also cache results of up to ten of the most frequently applied parameter values that were applied <em>during the last caching period</em> (as defined by your caching policy). If your question or dashboard has multiple parameters, Metabase will cache up to ten of the most frequently applied <em>combinations</em> of parameter values.</p>
