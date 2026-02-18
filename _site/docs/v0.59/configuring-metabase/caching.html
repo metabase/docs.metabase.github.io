@@ -12,31 +12,32 @@
   <script type="text/javascript">
     window.HELP_IMPROVE_VIDEOJS = false;
 
-    function redirectTo(theLocation) {
-      if (typeof theLocation === "string") {
-        theLocation = new URL(theLocation);
+window.redirectTo = function redirectTo(theLocation) {
+  if (typeof theLocation === "string") {
+    theLocation = new URL(theLocation);
+  }
+
+  var redirectionSuffixes = ["/index.html", ".html", "/index"];
+  for (var i = 0; i < redirectionSuffixes.length; i = i + 1) {
+    var redirectionSuffix = redirectionSuffixes[i];
+    if (
+      theLocation.pathname &&
+      theLocation.pathname.length > redirectionSuffix.length &&
+      theLocation.pathname.indexOf(redirectionSuffix) ===
+        theLocation.pathname.length - redirectionSuffix.length
+    ) {
+      var pathname = theLocation.pathname.replace(redirectionSuffix, "");
+      if (pathname[pathname.length - 1] === "/") {
+        pathname = pathname.slice(0, -1);
       }
 
-      var redirectionSuffixes = ["/index.html", ".html", "/index"];
-      for (var i = 0; i < redirectionSuffixes.length; i = i + 1) {
-        var redirectionSuffix = redirectionSuffixes[i];
-        if (
-          theLocation.pathname &&
-          theLocation.pathname.length > redirectionSuffix.length &&
-          theLocation.pathname.indexOf(redirectionSuffix) ===
-            theLocation.pathname.length - redirectionSuffix.length
-        ) {
-          var pathname = theLocation.pathname.replace(redirectionSuffix, "");
-          if (pathname[pathname.length - 1] === "/") {
-            pathname = pathname.slice(0, -1);
-          }
-
-          return `${pathname}${theLocation.search}${theLocation.hash}`;
-        }
-      }
-
-      return null;
+      return `${pathname}${theLocation.search}${theLocation.hash}`;
     }
+  }
+
+  return null;
+};
+
   </script>
 
   
@@ -5979,7 +5980,7 @@ Roadmap</a>
 
 <h3 id="default-caching-policy">Default caching policy</h3>
 
-<p>To set a default caching policy for your Metabase: Hit Cmd/Ctrl + k to bring up the command palette and search for <strong>Performance</strong>. Or, click through <strong>Gear</strong> settings icon &gt; <strong>Admin settings</strong> &gt; <strong>Performance</strong> &gt; <strong>Database caching</strong>.</p>
+<p>To set a default caching policy for your Metabase: Hit Cmd/Ctrl + k to bring up the command palette and search for <strong>Performance</strong>. Or, click through <strong>grid</strong> icon &gt; <strong>Admin</strong> &gt; <strong>Performance</strong> &gt; <strong>Database caching</strong>.</p>
 
 <p>Click on the button next to <strong>Default policy</strong>, and select a <a href="#cache-invalidation-policies">cache invalidation policy</a>.</p>
 
@@ -6102,7 +6103,7 @@ Roadmap</a>
 
 <ul>
   <li><strong>Questions and dashboards</strong>: Visit the item and click through the <strong>Info &gt; Caching policy &gt; Clear cache</strong> (the “Clear cache” button is at the bottom of the sidebar).</li>
-  <li><strong>Database</strong>: Click the <strong>Gear</strong> icon and click through <strong>Admin settings</strong> &gt; <strong>Performance</strong> &gt; <strong>Database caching</strong>. Select your database and click the <strong>Clear cache</strong> button (at the bottom of the page).</li>
+  <li><strong>Database</strong>: Click the <strong>grid</strong> icon and click through <strong>Admin</strong> &gt; <strong>Performance</strong> &gt; <strong>Database caching</strong>. Select your database and click the <strong>Clear cache</strong> button (at the bottom of the page).</li>
 </ul>
 
 <h2 id="caching-location">Caching location</h2>

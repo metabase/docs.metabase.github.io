@@ -12,31 +12,32 @@
   <script type="text/javascript">
     window.HELP_IMPROVE_VIDEOJS = false;
 
-    function redirectTo(theLocation) {
-      if (typeof theLocation === "string") {
-        theLocation = new URL(theLocation);
+window.redirectTo = function redirectTo(theLocation) {
+  if (typeof theLocation === "string") {
+    theLocation = new URL(theLocation);
+  }
+
+  var redirectionSuffixes = ["/index.html", ".html", "/index"];
+  for (var i = 0; i < redirectionSuffixes.length; i = i + 1) {
+    var redirectionSuffix = redirectionSuffixes[i];
+    if (
+      theLocation.pathname &&
+      theLocation.pathname.length > redirectionSuffix.length &&
+      theLocation.pathname.indexOf(redirectionSuffix) ===
+        theLocation.pathname.length - redirectionSuffix.length
+    ) {
+      var pathname = theLocation.pathname.replace(redirectionSuffix, "");
+      if (pathname[pathname.length - 1] === "/") {
+        pathname = pathname.slice(0, -1);
       }
 
-      var redirectionSuffixes = ["/index.html", ".html", "/index"];
-      for (var i = 0; i < redirectionSuffixes.length; i = i + 1) {
-        var redirectionSuffix = redirectionSuffixes[i];
-        if (
-          theLocation.pathname &&
-          theLocation.pathname.length > redirectionSuffix.length &&
-          theLocation.pathname.indexOf(redirectionSuffix) ===
-            theLocation.pathname.length - redirectionSuffix.length
-        ) {
-          var pathname = theLocation.pathname.replace(redirectionSuffix, "");
-          if (pathname[pathname.length - 1] === "/") {
-            pathname = pathname.slice(0, -1);
-          }
-
-          return `${pathname}${theLocation.search}${theLocation.hash}`;
-        }
-      }
-
-      return null;
+      return `${pathname}${theLocation.search}${theLocation.hash}`;
     }
+  }
+
+  return null;
+};
+
   </script>
 
   
@@ -5828,11 +5829,13 @@ Roadmap</a>
 
 <h2 id="broken-dependencies">Broken dependencies</h2>
 
+<p><img src="./images/broken-dependencies.png" alt="Broken dependencies"></p>
+
 <blockquote>
   <p>Note: Broken dependency detection currently covers only questions built with the query builder (MBQL). SQL questions and SQL models aren’t included.</p>
 </blockquote>
 
-<p>Broken dependencies lists items that other content depends on, where a dependent item references a column or field the item no longer provides. This can happen when a column is removed or renamed, or when a field is hidden from the query builder by setting Visibility to <a href="../data-modeling/metadata-editing"><strong>Do not include</strong></a>.</p>
+<p>Broken dependencies lists items that other content depends on, where a dependent item references a column or field the item no longer provides. This can happen when a column is removed or renamed, or when a field is hidden from the query builder by setting Visibility to <strong>Do not include</strong> in <a href="../data-modeling/metadata-editing">metadata editing</a>.</p>
 
 <p>The broken dependencies table includes:</p>
 
@@ -5886,7 +5889,9 @@ Roadmap</a>
 
 <h2 id="unreferenced-entities">Unreferenced entities</h2>
 
-<p>Unreferenced entities shows items that aren’t used by any other non-archived content. Use this view to clean up unused content, especially reusable items like models, metrics, and snippets. Start by checking why an item was created, when it was last edited, and whether it was meant to be reused.</p>
+<p><img src="./images/unreferenced-entities.png" alt="Unreferenced entities"></p>
+
+<p>Unreferenced entities shows items that aren’t used by any other non-archived content. Use this view to clean up unused content, especially reusable items like measures, metrics, and snippets. Start by checking why an item was created, when it was last edited, and whether it was meant to be reused.</p>
 
 <p>An unreferenced item isn’t broken and isn’t automatically safe to delete. It simply means nothing else depends on it. Check <a href="../usage-and-performance-tools/usage-analytics">Usage analytics</a> for view activity before you archive or delete an item.</p>
 

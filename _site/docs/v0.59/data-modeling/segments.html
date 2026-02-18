@@ -12,31 +12,32 @@
   <script type="text/javascript">
     window.HELP_IMPROVE_VIDEOJS = false;
 
-    function redirectTo(theLocation) {
-      if (typeof theLocation === "string") {
-        theLocation = new URL(theLocation);
+window.redirectTo = function redirectTo(theLocation) {
+  if (typeof theLocation === "string") {
+    theLocation = new URL(theLocation);
+  }
+
+  var redirectionSuffixes = ["/index.html", ".html", "/index"];
+  for (var i = 0; i < redirectionSuffixes.length; i = i + 1) {
+    var redirectionSuffix = redirectionSuffixes[i];
+    if (
+      theLocation.pathname &&
+      theLocation.pathname.length > redirectionSuffix.length &&
+      theLocation.pathname.indexOf(redirectionSuffix) ===
+        theLocation.pathname.length - redirectionSuffix.length
+    ) {
+      var pathname = theLocation.pathname.replace(redirectionSuffix, "");
+      if (pathname[pathname.length - 1] === "/") {
+        pathname = pathname.slice(0, -1);
       }
 
-      var redirectionSuffixes = ["/index.html", ".html", "/index"];
-      for (var i = 0; i < redirectionSuffixes.length; i = i + 1) {
-        var redirectionSuffix = redirectionSuffixes[i];
-        if (
-          theLocation.pathname &&
-          theLocation.pathname.length > redirectionSuffix.length &&
-          theLocation.pathname.indexOf(redirectionSuffix) ===
-            theLocation.pathname.length - redirectionSuffix.length
-        ) {
-          var pathname = theLocation.pathname.replace(redirectionSuffix, "");
-          if (pathname[pathname.length - 1] === "/") {
-            pathname = pathname.slice(0, -1);
-          }
-
-          return `${pathname}${theLocation.search}${theLocation.hash}`;
-        }
-      }
-
-      return null;
+      return `${pathname}${theLocation.search}${theLocation.hash}`;
     }
+  }
+
+  return null;
+};
+
   </script>
 
   
@@ -54,7 +55,7 @@
 <meta name="twitter:site" content="@metabase">
 
 <meta name="twitter:title" content="Segments | Metabase Documentation">
-<meta name="twitter:description" content="Segments Metabase allows admins to create segments so people can quickly and easily reference them in the query builder. To manage segments:  Click the gear icon in the upper right. Select Admin setting. Go to the Table Metadata tab. Click...">
+<meta name="twitter:description" content="Segments Metabase allows admins to create segments so people can quickly and easily reference them in the query builder. To manage segments:  Click the grid icon in the upper right. Select Admin. Go to the Table Metadata tab. Click Segments...">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -64,7 +65,7 @@
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://www.metabase.com/docs/v0.59/data-modeling/segments">
 <meta name="title" property="og:title" content="Segments | Metabase Documentation">
-<meta name="description" property="og:description" content="Segments Metabase allows admins to create segments so people can quickly and easily reference them in the query builder. To manage segments:  Click the gear icon in the upper right. Select Admin setting. Go to the Table Metadata tab. Click...">
+<meta name="description" property="og:description" content="Segments Metabase allows admins to create segments so people can quickly and easily reference them in the query builder. To manage segments:  Click the grid icon in the upper right. Select Admin. Go to the Table Metadata tab. Click Segments...">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -5820,8 +5821,8 @@ Roadmap</a>
 <p>To manage segments:</p>
 
 <ol>
-  <li>Click the <strong>gear</strong> icon in the upper right.</li>
-  <li>Select <strong>Admin setting</strong>.</li>
+  <li>Click the <strong>grid</strong> icon in the upper right.</li>
+  <li>Select <strong>Admin</strong>.</li>
   <li>Go to the <strong>Table Metadata</strong> tab.</li>
   <li>Click <strong>Segments</strong> at the bottom left.</li>
 </ol>

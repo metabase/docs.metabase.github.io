@@ -12,31 +12,32 @@
   <script type="text/javascript">
     window.HELP_IMPROVE_VIDEOJS = false;
 
-    function redirectTo(theLocation) {
-      if (typeof theLocation === "string") {
-        theLocation = new URL(theLocation);
+window.redirectTo = function redirectTo(theLocation) {
+  if (typeof theLocation === "string") {
+    theLocation = new URL(theLocation);
+  }
+
+  var redirectionSuffixes = ["/index.html", ".html", "/index"];
+  for (var i = 0; i < redirectionSuffixes.length; i = i + 1) {
+    var redirectionSuffix = redirectionSuffixes[i];
+    if (
+      theLocation.pathname &&
+      theLocation.pathname.length > redirectionSuffix.length &&
+      theLocation.pathname.indexOf(redirectionSuffix) ===
+        theLocation.pathname.length - redirectionSuffix.length
+    ) {
+      var pathname = theLocation.pathname.replace(redirectionSuffix, "");
+      if (pathname[pathname.length - 1] === "/") {
+        pathname = pathname.slice(0, -1);
       }
 
-      var redirectionSuffixes = ["/index.html", ".html", "/index"];
-      for (var i = 0; i < redirectionSuffixes.length; i = i + 1) {
-        var redirectionSuffix = redirectionSuffixes[i];
-        if (
-          theLocation.pathname &&
-          theLocation.pathname.length > redirectionSuffix.length &&
-          theLocation.pathname.indexOf(redirectionSuffix) ===
-            theLocation.pathname.length - redirectionSuffix.length
-        ) {
-          var pathname = theLocation.pathname.replace(redirectionSuffix, "");
-          if (pathname[pathname.length - 1] === "/") {
-            pathname = pathname.slice(0, -1);
-          }
-
-          return `${pathname}${theLocation.search}${theLocation.hash}`;
-        }
-      }
-
-      return null;
+      return `${pathname}${theLocation.search}${theLocation.hash}`;
     }
+  }
+
+  return null;
+};
+
   </script>
 
   
@@ -5879,7 +5880,7 @@ Roadmap</a>
 
 <ol>
   <li>Make sure you have <a href="#permissions-for-transforms">appropriate permissions to see transforms</a>.</li>
-  <li>Click on the <strong>grid</strong> icon on top right and go to <strong>Data Studio</strong>.</li>
+  <li>Click the <strong>grid</strong> icon on top right and go to <strong>Data Studio</strong>.</li>
   <li>In the left sidebar, select <strong>Transforms</strong>.</li>
 </ol>
 
@@ -5893,7 +5894,7 @@ Roadmap</a>
 
 <ol>
   <li>Make sure you have <a href="#permissions-for-transforms">appropriate permissions for creating transforms</a>.</li>
-  <li>Click on the <strong>grid</strong> icon on top right and go to <strong>Data Studio</strong>.</li>
+  <li>Click the <strong>grid</strong> icon on top right and go to <strong>Data Studio</strong>.</li>
   <li>In the left sidebar, select <strong>Transforms</strong>.</li>
   <li>
     <p>Click <strong>+ New</strong> and select a source for your transform.</p>
@@ -6033,14 +6034,14 @@ Roadmap</a>
 
 <h2 id="versioning-transforms">Versioning transforms</h2>
 
-<p><em>Admin settings &gt; General &gt; Remote sync</em></p>
+<p><em>Admin &gt; General &gt; Remote sync</em></p>
 
 <p>You can check your transforms into git with <a href="../../installation-and-operation/remote-sync">Remote Sync</a>. If you enable transform sync, Metabase will serialize transforms as YAML files and push them to your specified GitHub repo branch.</p>
 
 <p>To enable git sync of transforms:</p>
 
 <ol>
-  <li>Go to Admin settings by click on the <strong>grid</strong> icon in top right and select <strong>Admin</strong>.</li>
+  <li>Go to Admin settings by click the <strong>grid</strong> icon in top right and select <strong>Admin</strong>.</li>
   <li>On the <strong>General</strong> tab, pick <strong>Remote sync</strong> in the left sidebar.</li>
   <li>Follow the steps to <a href="../../installation-and-operation/remote-sync">Set up Remote Sync</a>, and toggle “Transforms” sync on.</li>
 </ol>

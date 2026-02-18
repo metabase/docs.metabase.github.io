@@ -12,31 +12,32 @@
   <script type="text/javascript">
     window.HELP_IMPROVE_VIDEOJS = false;
 
-    function redirectTo(theLocation) {
-      if (typeof theLocation === "string") {
-        theLocation = new URL(theLocation);
+window.redirectTo = function redirectTo(theLocation) {
+  if (typeof theLocation === "string") {
+    theLocation = new URL(theLocation);
+  }
+
+  var redirectionSuffixes = ["/index.html", ".html", "/index"];
+  for (var i = 0; i < redirectionSuffixes.length; i = i + 1) {
+    var redirectionSuffix = redirectionSuffixes[i];
+    if (
+      theLocation.pathname &&
+      theLocation.pathname.length > redirectionSuffix.length &&
+      theLocation.pathname.indexOf(redirectionSuffix) ===
+        theLocation.pathname.length - redirectionSuffix.length
+    ) {
+      var pathname = theLocation.pathname.replace(redirectionSuffix, "");
+      if (pathname[pathname.length - 1] === "/") {
+        pathname = pathname.slice(0, -1);
       }
 
-      var redirectionSuffixes = ["/index.html", ".html", "/index"];
-      for (var i = 0; i < redirectionSuffixes.length; i = i + 1) {
-        var redirectionSuffix = redirectionSuffixes[i];
-        if (
-          theLocation.pathname &&
-          theLocation.pathname.length > redirectionSuffix.length &&
-          theLocation.pathname.indexOf(redirectionSuffix) ===
-            theLocation.pathname.length - redirectionSuffix.length
-        ) {
-          var pathname = theLocation.pathname.replace(redirectionSuffix, "");
-          if (pathname[pathname.length - 1] === "/") {
-            pathname = pathname.slice(0, -1);
-          }
-
-          return `${pathname}${theLocation.search}${theLocation.hash}`;
-        }
-      }
-
-      return null;
+      return `${pathname}${theLocation.search}${theLocation.hash}`;
     }
+  }
+
+  return null;
+};
+
   </script>
 
   
@@ -5829,10 +5830,10 @@ Roadmap</a>
 
 <ol>
   <li>
-    <p>Click on the <strong>gear</strong> icon in the upper right.</p>
+    <p>Click the <strong>grid</strong> icon in the upper right.</p>
   </li>
   <li>
-    <p>Select <strong>Admin settings</strong>.</p>
+    <p>Select <strong>Admin</strong>.</p>
   </li>
   <li>
     <p>Click on the <strong>Permissions</strong> tab, which defaults to the <strong>Data</strong> tab.</p>
@@ -5860,7 +5861,7 @@ Roadmap</a>
 
 <p>Before you apply more specific permissions, you’ll want to make sure that no one can see any data. Since everyone’s automatically in the All Users group, you’ll want to block this group from seeing any data.</p>
 
-<p>In the <strong>Admin settings</strong> &gt; <strong>Permissions</strong> &gt; <strong>Data</strong>, block the All Users group’s access to the database.</p>
+<p>In the <strong>Admin</strong> &gt; <strong>Permissions</strong> &gt; <strong>Data</strong>, block the All Users group’s access to the database.</p>
 
 <p>From there, you can selectively grant privileges to different groups.</p>
 
@@ -6208,7 +6209,7 @@ Roadmap</a>
   </div>
 </div>
 
-<p>The <strong>Manage database</strong> permission grants access to the settings page for a given database (i.e., the page at <strong>Admin settings</strong> &gt; <strong>Databases</strong> &gt; your database).</p>
+<p>The <strong>Manage database</strong> permission grants access to the settings page for a given database (i.e., the page at <strong>Admin</strong> &gt; <strong>Databases</strong> &gt; your database).</p>
 
 <p>On the database settings page, you can:</p>
 

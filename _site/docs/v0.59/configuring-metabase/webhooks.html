@@ -12,31 +12,32 @@
   <script type="text/javascript">
     window.HELP_IMPROVE_VIDEOJS = false;
 
-    function redirectTo(theLocation) {
-      if (typeof theLocation === "string") {
-        theLocation = new URL(theLocation);
+window.redirectTo = function redirectTo(theLocation) {
+  if (typeof theLocation === "string") {
+    theLocation = new URL(theLocation);
+  }
+
+  var redirectionSuffixes = ["/index.html", ".html", "/index"];
+  for (var i = 0; i < redirectionSuffixes.length; i = i + 1) {
+    var redirectionSuffix = redirectionSuffixes[i];
+    if (
+      theLocation.pathname &&
+      theLocation.pathname.length > redirectionSuffix.length &&
+      theLocation.pathname.indexOf(redirectionSuffix) ===
+        theLocation.pathname.length - redirectionSuffix.length
+    ) {
+      var pathname = theLocation.pathname.replace(redirectionSuffix, "");
+      if (pathname[pathname.length - 1] === "/") {
+        pathname = pathname.slice(0, -1);
       }
 
-      var redirectionSuffixes = ["/index.html", ".html", "/index"];
-      for (var i = 0; i < redirectionSuffixes.length; i = i + 1) {
-        var redirectionSuffix = redirectionSuffixes[i];
-        if (
-          theLocation.pathname &&
-          theLocation.pathname.length > redirectionSuffix.length &&
-          theLocation.pathname.indexOf(redirectionSuffix) ===
-            theLocation.pathname.length - redirectionSuffix.length
-        ) {
-          var pathname = theLocation.pathname.replace(redirectionSuffix, "");
-          if (pathname[pathname.length - 1] === "/") {
-            pathname = pathname.slice(0, -1);
-          }
-
-          return `${pathname}${theLocation.search}${theLocation.hash}`;
-        }
-      }
-
-      return null;
+      return `${pathname}${theLocation.search}${theLocation.hash}`;
     }
+  }
+
+  return null;
+};
+
   </script>
 
   
@@ -5825,7 +5826,7 @@ Roadmap</a>
 
 <p>Before you can send an alert to a webhook, an admin will need to create a webhook to target.</p>
 
-<p>Admins and people with <a href="../permissions/application#settings-access">settings access</a> can create a webhook by clicking the <strong>gear icon</strong> &gt; <strong>Admin settings</strong> &gt; <strong>Notification channels</strong>. In <strong>Webhooks for alerts</strong>, click <strong>+ Add another</strong>. Metabase will show you a short form to fill out:</p>
+<p>Admins and people with <a href="../permissions/application#settings-access">settings access</a> can create a webhook by clicking the <strong>grid icon</strong> &gt; <strong>Admin</strong> &gt; <strong>Notification channels</strong>. In <strong>Webhooks for alerts</strong>, click <strong>+ Add another</strong>. Metabase will show you a short form to fill out:</p>
 
 <ul>
   <li><strong>Webhook URL</strong>. Where you want Metabase to send the results of an alert. Must be a valid URL.</li>

@@ -12,31 +12,32 @@
   <script type="text/javascript">
     window.HELP_IMPROVE_VIDEOJS = false;
 
-    function redirectTo(theLocation) {
-      if (typeof theLocation === "string") {
-        theLocation = new URL(theLocation);
+window.redirectTo = function redirectTo(theLocation) {
+  if (typeof theLocation === "string") {
+    theLocation = new URL(theLocation);
+  }
+
+  var redirectionSuffixes = ["/index.html", ".html", "/index"];
+  for (var i = 0; i < redirectionSuffixes.length; i = i + 1) {
+    var redirectionSuffix = redirectionSuffixes[i];
+    if (
+      theLocation.pathname &&
+      theLocation.pathname.length > redirectionSuffix.length &&
+      theLocation.pathname.indexOf(redirectionSuffix) ===
+        theLocation.pathname.length - redirectionSuffix.length
+    ) {
+      var pathname = theLocation.pathname.replace(redirectionSuffix, "");
+      if (pathname[pathname.length - 1] === "/") {
+        pathname = pathname.slice(0, -1);
       }
 
-      var redirectionSuffixes = ["/index.html", ".html", "/index"];
-      for (var i = 0; i < redirectionSuffixes.length; i = i + 1) {
-        var redirectionSuffix = redirectionSuffixes[i];
-        if (
-          theLocation.pathname &&
-          theLocation.pathname.length > redirectionSuffix.length &&
-          theLocation.pathname.indexOf(redirectionSuffix) ===
-            theLocation.pathname.length - redirectionSuffix.length
-        ) {
-          var pathname = theLocation.pathname.replace(redirectionSuffix, "");
-          if (pathname[pathname.length - 1] === "/") {
-            pathname = pathname.slice(0, -1);
-          }
-
-          return `${pathname}${theLocation.search}${theLocation.hash}`;
-        }
-      }
-
-      return null;
+      return `${pathname}${theLocation.search}${theLocation.hash}`;
     }
+  }
+
+  return null;
+};
+
   </script>
 
   
@@ -5841,7 +5842,7 @@ Roadmap</a>
 
 <h2 id="included-fonts">Included fonts</h2>
 
-<p>To change your Metabase font, click on the <strong>gear</strong> icon in the upper right of the screen and select <strong>Admin settings</strong> &gt; <strong>Settings</strong> &gt; <strong>Appearance</strong>. Under <strong>Font</strong>, select from a list of included fonts.</p>
+<p>To change your Metabase font, click the <strong>grid</strong> icon in the upper right of the screen and select <strong>Admin</strong> &gt; <strong>Settings</strong> &gt; <strong>Appearance</strong>. Under <strong>Font</strong>, select from a list of included fonts.</p>
 
 <ul>
   <li><a href="#custom-fonts">Custom font</a></li>
@@ -5870,7 +5871,7 @@ Roadmap</a>
 
 <h2 id="custom-fonts">Custom fonts</h2>
 
-<p>To set a custom font, click on the <strong>gear</strong> icon in the upper right of the screen and select <strong>Admin settings</strong> &gt; <strong>Settings</strong> &gt; <strong>Appearance</strong>.</p>
+<p>To set a custom font, click the <strong>grid</strong> icon in the upper right of the screen and select <strong>Admin</strong> &gt; <strong>Settings</strong> &gt; <strong>Appearance</strong>.</p>
 
 <p>For <strong>Font</strong>, select <strong>Custom…</strong> and enter URLs to your font files.</p>
 
@@ -5926,7 +5927,7 @@ Roadmap</a>
   <li>For 700: <a href="https://fonts.gstatic.com/s/robotomono/v21/L0xTDF4xlVMF-BfR8bXMIhJHg45mwgGEFl0_3vrtSM1J-gEPT5Ese6hmHSh0me8iUI0.woff2">https://fonts.gstatic.com/s/robotomono/v21/L0xTDF4xlVMF-BfR8bXMIhJHg45mwgGEFl0_3vrtSM1J-gEPT5Ese6hmHSh0me8iUI0.woff2</a></li>
 </ul>
 
-<p>And paste those URLS in the relevant input fields in <strong>Admin settings</strong> &gt; <strong>Settings</strong> &gt; <strong>Appearance</strong> &gt; <strong>Font</strong> section where it says “Tell us where to find the file for each font weight. You don’t need to include all of them, but it’ll look better if you do.”</p>
+<p>And paste those URLS in the relevant input fields in <strong>Admin</strong> &gt; <strong>Settings</strong> &gt; <strong>Appearance</strong> &gt; <strong>Font</strong> section where it says “Tell us where to find the file for each font weight. You don’t need to include all of them, but it’ll look better if you do.”</p>
 
 <h2 id="hosting-fonts-on-github">Hosting fonts on GitHub</h2>
 

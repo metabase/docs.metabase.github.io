@@ -12,31 +12,32 @@
   <script type="text/javascript">
     window.HELP_IMPROVE_VIDEOJS = false;
 
-    function redirectTo(theLocation) {
-      if (typeof theLocation === "string") {
-        theLocation = new URL(theLocation);
+window.redirectTo = function redirectTo(theLocation) {
+  if (typeof theLocation === "string") {
+    theLocation = new URL(theLocation);
+  }
+
+  var redirectionSuffixes = ["/index.html", ".html", "/index"];
+  for (var i = 0; i < redirectionSuffixes.length; i = i + 1) {
+    var redirectionSuffix = redirectionSuffixes[i];
+    if (
+      theLocation.pathname &&
+      theLocation.pathname.length > redirectionSuffix.length &&
+      theLocation.pathname.indexOf(redirectionSuffix) ===
+        theLocation.pathname.length - redirectionSuffix.length
+    ) {
+      var pathname = theLocation.pathname.replace(redirectionSuffix, "");
+      if (pathname[pathname.length - 1] === "/") {
+        pathname = pathname.slice(0, -1);
       }
 
-      var redirectionSuffixes = ["/index.html", ".html", "/index"];
-      for (var i = 0; i < redirectionSuffixes.length; i = i + 1) {
-        var redirectionSuffix = redirectionSuffixes[i];
-        if (
-          theLocation.pathname &&
-          theLocation.pathname.length > redirectionSuffix.length &&
-          theLocation.pathname.indexOf(redirectionSuffix) ===
-            theLocation.pathname.length - redirectionSuffix.length
-        ) {
-          var pathname = theLocation.pathname.replace(redirectionSuffix, "");
-          if (pathname[pathname.length - 1] === "/") {
-            pathname = pathname.slice(0, -1);
-          }
-
-          return `${pathname}${theLocation.search}${theLocation.hash}`;
-        }
-      }
-
-      return null;
+      return `${pathname}${theLocation.search}${theLocation.hash}`;
     }
+  }
+
+  return null;
+};
+
   </script>
 
   
@@ -5858,7 +5859,7 @@ Roadmap</a>
 <h3 id="1-enable-jwt-sso-in-your-metabase">1. Enable JWT SSO in your Metabase</h3>
 
 <ol>
-  <li>Configure JWT by going to <strong>Admin Settings</strong> &gt; <strong>Settings</strong> &gt; <strong>Authentication</strong> and clicking on <strong>Setup</strong></li>
+  <li>Configure JWT by going to <strong>Admin</strong> &gt; <strong>Settings</strong> &gt; <strong>Authentication</strong> and clicking on <strong>JWT</strong></li>
   <li>Enter the JWT Identity Provider URI, for example <code class="language-plaintext highlighter-rouge">http://localhost:9090/sso/metabase</code>. This is a new endpoint you will add in your backend to handle authentication.</li>
   <li>Generate a key and copy it to your clipboard.</li>
 </ol>
@@ -6264,7 +6265,7 @@ Roadmap</a>
 
 <p><strong>Admin setting changes in Metabase</strong>:</p>
 
-<p>In <strong>Admin Settings</strong> &gt; <strong>Authentication</strong> &gt; <strong>JWT SSO</strong>, set the <code class="language-plaintext highlighter-rouge">JWT Identity Provider URI</code> to the URL of your JWT SSO endpoint, e.g., <code class="language-plaintext highlighter-rouge">http://localhost:9090/sso/metabase</code>.</p>
+<p>In <strong>Admin</strong> &gt; <strong>Authentication</strong> &gt; <strong>JWT SSO</strong>, set the <code class="language-plaintext highlighter-rouge">JWT Identity Provider URI</code> to the URL of your JWT SSO endpoint, e.g., <code class="language-plaintext highlighter-rouge">http://localhost:9090/sso/metabase</code>.</p>
 
 <p><strong>Before:</strong></p>
 
@@ -6281,7 +6282,7 @@ Roadmap</a>
 <span class="p">});</span>
 </code></pre></div></div>
 
-<p>The SDK now uses the JWT Identity Provider URI setting configured in your Metabase admin settings (Admin &gt; Settings &gt; Authentication &gt; JWT).</p>
+<p>The SDK now uses the JWT Identity Provider URI setting configured in your Metabase Admin (Admin &gt; Settings &gt; Authentication &gt; JWT).</p>
 
 <h3 id="update-the-fetchrequesttoken-function-signature">Update the <code class="language-plaintext highlighter-rouge">fetchRequestToken</code> function signature</h3>
 
@@ -6383,13 +6384,13 @@ Roadmap</a>
 
 <h3 id="allow-your-domain-in-cors">Allow your domain in CORS</h3>
 
-<p>Go to <strong>Admin settings</strong> &gt; <strong>Embedding</strong> &gt; <strong>Modular embedding</strong> and add your embedding domain under <strong>Cross-Origin Resource Sharing (CORS)</strong> (such as <code class="language-plaintext highlighter-rouge">https://*.example.com</code>).</p>
+<p>Go to <strong>Admin</strong> &gt; <strong>Embedding</strong> &gt; <strong>Modular embedding</strong> and add your embedding domain under <strong>Cross-Origin Resource Sharing (CORS)</strong> (such as <code class="language-plaintext highlighter-rouge">https://*.example.com</code>).</p>
 
 <h3 id="configure-session-cookies-when-testing-locally">Configure session cookies when testing locally</h3>
 
 <p>When you use <code class="language-plaintext highlighter-rouge">useExistingUserSession: true</code> during development on a different domain, the browser must send the existing Metabase session cookie cross-origin into the iframe. To allow this, you’ll need to set the session cookie’s SameSite value to “none”.</p>
 
-<p>You can set session cookie’s SameSite value in <strong>Admin settings</strong> &gt; <strong>Embedding</strong> &gt; <strong>Security</strong> &gt; <strong>SameSite cookie setting</strong>.</p>
+<p>You can set session cookie’s SameSite value in <strong>Admin</strong> &gt; <strong>Embedding</strong> &gt; <strong>Security</strong> &gt; <strong>SameSite cookie setting</strong>.</p>
 
 <p>SameSite values include:</p>
 
