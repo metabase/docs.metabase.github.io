@@ -12,31 +12,32 @@
   <script type="text/javascript">
     window.HELP_IMPROVE_VIDEOJS = false;
 
-    function redirectTo(theLocation) {
-      if (typeof theLocation === "string") {
-        theLocation = new URL(theLocation);
+window.redirectTo = function redirectTo(theLocation) {
+  if (typeof theLocation === "string") {
+    theLocation = new URL(theLocation);
+  }
+
+  var redirectionSuffixes = ["/index.html", ".html", "/index"];
+  for (var i = 0; i < redirectionSuffixes.length; i = i + 1) {
+    var redirectionSuffix = redirectionSuffixes[i];
+    if (
+      theLocation.pathname &&
+      theLocation.pathname.length > redirectionSuffix.length &&
+      theLocation.pathname.indexOf(redirectionSuffix) ===
+        theLocation.pathname.length - redirectionSuffix.length
+    ) {
+      var pathname = theLocation.pathname.replace(redirectionSuffix, "");
+      if (pathname[pathname.length - 1] === "/") {
+        pathname = pathname.slice(0, -1);
       }
 
-      var redirectionSuffixes = ["/index.html", ".html", "/index"];
-      for (var i = 0; i < redirectionSuffixes.length; i = i + 1) {
-        var redirectionSuffix = redirectionSuffixes[i];
-        if (
-          theLocation.pathname &&
-          theLocation.pathname.length > redirectionSuffix.length &&
-          theLocation.pathname.indexOf(redirectionSuffix) ===
-            theLocation.pathname.length - redirectionSuffix.length
-        ) {
-          var pathname = theLocation.pathname.replace(redirectionSuffix, "");
-          if (pathname[pathname.length - 1] === "/") {
-            pathname = pathname.slice(0, -1);
-          }
-
-          return `${pathname}${theLocation.search}${theLocation.hash}`;
-        }
-      }
-
-      return null;
+      return `${pathname}${theLocation.search}${theLocation.hash}`;
     }
+  }
+
+  return null;
+};
+
   </script>
 
   
@@ -5849,7 +5850,7 @@ Roadmap</a>
       <li><strong>Client type</strong>: Select <code class="language-plaintext highlighter-rouge">SAML</code> from the dropdown.</li>
       <li>Click <strong>Next</strong>.</li>
       <li><strong>Valid Redirect URIs</strong>: The URL where you are hosting your Metabase instance followed by a slash (/) and an asterisk (_). For example, if you are hosting Metabase locally at <code class="language-plaintext highlighter-rouge">http://localhost:3000</code>, the URL would be <code class="language-plaintext highlighter-rouge">http://localhost:3000/_</code>.</li>
-      <li><strong>Home URL</strong>: In your Metabase, go to <strong>Admin settings</strong> &gt; <strong>Authentication</strong> &gt; <strong>SAML</strong>. You’ll find your Home URL in the field <strong>URL the IdP should redirect back to</strong>.</li>
+      <li><strong>Home URL</strong>: In your Metabase, go to <strong>Admin</strong> &gt; <strong>Settings</strong> &gt; <strong>Authentication</strong> &gt; <strong>SAML</strong>. You’ll find your Home URL in the field <strong>URL the IdP should redirect back to</strong>.</li>
       <li>Click <strong>Save</strong>.</li>
     </ul>
   </li>
@@ -5881,7 +5882,7 @@ Roadmap</a>
 <h2 id="mapping-fields-from-keycloak-to-metabase">Mapping fields from Keycloak to Metabase</h2>
 
 <ol>
-  <li>Go to your Metabase <strong>Admin settings</strong> &gt; <strong>Authentication</strong> &gt; <strong>SAML</strong>.</li>
+  <li>Go to your Metabase <strong>Admin</strong> &gt; <strong>Settings</strong> &gt; <strong>Authentication</strong> &gt; <strong>SAML</strong>.</li>
   <li>From the XML file from Step 7 above:
     <ul>
       <li><strong>SAML Identity Provider URL</strong>: Insert the URL that appears right after the following string: <code class="language-plaintext highlighter-rouge">Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location=</code></li>
@@ -5911,7 +5912,7 @@ Roadmap</a>
   </li>
 </ol>
 
-<p>You can edit the attribute values from your Metabase <strong>Admin settings</strong> &gt; <strong>Authentication</strong> &gt; <strong>SAML</strong> &gt; <strong>Attributes</strong>.</p>
+<p>You can edit the attribute values from your Metabase <strong>Admin</strong> &gt; <strong>Settings</strong> &gt; <strong>Authentication</strong> &gt; <strong>SAML</strong> &gt; <strong>Attributes</strong>.</p>
 
 <h2 id="configure-group-mappings-between-keycloak-and-metabase">Configure group mappings between Keycloak and Metabase</h2>
 
@@ -5934,7 +5935,7 @@ Roadmap</a>
 <h3 id="set-up-group-mapping-in-metabase">Set up group mapping in Metabase</h3>
 
 <ol>
-  <li>In Admin settings, go to <strong>Authentication &gt; SAML</strong>.</li>
+  <li>In Admin, go to <strong>Authentication &gt; SAML</strong>.</li>
   <li>In SAML settings, toggle on <strong>Synchronize Group Memberships</strong></li>
   <li>
     <p>For each of the Keycloak groups, set up a new mapping to a Metabase group.</p>

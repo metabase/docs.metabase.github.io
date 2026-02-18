@@ -12,31 +12,32 @@
   <script type="text/javascript">
     window.HELP_IMPROVE_VIDEOJS = false;
 
-    function redirectTo(theLocation) {
-      if (typeof theLocation === "string") {
-        theLocation = new URL(theLocation);
+window.redirectTo = function redirectTo(theLocation) {
+  if (typeof theLocation === "string") {
+    theLocation = new URL(theLocation);
+  }
+
+  var redirectionSuffixes = ["/index.html", ".html", "/index"];
+  for (var i = 0; i < redirectionSuffixes.length; i = i + 1) {
+    var redirectionSuffix = redirectionSuffixes[i];
+    if (
+      theLocation.pathname &&
+      theLocation.pathname.length > redirectionSuffix.length &&
+      theLocation.pathname.indexOf(redirectionSuffix) ===
+        theLocation.pathname.length - redirectionSuffix.length
+    ) {
+      var pathname = theLocation.pathname.replace(redirectionSuffix, "");
+      if (pathname[pathname.length - 1] === "/") {
+        pathname = pathname.slice(0, -1);
       }
 
-      var redirectionSuffixes = ["/index.html", ".html", "/index"];
-      for (var i = 0; i < redirectionSuffixes.length; i = i + 1) {
-        var redirectionSuffix = redirectionSuffixes[i];
-        if (
-          theLocation.pathname &&
-          theLocation.pathname.length > redirectionSuffix.length &&
-          theLocation.pathname.indexOf(redirectionSuffix) ===
-            theLocation.pathname.length - redirectionSuffix.length
-        ) {
-          var pathname = theLocation.pathname.replace(redirectionSuffix, "");
-          if (pathname[pathname.length - 1] === "/") {
-            pathname = pathname.slice(0, -1);
-          }
-
-          return `${pathname}${theLocation.search}${theLocation.hash}`;
-        }
-      }
-
-      return null;
+      return `${pathname}${theLocation.search}${theLocation.hash}`;
     }
+  }
+
+  return null;
+};
+
   </script>
 
   
@@ -5927,7 +5928,7 @@ Roadmap</a>
 
 <ol>
   <li>
-    <p>Go to <strong>Admin settings</strong> &gt; <strong>Settings</strong> &gt; <strong>Remote sync</strong>.</p>
+    <p>Go to <strong>Admin</strong> &gt; <strong>Settings</strong> &gt; <strong>Remote sync</strong>.</p>
   </li>
   <li>
     <p>Enter your repository URL:</p>
@@ -6007,7 +6008,7 @@ Roadmap</a>
 
 <ol>
   <li>
-    <p>Go to <strong>Admin settings</strong> &gt; <strong>Settings</strong> &gt; <strong>Remote sync</strong>.</p>
+    <p>Go to <strong>Admin</strong> &gt; <strong>Settings</strong> &gt; <strong>Remote sync</strong>.</p>
   </li>
   <li>
     <p>Enter your repository URL:</p>
@@ -6046,7 +6047,7 @@ Roadmap</a>
 
 <p><img src="./images/read-only-view.png" alt="Production Metabase"></p>
 
-<p>At this point, you should be all set up. Exit Admin settings, then reload your browser. You should see your synced collections in your production Metabase.</p>
+<p>At this point, you should be all set up. Exit Admin, then reload your browser. You should see your synced collections in your production Metabase.</p>
 
 <h3 id="8-configure-transforms-syncing-optional">8. Configure transforms syncing (optional)</h3>
 
@@ -6280,7 +6281,7 @@ Roadmap</a>
   <li>If you encounter sync errors, review error messages in the sync dialog, manually resolve conflicts in your Git repository, then pull again.</li>
 </ul>
 
-<p>In Read-only mode, go to <strong>Admin settings</strong> &gt; <strong>Settings</strong> &gt; <strong>Remote sync</strong> and click <strong>Pull changes</strong>.</p>
+<p>In Read-only mode, go to <strong>Admin</strong> &gt; <strong>Settings</strong> &gt; <strong>Remote sync</strong> and click <strong>Pull changes</strong>.</p>
 
 <h3 id="handling-unsynced-changes">Handling unsynced changes</h3>
 
@@ -6299,7 +6300,7 @@ Roadmap</a>
 <p>In Read-only mode, you can set Metabase to auto-sync changes from your main branch.</p>
 
 <ol>
-  <li>Navigate to <strong>Admin settings</strong> &gt; <strong>Settings</strong> &gt; <strong>Remote sync</strong>.</li>
+  <li>Navigate to <strong>Admin</strong> &gt; <strong>Settings</strong> &gt; <strong>Remote sync</strong>.</li>
   <li>Enable Auto-sync with Git.</li>
 </ol>
 
@@ -6307,12 +6308,12 @@ Roadmap</a>
 
 <h2 id="disabling-remote-sync">Disabling Remote Sync</h2>
 
-<p>To disable Remote Sync, go to the Remote Sync settings page in Admin settings.</p>
+<p>To disable Remote Sync, go to the Remote Sync settings page in Admin.</p>
 
 <p>To disable Remote Sync:</p>
 
 <ol>
-  <li>Go to <strong>Admin settings</strong> &gt; <strong>Settings</strong> &gt; <strong>Remote sync</strong>.</li>
+  <li>Go to <strong>Admin</strong> &gt; <strong>Settings</strong> &gt; <strong>Remote sync</strong>.</li>
   <li>Click <strong>Disable Remote Sync</strong>.</li>
   <li>In the confirmation dialog, click <strong>Disable</strong>.</li>
 </ol>

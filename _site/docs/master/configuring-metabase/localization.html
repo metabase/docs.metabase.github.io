@@ -12,31 +12,32 @@
   <script type="text/javascript">
     window.HELP_IMPROVE_VIDEOJS = false;
 
-    function redirectTo(theLocation) {
-      if (typeof theLocation === "string") {
-        theLocation = new URL(theLocation);
+window.redirectTo = function redirectTo(theLocation) {
+  if (typeof theLocation === "string") {
+    theLocation = new URL(theLocation);
+  }
+
+  var redirectionSuffixes = ["/index.html", ".html", "/index"];
+  for (var i = 0; i < redirectionSuffixes.length; i = i + 1) {
+    var redirectionSuffix = redirectionSuffixes[i];
+    if (
+      theLocation.pathname &&
+      theLocation.pathname.length > redirectionSuffix.length &&
+      theLocation.pathname.indexOf(redirectionSuffix) ===
+        theLocation.pathname.length - redirectionSuffix.length
+    ) {
+      var pathname = theLocation.pathname.replace(redirectionSuffix, "");
+      if (pathname[pathname.length - 1] === "/") {
+        pathname = pathname.slice(0, -1);
       }
 
-      var redirectionSuffixes = ["/index.html", ".html", "/index"];
-      for (var i = 0; i < redirectionSuffixes.length; i = i + 1) {
-        var redirectionSuffix = redirectionSuffixes[i];
-        if (
-          theLocation.pathname &&
-          theLocation.pathname.length > redirectionSuffix.length &&
-          theLocation.pathname.indexOf(redirectionSuffix) ===
-            theLocation.pathname.length - redirectionSuffix.length
-        ) {
-          var pathname = theLocation.pathname.replace(redirectionSuffix, "");
-          if (pathname[pathname.length - 1] === "/") {
-            pathname = pathname.slice(0, -1);
-          }
-
-          return `${pathname}${theLocation.search}${theLocation.hash}`;
-        }
-      }
-
-      return null;
+      return `${pathname}${theLocation.search}${theLocation.hash}`;
     }
+  }
+
+  return null;
+};
+
   </script>
 
   
@@ -54,7 +55,7 @@
 <meta name="twitter:site" content="@metabase">
 
 <meta name="twitter:title" content="Languages and localization | Metabase Documentation">
-<meta name="twitter:description" content="Languages and localization Admins can update the localization settings for the instance:  Click on the gear icon in the upper right. Click Admin settings. In the Settings tab, click on Localization in the left sidebar.  These localization settings allow...">
+<meta name="twitter:description" content="Languages and localization Admins can update the localization settings for the instance:  Click the grid icon in the upper right. Click Admin. In the Settings tab, click on Localization in the left sidebar.  These localization settings allow you to...">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -64,7 +65,7 @@
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://www.metabase.com/docs/master/configuring-metabase/localization">
 <meta name="title" property="og:title" content="Languages and localization | Metabase Documentation">
-<meta name="description" property="og:description" content="Languages and localization Admins can update the localization settings for the instance:  Click on the gear icon in the upper right. Click Admin settings. In the Settings tab, click on Localization in the left sidebar.  These localization settings allow...">
+<meta name="description" property="og:description" content="Languages and localization Admins can update the localization settings for the instance:  Click the grid icon in the upper right. Click Admin. In the Settings tab, click on Localization in the left sidebar.  These localization settings allow you to...">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -5824,8 +5825,8 @@ Roadmap</a>
 <p>Admins can update the localization settings for the instance:</p>
 
 <ol>
-  <li>Click on the <strong>gear</strong> icon in the upper right.</li>
-  <li>Click <strong>Admin settings</strong>.</li>
+  <li>Click the <strong>grid</strong> icon in the upper right.</li>
+  <li>Click <strong>Admin</strong>.</li>
   <li>In the <strong>Settings</strong> tab, click on <strong>Localization</strong> in the left sidebar.</li>
 </ol>
 

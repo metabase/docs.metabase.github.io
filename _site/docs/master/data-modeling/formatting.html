@@ -12,31 +12,32 @@
   <script type="text/javascript">
     window.HELP_IMPROVE_VIDEOJS = false;
 
-    function redirectTo(theLocation) {
-      if (typeof theLocation === "string") {
-        theLocation = new URL(theLocation);
+window.redirectTo = function redirectTo(theLocation) {
+  if (typeof theLocation === "string") {
+    theLocation = new URL(theLocation);
+  }
+
+  var redirectionSuffixes = ["/index.html", ".html", "/index"];
+  for (var i = 0; i < redirectionSuffixes.length; i = i + 1) {
+    var redirectionSuffix = redirectionSuffixes[i];
+    if (
+      theLocation.pathname &&
+      theLocation.pathname.length > redirectionSuffix.length &&
+      theLocation.pathname.indexOf(redirectionSuffix) ===
+        theLocation.pathname.length - redirectionSuffix.length
+    ) {
+      var pathname = theLocation.pathname.replace(redirectionSuffix, "");
+      if (pathname[pathname.length - 1] === "/") {
+        pathname = pathname.slice(0, -1);
       }
 
-      var redirectionSuffixes = ["/index.html", ".html", "/index"];
-      for (var i = 0; i < redirectionSuffixes.length; i = i + 1) {
-        var redirectionSuffix = redirectionSuffixes[i];
-        if (
-          theLocation.pathname &&
-          theLocation.pathname.length > redirectionSuffix.length &&
-          theLocation.pathname.indexOf(redirectionSuffix) ===
-            theLocation.pathname.length - redirectionSuffix.length
-        ) {
-          var pathname = theLocation.pathname.replace(redirectionSuffix, "");
-          if (pathname[pathname.length - 1] === "/") {
-            pathname = pathname.slice(0, -1);
-          }
-
-          return `${pathname}${theLocation.search}${theLocation.hash}`;
-        }
-      }
-
-      return null;
+      return `${pathname}${theLocation.search}${theLocation.hash}`;
     }
+  }
+
+  return null;
+};
+
   </script>
 
   
@@ -5831,7 +5832,7 @@ Roadmap</a>
 
 <h2 id="field-formatting">Field formatting</h2>
 
-<p><em>Admin settings &gt; Table Metadata &gt; Database &gt; Table &gt; Field &gt; Formatting</em></p>
+<p><em>Admin &gt; Table Metadata &gt; Database &gt; Table &gt; Field &gt; Formatting</em></p>
 
 <p>You can override the global defaults for a specific field by going to the <code class="language-plaintext highlighter-rouge">Table Metadata</code> section of the Admin Panel. Select the database and table of the field in question, then click scroll down to the <strong>Formatting</strong>.</p>
 
@@ -5841,7 +5842,7 @@ Roadmap</a>
 
 <h2 id="text-formatting-options">Text formatting options</h2>
 
-<p><em>Admin settings &gt; Table Metadata &gt; Database &gt; Table &gt; Field &gt; Formatting</em></p>
+<p><em>Admin &gt; Table Metadata &gt; Database &gt; Table &gt; Field &gt; Formatting</em></p>
 
 <p>Options depend on the <a href="./semantic-types">semantic type</a> you select for the field.</p>
 
@@ -5871,7 +5872,7 @@ Roadmap</a>
 
 <h2 id="dates-and-times">Dates and times</h2>
 
-<p><em>Admin settings &gt; Table Metadata &gt; Database &gt; Table &gt; Field &gt; Formatting</em></p>
+<p><em>Admin &gt; Table Metadata &gt; Database &gt; Table &gt; Field &gt; Formatting</em></p>
 
 <p>Options depend on the <a href="./semantic-types">semantic type</a> you select for the field.</p>
 
@@ -5923,7 +5924,7 @@ Roadmap</a>
 
 <h2 id="numbers">Numbers</h2>
 
-<p><em>Admin settings &gt; Table Metadata &gt; Database &gt; Table &gt; Field &gt; Formatting</em></p>
+<p><em>Admin &gt; Table Metadata &gt; Database &gt; Table &gt; Field &gt; Formatting</em></p>
 
 <p>Options depend on the <a href="./semantic-types">semantic type</a> you select for the field.</p>
 

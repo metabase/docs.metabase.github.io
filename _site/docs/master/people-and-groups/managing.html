@@ -12,31 +12,32 @@
   <script type="text/javascript">
     window.HELP_IMPROVE_VIDEOJS = false;
 
-    function redirectTo(theLocation) {
-      if (typeof theLocation === "string") {
-        theLocation = new URL(theLocation);
+window.redirectTo = function redirectTo(theLocation) {
+  if (typeof theLocation === "string") {
+    theLocation = new URL(theLocation);
+  }
+
+  var redirectionSuffixes = ["/index.html", ".html", "/index"];
+  for (var i = 0; i < redirectionSuffixes.length; i = i + 1) {
+    var redirectionSuffix = redirectionSuffixes[i];
+    if (
+      theLocation.pathname &&
+      theLocation.pathname.length > redirectionSuffix.length &&
+      theLocation.pathname.indexOf(redirectionSuffix) ===
+        theLocation.pathname.length - redirectionSuffix.length
+    ) {
+      var pathname = theLocation.pathname.replace(redirectionSuffix, "");
+      if (pathname[pathname.length - 1] === "/") {
+        pathname = pathname.slice(0, -1);
       }
 
-      var redirectionSuffixes = ["/index.html", ".html", "/index"];
-      for (var i = 0; i < redirectionSuffixes.length; i = i + 1) {
-        var redirectionSuffix = redirectionSuffixes[i];
-        if (
-          theLocation.pathname &&
-          theLocation.pathname.length > redirectionSuffix.length &&
-          theLocation.pathname.indexOf(redirectionSuffix) ===
-            theLocation.pathname.length - redirectionSuffix.length
-        ) {
-          var pathname = theLocation.pathname.replace(redirectionSuffix, "");
-          if (pathname[pathname.length - 1] === "/") {
-            pathname = pathname.slice(0, -1);
-          }
-
-          return `${pathname}${theLocation.search}${theLocation.hash}`;
-        }
-      }
-
-      return null;
+      return `${pathname}${theLocation.search}${theLocation.hash}`;
     }
+  }
+
+  return null;
+};
+
   </script>
 
   
@@ -5835,13 +5836,13 @@ Roadmap</a>
 
 <p>Or</p>
 
-<p>Click on the <strong>gear</strong> icon &gt; <strong>Admin settings</strong> &gt; <strong>People</strong>. You’ll see a list of all the people in your organization.</p>
+<p>Click the <strong>grid</strong> icon &gt; <strong>Admin</strong> &gt; <strong>People</strong>. You’ll see a list of all the people in your organization.</p>
 
 <p><img src="images/AdminBar.png" alt="Admin menu"></p>
 
 <h2 id="creating-an-account">Creating an account</h2>
 
-<p>Admins can add people to their Metabase. To add a new person manually, click on the gear icon and select <strong>Admin settings</strong>. Under the <strong>People</strong> tab, click <strong>Invite someone</strong> in the upper right corner. You’ll be prompted to enter their email, and optionally their first and last names–only the email is required.</p>
+<p>Admins can add people to their Metabase. To add a new person manually, click on the grid icon and select <strong>Admin</strong>. Under the <strong>People</strong> tab, click <strong>Invite someone</strong> in the upper right corner. You’ll be prompted to enter their email, and optionally their first and last names–only the email is required.</p>
 
 <p>Click <strong>Create</strong> to activate an account. An account becomes active once you click <strong>Create</strong>, even if the person never signs into the account. The account remains active until you <a href="#deactivating-an-account">deactivate the account</a>. If you’re on a Pro or Enterprise Metabase plan, all active accounts will count toward your user account total. If one person has more than one account, each account will count toward the total (see <a href="../cloud/how-billing-works">how billing works</a>).</p>
 
@@ -5884,7 +5885,7 @@ Roadmap</a>
 <p>To add a user attribute manually:</p>
 
 <ol>
-  <li>Go to <strong>Admin settings</strong> &gt; <strong>People</strong>.</li>
+  <li>Go to <strong>Admin</strong> &gt; <strong>People</strong>.</li>
   <li>Find the person’s account and click the <strong>three dot</strong> (…) menu.</li>
   <li>Click <strong>Edit user</strong>.</li>
   <li>Click <strong>+ Add an attribute</strong>.</li>
@@ -5981,7 +5982,7 @@ OK [[[1_7db2b600-d538-4aeb-b4f7-0cf5b1970d89]]]
 <ul>
   <li>Customers are not charged for these accounts.</li>
   <li>No one can log in to these user accounts.</li>
-  <li>Metabase excludes these user accounts from the <strong>Admin settings</strong> &gt; <strong>People</strong> tab.</li>
+  <li>Metabase excludes these user accounts from the <strong>Admin</strong> &gt; <strong>People</strong> tab.</li>
 </ul>
 
 <h3 id="anonymous-user-account">Anonymous user account</h3>
@@ -6075,7 +6076,7 @@ OK [[[1_7db2b600-d538-4aeb-b4f7-0cf5b1970d89]]]
 
 <h2 id="creating-a-group">Creating a group</h2>
 
-<p>Go to <strong>Admin settings</strong> &gt; <strong>People</strong> &gt; <strong>Groups</strong>, and click the <strong>Add a group</strong> button.</p>
+<p>Go to <strong>Admin</strong> &gt; <strong>People</strong> &gt; <strong>Groups</strong>, and click the <strong>Add a group</strong> button.</p>
 
 <p>We recommend creating groups that correspond to the teams your company or organization has, such as Human Resources, Engineering, Finance, and so on. By default, newly created groups don’t have access to anything.</p>
 
@@ -6119,7 +6120,7 @@ OK [[[1_7db2b600-d538-4aeb-b4f7-0cf5b1970d89]]]
 
 <ul>
   <li>Add or remove people from their group (that is, people who already have accounts in your Metabase).</li>
-  <li>View all people in the <strong>Admin settings</strong> &gt; <strong>People</strong> tab.</li>
+  <li>View all people in the <strong>Admin</strong> &gt; <strong>People</strong> tab.</li>
   <li>Promote other people to group manager, or demote them from group manager to member.</li>
   <li>Rename their group.</li>
 </ul>
@@ -6131,7 +6132,7 @@ OK [[[1_7db2b600-d538-4aeb-b4f7-0cf5b1970d89]]]
 <p>To promote someone to become a group manager:</p>
 
 <ol>
-  <li>At the top right of the screen, click the <strong>gear</strong> icon &gt; <strong>Admin settings</strong> &gt; <strong>People</strong> &gt; <strong>Groups</strong>.</li>
+  <li>At the top right of the screen, click the <strong>grid</strong> icon &gt; <strong>Admin</strong> &gt; <strong>People</strong> &gt; <strong>Groups</strong>.</li>
   <li>Select the group you want the person to manage. If the person isn’t already in the group, you’ll need to add that person to the group.</li>
   <li>Find the person you want to promote, hover over their member type, and click the up arrow to promote them to group manager. If you want to demote them, click on the down arrow.</li>
 </ol>

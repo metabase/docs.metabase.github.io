@@ -12,31 +12,32 @@
   <script type="text/javascript">
     window.HELP_IMPROVE_VIDEOJS = false;
 
-    function redirectTo(theLocation) {
-      if (typeof theLocation === "string") {
-        theLocation = new URL(theLocation);
+window.redirectTo = function redirectTo(theLocation) {
+  if (typeof theLocation === "string") {
+    theLocation = new URL(theLocation);
+  }
+
+  var redirectionSuffixes = ["/index.html", ".html", "/index"];
+  for (var i = 0; i < redirectionSuffixes.length; i = i + 1) {
+    var redirectionSuffix = redirectionSuffixes[i];
+    if (
+      theLocation.pathname &&
+      theLocation.pathname.length > redirectionSuffix.length &&
+      theLocation.pathname.indexOf(redirectionSuffix) ===
+        theLocation.pathname.length - redirectionSuffix.length
+    ) {
+      var pathname = theLocation.pathname.replace(redirectionSuffix, "");
+      if (pathname[pathname.length - 1] === "/") {
+        pathname = pathname.slice(0, -1);
       }
 
-      var redirectionSuffixes = ["/index.html", ".html", "/index"];
-      for (var i = 0; i < redirectionSuffixes.length; i = i + 1) {
-        var redirectionSuffix = redirectionSuffixes[i];
-        if (
-          theLocation.pathname &&
-          theLocation.pathname.length > redirectionSuffix.length &&
-          theLocation.pathname.indexOf(redirectionSuffix) ===
-            theLocation.pathname.length - redirectionSuffix.length
-        ) {
-          var pathname = theLocation.pathname.replace(redirectionSuffix, "");
-          if (pathname[pathname.length - 1] === "/") {
-            pathname = pathname.slice(0, -1);
-          }
-
-          return `${pathname}${theLocation.search}${theLocation.hash}`;
-        }
-      }
-
-      return null;
+      return `${pathname}${theLocation.search}${theLocation.hash}`;
     }
+  }
+
+  return null;
+};
+
   </script>
 
   
@@ -5870,7 +5871,7 @@ Roadmap</a>
 <p><strong>Steps to take:</strong></p>
 
 <ol>
-  <li>Check the <a href="../configuring-metabase/localization#report-timezone">report timezone setting</a> from <strong>Admin settings</strong> &gt; <strong>Settings</strong> &gt; <strong>Localization</strong>.</li>
+  <li>Check the <a href="../configuring-metabase/localization#report-timezone">report timezone setting</a> from <strong>Admin</strong> &gt; <strong>Settings</strong> &gt; <strong>Localization</strong>.</li>
   <li>If you’re using a database that doesn’t support the report timezone setting, ensure that Metabase’s time zone matches that of the database. Metabase’s time zone is the Java Virtual Machine’s time zone, typically set via a <code class="language-plaintext highlighter-rouge">-Duser.timezone&lt;..&gt;</code> parameter or the <code class="language-plaintext highlighter-rouge">JAVA_TIMEZONE</code> environment variable; exactly how it is set will depend on how you launch Metabase. Note that Metabase’s time zone doesn’t impact any databases that use a Report Time Zone.</li>
 </ol>
 

@@ -13,7 +13,7 @@ layout: new-docs
 
 > SQLite isn't available for [Metabase Cloud](/cloud/).
 
-To add a database connection, click on the **gear** icon in the top right, and navigate to **Admin settings** > **Databases** > **Add a database**.
+To add a database connection, click the **grid** icon in the top right, and navigate to **Admin** > **Databases** > **Add a database**.
 
 Fill out the fields for that database, and click **Save changes** at the bottom.
 

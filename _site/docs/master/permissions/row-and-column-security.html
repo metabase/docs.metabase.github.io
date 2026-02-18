@@ -12,31 +12,32 @@
   <script type="text/javascript">
     window.HELP_IMPROVE_VIDEOJS = false;
 
-    function redirectTo(theLocation) {
-      if (typeof theLocation === "string") {
-        theLocation = new URL(theLocation);
+window.redirectTo = function redirectTo(theLocation) {
+  if (typeof theLocation === "string") {
+    theLocation = new URL(theLocation);
+  }
+
+  var redirectionSuffixes = ["/index.html", ".html", "/index"];
+  for (var i = 0; i < redirectionSuffixes.length; i = i + 1) {
+    var redirectionSuffix = redirectionSuffixes[i];
+    if (
+      theLocation.pathname &&
+      theLocation.pathname.length > redirectionSuffix.length &&
+      theLocation.pathname.indexOf(redirectionSuffix) ===
+        theLocation.pathname.length - redirectionSuffix.length
+    ) {
+      var pathname = theLocation.pathname.replace(redirectionSuffix, "");
+      if (pathname[pathname.length - 1] === "/") {
+        pathname = pathname.slice(0, -1);
       }
 
-      var redirectionSuffixes = ["/index.html", ".html", "/index"];
-      for (var i = 0; i < redirectionSuffixes.length; i = i + 1) {
-        var redirectionSuffix = redirectionSuffixes[i];
-        if (
-          theLocation.pathname &&
-          theLocation.pathname.length > redirectionSuffix.length &&
-          theLocation.pathname.indexOf(redirectionSuffix) ===
-            theLocation.pathname.length - redirectionSuffix.length
-        ) {
-          var pathname = theLocation.pathname.replace(redirectionSuffix, "");
-          if (pathname[pathname.length - 1] === "/") {
-            pathname = pathname.slice(0, -1);
-          }
-
-          return `${pathname}${theLocation.search}${theLocation.hash}`;
-        }
-      }
-
-      return null;
+      return `${pathname}${theLocation.search}${theLocation.hash}`;
     }
+  }
+
+  return null;
+};
+
   </script>
 
   
@@ -5966,7 +5967,7 @@ Roadmap</a>
 
 <ol>
   <li>Make sure to do the <a href="#prerequisites-for-row-security">prerequisites for row security</a> first.</li>
-  <li>Go to <strong>Admin settings</strong> &gt; <strong>Permissions</strong>.</li>
+  <li>Go to <strong>Admin</strong> &gt; <strong>Permissions</strong>.</li>
   <li>Select the database and table that you want to secure.</li>
   <li>Find the group that you want to put in the secure.</li>
   <li>Click on the dropdown under <strong>View data</strong> for that group.</li>
@@ -6014,7 +6015,7 @@ Roadmap</a>
 
 <ol>
   <li>Make sure to do the <a href="#prerequisites-for-column-level-security">prerequisites</a> first.</li>
-  <li>Go to <strong>Admin settings</strong> &gt; <strong>Permissions</strong>.</li>
+  <li>Go to <strong>Admin</strong> &gt; <strong>Permissions</strong>.</li>
   <li>Select the database and table that you want to secure.</li>
   <li>Find the group to restrict.</li>
   <li>Click on the dropdown under <strong>Data access</strong> for that group.</li>
@@ -6035,7 +6036,7 @@ Roadmap</a>
   <li>Go to the SQL question that will be displayed to the people in place of the table.</li>
   <li>Add a <a href="../questions/native-editor/sql-parameters">parameterized</a> <code class="language-plaintext highlighter-rouge">WHERE</code> clause to your SQL query, such as <code class="language-plaintext highlighter-rouge">WHERE plan = {{ plan_variable }} </code>.</li>
   <li>Save the SQL question.</li>
-  <li>Go to <strong>Admin settings</strong> &gt; <strong>Permissions</strong>.</li>
+  <li>Go to <strong>Admin</strong> &gt; <strong>Permissions</strong>.</li>
   <li>Find the group and table you want to secure.</li>
   <li>Open the dropdown under <strong>View data</strong>.</li>
   <li>Click <strong>Edit row and column security</strong>.</li>

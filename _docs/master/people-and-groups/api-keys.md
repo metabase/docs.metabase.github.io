@@ -23,8 +23,8 @@ That said, there are times when it's nice to work with the API, like when managi
 
 To create an API key:
 
-1. Click on the **gear** icon in the upper right.
-2. Select **Admin settings**.
+1. Click the **grid** icon in the upper right.
+2. Select **Admin**.
 3. Go to the **Settings** tab.
 4. Click on the **Authentication** tab on the left menu.
 5. Scroll to **API Keys** and click **Manage**.
@@ -42,8 +42,8 @@ If you're on a [Pro or Enterprise self-hosted plan](/pricing/), you can [create 
 
 To view and manage existing API keys:
 
-1. Click on the **gear** icon in the upper right.
-2. Select **Admin settings**.
+1. Click the **grid** icon in the upper right.
+2. Select **Admin**.
 3. Go to the **Settings** tab.
 4. Click on the **Authentication** tab on the left menu.
 5. Scroll to **API Keys** and click **Manage**.
@@ -62,8 +62,8 @@ You won't be able to recover a deleted API key. You'll have to create a new key.
 
 To delete an API Key:
 
-1. Click on the **gear** icon in the upper right.
-2. Select **Admin settings**.
+1. Click the **grid** icon in the upper right.
+2. Select **Admin**.
 3. Go to the **Settings** tab.
 4. Click on the **Authentication** tab on the left menu.
 5. Scroll to **API Keys** and click **Manage**.

@@ -12,31 +12,32 @@
   <script type="text/javascript">
     window.HELP_IMPROVE_VIDEOJS = false;
 
-    function redirectTo(theLocation) {
-      if (typeof theLocation === "string") {
-        theLocation = new URL(theLocation);
+window.redirectTo = function redirectTo(theLocation) {
+  if (typeof theLocation === "string") {
+    theLocation = new URL(theLocation);
+  }
+
+  var redirectionSuffixes = ["/index.html", ".html", "/index"];
+  for (var i = 0; i < redirectionSuffixes.length; i = i + 1) {
+    var redirectionSuffix = redirectionSuffixes[i];
+    if (
+      theLocation.pathname &&
+      theLocation.pathname.length > redirectionSuffix.length &&
+      theLocation.pathname.indexOf(redirectionSuffix) ===
+        theLocation.pathname.length - redirectionSuffix.length
+    ) {
+      var pathname = theLocation.pathname.replace(redirectionSuffix, "");
+      if (pathname[pathname.length - 1] === "/") {
+        pathname = pathname.slice(0, -1);
       }
 
-      var redirectionSuffixes = ["/index.html", ".html", "/index"];
-      for (var i = 0; i < redirectionSuffixes.length; i = i + 1) {
-        var redirectionSuffix = redirectionSuffixes[i];
-        if (
-          theLocation.pathname &&
-          theLocation.pathname.length > redirectionSuffix.length &&
-          theLocation.pathname.indexOf(redirectionSuffix) ===
-            theLocation.pathname.length - redirectionSuffix.length
-        ) {
-          var pathname = theLocation.pathname.replace(redirectionSuffix, "");
-          if (pathname[pathname.length - 1] === "/") {
-            pathname = pathname.slice(0, -1);
-          }
-
-          return `${pathname}${theLocation.search}${theLocation.hash}`;
-        }
-      }
-
-      return null;
+      return `${pathname}${theLocation.search}${theLocation.hash}`;
     }
+  }
+
+  return null;
+};
+
   </script>
 
   
@@ -5857,7 +5858,7 @@ Roadmap</a>
 
 <h3 id="turn-on-model-persistence-for-your-metabase">Turn on model persistence for your Metabase</h3>
 
-<p>To turn on model persistence for your Metabase, go to <strong>Admin settings</strong> &gt; <strong>Performance</strong> &gt; <strong>Model persistence</strong>.</p>
+<p>To turn on model persistence for your Metabase, go to <strong>Admin</strong> &gt; <strong>Performance</strong> &gt; <strong>Model persistence</strong>.</p>
 
 <p>You can set models to refresh based on one of the default frequencies (every 1 hour, 2 hours, etc.), or select the <strong>Custom</strong> option to use <a href="https://www.quartz-scheduler.org/documentation/quartz-2.3.0/tutorials/crontrigger.html">cron syntax</a> to specify your own update frequency.</p>
 
@@ -5873,7 +5874,7 @@ Roadmap</a>
 
 <ol>
   <li>
-    <p>Go to <strong>Admin settings</strong> &gt; <strong>Databases</strong> &gt; [your database] &gt; <strong>Turn model persistence on</strong>. If the credentials you’ve given Metabase to connect to your database are permissive, Metabase should do all the work for you: Metabase will check if the schema already exists, or otherwise attempt to create it. If the connection’s credentials <em>lack</em> the necessary permissions to create the schema in your database, you’ll need to create the schema in the database yourself.</p>
+    <p>Go to <strong>Admin</strong> &gt; <strong>Databases</strong> &gt; [your database] &gt; <strong>Turn model persistence on</strong>. If the credentials you’ve given Metabase to connect to your database are permissive, Metabase should do all the work for you: Metabase will check if the schema already exists, or otherwise attempt to create it. If the connection’s credentials <em>lack</em> the necessary permissions to create the schema in your database, you’ll need to create the schema in the database yourself.</p>
   </li>
   <li>
     <p>To manually create the schema in your data warehouse, click on the <strong>info icon</strong> to get the schema name.</p>
@@ -5920,7 +5921,7 @@ Roadmap</a>
 
 <h2 id="view-model-persistence-logs">View model persistence logs</h2>
 
-<p>You can view the logs for model persistence by clicking on the <strong>gear</strong> icon in the upper right and selecting <strong>Admin settings</strong> &gt; <strong>Tools</strong> &gt; <strong>Model caching logs</strong>. See <a href="../usage-and-performance-tools/tools">Admin tools</a>.</p>
+<p>You can view the logs for model persistence by clicking on the <strong>grid</strong> icon in the upper right and selecting <strong>Admin</strong> &gt; <strong>Tools</strong> &gt; <strong>Model caching logs</strong>. See <a href="../usage-and-performance-tools/tools">Admin tools</a>.</p>
 
 <h2 id="difference-between-persisted-models-and-caching">Difference between persisted models and caching</h2>
 

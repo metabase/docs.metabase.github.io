@@ -12,31 +12,32 @@
   <script type="text/javascript">
     window.HELP_IMPROVE_VIDEOJS = false;
 
-    function redirectTo(theLocation) {
-      if (typeof theLocation === "string") {
-        theLocation = new URL(theLocation);
+window.redirectTo = function redirectTo(theLocation) {
+  if (typeof theLocation === "string") {
+    theLocation = new URL(theLocation);
+  }
+
+  var redirectionSuffixes = ["/index.html", ".html", "/index"];
+  for (var i = 0; i < redirectionSuffixes.length; i = i + 1) {
+    var redirectionSuffix = redirectionSuffixes[i];
+    if (
+      theLocation.pathname &&
+      theLocation.pathname.length > redirectionSuffix.length &&
+      theLocation.pathname.indexOf(redirectionSuffix) ===
+        theLocation.pathname.length - redirectionSuffix.length
+    ) {
+      var pathname = theLocation.pathname.replace(redirectionSuffix, "");
+      if (pathname[pathname.length - 1] === "/") {
+        pathname = pathname.slice(0, -1);
       }
 
-      var redirectionSuffixes = ["/index.html", ".html", "/index"];
-      for (var i = 0; i < redirectionSuffixes.length; i = i + 1) {
-        var redirectionSuffix = redirectionSuffixes[i];
-        if (
-          theLocation.pathname &&
-          theLocation.pathname.length > redirectionSuffix.length &&
-          theLocation.pathname.indexOf(redirectionSuffix) ===
-            theLocation.pathname.length - redirectionSuffix.length
-        ) {
-          var pathname = theLocation.pathname.replace(redirectionSuffix, "");
-          if (pathname[pathname.length - 1] === "/") {
-            pathname = pathname.slice(0, -1);
-          }
-
-          return `${pathname}${theLocation.search}${theLocation.hash}`;
-        }
-      }
-
-      return null;
+      return `${pathname}${theLocation.search}${theLocation.hash}`;
     }
+  }
+
+  return null;
+};
+
   </script>
 
   
@@ -5855,7 +5856,7 @@ Roadmap</a>
 
 <h2 id="encrypting-an-existing-connection">Encrypting an existing connection</h2>
 
-<p>If you added databases before setting the <code class="language-plaintext highlighter-rouge">MB_ENCRYPTION_SECRET_KEY</code> value, you can encrypt the connection details by going to each one of those databases in <strong>Admin settings</strong> &gt; <strong>Databases</strong> and clicking on the <strong>Save</strong> button. Existing databases with unencrypted details will continue to work normally.</p>
+<p>If you added databases before setting the <code class="language-plaintext highlighter-rouge">MB_ENCRYPTION_SECRET_KEY</code> value, you can encrypt the connection details by going to each one of those databases in <strong>Admin</strong> &gt; <strong>Databases</strong> and clicking on the <strong>Save</strong> button. Existing databases with unencrypted details will continue to work normally.</p>
 
 <h2 id="rotating-an-encryption-key">Rotating an encryption key</h2>
 
