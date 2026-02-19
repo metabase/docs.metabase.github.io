@@ -95,6 +95,7 @@ Metabase's reference documentation.
 
 - [The SQL editor](./questions/native-editor/writing-sql)
 - [SQL parameters](./questions/native-editor/sql-parameters)
+- [Table variables](./questions/native-editor/table-variables)
 - [Referencing models and saved questions](./questions/native-editor/referencing-saved-questions-in-queries)
 - [Snippets](./questions/native-editor/snippets)
 - [Snippet folder permissions](./permissions/snippets)
