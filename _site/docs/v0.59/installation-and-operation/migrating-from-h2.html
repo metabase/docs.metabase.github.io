@@ -857,13 +857,13 @@ Roadmap</a>
       <div class="menu-links-wrapper bg-neutral-95 blog-posts-wrapper">
         <span class="menu-heading">Recent Blog Posts</span>
         
-          <a class="w-100 post-with-image recent-blog-link mt-1" href="/blog/lessons-learned-building-ai-analytics-agents">
-            <div class="d-flex align-items-center position-relative overflow-hidden rounded-2 mb-3" id="recent-blog-image-wrapper">
-              <img alt="Resources Image" class="position-absolute w-100" src="/images/posts/metabot-ai-talk-og.png" loading="lazy">
-            </div>
-            <span class="h6 neutral-40 recent-blog-link-heading mb-3">Lessons learned from building AI analytics agents: build for chaos</span>
-          </a>
         
+        <a class="w-100 post-with-image recent-blog-link mt-1" href="/blog/lessons-learned-building-ai-analytics-agents">
+          <div class="d-flex align-items-center position-relative overflow-hidden rounded-2 mb-3" id="recent-blog-image-wrapper">
+            <img alt="Resources Image" class="position-absolute w-100" src="/images/posts/metabot-ai-talk-og.png" loading="lazy">
+          </div>
+          <span class="h6 neutral-40 recent-blog-link-heading mb-3">Lessons learned from building AI analytics agents: build for chaos</span>
+        </a>
         
           <a class="w-100 recent-blog-link" href="/blog/we-simplified-metabase-embedding">
             <span class="h6 neutral-40 recent-blog-link-heading mb-3">We simplified embedding</span>
@@ -5846,6 +5846,17 @@ Roadmap</a>
   <li><a href="https://mariadb.org/">MariaDB</a>. Minimum version: <code class="language-plaintext highlighter-rouge">10.4.0</code>. Required settings (which are the default): <code class="language-plaintext highlighter-rouge">utf8mb4_unicode_ci</code> collation, <code class="language-plaintext highlighter-rouge">utf8mb4</code> character set, and <code class="language-plaintext highlighter-rouge">innodb_large_prefix=ON</code>.</li>
 </ul>
 
+<h2 id="how-can-i-tell-if-my-metabase-instance-uses-h2">How can I tell if my Metabase instance uses H2?</h2>
+
+<p>As a Metabase admin, call the <a href="/docs/latest/api#tag/apibug-reporting/get/api/bug-reporting/details"><code class="language-plaintext highlighter-rouge">GET /api/bug-reporting/details</code></a> API endpoint. This will return something like this:</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"application-database"</span><span class="p">:</span><span class="w"> </span><span class="s2">"h2"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>If the <code class="language-plaintext highlighter-rouge">application-database</code> field is not <code class="language-plaintext highlighter-rouge">postgres</code> or <code class="language-plaintext highlighter-rouge">mysql</code>, then you are using the embedded H2 database, which is not suitable for production.</p>
+
 <h2 id="jar-how-to-migrate-from-h2-to-your-production-application-database">JAR: How to migrate from H2 to your production application database</h2>
 
 <blockquote>
@@ -5919,9 +5930,9 @@ java --add-opens java.base/java.nio=ALL-UNNAMED -jar metabase.jar
   <li><a href="#1-confirm-that-you-can-connect-to-your-target-application-database-1">1. Confirm that you can connect to your target application database</a></li>
   <li><a href="#2-back-up-your-h2-application-database">2. Back up your H2 application database</a></li>
   <li><a href="#3-stop-the-existing-metabase-container">3. Stop the existing Metabase container</a></li>
-  <li><a href="#3-download-the-jar">3. Download the JAR</a></li>
-  <li><a href="#4-run-the-migration-command">4. Run the migration command</a></li>
-  <li><a href="#5-start-a-new-docker-container-that-uses-the-new-app-db">5. Start a new Docker container that uses the new app db</a></li>
+  <li><a href="#4-download-the-jar">4. Download the JAR</a></li>
+  <li><a href="#5-run-the-migration-command">5. Run the migration command</a></li>
+  <li><a href="#6-start-a-new-docker-container-that-uses-the-new-app-db">6. Start a new Docker container that uses the new app db</a></li>
   <li><a href="#7-remove-the-old-container-that-was-using-the-h2-database">7. Remove the old container that was using the H2 database</a></li>
 </ul>
 
@@ -5939,13 +5950,13 @@ java --add-opens java.base/java.nio=ALL-UNNAMED -jar metabase.jar
 
 <p>You don’t want people creating new stuff in your Metabase while you’re migrating.</p>
 
-<h3 id="3-download-the-jar">3. Download the JAR</h3>
+<h3 id="4-download-the-jar">4. Download the JAR</h3>
 
 <p>In the directory where you saved your H2 file (that is, outside the container), <a href="https://github.com/metabase/metabase/releases">download the JAR</a> for your current version.</p>
 
 <p>Make sure you use the same version of Metabase you’ve been using. If you want to upgrade, perform the upgrade after you’ve confirmed the migration is successful.</p>
 
-<h3 id="4-run-the-migration-command">4. Run the migration command</h3>
+<h3 id="5-run-the-migration-command">5. Run the migration command</h3>
 
 <p>Create another copy of your H2 file that you extracted from the container when you backed up your app db (step 2).</p>
 
@@ -5960,7 +5971,7 @@ java --add-opens java.base/java.nio=ALL-UNNAMED -jar metabase.jar load-from-h2 /
 
 <p>See <a href="configuring-application-database">Configuring the application database</a>.</p>
 
-<h3 id="5-start-a-new-docker-container-that-uses-the-new-app-db">5. Start a new Docker container that uses the new app db</h3>
+<h3 id="6-start-a-new-docker-container-that-uses-the-new-app-db">6. Start a new Docker container that uses the new app db</h3>
 
 <p>With your new application database populated with your Metabase data, you can start a new container and tell the Metabase in the container to connect to the appdb. The command will looks something like this:</p>
 
