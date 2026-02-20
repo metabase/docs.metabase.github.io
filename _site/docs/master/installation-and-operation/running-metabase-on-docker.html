@@ -2011,6 +2011,20 @@ Roadmap</a>
 
                       
                       <li class="">
+                        <a href="/docs/master/questions/native-editor/table-variables" class="">
+                          Table variables
+
+                          
+                        </a>
+                        
+                      </li>
+                    
+                      
+
+                      
+
+                      
+                      <li class="">
                         <a href="/docs/master/questions/native-editor/optional-parameters" class="">
                           Optional variables
 
@@ -2633,6 +2647,21 @@ Roadmap</a>
               <li class="">
                 <a href="/docs/master/ai/agent-api" class="">
                   Agent API
+
+                  
+                </a>
+                
+              </li>
+            
+              
+
+              
+
+              
+
+              <li class="">
+                <a href="/docs/master/ai/sql-generation" class="">
+                  SQL generation
 
                   
                 </a>
@@ -5973,9 +6002,10 @@ Roadmap</a>
 
 <ul>
   <li><a href="#customizing-the-metabase-jetty-server">Customizing the Metabase Jetty server</a></li>
+  <li><a href="#docker-specific-environment-variables">Docker-specific environment variables</a></li>
   <li><a href="#setting-the-java-timezone">Setting the Java Timezone</a></li>
   <li><a href="#copying-the-application-database">Copying the application database</a></li>
-  <li><a href="#persisting-the-h2-application-database-on-your-host-machine">Persisting the H2 application database on your host machine</a></li>
+  <li><a href="#mounting-a-mapped-file-storage-volume">Mounting a mapped file storage volume</a></li>
   <li><a href="#getting-your-config-back-if-you-stopped-your-container">Getting your config back if you stopped your container</a></li>
   <li><a href="#adding-external-dependencies-or-plugins">Adding external dependencies or plugins</a></li>
   <li><a href="#use-docker-secrets-to-hide-sensitive-parameters">Use Docker Secrets to hide sensitive parameters</a></li>
@@ -5986,6 +6016,15 @@ Roadmap</a>
 <h3 id="customizing-the-metabase-jetty-server">Customizing the Metabase Jetty server</h3>
 
 <p>You can use any of the custom settings from <a href="../configuring-metabase/customizing-jetty-webserver">Customizing the Metabase Jetty Webserver</a> by setting environment variables in your Docker run command.</p>
+
+<h3 id="docker-specific-environment-variables">Docker-specific environment variables</h3>
+
+<p>In addition to the standard custom settings there are two docker specific environment variables <code class="language-plaintext highlighter-rouge">MUID</code> and <code class="language-plaintext highlighter-rouge">MGID</code> which are used to set the user and group IDs used by metabase when running in a docker container. These settings make it possible to match file permissions when files, such as the application database, are shared between the host and the container.</p>
+
+<p>Here’s how to use a database file, owned by your account and stored in your home directory:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run -d -v ~/my-metabase-db:/metabase.db --name metabase -e MB_DB_FILE=/metabase.db -e MUID=$UID -e MGID=$GID -p 3000:3000 metabase/metabase
+</code></pre></div></div>
 
 <h3 id="setting-the-java-timezone">Setting the Java Timezone</h3>
 
@@ -5998,31 +6037,24 @@ Roadmap</a>
 
 <h3 id="copying-the-application-database">Copying the application database</h3>
 
-<p>When you run Metabase without an external application database, it will use an embedded H2 database in the container’s filesystem. The default location for this H2 database is the directory <code class="language-plaintext highlighter-rouge">/metabase.db</code>. You can copy this directory out of the container using the following command (replacing <code class="language-plaintext highlighter-rouge">CONTAINER_ID</code> with the actual container ID or name, <code class="language-plaintext highlighter-rouge">metabase</code>, if you named the container):</p>
+<p>The default location for the application database in the container is <code class="language-plaintext highlighter-rouge">/metabase.db/metabase.db.mv.db</code>. You can copy this directory out of the container using the following command (replacing <code class="language-plaintext highlighter-rouge">CONTAINER_ID</code> with the actual container ID or name, <code class="language-plaintext highlighter-rouge">metabase</code> if you named the container):</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker cp CONTAINER_ID:/metabase.db ./
 </code></pre></div></div>
 
-<p>The database contents will be left in a directory named <code class="language-plaintext highlighter-rouge">metabase.db</code> on your host filesystem.</p>
+<p>The DB contents will be left in a directory named metabase.db.</p>
 
-<h3 id="persisting-the-h2-application-database-on-your-host-machine">Persisting the H2 application database on your host machine</h3>
+<h3 id="mounting-a-mapped-file-storage-volume">Mounting a mapped file storage volume</h3>
 
-<p>By default, Metabase stores the embedded H2 application database inside the container. If the container is ever deleted, or you create a new one running a different Metabase version, the database will be lost.</p>
+<p>To persist your data outside of the container and make it available for use between container launches, we can mount a local file path inside our container.</p>
 
-<p>You can make the H2 database more durable by storing it on your host machine, and mounting it inside the container.</p>
-
-<p>You will need to ensure this directory is read-writable by the container. One way to achieve this is by running the container as the same user from your host machine:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Ensure the directory exists and is owned by your host machine's user</span>
-<span class="nb">mkdir</span> ~/metabase-data
-
-<span class="c"># Run Metabase as your host machine's user</span>
-docker run <span class="nt">-d</span> <span class="nt">-p</span> 3000:3000 <span class="se">\</span>
-  <span class="nt">-v</span> ~/metabase-data:/metabase-data <span class="se">\</span>
-  <span class="nt">--user</span> <span class="si">$(</span><span class="nb">id</span> <span class="nt">-u</span><span class="si">)</span>:<span class="si">$(</span><span class="nb">id</span> <span class="nt">-g</span><span class="si">)</span> <span class="se">\</span>
-  <span class="nt">-e</span> <span class="nv">MB_DB_FILE</span><span class="o">=</span>/metabase-data/metabase.db <span class="se">\</span>
-  <span class="nt">--name</span> metabase metabase/metabase
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run -d -p 3000:3000 \
+  -v ~/metabase-data:/metabase-data \
+  -e "MB_DB_FILE=/metabase-data/metabase.db" \
+  --name metabase metabase/metabase
 </code></pre></div></div>
+
+<p>When you launch your container, Metabase will use the database file (<code class="language-plaintext highlighter-rouge">MB_DB_FILE</code>) at <code class="language-plaintext highlighter-rouge">~/metabase-data/metabase.db</code> instead of its default location. and we are mounting that folder from our local filesystem into the container.</p>
 
 <h3 id="getting-your-config-back-if-you-stopped-your-container">Getting your config back if you stopped your container</h3>
 
@@ -6050,7 +6082,7 @@ sha256:9ff56186de4dd0b9bb2a37c977c3a4c9358647cde60a16f11f4c05bded1fe77a
 430bb02a37bb2471176e54ca323d0940c4e0ee210c3ab04262cb6576fe4ded6d
 </code></pre></div></div>
 
-<p>You should have your previously configured Metabase installation back. If it’s not the one you expected, try a different stopped container and repeat these steps.</p>
+<p>You should have your previously configured Metabase Installation back. If it’s not the one you expected, try a different stopped container and repeat these steps.</p>
 
 <h3 id="adding-external-dependencies-or-plugins">Adding external dependencies or plugins</h3>
 

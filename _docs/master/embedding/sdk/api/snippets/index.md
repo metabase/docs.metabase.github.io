@@ -121,6 +121,8 @@ layout: new-docs
 | [DashboardCardMenu](./api/DashboardCardMenu)                               | -                                                                              |
 | [DashboardCardMenuCustomElement](./api/DashboardCardMenuCustomElement)     | -                                                                              |
 | [DashCardMenuItem](./api/DashCardMenuItem)                                 | -                                                                              |
+| [EmbeddingDataPicker](./api/EmbeddingDataPicker)                           | -                                                                              |
+| [EmbeddingEntityType](./api/EmbeddingEntityType)                           | -                                                                              |
 | [EntityTypeFilterKeys](./api/EntityTypeFilterKeys)                         | -                                                                              |
 | [IconName](./api/IconName)                                                 | -                                                                              |
 | [InitializationStatus](./api/InitializationStatus)                         | -                                                                              |
@@ -140,7 +142,6 @@ layout: new-docs
 | [MetabasePluginsConfig](./api/MetabasePluginsConfig)                       | -                                                                              |
 | [MetabaseThemePreset](./api/MetabaseThemePreset)                           | -                                                                              |
 | [MetabaseUser](./api/MetabaseUser)                                         | The User entity                                                                |
-| [ModularEmbeddingEntityType](./api/ModularEmbeddingEntityType)             | -                                                                              |
 | [ParameterValues](./api/ParameterValues)                                   | -                                                                              |
 | [ProtectedColorKey](./api/ProtectedColorKey)                               | Color keys that are protected and should not be exposed to embedding.          |
 | [SdkCollectionId](./api/SdkCollectionId)                                   | -                                                                              |
