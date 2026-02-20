@@ -25,10 +25,10 @@ Pro/Enterprise
 
 <!-- [<snippet properties>] -->
 
-| Property                                            | Type                                   | Default value | Description                                                                                                                                            |
-| :-------------------------------------------------- | :------------------------------------- | :------------ | :----------------------------------------------------------------------------------------------------------------------------------------------------- |
-| <a id="is-save-enabled"></a> `is-save-enabled?`     | `boolean`                              | `false`       | Whether the save button is enabled.                                                                                                                    |
-| <a id="layout"></a> `layout?`                       | `"auto"` \| `"sidebar"` \| `"stacked"` | `"auto"`      | How should the browser position the visualization with respect to the chat interface. `auto` uses `stacked` on mobile and `sidebar` on larger screens. |
-| <a id="target-collection"></a> `target-collection?` | `string` \| `number`                   | `undefined`   | The collection to save a question to.                                                                                                                  |
+| Property                                           | Type                 | Description                                                                                                                                                                                                                                           |
+| :------------------------------------------------- | :------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| <a id="is-save-enabled"></a> `is-save-enabled`     | `boolean`            | Whether the save button is enabled.<br>---<br>Optional<br>Default: `false`                                                                                                                                                                            |
+| <a id="layout"></a> `layout`                       | `string`             | How should the browser position the visualization with respect to the chat interface. `auto` uses `stacked` on mobile and `sidebar` on larger screens.<br>---<br>Optional<br>Default: `"auto"`<br>Possible values: `"auto"`, `"sidebar"`, `"stacked"` |
+| <a id="target-collection"></a> `target-collection` | `string` \| `number` | The collection to save a question to.<br>---<br>Optional                                                                                                                                                                                              |
 
 <!-- [<endsnippet properties>] -->
