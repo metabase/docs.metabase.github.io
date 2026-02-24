@@ -92,6 +92,8 @@ To create a transform:
 
    See [query-based transforms](query-transforms) and [Python transforms](python-transforms) for more information. You can reference target tables of other transforms when writing your transform.
 
+   If you're writing a SQL transform, variables _must_ be wrapped in optional blocks (`[[ ]]`), or given a default value. See [variables in SQL transforms](query-transforms#variables-in-sql-transforms) for more details.
+
    If you have the Metabot AI add-on, you can [use Metabot](#use-metabot-to-generate-code-for-transforms) to generate code for your transform.
 
 6. Click **Save** in the top right corner and fill out the transform information:
