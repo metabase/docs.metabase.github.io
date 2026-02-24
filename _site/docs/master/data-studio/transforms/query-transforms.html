@@ -5906,6 +5906,44 @@ Roadmap</a>
   </li>
 </ol>
 
+<h2 id="variables-in-sql-transforms">Variables in SQL transforms</h2>
+
+<p>SQL transforms support <a href="../../questions/native-editor/sql-parameters">variables</a> (<code class="language-plaintext highlighter-rouge">{{my_variable}} </code>), which are only useful when combined with <a href="../../questions/native-editor/snippets">snippets</a>.</p>
+
+<p>For (a really simple) example, let’s say you want to count rows per week across several tables. You could create a snippet called “rows per week” containing the full query with a <code class="language-plaintext highlighter-rouge">{{table}}</code> variable:</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">SELECT</span>
+  <span class="n">date_trunc</span><span class="p">(</span><span class="s1">'week'</span><span class="p">,</span> <span class="n">created_at</span><span class="p">)</span> <span class="k">AS</span> <span class="n">week</span><span class="p">,</span>
+  <span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="k">AS</span> <span class="k">row_count</span>
+<span class="k">FROM</span> <span class="p">{{</span><span class="k">table</span><span class="p">}}</span>
+<span class="k">GROUP</span> <span class="k">BY</span> <span class="n">week</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="n">week</span>
+
+</code></pre></div></div>
+
+<p>That way you can use the snippet to create multiple transforms, each sourced from different tables. Each transform’s entire SQL is just:</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{{</span><span class="n">snippet</span><span class="p">:</span> <span class="k">rows</span> <span class="n">per</span> <span class="n">week</span><span class="p">}}</span>
+</code></pre></div></div>
+
+<p>In each transform’s variable panel, set the default value of <code class="language-plaintext highlighter-rouge">table</code> to the target table (e.g., <code class="language-plaintext highlighter-rouge">orders</code>, <code class="language-plaintext highlighter-rouge">returns</code>, <code class="language-plaintext highlighter-rouge">subscriptions</code>). See <a href="../../questions/native-editor/table-variables">table variables</a>.</p>
+
+<p>If you ever need to change the query (say, to switch from weekly to daily granularity), you update the snippet once and every transform picks up the change on its next run.</p>
+
+<h3 id="transform-variable-must-be-optional-or-have-a-default-value">Transform variable must be optional, or have a default value</h3>
+
+<p>Parameters in transforms must either:</p>
+
+<ul>
+  <li>Wrap the variable in optional blocks (<code class="language-plaintext highlighter-rouge">[[ ]]</code>).</li>
+  <li>Supply a default value.</li>
+</ul>
+
+<p>The reason transform variables must have a default value (or be optional) is that transforms run on a schedule, so there’s no way to pass a value to the variable when the job runs the transform.</p>
+
+<p>The incremental <code class="language-plaintext highlighter-rouge">[[WHERE id &gt; {{checkpoint}}]]</code> pattern shown in <a href="#incremental-query-transforms">Incremental query transforms</a> is an example of this an optional variable in practice. See also <a href="../../questions/native-editor/optional-variables">optional variables</a>.</p>
+
 <h2 id="run-a-query-transform">Run a query transform</h2>
 
 <p>See <a href="transforms-overview#run-a-transform">Run a transform</a>. You’ll see logs for a transform run on the transform’s page.</p>
