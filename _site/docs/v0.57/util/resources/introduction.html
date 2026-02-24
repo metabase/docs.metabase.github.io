@@ -12,31 +12,32 @@
   <script type="text/javascript">
     window.HELP_IMPROVE_VIDEOJS = false;
 
-    function redirectTo(theLocation) {
-      if (typeof theLocation === "string") {
-        theLocation = new URL(theLocation);
+window.redirectTo = function redirectTo(theLocation) {
+  if (typeof theLocation === "string") {
+    theLocation = new URL(theLocation);
+  }
+
+  var redirectionSuffixes = ["/index.html", ".html", "/index"];
+  for (var i = 0; i < redirectionSuffixes.length; i = i + 1) {
+    var redirectionSuffix = redirectionSuffixes[i];
+    if (
+      theLocation.pathname &&
+      theLocation.pathname.length > redirectionSuffix.length &&
+      theLocation.pathname.indexOf(redirectionSuffix) ===
+        theLocation.pathname.length - redirectionSuffix.length
+    ) {
+      var pathname = theLocation.pathname.replace(redirectionSuffix, "");
+      if (pathname[pathname.length - 1] === "/") {
+        pathname = pathname.slice(0, -1);
       }
 
-      var redirectionSuffixes = ["/index.html", ".html", "/index"];
-      for (var i = 0; i < redirectionSuffixes.length; i = i + 1) {
-        var redirectionSuffix = redirectionSuffixes[i];
-        if (
-          theLocation.pathname &&
-          theLocation.pathname.length > redirectionSuffix.length &&
-          theLocation.pathname.indexOf(redirectionSuffix) ===
-            theLocation.pathname.length - redirectionSuffix.length
-        ) {
-          var pathname = theLocation.pathname.replace(redirectionSuffix, "");
-          if (pathname[pathname.length - 1] === "/") {
-            pathname = pathname.slice(0, -1);
-          }
-
-          return `${pathname}${theLocation.search}${theLocation.hash}`;
-        }
-      }
-
-      return null;
+      return `${pathname}${theLocation.search}${theLocation.hash}`;
     }
+  }
+
+  return null;
+};
+
   </script>
 
   
@@ -183,13 +184,12 @@
 <header class="bootstrap sticky">
   <div class="navigation-header bg-neutral-white bg-neutral-white">
     
-      <div class="promo-banner hidden">
+        <div class="promo-banner hidden">
   <div>
-    <span class="button">New</span>
-    <span>“Made with Metabase” community contest: share a project for a chance to win a limited‑edition mechanical keyboard ⌨️</span>
-    <a href="https://metaba.se/made-with-metabase">
-      Learn more
-      <img alt="Chevron Blue Right" src="/images/chevron_blue_right.svg">
+    <span class="button">Upcoming</span>
+    <span>JOIN: the first Metabase online conference, March 25.</span>
+    <a href="/join">
+      Register for Metabase JOIN<img alt="Chevron Blue Right" src="/images/chevron_blue_right.svg">
     </a>
   </div>
   <button>×</button>
@@ -290,14 +290,65 @@ Cloud</a>
     <div class="nav-menu overflow-hidden">
       <div class="d-flex flex-row">
         <div class="menu-links-wrapper">
+          <a class="menu-link" href="/features/metabot-ai">
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"><path stroke="#8D93A5" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.25 4.75H6.75a2 2 0 0 0-2 2v10.5a2 2 0 0 0 2 2h10.5a2 2 0 0 0 2-2V6.75a2 2 0 0 0-2-2Z"></path><path stroke="#8D93A5" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15.57 7.177H8.43c-.75 0-1.36.461-1.36 1.03v5.413c0 .57.61 1.03 1.36 1.03h7.14c.75 0 1.36-.46 1.36-1.03V8.208c0-.57-.61-1.031-1.36-1.031Z"></path><circle cx="9.625" cy="9.774" r=".75" fill="#8D93A5"></circle><circle cx="14.375" cy="9.774" r=".75" fill="#8D93A5"></circle><path stroke="#8D93A5" d="M13.266 11.152a1.266 1.266 0 1 1-2.532 0"></path><path stroke="#8D93A5" stroke-linecap="round" stroke-width="1.5" d="M14.709 17.079h2.002"></path></svg>
+  
+
+  <div>
+    <span class="menu-link-heading">
+      Metabot AI
+    </span>
+
+    
+
+    
+
+    
+  </div>
+</a>
+
+
+          <a class="menu-link" href="/product/data-studio">
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+  <path d="M9.75 15.25H17.25C18.3546 15.25 19.25 14.3546 19.25 13.25V6.75C19.25 5.64543 18.3546 4.75 17.25 4.75H6.75C5.64543 4.75 4.75 5.64543 4.75 6.75V13.25C4.75 14.3546 5.64543 15.25 6.75 15.25H9.75ZM9.75 15.25C9.75 15.25 10 18.25 8 19.25H16C14 18.25 14.25 15.25 14.25 15.25" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+  <path d="M15 12.5L15 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+  <path d="M9 12.5L9 10.4902" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+  <path d="M12 12.5L12 9.3501" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+
+  
+
+  <div>
+    <span class="menu-link-heading">
+      Data Studio
+    </span>
+
+    
+      <span class="badge">New</span>
+    
+
+    
+
+    
+  </div>
+</a>
+
+
           <a class="menu-link" href="/features/analytics-dashboards">
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  
+  
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path d="M19.25 12V6.75C19.25 5.64543 18.3546 4.75 17.25 4.75H6.75C5.64543 4.75 4.75 5.64543 4.75 6.75V17.25C4.75 18.3546 5.64543 19.25 6.75 19.25H12" stroke="#509EE3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
   <path d="M13 13L15.73 19.5L16.77 16.77L19.5 15.73L13 13Z" stroke="#509EE3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
   <path d="M16.77 16.77L19.5 19.5" stroke="#509EE3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
 </svg>
 
 
+  
 
   <div>
     <span class="menu-link-heading">
@@ -314,9 +365,12 @@ Cloud</a>
 
 
           <a class="menu-link" href="/features/query-builder">
-  <svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4.75 5.75a1 1 0 0 1 1-1h12.5a1 1 0 0 1 1 1v3.5a1 1 0 0 1-1 1H5.75a1 1 0 0 1-1-1v-3.5ZM4.75 14.75a1 1 0 0 1 1-1h12.5a1 1 0 0 1 1 1v3.5a1 1 0 0 1-1 1H5.75a1 1 0 0 1-1-1v-3.5ZM16.25 5v5M16.25 14v5" stroke="#509EE3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+  
+  
+    <svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4.75 5.75a1 1 0 0 1 1-1h12.5a1 1 0 0 1 1 1v3.5a1 1 0 0 1-1 1H5.75a1 1 0 0 1-1-1v-3.5ZM4.75 14.75a1 1 0 0 1 1-1h12.5a1 1 0 0 1 1 1v3.5a1 1 0 0 1-1 1H5.75a1 1 0 0 1-1-1v-3.5ZM16.25 5v5M16.25 14v5" stroke="#509EE3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
 
 
+  
 
   <div>
     <span class="menu-link-heading">
@@ -333,10 +387,13 @@ Cloud</a>
 
 
           <a class="menu-link" href="/features/data-segregation">
-  <svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  
+  
+    <svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path stroke="#509EE3" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.75 5.75a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1v3.5a1 1 0 0 1-1 1h-3.5a1 1 0 0 1-1-1v-3.5ZM4.75 14.75a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1v3.5a1 1 0 0 1-1 1h-3.5a1 1 0 0 1-1-1v-3.5ZM13.75 5.75a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1v3.5a1 1 0 0 1-1 1h-3.5a1 1 0 0 1-1-1v-3.5ZM13.75 14.75a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1v3.5a1 1 0 0 1-1 1h-3.5a1 1 0 0 1-1-1v-3.5Z"></path>
 </svg>
 
+  
 
   <div>
     <span class="menu-link-heading">
@@ -352,32 +409,10 @@ Cloud</a>
 </a>
 
 
-          <a class="menu-link" href="/features/semantic-layer">
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M4.75 8L12 4.75L19.25 8L12 11.25L4.75 8Z" stroke="#509EE3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-  <path d="M4.75 16L12 19.25L19.25 16" stroke="#509EE3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-  <path d="M19.25 8V16" stroke="#509EE3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-  <path d="M4.75 8V16" stroke="#509EE3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-  <path d="M12 11.5V19" stroke="#509EE3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-</svg>
-
-
-  <div>
-    <span class="menu-link-heading">
-      Semantic layer
-    </span>
-
-    
-
-    
-
-    
-  </div>
-</a>
-
-
           <a class="menu-link" href="/features/usage-analytics">
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  
+  
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path d="M17.5 10V6.75C17.5 5.64543 16.6046 4.75 15.5 4.75H7C5.89543 4.75 5 5.64543 5 6.75V17.25C5 18.3546 5.89543 19.25 7 19.25H10.25" stroke="#509EE3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
   <path d="M17.75 17.5L19.75 19.5" stroke="#509EE3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
   <circle cx="15.25" cy="15" r="3" stroke="#509EE3" stroke-width="1.5" stroke-linejoin="round"></circle>
@@ -386,6 +421,7 @@ Cloud</a>
   <path d="M7.25 16H9.25" stroke="#509EE3" stroke-width="1.5" stroke-linecap="round"></path>
 </svg>
 
+  
 
   <div>
     <span class="menu-link-heading">
@@ -400,31 +436,17 @@ Cloud</a>
   </div>
 </a>
 
-
-          <a class="menu-link" href="/features/metabot-ai">
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"><path stroke="#8D93A5" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.25 4.75H6.75a2 2 0 0 0-2 2v10.5a2 2 0 0 0 2 2h10.5a2 2 0 0 0 2-2V6.75a2 2 0 0 0-2-2Z"></path><path stroke="#8D93A5" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15.57 7.177H8.43c-.75 0-1.36.461-1.36 1.03v5.413c0 .57.61 1.03 1.36 1.03h7.14c.75 0 1.36-.46 1.36-1.03V8.208c0-.57-.61-1.031-1.36-1.031Z"></path><circle cx="9.625" cy="9.774" r=".75" fill="#8D93A5"></circle><circle cx="14.375" cy="9.774" r=".75" fill="#8D93A5"></circle><path stroke="#8D93A5" d="M13.266 11.152a1.266 1.266 0 1 1-2.532 0"></path><path stroke="#8D93A5" stroke-linecap="round" stroke-width="1.5" d="M14.709 17.079h2.002"></path></svg>
-
-  <div>
-    <span class="menu-link-heading">
-      Metabot AI
-    </span>
-
-    
-
-    
-
-    
-  </div>
-</a>
-
         </div>
 
         <div class="menu-links-wrapper">
           <a class="menu-link" href="/product/embedded-analytics-sdk">
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none">
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none">
   <path stroke="#8D93A5" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.75 6.75a2 2 0 0 1 2-2h10.5a2 2 0 0 1 2 2v10.5a2 2 0 0 1-2 2H6.75a2 2 0 0 1-2-2V6.75ZM9.75 8.75V19M5 8.25h14"></path>
 </svg>
 
+  
 
   <div>
     <span class="menu-link-heading">
@@ -441,10 +463,13 @@ Cloud</a>
 
 
           <a class="menu-link" href="/features/white-label-analytics">
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none">
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none">
   <path stroke="#8D93A5" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m4.75 16 2.746-3.493a2 2 0 0 1 3.09-.067L13 15.25m-2.085-2.427c1.037-1.32 2.482-3.188 2.576-3.31a2 2 0 0 1 3.094-.073L19 12.25m-12.25 7h10.5a2 2 0 0 0 2-2V6.75a2 2 0 0 0-2-2H6.75a2 2 0 0 0-2 2v10.5a2 2 0 0 0 2 2Z"></path>
 </svg>
 
+  
 
   <div>
     <span class="menu-link-heading">
@@ -461,10 +486,13 @@ Cloud</a>
 
 
           <a class="menu-link" href="/features/drill-through">
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none">
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none">
   <path stroke="#509ee3" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.25 19.25 15.5 15.5M4.75 11a6.25 6.25 0 1 1 12.5 0 6.25 6.25 0 0 1-12.5 0Z"></path>
 </svg>
 
+  
 
   <div>
     <span class="menu-link-heading">
@@ -481,11 +509,14 @@ Cloud</a>
 
 
           <a class="menu-link" href="/features/sql-editor">
-  <svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  
+  
+    <svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path stroke="#509EE3" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5.75 19.25h12.5a1 1 0 0 0 1-1V5.75a1 1 0 0 0-1-1H5.75a1 1 0 0 0-1 1v12.5a1 1 0 0 0 1 1ZM19.25 9.25h-14M19.25 14.75h-14"></path>
 </svg>
 
 
+  
 
   <div>
     <span class="menu-link-heading">
@@ -503,10 +534,13 @@ Cloud</a>
 
           <a class="menu-link" href="/features/permissions">
   
+  
+    
 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M19.25 12C19.25 13 17.5 18.25 12 18.25C6.5 18.25 4.75 13 4.75 12C4.75 11 6.5 5.75 12 5.75C17.5 5.75 19.25 11 19.25 12Z" stroke="#509EE3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
     <path d="M12 14.25C13.2426 14.25 14.25 13.2426 14.25 12C14.25 10.7574 13.2426 9.75 12 9.75C10.7574 9.75 9.75 10.7574 9.75 12C9.75 13.2426 10.7574 14.25 12 14.25Z" stroke="#509EE3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
 </svg>
+  
 
   <div>
     <span class="menu-link-heading">
@@ -523,12 +557,15 @@ Cloud</a>
 
 
           <a class="menu-link" href="/product/csv-uploads">
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  
+  
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path d="M8.25 17.5C6.45507 17.5 5 16.0449 5 14.25C5 12.5369 6.32542 11.1334 8.00672 11.009C8.13168 8.7739 9.98368 7 12.25 7C14.5163 7 16.3683 8.7739 16.4933 11.009C18.1746 11.1334 19.5 12.5369 19.5 14.25C19.5 16.0449 18.0449 17.5 16.25 17.5" stroke="#509EE3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
   <path d="M12.25 17.5L12.25 13.25" stroke="#509EE3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
   <path d="M9 14.5L12.25 12L15.5 14.5" stroke="#509EE3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
 </svg>
 
+  
 
   <div>
     <span class="menu-link-heading">
@@ -660,10 +697,13 @@ Roadmap</a>
     <div class="nav-menu d-flex flex-row" id="resources-nav-menu-desktop">
       <div class="menu-links-wrapper">
         <a class="menu-link" href="/blog">
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  
+  
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path d="M6.75 6.75C6.75 5.64543 7.64543 4.75 8.75 4.75H15.25C16.3546 4.75 17.25 5.64543 17.25 6.75V19.25L12 14.75L6.75 19.25V6.75Z" stroke="#509EE3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
 </svg>
 
+  
 
   <div>
     <span class="menu-link-heading">
@@ -682,11 +722,14 @@ Roadmap</a>
 
 
         <a class="menu-link" href="/events/">
-  <svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  
+  
+    <svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path stroke="#509EE3" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.75 6.75a2 2 0 0 1 2-2h10.5a2 2 0 0 1 2 2v10.5a2 2 0 0 1-2 2H6.75a2 2 0 0 1-2-2V6.75Z"></path>
   <path stroke="#509EE3" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m15.25 12-5.5-3.25v6.5l5.5-3.25Z"></path>
 </svg>
 
+  
 
   <div>
     <span class="menu-link-heading">
@@ -705,8 +748,11 @@ Roadmap</a>
 
 
         <a class="menu-link" href="/case-studies">
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"><path stroke="#509EE3" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11.995 7.233c-1.45-1.623-3.867-2.06-5.683-.573-1.816 1.486-2.072 3.971-.645 5.73l6.328 5.86 6.329-5.86c1.426-1.759 1.201-4.26-.646-5.73-1.848-1.471-4.233-1.05-5.683.573Z" clip-rule="evenodd"></path></svg>
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"><path stroke="#509EE3" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11.995 7.233c-1.45-1.623-3.867-2.06-5.683-.573-1.816 1.486-2.072 3.971-.645 5.73l6.328 5.86 6.329-5.86c1.426-1.759 1.201-4.26-.646-5.73-1.848-1.471-4.233-1.05-5.683.573Z" clip-rule="evenodd"></path></svg>
 
+  
 
   <div>
     <span class="menu-link-heading">
@@ -725,7 +771,9 @@ Roadmap</a>
 
 
         <a class="menu-link" href="https://discourse.metabase.com/">
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  
+  
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path d="M12 18.25C15.5 18.25 19.25 16.5 19.25 12C19.25 7.5 15.5 5.75 12 5.75C8.5 5.75 4.75 7.5 4.75 12C4.75 13.0298 4.94639 13.9156 5.29123 14.6693C5.50618 15.1392 5.62675 15.6573 5.53154 16.1651L5.26934 17.5635C5.13974 18.2547 5.74527 18.8603 6.43651 18.7307L9.64388 18.1293C9.896 18.082 10.1545 18.0861 10.4078 18.1263C10.935 18.2099 11.4704 18.25 12 18.25Z" stroke="#509EE3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
   <path d="M9.5 12C9.5 12.2761 9.27614 12.5 9 12.5C8.72386 12.5 8.5 12.2761 8.5 12C8.5 11.7239 8.72386 11.5 9 11.5C9.27614 11.5 9.5 11.7239 9.5 12Z" stroke="#509EE3" stroke-linecap="round" stroke-linejoin="round"></path>
   <path d="M12.5 12C12.5 12.2761 12.2761 12.5 12 12.5C11.7239 12.5 11.5 12.2761 11.5 12C11.5 11.7239 11.7239 11.5 12 11.5C12.2761 11.5 12.5 11.7239 12.5 12Z" stroke="#509EE3" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -733,6 +781,7 @@ Roadmap</a>
 </svg>
 
 
+  
 
   <div>
     <span class="menu-link-heading">
@@ -751,12 +800,15 @@ Roadmap</a>
 
 
         <a class="menu-link" href="/product/professional-services">
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  
+  
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
   <circle cx="12" cy="12" r="7.25" stroke="#509EE3" stroke-width="1.5"></circle>
   <path d="M17 17C17 17 14.6667 14.2685 12 14.2685C9.33333 14.2685 7 17 7 17" stroke="#509EE3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
   <path d="M15.25 11C15.25 12.7949 13.7949 14.25 12 14.25C10.2051 14.25 8.75 12.7949 8.75 11C8.75 9.20507 10.2051 7.75 12 7.75C13.7949 7.75 15.25 9.20507 15.25 11Z" stroke="#509EE3" stroke-width="1.5"></path>
 </svg>
 
+  
 
   <div>
     <span class="menu-link-heading">
@@ -775,12 +827,15 @@ Roadmap</a>
 
 
         <a class="menu-link" href="/partners/">
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  
+  
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path d="M4.75 6.75C4.75 5.64543 5.64543 4.75 6.75 4.75H17.25C18.3546 4.75 19.25 5.64543 19.25 6.75V14.25C19.25 15.3546 18.3546 16.25 17.25 16.25H14.625L12 19.25L9.375 16.25H6.75C5.64543 16.25 4.75 15.3546 4.75 14.25V6.75Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
   <path d="M9.5 11C9.5 11.2761 9.27614 11.5 9 11.5C8.72386 11.5 8.5 11.2761 8.5 11C8.5 10.7239 8.72386 10.5 9 10.5C9.27614 10.5 9.5 10.7239 9.5 11Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path>
   <path d="M12.5 11C12.5 11.2761 12.2761 11.5 12 11.5C11.7239 11.5 11.5 11.2761 11.5 11C11.5 10.7239 11.7239 10.5 12 10.5C12.2761 10.5 12.5 10.7239 12.5 11Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path>
   <path d="M15.5 11C15.5 11.2761 15.2761 11.5 15 11.5C14.7239 11.5 14.5 11.2761 14.5 11C14.5 10.7239 14.7239 10.5 15 10.5C15.2761 10.5 15.5 10.7239 15.5 11Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path>
 </svg>
+  
 
   <div>
     <span class="menu-link-heading">
@@ -802,28 +857,28 @@ Roadmap</a>
       <div class="menu-links-wrapper bg-neutral-95 blog-posts-wrapper">
         <span class="menu-heading">Recent Blog Posts</span>
         
-          <a class="w-100 post-with-image recent-blog-link mt-1" href="/blog/product-metrics">
-            <div class="d-flex align-items-center position-relative overflow-hidden rounded-2 mb-3" id="recent-blog-image-wrapper">
-              <img alt="Resources Image" class="position-absolute w-100" src="/images/posts/product-metrics-og.jpg" loading="lazy">
-            </div>
+        
+        <a class="w-100 post-with-image recent-blog-link mt-1" href="/blog/lessons-learned-building-ai-analytics-agents">
+          <div class="d-flex align-items-center position-relative overflow-hidden rounded-2 mb-3" id="recent-blog-image-wrapper">
+            <img alt="Resources Image" class="position-absolute w-100" src="/images/posts/metabot-ai-talk-og.png" loading="lazy">
+          </div>
+          <span class="h6 neutral-40 recent-blog-link-heading mb-3">Lessons learned from building AI analytics agents: build for chaos</span>
+        </a>
+        
+          <a class="w-100 recent-blog-link" href="/blog/we-simplified-metabase-embedding">
+            <span class="h6 neutral-40 recent-blog-link-heading mb-3">We simplified embedding</span>
+          </a>
+        
+          <a class="w-100 recent-blog-link" href="/blog/data-analyst-roadmap">
+            <span class="h6 neutral-40 recent-blog-link-heading mb-3">Become a data analyst in 2026: a practical roadmap</span>
+          </a>
+        
+          <a class="w-100 recent-blog-link" href="/blog/product-metrics">
             <span class="h6 neutral-40 recent-blog-link-heading mb-3">10 B2B SaaS product metrics that should be on your dashboard</span>
           </a>
         
-        
           <a class="w-100 recent-blog-link" href="/blog/metabase-community-data-stack-report-2025-key-analysis">
             <span class="h6 neutral-40 recent-blog-link-heading mb-3">Metabase Community Data Stack Report 2025</span>
-          </a>
-        
-          <a class="w-100 recent-blog-link" href="/blog/story-behind-ai-dataset-generator">
-            <span class="h6 neutral-40 recent-blog-link-heading mb-3">The story behind our AI Dataset Generator</span>
-          </a>
-        
-          <a class="w-100 recent-blog-link" href="/blog/how-to-build-sales-dashboards">
-            <span class="h6 neutral-40 recent-blog-link-heading mb-3">How to build sales dashboards that sales teams actually use</span>
-          </a>
-        
-          <a class="w-100 recent-blog-link" href="/blog/what-is-embedded-analytics">
-            <span class="h6 neutral-40 recent-blog-link-heading mb-3">What is embedded analytics?</span>
           </a>
         
       </div>
@@ -904,11 +959,14 @@ Roadmap</a>
   <span class="menu-heading mobile">Platform</span>
 
   <a class="menu-link" href="/data-sources/">
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  
+  
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path d="M5 7.55556V16.4444C5 18.4089 8.13425 20 12 20C15.8658 20 19 18.4089 19 16.4444V7.55556M5 7.55556C5 9.52 8.13425 11.1111 12 11.1111C15.8658 11.1111 19 9.52 19 7.55556M5 7.55556C5 5.59111 8.13425 4 12 4C15.8658 4 19 5.59111 19 7.55556M19 12C19 13.9644 15.8658 15.5556 12 15.5556C8.13425 15.5556 5 13.9644 5 12" stroke="#509EE3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>
 </svg>
 
 
+  
 
   <div>
     <span class="menu-link-heading">
@@ -925,9 +983,12 @@ Roadmap</a>
 
 
   <a class="menu-link" href="/security">
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"><path stroke="#509EE3" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12.003 4.75 4.753 8s-.75 11.25 7.25 11.25S19.253 8 19.253 8l-7.25-3.25Z"></path><path stroke="#509EE3" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m9.75 12.75 1.25 1.5 3.25-4.5"></path></svg>
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path stroke="#509EE3" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12.003 4.75 4.753 8s-.75 11.25 7.25 11.25S19.253 8 19.253 8l-7.25-3.25Z"></path><path stroke="#509EE3" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m9.75 12.75 1.25 1.5 3.25-4.5"></path></svg>
 
 
+  
 
   <div>
     <span class="menu-link-heading">
@@ -944,10 +1005,13 @@ Roadmap</a>
 
 
   <a class="menu-link" href="/cloud/">
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="">
+  
+  
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="">
   <path d="M4.75 14C4.75 15.7949 6.20507 17.25 8 17.25H16C17.7949 17.25 19.25 15.7949 19.25 14C19.25 12.2869 17.9246 10.8834 16.2433 10.759C16.1183 8.5239 14.2663 6.75 12 6.75C9.73368 6.75 7.88168 8.5239 7.75672 10.759C6.07542 10.8834 4.75 12.2869 4.75 14Z" stroke="#509EE3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
 </svg>
 
+  
 
   <div>
     <span class="menu-link-heading">
@@ -989,11 +1053,62 @@ Roadmap</a>
 </label>
 
 <div id="features-dropdown-mobile">
+  <a class="menu-link" href="/features/metabot-ai">
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"><path stroke="#8D93A5" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.25 4.75H6.75a2 2 0 0 0-2 2v10.5a2 2 0 0 0 2 2h10.5a2 2 0 0 0 2-2V6.75a2 2 0 0 0-2-2Z"></path><path stroke="#8D93A5" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15.57 7.177H8.43c-.75 0-1.36.461-1.36 1.03v5.413c0 .57.61 1.03 1.36 1.03h7.14c.75 0 1.36-.46 1.36-1.03V8.208c0-.57-.61-1.031-1.36-1.031Z"></path><circle cx="9.625" cy="9.774" r=".75" fill="#8D93A5"></circle><circle cx="14.375" cy="9.774" r=".75" fill="#8D93A5"></circle><path stroke="#8D93A5" d="M13.266 11.152a1.266 1.266 0 1 1-2.532 0"></path><path stroke="#8D93A5" stroke-linecap="round" stroke-width="1.5" d="M14.709 17.079h2.002"></path></svg>
+  
+
+  <div>
+    <span class="menu-link-heading">
+      Metabot AI
+    </span>
+
+    
+
+    
+
+    
+  </div>
+</a>
+
+
+  <a class="menu-link" href="/product/data-studio">
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+  <path d="M9.75 15.25H17.25C18.3546 15.25 19.25 14.3546 19.25 13.25V6.75C19.25 5.64543 18.3546 4.75 17.25 4.75H6.75C5.64543 4.75 4.75 5.64543 4.75 6.75V13.25C4.75 14.3546 5.64543 15.25 6.75 15.25H9.75ZM9.75 15.25C9.75 15.25 10 18.25 8 19.25H16C14 18.25 14.25 15.25 14.25 15.25" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+  <path d="M15 12.5L15 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+  <path d="M9 12.5L9 10.4902" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+  <path d="M12 12.5L12 9.3501" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+
+  
+
+  <div>
+    <span class="menu-link-heading">
+      Data Studio
+    </span>
+
+    
+      <span class="badge">New</span>
+    
+
+    
+
+    
+  </div>
+</a>
+
+
   <a class="menu-link" href="/product/embedded-analytics-sdk">
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none">
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none">
   <path stroke="#8D93A5" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.75 6.75a2 2 0 0 1 2-2h10.5a2 2 0 0 1 2 2v10.5a2 2 0 0 1-2 2H6.75a2 2 0 0 1-2-2V6.75ZM9.75 8.75V19M5 8.25h14"></path>
 </svg>
 
+  
 
   <div>
     <span class="menu-link-heading">
@@ -1010,10 +1125,13 @@ Roadmap</a>
 
 
   <a class="menu-link" href="/features/white-label-analytics">
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none">
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none">
   <path stroke="#8D93A5" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m4.75 16 2.746-3.493a2 2 0 0 1 3.09-.067L13 15.25m-2.085-2.427c1.037-1.32 2.482-3.188 2.576-3.31a2 2 0 0 1 3.094-.073L19 12.25m-12.25 7h10.5a2 2 0 0 0 2-2V6.75a2 2 0 0 0-2-2H6.75a2 2 0 0 0-2 2v10.5a2 2 0 0 0 2 2Z"></path>
 </svg>
 
+  
 
   <div>
     <span class="menu-link-heading">
@@ -1030,13 +1148,16 @@ Roadmap</a>
 
 
   <a class="menu-link" href="/features/analytics-dashboards">
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  
+  
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path d="M19.25 12V6.75C19.25 5.64543 18.3546 4.75 17.25 4.75H6.75C5.64543 4.75 4.75 5.64543 4.75 6.75V17.25C4.75 18.3546 5.64543 19.25 6.75 19.25H12" stroke="#509EE3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
   <path d="M13 13L15.73 19.5L16.77 16.77L19.5 15.73L13 13Z" stroke="#509EE3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
   <path d="M16.77 16.77L19.5 19.5" stroke="#509EE3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
 </svg>
 
 
+  
 
   <div>
     <span class="menu-link-heading">
@@ -1053,10 +1174,13 @@ Roadmap</a>
 
 
   <a class="menu-link" href="/features/drill-through">
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none">
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none">
   <path stroke="#509ee3" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.25 19.25 15.5 15.5M4.75 11a6.25 6.25 0 1 1 12.5 0 6.25 6.25 0 0 1-12.5 0Z"></path>
 </svg>
 
+  
 
   <div>
     <span class="menu-link-heading">
@@ -1073,9 +1197,12 @@ Roadmap</a>
 
 
   <a class="menu-link" href="/features/query-builder">
-  <svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4.75 5.75a1 1 0 0 1 1-1h12.5a1 1 0 0 1 1 1v3.5a1 1 0 0 1-1 1H5.75a1 1 0 0 1-1-1v-3.5ZM4.75 14.75a1 1 0 0 1 1-1h12.5a1 1 0 0 1 1 1v3.5a1 1 0 0 1-1 1H5.75a1 1 0 0 1-1-1v-3.5ZM16.25 5v5M16.25 14v5" stroke="#509EE3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+  
+  
+    <svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4.75 5.75a1 1 0 0 1 1-1h12.5a1 1 0 0 1 1 1v3.5a1 1 0 0 1-1 1H5.75a1 1 0 0 1-1-1v-3.5ZM4.75 14.75a1 1 0 0 1 1-1h12.5a1 1 0 0 1 1 1v3.5a1 1 0 0 1-1 1H5.75a1 1 0 0 1-1-1v-3.5ZM16.25 5v5M16.25 14v5" stroke="#509EE3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
 
 
+  
 
   <div>
     <span class="menu-link-heading">
@@ -1092,11 +1219,14 @@ Roadmap</a>
 
 
   <a class="menu-link" href="/features/sql-editor">
-  <svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  
+  
+    <svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path stroke="#509EE3" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5.75 19.25h12.5a1 1 0 0 0 1-1V5.75a1 1 0 0 0-1-1H5.75a1 1 0 0 0-1 1v12.5a1 1 0 0 0 1 1ZM19.25 9.25h-14M19.25 14.75h-14"></path>
 </svg>
 
 
+  
 
   <div>
     <span class="menu-link-heading">
@@ -1113,7 +1243,9 @@ Roadmap</a>
 
 
   <a class="menu-link" href="/features/semantic-layer">
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  
+  
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path d="M4.75 8L12 4.75L19.25 8L12 11.25L4.75 8Z" stroke="#509EE3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
   <path d="M4.75 16L12 19.25L19.25 16" stroke="#509EE3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
   <path d="M19.25 8V16" stroke="#509EE3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -1121,6 +1253,7 @@ Roadmap</a>
   <path d="M12 11.5V19" stroke="#509EE3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
 </svg>
 
+  
 
   <div>
     <span class="menu-link-heading">
@@ -1138,10 +1271,13 @@ Roadmap</a>
 
   <a class="menu-link" href="/features/permissions">
   
+  
+    
 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M19.25 12C19.25 13 17.5 18.25 12 18.25C6.5 18.25 4.75 13 4.75 12C4.75 11 6.5 5.75 12 5.75C17.5 5.75 19.25 11 19.25 12Z" stroke="#509EE3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
     <path d="M12 14.25C13.2426 14.25 14.25 13.2426 14.25 12C14.25 10.7574 13.2426 9.75 12 9.75C10.7574 9.75 9.75 10.7574 9.75 12C9.75 13.2426 10.7574 14.25 12 14.25Z" stroke="#509EE3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
 </svg>
+  
 
   <div>
     <span class="menu-link-heading">
@@ -1158,12 +1294,15 @@ Roadmap</a>
 
 
   <a class="menu-link" href="/product/csv-uploads">
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  
+  
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path d="M8.25 17.5C6.45507 17.5 5 16.0449 5 14.25C5 12.5369 6.32542 11.1334 8.00672 11.009C8.13168 8.7739 9.98368 7 12.25 7C14.5163 7 16.3683 8.7739 16.4933 11.009C18.1746 11.1334 19.5 12.5369 19.5 14.25C19.5 16.0449 18.0449 17.5 16.25 17.5" stroke="#509EE3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
   <path d="M12.25 17.5L12.25 13.25" stroke="#509EE3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
   <path d="M9 14.5L12.25 12L15.5 14.5" stroke="#509EE3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
 </svg>
 
+  
 
   <div>
     <span class="menu-link-heading">
@@ -1180,10 +1319,13 @@ Roadmap</a>
 
 
   <a class="menu-link" href="/features/data-segregation">
-  <svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  
+  
+    <svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path stroke="#509EE3" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.75 5.75a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1v3.5a1 1 0 0 1-1 1h-3.5a1 1 0 0 1-1-1v-3.5ZM4.75 14.75a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1v3.5a1 1 0 0 1-1 1h-3.5a1 1 0 0 1-1-1v-3.5ZM13.75 5.75a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1v3.5a1 1 0 0 1-1 1h-3.5a1 1 0 0 1-1-1v-3.5ZM13.75 14.75a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1v3.5a1 1 0 0 1-1 1h-3.5a1 1 0 0 1-1-1v-3.5Z"></path>
 </svg>
 
+  
 
   <div>
     <span class="menu-link-heading">
@@ -1200,7 +1342,9 @@ Roadmap</a>
 
 
   <a class="menu-link" href="/features/usage-analytics">
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  
+  
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path d="M17.5 10V6.75C17.5 5.64543 16.6046 4.75 15.5 4.75H7C5.89543 4.75 5 5.64543 5 6.75V17.25C5 18.3546 5.89543 19.25 7 19.25H10.25" stroke="#509EE3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
   <path d="M17.75 17.5L19.75 19.5" stroke="#509EE3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
   <circle cx="15.25" cy="15" r="3" stroke="#509EE3" stroke-width="1.5" stroke-linejoin="round"></circle>
@@ -1209,6 +1353,7 @@ Roadmap</a>
   <path d="M7.25 16H9.25" stroke="#509EE3" stroke-width="1.5" stroke-linecap="round"></path>
 </svg>
 
+  
 
   <div>
     <span class="menu-link-heading">
@@ -1224,28 +1369,14 @@ Roadmap</a>
 </a>
 
 
-  <a class="menu-link" href="/features/metabot-ai">
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"><path stroke="#8D93A5" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.25 4.75H6.75a2 2 0 0 0-2 2v10.5a2 2 0 0 0 2 2h10.5a2 2 0 0 0 2-2V6.75a2 2 0 0 0-2-2Z"></path><path stroke="#8D93A5" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15.57 7.177H8.43c-.75 0-1.36.461-1.36 1.03v5.413c0 .57.61 1.03 1.36 1.03h7.14c.75 0 1.36-.46 1.36-1.03V8.208c0-.57-.61-1.031-1.36-1.031Z"></path><circle cx="9.625" cy="9.774" r=".75" fill="#8D93A5"></circle><circle cx="14.375" cy="9.774" r=".75" fill="#8D93A5"></circle><path stroke="#8D93A5" d="M13.266 11.152a1.266 1.266 0 1 1-2.532 0"></path><path stroke="#8D93A5" stroke-linecap="round" stroke-width="1.5" d="M14.709 17.079h2.002"></path></svg>
-
-  <div>
-    <span class="menu-link-heading">
-      Metabot AI
-    </span>
-
-    
-
-    
-
-    
-  </div>
-</a>
-
-
   <span class="menu-heading mobile">Updates</span>
 
   <a class="menu-link" href="/releases">
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path stroke="#509EE3" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16.283 12.26 15.5 15l-.783-2.74a4.333 4.333 0 0 0-2.975-2.976L9 8.5l2.74-.783a4.333 4.333 0 0 0 2.976-2.975L15.5 2l.783 2.74a4.333 4.333 0 0 0 2.975 2.976L22 8.5l-2.74.783a4.334 4.334 0 0 0-2.976 2.975l-.001.001ZM6.5 22l.591-1.774a3.375 3.375 0 0 1 2.135-2.135L11 17.5l-1.774-.591a3.375 3.375 0 0 1-2.135-2.134L6.5 13l-.591 1.774a3.375 3.375 0 0 1-2.134 2.135L2 17.5l1.775.591a3.375 3.375 0 0 1 2.134 2.134L6.5 22Z"></path></svg>
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path stroke="#509EE3" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16.283 12.26 15.5 15l-.783-2.74a4.333 4.333 0 0 0-2.975-2.976L9 8.5l2.74-.783a4.333 4.333 0 0 0 2.976-2.975L15.5 2l.783 2.74a4.333 4.333 0 0 0 2.975 2.976L22 8.5l-2.74.783a4.334 4.334 0 0 0-2.976 2.975l-.001.001ZM6.5 22l.591-1.774a3.375 3.375 0 0 1 2.135-2.135L11 17.5l-1.774-.591a3.375 3.375 0 0 1-2.135-2.134L6.5 13l-.591 1.774a3.375 3.375 0 0 1-2.134 2.135L2 17.5l1.775.591a3.375 3.375 0 0 1 2.134 2.134L6.5 22Z"></path></svg>
 
+  
 
   <div>
     <span class="menu-link-heading">
@@ -1261,10 +1392,13 @@ Roadmap</a>
 </a>
 
   <a class="menu-link" href="/roadmap">
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none">
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none">
   <path stroke="#8D93A5" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m4.75 6.75 4.5-2v12.5l-4.5 2V6.75ZM14.75 6.75l4.5-2v12.5l-4.5 2V6.75ZM14.75 6.75l-5.5-2v12.5l5.5 2V6.75Z"></path>
 </svg>
 
+  
 
   <div>
     <span class="menu-link-heading">
@@ -1389,10 +1523,13 @@ Roadmap</a>
 </label>
 <div id="resources-dropdown-mobile">
   <a class="menu-link" href="/blog">
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  
+  
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path d="M6.75 6.75C6.75 5.64543 7.64543 4.75 8.75 4.75H15.25C16.3546 4.75 17.25 5.64543 17.25 6.75V19.25L12 14.75L6.75 19.25V6.75Z" stroke="#509EE3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
 </svg>
 
+  
 
   <div>
     <span class="menu-link-heading">
@@ -1409,11 +1546,14 @@ Roadmap</a>
 
 
   <a class="menu-link" href="/events/">
-  <svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  
+  
+    <svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path stroke="#509EE3" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.75 6.75a2 2 0 0 1 2-2h10.5a2 2 0 0 1 2 2v10.5a2 2 0 0 1-2 2H6.75a2 2 0 0 1-2-2V6.75Z"></path>
   <path stroke="#509EE3" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m15.25 12-5.5-3.25v6.5l5.5-3.25Z"></path>
 </svg>
 
+  
 
   <div>
     <span class="menu-link-heading">
@@ -1430,8 +1570,11 @@ Roadmap</a>
 
 
   <a class="menu-link" href="/case-studies">
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"><path stroke="#509EE3" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11.995 7.233c-1.45-1.623-3.867-2.06-5.683-.573-1.816 1.486-2.072 3.971-.645 5.73l6.328 5.86 6.329-5.86c1.426-1.759 1.201-4.26-.646-5.73-1.848-1.471-4.233-1.05-5.683.573Z" clip-rule="evenodd"></path></svg>
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"><path stroke="#509EE3" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11.995 7.233c-1.45-1.623-3.867-2.06-5.683-.573-1.816 1.486-2.072 3.971-.645 5.73l6.328 5.86 6.329-5.86c1.426-1.759 1.201-4.26-.646-5.73-1.848-1.471-4.233-1.05-5.683.573Z" clip-rule="evenodd"></path></svg>
 
+  
 
   <div>
     <span class="menu-link-heading">
@@ -1448,7 +1591,9 @@ Roadmap</a>
 
 
   <a class="menu-link" href="https://discourse.metabase.com/">
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  
+  
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path d="M12 18.25C15.5 18.25 19.25 16.5 19.25 12C19.25 7.5 15.5 5.75 12 5.75C8.5 5.75 4.75 7.5 4.75 12C4.75 13.0298 4.94639 13.9156 5.29123 14.6693C5.50618 15.1392 5.62675 15.6573 5.53154 16.1651L5.26934 17.5635C5.13974 18.2547 5.74527 18.8603 6.43651 18.7307L9.64388 18.1293C9.896 18.082 10.1545 18.0861 10.4078 18.1263C10.935 18.2099 11.4704 18.25 12 18.25Z" stroke="#509EE3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
   <path d="M9.5 12C9.5 12.2761 9.27614 12.5 9 12.5C8.72386 12.5 8.5 12.2761 8.5 12C8.5 11.7239 8.72386 11.5 9 11.5C9.27614 11.5 9.5 11.7239 9.5 12Z" stroke="#509EE3" stroke-linecap="round" stroke-linejoin="round"></path>
   <path d="M12.5 12C12.5 12.2761 12.2761 12.5 12 12.5C11.7239 12.5 11.5 12.2761 11.5 12C11.5 11.7239 11.7239 11.5 12 11.5C12.2761 11.5 12.5 11.7239 12.5 12Z" stroke="#509EE3" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -1456,6 +1601,7 @@ Roadmap</a>
 </svg>
 
 
+  
 
   <div>
     <span class="menu-link-heading">
@@ -1472,12 +1618,15 @@ Roadmap</a>
 
 
   <a class="menu-link" href="/product/professional-services">
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  
+  
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
   <circle cx="12" cy="12" r="7.25" stroke="#509EE3" stroke-width="1.5"></circle>
   <path d="M17 17C17 17 14.6667 14.2685 12 14.2685C9.33333 14.2685 7 17 7 17" stroke="#509EE3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
   <path d="M15.25 11C15.25 12.7949 13.7949 14.25 12 14.25C10.2051 14.25 8.75 12.7949 8.75 11C8.75 9.20507 10.2051 7.75 12 7.75C13.7949 7.75 15.25 9.20507 15.25 11Z" stroke="#509EE3" stroke-width="1.5"></path>
 </svg>
 
+  
 
   <div>
     <span class="menu-link-heading">
@@ -1494,12 +1643,15 @@ Roadmap</a>
 
 
   <a class="menu-link" href="/partners/">
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  
+  
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path d="M4.75 6.75C4.75 5.64543 5.64543 4.75 6.75 4.75H17.25C18.3546 4.75 19.25 5.64543 19.25 6.75V14.25C19.25 15.3546 18.3546 16.25 17.25 16.25H14.625L12 19.25L9.375 16.25H6.75C5.64543 16.25 4.75 15.3546 4.75 14.25V6.75Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
   <path d="M9.5 11C9.5 11.2761 9.27614 11.5 9 11.5C8.72386 11.5 8.5 11.2761 8.5 11C8.5 10.7239 8.72386 10.5 9 10.5C9.27614 10.5 9.5 10.7239 9.5 11Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path>
   <path d="M12.5 11C12.5 11.2761 12.2761 11.5 12 11.5C11.7239 11.5 11.5 11.2761 11.5 11C11.5 10.7239 11.7239 10.5 12 10.5C12.2761 10.5 12.5 10.7239 12.5 11Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path>
   <path d="M15.5 11C15.5 11.2761 15.2761 11.5 15 11.5C14.7239 11.5 14.5 11.2761 14.5 11C14.5 10.7239 14.7239 10.5 15 10.5C15.2761 10.5 15.5 10.7239 15.5 11Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path>
 </svg>
+  
 
   <div>
     <span class="menu-link-heading">
@@ -1620,7 +1772,7 @@ Roadmap</a>
       
 
       <li class="">
-        <a href="/docs/v0.57/questions/start" class="">
+        <a href="/docs/v0.58/questions/start" class="">
         Queries and charts
 
           
@@ -1643,7 +1795,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/questions/introduction" class="">
+                <a href="/docs/v0.58/questions/introduction" class="">
                   Introduction
 
                   
@@ -1679,7 +1831,7 @@ Roadmap</a>
 
                       
                       <li class="">
-                        <a href="/docs/v0.57/questions/query-builder/editor" class="">
+                        <a href="/docs/v0.58/questions/query-builder/editor" class="">
                           Editor
 
                           
@@ -1693,7 +1845,7 @@ Roadmap</a>
 
                       
                       <li class="">
-                        <a href="/docs/v0.57/questions/query-builder/filters" class="">
+                        <a href="/docs/v0.58/questions/query-builder/filters" class="">
                           Filtering
 
                           
@@ -1707,7 +1859,7 @@ Roadmap</a>
 
                       
                       <li class="">
-                        <a href="/docs/v0.57/questions/query-builder/summarizing-and-grouping" class="">
+                        <a href="/docs/v0.58/questions/query-builder/summarizing-and-grouping" class="">
                           Summarizing and grouping
 
                           
@@ -1721,7 +1873,7 @@ Roadmap</a>
 
                       
                       <li class="">
-                        <a href="/docs/v0.57/questions/query-builder/join" class="">
+                        <a href="/docs/v0.58/questions/query-builder/join" class="">
                           Joining data
 
                           
@@ -1735,7 +1887,7 @@ Roadmap</a>
 
                       
                       <li class="">
-                        <a href="/docs/v0.57/questions/query-builder/expressions" class="">
+                        <a href="/docs/v0.58/questions/query-builder/expressions" class="">
                           Custom expressions
 
                           
@@ -1749,7 +1901,7 @@ Roadmap</a>
 
                       
                       <li class="">
-                        <a href="/docs/v0.57/questions/query-builder/expressions-list" class="">
+                        <a href="/docs/v0.58/questions/query-builder/expressions-list" class="">
                           List of expressions
 
                           
@@ -1789,7 +1941,7 @@ Roadmap</a>
 
                       
                       <li class="">
-                        <a href="/docs/v0.57/questions/native-editor/writing-sql" class="">
+                        <a href="/docs/v0.58/questions/native-editor/writing-sql" class="">
                           SQL editor
 
                           
@@ -1803,7 +1955,7 @@ Roadmap</a>
 
                       
                       <li class="">
-                        <a href="/docs/v0.57/questions/native-editor/sql-parameters" class="">
+                        <a href="/docs/v0.58/questions/native-editor/sql-parameters" class="">
                           SQL parameters
 
                           
@@ -1817,7 +1969,7 @@ Roadmap</a>
 
                       
                       <li class="">
-                        <a href="/docs/v0.57/questions/native-editor/field-filters" class="">
+                        <a href="/docs/v0.58/questions/native-editor/field-filters" class="">
                           Field filters
 
                           
@@ -1831,7 +1983,7 @@ Roadmap</a>
 
                       
                       <li class="">
-                        <a href="/docs/v0.57/questions/native-editor/basic-sql-parameters" class="">
+                        <a href="/docs/v0.58/questions/native-editor/basic-sql-parameters" class="">
                           Basic SQL parameters
 
                           
@@ -1845,7 +1997,7 @@ Roadmap</a>
 
                       
                       <li class="">
-                        <a href="/docs/v0.57/questions/native-editor/time-grouping-parameters" class="">
+                        <a href="/docs/v0.58/questions/native-editor/time-grouping-parameters" class="">
                           Time grouping parameters
 
                           
@@ -1859,7 +2011,7 @@ Roadmap</a>
 
                       
                       <li class="">
-                        <a href="/docs/v0.57/questions/native-editor/optional-variables" class="">
+                        <a href="/docs/v0.58/questions/native-editor/optional-variables" class="">
                           Optional variables
 
                           
@@ -1873,7 +2025,7 @@ Roadmap</a>
 
                       
                       <li class="">
-                        <a href="/docs/v0.57/questions/native-editor/filter-widgets" class="">
+                        <a href="/docs/v0.58/questions/native-editor/filter-widgets" class="">
                           Filter widgets
 
                           
@@ -1887,7 +2039,7 @@ Roadmap</a>
 
                       
                       <li class="">
-                        <a href="/docs/v0.57/questions/native-editor/referencing-saved-questions-in-queries" class="">
+                        <a href="/docs/v0.58/questions/native-editor/referencing-saved-questions-in-queries" class="">
                           Referencing models and questions
 
                           
@@ -1901,7 +2053,7 @@ Roadmap</a>
 
                       
                       <li class="">
-                        <a href="/docs/v0.57/questions/native-editor/snippets" class="">
+                        <a href="/docs/v0.58/questions/native-editor/snippets" class="">
                           Snippets
 
                           
@@ -1915,7 +2067,7 @@ Roadmap</a>
 
                       
                       <li class="">
-                        <a href="/docs/v0.57/permissions/snippets" class="">
+                        <a href="/docs/v0.58/permissions/snippets" class="">
                           Snippet folder permissions
 
                           
@@ -1955,7 +2107,7 @@ Roadmap</a>
 
                       
                       <li class="">
-                        <a href="/docs/v0.57/questions/visualizations/visualizing-results" class="">
+                        <a href="/docs/v0.58/questions/visualizations/visualizing-results" class="">
                           Overview
 
                           
@@ -1969,7 +2121,7 @@ Roadmap</a>
 
                       
                       <li class="">
-                        <a href="/docs/v0.57/questions/visualizations/combo-chart" class="">
+                        <a href="/docs/v0.58/questions/visualizations/combo-chart" class="">
                           Combo chart
 
                           
@@ -1983,7 +2135,7 @@ Roadmap</a>
 
                       
                       <li class="">
-                        <a href="/docs/v0.57/questions/visualizations/detail" class="">
+                        <a href="/docs/v0.58/questions/visualizations/detail" class="">
                           Details chart
 
                           
@@ -1997,7 +2149,7 @@ Roadmap</a>
 
                       
                       <li class="">
-                        <a href="/docs/v0.57/questions/visualizations/funnel" class="">
+                        <a href="/docs/v0.58/questions/visualizations/funnel" class="">
                           Funnel chart
 
                           
@@ -2011,7 +2163,7 @@ Roadmap</a>
 
                       
                       <li class="">
-                        <a href="/docs/v0.57/questions/visualizations/gauge" class="">
+                        <a href="/docs/v0.58/questions/visualizations/gauge" class="">
                           Gauge chart
 
                           
@@ -2025,7 +2177,7 @@ Roadmap</a>
 
                       
                       <li class="">
-                        <a href="/docs/v0.57/questions/visualizations/line-bar-and-area-charts" class="">
+                        <a href="/docs/v0.58/questions/visualizations/line-bar-and-area-charts" class="">
                           Line, bar, and area charts
 
                           
@@ -2039,7 +2191,7 @@ Roadmap</a>
 
                       
                       <li class="">
-                        <a href="/docs/v0.57/questions/visualizations/map" class="">
+                        <a href="/docs/v0.58/questions/visualizations/map" class="">
                           Maps
 
                           
@@ -2053,7 +2205,7 @@ Roadmap</a>
 
                       
                       <li class="">
-                        <a href="/docs/v0.57/questions/visualizations/numbers" class="">
+                        <a href="/docs/v0.58/questions/visualizations/numbers" class="">
                           Number chart
 
                           
@@ -2067,7 +2219,7 @@ Roadmap</a>
 
                       
                       <li class="">
-                        <a href="/docs/v0.57/questions/visualizations/pie-or-donut-chart" class="">
+                        <a href="/docs/v0.58/questions/visualizations/pie-or-donut-chart" class="">
                           Pie and sunburst charts
 
                           
@@ -2081,7 +2233,7 @@ Roadmap</a>
 
                       
                       <li class="">
-                        <a href="/docs/v0.57/questions/visualizations/pivot-table" class="">
+                        <a href="/docs/v0.58/questions/visualizations/pivot-table" class="">
                           Pivot tables
 
                           
@@ -2095,7 +2247,7 @@ Roadmap</a>
 
                       
                       <li class="">
-                        <a href="/docs/v0.57/questions/visualizations/progress-bar" class="">
+                        <a href="/docs/v0.58/questions/visualizations/progress-bar" class="">
                           Progress bar
 
                           
@@ -2109,7 +2261,7 @@ Roadmap</a>
 
                       
                       <li class="">
-                        <a href="/docs/v0.57/questions/visualizations/sankey" class="">
+                        <a href="/docs/v0.58/questions/visualizations/sankey" class="">
                           Sankey chart
 
                           
@@ -2123,7 +2275,7 @@ Roadmap</a>
 
                       
                       <li class="">
-                        <a href="/docs/v0.57/questions/visualizations/scatterplot-or-bubble-chart" class="">
+                        <a href="/docs/v0.58/questions/visualizations/scatterplot-or-bubble-chart" class="">
                           Scatterplot
 
                           
@@ -2137,7 +2289,7 @@ Roadmap</a>
 
                       
                       <li class="">
-                        <a href="/docs/v0.57/questions/visualizations/table" class="">
+                        <a href="/docs/v0.58/questions/visualizations/table" class="">
                           Table
 
                           
@@ -2151,7 +2303,7 @@ Roadmap</a>
 
                       
                       <li class="">
-                        <a href="/docs/v0.57/questions/visualizations/trend" class="">
+                        <a href="/docs/v0.58/questions/visualizations/trend" class="">
                           Trend chart
 
                           
@@ -2165,7 +2317,7 @@ Roadmap</a>
 
                       
                       <li class="">
-                        <a href="/docs/v0.57/questions/visualizations/waterfall-chart" class="">
+                        <a href="/docs/v0.58/questions/visualizations/waterfall-chart" class="">
                           Waterfall chart
 
                           
@@ -2179,7 +2331,7 @@ Roadmap</a>
 
                       
                       <li class="">
-                        <a href="/docs/v0.57/questions/visualizations/tooltips" class="">
+                        <a href="/docs/v0.58/questions/visualizations/tooltips" class="">
                           Tooltips
 
                           
@@ -2198,7 +2350,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/questions/alerts" class="">
+                <a href="/docs/v0.58/questions/alerts" class="">
                   Alerts
 
                   
@@ -2213,7 +2365,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/questions/exporting-results" class="">
+                <a href="/docs/v0.58/questions/exporting-results" class="">
                   Exporting data
 
                   
@@ -2234,7 +2386,7 @@ Roadmap</a>
       
 
       <li class="">
-        <a href="/docs/v0.57/dashboards/start" class="">
+        <a href="/docs/v0.58/dashboards/start" class="">
         Dashboards
 
           
@@ -2257,7 +2409,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/dashboards/introduction" class="">
+                <a href="/docs/v0.58/dashboards/introduction" class="">
                   Overview
 
                   
@@ -2272,7 +2424,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/dashboards/filters" class="">
+                <a href="/docs/v0.58/dashboards/filters" class="">
                   Dashboard filters
 
                   
@@ -2287,7 +2439,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/dashboards/linked-filters" class="">
+                <a href="/docs/v0.58/dashboards/linked-filters" class="">
                   Linked filters
 
                   
@@ -2302,7 +2454,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/dashboards/interactive" class="">
+                <a href="/docs/v0.58/dashboards/interactive" class="">
                   Dashboard interactivity
 
                   
@@ -2317,7 +2469,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/dashboards/multiple-series" class="">
+                <a href="/docs/v0.58/dashboards/multiple-series" class="">
                   Charts with multiple series
 
                   
@@ -2332,7 +2484,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/dashboards/subscriptions" class="">
+                <a href="/docs/v0.58/dashboards/subscriptions" class="">
                   Dashboard subscriptions
 
                   
@@ -2347,7 +2499,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/dashboards/actions" class="">
+                <a href="/docs/v0.58/dashboards/actions" class="">
                   Actions on dashboards
 
                   
@@ -2368,7 +2520,7 @@ Roadmap</a>
       
 
       <li class="">
-        <a href="/docs/v0.57/documents/start" class="">
+        <a href="/docs/v0.58/documents/start" class="">
         Documents
 
           
@@ -2391,7 +2543,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/documents/introduction" class="">
+                <a href="/docs/v0.58/documents/introduction" class="">
                   Overview
 
                   
@@ -2412,7 +2564,7 @@ Roadmap</a>
       
 
       <li class="">
-        <a href="/docs/v0.57/ai/start" class="">
+        <a href="/docs/v0.58/ai/start" class="">
         AI
 
           
@@ -2435,7 +2587,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/ai/metabot" class="">
+                <a href="/docs/v0.58/ai/metabot" class="">
                   Metabot AI
 
                   
@@ -2450,7 +2602,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/ai/settings" class="">
+                <a href="/docs/v0.58/ai/settings" class="">
                   Metabot settings
 
                   
@@ -2471,7 +2623,7 @@ Roadmap</a>
       
 
       <li class="">
-        <a href="/docs/v0.57/data-modeling/start" class="">
+        <a href="/docs/v0.58/data-modeling/start" class="">
         Data modeling
 
           
@@ -2494,7 +2646,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/data-modeling/models" class="">
+                <a href="/docs/v0.58/data-modeling/models" class="">
                   Models
 
                   
@@ -2509,7 +2661,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/data-modeling/model-persistence" class="">
+                <a href="/docs/v0.58/data-modeling/model-persistence" class="">
                   Model persistence
 
                   
@@ -2524,7 +2676,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/data-modeling/metrics" class="">
+                <a href="/docs/v0.58/data-modeling/metrics" class="">
                   Metrics
 
                   
@@ -2539,7 +2691,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/data-modeling/metadata-editing" class="">
+                <a href="/docs/v0.58/data-modeling/metadata-editing" class="">
                   Table metadata settings
 
                   
@@ -2554,7 +2706,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/data-modeling/semantic-types" class="">
+                <a href="/docs/v0.58/data-modeling/semantic-types" class="">
                   Data and semantic types
 
                   
@@ -2569,7 +2721,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/data-modeling/editable-tables" class="">
+                <a href="/docs/v0.58/data-modeling/editable-tables" class="">
                   Editable tables
 
                   
@@ -2584,7 +2736,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/data-modeling/formatting" class="">
+                <a href="/docs/v0.58/data-modeling/formatting" class="">
                   Formatting defaults
 
                   
@@ -2599,7 +2751,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/data-modeling/json-unfolding" class="">
+                <a href="/docs/v0.58/data-modeling/json-unfolding" class="">
                   Working with JSON
 
                   
@@ -2614,7 +2766,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/data-modeling/segments" class="">
+                <a href="/docs/v0.58/data-modeling/segments" class="">
                   Segments
 
                   
@@ -2650,7 +2802,7 @@ Roadmap</a>
 
                       
                       <li class="">
-                        <a href="/docs/v0.57/actions/introduction" class="">
+                        <a href="/docs/v0.58/actions/introduction" class="">
                           Overview
 
                           
@@ -2664,7 +2816,7 @@ Roadmap</a>
 
                       
                       <li class="">
-                        <a href="/docs/v0.57/actions/basic" class="">
+                        <a href="/docs/v0.58/actions/basic" class="">
                           Basic actions
 
                           
@@ -2678,7 +2830,7 @@ Roadmap</a>
 
                       
                       <li class="">
-                        <a href="/docs/v0.57/actions/custom" class="">
+                        <a href="/docs/v0.58/actions/custom" class="">
                           Custom actions
 
                           
@@ -2703,7 +2855,7 @@ Roadmap</a>
       
 
       <li class="">
-        <a href="/docs/v0.57/exploration-and-organization/start" class="">
+        <a href="/docs/v0.58/exploration-and-organization/start" class="">
         Organization
 
           
@@ -2726,7 +2878,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/exploration-and-organization/exploration" class="">
+                <a href="/docs/v0.58/exploration-and-organization/exploration" class="">
                   Basic exploration
 
                   
@@ -2741,7 +2893,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/exploration-and-organization/keyboard-shortcuts" class="">
+                <a href="/docs/v0.58/exploration-and-organization/keyboard-shortcuts" class="">
                   Keyboard shortcuts
 
                   
@@ -2756,7 +2908,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/exploration-and-organization/collections" class="">
+                <a href="/docs/v0.58/exploration-and-organization/collections" class="">
                   Collections
 
                   
@@ -2771,7 +2923,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/exploration-and-organization/data-model-reference" class="">
+                <a href="/docs/v0.58/exploration-and-organization/data-model-reference" class="">
                   Data reference
 
                   
@@ -2786,7 +2938,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/exploration-and-organization/events-and-timelines" class="">
+                <a href="/docs/v0.58/exploration-and-organization/events-and-timelines" class="">
                   Events and timelines
 
                   
@@ -2801,7 +2953,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/exploration-and-organization/x-rays" class="">
+                <a href="/docs/v0.58/exploration-and-organization/x-rays" class="">
                   X-rays
 
                   
@@ -2816,7 +2968,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/exploration-and-organization/content-verification" class="">
+                <a href="/docs/v0.58/exploration-and-organization/content-verification" class="">
                   Content verification
 
                   
@@ -2831,7 +2983,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/exploration-and-organization/history" class="">
+                <a href="/docs/v0.58/exploration-and-organization/history" class="">
                   History
 
                   
@@ -2846,7 +2998,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/exploration-and-organization/delete-and-restore" class="">
+                <a href="/docs/v0.58/exploration-and-organization/delete-and-restore" class="">
                   Delete and restore
 
                   
@@ -2873,7 +3025,7 @@ Roadmap</a>
       
 
       <li class="">
-        <a href="/docs/v0.57/embedding/introduction" class="">
+        <a href="/docs/v0.58/embedding/introduction" class="">
         Overview
 
           
@@ -2891,7 +3043,7 @@ Roadmap</a>
       
 
       <li class="">
-        <a href="/docs/v0.57/embedding/sdk/introduction" class="">
+        <a href="" class="">
         Modular embedding
 
           
@@ -2914,8 +3066,68 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/embedding/embedded-analytics-js" class="">
-                  Embedded analytics JS
+                <a href="/docs/v0.58/embedding/modular-embedding" class="">
+                  Overview
+
+                  
+                </a>
+                
+              </li>
+            
+              
+
+              
+
+              
+
+              <li class="">
+                <a href="/docs/v0.58/embedding/components" class="">
+                  Components
+
+                  
+                </a>
+                
+              </li>
+            
+              
+
+              
+
+              
+
+              <li class="">
+                <a href="/docs/v0.58/embedding/appearance" class="">
+                  Appearance
+
+                  
+                </a>
+                
+              </li>
+            
+              
+
+              
+
+              
+
+              <li class="">
+                <a href="/docs/v0.58/embedding/authentication" class="">
+                  Authentication
+
+                  
+                </a>
+                
+              </li>
+            
+              
+
+              
+
+              
+
+              <li class="">
+                <a href="/docs/v0.58/embedding/tenants" class="">
+                  Tenants
 
                   
                 </a>
@@ -2930,7 +3142,7 @@ Roadmap</a>
 
               <li class="">
                 <a href="" class="">
-                  Embedded analytics SDK
+                  Modular embedding SDK
 
                   
                     <div>
@@ -2950,8 +3162,8 @@ Roadmap</a>
 
                       
                       <li class="">
-                        <a href="/docs/v0.57/embedding/sdk/introduction" class="">
-                          Introduction
+                        <a href="/docs/v0.58/embedding/sdk/introduction" class="">
+                          Overview
 
                           
                         </a>
@@ -2964,8 +3176,8 @@ Roadmap</a>
 
                       
                       <li class="">
-                        <a href="/docs/v0.57/embedding/sdk/quickstart" class="">
-                          Quickstart
+                        <a href="/docs/v0.58/embedding/sdk/introduction#quickstarts" class="">
+                          Quickstarts
 
                           
                         </a>
@@ -2978,11 +3190,57 @@ Roadmap</a>
 
                       
                       <li class="">
-                        <a href="/docs/v0.57/embedding/sdk/quickstart-cli" class="">
-                          Quickstart with CLI
+                        <a href="" class="">
+                          Components
 
                           
+                            <div>
+                              <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="chevron">
+<path opacity="0.9" d="M3 8.96338L16 21.9634L29 8.96338" stroke="#509ee3" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+
+                            </div>
+                          
                         </a>
+                        
+                          <ul>
+                            
+                              
+                              <li>
+                                <a href="/docs/v0.58/embedding/sdk/questions" class="">
+                                  Questions
+                                </a>
+                              </li>
+                            
+                              
+                              <li>
+                                <a href="/docs/v0.58/embedding/sdk/dashboards" class="">
+                                  Dashboards
+                                </a>
+                              </li>
+                            
+                              
+                              <li>
+                                <a href="/docs/v0.58/embedding/sdk/ai-chat" class="">
+                                  AI chat
+                                </a>
+                              </li>
+                            
+                              
+                              <li>
+                                <a href="/docs/v0.58/embedding/sdk/collections" class="">
+                                  Collections
+                                </a>
+                              </li>
+                            
+                              
+                              <li>
+                                <a href="/docs/v0.58/embedding/sdk/plugins" class="">
+                                  Plugins
+                                </a>
+                              </li>
+                            
+                          </ul>
                         
                       </li>
                     
@@ -2992,11 +3250,43 @@ Roadmap</a>
 
                       
                       <li class="">
-                        <a href="/docs/v0.57/embedding/sdk/quickstart-with-sample-app" class="">
-                          Quickstart with sample app
+                        <a href="" class="">
+                          Configuration
 
                           
+                            <div>
+                              <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="chevron">
+<path opacity="0.9" d="M3 8.96338L16 21.9634L29 8.96338" stroke="#509ee3" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+
+                            </div>
+                          
                         </a>
+                        
+                          <ul>
+                            
+                              
+                              <li>
+                                <a href="/docs/v0.58/embedding/sdk/config" class="">
+                                  Provider config
+                                </a>
+                              </li>
+                            
+                              
+                              <li>
+                                <a href="/docs/v0.58/embedding/sdk/next-js" class="">
+                                  Working with Next.js
+                                </a>
+                              </li>
+                            
+                              
+                              <li>
+                                <a href="/docs/v0.58/embedding/sdk/version" class="">
+                                  Versioning
+                                </a>
+                              </li>
+                            
+                          </ul>
                         
                       </li>
                     
@@ -3006,133 +3296,7 @@ Roadmap</a>
 
                       
                       <li class="">
-                        <a href="/docs/v0.57/embedding/sdk/questions" class="">
-                          Questions
-
-                          
-                        </a>
-                        
-                      </li>
-                    
-                      
-
-                      
-
-                      
-                      <li class="">
-                        <a href="/docs/v0.57/embedding/sdk/dashboards" class="">
-                          Dashboards
-
-                          
-                        </a>
-                        
-                      </li>
-                    
-                      
-
-                      
-
-                      
-                      <li class="">
-                        <a href="/docs/v0.57/embedding/sdk/ai-chat" class="">
-                          AI chat
-
-                          
-                        </a>
-                        
-                      </li>
-                    
-                      
-
-                      
-
-                      
-                      <li class="">
-                        <a href="/docs/v0.57/embedding/sdk/collections" class="">
-                          Collections
-
-                          
-                        </a>
-                        
-                      </li>
-                    
-                      
-
-                      
-
-                      
-                      <li class="">
-                        <a href="/docs/v0.57/embedding/sdk/authentication" class="">
-                          Authentication
-
-                          
-                        </a>
-                        
-                      </li>
-                    
-                      
-
-                      
-
-                      
-                      <li class="">
-                        <a href="/docs/v0.57/embedding/sdk/appearance" class="">
-                          Appearance
-
-                          
-                        </a>
-                        
-                      </li>
-                    
-                      
-
-                      
-
-                      
-                      <li class="">
-                        <a href="/docs/v0.57/embedding/sdk/config" class="">
-                          Config
-
-                          
-                        </a>
-                        
-                      </li>
-                    
-                      
-
-                      
-
-                      
-                      <li class="">
-                        <a href="/docs/v0.57/embedding/sdk/next-js" class="">
-                          Working with Next.js
-
-                          
-                        </a>
-                        
-                      </li>
-                    
-                      
-
-                      
-
-                      
-                      <li class="">
-                        <a href="/docs/v0.57/embedding/sdk/version" class="">
-                          Versioning
-
-                          
-                        </a>
-                        
-                      </li>
-                    
-                      
-
-                      
-
-                      
-                      <li class="">
-                        <a href="/docs/v0.57/embedding/sdk/upgrade" class="">
+                        <a href="/docs/v0.58/embedding/sdk/upgrade" class="">
                           Upgrading
 
                           
@@ -3146,21 +3310,7 @@ Roadmap</a>
 
                       
                       <li class="">
-                        <a href="/docs/v0.57/embedding/sdk/plugins" class="">
-                          Plugins
-
-                          
-                        </a>
-                        
-                      </li>
-                    
-                      
-
-                      
-
-                      
-                      <li class="">
-                        <a href="/docs/v0.57/embedding/sdk/api/" class="">
+                        <a href="/docs/v0.58/embedding/sdk/api/" class="">
                           API
 
                           
@@ -3172,35 +3322,6 @@ Roadmap</a>
                 
               </li>
             
-          </ul>
-        
-      </li>
-    
-      
-
-      
-
-      
-
-      
-
-      <li class="">
-        <a href="/docs/v0.57/embedding/static-embedding" class="">
-        Static embedding
-
-          
-            <div>
-              <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="chevron">
-<path opacity="0.9" d="M3 8.96338L16 21.9634L29 8.96338" stroke="#509ee3" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"></path>
-</svg>
-
-            </div>
-          
-        </a>
-
-        
-          <ul>
-            
               
 
               
@@ -3208,8 +3329,8 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/embedding/static-embedding" class="">
-                  Overview
+                <a href="/docs/v0.58/embedding/guest-embedding" class="">
+                  Guest embedding
 
                   
                 </a>
@@ -3223,22 +3344,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/embedding/static-embedding-parameters" class="">
-                  Parameters for static embeds
-
-                  
-                </a>
-                
-              </li>
-            
-              
-
-              
-
-              
-
-              <li class="">
-                <a href="/docs/v0.57/embedding/translations" class="">
+                <a href="/docs/v0.58/embedding/translations" class="">
                   Translate embeds
 
                   
@@ -3259,8 +3365,8 @@ Roadmap</a>
       
 
       <li class="">
-        <a href="/docs/v0.57/embedding/interactive-embedding" class="">
-        Interactive embedding
+        <a href="" class="">
+        Full app embedding
 
           
             <div>
@@ -3282,7 +3388,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/embedding/interactive-embedding" class="">
+                <a href="/docs/v0.58/embedding/full-app-embedding" class="">
                   Overview
 
                   
@@ -3297,7 +3403,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/embedding/interactive-embedding-quick-start-guide" class="">
+                <a href="/docs/v0.58/embedding/full-app-embedding-quick-start-guide" class="">
                   Quickstart
 
                   
@@ -3312,8 +3418,8 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/embedding/interactive-ui-components" class="">
-                  Parameters for interactive embeds
+                <a href="/docs/v0.58/embedding/full-app-ui-components" class="">
+                  Full app UI components
 
                   
                 </a>
@@ -3333,7 +3439,7 @@ Roadmap</a>
       
 
       <li class="">
-        <a href="/docs/v0.57/embedding/public-links" class="">
+        <a href="/docs/v0.58/embedding/public-links" class="">
         Public links and embeds
 
           
@@ -3351,8 +3457,8 @@ Roadmap</a>
       
 
       <li class="">
-        <a href="/docs/v0.57/embedding/securing-embeds" class="">
-        Securing embedded Metabase
+        <a href="/docs/v0.58/embedding/securing-embeds" class="">
+        Securing embeds
 
           
         </a>
@@ -3375,7 +3481,7 @@ Roadmap</a>
       
 
       <li class="">
-        <a href="/docs/v0.57/installation-and-operation/start" class="">
+        <a href="/docs/v0.58/installation-and-operation/start" class="">
         Installation
 
           
@@ -3419,7 +3525,7 @@ Roadmap</a>
 
                       
                       <li class="">
-                        <a href="/docs/v0.57/installation-and-operation/installing-metabase" class="">
+                        <a href="/docs/v0.58/installation-and-operation/installing-metabase" class="">
                           Installation overview
 
                           
@@ -3447,7 +3553,7 @@ Roadmap</a>
 
                       
                       <li class="">
-                        <a href="/docs/v0.57/installation-and-operation/running-the-metabase-jar-file" class="">
+                        <a href="/docs/v0.58/installation-and-operation/running-the-metabase-jar-file" class="">
                           Running the JAR file
 
                           
@@ -3461,7 +3567,7 @@ Roadmap</a>
 
                       
                       <li class="">
-                        <a href="/docs/v0.57/installation-and-operation/running-metabase-on-docker" class="">
+                        <a href="/docs/v0.58/installation-and-operation/running-metabase-on-docker" class="">
                           Running in Docker
 
                           
@@ -3475,7 +3581,7 @@ Roadmap</a>
 
                       
                       <li class="">
-                        <a href="/docs/v0.57/installation-and-operation/installing-metabase#other-installation-options" class="">
+                        <a href="/docs/v0.58/installation-and-operation/installing-metabase#other-installation-options" class="">
                           Other installation options
 
                           
@@ -3494,7 +3600,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/installation-and-operation/upgrading-metabase" class="">
+                <a href="/docs/v0.58/installation-and-operation/upgrading-metabase" class="">
                   Upgrading Metabase
 
                   
@@ -3509,7 +3615,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/installation-and-operation/configuring-application-database" class="">
+                <a href="/docs/v0.58/installation-and-operation/configuring-application-database" class="">
                   Configuring the Metabase application database
 
                   
@@ -3524,7 +3630,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/installation-and-operation/activating-the-enterprise-edition" class="">
+                <a href="/docs/v0.58/installation-and-operation/activating-the-enterprise-edition" class="">
                   Activating Enterprise features
 
                   
@@ -3539,7 +3645,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/installation-and-operation/migrating-from-h2" class="">
+                <a href="/docs/v0.58/installation-and-operation/migrating-from-h2" class="">
                   Migrating to a production application database
 
                   
@@ -3560,7 +3666,7 @@ Roadmap</a>
       
 
       <li class="">
-        <a href="/docs/v0.57/databases/start" class="">
+        <a href="/docs/v0.58/databases/start" class="">
         Data sources
 
           
@@ -3583,7 +3689,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/databases/connecting" class="">
+                <a href="/docs/v0.58/databases/connecting" class="">
                   Adding and managing databases
 
                   
@@ -3619,7 +3725,7 @@ Roadmap</a>
 
                       
                       <li class="">
-                        <a href="/docs/v0.57/databases/connections/athena" class="">
+                        <a href="/docs/v0.58/databases/connections/athena" class="">
                           Athena
 
                           
@@ -3633,7 +3739,7 @@ Roadmap</a>
 
                       
                       <li class="">
-                        <a href="/docs/v0.57/databases/connections/aws-rds" class="">
+                        <a href="/docs/v0.58/databases/connections/aws-rds" class="">
                           Amazon RDS
 
                           
@@ -3647,7 +3753,7 @@ Roadmap</a>
 
                       
                       <li class="">
-                        <a href="/docs/v0.57/databases/connections/bigquery" class="">
+                        <a href="/docs/v0.58/databases/connections/bigquery" class="">
                           BigQuery
 
                           
@@ -3661,7 +3767,7 @@ Roadmap</a>
 
                       
                       <li class="">
-                        <a href="/docs/v0.57/databases/connections/clickhouse" class="">
+                        <a href="/docs/v0.58/databases/connections/clickhouse" class="">
                           ClickHouse
 
                           
@@ -3675,7 +3781,7 @@ Roadmap</a>
 
                       
                       <li class="">
-                        <a href="/docs/v0.57/databases/connections/databricks" class="">
+                        <a href="/docs/v0.58/databases/connections/databricks" class="">
                           Databricks
 
                           
@@ -3689,7 +3795,7 @@ Roadmap</a>
 
                       
                       <li class="">
-                        <a href="/docs/v0.57/databases/connections/druid" class="">
+                        <a href="/docs/v0.58/databases/connections/druid" class="">
                           Druid
 
                           
@@ -3703,7 +3809,7 @@ Roadmap</a>
 
                       
                       <li class="">
-                        <a href="/docs/v0.57/databases/connections/mariadb" class="">
+                        <a href="/docs/v0.58/databases/connections/mariadb" class="">
                           MariaDB
 
                           
@@ -3717,7 +3823,7 @@ Roadmap</a>
 
                       
                       <li class="">
-                        <a href="/docs/v0.57/databases/connections/mongodb" class="">
+                        <a href="/docs/v0.58/databases/connections/mongodb" class="">
                           MongoDB
 
                           
@@ -3731,7 +3837,7 @@ Roadmap</a>
 
                       
                       <li class="">
-                        <a href="/docs/v0.57/databases/connections/mysql" class="">
+                        <a href="/docs/v0.58/databases/connections/mysql" class="">
                           MySQL
 
                           
@@ -3745,7 +3851,7 @@ Roadmap</a>
 
                       
                       <li class="">
-                        <a href="/docs/v0.57/databases/connections/oracle" class="">
+                        <a href="/docs/v0.58/databases/connections/oracle" class="">
                           Oracle
 
                           
@@ -3759,7 +3865,7 @@ Roadmap</a>
 
                       
                       <li class="">
-                        <a href="/docs/v0.57/databases/connections/postgresql" class="">
+                        <a href="/docs/v0.58/databases/connections/postgresql" class="">
                           PostgreSQL
 
                           
@@ -3773,7 +3879,7 @@ Roadmap</a>
 
                       
                       <li class="">
-                        <a href="/docs/v0.57/databases/connections/presto" class="">
+                        <a href="/docs/v0.58/databases/connections/presto" class="">
                           Presto
 
                           
@@ -3787,7 +3893,7 @@ Roadmap</a>
 
                       
                       <li class="">
-                        <a href="/docs/v0.57/databases/connections/redshift" class="">
+                        <a href="/docs/v0.58/databases/connections/redshift" class="">
                           Redshift
 
                           
@@ -3801,7 +3907,7 @@ Roadmap</a>
 
                       
                       <li class="">
-                        <a href="/docs/v0.57/databases/connections/snowflake" class="">
+                        <a href="/docs/v0.58/databases/connections/snowflake" class="">
                           Snowflake
 
                           
@@ -3815,7 +3921,7 @@ Roadmap</a>
 
                       
                       <li class="">
-                        <a href="/docs/v0.57/databases/connections/sql-server" class="">
+                        <a href="/docs/v0.58/databases/connections/sql-server" class="">
                           SQL Server
 
                           
@@ -3829,7 +3935,7 @@ Roadmap</a>
 
                       
                       <li class="">
-                        <a href="/docs/v0.57/databases/connections/sqlite" class="">
+                        <a href="/docs/v0.58/databases/connections/sqlite" class="">
                           SQLite
 
                           
@@ -3843,7 +3949,7 @@ Roadmap</a>
 
                       
                       <li class="">
-                        <a href="/docs/v0.57/databases/connections/sparksql" class="">
+                        <a href="/docs/v0.58/databases/connections/sparksql" class="">
                           Spark SQL
 
                           
@@ -3857,7 +3963,7 @@ Roadmap</a>
 
                       
                       <li class="">
-                        <a href="/docs/v0.57/databases/connections/starburst" class="">
+                        <a href="/docs/v0.58/databases/connections/starburst" class="">
                           Starburst
 
                           
@@ -3871,7 +3977,7 @@ Roadmap</a>
 
                       
                       <li class="">
-                        <a href="/docs/v0.57/databases/connections/vertica" class="">
+                        <a href="/docs/v0.58/databases/connections/vertica" class="">
                           Vertica
 
                           
@@ -3885,7 +3991,7 @@ Roadmap</a>
 
                       
                       <li class="">
-                        <a href="/docs/v0.57/developers-guide/community-drivers" class="">
+                        <a href="/docs/v0.58/developers-guide/community-drivers" class="">
                           Community drivers
 
                           
@@ -3904,7 +4010,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/databases/users-roles-privileges" class="">
+                <a href="/docs/v0.58/databases/users-roles-privileges" class="">
                   Database users, roles, and privileges
 
                   
@@ -3919,7 +4025,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/databases/sync-scan" class="">
+                <a href="/docs/v0.58/databases/sync-scan" class="">
                   Syncing and scanning databases
 
                   
@@ -3934,7 +4040,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/databases/encrypting-details-at-rest" class="">
+                <a href="/docs/v0.58/databases/encrypting-details-at-rest" class="">
                   Encrypting your database connection
 
                   
@@ -3949,7 +4055,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/databases/ssh-tunnel" class="">
+                <a href="/docs/v0.58/databases/ssh-tunnel" class="">
                   SSH tunneling
 
                   
@@ -3964,7 +4070,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/databases/ssl-certificates" class="">
+                <a href="/docs/v0.58/databases/ssl-certificates" class="">
                   SSL certificate
 
                   
@@ -3979,7 +4085,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/databases/uploads" class="">
+                <a href="/docs/v0.58/databases/uploads" class="">
                   Setting up data uploads
 
                   
@@ -3994,7 +4100,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/exploration-and-organization/uploads" class="">
+                <a href="/docs/v0.58/exploration-and-organization/uploads" class="">
                   Uploading data
 
                   
@@ -4045,7 +4151,7 @@ Roadmap</a>
       
 
       <li class="">
-        <a href="/docs/v0.57/configuring-metabase/start" class="">
+        <a href="/docs/v0.58/configuring-metabase/start" class="">
         Configuration
 
           
@@ -4068,7 +4174,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/configuring-metabase/setting-up-metabase" class="">
+                <a href="/docs/v0.58/configuring-metabase/setting-up-metabase" class="">
                   Setting up Metabase
 
                   
@@ -4083,7 +4189,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/configuring-metabase/settings" class="">
+                <a href="/docs/v0.58/configuring-metabase/settings" class="">
                   General settings
 
                   
@@ -4098,7 +4204,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/configuring-metabase/email" class="">
+                <a href="/docs/v0.58/configuring-metabase/email" class="">
                   Set up email
 
                   
@@ -4113,7 +4219,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/configuring-metabase/slack" class="">
+                <a href="/docs/v0.58/configuring-metabase/slack" class="">
                   Set up Slack
 
                   
@@ -4128,7 +4234,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/configuring-metabase/webhooks" class="">
+                <a href="/docs/v0.58/configuring-metabase/webhooks" class="">
                   Webhooks
 
                   
@@ -4143,7 +4249,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/configuring-metabase/environment-variables" class="">
+                <a href="/docs/v0.58/configuring-metabase/environment-variables" class="">
                   Environment variables
 
                   
@@ -4158,7 +4264,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/configuring-metabase/config-file" class="">
+                <a href="/docs/v0.58/configuring-metabase/config-file" class="">
                   Configuration file
 
                   
@@ -4173,7 +4279,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/configuring-metabase/config-template" class="">
+                <a href="/docs/v0.58/configuring-metabase/config-template" class="">
                   Config file template
 
                   
@@ -4188,7 +4294,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/configuring-metabase/log-configuration" class="">
+                <a href="/docs/v0.58/configuring-metabase/log-configuration" class="">
                   Metabase log configuration
 
                   
@@ -4203,7 +4309,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/configuring-metabase/timezones" class="">
+                <a href="/docs/v0.58/configuring-metabase/timezones" class="">
                   Timezones
 
                   
@@ -4218,7 +4324,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/configuring-metabase/localization" class="">
+                <a href="/docs/v0.58/configuring-metabase/localization" class="">
                   Languages and localization
 
                   
@@ -4233,7 +4339,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/configuring-metabase/appearance" class="">
+                <a href="/docs/v0.58/configuring-metabase/appearance" class="">
                   Appearance
 
                   
@@ -4248,7 +4354,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/configuring-metabase/fonts" class="">
+                <a href="/docs/v0.58/configuring-metabase/fonts" class="">
                   Fonts
 
                   
@@ -4263,7 +4369,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/configuring-metabase/caching" class="">
+                <a href="/docs/v0.58/configuring-metabase/caching" class="">
                   Caching query results
 
                   
@@ -4278,7 +4384,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/configuring-metabase/custom-maps" class="">
+                <a href="/docs/v0.58/configuring-metabase/custom-maps" class="">
                   Custom maps
 
                   
@@ -4293,7 +4399,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/configuring-metabase/customizing-jetty-webserver" class="">
+                <a href="/docs/v0.58/configuring-metabase/customizing-jetty-webserver" class="">
                   Customizing the Metabase Jetty webserver
 
                   
@@ -4314,7 +4420,7 @@ Roadmap</a>
       
 
       <li class="">
-        <a href="/docs/v0.57/installation-and-operation/start" class="">
+        <a href="/docs/v0.58/installation-and-operation/start" class="">
         Operations and monitoring
 
           
@@ -4337,7 +4443,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/installation-and-operation/backing-up-metabase-application-data" class="">
+                <a href="/docs/v0.58/installation-and-operation/backing-up-metabase-application-data" class="">
                   Backing up Metabase
 
                   
@@ -4352,7 +4458,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/installation-and-operation/development-instance" class="">
+                <a href="/docs/v0.58/installation-and-operation/development-instance" class="">
                   Development instances
 
                   
@@ -4367,7 +4473,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/installation-and-operation/monitoring-metabase" class="">
+                <a href="/docs/v0.58/installation-and-operation/monitoring-metabase" class="">
                   Monitoring your Metabase
 
                   
@@ -4382,7 +4488,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/installation-and-operation/observability-with-prometheus" class="">
+                <a href="/docs/v0.58/installation-and-operation/observability-with-prometheus" class="">
                   Observability with Prometheus
 
                   
@@ -4397,7 +4503,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/installation-and-operation/serialization" class="">
+                <a href="/docs/v0.58/installation-and-operation/serialization" class="">
                   Serialization
 
                   
@@ -4412,7 +4518,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/installation-and-operation/remote-sync" class="">
+                <a href="/docs/v0.58/installation-and-operation/remote-sync" class="">
                   Remote Sync
 
                   
@@ -4427,7 +4533,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/installation-and-operation/commands" class="">
+                <a href="/docs/v0.58/installation-and-operation/commands" class="">
                   Commands
 
                   
@@ -4442,7 +4548,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/usage-and-performance-tools/usage-analytics" class="">
+                <a href="/docs/v0.58/usage-and-performance-tools/usage-analytics" class="">
                   Usage analytics
 
                   
@@ -4457,7 +4563,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/usage-and-performance-tools/tools" class="">
+                <a href="/docs/v0.58/usage-and-performance-tools/tools" class="">
                   Admin tools
 
                   
@@ -4478,7 +4584,7 @@ Roadmap</a>
       
 
       <li class="">
-        <a href="/docs/v0.57/people-and-groups/start" class="">
+        <a href="/docs/v0.58/people-and-groups/start" class="">
         Authentication
 
           
@@ -4501,7 +4607,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/people-and-groups/account-settings" class="">
+                <a href="/docs/v0.58/people-and-groups/account-settings" class="">
                   Account settings
 
                   
@@ -4516,7 +4622,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/people-and-groups/changing-password-complexity" class="">
+                <a href="/docs/v0.58/people-and-groups/changing-password-complexity" class="">
                   Password complexity
 
                   
@@ -4531,7 +4637,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/people-and-groups/changing-session-expiration" class="">
+                <a href="/docs/v0.58/people-and-groups/changing-session-expiration" class="">
                   Session expiration
 
                   
@@ -4546,7 +4652,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/people-and-groups/google-sign-in" class="">
+                <a href="/docs/v0.58/people-and-groups/google-sign-in" class="">
                   Google Sign-In
 
                   
@@ -4561,7 +4667,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/people-and-groups/ldap" class="">
+                <a href="/docs/v0.58/people-and-groups/ldap" class="">
                   LDAP
 
                   
@@ -4576,7 +4682,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/people-and-groups/user-provisioning" class="">
+                <a href="/docs/v0.58/people-and-groups/user-provisioning" class="">
                   User provisioning
 
                   
@@ -4591,7 +4697,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/people-and-groups/api-keys" class="">
+                <a href="/docs/v0.58/people-and-groups/api-keys" class="">
                   API keys
 
                   
@@ -4606,7 +4712,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/people-and-groups/start" class="">
+                <a href="/docs/v0.58/people-and-groups/start" class="">
                   Paid SSO options
 
                   
@@ -4627,7 +4733,7 @@ Roadmap</a>
 
                       
                       <li class="">
-                        <a href="/docs/v0.57/people-and-groups/authenticating-with-jwt" class="">
+                        <a href="/docs/v0.58/people-and-groups/authenticating-with-jwt" class="">
                           JWT-based authentication
 
                           
@@ -4641,7 +4747,7 @@ Roadmap</a>
 
                       
                       <li class="">
-                        <a href="/docs/v0.57/people-and-groups/authenticating-with-saml" class="">
+                        <a href="/docs/v0.58/people-and-groups/authenticating-with-saml" class="">
                           SAML-based authentication
 
                           
@@ -4655,7 +4761,7 @@ Roadmap</a>
 
                       
                       <li class="">
-                        <a href="/docs/v0.57/people-and-groups/saml-auth0" class="">
+                        <a href="/docs/v0.58/people-and-groups/saml-auth0" class="">
                           SAML with Auth0
 
                           
@@ -4669,7 +4775,7 @@ Roadmap</a>
 
                       
                       <li class="">
-                        <a href="/docs/v0.57/people-and-groups/saml-azure" class="">
+                        <a href="/docs/v0.58/people-and-groups/saml-azure" class="">
                           SAML with Microsoft Entra ID
 
                           
@@ -4683,7 +4789,7 @@ Roadmap</a>
 
                       
                       <li class="">
-                        <a href="/docs/v0.57/people-and-groups/saml-google" class="">
+                        <a href="/docs/v0.58/people-and-groups/saml-google" class="">
                           SAML with Google
 
                           
@@ -4697,7 +4803,7 @@ Roadmap</a>
 
                       
                       <li class="">
-                        <a href="/docs/v0.57/people-and-groups/saml-keycloak" class="">
+                        <a href="/docs/v0.58/people-and-groups/saml-keycloak" class="">
                           SAML with Keycloak
 
                           
@@ -4711,7 +4817,7 @@ Roadmap</a>
 
                       
                       <li class="">
-                        <a href="/docs/v0.57/people-and-groups/saml-okta" class="">
+                        <a href="/docs/v0.58/people-and-groups/saml-okta" class="">
                           SAML with Okta
 
                           
@@ -4736,7 +4842,7 @@ Roadmap</a>
       
 
       <li class="">
-        <a href="/docs/v0.57/permissions/start" class="">
+        <a href="/docs/v0.58/permissions/start" class="">
         Permissions
 
           
@@ -4759,7 +4865,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/permissions/introduction" class="">
+                <a href="/docs/v0.58/permissions/introduction" class="">
                   Permissions introduction
 
                   
@@ -4774,7 +4880,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/people-and-groups/managing" class="">
+                <a href="/docs/v0.58/people-and-groups/managing" class="">
                   Managing people and groups
 
                   
@@ -4789,7 +4895,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/permissions/data" class="">
+                <a href="/docs/v0.58/permissions/data" class="">
                   Data permissions
 
                   
@@ -4804,7 +4910,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/permissions/collections" class="">
+                <a href="/docs/v0.58/permissions/collections" class="">
                   Collection permissions
 
                   
@@ -4819,7 +4925,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/permissions/application" class="">
+                <a href="/docs/v0.58/permissions/application" class="">
                   Application permissions
 
                   
@@ -4834,7 +4940,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/permissions/row-and-column-security" class="">
+                <a href="/docs/v0.58/permissions/row-and-column-security" class="">
                   Row and column security
 
                   
@@ -4849,7 +4955,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/permissions/row-and-column-security-examples" class="">
+                <a href="/docs/v0.58/permissions/row-and-column-security-examples" class="">
                   Row and column security examples
 
                   
@@ -4864,7 +4970,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/permissions/database-routing" class="">
+                <a href="/docs/v0.58/permissions/database-routing" class="">
                   Database routing
 
                   
@@ -4879,7 +4985,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/permissions/impersonation" class="">
+                <a href="/docs/v0.58/permissions/impersonation" class="">
                   Impersonation
 
                   
@@ -4894,7 +5000,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/permissions/snippets" class="">
+                <a href="/docs/v0.58/permissions/snippets" class="">
                   Snippets folder permissions
 
                   
@@ -4909,7 +5015,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/permissions/notifications" class="">
+                <a href="/docs/v0.58/permissions/notifications" class="">
                   Notification permissions
 
                   
@@ -4924,7 +5030,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.57/permissions/embedding" class="">
+                <a href="/docs/v0.58/permissions/embedding" class="">
                   Configuring permissions for embedding
 
                   
@@ -4951,7 +5057,7 @@ Roadmap</a>
       
 
       <li class="">
-        <a href="/docs/v0.57/api" class="">
+        <a href="/docs/v0.58/api" class="">
         API
 
           
@@ -5177,7 +5283,7 @@ Roadmap</a>
       
 
       <li class="">
-        <a href="/docs/v0.57/troubleshooting-guide/" class="">
+        <a href="/docs/v0.58/troubleshooting-guide/" class="">
         Troubleshooting
 
           
@@ -5195,7 +5301,7 @@ Roadmap</a>
       
 
       <li class="">
-        <a href="/docs/v0.57/developers-guide/start" class="">
+        <a href="/docs/v0.58/developers-guide/start" class="">
         Developer guide
 
           
@@ -5231,7 +5337,7 @@ Roadmap</a>
       
 
       <li class="">
-        <a href="/docs/v0.57/installation-and-operation/accessibility" class="">
+        <a href="/docs/v0.58/installation-and-operation/accessibility" class="">
         Accessibility
 
           
@@ -5249,7 +5355,7 @@ Roadmap</a>
       
 
       <li class="">
-        <a href="/docs/v0.57/installation-and-operation/supported-browsers" class="">
+        <a href="/docs/v0.58/installation-and-operation/supported-browsers" class="">
         Supported browsers
 
           
@@ -5267,7 +5373,7 @@ Roadmap</a>
       
 
       <li class="">
-        <a href="/docs/v0.57/installation-and-operation/privacy" class="">
+        <a href="/docs/v0.58/installation-and-operation/privacy" class="">
         Privacy
 
           
@@ -5285,7 +5391,7 @@ Roadmap</a>
       
 
       <li class="">
-        <a href="/docs/v0.57/installation-and-operation/information-collection" class="">
+        <a href="/docs/v0.58/installation-and-operation/information-collection" class="">
         About the anonymous usage data we collect
 
           
@@ -5357,6 +5463,14 @@ Roadmap</a>
     
       
         <li>
+          <a href="/docs/v0.59">
+            v0.59
+          </a>
+        </li>
+      
+    
+      
+        <li>
           <a href="/docs/v0.58">
             v0.58
           </a>
@@ -5423,14 +5537,6 @@ Roadmap</a>
         <li>
           <a href="/docs/v0.50">
             v0.50
-          </a>
-        </li>
-      
-    
-      
-        <li>
-          <a href="/docs/v0.49">
-            v0.49
           </a>
         </li>
       
@@ -5623,6 +5729,7 @@ Roadmap</a>
 
       <div>
         <h6>Features</h6>
+        <a href="/features/metabot-ai">Metabot AI</a>
         <a href="/features/query-builder">Query Builder</a>
         <a href="/features/drill-through">Drill Through</a>
         <a href="/features/collections">Collections</a>
@@ -5630,12 +5737,11 @@ Roadmap</a>
         <a href="/features/analytics-dashboards">Dashboards and reporting</a>
         <a href="/features/sql-editor">SQL editor</a>
         <a href="/features/data-segregation">Data segregation</a>
-        <a href="/features/semantic-layer">Semantic layer</a>
+        <a href="/product/data-studio">Data Studio</a>
         <a href="/features/permissions">Permissions</a>
         <a href="/product/csv-uploads">CSV upload</a>
         <a href="/product/embedded-analytics-sdk">Embedded analytics SDK</a>
         <a href="/features/white-label-analytics">White label analytics</a>
-        <a href="/features/metabot-ai">Metabot AI</a>
       </div>
 
       <div>
@@ -5836,6 +5942,8 @@ Roadmap</a>
     });
   });
 </script>
+
+<script src="/js/fillout-form-fallback.js"></script>
 
 <!-- forms -->
 <script type="text/javascript" src="https://s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js"></script>
