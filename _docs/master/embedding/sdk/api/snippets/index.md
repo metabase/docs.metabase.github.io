@@ -47,6 +47,7 @@ layout: new-docs
 | :------------------------------------------------------------------------------------------------------------ | :------------------------------------------------ |
 | [InteractiveQuestion](./api/InteractiveQuestion)                                                           | A component that renders an interactive question. |
 | [DrillThroughQuestionProps](./api/DrillThroughQuestionProps)                                               | Props for the drill-through question              |
+| [InteractiveQuestionChartTypeDropdownProps](./api/InteractiveQuestionChartTypeDropdownProps)               | -                                                 |
 | [InteractiveQuestionEditorButtonProps](./api/InteractiveQuestionEditorButtonProps)                         | -                                                 |
 | [InteractiveQuestionEditorProps](./api/InteractiveQuestionEditorProps)                                     | -                                                 |
 | [InteractiveQuestionProps](./api/InteractiveQuestionProps)                                                 | -                                                 |
@@ -58,7 +59,6 @@ layout: new-docs
 | [SdkQuestionProps](./api/SdkQuestionProps)                                                                 | -                                                 |
 | [InteractiveQuestionBackButtonProps](./api/InteractiveQuestionBackButtonProps)                             | -                                                 |
 | [InteractiveQuestionBreakoutDropdownProps](./api/InteractiveQuestionBreakoutDropdownProps)                 | -                                                 |
-| [InteractiveQuestionChartTypeDropdownProps](./api/InteractiveQuestionChartTypeDropdownProps)               | -                                                 |
 | [InteractiveQuestionChartTypeSelectorProps](./api/InteractiveQuestionChartTypeSelectorProps)               | -                                                 |
 | [InteractiveQuestionDownloadWidgetDropdownProps](./api/InteractiveQuestionDownloadWidgetDropdownProps)     | -                                                 |
 | [InteractiveQuestionDownloadWidgetProps](./api/InteractiveQuestionDownloadWidgetProps)                     | -                                                 |
