@@ -131,7 +131,8 @@ Dropdown button for the Breakout component.
 <!-- [<snippet charttypedropdown()>] -->
 
 ```ts
-ChartTypeDropdown: (props: MenuProps) => Element;
+ChartTypeDropdown: (props: InteractiveQuestionChartTypeDropdownProps) =>
+  Element;
 ```
 
 **`Function`**
@@ -145,9 +146,9 @@ Automatically updates to show recommended visualization types for the current da
 
 <!-- [<snippet parameters>] -->
 
-| Parameter | Type                                                     | Description |
-| :-------- | :------------------------------------------------------- | :---------- |
-| `props`   | [`MenuProps`](https://v7.mantine.dev/core/menu/?t=props) |             |
+| Parameter | Type                                                                                              | Description |
+| :-------- | :------------------------------------------------------------------------------------------------ | :---------- |
+| `props`   | [`InteractiveQuestionChartTypeDropdownProps`](./api/InteractiveQuestionChartTypeDropdownProps) |             |
 
 <!-- [<endsnippet parameters>] -->
 
