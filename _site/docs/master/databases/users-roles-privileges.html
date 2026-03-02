@@ -55,7 +55,7 @@ window.redirectTo = function redirectTo(theLocation) {
 <meta name="twitter:site" content="@metabase">
 
 <meta name="twitter:title" content="Database users, roles, and privileges | Metabase Documentation">
-<meta name="twitter:description" content="Database users, roles, and privileges We recommend creating a metabase database user with the following database roles:  analytics for read access to any schemas or tables used for analysis. Optional metabase_actions for...">
+<meta name="twitter:description" content="Set up database users and roles for Metabase: read-only access for queries, optional write permissions for transforms, uploads, actions, and model persistence.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -65,7 +65,7 @@ window.redirectTo = function redirectTo(theLocation) {
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://www.metabase.com/docs/master/databases/users-roles-privileges">
 <meta name="title" property="og:title" content="Database users, roles, and privileges | Metabase Documentation">
-<meta name="description" property="og:description" content="Database users, roles, and privileges We recommend creating a metabase database user with the following database roles:  analytics for read access to any schemas or tables used for analysis. Optional metabase_actions for...">
+<meta name="description" property="og:description" content="Set up database users and roles for Metabase: read-only access for queries, optional write permissions for transforms, uploads, actions, and model persistence.">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -5851,13 +5851,17 @@ Roadmap</a>
 
         <h1 id="database-users-roles-and-privileges">Database users, roles, and privileges</h1>
 
-<p>We recommend creating a <code class="language-plaintext highlighter-rouge">metabase</code> database user with the following database roles:</p>
+<h2 id="recommended-setup">Recommended setup</h2>
+
+<p>We recommend creating a dedicated <code class="language-plaintext highlighter-rouge">metabase</code> database user with the <strong>read-only</strong> access to your database with <a href="#minimum-database-privileges">minimum database privileges for read access</a> to any schemas or tables used for analysis.</p>
+
+<p>Some Metabase functionality requires write access to the database. Depending on other Metabase features you’re planning to use, you might want to create additional roles:</p>
 
 <ul>
-  <li><a href="#minimum-database-privileges"><code class="language-plaintext highlighter-rouge">analytics</code> for read access</a> to any schemas or tables used for analysis.</li>
-  <li>Optional <a href="#privileges-to-enable-actions-and-editable-table-data"><code class="language-plaintext highlighter-rouge">metabase_actions</code> for write access</a> to tables used for Metabase actions.</li>
-  <li>Optional <a href="#privileges-to-enable-model-persistence"><code class="language-plaintext highlighter-rouge">metabase_model_persistence</code> for write access</a> to the schema used for Metabase model persistence.</li>
   <li>Optional <a href="#privileges-to-enable-transforms"><code class="language-plaintext highlighter-rouge">metabase_transforms</code> for write access</a> to the schema used for Metabase transforms.</li>
+  <li>Optional <a href="#privileges-to-enable-uploads"><code class="language-plaintext highlighter-rouge">metabase_uploads</code> for write access</a> to schema used for CSV uploads.</li>
+  <li>Optional <a href="#privileges-to-enable-actions-and-editable-table-data"><code class="language-plaintext highlighter-rouge">metabase_actions</code> for write access</a> to tables used for editable tables or Metabase actions .</li>
+  <li>Optional <a href="#privileges-to-enable-model-persistence"><code class="language-plaintext highlighter-rouge">metabase_model_persistence</code> for write access</a> to the schema used for Metabase model persistence.</li>
 </ul>
 
 <p>Bundling your privileges into roles based on use cases makes it easier to manage privileges in the future (especially in <a href="#multi-tenant-permissions">multi-tenant situations</a>). For example, you could:</p>
@@ -5866,6 +5870,8 @@ Roadmap</a>
   <li>Use the same <code class="language-plaintext highlighter-rouge">analytics</code> role for other BI tools in your <a href="/learn/grow-your-data-skills/data-fundamentals/data-landscape">data stack</a> that need read-only access to the analytics tables in your database.</li>
   <li>Revoke the write access for <code class="language-plaintext highlighter-rouge">metabase_model_persistence</code> without affecting the write access for <code class="language-plaintext highlighter-rouge">metabase_actions</code>.</li>
 </ul>
+
+<p>For operations that require write access, we recommend using separate <a href="./writeable-connection">writeable connections</a>.</p>
 
 <h2 id="minimum-database-privileges">Minimum database privileges</h2>
 
@@ -5942,18 +5948,18 @@ Roadmap</a>
 <span class="k">GRANT</span> <span class="k">ALL</span> <span class="k">PRIVILEGES</span> <span class="k">ON</span> <span class="nv">"database"</span> <span class="k">TO</span> <span class="n">metabase</span><span class="p">;</span>
 </code></pre></div></div>
 
-<p>This is a good option if you’re connecting to a local database for development or testing.</p>
+<p>This is a good option if you’re connecting to a local database for development or testing. Avoid using this setup in production.</p>
 
 <h2 id="privileges-to-enable-actions-and-editable-table-data">Privileges to enable actions and editable table data</h2>
 
 <p>Both <a href="../actions/introduction">actions</a> and the <a href="../data-modeling/editable-tables">editable table data</a> let Metabase write back to specific tables in your database.</p>
 
-<p>In addition to the <a href="#minimum-database-privileges">minimum database privileges</a>, you’ll need to grant write access to any tables you want to be able to write to.</p>
+<p>if you’re using actions or editable tables, then in addition to the <a href="#minimum-database-privileges">minimum database privileges</a>, you’ll need to grant write access to any tables you want to be able to write to.</p>
 
 <ul>
   <li>Create a new role called <code class="language-plaintext highlighter-rouge">metabase_writer</code>.</li>
   <li>Give the role <code class="language-plaintext highlighter-rouge">INSERT</code>, <code class="language-plaintext highlighter-rouge">UPDATE</code>, and <code class="language-plaintext highlighter-rouge">DELETE</code> privileges to the relevant tables.</li>
-  <li>Give the <code class="language-plaintext highlighter-rouge">metabase_writer</code> role to the <code class="language-plaintext highlighter-rouge">metabase</code> user.</li>
+  <li>Give the <code class="language-plaintext highlighter-rouge">metabase_writer</code> role to the user used for your database connection. We recommend using a <a href="./writeable-connection">writeable connection</a> and only granting this role to the user used for the writeable connection.</li>
 </ul>
 
 <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- Create a role to bundle database privileges for Metabase writing to your database.</span>
@@ -5976,7 +5982,7 @@ Roadmap</a>
   <li>Create a new role called <code class="language-plaintext highlighter-rouge">metabase_model_persistence</code>.</li>
   <li>Give the role <code class="language-plaintext highlighter-rouge">CREATE</code> access to the database.</li>
   <li>Give the role <code class="language-plaintext highlighter-rouge">INSERT</code>, <code class="language-plaintext highlighter-rouge">UPDATE</code>, and <code class="language-plaintext highlighter-rouge">DELETE</code> privileges to the schema used for model persistence.</li>
-  <li>Give the <code class="language-plaintext highlighter-rouge">metabase_model_persistence</code> role to the <code class="language-plaintext highlighter-rouge">metabase</code> user.</li>
+  <li>Give the <code class="language-plaintext highlighter-rouge">metabase_model_persistence</code> role to the user used for your database connection. We recommend using a <a href="./writeable-connection">writeable connection</a> and only granting this role to the user used for the writeable connection.</li>
 </ul>
 
 <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- Create a role to bundle database privileges for Metabase model persistence.</span>
@@ -5996,7 +6002,7 @@ Roadmap</a>
 
 <h2 id="privileges-to-enable-transforms">Privileges to enable transforms</h2>
 
-<p><a href="../data-studio/transforms/transforms-overview">Transforms</a> let Metabase write query results back to your database. We suggest that you create a dedicated schema for your transforms. Metabase’s database user will need to be able to create and drop transform tables.</p>
+<p><a href="../data-studio/transforms/transforms-overview">Transforms</a> let Metabase write query results back to your database. We suggest that you create a dedicated schema for your transforms. Metabase’s database user will need to be able to create and drop transform tables. We recommend using a <a href="./writeable-connection">writeable connection</a> and only granting write access to the user used for the writeable connection.</p>
 
 <p>In addition to the <a href="#minimum-database-privileges">minimum database privileges</a>:</p>
 
@@ -6004,14 +6010,14 @@ Roadmap</a>
   <li>Create a new role called <code class="language-plaintext highlighter-rouge">metabase_transforms</code>.</li>
   <li>Create a dedicated schema for transforms.</li>
   <li>Give the <code class="language-plaintext highlighter-rouge">metabase_transforms</code> role <code class="language-plaintext highlighter-rouge">CREATE TABLE</code> / <code class="language-plaintext highlighter-rouge">ALTER</code> / <code class="language-plaintext highlighter-rouge">DROP</code> privileges for the specified schema.</li>
-  <li>Give the <code class="language-plaintext highlighter-rouge">metabase_transforms</code> role to the <code class="language-plaintext highlighter-rouge">metabase</code> user.</li>
+  <li>Give the <code class="language-plaintext highlighter-rouge">metabase_transforms</code> role to the user used for your database connection. We recommend using a <a href="./writeable-connection">writeable connection</a> and only granting this role to the user used for the writeable connection.</li>
 </ul>
 
 <p>In certain cases, Metabase will give you an option to create new schemas for transforms, in which case you’ll also need <code class="language-plaintext highlighter-rouge">CREATE SCHEMA</code> privileges for your metabase users (or <code class="language-plaintext highlighter-rouge">CREATE DATABASE</code> for ClickHouse).</p>
 
 <h2 id="privileges-to-enable-uploads">Privileges to enable uploads</h2>
 
-<p>You can <a href="../databases/uploads">upload CSVs</a> to supported databases. Metabase’s database user should have write access (<code class="language-plaintext highlighter-rouge">INSERT</code>, <code class="language-plaintext highlighter-rouge">UPDATE</code>, <code class="language-plaintext highlighter-rouge">DELETE</code>) to the schema where you want to store the uploads.</p>
+<p>You can <a href="../databases/uploads">upload CSVs</a> to supported databases. Metabase’s database user should have write access (<code class="language-plaintext highlighter-rouge">INSERT</code>, <code class="language-plaintext highlighter-rouge">UPDATE</code>, <code class="language-plaintext highlighter-rouge">DELETE</code>) to the schema where you want to store the uploads. We recommend using a <a href="./writeable-connection">writeable connection</a> and only granting write access to the user used for the writeable connection.</p>
 
 <p>You’ll first need to create a schema to store uploads (or use an existing schema) and tell Metabase that you want to <a href="./uploads#select-the-database-and-schema-that-you-want-to-store-the-data-in">use that schema to store uploads</a>.</p>
 
@@ -6020,7 +6026,7 @@ Roadmap</a>
 <ul>
   <li>Create a new role called <code class="language-plaintext highlighter-rouge">metabase_uploads</code>.</li>
   <li>Give the role <code class="language-plaintext highlighter-rouge">INSERT</code>, <code class="language-plaintext highlighter-rouge">UPDATE</code>, and <code class="language-plaintext highlighter-rouge">DELETE</code> privileges to the schema where you want to store uploads.</li>
-  <li>Give the <code class="language-plaintext highlighter-rouge">metabase_uploads</code> role to the <code class="language-plaintext highlighter-rouge">metabase</code> user.</li>
+  <li>Give the <code class="language-plaintext highlighter-rouge">metabase_uploads</code> role to the user used for your database connection.</li>
 </ul>
 
 <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- Create a role to bundle database privileges for uploads.</span>
@@ -6090,6 +6096,7 @@ Roadmap</a>
 <h2 id="further-reading">Further reading</h2>
 
 <ul>
+  <li><a href="./writeable-connection">Writeable connections</a></li>
   <li><a href="/learn/metabase-basics/administration/permissions/strategy">Permissions strategies</a></li>
   <li><a href="../permissions/introduction">Permissions introduction</a></li>
   <li><a href="../people-and-groups/start">People overview</a></li>
