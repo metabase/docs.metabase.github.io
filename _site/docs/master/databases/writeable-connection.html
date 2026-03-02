@@ -6,7 +6,7 @@
   <meta content="frame-ancestors 'none'" http-equiv="Content-Security-Policy">
   <meta content="deny" http-equiv="X-Frame-Options">
     
-  <link href="https://www.metabase.com/docs/master/permissions/database-routing" rel="canonical">
+  <link href="https://www.metabase.com/docs/master/databases/writeable-connection" rel="canonical">
   
 
   <script type="text/javascript">
@@ -50,12 +50,12 @@ window.redirectTo = function redirectTo(theLocation) {
 
 
 
-<title>Database routing | Metabase Documentation</title>
+<title>Writeable connections | Metabase Documentation</title>
 <!-- Twitter cards -->
 <meta name="twitter:site" content="@metabase">
 
-<meta name="twitter:title" content="Database routing | Metabase Documentation">
-<meta name="twitter:description" content="Route queries to different databases based on who's viewing them. Great for multi-tenant setups where each customer has their own database.">
+<meta name="twitter:title" content="Writeable connections | Metabase Documentation">
+<meta name="twitter:description" content="Add an optional separate database connection for write operations like transforms or editable tables to keep the main Metabase connection read-only for analytics.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -63,9 +63,9 @@ window.redirectTo = function redirectTo(theLocation) {
 <!-- Open Graph metadata -->
 <meta property="og:site_name" content="Metabase | Business Intelligence, Dashboards, and Data Visualization">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://www.metabase.com/docs/master/permissions/database-routing">
-<meta name="title" property="og:title" content="Database routing | Metabase Documentation">
-<meta name="description" property="og:description" content="Route queries to different databases based on who's viewing them. Great for multi-tenant setups where each customer has their own database.">
+<meta property="og:url" content="https://www.metabase.com/docs/master/databases/writeable-connection">
+<meta name="title" property="og:title" content="Writeable connections | Metabase Documentation">
+<meta name="description" property="og:description" content="Add an optional separate database connection for write operations like transforms or editable tables to keep the main Metabase connection read-only for analytics.">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -5114,7 +5114,7 @@ Roadmap</a>
 
       
 
-      <li class="expanded">
+      <li class="">
         <a href="/docs/master/permissions/start" class="">
         Permissions
 
@@ -5243,7 +5243,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/master/permissions/database-routing" class="selected">
+                <a href="/docs/master/permissions/database-routing" class="">
                   Database routing
 
                   
@@ -5702,7 +5702,7 @@ Roadmap</a>
 
             
             
-                <li class="breadcrumb-item"><a class="blue-60" href="/docs/master/permissions/start">Permissions</a></li>
+                <li class="breadcrumb-item"><a class="blue-60" href="/docs/master/databases/start">Databases</a></li>
             
             
         </ol>
@@ -5849,211 +5849,74 @@ Roadmap</a>
 </div>
 
 
-        <h1 id="database-routing">Database routing</h1>
+        <h2 id="writeable-connections">Writeable connections</h2>
 
-<div class="bootstrap">
-  <div class="plans-blockquote bg-blue-95 rounded-3 p-6 d-flex flex-row border border-1 border-primary">
-    <svg class="" width="24" height="24" viewBox="0 0 26 26" fill="none">
-  <path d="M12 13V15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
-  <path d="M12 10C12.5523 10 13 9.55228 13 9C13 8.44772 12.5523 8 12 8C11.4477 8 11 8.44772 11 9C11 9.55228 11.4477 10 12 10Z" fill="#509EE3"></path>
-  <path d="M12 19.25C16.0041 19.25 19.25 16.0041 19.25 12C19.25 7.99594 16.0041 4.75 12 4.75C7.99594 4.75 4.75 7.99594 4.75 12C4.75 16.0041 7.99594 19.25 12 19.25Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
-</svg>
+<blockquote>
+  <p>Writeable connection requires the <strong>Advanced transforms (SQL + Python)</strong> add-on</p>
+</blockquote>
 
-    
-    
-    
-      
+<p><em>Admin &gt; Databases &gt; Writeable connection</em></p>
 
-    <p class="m-0 ms-2 paragraph-5 neutral-40">
-       Database routing is only available on
-      <a class="fw-bold" href="/product/pro">Pro</a> and
-      <a class="fw-bold link-purple" href="/product/enterprise">Enterprise</a>
-      plans  (both self-hosted and on Metabase Cloud).
-    </p>
-  </div>
-</div>
+<p>Writeable connection is an optional connection that Metabase will use for functionality that involves writing into the database (for example, transforms or CSV uploads). This allows you to keep your main Metabase connection read-only, and only to switch to connection with write permissions for the operations that require write access.</p>
 
-<p>With database routing, an admin can build a question once using one database, and the question will run its query against a different database with the same schema depending on who is viewing the question.</p>
+<p><img src="./images/writeable-connection.png" alt="Writeable connection in database settings"></p>
 
-<p>Database routing is useful for:</p>
+<h2 id="how-writeable-connection-works">How writeable connection works</h2>
 
-<ul>
-  <li>
-    <p>Managing modular and full app embedding setups where each customer has their own database with identical schemas.</p>
+<p>Writeable connection is an additional connection option added to an existing database connection.</p>
 
-    <p>With guest embedding, database queries will always be routed to the router database. This is because guest embed users don’t have Metabase accounts, so there are no user attributes available to determine which destination database to route to.</p>
-  </li>
-  <li>Switching between dev and prod data warehouses.</li>
-  <li>Changing the target data warehouse for certain teams.</li>
-  <li>Managing separate connections to the same data warehouse, with each connection having separate privileges. This connection management is akin to <a href="./impersonation">connection impersonation</a> for databases that prevent the same connection from changing roles.</li>
-</ul>
+<p>When a writeable connection is configured for a database, Metabase automatically switches between connections behind the scenes based on what people are doing with the database. The main connection is used for querying, and the writeable connection is used for <a href="#features-that-use-writeable-connection">features that require writes</a>.</p>
 
-<h2 id="database-routing-limitations">Database routing limitations</h2>
+<p>Writeable connection can use a different database user than the main connection, or even connect to a different database. For example, your main connection (used for querying) can go to a read replica, but the writeable connection can be to a primary database.</p>
 
-<h3 id="driver-limitations">Driver limitations</h3>
+<h2 id="add-a-writeable-connection">Add a writeable connection</h2>
 
-<p>Database routing is <strong>not supported</strong> on:</p>
+<p>To add a writeable connection to a database:</p>
 
-<ul>
-  <li>ClickHouse</li>
-  <li>Oracle</li>
-  <li>Spark SQL</li>
-  <li>Vertica.</li>
-</ul>
+<ol>
+  <li>Go to <strong>Admin &gt; Databases</strong>.</li>
+  <li>Select the database to add a writeable connection to.</li>
+  <li>Under <strong>Writeable connection</strong>, click <strong>Add writeable connection</strong>.</li>
+  <li>Metabase will pre-fill some fields with information from your main connection. Input the credentials for the writeable connection.</li>
+  <li>Click <strong>Save</strong>. Metabase will try to connect using the new connection.</li>
+</ol>
 
-<p>Different database have different setups, so <em>what</em> you can route between (database, schema, data catalog, etc.) will differ slightly depending on which data warehouse you’re using.</p>
+<h2 id="remove-a-writeable-connection">Remove a writeable connection</h2>
+
+<p>To remove a writeable connection from a database:</p>
+
+<ol>
+  <li>Go to <strong>Admin &gt; Databases</strong>.</li>
+  <li>Select the database you want to remove the writeable connection from.</li>
+  <li>Under <strong>Writeable connection</strong>, click <strong>Remove writeable connection</strong>.</li>
+</ol>
+
+<p>Once writeable connection is removed, Metabase will revert to using the main connection for <a href="#features-that-use-writeable-connection">features that need write access</a>, so your main connection will need to have appropriate database permissions, see <a href="./users-roles-privileges">Users, roles, and privileges</a></p>
+
+<h2 id="features-that-use-writeable-connection">Features that use writeable connection</h2>
+
+<p>When configured, writeable connection will be used for:</p>
 
 <ul>
-  <li>Athena: Only routing between different connections is supported (e.g., different buckets, roles, or catalogs).</li>
-  <li>BigQuery: Only routing between databases in different projects is supported.</li>
-  <li>Databricks: When multi-catalog is not enabled, you can route between catalogs on the same host. If multi-catalog is enabled, then you can only route between databases on separate hosts.</li>
-</ul>
-
-<h3 id="functionality-limitations">Functionality limitations</h3>
-
-<p>Database routing <strong>can’t be used</strong> on databases with:</p>
-
-<ul>
-  <li><a href="../databases/writeable-connection">Writeable connections</a></li>
+  <li><a href="../data-studio/transforms/transforms-overview">Transforms</a></li>
+  <li><a href="../databases/uploads">CSV uploads</a></li>
   <li><a href="../data-modeling/editable-tables">Editable tables</a></li>
   <li><a href="../actions/introduction">Actions</a></li>
-  <li><a href="../databases/uploads">CSV uploads</a></li>
   <li><a href="../data-modeling/model-persistence">Model persistence</a></li>
 </ul>
 
-<p>With <strong>guest embedding</strong>, database queries will always be routed to the router database. This is because guest embed users don’t have Metabase accounts, so there are no user attributes available to determine which destination database to route to.</p>
+<p>Your writeable connection will need to have the privileges required for these operations. See <a href="./users-roles-privileges">Users, roles, and privileges</a>.</p>
 
-<h2 id="how-database-routing-works">How database routing works</h2>
+<h2 id="limitations">Limitations</h2>
 
-<p>You connect Metabase to a database as normal. When you turn on database routing for that database, it becomes a <strong>router database</strong> - the main database that will handle routing queries to <strong>destination databases</strong>. You’ll add these destination databases to this router database, with each destination database associated with a value for the user attribute you assign to the router database. You don’t need to have your customer databases as separate connections.</p>
-
-<p>With the router database set up with its destination databases, an admin can then create questions that query the router database. When other people log in and view these questions, Metabase will route the queries to the destination database specified by the person’s user attribute.</p>
-
-<h2 id="setting-up-database-routing">Setting up database routing</h2>
-
-<p><img src="./images/database-routing.png" alt="Database routing"></p>
-
-<ol>
-  <li><a href="../databases/connecting">Connect to a database</a> that has <em>the same schema as all of your customer’s databases</em>. This database should be a mock/dev database, ideally with some fake data. The name used for this router database will be the name all users will see, regardless of which destination database they’re routed to, so make sure the name makes sense for everyone. (You can change the display name at any time).</li>
-  <li>Once connected to this initial database (the “Router database”), go to its Database routing section and toggle on <strong>Enable database routing</strong>.</li>
-  <li>Enter the user attribute you want to use to determine which database a user should be routed to.</li>
-  <li>In the <strong>Destination databases</strong> section, click <strong>Add</strong>, then fill out the connection details. For each destination database, you’ll need to specify a <strong>slug</strong> - this slug is the value that Metabase will use to match against the user attribute you assigned to the router database. At run time, when a user views a question built on the router database, Metabase will check the person’s user attribute. If the value matches this slug, the question will query this destination database instead.</li>
-</ol>
-
-<h2 id="user-attributes-and-database-routing">User attributes and database routing</h2>
-
-<p>For database routing to work, your users must have a user attribute that Metabase can use to route them to the right destination database.</p>
-
-<p>You can add user attributes manually, or via Single Sign-On (SSO) via <a href="../people-and-groups/authenticating-with-jwt">JWT</a> or <a href="../people-and-groups/authenticating-with-saml">SAML</a>.</p>
-
-<p>If an admin user lacks a value for the user attribute, they’ll see the router database. You can also explicitly set the value for admins (or any user) to <code class="language-plaintext highlighter-rouge">__METABASE_ROUTER__</code>.</p>
-
-<p>If a non-admin user account lacks a valid value for the user attribute, they won’t be able to view the question at all.</p>
-
-<p>See our docs on <a href="../people-and-groups/managing#adding-a-user-attribute">user attributes</a>.</p>
-
-<h2 id="testing-database-routing">Testing database routing</h2>
-
-<p>To see if database routing is working:</p>
-
-<ol>
-  <li>Log in as an admin.</li>
-  <li>Create a question that queries the router database.</li>
-  <li>Create a user account and add the user attribute you associated with your router database. Set the value as the slug of one of your destination databases.</li>
-  <li>In a private/incognito tab, log in as the user and view the question you created. You should see data from the destination database associated with person’s user attribute, not the data in the router database.</li>
-</ol>
-
-<h2 id="adding-destination-databases-with-the-api">Adding destination databases with the API</h2>
-
-<p>To add destination databases programmatically, you’ll need an <a href="../people-and-groups/api-keys">API key</a>.</p>
-
-<p>Because each database engine has its own settings, we recommend that you use the Network tab in your browser’s developer tools while you manually add a destination database in the UI. This way you can see the request Metabase generates.</p>
-
-<p>When you click <strong>Add</strong>, you’ll see a <code class="language-plaintext highlighter-rouge">POST</code> request to <code class="language-plaintext highlighter-rouge">/mirror-database?check_connection_details=true</code>. Click on that request to get the request’s headers and JSON payload.</p>
-
-<h3 id="adding-a-new-destination-database-example-with-postgresql-via-curl">Adding a new destination database: example with PostgreSQL via <code class="language-plaintext highlighter-rouge">curl</code></h3>
-
-<p>Here’s a <code class="language-plaintext highlighter-rouge">curl</code> command to add a PostgreSQL database as a destination database. Here the database’s <code class="language-plaintext highlighter-rouge">slug</code> is defined by <code class="language-plaintext highlighter-rouge">name</code> (in this case, <code class="language-plaintext highlighter-rouge">Green PostgreSQL</code>).</p>
-
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="s1">'http://localhost:3000/api/ee/database-routing/mirror-database?check_connection_details=true'</span> <span class="se">\</span>
-  <span class="nt">--request</span> POST <span class="se">\</span>
-  <span class="nt">--header</span> <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
-  <span class="nt">--header</span> <span class="s1">'X-Api-Key: mb_CpkoZHvSB5R+P+WsuXWRbdT3WbVphFv/rgMX9UGux/4='</span> <span class="se">\</span>
-  <span class="nt">--data</span> <span class="s1">'{
-  "router_database_id": 2,
-  "mirrors": [
-    {
-     "details": {
-        "host": "red-postgres",
-        "port": 5432,
-        "dbname": "sample",
-        "user": "metabase",
-        "use-auth-provider": false,
-        "password": "metasample123",
-        "schema-filters-type": "all",
-        "ssl": false,
-        "tunnel-enabled": false,
-        "destination-database": true
-      },
-      "name": "Green PostgreSQL",
-      "engine": "postgres"
-    }
-  ]
-}'</span>
-</code></pre></div></div>
-
-<p>The <code class="language-plaintext highlighter-rouge">details</code> object will have a different set of keys depending on the database.</p>
-
-<p>If you grab the payload from the browser’s Network tab, you may see additional, non-required settings:</p>
-
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="s1">'http://localhost:3000/api/ee/database-routing/mirror-database?check_connection_details=true'</span> <span class="se">\</span>
-  <span class="nt">--request</span> POST <span class="se">\</span>
-  <span class="nt">--header</span> <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
-  <span class="nt">--header</span> <span class="s1">'X-Api-Key: mb_CpkoZHvSB5R+P+WsuXWRbdT3WbVphFv/rgMX9UGux/4='</span> <span class="se">\</span>
-  <span class="nt">--data</span> <span class="s1">'{
-  "router_database_id": 2,
-  "mirrors": [
-    {
-      "is_on_demand": false,
-      "is_full_sync": true,
-      "is_sample": false,
-      "cache_ttl": null,
-      "refingerprint": null,
-      "auto_run_queries": true,
-      "schedules": {
-        "metadata_sync": {
-          "schedule_minute": 14,
-          "schedule_day": null,
-          "schedule_frame": null,
-          "schedule_hour": null,
-          "schedule_type": "hourly"
-        },
-        "cache_field_values": {
-          "schedule_minute": 0,
-          "schedule_day": null,
-          "schedule_frame": null,
-          "schedule_hour": 18,
-          "schedule_type": "daily"
-        }
-      },
-      "details": {
-        "host": "red-postgres",
-        "port": 5432,
-        "dbname": "sample",
-        "user": "metabase",
-        "use-auth-provider": false,
-        "password": "metasample123",
-        "schema-filters-type": "all",
-        "ssl": false,
-        "tunnel-enabled": false,
-        "destination-database": true
-      },
-      "name": "Red PostgreSQL",
-      "engine": "postgres"
-    }
-  ]
-}'</span>
-</code></pre></div></div>
+<ul>
+  <li>
+    <p>Writeable connection can’t be used with <a href="../permissions/database-routing">database routing</a>.</p>
+  </li>
+  <li>
+    <p>Writeable connection must use the same database engine as the primary connection - so for example, if the primary connection is to a PostgreSQL database, the writeable connection must be to a PostgreSQL database as well.</p>
+  </li>
+</ul>
 
 
         <div>
@@ -6107,7 +5970,7 @@ Roadmap</a>
 
   
     <span class="paragraph-6 fs-13 neutral-60" id="page-feedback-footer">
-      Want to improve these docs? <a href="https://github.com/metabase/metabase/blob/master/docs/permissions/database-routing.md" target="_blank">Propose a change.</a>
+      Want to improve these docs? <a href="https://github.com/metabase/metabase/blob/master/docs/databases/writeable-connection.md" target="_blank">Propose a change.</a>
     </span>
   
 </div>
@@ -6129,8 +5992,8 @@ Roadmap</a>
 <script type="text/javascript" src="/js/position-feedback-widget.js"></script>
 
 <script>
-  const pageTitle = `Database routing`;
-  const pageURL = '/docs/master/permissions/database-routing';
+  const pageTitle = `Writeable connections`;
+  const pageURL = '/docs/master/databases/writeable-connection';
   const pageURLSplit = pageURL.split('/');
 
   let pageURLPrefix = '/' + pageURLSplit[1] + '/' + pageURLSplit[2];

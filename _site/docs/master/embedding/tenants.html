@@ -6096,7 +6096,9 @@ To add tenant users in Metabase:</p>
 
 <p><img src="./images/edit-tenant.png" alt="Edit tenant"></p>
 
-<p>To add a tenant attribute:</p>
+<p>There are three ways to add a tenant attribute, using the Metabase UI, the API, or JWT SSO.</p>
+
+<p>To create a tenant attribute manually using the Metabase UI:</p>
 
 <ol>
   <li>Go to <strong>Admin settings &gt; People</strong></li>
@@ -6105,9 +6107,9 @@ To add tenant users in Metabase:</p>
   <li>Input the attribute key and value.</li>
 </ol>
 
-<p>Once you add a tenant attribute, all users of that tenant will inherit the attribute, but the value can be overridden for any particular user, see <a href="../people-and-groups/managing#adding-a-user-attribute">Edit user attributes</a>.</p>
+<p>For details on how to set tenant attributes using JWT tenant claims, see <a href="#setting-tenant-attributes-using-tenant-claims">Setting tenant attributes using tenant claims</a> below.</p>
 
-<p>Currently, you can’t assign custom tenant attributes with SSO. The only way to assign attributes is through the Metabase UI (but you can provision attributes for <em>individual users</em> through SSO, see <a href="../people-and-groups/authenticating-with-jwt">JWT user attributes</a>). However, if you’re using user attribute to set permissions, then you can use the <a href="#special-tenant-slug-attribute">special slug attribute</a> which Metabase creates automatically.</p>
+<p>Once you add a tenant attribute, all users of that tenant will inherit the attribute, but the value can be overridden for any particular user, see <a href="../people-and-groups/managing#adding-a-user-attribute">Edit user attributes</a>.</p>
 
 <h3 id="special-tenant-slug-attribute">Special tenant slug attribute</h3>
 
@@ -6171,6 +6173,23 @@ To add tenant users in Metabase:</p>
   <li>If the tenant doesn’t exist, Metabase automatically creates it. Metabase will use the value of the <code class="language-plaintext highlighter-rouge">@tenant</code> key (or your chosen assignment attribute) as the tenant slug.</li>
   <li>New users are automatically assigned to the tenant from their JWT.</li>
 </ol>
+
+<h3 id="setting-tenant-attributes-using-tenant-claims">Setting tenant attributes using tenant claims</h3>
+
+<p>To create tenant attributes from JWT SSO, include a claim <code class="language-plaintext highlighter-rouge">@tenant.attributes</code>:</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"@tenant"</span><span class="p">:</span><span class="w"> </span><span class="s2">"meowdern_solutions"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"@tenant.attributes"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"industry"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cat food"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mittens@example.com"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"first_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Mister"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"last_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Mittens"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>If a tenant attribute with this name doesn’t exist, Metabase will create the attribute and assign the value from the JWT claim. However, if the tenant attribute already exists, Metabase will <strong>not</strong> update the value.</p>
 
 <h3 id="troubleshooting-jwt-authentication-with-tenants">Troubleshooting JWT authentication with tenants</h3>
 
@@ -6250,8 +6269,7 @@ To add tenant users in Metabase:</p>
 
 <ul>
   <li>Metabase Admins will have <strong>Curate</strong> access to all shared collections and all tenant collections.</li>
-  <li>Other internal groups can be granted <strong>View</strong> or <strong>Curate</strong> access to <strong>shared collections</strong>, see <a href="#configuring-shared-collections-permissions">Configuring shared collection permissions</a>.</li>
-  <li>Non-admin internal users will have <strong>No</strong> access to tenant-specific collections. Currently, this can’t be configured.</li>
+  <li>Other internal groups and non-admin users have <strong>No</strong> access by default, but can be granted <strong>View</strong> or <strong>Curate</strong> access to <strong>shared collections</strong>. See <a href="#configuring-shared-collections-permissions">Configuring shared collection permissions</a> for details.</li>
 </ul>
 
 <p>For configuring permissions to <em>internal</em> collections for internal users, see <a href="../permissions/collections">general docs on collection permissions</a>.</p>
