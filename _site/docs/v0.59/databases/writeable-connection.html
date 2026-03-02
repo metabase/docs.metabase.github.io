@@ -6,7 +6,7 @@
   <meta content="frame-ancestors 'none'" http-equiv="Content-Security-Policy">
   <meta content="deny" http-equiv="X-Frame-Options">
     
-  <link href="https://www.metabase.com/docs/v0.59/databases/connections/postgresql" rel="canonical">
+  <link href="https://www.metabase.com/docs/v0.59/databases/writeable-connection" rel="canonical">
   
 
   <script type="text/javascript">
@@ -50,12 +50,12 @@ window.redirectTo = function redirectTo(theLocation) {
 
 
 
-<title>PostgreSQL | Metabase Documentation</title>
+<title>Writeable connections | Metabase Documentation</title>
 <!-- Twitter cards -->
 <meta name="twitter:site" content="@metabase">
 
-<meta name="twitter:title" content="PostgreSQL | Metabase Documentation">
-<meta name="twitter:description" content="PostgreSQL  This page covers connecting to PostgreSQL as a data warehouse. For using PostgreSQL as Metabase’s application database, see Configuring the Metabase application database.  To add a database connection, click the grid icon in the top right, and...">
+<meta name="twitter:title" content="Writeable connections | Metabase Documentation">
+<meta name="twitter:description" content="Add an optional separate database connection for write operations like transforms or editable tables to keep the main Metabase connection read-only for analytics.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -63,9 +63,9 @@ window.redirectTo = function redirectTo(theLocation) {
 <!-- Open Graph metadata -->
 <meta property="og:site_name" content="Metabase | Business Intelligence, Dashboards, and Data Visualization">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://www.metabase.com/docs/v0.59/databases/connections/postgresql">
-<meta name="title" property="og:title" content="PostgreSQL | Metabase Documentation">
-<meta name="description" property="og:description" content="PostgreSQL  This page covers connecting to PostgreSQL as a data warehouse. For using PostgreSQL as Metabase’s application database, see Configuring the Metabase application database.  To add a database connection, click the grid icon in the top right, and...">
+<meta property="og:url" content="https://www.metabase.com/docs/v0.59/databases/writeable-connection">
+<meta name="title" property="og:title" content="Writeable connections | Metabase Documentation">
+<meta name="description" property="og:description" content="Add an optional separate database connection for write operations like transforms or editable tables to keep the main Metabase connection read-only for analytics.">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -3938,7 +3938,7 @@ Roadmap</a>
 
       
 
-      <li class="expanded">
+      <li class="">
         <a href="/docs/v0.59/databases/start" class="">
         Data sources
 
@@ -3976,7 +3976,7 @@ Roadmap</a>
 
               
 
-              <li class="expanded">
+              <li class="">
                 <a href="" class="">
                   Supported databases
 
@@ -4138,7 +4138,7 @@ Roadmap</a>
 
                       
                       <li class="">
-                        <a href="/docs/v0.59/databases/connections/postgresql" class="selected">
+                        <a href="/docs/v0.59/databases/connections/postgresql" class="">
                           PostgreSQL
 
                           
@@ -5843,258 +5843,73 @@ Roadmap</a>
 </div>
 
 
-        <h1 id="postgresql">PostgreSQL</h1>
+        <h2 id="writeable-connections">Writeable connections</h2>
 
 <blockquote>
-  <p>This page covers connecting to PostgreSQL as a <em>data warehouse</em>. For using PostgreSQL as Metabase’s <em>application database</em>, see <a href="../../installation-and-operation/configuring-application-database">Configuring the Metabase application database</a>.</p>
+  <p>Writeable connection requires the <strong>Advanced transforms (SQL + Python)</strong> add-on</p>
 </blockquote>
 
-<p>To add a database connection, click the <strong>grid</strong> icon in the top right, and navigate to <strong>Admin</strong> &gt; <strong>Databases</strong> &gt; <strong>Add a database</strong>.</p>
+<p><em>Admin &gt; Databases &gt; Writeable connection</em></p>
 
-<p>Fill out the fields for that database, and click <strong>Save changes</strong> at the bottom.</p>
+<p>Writeable connection is an optional connection that Metabase will use for functionality that involves writing into the database (for example, transforms or CSV uploads). This allows you to keep your main Metabase connection read-only, and only to switch to connection with write permissions for the operations that require write access.</p>
 
-<h2 id="supported-versions">Supported versions</h2>
+<p><img src="./images/writeable-connection.png" alt="Writeable connection in database settings"></p>
 
-<p>Metabase supports the oldest supported version of PostgreSQL through the latest stable version. See <a href="https://www.postgresql.org/support/versioning/">PostgreSQL versions</a>.</p>
+<h2 id="how-writeable-connection-works">How writeable connection works</h2>
 
-<h2 id="connect-to-supabase">Connect to Supabase</h2>
+<p>Writeable connection is an additional connection option added to an existing database connection.</p>
 
-<p>To connect to a Supabase database, select PostgreSQL. For more details, check out the <a href="https://supabase.com/docs/guides/database/metabase">Supabase docs</a>.</p>
+<p>When a writeable connection is configured for a database, Metabase automatically switches between connections behind the scenes based on what people are doing with the database. The main connection is used for querying, and the writeable connection is used for <a href="#features-that-use-writeable-connection">features that require writes</a>.</p>
 
-<h2 id="connection-and-sync">Connection and sync</h2>
+<p>Writeable connection can use a different database user than the main connection, or even connect to a different database. For example, your main connection (used for querying) can go to a read replica, but the writeable connection can be to a primary database.</p>
 
-<p>After connecting to a database, you’ll see the “Connection and sync” section that displays the current connection status and options to manage your database connection.</p>
+<h2 id="add-a-writeable-connection">Add a writeable connection</h2>
 
-<p>Here you can <a href="../sync-scan">sync the database schema and rescan field values</a>, and edit connection details.</p>
+<p>To add a writeable connection to a database:</p>
 
-<h2 id="edit-connection-details">Edit connection details</h2>
+<ol>
+  <li>Go to <strong>Admin &gt; Databases</strong>.</li>
+  <li>Select the database to add a writeable connection to.</li>
+  <li>Under <strong>Writeable connection</strong>, click <strong>Add writeable connection</strong>.</li>
+  <li>Metabase will pre-fill some fields with information from your main connection. Input the credentials for the writeable connection.</li>
+  <li>Click <strong>Save</strong>. Metabase will try to connect using the new connection.</li>
+</ol>
 
-<p>You can edit these settings at any time. Just remember to save your changes.</p>
+<h2 id="remove-a-writeable-connection">Remove a writeable connection</h2>
 
-<h3 id="connection-string">Connection string</h3>
+<p>To remove a writeable connection from a database:</p>
 
-<p>Paste a connection string here to pre-fill the remaining fields below.</p>
+<ol>
+  <li>Go to <strong>Admin &gt; Databases</strong>.</li>
+  <li>Select the database you want to remove the writeable connection from.</li>
+  <li>Under <strong>Writeable connection</strong>, click <strong>Remove writeable connection</strong>.</li>
+</ol>
 
-<h3 id="display-name">Display name</h3>
+<p>Once writeable connection is removed, Metabase will revert to using the main connection for <a href="#features-that-use-writeable-connection">features that need write access</a>, so your main connection will need to have appropriate database permissions, see <a href="./users-roles-privileges">Users, roles, and privileges</a></p>
 
-<p>The display name for the database in the Metabase interface.</p>
+<h2 id="features-that-use-writeable-connection">Features that use writeable connection</h2>
 
-<h3 id="host">Host</h3>
-
-<p>Your database’s IP address, or its domain name (e.g., esc.mydatabase.com).</p>
-
-<h3 id="port">Port</h3>
-
-<p>The database port. E.g., 5432.</p>
-
-<h3 id="database-name">Database name</h3>
-
-<p>The name of the database you’re connecting to.</p>
-
-<h3 id="username">Username</h3>
-
-<p>The database username for the account that you want to use to connect to your database. You can set up multiple connections to the same database using different user accounts to connect to the same database, each with different sets of <a href="../users-roles-privileges">privileges</a>.</p>
-
-<h3 id="password">Password</h3>
-
-<p>The password for the username that you use to connect to the database.</p>
-
-<h3 id="use-an-authentication-provider">Use an authentication provider</h3>
-
-<div class="bootstrap">
-  <div class="plans-blockquote bg-blue-95 rounded-3 p-6 d-flex flex-row border border-1 border-primary">
-    <svg class="" width="24" height="24" viewBox="0 0 26 26" fill="none">
-  <path d="M12 13V15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
-  <path d="M12 10C12.5523 10 13 9.55228 13 9C13 8.44772 12.5523 8 12 8C11.4477 8 11 8.44772 11 9C11 9.55228 11.4477 10 12 10Z" fill="#509EE3"></path>
-  <path d="M12 19.25C16.0041 19.25 19.25 16.0041 19.25 12C19.25 7.99594 16.0041 4.75 12 4.75C7.99594 4.75 4.75 7.99594 4.75 12C4.75 16.0041 7.99594 19.25 12 19.25Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
-</svg>
-
-    
-    
-    
-      
-
-    <p class="m-0 ms-2 paragraph-5 neutral-40">
-       Authenticating with a provider is only available on
-      <a class="fw-bold" href="/product/pro">Pro</a> and
-      <a class="fw-bold link-purple" href="/product/enterprise">Enterprise</a>
-      plans  (both self-hosted and on Metabase Cloud).
-    </p>
-  </div>
-</div>
-
-<p>Instead of a password, you can authenticate with a supported provider.</p>
-
-<p>Only for self-hosted Pro and Enterprise plans.</p>
-
-<h4 id="azure-managed-identity">Azure Managed Identity</h4>
-
-<p>To use Azure Managed Identity, you’ll need to input your <a href="https://learn.microsoft.com/en-us/previous-versions/azure/postgresql/single-server/how-to-connect-with-managed-identity#retrieving-the-access-token-from-azure-instance-metadata-service">client ID</a>.</p>
-
-<h4 id="oauth">Oauth</h4>
-
-<p>To use Oauth as a provider, you’ll need to input your:</p>
+<p>When configured, writeable connection will be used for:</p>
 
 <ul>
-  <li>Auth token URL</li>
-  <li>Auth token request headers (a JSON map)</li>
+  <li><a href="../data-studio/transforms/transforms-overview">Transforms</a></li>
+  <li><a href="../databases/uploads">CSV uploads</a></li>
+  <li><a href="../data-modeling/editable-tables">Editable tables</a></li>
+  <li><a href="../actions/introduction">Actions</a></li>
+  <li><a href="../data-modeling/model-persistence">Model persistence</a></li>
 </ul>
 
-<h4 id="iam-authentication">IAM authentication</h4>
+<p>Your writeable connection will need to have the privileges required for these operations. See <a href="./users-roles-privileges">Users, roles, and privileges</a>.</p>
 
-<p>To connect to Amazon RDS instances using IAM authentication instead of a password, see <a href="./aws-rds#iam-authentication">IAM authentication for AWS RDS</a>.</p>
-
-<h3 id="schemas">Schemas</h3>
-
-<p>You can specify which schemas you want to sync and scan. Options are:</p>
+<h2 id="limitations">Limitations</h2>
 
 <ul>
-  <li>All</li>
-  <li>Only these…</li>
-  <li>All except…</li>
-</ul>
-
-<p>For the <strong>Only these</strong> and <strong>All except</strong> options, you can input a comma-separated list of values to tell Metabase which schemas you want to include (or exclude). For example:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>foo,bar,baz
-</code></pre></div></div>
-
-<p>You can use the <code class="language-plaintext highlighter-rouge">*</code> wildcard to match multiple schemas.</p>
-
-<p>Let’s say you have three schemas: foo, bar, and baz.</p>
-
-<ul>
-  <li>If you have <strong>Only these…</strong> set, and enter the string <code class="language-plaintext highlighter-rouge">b*</code>, you’ll sync with bar and baz.</li>
-  <li>If you have <strong>All except…</strong> set, and enter the string <code class="language-plaintext highlighter-rouge">b*</code>, you’ll just sync foo.</li>
-</ul>
-
-<p>Note that only the <code class="language-plaintext highlighter-rouge">*</code> wildcard is supported; you can’t use other special characters or regexes.</p>
-
-<h3 id="use-a-secure-connection-ssl">Use a secure connection (SSL)</h3>
-
-<p>Metabase automatically tries to connect to databases with SSL first, then without if that doesn’t work. If it’s possible to connect to your database with an SSL connection, Metabase will make that the default setting for your database. If you prefer to connect without this layer of security, you can always change this setting later, but we recommend keeping SSL turned on to keep your data secure.</p>
-
-<h4 id="ssl-mode">SSL Mode</h4>
-
-<p>PostgreSQL databases support different levels of security with their connections, with different levels of overhead.</p>
-
-<p>SSL Mode options include:</p>
-
-<ul>
-  <li>allow</li>
-  <li>prefer</li>
-  <li>require</li>
-  <li>verify-ca</li>
-  <li>verify-full</li>
-</ul>
-
-<p>See the PostgreSQL docs for a table about the different <a href="https://jdbc.postgresql.org/documentation/ssl/#configuring-the-client">SSL Modes</a>, and select the option that works for you.</p>
-
-<h4 id="ssl-root-certificate-pem">SSL root certificate (PEM)</h4>
-
-<p>If you set the SSL Mode to either “verify-ca” or “verify-full”, you’ll need to specify a root certificate (PEM). You have the option of using a <strong>Local file path</strong> or an <strong>Uploaded file path</strong>. If you’re on Metabase Cloud, you’ll need to select <strong>Uploaded file path</strong> and upload your certificate.</p>
-
-<h4 id="authenticate-client-certificate">Authenticate client certificate</h4>
-
-<p>Toggle on to bring up client certificate options.</p>
-
-<h4 id="ssl-client-certificate-pem">SSL Client Certificate (PEM)</h4>
-
-<p>You have the option of using a <strong>Local file path</strong> or an <strong>Uploaded file path</strong>. If you’re on Metabase Cloud, you’ll need to select <strong>Uploaded file path</strong> and upload your certificate.</p>
-
-<h4 id="ssl-client-key-pkcs-8der">SSL Client Key (PKCS-8/DER)</h4>
-
-<p>Again, you have the option of using a <strong>Local file path</strong> or an <strong>Uploaded file path</strong>. If you’re on Metabase Cloud, you’ll need to select <strong>Uploaded file path</strong> and upload your certificate. You’ll also need to input your <strong>SSL Client Key Password</strong>.</p>
-
-<p>The private key must be PKCS8 and stored in DER format.</p>
-
-<p>If you instead have a PEM SSL client key, you can convert that key to the PKCS-8/DER format using <a href="https://www.openssl.org/">openssl</a>. The command would look something like:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>openssl pkcs8 -topk8 -inform PEM -outform DER -in client-key.pem -out client-key.der -nocrypt
-</code></pre></div></div>
-
-<p>Note: if you’re using GCP and you managed to issue client certificates, everything will be given in PEM format, you only need to transform the client-key.pem into a client-key.der for the “SSL Client Key”</p>
-
-<h3 id="use-an-ssh-tunnel">Use an SSH tunnel</h3>
-
-<p>See our <a href="../ssh-tunnel">guide to SSH tunneling</a>.</p>
-
-<h3 id="unfold-json-columns">Unfold JSON Columns</h3>
-
-<p>For PostgreSQL databases, Metabase can unfold JSON columns into component fields to yield a table where each JSON key becomes a column. JSON unfolding is on by default, but you can turn off JSON unfolding if performance is slow.</p>
-
-<p>If you turn on JSON unfolding, you can also toggle the unfolding for individual columns in <a href="../../data-modeling/metadata-editing#unfold-json">table metadata</a>.</p>
-
-<h3 id="additional-jdbc-connection-string-options">Additional JDBC connection string options</h3>
-
-<p>You can append options to the connection string that Metabase uses to connect to your database. Use the format:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>options=-c%20key=value
-</code></pre></div></div>
-
-<p>PostgreSQL connection URIs expect <a href="https://developer.mozilla.org/en-US/docs/Glossary/Percent-encoding">percent-encoding</a> for whitespaces and symbols.</p>
-
-<h3 id="re-run-queries-for-simple-explorations">Re-run queries for simple explorations</h3>
-
-<p>Turn this option <strong>OFF</strong> if people want to click <strong>Run</strong> (the play button) before applying any <a href="../../questions/query-builder/summarizing-and-grouping">Summarize</a> or filter selections.</p>
-
-<p>By default, Metabase will execute a query as soon as you choose an grouping option from the <strong>Summarize</strong> menu or a filter condition from the <a href="/learn/metabase-basics/querying-and-dashboards/questions/drill-through">drill-through menu</a>. If your database is slow, you may want to disable re-running to avoid loading data on each click.</p>
-
-<h3 id="choose-when-syncs-and-scans-happen">Choose when syncs and scans happen</h3>
-
-<p>See <a href="../sync-scan#choose-when-syncs-and-scans-happen">syncs and scans</a>.</p>
-
-<h3 id="periodically-refingerprint-tables">Periodically refingerprint tables</h3>
-
-<blockquote>
-  <p>Periodic refingerprinting will increase the load on your database.</p>
-</blockquote>
-
-<p>Turn this option <strong>ON</strong> to scan a sample of values every time Metabase runs a <a href="../sync-scan#how-database-syncs-work">sync</a>.</p>
-
-<p>A fingerprinting query examines the first 10,000 rows from each column and uses that data to guesstimate how many unique values each column has, what the minimum and maximum values are for numeric and timestamp columns, and so on. If you leave this option <strong>OFF</strong>, Metabase will only fingerprint your columns once during setup.</p>
-
-<h2 id="writeable-connection">Writeable connection</h2>
-
-<p>Set up an additional connection used for write operations. See <a href="../writeable-connection">Writeable connections</a>.</p>
-
-<h2 id="model-features">Model features</h2>
-
-<p>Choose whether to enable features related to <a href="../../data-modeling/models">Metabase models</a>. These features will often require that the database user account, the one you use to connect to your database, has both read and write privileges.</p>
-
-<h3 id="model-actions">Model actions</h3>
-
-<p>Turn this setting on to allow <a href="../../actions/introduction">actions</a> from models created from this data to be run. Actions can read, write, and delete data. Your database user will need write permissions.</p>
-
-<h3 id="model-persistence">Model persistence</h3>
-
-<p>We’ll create tables with model data and refresh them on a schedule you define. To enable <a href="../../data-modeling/model-persistence">model persistence</a>, you need to grant this connection’s credentials read and write permissions on a schema Metabase provides.</p>
-
-<h2 id="editable-table-data">Editable table data</h2>
-
-<p>Turn this setting <strong>ON</strong> to enable editing of table data directly within Metabase. When enabled, Admins can create, update, and delete records in your tables through Metabase’s interface.</p>
-
-<p>Your database connection will need Write permissions to enable this feature. Meaning: the database user account that you use to connect Metabase to your database must have appropriate privileges to modify data in the tables you want to make editable.</p>
-
-<p>See <a href="../users-roles-privileges">privileges</a>.</p>
-
-<h2 id="database-routing">Database routing</h2>
-
-<p>With database routing, an admin can build a question once using one database, and the question will run its query against a different database with the same schema depending on who is viewing the question.</p>
-
-<p>See <a href="../../permissions/database-routing">Database routing</a>.</p>
-
-<h2 id="danger-zone">Danger zone</h2>
-
-<p>See <a href="../danger-zone">Danger zone</a>.</p>
-
-<h2 id="further-reading">Further reading</h2>
-
-<ul>
-  <li><a href="../../databases/connecting">Managing databases</a></li>
-  <li><a href="../../data-modeling/metadata-editing">Metadata editing</a></li>
-  <li><a href="../../data-modeling/models">Models</a></li>
-  <li><a href="../../permissions/data">Setting data access permissions</a></li>
+  <li>
+    <p>Writeable connection can’t be used with <a href="../permissions/database-routing">database routing</a>.</p>
+  </li>
+  <li>
+    <p>Writeable connection must use the same database engine as the primary connection - so for example, if the primary connection is to a PostgreSQL database, the writeable connection must be to a PostgreSQL database as well.</p>
+  </li>
 </ul>
 
 
@@ -6149,7 +5964,7 @@ Roadmap</a>
 
   
     <span class="paragraph-6 fs-13 neutral-60" id="page-feedback-footer">
-      Want to improve these docs? <a href="https://github.com/metabase/metabase/blob/master/docs/databases/connections/postgresql.md" target="_blank">Propose a change.</a>
+      Want to improve these docs? <a href="https://github.com/metabase/metabase/blob/master/docs/databases/writeable-connection.md" target="_blank">Propose a change.</a>
     </span>
   
 </div>
@@ -6171,8 +5986,8 @@ Roadmap</a>
 <script type="text/javascript" src="/js/position-feedback-widget.js"></script>
 
 <script>
-  const pageTitle = `PostgreSQL`;
-  const pageURL = '/docs/v0.59/databases/connections/postgresql';
+  const pageTitle = `Writeable connections`;
+  const pageURL = '/docs/v0.59/databases/writeable-connection';
   const pageURLSplit = pageURL.split('/');
 
   let pageURLPrefix = '/' + pageURLSplit[1] + '/' + pageURLSplit[2];
