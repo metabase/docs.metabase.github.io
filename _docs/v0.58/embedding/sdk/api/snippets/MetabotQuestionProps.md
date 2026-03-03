@@ -7,7 +7,6 @@ category: Embedding
 title: MetabotQuestionProps
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/embedding/sdk/api/snippets/MetabotQuestionProps.md'
 layout: new-docs
-latest: true
 ---
 
 **`Expand`**
