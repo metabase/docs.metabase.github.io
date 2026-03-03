@@ -7,7 +7,6 @@ category: 'Developers Guide'
 title: Mage
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/developers-guide/mage.md'
 layout: new-docs
-latest: true
 ---
 
 # MAGE - Development Automation
