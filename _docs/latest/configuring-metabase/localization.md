@@ -1,5 +1,5 @@
 ---
-version: v0.58
+version: v0.59
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -17,8 +17,8 @@ latest: true
 
 Admins can update the localization settings for the instance:
 
-1. Click on the **gear** icon in the upper right.
-2. Click **Admin settings**.
+1. Click the **grid** icon in the upper right.
+2. Click **Admin**.
 3. In the **Settings** tab, click on **Localization** in the left sidebar.
 
 These localization settings allow you to set global language and formatting defaults for dates, times, numbers, and currencies.

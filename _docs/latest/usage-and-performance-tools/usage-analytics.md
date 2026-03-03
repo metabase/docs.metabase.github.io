@@ -1,5 +1,5 @@
 ---
-version: v0.58
+version: v0.59
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -31,7 +31,7 @@ These resources are useful for:
 
 ## Access to Usage analytics
 
-You can find the **Usage analytics** collection under **collections** in the navigation sidebar. By default, only admins can see the Usage analytics collection, but admins can grant other groups view access to it. You can manage permissions for the collection in **Admin settings** > **Permissions** > **Collections**.
+You can find the **Usage analytics** collection under **collections** in the navigation sidebar. By default, only admins can see the Usage analytics collection, but admins can grant other groups view access to it. You can manage permissions for the collection in **Admin** > **Permissions** > **Collections**.
 
 There are only two access types for the Usage analytics collection: **View** and **No access**. Even admins can't curate Usage analytics.
 

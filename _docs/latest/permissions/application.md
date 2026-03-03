@@ -1,5 +1,5 @@
 ---
-version: v0.58
+version: v0.59
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -22,7 +22,7 @@ latest: true
 
 Application settings are useful for granting groups access to some, but not all, of Metabase's administrative features.
 
-To set application permissions, got to the top right of the screen and click on the **gear** icon > **Admin settings** > **Permissions** > **Application**.
+To set application permissions, got to the top right of the screen and click the **grid** icon > **Admin** > **Permissions** > **Application**.
 
 ## Settings access
 

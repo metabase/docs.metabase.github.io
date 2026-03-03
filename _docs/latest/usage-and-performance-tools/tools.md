@@ -1,5 +1,5 @@
 ---
-version: v0.58
+version: v0.59
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -15,7 +15,7 @@ latest: true
 
 # Admin tools
 
-The Admin **Tools** tab contains features for troubleshooting. To get to the Admin tools sections, go to the top right of the screen and click on the **gear** icon > **Admin settings** > **Tools**.
+The Admin **Tools** tab contains features for troubleshooting. To get to the Admin tools sections, go to the top right of the screen and click the **grid** icon > **Admin** > **Tools**.
 
 ## Question error logs
 

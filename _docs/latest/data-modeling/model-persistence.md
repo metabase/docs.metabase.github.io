@@ -1,5 +1,5 @@
 ---
-version: v0.58
+version: v0.59
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -12,6 +12,8 @@ latest: true
 ---
 
 # Model persistence
+
+> Prefer [Transforms](../data-studio/transforms/transforms-overview) instead of model persistence. Model persistence remains supported for now, but it will be deprecated in future versions of Metabase.
 
 Metabase can persist the results of your models so that your models (and the questions based on those models) load faster.
 
@@ -39,7 +41,7 @@ To persist models for faster loading, you'll need to turn on model persistence f
 
 ### Turn on model persistence for your Metabase
 
-To turn on model persistence for your Metabase, go to **Admin settings** > **Performance** > **Model persistence**.
+To turn on model persistence for your Metabase, go to **Admin** > **Performance** > **Model persistence**.
 
 You can set models to refresh based on one of the default frequencies (every 1 hour, 2 hours, etc.), or select the **Custom** option to use [cron syntax](https://www.quartz-scheduler.org/documentation/quartz-2.3.0/tutorials/crontrigger.html) to specify your own update frequency.
 
@@ -53,7 +55,7 @@ If someone [changes the query definition of a model](./models#edit-a-models-quer
 
 Once you've turned on model persistence for your Metabase, you'll need to set it up for each specific database, as Metabase will need to create a schema in your data warehouse to store the persisted models.
 
-1. Go to **Admin settings** > **Databases** > [your database] > **Turn model persistence on**. If the credentials you've given Metabase to connect to your database are permissive, Metabase should do all the work for you: Metabase will check if the schema already exists, or otherwise attempt to create it. If the connection's credentials _lack_ the necessary permissions to create the schema in your database, you'll need to create the schema in the database yourself.
+1. Go to **Admin** > **Databases** > [your database] > **Turn model persistence on**. If the credentials you've given Metabase to connect to your database are permissive, Metabase should do all the work for you: Metabase will check if the schema already exists, or otherwise attempt to create it. If the connection's credentials _lack_ the necessary permissions to create the schema in your database, you'll need to create the schema in the database yourself.
 
 2. To manually create the schema in your data warehouse, click on the **info icon** to get the schema name.
 
@@ -75,7 +77,7 @@ To refresh a model's results, go to the model and click on the three-dot menu (*
 
 ## View model persistence logs
 
-You can view the logs for model persistence by clicking on the **gear** icon in the upper right and selecting **Admin settings** > **Tools** > **Model caching logs**. See [Admin tools](../usage-and-performance-tools/tools).
+You can view the logs for model persistence by clicking on the **grid** icon in the upper right and selecting **Admin** > **Tools** > **Model caching logs**. See [Admin tools](../usage-and-performance-tools/tools).
 
 ## Difference between persisted models and caching
 

@@ -1,5 +1,5 @@
 ---
-version: v0.58
+version: v0.59
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -26,7 +26,7 @@ To reset password for your Metabase Store account, [contact support](/help-premi
 
 If you're not a Metabase admin, you'll have to tag them for help here.
 
-1. Check that you have the correct [site URL](../configuring-metabase/settings) from **Settings** > **Admin settings** > **General**.
+1. Check that you have the correct [site URL](../configuring-metabase/settings) from **Settings** > **Admin** > **General**.
 2. Check if the [account is deactivated](../people-and-groups/managing#deactivating-an-account).
 
 ## No access to Metabase Cloud account

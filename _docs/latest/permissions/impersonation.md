@@ -1,5 +1,5 @@
 ---
-version: v0.58
+version: v0.59
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -127,7 +127,7 @@ People in one group can have different attribute values, but must have the same 
 
 ### Set up impersonation
 
-1. In Metabase, hit Cmd/Ctrl + K to bring up the command palette and search for **Permissions**, or go directly to **Admin settings** > **Permissions** > **Data**.
+1. In Metabase, hit Cmd/Ctrl + K to bring up the command palette and search for **Permissions**, or go directly to **Admin** > **Permissions** > **Data**.
 
 2. Select the group that you want to associate with the database role you created.
 

@@ -1,5 +1,5 @@
 ---
-version: v0.58
+version: v0.59
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -41,7 +41,7 @@ To fix problems with your Metabase [application database](../installation-and-op
 
 ## Resetting a database connection
 
-1. Go to **Settings** > **Admin settings** > **Databases** > your database.
+1. Go to **Admin** > **Databases** > your database.
 2. Click **Save changes** (without making changes) to reset Metabase's connections to your database.
 3. Alternatively: kill the connection(s) directly from your database.
 

@@ -1,5 +1,5 @@
 ---
-version: v0.58
+version: v0.59
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -133,7 +133,6 @@ Use **AI exploration** to start a new conversation with Metabot when you don’t
 Open it from **+ New → AI exploration**, then ask a question or pick one of the suggested prompts.
 
 When answering questions in AI exploration, Metabot searches a limited set of content instead of your entire Metabase. Admins can set a **Collection for natural language querying** to scope AI exploration to a specific collection and its subcollections. You can still refer to content outside that scope by explicitly @-mentioning it in your prompt. See [Metabot AI settings](../ai/settings) for more details.
-
 
 ## Giving feedback on Metabot responses
 

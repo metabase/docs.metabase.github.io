@@ -1,5 +1,5 @@
 ---
-version: v0.58
+version: v0.59
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -18,7 +18,7 @@ latest: true
 
 > Metabot is only available as an add-on on Metabase Cloud.
 
-_Settings > Admin settings > AI_
+_Admin > AI_
 
 This page covers admin settings for Metabase's AI assistant, [Metabot](./metabot).
 
@@ -39,7 +39,7 @@ For now, Metabot is only available for Metabase Cloud. Before you can set up Met
 
 5. Read through the [terms of service](/license/hosting) and click **Add Metabot AI**.
 
-Once you've added Metabot AI in the Metabase store, you can log into your Metabase and configure it in _Admin settings > AI_.
+Once you've added Metabot AI in the Metabase store, you can log into your Metabase and configure it in _Admin > AI_.
 
 ## Verified content
 
@@ -116,7 +116,7 @@ In other words, to restrict what data Metabot can see for each person, simply ap
 
 ## Viewing Metabot usage
 
-You can see how many Metabot requests people have made this month by going to **Admin settings > Settings > License**.
+You can see how many Metabot requests people have made this month by going to **Admin > Settings > License**.
 
 If you aren't logged into the [Metabase Store](../cloud/accounts-and-billing).(, you'll need to log in to the store before you can view the usage. Once logged in to the store, go back to your Metabase and view the license page.
 

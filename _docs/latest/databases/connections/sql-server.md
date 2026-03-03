@@ -1,5 +1,5 @@
 ---
-version: v0.58
+version: v0.59
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -13,7 +13,7 @@ latest: true
 
 # SQL Server
 
-To add a database connection, click on the **gear** icon in the top right, and navigate to **Admin settings** > **Databases** > **Add a database**.
+To add a database connection, click the **grid** icon in the top right, and navigate to **Admin** > **Databases** > **Add a database**.
 
 ## Supported versions
 
@@ -105,6 +105,10 @@ A fingerprinting query examines the first 10,000 rows from each column and uses 
 ## Connecting to Azure SQL
 
 To connect to Azure SQL, you'll need to set the port to 1433.
+
+## Writeable connection
+
+Set up an additional connection used for write operations. See [Writeable connections](../writeable-connection).
 
 ## Database routing
 

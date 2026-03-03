@@ -1,5 +1,5 @@
 ---
-version: v0.58
+version: v0.59
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -24,8 +24,12 @@ To restrict data in guest embeds for specific people or groups, use [locked para
 
 ## Turning on guest embedding in Metabase
 
-1. Go to **Settings > Admin settings > Embedding > Guest embeds**.
-2. Toggle **Enable guest embedding**.
+The path to embedding settings depends on your Metabase version:
+
+- **OSS**: **Admin > Embedding**
+- **Starter/Pro/Enterprise**: **Admin > Embedding > Guest embeds**
+
+Toggle **Enable guest embeds**.
 
 ## Creating a guest embed
 
@@ -251,13 +255,13 @@ The end user won't see the "category" filter, but the dashboard will only show d
 
 ## Disabling embedding for a question or dashboard
 
-You can find a list of all guest embeds of questions and dashboards from **Admin settings** > **Embedding** > **Guest embeds**.
-
 1. Visit the embeddable question or dashboard.
 2. Click the **sharing icon** (square with an arrow pointing to the top right).
 3. Select **Embed**.
 4. Select **Guest embedding**
 5. Click **Unpublish**.
+
+Admins can find a list of embedded items in **Admin > Embedding** (on Pro and Enterprise plans, check the **Guest embeds** tab).
 
 ## Removing the "Powered by Metabase" banner
 
@@ -269,7 +273,7 @@ The banner appears on guest embeds created with Metabase's open-source version. 
 
 Your embedding secret key is used to sign JWTs for all of your embeds.
 
-1. Go to **Admin** > **Embedding** > **Guest embeds**.
+1. Go to **Admin > Embedding**. On Pro and Enterprise plans, check the **Guest embeds** tab.
 2. Under **Regenerate secret key**, click **Regenerate key**.
 
 This key is shared across all guest embeds. Whoever has access to this key could get access to all embedded artifacts, so keep this key secure. If you regenerate this key, you'll need to update your server code with the new key.
@@ -280,7 +284,7 @@ You can only use the **URL** option for [custom destinations](../dashboards/inte
 
 You can propagate filter values into the external URL, unless the filter is locked.
 
-## Translating guest embeds
+## Translating embeds
 
 To translate an embed, set the `locale` in `window.metabaseConfig`:
 
@@ -294,7 +298,7 @@ To translate an embed, set the `locale` in `window.metabaseConfig`:
 </script>
 ```
 
-The `locale` setting works for all modular embeds (guest and SSO). Metabase will automatically translate UI elements (like menus and buttons). To also translate content like dashboard titles and filter labels, you'll need to upload a translation dictionary. Translation dictionaries only work with guest embeds. See [Translating embedded questions and dashboards](./translations).
+The `locale` setting works for all modular embeds (guest, SSO, and SDK). Metabase will automatically translate UI elements (like menus and buttons). To also translate content like dashboard titles and filter labels, you'll need to upload a [translation dictionary](./translations).
 
 ## How guest embedding works
 

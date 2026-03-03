@@ -1,5 +1,5 @@
 ---
-version: v0.58
+version: v0.59
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -25,7 +25,7 @@ latest: true
 | <a id="classname"></a> ~~`className?`~~         | `string`                                                                                                                                                                     | A custom class name to be added to the root element. **Deprecated** This prop is not used anymore.                                                            |
 | <a id="errorcomponent"></a> `errorComponent?`   | [`SdkErrorComponent`](./api/SdkErrorComponent)                                                                                                                            | A custom error component to display when the SDK encounters an error.                                                                                         |
 | <a id="eventhandlers"></a> `eventHandlers?`     | [`SdkEventHandlersConfig`](./api/SdkEventHandlersConfig)                                                                                                                  | See [Global event handlers](/docs/latest/embedding/sdk/config#global-event-handlers).                                                 |
-| <a id="loadercomponent"></a> `loaderComponent?` | [`ComponentType`](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/b888d6cb49f494fe487b3da67d5132754eb92f3c/types/react/index.d.ts#L104)\<\{ `label?`: `string`; \}\> | A custom loader component to display while the SDK is loading. The component receives an optional `label` prop that can be used to display a loading message. |
+| <a id="loadercomponent"></a> `loaderComponent?` | [`ComponentType`](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/0b728411cd1dfb4bd26992bb35a73cf8edaa22e7/types/react/index.d.ts#L104)\<\{ `label?`: `string`; \}\> | A custom loader component to display while the SDK is loading. The component receives an optional `label` prop that can be used to display a loading message. |
 | <a id="locale"></a> `locale?`                   | `string`                                                                                                                                                                     | Defines the display language. Accepts an ISO language code such as `en` or `de`. Defaults to the instance locale.                                             |
 | <a id="pluginsconfig"></a> `pluginsConfig?`     | [`MetabaseGlobalPluginsConfig`](./api/MetabaseGlobalPluginsConfig)                                                                                                        | See [Plugins](/docs/latest/embedding/sdk/plugins).                                                                                    |
 | <a id="theme"></a> `theme?`                     | [`MetabaseEmbeddingTheme`](./api/MetabaseEmbeddingTheme)                                                                                                                  | See [Appearance](/docs/latest/embedding/sdk/appearance).                                                                              |

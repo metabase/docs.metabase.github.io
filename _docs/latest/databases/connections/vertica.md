@@ -1,5 +1,5 @@
 ---
-version: v0.58
+version: v0.59
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -49,6 +49,10 @@ For example, if you're running Metabase from a directory called `/app/`, you sho
 ### When running from Docker
 
 The process for adding plugins when running via Docker is similar, but you'll need to mount the `plugins` directory. Refer to instructions [here](../../installation-and-operation/running-metabase-on-docker#adding-external-dependencies-or-plugins) for more details.
+
+## Writeable connection
+
+Set up an additional connection used for write operations. See [Writeable connections](../writeable-connection).
 
 ## Model features
 

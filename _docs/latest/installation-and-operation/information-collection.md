@@ -1,5 +1,5 @@
 ---
-version: v0.58
+version: v0.59
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -42,8 +42,8 @@ This anonymous data helps us figure out things like:
 
 If you're self-hosting Metabase, you can opt out of providing us with your anonymous usage data:
 
-1. Click on the gear icon.
-2. Select **Admin settings**.
+1. Click the grid icon.
+2. Select **Admin**.
 3. Go to the **Settings** tab.
 4. Click **General**
 5. Toggle the **Anonymous tracking** option.

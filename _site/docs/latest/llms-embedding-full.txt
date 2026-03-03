@@ -1,6 +1,6 @@
 # Metabase Embedding - Complete Reference for AI agents
 
-> **This documentation is for Metabase 58 (latest).**
+> **This documentation is for Metabase 59 (latest).**
 >
 > Table of contents: https://metabase.com/docs/latest/llms.txt
 
@@ -355,7 +355,7 @@ Here's a high-level overview:
 
 ### 1. Enable JWT SSO in your Metabase
 
-1. Configure JWT by going to **Admin Settings** > **Settings** > **Authentication** and clicking on **Setup**
+1. Configure JWT by going to **Admin** > **Settings** > **Authentication** and clicking on **JWT**
 2. Enter the JWT Identity Provider URI, for example `http://localhost:9090/sso/metabase`. This is a new endpoint you will add in your backend to handle authentication.
 3. Generate a key and copy it to your clipboard.
 
@@ -515,7 +515,7 @@ Additionally, if you have SAML set up, but you'd prefer to use JWT SSO, you'll n
 
 **Admin setting changes in Metabase**:
 
-In **Admin Settings** > **Authentication** > **JWT SSO**, set the `JWT Identity Provider URI` to the URL of your JWT SSO endpoint, e.g., `http://localhost:9090/sso/metabase`.
+In **Admin** > **Authentication** > **JWT SSO**, set the `JWT Identity Provider URI` to the URL of your JWT SSO endpoint, e.g., `http://localhost:9090/sso/metabase`.
 
 **Before:**
 
@@ -534,7 +534,7 @@ const authConfig = defineMetabaseAuthConfig({
 });
 ```
 
-The SDK now uses the JWT Identity Provider URI setting configured in your Metabase admin settings (Admin > Settings > Authentication > JWT).
+The SDK now uses the JWT Identity Provider URI setting configured in your Metabase Admin (Admin > Settings > Authentication > JWT).
 
 ### Update the `fetchRequestToken` function signature
 
@@ -619,13 +619,13 @@ If you want to embed Metabase in another domain (say, if Metabase is hosted at `
 
 ### Allow your domain in CORS
 
-Go to **Admin settings** > **Embedding** > **Modular embedding** and add your embedding domain under **Cross-Origin Resource Sharing (CORS)** (such as `https://*.example.com`).
+Go to **Admin** > **Embedding** > **Modular embedding** and add your embedding domain under **Cross-Origin Resource Sharing (CORS)** (such as `https://*.example.com`).
 
 ### Configure session cookies when testing locally
 
 When you use `useExistingUserSession: true` during development on a different domain, the browser must send the existing Metabase session cookie cross-origin into the iframe. To allow this, you'll need to set the session cookie's SameSite value to "none".
 
-You can set session cookie's SameSite value in **Admin settings** > **Embedding** > **Security** > **SameSite cookie setting**.
+You can set session cookie's SameSite value in **Admin** > **Embedding** > **Security** > **SameSite cookie setting**.
 
 SameSite values include:
 
@@ -674,8 +674,9 @@ To render a dashboard:
 - `with-subscriptions` - let people set up [dashboard subscriptions](../dashboards/subscriptions). Unlike subscriptions sent from non-embedded dashboards, subscriptions sent from embedded dashboards exclude links to Metabase items, as Metabase assumes the recipient lacks access to the embedded Metabase.
 - `refresh` - auto-refreshes the dashboard. `refresh="60"` will refresh the dashboard every 60 seconds.
 - `hidden-parameters` - list of filter names to hide from the dashboard, like `['productId']`
+- `enable-entity-navigation` (default is false) - preserves dashboard custom [click behaviors](../dashboards/interactive#customizing-click-behavior) that navigate to other dashboards and questions within the embed. Requires `drills` to be true (which is the default). When disabled, only external URL links are kept. See also [`handleLink`](./sdk/plugins#handlelink) for customizing what happens when people click URL links.
 
-For guest embeds, you can also set a `locale` in your page-level configuration to [translate embedded content](./translations).
+For all modular embeds, you can also set a `locale` in your page-level configuration to [translate embedded content](./translations), including content from translation dictionaries.
 
 Only `with-title` and `with-downloads` are supported in [guest embeds](./guest-embedding).
 
@@ -708,12 +709,20 @@ To render a question (chart):
 ```html
 <metabase-question question-id="1"></metabase-question>
 ```
-
 ### Required parameters
 
-- `question-id` - This can be a regular ID or an entity ID. [Using Entity IDs](../installation-and-operation/serialization#entity-ids-work-with-embedding) in your embeds ensures that the IDs stay stable when exporting from one Metabase and importing to another. Only for SSO embeds. Guest embeds set the id with a token.
+- `question-id` - This can be a regular ID or an entity ID. [Using Entity IDs](../installation-and-operation/serialization#entity-ids-work-with-embedding) in your embeds ensures that the IDs stay stable when exporting from one Metabase and importing to another. Only for SSO embeds. Guest embeds set the ID with a token.
 
-  Use `question-id="new"` to embed the query builder exploration interface.
+You can also use the question component to create new questions:
+
+- `question-id="new"` — opens the visual query builder.
+- `question-id="new-native"` — opens the SQL editor.
+
+For example, to embed the SQL editor:
+
+```html
+<metabase-question question-id="new-native"></metabase-question>
+```
 
 ### Optional parameters
 
@@ -725,7 +734,8 @@ To render a question (chart):
 - `with-downloads` (default is true on OSS/Starter and false on Pro/Enterprise) - show downloads
 - `initial-sql-parameters` - default value for SQL parameters, only applicable to native SQL questions, like `{ "productId": "42" }`
 - `is-save-enabled` (default is false)
-- `target-collection` - this is to enforce saving into a particular collection. Values: regular ID, entity ID, `"personal”`, `"root”`
+- `target-collection` - this is to enforce saving into a particular collection. Values: regular ID, entity ID, `"personal"`, `"root"`
+- `with-alerts` (default is false) - let people set up [alerts](../questions/alerts) on embedded questions. Requires [email setup](../configuring-metabase/email). Unlike alerts on non-embedded questions, alerts on embedded questions only send to the logged-in user and exclude links to Metabase items. Not available for models.
 
 Only `with-title` and `with-downloads` are supported in [guest embeds](./guest-embedding).
 
@@ -831,7 +841,7 @@ You could also use the dashboard's [Entity ID](../installation-and-operation/ser
 
 ### Enable full app embedding
 
-In Metabase, click on the **gear** icon in the upper right and go to **Admin > Embedding** and toggle on **Enable full app embedding**.
+In Metabase, click the **grid** icon in the upper right and go to **Admin > Embedding** and toggle on **Enable full app embedding**.
 
 Under **Authorized origins**, add the URL of the website or web app where you want to embed Metabase. If you're running your app locally, you can add localhost and specify the port number, e.g. `http://localhost:8080`.
 
@@ -965,7 +975,7 @@ Recall the `signUserToken` function used to create the JWTs. Add a `groups` key 
 
 ### Create a group in Metabase
 
-In Metabase, click the **gear** icon and go to **Admin settings** > **People** > **Groups**. Click the **Create a group** button. Add a group that corresponds with a group in your app. If you're using the sample app, add a group called `Customer Acme`.
+In Metabase, click the **grid** icon and go to **Admin** > **People** > **Groups**. Click the **Create a group** button. Add a group that corresponds with a group in your app. If you're using the sample app, add a group called `Customer Acme`.
 
 ### Synchronize groups between Metabase and your app
 
@@ -985,7 +995,7 @@ Be sure to **Save changes**.
 
 First, sign out of Metabase and sign in using SSO.
 
-Then sign out and sign in to your Metabase as an admin and go to **Admin settings** > **People** section and verify that Metabase added the person to the appropriate group.
+Then sign out and sign in to your Metabase as an admin and go to **Admin** > **People** section and verify that Metabase added the person to the appropriate group.
 
 Note: only Metabase admins and group managers are aware of groups. Basic users have no concept of groups, and no way of knowing which groups they're a part of.
 
@@ -997,7 +1007,7 @@ Now to apply permissions to that group so that people only see data specific to 
 
 Metabase ships with two initial groups: "Admins" and "All Users". By default, Metabase gives the "All Users" group access to connected data sources. And since Metabase grants people the privileges of their most permissive group, you'll want to restrict what the "All Users" groups can see before you add them to groups with limited or no access to data sources and collections.
 
-To reset permissions for the All users group, click on the **gear** icon and go to **Admin settings** > **Permissions**. Under the **Data** tab, go to **Groups** and select **All Users**. For the **Sample Database** in the **View data** column, select "Blocked". Click **Save changes** and a modal will pop up summarizing what you're changing. Click **Yes**.
+To reset permissions for the All users group, click the **grid** icon and go to **Admin** > **Permissions**. Under the **Data** tab, go to **Groups** and select **All Users**. For the **Sample Database** in the **View data** column, select "Blocked". Click **Save changes** and a modal will pop up summarizing what you're changing. Click **Yes**.
 
 ![Resetting permissions of the All Users group to](./images/all-users.png)
 
@@ -1023,7 +1033,7 @@ Note that to persist the user attribute in Metabase, you'll need to log in. Log 
 
 ### Set row-level permissions
 
-In Metabase, go to **Admin settings** > **Permissions**. Under the **Data** tab on the left, click on a group. For "Sample Database", change its **Data access** column to **Granular**.
+In Metabase, go to **Admin** > **Permissions**. Under the **Data** tab on the left, click on a group. For "Sample Database", change its **Data access** column to **Granular**.
 
 Metabase will display a list of the tables in the database. Next, change **View data access** for the "Invoices" table to **Row and column security**.
 
@@ -1188,7 +1198,7 @@ Note that your full app embed must be compatible with Safari to run on _any_ bro
 
 If you want to embed Metabase in another domain (say, if Metabase is hosted at `metabase.yourcompany.com`, but you want to embed Metabase at `yourcompany.github.io`), you can tell Metabase to set the session cookie's SameSite value to "none".
 
-You can set session cookie's SameSite value in **Admin settings** > **Embedding** > **Security** > **SameSite cookie setting**.
+You can set session cookie's SameSite value in **Admin** > **Embedding** > **Security** > **SameSite cookie setting**.
 
 SameSite values include:
 
@@ -1518,8 +1528,12 @@ To restrict data in guest embeds for specific people or groups, use [locked para
 
 ## Turning on guest embedding in Metabase
 
-1. Go to **Settings > Admin settings > Embedding > Guest embeds**.
-2. Toggle **Enable guest embedding**.
+The path to embedding settings depends on your Metabase version:
+
+- **OSS**: **Admin > Embedding**
+- **Starter/Pro/Enterprise**: **Admin > Embedding > Guest embeds**
+
+Toggle **Enable guest embeds**.
 
 ## Creating a guest embed
 
@@ -1745,13 +1759,13 @@ The end user won't see the "category" filter, but the dashboard will only show d
 
 ## Disabling embedding for a question or dashboard
 
-You can find a list of all guest embeds of questions and dashboards from **Admin settings** > **Embedding** > **Guest embeds**.
-
 1. Visit the embeddable question or dashboard.
 2. Click the **sharing icon** (square with an arrow pointing to the top right).
 3. Select **Embed**.
 4. Select **Guest embedding**
 5. Click **Unpublish**.
+
+Admins can find a list of embedded items in **Admin > Embedding** (on Pro and Enterprise plans, check the **Guest embeds** tab).
 
 ## Removing the "Powered by Metabase" banner
 
@@ -1763,7 +1777,7 @@ The banner appears on guest embeds created with Metabase's open-source version. 
 
 Your embedding secret key is used to sign JWTs for all of your embeds.
 
-1. Go to **Admin** > **Embedding** > **Guest embeds**.
+1. Go to **Admin > Embedding**. On Pro and Enterprise plans, check the **Guest embeds** tab.
 2. Under **Regenerate secret key**, click **Regenerate key**.
 
 This key is shared across all guest embeds. Whoever has access to this key could get access to all embedded artifacts, so keep this key secure. If you regenerate this key, you'll need to update your server code with the new key.
@@ -1774,7 +1788,7 @@ You can only use the **URL** option for [custom destinations](../dashboards/inte
 
 You can propagate filter values into the external URL, unless the filter is locked.
 
-## Translating guest embeds
+## Translating embeds
 
 To translate an embed, set the `locale` in `window.metabaseConfig`:
 
@@ -1788,7 +1802,7 @@ To translate an embed, set the `locale` in `window.metabaseConfig`:
 </script>
 ```
 
-The `locale` setting works for all modular embeds (guest and SSO). Metabase will automatically translate UI elements (like menus and buttons). To also translate content like dashboard titles and filter labels, you'll need to upload a translation dictionary. Translation dictionaries only work with guest embeds. See [Translating embedded questions and dashboards](./translations).
+The `locale` setting works for all modular embeds (guest, SSO, and SDK). Metabase will automatically translate UI elements (like menus and buttons). To also translate content like dashboard titles and filter labels, you'll need to upload a [translation dictionary](./translations).
 
 ## How guest embedding works
 
@@ -1940,7 +1954,7 @@ If you're using React, check out the [Modular embedding SDK](./sdk/introduction)
 
 ## Enable modular embedding
 
-1. In Metabase, go to **Admin settings > Embedding**.
+1. In Metabase, go to **Admin > Embedding**.
 2. Toggle on **Enable modular embedding**.
 
 **For guest embeds**: You're done! Skip to [Create a new embed](#create-a-new-embed) or see the [Guest embedding guide](./guest-embedding) for detailed setup instructions.
@@ -1966,7 +1980,7 @@ In your Metabase:
 
 You can also open a command palette with Ctrl/Cmd+K, type "New embed". You'll get a wizard to help you set up your embed.
 
-You can also go to **Admin settings > Embedding > Modular embedding** and click **New embed**.
+You can also go to **Admin > Embedding > Modular embedding** and click **New embed**.
 
 ![New modular embed from the admin settings](./images/new-modular-embed-from-admin-settings.png)
 
@@ -2077,21 +2091,21 @@ In addition to this, we consider shared accounts to be unfair usage. Fair usage 
 
 The exact customization options you see will depend on which type of entity you're embedding. These are the settings for authenticated embeds available on [Pro](/product/pro) and [Enterprise](/product/enterprise) plans. For guest embeds (OSS and paid), see [guest embedding options](./guest-embedding#component-attributes).
 
-
 When you're creating a new embed using **Admin > Embedding > Setup guide > Embed in your code**, you'll see some or all the following customization options in the interactive creation flow. These options correspond to parameters in [components](./components).
 
 - **Allow people to drill through on data points**: determines whether people can interact with the chart (or charts on a dashboard). Interactivity includes [drilling down](/learn/metabase-basics/querying-and-dashboards/questions/drill-through) to individual records from aggregated questions, filtering on click, zooming in, etc. Disabling drill-through for an embedded _question_ also disables people's ability to add filters and summaries.
 
 - **Allow downloads**. Determines whether people can download question results and save dashboards as PDFs.
 
-- **Allow people to save new questions**. If you embed the query builder but disable this option, people can still do their own explorations, they just won't be able to save them.
+- **Allow people to save new questions**. If you embed the query builder (visual or SQL) but disable this option, people can still do their own explorations, they just won't be able to save them.
 
 - **Parameters**: for dashboard filters, SQL variables, and time grouping parameters, you can add default values. Default values set here override the default values set at the dashboard or question level. For dashboard filters and parameters, you can choose whether to hide the parameter.
 
 - **Show title**: what it says on the tin.
 
-- **Allow editing dashboards and questions**: lets people create and edit dashboards or questions in the current collection. When disabled, they can still perform actions like filter, summarize, and drill-through, but won't be able to save results.
+- **Allow editing dashboards and questions**: lets people create and edit dashboards or questions in the current collection, including both visual and native (SQL) questions. When disabled, they can still perform actions like filter, summarize, and drill-through, but won't be able to save results.
 
+- **Allow alerts**: lets people set up [alerts](../questions/alerts) on embedded questions. Requires [email setup](../configuring-metabase/email). Only for authenticated (SSO) question embeds.
 
 ## Page-level config
 
@@ -2106,6 +2120,8 @@ To define the configuration that applies to every embed on the page, use the `de
 - `apiKey: mb_YourAPIKey` (optional, for development only) - another way to preview embeds locally using an API key.
 
 - `fetchRequestToken: () => Promise<{ jwt: string }>` (optional) - you can customize how the SDK fetches the refresh token for JWT authentication by specifying the `fetchRequestToken` function. See [customizing JWT authentication](./authentication#customizing-jwt-authentication).
+
+- `pluginsConfig` : plugins to customize the behavior of embedded components. Use the `handleLink` function to customize what happens when people click a link in your embedded questions and dashboards. For details on the `handleLink` API, including code examples, see [`handleLink` plugin](./sdk/plugins#handlelink).
 
 ## Authentication
 
@@ -2264,8 +2280,8 @@ Public sharing is enabled by default.
 
 To disable public sharing:
 
-1. Click on the **Gear** icon in the upper right.
-2. Select **Admin settings**.
+1. Click the **grid** icon in the upper right.
+2. Select **Admin**.
 3. In the **Settings** tab, select **Public sharing**.
 4. Toggle off **Public sharing**.
 
@@ -2286,15 +2302,15 @@ If you disable public sharing, then re-enable public sharing, all your previousl
 
 Admins can view and deactivate all public links for a Metabase.
 
-1. Click on the **gear** icon in the upper right.
-2. Select **Admin settings**.
+1. Click the **grid** icon in the upper right.
+2. Select **Admin**.
 3. Go to the **Settings** tab.
 4. Go to the **Public sharing** tab in the left sidebar.
 5. For each item you want to deactivate, click on the **X** to revoke its public link.
 
 ## See all publicly shared content
 
-Admins can see all publicly shared questions, dashboards, documents, and actions in **Admin Settings > Public Sharing**.
+Admins can see all publicly shared questions, dashboards, documents, and actions in **Admin > Public Sharing**.
 
 ![See shared content](./images/see-shared-content.png)
 
@@ -2343,8 +2359,8 @@ You can check out a [demo of the AI chat component](https://embedded-analytics-s
 
 To configure your embedded AI chat in your Metabase:
 
-1. Click the **gear** icon in the upper right.
-2. Select **Admin settings**.
+1. Click the **grid** icon in the upper right.
+2. Select **Admin**.
 3. Click the **AI** tab.
 4. In the left sidebar, click **Embedded Metabot**.
 
@@ -2664,7 +2680,7 @@ To use the SDK, you'll need to enable the SDK in Metabase, and install the SDK i
 
 ### Enable the SDK in Metabase
 
-1. Enable the Modular embedding SDK by going to **Admin settings > Embedding**.
+1. Enable the Modular embedding SDK by going to **Admin > Embedding**.
 2. Toggle on **Modular embedding SDK**.
 3. In **Cross-Origin Resource Sharing (CORS)**, enter the origins for your website or app where you want to allow SDK embedding, separated by a space. Localhost is automatically included.
 
@@ -2744,9 +2760,7 @@ The SDK doesn't support:
 
 - Verified content
 - Official collections
-- Subscriptions
-- Alerts
-- Click behavior with custom destinations to other items in the same Metabase (like to other questions or dashboards)
+- Dashboard link cards
 - Server-side rendering (SSR)
 
 Other limitations:
@@ -2873,7 +2887,13 @@ To customize what happens when people click a link in your embedded questions an
 
 ```
 
-The plugin `handleLink` can only be used [globally](#plugin-scope) on provider level.
+By default, links open in a new tab. Use `handleLink` to intercept link clicks — for example, to open a URL in a modal or navigate within your app using your router.
+
+The function receives a URL string. Return `{ handled: true }` to prevent default navigation, or `{ handled: false }` to open the link in a new tab.
+
+The plugin `handleLink` can only be used [globally](#plugin-scope) on provider level. `handleLink` is also available in [modular embedding](../modular-embedding#page-level-config) via `pluginsConfig` in `defineMetabaseConfig`, with the same API.
+
+To create clickable links in your table columns, set the column's formatting to [display as link](../../data-modeling/formatting#display-as).
 
 ### `getNoDataIllustration` and `getNoObjectIllustration`
 
@@ -2899,8 +2919,7 @@ The plugins `getNoDataIllustration` and `getNoObjectIllustration` can only be us
 There are different ways you can embed questions:
 
 - [Static question](#staticquestion). Embeds a chart. Clicking on the chart doesn't do anything.
-- [Interactive question](#interactivequestion). Clicking on the chart gives you the drill-through menu.
-- [Query builder](#embedding-the-query-builder-for-creating-new-questions). Embeds the graphical query builder without a pre-defined query.
+- [Interactive question](#interactivequestion). Create new questions or edit existing ones with the visual query builder or SQL editor. Clicking on the chart gives you the drill-through menu.
 
 ## Embedding a question
 
@@ -2959,6 +2978,16 @@ You can pass parameter values to questions defined with SQL via the `initialSqlP
 ```
 
 `initialSqlParameters` can't be used with questions built using the query builder.
+
+## Enable alerts on embedded questions
+
+You can let people set up [alerts](../../questions/alerts) on embedded questions by passing the `withAlerts` prop to `StaticQuestion` or `InteractiveQuestion`. Alerts require [email setup](../../configuring-metabase/email), and the question must be saved (not a new question).
+
+Alerts created in an embedded context only send to the logged-in user and exclude links to Metabase items.
+
+```tsx
+<StaticQuestion questionId={42} withAlerts />
+```
 
 ## Questions with natural language
 
@@ -3047,11 +3076,27 @@ To prevent people from saving changes to an interactive question, or from saving
 
 ```
 
-## Embedding the query builder for creating new questions
+## Create and edit questions with the query builder
 
 ![Query builder](../images/query-builder.png)
 
-You can embed the query builder for creating new questions by passing the `questionId="new"` prop to the `InteractiveQuestion` component. You can use the [`children` prop](#customizing-interactive-questions) to customize the layout for creating new questions.
+The `InteractiveQuestion` component supports three modes:
+
+- `questionId="new"` — opens the visual query builder for creating new questions.
+- `questionId="new-native"` — opens the SQL editor for creating new questions.
+- A numeric `questionId` (e.g., `questionId={42}`) — embeds an existing question. People can click the edit button to modify it, which opens the appropriate editor (visual or SQL) based on the question type.
+
+### Embed the visual query builder
+
+To embed the query builder for creating new questions, pass `questionId="new"` to the `InteractiveQuestion` component. You can use the [`children` prop](#customizing-interactive-questions) to customize the layout.
+
+```tsx
+
+```
+
+### Embed the SQL editor
+
+To embed the SQL editor for creating new questions, pass `questionId="new-native"` to the `InteractiveQuestion` component:
 
 ```tsx
 
@@ -3204,7 +3249,7 @@ git clone git@github.com:metabase/metabase-nodejs-react-sdk-embedding-sample.git
 git checkout -stable
 ```
 
-E.g., if you're running Metabase 1.57 make sure the sample app repo is on the `57-stable` branch. You can find your Metabase version in the Metabase UI by clicking on the gears icon in the upper right and selecting **About Metabase**.
+E.g., if you're running Metabase 1.57 make sure the sample app repo is on the `57-stable` branch. You can find your Metabase version in the Metabase UI by clicking the **grid icon** in the upper right, selecting **Help**, then choosing **About Metabase**.
 
 ## Two ways to set up the sample app with Metabase
 
@@ -3295,7 +3340,7 @@ To enable SSO with JWT when self-hosting, you'll need to [activate your license]
 
 ## Enable embedding in Metabase
 
-From any Metabase page, click on the **gear** icon in the upper right and select **Admin Settings** > **Embedding**.
+From any Metabase page, click the **grid** icon in the upper right and select **Admin** > **Embedding**.
 
 Turn on:
 
@@ -3307,7 +3352,7 @@ Otherwise, this whole thing is hopeless.
 
 We'll also need to update our JWT Provider URI in Metabase. By default, this URI is where the SDK will redirect login requests.
 
-From any Metabase page, click on the **gear** icon in the upper right and select **Admin Settings** > **Settings** > **Authentication**.
+From any Metabase page, click the **grid** icon in the upper right and select **Admin** > **Settings** > **Authentication**.
 
 On the card that says **JWT**, click the **Setup** button.
 
@@ -3455,7 +3500,7 @@ To embed a dashboard in your app using the SDK, you'll need to:
 
 ## 1. Enable the SDK in Metabase
 
-In Metabase, click on the gear icon in the upper right and navigate to **Admin Settings > Embedding > Modular** and enable the **SDK for React**.
+In Metabase, click the grid icon in the upper right and navigate to **Admin > Embedding > Modular** and enable the **SDK for React**.
 
 ## 2. Create an API key in Metabase
 
@@ -3893,9 +3938,9 @@ Jump to a SDK quickstart with a sample React application.
 
 Guest embedding is a secure way to embed charts and dashboards. Guest embeds are view-only; people won't be able to drill-through charts and tables.
 
-### [Translating guest embeds](./translations)
+### [Translating embeds](./translations)
 
-Upload a translation dictionary to translate questions and dashboards (only in guest embeds).
+Upload a translation dictionary to translate questions and dashboards in modular embeds.
 
 ## [Full app embedding](./full-app-embedding)
 
@@ -4555,16 +4600,18 @@ You can create tenant-level [user attributes](#tenant-attributes) which all user
 
 ![Edit tenant](./images/edit-tenant.png)
 
-To add a tenant attribute:
+There are three ways to add a tenant attribute, using the Metabase UI, the API, or JWT SSO.
+
+To create a tenant attribute manually using the Metabase UI:
 
 1. Go to **Admin settings > People**
 2. Select **Tenants** on the left sidebar.
 3. Click on **three dots** next to the tenant.
 4. Input the attribute key and value.
 
-Once you add a tenant attribute, all users of that tenant will inherit the attribute, but the value can be overridden for any particular user, see [Edit user attributes](../people-and-groups/managing#adding-a-user-attribute).
+For details on how to set tenant attributes using JWT tenant claims, see [Setting tenant attributes using tenant claims](#setting-tenant-attributes-using-tenant-claims) below.
 
-Currently, you can't assign custom tenant attributes with SSO. The only way to assign attributes is through the Metabase UI (but you can provision attributes for _individual users_ through SSO, see [JWT user attributes](../people-and-groups/authenticating-with-jwt)). However, if you're using user attribute to set permissions, then you can use the [special slug attribute](#special-tenant-slug-attribute) which Metabase creates automatically.
+Once you add a tenant attribute, all users of that tenant will inherit the attribute, but the value can be overridden for any particular user, see [Edit user attributes](../people-and-groups/managing#adding-a-user-attribute).
 
 ### Special tenant slug attribute
 
@@ -4626,6 +4673,24 @@ When user provisioning with JWT is enabled:
 1. Metabase reads the tenant identifier from the JWT claim. By default, this is the `@tenant` key (you can configure this).
 2. If the tenant doesn't exist, Metabase automatically creates it. Metabase will use the value of the `@tenant` key (or your chosen assignment attribute) as the tenant slug.
 3. New users are automatically assigned to the tenant from their JWT.
+
+### Setting tenant attributes using tenant claims
+
+To create tenant attributes from JWT SSO, include a claim `@tenant.attributes`:
+
+```json
+{
+  "@tenant": "meowdern_solutions",
+  "@tenant.attributes": {
+    "industry": "cat food"
+  },
+  "email": "mittens@example.com",
+  "first_name": "Mister",
+  "last_name": "Mittens"
+}
+```
+
+If a tenant attribute with this name doesn't exist, Metabase will create the attribute and assign the value from the JWT claim. However, if the tenant attribute already exists, Metabase will **not** update the value.
 
 ### Troubleshooting JWT authentication with tenants
 
@@ -4692,8 +4757,7 @@ Permissions are granted to groups. Which permissions are available to each group
 ### Internal user collection permissions
 
 - Metabase Admins will have **Curate** access to all shared collections and all tenant collections.
-- Other internal groups can be granted **View** or **Curate** access to **shared collections**, see [Configuring shared collection permissions](#configuring-shared-collections-permissions).
-- Non-admin internal users will have **No** access to tenant-specific collections. Currently, this can't be configured.
+- Other internal groups and non-admin users have **No** access by default, but can be granted **View** or **Curate** access to **shared collections**. See [Configuring shared collection permissions](#configuring-shared-collections-permissions) for details.
 
 For configuring permissions to _internal_ collections for internal users, see [general docs on collection permissions](../permissions/collections).
 
@@ -4785,15 +4849,15 @@ If you disable multi-tenant strategy, _all your tenant users will be deactivated
 
 ---
 
-# Translate embedded dashboards and questions
+# Translate embedded components
 
 
 
-You can set a locale on all modular embeds (guest and SSO) to translate Metabase's UI. Translation dictionaries, however, are only available for [guest embeds](./guest-embedding).
+You can set a locale on modular embeds (guest, SSO, and SDK) to translate Metabase's UI. If you've uploaded a translation dictionary, Metabase will also translate content strings (like dashboard names and filter labels) for all [modular embeds](./modular-embedding).
 
 ## Set a locale to translate UI, and upload a dictionary to translate content
 
-To translate an embed's user interface, set the locale in the config. The `locale` setting works for all modular embeds (guest and SSO). Metabase UI elements (like menus) will be translated automatically - you don't need to add translations for them to your dictionary.
+To translate an embed's user interface, set the locale in the config. The `locale` setting works for all modular embeds (guest, SSO, and SDK). Metabase UI elements (like menus) will be translated automatically - you don't need to add translations for them to your dictionary.
 
 For guest and SSO embeds (not the SDK), set the `locale` in `window.metabaseConfig`:
 
@@ -4803,7 +4867,7 @@ For guest and SSO embeds (not the SDK), set the `locale` in `window.metabaseConf
     isGuest: true,
     instanceUrl: "YOUR_METABASE_URL",
     // Translates UI elements to the locale's language.
-    // For guest embeds, if you've uploaded a translation dictionary,
+    // If you've uploaded a translation dictionary,
     // Metabase will also translate content strings
     // to this locale from that dictionary.
     locale: "es"
@@ -4813,7 +4877,7 @@ For guest and SSO embeds (not the SDK), set the `locale` in `window.metabaseConf
 <metabase-dashboard token="YOUR_JWT_TOKEN"></metabase-dashboard>
 ```
 
-For guest embeds (and only guest embeds), if you also want to translate content (like item titles, headings, filter labels---even data), you'll need to add a translation dictionary.
+If you also want to translate content (like item titles, headings, filter labels, or data), you'll need to add a translation dictionary.
 
 ### SDK translations
 
@@ -4827,6 +4891,8 @@ For the SDK, set the `locale` prop on the `MetabaseProvider` component:
 </MetabaseProvider>
 ```
 
+If you've uploaded a translation dictionary, the SDK will also translate content strings (like dashboard names and filter labels) to this locale from that dictionary.
+
 ## Add a translation dictionary
 
 The dictionary must be a CSV with these columns:
@@ -4839,7 +4905,7 @@ The dictionary must be a CSV with these columns:
 
 To add a translation dictionary:
 
-1. Go to **Admin settings > Embedding**.
+1. Go to **Admin > Embedding**.
 2. Under **Translate embedded dashboards and question**, click **Upload translation dictionary**.
 
 Uploading a new dictionary will replace the existing dictionary.
@@ -4848,7 +4914,7 @@ To remove a translation dictionary, upload a blank dictionary.
 
 ## Example translation dictionary
 
-Metabase uses these dictionaries to translate user-generated content, like dashboard names in [guest embeds](./guest-embedding).
+Metabase uses these dictionaries to translate user-generated content, like dashboard names in [modular embeds](./modular-embedding).
 
 | Language | String      | Translation  |
 | -------- | ----------- | ------------ |
@@ -4859,7 +4925,7 @@ Metabase uses these dictionaries to translate user-generated content, like dashb
 | pt-BR    | Vendor      | Vendedor     |
 | IT       | Examples    | Esempi       |
 
-Prefer hyphens in your `pt-BR` in your translation dictionary. Underscores are also acceptable (if you download the dictionary _after_ uploading it, Metabase will transform `pt-BR` to `pt_BR`), but since the `locale` parameter in guest embeds only accepts locales with hyphens (like `pt-BR`), we recommend using hyphens for consistency.
+Prefer hyphens in your `pt-BR` in your translation dictionary. Underscores are also acceptable (if you download the dictionary _after_ uploading it, Metabase will transform `pt-BR` to `pt_BR`), but since the `locale` parameter in modular embeds only accepts locales with hyphens (like `pt-BR`), we recommend using hyphens for consistency.
 
 [See a list of supported locales](../configuring-metabase/localization#supported-languages).
 
@@ -4891,8 +4957,14 @@ If the strings you want to translate include markdown formatting, you'll need to
 | pt-BR    | `_Examples_`   | `_Exemplos_`   |
 | pt-BR    | `## Examples`  | `## Exemplos`  |
 
+
+## The AI chat component isn't translated
+
+One exception is that Metabase won't translate the text in the [AI chat component](./sdk/ai-chat). While Metabot can understand other languages, it works best in English.
+
 ## Further reading
 
+- [Modular embedding](./modular-embedding)
 - [Guest embedding](./guest-embedding)
 
 ---

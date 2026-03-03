@@ -1,5 +1,5 @@
 ---
-version: v0.58
+version: v0.59
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -169,7 +169,7 @@ You can connect the state column in the US region map to a "Location" type dashb
 
 ### Custom regions
 
-Admins can add more regions - like Brazil states or NYC neighborhoods - by [adding custom GeoJSON maps](../../configuring-metabase/custom-maps) in **Admin settings**. Once custom maps have been added, you'll be able to select them when building a region map in map settings.
+Admins can add more regions - like Brazil states or NYC neighborhoods - by [adding custom GeoJSON maps](../../configuring-metabase/custom-maps) in **Admin** > **Settings** > **Maps**. Once custom maps have been added, you'll be able to select them when building a region map in map settings.
 
 ![Select a custom region](../images/select-region-map.png)
 

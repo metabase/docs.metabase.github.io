@@ -1,5 +1,5 @@
 ---
-version: v0.58
+version: v0.59
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -39,7 +39,7 @@ On the **Google Identity Provider details** page:
 
 1. From your Google **IdP metadata**, locate the **issuer**.
    - The **issuer** looks like this: `https://accounts.google.com/o/saml2/`.
-2. Go to your Metabase SAML form (**Admin settings** > **Authentication** > **SAML**).
+2. Go to your Metabase SAML form (**Admin** > **Settings** > **Authentication** > **SAML**).
 3. Put the **issuer** in the Metabase **SAML Identity Provider Issuer** field.
 4. Put the **SSO URL** in the Metabase **SAML Identity Provider URL** field.
 5. Paste the **certificate** in the Metabase **SAML Identity Provider Certificate** field.
