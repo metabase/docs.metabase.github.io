@@ -1,5 +1,5 @@
 ---
-version: v0.58
+version: v0.59
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -26,7 +26,7 @@ People all around the world use Metabase, and everyone has different preferences
 
 ## Field formatting
 
-_Admin settings > Table Metadata > Database > Table > Field > Formatting_
+_Admin > Table Metadata > Database > Table > Field > Formatting_
 
 You can override the global defaults for a specific field by going to the `Table Metadata` section of the Admin Panel. Select the database and table of the field in question, then click scroll down to the **Formatting**.
 
@@ -36,7 +36,7 @@ The options you'll see here will depend on the field's data type and it's [seman
 
 ## Text formatting options
 
-_Admin settings > Table Metadata > Database > Table > Field > Formatting_
+_Admin > Table Metadata > Database > Table > Field > Formatting_
 
 Options depend on the [semantic type](./semantic-types) you select for the field.
 
@@ -66,7 +66,7 @@ https://www.google.com/search?q=askew
 
 ## Dates and times
 
-_Admin settings > Table Metadata > Database > Table > Field > Formatting_
+_Admin > Table Metadata > Database > Table > Field > Formatting_
 
 Options depend on the [semantic type](./semantic-types) you select for the field.
 
@@ -110,7 +110,7 @@ Choose between 12-hour and 24-hour time format:
 
 ## Numbers
 
-_Admin settings > Table Metadata > Database > Table > Field > Formatting_
+_Admin > Table Metadata > Database > Table > Field > Formatting_
 
 Options depend on the [semantic type](./semantic-types) you select for the field.
 

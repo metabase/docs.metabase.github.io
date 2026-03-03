@@ -1,5 +1,5 @@
 ---
-version: v0.58
+version: v0.59
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -56,7 +56,7 @@ For each table, you can view:
 - Questions about this table (if you have permission to view them)
 - Option to create an X-ray of the table
 
-Admins can edit the metadata in this reference by clicking the **Edit** button in the upper right. Admins can also edit metabadata in the [admin settings](../data-modeling/metadata-editing).
+Admins can edit the metadata in this reference by clicking the **Edit** button in the upper right. Admins can also edit metabadata in the [Admin](../data-modeling/metadata-editing).
 
 ## Glossary
 

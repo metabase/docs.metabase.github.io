@@ -1,5 +1,5 @@
 ---
-version: v0.58
+version: v0.59
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -176,6 +176,7 @@ config:
     jwt-attribute-groups: groups
     jwt-attribute-lastname: last_name
     jwt-attribute-tenant: '@tenant'
+    jwt-attribute-tenant-attributes: '@tenant.attributes'
     jwt-enabled: false
     jwt-group-mappings: {}
     jwt-group-sync: false
@@ -230,7 +231,9 @@ config:
     redirect-all-requests-to-https: false
     remote-sync-auto-import: false
     remote-sync-auto-import-rate: 5
+    remote-sync-check-changes-cache-ttl-seconds: 60
     remote-sync-task-time-limit-ms: 300000
+    remote-sync-transforms: false
     report-timezone: null
     reset-token-ttl-hours: 48
     retry-initial-interval: 500
@@ -278,6 +281,12 @@ config:
     site-url: null
     slack-app-token: null
     slack-bug-report-channel: metabase-bugs
+    slack-connect-attribute-team-id: https://slack.com/team_id
+    slack-connect-authentication-mode: sso
+    slack-connect-client-id: null
+    slack-connect-client-secret: null
+    slack-connect-enabled: false
+    slack-connect-user-provisioning-enabled: true
     smtp-override-enabled: false
     source-address-header: X-Forwarded-For
     sql-jdbc-fetch-size: 500
@@ -287,6 +296,7 @@ config:
     surveys-enabled: true
     sync-leaf-fields-limit: 1000
     synchronous-batch-updates: false
+    transforms-enabled: false
     unaggregated-query-row-limit: null
     uploads-settings: null
     user-visibility: all

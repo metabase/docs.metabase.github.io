@@ -1,5 +1,5 @@
 ---
-version: v0.58
+version: v0.59
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -44,8 +44,9 @@ To render a dashboard:
 - `with-subscriptions` - let people set up [dashboard subscriptions](../dashboards/subscriptions). Unlike subscriptions sent from non-embedded dashboards, subscriptions sent from embedded dashboards exclude links to Metabase items, as Metabase assumes the recipient lacks access to the embedded Metabase.
 - `refresh` - auto-refreshes the dashboard. `refresh="60"` will refresh the dashboard every 60 seconds.
 - `hidden-parameters` - list of filter names to hide from the dashboard, like `['productId']`
+- `enable-entity-navigation` (default is false) - preserves dashboard custom [click behaviors](../dashboards/interactive#customizing-click-behavior) that navigate to other dashboards and questions within the embed. Requires `drills` to be true (which is the default). When disabled, only external URL links are kept. See also [`handleLink`](./sdk/plugins#handlelink) for customizing what happens when people click URL links.
 
-For guest embeds, you can also set a `locale` in your page-level configuration to [translate embedded content](./translations).
+For all modular embeds, you can also set a `locale` in your page-level configuration to [translate embedded content](./translations), including content from translation dictionaries.
 
 Only `with-title` and `with-downloads` are supported in [guest embeds](./guest-embedding).
 
@@ -78,12 +79,20 @@ To render a question (chart):
 ```html
 <metabase-question question-id="1"></metabase-question>
 ```
-
 ### Required parameters
 
-- `question-id` - This can be a regular ID or an entity ID. [Using Entity IDs](../installation-and-operation/serialization#entity-ids-work-with-embedding) in your embeds ensures that the IDs stay stable when exporting from one Metabase and importing to another. Only for SSO embeds. Guest embeds set the id with a token.
+- `question-id` - This can be a regular ID or an entity ID. [Using Entity IDs](../installation-and-operation/serialization#entity-ids-work-with-embedding) in your embeds ensures that the IDs stay stable when exporting from one Metabase and importing to another. Only for SSO embeds. Guest embeds set the ID with a token.
 
-  Use `question-id="new"` to embed the query builder exploration interface.
+You can also use the question component to create new questions:
+
+- `question-id="new"` — opens the visual query builder.
+- `question-id="new-native"` — opens the SQL editor.
+
+For example, to embed the SQL editor:
+
+```html
+<metabase-question question-id="new-native"></metabase-question>
+```
 
 ### Optional parameters
 
@@ -95,7 +104,8 @@ To render a question (chart):
 - `with-downloads` (default is true on OSS/Starter and false on Pro/Enterprise) - show downloads
 - `initial-sql-parameters` - default value for SQL parameters, only applicable to native SQL questions, like `{ "productId": "42" }`
 - `is-save-enabled` (default is false)
-- `target-collection` - this is to enforce saving into a particular collection. Values: regular ID, entity ID, `"personal”`, `"root”`
+- `target-collection` - this is to enforce saving into a particular collection. Values: regular ID, entity ID, `"personal"`, `"root"`
+- `with-alerts` (default is false) - let people set up [alerts](../questions/alerts) on embedded questions. Requires [email setup](../configuring-metabase/email). Unlike alerts on non-embedded questions, alerts on embedded questions only send to the logged-in user and exclude links to Metabase items. Not available for models.
 
 Only `with-title` and `with-downloads` are supported in [guest embeds](./guest-embedding).
 

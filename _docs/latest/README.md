@@ -1,5 +1,5 @@
 ---
-version: v0.58
+version: v0.59
 has_magic_breadcrumbs: true
 show_category_breadcrumb: false
 show_title_breadcrumb: true
@@ -96,6 +96,7 @@ Metabase's reference documentation.
 
 - [The SQL editor](./questions/native-editor/writing-sql)
 - [SQL parameters](./questions/native-editor/sql-parameters)
+- [Table variables](./questions/native-editor/table-variables)
 - [Referencing models and saved questions](./questions/native-editor/referencing-saved-questions-in-queries)
 - [Snippets](./questions/native-editor/snippets)
 - [Snippet folder permissions](./permissions/snippets)
@@ -103,6 +104,7 @@ Metabase's reference documentation.
 #### Visualizing data
 
 - [Visualizing data](./questions/visualizations/visualizing-results)
+- [Box plots](./questions/visualizations/box-plot)
 - [Combo charts](./questions/visualizations/combo-chart)
 - [Detail](./questions/visualizations/detail)
 - [Funnel charts](./questions/visualizations/funnel)
@@ -158,6 +160,7 @@ Metabase's reference documentation.
 - [AI overview](./ai/start)
 - [Metabot](./ai/metabot)
 - [Setting up Metabot](./ai/settings)
+- [SQL generation](./ai/sql-generation)
 
 ### Exploration and organization
 

@@ -1,5 +1,5 @@
 ---
-version: v0.58
+version: v0.59
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -31,6 +31,7 @@ type IconName =
   | "gauge"
   | "progress"
   | "funnel"
+  | "boxplot"
   | "waterfall"
   | "sankey"
   | "list"
@@ -67,6 +68,7 @@ type IconName =
   | "bolt_filled"
   | "breakout"
   | "bubble"
+  | "broken_link"
   | "burger"
   | "calendar"
   | "camera"
@@ -128,6 +130,7 @@ type IconName =
   | "formula"
   | "funnel_outline"
   | "folder"
+  | "folder_database"
   | "folder_filled"
   | "gear"
   | "gear_settings_filled"
@@ -177,6 +180,7 @@ type IconName =
   | "metabot"
   | "metabot_sad"
   | "metric"
+  | "mode"
   | "model_with_badge"
   | "moon"
   | "move"
@@ -200,6 +204,7 @@ type IconName =
   | "popover"
   | "popular"
   | "publish"
+  | "published"
   | "pulse"
   | "receipt"
   | "recents"
@@ -230,6 +235,7 @@ type IconName =
   | "ruler"
   | "schema"
   | "search"
+  | "search_check"
   | "section"
   | "segment"
   | "segment2"
@@ -265,6 +271,7 @@ type IconName =
   | "unknown"
   | "unpin"
   | "unpublish"
+  | "unreferenced"
   | "unsubscribe"
   | "upload"
   | "variable"

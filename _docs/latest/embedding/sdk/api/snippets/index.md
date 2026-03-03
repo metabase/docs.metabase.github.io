@@ -1,5 +1,5 @@
 ---
-version: v0.58
+version: v0.59
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -155,7 +155,7 @@ latest: true
 | [SdkErrorComponentProps](./api/SdkErrorComponentProps)                     | -                                                                              |
 | [SdkEventHandlersConfig](./api/SdkEventHandlersConfig)                     | -                                                                              |
 | [SdkQuestionEntityPublicProps](./api/SdkQuestionEntityPublicProps)         | -                                                                              |
-| [SdkQuestionId](./api/SdkQuestionId)                                       | -                                                                              |
+| [SdkQuestionId](./api/SdkQuestionId)                                       | Represents the identifier for a question in the Metabase SDK.                  |
 | [SdkQuestionTitleProps](./api/SdkQuestionTitleProps)                       | -                                                                              |
 | [SdkUserId](./api/SdkUserId)                                               | -                                                                              |
 | [SqlParameterValues](./api/SqlParameterValues)                             | -                                                                              |

@@ -7,6 +7,7 @@ category: Embedding
 title: MetabaseQuestion
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/embedding/sdk/api/snippets/MetabaseQuestion.md'
 layout: new-docs
+latest: true
 ---
 
 ## Properties

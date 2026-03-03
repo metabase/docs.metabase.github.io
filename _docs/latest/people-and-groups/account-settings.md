@@ -1,5 +1,5 @@
 ---
-version: v0.58
+version: v0.59
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -18,7 +18,7 @@ latest: true
 
 # Account settings
 
-You can view your account settings by going to the top right of the screen and clicking on the **gear** icon > **Account settings**.
+To access your account settings, click the **grid** icon in the top right corner, then click your **profile name and email.**
 
 ## Account profile
 

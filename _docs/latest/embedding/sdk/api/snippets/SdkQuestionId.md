@@ -1,5 +1,5 @@
 ---
-version: v0.58
+version: v0.59
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -12,5 +12,27 @@ latest: true
 ---
 
 ```ts
-type SdkQuestionId = number | "new" | SdkEntityId;
+type SdkQuestionId = number | "new" | "new-native" | SdkEntityId;
 ```
+
+Represents the identifier for a question in the Metabase SDK.
+
+## Example
+
+<!-- [<snippet example>] -->
+
+```typescript
+// Numerical ID from question URL
+const questionId: SdkQuestionId = 123;
+
+// Entity ID string
+const questionId: SdkQuestionId = "abc123def456";
+
+// Create new notebook-style question
+const questionId: SdkQuestionId = "new";
+
+// Create new native SQL question
+const questionId: SdkQuestionId = "new-native";
+```
+
+<!-- [<endsnippet example>] -->

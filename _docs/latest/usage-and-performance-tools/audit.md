@@ -1,5 +1,5 @@
 ---
-version: v0.58
+version: v0.59
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -115,7 +115,7 @@ Here admins can get an overview of all of the [dashboard subscriptions][dashboar
 
 Admins can add and remove people from a subscription or alert by clicking on the item's **Recipients** number. Admins can also delete the subscription or alert entirely by clicking on the **X** on the relevant line.
 
-Everyone can view all of their subscriptions and alerts by clicking on the **gear** icon in the upper right and navigating to **Account settings** > **Notifications**.
+Everyone can view all of their subscriptions and alerts by clicking the **grid** icon in the upper right, then clicking their **profile name and email** to open **Account settings**, and navigating to **Notifications**.
 
 For more, see [how permissions work with alerts and subscriptions](../permissions/notifications).
 

@@ -1,5 +1,5 @@
 ---
-version: v0.58
+version: v0.59
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -26,7 +26,7 @@ Metabase supports user provisioning via the System for Cross-domain Identity Man
 
 ![Setting up user provisioning with SCIM in Metabase](./images/user-provisioning.png)
 
-To set up user provisioning. Click on the settings **Gear** icon in the upper right and navigate to **Admin settings** > **Settings**> **Authentication**.
+To set up user provisioning. Click the **grid** icon in the upper right and navigate to **Admin** > **Settings**> **Authentication**.
 
 Click on the **User provisioning** tab.
 

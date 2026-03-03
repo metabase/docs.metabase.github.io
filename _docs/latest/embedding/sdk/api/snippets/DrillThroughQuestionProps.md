@@ -1,5 +1,5 @@
 ---
-version: v0.58
+version: v0.59
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -35,8 +35,8 @@ Props for the drill-through question
 | <a id="targetcollection"></a> `targetCollection?`           | [`SdkCollectionId`](./api/SdkCollectionId)                                                                                                                                                                                           | The collection to save the question to. This will hide the collection picker from the save modal. Only applicable to interactive questions.            |
 | <a id="title"></a> `title?`                                 | [`SdkQuestionTitleProps`](./api/SdkQuestionTitleProps)                                                                                                                                                                               | Determines whether the question title is displayed, and allows a custom title to be displayed instead of the default question title. Shown by default. |
 | <a id="width"></a> `width?`                                 | `Width`\<`string` \| `number`\>                                                                                                                                                                                                         | A number or string specifying a CSS size value that specifies the width of the component                                                               |
+| <a id="withalerts"></a> `withAlerts?`                       | `boolean`                                                                                                                                                                                                                               | Enables the ability to set up alerts on the question.                                                                                                  |
 | <a id="withcharttypeselector"></a> `withChartTypeSelector?` | `boolean`                                                                                                                                                                                                                               | Determines whether the chart type selector and corresponding settings button are shown. Only relevant when using the default layout.                   |
 | <a id="withdownloads"></a> `withDownloads?`                 | `boolean`                                                                                                                                                                                                                               | Enables the ability to download results in the question.                                                                                               |
-| <a id="withresetbutton"></a> `withResetButton?`             | `boolean`                                                                                                                                                                                                                               | Determines whether a reset button is displayed. Only relevant when using the default layout.                                                           |
 
 <!-- [<endsnippet properties>] -->

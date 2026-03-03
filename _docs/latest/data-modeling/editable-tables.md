@@ -1,5 +1,5 @@
 ---
-version: v0.58
+version: v0.59
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -32,8 +32,8 @@ Currently, editable tables are available for the following databases:
 
 To set up table editing, admins can:
 
-1. Click the **gear** icon in the top right.
-2. Select **Admin settings**.
+1. Click the **grid** icon in the top right.
+2. Select **Admin**.
 3. Click **Databases**.
 4. Select your database.
 5. Toggle on **Editable table data**.
