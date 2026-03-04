@@ -5880,19 +5880,28 @@ Roadmap</a>
 
 <h2 id="configuring-logging-level">Configuring logging Level</h2>
 
-<p>Metabase uses <a href="https://logging.apache.org/log4j/2.x/">log4j</a>for logging configuration. Here is Metabase’s <a href="https://github.com/metabase/metabase/blob/master/resources/log4j2.xml">default logging configuration</a>. Some troubleshooting tasks might require you to override this logging configuration (for example, to see more details about errors). See Log4j’s docs for info on <a href="https://logging.apache.org/log4j/2.x/manual/customloglevels.html">log levels</a>.</p>
+<p>Metabase uses <a href="https://logging.apache.org/log4j/2.x/">Log4j</a> for logging configuration. Here is Metabase’s <a href="https://github.com/metabase/metabase/blob/master/resources/log4j2.xml">default logging configuration</a>. Some troubleshooting tasks might require you to override this logging configuration (for example, to see more details about errors). See Log4j’s docs for info on <a href="https://logging.apache.org/log4j/2.x/manual/customloglevels.html">log levels</a>.</p>
 
 <h3 id="temporary-override-logging-configuration">Temporary override logging configuration</h3>
 
-<p>To temporarily adjust the logging configuration, go to <strong>Admin</strong> &gt; <strong>Tools</strong> &gt; <strong>Logs</strong> and click on <strong>Customize log levels</strong>.</p>
+<p><em>Admin &gt; Tools &gt; Logs</em>.</p>
 
-<p>You can select from log level presets for common troubleshooting tasks (for example, troubleshooting sync issues), or provide your own configuration as a JSON. For example, here’s an override configuration that increases logging for troubleshooting linked filters:</p>
+<p>To temporarily adjust the logging configuration:</p>
 
-<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+<ol>
+  <li>Go to <strong>Admin</strong> &gt; <strong>Tools</strong> &gt; <strong>Logs</strong>.</li>
+  <li>
+    <p>Click on <strong>Customize log levels</strong> above the logs.</p>
+
+    <p>You can select from log-level presets for common troubleshooting tasks (for example, troubleshooting sync issues), or provide your own configuration as JSON. For example, here’s an override configuration that increases logging for troubleshooting linked filters:</p>
+
+    <div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
   </span><span class="nl">"metabase.parameters.chain-filter"</span><span class="p">:</span><span class="w"> </span><span class="s2">"debug"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"metabase.parameters.chain-filter.dedupe-joins"</span><span class="p">:</span><span class="w"> </span><span class="s2">"debug"</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div></div>
+</span></code></pre></div>    </div>
+  </li>
+</ol>
 
 <p>The override from Admin settings will be temporary. You can select for how long the override should be in place (e.g., 60 minutes). When the override times out, the logging configuration will revert to the default logging configuration (or a custom configuration if you’re using a <a href="#use-a-custom-log-configuration-file">custom log file</a>).</p>
 

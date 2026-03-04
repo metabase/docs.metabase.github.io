@@ -46,7 +46,7 @@ You can make your database columns time zone aware by storing them as specific d
 
 The exact data type will depend on your database. Some Metabase features only work with specific data types:
 
-- [Report timezone setting](../configuring-metabase/localization#report-timezone)
+- [Report timezone setting](../configuring-metabase/localization#set-default-instance-report-timezone)
 - [`converttimezone` custom expression](../questions/query-builder/expressions/converttimezone)
 
 ## Common pitfalls

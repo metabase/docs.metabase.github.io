@@ -11,7 +11,7 @@ layout: new-docs
 
 # Now
 
-`now` returns the current datetime using your Metabase [report timezone](../../../configuring-metabase/localization#report-timezone).
+`now` returns the current datetime using your Metabase [report timezone](../../../configuring-metabase/localization#set-default-instance-report-timezone).
 
 ## Creating conditional logic using the current date or time
 
@@ -65,7 +65,7 @@ For more info about the way these data types behave in Metabase, see [Timezones]
 
 ## Limitations
 
-`now` might not be _now_ (in your local time) if you don't live in the same timezone as your Metabase [report time zone](../../../configuring-metabase/localization#report-timezone).
+`now` might not be _now_ (in your local time) if you don't live in the same timezone as your Metabase [report time zone](../../../configuring-metabase/localization#set-default-instance-report-timezone).
 
 If you need to compare `now` to a column in a different time zone, use [convertTimezone](./converttimezone) to shift both columns into the same time zone. For example:
 
@@ -85,7 +85,7 @@ Different ways to do the same thing, because while you'd love to use custom expr
 
 When you run a question using the [query builder](/glossary/query-builder), Metabase will convert your query builder settings (filters, summaries, etc.) into a SQL query, and run that query against your database to get your results.
 
-By default, `now` uses your Metabase's [report time zone](../../../configuring-metabase/localization#report-timezone). If your admin hasn't set a report time zone, `now` will use your database's time zone.
+By default, `now` uses your Metabase's [report time zone](../../../configuring-metabase/localization#set-default-instance-report-timezone). If your admin hasn't set a report time zone, `now` will use your database's time zone.
 
 Say you're using a Postgres database. If your Metabase report time zone is set to EST, you'll get `now` in EST:
 
