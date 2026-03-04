@@ -8,6 +8,8 @@ title: 'Data studio'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/data-studio/overview.md'
 layout: new-docs
 summary: 'Data Studio provides tools to shape and track your data so everyone can trust the numbers.'
+redirect_from:
+    - /docs/master/data-studio/start
 ---
 
 # Data Studio
