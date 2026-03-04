@@ -5857,29 +5857,36 @@ Roadmap</a>
 
 <p>For now, webhooks are only available for <a href="../questions/alerts">alerts</a>; you can’t select a webhook as the recipient of a <a href="../dashboards/subscriptions">dashboard subscription</a>.</p>
 
-<h2 id="creating-a-webhook">Creating a webhook</h2>
+<h2 id="create-a-webhook">Create a webhook</h2>
 
-<p>Before you can send an alert to a webhook, an admin will need to create a webhook to target.</p>
+<p><em>Admin &gt; Settings &gt; Notification channels</em></p>
 
-<p>Admins and people with <a href="../permissions/application#settings-access">settings access</a> can create a webhook by clicking the <strong>grid icon</strong> &gt; <strong>Admin</strong> &gt; <strong>Notification channels</strong>. In <strong>Webhooks for alerts</strong>, click <strong>+ Add another</strong>. Metabase will show you a short form to fill out:</p>
+<p>Before people can send alerts to a webhook, an admin or someone with <a href="../permissions/application#settings-access">settings access</a> will need to create a webhook to target.</p>
 
-<ul>
-  <li><strong>Webhook URL</strong>. Where you want Metabase to send the results of an alert. Must be a valid URL.</li>
-  <li><strong>Give it a name</strong>. Name the webhook so that people can pick the right hook when setting up an alert on a question.</li>
-  <li><strong>Description</strong>. Tell people what the hook is for.</li>
-  <li><strong>Authentication method</strong>. See below.</li>
-</ul>
+<p>To create a webhook:</p>
 
-<h2 id="webhook-authentication-method">Webhook authentication method</h2>
+<ol>
+  <li>Click the <strong>grid</strong> icon in top right corner and select <strong>Admin</strong>.</li>
+  <li>In the Admin console, go <strong>Settings &gt; Notification channels</strong>.</li>
+  <li>In <strong>Webhooks for alerts</strong>, click <strong>Add a webhoor</strong>.</li>
+  <li>
+    <p>Metabase will show you a short form to fill out:</p>
 
-<p>You can specify an auth method for the webhook.</p>
-
-<ul>
-  <li><strong>None</strong>: Anything goes.</li>
-  <li><strong>Basic</strong>: Set a username and password.</li>
-  <li><strong>Bearer</strong>: Include a <a href="https://datatracker.ietf.org/doc/html/rfc6750">secret token</a>.</li>
-  <li><strong>API key</strong>: You can add the API key to the Header or as a Query param. Both approaches require a key and value (the API key itself).</li>
-</ul>
+    <ul>
+      <li><strong>Webhook URL</strong>. Where you want Metabase to send the results of an alert. Must be a valid URL.</li>
+      <li><strong>Give it a name</strong>. Name the webhook so that people can pick the right hook when setting up an alert on a question.</li>
+      <li><strong>Description</strong>. Tell people what the hook is for.</li>
+      <li><strong>Authentication method</strong>:
+        <ul>
+          <li><strong>None</strong>: Anything goes.</li>
+          <li><strong>Basic</strong>: Set a username and password.</li>
+          <li><strong>Bearer</strong>: Include a <a href="https://datatracker.ietf.org/doc/html/rfc6750">secret token</a>.</li>
+          <li><strong>API key</strong>: You can add the API key to the Header or as a Query param. Both approaches require a key and value (the API key itself).</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ol>
 
 <h2 id="webhook-payload">Webhook payload</h2>
 

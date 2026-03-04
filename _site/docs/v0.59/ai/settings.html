@@ -5883,33 +5883,46 @@ Roadmap</a>
 
 <p>Once you’ve added Metabot AI in the Metabase store, you can log into your Metabase and configure it in <em>Admin &gt; AI</em>.</p>
 
+<h2 id="metabot-options">Metabot options</h2>
+
+<p>You can set options for Metabot, both for your internal Metabase, and (separately) for embedded Metabase contexts. That way you can, say, use Metabot in your Metabase, while not giving access to Metabot in your embedded Metabase.</p>
+
+<ul>
+  <li><a href="#enable-metabot">Enable Metabot</a></li>
+  <li><a href="#verified-content">Verified content</a></li>
+  <li><a href="#collection-metabot-can-use">Collection Metabot can use</a></li>
+</ul>
+
+<h2 id="enable-metabot">Enable Metabot</h2>
+
+<p>Toggle <a href="./metabot">Metabot</a> on or off for your Metabase or embedded contexts. Both Metabot and Embedded Metabot are enabled by default.</p>
+
+<h3 id="internal-metabot">Internal Metabot</h3>
+
+<p>When enabled, Metabot is available to help people create questions, analyze data, and answer questions about your data. When disabled, the Metabot icon and keyboard shortcuts are hidden.</p>
+
+<h3 id="embedded-metabot">Embedded Metabot</h3>
+
+<p>The toggle will turn embedded Metabot on or off. The toggle affects both full-app embeds and modular embeds.</p>
+
+<ul>
+  <li><a href="../embedding/full-app-embedding">Full-app embedding</a>: The Metabot icon and keyboard shortcuts are only available when Metabot is enabled. Turning off Embedded Metabot will hide these icons and disable the keyboard shortcuts.</li>
+  <li><a href="../embedding/modular-embedding">Modular embedding</a> The toggle doesn’t add Metabot anywhere; you have to explicitly include a chat component (like the SDK’s <a href="../embedding/sdk/ai-chat"><code class="language-plaintext highlighter-rouge">MetabotQuestion</code></a>) in your application. If, however, you’ve added a component, and you turn off the Embedded Metabot toggle, your chat component will stop working, so you should also remove or hide the component in your application.</li>
+</ul>
+
 <h2 id="verified-content">Verified content</h2>
 
 <p>Admins on Pro and Enterprise plans can tell Metabot to only work with <a href="../data-modeling/models">models</a> and <a href="../data-modeling/metrics">metrics</a> that have been <a href="../exploration-and-organization/content-verification">verified</a>.</p>
 
 <p>Restricting Metabot to verified models and metrics (and only models and metrics) helps Metabot produce more reliable answers, since you know someone has at least vetted the data Metabot can use.</p>
 
-<h2 id="collection-for-natural-language-querying">Collection for natural language querying</h2>
+<h2 id="collection-metabot-can-use">Collection Metabot can use</h2>
 
 <p>Select a collection (including its subcollections) to limit which collections Metabot searches during <a href="../ai/metabot#ai-exploration">AI exploration</a>.</p>
 
 <p>This setting only affects conversations started from <strong>+ New → AI exploration</strong>.</p>
 
 <p>People can still @-mention items outside of this collection when prompting in AI exploration. Metabot can also see the person’s current context (for example, Metabot will know about the dashboard they’re currently viewing, even if the dashboard is outside the selected collection).</p>
-
-<h2 id="when-embedding-metabot-you-can-pick-a-collection-for-metabot-to-have-access-to">When embedding Metabot, you can pick a collection for Metabot to have access to</h2>
-
-<p>When embedding Metabot in your app, you can select a collection for Metabot:</p>
-
-<ol>
-  <li>Click <strong>Embedded Metabot</strong>.</li>
-  <li>In the <strong>Collection Embedded Metabot can use</strong> section, click <strong>Pick a collection</strong>.</li>
-  <li>Select the collection that contains the models and metrics you want Metabot to use.</li>
-</ol>
-
-<p>Metabot will use the models and metrics in that collection to help answer questions and generate queries. You can change this collection at any time. To give Metabot access to all collections, you can set the collection to the root collection, called “Our Analytics” (the default).</p>
-
-<p>Alternatively (or additionally), you can restrict Metabot to <a href="#verified-content">verified content</a>.</p>
 
 <h2 id="tips-for-making-the-most-of-metabot">Tips for making the most of Metabot</h2>
 

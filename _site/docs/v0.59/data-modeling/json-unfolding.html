@@ -5853,10 +5853,6 @@ Roadmap</a>
 
         <h1 id="working-with-json">Working with JSON</h1>
 
-<h2 id="filtering-json">Filtering JSON</h2>
-
-<p>In the <a href="../questions/query-builder/editor">query builder</a>, Metabase can’t parse JSON in columns, so you can only filter by “Is empty” or “Not empty”.</p>
-
 <h2 id="json-unfolding">JSON unfolding</h2>
 
 <p>With <a href="#databases-that-support-json-unfolding">some databases</a>, Metabase can unfold JSON columns into their component fields, which you can then filter on using the query builder.</p>
@@ -5877,7 +5873,23 @@ Roadmap</a>
 
 <p>Metabase will prefix the unfolded column names with the name of the original column that contained the JSON. You can change the column names in <strong>Admin</strong> &gt; <a href="metadata-editing">Table metadata</a>, or by creating a <a href="./models">model</a> and editing the column metadata.</p>
 
+<h2 id="databases-that-support-json-unfolding">Databases that support JSON unfolding</h2>
+
+<ul>
+  <li>
+    <p><a href="../databases/connections/postgresql">BigQuery</a>: automatically enabled, applies to <code class="language-plaintext highlighter-rouge">STRUCT</code> types only.</p>
+
+    <p>If your data is stored in the <a href="https://cloud.google.com/bigquery/docs/reference/standard-sql/data-types#struct_type">STRUCT data type</a> in BigQuery, you can query the table’s nested fields. This is enabled by default. However, Metabase won’t unfold JSON stored in BigQuery as the <code class="language-plaintext highlighter-rouge">JSON</code> type. This is because in BigQuery, nested fields are <em>part of the table definition itself</em>, so when Metabase syncs with your BigQuery database, it’ll be able to get metadata about any of your tables, including tables with nested fields. Querying nested fields, however, doesn’t extend to arrays (REPEATED (STRUCT)) in BigQuery.</p>
+  </li>
+  <li><a href="../databases/connections/druid">Druid (JDBC)</a></li>
+  <li><a href="../databases/connections/mysql">MongoDB</a>: automatically enabled for all nested fields.</li>
+  <li><a href="../databases/connections/mysql">MySQL</a></li>
+  <li><a href="../databases/connections/postgresql">PostgreSQL</a></li>
+</ul>
+
 <h2 id="toggling-json-unfolding-for-a-database">Toggling JSON unfolding for a database</h2>
+
+<p><em>Admin &gt; Databases &gt; Advanced options &gt; Allow unfolding of JSON column</em></p>
 
 <p>If you notice a hit to performance from this JSON unfolding, we recommend turning it off.</p>
 
@@ -5896,6 +5908,8 @@ Roadmap</a>
 </ol>
 
 <h2 id="toggling-json-unfolding-for-a-specific-column">Toggling JSON unfolding for a specific column</h2>
+
+<p><em>Admin &gt; Table metadata &gt; Unfold JSON</em></p>
 
 <p>If performance degrades, or you’d rather keep the JSON contained in the original column, you can turn off unfolding for individual fields in their settings.</p>
 
@@ -5916,19 +5930,9 @@ Roadmap</a>
 
 <p>For example, if you upload a CSV with JSON in it, you might need to update the data/type in the database. Note that you can’t edit the data type via Metabase; you can only change its field type. So even if the field type in Metabase is <code class="language-plaintext highlighter-rouge">Field containing JSON</code>, if the data/type isn’t <code class="language-plaintext highlighter-rouge">JSON</code>, Metabase won’t give you the option to unfold the column. You’ll need to change the column type in the database itself.</p>
 
-<h2 id="databases-that-support-json-unfolding">Databases that support JSON unfolding</h2>
+<h2 id="filtering-json">Filtering JSON</h2>
 
-<ul>
-  <li>
-    <p><a href="../databases/connections/postgresql">BigQuery</a>: automatically enabled, applies to <code class="language-plaintext highlighter-rouge">STRUCT</code> types only.</p>
-
-    <p>If your data is stored in the <a href="https://cloud.google.com/bigquery/docs/reference/standard-sql/data-types#struct_type">STRUCT data type</a> in BigQuery, you can query the table’s nested fields. This is enabled by default. However, Metabase won’t unfold JSON stored in BigQuery as the <code class="language-plaintext highlighter-rouge">JSON</code> type. This is because in BigQuery, nested fields are <em>part of the table definition itself</em>, so when Metabase syncs with your BigQuery database, it’ll be able to get metadata about any of your tables, including tables with nested fields. Querying nested fields, however, doesn’t extend to arrays (REPEATED (STRUCT)) in BigQuery.</p>
-  </li>
-  <li><a href="../databases/connections/druid">Druid (JDBC)</a></li>
-  <li><a href="../databases/connections/mysql">MongoDB</a>: automatically enabled for all nested fields.</li>
-  <li><a href="../databases/connections/mysql">MySQL</a></li>
-  <li><a href="../databases/connections/postgresql">PostgreSQL</a></li>
-</ul>
+<p>In the <a href="../questions/query-builder/editor">query builder</a>, Metabase can’t parse JSON in columns, so you can only filter by “Is empty” or “Not empty”.</p>
 
 
         <div>

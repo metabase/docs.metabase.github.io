@@ -5859,6 +5859,8 @@ Roadmap</a>
 
 <p>You’ll write a query or a Python script in Metabase, a transform will run this query or script, create a table in your target database containing the results, and sync that table to Metabase, so it can be used as a data source for questions or other transforms.</p>
 
+<p><img src="../images/transforms.png" alt="Transforms"></p>
+
 <h2 id="transforms-overview">Transforms overview</h2>
 
 <ul>
@@ -5921,6 +5923,8 @@ Roadmap</a>
   <li>In the left sidebar, select <strong>Transforms</strong>.</li>
 </ol>
 
+<p><img src="../images/transforms.png" alt="Transforms"></p>
+
 <h2 id="create-a-transform">Create a transform</h2>
 
 <p><em>Data Studio &gt; Transforms</em></p>
@@ -5936,9 +5940,13 @@ Roadmap</a>
   <li>
     <p>Click <strong>+ New</strong> and select a source for your transform.</p>
 
+    <p><img src="../images/new_transform.png" alt="New transform"></p>
+
     <p>You can create your transform using Metabase’s <a href="../../questions/query-builder/editor">graphical query builder</a>, SQL, or Python.</p>
 
     <p>For more information on transforms built with the query builder or SQL, see <a href="query-transforms">query-based transforms</a>. For more information on Python transforms, see <a href="python-transforms">Python transforms</a>.</p>
+
+    <p><img src="../images/sql-transform.png" alt="Query transform"></p>
 
     <p>If you select <strong>Copy of a saved question</strong> for the transform’s source, you can copy the query of an existing Metabase question (either a SQL question or a query builder question) into your transform query. Metabase will only <em>copy</em> the question’s query. Later edits to that original question won’t affect the transform’s query.</p>
   </li>
@@ -5959,7 +5967,11 @@ Roadmap</a>
       <li><strong>Schema</strong> (required): Target schema for your transform. This schema can be different from the schema of the source table(s). You create a new schema by typing its name in this field. You can only transform data <em>within</em> a database; you can’t write from one database to another.</li>
       <li><strong>Table name</strong> (required): Name of the target table. Metabase will write the results of the transform into this table, and then sync the table in Metabase.</li>
       <li><strong>Folder</strong> (optional): The folder where the transform should live. Click on the field to pick a different folder or create a new one.</li>
-      <li><strong>Incremental transformation</strong> (optional): see <a href="query-transforms#incremental-query-transforms">Incremental query-based transforms</a> or <a href="python-transforms">Incremental Python transforms</a></li>
+      <li>
+        <p><strong>Incremental transformation</strong> (optional): see <a href="query-transforms#incremental-query-transforms">Incremental query-based transforms</a> or <a href="python-transforms">Incremental Python transforms</a></p>
+
+        <p><img src="../images/transform-settings.png" alt="Transform settings"></p>
+      </li>
     </ul>
   </li>
   <li>Optionally, once the transform is saved, assign tags to your transform. Tags are used by <a href="./jobs-and-runs">jobs</a> to run transforms on schedule.</li>
@@ -5974,16 +5986,24 @@ Roadmap</a>
 <p>You can ask Metabot to generate a new SQL or Python-based transform, or edit an existing transform.</p>
 
 <ol>
-  <li>Go to <strong>Data studio &gt; Transforms</strong>.</li>
+  <li>Go to <strong>Data studio &gt; Transforms</strong>. If you want Metabot to edit an existing transform, navigate to the transform.</li>
   <li>While in Transforms view, click on the Metabot icon in top right.</li>
   <li>
     <p>Describe the transform that you’d like Metabot to write.</p>
 
     <p>You can specify which kind of transform you want (Python or SQL) and @-mention specific data sources to help Metabot understand your request.</p>
+
+    <p><img src="../images/transform-codegen.png" alt="Create a new transform with codegen"></p>
+  </li>
+  <li>
+    <p>Metabot will create a to-do list for itself that will show its thinking process, and then work through the list.</p>
+  </li>
+  <li>
+    <p>If you asked Metabot to create a new transform, review the code that Metabot offers in the chat window and click on “Create” under the code snippet.</p>
+
+    <p><img src="../images/create-transform.png" alt="Create snippet"></p>
   </li>
 </ol>
-
-<p>Metabot will create a to-do list for itself that will show its thinking process, and then work through the list.</p>
 
 <p>You can continue working with Metabot to refine your code. Metabot will suggest code changes, and give you the option of accepting or rejecting the changes.</p>
 
@@ -5994,6 +6014,8 @@ Roadmap</a>
 <p>You can edit the transform’s name and description, query/script, target table, and incremental settings. You can edit the transform even if it already ran or is scheduled to run.</p>
 
 <p>If you’re using remote sync, you won’t be able to edit transforms if your instance is in <a href="../../installation-and-operation/remote-sync">“read-only” sync mode</a>.</p>
+
+<p><img src="../images/transform-edit-settings.png" alt="Edit transform settings"></p>
 
 <h3 id="edit-transforms-query-or-script">Edit transform’s query or script</h3>
 
@@ -6038,11 +6060,31 @@ Roadmap</a>
 
 <h2 id="transform-dependencies">Transform dependencies</h2>
 
-<blockquote>
-  <p>Transform dependency graph is only available on Pro and Enterprise plans (both self-hosted and Metabase Cloud)</p>
-</blockquote>
+<div class="bootstrap">
+  <div class="plans-blockquote bg-blue-95 rounded-3 p-6 d-flex flex-row border border-1 border-primary">
+    <svg class="" width="24" height="24" viewBox="0 0 26 26" fill="none">
+  <path d="M12 13V15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
+  <path d="M12 10C12.5523 10 13 9.55228 13 9C13 8.44772 12.5523 8 12 8C11.4477 8 11 8.44772 11 9C11 9.55228 11.4477 10 12 10Z" fill="#509EE3"></path>
+  <path d="M12 19.25C16.0041 19.25 19.25 16.0041 19.25 12C19.25 7.99594 16.0041 4.75 12 4.75C7.99594 4.75 4.75 7.99594 4.75 12C4.75 16.0041 7.99594 19.25 12 19.25Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
+</svg>
+
+    
+    
+    
+      
+
+    <p class="m-0 ms-2 paragraph-5 neutral-40">
+       Transform dependencies are only available on
+      <a class="fw-bold" href="/product/pro">Pro</a> and
+      <a class="fw-bold link-purple" href="/product/enterprise">Enterprise</a>
+      plans  (both self-hosted and on Metabase Cloud).
+    </p>
+  </div>
+</div>
 
 <p><em>Data Studio &gt; Transforms &gt; Dependencies</em></p>
+
+<p><img src="../images/transform-dependencies.png" alt="Transforms dependencies"></p>
 
 <p>Transform queries can use the data from other transforms, and query-based transforms can also reference Metabase questions and models. For example, you can have a transform that uses data from a <code class="language-plaintext highlighter-rouge">raw_events</code> table and writes to a <code class="language-plaintext highlighter-rouge">stg_events</code> table, and then create another transform that uses data from the <code class="language-plaintext highlighter-rouge">stg_events</code> table and writes to an <code class="language-plaintext highlighter-rouge">events</code> table.</p>
 

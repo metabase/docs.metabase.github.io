@@ -5857,7 +5857,7 @@ Roadmap</a>
 
 <p>Both admins and people with <a href="../permissions/application#settings-access">settings access</a> can set up email.</p>
 
-<h2 id="email-on-metabase-cloud">Email on Metabase Cloud</h2>
+<h2 id="set-up-email-on-metabase-cloud">Set up email on Metabase Cloud</h2>
 
 <p><em>Admin &gt; Settings &gt; Email</em></p>
 
@@ -5935,33 +5935,34 @@ Roadmap</a>
   <li><strong>SMTP PASSWORD</strong>: Your SMTP account password.</li>
 </ul>
 
-<p>You’ll also need to specify:</p>
-
-<ul>
-  <li><strong>From address</strong>: The email address you want to use for the sender of emails.</li>
-  <li><strong>Reply-to address</strong>: The email address you want replies to go to, if different from the From address.</li>
-</ul>
+<p>Once you set up your SMTP, you’ll be able to <a href="#configure-email-settings">Configure email settings</a>.</p>
 
 <p>You can edit these settings at any time. You can also toggle between this custom SMTP server and the server managed by Metabase Cloud.</p>
 
-<h2 id="configuring-your-email-account">Configuring your email account</h2>
+<h2 id="set-up-email-on-self-hosted-metabases">Set up email on self-hosted Metabases</h2>
 
 <p><em>Admin &gt; Settings &gt; Email</em></p>
 
 <p>For Metabase to send messages to people, you’ll need to set up an email account to send emails via <strong>SMTP</strong> (simple mail transfer protocol). SMTP is an email standard that, when combined with SSL/TLS, provides security protection for emails.</p>
 
-<p>To start, go to the Admin Panel from the dropdown menu in the top right of Metabase, then from the Settings page, click on <strong>Email</strong> in the left menu.</p>
+<p>If you’re on Metabase Cloud, see <a href="#set-up-email-on-metabase-cloud">Set up email on Metabase Cloud</a>.</p>
 
-<p>You should see this form:</p>
+<p>To set up email on self-hosted Metabase:</p>
 
-<p><img src="images/EmailCredentials.png" alt="Email Credentials"></p>
+<ol>
+  <li>Go to <strong>Admin &gt; Settings &gt; Email</strong>.</li>
+  <li>Next to <strong>Self-Hosted SMTP</strong>, click <strong>Configure</strong>.</li>
+  <li>
+    <p>Specify the email configuration:</p>
 
-<p>Here you’ll set:</p>
+    <p><img src="images/EmailCredentials.png" alt="Email Credentials"></p>
+  </li>
+</ol>
 
 <ul>
-  <li><strong>SMTP HOST</strong>: The address of the SMTP server that handles your emails.</li>
-  <li><strong>SMTP PORT</strong>: The port your SMTP server uses for outgoing emails.</li>
-  <li><strong>SMTP SECURITY</strong>:
+  <li><strong>SMTP Host</strong>: The address of the SMTP server that handles your emails.</li>
+  <li><strong>SMTP Port</strong>: The port your SMTP server uses for outgoing emails.</li>
+  <li><strong>SMTP Security</strong>:
     <ul>
       <li>None</li>
       <li>SSL</li>
@@ -5969,22 +5970,137 @@ Roadmap</a>
       <li>STARTTLS</li>
     </ul>
   </li>
-  <li><strong>SMTP USERNAME</strong>: Your SMTP account username.</li>
-  <li><strong>SMTP PASSWORD</strong>: Your SMTP account password.</li>
+  <li><strong>SMTP Username</strong>: Your SMTP account username.</li>
+  <li><strong>SMTP Password</strong>: Your SMTP account password.</li>
 </ul>
 
-<p>You’ll also need to specify your:</p>
+<ol>
+  <li>Click <strong>Save changes</strong>.</li>
+</ol>
+
+<h2 id="configure-email-settings">Configure email settings</h2>
+
+<p><em>Admin &gt; Settings &gt; Email</em></p>
+
+<p><img src="./images/email-settings.png" alt="email settings"></p>
+
+<h3 id="add-from-and-reply-to-addresses">Add From and Reply-to addresses</h3>
+
+<p>Once you set up your email, you can configure:</p>
 
 <ul>
+  <li><strong>From Name</strong>: The name you want to use for the sender of emails.</li>
   <li><strong>From address</strong>: The email address you want to use for the sender of emails.</li>
   <li><strong>Reply-to address</strong>: The email address you want replies to go to, if different from the From address.</li>
 </ul>
 
-<h2 id="add-recipients-as-cc-or-bcc">Add recipients as CC or BCC</h2>
+<h3 id="add-recipients-as-cc-or-bcc">Add recipients as CC or BCC</h3>
 
 <p>By default, Metabase will hide email recipients by including them in the BCC list (Blind Carbon Copy) of the email. But if you’re having issues with your email provider blocking emails with BCC recipients, and you don’t mind having people see who else has been copied on the email Metabase sends them, you can tell Metabase to CC (Carbon Copy) recipients instead.</p>
 
-<h3 id="recommended-email-settings">Recommended email settings</h3>
+<p>To configure CC/BCC:</p>
+
+<ol>
+  <li>Go to <strong>Admin &gt; Settings &gt; Email</strong></li>
+  <li>Under <strong>Add recipients as CC or BCC</strong>, select how you want Metabase to handle recipients.</li>
+</ol>
+
+<h3 id="approved-domains-for-notifications">Approved domains for notifications</h3>
+
+<div class="bootstrap">
+  <div class="plans-blockquote bg-blue-95 rounded-3 p-6 d-flex flex-row border border-1 border-primary">
+    <svg class="" width="24" height="24" viewBox="0 0 26 26" fill="none">
+  <path d="M12 13V15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
+  <path d="M12 10C12.5523 10 13 9.55228 13 9C13 8.44772 12.5523 8 12 8C11.4477 8 11 8.44772 11 9C11 9.55228 11.4477 10 12 10Z" fill="#509EE3"></path>
+  <path d="M12 19.25C16.0041 19.25 19.25 16.0041 19.25 12C19.25 7.99594 16.0041 4.75 12 4.75C7.99594 4.75 4.75 7.99594 4.75 12C4.75 16.0041 7.99594 19.25 12 19.25Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
+</svg>
+
+    
+    
+    
+      
+
+    <p class="m-0 ms-2 paragraph-5 neutral-40">
+       Approved domains for notifications is only available on
+      <a class="fw-bold" href="/product/pro">Pro</a> and
+      <a class="fw-bold link-purple" href="/product/enterprise">Enterprise</a>
+      plans  (both self-hosted and on Metabase Cloud).
+    </p>
+  </div>
+</div>
+
+<p>You can configure allowed email address domain(s) for new <a href="../dashboards/subscriptions">dashboard subscriptions</a> and <a href="../questions/alerts">alerts</a>.</p>
+
+<p>Adding approved domains allows you to restrict which email addresses people can send alerts and subscriptions to. This restriction only applies to sending email to people who lack an account with that Metabase. People with Metabase accounts who aren’t <a href="../permissions/row-and-column-security">restricted by row or column security</a> will be able to email any other person with an account in that same Metabase.</p>
+
+<p>To configure allowed domains:</p>
+
+<ol>
+  <li>Go to <strong>Admin &gt; Settings &gt; Email</strong></li>
+  <li>
+    <p>Under <strong>Allowed domains for notifications</strong>, add allowed domains:</p>
+
+    <ul>
+      <li>To allow all domains, leave the field empty (allowing all domains is the default).</li>
+      <li>To specify multiple domains, separate each domain with a comma, with no space in between (e.g., <code class="language-plaintext highlighter-rouge">domain1,domain2</code>).</li>
+    </ul>
+  </li>
+</ol>
+
+<p>You can also set this property using the environment variable <a href="../configuring-metabase/environment-variables#mb_subscription_allowed_domains"><code class="language-plaintext highlighter-rouge">MB_SUBSCRIPTION_ALLOWED_DOMAINS</code></a>.</p>
+
+<blockquote>
+  <p>Changing this setting won’t affect already existing subscriptions and alerts.</p>
+</blockquote>
+
+<h3 id="suggest-recipients-on-dashboard-subscriptions-and-alerts">Suggest recipients on dashboard subscriptions and alerts</h3>
+
+<div class="bootstrap">
+  <div class="plans-blockquote bg-blue-95 rounded-3 p-6 d-flex flex-row border border-1 border-primary">
+    <svg class="" width="24" height="24" viewBox="0 0 26 26" fill="none">
+  <path d="M12 13V15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
+  <path d="M12 10C12.5523 10 13 9.55228 13 9C13 8.44772 12.5523 8 12 8C11.4477 8 11 8.44772 11 9C11 9.55228 11.4477 10 12 10Z" fill="#509EE3"></path>
+  <path d="M12 19.25C16.0041 19.25 19.25 16.0041 19.25 12C19.25 7.99594 16.0041 4.75 12 4.75C7.99594 4.75 4.75 7.99594 4.75 12C4.75 16.0041 7.99594 19.25 12 19.25Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
+</svg>
+
+    
+    
+    
+      
+
+    <p class="m-0 ms-2 paragraph-5 neutral-40">
+       Configuring suggested recipients is only available on
+      <a class="fw-bold" href="/product/pro">Pro</a> and
+      <a class="fw-bold link-purple" href="/product/enterprise">Enterprise</a>
+      plans  (both self-hosted and on Metabase Cloud).
+    </p>
+  </div>
+</div>
+
+<p>You can control which recipients people can see when they create a new <a href="../dashboards/subscriptions">dashboard subscription</a> or <a href="../questions/alerts">alert</a>.</p>
+
+<p><img src="./images/suggested-recipients.png" alt="Suggested recipients"></p>
+
+<p>For example, you may want to restrict people to viewing potential recipients that belong to the same <a href="../people-and-groups/managing#groups">groups</a> they are a member of.</p>
+
+<p>To configure suggested recipients for subscriptions and alerts:</p>
+
+<ol>
+  <li>Go to <strong>Admin &gt; Settings &gt; Email</strong>.</li>
+  <li>
+    <p>Under <strong>Suggest recipients on dashboard subscriptions and alerts</strong>, select one of the options:</p>
+
+    <ul>
+      <li>Suggest all users</li>
+      <li>Only suggest users in the same groups</li>
+      <li>Don’t show suggestions</li>
+    </ul>
+  </li>
+</ol>
+
+<p>People with <a href="../permissions/row-and-column-security">row or column restrictions</a> won’t see suggestions.</p>
+
+<h2 id="email-best-practices">Email best practices</h2>
 
 <ul>
   <li>SSL is strongly recommended because it’s more secure and gives your account extra protection from threats.</li>
@@ -6002,11 +6118,11 @@ Roadmap</a>
 <h3 id="google-apps">Google Apps</h3>
 
 <ol>
-  <li>In the <strong>SMTP HOST</strong> field, enter smtp.gmail.com</li>
-  <li>Fill in 465 for the <strong>SMTP PORT</strong> field</li>
-  <li>For the <strong>SMTP SECURITY</strong> field, enter <strong>SSL</strong></li>
-  <li>In the <strong>SMTP USERNAME</strong> field, enter your Google Apps email address (e.g. hello@yourdomain.com)</li>
-  <li>Enter your Google Apps password in the <strong>SMTP PASSWORD</strong> field</li>
+  <li>In the <strong>SMTP Host</strong> field, enter <code class="language-plaintext highlighter-rouge">smtp.gmail.com</code>.</li>
+  <li>Fill in 465 for the <strong>SMTP Port</strong> field.</li>
+  <li>For the <strong>SMTP Security</strong>, select <strong>SSL</strong>.</li>
+  <li>In the <strong>SMTP UsernameE</strong> field, enter your Google Apps email address (e.g. <code class="language-plaintext highlighter-rouge">hello@yourdomain.com</code>).</li>
+  <li>Enter your Google Apps password in the <strong>SMTP Password</strong> field.</li>
   <li>Enter the email address you would like to be used as the sender of system notifications in the <strong>From address</strong> field.</li>
 </ol>
 
@@ -6031,80 +6147,6 @@ Roadmap</a>
   <li>Although Mandrill lists <strong>port 587</strong>, <a href="https://mailchimp.com/developer/transactional/docs/smtp-integration/#the-basics">any port supported by Mandrill</a> will work for SMTP email.</li>
   <li>Now you can go back to the Metabase Admin Panel form and enter the info there.</li>
 </ol>
-
-<h2 id="approved-domains-for-notifications">Approved domains for notifications</h2>
-
-<div class="bootstrap">
-  <div class="plans-blockquote bg-blue-95 rounded-3 p-6 d-flex flex-row border border-1 border-primary">
-    <svg class="" width="24" height="24" viewBox="0 0 26 26" fill="none">
-  <path d="M12 13V15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
-  <path d="M12 10C12.5523 10 13 9.55228 13 9C13 8.44772 12.5523 8 12 8C11.4477 8 11 8.44772 11 9C11 9.55228 11.4477 10 12 10Z" fill="#509EE3"></path>
-  <path d="M12 19.25C16.0041 19.25 19.25 16.0041 19.25 12C19.25 7.99594 16.0041 4.75 12 4.75C7.99594 4.75 4.75 7.99594 4.75 12C4.75 16.0041 7.99594 19.25 12 19.25Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
-</svg>
-
-    
-    
-    
-      
-
-    <p class="m-0 ms-2 paragraph-5 neutral-40">
-       Approved domains for notifications is only available on
-      <a class="fw-bold" href="/product/pro">Pro</a> and
-      <a class="fw-bold link-purple" href="/product/enterprise">Enterprise</a>
-      plans  (both self-hosted and on Metabase Cloud).
-    </p>
-  </div>
-</div>
-
-<p>Allowed email address domain(s) for new <a href="../dashboards/subscriptions">dashboard subscriptions</a> and <a href="../questions/alerts">alerts</a>.</p>
-
-<p>Adding approved domains allows you to restrict which email addresses people can send alerts and subscriptions to. This restriction only applies to sending email to people who lack an account with that Metabase. People with Metabase accounts who aren’t <a href="../permissions/row-and-column-security">restricted by row or column security</a> will be able to email any other person with an account in that same Metabase.</p>
-
-<p>To allow all domains, leave the field empty (allowing all domains is the default).</p>
-
-<p>To specify multiple domains, separate each domain with a comma, with no space in between (e.g., “domain1,domain2”).</p>
-
-<p>You can also set this property using the environment variable <a href="../configuring-metabase/environment-variables#mb_subscription_allowed_domains"><code class="language-plaintext highlighter-rouge">MB_SUBSCRIPTION_ALLOWED_DOMAINS</code></a>.</p>
-
-<blockquote>
-  <p>This setting doesn’t affect existing subscriptions and alerts.</p>
-</blockquote>
-
-<h2 id="suggest-recipients-on-dashboard-subscriptions-and-alerts">Suggest recipients on dashboard subscriptions and alerts</h2>
-
-<div class="bootstrap">
-  <div class="plans-blockquote bg-blue-95 rounded-3 p-6 d-flex flex-row border border-1 border-primary">
-    <svg class="" width="24" height="24" viewBox="0 0 26 26" fill="none">
-  <path d="M12 13V15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
-  <path d="M12 10C12.5523 10 13 9.55228 13 9C13 8.44772 12.5523 8 12 8C11.4477 8 11 8.44772 11 9C11 9.55228 11.4477 10 12 10Z" fill="#509EE3"></path>
-  <path d="M12 19.25C16.0041 19.25 19.25 16.0041 19.25 12C19.25 7.99594 16.0041 4.75 12 4.75C7.99594 4.75 4.75 7.99594 4.75 12C4.75 16.0041 7.99594 19.25 12 19.25Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
-</svg>
-
-    
-    
-    
-      
-
-    <p class="m-0 ms-2 paragraph-5 neutral-40">
-       Configuring suggested recipients is only available on
-      <a class="fw-bold" href="/product/pro">Pro</a> and
-      <a class="fw-bold link-purple" href="/product/enterprise">Enterprise</a>
-      plans  (both self-hosted and on Metabase Cloud).
-    </p>
-  </div>
-</div>
-
-<p>Control which recipients people can see when they create a new <a href="../dashboards/subscriptions">dashboard subscription</a> or <a href="../questions/alerts">alert</a>. For example, you may want to restrict people to viewing potential recipients that belong to the same <a href="../people-and-groups/managing#groups">groups</a> they are a member of.</p>
-
-<p>Options include:</p>
-
-<ul>
-  <li>Suggest all users</li>
-  <li>Only suggest users in the same groups</li>
-  <li>Don’t show suggestions</li>
-</ul>
-
-<p>People with <a href="../permissions/row-and-column-security">row or column restrictions</a> won’t see suggestions.</p>
 
 <h2 id="further-reading">Further reading</h2>
 

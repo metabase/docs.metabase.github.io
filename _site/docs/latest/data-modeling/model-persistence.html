@@ -5882,7 +5882,7 @@ Roadmap</a>
 <ol>
   <li><a href="#turn-on-model-persistence-for-your-metabase">Your Metabase</a></li>
   <li><a href="#turn-on-model-persistence-for-each-database">Individual databases</a></li>
-  <li><a href="#turn-on-model-persistence-for-individual-models">(Optional) individual models</a></li>
+  <li><a href="#turn-on-model-persistence-for-individual-models">individual models</a></li>
 </ol>
 
 <h3 id="turn-on-model-persistence-for-your-metabase">Turn on model persistence for your Metabase</h3>
@@ -5891,7 +5891,7 @@ Roadmap</a>
 
 <p>You can set models to refresh based on one of the default frequencies (every 1 hour, 2 hours, etc.), or select the <strong>Custom</strong> option to use <a href="https://www.quartz-scheduler.org/documentation/quartz-2.3.0/tutorials/crontrigger.html">cron syntax</a> to specify your own update frequency.</p>
 
-<p>The cron scheduler uses the <a href="../configuring-metabase/localization#report-timezone">Report Timezone</a> if selected. Otherwise the scheduler will use the System Timezone (which defaults to GMT in <a href="/cloud/">Metabase Cloud</a>).</p>
+<p>The cron scheduler uses the <a href="../configuring-metabase/localization#set-default-instance-report-timezone">default instance report Timezone</a> if selected. Otherwise the scheduler will use the System Timezone (which defaults to GMT in <a href="/cloud/">Metabase Cloud</a>).</p>
 
 <p>We recommend scheduling your models to refresh on a frequency that makes sense with how often your source tables update with new data.</p>
 
@@ -5915,6 +5915,8 @@ Roadmap</a>
     <p>Ensure that the credentials Metabase uses to connect to your data warehouse can manage and write to that schema.</p>
   </li>
 </ol>
+
+<p>By default, new models on the database will <em>not</em> b persisted. You need to <a href="#turn-on-model-persistence-for-individual-models">Turn on model persistence for individual models</a>.</p>
 
 <h2 id="turn-on-model-persistence-for-individual-models">Turn on model persistence for individual models</h2>
 

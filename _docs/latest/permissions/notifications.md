@@ -16,7 +16,7 @@ latest: true
 
 # Notification permissions
 
-Notifications in Metabase include [alerts](../questions/alerts) and [dashboard subscriptions](../dashboards/subscriptions#setting-up-a-dashboard-subscription).
+Notifications in Metabase include [alerts](../questions/alerts) and [dashboard subscriptions](../dashboards/subscriptions).
 
 ## Who can edit dashboard subscriptions and alerts
 
@@ -30,7 +30,7 @@ What you can do with alerts and dashboard subscriptions depends on whether you'r
 
 Everyone's in the All Users group. Which means that everyone can:
 
-- Create [alerts](../questions/alerts) and [dashboard subscriptions](../dashboards/subscriptions#setting-up-a-dashboard-subscription).
+- Create [alerts](../questions/alerts) and [dashboard subscriptions](../dashboards/subscriptions).
 - Add new recipients to dashboard subscriptions and alerts that they created.
 - Unsubscribe from any alert or subscription in their [Account settings](../people-and-groups/account-settings).
 

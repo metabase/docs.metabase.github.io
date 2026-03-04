@@ -16,6 +16,8 @@ latest: true
 
 # Dependency diagnostics
 
+{% include plans-blockquote.html feature="Dependency disagnistics" %}
+
 Dependency diagnostics shows you content with broken dependencies, and content that isn't referenced by anything else.
 
 To open Dependency diagnostics:
