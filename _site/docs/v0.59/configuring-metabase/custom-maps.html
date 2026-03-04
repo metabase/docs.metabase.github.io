@@ -55,7 +55,7 @@ window.redirectTo = function redirectTo(theLocation) {
 <meta name="twitter:site" content="@metabase">
 
 <meta name="twitter:title" content="Custom maps | Metabase Documentation">
-<meta name="twitter:description" content="Custom maps By default, Metabase uses OpenStreetMaps for map visualizations, but there are a few customization options. Map settings To find the map settings:  At the top right of the screen, click grid icon > Admin > Settings. Select...">
+<meta name="twitter:description" content="Add custom region maps and customize the map tile server.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -65,7 +65,7 @@ window.redirectTo = function redirectTo(theLocation) {
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://www.metabase.com/docs/v0.59/configuring-metabase/custom-maps">
 <meta name="title" property="og:title" content="Custom maps | Metabase Documentation">
-<meta name="description" property="og:description" content="Custom maps By default, Metabase uses OpenStreetMaps for map visualizations, but there are a few customization options. Map settings To find the map settings:  At the top right of the screen, click grid icon > Admin > Settings. Select...">
+<meta name="description" property="og:description" content="Add custom region maps and customize the map tile server.">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -5853,9 +5853,9 @@ Roadmap</a>
 
         <h1 id="custom-maps">Custom maps</h1>
 
-<p>By default, Metabase uses OpenStreetMaps for map visualizations, but there are a few customization options.</p>
+<p><em>Admin &gt; Settings &gt; Maps</em></p>
 
-<h2 id="map-settings">Map settings</h2>
+<p>By default, Metabase uses OpenStreetMaps tiles for pin and grid map visualizations, and comes with two built-in region maps - world countries and US states. You can change the tiles used for pin and grid maps, and upload additional region maps.</p>
 
 <p>To find the map settings:</p>
 
@@ -5871,7 +5871,16 @@ Roadmap</a>
 <p>By default, Metabase uses the <a href="https://www.openstreetmap.org">OpenStreetMaps</a> tile server for pin and grid maps. If your organization requires a different
 look or level of detail in your map visualizations, you can change the map tile server by adding the map tile server path to the first field on the page.</p>
 
-<p>The path must either be a URL that starts with <code class="language-plaintext highlighter-rouge">http://</code> or <code class="language-plaintext highlighter-rouge">https://</code> or a relative path to a local file in the JVM’s classpath.</p>
+<p>To change the map tile server:</p>
+
+<ol>
+  <li>Go to <strong>Admin &gt; Settings &gt; Maps</strong>.</li>
+  <li>
+    <p>Under <strong>Map tile server URL</strong>, add the path to the new map tile server.</p>
+
+    <p>The path must either be a URL that starts with <code class="language-plaintext highlighter-rouge">http://</code> or <code class="language-plaintext highlighter-rouge">https://</code> or a relative path to a local file in the JVM’s classpath.</p>
+  </li>
+</ol>
 
 <p>Currently, Metabase uses a single tile server per instance. You can’t specify different tiles for different maps.</p>
 
@@ -5880,6 +5889,8 @@ look or level of detail in your map visualizations, you can change the map tile 
 <p>Metabase comes with two built-in <a href="../questions/visualizations/map#region-maps">region maps</a>: world map with countries and United States map with states.</p>
 
 <p>If you need a map of other regions - like EU countries or NYC neighborhoods - you can specify a GeoJSON file containing region information. You can often find GeoJSON maps by searching online for “[Your region] + geojson”, like “NYC neighborhoods GeoJSON.” Many community members and government organizations have already developed map files for common regions. You can also create your own GeoJSON with a tool like <a href="https://mapshaper.org/">MapShaper</a> or <a href="https://geojson.io/">GeoJSON.io</a>.</p>
+
+<h3 id="custom-geojson-requirements">Custom geoJSON requirements</h3>
 
 <p>Your GeoJSON file should:</p>
 
@@ -5890,6 +5901,8 @@ look or level of detail in your map visualizations, you can change the map tile 
   <li>Accessible by a public URL. Currently, you can’t upload a GeoJSON to Metabase.</li>
 </ul>
 
+<h3 id="add-a-custom-map">Add a custom map</h3>
+
 <p>To add a custom map:</p>
 
 <ol>
@@ -5897,16 +5910,18 @@ look or level of detail in your map visualizations, you can change the map tile 
   <li>Click <strong>Add a Map</strong>.</li>
   <li>Enter a name for your map.</li>
   <li>Provide the URL to your GeoJSON file.</li>
-  <li>Specify the JSON properties that should serve as region identifier and region name.</li>
+  <li>
+    <p>Specify the JSON properties that should serve as region identifier and region name.</p>
+
+    <p><img src="./images/custom-geojson.png" alt="Uploading a custom GeoJSON"></p>
+
+    <ul>
+      <li><strong>Name of the map</strong> will be displayed in the region selector for <a href="../questions/visualizations/map#custom-regions">custom region maps</a>.</li>
+      <li><strong>Region’s identifier</strong> is a GeoJSON field that identifies your region. The values in this field should match how the data refers to the regions. The field doesn’t need to match the display name .</li>
+      <li><strong>Region’s display name</strong> is a GeoJSON field that specifies how maps will display region names. This field can be different from region’s identifier.</li>
+    </ul>
+  </li>
 </ol>
-
-<p><img src="./images/custom-geojson.png" alt="Uploading a custom GeoJSON"></p>
-
-<ul>
-  <li><strong>Name of the map</strong> will be displayed in the region selector for <a href="../questions/visualizations/map#custom-regions">custom region maps</a></li>
-  <li><strong>Region’s identifier</strong> is a GeoJSON field that identifies your region. The values in this field should match how the regions are referenced in your data. The field does not need to match the display name .</li>
-  <li><strong>Region’s display name</strong> is a GeoJSON field that specifies how your region name will be displayed on a map. This field can be different from region’s identifier.</li>
-</ul>
 
 <p>To pre-load one or more region maps when Metabase starts, you can use the environment variable <a href="./environment-variables#mb_custom_geojson"><code class="language-plaintext highlighter-rouge">MB_CUSTOM_GEOJSON</code></a> or a <a href="./config-file">config file option</a> <code class="language-plaintext highlighter-rouge">custom-geojson</code> .</p>
 

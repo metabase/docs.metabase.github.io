@@ -14,11 +14,11 @@ latest: true
 
 # Editable tables
 
-{% include plans-blockquote.html feature="Editable table data"  %}
+{% include plans-blockquote.html feature="Editable tables"  %}
 
-Admins can enable editable table data in Metabase.
+Admins can enable editable tables in Metabase, which will allow admins to edit data in tables directly from Metabase.
 
-![Edit table](./images/edit-table.png)
+![Add option](./images/add-option.png)
 
 ## Databases that support editable tables
 
@@ -29,6 +29,7 @@ Currently, editable tables are available for the following databases:
 
 ## Setting up editable tables
 
+_Admin > Databases > Editable tables_
 
 To set up table editing, admins can:
 
@@ -42,11 +43,16 @@ For this to work, Metabase's connection to your database must support writing ba
 
 ## Update or delete records in a table
 
+_Browse Databases > Edit table_
+
 To update or delete records in a table:
 
 1. Open the left sidebar.
 2. In the Data section, click **Databases**.
 3. Hover over the table you want to edit and click the **Pencil** icon.
+
+   ![Edit table](./images/edit-table.png)
+
 4. Edit rows in the table just like you would in a spreadsheet.
 
 Depending on the data in the column, Metabase may show a list of values to choose from. If you need to add an option to that list, simply type out the option and add it (you may need to refresh the browser for the new option to show up in the list).
@@ -78,7 +84,7 @@ If you try to delete a row that has foreign key references from other tables, yo
 
 Metabase offers two ways to modify data in your database: **editable table data** and [actions](../actions/introduction).
 
-###  When to use editable table data
+### When to use editable tables
 
 Use editable table data to:
 

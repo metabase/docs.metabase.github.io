@@ -53,7 +53,7 @@ window.redirectTo = function redirectTo(theLocation) {
 <meta name="twitter:site" content="@metabase">
 
 <meta name="twitter:title" content="Languages and localization | Metabase Documentation">
-<meta name="twitter:description" content="Languages and localization Admins can update the localization settings for the instance:  Click the grid icon in the upper right. Click Admin. In the Settings tab, click on Localization in the left sidebar.  These localization settings allow you to...">
+<meta name="twitter:description" content="Languages and localization Admin > Settings > Localization Admins can update the localization settings for the instance:  Click the grid icon in the upper right. Select Admin. In the Settings tab, click on Localization in the left sidebar.  These...">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -63,7 +63,7 @@ window.redirectTo = function redirectTo(theLocation) {
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://www.metabase.com/docs/latest/configuring-metabase/localization">
 <meta name="title" property="og:title" content="Languages and localization | Metabase Documentation">
-<meta name="description" property="og:description" content="Languages and localization Admins can update the localization settings for the instance:  Click the grid icon in the upper right. Click Admin. In the Settings tab, click on Localization in the left sidebar.  These localization settings allow you to...">
+<meta name="description" property="og:description" content="Languages and localization Admin > Settings > Localization Admins can update the localization settings for the instance:  Click the grid icon in the upper right. Select Admin. In the Settings tab, click on Localization in the left sidebar.  These...">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -5851,17 +5851,170 @@ Roadmap</a>
 
         <h1 id="languages-and-localization">Languages and localization</h1>
 
+<p><em>Admin &gt; Settings &gt; Localization</em></p>
+
 <p>Admins can update the localization settings for the instance:</p>
 
 <ol>
   <li>Click the <strong>grid</strong> icon in the upper right.</li>
-  <li>Click <strong>Admin</strong>.</li>
+  <li>Select <strong>Admin</strong>.</li>
   <li>In the <strong>Settings</strong> tab, click on <strong>Localization</strong> in the left sidebar.</li>
 </ol>
 
 <p>These localization settings allow you to set global language and formatting defaults for dates, times, numbers, and currencies.</p>
 
-<p>You can also override these localization options for specific fields or questions. For more info, see <a href="../data-modeling/formatting">Formatting</a>.</p>
+<p>People can also override these localization options for specific fields or questions. For more info, see <a href="../data-modeling/formatting">Formatting</a>.</p>
+
+<h2 id="instance-settings">Instance settings</h2>
+
+<h3 id="set-default-instance-language">Set default instance language</h3>
+
+<p><em>Admin &gt; Settings &gt; Localization &gt; Instance settings &gt; Instance language</em></p>
+
+<p>You can set the default language (also called the “instance language”) across your Metabase UI, system <a href="./email">emails</a>, <a href="../dashboards/subscriptions">dashboard subscriptions</a>, and <a href="../questions/alerts">alerts</a>.</p>
+
+<p>People can override these settings in their personal <a href="../people-and-groups/account-settings">account settings</a>.</p>
+
+<p>To set the instance-wider language:</p>
+
+<ol>
+  <li>Go to <strong>Admin &gt; Settings &gt; Localization</strong>.</li>
+  <li>
+    <p>Under <strong>Instance language</strong>, pick the language for your instance.</p>
+
+    <p>See <a href="#supported-languages">List of supported languages</a>. Some translations are created by the Metabase community, and might not be perfect.</p>
+  </li>
+</ol>
+
+<h3 id="set-default-instance-report-timezone">Set default instance report timezone</h3>
+
+<p><em>Admin &gt; Settings &gt; Localization &gt; Instance settings &gt; Report timezone</em></p>
+
+<p>Use <strong>report timezone</strong> to set a default display time zone for dates and times in Metabase. The report timezone setting is a display setting only, so changing the report timezone won’t affect the time zone of any data in your database.</p>
+
+<p>Report timezone doesn’t apply to <code class="language-plaintext highlighter-rouge">timestamp without time zone</code> data types, including the output of <a href="../questions/query-builder/expressions/converttimezone"><code class="language-plaintext highlighter-rouge">convertTimezone</code></a> expressions. For example:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Raw timestamp in your database</th>
+      <th>Data type</th>
+      <th>Report time zone</th>
+      <th>Displayed as</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td data-label="Raw timestamp in your database"><code class="language-plaintext highlighter-rouge">2022-12-28T12:00:00 AT TIME ZONE 'CST'</code></td>
+      <td data-label="Data type"><code class="language-plaintext highlighter-rouge">timestamp with time zone</code></td>
+      <td data-label="Report time zone">‘Canada/Eastern’</td>
+      <td data-label="Displayed as">Dec 28, 2022, 7:00 AM</td>
+    </tr>
+    <tr>
+      <td data-label="Raw timestamp in your database"><code class="language-plaintext highlighter-rouge">2022-12-28T12:00:00-06:00</code></td>
+      <td data-label="Data type"><code class="language-plaintext highlighter-rouge">timestamp with offset</code></td>
+      <td data-label="Report time zone">‘Canada/Eastern’</td>
+      <td data-label="Displayed as">Dec 28, 2022, 7:00 AM</td>
+    </tr>
+    <tr>
+      <td data-label="Raw timestamp in your database"><code class="language-plaintext highlighter-rouge">2022-12-28T12:00:00</code></td>
+      <td data-label="Data type"><code class="language-plaintext highlighter-rouge">timestamp without time zone</code></td>
+      <td data-label="Report time zone">‘Canada/Eastern’</td>
+      <td data-label="Displayed as">Dec 28, 2022, 12:00 AM</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Report timezone is only supported for the following databases:</p>
+
+<ul>
+  <li>BigQuery</li>
+  <li>Druid</li>
+  <li>MySQL</li>
+  <li>Oracle</li>
+  <li>PostgreSQL</li>
+  <li>Presto</li>
+  <li>Redshift</li>
+  <li>Vertica</li>
+</ul>
+
+<p>To set report timezone:</p>
+
+<ol>
+  <li>Go to <strong>Admin &gt; Settings &gt; Localization</strong>.</li>
+  <li>Under <strong>Report timezone</strong>, pick the default report timezone.</li>
+</ol>
+
+<h3 id="first-day-of-the-week">First day of the week</h3>
+
+<p><em>Admin &gt; Settings &gt; Localization &gt; Instance settings &gt; First day of the week</em></p>
+
+<p>If you need to, you can change the first day of the week for your instance (the default is Sunday).</p>
+
+<p>Setting the first day of the week affects how the <a href="../questions/query-builder/editor">query builder</a> filters or groups by week. People can, however, use the <code class="language-plaintext highlighter-rouge">week</code> function to override this default when filtering or grouping by week of year. See <a href="../questions/query-builder/expressions/week#using-a-different-first-week-of-the-year">using a different first week of the year</a>.</p>
+
+<p>This setting doesn’t affect <a href="../questions/native-editor/writing-sql">SQL queries</a>.</p>
+
+<h2 id="dates-and-times-display-settings">Dates and times display settings</h2>
+
+<p>You can configure the default formatting for dates and times.</p>
+
+<p>Note that people can also override these localization options for specific fields or questions. For more info, see <a href="../data-modeling/formatting">Formatting</a>.</p>
+
+<p>To configure default date and time format settings:</p>
+
+<ol>
+  <li>Go to <strong>Admin &gt; Settings &gt; Localization</strong>.</li>
+  <li>Under <strong>Dates and times</strong>, configure your settings:
+    <ul>
+      <li><strong>Date style:</strong> the way dates should be displayed in tables, axis labels, and tooltips.</li>
+      <li><strong>Date separators:</strong> you can choose between slashes (<code class="language-plaintext highlighter-rouge">2022/12/14</code>), dashes (<code class="language-plaintext highlighter-rouge">2022-12-14</code>), and dots (<code class="language-plaintext highlighter-rouge">2022.12.14</code>).</li>
+      <li><strong>Abbreviate names of days and months:</strong> whenever a date is displayed with the day of the week and/or the month written out, turning this setting on will display e.g. “January” as “Jan” or “Monday” as “Mon”.</li>
+      <li><strong>Time style:</strong> choose to display the time using either a 12 or 24-hour clock (e.g., 3:00 PM or 15:00).</li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="number-display-settings">Number display settings</h2>
+
+<p><em>Admin &gt; Settings &gt; Localization</em></p>
+
+<p>Some people use commas to separate thousands places, and others use periods. You can configure which camp you belong to.</p>
+
+<p>Note that people can also override these localization options for specific fields or questions. For more info, see <a href="../data-modeling/formatting">Formatting</a>.</p>
+
+<p>To configure default separator settings:</p>
+
+<ol>
+  <li>Go to <strong>Admin &gt; Settings &gt; Localization</strong>.</li>
+  <li>Under <strong>Number</strong>, configure the <strong>Separator style</strong>.</li>
+</ol>
+
+<h2 id="currency-display-settings">Currency display settings</h2>
+
+<p><em>Admin &gt; Settings &gt; Localization</em></p>
+
+<p>You can choose how should currency fields be displayed by default (you can to configure <em>which</em> fields should be displayed as currency in table metadata or in question formatting setting, see <a href="../data-modeling/formatting">Formatting</a> )</p>
+
+<p>Note that people can also override these localization options for specific fields or questions.</p>
+
+<p>To configure default currency settings:</p>
+
+<ol>
+  <li>Go to <strong>Admin &gt; Settings &gt; Localization</strong>.</li>
+  <li>
+    <p>Under <strong>Currency</strong>, configure currency settings:</p>
+
+    <ul>
+      <li><strong>Unit of currency:</strong> if you do most of your business in a particular currency, you can specify that here.</li>
+      <li><strong>Currency label style:</strong> whether you want to have your currencies labeled with a symbol, a code (like “USD”), or its full name.</li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="localizing-embedded-metabase">Localizing embedded Metabase</h2>
+
+<p>You can translate both Metabase UI elements (like button labels) and content (like dashboard names) in guest embeds. See <a href="../embedding/guest-embedding">Setting the language for guest embeds</a> and <a href="../embedding/translations">Translating embedded dashboards and questions</a>.</p>
 
 <h2 id="supported-languages">Supported languages</h2>
 
@@ -6037,101 +6190,6 @@ Roadmap</a>
 <h3 id="contributing-to-translations-for-metabase">Contributing to translations for Metabase</h3>
 
 <p>If you’d like to help make Metabase available in a language you’re fluent in, we’d love your help! Check out our <a href="https://crowdin.com/project/metabase-i18n">Crowdin project</a>.</p>
-
-<h2 id="instance-settings">Instance settings</h2>
-
-<h3 id="instance-language">Instance language</h3>
-
-<p>Here you can set the default language (also called the “instance language”) across your Metabase UI, system <a href="./email">emails</a>, <a href="../dashboards/subscriptions">dashboard subscriptions</a>, and <a href="../questions/alerts">alerts</a>.</p>
-
-<p>People can override these settings in their personal <a href="../people-and-groups/account-settings">account settings</a>.</p>
-
-<p>Some translations are created by the Metabase community, and might not be perfect.</p>
-
-<h3 id="report-timezone">Report timezone</h3>
-
-<p>Use <strong>report timezone</strong> to set a default display time zone for dates and times in Metabase. The report timezone setting is a display setting only, so changing the report timezone won’t affect the time zone of any data in your database.</p>
-
-<p>Report timezone doesn’t apply to <code class="language-plaintext highlighter-rouge">timestamp without time zone</code> data types, including the output of <a href="../questions/query-builder/expressions/converttimezone"><code class="language-plaintext highlighter-rouge">convertTimezone</code></a> expressions. For example:</p>
-
-<table>
-  <thead>
-    <tr>
-      <th>Raw timestamp in your database</th>
-      <th>Data type</th>
-      <th>Report time zone</th>
-      <th>Displayed as</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td data-label="Raw timestamp in your database"><code class="language-plaintext highlighter-rouge">2022-12-28T12:00:00 AT TIME ZONE 'CST'</code></td>
-      <td data-label="Data type"><code class="language-plaintext highlighter-rouge">timestamp with time zone</code></td>
-      <td data-label="Report time zone">‘Canada/Eastern’</td>
-      <td data-label="Displayed as">Dec 28, 2022, 7:00 AM</td>
-    </tr>
-    <tr>
-      <td data-label="Raw timestamp in your database"><code class="language-plaintext highlighter-rouge">2022-12-28T12:00:00-06:00</code></td>
-      <td data-label="Data type"><code class="language-plaintext highlighter-rouge">timestamp with offset</code></td>
-      <td data-label="Report time zone">‘Canada/Eastern’</td>
-      <td data-label="Displayed as">Dec 28, 2022, 7:00 AM</td>
-    </tr>
-    <tr>
-      <td data-label="Raw timestamp in your database"><code class="language-plaintext highlighter-rouge">2022-12-28T12:00:00</code></td>
-      <td data-label="Data type"><code class="language-plaintext highlighter-rouge">timestamp without time zone</code></td>
-      <td data-label="Report time zone">‘Canada/Eastern’</td>
-      <td data-label="Displayed as">Dec 28, 2022, 12:00 AM</td>
-    </tr>
-  </tbody>
-</table>
-
-<p>Report timezone is only supported for the following databases:</p>
-
-<ul>
-  <li>BigQuery</li>
-  <li>Druid</li>
-  <li>MySQL</li>
-  <li>Oracle</li>
-  <li>PostgreSQL</li>
-  <li>Presto</li>
-  <li>Redshift</li>
-  <li>Vertica</li>
-</ul>
-
-<h3 id="first-day-of-the-week">First day of the week</h3>
-
-<p>If you need to, you can change the first day of the week for your instance (the default is Sunday).</p>
-
-<p>Setting the first day of the week affects how the <a href="../questions/query-builder/editor">query builder</a> filters or groups by week. People can, however, use the <code class="language-plaintext highlighter-rouge">week</code> function to override this default when filtering or grouping by week of year. See <a href="../questions/query-builder/expressions/week#using-a-different-first-week-of-the-year">using a different first week of the year</a>.</p>
-
-<p>This setting doesn’t affect <a href="../questions/native-editor/writing-sql">SQL queries</a>.</p>
-
-<h2 id="dates-and-times">Dates and times</h2>
-
-<ul>
-  <li><strong>Date style:</strong> the way dates should be displayed in tables, axis labels, and tooltips.</li>
-  <li><strong>Date separators:</strong> you can choose between slashes (<code class="language-plaintext highlighter-rouge">2022/12/14</code>), dashes (<code class="language-plaintext highlighter-rouge">2022-12-14</code>), and dots (<code class="language-plaintext highlighter-rouge">2022.12.14</code>).</li>
-  <li><strong>Abbreviate names of days and months:</strong> whenever a date is displayed with the day of the week and/or the month written out, turning this setting on will display e.g. “January” as “Jan” or “Monday” as “Mon”.</li>
-  <li><strong>Time style:</strong> choose to display the time using either a 12 or 24-hour clock (e.g., 3:00 PM or 15:00).</li>
-</ul>
-
-<h2 id="numbers">Numbers</h2>
-
-<ul>
-  <li><strong>Separator style:</strong> some people use commas to separate thousands places, and others use periods. Here’s where you can indicate which camp you belong to.</li>
-</ul>
-
-<h2 id="currency">Currency</h2>
-
-<ul>
-  <li><strong>Unit of currency:</strong> if you do most of your business in a particular currency, you can specify that here.</li>
-  <li><strong>Currency label style:</strong> whether you want to have your currencies labeled with a symbol, a code (like “USD”), or its full name.</li>
-  <li><strong>Where to display the unit of currency:</strong> this pertains specifically to tables, and lets you choose whether you want the currency labels to appear only in the column heading, or next to each value in the column.</li>
-</ul>
-
-<h2 id="localizing-embedded-metabase">Localizing embedded Metabase</h2>
-
-<p>You can translate both Metabase UI elements (like button labels) and content (like dashboard names) in guest embeds. See <a href="../embedding/guest-embedding">Setting the language for guest embeds</a> and <a href="../embedding/translations">Translating embedded dashboards and questions</a>.</p>
 
 
         <div>

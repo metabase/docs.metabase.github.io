@@ -141,11 +141,15 @@ You won't see archived Events and Timelines in Trash. To see archived events and
 
 ## Deleting and restoring snippets
 
-Snippets can be archived and unarchived. See [Archiving snippets](../questions/native-editor/snippets#archive-snippets). You won't see archived snippets in Trash.
+Snippets can be archived and unarchived. See [Archiving snippets](../questions/native-editor/snippets#archive-snippets). You won't see archived snippets in Trash. Snippets can't be permanently deleted.
 
 ## Deleting segments
 
-Segments can be retired. See [Retiring Segments](../data-modeling/segments#editing-and-retiring-segments). You won't see retired Segments in Trash.
+Segments can be retired. See [Retiring Segments](../data-modeling/segments#editing-and-retiring-segments). Retiring segments is permanent.
+
+## Deleting measures
+
+See [Delete measures](../data-studio/data-structure#delete-a-measure). Deleting measures is permanent.
 
 ## Deleting subscriptions and alerts
 

@@ -55,7 +55,7 @@ window.redirectTo = function redirectTo(theLocation) {
 <meta name="twitter:site" content="@metabase">
 
 <meta name="twitter:title" content="The query builder | Metabase Documentation">
-<meta name="twitter:description" content="The query builder Metabase includes a graphical query builder that lets you build interactive charts. With the query builder you can:  Pick data Join tables Create custom columns Filter data Summarize and group data <a...">
+<meta name="twitter:description" content="The query builder Metabase includes a graphical query builder that lets you build interactive charts by building a query step by step from building blocks like filters and summaries.  Create a new question with...">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -65,7 +65,7 @@ window.redirectTo = function redirectTo(theLocation) {
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://www.metabase.com/docs/v0.59/questions/query-builder/editor">
 <meta name="title" property="og:title" content="The query builder | Metabase Documentation">
-<meta name="description" property="og:description" content="The query builder Metabase includes a graphical query builder that lets you build interactive charts. With the query builder you can:  Pick data Join tables Create custom columns Filter data Summarize and group data <a...">
+<meta name="description" property="og:description" content="The query builder Metabase includes a graphical query builder that lets you build interactive charts by building a query step by step from building blocks like filters and summaries.  Create a new question with...">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -5853,74 +5853,41 @@ Roadmap</a>
 
         <h1 id="the-query-builder">The query builder</h1>
 
-<p>Metabase includes a graphical query builder that lets you build interactive charts.</p>
+<p>Metabase includes a graphical query builder that lets you build interactive charts by building a query step by step from building blocks like filters and summaries.</p>
 
-<p>With the query builder you can:</p>
+<p><img src="../images/notebook-editor.png" alt="Metabase query builder"></p>
+
+<h2 id="create-a-new-question-with-the-query-builder">Create a new question with the query builder</h2>
+
+<p>From the <strong>+ New</strong> dropdown, select <strong>Question</strong>. Metabase will give you a graphical interface to build your query step-by-step:</p>
 
 <ul>
-  <li><a href="#picking-data">Pick data</a></li>
-  <li><a href="#joining-data">Join tables</a></li>
+  <li><a href="#pick-data">Pick data</a></li>
+  <li><a href="#join-data">Join tables</a></li>
   <li><a href="#custom-columns">Create custom columns</a></li>
   <li><a href="./filters">Filter data</a></li>
   <li><a href="./summarizing-and-grouping">Summarize and group data</a></li>
   <li><a href="#setting-a-row-limit">Limit results</a></li>
+  <li><a href="#visualizing-your-data">Visualize results as a chart</a></li>
 </ul>
 
-<p>When viewing a chart, you can also click through questions to explore the data in greater detail.</p>
+<h2 id="preview-results">Preview results</h2>
 
-<p><img src="../images/drill-through-menu.png" alt="Drill-through menu"></p>
-
-<p>The drill-through menu will present different options depending on what you click on. You can then optionally save any exploration as a new question. Full drill-through menu is only available for questions built using the query builder. Questions built with the SQL/native editor will have only have <a href="../native-editor/writing-sql#drill-though-in-sql-questions">limited drill-through actions</a>. For more on how drill-through works, check out <a href="/learn/metabase-basics/querying-and-dashboards/questions/drill-through">Creating interactive charts</a>.</p>
-
-<h2 id="creating-a-new-question-with-the-query-builder">Creating a new question with the query builder</h2>
-
-<p>From the <strong>+ New</strong> dropdown, select <strong>Question</strong>, then pick your starting data:</p>
-
-<p>You can start a question from:</p>
-
-<ul>
-  <li><strong>A model</strong>. A <a href="../../data-modeling/models">model</a> is a special kind of saved question meant to be used as a good starting point for questions. Sometimes these are called derived tables, as they usually pull together data from multiple raw tables.</li>
-  <li><strong>A metric</strong>. <a href="../../data-modeling/metrics">Metrics</a> are pre-defined calculations. If you pick a metric as a starting point for a question, Metabase will create a question with the same data source as the selected metric, and apply the metric. You’ll be able to add more joins, filter, and summaries.</li>
-  <li><strong>Tables</strong>. You’ll need to specify the database and the table in that database as the starting point for your question.</li>
-  <li>A <strong>saved question</strong>. You can use the results of any question as the starting point for a new question.</li>
-</ul>
-
-<p>Note that there are some kinds of saved questions that can’t be used as source data:</p>
-
-<ul>
-  <li>Druid questions</li>
-  <li>Mongo questions</li>
-  <li>Questions that use <code class="language-plaintext highlighter-rouge">Cumulative Sum</code> or <code class="language-plaintext highlighter-rouge">Cumulative Count</code> aggregations</li>
-  <li>Questions that have columns that are named the same or similar thing, like <code class="language-plaintext highlighter-rouge">Count</code> and <code class="language-plaintext highlighter-rouge">Count 2</code></li>
-</ul>
-
-<h2 id="the-editor">The editor</h2>
-
-<p>Once you select your data, Metabase will take you to the query builder’s editor. Say you selected <strong>Tables</strong> &gt; <strong>Sample database</strong> &gt; <strong>Orders</strong>, then you’ll see something like this:</p>
-
-<p><img src="../images/notebook-editor.png" alt="Metabase query builder"></p>
-
-<p>This is the query builder’s editor. It has three default steps.</p>
-
-<ul>
-  <li><a href="#picking-data">Picking data</a></li>
-  <li><a href="./filters">Filtering</a></li>
-  <li><a href="./summarizing-and-grouping">Summarizing and grouping by</a></li>
-</ul>
-
-<p>You can also add steps for <a href="./join">joining data</a>, <a href="#custom-columns">custom columns</a>, and <a href="#sorting-results">sorting results</a>, and <a href="#setting-a-row-limit">limiting results</a>.</p>
-
-<p>To the right of each completed step is a <strong>Preview</strong> button (looks like a Play button - a triangle pointing to the right) that shows you the first 10 rows of the results of your question up to that step.</p>
+<p>To the right of each step in the query builder is a <strong>Preview</strong> button (looks like a Play button - a triangle pointing to the right) that shows you the first 10 rows of the results of your question up to that step.</p>
 
 <p><img src="../images/preview-table.png" alt="Previewing results"></p>
 
-<h2 id="picking-data">Picking data</h2>
+<h2 id="pick-data">Pick data</h2>
 
-<p>The data section is where you select the data you want to work with. Here you’ll pick a <a href="../../data-modeling/models">model</a>, a <a href="../../data-modeling/metrics">metric</a>, a table from a database, or a saved question. You can search by typing, or browse your databases and collections.</p>
+<p>To start building a question with the query builder, you need to select the data you want to work with. You can pick pick a a table from a database, a<a href="../../data-modeling/models">model</a>, a <a href="../../data-modeling/metrics">metric</a>, or another saved question. You can search by typing, or browse your databases and collections.</p>
 
 <p><img src="../images/data-picker.png" alt="data picker"></p>
 
-<p>You can see the data source in a new browser tab by Cmd/Ctrl+Clicking on the data source’s name in the query builder.</p>
+<p>If your Metabase has the <a href="../../data-studio/library">Library collection</a>, then by default you’ll only see the Data (tables) and Metrics from the library. To query other data sources, select “Browse all”.</p>
+
+<p><img src="../images/library-data-picker.png" alt="library data picker"></p>
+
+<p>Once you select the data source, you can preview the data, or view the data in a new browser tab by Cmd/Ctrl+Clicking on the data source’s name.</p>
 
 <p>To choose which columns to include in your query, click on the arrow next to the data source. If you uncheck a column, you’ll still be able to use the column while building a query (for example, in filters) but Metabase won’t display the column in results.</p>
 
@@ -5930,27 +5897,11 @@ Roadmap</a>
   <p><strong>Hiding columns should <em>not</em> be used to secure sensitive information</strong>. Hiding columns in table visualization settings only affects the visibility of the columns <em>in the visualization</em>, not in the query results. Even people with only “view data” permissions to the question will be able to change the visualization settings and unhide columns. To exclude a column from the results of a specific query, uncheck the column in the “Data” block of the query builder.</p>
 </blockquote>
 
-<h2 id="joining-data">Joining data</h2>
+<h2 id="join-data">Join data</h2>
 
-<p>You can also select multiple tables from the same database by <a href="./join">joining them</a>.</p>
+<p><img src="../images/join.png" alt="Join"></p>
 
-<h2 id="filtering-data">Filtering data</h2>
-
-<p>See <a href="./filters">filters</a>.</p>
-
-<h2 id="visualizing-your-data">Visualizing your data</h2>
-
-<p>Check out <a href="../visualizations/visualizing-results">visualizing results</a>.</p>
-
-<h2 id="column-heading-drill-through">Column heading drill-through</h2>
-
-<p>When viewing a <a href="../visualizations/table">table</a>, clicking on the heading of a column gives you different options, depending on the columns data type. See <a href="../visualizations/table#column-heading-options-for-filtering-and-summarizing">table</a>.</p>
-
-<h2 id="custom-expressions">Custom expressions</h2>
-
-<p>Custom expressions allow you to use spreadsheet-like functions and simple arithmetic within or between aggregation functions.</p>
-
-<p>For example, you could do <code class="language-plaintext highlighter-rouge">Average(sqrt[FieldX]) + Sum([FieldY])</code> or <code class="language-plaintext highlighter-rouge">Max(floor([FieldX] - [FieldY]))</code>, where <code class="language-plaintext highlighter-rouge">FieldX</code> and <code class="language-plaintext highlighter-rouge">FieldY</code> are fields in the currently selected table. <a href="./expressions">Learn more about writing expressions</a>.</p>
+<p>You can also select data from multiple tables from the same database by joining the tables, see <a href="./join">Joins</a>.</p>
 
 <h2 id="custom-columns">Custom columns</h2>
 
@@ -5958,17 +5909,47 @@ Roadmap</a>
 
 <p>Custom columns are helpful when you need to create a new column based on a calculation, such as subtracting the value of one column from another, or extracting a portion of an existing text column. Custom columns that you add aren’t permanently added to the underlying database table; the columns will only be present in the given question.</p>
 
-<p>You can use the following math operators in your formulas: <code class="language-plaintext highlighter-rouge">+</code>, <code class="language-plaintext highlighter-rouge">–</code>, <code class="language-plaintext highlighter-rouge">*</code> (multiplication), and <code class="language-plaintext highlighter-rouge">/</code> (division), along with a whole host of spreadsheet-like functions. You can also use parentheses to clarify the order of operations. See <a href="../query-builder/expressions-list">list of expressions</a>.</p>
+<p>You can use the following math operators in your formulas: <code class="language-plaintext highlighter-rouge">+</code>, <code class="language-plaintext highlighter-rouge">–</code>, <code class="language-plaintext highlighter-rouge">*</code> (multiplication), and <code class="language-plaintext highlighter-rouge">/</code> (division), along with a whole host of spreadsheet-like functions. You can also use parentheses to clarify the order of operations.</p>
 
-<h2 id="sorting-results">Sorting results</h2>
+<p>You can add custom columns after the <a href="#pick-data">Pick data</a> step or after <a href="#summarize-and-group-data">Summarize</a> step.</p>
+
+<p>See <a href="../query-builder/expressions">Custom expressions</a>.</p>
+
+<h2 id="filter-data">Filter data</h2>
+
+<p><img src="../images/filter.png" alt="Filter"></p>
+
+<p>You can add filters to restrict the data you retrieve. For example, you can tell Metabase to only retrieve data for <code class="language-plaintext highlighter-rouge">Widgets</code> over <code class="language-plaintext highlighter-rouge">Last 3 weeks</code>. See <a href="./filters">filtering data</a>.</p>
+
+<h2 id="summarize-and-group-data">Summarize and group data</h2>
+
+<p><img src="../images/summarize.png" alt="Summary"></p>
+
+<p>Once you pick the data to query and hhe filters to apply, you can choose to summarize your data - for example, compute the count of rows or average of a column. You can also break out and group summaries by dimensions.</p>
+
+<p>See <a href="./summarizing-and-grouping">Summarizing and grouping</a>.</p>
+
+<p>Metabase comes with several built-in summaries, but you can also use custom expressions to write spreadsheet-like functions and simple arithmetic within or between aggregation functions.</p>
+
+<p>For example, you could do <code class="language-plaintext highlighter-rouge">Average(sqrt[FieldX]) + Sum([FieldY])</code> or <code class="language-plaintext highlighter-rouge">Max(floor([FieldX] - [FieldY]))</code>, where <code class="language-plaintext highlighter-rouge">FieldX</code> and <code class="language-plaintext highlighter-rouge">FieldY</code> are fields in the currently selected table. <a href="./expressions">Learn more about writing expressions</a>.</p>
+
+<h2 id="sort-results">Sort results</h2>
 
 <p><img src="../images/sort-step.png" alt="Sorting"></p>
 
 <p>The sorting step lets you pick one or more columns to sort your results by. For each column you pick, you can also choose whether to sort ascending or descending; just click the arrow to change from ascending (up arrow) to descending (down arrow).</p>
 
+<p>If you’re using cumulative aggregation functions in you <strong>Summarize</strong> block, the sort order might affect how the aggregation is computed (as opposed to just how the results are displayed ). See <a href="../query-builder/expressions/cumulative">Cumulative functions</a>.</p>
+
 <h2 id="setting-a-row-limit">Setting a row limit</h2>
 
-<p>The row limit step lets you cap how many rows you want from the previous results. When used in conjunction with sorting, limits can let you do things like create a top-10 list, by first sorting by one of the columns in your result, then adding a row limit of 10. Unlike other steps, the row limit step can only be added at the end of your question. If you do want to add more steps to limited results, you can always save the limited results as a question, then start a <em>new</em> question based on those results.</p>
+<p>The row limit step lets you cap how many rows you want from the previous results. When used in conjunction with sorting, limits can let you do things like create a top-10 list, by first sorting by one of the columns in your result, then adding a row limit of 10.</p>
+
+<p>Unlike other steps, the row limit step can only be added at the end of your question, so if you limit your results to 10 rows, Metabase will <em>first</em> do all the actions in previous steps (filters, summaries, etc), and only <em>then</em> limit the display (as opposed to just starting with 10 rows to begin with)</p>
+
+<p>If you do want to add more steps to limited results, you can always save the limited results as a question, then start a <em>new</em> question based on those results.</p>
+
+<p>Note that if you pick row limit over 2,000 for unaggregated queries or 10,000 for aggregated queries, Metabase will still only display 2,000 or 10,000 rows in the table visualization. This is to avoid overloading your browser. See <a href="../visualizations/table">Table visualization</a>.</p>
 
 <h2 id="viewing-the-native-query-that-powers-your-question">Viewing the native query that powers your question</h2>
 
@@ -5988,6 +5969,24 @@ Roadmap</a>
 </ol>
 
 <p>Conversion is a one-way street: you can’t convert a SQL question back into a query builder question.</p>
+
+<h2 id="visualizing-your-data">Visualizing your data</h2>
+
+<p>To view results, click <strong>Visualize</strong> to create a chart. Metabase will automatically pick the best visualization for your data, but you can change and customize it.</p>
+
+<p>Check out <a href="../visualizations/visualizing-results">visualizing results</a>.</p>
+
+<h3 id="drill-through">Drill-through</h3>
+
+<p>When viewing a chart, you can also click through questions to explore the data in greater detail.</p>
+
+<p><img src="../images/drill-through-menu.png" alt="Drill-through menu"></p>
+
+<p>The drill-through menu will present different options depending on what you click on. You can then optionally save any exploration as a new question. The full drill-through menu is only available for questions built using the query builder. Questions built with the SQL/native editor have <a href="../native-editor/writing-sql#drill-though-in-sql-questions">limited drill-through actions</a>. For more on how drill-through works, check out <a href="/learn/metabase-basics/querying-and-dashboards/questions/drill-through">Creating interactive charts</a>.</p>
+
+<h3 id="column-heading-drill-through">Column heading drill-through</h3>
+
+<p>When viewing a <a href="../visualizations/table">table</a>, clicking on the heading of a column gives you different options, depending on the columns data type. See <a href="../visualizations/table#column-heading-options-for-filtering-and-summarizing">table</a>.</p>
 
 
         <div>

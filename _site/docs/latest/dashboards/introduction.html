@@ -5870,11 +5870,40 @@ Roadmap</a>
 
 <p>You can make as many dashboards as you want. Go nuts.</p>
 
+<h2 id="example-dashboard">Example dashboard</h2>
+
+<p>Every new Metabase comes with an example dashboard, <strong>E-commerce insights</strong>, in the <strong>Examples</strong> collection (though your admin can turn off or delete the examples). The example dashboard is yours to explore and play with.</p>
+
 <h2 id="how-to-create-a-dashboard">How to create a dashboard</h2>
 
-<p>In the top right of the screen, click the <strong>+ New</strong> &gt; <strong>Dashboard</strong>. Give your new dashboard a name and a description, choose which <a href="../exploration-and-organization/collections">collections</a> the dashboard should go in, then click <strong>Create</strong>, and Metabase will take you to your shiny new dashboard.</p>
+<div style="width: ; margin-bottom: 2em;">
+    
+        <div class="youtube-container" style="position: relative;
+                    width: 100%;
+                    height: 0;
+                    padding-bottom: 56.25%">
+
+          <iframe class="youtube-video" style="position: absolute;
+                         top: 0;
+                         left: 0;
+                         width: 100%;
+                         height: 100%;
+                         border: 0" allowfullscreen="" src="https://www.youtube.com/embed/W-i9E5_Wjmw">
+	  </iframe>
+        </div>
+    </div>
+
+<ol>
+  <li>In the top right of the screen, click the <strong>+ New</strong> &gt; <strong>Dashboard</strong>.</li>
+  <li>Give your new dashboard a name and a description.</li>
+  <li>Choose which <a href="../exploration-and-organization/collections">collections</a> the dashboard should go in.</li>
+  <li>Click <strong>Create</strong>, and Metabase will take you to your shiny new dashboard.</li>
+  <li>Next, you’ll need to add some questions (charts) to the dashboard, see <a href="#adding-or-saving-questions-to-a-dashboard">Adding or saving questions to the dashboard</a>.</li>
+</ol>
 
 <h2 id="adding-or-saving-questions-to-a-dashboard">Adding or saving questions to a dashboard</h2>
+
+<p>To get some charts on a dashboard, you’ll need to <a href="../questions/introduction">create questions</a> (Metabase word for chart or query) and then add them, to the dashboard.</p>
 
 <p>You can add questions that are saved to collections, or save questions directly to a dashboard.</p>
 
@@ -5945,11 +5974,17 @@ Roadmap</a>
 
 <h2 id="link-cards">Link cards</h2>
 
-<p><img src="./images/dashboard-with-link-cards.png" alt="Dashboards with link cards"></p>
-
 <p>Link cards are specialized cards that let you search and link to other items in your Metabase. You can also use them for external links. Useful for pointing people to other resources relevant to your dashboard.</p>
 
-<p>To add a link card to a dashboard, click the <strong>pencil</strong> icon to enter dashboard editing mode, then click on the <strong>link</strong> icon. Click on the input field in the link card to search your Metabase for an item to link to, or paste an external link.</p>
+<p><img src="./images/dashboard-with-link-cards.png" alt="Dashboards with link cards"></p>
+
+<p>To add a link card to a dashboard:</p>
+
+<ol>
+  <li>When viewing a dashboard, click the <strong>pencil</strong> icon to enter dashboard editing mode;</li>
+  <li>Click the <strong>link</strong> (paper clip) icon to add a link card.</li>
+  <li>On the link card, click the input field to search your Metabase for an item to link to, or paste an external link.</li>
+</ol>
 
 <p>Link cards support variables so you can use dashboard filters to update values in the link card’s URL. For example, you could include a variable in a URL using double braces, like so:</p>
 
@@ -6191,17 +6226,16 @@ src="https://www.youtube.com/embed/{{video_id}}
 
 <h2 id="exporting-results-from-a-dashboard">Exporting results from a dashboard</h2>
 
-<p>See <a href="../questions/exporting-results">Exporting results</a>.</p>
+<p>You can export the entire dashboard as PDF, or export results of individual questions on the dashboard. See <a href="../questions/exporting-results">Exporting results</a>.</p>
 
 <h2 id="configuring-a-dashboard-through-its-url">Configuring a dashboard through its URL</h2>
 
-<p>You can amend the URL of a dashboard to automatically enter fullscreen, enable night mode, or auto-refresh the dashboard. Customizing the dashboard’s URL allows you to configure the dashboard - even when you do not have any input access to the device where the dashboard will be displayed, like scripted screens, for example.</p>
+<p>You can amend the URL of a dashboard to automatically enter fullscreen or auto-refresh the dashboard. Customizing the dashboard’s URL allows you to configure the dashboard - even when you do not have any input access to the device where the dashboard will be displayed, like scripted screens, for example.</p>
 
 <p>To configure a dashboard using its URL, you can add the following optional keywords:</p>
 
 <ul>
   <li><code class="language-plaintext highlighter-rouge">fullscreen</code></li>
-  <li><code class="language-plaintext highlighter-rouge">night</code></li>
   <li><code class="language-plaintext highlighter-rouge">refresh</code></li>
 </ul>
 
@@ -6210,7 +6244,7 @@ src="https://www.youtube.com/embed/{{video_id}}
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://metabase.mydomain.com/dash/2#refresh=60&amp;fullscreen&amp;night
 </code></pre></div></div>
 
-<p>The part that says <code class="language-plaintext highlighter-rouge">refresh=60</code> sets the dashboard to automatically refresh every 60 seconds, <code class="language-plaintext highlighter-rouge">fullscreen</code> sets it to fullscreen mode, and <code class="language-plaintext highlighter-rouge">night</code> sets it to night mode (night mode only works when using fullscreen). Use an ampersand, <code class="language-plaintext highlighter-rouge">&amp;</code>, in between keywords, and make sure there’s a hash, <code class="language-plaintext highlighter-rouge">#</code>, after the dashboard’s ID number.</p>
+<p>The part that says <code class="language-plaintext highlighter-rouge">refresh=60</code> sets the dashboard to automatically refresh every 60 seconds, <code class="language-plaintext highlighter-rouge">fullscreen</code> sets it to fullscreen mode. Use an ampersand, <code class="language-plaintext highlighter-rouge">&amp;</code>, in between keywords, and make sure there’s a hash, <code class="language-plaintext highlighter-rouge">#</code>, after the dashboard’s ID number.</p>
 
 <p>There is one important limitation with the <code class="language-plaintext highlighter-rouge">fullscreen</code> option: for security reasons, many browsers require user interaction to initiate fullscreen. In those browsers, using the <code class="language-plaintext highlighter-rouge">fullscreen</code> option will enable the fullscreen UI in Metabase, but it won’t expand the browser content to fill the screen. To ensure the dashboard occupies the entire screen, either activate fullscreen by clicking the button in the UI, or use the <code class="language-plaintext highlighter-rouge">fullscreen</code> URL option and launch the browser in fullscreen or kiosk mode.</p>
 

@@ -53,7 +53,7 @@ window.redirectTo = function redirectTo(theLocation) {
 <meta name="twitter:site" content="@metabase">
 
 <meta name="twitter:title" content="Appearance | Metabase Documentation">
-<meta name="twitter:description" content="Appearance     <path d=" m12="" 10c12.5523="" 10="" 13="" 9.55228="" 9c13="" 8.44772="" 12.5523="" 8..."="">
+<meta name="twitter:description" content="Configure colors, fonts, and illustrations in your Metabase.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -63,7 +63,7 @@ window.redirectTo = function redirectTo(theLocation) {
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://www.metabase.com/docs/latest/configuring-metabase/appearance">
 <meta name="title" property="og:title" content="Appearance | Metabase Documentation">
-<meta name="description" property="og:description" content="Appearance     <path d=" m12="" 10c12.5523="" 10="" 13="" 9.55228="" 9c13="" 8.44772="" 12.5523="" 8..."="">
+<meta name="description" property="og:description" content="Configure colors, fonts, and illustrations in your Metabase.">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -5873,6 +5873,8 @@ Roadmap</a>
   </div>
 </div>
 
+<p><em>Admin &gt; Settings &gt; Appearance</em></p>
+
 <p>Appearance settings give admins the option to whitelabel Metabase to match your company’s branding.</p>
 
 <p>If you’re looking for date, time, number, or currency formatting, see <a href="../data-modeling/formatting">Formatting defaults</a>.</p>
@@ -5883,42 +5885,9 @@ Roadmap</a>
 
 <p>You can also click the <strong>grid</strong> icon at the bottom of the navigation sidebar and click through <strong>Admin</strong> &gt; <strong>Settings</strong> &gt; <strong>Appearance</strong>.</p>
 
-<p>Appearance settings are split across different tabs:</p>
-
-<ul>
-  <li><a href="#branding">Branding</a></li>
-  <li><a href="#conceal-metabase">Conceal Metabase</a></li>
-</ul>
-
-<h2 id="dark-mode">Dark mode</h2>
-
-<p>People can display their Metabase in dark mode in their <a href="../people-and-groups/account-settings#theme">account settings</a>. Options are:</p>
-
-<ul>
-  <li>System default (which is also the default setting). Metabase will switch between light and dark mode when the system switches without having to reload the page.</li>
-  <li>Always use dark mode.</li>
-  <li>Always use light mode.</li>
-</ul>
-
-<p>You can quickly toggle dark mode from anywhere in Metabase by opening the <a href="../exploration-and-organization/exploration#command-palette">command palette</a> and searching for “light” or “dark” or “theme”.</p>
-
-<p>Dark mode is a user-level setting, not an instance-level setting. Currently, there’s no way to change the theme to dark mode for the entire instance, but you can edit some <a href="#user-interface-colors">user interface colors</a>.</p>
-
-<h2 id="branding">Branding</h2>
-
-<p>In the Branding tab, you can configure your Metabase to match your brand visuals and voice.</p>
-
-<ul>
-  <li><a href="#color-palette">Color palette</a></li>
-  <li><a href="#user-interface-colors">User interface colors</a></li>
-  <li><a href="#chart-colors">Chart colors</a></li>
-  <li><a href="#logo">Logo</a></li>
-  <li><a href="#font">Font</a></li>
-  <li><a href="#loading-message">Loading message</a></li>
-  <li><a href="#favicon">Favicon</a></li>
-</ul>
-
 <h2 id="color-palette">Color palette</h2>
+
+<p><em>Admin &gt; Settings &gt; Appearance &gt; Branding</em></p>
 
 <p>You can customize colors in both the application UI and in the Metabase charts.</p>
 
@@ -5934,31 +5903,75 @@ Roadmap</a>
   <li><strong>Third color:</strong> Color of filters in the query builder, buttons and links in filter widgets.</li>
 </ul>
 
+<p><img src="./images/qb-colors.png" alt="QB with custom colors"></p>
+
+<p>When choosing interface color, keep in mind that some users of your Metabase can choose to display the interface in <a href="../people-and-groups/account-settings#theme">dark mode</a>. Pick colors that work well both in light and dark mode.</p>
+
 <h3 id="chart-colors">Chart colors</h3>
 
 <p><img src="./images/chart-colors.png" alt="Chart colors"></p>
 
 <p>You can choose up to 24 hex values. If you choose fewer than 24 colors, Metabase will auto-generate colors to fill in the rest of the values. The order of colors doesn’t apply to the order of colors for series on charts. When building a chart, Metabase will select colors to make each series easy to distinguish.</p>
 
-<p>Custom colors are unavailable for:</p>
+<p>You can preview what the chart colors will look like by switching to the <strong>Preview</strong> tab.</p>
+
+<p><img src="./images/preview.png" alt="Preview chart"></p>
+
+<p>Custom colors are <strong>unavailable</strong> for:</p>
 
 <ul>
-  <li><a href="../questions/visualizations/numbers">Number charts</a></li>
   <li><a href="../questions/visualizations/trend">Trend charts</a></li>
   <li><a href="../questions/visualizations/funnel">Funnel charts</a></li>
-  <li>Conditional formatting (<a href="../questions/visualizations/table">tables</a> and <a href="../questions/visualizations/pivot-table">pivot tables</a>)</li>
-  <li><a href="../questions/visualizations/map">Maps</a></li>
+  <li><a href="../questions/visualizations/map">Pin and grid maps</a></li>
 </ul>
 
-<h2 id="logo">Logo</h2>
+<p>Only a <strong>limited subset</strong> of custom colors will be used for:</p>
+
+<ul>
+  <li>Conditional formatting in <a href="../questions/visualizations/table">tables</a> and <a href="../questions/visualizations/pivot-table">pivot tables</a></li>
+  <li><a href="../questions/visualizations/map">Maps</a></li>
+  <li><a href="../questions/visualizations/pie-or-donut-chart">Sunburst chart</a></li>
+</ul>
+
+<p>In most cases, replacing default colors with custom chart colors will not be applied to</p>
+
+<h2 id="icons">Icons</h2>
+
+<p><em>Admin &gt; Settings &gt; Appearance &gt; Branding</em></p>
+
+<h3 id="logo">Logo</h3>
 
 <p>You can replace Metabase’s familiar, tasteful, inspired-yet-not-threateningly-avant-garde dotted M logo with your very own logo. For things to work best, the logo you upload should be an SVG file that looks good when it’s around 60px tall. (In other words, ask the nearest designer for help.)</p>
 
+<h3 id="favicon">Favicon</h3>
+
+<p>The URL or image that you want to use as the favicon (the logo visible in browser tabs, address bars, bookmark lists, and other places).</p>
+
+<p>If you use a relative path, that path isn’t relative to the Metabase JAR, but to the webserver. So unless you’re using a reverse-proxy, the path will be relative to the frontend resources available to the JAR.</p>
+
+<h2 id="dark-mode">Dark mode</h2>
+
+<p>People can display their Metabase in dark mode in their <a href="../people-and-groups/account-settings#theme">account settings</a>. Options are:</p>
+
+<ul>
+  <li>System default (which is also the default setting). Metabase will switch between light and dark mode when the system switches without having to reload the page.</li>
+  <li>Always use dark mode.</li>
+  <li>Always use light mode.</li>
+</ul>
+
+<p>You can quickly toggle dark mode from anywhere in Metabase by opening the <a href="../exploration-and-organization/exploration#command-palette">command palette</a> and searching for “light” or “dark” or “theme”.</p>
+
+<p>Dark mode is a user-level setting, not an instance-level setting. Currently, there’s no way to change the theme to dark mode for the entire instance, but you can edit some <a href="#user-interface-colors">user interface colors</a>.</p>
+
 <h2 id="font">Font</h2>
+
+<p><em>Admin &gt; Settings &gt; Appearance &gt; Branding</em></p>
 
 <p>This is the primary font used in charts and throughout the Metabase application (your “instance font”). See <a href="./fonts">Fonts</a>.</p>
 
 <h2 id="loading-message">Loading message</h2>
+
+<p><em>Admin &gt; Settings &gt; Appearance &gt; Branding</em></p>
 
 <p>This message is the text Metabase presents when it’s loading a query. Options include:</p>
 
@@ -5968,34 +5981,23 @@ Roadmap</a>
   <li>“Loading results…”</li>
 </ul>
 
-<h2 id="favicon">Favicon</h2>
+<h2 id="names">Names</h2>
 
-<p>The URL or image that you want to use as the favicon (the logo visible in browser tabs, address bars, bookmark lists, and other places).</p>
+<p><em>Admin &gt; Settings &gt; Appearance &gt; Conceal Metabase</em></p>
 
-<p>If you use a relative path, that path isn’t relative to the Metabase JAR, but to the webserver. So unless you’re using a reverse-proxy, the path will be relative to the frontend resources available to the JAR.</p>
-
-<h2 id="conceal-metabase">Conceal Metabase</h2>
-
-<p>Hide or customize pieces of the Metabase product to tailor the experience to your brand and needs.</p>
-
-<ul>
-  <li><a href="#application-name">Application name</a></li>
-  <li><a href="#documentation-and-references">Documentation and references</a></li>
-  <li><a href="#help-link-in-the-settings-menu">Help link in the settings menu</a></li>
-  <li><a href="#metabase-illustrations">Metabase illustrations</a></li>
-</ul>
-
-<h2 id="application-name">Application name</h2>
+<h3 id="application-name">Application name</h3>
 
 <p>You can change every place in the app that says “Metabase” to something like “Acme Analytics,” or whatever you want to call your Metabase app.</p>
 
-<h2 id="documentation-and-references">Documentation and references</h2>
+<p>Setting a custom application name will also hide the “How to use Metabase” section in the navigation.</p>
 
-<p>Control the visibility of links to official Metabase documentation and other references to Metabase in your instance.</p>
+<h3 id="documentation-and-references">Documentation and references</h3>
 
-<p>This setting affects all links in the product experience that point to Metabase.com URLs (with the exception of links and references in the Admin settings).</p>
+<p>Control the visibility of links to official Metabase documentation and other references to Metabase in your instance outside of Admin settings.</p>
 
-<h2 id="help-link-in-the-settings-menu">Help link in the settings menu</h2>
+<p>Keep in mind that if you hide documentation links, people using your Metabase might not be able to troubleshoot their problems or learn how to use Metabase features like <a href="../questions/query-builder/expressions">custom expressions</a>.</p>
+
+<h3 id="help-link-in-the-settings-menu">Help link in the settings menu</h3>
 
 <p>The Settings menu (the “grid” menu in the upper right of your Metabase) includes a <strong>Help</strong> option that links to a <a href="/help/">Metabase help page</a> by default. You can change this menu Help item by selecting one of the following options:</p>
 
@@ -6006,6 +6008,8 @@ Roadmap</a>
 </ul>
 
 <h2 id="metabase-illustrations">Metabase illustrations</h2>
+
+<p><em>Admin &gt; Settings &gt; Appearance &gt; Conceal Metabase</em></p>
 
 <p><img src="./images/lighthouse-illustration.png" alt="Lighthouse illustration"></p>
 

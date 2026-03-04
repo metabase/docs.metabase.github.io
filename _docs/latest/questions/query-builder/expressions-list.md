@@ -888,7 +888,7 @@ Related: [dayName](#dayname), [quarterName](#quartername).
 
 ### [now](./expressions/now)
 
-Returns the current date and time using your Metabase [report timezone](../../configuring-metabase/localization#report-timezone).
+Returns the current date and time using your Metabase [instance default report timezone](../../configuring-metabase/localization#set-default-instance-report-timezone).
 
 Syntax: `now()`
 
