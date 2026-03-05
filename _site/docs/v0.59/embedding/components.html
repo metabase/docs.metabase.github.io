@@ -5861,6 +5861,10 @@ Roadmap</a>
 
 <p>This page covers what you can embed. For theming your embeds, see <a href="./appearance">Appearance</a>.</p>
 
+<blockquote>
+  <p>Depending on the framework you’re using, you may need to stringify attributes before passing them to the embedded components.</p>
+</blockquote>
+
 <h2 id="dashboard">Dashboard</h2>
 
 <p>To render a dashboard:</p>
@@ -5869,53 +5873,71 @@ Roadmap</a>
 <span class="nt">&lt;/metabase-dashboard&gt;</span>
 </code></pre></div></div>
 
-<h3 id="required-parameters">Required parameters</h3>
+<h3 id="attributes">Attributes</h3>
 
-<ul>
-  <li><code class="language-plaintext highlighter-rouge">dashboard-id</code> - This can be a regular ID or an entity ID. <a href="../installation-and-operation/serialization#entity-ids-work-with-embedding">Using Entity IDs</a> in your embeds ensures that the IDs stay stable when exporting from one Metabase and importing to another. Only for SSO. Guest embeds set the id with token.</li>
-</ul>
-
-<h3 id="optional-parameters">Optional parameters</h3>
-
-<ul>
-  <li><code class="language-plaintext highlighter-rouge">with-title</code> (default is true) - show the dashboard title in the embed</li>
-</ul>
-
-<div class="bootstrap">
-  <div class="plans-blockquote bg-blue-95 rounded-3 p-6 d-flex flex-row border border-1 border-primary">
-    <svg class="" width="24" height="24" viewBox="0 0 26 26" fill="none">
-  <path d="M12 13V15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
-  <path d="M12 10C12.5523 10 13 9.55228 13 9C13 8.44772 12.5523 8 12 8C11.4477 8 11 8.44772 11 9C11 9.55228 11.4477 10 12 10Z" fill="#509EE3"></path>
-  <path d="M12 19.25C16.0041 19.25 19.25 16.0041 19.25 12C19.25 7.99594 16.0041 4.75 12 4.75C7.99594 4.75 4.75 7.99594 4.75 12C4.75 16.0041 7.99594 19.25 12 19.25Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
-</svg>
-
-    
-    
-    
-      
-
-    <p class="m-0 ms-2 paragraph-5 neutral-40">
-       More parameters for dashboard component are only available on
-      <a class="fw-bold" href="/product/pro">Pro</a> and
-      <a class="fw-bold link-purple" href="/product/enterprise">Enterprise</a>
-      plans  (both self-hosted and on Metabase Cloud).
-    </p>
-  </div>
-</div>
-
-<ul>
-  <li><code class="language-plaintext highlighter-rouge">with-downloads</code> (default is true on OSS/Starter and false on Pro/Enterprise) - show the button to download the dashboard as PDF and download question results</li>
-  <li><code class="language-plaintext highlighter-rouge">drills</code> (default is true) - lets you drill through the dashboard</li>
-  <li><code class="language-plaintext highlighter-rouge">initial-parameters</code> - default value for dashboard filters, like <code class="language-plaintext highlighter-rouge">{ 'productId': '42' }</code>.</li>
-  <li><code class="language-plaintext highlighter-rouge">with-subscriptions</code> - let people set up <a href="../dashboards/subscriptions">dashboard subscriptions</a>. Unlike subscriptions sent from non-embedded dashboards, subscriptions sent from embedded dashboards exclude links to Metabase items, as Metabase assumes the recipient lacks access to the embedded Metabase.</li>
-  <li><code class="language-plaintext highlighter-rouge">refresh</code> - auto-refreshes the dashboard. <code class="language-plaintext highlighter-rouge">refresh="60"</code> will refresh the dashboard every 60 seconds.</li>
-  <li><code class="language-plaintext highlighter-rouge">hidden-parameters</code> - list of filter names to hide from the dashboard, like <code class="language-plaintext highlighter-rouge">['productId']</code></li>
-  <li><code class="language-plaintext highlighter-rouge">enable-entity-navigation</code> (default is false) - preserves dashboard custom <a href="../dashboards/interactive#customizing-click-behavior">click behaviors</a> that navigate to other dashboards and questions within the embed. Requires <code class="language-plaintext highlighter-rouge">drills</code> to be true (which is the default). When disabled, only external URL links are kept. See also <a href="./sdk/plugins#handlelink"><code class="language-plaintext highlighter-rouge">handleLink</code></a> for customizing what happens when people click URL links.</li>
-</ul>
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Property</th>
+      <th style="text-align: left">Type</th>
+      <th style="text-align: left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left" data-label="Property"><a id="auto-refresh-interval"></a> <code class="language-plaintext highlighter-rouge">auto-refresh-interval</code></td>
+      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">number</code></td>
+      <td style="text-align: left" data-label="Description">Auto-refresh interval in seconds. For example, <code class="language-plaintext highlighter-rouge">60</code> refreshes the dashboard every 60 seconds.<br>—<br>Optional<br>Available in Pro/Enterprise and Guest embed.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left" data-label="Property"><a id="dashboard-id"></a> <code class="language-plaintext highlighter-rouge">dashboard-id</code></td>
+      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">string</code> | <code class="language-plaintext highlighter-rouge">number</code></td>
+      <td style="text-align: left" data-label="Description">The ID of the dashboard to embed. Can be a regular ID or an <a href="/docs/latest/installation-and-operation/serialization#entity-ids-work-with-embedding">entity ID</a>. Only for SSO embeds — guest embeds set the ID with <code class="language-plaintext highlighter-rouge">token</code>.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left" data-label="Property"><a id="drills"></a> <code class="language-plaintext highlighter-rouge">drills</code></td>
+      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">boolean</code></td>
+      <td style="text-align: left" data-label="Description">Whether to enable drill-through on the dashboard.<br>—<br>Optional<br>Default: <code class="language-plaintext highlighter-rouge">true</code><br>Available in Pro/Enterprise.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left" data-label="Property"><a id="enable-entity-navigation"></a> <code class="language-plaintext highlighter-rouge">enable-entity-navigation</code></td>
+      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">boolean</code></td>
+      <td style="text-align: left" data-label="Description">Whether to enable internal entity navigation (links to dashboards/questions). Requires <code class="language-plaintext highlighter-rouge">drills</code> to be <code class="language-plaintext highlighter-rouge">true</code><br>—<br>Optional<br>Default: <code class="language-plaintext highlighter-rouge">false</code><br>Available in Pro/Enterprise.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left" data-label="Property"><a id="hidden-parameters"></a> <code class="language-plaintext highlighter-rouge">hidden-parameters</code></td>
+      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">string</code>[]</td>
+      <td style="text-align: left" data-label="Description">List of filter names to hide from the dashboard, e.g. <code class="language-plaintext highlighter-rouge">['productId']</code>.<br>—<br>Optional<br>Available in Pro/Enterprise.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left" data-label="Property"><a id="initial-parameters"></a> <code class="language-plaintext highlighter-rouge">initial-parameters</code></td>
+      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">object</code></td>
+      <td style="text-align: left" data-label="Description">Default values for dashboard filters, e.g. <code class="language-plaintext highlighter-rouge">{ 'productId': '42' }</code>.<br>—<br>Optional<br>Available in Pro/Enterprise and Guest embed.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left" data-label="Property"><a id="token"></a> <code class="language-plaintext highlighter-rouge">token</code></td>
+      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">string</code></td>
+      <td style="text-align: left" data-label="Description">The token for guest embeds. Set automatically by the guest embed flow.<br>—<br>Optional<br>Available in Guest embed.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left" data-label="Property"><a id="with-downloads"></a> <code class="language-plaintext highlighter-rouge">with-downloads</code></td>
+      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">boolean</code></td>
+      <td style="text-align: left" data-label="Description">Whether to show the button to download the dashboard as PDF and download question results.<br>—<br>Optional<br>Default: <code class="language-plaintext highlighter-rouge">true</code> on OSS/Starter, <code class="language-plaintext highlighter-rouge">false</code> on Pro/Enterprise<br>Available in Guest embed.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left" data-label="Property"><a id="with-subscriptions"></a> <code class="language-plaintext highlighter-rouge">with-subscriptions</code></td>
+      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">boolean</code></td>
+      <td style="text-align: left" data-label="Description">Whether to let people set up <a href="/docs/latest/dashboards/subscriptions">dashboard subscriptions</a>. Subscriptions sent from embedded dashboards exclude links to Metabase items.<br>—<br>Optional<br>Available in Pro/Enterprise.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left" data-label="Property"><a id="with-title"></a> <code class="language-plaintext highlighter-rouge">with-title</code></td>
+      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">boolean</code></td>
+      <td style="text-align: left" data-label="Description">Whether to show the dashboard title in the embed.<br>—<br>Optional<br>Default: <code class="language-plaintext highlighter-rouge">true</code><br>Available in Guest embed.</td>
+    </tr>
+  </tbody>
+</table>
 
 <p>For all modular embeds, you can also set a <code class="language-plaintext highlighter-rouge">locale</code> in your page-level configuration to <a href="./translations">translate embedded content</a>, including content from translation dictionaries.</p>
-
-<p>Only <code class="language-plaintext highlighter-rouge">with-title</code> and <code class="language-plaintext highlighter-rouge">with-downloads</code> are supported in <a href="./guest-embedding">guest embeds</a>.</p>
 
 <p>If you surround your attribute value with double quotes, make sure to use single quotes:</p>
 
@@ -5943,62 +5965,75 @@ Roadmap</a>
 
 <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;metabase-question</span> <span class="na">question-id=</span><span class="s">"1"</span><span class="nt">&gt;&lt;/metabase-question&gt;</span>
 </code></pre></div></div>
-<h3 id="required-parameters-1">Required parameters</h3>
 
-<ul>
-  <li><code class="language-plaintext highlighter-rouge">question-id</code> - This can be a regular ID or an entity ID. <a href="../installation-and-operation/serialization#entity-ids-work-with-embedding">Using Entity IDs</a> in your embeds ensures that the IDs stay stable when exporting from one Metabase and importing to another. Only for SSO embeds. Guest embeds set the ID with a token.</li>
-</ul>
+<h3 id="attributes-1">Attributes</h3>
 
-<p>You can also use the question component to create new questions:</p>
-
-<ul>
-  <li><code class="language-plaintext highlighter-rouge">question-id="new"</code> — opens the visual query builder.</li>
-  <li><code class="language-plaintext highlighter-rouge">question-id="new-native"</code> — opens the SQL editor.</li>
-</ul>
-
-<p>For example, to embed the SQL editor:</p>
-
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;metabase-question</span> <span class="na">question-id=</span><span class="s">"new-native"</span><span class="nt">&gt;&lt;/metabase-question&gt;</span>
-</code></pre></div></div>
-
-<h3 id="optional-parameters-1">Optional parameters</h3>
-
-<ul>
-  <li><code class="language-plaintext highlighter-rouge">with-title</code> (default is true) - show the title</li>
-</ul>
-
-<div class="bootstrap">
-  <div class="plans-blockquote bg-blue-95 rounded-3 p-6 d-flex flex-row border border-1 border-primary">
-    <svg class="" width="24" height="24" viewBox="0 0 26 26" fill="none">
-  <path d="M12 13V15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
-  <path d="M12 10C12.5523 10 13 9.55228 13 9C13 8.44772 12.5523 8 12 8C11.4477 8 11 8.44772 11 9C11 9.55228 11.4477 10 12 10Z" fill="#509EE3"></path>
-  <path d="M12 19.25C16.0041 19.25 19.25 16.0041 19.25 12C19.25 7.99594 16.0041 4.75 12 4.75C7.99594 4.75 4.75 7.99594 4.75 12C4.75 16.0041 7.99594 19.25 12 19.25Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
-</svg>
-
-    
-    
-    
-      
-
-    <p class="m-0 ms-2 paragraph-5 neutral-40">
-       More parameters for dashboard component are only available on
-      <a class="fw-bold" href="/product/pro">Pro</a> and
-      <a class="fw-bold link-purple" href="/product/enterprise">Enterprise</a>
-      plans  (both self-hosted and on Metabase Cloud).
-    </p>
-  </div>
-</div>
-
-<ul>
-  <li><code class="language-plaintext highlighter-rouge">drills</code> (default is true) - lets you drill through the question</li>
-  <li><code class="language-plaintext highlighter-rouge">with-downloads</code> (default is true on OSS/Starter and false on Pro/Enterprise) - show downloads</li>
-  <li><code class="language-plaintext highlighter-rouge">initial-sql-parameters</code> - default value for SQL parameters, only applicable to native SQL questions, like <code class="language-plaintext highlighter-rouge">{ "productId": "42" }</code></li>
-  <li><code class="language-plaintext highlighter-rouge">is-save-enabled</code> (default is false)</li>
-  <li><code class="language-plaintext highlighter-rouge">target-collection</code> - this is to enforce saving into a particular collection. Values: regular ID, entity ID, <code class="language-plaintext highlighter-rouge">"personal"</code>, <code class="language-plaintext highlighter-rouge">"root"</code></li>
-  <li><code class="language-plaintext highlighter-rouge">with-alerts</code> (default is false) - let people set up <a href="../questions/alerts">alerts</a> on embedded questions. Requires <a href="../configuring-metabase/email">email setup</a>. Unlike alerts on non-embedded questions, alerts on embedded questions only send to the logged-in user and exclude links to Metabase items. Not available for models.</li>
-</ul>
-
-<p>Only <code class="language-plaintext highlighter-rouge">with-title</code> and <code class="language-plaintext highlighter-rouge">with-downloads</code> are supported in <a href="./guest-embedding">guest embeds</a>.</p>
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Property</th>
+      <th style="text-align: left">Type</th>
+      <th style="text-align: left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left" data-label="Property"><a id="drills"></a> <code class="language-plaintext highlighter-rouge">drills</code></td>
+      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">boolean</code></td>
+      <td style="text-align: left" data-label="Description">Whether to enable drill-through on the question.<br>—<br>Optional<br>Default: <code class="language-plaintext highlighter-rouge">true</code><br>Available in Pro/Enterprise.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left" data-label="Property"><a id="entity-types"></a> <code class="language-plaintext highlighter-rouge">entity-types</code></td>
+      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">string</code>[]</td>
+      <td style="text-align: left" data-label="Description">Which entity types to show in the question’s data picker, e.g. <code class="language-plaintext highlighter-rouge">["model", "table"]</code>.<br>—<br>Optional<br>Possible values: <code class="language-plaintext highlighter-rouge">"model"</code>, <code class="language-plaintext highlighter-rouge">"table"</code><br>Available in Pro/Enterprise and Guest embed.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left" data-label="Property"><a id="hidden-parameters"></a> <code class="language-plaintext highlighter-rouge">hidden-parameters</code></td>
+      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">string</code>[]</td>
+      <td style="text-align: left" data-label="Description">List of parameter names to hide from the question.<br>—<br>Optional<br>Available in Pro/Enterprise.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left" data-label="Property"><a id="initial-sql-parameters"></a> <code class="language-plaintext highlighter-rouge">initial-sql-parameters</code></td>
+      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">object</code></td>
+      <td style="text-align: left" data-label="Description">Default values for SQL parameters, only applicable to native SQL questions, e.g. <code class="language-plaintext highlighter-rouge">{ "productId": "42" }</code>.<br>—<br>Optional<br>Available in Pro/Enterprise and Guest embed.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left" data-label="Property"><a id="is-save-enabled"></a> <code class="language-plaintext highlighter-rouge">is-save-enabled</code></td>
+      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">boolean</code></td>
+      <td style="text-align: left" data-label="Description">Whether the save button is enabled.<br>—<br>Optional<br>Default: <code class="language-plaintext highlighter-rouge">false</code><br>Available in Pro/Enterprise.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left" data-label="Property"><a id="question-id"></a> <code class="language-plaintext highlighter-rouge">question-id</code></td>
+      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">string</code> | <code class="language-plaintext highlighter-rouge">number</code></td>
+      <td style="text-align: left" data-label="Description">The ID of the question to embed. Can be a regular ID or an <a href="/docs/latest/installation-and-operation/serialization#entity-ids-work-with-embedding">entity ID</a>. Use <code class="language-plaintext highlighter-rouge">"new"</code> to embed the query builder. Only for SSO embeds — guest embeds use <code class="language-plaintext highlighter-rouge">token</code>.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left" data-label="Property"><a id="target-collection"></a> <code class="language-plaintext highlighter-rouge">target-collection</code></td>
+      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">string</code> | <code class="language-plaintext highlighter-rouge">number</code></td>
+      <td style="text-align: left" data-label="Description">The collection to save a question to. Values: regular ID, entity ID, <code class="language-plaintext highlighter-rouge">"personal"</code>, <code class="language-plaintext highlighter-rouge">"root"</code>.<br>—<br>Optional<br>Available in Pro/Enterprise.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left" data-label="Property"><a id="token"></a> <code class="language-plaintext highlighter-rouge">token</code></td>
+      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">string</code></td>
+      <td style="text-align: left" data-label="Description">The token for guest embeds. Set automatically by the guest embed flow.<br>—<br>Optional<br>Available in Guest embed.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left" data-label="Property"><a id="with-alerts"></a> <code class="language-plaintext highlighter-rouge">with-alerts</code></td>
+      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">boolean</code></td>
+      <td style="text-align: left" data-label="Description">Whether to show the alerts button.<br>—<br>Optional<br>Default: <code class="language-plaintext highlighter-rouge">false</code><br>Available in Pro/Enterprise.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left" data-label="Property"><a id="with-downloads"></a> <code class="language-plaintext highlighter-rouge">with-downloads</code></td>
+      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">boolean</code></td>
+      <td style="text-align: left" data-label="Description">Whether to show download buttons for question results.<br>—<br>Optional<br>Default: <code class="language-plaintext highlighter-rouge">true</code> on OSS/Starter, <code class="language-plaintext highlighter-rouge">false</code> on Pro/Enterprise<br>Available in Guest embed.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left" data-label="Property"><a id="with-title"></a> <code class="language-plaintext highlighter-rouge">with-title</code></td>
+      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">boolean</code></td>
+      <td style="text-align: left" data-label="Description">Whether to show the question title in the embed.<br>—<br>Optional<br>Default: <code class="language-plaintext highlighter-rouge">true</code><br>Available in Guest embed.</td>
+    </tr>
+  </tbody>
+</table>
 
 <h2 id="browser">Browser</h2>
 
@@ -6036,23 +6071,64 @@ Roadmap</a>
 <span class="nt">&lt;/metabase-browser&gt;</span>
 </code></pre></div></div>
 
-<h3 id="required-parameters-2">Required parameters</h3>
+<h3 id="attributes-2">Attributes</h3>
 
-<ul>
-  <li><code class="language-plaintext highlighter-rouge">initial-collection</code> - This can be a collection ID or <code class="language-plaintext highlighter-rouge">root</code>. Use a collection ID (e.g., <code class="language-plaintext highlighter-rouge">14</code>) to start in a specific collection. Use <code class="language-plaintext highlighter-rouge">root</code> to start at the top-level, “Our Analytics” collection.</li>
-</ul>
-
-<h3 id="optional-parameters-2">Optional parameters</h3>
-
-<ul>
-  <li><code class="language-plaintext highlighter-rouge">read-only</code> (default is true) – if true, people can interact with items (filter, summarize, drill-through) but can’t save. If <code class="language-plaintext highlighter-rouge">false</code>, they can create and edit items in the collection.</li>
-  <li><code class="language-plaintext highlighter-rouge">collection-visible-columns</code> – an array of columns to show in the collection browser: <code class="language-plaintext highlighter-rouge">type</code>, <code class="language-plaintext highlighter-rouge">name</code>, <code class="language-plaintext highlighter-rouge">description</code>, <code class="language-plaintext highlighter-rouge">lastEditedBy</code>, <code class="language-plaintext highlighter-rouge">lastEditedAt</code>, <code class="language-plaintext highlighter-rouge">archive</code>. For example, <code class="language-plaintext highlighter-rouge">collection-visible-columns="['type', 'name']"</code> shows only the type and name columns.</li>
-  <li><code class="language-plaintext highlighter-rouge">collection-page-size</code> – how many items to show per page in the collection browser.</li>
-  <li><code class="language-plaintext highlighter-rouge">collection-entity-types</code> – an array of entity types to show in the collection browser: <code class="language-plaintext highlighter-rouge">collection</code>, <code class="language-plaintext highlighter-rouge">dashboard</code>, <code class="language-plaintext highlighter-rouge">question</code>, <code class="language-plaintext highlighter-rouge">model</code>. For example, <code class="language-plaintext highlighter-rouge">collection-entity-types="['collection', 'dashboard']"</code> shows only collections and dashboards.</li>
-  <li><code class="language-plaintext highlighter-rouge">data-picker-entity-types</code> – an array of entity types to show in the question’s data picker: <code class="language-plaintext highlighter-rouge">model</code>, <code class="language-plaintext highlighter-rouge">table</code>. For example, <code class="language-plaintext highlighter-rouge">data-picker-entity-types="['model']"</code> shows only models.</li>
-  <li><code class="language-plaintext highlighter-rouge">with-new-question</code> (default is true) – whether to show the “New exploration” button.</li>
-  <li><code class="language-plaintext highlighter-rouge">with-new-dashboard</code> (default is true) – whether to show the “New dashboard” button. Only applies when <code class="language-plaintext highlighter-rouge">read-only</code> is false.</li>
-</ul>
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Property</th>
+      <th style="text-align: left">Type</th>
+      <th style="text-align: left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left" data-label="Property"><a id="collection-entity-types"></a> <code class="language-plaintext highlighter-rouge">collection-entity-types</code></td>
+      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">string</code>[]</td>
+      <td style="text-align: left" data-label="Description">An array of entity types to show in the collection browser: <code class="language-plaintext highlighter-rouge">collection</code>, <code class="language-plaintext highlighter-rouge">dashboard</code>, <code class="language-plaintext highlighter-rouge">question</code>, <code class="language-plaintext highlighter-rouge">model</code>.<br>—<br>Optional<br>Possible values: <code class="language-plaintext highlighter-rouge">"model"</code>, <code class="language-plaintext highlighter-rouge">"collection"</code>, <code class="language-plaintext highlighter-rouge">"dashboard"</code>, <code class="language-plaintext highlighter-rouge">"question"</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left" data-label="Property"><a id="collection-page-size"></a> <code class="language-plaintext highlighter-rouge">collection-page-size</code></td>
+      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">number</code></td>
+      <td style="text-align: left" data-label="Description">How many items to show per page in the collection browser.<br>—<br>Optional</td>
+    </tr>
+    <tr>
+      <td style="text-align: left" data-label="Property"><a id="collection-visible-columns"></a> <code class="language-plaintext highlighter-rouge">collection-visible-columns</code></td>
+      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">string</code>[]</td>
+      <td style="text-align: left" data-label="Description">An array of columns to show in the collection browser: <code class="language-plaintext highlighter-rouge">type</code>, <code class="language-plaintext highlighter-rouge">name</code>, <code class="language-plaintext highlighter-rouge">description</code>, <code class="language-plaintext highlighter-rouge">lastEditedBy</code>, <code class="language-plaintext highlighter-rouge">lastEditedAt</code>, <code class="language-plaintext highlighter-rouge">archive</code>.<br>—<br>Optional<br>Possible values: <code class="language-plaintext highlighter-rouge">"type"</code>, <code class="language-plaintext highlighter-rouge">"name"</code>, <code class="language-plaintext highlighter-rouge">"description"</code>, <code class="language-plaintext highlighter-rouge">"lastEditedBy"</code>, <code class="language-plaintext highlighter-rouge">"lastEditedAt"</code>, <code class="language-plaintext highlighter-rouge">"archive"</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left" data-label="Property"><a id="data-picker-entity-types"></a> <code class="language-plaintext highlighter-rouge">data-picker-entity-types</code></td>
+      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">string</code>[]</td>
+      <td style="text-align: left" data-label="Description">An array of entity types to show in the question’s data picker: <code class="language-plaintext highlighter-rouge">model</code>, <code class="language-plaintext highlighter-rouge">table</code>.<br>—<br>Optional<br>Possible values: <code class="language-plaintext highlighter-rouge">"model"</code>, <code class="language-plaintext highlighter-rouge">"table"</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left" data-label="Property"><a id="enable-entity-navigation"></a> <code class="language-plaintext highlighter-rouge">enable-entity-navigation</code></td>
+      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">boolean</code></td>
+      <td style="text-align: left" data-label="Description">Whether to enable internal entity navigation (links to dashboards/questions).<br>—<br>Optional<br>Default: <code class="language-plaintext highlighter-rouge">false</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left" data-label="Property"><a id="initial-collection"></a> <code class="language-plaintext highlighter-rouge">initial-collection</code></td>
+      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">string</code> | <code class="language-plaintext highlighter-rouge">number</code></td>
+      <td style="text-align: left" data-label="Description">Which collection to start from. Use a collection ID (e.g., <code class="language-plaintext highlighter-rouge">14</code>) to start in a specific collection, or <code class="language-plaintext highlighter-rouge">"root"</code> for the top-level “Our Analytics” collection.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left" data-label="Property"><a id="read-only"></a> <code class="language-plaintext highlighter-rouge">read-only</code></td>
+      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">boolean</code></td>
+      <td style="text-align: left" data-label="Description">Whether the content manager is in read-only mode. When <code class="language-plaintext highlighter-rouge">true</code>, people can interact with items (filter, summarize, drill-through) but can’t save. When <code class="language-plaintext highlighter-rouge">false</code>, they can create and edit items.<br>—<br>Optional<br>Default: <code class="language-plaintext highlighter-rouge">true</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left" data-label="Property"><a id="with-new-dashboard"></a> <code class="language-plaintext highlighter-rouge">with-new-dashboard</code></td>
+      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">boolean</code></td>
+      <td style="text-align: left" data-label="Description">Whether to show the “New dashboard” button. Only applies when <code class="language-plaintext highlighter-rouge">read-only</code> is <code class="language-plaintext highlighter-rouge">false</code>.<br>—<br>Optional<br>Default: <code class="language-plaintext highlighter-rouge">true</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left" data-label="Property"><a id="with-new-question"></a> <code class="language-plaintext highlighter-rouge">with-new-question</code></td>
+      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">boolean</code></td>
+      <td style="text-align: left" data-label="Description">Whether to show the “New exploration” button.<br>—<br>Optional<br>Default: <code class="language-plaintext highlighter-rouge">true</code></td>
+    </tr>
+  </tbody>
+</table>
 
 <h2 id="ai-chat">AI chat</h2>
 
@@ -6085,21 +6161,34 @@ Roadmap</a>
 <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;metabase-metabot&gt;&lt;/metabase-metabot&gt;</span>
 </code></pre></div></div>
 
-<h3 id="required-parameters-3">Required parameters</h3>
+<h3 id="attributes-3">Attributes</h3>
 
-<p>None.</p>
-
-<h3 id="optional-parameters-3">Optional parameters</h3>
-
-<ul>
-  <li><code class="language-plaintext highlighter-rouge">layout</code> (default is <code class="language-plaintext highlighter-rouge">auto</code>) – how should the browser position the visualization with respect to the chat interface. Possible values are:
-    <ul>
-      <li><code class="language-plaintext highlighter-rouge">auto</code> (default): Metabot uses the <code class="language-plaintext highlighter-rouge">stacked</code> layout on mobile screens, and a <code class="language-plaintext highlighter-rouge">sidebar</code> layout on larger screens.</li>
-      <li><code class="language-plaintext highlighter-rouge">stacked</code>: the question visualization stacks on top of the chat interface.</li>
-      <li><code class="language-plaintext highlighter-rouge">sidebar</code>: the question visualization appears to the left of the chat interface, which is in the right sidebar.</li>
-    </ul>
-  </li>
-</ul>
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Property</th>
+      <th style="text-align: left">Type</th>
+      <th style="text-align: left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left" data-label="Property"><a id="is-save-enabled"></a> <code class="language-plaintext highlighter-rouge">is-save-enabled</code></td>
+      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">boolean</code></td>
+      <td style="text-align: left" data-label="Description">Whether the save button is enabled.<br>—<br>Optional<br>Default: <code class="language-plaintext highlighter-rouge">false</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left" data-label="Property"><a id="layout"></a> <code class="language-plaintext highlighter-rouge">layout</code></td>
+      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">string</code></td>
+      <td style="text-align: left" data-label="Description">How should the browser position the visualization with respect to the chat interface. <code class="language-plaintext highlighter-rouge">auto</code> uses <code class="language-plaintext highlighter-rouge">stacked</code> on mobile and <code class="language-plaintext highlighter-rouge">sidebar</code> on larger screens.<br>—<br>Optional<br>Default: <code class="language-plaintext highlighter-rouge">"auto"</code><br>Possible values: <code class="language-plaintext highlighter-rouge">"auto"</code>, <code class="language-plaintext highlighter-rouge">"sidebar"</code>, <code class="language-plaintext highlighter-rouge">"stacked"</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left" data-label="Property"><a id="target-collection"></a> <code class="language-plaintext highlighter-rouge">target-collection</code></td>
+      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">string</code> | <code class="language-plaintext highlighter-rouge">number</code></td>
+      <td style="text-align: left" data-label="Description">The collection to save a question to.<br>—<br>Optional</td>
+    </tr>
+  </tbody>
+</table>
 
 <h2 id="customizing-loader-and-error-components">Customizing loader and error components</h2>
 

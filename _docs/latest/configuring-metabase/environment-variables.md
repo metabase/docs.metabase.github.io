@@ -1999,6 +1999,16 @@ Maximum number of leaf fields synced per collection of document database. Curren
 
 Process batches updates synchronously. If true, all `submit!` calls will be processed immediately. Default is false.
 
+### `MB_THREAD_INTERRUPT_ESCALATION_TIMEOUT_MS`
+
+- Type: integer
+- Default: `0`
+
+By default, this is 0 and the thread interrupt escalation does not run.
+
+Timeout in milliseconds to wait after query cancellation before escalating to thread interruption.
+        This is used to free up threads that are stuck waiting for a DB response after a query has been cancelled.
+
 ### `MB_TRANSFORMS_ENABLED`
 
 - Type: boolean
@@ -2139,6 +2149,8 @@ Default: `null`
 
 A JDBC-style connection URI that can be used instead of most of `MB_DB_*` like [MB_DB_HOST](#mb_db_host). Also used when certain Connection String parameters are required for the connection. The connection type requirement is the same as [MB_DB_TYPE](#mb_db_type).
 
+Note that the `currentSchema` JDBC parameter has no effect. [The schema used for PostgreSQL application databases must be `public`](https://github.com/metabase/metabase/issues/37836).
+
 Examples:
 
 ```
@@ -2263,7 +2275,7 @@ Since: v51.3
 
 If `true`, log a stack trace for any connections killed due to exceeding the timeout specified in [MB_DB_QUERY_TIMEOUT_MINUTES](#mb_db_query_timeout_minutes).
 
-In order to see the stack traces in the logs, you'll also need to update the com.mchange log level to "INFO" or higher via a custom Log4j configuration. For configuring log levels, see [Metabase log configuration](./log-configuration).
+In order to see the stack traces in the logs, you'll also need to update the com.mchange log level to "INFO" or higher via a custom log4j configuration. For configuring log levels, see [Metabase log configuration](./log-configuration).
 
 ### `MB_JETTY_ASYNC_RESPONSE_TIMEOUT`
 
@@ -2393,6 +2405,20 @@ Type: Boolean<br>
 Default: True
 
 Whether to include the Sample Database in your Metabase. To exclude the Sample Database, set `MB_LOAD_SAMPLE_CONTENT=false`.
+
+### `MB_MONITOR_PERFORMANCE`
+
+Type: string<br>
+Default: `""`
+
+When set, starts a Java Flight Recorder (JFR) recording at startup that can be analyzed with JDK Mission Control or other JFR tools.
+
+- `"true"` generates a timestamped output file like `metabase-2026_01_15.jfr`
+- Any other non-empty value is used as the output filename (`.jfr` extension is appended if missing)
+- `""` or `"false"` disables monitoring (the default)
+
+The performance recording stores only method signature calls and other code execution metrics.
+It does not store any sensitive information such as environment variables, system properties, or other machine information.
 
 ### `MB_NO_SURVEYS`
 
