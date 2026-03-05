@@ -8373,6 +8373,18 @@ don’t have one.</p>
 
 <p>Process batches updates synchronously. If true, all <code class="language-plaintext highlighter-rouge">submit!</code> calls will be processed immediately. Default is false.</p>
 
+<h3 id="mb_thread_interrupt_escalation_timeout_ms"><code class="language-plaintext highlighter-rouge">MB_THREAD_INTERRUPT_ESCALATION_TIMEOUT_MS</code></h3>
+
+<ul>
+  <li>Type: integer</li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">0</code></li>
+</ul>
+
+<p>By default, this is 0 and the thread interrupt escalation does not run.</p>
+
+<p>Timeout in milliseconds to wait after query cancellation before escalating to thread interruption.
+        This is used to free up threads that are stuck waiting for a DB response after a query has been cancelled.</p>
+
 <h3 id="mb_transforms_enabled"><code class="language-plaintext highlighter-rouge">MB_TRANSFORMS_ENABLED</code></h3>
 
 <ul>
@@ -8539,6 +8551,8 @@ Default: <code class="language-plaintext highlighter-rouge">null</code></p>
 
 <p>A JDBC-style connection URI that can be used instead of most of <code class="language-plaintext highlighter-rouge">MB_DB_*</code> like <a href="#mb_db_host">MB_DB_HOST</a>. Also used when certain Connection String parameters are required for the connection. The connection type requirement is the same as <a href="#mb_db_type">MB_DB_TYPE</a>.</p>
 
+<p>Note that the <code class="language-plaintext highlighter-rouge">currentSchema</code> JDBC parameter has no effect. <a href="https://github.com/metabase/metabase/issues/37836">The schema used for PostgreSQL application databases must be <code class="language-plaintext highlighter-rouge">public</code></a>.</p>
+
 <p>Examples:</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>jdbc:postgresql://db.example.com:5432/mydb?user=dbuser&amp;password=dbpassword
@@ -8662,7 +8676,7 @@ Since: v51.3</p>
 
 <p>If <code class="language-plaintext highlighter-rouge">true</code>, log a stack trace for any connections killed due to exceeding the timeout specified in <a href="#mb_db_query_timeout_minutes">MB_DB_QUERY_TIMEOUT_MINUTES</a>.</p>
 
-<p>In order to see the stack traces in the logs, you’ll also need to update the com.mchange log level to “INFO” or higher via a custom Log4j configuration. For configuring log levels, see <a href="./log-configuration">Metabase log configuration</a>.</p>
+<p>In order to see the stack traces in the logs, you’ll also need to update the com.mchange log level to “INFO” or higher via a custom log4j configuration. For configuring log levels, see <a href="./log-configuration">Metabase log configuration</a>.</p>
 
 <h3 id="mb_jetty_async_response_timeout"><code class="language-plaintext highlighter-rouge">MB_JETTY_ASYNC_RESPONSE_TIMEOUT</code></h3>
 
@@ -8792,6 +8806,22 @@ Default: <code class="language-plaintext highlighter-rouge">null</code></p>
 Default: True</p>
 
 <p>Whether to include the Sample Database in your Metabase. To exclude the Sample Database, set <code class="language-plaintext highlighter-rouge">MB_LOAD_SAMPLE_CONTENT=false</code>.</p>
+
+<h3 id="mb_monitor_performance"><code class="language-plaintext highlighter-rouge">MB_MONITOR_PERFORMANCE</code></h3>
+
+<p>Type: string<br>
+Default: <code class="language-plaintext highlighter-rouge">""</code></p>
+
+<p>When set, starts a Java Flight Recorder (JFR) recording at startup that can be analyzed with JDK Mission Control or other JFR tools.</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">"true"</code> generates a timestamped output file like <code class="language-plaintext highlighter-rouge">metabase-2026_01_15.jfr</code></li>
+  <li>Any other non-empty value is used as the output filename (<code class="language-plaintext highlighter-rouge">.jfr</code> extension is appended if missing)</li>
+  <li><code class="language-plaintext highlighter-rouge">""</code> or <code class="language-plaintext highlighter-rouge">"false"</code> disables monitoring (the default)</li>
+</ul>
+
+<p>The performance recording stores only method signature calls and other code execution metrics.
+It does not store any sensitive information such as environment variables, system properties, or other machine information.</p>
 
 <h3 id="mb_no_surveys"><code class="language-plaintext highlighter-rouge">MB_NO_SURVEYS</code></h3>
 
