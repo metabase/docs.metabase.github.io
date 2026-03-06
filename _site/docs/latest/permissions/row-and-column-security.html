@@ -6144,29 +6144,30 @@ Roadmap</a>
 <p>If you want to give someone access to multiple user IDs (e.g., the person should see rows for both <code class="language-plaintext highlighter-rouge">User_ID</code> 1 and 2.), you can set up a user attribute, like <code class="language-plaintext highlighter-rouge">user_id</code> that can handle comma-separated values like “1,2”.</p>
 
 <ol>
-  <li>Create a SQL question that parses the comma-separated string and filters the table:</li>
-</ol>
+  <li>
+    <p>Create a SQL question that parses the comma-separated string and filters the table:</p>
 
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-<span class="k">SELECT</span> <span class="o">*</span>
-<span class="k">FROM</span> <span class="n">users_with_values</span>
-<span class="k">WHERE</span> <span class="n">user_id</span> <span class="o">=</span> <span class="k">ANY</span><span class="p">(</span><span class="n">STRING_TO_ARRAY</span><span class="p">(</span><span class="n">REGEXP_REPLACE</span><span class="p">(</span><span class="k">TRIM</span><span class="p">({{</span><span class="n">user_id</span><span class="p">}}),</span> <span class="s1">'</span><span class="se">\\</span><span class="s1">s*,</span><span class="se">\\</span><span class="s1">s*'</span><span class="p">,</span> <span class="s1">','</span><span class="p">),</span> <span class="s1">','</span><span class="p">))</span>
+    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    
+ <span class="k">SELECT</span> <span class="o">*</span>
+ <span class="k">FROM</span> <span class="n">users_with_values</span>
+ <span class="k">WHERE</span> <span class="n">user_id</span> <span class="o">=</span> <span class="k">ANY</span><span class="p">(</span><span class="n">STRING_TO_ARRAY</span><span class="p">(</span><span class="n">REGEXP_REPLACE</span><span class="p">(</span><span class="k">TRIM</span><span class="p">({{</span><span class="n">user_id</span><span class="p">}}),</span> <span class="s1">'</span><span class="se">\\</span><span class="s1">s*,</span><span class="se">\\</span><span class="s1">s*'</span><span class="p">,</span> <span class="s1">','</span><span class="p">),</span> <span class="s1">','</span><span class="p">))</span>
+    
+</code></pre></div>    </div>
 
-</code></pre></div></div>
+    <p>This query:</p>
 
-<p>This query:</p>
+    <ul>
+      <li>Trims whitespace from the user attribute value</li>
+      <li>Replaces any spaces around commas with just commas</li>
+      <li>Converts the comma-separated string to an array</li>
+      <li>Filters rows where the user_id matches any value in the array</li>
+    </ul>
 
-<ul>
-  <li>Trims whitespace from the user attribute value</li>
-  <li>Replaces any spaces around commas with just commas</li>
-  <li>Converts the comma-separated string to an array</li>
-  <li>Filters rows where the user_id matches any value in the array</li>
-</ul>
-
-<p>The <code class="language-plaintext highlighter-rouge">STRING_TO_ARRAY()</code> and <code class="language-plaintext highlighter-rouge">REGEXP_REPLACE()</code> functions are PostgreSQL-specific. To see which functions your database supports, see your database’s documentation.</p>
-
-<ol>
-  <li>Set up the row and column security using this SQL question. See <a href="#setting-up-column-security">setting up column security</a>.</li>
+    <p>The <code class="language-plaintext highlighter-rouge">STRING_TO_ARRAY()</code> and <code class="language-plaintext highlighter-rouge">REGEXP_REPLACE()</code> functions are PostgreSQL-specific. To see which functions your database supports, see your database’s documentation.</p>
+  </li>
+  <li>
+    <p>Set up the row and column security using this SQL question. See <a href="#setting-up-column-security">setting up column security</a>.</p>
+  </li>
 </ol>
 
 <h2 id="preventing-row-and-column-security-permissions-conflicts">Preventing row and column security permissions conflicts</h2>
