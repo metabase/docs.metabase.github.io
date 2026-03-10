@@ -41,6 +41,7 @@ type MetabaseColorKey =
   | "accent-gray-dark"
   | ProtectedColorKey
   | "background-brand"
+  | "background-filter"
   | "background-disabled"
   | "background-disabled-inverse"
   | "background-error"
@@ -59,6 +60,7 @@ type MetabaseColorKey =
   | "background-warning"
   | "border"
   | "border-brand"
+  | "border-filter"
   | "border-strong"
   | "border-subtle"
   | "brand"
@@ -92,6 +94,7 @@ type MetabaseColorKey =
   | "syntax-parameters"
   | "syntax-parameters-active"
   | "text-brand"
+  | "text-filter"
   | "text-hover"
   | "text-primary"
   | "text-primary-inverse"
