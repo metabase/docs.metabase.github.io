@@ -5,8 +5,12 @@
 
   <meta content="frame-ancestors 'none'" http-equiv="Content-Security-Policy">
   <meta content="deny" http-equiv="X-Frame-Options">
-    
+  
+
+  
+   
   <link href="https://www.metabase.com/docs/latest/configuring-metabase/environment-variables" rel="canonical">
+  
   
 
   <script type="text/javascript">
@@ -41,10 +45,9 @@ window.redirectTo = function redirectTo(theLocation) {
   </script>
 
   
-    
- 
+  
 
- 
+
 
 
 
@@ -106,7 +109,7 @@ window.redirectTo = function redirectTo(theLocation) {
 
 
   
-    <link href="/images/favicon.svg" rel="shortcut icon">
+  <link href="/images/favicon.svg" rel="shortcut icon">
   
   <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -118,7 +121,7 @@ window.redirectTo = function redirectTo(theLocation) {
   <link href="/css/docs.css" rel="stylesheet">
   <link href="/css/styles.css" rel="stylesheet">
   
-    <link href="/css/main.css" rel="stylesheet">
+  <link href="/css/main.css" rel="stylesheet">
   
   <link href="/css/gdpr.css" rel="stylesheet">
   <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet">
@@ -162,7 +165,6 @@ window.redirectTo = function redirectTo(theLocation) {
 
   <script type="text/javascript" src="/js/ai-newsletter-subscribe-form.js" defer=""></script>
 </head>
-
 
   <body>
     
@@ -6207,6 +6209,17 @@ If set to 0, Metabase will keep all rows.</p>
 <p>Whether to (asynchronously) sync newly created Databases during config-from-file initialization. By default, true,
   but you can disable this behavior if you want to sync it manually or use SerDes to populate its data model.</p>
 
+<h3 id="mb_csv_field_separator"><code class="language-plaintext highlighter-rouge">MB_CSV_FIELD_SEPARATOR</code></h3>
+
+<ul>
+  <li>Type: string</li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">,</code></li>
+  <li><a href="../installation-and-operation/serialization">Exported as</a>: <code class="language-plaintext highlighter-rouge">csv-field-separator</code>.</li>
+  <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">csv-field-separator</code></li>
+</ul>
+
+<p>Character to use as field separator in CSV exports. Defaults to comma (,). Common alternatives include semicolon (;) for European locales and tab (\t).</p>
+
 <h3 id="mb_custom_formatting"><code class="language-plaintext highlighter-rouge">MB_CUSTOM_FORMATTING</code></h3>
 
 <ul>
@@ -6295,10 +6308,13 @@ If set to 0, Metabase will keep all rows.</p>
 
 <p>By default, this is 20 minutes.</p>
 
-<p>Timeout in minutes for databases query execution, both Metabase application database and data connections.
-  If you have long-running queries, you might consider increasing this value.
-  Adjusting the timeout does not impact Metabase’s frontend.
-  Please be aware that other services (like Nginx) may still drop long-running queries.</p>
+<p>Timeout in minutes for the database’s query execution, both for the Metabase application database and any data connections.
+  If you have long-running queries, you might consider increasing this value. Adjusting the timeout does not impact Metabase’s frontend.</p>
+
+<p>This setting also applies to individual queries executed within transforms, so make sure the duration is long enough
+  that it doesn’t timeout any long-running queries in your transforms.</p>
+
+<p>Please be aware that other services (like Nginx) may still drop long-running queries.</p>
 
 <h3 id="mb_default_maps_enabled"><code class="language-plaintext highlighter-rouge">MB_DEFAULT_MAPS_ENABLED</code></h3>
 
@@ -8384,6 +8400,22 @@ don’t have one.</p>
 
 <p>Timeout in milliseconds to wait after query cancellation before escalating to thread interruption.
         This is used to free up threads that are stuck waiting for a DB response after a query has been cancelled.</p>
+
+<h3 id="mb_transform_timeout"><code class="language-plaintext highlighter-rouge">MB_TRANSFORM_TIMEOUT</code></h3>
+
+<blockquote>
+  <p>Only available on Metabase <a href="/product/pro">Pro</a> and <a href="/product/enterprise">Enterprise</a> plans.</p>
+</blockquote>
+
+<ul>
+  <li>Type: integer</li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">240</code></li>
+</ul>
+
+<p>The timeout for a transform job, in minutes.</p>
+
+<p>Each query executed by a transform is also subject to the MB_DB_QUERY_TIMEOUT_MINUTES timeout,
+  so make sure that value isn’t lower, or it will timeout your transform.</p>
 
 <h3 id="mb_transforms_enabled"><code class="language-plaintext highlighter-rouge">MB_TRANSFORMS_ENABLED</code></h3>
 
