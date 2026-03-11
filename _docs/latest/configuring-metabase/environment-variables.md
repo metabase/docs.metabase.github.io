@@ -325,6 +325,15 @@ Identify when new versions of Metabase are available.
 Whether to (asynchronously) sync newly created Databases during config-from-file initialization. By default, true,
   but you can disable this behavior if you want to sync it manually or use SerDes to populate its data model.
 
+### `MB_CSV_FIELD_SEPARATOR`
+
+- Type: string
+- Default: `,`
+- [Exported as](../installation-and-operation/serialization): `csv-field-separator`.
+- [Configuration file name](./config-file): `csv-field-separator`
+
+Character to use as field separator in CSV exports. Defaults to comma (,). Common alternatives include semicolon (;) for European locales and tab (\t).
+
 ### `MB_CUSTOM_FORMATTING`
 
 - Type: json
@@ -397,9 +406,12 @@ Timeout in milliseconds for connecting to databases, both Metabase application d
 
 By default, this is 20 minutes.
 
-Timeout in minutes for databases query execution, both Metabase application database and data connections.
-  If you have long-running queries, you might consider increasing this value.
-  Adjusting the timeout does not impact Metabase’s frontend.
+Timeout in minutes for the database's query execution, both for the Metabase application database and any data connections.
+  If you have long-running queries, you might consider increasing this value. Adjusting the timeout does not impact Metabase’s frontend.
+
+  This setting also applies to individual queries executed within transforms, so make sure the duration is long enough
+  that it doesn't timeout any long-running queries in your transforms.
+
   Please be aware that other services (like Nginx) may still drop long-running queries.
 
 ### `MB_DEFAULT_MAPS_ENABLED`
@@ -2008,6 +2020,18 @@ By default, this is 0 and the thread interrupt escalation does not run.
 
 Timeout in milliseconds to wait after query cancellation before escalating to thread interruption.
         This is used to free up threads that are stuck waiting for a DB response after a query has been cancelled.
+
+### `MB_TRANSFORM_TIMEOUT`
+
+> Only available on Metabase [Pro](/product/pro) and [Enterprise](/product/enterprise) plans.
+
+- Type: integer
+- Default: `240`
+
+The timeout for a transform job, in minutes.
+
+Each query executed by a transform is also subject to the MB_DB_QUERY_TIMEOUT_MINUTES timeout,
+  so make sure that value isn't lower, or it will timeout your transform.
 
 ### `MB_TRANSFORMS_ENABLED`
 
