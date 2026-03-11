@@ -125,6 +125,7 @@ type IconName =
   | "fields"
   | "filter"
   | "filter_plus"
+  | "find_replace"
   | "bug"
   | "format_code"
   | "formula"
