@@ -168,9 +168,9 @@ FROM [my_dataset.my_table]
 
 If you're having trouble with your BigQuery connection, you can check out this [troubleshooting guide](../../troubleshooting-guide/bigquery-drive) that covers BigQuery issues, [this one](../../troubleshooting-guide/db-connection) on data warehouse connections, or visit [Metabase's discussion forum](https://discourse.metabase.com/search?q=bigquery) to see if someone has encountered and resolved a similar issue.
 
-## Writeable connection
+## Writable connection
 
-Set up an additional connection used for write operations. See [Writeable connections](../writeable-connection).
+Set up an additional connection used for write operations. See [Writable connections](../writable-connection).
 
 ## Model features
 
