@@ -138,9 +138,9 @@ For example, if you're running Metabase from a directory called `/app/`, you sho
 
 The process for adding plugins when running via Docker is similar, but you'll need to mount the `plugins` directory. Refer to instructions [here](../../installation-and-operation/running-metabase-on-docker#adding-external-dependencies-or-plugins) for more details.
 
-## Writeable connection
+## Writable connection
 
-Set up an additional connection used for write operations. See [Writeable connections](../writeable-connection).
+Set up an additional connection used for write operations. See [Writable connections](../writable-connection).
 
 ## Danger zone
 
