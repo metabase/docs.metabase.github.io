@@ -46,7 +46,7 @@ Currently, Metabase can create transforms on the following databases:
 
 You can't create transforms on databases that have [Database routing](../../permissions/database-routing) enabled, or on Metabase's Sample Database.
 
-Transforms will create tables in your database, so the database user you use for your connection must have appropriate privileges. See [Database users, roles, and privileges](../../databases/users-roles-privileges).
+Transforms will create tables in your database, so the database user you use for your connection must have appropriate privileges. See [Database users, roles, and privileges](../../databases/users-roles-privileges). We suggest using a [Writable connection](../../databases/writable-connection) option for your database.
 
 ## Types of transforms
 
