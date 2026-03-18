@@ -5968,37 +5968,57 @@ Roadmap</a>
 
 <h3 id="make-a-query-transform-incremental">Make a query transform incremental</h3>
 
+<h4 id="use-table-variables-for-incremental-sql-transforms">Use table variables for incremental SQL transforms</h4>
+
+<p>If you built your transform in the graphical query builder, you can skip right to <a href="#mark-transform-as-incremental">marking the transform as incremental</a>.</p>
+
+<p>If you are writing your incremental transform in raw SQL, you’ll need to add a <a href="../../questions/native-editor/table-variables">table variable</a> into your SQL code, with the table variable replacing the table with the checkpoint column.</p>
+
+<p>For example, let’s say you have a transform that retrieves order id, total and product title:</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span>
+  <span class="n">orders</span><span class="p">.</span><span class="n">id</span><span class="p">,</span>
+  <span class="n">orders</span><span class="p">.</span><span class="n">total</span><span class="p">,</span>
+  <span class="n">products</span><span class="p">.</span><span class="n">title</span>
+<span class="k">FROM</span>
+   <span class="n">orders</span> <span class="k">JOIN</span> <span class="n">products</span> <span class="k">on</span> <span class="n">orders</span><span class="p">.</span><span class="n">product_id</span> <span class="o">=</span> <span class="n">products</span><span class="p">.</span><span class="n">id</span>
+</code></pre></div></div>
+
+<p>To make this transform incrementally load the data based on new values of <code class="language-plaintext highlighter-rouge">orders.id</code> column, you need to:</p>
+
+<ol>
+  <li>Add a table variable, for example `` replacing <code class="language-plaintext highlighter-rouge">orders</code> in the <code class="language-plaintext highlighter-rouge">FROM</code> statement;</li>
+  <li>In the table variable settings, connect the table variable to the <code class="language-plaintext highlighter-rouge">orders</code> table;</li>
+  <li>Replace other references to the table in your query with either:
+    <ul>
+      <li>The name of the table variable (if you have “Emit table alias” toggled on in variable’s setting).</li>
+      <li>Your own handcrafted alias for the variable.</li>
+    </ul>
+  </li>
+</ol>
+
+<p>So your query will look like this:</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span>
+  <span class="n">orders_var</span><span class="p">.</span><span class="n">id</span><span class="p">,</span>
+  <span class="n">orders_var</span><span class="p">.</span><span class="n">total</span><span class="p">,</span>
+  <span class="n">products</span><span class="p">.</span><span class="n">title</span>
+<span class="k">FROM</span>
+    <span class="k">JOIN</span> <span class="n">products</span> <span class="k">on</span> <span class="n">orders_var</span><span class="p">.</span><span class="n">product_id</span> <span class="o">=</span> <span class="n">products</span><span class="p">.</span><span class="n">id</span>
+</code></pre></div></div>
+
+<p>In this query,<code class="language-plaintext highlighter-rouge">orders_var</code> is connected to the <code class="language-plaintext highlighter-rouge">orders</code> table in variable settings, and “Emit table aliases” toggled on in the variables sidebar.</p>
+
+<p>Once your query has table aliases, you can mark the transform as incremental using the <code class="language-plaintext highlighter-rouge">orders.id</code> column in the transform’s settings.</p>
+
+<h4 id="mark-transform-as-incremental">Mark transform as incremental</h4>
+
 <p>To make a query transform incremental:</p>
 
 <ol>
   <li>Go to the transform’s page in <strong>Data studio &gt; Transforms</strong>.</li>
   <li>Switch to <strong>Settings</strong> tab.</li>
-  <li>
-    <p>In <strong>Column to check for new values</strong>, select the column that Metabase should check to determine which values are new. See <a href="./transforms-overview#prerequisites-for-incremental-transforms">Prerequisites for incremental transforms</a> for more information on the requirements for that column.</p>
-
-    <p>You have to select the column from the list of the columns of the <em>output</em> tables. Note: this is different from <a href="python-transforms">Python transforms</a>, where you select an <em>input</em> column as column to check for new values.</p>
-
-    <p>If you’re using SQL, Metabase might tell you that your query is too complicated to automatically make the transform incremental. In this case, you need to add the filter for new values manually. For example, let’s say you have a transform query:</p>
-
-    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">id</span><span class="p">,</span> <span class="n">total</span> <span class="k">FROM</span> <span class="n">orders</span><span class="p">;</span>
-</code></pre></div>    </div>
-
-    <p>(This query is actually simple enough for Metabase to handle it automatically, we’re just using it as an example)</p>
-
-    <p>If you want use the <code class="language-plaintext highlighter-rouge">id</code> column to check for new values, i.e. only write back the records with <code class="language-plaintext highlighter-rouge">id</code> greater than already existing <code class="language-plaintext highlighter-rouge">id</code>, you can add a manual filter like this:</p>
-
-    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">id</span><span class="p">,</span> <span class="n">total</span> <span class="k">FROM</span> <span class="n">orders</span>
-<span class="p">[[</span><span class="k">WHERE</span> <span class="n">id</span> <span class="o">&gt;</span> <span class="p">{{</span><span class="k">checkpoint</span><span class="p">}}]]</span>
-</code></pre></div>    </div>
-
-    <p>and then select <code class="language-plaintext highlighter-rouge">id</code> as the <strong>Column to check for new values</strong> in the incremental transform settings.</p>
-
-    <p>If you’re using a timestamp column as a checkpoint, you’ll need to explicitly cast it to timestamp:</p>
-
-    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">created_at</span><span class="p">,</span> <span class="n">total</span> <span class="k">FROM</span> <span class="n">orders</span>
-<span class="p">[[</span><span class="k">WHERE</span> <span class="n">created_at</span> <span class="o">&gt;</span> <span class="p">{{</span><span class="k">checkpoint</span><span class="p">}}::</span><span class="nb">timestamp</span><span class="p">]]</span>
-</code></pre></div>    </div>
-  </li>
+  <li>In <strong>Column to check for new values</strong>, select the column in one of the source tables that Metabase should check to determine which values are new. Only some columns are eligible. See <a href="./transforms-overview#prerequisites-for-incremental-transforms">prerequisites for incremental transforms</a>.</li>
 </ol>
 
 
