@@ -5886,8 +5886,6 @@ Roadmap</a>
   </div>
 </div>
 
-<h2 id="overview">Overview</h2>
-
 <p>Remote Sync lets you develop analytics content in your Metabase and automatically deploy it to a read-only production Metabase through Git. Remote Sync can sync:</p>
 
 <ul>
@@ -5897,9 +5895,9 @@ Roadmap</a>
   <li>Transforms</li>
 </ul>
 
-<p>Metabase doesn’t sync any of your data. What it stores in Git are <a href="./serialization#example-of-a-serialized-question">YAML files</a> describing your analytics content. Your actual data stays in your databases and never goes to GitHub.</p>
+<p>Metabase doesn’t sync any of your data. What it stores in Git are <a href="./serialization#example-of-a-serialized-question">YAML files</a> describing your analytics content. Your actual data stays in your databases and never leaves your Metabase.</p>
 
-<h3 id="how-remote-sync-works">How Remote Sync works</h3>
+<h2 id="how-remote-sync-works">How Remote Sync works</h2>
 
 <p>Here’s a basic remote-sync workflow:</p>
 
@@ -5913,22 +5911,49 @@ Roadmap</a>
 
 <p>We’ll cover <a href="#setting-up-remote-sync">setting up Remote Sync</a>, an <a href="#an-example-dev-to-production-workflow">example dev-to-production workflow</a>, <a href="#branch-management">branch management</a>, and some other odds and ends.</p>
 
-<h3 id="key-concepts">Key concepts</h3>
+<h2 id="key-concepts">Key concepts</h2>
 
-<p><strong>Remote Sync has two modes for different roles</strong>:</p>
+<h3 id="remote-sync-has-two-modes-for-different-roles">Remote Sync has two modes for different roles</h3>
 
 <ul>
   <li><strong>Read-write mode</strong>: Create and edit content. You can <a href="#pushing-changes-to-git">push</a> and <a href="#pulling-changes-from-git">pull</a> changes to and from your repository. Multiple Metabase instances can connect in Read-write mode, each working on <a href="#branch-management">different branches</a>.</li>
-  <li><strong>Read-only mode</strong>: Read-only instances only <a href="#pulling-changes-from-git">pull</a> changes (typically from your main branch) and don’t allow direct editing of synced content. In Read-only mode, you also can’t edit transforms (even if transforms syncing wasn’t enabled in read-write mode), can’t edit Library content, and can’t create segments or measures on published tables. You can set up <a href="#pulling-changes-automatically">auto-sync</a> to automatically pull approved changes every five minutes.</li>
+  <li><strong>Read-only mode</strong>: Read-only instances only <a href="#pulling-changes-from-git">pull</a> changes (typically from your main branch) and don’t allow direct editing of synced content. In Read-only mode, you also can’t edit transforms (transforms are always read-only in this mode—see <a href="#8-configure-transforms-syncing-optional">Configure transforms syncing</a>), can’t edit Library content, and can’t create segments or measures on published tables. You can set up <a href="#pulling-changes-automatically">auto-sync</a> to automatically pull approved changes every five minutes.</li>
 </ul>
 
-<p><strong>You choose what to sync</strong>: You can sync the Library, any top-level collections, and transforms. Everything inside selected collections (including sub-collections) is versioned and synchronized with your repository. If you use <a href="../embedding/tenants">Tenants</a>, you can also sync shared collections.</p>
+<h3 id="you-choose-what-to-sync">You choose what to sync</h3>
 
-<p><strong>Items in synced collections must be self-contained</strong>: Everything a dashboard or question needs must be <a href="#items-in-synced-collections-cant-depend-on-items-outside-of-synced-collections">inside a synced collection</a>.</p>
+<p>You can sync:</p>
 
-<p><strong>Content is stored as <a href="./serialization#example-of-a-serialized-question">YAML files</a></strong>: Remote Sync stores your content as YAML files in your Git repository. Each dashboard, question, model, and document becomes a YAML file that can be reviewed in pull requests and versioned like code.</p>
+<ul>
+  <li>Your <a href="../data-studio/library">Library</a></li>
+  <li><a href="../data-studio/transforms/transforms-overview">Transforms</a></li>
+  <li>Any top-level collection under Our Analytics.</li>
+  <li>If you use <a href="../embedding/tenants">tenants</a>, you can also sync <a href="../embedding/tenants#collection-types">shared collections</a>.</li>
+</ul>
 
-<p><strong>Remote Sync excludes table metadata</strong>: Column types, descriptions, and visibility settings don’t sync. If you need to version table metadata, use <a href="./serialization">serialization</a> instead.</p>
+<h3 id="items-in-synced-collections-must-be-self-contained">Items in synced collections must be self-contained</h3>
+
+<p>For Remote Sync to work properly, synced collections must be self-contained. Everything a dashboard or question needs must be inside one of the synced collections. This includes:</p>
+
+<ul>
+  <li>Questions that reference other questions</li>
+  <li>Dashboards with questions</li>
+  <li>Click behaviors linking to other items</li>
+  <li>Filters that pick values from other questions</li>
+  <li>@ mention of other items in documents</li>
+</ul>
+
+<h3 id="content-is-stored-as-yaml-files">Content is stored as YAML files</h3>
+
+<p>Remote Sync stores your content as <a href="./serialization#example-of-a-serialized-question">YAML files</a> in your Git repository. Each dashboard, question, model, and document becomes a YAML file that can be reviewed in pull requests and versioned like code.</p>
+
+<h3 id="remote-sync-excludes-table-metadata">Remote Sync excludes table metadata</h3>
+
+<p>Table metadata doesn’t sync. Table metadata includes things like table names, column types, descriptions, and visibility settings. If you need to version table metadata, use <a href="./serialization">serialization</a> instead.</p>
+
+<h3 id="one-branch-at-a-time-per-metabase">One branch at a time per Metabase</h3>
+
+<p>You can only have <a href="#branching-limitations">one branch at a time per Metabase</a>.</p>
 
 <h2 id="setting-up-remote-sync">Setting up Remote Sync</h2>
 
@@ -5936,29 +5961,36 @@ Roadmap</a>
 
 <ol>
   <li><a href="#1-set-up-a-repository-to-store-your-content">Set up a repository to store your content</a></li>
-  <li><a href="#2-create-a-personal-access-token-for-development">Create a personal access token for development</a></li>
+  <li><a href="#2-create-a-token-for-your-read-and-write-metabase">Create a token for your read-and-write Metabase</a></li>
   <li><a href="#3-connect-your-development-metabase-to-your-repository">Connect your development Metabase to your repository</a></li>
-  <li><a href="#4-select-collections-to-sync">Select collections to sync</a></li>
+  <li><a href="#4-select-what-to-sync">Select what to sync</a></li>
   <li><a href="#5-push-your-changes-to-your-repository">Push your changes to your repository</a></li>
-  <li><a href="#6-create-a-personal-access-token-for-production">Create a personal access token for production</a></li>
+  <li><a href="#6-create-a-token-for-your-read-only-metabase">Create a token for your read-only Metabase</a></li>
   <li><a href="#7-connect-your-production-metabase-to-your-repository">Connect your production Metabase to your repository</a></li>
   <li><a href="#8-configure-transforms-syncing-optional">Configure transforms syncing (optional)</a></li>
 </ol>
 
 <h3 id="1-set-up-a-repository-to-store-your-content">1. Set up a repository to store your content</h3>
 
-<p>Before you connect Metabase to your Git repository, create a <a href="https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-new-repository">new GitHub repository</a>. Initialize the repo with a README.md.</p>
-
-<h3 id="2-create-a-personal-access-token-for-development">2. Create a personal access token for development</h3>
-
-<p>Create a <a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens">GitHub fine-grained personal access token</a> for your repository with these permissions:</p>
+<p>Before you connect Metabase to your Git repository, create a new repository. Supported providers include:</p>
 
 <ul>
-  <li><strong>Contents:</strong> Read and write</li>
-  <li><strong>Metadata:</strong> Read-only (required)</li>
+  <li><a href="https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-new-repository">GitHub</a></li>
+  <li><a href="https://docs.gitlab.com/user/project/index.html#create-a-blank-project">GitLab</a></li>
+  <li><a href="https://support.atlassian.com/bitbucket-cloud/docs/create-a-repository/">Bitbucket</a></li>
 </ul>
 
-<p>Copy the token immediately after generating it.</p>
+<p>Initialize the repo with a README.md.</p>
+
+<h3 id="2-create-a-token-for-your-read-and-write-metabase">2. Create a token for your read-and-write Metabase</h3>
+
+<p>Create a personal access token with read and write repository access. Copy the token immediately; you won’t be able to see the token again.</p>
+
+<ul>
+  <li><strong>GitHub</strong>: Create a <a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens">fine-grained personal access token</a> with <strong>Contents: Read and write</strong> and <strong>Metadata: Read-only</strong> permissions.</li>
+  <li><strong>GitLab</strong>: In <strong>User Settings</strong> &gt; <strong>Personal access tokens</strong>, <a href="https://docs.gitlab.com/user/profile/personal_access_tokens/">create a token</a> with <strong>read_repository</strong> and <strong>write_repository</strong> scopes. Tokens have an expiration date (your admin may set a maximum lifetime).</li>
+  <li><strong>Bitbucket</strong>: In your <a href="https://id.atlassian.com/manage-profile/security">Atlassian account settings</a> under <strong>Security</strong>, click <strong>Create API token with scopes</strong>. Select Bitbucket, search for “repos”, and grant <code class="language-plaintext highlighter-rouge">read:repository:bitbucket</code> and <code class="language-plaintext highlighter-rouge">write:repository:bitbucket</code> (write does not include read). Tokens expire and can’t be modified after creation.</li>
+</ul>
 
 <h3 id="3-connect-your-development-metabase-to-your-repository">3. Connect your development Metabase to your repository</h3>
 
@@ -5976,7 +6008,7 @@ Roadmap</a>
     <p>Enter your repository URL:</p>
 
     <ul>
-      <li>For example, <code class="language-plaintext highlighter-rouge">https://github.com/your-org/your-repo</code>. The repository must already exist and be initialized with at least one commit.</li>
+      <li>For example, <code class="language-plaintext highlighter-rouge">https://github.com/your-org/your-repo</code> or <code class="language-plaintext highlighter-rouge">https://bitbucket.org/your-workspace/your-repo</code> (note the <code class="language-plaintext highlighter-rouge">https</code>). The repository must already exist and be initialized with at least one commit.</li>
     </ul>
   </li>
   <li>
@@ -5986,7 +6018,7 @@ Roadmap</a>
     <p>Add your access token:</p>
 
     <ul>
-      <li>Paste the personal access token (PAT) you created earlier. Make sure the token has <a href="#2-create-a-personal-access-token-for-development">read and write permissions</a>. Metabase encrypts your token before storing it.</li>
+      <li>Paste the personal access token (PAT) you created earlier. Make sure the token has <a href="#2-create-a-token-for-your-read-and-write-metabase">read and write permissions</a>. Metabase encrypts your token before storing it.</li>
     </ul>
   </li>
   <li>
@@ -6001,13 +6033,9 @@ Roadmap</a>
   </li>
 </ol>
 
-<h3 id="4-select-collections-to-sync">4. Select collections to sync</h3>
+<h3 id="4-select-what-to-sync">4. Select what to sync</h3>
 
-<p>You can select any top-level collection under Our Analytics to sync with Git. In the Remote Sync settings, choose which collections you want to track.</p>
-
-<p>Collections you select for syncing must pass referential integrity checks—they need to be self-contained, meaning all dependencies (like models referenced by questions) must also be in synced collections.</p>
-
-<p>If you use <a href="../embedding/tenants">tenants</a>, you can also choose to sync <a href="../embedding/tenants#collection-types">shared collections</a>.</p>
+<p>Select what you <a href="#you-choose-what-to-sync">want to sync</a>.</p>
 
 <h3 id="5-push-your-changes-to-your-repository">5. Push your changes to your repository</h3>
 
@@ -6031,16 +6059,15 @@ Roadmap</a>
 
 <p>By default, you’re pushing to your repository’s main branch. However, you can choose (or create) a different branch so you can open pull requests for review. See <a href="#branch-management">Branch management</a> for details on creating and switching branches.</p>
 
-<h3 id="6-create-a-personal-access-token-for-production">6. Create a personal access token for production</h3>
+<h3 id="6-create-a-token-for-your-read-only-metabase">6. Create a token for your read-only Metabase</h3>
 
-<p>Create a <a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens">GitHub fine-grained personal access token</a> for your repository with these permissions:</p>
+<p>Create a personal access token with read-only repository access. Copy the token immediately; you won’t be able to see the token again.</p>
 
 <ul>
-  <li><strong>Contents:</strong> Read-only</li>
-  <li><strong>Metadata:</strong> Read-only (required)</li>
+  <li><strong>GitHub</strong>: Create a <a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens">fine-grained personal access token</a> with <strong>Contents: Read-only</strong> and <strong>Metadata: Read-only</strong> permissions.</li>
+  <li><strong>GitLab</strong>: In <strong>User Settings</strong> &gt; <strong>Personal access tokens</strong>, <a href="https://docs.gitlab.com/user/profile/personal_access_tokens/">create a token</a> with <strong>read_repository</strong> scope only.</li>
+  <li><strong>Bitbucket</strong>: In your <a href="https://id.atlassian.com/manage-profile/security">Atlassian account settings</a> under <strong>Security</strong>, click <strong>Create API token with scopes</strong>. Select Bitbucket and grant <code class="language-plaintext highlighter-rouge">read:repository:bitbucket</code> only.</li>
 </ul>
-
-<p>Copy the token immediately after generating it — you’ll need to paste it into your production Metabase.</p>
 
 <h3 id="7-connect-your-production-metabase-to-your-repository">7. Connect your production Metabase to your repository</h3>
 
@@ -6056,7 +6083,7 @@ Roadmap</a>
     <p>Enter your repository URL:</p>
 
     <ul>
-      <li>Use the same repository as your development Metabase, for example, <code class="language-plaintext highlighter-rouge">https://github.com/your-org/your-repo</code>.</li>
+      <li>Use the same repository as your development Metabase, for example, <code class="language-plaintext highlighter-rouge">https://github.com/your-org/your-repo</code> (note the <code class="language-plaintext highlighter-rouge">https</code>).</li>
     </ul>
   </li>
   <li>
@@ -6093,7 +6120,14 @@ Roadmap</a>
 
 <h3 id="8-configure-transforms-syncing-optional">8. Configure transforms syncing (optional)</h3>
 
-<p>To version control your data transformation logic, you can sync your <a href="../data-studio/transforms/transforms-overview">Transforms</a> including all your tags and jobs. Transform syncing is all or nothing: Metabase will sync your entire transforms namespace. You can’t selectively sync specific transform folders.</p>
+<p>To version your data transformation logic, you can sync your <a href="../data-studio/transforms/transforms-overview">Transforms</a>, including all your tags and jobs. Some things to keep in mind:</p>
+
+<ul>
+  <li><strong>Transform syncing is all or nothing</strong>: Metabase will sync your entire transforms namespace. You can’t selectively sync specific transform folders.</li>
+  <li><strong>This setting only determines whether Metabase pushes transforms from Read-write mode.</strong> When you <em>pull</em> from a repository, all content present in the repo is loaded—including any transforms—regardless of this setting. Think of it like pulling a repo that has a new collection you hadn’t previously synced: the setting doesn’t filter what comes in, only what goes out.
+-<strong>You can’t edit transforms in read-only mode.</strong>, even if you haven’t explicitly turned on transform syncing. Keeping transforms read-only prevents unintended overwrites on subsequent pulls.</li>
+  <li><strong>Use different databases for dev and production</strong>. If you use transforms with Remote Sync, your development and production Metabases should connect to separate databases that share <em>identical</em> schemas. If you use the same database for both, dev transforms would also change production data.</li>
+</ul>
 
 <h2 id="an-example-dev-to-production-workflow">An example dev-to-production workflow</h2>
 
@@ -6141,7 +6175,7 @@ Roadmap</a>
 <ul>
   <li><a href="#synced-collections-in-the-ui">Synced collections in the UI</a></li>
   <li><a href="#moving-and-deleting-content-in-synced-collections">Moving and deleting content in synced collections</a></li>
-  <li><a href="#items-in-synced-collections-cant-depend-on-items-outside-of-synced-collections">Items in synced collections can’t depend on items outside of synced collections</a></li>
+  <li><a href="#items-in-synced-collections-must-be-self-contained">Items in synced collections must be self-contained</a></li>
 </ul>
 
 <h3 id="synced-collections-in-the-ui">Synced collections in the UI</h3>
@@ -6159,18 +6193,6 @@ Roadmap</a>
 <p>When you remove content from a synced collection in Read-write mode and push that change, the content will also be removed from your production instance when it syncs. This applies to moving content out of a synced collection or deleting it entirely.</p>
 
 <p>Content in other Metabases that depended on this item may break since the dependency will no longer be in a synced collection.</p>
-
-<h3 id="items-in-synced-collections-cant-depend-on-items-outside-of-synced-collections">Items in synced collections can’t depend on items outside of synced collections</h3>
-
-<p>For Remote Sync to work properly, synced collections must be self-contained. Everything a dashboard or question needs must be inside one of the synced collections. This includes:</p>
-
-<ul>
-  <li>Questions that reference models</li>
-  <li>Dashboards with questions</li>
-  <li>Click behaviors linking to other items</li>
-  <li>Filters that pick values from other questions</li>
-  <li>@ mentions in documents</li>
-</ul>
 
 <h3 id="making-sub-collections-appear-at-the-top-level">Making sub-collections appear at the top level</h3>
 
@@ -6208,10 +6230,6 @@ Roadmap</a>
 └── Giant Sloth Statistics
 </code></pre></div></div>
 
-<h2 id="remote-sync-uses-serialization">Remote Sync uses serialization</h2>
-
-<p>Remote Sync serializes your Metabase content as YAML files in your repo. YAML files use Metabase <a href="./serialization">serialization format</a>. See <a href="./serialization">Serialization docs</a> for more information on the format.</p>
-
 <h2 id="what-metabase-syncs">What Metabase syncs</h2>
 
 <p>Remote Sync uses the same serialization format as the <a href="./serialization">Metabase CLI serialization feature</a>, storing your content as YAML files in your Git repository.</p>
@@ -6236,7 +6254,7 @@ Roadmap</a>
   <li>Alerts and subscriptions</li>
   <li>Database connections</li>
   <li>Personal collections</li>
-  <li>Table metadata (column types, descriptions, visibility settings, etc.)</li>
+  <li>Table metadata (table names, column types, descriptions, visibility settings, etc.)</li>
 </ul>
 
 <h2 id="branch-management">Branch management</h2>
@@ -6358,8 +6376,6 @@ Roadmap</a>
 <p>By default, Metabase will check for and pull changes from the branch you specify every five minutes. You can also manually sync as needed.</p>
 
 <h2 id="disabling-remote-sync">Disabling Remote Sync</h2>
-
-<p>To disable Remote Sync, go to the Remote Sync settings page in Admin.</p>
 
 <p>To disable Remote Sync:</p>
 
