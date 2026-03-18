@@ -8845,13 +8845,28 @@ Default: <code class="language-plaintext highlighter-rouge">""</code></p>
 <p>When set, starts a Java Flight Recorder (JFR) recording at startup that can be analyzed with JDK Mission Control or other JFR tools.</p>
 
 <ul>
-  <li><code class="language-plaintext highlighter-rouge">"true"</code> generates a timestamped output file like <code class="language-plaintext highlighter-rouge">metabase-2026_01_15.jfr</code></li>
-  <li>Any other non-empty value is used as the output filename (<code class="language-plaintext highlighter-rouge">.jfr</code> extension is appended if missing)</li>
+  <li><code class="language-plaintext highlighter-rouge">"true"</code> generates a timestamped output file like <code class="language-plaintext highlighter-rouge">metabase-20260115_143000.jfr</code></li>
+  <li>A value ending in <code class="language-plaintext highlighter-rouge">.jfr</code> is used as the output filename</li>
+  <li>Any other non-empty value is treated as a directory path. A new timestamped JFR file is written to that directory every 30 minutes (e.g., <code class="language-plaintext highlighter-rouge">metabase-20260115_143000.jfr</code>). Data is only written at the end of each 30-minute interval.</li>
   <li><code class="language-plaintext highlighter-rouge">""</code> or <code class="language-plaintext highlighter-rouge">"false"</code> disables monitoring (the default)</li>
 </ul>
 
 <p>The performance recording stores only method signature calls and other code execution metrics.
 It does not store any sensitive information such as environment variables, system properties, or other machine information.</p>
+
+<h3 id="mb_monitor_performance_save_rate"><code class="language-plaintext highlighter-rouge">MB_MONITOR_PERFORMANCE_SAVE_RATE</code></h3>
+
+<p>Type: integer<br>
+Default: mode-specific (5 minutes for single-file mode, 30 minutes for rolling mode)</p>
+
+<p>Override the interval (in minutes) at which JFR recording data is saved to disk. Only applies when <a href="#mb_monitor_performance">MB_MONITOR_PERFORMANCE</a> is enabled.</p>
+
+<ul>
+  <li>In single-file mode, the default is <code class="language-plaintext highlighter-rouge">5</code> minutes.</li>
+  <li>In rolling directory mode, the default is <code class="language-plaintext highlighter-rouge">30</code> minutes.</li>
+</ul>
+
+<p>Setting this value overrides the default for whichever mode is active.</p>
 
 <h3 id="mb_no_surveys"><code class="language-plaintext highlighter-rouge">MB_NO_SURVEYS</code></h3>
 
