@@ -5855,19 +5855,18 @@ Roadmap</a>
 
 <p><img src="./images/embed-share-button.png" alt="Embed share button"></p>
 
-<p>Guest embeds on OSS/Starter plans come with two theme presets - light and dark. On Metabase Pro/Enterprise plans, you can customize individual colors, fonts, etc.</p>
+<p>Guest embeds on OSS and Starter plans come with two theme presets - light and dark. On Metabase Pro and Enterprise plans, you can also customize individual colors, backgrounds, fonts and more. See <a href="#advanced-theming">Advanced theming</a>.</p>
 
-<h2 id="basic-theming">Basic theming</h2>
+<h2 id="dark-mode-and-light-mode">Dark mode and light mode</h2>
 
-<p>You can choose light or dark theme for your embeds. On Pro/Enterprise plans, you can also configure granular appearance settings like background, fonts etc, see <a href="#advanced-theming">Advanced theming</a>.</p>
+<p>By default, components that you embed using the SDK will use a light mode theme.</p>
 
-<p>To add a light or dark theme, pass a <code class="language-plaintext highlighter-rouge">theme</code> parameter with <code class="language-plaintext highlighter-rouge">preset</code> to the <code class="language-plaintext highlighter-rouge">defineMetabaseConfig()</code> function in your <a href="./modular-embedding#add-the-embedding-script-to-your-app">embedding code snippet</a>. For example, to specify a dark theme:</p>
+<p>To use dark mode, set <code class="language-plaintext highlighter-rouge">theme.preset</code> to <code class="language-plaintext highlighter-rouge">"dark"</code> in the <code class="language-plaintext highlighter-rouge">defineMetabaseConfig()</code> function of your <a href="./modular-embedding#add-the-embedding-script-to-your-app">embedding code snippet</a>:</p>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">defineMetabaseConfig</span><span class="p">({</span>
   <span class="na">theme</span><span class="p">:</span> <span class="p">{</span>
-    <span class="na">preset</span><span class="p">:</span> <span class="dl">"</span><span class="s2">dark</span><span class="dl">"</span><span class="p">,</span>
+    <span class="na">preset</span><span class="p">:</span> <span class="dl">"</span><span class="s2">dark</span><span class="dl">"</span><span class="p">,</span> <span class="c1">// or "light"</span>
   <span class="p">},</span>
-  <span class="na">instanceUrl</span><span class="p">:</span> <span class="dl">"</span><span class="s2">http://localhost:3000</span><span class="dl">"</span><span class="p">,</span>
 <span class="p">});</span>
 </code></pre></div></div>
 

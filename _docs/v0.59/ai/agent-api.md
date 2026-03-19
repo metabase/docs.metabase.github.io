@@ -37,9 +37,7 @@ Base path:[/api/agent](../api#tag/apiagent)
 
 ## Authentication
 
-The Agent API supports two authentication modes, both requiring JWT to be configured in Metabase admin settings (**Admin** > **Settings** > **Authentication** > **JWT**):
-
-### 1. Stateless JWT (recommended for agents)
+The Agent API uses stateless JWT authentication. JWT must be configured in Metabase admin settings (**Admin** > **Settings** > **Authentication** > **JWT**).
 
 Pass a signed JWT directly in each request:
 
@@ -66,15 +64,14 @@ Example JWT payload:
 }
 ```
 
-### 2. Session-based
+## Example application
 
-Exchange a JWT at `POST /auth/sso` to get a session token, then pass the session token via:
+![Metabase Agent chat answering a product rating question](./images/agent-api-demo.png)
 
-```
-X-Metabase-Session: <session-token>
-```
+Check out the [Metabase Agent API demo](https://github.com/metabase/metabase-agent-api-demo) for a working example of an agentic BI app built on the Agent API.
 
 ## Further reading
 
+- [Metabase Agent API demo](https://github.com/metabase/metabase-agent-api-demo)
 - [Metabase API docs](../api)
 - [JWT authentication](../people-and-groups/authenticating-with-jwt)
