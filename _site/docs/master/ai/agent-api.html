@@ -5913,9 +5913,7 @@ Roadmap</a>
 
 <h2 id="authentication">Authentication</h2>
 
-<p>The Agent API supports two authentication modes, both requiring JWT to be configured in Metabase admin settings (<strong>Admin</strong> &gt; <strong>Settings</strong> &gt; <strong>Authentication</strong> &gt; <strong>JWT</strong>):</p>
-
-<h3 id="1-stateless-jwt-recommended-for-agents">1. Stateless JWT (recommended for agents)</h3>
+<p>The Agent API uses stateless JWT authentication. JWT must be configured in Metabase admin settings (<strong>Admin</strong> &gt; <strong>Settings</strong> &gt; <strong>Authentication</strong> &gt; <strong>JWT</strong>).</p>
 
 <p>Pass a signed JWT directly in each request:</p>
 
@@ -5975,16 +5973,16 @@ Roadmap</a>
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div></div>
 
-<h3 id="2-session-based">2. Session-based</h3>
+<h2 id="example-application">Example application</h2>
 
-<p>Exchange a JWT at <code class="language-plaintext highlighter-rouge">POST /auth/sso</code> to get a session token, then pass the session token via:</p>
+<p><img src="./images/agent-api-demo.png" alt="Metabase Agent chat answering a product rating question"></p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>X-Metabase-Session: &lt;session-token&gt;
-</code></pre></div></div>
+<p>Check out the <a href="https://github.com/metabase/metabase-agent-api-demo">Metabase Agent API demo</a> for a working example of an agentic BI app built on the Agent API.</p>
 
 <h2 id="further-reading">Further reading</h2>
 
 <ul>
+  <li><a href="https://github.com/metabase/metabase-agent-api-demo">Metabase Agent API demo</a></li>
   <li><a href="../api">Metabase API docs</a></li>
   <li><a href="../people-and-groups/authenticating-with-jwt">JWT authentication</a></li>
 </ul>
