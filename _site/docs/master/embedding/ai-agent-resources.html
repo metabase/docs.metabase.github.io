@@ -49,12 +49,12 @@ window.redirectTo = function redirectTo(theLocation) {
 
 
 
-<title>Embedding overview | Metabase Documentation</title>
+<title>AI agent resources for embedding | Metabase Documentation</title>
 <!-- Twitter cards -->
 <meta name="twitter:site" content="@metabase">
 
-<meta name="twitter:title" content="Embedding overview | Metabase Documentation">
-<meta name="twitter:description" content="Embedding overview Introduction What is embedding, and how does it work? Modular embedding Embed individual dashboards, questions, or the query builder in your app with an interactive wizard and simple drop-in script, with minimal or no coding...">
+<meta name="twitter:title" content="AI agent resources for embedding | Metabase Documentation">
+<meta name="twitter:description" content="Agent skills and llms.txt to help AI coding agents embed Metabase in your app.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -62,9 +62,9 @@ window.redirectTo = function redirectTo(theLocation) {
 <!-- Open Graph metadata -->
 <meta property="og:site_name" content="Metabase | Business Intelligence, Dashboards, and Data Visualization">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://www.metabase.com/docs/master/embedding/start">
-<meta name="title" property="og:title" content="Embedding overview | Metabase Documentation">
-<meta name="description" property="og:description" content="Embedding overview Introduction What is embedding, and how does it work? Modular embedding Embed individual dashboards, questions, or the query builder in your app with an interactive wizard and simple drop-in script, with minimal or no coding...">
+<meta property="og:url" content="https://www.metabase.com/docs/master/embedding/ai-agent-resources">
+<meta name="title" property="og:title" content="AI agent resources for embedding | Metabase Documentation">
+<meta name="description" property="og:description" content="Agent skills and llms.txt to help AI coding agents embed Metabase in your app.">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -5862,57 +5862,77 @@ Roadmap</a>
 </div>
 
 
-        <h1 id="embedding-overview">Embedding overview</h1>
+        <h1 id="ai-agent-resources-for-embedding">AI agent resources for embedding</h1>
 
-<h2 id="introduction"><a href="./introduction">Introduction</a></h2>
+<p>If you use an AI coding agent, you can give the agent Metabase-specific context to help with embedding setup, upgrades, and migrations.</p>
 
-<p>What is embedding, and how does it work?</p>
+<h2 id="agent-skills">Agent skills</h2>
 
-<h2 id="modular-embedding"><a href="./modular-embedding">Modular embedding</a></h2>
+<p>We’ve developed some <a href="https://github.com/metabase/agent-skills">agent skills</a> to give your AI agents step-by-step playbooks for specific embedding tasks.</p>
 
-<p>Embed individual dashboards, questions, or the query builder in your app with an interactive wizard and simple drop-in script, with minimal or no coding required. Control component UI and theming. Integrate your app’s auth with Metabase SSO.</p>
+<h3 id="available-skills">Available skills</h3>
 
-<p>If you’re on Metabase OSS or Starter, you can only embed components without SSO. See <a href="./guest-embedding">Guest embeds</a>.</p>
+<table>
+  <thead>
+    <tr>
+      <th>Skill</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td data-label="Skill"><a href="https://skillsmp.com/skills/metabase-agent-skills-skills-metabase-modular-embedding-version-upgrade-skill-md">SDK version upgrade</a></td>
+      <td data-label="Description">Upgrade your modular embedding SDK, including changelog checks and breaking change handling.</td>
+    </tr>
+    <tr>
+      <td data-label="Skill"><a href="https://skillsmp.com/skills/metabase-agent-skills-skills-metabase-full-app-to-modular-embedding-upgrade-skill-md">Full app → modular embedding</a></td>
+      <td data-label="Description">Migrate from full app embedding to modular embedding.</td>
+    </tr>
+    <tr>
+      <td data-label="Skill"><a href="https://skillsmp.com/skills/metabase-agent-skills-skills-metabase-modular-embedding-to-modular-embedding-sdk-upgrade-skill-md">Modular embedding → SDK (React)</a></td>
+      <td data-label="Description">Migrate from script-based modular embedding to the React SDK.</td>
+    </tr>
+    <tr>
+      <td data-label="Skill"><a href="https://skillsmp.com/skills/metabase-agent-skills-skills-metabase-static-embedding-to-guest-embedding-upgrade-skill-md">Static → guest embeds</a></td>
+      <td data-label="Description">Migrate from static (signed) embeds to guest embeds.</td>
+    </tr>
+    <tr>
+      <td data-label="Skill"><a href="https://skillsmp.com/skills/metabase-agent-skills-skills-metabase-embedding-sso-implementation-skill-md">SSO for embeds</a></td>
+      <td data-label="Description">Set up SSO authentication for embedded Metabase. <em>(In development.)</em></td>
+    </tr>
+  </tbody>
+</table>
 
-<h3 id="modular-embedding-sdk"><a href="./sdk/introduction">Modular embedding SDK</a></h3>
+<p>Browse all skills on the <a href="https://github.com/metabase/agent-skills">agent skills repo</a>.</p>
 
-<p>With the Modular embedding SDK, you can embed individual Metabase components with React (like standalone charts, dashboards, the query builder, and more). You can manage access and interactivity per component, and you have advanced customization for seamless styling.</p>
+<h2 id="llmstxt">llms.txt</h2>
 
-<h3 id="modular-embedding-sdk-quickstart"><a href="./sdk/quickstart">Modular embedding SDK quickstart</a></h3>
+<p>Agents can read the docs you’re reading now (and many agents have already read our docs), but we also publish llms.txts so that you can give your AI agent:</p>
 
-<p>Jump to a SDK quickstart with a sample React application.</p>
+<ul>
+  <li><a href="/docs/llms.txt">Summary of embedding docs, with links</a>.</li>
+  <li><a href="/docs/llms-embedding-full.txt">The full embedding docs</a>.</li>
+</ul>
 
-<h3 id="guest-embedding"><a href="./guest-embedding">Guest embedding</a></h3>
+<p>If you’re on a specific version (e.g., v0.58), you can use versioned llms.txt files scoped to that version’s docs:</p>
 
-<p>Guest embedding is a secure way to embed charts and dashboards. Guest embeds are view-only; people won’t be able to drill-through charts and tables.</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">https://www.metabase.com/docs/v0.58/llms.txt</code></li>
+  <li><code class="language-plaintext highlighter-rouge">https://www.metabase.com/docs/v0.58/llms-embedding-full.txt</code></li>
+</ul>
 
-<h3 id="translating-embeds"><a href="./translations">Translating embeds</a></h3>
+<h2 id="agents-are-not-magic">Agents are not magic</h2>
 
-<p>Upload a translation dictionary to translate questions and dashboards in modular embeds.</p>
+<p>Always review and validate the changes made by agents. Check that your application builds, tests pass, and the embedding works as expected before committing anything.</p>
 
-<h2 id="full-app-embedding"><a href="./full-app-embedding">Full app embedding</a></h2>
+<h2 id="further-reading">Further reading</h2>
 
-<p>Full app embedding allows you to embed full Metabase app in an iframe. Full app embedding integrates with your data permissions to let people slice and dice data on their own using Metabase’s query builder.</p>
-
-<h3 id="full-app-embedding-quickstart"><a href="./full-app-embedding-quick-start-guide">Full app embedding quickstart</a></h3>
-
-<p>You’ll embed the full Metabase application in your app. Once logged in, people can view a Metabase dashboard in your web app, and be able to use the full Metabase application to explore their data, and only their data.</p>
-
-<h3 id="full-app-ui-components"><a href="./full-app-ui-components">Full app UI components</a></h3>
-
-<p>Customize the UI components in your full app embed by adding parameters to the embedding URL.</p>
-
-<h2 id="public-embeds"><a href="./public-links">Public embeds</a></h2>
-
-<p>Admins can also create unsecured public links or embeds of questions and dashboards.</p>
-
-<h2 id="securing-embeds"><a href="./securing-embeds">Securing embeds</a></h2>
-
-<p>How to make sure the right people can see the right data in your embedded Metabase.</p>
-
-<h2 id="ai-agent-resources"><a href="./ai-agent-resources">AI agent resources</a></h2>
-
-<p>Machine-readable docs and agent skills to help AI coding agents with embedding setup, upgrades, and migrations.</p>
+<ul>
+  <li><a href="./introduction">Embedding introduction</a></li>
+  <li><a href="./sdk/introduction">Modular embedding SDK</a></li>
+  <li><a href="./sdk/upgrade">Upgrading the modular embedding SDK</a></li>
+  <li><a href="https://github.com/metabase/agent-skills">Agent skills repo</a></li>
+</ul>
 
 
         <div>
@@ -5966,7 +5986,7 @@ Roadmap</a>
 
   
     <span class="paragraph-6 fs-13 neutral-60" id="page-feedback-footer">
-      Want to improve these docs? <a href="https://github.com/metabase/metabase/blob/master/docs/embedding/start.md" target="_blank">Propose a change.</a>
+      Want to improve these docs? <a href="https://github.com/metabase/metabase/blob/master/docs/embedding/ai-agent-resources.md" target="_blank">Propose a change.</a>
     </span>
   
 </div>
@@ -5988,8 +6008,8 @@ Roadmap</a>
 <script type="text/javascript" src="/js/position-feedback-widget.js"></script>
 
 <script>
-  const pageTitle = `Embedding overview`;
-  const pageURL = '/docs/master/embedding/start';
+  const pageTitle = `AI agent resources for embedding`;
+  const pageURL = '/docs/master/embedding/ai-agent-resources';
   const pageURLSplit = pageURL.split('/');
 
   let pageURLPrefix = '/' + pageURLSplit[1] + '/' + pageURLSplit[2];

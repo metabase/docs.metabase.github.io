@@ -59,6 +59,51 @@ Watch out for these deprecated props and gotchas for Metabase 57 onwards, for mo
 6. `fetchRequestToken` is not needed by default in most implementations. This is only used to customize how the SDK fetches the request token. For example, if the `/sso/metabase` endpoint in the user's backend requires passing custom auth tokens or headers.
 7. When using `fetchRequestToken`, you MUST return the token in the shape of `{jwt: "<jwt string>"}`. Example: `return {jwt: await response.json()}`. 
 
+# AI agent resources for embedding
+
+If you use an AI coding agent, you can give the agent Metabase-specific context to help with embedding setup, upgrades, and migrations.
+
+## Agent skills
+
+We've developed some [agent skills](https://github.com/metabase/agent-skills) to give your AI agents step-by-step playbooks for specific embedding tasks.
+
+### Available skills
+
+| Skill                           | Description                                                                                  |
+| ------------------------------- | -------------------------------------------------------------------------------------------- |
+| [SDK version upgrade](https://skillsmp.com/skills/metabase-agent-skills-skills-metabase-modular-embedding-version-upgrade-skill-md) | Upgrade your modular embedding SDK, including changelog checks and breaking change handling. |
+| [Full app → modular embedding](https://skillsmp.com/skills/metabase-agent-skills-skills-metabase-full-app-to-modular-embedding-upgrade-skill-md) | Migrate from full app embedding to modular embedding. |
+| [Modular embedding → SDK (React)](https://skillsmp.com/skills/metabase-agent-skills-skills-metabase-modular-embedding-to-modular-embedding-sdk-upgrade-skill-md) | Migrate from script-based modular embedding to the React SDK. |
+| [Static → guest embeds](https://skillsmp.com/skills/metabase-agent-skills-skills-metabase-static-embedding-to-guest-embedding-upgrade-skill-md) | Migrate from static (signed) embeds to guest embeds. |
+| [SSO for embeds](https://skillsmp.com/skills/metabase-agent-skills-skills-metabase-embedding-sso-implementation-skill-md) | Set up SSO authentication for embedded Metabase. _(In development.)_ |
+
+Browse all skills on the [agent skills repo](https://github.com/metabase/agent-skills).
+
+## llms.txt
+
+Agents can read the docs you're reading now (and many agents have already read our docs), but we also publish llms.txts so that you can give your AI agent:
+
+- [Summary of embedding docs, with links](/docs/llms.txt).
+- [The full embedding docs](/docs/llms-embedding-full.txt).
+
+If you're on a specific version (e.g., v0.58), you can use versioned llms.txt files scoped to that version's docs:
+
+- `https://www.metabase.com/docs/v0.58/llms.txt`
+- `https://www.metabase.com/docs/v0.58/llms-embedding-full.txt`
+
+## Agents are not magic
+
+Always review and validate the changes made by agents. Check that your application builds, tests pass, and the embedding works as expected before committing anything.
+
+## Further reading
+
+- [Embedding introduction](./introduction)
+- [Modular embedding SDK](./sdk/introduction)
+- [Upgrading the modular embedding SDK](./sdk/upgrade)
+- [Agent skills repo](https://github.com/metabase/agent-skills)
+
+---
+
 # Customizing the appearance of modular embeds
 
 You can style your embedded [Metabase components](./components) with a **theme**.
@@ -2001,7 +2046,7 @@ If you'd like to share your data with the good people of the internet, admins ca
 | Charts and dashboards                                                                                                | ✅                                   | ✅                                    | ✅                                    | ✅                                  | ✅                                     |
 | [Filter widgets](/glossary/filter-widget)                                                    | ✅                                   | ✅                                    | ✅                                    | ✅                                  | ✅                                     |
 | Export results\*                                                                                                     | ✅                                   | ✅                                    | ✅                                    | ✅                                  | ✅                                     |
-| [Locked filters](./static-embedding-parameters#restricting-data-in-a-static-embed-with-locked-parameters)          | ❌                                   | ❌                                    | ✅                                    | ❌                                  | ❌                                     |
+| [Locked filters](./static-embedding-parameters#restricting-data-in-a-static-embed-with-locked-parameters)         | ❌                                   | ❌                                    | ✅                                    | ❌                                  | ❌                                     |
 | [Data segregation](../permissions/embedding)                                                                      | ✅                                   | ✅                                    | ❌                                    | ✅                                  | ❌                                     |
 | [Drill-through menu](/learn/metabase-basics/querying-and-dashboards/questions/drill-through) | ✅                                   | ✅                                    | ❌                                    | ✅                                  | ❌                                     |
 | [Query builder](../questions/query-builder/editor)                                                                | ✅                                   | ✅                                    | ❌                                    | ✅                                  | ❌                                     |
@@ -2017,6 +2062,10 @@ If you'd like to share your data with the good people of the internet, admins ca
 \* Each embedding type allows data downloads by default, but only [Pro and Enterprise](/pricing/) plans can disable data downloads.
 
 \*\* Requires a [Pro and Enterprise](/pricing/) plan for any embedding type.
+
+## Resources for AI agents
+
+If you're using an AI agent to help you embed Metabase in your app, check out [AI agent resources](./ai-agent-resources).
 
 ## Further reading
 
@@ -3638,6 +3687,8 @@ Run your app and visit the page with the embedded dashboard.
 
 Here's a basic overview of the steps you'll want to take when upgrading your SDK.
 
+> **Using an AI coding agent?** The [agent skills pack](../ai-agent-resources) includes a skill that walks your agent through SDK upgrades step by step.
+
 ## 1. Read the release post and changelog for Metabase and the modular embedding SDK
 
 - [Release posts](/releases) give a good overview of what's in each release, and call out breaking changes (which are rare).
@@ -4049,6 +4100,10 @@ Admins can also create unsecured public links or embeds of questions and dashboa
 ## [Securing embeds](./securing-embeds)
 
 How to make sure the right people can see the right data in your embedded Metabase.
+
+## [AI agent resources](./ai-agent-resources)
+
+Machine-readable docs and agent skills to help AI coding agents with embedding setup, upgrades, and migrations.
 
 ---
 
