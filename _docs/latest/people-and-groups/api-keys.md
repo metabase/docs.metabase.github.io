@@ -86,7 +86,7 @@ Replace `YOUR_API_KEY` with the API key you generated above.
 
 ```sh
 curl \
--H 'x-api-key: YOUR_API_KEY' \
+-H 'X-API-Key: YOUR_API_KEY' \
 -X GET 'http://localhost:3000/api/permissions/group'
 ```
 
@@ -108,7 +108,7 @@ const API_KEY = process.env.METABASE_API_KEY;
 const init = {
   headers: {
     "Content-Type": "application/json",
-    "X-API-KEY": API_KEY,
+    "X-API-Key": API_KEY,
   },
 };
 
