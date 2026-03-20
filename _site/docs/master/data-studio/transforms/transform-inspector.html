@@ -49,12 +49,12 @@ window.redirectTo = function redirectTo(theLocation) {
 
 
 
-<title>Embedding overview | Metabase Documentation</title>
+<title>Transform inspector | Metabase Documentation</title>
 <!-- Twitter cards -->
 <meta name="twitter:site" content="@metabase">
 
-<meta name="twitter:title" content="Embedding overview | Metabase Documentation">
-<meta name="twitter:description" content="Embedding overview Introduction What is embedding, and how does it work? Modular embedding Embed individual dashboards, questions, or the query builder in your app with an interactive wizard and simple drop-in script, with minimal or no coding...">
+<meta name="twitter:title" content="Transform inspector | Metabase Documentation">
+<meta name="twitter:description" content="Analyze how your transforms process data by inspecting input and output shapes, join behavior, and column distributions.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -62,9 +62,9 @@ window.redirectTo = function redirectTo(theLocation) {
 <!-- Open Graph metadata -->
 <meta property="og:site_name" content="Metabase | Business Intelligence, Dashboards, and Data Visualization">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://www.metabase.com/docs/master/embedding/start">
-<meta name="title" property="og:title" content="Embedding overview | Metabase Documentation">
-<meta name="description" property="og:description" content="Embedding overview Introduction What is embedding, and how does it work? Modular embedding Embed individual dashboards, questions, or the query builder in your app with an interactive wizard and simple drop-in script, with minimal or no coding...">
+<meta property="og:url" content="https://www.metabase.com/docs/master/data-studio/transforms/transform-inspector">
+<meta name="title" property="og:title" content="Transform inspector | Metabase Documentation">
+<meta name="description" property="og:description" content="Analyze how your transforms process data by inspecting input and output shapes, join behavior, and column distributions.">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -5715,7 +5715,7 @@ Roadmap</a>
 
             
             
-                <li class="breadcrumb-item"><a class="blue-60" href="/docs/master/embedding/start">Embedding</a></li>
+                <li class="breadcrumb-item"><a class="blue-60" href="/docs/master/data-studio/start">Data Studio</a></li>
             
             
         </ol>
@@ -5862,57 +5862,76 @@ Roadmap</a>
 </div>
 
 
-        <h1 id="embedding-overview">Embedding overview</h1>
+        <h1 id="transform-inspector">Transform inspector</h1>
 
-<h2 id="introduction"><a href="./introduction">Introduction</a></h2>
+<blockquote>
+  <p>Transform inspector requires the <strong>Advanced transforms</strong> add-on.</p>
+</blockquote>
 
-<p>What is embedding, and how does it work?</p>
+<p><em>Data Studio &gt; Transforms &gt; [transform name] &gt; Inspect</em></p>
 
-<h2 id="modular-embedding"><a href="./modular-embedding">Modular embedding</a></h2>
+<p>The transform inspector gives you a diagnostic view of your transforms. Instead of writing your own SQL to check row counts, join match rates, or column distributions, you can open the <strong>Inspect</strong> tab and let Metabase analyze your transform’s inputs and outputs for you. The inspector is especially useful for catching data quality issues (like unmatched rows in joins) before they cause problems downstream.</p>
 
-<p>Embed individual dashboards, questions, or the query builder in your app with an interactive wizard and simple drop-in script, with minimal or no coding required. Control component UI and theming. Integrate your app’s auth with Metabase SSO.</p>
+<p><img src="../images/transform-inspector.png" alt="Transform inspector"></p>
 
-<p>If you’re on Metabase OSS or Starter, you can only embed components without SSO. See <a href="./guest-embedding">Guest embeds</a>.</p>
+<p>To inspect a transform, you need to run the transform at least once, since the inspector analyzes actual data in the target and source tables. If you change the transform definition, you’ll need to re-run the transform to refresh the inspector’s analysis.</p>
 
-<h3 id="modular-embedding-sdk"><a href="./sdk/introduction">Modular embedding SDK</a></h3>
+<h2 id="lenses">Lenses</h2>
 
-<p>With the Modular embedding SDK, you can embed individual Metabase components with React (like standalone charts, dashboards, the query builder, and more). You can manage access and interactivity per component, and you have advanced customization for seamless styling.</p>
+<p>The inspector organizes its analysis into different lenses (displayed as tabs). Each lens focuses on specific aspects of your transform. Lenses other than the Data Summary only appear when relevant.</p>
 
-<h3 id="modular-embedding-sdk-quickstart"><a href="./sdk/quickstart">Modular embedding SDK quickstart</a></h3>
+<ul>
+  <li><a href="#data-summary">Data summary</a></li>
+  <li><a href="#column-distributions">Column distributions</a></li>
+  <li><a href="#join-analysis">Join analysis</a></li>
+  <li><a href="#drill-lenses">Drill lenses</a></li>
+</ul>
 
-<p>Jump to a SDK quickstart with a sample React application.</p>
+<h3 id="data-summary">Data summary</h3>
 
-<h3 id="guest-embedding"><a href="./guest-embedding">Guest embedding</a></h3>
+<p>Data summary gives you a quick snapshot of the transform’s input and output tables:</p>
 
-<p>Guest embedding is a secure way to embed charts and dashboards. Guest embeds are view-only; people won’t be able to drill-through charts and tables.</p>
+<ul>
+  <li><strong>Input and output tables</strong>: table name, row count, column count.</li>
+  <li><strong>Field-level stats</strong>: data type, distinct count, nil percentage (number of null values), range, and averages.</li>
+</ul>
 
-<h3 id="translating-embeds"><a href="./translations">Translating embeds</a></h3>
+<h3 id="column-distributions">Column distributions</h3>
 
-<p>Upload a translation dictionary to translate questions and dashboards in modular embeds.</p>
+<p>The Column distributions lens visualizes how data distributions change through the transform. This lens can help you spot unexpected filtering or aggregation effects. This lens is only available when columns match between input and output tables (so you may not see it for transforms that aggregate data).</p>
 
-<h2 id="full-app-embedding"><a href="./full-app-embedding">Full app embedding</a></h2>
+<p>The Column distributions lens can be slow on large datasets because it computes distribution stats for every matched column.</p>
 
-<p>Full app embedding allows you to embed full Metabase app in an iframe. Full app embedding integrates with your data permissions to let people slice and dice data on their own using Metabase’s query builder.</p>
+<h3 id="join-analysis">Join analysis</h3>
 
-<h3 id="full-app-embedding-quickstart"><a href="./full-app-embedding-quick-start-guide">Full app embedding quickstart</a></h3>
+<p><img src="../images/join-problem.png" alt="Transform inspector join inspector detects unmatched rows"></p>
 
-<p>You’ll embed the full Metabase application in your app. Once logged in, people can view a Metabase dashboard in your web app, and be able to use the full Metabase application to explore their data, and only their data.</p>
+<p>Available when the transform includes joins. Shows how well your joins match across tables:</p>
 
-<h3 id="full-app-ui-components"><a href="./full-app-ui-components">Full app UI components</a></h3>
+<ul>
+  <li><strong>Join name</strong>, <strong>output rows</strong>, <strong>matched rows</strong>, and <strong>table rows</strong> for each join.</li>
+  <li>Shows a warning when more than 20% of rows are unmatched. The warning appears inline in the join analysis results. You can click to open a <a href="#drill-lenses">drill lens</a> to see the unmatched rows.</li>
+</ul>
 
-<p>Customize the UI components in your full app embed by adding parameters to the embedding URL.</p>
+<h3 id="drill-lenses">Drill lenses</h3>
 
-<h2 id="public-embeds"><a href="./public-links">Public embeds</a></h2>
+<p><img src="../images/drill-lens.png" alt="Drill lenses tab showing unmatched rows"></p>
 
-<p>Admins can also create unsecured public links or embeds of questions and dashboards.</p>
+<p>Drill lenses are dynamic tabs that appear based on analysis results. For example, if a join analysis finds unmatched rows, a tab like “Unmatched Rows - Join 1” will appear.</p>
 
-<h2 id="securing-embeds"><a href="./securing-embeds">Securing embeds</a></h2>
+<h2 id="some-lenses-can-take-a-while-to-load">Some lenses can take a while to load</h2>
 
-<p>How to make sure the right people can see the right data in your embedded Metabase.</p>
+<p><img src="../images/transform-inspector-analysis-warning.png" alt="Some analyses may take a long time to load"></p>
 
-<h2 id="ai-agent-resources"><a href="./ai-agent-resources">AI agent resources</a></h2>
+<p>Inspector lenses run queries against your database, and some lenses can take longer than others. A clock icon on a lens tab means the lens could run a long query, depending on how many rows of data you’re working with. For large datasets, consider running these lenses during off-peak hours.</p>
 
-<p>Machine-readable docs and agent skills to help AI coding agents with embedding setup, upgrades, and migrations.</p>
+<h2 id="further-reading">Further reading</h2>
+
+<ul>
+  <li><a href="transforms-overview">Transforms overview</a></li>
+  <li><a href="query-transforms">Query-based transforms</a></li>
+  <li><a href="python-transforms">Python transforms</a></li>
+</ul>
 
 
         <div>
@@ -5966,7 +5985,7 @@ Roadmap</a>
 
   
     <span class="paragraph-6 fs-13 neutral-60" id="page-feedback-footer">
-      Want to improve these docs? <a href="https://github.com/metabase/metabase/blob/master/docs/embedding/start.md" target="_blank">Propose a change.</a>
+      Want to improve these docs? <a href="https://github.com/metabase/metabase/blob/master/docs/data-studio/transforms/transform-inspector.md" target="_blank">Propose a change.</a>
     </span>
   
 </div>
@@ -5988,8 +6007,8 @@ Roadmap</a>
 <script type="text/javascript" src="/js/position-feedback-widget.js"></script>
 
 <script>
-  const pageTitle = `Embedding overview`;
-  const pageURL = '/docs/master/embedding/start';
+  const pageTitle = `Transform inspector`;
+  const pageURL = '/docs/master/data-studio/transforms/transform-inspector';
   const pageURLSplit = pageURL.split('/');
 
   let pageURLPrefix = '/' + pageURLSplit[1] + '/' + pageURLSplit[2];
@@ -6309,8 +6328,6 @@ Roadmap</a>
   <script type="text/javascript" src="/js/blog.js"></script>
   <script type="text/javascript" src="/js/syntax-highlight.js"></script>
 
-  
-    <script type="text/javascript" src="/js/docs/checkpoints.js"></script>
   
 
 </body></html>
