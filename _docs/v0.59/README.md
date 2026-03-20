@@ -221,6 +221,7 @@ Metabase's reference documentation.
   - [SDK](./embedding/sdk/introduction)
 - [Full app embedding](./embedding/full-app-embedding)
 - [Securing embeds](./embedding/securing-embeds)
+- [AI agent resources](./embedding/ai-agent-resources)
 
 ### Configuration
 

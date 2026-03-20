@@ -17,6 +17,8 @@ latest: true
 
 Here's a basic overview of the steps you'll want to take when upgrading your SDK.
 
+> **Using an AI coding agent?** The [agent skills pack](../ai-agent-resources) includes a skill that walks your agent through SDK upgrades step by step.
+
 ## 1. Read the release post and changelog for Metabase and the modular embedding SDK
 
 - [Release posts](/releases) give a good overview of what's in each release, and call out breaking changes (which are rare).
