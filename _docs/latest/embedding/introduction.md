@@ -78,7 +78,7 @@ If you'd like to share your data with the good people of the internet, admins ca
 | Charts and dashboards                                                                                                | ✅                                   | ✅                                    | ✅                                    | ✅                                  | ✅                                     |
 | [Filter widgets](/glossary/filter-widget)                                                    | ✅                                   | ✅                                    | ✅                                    | ✅                                  | ✅                                     |
 | Export results\*                                                                                                     | ✅                                   | ✅                                    | ✅                                    | ✅                                  | ✅                                     |
-| [Locked filters](./static-embedding-parameters#restricting-data-in-a-static-embed-with-locked-parameters)          | ❌                                   | ❌                                    | ✅                                    | ❌                                  | ❌                                     |
+| [Locked filters](./static-embedding-parameters#restricting-data-in-a-static-embed-with-locked-parameters)         | ❌                                   | ❌                                    | ✅                                    | ❌                                  | ❌                                     |
 | [Data segregation](../permissions/embedding)                                                                      | ✅                                   | ✅                                    | ❌                                    | ✅                                  | ❌                                     |
 | [Drill-through menu](/learn/metabase-basics/querying-and-dashboards/questions/drill-through) | ✅                                   | ✅                                    | ❌                                    | ✅                                  | ❌                                     |
 | [Query builder](../questions/query-builder/editor)                                                                | ✅                                   | ✅                                    | ❌                                    | ✅                                  | ❌                                     |
@@ -94,6 +94,10 @@ If you'd like to share your data with the good people of the internet, admins ca
 \* Each embedding type allows data downloads by default, but only [Pro and Enterprise](/pricing/) plans can disable data downloads.
 
 \*\* Requires a [Pro and Enterprise](/pricing/) plan for any embedding type.
+
+## Resources for AI agents
+
+If you're using an AI agent to help you embed Metabase in your app, check out [AI agent resources](./ai-agent-resources).
 
 ## Further reading
 
