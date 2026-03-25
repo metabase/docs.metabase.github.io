@@ -12,9 +12,13 @@ summary: 'The Agent API is a REST API for building headless, agentic BI applicat
 
 # Agent API
 
-{% include plans-blockquote.html feature="Metabase agent API" %}
-
 The Agent API is a REST API for building headless, agentic BI applications on top of Metabase's semantic layer, scoped to an authenticated user's permissions.
+
+## Example application
+
+![Metabase Agent chat answering a product rating question](./images/agent-api-demo.png)
+
+Check out the [Metabase Agent API demo](https://github.com/metabase/metabase-agent-api-demo) for a working example of an agentic BI app built on the Agent API.
 
 ## Why use the Agent API
 
@@ -33,7 +37,11 @@ The Agent API supports:
 - Inspecting their fields
 - Constructing and executing queries
 
-Base path:[/api/agent](../api#tag/apiagent)
+## Agent API endpoints and reference
+
+Check out the API endpoints: [/api/agent](../api#tag/apiagent).
+
+You can also point your AI to the [Agent API reference](https://github.com/metabase/metabase/blob/master/src/metabase/agent_api/reference.md) to bootstrap your agent.
 
 ## Authentication
 
@@ -64,14 +72,17 @@ Example JWT payload:
 }
 ```
 
-## Example application
+### Session-based authentication
 
-![Metabase Agent chat answering a product rating question](./images/agent-api-demo.png)
+Exchange a JWT at `POST /auth/sso/to_session` to get a session token, then pass it via:
 
-Check out the [Metabase Agent API demo](https://github.com/metabase/metabase-agent-api-demo) for a working example of an agentic BI app built on the Agent API.
+```
+X-Metabase-Session: <session-token>
+```
 
 ## Further reading
 
+- [Agent API complete reference](https://github.com/metabase/metabase/blob/master/src/metabase/agent_api/reference.md)
 - [Metabase Agent API demo](https://github.com/metabase/metabase-agent-api-demo)
 - [Metabase API docs](../api)
 - [JWT authentication](../people-and-groups/authenticating-with-jwt)
