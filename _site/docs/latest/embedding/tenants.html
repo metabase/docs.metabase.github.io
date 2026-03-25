@@ -6116,8 +6116,6 @@ To add tenant users in Metabase:</p>
 
 <p><img src="./images/edit-tenant.png" alt="Edit tenant"></p>
 
-<p>There are three ways to add a tenant attribute, using the Metabase UI, the API, or JWT SSO.</p>
-
 <p>To create a tenant attribute manually using the Metabase UI:</p>
 
 <ol>
@@ -6127,7 +6125,7 @@ To add tenant users in Metabase:</p>
   <li>Input the attribute key and value.</li>
 </ol>
 
-<p>For details on how to set tenant attributes using JWT tenant claims, see <a href="#setting-tenant-attributes-using-tenant-claims">Setting tenant attributes using tenant claims</a> below.</p>
+<p>You can also assign tenant attributes automatically through JWT claims, see <a href="#setting-tenant-attributes-using-tenant-claims">Setting tenant attributes using tenant claims</a> below.</p>
 
 <p>Once you add a tenant attribute, all users of that tenant will inherit the attribute, but the value can be overridden for any particular user, see <a href="../people-and-groups/managing#adding-a-user-attribute">Edit user attributes</a>.</p>
 
@@ -6201,7 +6199,8 @@ To add tenant users in Metabase:</p>
 <div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
   </span><span class="nl">"@tenant"</span><span class="p">:</span><span class="w"> </span><span class="s2">"meowdern_solutions"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"@tenant.attributes"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="nl">"industry"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cat food"</span><span class="w">
+    </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"13371337"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Mammoth Solutions"</span><span class="w">
   </span><span class="p">},</span><span class="w">
   </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mittens@example.com"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"first_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Mister"</span><span class="p">,</span><span class="w">
@@ -6254,7 +6253,7 @@ To add tenant users in Metabase:</p>
 
 <h3 id="use-tenant-attributes-for-data-permissions">Use tenant attributes for data permissions</h3>
 
-<p><a href="../permissions/row-and-column-security">Row and column security</a>, <a href="../permissions/impersonation">Impersonation</a>, and Database routing require user attributes. You can <a href="#tenant-attributes">specify custom tenant attributes</a> to configure data permissions based on attribute values. See <a href="#tenant-attributes">Tenant attributes</a>. Alternatively, you can use the special tenant slug attribute, see <a href="#special-tenant-slug-attribute">Special slug attribute</a>.</p>
+<p><a href="../permissions/row-and-column-security">Row and column security</a>, <a href="../permissions/impersonation">Impersonation</a>, and Database routing require user attributes. You can <a href="#tenant-attributes">specify custom tenant attributes</a> to configure data permissions based on attribute values. See <a href="#tenant-attributes">Tenant attributes</a>.</p>
 
 <h2 id="collection-permissions-for-tenants">Collection permissions for tenants</h2>
 
@@ -6289,7 +6288,7 @@ To add tenant users in Metabase:</p>
 
 <ul>
   <li>Metabase Admins will have <strong>Curate</strong> access to all shared collections and all tenant collections.</li>
-  <li>Other internal groups and non-admin users have <strong>No</strong> access by default, but can be granted <strong>View</strong> or <strong>Curate</strong> access to <strong>shared collections</strong>. See <a href="#configuring-shared-collections-permissions">Configuring shared collection permissions</a> for details.</li>
+  <li>Other internal and non-admin groups have <strong>No</strong> access by default, but can be granted <strong>View</strong> or <strong>Curate</strong> access to shared or tenant collections. See <a href="#configuring-shared-collections-permissions">Configuring shared collection permissions</a> for details.</li>
 </ul>
 
 <p>For configuring permissions to <em>internal</em> collections for internal users, see <a href="../permissions/collections">general docs on collection permissions</a>.</p>
