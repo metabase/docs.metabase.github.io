@@ -5896,29 +5896,13 @@ Roadmap</a>
 
         <h1 id="agent-api">Agent API</h1>
 
-<div class="bootstrap">
-  <div class="plans-blockquote bg-blue-95 rounded-3 p-6 d-flex flex-row border border-1 border-primary">
-    <svg class="" width="24" height="24" viewBox="0 0 26 26" fill="none">
-  <path d="M12 13V15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
-  <path d="M12 10C12.5523 10 13 9.55228 13 9C13 8.44772 12.5523 8 12 8C11.4477 8 11 8.44772 11 9C11 9.55228 11.4477 10 12 10Z" fill="#509EE3"></path>
-  <path d="M12 19.25C16.0041 19.25 19.25 16.0041 19.25 12C19.25 7.99594 16.0041 4.75 12 4.75C7.99594 4.75 4.75 7.99594 4.75 12C4.75 16.0041 7.99594 19.25 12 19.25Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
-</svg>
-
-    
-    
-    
-      
-
-    <p class="m-0 ms-2 paragraph-5 neutral-40">
-       Metabase agent API is only available on
-      <a class="fw-bold" href="/product/pro">Pro</a> and
-      <a class="fw-bold link-purple" href="/product/enterprise">Enterprise</a>
-      plans  (both self-hosted and on Metabase Cloud).
-    </p>
-  </div>
-</div>
-
 <p>The Agent API is a REST API for building headless, agentic BI applications on top of Metabase’s semantic layer, scoped to an authenticated user’s permissions.</p>
+
+<h2 id="example-application">Example application</h2>
+
+<p><img src="./images/agent-api-demo.png" alt="Metabase Agent chat answering a product rating question"></p>
+
+<p>Check out the <a href="https://github.com/metabase/metabase-agent-api-demo">Metabase Agent API demo</a> for a working example of an agentic BI app built on the Agent API.</p>
 
 <h2 id="why-use-the-agent-api">Why use the Agent API</h2>
 
@@ -5941,7 +5925,11 @@ Roadmap</a>
   <li>Constructing and executing queries</li>
 </ul>
 
-<p>Base path:<a href="../api#tag/apiagent">/api/agent</a></p>
+<h2 id="agent-api-endpoints-and-reference">Agent API endpoints and reference</h2>
+
+<p>Check out the API endpoints: <a href="../api#tag/apiagent">/api/agent</a>.</p>
+
+<p>You can also point your AI to the <a href="https://github.com/metabase/metabase/blob/master/src/metabase/agent_api/reference.md">Agent API reference</a> to bootstrap your agent.</p>
 
 <h2 id="authentication">Authentication</h2>
 
@@ -6005,15 +5993,17 @@ Roadmap</a>
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div></div>
 
-<h2 id="example-application">Example application</h2>
+<h3 id="session-based-authentication">Session-based authentication</h3>
 
-<p><img src="./images/agent-api-demo.png" alt="Metabase Agent chat answering a product rating question"></p>
+<p>Exchange a JWT at <code class="language-plaintext highlighter-rouge">POST /auth/sso/to_session</code> to get a session token, then pass it via:</p>
 
-<p>Check out the <a href="https://github.com/metabase/metabase-agent-api-demo">Metabase Agent API demo</a> for a working example of an agentic BI app built on the Agent API.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>X-Metabase-Session: &lt;session-token&gt;
+</code></pre></div></div>
 
 <h2 id="further-reading">Further reading</h2>
 
 <ul>
+  <li><a href="https://github.com/metabase/metabase/blob/master/src/metabase/agent_api/reference.md">Agent API complete reference</a></li>
   <li><a href="https://github.com/metabase/metabase-agent-api-demo">Metabase Agent API demo</a></li>
   <li><a href="../api">Metabase API docs</a></li>
   <li><a href="../people-and-groups/authenticating-with-jwt">JWT authentication</a></li>
