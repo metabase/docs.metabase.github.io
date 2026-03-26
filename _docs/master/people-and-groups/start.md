@@ -51,6 +51,8 @@ With [Pro and Enterprise plans](/pricing/), you have more options to help orches
 - LDAP advanced features
   - [Group membership filter](./ldap#ldap-group-membership-filter)
   - [Syncing user attributes](./ldap#syncing-user-attributes-with-ldap)
+- [OIDC][oidc]
+  - [Keycloak][oidc-keycloak]
 - [SAML][saml]
   - [Auth0][saml-auth0]
   - [Microsoft Entra ID][azure-ad]
@@ -66,6 +68,8 @@ Create keys to authenticate API calls.
 
 Metabase supports user provisioning via the SCIM protocol.
 
+[oidc]: ./authenticating-with-oidc
+[oidc-keycloak]: ./oidc-keycloak
 [azure-ad]: ./saml-azure
 [google-sign-in]: ./google-and-ldap#enabling-google-sign-in
 [jwt]: ./authenticating-with-jwt
