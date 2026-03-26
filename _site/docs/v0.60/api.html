@@ -1,0 +1,177 @@
+<!DOCTYPE html><html><head>
+  <meta charset="utf-8">
+  <meta content="IE=edge" http-equiv="X-UA-Compatible">
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport">
+
+  <meta content="frame-ancestors 'none'" http-equiv="Content-Security-Policy">
+  <meta content="deny" http-equiv="X-Frame-Options">
+  
+  <meta name="robots" content="noindex nofollow">
+  
+
+  
+
+  <script type="text/javascript">
+    window.HELP_IMPROVE_VIDEOJS = false;
+
+window.redirectTo = function redirectTo(theLocation) {
+  if (typeof theLocation === "string") {
+    theLocation = new URL(theLocation);
+  }
+
+  var redirectionSuffixes = ["/index.html", ".html", "/index"];
+  for (var i = 0; i < redirectionSuffixes.length; i = i + 1) {
+    var redirectionSuffix = redirectionSuffixes[i];
+    if (
+      theLocation.pathname &&
+      theLocation.pathname.length > redirectionSuffix.length &&
+      theLocation.pathname.indexOf(redirectionSuffix) ===
+        theLocation.pathname.length - redirectionSuffix.length
+    ) {
+      var pathname = theLocation.pathname.replace(redirectionSuffix, "");
+      if (pathname[pathname.length - 1] === "/") {
+        pathname = pathname.slice(0, -1);
+      }
+
+      return `${pathname}${theLocation.search}${theLocation.hash}`;
+    }
+  }
+
+  return null;
+};
+
+  </script>
+
+  
+  
+
+
+
+
+
+<title>Metabase API documentation | Metabase Documentation</title>
+<!-- Twitter cards -->
+<meta name="twitter:site" content="@metabase">
+
+<meta name="twitter:title" content="Metabase API documentation | Metabase Documentation">
+<meta name="twitter:description" content="The official API documentation for Metabase.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
+<!-- end of Twitter cards -->
+
+<!-- Open Graph metadata -->
+<meta property="og:site_name" content="Metabase | Business Intelligence, Dashboards, and Data Visualization">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://www.metabase.com/docs/v0.60/api">
+<meta name="title" property="og:title" content="Metabase API documentation | Metabase Documentation">
+<meta name="description" property="og:description" content="The official API documentation for Metabase.">
+<meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
+<!-- end of Open Graph metadata -->
+
+  
+
+  
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "url": "https://www.metabase.com/",
+    "sameAs": [
+      "https://github.com/metabase",
+      "https://www.linkedin.com/company/metabase/",
+      "https://x.com/metabase",
+      "https://www.youtube.com/@metabasedata"
+    ],
+    "logo": "https://github.com/metabase/metabase.github.io/blob/master/images/metabase-logo.png?raw=",
+    "name": "Metabase",
+    "description": "Metabase is an open source Business Intelligence and Embedded Analytics tool. Connect to your data stack in 5 minutes to make queries, visualizations, and dashboards easy for everyone—no SQL required",
+    "email": "hello@metabase.com",
+    "foundingDate": "2015-02-01T00:00:00.000Z",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "9740 Campo Rd",
+      "addressLocality": "Spring Valley",
+      "addressCountry": "USA",
+      "addressRegion": "CA",
+      "postalCode": "91977"
+    },
+    "knowsAbout": [
+      { "@type": "Thing", "name": "Business Intelligence" },
+      { "@type": "Thing", "name": "Embedded Analytics" },
+      { "@type": "Thing", "name": "Self-service analytics" },
+      { "@type": "Thing", "name": "Open source Business Intelligence" }
+    ]
+  }
+</script>
+ 
+
+
+  
+  <link href="/images/favicon.svg" rel="shortcut icon">
+  
+  <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;0,900&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;0,900;1,400;1,700&amp;family=Roboto+Mono&amp;display=swap" rel="stylesheet">
+  <link href="/gdpr-cookie-notice/dist/style.css" rel="stylesheet">
+  <link href="/css/docs.css" rel="stylesheet">
+  <link href="/css/styles.css" rel="stylesheet">
+  
+  <link href="/css/gdpr.css" rel="stylesheet">
+  <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet">
+
+  
+
+  
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/flexboxgrid/6.3.1/flexboxgrid.min.css" rel="stylesheet" type="text/css">
+  <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet">
+
+  <link href="/feed.xml" rel="alternate" title="Metabase | Business Intelligence, Dashboards, and Data Visualization" type="application/rss+xml">
+
+  <meta content="no-referrer-when-downgrade" name="referrer">
+
+  <!-- VWO -->
+  <link rel="preconnect" href="https://dev.visualwebsiteoptimizer.com">
+
+  <!-- Syntax Highlighting -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/base16/atelier-sulphurpool-light.min.css" integrity="sha512-qrwjMzcPG1EHhhg9z2nH7VW7hj525RVx0o7GlxQc4ZhWkghp9slpnTjOUu5thnPaRfRqfAUlX7anvAqD9EonfQ==" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <script src="/js/navigation-header.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+  <script src="/js/promo-banner.js"></script>
+
+  <!-- GDPR -->
+  <script type="text/javascript" src="/gdpr-cookie-notice/dist/script.js"></script>
+  <script type="text/javascript" src="/js/cookie-consent.js"></script>
+
+  <!-- Start of crisp.chat script -->
+  
+  <!-- End of crisp.chat script -->
+
+  <script type="text/javascript" src="/js/add-params-to-anchors.js"></script>
+  <script type="text/javascript" src="/js/pass-referral-params-to-fillout-forms.js"></script>
+
+  
+  <!-- Add Inkeep widget -->
+  <script type="module" src="https://unpkg.com/@inkeep/uikit-js@0.3.10/dist/embed.js" defer=""></script>
+  
+
+  <script type="text/javascript" src="/js/ai-newsletter-subscribe-form.js" defer=""></script>
+<style>
+    :root {
+      --scalar-font: 'Lato', sans-serif;
+    }
+  </style></head>
+  
+  <body>
+    <script id="api-reference" data-url="api.json"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@scalar/api-reference@1.39.1/dist/browser/standalone.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@scalar/api-reference@1.39.1/dist/style.min.css">
+  
+
+
+</body></html>
