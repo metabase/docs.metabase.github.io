@@ -188,6 +188,8 @@ Metabase's reference documentation.
 #### Paid SSO options
 
 - [JWT-based authentication](./people-and-groups/authenticating-with-jwt)
+- [OIDC-based authentication](./people-and-groups/authenticating-with-oidc)
+  - [OIDC with Keycloak](./people-and-groups/oidc-keycloak)
 - [SAML-based authentication](./people-and-groups/authenticating-with-saml)
   - [SAML with Auth0](./people-and-groups/saml-auth0)
   - [SAML with Microsoft Entra ID](./people-and-groups/saml-azure)
