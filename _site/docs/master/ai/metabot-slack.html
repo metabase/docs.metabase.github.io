@@ -188,17 +188,18 @@ window.redirectTo = function redirectTo(theLocation) {
     <span>Meet Data Studio: an analyst workbench with tools to shape data and curate your semantic layer in Metabase.</span>
     <a href="/blog/meet-data-studio-semantic-layer">
       See what we built and why<img alt="Chevron Blue Right" src="/images/chevron_blue_right.svg">
-  </a></div><a href="/blog/meet-data-studio-semantic-layer">
+    </a>
+  </div>
   <button>×</button>
-</a></div><a href="/blog/meet-data-studio-semantic-layer">
+</div>
 <script src="/js/events/datetime.js"></script>
 
     
 
-    </a><div class="container"><a href="/blog/meet-data-studio-semantic-layer">
-      </a><div class="row flex-grow-1"><a href="/blog/meet-data-studio-semantic-layer">
-        </a><div class="home-link col-xs-4 col-lg-2 d-flex align-items-center"><a href="/blog/meet-data-studio-semantic-layer">
-          </a><a href="/">
+    <div class="container">
+      <div class="row flex-grow-1">
+        <div class="home-link col-xs-4 col-lg-2 d-flex align-items-center">
+          <a href="/">
             
               <div class="MB-Logo inline-block"></div>
             
@@ -2588,7 +2589,7 @@ Roadmap</a>
 
       
 
-      <li class="">
+      <li class="expanded">
         <a href="/docs/master/ai/start" class="">
         AI
 
@@ -2627,6 +2628,21 @@ Roadmap</a>
               
 
               <li class="">
+                <a href="/docs/master/ai/metabot-slack" class="selected">
+                  Metabot for Slack
+
+                  
+                </a>
+                
+              </li>
+            
+              
+
+              
+
+              
+
+              <li class="">
                 <a href="/docs/master/ai/settings" class="">
                   Metabot settings
 
@@ -2642,8 +2658,8 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/master/ai/agent-api" class="">
-                  Agent API
+                <a href="/docs/master/ai/mcp" class="">
+                  MCP server
 
                   
                 </a>
@@ -2657,8 +2673,8 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/master/ai/sql-generation" class="">
-                  SQL generation
+                <a href="/docs/master/ai/agent-api" class="">
+                  Agent API
 
                   
                 </a>
@@ -5908,7 +5924,8 @@ Roadmap</a>
   <li><strong>Answer questions</strong>: Create ad-hoc queries from natural language to answer your questions on the spot. You can click the link to save the question in Metabase.</li>
   <li><strong>Show charts and tables</strong>: Render static visualizations or tabular results in Slack. You can copy table results or download them as TSV.</li>
   <li><strong>Work with CSVs</strong>: <a href="../databases/uploads">Upload a CSV</a> to Metabase, then ask follow-up questions about the data.</li>
-  <li><strong>Manage notifications</strong>: Create <a href="../dashboards/subscriptions">subscriptions</a> and <a href="../questions/alerts">alerts</a> from within a channel. Metabot can find an answer and subscribe you to it in one go (though Metabot won’t create new questions or dashboards).</li>
+  <li><strong>Create alerts</strong>: Set up <a href="../questions/alerts">alerts</a> on saved questions that get delivered to the current Slack channel. Metabot can find an answer and set up an alert for it in one go (though the question must already be saved).</li>
+  <li><strong>Create dashboard subscriptions</strong>: Set up recurring <a href="../dashboards/subscriptions">subscriptions</a> that deliver a dashboard’s contents to the current Slack channel.</li>
 </ul>
 
 <h2 id="set-up-metabot-in-slack">Set up Metabot in Slack</h2>
@@ -5944,6 +5961,19 @@ Roadmap</a>
 <h3 id="clearing-context">Clearing context</h3>
 
 <p>Metabot remembers the context of a thread. To clear context and start a fresh conversation, either begin a new direct message or @mention Metabot in a new thread in a channel.</p>
+
+<h2 id="alerts-and-subscriptions">Alerts and subscriptions</h2>
+
+<p>From Slack, Metabot can create <a href="../questions/alerts">alerts</a> and <a href="../dashboards/subscriptions">dashboard subscriptions</a> that deliver to the current Slack channel.</p>
+
+<p>Some caveats:</p>
+
+<ul>
+  <li>For goal-based alerts, the goal line must already be configured and saved on the question. Metabot can’t add goal lines.</li>
+  <li>Metabot can’t modify or delete existing alerts or subscriptions.</li>
+  <li>Alerts and subscriptions are delivered to the Slack channel where the conversation takes place. You can’t redirect them to a different channel or to email.</li>
+  <li>Alerts can only be set on questions not metrics or ad-hoc queries.</li>
+</ul>
 
 <h2 id="notes-on-privacy">Notes on privacy</h2>
 

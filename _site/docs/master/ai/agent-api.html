@@ -188,17 +188,18 @@ window.redirectTo = function redirectTo(theLocation) {
     <span>Meet Data Studio: an analyst workbench with tools to shape data and curate your semantic layer in Metabase.</span>
     <a href="/blog/meet-data-studio-semantic-layer">
       See what we built and why<img alt="Chevron Blue Right" src="/images/chevron_blue_right.svg">
-  </a></div><a href="/blog/meet-data-studio-semantic-layer">
+    </a>
+  </div>
   <button>×</button>
-</a></div><a href="/blog/meet-data-studio-semantic-layer">
+</div>
 <script src="/js/events/datetime.js"></script>
 
     
 
-    </a><div class="container"><a href="/blog/meet-data-studio-semantic-layer">
-      </a><div class="row flex-grow-1"><a href="/blog/meet-data-studio-semantic-layer">
-        </a><div class="home-link col-xs-4 col-lg-2 d-flex align-items-center"><a href="/blog/meet-data-studio-semantic-layer">
-          </a><a href="/">
+    <div class="container">
+      <div class="row flex-grow-1">
+        <div class="home-link col-xs-4 col-lg-2 d-flex align-items-center">
+          <a href="/">
             
               <div class="MB-Logo inline-block"></div>
             
@@ -2627,6 +2628,21 @@ Roadmap</a>
               
 
               <li class="">
+                <a href="/docs/master/ai/metabot-slack" class="">
+                  Metabot for Slack
+
+                  
+                </a>
+                
+              </li>
+            
+              
+
+              
+
+              
+
+              <li class="">
                 <a href="/docs/master/ai/settings" class="">
                   Metabot settings
 
@@ -2642,8 +2658,8 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/master/ai/agent-api" class="selected">
-                  Agent API
+                <a href="/docs/master/ai/mcp" class="">
+                  MCP server
 
                   
                 </a>
@@ -2657,8 +2673,8 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/master/ai/sql-generation" class="">
-                  SQL generation
+                <a href="/docs/master/ai/agent-api" class="selected">
+                  Agent API
 
                   
                 </a>
@@ -5910,7 +5926,7 @@ Roadmap</a>
 <ul>
   <li>Agent endpoints are explicitly supported for building agentic BI applications.</li>
   <li>The agent API is versioned, so your apps can rely on consistent responses.</li>
-  <li>Supports JWT auth so requests can be scoped to a user’s permissions.</li>
+  <li>Requests are scoped to the authenticated user’s permissions.</li>
   <li>Doesn’t require you to work with MBQL, which is Metabase’s querying language.</li>
 </ul>
 
@@ -5919,10 +5935,16 @@ Roadmap</a>
 <p>The Agent API supports:</p>
 
 <ul>
-  <li>Discovering tables and metrics</li>
+  <li>Searching for tables and metrics</li>
   <li>Inspecting their fields</li>
   <li>Constructing and executing queries</li>
 </ul>
+
+<p>If you want to connect an MCP-compatible AI client (like Claude Desktop) without writing custom code, see the <a href="./mcp">MCP server</a>, which builds on this API.</p>
+
+<h2 id="row-limits-and-pagination">Row limits and pagination</h2>
+
+<p>Queries return a maximum of 200 rows per request. To page through larger result sets, use <code class="language-plaintext highlighter-rouge">POST /api/agent/v1/query</code>, which returns a <code class="language-plaintext highlighter-rouge">continuation_token</code> when more rows are available. Pass the token back to get the next page.</p>
 
 <h2 id="agent-api-endpoints-and-reference">Agent API endpoints and reference</h2>
 
@@ -5932,9 +5954,61 @@ Roadmap</a>
 
 <h2 id="authentication">Authentication</h2>
 
-<p>The Agent API uses stateless JWT authentication. JWT must be configured in Metabase admin settings (<strong>Admin</strong> &gt; <strong>Settings</strong> &gt; <strong>Authentication</strong> &gt; <strong>JWT</strong>).</p>
+<p>The Agent API supports three authentication methods.</p>
 
-<p>Pass a signed JWT directly in each request:</p>
+<h3 id="api-key">API key</h3>
+
+<p>The simplest option. Create an <a href="../people-and-groups/api-keys">API key</a> in <strong>Admin</strong> &gt; <strong>Settings</strong> &gt; <strong>Authentication</strong> &gt; <strong>API keys</strong>, then pass it in each request:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>X-API-Key: YOUR_API_KEY
+</code></pre></div></div>
+
+<p>The key’s permissions are determined by the <a href="../people-and-groups/managing#groups">group</a> assigned to that key. Unlike session or JWT authentication, API key requests aren’t scoped to an individual user. Anyone using a client app that authenticates with an API key will have the same permissions as that key.</p>
+
+<h3 id="session-token">Session token</h3>
+
+<p>Log in with a Metabase username and password to get a session token, then pass it in subsequent requests.</p>
+
+<p><strong>1. Get a session token:</strong></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>POST /api/session
+Content-Type: application/json
+
+{"username": "analyst@example.com", "password": "your-password"}
+</code></pre></div></div>
+
+<p>The response body contains an <code class="language-plaintext highlighter-rouge">id</code> field – that’s your session token.</p>
+
+<p><strong>2. Pass the token in each request:</strong></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>X-Metabase-Session: SESSION_TOKEN
+</code></pre></div></div>
+
+<h3 id="jwt">JWT</h3>
+
+<div class="bootstrap">
+  <div class="plans-blockquote bg-blue-95 rounded-3 p-6 d-flex flex-row border border-1 border-primary">
+    <svg class="" width="24" height="24" viewBox="0 0 26 26" fill="none">
+  <path d="M12 13V15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
+  <path d="M12 10C12.5523 10 13 9.55228 13 9C13 8.44772 12.5523 8 12 8C11.4477 8 11 8.44772 11 9C11 9.55228 11.4477 10 12 10Z" fill="#509EE3"></path>
+  <path d="M12 19.25C16.0041 19.25 19.25 16.0041 19.25 12C19.25 7.99594 16.0041 4.75 12 4.75C7.99594 4.75 4.75 7.99594 4.75 12C4.75 16.0041 7.99594 19.25 12 19.25Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
+</svg>
+
+    
+    
+    
+      
+
+    <p class="m-0 ms-2 paragraph-5 neutral-40">
+       JWT-based authentication is only available on
+      <a class="fw-bold" href="/product/pro">Pro</a> and
+      <a class="fw-bold link-purple" href="/product/enterprise">Enterprise</a>
+      plans  (both self-hosted and on Metabase Cloud).
+    </p>
+  </div>
+</div>
+
+<p>If you’ve configured <a href="../people-and-groups/authenticating-with-jwt">JWT-based authentication</a> (<strong>Admin</strong> &gt; <strong>Settings</strong> &gt; <strong>Authentication</strong> &gt; <strong>JWT</strong>), you can pass a signed JWT directly:</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Authorization: Bearer &lt;jwt&gt;
 </code></pre></div></div>
@@ -5992,19 +6066,16 @@ Roadmap</a>
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div></div>
 
-<h3 id="session-based-authentication">Session-based authentication</h3>
-
-<p>Exchange a JWT at <code class="language-plaintext highlighter-rouge">POST /auth/sso/to_session</code> to get a session token, then pass it via:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>X-Metabase-Session: &lt;session-token&gt;
-</code></pre></div></div>
+<p>You can also exchange a JWT for a session token via <code class="language-plaintext highlighter-rouge">POST /auth/sso/to_session</code> (note: this endpoint is under <code class="language-plaintext highlighter-rouge">/auth</code>, not <code class="language-plaintext highlighter-rouge">/api</code>), then use the <code class="language-plaintext highlighter-rouge">X-Metabase-Session</code> header as described above.</p>
 
 <h2 id="further-reading">Further reading</h2>
 
 <ul>
+  <li><a href="./mcp">MCP server</a></li>
   <li><a href="https://github.com/metabase/metabase/blob/master/src/metabase/agent_api/reference.md">Agent API complete reference</a></li>
   <li><a href="https://github.com/metabase/metabase-agent-api-demo">Metabase Agent API demo</a></li>
   <li><a href="../api">Metabase API docs</a></li>
+  <li><a href="../people-and-groups/api-keys">API keys</a></li>
   <li><a href="../people-and-groups/authenticating-with-jwt">JWT authentication</a></li>
 </ul>
 

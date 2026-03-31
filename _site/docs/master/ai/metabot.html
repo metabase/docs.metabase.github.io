@@ -188,17 +188,18 @@ window.redirectTo = function redirectTo(theLocation) {
     <span>Meet Data Studio: an analyst workbench with tools to shape data and curate your semantic layer in Metabase.</span>
     <a href="/blog/meet-data-studio-semantic-layer">
       See what we built and why<img alt="Chevron Blue Right" src="/images/chevron_blue_right.svg">
-  </a></div><a href="/blog/meet-data-studio-semantic-layer">
+    </a>
+  </div>
   <button>×</button>
-</a></div><a href="/blog/meet-data-studio-semantic-layer">
+</div>
 <script src="/js/events/datetime.js"></script>
 
     
 
-    </a><div class="container"><a href="/blog/meet-data-studio-semantic-layer">
-      </a><div class="row flex-grow-1"><a href="/blog/meet-data-studio-semantic-layer">
-        </a><div class="home-link col-xs-4 col-lg-2 d-flex align-items-center"><a href="/blog/meet-data-studio-semantic-layer">
-          </a><a href="/">
+    <div class="container">
+      <div class="row flex-grow-1">
+        <div class="home-link col-xs-4 col-lg-2 d-flex align-items-center">
+          <a href="/">
             
               <div class="MB-Logo inline-block"></div>
             
@@ -2627,6 +2628,21 @@ Roadmap</a>
               
 
               <li class="">
+                <a href="/docs/master/ai/metabot-slack" class="">
+                  Metabot for Slack
+
+                  
+                </a>
+                
+              </li>
+            
+              
+
+              
+
+              
+
+              <li class="">
                 <a href="/docs/master/ai/settings" class="">
                   Metabot settings
 
@@ -2642,8 +2658,8 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/master/ai/agent-api" class="">
-                  Agent API
+                <a href="/docs/master/ai/mcp" class="">
+                  MCP server
 
                   
                 </a>
@@ -2657,8 +2673,8 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/master/ai/sql-generation" class="">
-                  SQL generation
+                <a href="/docs/master/ai/agent-api" class="">
+                  Agent API
 
                   
                 </a>
@@ -5969,7 +5985,7 @@ Roadmap</a>
 
 <p>When you ask Metabot to create a chart from natural language, it first looks for existing questions that might answer your request. If it finds a relevant question, it’ll point you to that instead of creating something new. Otherwise, Metabot will use the <a href="../questions/query-builder/editor">query builder</a> to create a new chart for you.</p>
 
-<p>Keep in mind that Metabot is still learning the query builder. Metabot can only handle basic query builder operations, and it lacks access to the library of <a href="../questions/query-builder/expressions-list">custom expressions</a>. Metabot is also limited to single-level aggregation and grouping, so if you need more complex analysis, you can take over and refine the query yourself, or switch to the SQL editor.</p>
+<p>Metabot is not magic, and it’s <a href="#current-limitations">still learning Metabase and the query builder</a>.</p>
 
 <h2 id="metabot-in-the-native-editor">Metabot in the native editor</h2>
 
@@ -6024,6 +6040,20 @@ Roadmap</a>
 <p>Open it from <strong>+ New → AI exploration</strong>, then ask a question or pick one of the suggested prompts.</p>
 
 <p>When answering questions in AI exploration, Metabot searches a limited set of content instead of your entire Metabase. Admins can set a <strong>Collection for natural language querying</strong> to scope AI exploration to a specific collection and its subcollections. You can still refer to content outside that scope by explicitly @-mentioning it in your prompt. See <a href="../ai/settings">Metabot AI settings</a> for more details.</p>
+
+<h2 id="current-limitations">Current limitations</h2>
+
+<p>Metabot is getting smarter all the time, but there are some things it can’t do yet:</p>
+
+<ul>
+  <li><strong>Custom expressions.</strong> Metabot can’t use <a href="../questions/query-builder/expressions-list">custom expressions</a> in query builder questions.</li>
+  <li><strong>Multi-level aggregation.</strong> Metabot is limited to a single level of aggregation and grouping.</li>
+  <li><strong>SQL variables.</strong> Metabot can’t generate SQL queries that include <a href="../questions/native-editor/sql-parameters">SQL parameters</a> (like filters or field filters).</li>
+  <li><strong>Goal lines.</strong> Metabot can’t add <a href="../questions/visualizations/line-bar-and-area-charts#goal-lines">goal lines</a> to charts.</li>
+  <li><strong>Chart formatting.</strong> Metabot can’t change visualization settings like colors, axis labels, or number formatting.</li>
+  <li><strong>Managing alerts.</strong> <a href="./metabot-slack">Metabot in Slack</a> can create alerts and dashboard subscriptions, but can’t modify or delete existing ones.</li>
+  <li><strong>Search.</strong> Metabot can only search for tables, metrics, questions, models, and dashboards. It can’t discover segments, measures, documents, collections, actions, or indexed entities on its own — but it can use segments and measures in ad-hoc queries (for example, filtering by a segment).</li>
+</ul>
 
 <h2 id="metabot-in-slack">Metabot in Slack</h2>
 
