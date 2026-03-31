@@ -158,8 +158,9 @@ Metabase's reference documentation.
 
 - [AI overview](./ai/start)
 - [Metabot](./ai/metabot)
-- [Setting up Metabot](./ai/settings)
-- [SQL generation](./ai/sql-generation)
+- [AI settings](./ai/settings)
+- [Agent API](./ai/agent-api)
+- [MCP server](./ai/mcp)
 
 ### Exploration and organization
 
