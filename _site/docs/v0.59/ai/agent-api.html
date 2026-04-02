@@ -184,7 +184,10 @@ window.redirectTo = function redirectTo(theLocation) {
     
         <div class="promo-banner hidden">
   <div>
-    <span>🐱 We're live on Product Hunt with Data Studio today!</span><a href="https://metaba.se/data-studio-ph">Come say hi 👋<img alt="Chevron Blue Right" src="/images/chevron_blue_right.svg">
+    <span class="button">New</span>
+    <span>Meet Data Studio: an analyst workbench with tools to shape data and curate your semantic layer in Metabase.</span>
+    <a href="/blog/meet-data-studio-semantic-layer">
+      See what we built and why<img alt="Chevron Blue Right" src="/images/chevron_blue_right.svg">
     </a>
   </div>
   <button>×</button>
@@ -5866,6 +5869,79 @@ Roadmap</a>
 
         <h1 id="agent-api">Agent API</h1>
 
+<p>The <a href="(../api#tag/apiagent)">Agent API</a> is a REST API for building headless, agentic BI applications on top of Metabase’s semantic layer, scoped to an authenticated user’s permissions.</p>
+
+<h2 id="agent-api-endpoints-and-reference">Agent API endpoints and reference</h2>
+
+<p>Check out the API endpoint docs: <a href="../api#tag/apiagent">/api/agent</a>.</p>
+
+<p>You can also point your AI to the <a href="https://github.com/metabase/metabase/blob/master/src/metabase/agent_api/reference.md">Agent API reference</a> to bootstrap your agent.</p>
+
+<h2 id="example-application">Example application</h2>
+
+<p><img src="./images/agent-api-demo.png" alt="Metabase Agent chat answering a product rating question"></p>
+
+<p>Check out the <a href="https://github.com/metabase/metabase-agent-api-demo">Metabase Agent API demo</a> for a working example of an agentic BI app built on the Agent API.</p>
+
+<h2 id="why-use-the-agent-api">Why use the Agent API</h2>
+
+<p>There are a few advantages to using the agent API over the Metabase API.</p>
+
+<ul>
+  <li>Agent endpoints are explicitly supported for building agentic BI applications.</li>
+  <li>The agent API is versioned, so your apps can rely on consistent responses.</li>
+  <li>Requests are scoped to the authenticated user’s permissions.</li>
+  <li>Doesn’t require you to work with MBQL, which is Metabase’s querying language.</li>
+</ul>
+
+<h2 id="supported-features">Supported features</h2>
+
+<p>The Agent API supports:</p>
+
+<ul>
+  <li>Searching for tables and metrics</li>
+  <li>Inspecting their fields</li>
+  <li>Constructing and executing queries</li>
+</ul>
+
+<h2 id="row-limits-and-pagination">Row limits and pagination</h2>
+
+<p>Queries return a maximum of 200 rows per request. To page through larger result sets, use <code class="language-plaintext highlighter-rouge">POST /api/agent/v1/query</code>, which returns a <code class="language-plaintext highlighter-rouge">continuation_token</code> when more rows are available. Pass the token back to get the next page.</p>
+
+<h2 id="authentication">Authentication</h2>
+
+<p>The Agent API supports three authentication methods.</p>
+
+<h3 id="api-key">API key</h3>
+
+<p>The simplest option. Create an <a href="../people-and-groups/api-keys">API key</a> in <strong>Admin</strong> &gt; <strong>Settings</strong> &gt; <strong>Authentication</strong> &gt; <strong>API keys</strong>, then pass it in each request:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>X-API-Key: YOUR_API_KEY
+</code></pre></div></div>
+
+<p>The key’s permissions are determined by the <a href="../people-and-groups/managing#groups">group</a> assigned to that key. Unlike session or JWT authentication, API key requests aren’t scoped to an individual user. Anyone using a client app that authenticates with an API key will have the same permissions as that key.</p>
+
+<h3 id="session-token">Session token</h3>
+
+<p>Log in with a Metabase username and password to get a session token, then pass it in subsequent requests.</p>
+
+<p><strong>1. Get a session token:</strong></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>POST /api/session
+Content-Type: application/json
+
+{"username": "analyst@example.com", "password": "your-password"}
+</code></pre></div></div>
+
+<p>The response body contains an <code class="language-plaintext highlighter-rouge">id</code> field – that’s your session token.</p>
+
+<p><strong>2. Pass the token in each request:</strong></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>X-Metabase-Session: SESSION_TOKEN
+</code></pre></div></div>
+
+<h3 id="jwt">JWT</h3>
+
 <div class="bootstrap">
   <div class="plans-blockquote bg-blue-95 rounded-3 p-6 d-flex flex-row border border-1 border-primary">
     <svg class="" width="24" height="24" viewBox="0 0 26 26" fill="none">
@@ -5880,7 +5956,7 @@ Roadmap</a>
       
 
     <p class="m-0 ms-2 paragraph-5 neutral-40">
-       Metabase agent API is only available on
+       JWT-based authentication is only available on
       <a class="fw-bold" href="/product/pro">Pro</a> and
       <a class="fw-bold link-purple" href="/product/enterprise">Enterprise</a>
       plans  (both self-hosted and on Metabase Cloud).
@@ -5888,36 +5964,7 @@ Roadmap</a>
   </div>
 </div>
 
-<p>The Agent API is a REST API for building headless, agentic BI applications on top of Metabase’s semantic layer, scoped to an authenticated user’s permissions.</p>
-
-<h2 id="why-use-the-agent-api">Why use the Agent API</h2>
-
-<p>There are a few advantages to using the agent API over the Metabase API.</p>
-
-<ul>
-  <li>Agent endpoints are explicitly supported for building agentic BI applications.</li>
-  <li>The agent API is versioned, so your apps can rely on consistent responses.</li>
-  <li>Supports JWT auth so requests can be scoped to a user’s permissions.</li>
-  <li>Doesn’t require you to work with MBQL, which is Metabase’s querying language.</li>
-</ul>
-
-<h2 id="supported-features">Supported features</h2>
-
-<p>The Agent API supports:</p>
-
-<ul>
-  <li>Discovering tables and metrics</li>
-  <li>Inspecting their fields</li>
-  <li>Constructing and executing queries</li>
-</ul>
-
-<p>Base path:<a href="../api#tag/apiagent">/api/agent</a></p>
-
-<h2 id="authentication">Authentication</h2>
-
-<p>The Agent API uses stateless JWT authentication. JWT must be configured in Metabase admin settings (<strong>Admin</strong> &gt; <strong>Settings</strong> &gt; <strong>Authentication</strong> &gt; <strong>JWT</strong>).</p>
-
-<p>Pass a signed JWT directly in each request:</p>
+<p>If you’ve configured <a href="../people-and-groups/authenticating-with-jwt">JWT-based authentication</a> (<strong>Admin</strong> &gt; <strong>Settings</strong> &gt; <strong>Authentication</strong> &gt; <strong>JWT</strong>), you can pass a signed JWT directly:</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Authorization: Bearer &lt;jwt&gt;
 </code></pre></div></div>
@@ -5975,17 +6022,15 @@ Roadmap</a>
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div></div>
 
-<h2 id="example-application">Example application</h2>
-
-<p><img src="./images/agent-api-demo.png" alt="Metabase Agent chat answering a product rating question"></p>
-
-<p>Check out the <a href="https://github.com/metabase/metabase-agent-api-demo">Metabase Agent API demo</a> for a working example of an agentic BI app built on the Agent API.</p>
+<p>You can also exchange a JWT for a session token via <code class="language-plaintext highlighter-rouge">POST /auth/sso/to_session</code> (note: this endpoint is under <code class="language-plaintext highlighter-rouge">/auth</code>, not <code class="language-plaintext highlighter-rouge">/api</code>), then use the <code class="language-plaintext highlighter-rouge">X-Metabase-Session</code> header as described above.</p>
 
 <h2 id="further-reading">Further reading</h2>
 
 <ul>
+  <li><a href="https://github.com/metabase/metabase/blob/master/src/metabase/agent_api/reference.md">Agent API complete reference</a></li>
   <li><a href="https://github.com/metabase/metabase-agent-api-demo">Metabase Agent API demo</a></li>
   <li><a href="../api">Metabase API docs</a></li>
+  <li><a href="../people-and-groups/api-keys">API keys</a></li>
   <li><a href="../people-and-groups/authenticating-with-jwt">JWT authentication</a></li>
 </ul>
 
