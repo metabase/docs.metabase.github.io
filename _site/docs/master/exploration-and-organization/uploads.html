@@ -54,7 +54,7 @@ window.redirectTo = function redirectTo(theLocation) {
 <meta name="twitter:site" content="@metabase">
 
 <meta name="twitter:title" content="Uploading data | Metabase Documentation">
-<meta name="twitter:description" content="Uploading data If an admin has set up uploads, you can upload CSV data by clicking on the Upload icon in the top right of the collection page.  Create, append, or replace models...">
+<meta name="twitter:description" content="Upload CSV files to Metabase to create models. Requires uploads enabled by an admin, data permissions on the upload schema, and Curate access to the target collection.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -64,7 +64,7 @@ window.redirectTo = function redirectTo(theLocation) {
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://www.metabase.com/docs/master/exploration-and-organization/uploads">
 <meta name="title" property="og:title" content="Uploading data | Metabase Documentation">
-<meta name="description" property="og:description" content="Uploading data If an admin has set up uploads, you can upload CSV data by clicking on the Upload icon in the top right of the collection page.  Create, append, or replace models...">
+<meta name="description" property="og:description" content="Upload CSV files to Metabase to create models. Requires uploads enabled by an admin, data permissions on the upload schema, and Curate access to the target collection.">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -5911,15 +5911,49 @@ Roadmap</a>
 
         <h1 id="uploading-data">Uploading data</h1>
 
-<p>If an admin has <a href="../databases/uploads">set up uploads</a>, you can upload CSV data by clicking on the <strong>Upload</strong> icon in the top right of the collection page.</p>
+<p>You can upload CSV files to Metabase to query, visualize, and share.</p>
+
+<h2 id="upload-requirements">Upload requirements</h2>
+
+<p>To upload CSV data, you’ll need:</p>
+
+<ul>
+  <li>Uploads <a href="../databases/uploads">enabled</a> by an admin.</li>
+  <li><a href="../permissions/data">Data permissions</a>: your group needs <strong>Can view</strong> data access and <strong>Create queries</strong> access (query builder or higher) for the upload schema. (Unless you’re an admin, you can’t see what groups you’re in; just noting this here so you know groups are a thing. Ask your admin to put you in a group with these privileges).</li>
+  <li><a href="../permissions/collections#curate-access">Curate access</a> to the collection you want to upload to.</li>
+</ul>
+
+<p>The upload icon only appears in collections where you have Curate access. Everyone has Curate access to their <a href="../permissions/collections#personal-collections">personal collection</a>, so you can always upload there.</p>
+
+<h2 id="uploading-a-csv-file">Uploading a CSV file</h2>
+
+<p><strong>From a collection page</strong>:</p>
+
+<ol>
+  <li>Go to the collection where you want to save the uploaded data.</li>
+  <li>Click the <strong>Upload</strong> icon (the cloud with an arrow) in the upper right of the collection page.</li>
+  <li>Select your CSV file.</li>
+</ol>
 
 <p><img src="../databases/images/upload-icon.png" alt="Upload CSV data"></p>
+
+<p><strong>From the sidebar</strong>:</p>
+
+<ol>
+  <li>Click the <strong>Add data</strong> button (<strong>+</strong>) next to <strong>DATA</strong> in the left sidebar.</li>
+  <li>Select <strong>CSV</strong>.</li>
+  <li>Drag and drop a file or click <strong>Select a file</strong>.</li>
+  <li>Choose the destination collection at the bottom of the modal.</li>
+  <li>Click <strong>Upload</strong>.</li>
+</ol>
+
+<p>You can also add data from <a href="../cloud/google-sheets">Google Sheets</a> (Metabase Cloud only).</p>
 
 <h2 id="create-append-or-replace-models-with-uploads">Create, append, or replace models with uploads</h2>
 
 <p>When you upload a CSV file, Metabase may ask to select a destination for that upload (depending on whether there are other uploads).</p>
 
-<p>If your CSV has the same columns as a model from a previously uploaded file, you can append data to that model. Otherwise, you can create a new <a href="../data-modeling/models">model</a>. if you want to:</p>
+<p>If your CSV has the same columns as a model from a previously uploaded file, you can append data to that model. Otherwise, you can create a new <a href="../data-modeling/models">model</a>. You can:</p>
 
 <ul>
   <li>Create a new model</li>
@@ -5928,8 +5962,6 @@ Roadmap</a>
 </ul>
 
 <p>Metabase will create a <a href="../data-modeling/models">model</a> that contains that CSV data, as well as the model’s underlying table.</p>
-
-<p>Uploads will only be available if your admin has enabled uploads for your Metabase, and you’re in a group with Unrestricted access to the schema used to store those uploads. See <a href="../databases/uploads">Uploading data</a>.</p>
 
 <h2 id="appending-to-a-model-created-by-an-upload">Appending to a model created by an upload</h2>
 
