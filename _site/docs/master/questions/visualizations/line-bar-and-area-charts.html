@@ -6,7 +6,7 @@
   <meta content="frame-ancestors 'none'" http-equiv="Content-Security-Policy">
   <meta content="deny" http-equiv="X-Frame-Options">
   
-  <meta name="robots" content="noindex nofollow">
+  <meta name="robots" content="noindex, nofollow">
   
 
   
@@ -6001,6 +6001,7 @@ Roadmap</a>
 <ul>
   <li><a href="#goal-lines">Goal line</a></li>
   <li><a href="#stacked-bar-chart">Stack a bar chart</a></li>
+  <li><a href="#stack-series">Stack series</a></li>
   <li><a href="#values-on-data-points">Whether to show values on data points</a></li>
 </ul>
 
@@ -6025,6 +6026,22 @@ Roadmap</a>
 <p>As well as stack them as a percentage:</p>
 
 <p><img src="../images/stacked-100.png" alt="Stacked bar chart 100%"></p>
+
+<h3 id="stack-series">Stack series</h3>
+
+<p>To stack series, one chart on top of the other, your query must include <strong>either</strong>:</p>
+
+<p><strong>Multiple breakouts</strong>: at least two entries in the grouping block in the query builder or <code class="language-plaintext highlighter-rouge">GROUP BY</code> clause in SQL.</p>
+
+<p>OR</p>
+
+<p><strong>Multiple metrics</strong>: at least two entries in the summarize block, or two aggregation functions in the <code class="language-plaintext highlighter-rouge">SELECT</code> statement.</p>
+
+<p><img src="../images/stacked-series.png" alt="Stacked series"></p>
+
+<p>You can mix and match bar, line, and areas in stacked series - select the right visualization type for each series in the <strong>Data</strong> tab:</p>
+
+<p><img src="../images/stacked-series-mix.png" alt="Stacked series mixed types"></p>
 
 <h3 id="values-on-data-points">Values on data points</h3>
 
