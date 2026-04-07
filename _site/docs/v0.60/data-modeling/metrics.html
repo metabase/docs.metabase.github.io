@@ -6,7 +6,7 @@
   <meta content="frame-ancestors 'none'" http-equiv="Content-Security-Policy">
   <meta content="deny" http-equiv="X-Frame-Options">
   
-  <meta name="robots" content="noindex nofollow">
+  <meta name="robots" content="noindex, nofollow">
   
 
   
@@ -54,7 +54,7 @@ window.redirectTo = function redirectTo(theLocation) {
 <meta name="twitter:site" content="@metabase">
 
 <meta name="twitter:title" content="Metrics | Metabase Documentation">
-<meta name="twitter:description" content="Metrics Create metrics to define the official way to calculate important numbers for your team. Metrics are like pre-defined calculations: create your aggregations once, save them as metrics, and use them whenever you need to analyze your data. For example, you...">
+<meta name="twitter:description" content="Metrics are reusable, standardized aggregations that let your team consistently define important numbers across your Metabase.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -64,7 +64,7 @@ window.redirectTo = function redirectTo(theLocation) {
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://www.metabase.com/docs/v0.60/data-modeling/metrics">
 <meta name="title" property="og:title" content="Metrics | Metabase Documentation">
-<meta name="description" property="og:description" content="Metrics Create metrics to define the official way to calculate important numbers for your team. Metrics are like pre-defined calculations: create your aggregations once, save them as metrics, and use them whenever you need to analyze your data. For example, you...">
+<meta name="description" property="og:description" content="Metrics are reusable, standardized aggregations that let your team consistently define important numbers across your Metabase.">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -188,17 +188,18 @@ window.redirectTo = function redirectTo(theLocation) {
     <span>Meet Data Studio: an analyst workbench with tools to shape data and curate your semantic layer in Metabase.</span>
     <a href="/blog/meet-data-studio-semantic-layer">
       See what we built and why<img alt="Chevron Blue Right" src="/images/chevron_blue_right.svg">
-  </a></div><a href="/blog/meet-data-studio-semantic-layer">
+    </a>
+  </div>
   <button>×</button>
-</a></div><a href="/blog/meet-data-studio-semantic-layer">
+</div>
 <script src="/js/events/datetime.js"></script>
 
     
 
-    </a><div class="container"><a href="/blog/meet-data-studio-semantic-layer">
-      </a><div class="row flex-grow-1"><a href="/blog/meet-data-studio-semantic-layer">
-        </a><div class="home-link col-xs-4 col-lg-2 d-flex align-items-center"><a href="/blog/meet-data-studio-semantic-layer">
-          </a><a href="/">
+    <div class="container">
+      <div class="row flex-grow-1">
+        <div class="home-link col-xs-4 col-lg-2 d-flex align-items-center">
+          <a href="/">
             
               <div class="MB-Logo inline-block"></div>
             
@@ -855,12 +856,16 @@ Roadmap</a>
         <span class="menu-heading">Recent Blog Posts</span>
         
         
-        <a class="w-100 post-with-image recent-blog-link mt-1" href="/blog/meet-data-studio-semantic-layer">
+        <a class="w-100 post-with-image recent-blog-link mt-1" href="/blog/reprobot-github-issue-triage-agent">
           <div class="d-flex align-items-center position-relative overflow-hidden rounded-2 mb-3" id="recent-blog-image-wrapper">
-            <img alt="Resources Image" class="position-absolute w-100" src="/images/posts/metabase-59/data-studio-blog-og.png" loading="lazy">
+            <img alt="Resources Image" class="position-absolute w-100" src="/images/posts/engineering-2026/repro-bot.jpg" loading="lazy">
           </div>
-          <span class="h6 neutral-40 recent-blog-link-heading mb-3">Meet Data Studio: tools to curate your semantic layer in Metabase</span>
+          <span class="h6 neutral-40 recent-blog-link-heading mb-3">Meet Repro-Bot, our GitHub issue triage agent</span>
         </a>
+        
+          <a class="w-100 recent-blog-link" href="/blog/meet-data-studio-semantic-layer">
+            <span class="h6 neutral-40 recent-blog-link-heading mb-3">Meet Data Studio: tools to curate your semantic layer in Metabase</span>
+          </a>
         
           <a class="w-100 recent-blog-link" href="/blog/lessons-learned-building-ai-analytics-agents">
             <span class="h6 neutral-40 recent-blog-link-heading mb-3">Lessons learned from building AI analytics agents: build for chaos</span>
@@ -872,10 +877,6 @@ Roadmap</a>
         
           <a class="w-100 recent-blog-link" href="/blog/data-analyst-roadmap">
             <span class="h6 neutral-40 recent-blog-link-heading mb-3">Become a data analyst in 2026: a practical roadmap</span>
-          </a>
-        
-          <a class="w-100 recent-blog-link" href="/blog/product-metrics">
-            <span class="h6 neutral-40 recent-blog-link-heading mb-3">10 B2B SaaS product metrics that should be on your dashboard</span>
           </a>
         
       </div>
@@ -5904,62 +5905,132 @@ Roadmap</a>
 
         <h1 id="metrics">Metrics</h1>
 
-<p>Create metrics to define the official way to calculate important numbers for your team.</p>
+<p>Metrics define the official way to calculate important numbers for your team.</p>
+
+<p><img src="./images/metric.png" alt="Metric home page"></p>
 
 <p>Metrics are like pre-defined calculations: create your aggregations once, save them as metrics, and use them whenever you need to analyze your data.</p>
 
 <p>For example, you may want to create a metric that calculates revenue, so people can refer to revenue in their own questions. That way you standardize how revenue is calculated (so you don’t end up with five different calculations for the revenue).</p>
 
-<h2 id="metrics-in-the-query-builder">Metrics in the query builder</h2>
+<h2 id="how-metrics-work">How metrics work</h2>
 
-<p>When asking questions in the query builder, you can find metrics that your team created in the summarization section under <strong>Common metrics</strong>. You can pick multiple metrics and they will be calculated independently and joined automatically along the chosen dimensions.</p>
+<p>Think of a metric like a reusable formula. For example, you can create a metric on a <code class="language-plaintext highlighter-rouge">Survey</code> table that calculates <code class="language-plaintext highlighter-rouge">(CountIf([Score] &gt;= 9) - CountIf([Score] &lt;= 6)) / Count()</code> (a.k.a. Net Promoter Score). Now other people in your Metabase, instead of writing their own version of NPS, can simply look up that agreed-upon NPS metric, or refer to it in the <a href="../questions/query-builder/editor">query builder</a> when creating new questions.</p>
+
+<p>Metrics have three components:</p>
+
+<ul>
+  <li><a href="#metric-data-sources"><strong>Data source</strong></a>: metrics are associated with a specific data source and can be used in any question built on that data source.</li>
+  <li><a href="#metric-formula"><strong>Formula</strong></a>: the aggregation’s definition.</li>
+  <li><a href="#metric-default-time-dimension"><strong>Optional default time dimension</strong></a>: a default time dimension to be used when displaying the metric as a standalone card on a dashboard or a pinned item in the collection. This time dimension doesn’t affect how the metric is computed.</li>
+</ul>
+
+<p>Metabase will show the metrics as an option in the query builder along with the basic aggregations like Count or Sum.</p>
+
+<p>If you use a metric as you aggregation, Metabase will replace the metric with the saved formula behind the scenes. See <a href="#use-metrics-in-the-query-builder">Use metrics in the query builder</a>.</p>
+
+<p>Metrics live in collections. You can save metrics into the <a href="../data-studio/library">Library</a> collection to surface your org’s official curated metrics and encourage people to use them for their own questions.</p>
+
+<h2 id="use-metrics-in-the-query-builder">Use metrics in the query builder</h2>
+
+<p>When you start a question on a <a href="#metric-data-sources">data source that has a metric defined</a>, Metabase will show you metrics on that data source in the <strong>Summarize</strong> block under <strong>Metrics</strong>.</p>
 
 <p><img src="./images/common-metrics.png" alt="Common metrics"></p>
 
+<p>Custom metrics work just like built-in metrics (Count, Sum etc): you can break out metrics by dimensions, include multiple metrics, and refer to metrics in custom expressions.</p>
+
+<p><img src="./images/use-metric-in-qb.png" alt="Metric built on top of other metrics"></p>
+
 <p>You can also pick a metric as a data source when creating a new question. If the metric has a time dimension, Metabase will include the time dimension as a grouping. You can change the groupings to break out the metric by other dimensions.</p>
 
-<p><img src="./images/entity-picker-metrics-tab.png" alt="Metrics tab in the entity picker"></p>
+<h2 id="create-a-metric">Create a metric</h2>
 
-<p>You can use custom expressions to combine multiple metrics, or perform calculations on top of metrics.</p>
+<p>A metric consists of three parts: the data source, the formula that defines how a metric is computed, and an optional time dimension.</p>
 
-<h2 id="using-metrics">Using metrics</h2>
+<p>To create a metric:</p>
 
-<p>You can:</p>
+<ol>
+  <li>
+    <p>Bring up the command palette with cmd/ctrl + k (that’s cmd + k for Macs, or ctrl + k for Windows PCs) and search for <strong>New metric</strong></p>
 
-<ul>
-  <li>When creating questions in the query builder, you can  pick metrics as aggregation columns in the Summarize block. You can modify metrics, or combine them.</li>
-  <li>Save metrics to <a href="../exploration-and-organization/collections">collections</a>, including the <a href="../data-studio/library">Library</a>.</li>
-  <li>Add metrics to <a href="../dashboards/introduction">dashboards</a>.</li>
-  <li>View metrics in the <a href="../exploration-and-organization/exploration#browse-your-databases">database browser</a>.</li>
-  <li><a href="/product/pro">Pro</a> and <a href="/product/enterprise">Enterprise</a> plans include the ability to <a href="../exploration-and-organization/content-verification">mark metrics as verified</a>.</li>
-</ul>
+    <p>You can also create a new metric by going to <strong>Browse &gt; Metrics</strong> in the navigation sidebar and clicking on <strong>+</strong>.</p>
 
-<h2 id="creating-a-metric">Creating a metric</h2>
+    <p>If you’re creating a <a href="../data-studio/library#metrics">Library metric</a>, you can also <a href="../data-studio/library">navigate to the Library</a> and click <strong>+ New &gt; Metric</strong>.</p>
+  </li>
+  <li>
+    <p>Select your starting data. You can start from a table, saved question, model, or another metric.</p>
 
-<p>To create a metric, bring up the command palette with cmd/ctrl + k. That’s cmd + k for Macs, or ctrl + k for Windows PCs. Search for New metric.</p>
+    <p>Metric will be usable only on the data source you defined it on.</p>
+  </li>
+  <li>
+    <p>Define your metric. The metric editor is similar to the regular query builder, with two key differences:</p>
 
-<p>You can also create a new metric by going to <strong>Browse &gt; Metrics</strong> in the navigation side bar and clicking on <strong>+</strong>.</p>
+    <ul>
+      <li>The <a href="#metric-formula"><strong>Formula</strong></a> block is where you define your aggregation. You can use <a href="../questions/query-builder/expressions">custom expressions</a> to write the formula, for example <code class="language-plaintext highlighter-rouge">SumIf([Total], [Plan] != 'free')</code>.</li>
+      <li>The <a href="#metric-default-time-dimension"><strong>Default time dimension</strong></a> is where you can optionally include a default way for Metabase to group the metric by time when displaying the metric on a dashboard, document, or collection card. This time dimension isn’t used for computing the metric (you can specify any other dimension when actually using the metric).</li>
+    </ul>
 
-<p>Select your starting data. You can start from a model, metric, table, or saved question.</p>
+    <p><img src="./images/formula.png" alt="Formula"></p>
 
-<p>The metric editor is similar to the regular query builder, with two key differences:</p>
+    <p>Only the data and formula steps are required to define a metric. You can join and filter data before the formula step, and set a default time dimension to group by.</p>
+  </li>
+  <li>
+    <p>Click <strong>Save</strong>. Metrics live in collections, so you’ll need to pick a collection for the metric to save.</p>
+  </li>
+</ol>
 
-<ul>
-  <li>The aggregation section is called <a href="#metric-formula"><strong>Formula</strong></a></li>
-  <li>The group by section is called the <a href="#metric-default-time-dimension"><strong>Default time dimension</strong></a>. You can only group by a single time dimension.</li>
-</ul>
+<h2 id="edit-a-metric">Edit a metric</h2>
 
-<p><img src="./images/formula.png" alt="Formula"></p>
+<p>To edit a metric:</p>
 
-<p>Only the data and formula steps are required to define a metric. You can join and filter data before the formula step, and set a default time dimension to group by.</p>
+<ol>
+  <li>
+    <p>Navigate to the metric you want to edit.</p>
+
+    <p>You can visit metric in its collection, find it in the <a href="#see-all-metrics">metrics browser</a>, or search for it.</p>
+  </li>
+  <li>
+    <p>To edit the metric’s definition, switch to the <strong>Definition tab</strong>.</p>
+
+    <p><img src="./images/metric-definition.png" alt="Metric definition"></p>
+
+    <p>If you edit metric’s definition, all questions that use the metric will immediately start using the new definition.</p>
+  </li>
+  <li>
+    <p>Save your changes.</p>
+  </li>
+</ol>
+
+<h2 id="explore-and-compare-metrics">Explore and compare metrics</h2>
+
+<p>You can explore metrics, break them out by different dimensions, and compare metrics and <a href="../data-studio/data-structure#measures">measures</a> to each other in the <a href="../questions/metrics-explorer">Metrics Explorer</a>.</p>
+
+<p><img src="./images/metric-explorer.png" alt="Metrics explorer"></p>
+
+<p>To see a metric in the Metrics Explorer, visit the metric and click <strong>Explore</strong> in the top right corner. You can add more metrics, breakouts, and filters to compare metrics along different dimensions.</p>
+
+<h2 id="metric-data-sources">Metric data sources</h2>
+
+<p>Metrics are attached to a specific data source. This means that if you define a “Net Promoter Score” metric on the <code class="language-plaintext highlighter-rouge">Survey</code> table, you will be able to use the metric in any question that is build on the <code class="language-plaintext highlighter-rouge">Survey</code> table, but <em>only</em> in questions that are built on the <code class="language-plaintext highlighter-rouge">Survey</code> table (and not, for example, any model or saved question that itself uses the <code class="language-plaintext highlighter-rouge">Survey</code> table).</p>
+
+<p>You can build metrics on tables, saved questions, models, and other metrics.</p>
+
+<p>We don’t recommend using joins in metric definitions. If you need to build a metric that uses information from multiple tables, consider making a <a href="../data-studio/transforms/transforms-overview">transform</a> to join those tables, <em>then</em> create a metric on the table the transform creates.</p>
 
 <h2 id="metric-formula">Metric formula</h2>
 
 <p>The formula is the core of the metric. It’s the thing you are aggregating, and it’s required when defining a metric.</p>
 
-<p>You can build metrics on top of existing metrics.</p>
+<p>You can use <a href="../questions/query-builder/expressions">custom expressions</a> to define a metric, for example:</p>
 
-<p><img src="./images/metrics-built-on-other-metrics.png" alt="Metric built on top of other metrics"></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> (CountIf([Score] &gt;= 9) - CountIf([Score] &lt;= 6) ) / Count() * 100
+</code></pre></div></div>
+
+<p>Metric formula must to be an <em>aggregation</em>  of a column, meaning you can have a formula like <code class="language-plaintext highlighter-rouge">Sum([Price])</code> which will add up all the values in the <code class="language-plaintext highlighter-rouge">Price</code> column across all records, but you can’t have a formula like <code class="language-plaintext highlighter-rouge">[Price] + [Tax]</code> which adds two values on a per-record basis. If you need to create a “calculated” column, consider using <a href="../data-studio/transforms/transforms-overview">transforms</a> or <a href="../data-modeling/models">models</a> instead.</p>
+
+<p>We don’t recommend adding filters into the metric definition to avoid filter conflicts when using metrics in the query builder. You can use conditional custom expressions like <a href="../questions/query-builder/expressions-list#aggregations"><code class="language-plaintext highlighter-rouge">CountIf</code>, <code class="language-plaintext highlighter-rouge">SumIf</code>, and <code class="language-plaintext highlighter-rouge">DistinctIf</code></a> to create conditional aggregations.</p>
+
+<p>You can reference other metrics when defining the formula for your metric.</p>
 
 <h2 id="metric-default-time-dimension">Metric default time dimension</h2>
 
@@ -5971,35 +6042,77 @@ Roadmap</a>
 
 <p>For example, you could calculate revenue and set a default time dimension of <code class="language-plaintext highlighter-rouge">Created At</code> by month, but if someone added that metric to a dashboard, they could group revenue by a different time granularity (e.g., by quarter). This is just an FYI so that you don’t name a metric “Monthly Revenue” and think that by setting a default time dimension to “month”, Metabase will prevent people from slicing revenue by other time granularities.</p>
 
-<h2 id="editing-a-metric">Editing a metric</h2>
+<h2 id="see-all-metrics">See all metrics</h2>
 
-<p>To edit a metric, click on the three dot menu (<strong>…</strong>) and select <strong>Edit metric definition</strong>. Editing a metric requires curate access to the metric’s collection.</p>
+<p>You can see all metrics on your instance:</p>
 
-<p>Do your thing, and save your changes.</p>
-
-<p>When you click on a metric, Metabase will assume that you’re using that metric as the starting point for a new question. You can save any changes you make as a new question, but these changes won’t affect the metric’s definition.</p>
+<ul>
+  <li>Open the left navigation sidebar and select <strong>Metrics</strong> under <strong>Data</strong>.</li>
+  <li>Alternatively, bring up the command palette with cmd/ctrl + k (that’s cmd + k for Macs, or ctrl + k for Windows PCs) and search for <strong>Browse metrics</strong>.</li>
+</ul>
 
 <h2 id="metric-permissions">Metric permissions</h2>
 
-<p>Like questions, models, and dashboards, whether a group can view or edit a metric depends on <a href="../permissions/collections">collection permissions</a>. By “view” we mean the ability to see the metric in a collection, or see the metric as an option when building a query with the metric’s data source. If a metric is used in another question, whether a group can view the question depends on the question’s collection, not the metric’s collection.</p>
+<p>Because metrics live in collections, are attached to a data source, and define a query, permissions for metrics are determined by a combination of <a href="../permissions/collections">collection permissions</a>, <a href="../permissions/data#can-view-data-permission">“View data” permissions</a>, and <a href="../permissions/data#create-queries-permissions">“Create queries” permissions</a>.</p>
 
-<p>By “editing” a metric, we mean <a href="#editing-a-metric">editing the metric’s query definition</a>.</p>
+<table>
+  <thead>
+    <tr>
+      <th>Metric action \ Permissions</th>
+      <th>View data</th>
+      <th>Create queries</th>
+      <th>Collection</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td data-label="Metric action \ Permissions"><strong>Create</strong> or <strong>edit</strong> definition</td>
+      <td data-label="View data">Not “Blocked”</td>
+      <td data-label="Create queries">At least “Query builder”</td>
+      <td data-label="Collection">Curate</td>
+    </tr>
+    <tr>
+      <td data-label="Metric action \ Permissions"><strong>View</strong></td>
+      <td data-label="View data">Not “Blocked”</td>
+      <td data-label="Create queries">Any</td>
+      <td data-label="Collection">View</td>
+    </tr>
+    <tr>
+      <td data-label="Metric action \ Permissions"><strong>Use</strong> in the query builder</td>
+      <td data-label="View data">Not “Blocked”</td>
+      <td data-label="Create queries">At least “Query builder”</td>
+      <td data-label="Collection">View</td>
+    </tr>
+  </tbody>
+</table>
 
-<p>These collection permissions also interact with the group’s <a href="../permissions/data">data permissions</a>, which define whether the group can view or query the metric’s source data.</p>
+<p>Anyone who has these permissions will be able to interact with the metric: for example, anyone with curate permissions to a collection, and “Create queries” permission on a data source will be able to create metrics in the collection that they can curate.</p>
 
 <h2 id="metrics-in-the-library">Metrics in the Library</h2>
 
-<p>By adding metrics to your Library, the query builder will display the metrics more prominently in menus. See <a href="../data-studio/library#metrics">Library metrics</a></p>
+<p>By adding metrics to your Library, the query builder will display the metrics more prominently in menus. See <a href="../data-studio/library#metrics">Library metrics</a>.</p>
 
 <h2 id="verifying-a-metric">Verifying a metric</h2>
 
-<p>See <a href="../exploration-and-organization/content-verification">content verification</a>. Prefer using <a href="../data-studio/library#metrics">Library metrics</a> instead of content verification.</p>
+<p>On <a href="/product/pro">Pro</a> and <a href="/product/enterprise">Enterprise</a> plans, you can <a href="../exploration-and-organization/content-verification">mark metrics as verified</a>.</p>
+
+<p>Prefer using the <a href="../data-studio/library#metrics">Library</a> to let people know which metrics they should use.</p>
+
+<h2 id="limitations">Limitations</h2>
+
+<ul>
+  <li>For now, metrics are associated with a specific data source, and can’t be used on any other data source, including on data sources derived from metric’s original data source.</li>
+  <li>Metrics are only available to the query builder. For defining reusable bits of SQL, check out <a href="../questions/native-editor/snippets">Snippets</a>.</li>
+  <li>You can’t limit people from creating metrics on data sources they otherwise have permissions to query.</li>
+</ul>
 
 <h2 id="further-reading">Further reading</h2>
 
 <ul>
+  <li><a href="../data-studio/data-structure#measures">Measures</a></li>
   <li><a href="./models">Models</a></li>
   <li><a href="./segments">Segments</a></li>
+  <li><a href="../questions/native-editor/snippets">SQL Snippets</a></li>
 </ul>
 
 

@@ -6,7 +6,7 @@
   <meta content="frame-ancestors 'none'" http-equiv="Content-Security-Policy">
   <meta content="deny" http-equiv="X-Frame-Options">
   
-  <meta name="robots" content="noindex nofollow">
+  <meta name="robots" content="noindex, nofollow">
   
 
   
@@ -54,7 +54,7 @@ window.redirectTo = function redirectTo(theLocation) {
 <meta name="twitter:site" content="@metabase">
 
 <meta name="twitter:title" content="Setting up data uploads | Metabase Documentation">
-<meta name="twitter:description" content="Setting up data uploads This page covers how admins can set up data uploads so people can upload CSVs to your Metabase. For how to upload data once this is set up, check out Uploading data. <img src=" .="" images="" upload-to-collection.png"="" alt="Upload CSV...">
+<meta name="twitter:description" content="How admins can enable CSV uploads by connecting a database with write access, selecting an upload schema, and granting people data and collection permissions.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -64,7 +64,7 @@ window.redirectTo = function redirectTo(theLocation) {
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://www.metabase.com/docs/v0.60/databases/uploads">
 <meta name="title" property="og:title" content="Setting up data uploads | Metabase Documentation">
-<meta name="description" property="og:description" content="Setting up data uploads This page covers how admins can set up data uploads so people can upload CSVs to your Metabase. For how to upload data once this is set up, check out Uploading data. <img src=" .="" images="" upload-to-collection.png"="" alt="Upload CSV...">
+<meta name="description" property="og:description" content="How admins can enable CSV uploads by connecting a database with write access, selecting an upload schema, and granting people data and collection permissions.">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -188,17 +188,18 @@ window.redirectTo = function redirectTo(theLocation) {
     <span>Meet Data Studio: an analyst workbench with tools to shape data and curate your semantic layer in Metabase.</span>
     <a href="/blog/meet-data-studio-semantic-layer">
       See what we built and why<img alt="Chevron Blue Right" src="/images/chevron_blue_right.svg">
-  </a></div><a href="/blog/meet-data-studio-semantic-layer">
+    </a>
+  </div>
   <button>×</button>
-</a></div><a href="/blog/meet-data-studio-semantic-layer">
+</div>
 <script src="/js/events/datetime.js"></script>
 
     
 
-    </a><div class="container"><a href="/blog/meet-data-studio-semantic-layer">
-      </a><div class="row flex-grow-1"><a href="/blog/meet-data-studio-semantic-layer">
-        </a><div class="home-link col-xs-4 col-lg-2 d-flex align-items-center"><a href="/blog/meet-data-studio-semantic-layer">
-          </a><a href="/">
+    <div class="container">
+      <div class="row flex-grow-1">
+        <div class="home-link col-xs-4 col-lg-2 d-flex align-items-center">
+          <a href="/">
             
               <div class="MB-Logo inline-block"></div>
             
@@ -855,12 +856,16 @@ Roadmap</a>
         <span class="menu-heading">Recent Blog Posts</span>
         
         
-        <a class="w-100 post-with-image recent-blog-link mt-1" href="/blog/meet-data-studio-semantic-layer">
+        <a class="w-100 post-with-image recent-blog-link mt-1" href="/blog/reprobot-github-issue-triage-agent">
           <div class="d-flex align-items-center position-relative overflow-hidden rounded-2 mb-3" id="recent-blog-image-wrapper">
-            <img alt="Resources Image" class="position-absolute w-100" src="/images/posts/metabase-59/data-studio-blog-og.png" loading="lazy">
+            <img alt="Resources Image" class="position-absolute w-100" src="/images/posts/engineering-2026/repro-bot.jpg" loading="lazy">
           </div>
-          <span class="h6 neutral-40 recent-blog-link-heading mb-3">Meet Data Studio: tools to curate your semantic layer in Metabase</span>
+          <span class="h6 neutral-40 recent-blog-link-heading mb-3">Meet Repro-Bot, our GitHub issue triage agent</span>
         </a>
+        
+          <a class="w-100 recent-blog-link" href="/blog/meet-data-studio-semantic-layer">
+            <span class="h6 neutral-40 recent-blog-link-heading mb-3">Meet Data Studio: tools to curate your semantic layer in Metabase</span>
+          </a>
         
           <a class="w-100 recent-blog-link" href="/blog/lessons-learned-building-ai-analytics-agents">
             <span class="h6 neutral-40 recent-blog-link-heading mb-3">Lessons learned from building AI analytics agents: build for chaos</span>
@@ -872,10 +877,6 @@ Roadmap</a>
         
           <a class="w-100 recent-blog-link" href="/blog/data-analyst-roadmap">
             <span class="h6 neutral-40 recent-blog-link-heading mb-3">Become a data analyst in 2026: a practical roadmap</span>
-          </a>
-        
-          <a class="w-100 recent-blog-link" href="/blog/product-metrics">
-            <span class="h6 neutral-40 recent-blog-link-heading mb-3">10 B2B SaaS product metrics that should be on your dashboard</span>
           </a>
         
       </div>
@@ -5970,6 +5971,8 @@ Roadmap</a>
 <h2 id="add-people-to-a-group-with-data-access-to-the-upload-schema">Add people to a group with data access to the upload schema</h2>
 
 <p>In order to upload CSVs, a person must be in a group with <strong>View data</strong> access of “Can view” and <strong>Create queries</strong> of Query builder access or higher to the schema you’ve selected to store your uploaded data. See <a href="../people-and-groups/managing">groups</a> and <a href="../permissions/data">data permissions</a>.</p>
+
+<p>People also need <a href="../permissions/collections#curate-access">Curate access</a> to any collection they want to upload to. The upload icon only appears in collections where they have Curate access. Everyone has Curate access to their <a href="../permissions/collections#personal-collections">personal collection</a> by default.</p>
 
 <h2 id="note-on-uploading-data-to-a-mysql-database">Note on uploading data to a MySQL database</h2>
 
