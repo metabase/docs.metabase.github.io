@@ -6,7 +6,7 @@
   <meta content="frame-ancestors 'none'" http-equiv="Content-Security-Policy">
   <meta content="deny" http-equiv="X-Frame-Options">
   
-  <meta name="robots" content="noindex nofollow">
+  <meta name="robots" content="noindex, nofollow">
   
 
   
@@ -188,17 +188,18 @@ window.redirectTo = function redirectTo(theLocation) {
     <span>Meet Data Studio: an analyst workbench with tools to shape data and curate your semantic layer in Metabase.</span>
     <a href="/blog/meet-data-studio-semantic-layer">
       See what we built and why<img alt="Chevron Blue Right" src="/images/chevron_blue_right.svg">
-  </a></div><a href="/blog/meet-data-studio-semantic-layer">
+    </a>
+  </div>
   <button>×</button>
-</a></div><a href="/blog/meet-data-studio-semantic-layer">
+</div>
 <script src="/js/events/datetime.js"></script>
 
     
 
-    </a><div class="container"><a href="/blog/meet-data-studio-semantic-layer">
-      </a><div class="row flex-grow-1"><a href="/blog/meet-data-studio-semantic-layer">
-        </a><div class="home-link col-xs-4 col-lg-2 d-flex align-items-center"><a href="/blog/meet-data-studio-semantic-layer">
-          </a><a href="/">
+    <div class="container">
+      <div class="row flex-grow-1">
+        <div class="home-link col-xs-4 col-lg-2 d-flex align-items-center">
+          <a href="/">
             
               <div class="MB-Logo inline-block"></div>
             
@@ -855,12 +856,16 @@ Roadmap</a>
         <span class="menu-heading">Recent Blog Posts</span>
         
         
-        <a class="w-100 post-with-image recent-blog-link mt-1" href="/blog/meet-data-studio-semantic-layer">
+        <a class="w-100 post-with-image recent-blog-link mt-1" href="/blog/reprobot-github-issue-triage-agent">
           <div class="d-flex align-items-center position-relative overflow-hidden rounded-2 mb-3" id="recent-blog-image-wrapper">
-            <img alt="Resources Image" class="position-absolute w-100" src="/images/posts/metabase-59/data-studio-blog-og.png" loading="lazy">
+            <img alt="Resources Image" class="position-absolute w-100" src="/images/posts/engineering-2026/repro-bot.jpg" loading="lazy">
           </div>
-          <span class="h6 neutral-40 recent-blog-link-heading mb-3">Meet Data Studio: tools to curate your semantic layer in Metabase</span>
+          <span class="h6 neutral-40 recent-blog-link-heading mb-3">Meet Repro-Bot, our GitHub issue triage agent</span>
         </a>
+        
+          <a class="w-100 recent-blog-link" href="/blog/meet-data-studio-semantic-layer">
+            <span class="h6 neutral-40 recent-blog-link-heading mb-3">Meet Data Studio: tools to curate your semantic layer in Metabase</span>
+          </a>
         
           <a class="w-100 recent-blog-link" href="/blog/lessons-learned-building-ai-analytics-agents">
             <span class="h6 neutral-40 recent-blog-link-heading mb-3">Lessons learned from building AI analytics agents: build for chaos</span>
@@ -872,10 +877,6 @@ Roadmap</a>
         
           <a class="w-100 recent-blog-link" href="/blog/data-analyst-roadmap">
             <span class="h6 neutral-40 recent-blog-link-heading mb-3">Become a data analyst in 2026: a practical roadmap</span>
-          </a>
-        
-          <a class="w-100 recent-blog-link" href="/blog/product-metrics">
-            <span class="h6 neutral-40 recent-blog-link-heading mb-3">10 B2B SaaS product metrics that should be on your dashboard</span>
           </a>
         
       </div>
@@ -5904,7 +5905,13 @@ Roadmap</a>
 
         <h1 id="agent-api">Agent API</h1>
 
-<p>The Agent API is a REST API for building headless, agentic BI applications on top of Metabase’s semantic layer, scoped to an authenticated user’s permissions.</p>
+<p>The <a href="../api#tag/apiagent">Agent API</a> is a REST API for building headless, agentic BI applications on top of Metabase’s semantic layer, scoped to an authenticated user’s permissions.</p>
+
+<h2 id="agent-api-endpoints-and-reference">Agent API endpoints and reference</h2>
+
+<p>Check out the API endpoint docs: <a href="../api#tag/apiagent">/api/agent</a>.</p>
+
+<p>You can also point your AI to the <a href="https://github.com/metabase/metabase/blob/master/src/metabase/agent_api/reference.md">Agent API reference</a> to bootstrap your agent.</p>
 
 <h2 id="example-application">Example application</h2>
 
@@ -5938,12 +5945,6 @@ Roadmap</a>
 <h2 id="row-limits-and-pagination">Row limits and pagination</h2>
 
 <p>Queries return a maximum of 200 rows per request. To page through larger result sets, use <code class="language-plaintext highlighter-rouge">POST /api/agent/v1/query</code>, which returns a <code class="language-plaintext highlighter-rouge">continuation_token</code> when more rows are available. Pass the token back to get the next page.</p>
-
-<h2 id="agent-api-endpoints-and-reference">Agent API endpoints and reference</h2>
-
-<p>Check out the API endpoints: <a href="../api#tag/apiagent">/api/agent</a>.</p>
-
-<p>You can also point your AI to the <a href="https://github.com/metabase/metabase/blob/master/src/metabase/agent_api/reference.md">Agent API reference</a> to bootstrap your agent.</p>
 
 <h2 id="authentication">Authentication</h2>
 
