@@ -82,7 +82,7 @@ For example, to embed the SQL editor:
 
 ## Browser
 
-{% include plans-blockquote.html feature="Browser component" convert_pro_link_to_embbedding=true%}
+{% include plans-blockquote.html feature="Browser component" convert_pro_link_to_embedding=true%}
 
 Browser component is only available for authenticated modular embeds. It's unavailable for [Guest embeds](./guest-embedding).
 
@@ -103,7 +103,7 @@ To render a collection browser so people can navigate a collection and open dash
 
 ## AI chat
 
-{% include plans-blockquote.html feature="AI chat component" convert_pro_link_to_embbedding=true%}
+{% include plans-blockquote.html feature="AI chat component" convert_pro_link_to_embedding=true%}
 
 AI chat component is only available for authenticated modular embeds. It's unavailable for [Guest embeds](./guest-embedding).
 
@@ -119,7 +119,7 @@ To render the AI chat interface:
 
 ## Customizing loader and error components
 
-{% include plans-blockquote.html feature="Customizing loader and error componentst" convert_pro_link_to_embbedding=true%}
+{% include plans-blockquote.html feature="Customizing loader and error components" convert_pro_link_to_embedding=true%}
 
 If you're using the [modular embedding SDK](./sdk/introduction), you can provide your own components for loading and error states by specifying `loaderComponent` and `errorComponent` as props to `MetabaseProvider`.
 

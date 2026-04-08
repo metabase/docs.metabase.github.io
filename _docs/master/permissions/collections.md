@@ -91,7 +91,7 @@ People in groups with Curate access to a collection can pin items in the collect
 
 To pin an item, select the **pin icon** next to the item's name.
 
-Note that collections themselves can't be pinned. If you're running on a [Pro or Enterprise plan](/pricing/), admins can designate [Official Collections][offical-collections].
+Note that collections themselves can't be pinned. If you're running on a [Pro or Enterprise plan](/pricing/), admins can designate [Official Collections][official-collections].
 
 ## Special collections
 
@@ -126,7 +126,7 @@ See [Tenants > External collections](../embedding/tenants#collection-types)
 [collections]: ../exploration-and-organization/collections
 [collection-permissions]: /learn/metabase-basics/administration/permissions/collection-permissions
 [dashboard-subscriptions]: ../dashboards/subscriptions
-[offical-collections]: ../exploration-and-organization/collections#official-collections
+[official-collections]: ../exploration-and-organization/collections#official-collections
 [permissions]: /learn/metabase-basics/administration/permissions
 [slack-integration]: ../configuring-metabase/slack
 [sql-snippet-folders]: ../questions/native-editor/snippets

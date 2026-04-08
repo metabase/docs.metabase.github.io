@@ -12,7 +12,7 @@ summary: 'Embed Metabase collection browser in your application using the Metaba
 
 # Modular embedding SDK - collections
 
-{% include plans-blockquote.html feature="Modular embedding SDK" sdk=true %}
+{% include plans-blockquote.html feature="Modular embedding SDK" sdk=true convert_pro_link_to_embedding=true %}
 
 ## Embedding a collection browser
 
