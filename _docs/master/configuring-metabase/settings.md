@@ -13,7 +13,7 @@ redirect_from:
 
 # General settings
 
-_Admin > Settings > Feneral_
+_Admin > Settings > General_
 
 This section contains settings for your whole instance, like its URL, the reporting timezone, and toggles for disabling or enabling some of Metabase's optional features.
 You can configure these settings by clicking the **grid icon** in the upper right, then going to **Admin** > **Settings** > **General**.
@@ -49,7 +49,7 @@ This email address will be displayed in various messages throughout Metabase whe
 
 ## Anonymous tracking
 
-On self-hosted Metabases, this option turns determines whether or not you allow [anonymous data about your usage of Metabase](../installation-and-operation/information-collection) to be sent back to us to help us improve the product. [Your database’s data is never tracked or sent](/security).
+On self-hosted Metabases, this option determines whether or not you allow [anonymous data about your usage of Metabase](../installation-and-operation/information-collection) to be sent back to us to help us improve the product. [Your database’s data is never tracked or sent](/security).
 
 ## Friendly table and field names
 

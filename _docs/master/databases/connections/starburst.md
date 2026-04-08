@@ -46,7 +46,7 @@ The database port (e.g., `8080`).
 
 ### Catalog
 
-Starburt catalogs contain schemas and reference data sources via a connector.
+Starburst catalogs contain schemas and reference data sources via a connector.
 
 ### Schema (optional)
 
