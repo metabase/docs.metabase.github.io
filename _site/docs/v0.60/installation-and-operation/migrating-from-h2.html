@@ -54,7 +54,7 @@ window.redirectTo = function redirectTo(theLocation) {
 <meta name="twitter:site" content="@metabase">
 
 <meta name="twitter:title" content="Migrating to a production application database | Metabase Documentation">
-<meta name="twitter:description" content="Migrating to a production application database This page covers how to convert a Metabase that’s been using the built-in application database, H2, to a production-ready instance PostgreSQL. For more on why you should use Postgres as your app DB, check out...">
+<meta name="twitter:description" content="Migrating to a production application database This page covers how to convert a Metabase that’s been using the built-in application database, H2, to a production-ready instance of PostgreSQL. For more on why you should use Postgres as your app DB, check...">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -64,7 +64,7 @@ window.redirectTo = function redirectTo(theLocation) {
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://www.metabase.com/docs/v0.60/installation-and-operation/migrating-from-h2">
 <meta name="title" property="og:title" content="Migrating to a production application database | Metabase Documentation">
-<meta name="description" property="og:description" content="Migrating to a production application database This page covers how to convert a Metabase that’s been using the built-in application database, H2, to a production-ready instance PostgreSQL. For more on why you should use Postgres as your app DB, check out...">
+<meta name="description" property="og:description" content="Migrating to a production application database This page covers how to convert a Metabase that’s been using the built-in application database, H2, to a production-ready instance of PostgreSQL. For more on why you should use Postgres as your app DB, check...">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -135,8 +135,8 @@ window.redirectTo = function redirectTo(theLocation) {
 
   <meta content="no-referrer-when-downgrade" name="referrer">
 
-  <!-- VWO -->
-  <link rel="preconnect" href="https://dev.visualwebsiteoptimizer.com">
+  
+
 
   <!-- Syntax Highlighting -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/base16/atelier-sulphurpool-light.min.css" integrity="sha512-qrwjMzcPG1EHhhg9z2nH7VW7hj525RVx0o7GlxQc4ZhWkghp9slpnTjOUu5thnPaRfRqfAUlX7anvAqD9EonfQ==" crossorigin="anonymous" referrerpolicy="no-referrer">
@@ -2366,6 +2366,21 @@ Roadmap</a>
                       </li>
                     
                   </ul>
+                
+              </li>
+            
+              
+
+              
+
+              
+
+              <li class="">
+                <a href="/docs/v0.60/questions/metrics-explorer" class="">
+                  Metrics explorer
+
+                  
+                </a>
                 
               </li>
             
@@ -5158,6 +5173,34 @@ Roadmap</a>
                         
                       </li>
                     
+                      
+
+                      
+
+                      
+                      <li class="">
+                        <a href="/docs/v0.60/people-and-groups/authenticating-with-oidc" class="">
+                          OIDC-based authentication
+
+                          
+                        </a>
+                        
+                      </li>
+                    
+                      
+
+                      
+
+                      
+                      <li class="">
+                        <a href="/docs/v0.60/people-and-groups/oidc-keycloak" class="">
+                          OIDC with Keycloak
+
+                          
+                        </a>
+                        
+                      </li>
+                    
                   </ul>
                 
               </li>
@@ -5905,7 +5948,7 @@ Roadmap</a>
 
         <h1 id="migrating-to-a-production-application-database">Migrating to a production application database</h1>
 
-<p>This page covers how to convert a Metabase that’s been using the built-in application database, H2, to a production-ready instance PostgreSQL. For more on why you should use Postgres as your app DB, check out <a href="/learn/metabase-basics/administration/administration-and-operation/metabase-in-production">How to run Metabase in production</a>.</p>
+<p>This page covers how to convert a Metabase that’s been using the built-in application database, H2, to a production-ready instance of PostgreSQL. For more on why you should use Postgres as your app DB, check out <a href="/learn/metabase-basics/administration/administration-and-operation/metabase-in-production">How to run Metabase in production</a>.</p>
 
 <p>If you’d rather move to Metabase Cloud, check out <a href="../cloud/migrate/guide">Migrate to Metabase Cloud</a>.</p>
 
@@ -6056,13 +6099,13 @@ export MB_DB_CONNECTION_URI="jdbc:postgresql://&lt;host&gt;:5432/metabase?user=&
 java --add-opens java.base/java.nio=ALL-UNNAMED -jar metabase.jar load-from-h2 /path/to/metabase.db # do not include .mv.db
 </code></pre></div></div>
 
-<p>Metabase will start up, perform the migration (meaning, it’ll take the data from the H2 file and put it into your new app db, in this a Postgres db), and then exit.</p>
+<p>Metabase will start up, perform the migration (meaning, it’ll take the data from the H2 file and put it into your new app db, in this case a Postgres db), and then exit.</p>
 
 <p>See <a href="configuring-application-database">Configuring the application database</a>.</p>
 
 <h3 id="6-start-a-new-docker-container-that-uses-the-new-app-db">6. Start a new Docker container that uses the new app db</h3>
 
-<p>With your new application database populated with your Metabase data, you can start a new container and tell the Metabase in the container to connect to the appdb. The command will looks something like this:</p>
+<p>With your new application database populated with your Metabase data, you can start a new container and tell the Metabase in the container to connect to the appdb. The command will look something like this:</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run -d -p 3000:3000 \
   -e "MB_DB_TYPE=postgres" \
@@ -6504,8 +6547,6 @@ Once your database is updated try running the application again.
   })();
   var $mcj = jQuery.noConflict(true);
 </script>
-
-
 
 
 
