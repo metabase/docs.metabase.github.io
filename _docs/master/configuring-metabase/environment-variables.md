@@ -907,10 +907,20 @@ Key to retrieve the JWT user's tenant attributes.
 - Default: `false`
 - [Configuration file name](./config-file): `jwt-enabled`
 
-Is JWT authentication configured and enabled?
+Is JWT authentication enabled?
 
 When set to true, will enable JWT authentication with the options configured in the MB_JWT_* variables.
         This is for JWT SSO authentication, and has nothing to do with Static embedding, which is MB_EMBEDDING_SECRET_KEY.
+
+### `MB_JWT_ENABLED_AND_CONFIGURED`
+
+> Only available on Metabase [Pro](/product/pro) and [Enterprise](/product/enterprise) plans.
+
+- Type: boolean
+- Default: `false`
+- [Configuration file name](./config-file): `jwt-enabled-and-configured`
+
+Is JWT authentication configured and enabled?
 
 ### `MB_JWT_GROUP_MAPPINGS`
 

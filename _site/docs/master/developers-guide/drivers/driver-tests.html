@@ -135,8 +135,8 @@ window.redirectTo = function redirectTo(theLocation) {
 
   <meta content="no-referrer-when-downgrade" name="referrer">
 
-  <!-- VWO -->
-  <link rel="preconnect" href="https://dev.visualwebsiteoptimizer.com">
+  
+
 
   <!-- Syntax Highlighting -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/base16/atelier-sulphurpool-light.min.css" integrity="sha512-qrwjMzcPG1EHhhg9z2nH7VW7hj525RVx0o7GlxQc4ZhWkghp9slpnTjOUu5thnPaRfRqfAUlX7anvAqD9EonfQ==" crossorigin="anonymous" referrerpolicy="no-referrer">
@@ -5977,7 +5977,7 @@ Roadmap</a>
 
 <p>To run the test suite with your driver, you’ll need to write a series of method implementations for special <em>test extension</em> multimethods. Test extensions do things like create new databases and load data for <em>database definitions</em>.</p>
 
-<p>These test extensions will tell Metabase how to create new databases and load them with test data, and provide information about what Metabae can expect from the created database. Test extensions are simply additional multimethods used only by tests. Like the core driver multimethods, they dispatch on the driver name as a keyword, e.g. <code class="language-plaintext highlighter-rouge">:mysql</code>.</p>
+<p>These test extensions will tell Metabase how to create new databases and load them with test data, and provide information about what Metabase can expect from the created database. Test extensions are simply additional multimethods used only by tests. Like the core driver multimethods, they dispatch on the driver name as a keyword, e.g. <code class="language-plaintext highlighter-rouge">:mysql</code>.</p>
 
 <h2 id="file-organization">File organization</h2>
 
@@ -6029,7 +6029,7 @@ and <a href="https://github.com/metabase/metabase/blob/master/test/metabase/test
 
 <h2 id="anatomy-of-a-metabase-test">Anatomy of a Metabase test</h2>
 
-<p>Let’s look at an real-life Metabase test so we can understand how it works and what exactly we need to do to power it:</p>
+<p>Let’s look at a real-life Metabase test so we can understand how it works and what exactly we need to do to power it:</p>
 
 <div class="language-clj highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">;; expect-with-non-timeseries-dbs = run against all drivers listed in `DRIVERS` env var except timeseries ones like Druid</span><span class="w">
 </span><span class="p">(</span><span class="nf">expect-with-non-timeseries-dbs</span><span class="w">
@@ -6070,9 +6070,9 @@ and <a href="https://github.com/metabase/metabase/blob/master/test/metabase/test
 
 <h2 id="loading-data">Loading Data</h2>
 
-<p>In order to ensure consistent behavior across different drivers, the Metabase test suite creates new databases and load datas into them from a set of shared <em>Database Definitions</em>. That means whether we’re running a test against MySQL, Postgres, SQL Server, or MongoDB, a single test can check that we get the exact same results for every driver!</p>
+<p>In order to ensure consistent behavior across different drivers, the Metabase test suite creates new databases and loads data into them from a set of shared <em>Database Definitions</em>. That means whether we’re running a test against MySQL, Postgres, SQL Server, or MongoDB, a single test can check that we get the exact same results for every driver!</p>
 
-<p>Most of these database definitions live in <a href="https://github.com/edn-format/edn">EDN</a> files; the majority of tests run against a test database named “test data”, whose definition can be found <a href="https://github.com/metabase/metabase/blob/master/test/metabase/test/data/dataset_definitions/test-data.edn">here</a>. Take a look at that file – it’s just a simple set of tables names, column names and types, and then a few thousand rows of data to load into those tables.</p>
+<p>Most of these database definitions live in <a href="https://github.com/edn-format/edn">EDN</a> files; the majority of tests run against a test database named “test data”, whose definition can be found <a href="https://github.com/metabase/metabase/blob/master/test/metabase/test/data/dataset_definitions/test-data.edn">here</a>. Take a look at that file – it’s just a simple set of table names, column names and types, and then a few thousand rows of data to load into those tables.</p>
 
 <p>Like test extension method definitions, schemas for <code class="language-plaintext highlighter-rouge">DatabaseDefinition</code> live in <a href="https://github.com/metabase/metabase/blob/master/test/metabase/test/data/interface.clj"><code class="language-plaintext highlighter-rouge">metabase.test.data.interface</code></a> – you can take a look and see exactly what a database definition is supposed to look like.</p>
 
@@ -6569,8 +6569,6 @@ and <a href="https://github.com/metabase/metabase/blob/master/test/metabase/test
   })();
   var $mcj = jQuery.noConflict(true);
 </script>
-
-
 
 
 

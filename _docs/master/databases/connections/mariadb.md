@@ -67,7 +67,7 @@ You can append options to the connection string that Metabase uses to connect to
 
 ### Re-run queries for simple explorations
 
-Turn this option **OFF** if people want to click **Run** (the play button) before applying any [summarize](../../questions/query-builder/summarizing-and-grouping)) or [filter](../../questions/query-builder/filters) selections.
+Turn this option **OFF** if people want to click **Run** (the play button) before applying any [summarize](../../questions/query-builder/summarizing-and-grouping) or [filter](../../questions/query-builder/filters) selections.
 
 By default, Metabase will execute a query as soon as you choose an grouping option from the **Summarize** menu or a filter condition from the [drill-through menu](/learn/metabase-basics/querying-and-dashboards/questions/drill-through). If your database is slow, you may want to disable re-running to avoid loading data on each click.
 
