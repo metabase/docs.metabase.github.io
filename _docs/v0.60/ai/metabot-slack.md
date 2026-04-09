@@ -39,7 +39,7 @@ This is the basic Slack integration that lets Metabase send alerts and subscript
 
 ### 3. Enable natural language questions
 
-This is the setting lets people chat with Metabot in Slack.
+This is the setting that lets people chat with Metabot in Slack.
 
 Follow the steps in [Set up Metabot in Slack](../configuring-metabase/slack#set-up-metabot-in-slack) to add your Slack app credentials.
 

@@ -123,7 +123,7 @@ On saved SQL questions without [parameters](./sql-parameters), you'll get the **
 
 ![Explore results button](../images/explore-results.png)
 
-## Drill-though in SQL questions
+## Drill-through in SQL questions
 
 Visualizations created with SQL have limited [drill-through][drill-through] capabilities:
 

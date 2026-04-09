@@ -90,7 +90,7 @@ To edit a metric:
 
    ![Metric definition](./images/metric-definition.png)
 
-   If you edit metric's definition, all questions that use the metric will immediately start using the new definition.
+   If you edit the metric's definition, all questions that use the metric will immediately start using the new definition.
 
 3. Save your changes.
 
@@ -120,7 +120,7 @@ You can use [custom expressions](../questions/query-builder/expressions) to defi
  (CountIf([Score] >= 9) - CountIf([Score] <= 6) ) / Count() * 100
 ```
 
-Metric formula must to be an _aggregation_  of a column, meaning you can have a formula like `Sum([Price])` which will add up all the values in the `Price` column across all records, but you can't have a formula like `[Price] + [Tax]` which adds two values on a per-record basis. If you need to create a "calculated" column, consider using [transforms](../data-studio/transforms/transforms-overview) or [models](../data-modeling/models) instead.
+Metric formula must be an _aggregation_  of a column, meaning you can have a formula like `Sum([Price])` which will add up all the values in the `Price` column across all records, but you can't have a formula like `[Price] + [Tax]` which adds two values on a per-record basis. If you need to create a "calculated" column, consider using [transforms](../data-studio/transforms/transforms-overview) or [models](../data-modeling/models) instead.
 
 We don't recommend adding filters into the metric definition to avoid filter conflicts when using metrics in the query builder. You can use conditional custom expressions like [`CountIf`, `SumIf`, and `DistinctIf`](../questions/query-builder/expressions-list#aggregations) to create conditional aggregations.
 

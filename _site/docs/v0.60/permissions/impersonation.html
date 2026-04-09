@@ -135,8 +135,8 @@ window.redirectTo = function redirectTo(theLocation) {
 
   <meta content="no-referrer-when-downgrade" name="referrer">
 
-  <!-- VWO -->
-  <link rel="preconnect" href="https://dev.visualwebsiteoptimizer.com">
+  
+
 
   <!-- Syntax Highlighting -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/base16/atelier-sulphurpool-light.min.css" integrity="sha512-qrwjMzcPG1EHhhg9z2nH7VW7hj525RVx0o7GlxQc4ZhWkghp9slpnTjOUu5thnPaRfRqfAUlX7anvAqD9EonfQ==" crossorigin="anonymous" referrerpolicy="no-referrer">
@@ -2366,6 +2366,21 @@ Roadmap</a>
                       </li>
                     
                   </ul>
+                
+              </li>
+            
+              
+
+              
+
+              
+
+              <li class="">
+                <a href="/docs/v0.60/questions/metrics-explorer" class="">
+                  Metrics explorer
+
+                  
+                </a>
                 
               </li>
             
@@ -5158,6 +5173,34 @@ Roadmap</a>
                         
                       </li>
                     
+                      
+
+                      
+
+                      
+                      <li class="">
+                        <a href="/docs/v0.60/people-and-groups/authenticating-with-oidc" class="">
+                          OIDC-based authentication
+
+                          
+                        </a>
+                        
+                      </li>
+                    
+                      
+
+                      
+
+                      
+                      <li class="">
+                        <a href="/docs/v0.60/people-and-groups/oidc-keycloak" class="">
+                          OIDC with Keycloak
+
+                          
+                        </a>
+                        
+                      </li>
+                    
                   </ul>
                 
               </li>
@@ -5934,6 +5977,7 @@ Roadmap</a>
 <h2 id="databases-that-support-impersonation">Databases that support impersonation</h2>
 
 <p>For now, impersonation access is only available for the following databases:</p>
+
 <ul>
   <li>ClickHouse</li>
   <li>MySQL</li>
@@ -5987,7 +6031,7 @@ Roadmap</a>
 
 <ol>
   <li>Create a new database role (in Redshift, this would be a new user).</li>
-  <li>Grant that role privileges that you’d like impersonated users to have..</li>
+  <li>Grant that role privileges that you’d like impersonated users to have.</li>
 </ol>
 
 <p>For exactly how to create a new role in your database and grant that role privileges, you’ll need to consult your database’s documentation. We also have some docs on <a href="../databases/users-roles-privileges">users, roles, and privileges</a> that can help you get started.</p>
@@ -6078,7 +6122,7 @@ Roadmap</a>
 
 <h3 id="verify-that-impersonated-permissions-are-working">Verify that impersonated permissions are working</h3>
 
-<p>Admins will not be able to verify that impersonation is are working from their own account, so you should create a test user, add them to the group and set up their user attributes.</p>
+<p>Admins will not be able to verify that impersonation is working from their own account, so you should create a test user, add them to the group and set up their user attributes.</p>
 
 <p>To verify that the impersonated permissions are working:</p>
 
@@ -6094,7 +6138,7 @@ Roadmap</a>
 <p>to verify that the test user only sees data from Vermont.</p>
 
 <ul>
-  <li>If the test user has “Create queries” permissions set to “Query builder only”, go to <strong>Browse data</strong> in the left sidebar and verify that the user can only see the tables they have access to, and only the data in those tables that</li>
+  <li>If the test user has “Create queries” permissions set to “Query builder only”, go to <strong>Browse data</strong> in the left sidebar and verify that the user can only see the tables and data they have access to.</li>
 </ul>
 
 <h2 id="people-in-a-group-with-impersonation-access-to-data-do-not-necessarily-share-the-same-privileges">People in a group with impersonation access to data do not necessarily share the same privileges</h2>
@@ -6122,7 +6166,7 @@ Roadmap</a>
 
 <h2 id="admins-wont-see-the-effects-of-impersonation">Admins won’t see the effects of impersonation</h2>
 
-<p>Admins won’t ever see the effects of impersonation effects, because their privileges will override those of any other group they’re a member of.</p>
+<p>Admins won’t ever see the effects of impersonation, because their privileges will override those of any other group they’re a member of.</p>
 
 <p>Metabase’s default Administrators group has “Can view” access to all databases, and Metabase uses the most permissive access for any person in multiple groups, so any admin will have “Can view” - not “Impersonated” - access to the database.</p>
 
@@ -6518,8 +6562,6 @@ Roadmap</a>
   })();
   var $mcj = jQuery.noConflict(true);
 </script>
-
-
 
 
 

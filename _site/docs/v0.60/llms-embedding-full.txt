@@ -137,7 +137,7 @@ On Pro/Enterprise plan, you can configure granular appearance options, like back
 
 ![Behavior and appearance](./images/behavior-and-appearance.png)
 
-Some appearance options like brand, text, and background color are configurable in in the [embed wizard](./modular-embedding#create-a-new-embed).
+Some appearance options like brand, text, and background color are configurable in the [embed wizard](./modular-embedding#create-a-new-embed).
 
 For other appearance settings, use the `theme` parameter with `preset` in the `defineMetabaseConfig()` function in your [embedding code snippet](./modular-embedding#add-the-embedding-script-to-your-app). For example:
 
@@ -1008,7 +1008,7 @@ We'll set up group synchronization later, but for now, be sure to click the **Sa
 
 Here you'll need to input some values for your SSO to work.
 
-You'll want to declare up two constants in your app:
+You'll want to declare up to two constants in your app:
 
 - `METABASE_JWT_SHARED_SECRET`, paste the JWT signing key that you got from your Metabase here.
 - `METABASE_SITE_URL`, which points to your Metabase instance's root path.
@@ -1273,7 +1273,7 @@ To embed a specific Metabase dashboard, you'll want to use the dashboard's Entit
 src="https://metabase.yourcompany.com/dashboard/entity/[Entity ID]"
 ```
 
-To get a dashboard's Entity ID, visit the dashboard and click on the **info** button. In the **Overview** tab, copy the **Entity ID**. Then in your iframe's `src` attribute to:
+To get a dashboard's Entity ID, visit the dashboard and click on the **info** button. In the **Overview** tab, copy the **Entity ID**. Then set your iframe's `src` attribute to:
 
 ```
 src=https://metabase.yourcompany.com/dashboard/entity/Dc_7X8N7zf4iDK9Ps1M3b
@@ -1524,7 +1524,7 @@ header=false&additional_info=false
 
 ## `breadcrumbs`
 
-Shown by default in the top nav bar. Collection breadcrumbs show the path to the item (i.e., the collection(s) the item is in). This does not effect Data breadcrumbs if the user has Query Builder permissions. To hide the breadcrumbs:
+Shown by default in the top nav bar. Collection breadcrumbs show the path to the item (i.e., the collection(s) the item is in). This does not affect Data breadcrumbs if the user has Query Builder permissions. To hide the breadcrumbs:
 
 ```
 breadcrumbs=false
@@ -2135,9 +2135,9 @@ The exact customization options you see will depend on what type of entity you'r
 
 ![Embed flow options for AI chat](./images/embed-flow-options.png)
 
-If you are on Metabase OSS/Starter plans, you'll be able to select light or dark themes for your components. On Metabase Pro/Enterprise, you'll be also be able to pick specific colors for brand, text, and background in the embed wizard, and add more customization options through [appearance settings](./appearance) later.
+If you are on Metabase OSS/Starter plans, you'll be able to select light or dark themes for your components. On Metabase Pro/Enterprise, you'll also be able to pick specific colors for brand, text, and background in the embed wizard, and add more customization options through [appearance settings](./appearance) later.
 
-All the customization options you select in this wizard will be reflected in code snippet that the embed wizard will generate for you, and you'll be able to add more options later.
+All the customization options you select in this wizard will be reflected in the code snippet that the embed wizard will generate for you, and you'll be able to add more options later.
 
 For example, this code defines the font, color, and size for text, background colors, and colors for filters and summaries:
 
@@ -2170,10 +2170,10 @@ If you [create an embed through the built-in embed wizard](#create-a-new-embed),
 
 You'll add this code snippet to your app and refresh the page.
 
-The code snippets:
+The code snippet has three parts:
 
 - Loading the modular embedding library from your Metabase instance.
-- Set global configuration settings, like the URL of your Metabase and the `theme`. See [Page-level config](#page-level-config).
+- Setting global configuration settings, like the URL of your Metabase and the `theme`. See [Page-level config](#page-level-config).
 - The component(s) to embed, with their parameters. See [Components](./components).
 
 Here's an example snippet:
@@ -2228,7 +2228,7 @@ In addition to this, we consider shared accounts to be unfair usage. Fair usage 
 
 The exact customization options you see will depend on which type of entity you're embedding. These are the settings for authenticated embeds available on [Pro](/product/pro) and [Enterprise](/product/enterprise) plans. For guest embeds (OSS and paid), see [guest embedding options](./guest-embedding#component-attributes).
 
-When you're creating a new embed using **Admin > Embedding > Setup guide > Embed in your code**, you'll see some or all the following customization options in the interactive creation flow. These options correspond to parameters in [components](./components).
+When you're creating a new embed using **Admin > Embedding > Setup guide > Embed in your code**, you'll see some or all of the following customization options in the interactive creation flow. These options correspond to parameters in [components](./components).
 
 - **Allow people to drill through on data points**: determines whether people can interact with the chart (or charts on a dashboard). Interactivity includes [drilling down](/learn/metabase-basics/querying-and-dashboards/questions/drill-through) to individual records from aggregated questions, filtering on click, zooming in, etc. Disabling drill-through for an embedded _question_ also disables people's ability to add filters and summaries.
 
@@ -2542,7 +2542,7 @@ You can embed Metabase's collection browser so that people can explore items in 
 
 ## Hide the collection picker and hard code the collection you want people to save stuff to
 
-With static questions, you set a specific collection as the collection people can save items to, so that they don't have bother picking a collection. To hard-code a collection:
+With static questions, you set a specific collection as the collection people can save items to, so that they don't have to bother picking a collection. To hard-code a collection:
 
 1. Set `isSaveEnabled` to true.
 2. Set `targetCollection` to the collection ID you want people to save items to.
@@ -2620,7 +2620,7 @@ You can embed an interactive, editable, or static dashboard.
 
 ## Embedding a dashboard
 
-You can embed a dashboard using the one of the dashboard components:
+You can embed a dashboard using one of the dashboard components:
 
 ### `StaticDashboard`
 
@@ -2908,7 +2908,7 @@ The SDK doesn't support:
 
 Other limitations:
 
-- Multiple _interactive_ dashboards on the same application page. If you need to embed multiple dashboards on the same application page, you can embed static dashboards.
+- You can only have one dashboard per application page. You can, however, embed multiple questions on the same app page, or use [dashboard tabs](../../dashboards/introduction#dashboard-tabs) to create multiple different card layouts on one dashboard.
 - If you have Leaflet 1.x as a dependency in your app, you may run into compatibility issues. You can try using Leaflet 2.x instead.
 
 ## Issues, feature requests and support
@@ -3018,7 +3018,7 @@ See docs for specific components:
 
 ### `mapQuestionClickActions`
 
-The plugin `mapQuestionClickActions` lets you to customize what happens when people click on a data point on a dashboard or chart. `mapQuestionClickActions` can be used globally, or on component level.
+The plugin `mapQuestionClickActions` lets you customize what happens when people click on a data point on a dashboard or chart. `mapQuestionClickActions` can be used globally, or on component level.
 
 See [`mapQuestionClickActions` plugin](./questions#mapquestionclickactions) for more information and examples.
 
@@ -3066,7 +3066,7 @@ There are different ways you can embed questions:
 
 ## Embedding a question
 
-You can embed a question using the one of the question components:
+You can embed a question using one of the question components:
 
 ### `StaticQuestion`
 
@@ -4023,7 +4023,7 @@ To set up these multi-tenant permissions, we'll need to:
    - People with `role=customer` are assigned to the Customers group.
 5. Set up row-level security on the Accounts table for each group:
    - For the Customers group, the Accounts table will be restricted with `Account ID = primary_id`.
-   - For the Tenants group,, the Accounts table will be restricted with `Tenant ID = primary_id`.
+   - For the Tenants group, the Accounts table will be restricted with `Tenant ID = primary_id`.
 
 When Tenant A logs in with SSO for the first time:
 
@@ -5018,7 +5018,7 @@ For guest and SSO embeds (not the SDK), set the `locale` in `window.metabaseConf
     // If you've uploaded a translation dictionary,
     // Metabase will also translate content strings
     // to this locale from that dictionary.
-    locale: "es"
+    locale: "es",
   };
 </script>
 
@@ -5032,11 +5032,7 @@ If you also want to translate content (like item titles, headings, filter labels
 For the SDK, set the `locale` prop on the `MetabaseProvider` component:
 
 ```tsx
-<MetabaseProvider
-  authConfig={authConfig}
-  locale="es"
->
-</MetabaseProvider>
+<MetabaseProvider authConfig={authConfig} locale="es"></MetabaseProvider>
 ```
 
 If you've uploaded a translation dictionary, the SDK will also translate content strings (like dashboard names and filter labels) to this locale from that dictionary.
@@ -5073,7 +5069,7 @@ Metabase uses these dictionaries to translate user-generated content, like dashb
 | pt-BR    | Vendor      | Vendedor     |
 | IT       | Examples    | Esempi       |
 
-Prefer hyphens in your `pt-BR` in your translation dictionary. Underscores are also acceptable (if you download the dictionary _after_ uploading it, Metabase will transform `pt-BR` to `pt_BR`), but since the `locale` parameter in modular embeds only accepts locales with hyphens (like `pt-BR`), we recommend using hyphens for consistency.
+Prefer hyphens in your `pt-BR` translation dictionary. Underscores are also acceptable (if you download the dictionary _after_ uploading it, Metabase will transform `pt-BR` to `pt_BR`), but since the `locale` parameter in modular embeds only accepts locales with hyphens (like `pt-BR`), we recommend using hyphens for consistency.
 
 [See a list of supported locales](../configuring-metabase/localization#supported-languages).
 
@@ -5104,7 +5100,6 @@ If the strings you want to translate include markdown formatting, you'll need to
 | pt-BR    | `**Examples**` | `**Exemplos**` |
 | pt-BR    | `_Examples_`   | `_Exemplos_`   |
 | pt-BR    | `## Examples`  | `## Exemplos`  |
-
 
 ## The AI chat component isn't translated
 
