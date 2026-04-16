@@ -839,7 +839,7 @@ Pro/Enterprise
 | <a id="initial-collection"></a> `initial-collection`                 | `string` \| `number` | Which collection to start from. Use a collection ID (e.g., `14`) to start in a specific collection, or `"root"` for the top-level "Our Analytics" collection.                                                                                                |
 | <a id="read-only"></a> `read-only`                                   | `boolean`            | Whether the content manager is in read-only mode. When `true`, people can interact with items (filter, summarize, drill-through) but can't save. When `false`, they can create and edit items.<br>---<br>Optional<br>Default: `true`                         |
 | <a id="with-new-dashboard"></a> `with-new-dashboard`                 | `boolean`            | Whether to show the "New dashboard" button. Only applies when `read-only` is `false`.<br>---<br>Optional<br>Default: `true`                                                                                                                                  |
-| <a id="with-new-question"></a> `with-new-question`                   | `boolean`            | Whether to show the "New exploration" button.<br>---<br>Optional<br>Default: `true`                                                                                                                                                                          |
+| <a id="with-new-question"></a> `with-new-question`                   | `boolean`            | Whether to show the "New question" button.<br>---<br>Optional<br>Default: `true`                                                                                                                                                                             |
 
 <!-- [<endsnippet properties>] -->
 
@@ -966,7 +966,7 @@ You'll first need a dashboard to embed. If you don't have one yet, you can use t
 
 Visit that dashboard and make a note of its URL, e.g. `/dashboard/1-e-commerce-insights`. You'll need to put this relative URL in your app, as you'll use the dashboard as the first page that logged-in people will see when they visit the analytics section in your app. It's enough to include the ID only and omit the rest of the URL, e.g. `/dashboard/1`.
 
-You could also use the dashboard's [Entity ID](../installation-and-operation/serialization#metabase-uses-entity-ids-to-identify-and-reference-metabase-items). On the dashboard, click on the **info** button. On the **Overview** tab, look for the dashboard's **Entity ID**. Copy that Entity ID. You'll use that Entity ID in the iframe's `src` URL: (e.g., `src=/dashboard/entity/[Entity ID]`).
+You could also use the dashboard's [Entity ID](../installation-and-operation/serialization#metabase-uses-entity-ids-to-identify-metabase-items). On the dashboard, click on the **info** button. On the **Overview** tab, look for the dashboard's **Entity ID**. Copy that Entity ID. You'll use that Entity ID in the iframe's `src` URL: (e.g., `src=/dashboard/entity/[Entity ID]`).
 
 ### Enable full app embedding
 
@@ -4457,7 +4457,7 @@ For iframe snippets:
 
 ## If you serialize your Metabase, use Entity IDs in your static embeds
 
-Using [Entity IDs](../installation-and-operation/serialization#metabase-uses-entity-ids-to-identify-and-reference-metabase-items) in your static embeds will make sure that the IDs are stable when exporting from one Metabase and importing to another Metabase.
+Using [Entity IDs](../installation-and-operation/serialization#metabase-uses-entity-ids-to-identify-metabase-items) in your static embeds will make sure that the IDs are stable when exporting from one Metabase and importing to another Metabase.
 
 To use an Entity ID in a static embed, all you need to do is edit the `resource` map in the `payload` used to sign your token. Replace the item's (autopopulated) ID with its Entity ID and you're done.
 
