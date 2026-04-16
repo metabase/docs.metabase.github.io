@@ -2696,6 +2696,21 @@ Roadmap</a>
                 
               </li>
             
+              
+
+              
+
+              
+
+              <li class="">
+                <a href="/docs/v0.60/ai/file-based-development" class="">
+                  File-based development
+
+                  
+                </a>
+                
+              </li>
+            
           </ul>
         
       </li>
@@ -5982,6 +5997,17 @@ Roadmap</a>
 
 <p>Results returned by the MCP server are sent to your MCP client, which may forward them to an AI provider depending on how the client is configured. See <a href="./settings#privacy">Privacy</a>.</p>
 
+<h3 id="site-url-must-match-the-url-your-client-uses">Site URL must match the URL your client uses</h3>
+
+<p>For containerized setups, like when testing locally, you may need to set the <code class="language-plaintext highlighter-rouge">MB_SITE_URL</code> environment variable to the URL you point to. For example, if you’re playing around with a Metabase on localhost:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>MB_SITE_URL: http://localhost:3000
+</code></pre></div></div>
+
+<p>Some explanation: OAuth discovery starts with Metabase returning a <code class="language-plaintext highlighter-rouge">WWW-Authenticate</code> header whose <code class="language-plaintext highlighter-rouge">resource_metadata</code> URL is built from your <strong>Site URL</strong> setting in <strong>Admin</strong> &gt; <strong>Settings</strong> &gt; <strong>General</strong> (or via the environment variable).</p>
+
+<p>If the site URL doesn’t match an address your MCP client can reach, like if you’re running Metabase in Docker and the site URL got auto-detected from an internal hostname like <code class="language-plaintext highlighter-rouge">metabase-dev:3000</code>, the client will register but fail the handshake. Your MCP client will typically report a connection failure rather than prompting you to authenticate (for example, Claude Code shows <code class="language-plaintext highlighter-rouge">✗ Failed to connect</code> rather than <code class="language-plaintext highlighter-rouge">! Needs authentication</code>).</p>
+
 <h2 id="available-tools">Available tools</h2>
 
 <p>Some clients (like Claude Desktop) will ask you to approve each tool the first time it’s used. The MCP server builds on Metabase’s <a href="./agent-api">Agent API</a>, and exposes the following tools. If you’re building a custom integration and need full control, use the <a href="./agent-api">Agent API</a> directly instead.</p>
@@ -5997,10 +6023,17 @@ Roadmap</a>
   <li><strong>query</strong>: Query a table or metric and return results.</li>
 </ul>
 
+<h2 id="use-the-mcp-server-with-file-based-development">Use the MCP server with file-based development</h2>
+
+<p>You can use the MCP server to help you create Metabase content as serialized YAML files that you can import into your Metabase. Point your agent at the MCP server to give it access to your Metabase’s database metadata (table names, fields, and sample values) so it can write questions and dashboards that point at real columns.</p>
+
+<p>See <a href="./file-based-development">File-based development</a>.</p>
+
 <h2 id="further-reading">Further reading</h2>
 
 <ul>
   <li><a href="./agent-api">Agent API</a></li>
+  <li><a href="./file-based-development">File-based development</a></li>
   <li><a href="../api">Metabase API docs</a></li>
   <li><a href="https://modelcontextprotocol.io/">Model Context Protocol specification</a></li>
 </ul>

@@ -70,6 +70,8 @@ type IconName =
   | "burger"
   | "calendar"
   | "camera"
+  | "chart_layout_default"
+  | "chart_layout_stack"
   | "check"
   | "check_filled"
   | "code_block"

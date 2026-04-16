@@ -49,12 +49,12 @@ window.redirectTo = function redirectTo(theLocation) {
 
 
 
-<title>Modular embedding SDK - collections | Metabase Documentation</title>
+<title>File-based development | Metabase Documentation</title>
 <!-- Twitter cards -->
 <meta name="twitter:site" content="@metabase">
 
-<meta name="twitter:title" content="Modular embedding SDK - collections | Metabase Documentation">
-<meta name="twitter:description" content="Embed Metabase collection browser in your application using the MetabaseProvider SDK component.">
+<meta name="twitter:title" content="File-based development | Metabase Documentation">
+<meta name="twitter:description" content="Use a combination of agent skills, the Metabase MCP server, and serialization to develop Metabase content with agents on your local file system.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -62,9 +62,9 @@ window.redirectTo = function redirectTo(theLocation) {
 <!-- Open Graph metadata -->
 <meta property="og:site_name" content="Metabase | Business Intelligence, Dashboards, and Data Visualization">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://www.metabase.com/docs/v0.60/embedding/sdk/collections">
-<meta name="title" property="og:title" content="Modular embedding SDK - collections | Metabase Documentation">
-<meta name="description" property="og:description" content="Embed Metabase collection browser in your application using the MetabaseProvider SDK component.">
+<meta property="og:url" content="https://www.metabase.com/docs/v0.60/ai/file-based-development">
+<meta name="title" property="og:title" content="File-based development | Metabase Documentation">
+<meta name="description" property="og:description" content="Use a combination of agent skills, the Metabase MCP server, and serialization to develop Metabase content with agents on your local file system.">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -2604,7 +2604,7 @@ Roadmap</a>
 
       
 
-      <li class="">
+      <li class="expanded">
         <a href="/docs/v0.60/ai/start" class="">
         AI
 
@@ -2703,7 +2703,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.60/ai/file-based-development" class="">
+                <a href="/docs/v0.60/ai/file-based-development" class="selected">
                   File-based development
 
                   
@@ -3372,7 +3372,7 @@ Roadmap</a>
 
       
 
-      <li class="expanded">
+      <li class="">
         <a href="" class="">
         Modular embedding
 
@@ -3470,7 +3470,7 @@ Roadmap</a>
 
               
 
-              <li class="expanded">
+              <li class="">
                 <a href="" class="">
                   Modular embedding SDK
 
@@ -3519,7 +3519,7 @@ Roadmap</a>
                       
 
                       
-                      <li class="expanded">
+                      <li class="">
                         <a href="" class="">
                           Components
 
@@ -3558,7 +3558,7 @@ Roadmap</a>
                             
                               
                               <li>
-                                <a href="/docs/v0.60/embedding/sdk/collections" class="selected">
+                                <a href="/docs/v0.60/embedding/sdk/collections" class="">
                                   Collections
                                 </a>
                               </li>
@@ -5820,7 +5820,7 @@ Roadmap</a>
 
             
             
-                <li class="breadcrumb-item"><a class="blue-60" href="/docs/v0.60/embedding/start">Embedding</a></li>
+                <li class="breadcrumb-item"><a class="blue-60" href="/docs/v0.60/ai/start">Ai</a></li>
             
             
         </ol>
@@ -5961,7 +5961,7 @@ Roadmap</a>
 </div>
 
 
-        <h1 id="modular-embedding-sdk---collections">Modular embedding SDK - collections</h1>
+        <h1 id="file-based-development">File-based development</h1>
 
 <div class="bootstrap">
   <div class="plans-blockquote bg-blue-95 rounded-3 p-6 d-flex flex-row border border-1 border-primary">
@@ -5977,114 +5977,214 @@ Roadmap</a>
       
 
     <p class="m-0 ms-2 paragraph-5 neutral-40">
-       Modular embedding SDK is only available on
-      <a class="fw-bold" href="https://store.metabase.com/checkout/embedding">Pro</a> and
+       File-based development is only available on
+      <a class="fw-bold" href="/product/pro">Pro</a> and
       <a class="fw-bold link-purple" href="/product/enterprise">Enterprise</a>
       plans  (both self-hosted and on Metabase Cloud).
     </p>
   </div>
 </div>
 
-<h2 id="embedding-a-collection-browser">Embedding a collection browser</h2>
+<p>Metabase content like questions and dashboards can be serialized as YAML files. You can edit those YAML files directly, but the most productive workflow is to let an agent do the editing for you — this article focuses on that agent-driven workflow.</p>
 
-<p>You can embed Metabase’s collection browser so that people can explore items in your Metabase from your application.</p>
+<h2 id="the-file-based-toolkit">The file-based toolkit</h2>
 
-<h3 id="collectionbrowser"><code class="language-plaintext highlighter-rouge">CollectionBrowser</code></h3>
-
-<h4 id="api-reference">API Reference</h4>
+<p>We provide a set of tools for using an AI agent to create and edit Metabase content <a href="../installation-and-operation/serialization">serialized</a> as YAML files.</p>
 
 <ul>
-  <li><a href="./api/CollectionBrowser">Component</a></li>
-  <li><a href="./api/CollectionBrowserProps">Props</a></li>
+  <li>The <a href="https://github.com/metabase/representations">Metabase Representation Format</a>. This is a directory that includes a spec, schemas, and examples for all Metabase entities as YAML files: questions, dashboards, and so on.</li>
+  <li>The <a href="https://github.com/metabase/agent-skills"><code class="language-plaintext highlighter-rouge">metabase-representation-format</code> agent skill</a> for working with these YAML files.</li>
+  <li>CLI commands and API endpoints to export and import content serialized in YAML.</li>
+  <li><a href="./mcp">MCP server</a> to look up database metadata when creating the YAML files.</li>
 </ul>
 
-<h4 id="example">Example</h4>
+<h2 id="prerequisites">Prerequisites</h2>
 
-<div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nx">React</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">react</span><span class="dl">"</span><span class="p">;</span>
-<span class="k">import</span> <span class="p">{</span> <span class="nx">CollectionBrowser</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@metabase/embedding-sdk-react</span><span class="dl">"</span><span class="p">;</span>
+<h3 id="set-up-a-development-metabase">Set up a development Metabase</h3>
 
-<span class="k">export</span> <span class="k">default</span> <span class="kd">function</span> <span class="nf">App</span><span class="p">()</span> <span class="p">{</span>
-  <span class="kd">const</span> <span class="nx">collectionId</span> <span class="o">=</span> <span class="mi">123</span><span class="p">;</span> <span class="c1">// This is the collection ID you want to browse</span>
-  <span class="kd">const</span> <span class="nx">handleItemClick</span> <span class="o">=</span> <span class="nx">item</span> <span class="o">=&gt;</span> <span class="p">{</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">Clicked item:</span><span class="dl">"</span><span class="p">,</span> <span class="nx">item</span><span class="p">);</span>
-  <span class="p">};</span>
+<p>Set up a Metabase instance to check your work before pushing changes to production. This Metabase should connect to the same data warehouse(s) your production Metabase connects to. A <a href="../configuring-metabase/config-file">config file</a> will come in handy here.</p>
 
-  <span class="k">return </span><span class="p">(</span>
-    <span class="p">&lt;</span><span class="nc">CollectionBrowser</span>
-      <span class="na">collectionId</span><span class="p">=</span><span class="si">{</span><span class="nx">collectionId</span><span class="si">}</span>
-      <span class="na">onClick</span><span class="p">=</span><span class="si">{</span><span class="nx">handleItemClick</span><span class="si">}</span>
-      <span class="na">pageSize</span><span class="p">=</span><span class="si">{</span><span class="mi">10</span><span class="si">}</span>
-      <span class="c1">// Define the collection item types you want to be visible</span>
-      <span class="na">visibleEntityTypes</span><span class="p">=</span><span class="si">{</span><span class="p">[</span><span class="dl">"</span><span class="s2">dashboard</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">question</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">collection</span><span class="dl">"</span><span class="p">]</span><span class="si">}</span>
-    <span class="p">/&gt;</span>
-  <span class="p">);</span>
-<span class="p">}</span>
+<p>We also recommend turning off the sample content and usage analytics, so they don’t pollute the data model. If you’re using a <a href="../installation-and-operation/running-metabase-on-docker">docker compose file</a>, add these <a href="../configuring-metabase/environment-variables">environment variables</a>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>MB_LOAD_SAMPLE_CONTENT: "false"
+MB_INSTALL_ANALYTICS_DATABASE: "false"
 </code></pre></div></div>
 
-<h4 id="props">Props</h4>
+<h3 id="for-agent-driven-development">For agent-driven development</h3>
 
-<table>
-  <thead>
-    <tr>
-      <th style="text-align: left">Property</th>
-      <th style="text-align: left">Type</th>
-      <th style="text-align: left">Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="classname"></a> <code class="language-plaintext highlighter-rouge">className?</code></td>
-      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">string</code></td>
-      <td style="text-align: left" data-label="Description">A custom class name to be added to the root element.</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="collectionid"></a> <code class="language-plaintext highlighter-rouge">collectionId?</code></td>
-      <td style="text-align: left" data-label="Type"><a href="./api/SdkCollectionId"><code class="language-plaintext highlighter-rouge">SdkCollectionId</code></a></td>
-      <td style="text-align: left" data-label="Description">The numerical ID of the collection, “personal” for the user’s personal collection, “tenant” for the user’s tenant collection, or “root” for the root collection. You can find this ID in the URL when accessing a collection in your Metabase instance. For example, the collection ID in <code class="language-plaintext highlighter-rouge">http://localhost:3000/collection/1-my-collection</code> would be <code class="language-plaintext highlighter-rouge">1</code>. Defaults to “personal”</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="emptycontentcomponent"></a> <code class="language-plaintext highlighter-rouge">EmptyContentComponent?</code></td>
-      <td style="text-align: left" data-label="Type">| <code class="language-plaintext highlighter-rouge">null</code> | <a href="https://github.com/DefinitelyTyped/DefinitelyTyped/blob/0b728411cd1dfb4bd26992bb35a73cf8edaa22e7/types/react/index.d.ts#L104"><code class="language-plaintext highlighter-rouge">ComponentType</code></a></td>
-      <td style="text-align: left" data-label="Description">A component to display when there are no items in the collection.</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="onclick"></a> <code class="language-plaintext highlighter-rouge">onClick?</code></td>
-      <td style="text-align: left" data-label="Type">(<code class="language-plaintext highlighter-rouge">item</code>: <a href="./api/MetabaseCollectionItem"><code class="language-plaintext highlighter-rouge">MetabaseCollectionItem</code></a>) =&gt; <code class="language-plaintext highlighter-rouge">void</code></td>
-      <td style="text-align: left" data-label="Description">A function to call when an item is clicked.</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="pagesize"></a> <code class="language-plaintext highlighter-rouge">pageSize?</code></td>
-      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">number</code></td>
-      <td style="text-align: left" data-label="Description">The number of items to display per page. The default is 25.</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="style"></a> <code class="language-plaintext highlighter-rouge">style?</code></td>
-      <td style="text-align: left" data-label="Type"><a href="https://github.com/DefinitelyTyped/DefinitelyTyped/blob/0b728411cd1dfb4bd26992bb35a73cf8edaa22e7/types/react/index.d.ts#L2579"><code class="language-plaintext highlighter-rouge">CSSProperties</code></a></td>
-      <td style="text-align: left" data-label="Description">A custom style object to be added to the root element.</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="visiblecolumns"></a> <code class="language-plaintext highlighter-rouge">visibleColumns?</code></td>
-      <td style="text-align: left" data-label="Type"><a href="./api/CollectionBrowserListColumns"><code class="language-plaintext highlighter-rouge">CollectionBrowserListColumns</code></a>[]</td>
-      <td style="text-align: left" data-label="Description">The columns to display in the collection items table. If not provided, all columns will be shown.</td>
-    </tr>
-    <tr>
-      <td style="text-align: left" data-label="Property"><a id="visibleentitytypes"></a> <code class="language-plaintext highlighter-rouge">visibleEntityTypes?</code></td>
-      <td style="text-align: left" data-label="Type">(<code class="language-plaintext highlighter-rouge">"collection"</code> | <code class="language-plaintext highlighter-rouge">"dashboard"</code> | <code class="language-plaintext highlighter-rouge">"question"</code> | <code class="language-plaintext highlighter-rouge">"model"</code>)[]</td>
-      <td style="text-align: left" data-label="Description">The types of entities that should be visible. If not provided, all entities will be shown.</td>
-    </tr>
-  </tbody>
-</table>
-
-<h2 id="hide-the-collection-picker-and-hard-code-the-collection-you-want-people-to-save-stuff-to">Hide the collection picker and hard code the collection you want people to save stuff to</h2>
-
-<p>With static questions, you set a specific collection as the collection people can save items to, so that they don’t have to bother picking a collection. To hard-code a collection:</p>
+<p>If you want an agent to do the editing, you also need:</p>
 
 <ol>
-  <li>Set <code class="language-plaintext highlighter-rouge">isSaveEnabled</code> to true.</li>
-  <li>Set <code class="language-plaintext highlighter-rouge">targetCollection</code> to the collection ID you want people to save items to.</li>
+  <li>
+    <p><strong>The <code class="language-plaintext highlighter-rouge">metabase-representation-format</code> skill added to your agent</strong> so the agent understands the YAML schemas. See <a href="https://github.com/metabase/agent-skills">Agent skills</a>.</p>
+  </li>
+  <li>
+    <p><strong>Your agent connected to your Metabase’s MCP server</strong>, so it can look up database metadata (table names, fields, and sample values) when writing questions and dashboards. The MCP server exposes tools like <code class="language-plaintext highlighter-rouge">search</code>, <code class="language-plaintext highlighter-rouge">get_table</code>, and <code class="language-plaintext highlighter-rouge">get_table_field_values</code>. See <a href="./mcp">MCP server</a>.</p>
+  </li>
 </ol>
 
-<p>For more options, see <a href="./questions">Question props</a>.</p>
+<h2 id="example-agent-driven-workflow">Example agent-driven workflow</h2>
+
+<p>Here’s an example workflow for using an agent to create Metabase content as YAML on your local machine, then importing that content into your development and production Metabases.</p>
+
+<h3 id="1-create-a-git-repo">1. Create a git repo</h3>
+
+<p>Initialize a git repo with a README.md and an initial commit.</p>
+
+<h3 id="2-check-out-a-branch">2. Check out a branch</h3>
+
+<p>Create a new branch to track your work.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git checkout -b your-branch-name
+</code></pre></div></div>
+
+<h3 id="3-export-your-production-metabase">3. Export your production Metabase</h3>
+
+<p>Always export before editing YAML files locally. If someone has updated a dashboard or question in the Metabase UI since your last export, and you edit and import stale local files, the import will overwrite those in-app changes. Re-export at the start of each editing session if the app may have changed since your last export.</p>
+
+<p>Your agent will also read these serialized YAML files to find info about existing content, so the agent can know what you mean when you ask it to “add the new question to the Handsome collection.”</p>
+
+<p>To export your Metabase:</p>
+
+<ol>
+  <li>Create an <a href="../people-and-groups/api-keys">API key</a>.</li>
+  <li>Assign the key to the Admin group.</li>
+  <li>
+    <p>Send a <code class="language-plaintext highlighter-rouge">curl</code> request to export data:</p>
+
+    <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="se">\</span>
+  <span class="nt">-H</span> <span class="s1">'X-API-Key: YOUR_API_KEY'</span> <span class="se">\</span>
+  <span class="nt">-X</span> POST <span class="s1">'https://your-metabase-url/api/ee/serialization/export?data_model=false'</span> <span class="se">\</span>
+  <span class="nt">-o</span> metabase_data.tgz
+</code></pre></div>    </div>
+
+    <p>substituting <code class="language-plaintext highlighter-rouge">YOUR_API_KEY</code> with your API key and <code class="language-plaintext highlighter-rouge">your-metabase-url</code> with the URL of your Metabase instance.</p>
+
+    <p>Be sure to set the <code class="language-plaintext highlighter-rouge">data_model=false</code> query parameter excludes the data model from the export, since the data model payload can be large. Instead, your agent will use the MCP server to search for the metadata it needs to generate the YAML files. See <a href="../installation-and-operation/serialization">Serialization</a> for other export options.</p>
+
+    <p>This command will download the files as a GZIP-compressed Tar file named <code class="language-plaintext highlighter-rouge">metabase_data.tgz</code>.</p>
+  </li>
+  <li>
+    <p>Extract the archive:</p>
+
+    <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">tar</span> <span class="nt">-xzf</span> metabase_data.tgz
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<p>Instead of running this <code class="language-plaintext highlighter-rouge">curl</code> by hand every time, you can ask your agent to generate an <code class="language-plaintext highlighter-rouge">export.sh</code> script that wraps the <code class="language-plaintext highlighter-rouge">curl</code> and the <code class="language-plaintext highlighter-rouge">tar -xzf</code> extraction, so you can re-export with a single command.</p>
+
+<h3 id="4-commit-the-export">4. Commit the export</h3>
+
+<p>Commit the initial exported set of YAML files. If your AI goes off the rails, you can always revert to the original export.</p>
+
+<h3 id="5-use-ai-to-edit-or-create-new-content">5. Use AI to edit or create new content</h3>
+
+<p>Change into the directory with your serialized files and ask your agent to create whatever you want. Make sure your agent actually invokes the skills, otherwise the agent may not get the YAML format right.</p>
+
+<p>Example prompt:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Use the metabase-representation-format skill and the Metabase MCP server to do the following by editing the YAML files in this directory:
+
+1. Create a new collection called "File-based collection".
+2. Create a new dashboard called "AI-created dashboard", saved to that collection.
+3. Create a question called "AI counts products" that counts the number of products by category.
+4. Add that question to the "AI-created dashboard".
+</code></pre></div></div>
+
+<p>Depending on how sophisticated your AI model is, you can also try more ambitious, open-ended requests:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Use the metabase-representation-format skill and the Metabase MCP server to analyze the data in the sample postgresql
+database. Look at the orders, people, reviews, and products tables.
+
+Create a dashboard with some questions that gives an overview of how the business is doing.
+</code></pre></div></div>
+
+<h3 id="6-validate-the-yaml-files">6. Validate the YAML files</h3>
+
+<p>Before importing, check your YAML files against the representation schemas. The <code class="language-plaintext highlighter-rouge">metabase-representation-format</code> skill should have the agent run the validator for you, but you can also run it yourself:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npx --yes @metabase/representations validate-schema
+</code></pre></div></div>
+
+<p>You can also set up a workflow to run the validator on pull requests. Here’s an example, saved to <code class="language-plaintext highlighter-rouge">.github/workflows/schema-check.yml</code>:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">name</span><span class="pi">:</span> <span class="s">Schema Check</span>
+
+<span class="na">on</span><span class="pi">:</span>
+  <span class="na">push</span><span class="pi">:</span>
+    <span class="na">branches</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">main</span><span class="pi">]</span>
+  <span class="na">pull_request</span><span class="pi">:</span>
+
+<span class="na">jobs</span><span class="pi">:</span>
+  <span class="na">schema-check</span><span class="pi">:</span>
+    <span class="na">runs-on</span><span class="pi">:</span> <span class="s">ubuntu-latest</span>
+    <span class="na">steps</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/checkout@v4</span>
+
+      <span class="pi">-</span> <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/setup-node@v4</span>
+        <span class="na">with</span><span class="pi">:</span>
+          <span class="na">node-version</span><span class="pi">:</span> <span class="s2">"</span><span class="s">20"</span>
+
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Validate representation YAML files</span>
+        <span class="na">run</span><span class="pi">:</span> <span class="s">npx --yes @metabase/representations validate-schema</span>
+</code></pre></div></div>
+
+<p>That way your team catches schema issues on the PR, before anyone imports the changes into Metabase.</p>
+
+<h3 id="7-import-the-changes-to-your-development-metabase">7. Import the changes to your development Metabase</h3>
+
+<p>Import your changes to your development Metabase, and check that the import works and the content is as expected.</p>
+
+<p>First, compress your directory of YAML files:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>tar -czf metabase_data.tgz metabase_data
+</code></pre></div></div>
+
+<p>Then import that compressed file:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl -X POST \
+  -H 'X-API-Key: YOUR_API_KEY' \
+  -F 'file=@metabase_data.tgz' \
+  'https://your-metabase-url/api/ee/serialization/import' \
+  -o -
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">-o -</code> flag writes the import response to stdout, so you can see whether the import succeeded and check any warnings.</p>
+
+<p>Just like with export, you can ask your agent to generate an <code class="language-plaintext highlighter-rouge">import.sh</code> script that handles the <code class="language-plaintext highlighter-rouge">tar -czf</code> compression and the <code class="language-plaintext highlighter-rouge">curl</code> in one shot.</p>
+
+<p>Log in to this Metabase and check that the changes are as you expect.</p>
+
+<h4 id="did-your-ai-go-off-the-rails">Did your AI go off the rails?</h4>
+
+<p>If you want to undo the agent’s changes, use <code class="language-plaintext highlighter-rouge">git</code> to revert your YAML files to the last known-good commit. Don’t try to undo the changes by re-exporting from your production Metabase: re-exporting will overwrite edits you made to existing files, but it <em>won’t</em> delete any new files the agent created, so your directory will still contain those unwanted files.</p>
+
+<h3 id="8-commit-your-changes">8. Commit your changes</h3>
+
+<p>If all looks good, commit your changes. If you get any errors, give the error info to the agent in the same session and the agent should iron out any issues.</p>
+
+<h3 id="9-import-to-your-production-metabase">9. Import to your production Metabase</h3>
+
+<p>Import your changes via the API, push your changes to a remote git repository and set up <a href="../installation-and-operation/remote-sync">remote sync</a> so that your production instance pulls in the changes automatically.</p>
+
+<h2 id="deleting-content">Deleting content</h2>
+
+<p>Since imports and exports <em>don’t</em> delete content, you’ll need to delete that content in the Metabase application itself, then update the YAML files as well.</p>
+
+<ol>
+  <li>Delete the content in your production Metabase (in the app’s UI itself).</li>
+  <li>Export from your production Metabase to your repo.</li>
+  <li>Commit the changes so that the YAML files are updated. That way Metabase won’t recreate the deleted items the next time you import your changes.</li>
+</ol>
+
+<h2 id="further-reading">Further reading</h2>
+
+<ul>
+  <li><a href="./mcp">MCP server</a></li>
+  <li><a href="../installation-and-operation/serialization">Serialization</a></li>
+  <li><a href="https://github.com/metabase/agent-skills">Agent skills</a></li>
+</ul>
 
 
         <div>
@@ -6138,7 +6238,7 @@ Roadmap</a>
 
   
     <span class="paragraph-6 fs-13 neutral-60" id="page-feedback-footer">
-      Want to improve these docs? <a href="https://github.com/metabase/metabase/blob/master/docs/embedding/sdk/collections.md" target="_blank">Propose a change.</a>
+      Want to improve these docs? <a href="https://github.com/metabase/metabase/blob/master/docs/ai/file-based-development.md" target="_blank">Propose a change.</a>
     </span>
   
 </div>
@@ -6160,8 +6260,8 @@ Roadmap</a>
 <script type="text/javascript" src="/js/position-feedback-widget.js"></script>
 
 <script>
-  const pageTitle = `Modular embedding SDK - collections`;
-  const pageURL = '/docs/v0.60/embedding/sdk/collections';
+  const pageTitle = `File-based development`;
+  const pageURL = '/docs/v0.60/ai/file-based-development';
   const pageURLSplit = pageURL.split('/');
 
   let pageURLPrefix = '/' + pageURLSplit[1] + '/' + pageURLSplit[2];
@@ -6484,8 +6584,6 @@ Roadmap</a>
   <script type="text/javascript" src="/js/blog.js"></script>
   <script type="text/javascript" src="/js/syntax-highlight.js"></script>
 
-  
-    <script type="text/javascript" src="/js/docs/checkpoints.js"></script>
   
 
 </body></html>
