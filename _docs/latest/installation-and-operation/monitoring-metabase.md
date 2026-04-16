@@ -1,5 +1,5 @@
 ---
-version: v0.59
+version: v0.60
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -67,7 +67,7 @@ Then use the hostname you specified above:
 
 ![sethostname](images/SetRemoteHostName.png)
 
-Your local machine must to be able to refer to the hostname you specified (which might require a hosts entry):
+Your local machine must be able to refer to the hostname you specified (which might require a hosts entry):
 
 ![addjmxhost](images/ClickAddJMXHost.png)
 

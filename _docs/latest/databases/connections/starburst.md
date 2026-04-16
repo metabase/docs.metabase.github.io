@@ -1,5 +1,5 @@
 ---
-version: v0.59
+version: v0.60
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -50,7 +50,7 @@ The database port (e.g., `8080`).
 
 ### Catalog
 
-Starburt catalogs contain schemas and reference data sources via a connector.
+Starburst catalogs contain schemas and reference data sources via a connector.
 
 ### Schema (optional)
 

@@ -1,5 +1,5 @@
 ---
-version: v0.59
+version: v0.60
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -45,7 +45,7 @@ Don't worry about picking the wrong option. If you say you're interested in embe
 
 ## Gathering your database info
 
-At this point you’ll need to gather some information about the database you want to use with Metabase. We won’t be able to connect to your database without it, but you’d like to deal with all of this later, that’s okay: just click **I’ll add my data later**. Metabase comes with a [Sample Database](/glossary/sample-database) that you can play around with to get a feel for how Metabase works.
+At this point you’ll need to gather some information about the database you want to use with Metabase. We won’t be able to connect to your database without it, but if you’d like to deal with all of this later, that’s okay: just click **I’ll add my data later**. Metabase comes with a [Sample Database](/glossary/sample-database) that you can play around with to get a feel for how Metabase works.
 
 If you’re ready to connect, here’s what you’ll need:
 

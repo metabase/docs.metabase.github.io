@@ -1,5 +1,5 @@
 ---
-version: v0.59
+version: v0.60
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -33,7 +33,7 @@ WHERE
 {% endraw %}
 ```
 
-These basic variabless simply plug in the values set by the widget into the placeholder in the code. Basic variables have a different syntax than [field filters](./sql-parameters).
+These basic variables simply plug in the values set by the widget into the placeholder in the code. Basic variables have a different syntax than [field filters](./sql-parameters).
 
 Here's the [field filter](./field-filters) syntax:
 

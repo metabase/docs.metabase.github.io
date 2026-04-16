@@ -1,5 +1,5 @@
 ---
-version: v0.59
+version: v0.60
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -23,7 +23,7 @@ latest: true
 ## Metabase 0.56.13
 
 - `/api/collection/graph` endpoints now no longer return 'none' permissions in the returned graph. Missing fields in
-  between group ids and collection id indicate that that the group provides no permissions for the collection. For
+  between group ids and collection id indicate that the group provides no permissions for the collection. For
   example, what was returned in versions before 0.56.13:
   ```json
   {"revision": 2, "groups": {"1": {"root": "write", "1": "read", "2": "none"}}}

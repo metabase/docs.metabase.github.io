@@ -1,5 +1,5 @@
 ---
-version: v0.59
+version: v0.60
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -79,7 +79,7 @@ Kerberos settings include:
 - Kerberos credential cache file (e.g., `/tmp/kerbo-credential-cache`)
 - Kerberos keytab file (e.g., `/path/to/kerberos.keytab`)
 - Kerberos configuration file (e.g., `/etc/krb5.conf`)
-- Presto coordinator Kerberos service principal pattern (e.g., `${SERVICE}@${HOST}.${SERVICE}`
+- Presto coordinator Kerberos service principal pattern (e.g., `${SERVICE}@${HOST}.${SERVICE}`)
 
 ### Additional JDBC connection string options
 

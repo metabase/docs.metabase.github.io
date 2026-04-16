@@ -1,5 +1,5 @@
 ---
-version: v0.59
+version: v0.60
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -49,6 +49,7 @@ latest: true
 | :------------------------------------------------------------------------------------------------------------ | :------------------------------------------------ |
 | [InteractiveQuestion](./api/InteractiveQuestion)                                                           | A component that renders an interactive question. |
 | [DrillThroughQuestionProps](./api/DrillThroughQuestionProps)                                               | Props for the drill-through question              |
+| [InteractiveQuestionChartTypeDropdownProps](./api/InteractiveQuestionChartTypeDropdownProps)               | -                                                 |
 | [InteractiveQuestionEditorButtonProps](./api/InteractiveQuestionEditorButtonProps)                         | -                                                 |
 | [InteractiveQuestionEditorProps](./api/InteractiveQuestionEditorProps)                                     | -                                                 |
 | [InteractiveQuestionProps](./api/InteractiveQuestionProps)                                                 | -                                                 |
@@ -60,7 +61,6 @@ latest: true
 | [SdkQuestionProps](./api/SdkQuestionProps)                                                                 | -                                                 |
 | [InteractiveQuestionBackButtonProps](./api/InteractiveQuestionBackButtonProps)                             | -                                                 |
 | [InteractiveQuestionBreakoutDropdownProps](./api/InteractiveQuestionBreakoutDropdownProps)                 | -                                                 |
-| [InteractiveQuestionChartTypeDropdownProps](./api/InteractiveQuestionChartTypeDropdownProps)               | -                                                 |
 | [InteractiveQuestionChartTypeSelectorProps](./api/InteractiveQuestionChartTypeSelectorProps)               | -                                                 |
 | [InteractiveQuestionDownloadWidgetDropdownProps](./api/InteractiveQuestionDownloadWidgetDropdownProps)     | -                                                 |
 | [InteractiveQuestionDownloadWidgetProps](./api/InteractiveQuestionDownloadWidgetProps)                     | -                                                 |
@@ -123,6 +123,8 @@ latest: true
 | [DashboardCardMenu](./api/DashboardCardMenu)                               | -                                                                              |
 | [DashboardCardMenuCustomElement](./api/DashboardCardMenuCustomElement)     | -                                                                              |
 | [DashCardMenuItem](./api/DashCardMenuItem)                                 | -                                                                              |
+| [EmbeddingDataPicker](./api/EmbeddingDataPicker)                           | -                                                                              |
+| [EmbeddingEntityType](./api/EmbeddingEntityType)                           | -                                                                              |
 | [EntityTypeFilterKeys](./api/EntityTypeFilterKeys)                         | -                                                                              |
 | [IconName](./api/IconName)                                                 | -                                                                              |
 | [InitializationStatus](./api/InitializationStatus)                         | -                                                                              |
@@ -142,7 +144,6 @@ latest: true
 | [MetabasePluginsConfig](./api/MetabasePluginsConfig)                       | -                                                                              |
 | [MetabaseThemePreset](./api/MetabaseThemePreset)                           | -                                                                              |
 | [MetabaseUser](./api/MetabaseUser)                                         | The User entity                                                                |
-| [ModularEmbeddingEntityType](./api/ModularEmbeddingEntityType)             | -                                                                              |
 | [ParameterValues](./api/ParameterValues)                                   | -                                                                              |
 | [ProtectedColorKey](./api/ProtectedColorKey)                               | Color keys that are protected and should not be exposed to embedding.          |
 | [SdkCollectionId](./api/SdkCollectionId)                                   | -                                                                              |

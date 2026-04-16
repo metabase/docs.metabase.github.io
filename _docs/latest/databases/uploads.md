@@ -1,5 +1,5 @@
 ---
-version: v0.59
+version: v0.60
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -7,6 +7,10 @@ category: Databases
 title: Setting up data uploads
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/databases/uploads.md'
 layout: new-docs
+description: >-
+  How admins can enable CSV uploads by connecting a database with write access,
+  selecting an upload schema, and granting people data and collection
+  permissions.
 latest: true
 ---
 
@@ -68,6 +72,8 @@ Admins can optionally specify a string of text to add in front of the table that
 ## Add people to a group with data access to the upload schema
 
 In order to upload CSVs, a person must be in a group with **View data** access of "Can view" and **Create queries** of Query builder access or higher to the schema you've selected to store your uploaded data. See [groups](../people-and-groups/managing) and [data permissions](../permissions/data).
+
+People also need [Curate access](../permissions/collections#curate-access) to any collection they want to upload to. The upload icon only appears in collections where they have Curate access. Everyone has Curate access to their [personal collection](../permissions/collections#personal-collections) by default.
 
 ## Note on uploading data to a MySQL database
 

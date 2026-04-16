@@ -1,5 +1,5 @@
 ---
-version: v0.59
+version: v0.60
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -106,7 +106,7 @@ To create a grid map:
 
 Region maps display a distribution of aggregated data broken out by regions, like count of users by country.
 
-Metabase comes with two built-in regions: [world map](#world-map) with countries, and the [Unites States map](#united-states-map) with states. Admins can [add custom regions](#custom-regions) in Admin setting.
+Metabase comes with two built-in regions: [world map](#world-map) with countries, and the [United States map](#united-states-map) with states. Admins can [add custom regions](#custom-regions) in Admin settings.
 
 ![Three types of region maps](../images/region-maps.png)
 

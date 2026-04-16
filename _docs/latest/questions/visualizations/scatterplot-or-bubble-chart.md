@@ -1,5 +1,5 @@
 ---
-version: v0.59
+version: v0.60
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -19,6 +19,6 @@ latest: true
 
 If you have a third numeric field, you can also create a **bubble chart**. Select the Scatter visualization, then open up the chart settings and select a field in the **bubble size** dropdown. This field will be used to determine the size of each bubble on your chart. For example, you could use a field that contains the total dollar amount for each x-y pair — i.e. larger bubbles for larger total dollar amounts spent on orders.
 
-Scatterplots and bubble charts also have similar chart options as line, bar, and area charts, including the option to display trend or goal lines.
+Scatterplots and bubble charts also have similar chart options as line, bar, and area charts, including the option to display trend or goal lines, or stack series.
 
 ![Scatter](../images/scatter.png)

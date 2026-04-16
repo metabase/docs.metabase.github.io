@@ -56,7 +56,7 @@ window.redirectTo = function redirectTo(theLocation) {
 <meta name="twitter:site" content="@metabase">
 
 <meta name="twitter:title" content="Setting up data uploads | Metabase Documentation">
-<meta name="twitter:description" content="Setting up data uploads This page covers how admins can set up data uploads so people can upload CSVs to your Metabase. For how to upload data once this is set up, check out Uploading data. <img src=" .="" images="" upload-to-collection.png"="" alt="Upload CSV...">
+<meta name="twitter:description" content="How admins can enable CSV uploads by connecting a database with write access, selecting an upload schema, and granting people data and collection permissions.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -66,7 +66,7 @@ window.redirectTo = function redirectTo(theLocation) {
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://www.metabase.com/docs/latest/databases/uploads">
 <meta name="title" property="og:title" content="Setting up data uploads | Metabase Documentation">
-<meta name="description" property="og:description" content="Setting up data uploads This page covers how admins can set up data uploads so people can upload CSVs to your Metabase. For how to upload data once this is set up, check out Uploading data. <img src=" .="" images="" upload-to-collection.png"="" alt="Upload CSV...">
+<meta name="description" property="og:description" content="How admins can enable CSV uploads by connecting a database with write access, selecting an upload schema, and granting people data and collection permissions.">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -187,9 +187,9 @@ window.redirectTo = function redirectTo(theLocation) {
         <div class="promo-banner hidden">
   <div>
     <span class="button">New</span>
-    <span>Meet Data Studio: an analyst workbench with tools to shape data and curate your semantic layer in Metabase.</span>
-    <a href="/blog/meet-data-studio-semantic-layer">
-      See what we built and why<img alt="Chevron Blue Right" src="/images/chevron_blue_right.svg">
+    <span>Metabase 60: AI goes open source, Metabase MCP server, Metabot in Slack, split panel charts, metrics explorer, and more.</span>
+    <a href="/releases/metabase-60 ">
+      Read the announcement<img alt="Chevron Blue Right" src="/images/chevron_blue_right.svg">
     </a>
   </div>
   <button>×</button>
@@ -2378,6 +2378,21 @@ Roadmap</a>
               
 
               <li class="">
+                <a href="/docs/latest/questions/metrics-explorer" class="">
+                  Metrics explorer
+
+                  
+                </a>
+                
+              </li>
+            
+              
+
+              
+
+              
+
+              <li class="">
                 <a href="/docs/latest/questions/alerts" class="">
                   Alerts
 
@@ -2630,8 +2645,38 @@ Roadmap</a>
               
 
               <li class="">
+                <a href="/docs/latest/ai/metabot-slack" class="">
+                  Metabot for Slack
+
+                  
+                </a>
+                
+              </li>
+            
+              
+
+              
+
+              
+
+              <li class="">
                 <a href="/docs/latest/ai/settings" class="">
                   Metabot settings
+
+                  
+                </a>
+                
+              </li>
+            
+              
+
+              
+
+              
+
+              <li class="">
+                <a href="/docs/latest/ai/mcp" class="">
+                  MCP server
 
                   
                 </a>
@@ -2660,8 +2705,8 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/latest/ai/sql-generation" class="">
-                  SQL generation
+                <a href="/docs/latest/ai/file-based-development" class="">
+                  File-based development
 
                   
                 </a>
@@ -3105,6 +3150,20 @@ Roadmap</a>
                       <li class="">
                         <a href="/docs/latest/data-studio/transforms/jobs-and-runs" class="">
                           Jobs and runs
+
+                          
+                        </a>
+                        
+                      </li>
+                    
+                      
+
+                      
+
+                      
+                      <li class="">
+                        <a href="/docs/latest/data-studio/transforms/transform-inspector" class="">
+                          Transform inspector
 
                           
                         </a>
@@ -5131,6 +5190,34 @@ Roadmap</a>
                         
                       </li>
                     
+                      
+
+                      
+
+                      
+                      <li class="">
+                        <a href="/docs/latest/people-and-groups/authenticating-with-oidc" class="">
+                          OIDC-based authentication
+
+                          
+                        </a>
+                        
+                      </li>
+                    
+                      
+
+                      
+
+                      
+                      <li class="">
+                        <a href="/docs/latest/people-and-groups/oidc-keycloak" class="">
+                          OIDC with Keycloak
+
+                          
+                        </a>
+                        
+                      </li>
+                    
                   </ul>
                 
               </li>
@@ -5755,7 +5842,7 @@ Roadmap</a>
 <div class="version__selector cursor-pointer">
   <span class="version__current">
     
-      v0.59
+      v0.60
     
 
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="chevron">
@@ -5766,13 +5853,13 @@ Roadmap</a>
   <ul class="version__dropdown">
     
       
+    
+      
         <li>
-          <a href="/docs/v0.60">
-            v0.60
+          <a href="/docs/v0.59">
+            v0.59
           </a>
         </li>
-      
-    
       
     
       
@@ -5937,6 +6024,8 @@ Roadmap</a>
 <h2 id="add-people-to-a-group-with-data-access-to-the-upload-schema">Add people to a group with data access to the upload schema</h2>
 
 <p>In order to upload CSVs, a person must be in a group with <strong>View data</strong> access of “Can view” and <strong>Create queries</strong> of Query builder access or higher to the schema you’ve selected to store your uploaded data. See <a href="../people-and-groups/managing">groups</a> and <a href="../permissions/data">data permissions</a>.</p>
+
+<p>People also need <a href="../permissions/collections#curate-access">Curate access</a> to any collection they want to upload to. The upload icon only appears in collections where they have Curate access. Everyone has Curate access to their <a href="../permissions/collections#personal-collections">personal collection</a> by default.</p>
 
 <h2 id="note-on-uploading-data-to-a-mysql-database">Note on uploading data to a MySQL database</h2>
 

@@ -1,5 +1,5 @@
 ---
-version: v0.59
+version: v0.60
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -180,7 +180,7 @@ People with [row or column restrictions](../permissions/row-and-column-security)
 1. In the **SMTP Host** field, enter `smtp.gmail.com`.
 2. Fill in 465 for the **SMTP Port** field.
 3. For the **SMTP Security**, select **SSL**.
-4. In the **SMTP UsernameE** field, enter your Google Apps email address (e.g. `hello@yourdomain.com`).
+4. In the **SMTP Username** field, enter your Google Apps email address (e.g. `hello@yourdomain.com`).
 5. Enter your Google Apps password in the **SMTP Password** field.
 6. Enter the email address you would like to be used as the sender of system notifications in the **From address** field.
 

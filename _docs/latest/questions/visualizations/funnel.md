@@ -1,5 +1,5 @@
 ---
-version: v0.59
+version: v0.60
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -27,7 +27,7 @@ Funnels are commonly used in e-commerce or sales to visualize how many customers
 
 ## Data shape for a funnel chart
 
-To create a funnel in Metabase, you'll need to have a table with at least two columns: one column that contains the funnel's steps, and another column contains the metric you're interested in, like the number of customers at this step.
+To create a funnel in Metabase, you'll need to have a table with at least two columns: one column that contains the funnel's steps, and another column that contains the metric you're interested in, like the number of customers at this step.
 
 Here's the data shape used to create the chart above:
 

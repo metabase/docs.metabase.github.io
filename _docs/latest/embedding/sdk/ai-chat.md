@@ -1,5 +1,5 @@
 ---
-version: v0.59
+version: v0.60
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -17,7 +17,7 @@ latest: true
 
 ![Embedded AI chat](../images/ai-chat.png)
 
-{% include plans-blockquote.html feature="Modular embedding SDK" sdk=true %}
+{% include plans-blockquote.html feature="Modular embedding SDK" sdk=true convert_pro_link_to_embedding=true%}
 
 You can embed an AI chat in your application similar to [Metabot](../modular-embedding) in Metabase.
 

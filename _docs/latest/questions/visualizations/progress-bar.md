@@ -1,5 +1,5 @@
 ---
-version: v0.59
+version: v0.60
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -43,7 +43,7 @@ To create a progress bar you'll need:
 
 ## Create a progress bar
 
-Once you built the query that returns data in the appropriate shape, you can create a progress bar:
+Once you've built the query that returns data in the appropriate shape, you can create a progress bar:
 
 1. Visualize the query results.
 

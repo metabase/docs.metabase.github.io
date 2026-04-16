@@ -1,5 +1,5 @@
 ---
-version: v0.59
+version: v0.60
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -56,7 +56,7 @@ Admins can verify the following items:
 - [Metrics](../data-modeling/metrics)
 - [Dashboards](../dashboards/introduction)
 
-Dashboard verification status has no affect on its questions. Questions must be verified independently.
+Dashboard verification status has no effect on its questions. Questions must be verified independently.
 
 ## Further reading
 

@@ -1,5 +1,5 @@
 ---
-version: v0.59
+version: v0.60
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -111,7 +111,7 @@ WHERE
 {% endraw %}
 ```
 
-Here, we again map the field filter to the`category` field in the `products` table. But since we use a CTE, aliased as `expensive_products`, we'd need to put `expensive_products.category` in the **Table and field alias** input for the mapping to work correctly.
+Here, we again map the field filter to the `category` field in the `products` table. But since we use a CTE, aliased as `expensive_products`, we'd need to put `expensive_products.category` in the **Table and field alias** input for the mapping to work correctly.
 
 ## Field filters must be connected to database fields included in the query
 

@@ -1,5 +1,5 @@
 ---
-version: v0.59
+version: v0.60
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -22,6 +22,7 @@ This page covers the [View data](./data#view-data-permissions) permission level 
 ## Databases that support impersonation
 
 For now, impersonation access is only available for the following databases:
+
 - ClickHouse
 - MySQL
 - PostgreSQL. If you're using views in PostgreSQL, the row-level security policies on views will only work on Postgres versions 15 and higher.
@@ -68,7 +69,7 @@ You can then create roles in the database that have more restrictive access to t
 In your database (not in Metabase):
 
 1. Create a new database role (in Redshift, this would be a new user).
-2. Grant that role privileges that you'd like impersonated users to have..
+2. Grant that role privileges that you'd like impersonated users to have.
 
 For exactly how to create a new role in your database and grant that role privileges, you'll need to consult your database's documentation. We also have some docs on [users, roles, and privileges](../databases/users-roles-privileges) that can help you get started.
 
@@ -147,7 +148,7 @@ Remember to also set up ["Create queries"](./data#create-queries-permissions) pe
 
 ### Verify that impersonated permissions are working
 
-Admins will not be able to verify that impersonation is are working from their own account, so you should create a test user, add them to the group and set up their user attributes.
+Admins will not be able to verify that impersonation is working from their own account, so you should create a test user, add them to the group and set up their user attributes.
 
 To verify that the impersonated permissions are working:
 
@@ -161,7 +162,7 @@ SELECT * FROM people;
 
 to verify that the test user only sees data from Vermont.
 
-- If the test user has "Create queries" permissions set to "Query builder only", go to **Browse data** in the left sidebar and verify that the user can only see the tables they have access to, and only the data in those tables that
+- If the test user has "Create queries" permissions set to "Query builder only", go to **Browse data** in the left sidebar and verify that the user can only see the tables and data they have access to.
 
 ## People in a group with impersonation access to data do not necessarily share the same privileges
 
@@ -186,7 +187,7 @@ Blue group's more permissive access would override the impersonated access.
 
 ## Admins won't see the effects of impersonation
 
-Admins won't ever see the effects of impersonation effects, because their privileges will override those of any other group they're a member of.
+Admins won't ever see the effects of impersonation, because their privileges will override those of any other group they're a member of.
 
 Metabase's default Administrators group has "Can view" access to all databases, and Metabase uses the most permissive access for any person in multiple groups, so any admin will have "Can view" - not "Impersonated" - access to the database.
 

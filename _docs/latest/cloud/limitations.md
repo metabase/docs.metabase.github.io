@@ -12,7 +12,7 @@ redirect_from:
 latest: true
 ---
 
-# Limitation of Metabase Cloud
+# Limitations of Metabase Cloud
 
 There are some limitations that could impact your migration to Metabase Cloud. These limitations apply to all [Metabase Cloud plans](/pricing/).
 

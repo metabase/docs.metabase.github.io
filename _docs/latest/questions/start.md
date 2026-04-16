@@ -1,5 +1,5 @@
 ---
-version: v0.59
+version: v0.60
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: false
@@ -77,6 +77,10 @@ Use saved questions as data sources in your native queries.
 ### [Snippets](./native-editor/snippets)
 
 Reuse and share bits of SQL.
+
+## [Metrics Explorer](./metrics-explorer)
+
+Explore metrics and measures across dimensions, compare them side by side, and drill into the data — without building a question from scratch.
 
 ## Sharing results
 

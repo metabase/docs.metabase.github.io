@@ -1,5 +1,5 @@
 ---
-version: v0.59
+version: v0.60
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -31,6 +31,7 @@ You'll write a query or a Python script in Metabase, a transform will run this q
   - You assign tags (e.g., daily, hourly) to group your transforms.
   - A job runs on a schedule (e.g., every day at midnight) and executes all transforms that have been assigned a specific tag.
 - Each execution of a transform is a **run**. A run replaces the target table with fresh results. You can review the history of runs to monitor their success or failure.
+- You can **inspect** a transform to analyze its data flow, join behavior, and column distributions. See [Transform inspector](transform-inspector).
 
 ## Databases that support transforms
 
@@ -188,6 +189,12 @@ You can see the time and status of the latest transform run on the transform's p
 
 For Python transforms, you'll also see the transform's execution logs.
 
+## Inspect a transform
+
+_Data Studio > Transforms > [transform name] > Inspect_
+
+The [transform inspector](./transform-inspector) lets you poke at the input and outputs of your transform.
+
 ## Transform dependencies
 
 {% include plans-blockquote.html feature="Transform dependencies" is_plural=true%}
@@ -228,7 +235,7 @@ You can check your transforms into git with [Remote Sync](../../installation-and
 
 To enable git sync of transforms:
 
-1. Go to Admin settings by click the **grid** icon in top right and select **Admin**.
+1. Go to Admin settings by clicking the **grid** icon in top right and select **Admin**.
 2. On the **General** tab, pick **Remote sync** in the left sidebar.
 3. Follow the steps to [Set up Remote Sync](../../installation-and-operation/remote-sync), and toggle "Transforms" sync on.
 

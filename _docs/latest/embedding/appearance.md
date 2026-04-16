@@ -1,5 +1,5 @@
 ---
-version: v0.59
+version: v0.60
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -48,7 +48,7 @@ On Pro/Enterprise plan, you can configure granular appearance options, like back
 
 ![Behavior and appearance](./images/behavior-and-appearance.png)
 
-Some appearance options like brand, text, and background color are configurable in in the [embed wizard](./modular-embedding#create-a-new-embed).
+Some appearance options like brand, text, and background color are configurable in the [embed wizard](./modular-embedding#create-a-new-embed).
 
 For other appearance settings, use the `theme` parameter with `preset` in the `defineMetabaseConfig()` function in your [embedding code snippet](./modular-embedding#add-the-embedding-script-to-your-app). For example:
 

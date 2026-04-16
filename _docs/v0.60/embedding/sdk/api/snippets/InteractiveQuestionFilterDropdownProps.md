@@ -7,6 +7,7 @@ category: Embedding
 title: InteractiveQuestionFilterDropdownProps
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/embedding/sdk/api/snippets/InteractiveQuestionFilterDropdownProps.md'
 layout: new-docs
+latest: true
 ---
 
 ```ts

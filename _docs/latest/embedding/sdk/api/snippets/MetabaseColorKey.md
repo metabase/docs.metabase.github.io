@@ -1,5 +1,5 @@
 ---
-version: v0.59
+version: v0.60
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -43,6 +43,7 @@ type MetabaseColorKey =
   | "accent-gray-dark"
   | ProtectedColorKey
   | "background-brand"
+  | "background-filter"
   | "background-disabled"
   | "background-disabled-inverse"
   | "background-error"
@@ -61,7 +62,9 @@ type MetabaseColorKey =
   | "background-warning"
   | "border"
   | "border-brand"
+  | "border-filter"
   | "border-strong"
+  | "border-stronger"
   | "border-subtle"
   | "brand"
   | "brand-hover"
@@ -94,6 +97,7 @@ type MetabaseColorKey =
   | "syntax-parameters"
   | "syntax-parameters-active"
   | "text-brand"
+  | "text-filter"
   | "text-hover"
   | "text-primary"
   | "text-primary-inverse"

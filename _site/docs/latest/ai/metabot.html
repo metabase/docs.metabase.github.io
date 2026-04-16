@@ -187,9 +187,9 @@ window.redirectTo = function redirectTo(theLocation) {
         <div class="promo-banner hidden">
   <div>
     <span class="button">New</span>
-    <span>Meet Data Studio: an analyst workbench with tools to shape data and curate your semantic layer in Metabase.</span>
-    <a href="/blog/meet-data-studio-semantic-layer">
-      See what we built and why<img alt="Chevron Blue Right" src="/images/chevron_blue_right.svg">
+    <span>Metabase 60: AI goes open source, Metabase MCP server, Metabot in Slack, split panel charts, metrics explorer, and more.</span>
+    <a href="/releases/metabase-60 ">
+      Read the announcement<img alt="Chevron Blue Right" src="/images/chevron_blue_right.svg">
     </a>
   </div>
   <button>×</button>
@@ -2378,6 +2378,21 @@ Roadmap</a>
               
 
               <li class="">
+                <a href="/docs/latest/questions/metrics-explorer" class="">
+                  Metrics explorer
+
+                  
+                </a>
+                
+              </li>
+            
+              
+
+              
+
+              
+
+              <li class="">
                 <a href="/docs/latest/questions/alerts" class="">
                   Alerts
 
@@ -2630,8 +2645,38 @@ Roadmap</a>
               
 
               <li class="">
+                <a href="/docs/latest/ai/metabot-slack" class="">
+                  Metabot for Slack
+
+                  
+                </a>
+                
+              </li>
+            
+              
+
+              
+
+              
+
+              <li class="">
                 <a href="/docs/latest/ai/settings" class="">
                   Metabot settings
+
+                  
+                </a>
+                
+              </li>
+            
+              
+
+              
+
+              
+
+              <li class="">
+                <a href="/docs/latest/ai/mcp" class="">
+                  MCP server
 
                   
                 </a>
@@ -2660,8 +2705,8 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/latest/ai/sql-generation" class="">
-                  SQL generation
+                <a href="/docs/latest/ai/file-based-development" class="">
+                  File-based development
 
                   
                 </a>
@@ -3105,6 +3150,20 @@ Roadmap</a>
                       <li class="">
                         <a href="/docs/latest/data-studio/transforms/jobs-and-runs" class="">
                           Jobs and runs
+
+                          
+                        </a>
+                        
+                      </li>
+                    
+                      
+
+                      
+
+                      
+                      <li class="">
+                        <a href="/docs/latest/data-studio/transforms/transform-inspector" class="">
+                          Transform inspector
 
                           
                         </a>
@@ -5131,6 +5190,34 @@ Roadmap</a>
                         
                       </li>
                     
+                      
+
+                      
+
+                      
+                      <li class="">
+                        <a href="/docs/latest/people-and-groups/authenticating-with-oidc" class="">
+                          OIDC-based authentication
+
+                          
+                        </a>
+                        
+                      </li>
+                    
+                      
+
+                      
+
+                      
+                      <li class="">
+                        <a href="/docs/latest/people-and-groups/oidc-keycloak" class="">
+                          OIDC with Keycloak
+
+                          
+                        </a>
+                        
+                      </li>
+                    
                   </ul>
                 
               </li>
@@ -5755,7 +5842,7 @@ Roadmap</a>
 <div class="version__selector cursor-pointer">
   <span class="version__current">
     
-      v0.59
+      v0.60
     
 
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="chevron">
@@ -5766,13 +5853,13 @@ Roadmap</a>
   <ul class="version__dropdown">
     
       
+    
+      
         <li>
-          <a href="/docs/v0.60">
-            v0.60
+          <a href="/docs/v0.59">
+            v0.59
           </a>
         </li>
-      
-    
       
     
       
@@ -5871,10 +5958,6 @@ Roadmap</a>
 
         <h1 id="metabot---metabases-ai-assistant">Metabot - Metabase’s AI assistant</h1>
 
-<blockquote>
-  <p>Metabot is only available as an add-on on Metabase Cloud.</p>
-</blockquote>
-
 <p><img src="./images/metabot.png" alt="Meet Metabot"></p>
 
 <p>Metabot helps you analyze your data by creating charts from natural language, generating SQL queries, fixing query errors, and analyzing existing visualizations.</p>
@@ -5895,6 +5978,7 @@ Roadmap</a>
   <li><a href="#analyze-charts-with-metabot">Analyze a chart</a>.</li>
   <li><a href="#have-metabot-fix-sql-queries">Fix errors in SQL code</a>.</li>
   <li>Answer questions from our documentation (as in, the literature you’re reading right now).</li>
+  <li><a href="./metabot-slack">Chat with Metabot in Slack</a>.</li>
 </ul>
 
 <p>Like with all generative AI, you’ll always need to double-check results.</p>
@@ -5948,7 +6032,7 @@ Roadmap</a>
 
 <p>When you ask Metabot to create a chart from natural language, it first looks for existing questions that might answer your request. If it finds a relevant question, it’ll point you to that instead of creating something new. Otherwise, Metabot will use the <a href="../questions/query-builder/editor">query builder</a> to create a new chart for you.</p>
 
-<p>Keep in mind that Metabot is still learning the query builder. Metabot can only handle basic query builder operations, and it lacks access to the library of <a href="../questions/query-builder/expressions-list">custom expressions</a>. Metabot is also limited to single-level aggregation and grouping, so if you need more complex analysis, you can take over and refine the query yourself, or switch to the SQL editor.</p>
+<p>Metabot is not magic, and it’s <a href="#current-limitations">still learning Metabase and the query builder</a>.</p>
 
 <h2 id="metabot-in-the-native-editor">Metabot in the native editor</h2>
 
@@ -5981,12 +6065,14 @@ Roadmap</a>
 
 <ol>
   <li>Open the <a href="../questions/native-editor/writing-sql">SQL editor</a>.</li>
-  <li>Press Cmd+shift+i on Mac or Ctrl+shift+i on Windows.</li>
-  <li>Describe the SQL you want to generate or modify.</li>
-  <li>Review the generated code and accept or reject it.</li>
+  <li>Press <strong>Cmd+Shift+I</strong> (Mac) or <strong>Ctrl+Shift+I</strong> (Windows).</li>
+  <li>Enter one or more tables.</li>
+  <li>Type a prompt describing the query you want to write.</li>
+  <li>Click <strong>Generate</strong> to create the SQL.</li>
+  <li>Accept or reject the change. Always review the code before running it (AI is not magic).</li>
 </ol>
 
-<p>Once you start typing or editing your SQL, you can continue using the keyboard shortcut to refine your code.</p>
+<p>You can also edit existing SQL. Place your cursor in the query, press <strong>Cmd/Ctrl+Shift+I</strong>, and describe the change you want to make (like “add a filter for orders from this year”). Metabase will suggest edits that you can accept or reject.</p>
 
 <h2 id="navigating-after-metabot-creates-a-chart">Navigating after Metabot creates a chart</h2>
 
@@ -6003,6 +6089,24 @@ Roadmap</a>
 <p>Open it from <strong>+ New → AI exploration</strong>, then ask a question or pick one of the suggested prompts.</p>
 
 <p>When answering questions in AI exploration, Metabot searches a limited set of content instead of your entire Metabase. Admins can set a <strong>Collection for natural language querying</strong> to scope AI exploration to a specific collection and its subcollections. You can still refer to content outside that scope by explicitly @-mentioning it in your prompt. See <a href="../ai/settings">Metabot AI settings</a> for more details.</p>
+
+<h2 id="current-limitations">Current limitations</h2>
+
+<p>Metabot is getting smarter all the time, but there are some things it can’t do yet:</p>
+
+<ul>
+  <li><strong>Custom expressions.</strong> Metabot can’t use <a href="../questions/query-builder/expressions-list">custom expressions</a> in query builder questions.</li>
+  <li><strong>Multi-level aggregation.</strong> Metabot is limited to a single level of aggregation and grouping.</li>
+  <li><strong>SQL variables.</strong> Metabot can’t generate SQL queries that include <a href="../questions/native-editor/sql-parameters">SQL parameters</a> (like filters or field filters).</li>
+  <li><strong>Goal lines.</strong> Metabot can’t add <a href="../questions/visualizations/line-bar-and-area-charts#goal-lines">goal lines</a> to charts.</li>
+  <li><strong>Chart formatting.</strong> Metabot can’t change visualization settings like colors, axis labels, or number formatting.</li>
+  <li><strong>Managing alerts.</strong> <a href="./metabot-slack">Metabot in Slack</a> can create alerts and dashboard subscriptions, but can’t modify or delete existing ones.</li>
+  <li><strong>Search.</strong> Metabot can only search for tables, metrics, questions, models, and dashboards. It can’t discover segments, measures, documents, collections, actions, or indexed entities on its own — but it can use segments and measures in ad-hoc queries (for example, filtering by a segment).</li>
+</ul>
+
+<h2 id="metabot-in-slack">Metabot in Slack</h2>
+
+<p>Slack Metabot directly or @mention it in a channel to ask questions about your data. See <a href="./metabot-slack">Metabot in Slack</a>.</p>
 
 <h2 id="giving-feedback-on-metabot-responses">Giving feedback on Metabot responses</h2>
 

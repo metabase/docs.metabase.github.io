@@ -187,9 +187,9 @@ window.redirectTo = function redirectTo(theLocation) {
         <div class="promo-banner hidden">
   <div>
     <span class="button">New</span>
-    <span>Meet Data Studio: an analyst workbench with tools to shape data and curate your semantic layer in Metabase.</span>
-    <a href="/blog/meet-data-studio-semantic-layer">
-      See what we built and why<img alt="Chevron Blue Right" src="/images/chevron_blue_right.svg">
+    <span>Metabase 60: AI goes open source, Metabase MCP server, Metabot in Slack, split panel charts, metrics explorer, and more.</span>
+    <a href="/releases/metabase-60 ">
+      Read the announcement<img alt="Chevron Blue Right" src="/images/chevron_blue_right.svg">
     </a>
   </div>
   <button>×</button>
@@ -2378,6 +2378,21 @@ Roadmap</a>
               
 
               <li class="">
+                <a href="/docs/latest/questions/metrics-explorer" class="">
+                  Metrics explorer
+
+                  
+                </a>
+                
+              </li>
+            
+              
+
+              
+
+              
+
+              <li class="">
                 <a href="/docs/latest/questions/alerts" class="">
                   Alerts
 
@@ -2630,8 +2645,38 @@ Roadmap</a>
               
 
               <li class="">
+                <a href="/docs/latest/ai/metabot-slack" class="">
+                  Metabot for Slack
+
+                  
+                </a>
+                
+              </li>
+            
+              
+
+              
+
+              
+
+              <li class="">
                 <a href="/docs/latest/ai/settings" class="">
                   Metabot settings
+
+                  
+                </a>
+                
+              </li>
+            
+              
+
+              
+
+              
+
+              <li class="">
+                <a href="/docs/latest/ai/mcp" class="">
+                  MCP server
 
                   
                 </a>
@@ -2660,8 +2705,8 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/latest/ai/sql-generation" class="">
-                  SQL generation
+                <a href="/docs/latest/ai/file-based-development" class="">
+                  File-based development
 
                   
                 </a>
@@ -3105,6 +3150,20 @@ Roadmap</a>
                       <li class="">
                         <a href="/docs/latest/data-studio/transforms/jobs-and-runs" class="">
                           Jobs and runs
+
+                          
+                        </a>
+                        
+                      </li>
+                    
+                      
+
+                      
+
+                      
+                      <li class="">
+                        <a href="/docs/latest/data-studio/transforms/transform-inspector" class="">
+                          Transform inspector
 
                           
                         </a>
@@ -5131,6 +5190,34 @@ Roadmap</a>
                         
                       </li>
                     
+                      
+
+                      
+
+                      
+                      <li class="">
+                        <a href="/docs/latest/people-and-groups/authenticating-with-oidc" class="">
+                          OIDC-based authentication
+
+                          
+                        </a>
+                        
+                      </li>
+                    
+                      
+
+                      
+
+                      
+                      <li class="">
+                        <a href="/docs/latest/people-and-groups/oidc-keycloak" class="">
+                          OIDC with Keycloak
+
+                          
+                        </a>
+                        
+                      </li>
+                    
                   </ul>
                 
               </li>
@@ -5755,7 +5842,7 @@ Roadmap</a>
 <div class="version__selector cursor-pointer">
   <span class="version__current">
     
-      v0.59
+      v0.60
     
 
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="chevron">
@@ -5766,13 +5853,13 @@ Roadmap</a>
   <ul class="version__dropdown">
     
       
+    
+      
         <li>
-          <a href="/docs/v0.60">
-            v0.60
+          <a href="/docs/v0.59">
+            v0.59
           </a>
         </li>
-      
-    
       
     
       
@@ -7372,6 +7459,16 @@ Options:</p>
 
 <p>The map tile server URL template used in map visualizations, for example from OpenStreetMaps or MapBox.</p>
 
+<h3 id="mb_metabot_slack_signing_secret"><code class="language-plaintext highlighter-rouge">MB_METABOT_SLACK_SIGNING_SECRET</code></h3>
+
+<ul>
+  <li>Type: string</li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">null</code></li>
+  <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">metabot-slack-signing-secret</code></li>
+</ul>
+
+<p>Signing secret for verifying requests from the Metabot Slack app.</p>
+
 <h3 id="mb_native_query_autocomplete_match_style"><code class="language-plaintext highlighter-rouge">MB_NATIVE_QUERY_AUTOCOMPLETE_MATCH_STYLE</code></h3>
 
 <ul>
@@ -7521,6 +7618,46 @@ Options:</p>
 <p>If Metabase stops sending notifications like alerts, it may be because long-running
   queries are clogging the notification queue. You may be able to unclog the queue by
   increasing the size of the thread pool dedicated to notifications.</p>
+
+<h3 id="mb_oidc_allowed_networks"><code class="language-plaintext highlighter-rouge">MB_OIDC_ALLOWED_NETWORKS</code></h3>
+
+<ul>
+  <li>Type: keyword</li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">allow-all</code></li>
+  <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">oidc-allowed-networks</code></li>
+</ul>
+
+<p>What networks are OIDC requests allowed to? Possible values: ‘allow-all’ (default), ‘allow-private’, or ‘external-only’.</p>
+
+<h3 id="mb_oidc_providers"><code class="language-plaintext highlighter-rouge">MB_OIDC_PROVIDERS</code></h3>
+
+<blockquote>
+  <p>Only available on Metabase <a href="/product/pro">Pro</a> and <a href="/product/enterprise">Enterprise</a> plans.</p>
+</blockquote>
+
+<ul>
+  <li>Type: json</li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">[]</code></li>
+  <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">oidc-providers</code></li>
+</ul>
+
+<p>JSON containing OIDC provider configurations.</p>
+
+<h3 id="mb_oidc_user_provisioning_enabled"><code class="language-plaintext highlighter-rouge">MB_OIDC_USER_PROVISIONING_ENABLED</code></h3>
+
+<blockquote>
+  <p>Only available on Metabase <a href="/product/pro">Pro</a> and <a href="/product/enterprise">Enterprise</a> plans.</p>
+</blockquote>
+
+<ul>
+  <li>Type: boolean</li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">true</code></li>
+  <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">oidc-user-provisioning-enabled</code></li>
+</ul>
+
+<p>Determines what happens when a user logs in via OIDC and doesn’t have a Metabase account.</p>
+
+<p>When set to <code class="language-plaintext highlighter-rouge">true</code>, users who log in via OIDC will automatically get a Metabase account if they don’t have one, or get their existing account reactivated. When set to <code class="language-plaintext highlighter-rouge">false</code>, only users with active Metabase accounts can log in via OIDC.</p>
 
 <h3 id="mb_persisted_model_refresh_cron_schedule"><code class="language-plaintext highlighter-rouge">MB_PERSISTED_MODEL_REFRESH_CRON_SCHEDULE</code></h3>
 
@@ -8214,10 +8351,6 @@ using, this usually looks like <code class="language-plaintext highlighter-rouge
 
 <h3 id="mb_slack_connect_attribute_team_id"><code class="language-plaintext highlighter-rouge">MB_SLACK_CONNECT_ATTRIBUTE_TEAM_ID</code></h3>
 
-<blockquote>
-  <p>Only available on Metabase <a href="/product/pro">Pro</a> and <a href="/product/enterprise">Enterprise</a> plans.</p>
-</blockquote>
-
 <ul>
   <li>Type: string</li>
   <li>Default: <code class="language-plaintext highlighter-rouge">https://slack.com/team_id</code></li>
@@ -8228,23 +8361,15 @@ using, this usually looks like <code class="language-plaintext highlighter-rouge
 
 <h3 id="mb_slack_connect_authentication_mode"><code class="language-plaintext highlighter-rouge">MB_SLACK_CONNECT_AUTHENTICATION_MODE</code></h3>
 
-<blockquote>
-  <p>Only available on Metabase <a href="/product/pro">Pro</a> and <a href="/product/enterprise">Enterprise</a> plans.</p>
-</blockquote>
-
 <ul>
   <li>Type: string</li>
-  <li>Default: <code class="language-plaintext highlighter-rouge">sso</code></li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">link-only</code></li>
   <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">slack-connect-authentication-mode</code></li>
 </ul>
 
-<p>Controls whether Slack can be used for SSO login or just account linking. Valid values: “sso” (default) or “link-only”.</p>
+<p>Controls whether Slack can be used for SSO login or just account linking. Valid values: “sso” or “link-only” (default).</p>
 
 <h3 id="mb_slack_connect_client_id"><code class="language-plaintext highlighter-rouge">MB_SLACK_CONNECT_CLIENT_ID</code></h3>
-
-<blockquote>
-  <p>Only available on Metabase <a href="/product/pro">Pro</a> and <a href="/product/enterprise">Enterprise</a> plans.</p>
-</blockquote>
 
 <ul>
   <li>Type: string</li>
@@ -8256,10 +8381,6 @@ using, this usually looks like <code class="language-plaintext highlighter-rouge
 
 <h3 id="mb_slack_connect_client_secret"><code class="language-plaintext highlighter-rouge">MB_SLACK_CONNECT_CLIENT_SECRET</code></h3>
 
-<blockquote>
-  <p>Only available on Metabase <a href="/product/pro">Pro</a> and <a href="/product/enterprise">Enterprise</a> plans.</p>
-</blockquote>
-
 <ul>
   <li>Type: string</li>
   <li>Default: <code class="language-plaintext highlighter-rouge">null</code></li>
@@ -8270,10 +8391,6 @@ using, this usually looks like <code class="language-plaintext highlighter-rouge
 
 <h3 id="mb_slack_connect_enabled"><code class="language-plaintext highlighter-rouge">MB_SLACK_CONNECT_ENABLED</code></h3>
 
-<blockquote>
-  <p>Only available on Metabase <a href="/product/pro">Pro</a> and <a href="/product/enterprise">Enterprise</a> plans.</p>
-</blockquote>
-
 <ul>
   <li>Type: boolean</li>
   <li>Default: <code class="language-plaintext highlighter-rouge">false</code></li>
@@ -8283,10 +8400,6 @@ using, this usually looks like <code class="language-plaintext highlighter-rouge
 <p>Is Slack Connect authentication configured and enabled?</p>
 
 <h3 id="mb_slack_connect_user_provisioning_enabled"><code class="language-plaintext highlighter-rouge">MB_SLACK_CONNECT_USER_PROVISIONING_ENABLED</code></h3>
-
-<blockquote>
-  <p>Only available on Metabase <a href="/product/pro">Pro</a> and <a href="/product/enterprise">Enterprise</a> plans.</p>
-</blockquote>
 
 <ul>
   <li>Type: boolean</li>
@@ -8344,6 +8457,15 @@ using, this usually looks like <code class="language-plaintext highlighter-rouge
 
 <p>Fetch size for result sets. We want to ensure that the jdbc ResultSet objects are not realizing the entire results
   in memory.</p>
+
+<h3 id="mb_sql_tools_parser_backend"><code class="language-plaintext highlighter-rouge">MB_SQL_TOOLS_PARSER_BACKEND</code></h3>
+
+<ul>
+  <li>Type: keyword</li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">sqlglot</code></li>
+</ul>
+
+<p>Parser backend of <code class="language-plaintext highlighter-rouge">sql-tools</code> module.</p>
 
 <h3 id="mb_ssh_heartbeat_interval_sec"><code class="language-plaintext highlighter-rouge">MB_SSH_HEARTBEAT_INTERVAL_SEC</code></h3>
 

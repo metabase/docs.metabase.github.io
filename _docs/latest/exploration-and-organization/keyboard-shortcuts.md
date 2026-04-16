@@ -1,5 +1,5 @@
 ---
-version: v0.59
+version: v0.60
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -18,7 +18,7 @@ A handy list of keyboard shortcuts to help you zip around Metabase.
 
 Shortcuts change depending on which page you're viewing in your Metabase.
 
-To view the shortcut menu in Metabase, press `?`, or click the **grid** icon in the top right corner and select **Help**, then choose **Keyboard shortcuts**.
+To view the shortcut menu in Metabase, press `?`, or click the **profile or grid icon** in the top right corner and select **Help**, then choose **Keyboard shortcuts**.
 
 ## Global
 

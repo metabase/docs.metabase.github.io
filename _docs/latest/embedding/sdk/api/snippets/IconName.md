@@ -1,5 +1,5 @@
 ---
-version: v0.59
+version: v0.60
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -72,6 +72,8 @@ type IconName =
   | "burger"
   | "calendar"
   | "camera"
+  | "chart_layout_default"
+  | "chart_layout_stack"
   | "check"
   | "check_filled"
   | "code_block"
@@ -95,8 +97,10 @@ type IconName =
   | "connections"
   | "contract"
   | "copy"
+  | "corner_up_right"
   | "curved"
   | "database"
+  | "database_routing"
   | "dependencies"
   | "data_studio"
   | "dash"
@@ -125,6 +129,7 @@ type IconName =
   | "fields"
   | "filter"
   | "filter_plus"
+  | "find_replace"
   | "bug"
   | "format_code"
   | "formula"
@@ -141,6 +146,8 @@ type IconName =
   | "git_branch"
   | "grabber"
   | "grid"
+  | "grid_2x2"
+  | "grid_bordered"
   | "group"
   | "google"
   | "google_drive"
@@ -161,6 +168,7 @@ type IconName =
   | "index"
   | "key"
   | "label"
+  | "layout_grid"
   | "ldap"
   | "learn"
   | "lightbulb"
@@ -196,6 +204,7 @@ type IconName =
   | "pencil_lines"
   | "permissions_limited"
   | "person"
+  | "pie_slice"
   | "pin"
   | "pinmap"
   | "pivot_table"

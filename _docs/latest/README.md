@@ -1,5 +1,5 @@
 ---
-version: v0.59
+version: v0.60
 has_magic_breadcrumbs: true
 show_category_breadcrumb: false
 show_title_breadcrumb: true
@@ -159,8 +159,9 @@ Metabase's reference documentation.
 
 - [AI overview](./ai/start)
 - [Metabot](./ai/metabot)
-- [Setting up Metabot](./ai/settings)
-- [SQL generation](./ai/sql-generation)
+- [AI settings](./ai/settings)
+- [Agent API](./ai/agent-api)
+- [MCP server](./ai/mcp)
 
 ### Exploration and organization
 
@@ -189,6 +190,8 @@ Metabase's reference documentation.
 #### Paid SSO options
 
 - [JWT-based authentication](./people-and-groups/authenticating-with-jwt)
+- [OIDC-based authentication](./people-and-groups/authenticating-with-oidc)
+  - [OIDC with Keycloak](./people-and-groups/oidc-keycloak)
 - [SAML-based authentication](./people-and-groups/authenticating-with-saml)
   - [SAML with Auth0](./people-and-groups/saml-auth0)
   - [SAML with Microsoft Entra ID](./people-and-groups/saml-azure)
