@@ -1,5 +1,5 @@
 ---
-version: v0.59
+version: v0.60
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -41,7 +41,7 @@ To filter your search results, hit `cmd/ctrl + k` to bring up the command palett
 
 ![Search results](./images/search-results.png)
 
-Searches consider items' titles, descriptions, and other metadata — you can even search the contents of your SQL queries. For example, you can search for things like `SELECT escape_pod FROM mothership` and find that one question you worked on six months ago. The results will display which collection each item is saved in, what kind of object it is, and whether it's pinned. Note that you'll only ever see items in that are in collections you have permission to view.
+Searches consider items' titles, descriptions, and other metadata — you can even search the contents of your SQL queries. For example, you can search for things like `SELECT escape_pod FROM mothership` and find that one question you worked on six months ago. The results will display which collection each item is saved in, what kind of object it is, and whether it's pinned. Note that you'll only ever see items that are in collections you have permission to view.
 
 You can search by:
 
@@ -99,7 +99,7 @@ In this example of orders by product category per month, clicking on a data poin
 - **Automatic insights**: See orders for a particular category over a shorter time range.
 - **Filter by this value**: update the chart based on the value you clicked: equal to, less than, greater than, or not equal to.
 
-> Note that while charts created with SQL currently only have [limited drill-through menu](../questions/native-editor/writing-sql#drill-though-in-sql-questions), you can add SQL questions to a dashboard and customize their click behavior. You can send people to a [custom destination](/learn/metabase-basics/querying-and-dashboards/dashboards/custom-destinations) (like another dashboard or an external URL), or have the clicked value [update a dashboard filter](/learn/metabase-basics/querying-and-dashboards/dashboards/cross-filtering).
+> Note that while charts created with SQL currently only have [limited drill-through menu](../questions/native-editor/writing-sql#drill-through-in-sql-questions), you can add SQL questions to a dashboard and customize their click behavior. You can send people to a [custom destination](/learn/metabase-basics/querying-and-dashboards/dashboards/custom-destinations) (like another dashboard or an external URL), or have the clicked value [update a dashboard filter](/learn/metabase-basics/querying-and-dashboards/dashboards/cross-filtering).
 
 Clicking on a table cell will often allow you to filter the results using a comparison operator, like =, >, or <. For example, you can click on a table cell, and select the less than operator `<` to filter for values that are less than the selected value.
 

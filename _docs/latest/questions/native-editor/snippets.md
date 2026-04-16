@@ -1,5 +1,5 @@
 ---
-version: v0.59
+version: v0.60
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -54,7 +54,7 @@ In the [**native editor**](./writing-sql):
 
 You can also create a new snippet from the Snippet sidebar:
 
-1. Open the native editor by clicking **+ New > SQL query** or **+ New > Native query**in the top right corner.
+1. Open the native editor by clicking **+ New > SQL query** or **+ New > Native query** in the top right corner.
 2. Open the Snippet sidebar by clicking the **Snippets** button above the editor window
 3. Enter the code that you want to save as a reusable snippet.
 4. Save.
@@ -74,7 +74,7 @@ To add a snippet to your native code, start typing `{% raw %}{{snippet: }}{% end
 
 Metabase is sensitive to whitespace in snippet references, so you should type `{% raw %}{{snippet: Products}}{% endraw %}`, with no space between `{% raw %}{{{% endraw %}` and `snippet`, and with a space between `:` and snippet's name.
 
-When you execute the query, behind the scenes Metabase replace the snippet reference with the snippet's SQL.
+When you execute the query, behind the scenes Metabase replaces the snippet reference with the snippet's SQL.
 
 You can also just pick a snippet to insert from the snippet sidebar:
 

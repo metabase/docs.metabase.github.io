@@ -187,9 +187,9 @@ window.redirectTo = function redirectTo(theLocation) {
         <div class="promo-banner hidden">
   <div>
     <span class="button">New</span>
-    <span>Meet Data Studio: an analyst workbench with tools to shape data and curate your semantic layer in Metabase.</span>
-    <a href="/blog/meet-data-studio-semantic-layer">
-      See what we built and why<img alt="Chevron Blue Right" src="/images/chevron_blue_right.svg">
+    <span>Metabase 60: AI goes open source, Metabase MCP server, Metabot in Slack, split panel charts, metrics explorer, and more.</span>
+    <a href="/releases/metabase-60 ">
+      Read the announcement<img alt="Chevron Blue Right" src="/images/chevron_blue_right.svg">
     </a>
   </div>
   <button>×</button>
@@ -2378,6 +2378,21 @@ Roadmap</a>
               
 
               <li class="">
+                <a href="/docs/latest/questions/metrics-explorer" class="">
+                  Metrics explorer
+
+                  
+                </a>
+                
+              </li>
+            
+              
+
+              
+
+              
+
+              <li class="">
                 <a href="/docs/latest/questions/alerts" class="">
                   Alerts
 
@@ -2630,8 +2645,38 @@ Roadmap</a>
               
 
               <li class="">
+                <a href="/docs/latest/ai/metabot-slack" class="">
+                  Metabot for Slack
+
+                  
+                </a>
+                
+              </li>
+            
+              
+
+              
+
+              
+
+              <li class="">
                 <a href="/docs/latest/ai/settings" class="">
                   Metabot settings
+
+                  
+                </a>
+                
+              </li>
+            
+              
+
+              
+
+              
+
+              <li class="">
+                <a href="/docs/latest/ai/mcp" class="">
+                  MCP server
 
                   
                 </a>
@@ -2660,8 +2705,8 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/latest/ai/sql-generation" class="">
-                  SQL generation
+                <a href="/docs/latest/ai/file-based-development" class="">
+                  File-based development
 
                   
                 </a>
@@ -3105,6 +3150,20 @@ Roadmap</a>
                       <li class="">
                         <a href="/docs/latest/data-studio/transforms/jobs-and-runs" class="">
                           Jobs and runs
+
+                          
+                        </a>
+                        
+                      </li>
+                    
+                      
+
+                      
+
+                      
+                      <li class="">
+                        <a href="/docs/latest/data-studio/transforms/transform-inspector" class="">
+                          Transform inspector
 
                           
                         </a>
@@ -5131,6 +5190,34 @@ Roadmap</a>
                         
                       </li>
                     
+                      
+
+                      
+
+                      
+                      <li class="">
+                        <a href="/docs/latest/people-and-groups/authenticating-with-oidc" class="">
+                          OIDC-based authentication
+
+                          
+                        </a>
+                        
+                      </li>
+                    
+                      
+
+                      
+
+                      
+                      <li class="">
+                        <a href="/docs/latest/people-and-groups/oidc-keycloak" class="">
+                          OIDC with Keycloak
+
+                          
+                        </a>
+                        
+                      </li>
+                    
                   </ul>
                 
               </li>
@@ -5755,7 +5842,7 @@ Roadmap</a>
 <div class="version__selector cursor-pointer">
   <span class="version__current">
     
-      v0.59
+      v0.60
     
 
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="chevron">
@@ -5766,13 +5853,13 @@ Roadmap</a>
   <ul class="version__dropdown">
     
       
+    
+      
         <li>
-          <a href="/docs/v0.60">
-            v0.60
+          <a href="/docs/v0.59">
+            v0.59
           </a>
         </li>
-      
-    
       
     
       
@@ -5919,7 +6006,7 @@ Roadmap</a>
 
 <h2 id="data-settings">Data settings</h2>
 
-<p>Here you can configure settings for the how the data is displayed.</p>
+<p>Here you can configure settings for how the data is displayed.</p>
 
 <p>For each series on the chart, you can:</p>
 
@@ -5938,7 +6025,7 @@ Roadmap</a>
   <li>Line shape</li>
   <li>Line style</li>
   <li>Line size: Small, Medium, or Large</li>
-  <li>Whether to show docs on the lines (the dots represent the actual data points plotted on the chart)</li>
+  <li>Whether to show dots on the lines (the dots represent the actual data points plotted on the chart)</li>
   <li>Whether to show values for the series. This option is only available if you’ve toggled on <a href="#values-on-data-points">Show value on data points</a>.</li>
   <li>How to replace missing values: Zero, Nothing (just a break in the line), or Linear interpolated</li>
 </ul>
@@ -5961,6 +6048,7 @@ Roadmap</a>
 <ul>
   <li><a href="#goal-lines">Goal line</a></li>
   <li><a href="#stacked-bar-chart">Stack a bar chart</a></li>
+  <li><a href="#stack-series">Stack series</a></li>
   <li><a href="#values-on-data-points">Whether to show values on data points</a></li>
 </ul>
 
@@ -5968,7 +6056,7 @@ Roadmap</a>
 
 <p><img src="../images/goal-line.png" alt="Goal line on chart"></p>
 
-<p>Goal lines can be used in conjunction with <a href="../alerts">alerts</a> to send an email or a Slack message when your metric cross this line.</p>
+<p>Goal lines can be used in conjunction with <a href="../alerts">alerts</a> to send an email or a Slack message when your metric crosses this line.</p>
 
 <h3 id="trend-lines">Trend lines</h3>
 
@@ -5978,13 +6066,29 @@ Roadmap</a>
 
 <h3 id="stacked-bar-chart">Stacked bar chart</h3>
 
-<p>If you have multiple series, you can stack them on bar chart.</p>
+<p>If you have multiple series, you can stack them on a bar chart.</p>
 
 <p><img src="../images/stacked-bar-chart.png" alt="Stacked bar chart"></p>
 
 <p>As well as stack them as a percentage:</p>
 
 <p><img src="../images/stacked-100.png" alt="Stacked bar chart 100%"></p>
+
+<h3 id="stack-series">Stack series</h3>
+
+<p>To stack series, one chart on top of the other, your query must include <strong>either</strong>:</p>
+
+<p><strong>Multiple breakouts</strong>: at least two entries in the grouping block in the query builder or <code class="language-plaintext highlighter-rouge">GROUP BY</code> clause in SQL.</p>
+
+<p>OR</p>
+
+<p><strong>Multiple metrics</strong>: at least two entries in the summarize block, or two aggregation functions in the <code class="language-plaintext highlighter-rouge">SELECT</code> statement.</p>
+
+<p><img src="../images/stacked-series.png" alt="Stacked series"></p>
+
+<p>You can mix and match bar, line, and areas in stacked series - select the right visualization type for each series in the <strong>Data</strong> tab:</p>
+
+<p><img src="../images/stacked-series-mix.png" alt="Stacked series mixed types"></p>
 
 <h3 id="values-on-data-points">Values on data points</h3>
 
@@ -6015,7 +6119,7 @@ Roadmap</a>
   <li>Show label (the label for the axis).</li>
   <li>Rename the axis</li>
   <li>Split y-axis when necessary</li>
-  <li>Auto y-axis range. When not toggled on, you can set the y-axis range (it’s min and max values).</li>
+  <li>Auto y-axis range. When not toggled on, you can set the y-axis range (its min and max values).</li>
   <li>Scale: Linear, power, or log.</li>
   <li>Show lines and marks</li>
   <li>Unpin from zero. Allows you to “Zoom in” on charts with values well above zero. Here’s an example (note the y-axis starts at 20,000):
@@ -6024,7 +6128,7 @@ Roadmap</a>
 
 <h2 id="chart-legend">Chart legend</h2>
 
-<p>For charts with multiple series or breakouts, chart legend displays the label and color of each series.</p>
+<p>For charts with multiple series or breakouts, the chart legend displays the label and color of each series.</p>
 
 <p><img src="../images/legend.png" alt="Legend"></p>
 

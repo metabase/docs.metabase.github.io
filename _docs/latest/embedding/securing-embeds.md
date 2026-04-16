@@ -1,5 +1,5 @@
 ---
-version: v0.59
+version: v0.60
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -226,7 +226,7 @@ To set up these multi-tenant permissions, we'll need to:
    - People with `role=customer` are assigned to the Customers group.
 5. Set up row-level security on the Accounts table for each group:
    - For the Customers group, the Accounts table will be restricted with `Account ID = primary_id`.
-   - For the Tenants group,, the Accounts table will be restricted with `Tenant ID = primary_id`.
+   - For the Tenants group, the Accounts table will be restricted with `Tenant ID = primary_id`.
 
 When Tenant A logs in with SSO for the first time:
 

@@ -187,9 +187,9 @@ window.redirectTo = function redirectTo(theLocation) {
         <div class="promo-banner hidden">
   <div>
     <span class="button">New</span>
-    <span>Meet Data Studio: an analyst workbench with tools to shape data and curate your semantic layer in Metabase.</span>
-    <a href="/blog/meet-data-studio-semantic-layer">
-      See what we built and why<img alt="Chevron Blue Right" src="/images/chevron_blue_right.svg">
+    <span>Metabase 60: AI goes open source, Metabase MCP server, Metabot in Slack, split panel charts, metrics explorer, and more.</span>
+    <a href="/releases/metabase-60 ">
+      Read the announcement<img alt="Chevron Blue Right" src="/images/chevron_blue_right.svg">
     </a>
   </div>
   <button>×</button>
@@ -2378,6 +2378,21 @@ Roadmap</a>
               
 
               <li class="">
+                <a href="/docs/latest/questions/metrics-explorer" class="">
+                  Metrics explorer
+
+                  
+                </a>
+                
+              </li>
+            
+              
+
+              
+
+              
+
+              <li class="">
                 <a href="/docs/latest/questions/alerts" class="">
                   Alerts
 
@@ -2630,8 +2645,38 @@ Roadmap</a>
               
 
               <li class="">
+                <a href="/docs/latest/ai/metabot-slack" class="">
+                  Metabot for Slack
+
+                  
+                </a>
+                
+              </li>
+            
+              
+
+              
+
+              
+
+              <li class="">
                 <a href="/docs/latest/ai/settings" class="">
                   Metabot settings
+
+                  
+                </a>
+                
+              </li>
+            
+              
+
+              
+
+              
+
+              <li class="">
+                <a href="/docs/latest/ai/mcp" class="">
+                  MCP server
 
                   
                 </a>
@@ -2660,8 +2705,8 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/latest/ai/sql-generation" class="">
-                  SQL generation
+                <a href="/docs/latest/ai/file-based-development" class="">
+                  File-based development
 
                   
                 </a>
@@ -3105,6 +3150,20 @@ Roadmap</a>
                       <li class="">
                         <a href="/docs/latest/data-studio/transforms/jobs-and-runs" class="">
                           Jobs and runs
+
+                          
+                        </a>
+                        
+                      </li>
+                    
+                      
+
+                      
+
+                      
+                      <li class="">
+                        <a href="/docs/latest/data-studio/transforms/transform-inspector" class="">
+                          Transform inspector
 
                           
                         </a>
@@ -5131,6 +5190,34 @@ Roadmap</a>
                         
                       </li>
                     
+                      
+
+                      
+
+                      
+                      <li class="">
+                        <a href="/docs/latest/people-and-groups/authenticating-with-oidc" class="">
+                          OIDC-based authentication
+
+                          
+                        </a>
+                        
+                      </li>
+                    
+                      
+
+                      
+
+                      
+                      <li class="">
+                        <a href="/docs/latest/people-and-groups/oidc-keycloak" class="">
+                          OIDC with Keycloak
+
+                          
+                        </a>
+                        
+                      </li>
+                    
                   </ul>
                 
               </li>
@@ -5755,7 +5842,7 @@ Roadmap</a>
 <div class="version__selector cursor-pointer">
   <span class="version__current">
     
-      v0.59
+      v0.60
     
 
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="chevron">
@@ -5766,13 +5853,13 @@ Roadmap</a>
   <ul class="version__dropdown">
     
       
+    
+      
         <li>
-          <a href="/docs/v0.60">
-            v0.60
+          <a href="/docs/v0.59">
+            v0.59
           </a>
         </li>
-      
-    
       
     
       
@@ -5893,7 +5980,7 @@ Roadmap</a>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run -d -p 3000:3000 --name metabase metabase/metabase
 </code></pre></div></div>
 
-<p>This will launch an Metabase server on port 3000 by default.</p>
+<p>This will launch a Metabase server on port 3000 by default.</p>
 
 <p>Optional: to view the logs as your Open Source Metabase initializes, run:</p>
 
@@ -5939,7 +6026,7 @@ Roadmap</a>
 
 <p>Metabase ships with an embedded H2 database that uses the file system to store its own application data. Meaning, if you remove the container, you’ll lose your Metabase application data (your questions, dashboards, collections, and so on).</p>
 
-<p>If you want to run Metabase in production, you’ll need store your application data in a <a href="./migrating-from-h2#supported-databases-for-storing-your-metabase-application-data">production-ready database</a>.</p>
+<p>If you want to run Metabase in production, you’ll need to store your application data in a <a href="./migrating-from-h2#supported-databases-for-storing-your-metabase-application-data">production-ready database</a>.</p>
 
 <p>Once you’ve provisioned a database, like Postgres, for Metabase to use to store its application data, all you need to do is provide Metabase with the connection information and credentials so Metabase can connect to it.</p>
 
@@ -6074,7 +6161,7 @@ Roadmap</a>
   --name metabase metabase/metabase
 </code></pre></div></div>
 
-<p>When you launch your container, Metabase will use the database file (<code class="language-plaintext highlighter-rouge">MB_DB_FILE</code>) at <code class="language-plaintext highlighter-rouge">~/metabase-data/metabase.db</code> instead of its default location. and we are mounting that folder from our local filesystem into the container.</p>
+<p>When you launch your container, Metabase will use the database file (<code class="language-plaintext highlighter-rouge">MB_DB_FILE</code>) at <code class="language-plaintext highlighter-rouge">~/metabase-data/metabase.db</code> instead of its default location, and we are mounting that folder from our local filesystem into the container.</p>
 
 <h3 id="getting-your-config-back-if-you-stopped-your-container">Getting your config back if you stopped your container</h3>
 
@@ -6106,7 +6193,7 @@ sha256:9ff56186de4dd0b9bb2a37c977c3a4c9358647cde60a16f11f4c05bded1fe77a
 
 <h3 id="adding-external-dependencies-or-plugins">Adding external dependencies or plugins</h3>
 
-<p>To add external dependency JAR files, such as the Oracle or Vertica JDBC drivers or 3rd-party Metabase drivers), you’ll need to:</p>
+<p>To add external dependency JAR files, such as the Oracle or Vertica JDBC drivers or 3rd-party Metabase drivers, you’ll need to:</p>
 
 <ul>
   <li>create a <code class="language-plaintext highlighter-rouge">plugins</code> directory in your host system, and</li>

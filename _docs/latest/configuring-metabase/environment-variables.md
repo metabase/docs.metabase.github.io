@@ -1,5 +1,5 @@
 ---
-version: v0.59
+version: v0.60
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -1214,6 +1214,14 @@ The custom illustration for the login page.
 
 The map tile server URL template used in map visualizations, for example from OpenStreetMaps or MapBox.
 
+### `MB_METABOT_SLACK_SIGNING_SECRET`
+
+- Type: string
+- Default: `null`
+- [Configuration file name](./config-file): `metabot-slack-signing-secret`
+
+Signing secret for verifying requests from the Metabot Slack app.
+
 ### `MB_NATIVE_QUERY_AUTOCOMPLETE_MATCH_STYLE`
 
 - Type: keyword
@@ -1329,6 +1337,36 @@ The size of the thread pool used to send notifications.
 If Metabase stops sending notifications like alerts, it may be because long-running
   queries are clogging the notification queue. You may be able to unclog the queue by
   increasing the size of the thread pool dedicated to notifications.
+
+### `MB_OIDC_ALLOWED_NETWORKS`
+
+- Type: keyword
+- Default: `allow-all`
+- [Configuration file name](./config-file): `oidc-allowed-networks`
+
+What networks are OIDC requests allowed to? Possible values: 'allow-all' (default), 'allow-private', or 'external-only'.
+
+### `MB_OIDC_PROVIDERS`
+
+> Only available on Metabase [Pro](/product/pro) and [Enterprise](/product/enterprise) plans.
+
+- Type: json
+- Default: `[]`
+- [Configuration file name](./config-file): `oidc-providers`
+
+JSON containing OIDC provider configurations.
+
+### `MB_OIDC_USER_PROVISIONING_ENABLED`
+
+> Only available on Metabase [Pro](/product/pro) and [Enterprise](/product/enterprise) plans.
+
+- Type: boolean
+- Default: `true`
+- [Configuration file name](./config-file): `oidc-user-provisioning-enabled`
+
+Determines what happens when a user logs in via OIDC and doesn't have a Metabase account.
+
+When set to `true`, users who log in via OIDC will automatically get a Metabase account if they don't have one, or get their existing account reactivated. When set to `false`, only users with active Metabase accounts can log in via OIDC.
 
 ### `MB_PERSISTED_MODEL_REFRESH_CRON_SCHEDULE`
 
@@ -1868,8 +1906,6 @@ The name of the channel where bug reports should be posted.
 
 ### `MB_SLACK_CONNECT_ATTRIBUTE_TEAM_ID`
 
-> Only available on Metabase [Pro](/product/pro) and [Enterprise](/product/enterprise) plans.
-
 - Type: string
 - Default: `https://slack.com/team_id`
 - [Configuration file name](./config-file): `slack-connect-attribute-team-id`
@@ -1878,17 +1914,13 @@ Slack OIDC claim for the team/workspace ID.
 
 ### `MB_SLACK_CONNECT_AUTHENTICATION_MODE`
 
-> Only available on Metabase [Pro](/product/pro) and [Enterprise](/product/enterprise) plans.
-
 - Type: string
-- Default: `sso`
+- Default: `link-only`
 - [Configuration file name](./config-file): `slack-connect-authentication-mode`
 
-Controls whether Slack can be used for SSO login or just account linking. Valid values: "sso" (default) or "link-only".
+Controls whether Slack can be used for SSO login or just account linking. Valid values: "sso" or "link-only" (default).
 
 ### `MB_SLACK_CONNECT_CLIENT_ID`
-
-> Only available on Metabase [Pro](/product/pro) and [Enterprise](/product/enterprise) plans.
 
 - Type: string
 - Default: `null`
@@ -1898,8 +1930,6 @@ Client ID for your Slack app. Get this from https://api.slack.com/apps.
 
 ### `MB_SLACK_CONNECT_CLIENT_SECRET`
 
-> Only available on Metabase [Pro](/product/pro) and [Enterprise](/product/enterprise) plans.
-
 - Type: string
 - Default: `null`
 - [Configuration file name](./config-file): `slack-connect-client-secret`
@@ -1908,8 +1938,6 @@ Client Secret for your Slack app.
 
 ### `MB_SLACK_CONNECT_ENABLED`
 
-> Only available on Metabase [Pro](/product/pro) and [Enterprise](/product/enterprise) plans.
-
 - Type: boolean
 - Default: `false`
 - [Configuration file name](./config-file): `slack-connect-enabled`
@@ -1917,8 +1945,6 @@ Client Secret for your Slack app.
 Is Slack Connect authentication configured and enabled?
 
 ### `MB_SLACK_CONNECT_USER_PROVISIONING_ENABLED`
-
-> Only available on Metabase [Pro](/product/pro) and [Enterprise](/product/enterprise) plans.
 
 - Type: boolean
 - Default: `true`
@@ -1962,6 +1988,13 @@ Identify the source of HTTP requests by this header's value, instead of its remo
 
 Fetch size for result sets. We want to ensure that the jdbc ResultSet objects are not realizing the entire results
   in memory.
+
+### `MB_SQL_TOOLS_PARSER_BACKEND`
+
+- Type: keyword
+- Default: `sqlglot`
+
+Parser backend of `sql-tools` module.
 
 ### `MB_SSH_HEARTBEAT_INTERVAL_SEC`
 

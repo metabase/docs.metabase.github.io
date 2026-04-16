@@ -1,5 +1,5 @@
 ---
-version: v0.59
+version: v0.60
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -200,7 +200,7 @@ See [Upload permissions](../databases/uploads#add-people-to-a-group-with-data-ac
 
 Transform permissions control who can manage and run [transforms](../data-studio/transforms/transforms-overview) on a database. Transform permissions can only be set on a database level, not on a table level.
 
-A group can only have transform permissions for a database if they also have "View data" and "Query builder and native" per for _all_ the tables in a database.
+A group can only have transform permissions for a database if they also have "View data" and "Query builder and native" permissions for _all_ the tables in a database.
 
 ## Further reading
 

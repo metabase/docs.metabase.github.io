@@ -1,5 +1,5 @@
 ---
-version: v0.59
+version: v0.60
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -24,7 +24,7 @@ You can embed an interactive, editable, or static dashboard.
 
 ## Embedding a dashboard
 
-You can embed a dashboard using the one of the dashboard components:
+You can embed a dashboard using one of the dashboard components:
 
 ### `StaticDashboard`
 

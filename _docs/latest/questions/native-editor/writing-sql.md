@@ -1,5 +1,5 @@
 ---
-version: v0.59
+version: v0.60
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -125,7 +125,7 @@ On saved SQL questions without [parameters](./sql-parameters), you'll get the **
 
 ![Explore results button](../images/explore-results.png)
 
-## Drill-though in SQL questions
+## Drill-through in SQL questions
 
 Visualizations created with SQL have limited [drill-through][drill-through] capabilities:
 

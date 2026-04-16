@@ -1,5 +1,5 @@
 ---
-version: v0.59
+version: v0.60
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -104,7 +104,7 @@ Examples of user attributes in play:
 1. Make sure to do the [prerequisites for row security](#prerequisites-for-row-security) first.
 2. Go to **Admin** > **Permissions**.
 3. Select the database and table that you want to secure.
-4. Find the group that you want to put in the secure.
+4. Find the group that you want to secure.
 5. Click on the dropdown under **View data** for that group.
 6. Select "Row and column security".
 7. Click the dropdown under **Column** and enter the column to filter the table on, such as "Plan".
@@ -265,7 +265,7 @@ If you put Vincent Accountman in both groups, he'll have conflicting permissions
 To resolve row and column security permissions conflicts:
 
 - Remove the person from all but one of the groups.
-- Set the all but one of the group's [View data](./data#view-data-permissions) access to the datatabase to "Blocked".
+- Set all but one of the group's [View data](./data#view-data-permissions) access to the database to "Blocked".
 
 ### You cannot secure the rows or columns of SQL results
 
@@ -298,7 +298,7 @@ Some things to keep in mind when using row and column security.
 ### Groups with native query permissions (access to the SQL editor) can bypass row and column security
 
 Row and column security is limited to the [query builder](../questions/query-builder/editor).
-You can't set up [native query persmissons](./data#create-queries-permissions) for groups with row and column security.
+You can't set up [native query permissions](./data#create-queries-permissions) for groups with row and column security.
 
 To enforce row-level permissions with the native query editor, check out [impersonation](./impersonation).
 

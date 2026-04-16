@@ -1,5 +1,5 @@
 ---
-version: v0.59
+version: v0.60
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -46,6 +46,8 @@ The Agent API supports:
 - Searching for tables and metrics
 - Inspecting their fields
 - Constructing and executing queries
+
+If you want to connect an MCP-compatible AI client (like Claude Desktop) without writing custom code, see the [MCP server](./mcp), which builds on this API.
 
 ## Row limits and pagination
 
@@ -119,6 +121,7 @@ You can also exchange a JWT for a session token via `POST /auth/sso/to_session` 
 
 ## Further reading
 
+- [MCP server](./mcp)
 - [Agent API complete reference](https://github.com/metabase/metabase/blob/master/src/metabase/agent_api/reference.md)
 - [Metabase Agent API demo](https://github.com/metabase/metabase-agent-api-demo)
 - [Metabase API docs](../api)

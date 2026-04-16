@@ -1,5 +1,5 @@
 ---
-version: v0.59
+version: v0.60
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -16,7 +16,7 @@ latest: true
 
 # Dependency diagnostics
 
-{% include plans-blockquote.html feature="Dependency disagnistics" %}
+{% include plans-blockquote.html feature="Dependency diagnostics" %}
 
 Dependency diagnostics shows you content with broken dependencies, and content that isn't referenced by anything else.
 

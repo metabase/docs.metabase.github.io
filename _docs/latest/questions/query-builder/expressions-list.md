@@ -1,5 +1,5 @@
 ---
-version: v0.59
+version: v0.60
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -1055,7 +1055,7 @@ Example: `Offset(Sum([Total]), -1)` would get the `Sum([Total])` value from the 
 
 ## Database limitations
 
-Limitations are noted for each aggregation and function above, and here there are in summary:
+Limitations are noted for each aggregation and function above, and here they are in summary:
 
 **H2** (including Metabase Sample Database): `Median`, `Percentile`, `convertTimezone`, `regexExtract`, `datetime`, `float`, `splitPart`.
 

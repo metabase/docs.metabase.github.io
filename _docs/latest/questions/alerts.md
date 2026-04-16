@@ -1,5 +1,5 @@
 ---
-version: v0.59
+version: v0.60
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -118,7 +118,7 @@ To edit or delete alerts on a question, click on the **three dots** icon in the 
 Everyone:
 
 - Everyone can edit alerts that they've personally set up (but not alerts set up by other people).
-- Everyone can view and unsubscribe from all alerts they receive by clicking on the **grid** icon in the upper right then clicking their **profile name and email** to open Account settings, and navigating to **Notifications**.
+- Everyone can view and unsubscribe from all alerts they receive by clicking the **profile or grid icon** in the upper right then clicking their **profile name and email** to open Account settings, and navigating to **Notifications**.
 
 Admins:
 

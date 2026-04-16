@@ -1,5 +1,5 @@
 ---
-version: v0.59
+version: v0.60
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -30,6 +30,8 @@ To complete any build of the Metabase code, you'll need to install the following
 2. [Java Development Kit JDK (https://adoptopenjdk.net/releases.html)](https://adoptopenjdk.net/releases.html) - you need to install JDK 21 ([more info on Java versions](../installation-and-operation/running-the-metabase-jar-file))
 
 3. [Node.js (https://nodejs.org/)](https://nodejs.org/) - latest LTS release
+
+4. [uv](https://docs.astral.sh/uv/getting-started/installation/) - for installing python deps
 
 4. [Bun package manager](https://bun.sh/) - you can install it by running:
 
@@ -111,7 +113,7 @@ The “official” branch of Metabase is called `master`, and other feature deve
    git pull
    ```
 
-   You should do this every time to make sure that you have all the latest Metabase branches and code on your computer. It’s also how you’ll get updates on a feature branch someone make changes to it.
+   You should do this every time to make sure that you have all the latest Metabase branches and code on your computer. It’s also how you’ll get updates on a feature branch when someone makes changes to it.
 
 7. Find the name of the branch you want to run by going to the “pull request” page for that feature on GitHub and copying the branch name from there. Here’s [an example PR page](https://github.com/metabase/metabase/pull/19138), with the branch name
    `fix-native-dataset-drill-popover`.

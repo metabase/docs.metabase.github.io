@@ -52,7 +52,7 @@ Once the snapshot upload completes:
 
 ### Set up your account and choose your plan and deployment
 
-While Metabase prepping the migration, click on the **Go to Metabase Store** button to sign in to or set up your account.
+While Metabase is prepping the migration, click on the **Go to Metabase Store** button to sign in to or set up your account.
 
 Choose your plan: [Starter](/product/starter) or [Pro](/product/pro). You can choose monthly or annual billing (annual will save you 10%).
 
@@ -74,7 +74,7 @@ Welcome to Metabase Cloud!
 
 When migrating, you may get an automatic upgrade. If the current version of Metabase Cloud is higher than the version you were using, your Metabase will be upgraded automatically to the higher version.
 
-If the default version on Metabase Cloud is the same or lower than your current version, you're migration will maintain the same version you've been running.
+If the default version on Metabase Cloud is the same or lower than your current version, your migration will maintain the same version you've been running.
 
 ## Follow up after the migration
 

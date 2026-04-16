@@ -1,5 +1,5 @@
 ---
-version: v0.59
+version: v0.60
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -116,7 +116,7 @@ To configure default separator settings:
 
 _Admin > Settings > Localization_
 
-You can choose how should currency fields be displayed by default (you can to configure _which_ fields should be displayed as currency in table metadata or in question formatting setting, see [Formatting](../data-modeling/formatting) )
+You can choose how currency fields should be displayed by default (you can configure _which_ fields should be displayed as currency in table metadata or in question formatting setting, see [Formatting](../data-modeling/formatting))
 
 Note that people can also override these localization options for specific fields or questions.
 

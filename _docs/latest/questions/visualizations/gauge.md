@@ -1,5 +1,5 @@
 ---
-version: v0.59
+version: v0.60
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -50,7 +50,7 @@ To build a gauge chart, you'll need:
 
 You can set the ranges, their colors, and optional labels in chart settings.
 
-To open the chart setting, click on the **Visualization** icon at the bottom left of the screen.
+To open the chart settings, click on the **Visualization** icon at the bottom left of the screen.
 
 Format options will apply to both the result of the query and the range boundaries:
 

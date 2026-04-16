@@ -1,5 +1,5 @@
 ---
-version: v0.59
+version: v0.60
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -16,7 +16,7 @@ latest: true
 
 # Translate embedded components
 
-{% include plans-blockquote.html feature="Translation of embedded content" convert_pro_link_to_embbedding=true %}
+{% include plans-blockquote.html feature="Translation of embedded content" convert_pro_link_to_embedding=true %}
 
 You can set a locale on modular embeds (guest, SSO, and SDK) to translate Metabase's UI. If you've uploaded a translation dictionary, Metabase will also translate content strings (like dashboard names and filter labels) for all [modular embeds](./modular-embedding).
 
@@ -35,7 +35,7 @@ For guest and SSO embeds (not the SDK), set the `locale` in `window.metabaseConf
     // If you've uploaded a translation dictionary,
     // Metabase will also translate content strings
     // to this locale from that dictionary.
-    locale: "es"
+    locale: "es",
   };
 </script>
 
@@ -49,11 +49,7 @@ If you also want to translate content (like item titles, headings, filter labels
 For the SDK, set the `locale` prop on the `MetabaseProvider` component:
 
 ```tsx
-<MetabaseProvider
-  authConfig={authConfig}
-  locale="es"
->
-</MetabaseProvider>
+<MetabaseProvider authConfig={authConfig} locale="es"></MetabaseProvider>
 ```
 
 If you've uploaded a translation dictionary, the SDK will also translate content strings (like dashboard names and filter labels) to this locale from that dictionary.
@@ -90,7 +86,7 @@ Metabase uses these dictionaries to translate user-generated content, like dashb
 | pt-BR    | Vendor      | Vendedor     |
 | IT       | Examples    | Esempi       |
 
-Prefer hyphens in your `pt-BR` in your translation dictionary. Underscores are also acceptable (if you download the dictionary _after_ uploading it, Metabase will transform `pt-BR` to `pt_BR`), but since the `locale` parameter in modular embeds only accepts locales with hyphens (like `pt-BR`), we recommend using hyphens for consistency.
+Prefer hyphens in your `pt-BR` translation dictionary. Underscores are also acceptable (if you download the dictionary _after_ uploading it, Metabase will transform `pt-BR` to `pt_BR`), but since the `locale` parameter in modular embeds only accepts locales with hyphens (like `pt-BR`), we recommend using hyphens for consistency.
 
 [See a list of supported locales](../configuring-metabase/localization#supported-languages).
 
@@ -121,7 +117,6 @@ If the strings you want to translate include markdown formatting, you'll need to
 | pt-BR    | `**Examples**` | `**Exemplos**` |
 | pt-BR    | `_Examples_`   | `_Exemplos_`   |
 | pt-BR    | `## Examples`  | `## Exemplos`  |
-
 
 ## The AI chat component isn't translated
 

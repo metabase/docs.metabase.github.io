@@ -1,5 +1,5 @@
 ---
-version: v0.59
+version: v0.60
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -67,7 +67,7 @@ Your data can include more than three columns, but each row must include the req
 
 ## Sankey display options
 
-You can change a charts alignment, edge labels, and edge colors.
+You can change a chart's alignment, edge labels, and edge colors.
 
 ### Alignment
 

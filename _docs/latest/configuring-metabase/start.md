@@ -1,5 +1,5 @@
 ---
-version: v0.59
+version: v0.60
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: false
@@ -31,7 +31,7 @@ Set up email for [Alerts](../questions/alerts) and [Dashboard subscriptions](../
 
 Set up Slack for Alerts and Dashboard subscriptions.
 
-### [Webhooks](./webhooks)
+## [Webhooks](./webhooks)
 
 Set up webhooks as notification channels for alerts.
 

@@ -1,5 +1,5 @@
 ---
-version: v0.59
+version: v0.60
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -55,6 +55,7 @@ type MetabaseEmbeddingColorKeyV2 = Exclude<
   | "upsell-secondary"
   | "upsell-gem"
   | "background-brand"
+  | "background-filter"
   | "background-disabled"
   | "background-disabled-inverse"
   | "background-error"
@@ -73,7 +74,9 @@ type MetabaseEmbeddingColorKeyV2 = Exclude<
   | "background-warning"
   | "border"
   | "border-brand"
+  | "border-filter"
   | "border-strong"
+  | "border-stronger"
   | "border-subtle"
   | "brand"
   | "brand-hover"
@@ -101,6 +104,7 @@ type MetabaseEmbeddingColorKeyV2 = Exclude<
   | "syntax-parameters"
   | "syntax-parameters-active"
   | "text-brand"
+  | "text-filter"
   | "text-hover"
   | "text-primary"
   | "text-primary-inverse"

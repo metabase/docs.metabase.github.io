@@ -1,5 +1,5 @@
 ---
-version: v0.59
+version: v0.60
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -212,6 +212,7 @@ config:
     login-page-illustration: default
     login-page-illustration-custom: null
     map-tile-server-url: https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png
+    metabot-slack-signing-secret: null
     native-query-autocomplete-match-style: substring
     nested-field-columns-value-length-limit: 50000
     no-data-illustration: default
@@ -224,6 +225,9 @@ config:
     notification-system-event-thread-pool-size: 5
     notification-temp-file-size-max-bytes: 10485760
     notification-thread-pool-size: 3
+    oidc-allowed-networks: allow-all
+    oidc-providers: []
+    oidc-user-provisioning-enabled: true
     persisted-model-refresh-cron-schedule: 0 0 0/6 * * ? *
     persisted-models-enabled: false
     premium-embedding-token: null
@@ -283,7 +287,7 @@ config:
     slack-app-token: null
     slack-bug-report-channel: metabase-bugs
     slack-connect-attribute-team-id: https://slack.com/team_id
-    slack-connect-authentication-mode: sso
+    slack-connect-authentication-mode: link-only
     slack-connect-client-id: null
     slack-connect-client-secret: null
     slack-connect-enabled: false
@@ -291,6 +295,7 @@ config:
     smtp-override-enabled: false
     source-address-header: X-Forwarded-For
     sql-jdbc-fetch-size: 500
+    sql-tools-parser-backend: sqlglot
     ssh-heartbeat-interval-sec: 180
     start-of-week: sunday
     subscription-allowed-domains: null

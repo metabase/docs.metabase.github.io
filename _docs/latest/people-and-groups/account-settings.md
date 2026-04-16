@@ -1,5 +1,5 @@
 ---
-version: v0.59
+version: v0.60
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -18,7 +18,7 @@ latest: true
 
 # Account settings
 
-To access your account settings, click the **grid** icon in the top right corner, then click your **profile name and email.**
+To access your account settings, click the **profile or grid icon** in the top right corner, then click your **profile name and email.**
 
 ## Account profile
 

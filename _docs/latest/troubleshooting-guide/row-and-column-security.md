@@ -1,5 +1,5 @@
 ---
-version: v0.59
+version: v0.60
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -126,7 +126,7 @@ Add these people to a group (or create a new group) that has permissions to view
 
 ### Has an administrator hidden fields in the table?
 
-**Root cause:**: An administrator has hidden fields in the table.
+**Root cause**: An administrator has hidden fields in the table.
 
 **Steps to take:**
 

@@ -1,5 +1,5 @@
 ---
-version: v0.59
+version: v0.60
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -77,7 +77,7 @@ Only a **limited subset** of custom colors will be used for:
 - [Maps](../questions/visualizations/map)
 - [Sunburst chart](../questions/visualizations/pie-or-donut-chart)
 
-In most cases, replacing default colors with custom chart colors will not be applied to
+In most cases, replacing default colors with custom chart colors will not be applied to existing charts.
 
 ## Icons
 

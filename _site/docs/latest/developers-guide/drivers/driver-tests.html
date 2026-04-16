@@ -187,9 +187,9 @@ window.redirectTo = function redirectTo(theLocation) {
         <div class="promo-banner hidden">
   <div>
     <span class="button">New</span>
-    <span>Meet Data Studio: an analyst workbench with tools to shape data and curate your semantic layer in Metabase.</span>
-    <a href="/blog/meet-data-studio-semantic-layer">
-      See what we built and why<img alt="Chevron Blue Right" src="/images/chevron_blue_right.svg">
+    <span>Metabase 60: AI goes open source, Metabase MCP server, Metabot in Slack, split panel charts, metrics explorer, and more.</span>
+    <a href="/releases/metabase-60 ">
+      Read the announcement<img alt="Chevron Blue Right" src="/images/chevron_blue_right.svg">
     </a>
   </div>
   <button>×</button>
@@ -2378,6 +2378,21 @@ Roadmap</a>
               
 
               <li class="">
+                <a href="/docs/latest/questions/metrics-explorer" class="">
+                  Metrics explorer
+
+                  
+                </a>
+                
+              </li>
+            
+              
+
+              
+
+              
+
+              <li class="">
                 <a href="/docs/latest/questions/alerts" class="">
                   Alerts
 
@@ -2630,8 +2645,38 @@ Roadmap</a>
               
 
               <li class="">
+                <a href="/docs/latest/ai/metabot-slack" class="">
+                  Metabot for Slack
+
+                  
+                </a>
+                
+              </li>
+            
+              
+
+              
+
+              
+
+              <li class="">
                 <a href="/docs/latest/ai/settings" class="">
                   Metabot settings
+
+                  
+                </a>
+                
+              </li>
+            
+              
+
+              
+
+              
+
+              <li class="">
+                <a href="/docs/latest/ai/mcp" class="">
+                  MCP server
 
                   
                 </a>
@@ -2660,8 +2705,8 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/latest/ai/sql-generation" class="">
-                  SQL generation
+                <a href="/docs/latest/ai/file-based-development" class="">
+                  File-based development
 
                   
                 </a>
@@ -3105,6 +3150,20 @@ Roadmap</a>
                       <li class="">
                         <a href="/docs/latest/data-studio/transforms/jobs-and-runs" class="">
                           Jobs and runs
+
+                          
+                        </a>
+                        
+                      </li>
+                    
+                      
+
+                      
+
+                      
+                      <li class="">
+                        <a href="/docs/latest/data-studio/transforms/transform-inspector" class="">
+                          Transform inspector
 
                           
                         </a>
@@ -5131,6 +5190,34 @@ Roadmap</a>
                         
                       </li>
                     
+                      
+
+                      
+
+                      
+                      <li class="">
+                        <a href="/docs/latest/people-and-groups/authenticating-with-oidc" class="">
+                          OIDC-based authentication
+
+                          
+                        </a>
+                        
+                      </li>
+                    
+                      
+
+                      
+
+                      
+                      <li class="">
+                        <a href="/docs/latest/people-and-groups/oidc-keycloak" class="">
+                          OIDC with Keycloak
+
+                          
+                        </a>
+                        
+                      </li>
+                    
                   </ul>
                 
               </li>
@@ -5755,7 +5842,7 @@ Roadmap</a>
 <div class="version__selector cursor-pointer">
   <span class="version__current">
     
-      v0.59
+      v0.60
     
 
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="chevron">
@@ -5766,13 +5853,13 @@ Roadmap</a>
   <ul class="version__dropdown">
     
       
+    
+      
         <li>
-          <a href="/docs/v0.60">
-            v0.60
+          <a href="/docs/v0.59">
+            v0.59
           </a>
         </li>
-      
-    
       
     
       
@@ -5894,7 +5981,7 @@ Roadmap</a>
 
 <p>To run the test suite with your driver, you’ll need to write a series of method implementations for special <em>test extension</em> multimethods. Test extensions do things like create new databases and load data for <em>database definitions</em>.</p>
 
-<p>These test extensions will tell Metabase how to create new databases and load them with test data, and provide information about what Metabae can expect from the created database. Test extensions are simply additional multimethods used only by tests. Like the core driver multimethods, they dispatch on the driver name as a keyword, e.g. <code class="language-plaintext highlighter-rouge">:mysql</code>.</p>
+<p>These test extensions will tell Metabase how to create new databases and load them with test data, and provide information about what Metabase can expect from the created database. Test extensions are simply additional multimethods used only by tests. Like the core driver multimethods, they dispatch on the driver name as a keyword, e.g. <code class="language-plaintext highlighter-rouge">:mysql</code>.</p>
 
 <h2 id="file-organization">File organization</h2>
 
@@ -5946,7 +6033,7 @@ and <a href="https://github.com/metabase/metabase/blob/master/test/metabase/test
 
 <h2 id="anatomy-of-a-metabase-test">Anatomy of a Metabase test</h2>
 
-<p>Let’s look at an real-life Metabase test so we can understand how it works and what exactly we need to do to power it:</p>
+<p>Let’s look at a real-life Metabase test so we can understand how it works and what exactly we need to do to power it:</p>
 
 <div class="language-clj highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">;; expect-with-non-timeseries-dbs = run against all drivers listed in `DRIVERS` env var except timeseries ones like Druid</span><span class="w">
 </span><span class="p">(</span><span class="nf">expect-with-non-timeseries-dbs</span><span class="w">
@@ -5987,9 +6074,9 @@ and <a href="https://github.com/metabase/metabase/blob/master/test/metabase/test
 
 <h2 id="loading-data">Loading Data</h2>
 
-<p>In order to ensure consistent behavior across different drivers, the Metabase test suite creates new databases and load datas into them from a set of shared <em>Database Definitions</em>. That means whether we’re running a test against MySQL, Postgres, SQL Server, or MongoDB, a single test can check that we get the exact same results for every driver!</p>
+<p>In order to ensure consistent behavior across different drivers, the Metabase test suite creates new databases and loads data into them from a set of shared <em>Database Definitions</em>. That means whether we’re running a test against MySQL, Postgres, SQL Server, or MongoDB, a single test can check that we get the exact same results for every driver!</p>
 
-<p>Most of these database definitions live in <a href="https://github.com/edn-format/edn">EDN</a> files; the majority of tests run against a test database named “test data”, whose definition can be found <a href="https://github.com/metabase/metabase/blob/master/test/metabase/test/data/dataset_definitions/test-data.edn">here</a>. Take a look at that file – it’s just a simple set of tables names, column names and types, and then a few thousand rows of data to load into those tables.</p>
+<p>Most of these database definitions live in <a href="https://github.com/edn-format/edn">EDN</a> files; the majority of tests run against a test database named “test data”, whose definition can be found <a href="https://github.com/metabase/metabase/blob/master/test/metabase/test/data/dataset_definitions/test-data.edn">here</a>. Take a look at that file – it’s just a simple set of table names, column names and types, and then a few thousand rows of data to load into those tables.</p>
 
 <p>Like test extension method definitions, schemas for <code class="language-plaintext highlighter-rouge">DatabaseDefinition</code> live in <a href="https://github.com/metabase/metabase/blob/master/test/metabase/test/data/interface.clj"><code class="language-plaintext highlighter-rouge">metabase.test.data.interface</code></a> – you can take a look and see exactly what a database definition is supposed to look like.</p>
 
@@ -6067,7 +6154,7 @@ and <a href="https://github.com/metabase/metabase/blob/master/test/metabase/test
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">be-tests-postgres-latest-ee</span><span class="pi">:</span>
   <span class="na">needs</span><span class="pi">:</span> <span class="s">files-changed</span>
   <span class="na">if</span><span class="pi">:</span> <span class="s">github.event.pull_request.draft == </span><span class="kc">false</span><span class="s"> &amp;&amp; needs.files-changed.outputs.backend_all == 'true'</span>
-  <span class="na">runs-on</span><span class="pi">:</span> <span class="s">ubuntu-22.04</span>
+  <span class="na">runs-on</span><span class="pi">:</span> <span class="s">$</span>
   <span class="na">timeout-minutes</span><span class="pi">:</span> <span class="m">40</span>
   <span class="na">env</span><span class="pi">:</span>
     <span class="na">CI</span><span class="pi">:</span> <span class="s2">"</span><span class="s">true"</span>
@@ -6083,7 +6170,7 @@ and <a href="https://github.com/metabase/metabase/blob/master/test/metabase/test
     <span class="na">MB_POSTGRES_SSL_TEST_SSL_ROOT_CERT_PATH</span><span class="pi">:</span> <span class="s2">"</span><span class="s">test-resources/certificates/us-east-2-bundle.pem"</span>
   <span class="na">services</span><span class="pi">:</span>
     <span class="na">postgres</span><span class="pi">:</span>
-      <span class="na">image</span><span class="pi">:</span> <span class="s">postgres:latest</span>
+      <span class="na">image</span><span class="pi">:</span> <span class="s">circleci/postgres:latest</span>
       <span class="na">ports</span><span class="pi">:</span>
         <span class="pi">-</span> <span class="s2">"</span><span class="s">5432:5432"</span>
       <span class="na">env</span><span class="pi">:</span>
