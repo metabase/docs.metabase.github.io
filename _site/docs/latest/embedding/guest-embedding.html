@@ -5977,6 +5977,8 @@ Roadmap</a>
 
 <p>Guest embeds are a way to embed basic Metabase components in your app without requiring you to create a Metabase account for each person viewing the charts and dashboards. But not logging people in to your Metabase has some major tradeoffs: see <a href="#guest-embed-limitations">limitations</a>.</p>
 
+<p>“Guest” refers to the authentication approach: Metabase doesn’t create a session for each person. Authentication has nothing to do with data freshness. Dashboards and charts in guest embeds always show live data from your database.</p>
+
 <p>Even though you’re not using SSO, guest embeds are still secure: Metabase will only load the embed if the request has a JWT signed with the secret shared between your app and your Metabase. The JWT also includes a reference to the resource to load (like the ID of the embedded item), and any values for parameters.</p>
 
 <p>To restrict data in guest embeds for specific people or groups, use <a href="#locked-parameters">locked parameters</a>.</p>
@@ -6180,7 +6182,7 @@ Fetch the JWT token from your backend and programmatically pass it to the 'metab
 
 <h3 id="locked-parameters">Locked parameters</h3>
 
-<p>Locked parameters let you filter data without exposing the filter to the end-user. This is useful for restricting data based on who’s viewing the embed (for example, showing each customer only their own data).</p>
+<p>Locked parameters let you filter data without exposing the filter to the end-user. Locking parameters is useful for restricting data based on who’s viewing the embed (for example, showing each customer only their own data).</p>
 
 <p>To use locked parameters, you need to:</p>
 
@@ -6236,6 +6238,63 @@ Fetch the token from your backend and pass it to the component programmatically.
 </code></pre></div></div>
 
 <p>The end user won’t see the “category” filter, but the dashboard will only show data for the “Gadget” category (or whatever you passed to the “category” array in the <code class="language-plaintext highlighter-rouge">params</code> object in the server payload you used to sign the JWT).</p>
+
+<h2 id="updating-a-locked-parameter">Updating a locked parameter</h2>
+
+<p>Things to keep in mind if you need to make changes to your locked parameters.</p>
+
+<h3 id="include-all-locked-parameters-in-your-jwt">Include all locked parameters in your JWT</h3>
+
+<p>Once you publish a question or dashboard with a locked parameter, you <em>must</em> include the name of the locked parameter in the <code class="language-plaintext highlighter-rouge">params</code> object when you sign the JWT. If you leave the parameter out, Metabase will refuse the request and log: <code class="language-plaintext highlighter-rouge">You must specify a value for :parameter in the JWT</code>.</p>
+
+<h3 id="pass-an-empty-array-to-turn-off-a-locked-parameter">Pass an empty array to turn off a locked parameter</h3>
+
+<p>If you don’t want the locked filter to apply for a given token, pass an empty array, <code class="language-plaintext highlighter-rouge">[]</code>, as the value for the parameter in the JWT:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">payload</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">resource</span><span class="p">:</span> <span class="p">{</span> <span class="na">dashboard</span><span class="p">:</span> <span class="mi">10</span> <span class="p">},</span>
+  <span class="na">params</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">category</span><span class="p">:</span> <span class="p">[],</span> <span class="c1">// locked filter is bypassed for this token</span>
+  <span class="p">},</span>
+  <span class="na">exp</span><span class="p">:</span> <span class="nb">Math</span><span class="p">.</span><span class="nf">round</span><span class="p">(</span><span class="nb">Date</span><span class="p">.</span><span class="nf">now</span><span class="p">()</span> <span class="o">/</span> <span class="mi">1000</span><span class="p">)</span> <span class="o">+</span> <span class="mi">10</span> <span class="o">*</span> <span class="mi">60</span><span class="p">,</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<p>This is handy when you want to reuse the same dashboard or question across contexts, and conditionally skip a locked filter in some of them.</p>
+
+<h3 id="filter-name-should-match-the-locked-parameter-name">Filter name should match the locked parameter name</h3>
+
+<p>If you rename a dashboard filter that’s used as a locked parameter, update the matching key in your JWT <code class="language-plaintext highlighter-rouge">params</code> object. Locked parameters that are connected to a <a href="../questions/native-editor/sql-parameters">SQL variable</a> don’t need to be renamed on the server.</p>
+
+<h3 id="multiple-locked-parameters-or-multiple-values">Multiple locked parameters or multiple values</h3>
+
+<p>The values for a locked parameter in your JWT should match your filter’s values exactly. The best way to set multiple locked parameters, or pass multiple values to a single locked parameter, is to pick a filter value under <strong>Preview locked parameters</strong> in the embed wizard and copy the server code that Metabase generates.</p>
+
+<p>Multiple locked parameters combine with <code class="language-plaintext highlighter-rouge">AND</code>, not <code class="language-plaintext highlighter-rouge">OR</code>. If you only want to apply a subset of the locked parameters for a given token, pass <code class="language-plaintext highlighter-rouge">[]</code> for the ones you want to skip (see <a href="#pass-an-empty-array-to-turn-off-a-locked-parameter">pass an empty array</a>).</p>
+
+<h2 id="locked-parameters-limit-the-values-available-to-other-editable-parameters">Locked parameters limit the values available to other editable parameters</h2>
+
+<p>Because locked parameters filter data <em>before</em> the results are displayed in the embed, locked parameters also limit the values available to any editable filter widgets on the same item.</p>
+
+<p>For example, say you’re embedding a dashboard with two filters, State and City. If you lock the State parameter with the value “Vermont”, the City filter will only show cities in Vermont in its dropdown. You don’t need to wire the filters together explicitly — they’ll behave like <a href="../dashboards/filters#linking-filters">linked filters</a>.</p>
+
+<h2 id="locked-parameters-on-dashboards-with-sql-questions">Locked parameters on dashboards with SQL questions</h2>
+
+<p>If a locked parameter is linked to a dashboard filter that’s in turn linked to a SQL question, you’ll only be able to pass a <em>single</em> value for that locked parameter in the JWT.</p>
+
+<p>For example, if you have a dashboard filter called “Breakfast” with the values “Hash browns”, “Muffin”, and “Waffles”, and the filter is linked to <em>any</em> SQL question on the dashboard, you can only pass one of those options as the locked parameter value.</p>
+
+<h2 id="using-locked-parameters-to-power-custom-widgets-in-your-app">Using locked parameters to power custom widgets in your app</h2>
+
+<p>Because Metabase doesn’t render locked parameters as filter widgets, you can use them to power custom filter widgets that you build yourself. You may want to build your own filter widget(s) to:</p>
+
+<ul>
+  <li>Match the widget to the look and feel of your app.</li>
+  <li>Add custom logic, like remembering recently used values.</li>
+  <li>Reuse one dashboard in different ways in different parts of your app. For example, a sales dashboard that’s locked by “region” in one place and by “team” in another.</li>
+</ul>
+
+<p>When the end-user changes a value in your custom widget, re-sign a new JWT on your server with the updated <code class="language-plaintext highlighter-rouge">params</code> and swap it onto the web component’s <code class="language-plaintext highlighter-rouge">token</code> attribute. The embed will re-request the data with the new locked value.</p>
 
 <h2 id="disabling-embedding-for-a-question-or-dashboard">Disabling embedding for a question or dashboard</h2>
 
