@@ -19,11 +19,9 @@ latest: true
 
 Metabase includes an [MCP (Model Context Protocol)](https://modelcontextprotocol.io/) server (using Streamable HTTP transport) that lets AI clients connect directly to your Metabase, all scoped to the connecting person's permissions.
 
-Before connecting, make sure AI features are enabled in your Metabase. See [AI settings](./settings).
-
 ## Connect an MCP client
 
-Point your MCP client at Metabase's MCP endpoint at `/api/mcp`:
+If your admin has turned on [your Metabase's MCP server](./settings#mcp-server-settings), all you need to do is point your MCP client at Metabase's MCP endpoint, `/api/mcp`. For example:
 
 ```
 https://{your-metabase.example.com}/api/mcp
