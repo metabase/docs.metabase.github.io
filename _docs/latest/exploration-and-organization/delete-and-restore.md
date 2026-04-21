@@ -149,7 +149,7 @@ Segments can be retired. See [Retiring Segments](../data-modeling/segments#editi
 
 ## Deleting measures
 
-See [Delete measures](../data-studio/data-structure#delete-a-measure). Deleting measures is permanent.
+See [Delete measures](../data-studio/measures#delete-measures). Deleting measures is permanent.
 
 ## Deleting subscriptions and alerts
 

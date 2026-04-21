@@ -54,7 +54,7 @@ window.redirectTo = function redirectTo(theLocation) {
 <meta name="twitter:site" content="@metabase">
 
 <meta name="twitter:title" content="Models | Metabase Documentation">
-<meta name="twitter:description" content="Models  Consider using Transforms instead of models.  Models curate data from another table or tables from the same database to anticipate the kinds of questions people will ask of the data. You can think of them as derived...">
+<meta name="twitter:description" content="Models  Consider using Transforms instead of models. You can convert models to transforms in bulk.  Models curate data from another table or tables from the same database to anticipate the kinds of questions people will ask of...">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -64,7 +64,7 @@ window.redirectTo = function redirectTo(theLocation) {
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://www.metabase.com/docs/v0.60/data-modeling/models">
 <meta name="title" property="og:title" content="Models | Metabase Documentation">
-<meta name="description" property="og:description" content="Models  Consider using Transforms instead of models.  Models curate data from another table or tables from the same database to anticipate the kinds of questions people will ask of the data. You can think of them as derived...">
+<meta name="description" property="og:description" content="Models  Consider using Transforms instead of models. You can convert models to transforms in bulk.  Models curate data from another table or tables from the same database to anticipate the kinds of questions people will ask of...">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -856,12 +856,16 @@ Roadmap</a>
         <span class="menu-heading">Recent Blog Posts</span>
         
         
-        <a class="w-100 post-with-image recent-blog-link mt-1" href="/blog/reprobot-github-issue-triage-agent">
+        <a class="w-100 post-with-image recent-blog-link mt-1" href="/blog/ten-custom-subagents">
           <div class="d-flex align-items-center position-relative overflow-hidden rounded-2 mb-3" id="recent-blog-image-wrapper">
-            <img alt="Resources Image" class="position-absolute w-100" src="/images/posts/engineering-2026/repro-bot.jpg" loading="lazy">
+            <img alt="Resources Image" class="position-absolute w-100" src="/images/posts/engineering-2026/ten-custom-agents.png" loading="lazy">
           </div>
-          <span class="h6 neutral-40 recent-blog-link-heading mb-3">Meet Repro-Bot, our GitHub issue triage agent</span>
+          <span class="h6 neutral-40 recent-blog-link-heading mb-3">How we built ten custom agents to tame our giant codebase</span>
         </a>
+        
+          <a class="w-100 recent-blog-link" href="/blog/reprobot-github-issue-triage-agent">
+            <span class="h6 neutral-40 recent-blog-link-heading mb-3">Meet Repro-Bot, our GitHub issue triage agent</span>
+          </a>
         
           <a class="w-100 recent-blog-link" href="/blog/meet-data-studio-semantic-layer">
             <span class="h6 neutral-40 recent-blog-link-heading mb-3">Meet Data Studio: tools to curate your semantic layer in Metabase</span>
@@ -873,10 +877,6 @@ Roadmap</a>
         
           <a class="w-100 recent-blog-link" href="/blog/we-simplified-metabase-embedding">
             <span class="h6 neutral-40 recent-blog-link-heading mb-3">We simplified embedding</span>
-          </a>
-        
-          <a class="w-100 recent-blog-link" href="/blog/data-analyst-roadmap">
-            <span class="h6 neutral-40 recent-blog-link-heading mb-3">Become a data analyst in 2026: a practical roadmap</span>
           </a>
         
       </div>
@@ -5957,7 +5957,7 @@ Roadmap</a>
         <h1 id="models">Models</h1>
 
 <blockquote>
-  <p>Consider using <a href="../data-studio/transforms/transforms-overview">Transforms</a> instead of models.</p>
+  <p>Consider using <a href="../data-studio/transforms/transforms-overview">Transforms</a> instead of models. You can <a href="../data-studio/transforms/transforms-overview#convert-models-to-transforms">convert models to transforms in bulk</a>.</p>
 </blockquote>
 
 <p>Models curate data from another table or tables from the same database to anticipate the kinds of questions people will ask of the data. You can think of them as derived tables, or a special kind of saved question meant to be used as the starting point for new questions. You can base a model on a SQL or query builder question, which means you can include custom, calculated columns in your model.</p>
@@ -6211,6 +6211,14 @@ Roadmap</a>
 <h2 id="model-persistence">Model persistence</h2>
 
 <p>See <a href="./model-persistence">Model persistence</a></p>
+
+<h2 id="convert-a-model-to-a-transform">Convert a model to a transform</h2>
+
+<p><a href="../data-studio/transforms/transforms-overview">Transforms</a> are the successor to models. Transforms create a persistent table in your database that refreshes on a schedule, instead of running the query live each time. Metabase will be gradually phasing out models in favor of transforms.</p>
+
+<p>If you’re an admin, you can convert existing models to transforms one at a time. Conversion creates a transform from the model’s query, runs it to produce the output table, and then updates all questions and dashboards that used the model to use the transform’s table instead. The model itself becomes a saved question.</p>
+
+<p>See <a href="../data-studio/transforms/transforms-overview#convert-models-to-transforms">Convert existing models to transforms</a>.</p>
 
 <h2 id="further-reading">Further reading</h2>
 

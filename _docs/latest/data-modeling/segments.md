@@ -13,7 +13,7 @@ latest: true
 
 # Segments
 
-> Prefer [Data Studio](../data-studio/data-structure#segments) for managing segments.
+> Prefer [Data Studio](../data-studio/segments) for managing segments.
 
 Metabase allows admins to create segments so people can quickly and easily reference them in the query builder.
 

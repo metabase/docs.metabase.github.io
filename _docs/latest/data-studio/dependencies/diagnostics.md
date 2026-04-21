@@ -6,11 +6,13 @@ show_title_breadcrumb: true
 category: Data Studio
 title: Dependency diagnostics
 source_url: >-
-  https://github.com/metabase/metabase/blob/master/docs/data-studio/dependency-diagnostics.md
+  https://github.com/metabase/metabase/blob/master/docs/data-studio/dependencies/diagnostics.md
 layout: new-docs
 summary: >-
   Find broken content and unused items so you can fix problems and clean up
   safely.
+redirect_from:
+  - /docs/latest/data-studio/dependency-diagnostics
 latest: true
 ---
 
@@ -22,24 +24,22 @@ Dependency diagnostics shows you content with broken dependencies, and content t
 
 To open Dependency diagnostics:
 
-1. Open [Data Studio](./overview).
+1. Open [Data Studio](../overview).
 2. Click **Dependency diagnostics** in the left sidebar.
 
 Dependency diagnostics has two tabs: **Broken dependencies** and **Unreferenced entities**.
 
 ## Broken dependencies
 
-![Broken dependencies](./images/broken-dependencies.png)
+![Broken dependencies](../images/broken-dependencies.png)
 
-> Note: Broken dependency detection currently covers only questions built with the query builder (MBQL). SQL questions and SQL models aren't included.
-
-Broken dependencies lists items that other content depends on, where a dependent item references a column or field the item no longer provides. This can happen when a column is removed or renamed, or when a field is hidden from the query builder by setting Visibility to **Do not include** in [metadata editing](../data-modeling/metadata-editing).
+Broken dependencies lists items that other content depends on, where a dependent item references a column or field the item no longer provides. This can happen when a column is removed or renamed, or when a field is hidden from the query builder by setting Visibility to **Do not include** in [metadata editing](../../data-modeling/metadata-editing).
 
 The broken dependencies table includes:
 
 - Tables
-- [Questions](../questions/introduction)
-- [Models](../data-modeling/models)
+- [Questions](../../questions/introduction)
+- [Models](../../data-modeling/models)
 
 For each item, the list shows:
 
@@ -57,7 +57,7 @@ Selecting an item opens a details panel with:
 - The item's name, owner, and creation date
 - A list of missing or invalid columns, with copy buttons to help fix references
 - Downstream items that are broken because of this specific issue. You can filter this list by entity type
-- Quick links to open items or view them in the [dependency graph](./dependency-graph)
+- Quick links to open items or view them in the [dependency graph](./graph)
 
 For tables created by transforms, the sidebar also shows a link to the source transform.
 
@@ -81,23 +81,23 @@ To fix this, either restore the expected column names in the SQL query or update
 
 ## Unreferenced entities
 
-![Unreferenced entities](./images/unreferenced-entities.png)
+![Unreferenced entities](../images/unreferenced-entities.png)
 
 Unreferenced entities shows items that aren't used by any other non-archived content. Use this view to clean up unused content, especially reusable items like measures, metrics, and snippets. Start by checking why an item was created, when it was last edited, and whether it was meant to be reused.
 
-An unreferenced item isn't broken and isn't automatically safe to delete. It simply means nothing else depends on it. Check [Usage analytics](../usage-and-performance-tools/usage-analytics) for view activity before you archive or delete an item.
+An unreferenced item isn't broken and isn't automatically safe to delete. It simply means nothing else depends on it. Check [Usage analytics](../../usage-and-performance-tools/usage-analytics) for view activity before you archive or delete an item.
 
-The Unreferenced entities list is limited to what you can access, so an item can show up as unreferenced even if something you can’t see depends on it.
+The Unreferenced entities list is limited to what you can access, so an item can show up as unreferenced even if something you can't see depends on it.
 
 Unreferenced entities includes:
 
 - Tables
-- [Questions](../questions/introduction)
-- [Models](../data-modeling/models)
-- [Metrics](../data-modeling/metrics)
+- [Questions](../../questions/introduction)
+- [Models](../../data-modeling/models)
+- [Metrics](../../data-modeling/metrics)
 - Segments
 - Measures
-- [Snippets](../questions/native-editor/snippets)
+- [Snippets](../../questions/native-editor/snippets)
 
 For each item, the list shows:
 
@@ -110,6 +110,6 @@ Selecting an item opens a details panel with:
 
 - Who created the item and when
 - When it was last edited
-- Links to open the item or view it in the [dependency graph](./dependency-graph)
+- Links to open the item or view it in the [dependency graph](./graph)
 
 For tables, the sidebar also shows owners, descriptions, and links to open the schema or database. For tables created by transforms, the sidebar shows a link to the source transform.

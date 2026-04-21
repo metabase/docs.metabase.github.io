@@ -61,7 +61,7 @@ Once a table is published, you can view and manage its metadata, and more.
 - Fields
 - [Segments](../data-modeling/segments)
 - Measures
-- [Dependencies](./dependency-graph)
+- [Dependencies](./dependencies/graph)
 
 To query a table from the Library in Data Studio:
 
@@ -109,7 +109,7 @@ Metabase uses the standard [collection permissions](../permissions/collections) 
 
 ## Further reading
 
-- [Dependency graph](./dependency-graph)
+- [Dependency graph](./dependencies/graph)
 - [Remote sync](../installation-and-operation/remote-sync)
 - [Models](../data-modeling/models)
 - [Metrics](../data-modeling/metrics)
