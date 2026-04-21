@@ -15,7 +15,7 @@ latest: true
 
 # Table metadata editing
 
-> Prefer using [Data Studio > Data structure](../data-studio/data-structure) for metadata editing. The page _Admin > Table Metadata_ will be removed in future versions of Metabase.
+> Prefer using [Data Studio > Tables](../data-studio/managing-tables) for metadata editing. The page _Admin > Table Metadata_ will be removed in future versions of Metabase.
 
 _Admin > Table metadata_
 

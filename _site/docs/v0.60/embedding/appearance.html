@@ -856,12 +856,16 @@ Roadmap</a>
         <span class="menu-heading">Recent Blog Posts</span>
         
         
-        <a class="w-100 post-with-image recent-blog-link mt-1" href="/blog/reprobot-github-issue-triage-agent">
+        <a class="w-100 post-with-image recent-blog-link mt-1" href="/blog/ten-custom-subagents">
           <div class="d-flex align-items-center position-relative overflow-hidden rounded-2 mb-3" id="recent-blog-image-wrapper">
-            <img alt="Resources Image" class="position-absolute w-100" src="/images/posts/engineering-2026/repro-bot.jpg" loading="lazy">
+            <img alt="Resources Image" class="position-absolute w-100" src="/images/posts/engineering-2026/ten-custom-agents.png" loading="lazy">
           </div>
-          <span class="h6 neutral-40 recent-blog-link-heading mb-3">Meet Repro-Bot, our GitHub issue triage agent</span>
+          <span class="h6 neutral-40 recent-blog-link-heading mb-3">How we built ten custom agents to tame our giant codebase</span>
         </a>
+        
+          <a class="w-100 recent-blog-link" href="/blog/reprobot-github-issue-triage-agent">
+            <span class="h6 neutral-40 recent-blog-link-heading mb-3">Meet Repro-Bot, our GitHub issue triage agent</span>
+          </a>
         
           <a class="w-100 recent-blog-link" href="/blog/meet-data-studio-semantic-layer">
             <span class="h6 neutral-40 recent-blog-link-heading mb-3">Meet Data Studio: tools to curate your semantic layer in Metabase</span>
@@ -873,10 +877,6 @@ Roadmap</a>
         
           <a class="w-100 recent-blog-link" href="/blog/we-simplified-metabase-embedding">
             <span class="h6 neutral-40 recent-blog-link-heading mb-3">We simplified embedding</span>
-          </a>
-        
-          <a class="w-100 recent-blog-link" href="/blog/data-analyst-roadmap">
-            <span class="h6 neutral-40 recent-blog-link-heading mb-3">Become a data analyst in 2026: a practical roadmap</span>
           </a>
         
       </div>
@@ -6250,12 +6250,43 @@ Roadmap</a>
 
     </span><span class="err">//</span><span class="w"> </span><span class="err">Popover</span><span class="w"> </span><span class="err">are</span><span class="w"> </span><span class="err">used</span><span class="w"> </span><span class="err">in</span><span class="w"> </span><span class="err">components</span><span class="w"> </span><span class="err">such</span><span class="w"> </span><span class="err">as</span><span class="w"> </span><span class="err">click</span><span class="w"> </span><span class="err">actions</span><span class="w"> </span><span class="err">in</span><span class="w"> </span><span class="err">interactive</span><span class="w"> </span><span class="err">questions.</span><span class="w">
     </span><span class="nl">"popover"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="err">//</span><span class="w"> </span><span class="err">z-index</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">popover.</span><span class="w"> </span><span class="err">Useful</span><span class="w"> </span><span class="err">for</span><span class="w"> </span><span class="err">embedding</span><span class="w"> </span><span class="err">components</span><span class="w"> </span><span class="err">in</span><span class="w"> </span><span class="err">a</span><span class="w"> </span><span class="err">modal.</span><span class="w"> </span><span class="err">defaults</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="mi">4</span><span class="err">.</span><span class="w">
-      </span><span class="nl">"zIndex"</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="w">
+      </span><span class="err">//</span><span class="w"> </span><span class="err">z-index</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">popover.</span><span class="w"> </span><span class="err">Defaults</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="mi">200</span><span class="err">.</span><span class="w">
+      </span><span class="nl">"zIndex"</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div></div>
+
+<h2 id="cant-see-a-modal-bump-the-z-index">Can’t see a modal? Bump the z-index</h2>
+
+<p>If your app renders its own modal, drawer, or backdrop at a high z-index, SDK-internal overlays (like a save dialog) may be hidden behind your overlay.</p>
+
+<p>The SDK defaults popovers to <code class="language-plaintext highlighter-rouge">zIndex: 200</code>, which may be lower than your app’s overlay settings. All you need to do in this case is raise the SDK popover z-index above your overlay via <code class="language-plaintext highlighter-rouge">defineMetabaseTheme</code>:</p>
+
+<div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span>
+  <span class="nx">MetabaseProvider</span><span class="p">,</span>
+  <span class="nx">defineMetabaseTheme</span><span class="p">,</span>
+<span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@metabase/embedding-sdk-react</span><span class="dl">"</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">theme</span> <span class="o">=</span> <span class="nf">defineMetabaseTheme</span><span class="p">({</span>
+  <span class="na">components</span><span class="p">:</span> <span class="p">{</span>
+    <span class="c1">//... Other theme settings</span>
+    <span class="na">popover</span><span class="p">:</span> <span class="p">{</span>
+      <span class="c1">// Set above your overlay's z-index.</span>
+      <span class="c1">// For example, if your modal is at 1000, use 1001.</span>
+      <span class="na">zIndex</span><span class="p">:</span> <span class="mi">1001</span><span class="p">,</span>
+    <span class="p">},</span>
+  <span class="p">},</span>
+<span class="p">});</span>
+
+<span class="k">export</span> <span class="kd">function</span> <span class="nf">App</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">return </span><span class="p">(</span>
+    <span class="p">&lt;</span><span class="nc">MetabaseProvider</span> <span class="na">authConfig</span><span class="p">=</span><span class="si">{</span><span class="nx">authConfig</span><span class="si">}</span> <span class="na">theme</span><span class="p">=</span><span class="si">{</span><span class="nx">theme</span><span class="si">}</span><span class="p">&gt;</span>
+      <span class="si">{</span><span class="cm">/* your app */</span><span class="si">}</span>
+    <span class="p">&lt;/</span><span class="nc">MetabaseProvider</span><span class="p">&gt;</span>
+  <span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
 
 <h2 id="limitations">Limitations</h2>
 

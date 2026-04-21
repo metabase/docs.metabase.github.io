@@ -12,7 +12,7 @@ summary: 'Explore metrics and measures across dimensions and compare them side b
 
 # Metrics explorer
 
-The metrics Explorer is a space for ad-hoc analysis of [metrics](../data-modeling/metrics) and [measures](../data-studio/data-structure#measures)
+The metrics Explorer is a space for ad-hoc analysis of [metrics](../data-modeling/metrics) and [measures](../data-studio/measures)
 
 ![Metrics explorer](../questions/images/metrics-explorer.png)
 
