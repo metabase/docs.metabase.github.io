@@ -1655,6 +1655,8 @@ The `top_nav` parameter controls the visibility of the entire top navigation bar
 
 Guest embeds are a way to embed basic Metabase components in your app without requiring you to create a Metabase account for each person viewing the charts and dashboards. But not logging people in to your Metabase has some major tradeoffs: see [limitations](#guest-embed-limitations).
 
+"Guest" refers to the authentication approach: Metabase doesn't create a session for each person. Authentication has nothing to do with data freshness. Dashboards and charts in guest embeds always show live data from your database.
+
 Even though you're not using SSO, guest embeds are still secure: Metabase will only load the embed if the request has a JWT signed with the secret shared between your app and your Metabase. The JWT also includes a reference to the resource to load (like the ID of the embedded item), and any values for parameters.
 
 To restrict data in guest embeds for specific people or groups, use [locked parameters](#locked-parameters).
@@ -2023,6 +2025,8 @@ With SSO, Metabase can know who's viewing what, which unlocks a lot of power. Yo
 
 **When to use SSO**: You want to offer multi-tenant, self-service analytics, or you want to include the query builder, AI chat, drill-through, or a collection browser.
 
+If you're building a SaaS product with embedded analytics for multiple customers, you can keep customer data isolated with [Tenants](./tenants).
+
 ### Guest embedding
 
 [Guest embeds](./guest-embedding) are a secure way to embed charts and dashboards. Guest embedding works on all Metabase plans, including OSS and Starter.
@@ -2062,6 +2066,12 @@ If you'd like to share your data with the good people of the internet, admins ca
 \* Each embedding type allows data downloads by default, but only [Pro and Enterprise](/pricing/) plans can disable data downloads.
 
 \*\* Requires a [Pro and Enterprise](/pricing/) plan for any embedding type.
+
+### Should you use the Modular embedding SDK?
+
+If your app uses React, you can go with the modular embedding SDK, but you don't need to.
+
+The modular embeds that you can set up in the [in-app wizard](./modular-embedding) are built on top of the Modular embedding SDK. Using the SDK just gives you slightly more customization (see the table above), but your app has to use React. You can always start with modular embedding, then move to the SDK if you really need that extra customization. Both support SSO and Guest embeds.
 
 ## Resources for AI agents
 
@@ -4060,6 +4070,8 @@ When Customer 1 logs in, they'll see a different filtered version of the Account
 ---
 
 # Embedding overview
+
+You can use Metabase as a BI tool for your own team, or embed Metabase in your app so your customers can explore their own data.
 
 ## [Introduction](./introduction)
 
