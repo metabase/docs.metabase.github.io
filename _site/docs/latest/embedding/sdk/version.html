@@ -5982,16 +5982,25 @@ Roadmap</a>
   </div>
 </div>
 
-<p>The SDK stable version tracks with the Metabase version.</p>
+<h2 id="metabase-57-and-later">Metabase 57 and later</h2>
 
-<p>So, for example, if you’re on Metabase 56 (<code class="language-plaintext highlighter-rouge">0.56.x</code>, <code class="language-plaintext highlighter-rouge">1.56.x</code>), <em>any</em> version 0.56.x of the @metabase/embedding-sdk-react npm package will be compatible.</p>
+<p>Starting with Metabase 57, the <code class="language-plaintext highlighter-rouge">@metabase/embedding-sdk-react</code> npm package loads the SDK Bundle from your Metabase.</p>
 
-<p>To simplify things, we publish dist-tags for each stable Metabase version. For example, to install the latest version of the SDK compatible with Metabase 56, run:</p>
+<p>Install the SDK Package matching your Metabase major with the <code class="language-plaintext highlighter-rouge">@{major}-stable</code> dist-tag, so the package’s TypeScript types and exported components stay in sync with your instance’s SDK Bundle:</p>
 
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm <span class="nb">install</span> @metabase/embedding-sdk-react@56-stable
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm <span class="nb">install</span> @metabase/embedding-sdk-react@60-stable
 </code></pre></div></div>
 
-<p>To grab the latest version of the SDK that works with Metabase nightly builds, use the <code class="language-plaintext highlighter-rouge">canary</code> dist-tag.</p>
+<p>Installing without a dist-tag (<code class="language-plaintext highlighter-rouge">npm install @metabase/embedding-sdk-react</code>) still works. The bundle loads from your Metabase, but the package’s types and exports will track the latest published SDK major, which may drift from your Metabase version.</p>
+
+<h2 id="metabase-56-and-earlier">Metabase 56 and earlier</h2>
+
+<p>For Metabase 56 and earlier, the SDK major version must match the Metabase major version. Use the matching <code class="language-plaintext highlighter-rouge">@{major}-stable</code> dist-tag. For example, for Metabase 55:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm <span class="nb">install</span> @metabase/embedding-sdk-react@55-stable
+</code></pre></div></div>
+
+<p>On Metabase 55 (<code class="language-plaintext highlighter-rouge">0.55.x</code>, <code class="language-plaintext highlighter-rouge">1.55.x</code>), <em>any</em> 0.55.x release of <code class="language-plaintext highlighter-rouge">@metabase/embedding-sdk-react</code> will be compatible.</p>
 
 <h2 id="minimum-sdk-version">Minimum SDK version</h2>
 
@@ -5999,7 +6008,9 @@ Roadmap</a>
 
 <h2 id="you-can-pin-instances-to-a-version-on-metabase-cloud">You can pin instances to a version on Metabase Cloud</h2>
 
-<p>Metabase Cloud upgrades your instance automatically as new versions roll out. But if you’re using the SDK with Metabase Cloud, you may want to pin your version so you can upgrade manually. This way you can make sure that your embeds don’t break when you upgrade both your Metabase and your SDK version.</p>
+<p>Metabase Cloud upgrades your instance automatically as new versions roll out. If you’re using the SDK with Metabase Cloud, you may want to pin your version so you can upgrade manually.</p>
+
+<p>On Metabase 56 or earlier, pinning also keeps the SDK Package and Metabase majors in lockstep.</p>
 
 <h3 id="manually-pinning-your-instance-version-on-metabase-cloud">Manually pinning your instance version on Metabase Cloud</h3>
 

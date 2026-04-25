@@ -2927,17 +2927,21 @@ To use the SDK, you'll need to enable the SDK in Metabase, and install the SDK i
 
 ### Install the SDK in your React application
 
-You can install the modular embedding SDK for React via npm. Make sure to use the dist-tag that corresponds to your Metabase version, example: 56-stable for Metabase 56:
+Install the SDK Package matching your Metabase major with the `@{major}-stable` dist-tag, so the package's TypeScript types and exported components stay in sync with your instance's SDK Bundle:
 
 ```bash
-npm install @metabase/embedding-sdk-react@56-stable
+npm install @metabase/embedding-sdk-react@60-stable
 ```
 
 or with Yarn:
 
 ```bash
-yarn add @metabase/embedding-sdk-react@56-stable
+yarn add @metabase/embedding-sdk-react@60-stable
 ```
+
+On **Metabase 56 or earlier**, the SDK major _must_ match your Metabase major. On **Metabase 57 and later**, you can also install without a dist-tag to track the latest published SDK major.
+
+See [SDK versions](./version) for more on compatibility.
 
 ### Resolving `@types/react` version mismatches
 
@@ -3752,19 +3756,21 @@ Still in the Admin console, go to **Settings > Authentication** and click on the
 
 ## 3. Install the SDK in your app
 
-When installing the npm package, it's critical to use the npm dist-tag that corresponds to the major version of your Metabase. For example, if your Metabase is version 1.56.x, you'd run `56-stable`. See [SDK versioning](./version).
+Install the `@{major}-stable` dist-tag matching your Metabase major, so the package's types and exported components in your client match your SDK bundle served from your Metabase. For Metabase 60:
 
 Via npm:
 
 ```
-npm install @metabase/embedding-sdk-react@53-stable
+npm install @metabase/embedding-sdk-react@60-stable
 ```
 
 Via Yarn:
 
 ```
-yarn add @metabase/embedding-sdk-react@53-stable
+yarn add @metabase/embedding-sdk-react@60-stable
 ```
+
+See [SDK versions](./version) for other install options.
 
 ## 4. Embed SDK components in your app
 
@@ -3803,8 +3809,6 @@ Check for any relevant changes, especially deprecations or breaking changes that
 
 ## 2. Test the upgrade
 
-When upgrading to a new major version, you'll want to upgrade both Metabase and the SDK version in parallel, as having Metabase and the SDK major versions out of sync can cause errors.
-
 ### Spin up the new version of Metabase for testing
 
 You can do this locally or in a dev instance. If your testing setup involves a lot of test user accounts, getting a [development instance](../../installation-and-operation/development-instance) could be more cost-effective.
@@ -3815,31 +3819,25 @@ See [upgrading Metabase](../../installation-and-operation/upgrading-metabase).
 
 You'll want to test the changes locally first, as there may be breaking changes that require you to upgrade your application code.
 
-Check out a new branch in your application and install the next stable version, either with npm or Yarn:
-
-Via npm:
+Check out a new branch in your application and install the SDK that matches your Metabase major version. For Metabase 60.x:
 
 ```bash
-npm install @metabase/embedding-sdk-react@{next-major-version-number}-stable
+npm install @metabase/embedding-sdk-react@60-stable
 ```
 
-For example, if you were upgrading to version 56 of the SDK:
+or with Yarn:
 
 ```bash
-npm install @metabase/embedding-sdk-react@56-stable
+yarn add @metabase/embedding-sdk-react@60-stable
 ```
 
-If you're using Yarn:
-
-```bash
-yarn add @metabase/embedding-sdk-react@{next-major-version-number}-stable
-```
+To track the latest published SDK major instead, install without a dist-tag (`npm install @metabase/embedding-sdk-react`).
 
 See more on [SDK versions](./version).
 
 ### If there are deprecations or breaking changes, make the necessary changes to your application code
 
-Deprecations or breaking changes are rare, but if you do need to make changes, we'll mention it in the release notes for the new major version and have docs that walk you through the changes.
+Deprecations or breaking changes are rare, but if you do need to make changes to your application code, we'll mention it in the [release notes](/releases) for the new major version and have docs that walk you through the changes.
 
 Update or add tests for any application code changes that you make.
 
@@ -3855,8 +3853,6 @@ If all goes well with your local tests, deploy to your staging environment. Chec
 ## 3. Deploy to production
 
 If everything is working in staging, you're ready to deploy to production.
-
-Be sure to deploy your application changes and upgrade your Metabase in parallel so that the SDK version and the Metabase version stay in sync.
 
 ### Caching may delay the upgrade by up to a minute
 
@@ -3876,17 +3872,27 @@ We'll coordinate with you so that your instance is upgraded when you deploy the 
 
 
 
-The SDK stable version tracks with the Metabase version.
+## Metabase 57 and later
 
-So, for example, if you're on Metabase 56 (`0.56.x`, `1.56.x`), _any_ version 0.56.x of the @metabase/embedding-sdk-react npm package will be compatible.
+Starting with Metabase 57, the `@metabase/embedding-sdk-react` npm package loads the SDK Bundle from your Metabase.
 
-To simplify things, we publish dist-tags for each stable Metabase version. For example, to install the latest version of the SDK compatible with Metabase 56, run:
+Install the SDK Package matching your Metabase major with the `@{major}-stable` dist-tag, so the package's TypeScript types and exported components stay in sync with your instance's SDK Bundle:
 
 ```sh
-npm install @metabase/embedding-sdk-react@56-stable
+npm install @metabase/embedding-sdk-react@60-stable
 ```
 
-To grab the latest version of the SDK that works with Metabase nightly builds, use the `canary` dist-tag.
+Installing without a dist-tag (`npm install @metabase/embedding-sdk-react`) still works. The bundle loads from your Metabase, but the package's types and exports will track the latest published SDK major, which may drift from your Metabase version.
+
+## Metabase 56 and earlier
+
+For Metabase 56 and earlier, the SDK major version must match the Metabase major version. Use the matching `@{major}-stable` dist-tag. For example, for Metabase 55:
+
+```sh
+npm install @metabase/embedding-sdk-react@55-stable
+```
+
+On Metabase 55 (`0.55.x`, `1.55.x`), _any_ 0.55.x release of `@metabase/embedding-sdk-react` will be compatible.
 
 ## Minimum SDK version
 
@@ -3894,7 +3900,9 @@ Version 52 is the minimum version supported for the Modular embedding SDK.
 
 ## You can pin instances to a version on Metabase Cloud
 
-Metabase Cloud upgrades your instance automatically as new versions roll out. But if you're using the SDK with Metabase Cloud, you may want to pin your version so you can upgrade manually. This way you can make sure that your embeds don't break when you upgrade both your Metabase and your SDK version.
+Metabase Cloud upgrades your instance automatically as new versions roll out. If you're using the SDK with Metabase Cloud, you may want to pin your version so you can upgrade manually.
+
+On Metabase 56 or earlier, pinning also keeps the SDK Package and Metabase majors in lockstep.
 
 ### Manually pinning your instance version on Metabase Cloud
 
