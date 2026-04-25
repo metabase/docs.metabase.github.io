@@ -5976,8 +5976,6 @@ Roadmap</a>
 
 <h2 id="2-test-the-upgrade">2. Test the upgrade</h2>
 
-<p>When upgrading to a new major version, you’ll want to upgrade both Metabase and the SDK version in parallel, as having Metabase and the SDK major versions out of sync can cause errors.</p>
-
 <h3 id="spin-up-the-new-version-of-metabase-for-testing">Spin up the new version of Metabase for testing</h3>
 
 <p>You can do this locally or in a dev instance. If your testing setup involves a lot of test user accounts, getting a <a href="../../installation-and-operation/development-instance">development instance</a> could be more cost-effective.</p>
@@ -5988,28 +5986,23 @@ Roadmap</a>
 
 <p>You’ll want to test the changes locally first, as there may be breaking changes that require you to upgrade your application code.</p>
 
-<p>Check out a new branch in your application and install the next stable version, either with npm or Yarn:</p>
+<p>Check out a new branch in your application and install the SDK that matches your Metabase major version. For Metabase 60.x:</p>
 
-<p>Via npm:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm <span class="nb">install</span> @metabase/embedding-sdk-react@<span class="o">{</span>next-major-version-number<span class="o">}</span><span class="nt">-stable</span>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm <span class="nb">install</span> @metabase/embedding-sdk-react@60-stable
 </code></pre></div></div>
 
-<p>For example, if you were upgrading to version 56 of the SDK:</p>
+<p>or with Yarn:</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm <span class="nb">install</span> @metabase/embedding-sdk-react@56-stable
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>yarn add @metabase/embedding-sdk-react@60-stable
 </code></pre></div></div>
 
-<p>If you’re using Yarn:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>yarn add @metabase/embedding-sdk-react@<span class="o">{</span>next-major-version-number<span class="o">}</span><span class="nt">-stable</span>
-</code></pre></div></div>
+<p>To track the latest published SDK major instead, install without a dist-tag (<code class="language-plaintext highlighter-rouge">npm install @metabase/embedding-sdk-react</code>).</p>
 
 <p>See more on <a href="./version">SDK versions</a>.</p>
 
 <h3 id="if-there-are-deprecations-or-breaking-changes-make-the-necessary-changes-to-your-application-code">If there are deprecations or breaking changes, make the necessary changes to your application code</h3>
 
-<p>Deprecations or breaking changes are rare, but if you do need to make changes, we’ll mention it in the release notes for the new major version and have docs that walk you through the changes.</p>
+<p>Deprecations or breaking changes are rare, but if you do need to make changes to your application code, we’ll mention it in the <a href="/releases">release notes</a> for the new major version and have docs that walk you through the changes.</p>
 
 <p>Update or add tests for any application code changes that you make.</p>
 
@@ -6025,8 +6018,6 @@ For example, if we plan to remove a prop from an SDK React component, we first m
 <h2 id="3-deploy-to-production">3. Deploy to production</h2>
 
 <p>If everything is working in staging, you’re ready to deploy to production.</p>
-
-<p>Be sure to deploy your application changes and upgrade your Metabase in parallel so that the SDK version and the Metabase version stay in sync.</p>
 
 <h3 id="caching-may-delay-the-upgrade-by-up-to-a-minute">Caching may delay the upgrade by up to a minute</h3>
 
