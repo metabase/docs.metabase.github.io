@@ -18,7 +18,7 @@ Metabase includes an [MCP (Model Context Protocol)](https://modelcontextprotocol
 
 ## Connect an MCP client
 
-If your admin has turned on [your Metabase's MCP server](./settings#mcp-server-settings), all you need to do is point your MCP client at Metabase's MCP endpoint, `/api/mcp`. For example:
+If your admin has turned on [your Metabase's MCP server](./settings#enable-mcp-server), all you need to do is point your MCP client at Metabase's MCP endpoint, `/api/mcp`. For example:
 
 ```
 https://{your-metabase.example.com}/api/mcp
