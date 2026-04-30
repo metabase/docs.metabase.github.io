@@ -246,7 +246,6 @@ type IconName =
   | "search_check"
   | "section"
   | "segment"
-  | "segment2"
   | "shield"
   | "shield_outline"
   | "sidebar_closed"
