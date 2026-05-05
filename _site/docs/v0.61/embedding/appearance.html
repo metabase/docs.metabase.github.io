@@ -148,6 +148,58 @@ window.redirectTo = function redirectTo(theLocation) {
 
   <script src="/js/promo-banner.js"></script>
 
+   
+     <!-- Sentry -->
+<script type="text/javascript">
+  window.SENTRY_REPLAY_ENABLED = false;
+
+  function sentryReplayInit () {
+    if (window.SENTRY_REPLAY_ENABLED) {
+      setTimeout(() => {
+        if (!window.Sentry || !window.Sentry.lazyLoadIntegration) {
+          return;
+        }
+        Sentry.lazyLoadIntegration("replayIntegration").then(function (replayIntegration) {
+          console.log({ loaded: !!replayIntegration, replayIntegration })
+          window.Sentry.addIntegration(replayIntegration({ maskAllText: false }));
+        });
+      }, 500);
+    }
+  }
+
+  function sentryInit() {
+    Sentry.init({
+      attachStacktrace: true,
+      dsn:
+        "https://4b0be007af0a45f3bf6f59e5381ffe74@o408345.ingest.us.sentry.io/6722711",
+      environment: "production",
+      tracesSampleRate: 0.1, // performance monitoring
+      replaysSessionSampleRate: 0.05,
+      enableLogs: true,
+      ignoreErrors: [
+        "ResizeObserver loop limit exceeded",
+        "ResizeObserver loop completed with undelivered notifications.",
+      ],
+      sendDefaultPii: false,
+    });
+    sentryReplayInit();
+  }
+
+  if (window.SENTRY_REPLAY_ENABLED) {
+    document.addEventListener("DOMContentLoaded", sentryInit);
+  } else {
+    window.sentryOnLoad = sentryInit;
+  }
+</script>
+
+
+
+
+  <script src="https://js.sentry-cdn.com/4b0be007af0a45f3bf6f59e5381ffe74.min.js" crossorigin="anonymous" data-cfasync="false"></script>
+
+
+   
+
   <!-- GDPR -->
   <script type="text/javascript" src="/gdpr-cookie-notice/dist/script.js"></script>
   <script type="text/javascript" src="/js/cookie-consent.js"></script>
@@ -5971,7 +6023,14 @@ Roadmap</a>
 
 <p><img src="./images/embed-share-button.png" alt="Embed share button"></p>
 
-<p>Guest embeds on OSS and Starter plans come with two theme presets - light and dark. On Metabase Pro and Enterprise plans, you can also customize individual colors, backgrounds, fonts and more. See <a href="#advanced-theming">Advanced theming</a>.</p>
+<p>On OSS and Starter plans, embeds come with two theme presets: <a href="#dark-mode-and-light-mode">light and dark</a>.</p>
+
+<p>On Pro and Enterprise plans, you can:</p>
+
+<ul>
+  <li><a href="#embedding-themes">Save reusable themes</a>, then pick one in the embed wizard.</li>
+  <li>Customize individual colors, backgrounds, fonts, and more in your embedding code. See <a href="#advanced-theming">Advanced theming</a>.</li>
+</ul>
 
 <h2 id="dark-mode-and-light-mode">Dark mode and light mode</h2>
 
@@ -5985,6 +6044,95 @@ Roadmap</a>
   <span class="p">},</span>
 <span class="p">});</span>
 </code></pre></div></div>
+
+<h2 id="embedding-themes">Embedding themes</h2>
+
+<p><img src="./images/themes.png" alt="Embedding themes"></p>
+
+<div class="bootstrap">
+  <div class="plans-blockquote bg-blue-95 rounded-3 p-6 d-flex flex-row border border-1 border-primary">
+    <svg class="" width="24" height="24" viewBox="0 0 26 26" fill="none">
+  <path d="M12 13V15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
+  <path d="M12 10C12.5523 10 13 9.55228 13 9C13 8.44772 12.5523 8 12 8C11.4477 8 11 8.44772 11 9C11 9.55228 11.4477 10 12 10Z" fill="#509EE3"></path>
+  <path d="M12 19.25C16.0041 19.25 19.25 16.0041 19.25 12C19.25 7.99594 16.0041 4.75 12 4.75C7.99594 4.75 4.75 7.99594 4.75 12C4.75 16.0041 7.99594 19.25 12 19.25Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
+</svg>
+
+    
+    
+    
+      
+
+    <p class="m-0 ms-2 paragraph-5 neutral-40">
+       Saved embedding themes are only available on
+      <a class="fw-bold" href="/product/pro">Pro</a> and
+      <a class="fw-bold link-purple" href="/product/enterprise">Enterprise</a>
+      plans  (both self-hosted and on Metabase Cloud).
+    </p>
+  </div>
+</div>
+
+<p>A theme is a named set of colors and fonts that the embed wizard can copy into each new embed’s config. The embed doesn’t reference the theme, the embed carries its own inlined copy of the values. Changing or deleting the theme won’t affect existing embeds.</p>
+
+<h3 id="manage-themes">Manage themes</h3>
+
+<p>Go to <strong>Admin settings &gt; Embedding &gt; Themes</strong>.</p>
+
+<p>Metabase ships with light and dark themes that pick up any appearance settings you’ve set on your Metabase (though you can tinker with these default themes as well, including removing theme like you can any other custom theme).</p>
+
+<p>From the Themes tab, you can:</p>
+
+<ul>
+  <li><strong>Create a theme.</strong> Click <strong>+ New theme</strong>, then set a name, colors, and font.</li>
+  <li><strong>Edit a theme.</strong> Click a theme card to open the editor. Changes show up in the live preview.</li>
+  <li><strong>Choose what the preview renders.</strong> Pick the dashboard or question used to preview the theme.</li>
+  <li><strong>Duplicate a theme.</strong> Handy if you want to vary an existing theme.</li>
+  <li><strong>Delete a theme.</strong> This deletion is eternal.</li>
+</ul>
+
+<p><img src="./images/theme-editor.png" alt="Theme editor"></p>
+
+<h3 id="apply-a-saved-theme-to-a-new-embed">Apply a saved theme to a new embed</h3>
+
+<p>When you create a new embed using the <a href="./modular-embedding#3-customize-your-embed">embed wizard</a>, the last customization step lets you pick:</p>
+
+<ul>
+  <li><strong>A saved theme</strong> from your list of themes.</li>
+  <li><strong>Instance theme</strong> to use Metabase’s instance defaults.</li>
+  <li><strong>Custom</strong> to set colors directly on this embed without saving them as a theme.</li>
+</ul>
+
+<p><img src="./images/embed-wizard-appearance.png" alt="Embed wizard appearance"></p>
+
+<p>The theme you pick is inlined into the generated <code class="language-plaintext highlighter-rouge">defineMetabaseConfig({ theme: ... })</code> snippet. Because each embed carries its <em>own</em> copy of the values, editing or deleting the theme in Metabase won’t change the themes in embeds that have already been generated. Those embeds keep the colors and fonts they were created with. To pick up theme changes in an existing embed, regenerate the snippet from the wizard, or edit the <code class="language-plaintext highlighter-rouge">theme</code> block in your code by hand.</p>
+
+<h3 id="reuse-a-saved-theme-in-the-sdk">Reuse a saved theme in the SDK</h3>
+
+<p>If you’re using the <a href="./sdk/introduction">SDK</a>, pass a theme to <code class="language-plaintext highlighter-rouge">MetabaseProvider</code> with <code class="language-plaintext highlighter-rouge">defineMetabaseTheme</code>, which accepts the same theme shape that you configure in the Themes admin UI. You can copy a saved theme’s values into your code:</p>
+
+<div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span>
+  <span class="nx">MetabaseProvider</span><span class="p">,</span>
+  <span class="nx">defineMetabaseTheme</span><span class="p">,</span>
+<span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@metabase/embedding-sdk-react</span><span class="dl">"</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">theme</span> <span class="o">=</span> <span class="nf">defineMetabaseTheme</span><span class="p">({</span>
+  <span class="na">fontFamily</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Lato</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">colors</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">brand</span><span class="p">:</span> <span class="dl">"</span><span class="s2">#50e397</span><span class="dl">"</span><span class="p">,</span>
+    <span class="na">background</span><span class="p">:</span> <span class="dl">"</span><span class="s2">#11123d</span><span class="dl">"</span><span class="p">,</span>
+    <span class="dl">"</span><span class="s2">text-primary</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">#f9f9fc</span><span class="dl">"</span><span class="p">,</span>
+  <span class="p">},</span>
+<span class="p">});</span>
+
+<span class="k">export</span> <span class="kd">function</span> <span class="nf">App</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">return </span><span class="p">(</span>
+    <span class="p">&lt;</span><span class="nc">MetabaseProvider</span> <span class="na">authConfig</span><span class="p">=</span><span class="si">{</span><span class="nx">authConfig</span><span class="si">}</span> <span class="na">theme</span><span class="p">=</span><span class="si">{</span><span class="nx">theme</span><span class="si">}</span><span class="p">&gt;</span>
+      <span class="si">{</span><span class="cm">/* your app */</span><span class="si">}</span>
+    <span class="p">&lt;/</span><span class="nc">MetabaseProvider</span><span class="p">&gt;</span>
+  <span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>For the full set of available colors and component overrides, see <a href="#theme-options">Theme options</a>.</p>
 
 <h2 id="advanced-theming">Advanced theming</h2>
 
@@ -6010,11 +6158,13 @@ Roadmap</a>
   </div>
 </div>
 
-<p>On Pro/Enterprise plan, you can configure granular appearance options, like background colors, font sizes etc. See the <a href="">list of all theming options</a>.</p>
+<p>On Pro/Enterprise plan, you can configure granular appearance options, like background colors, font sizes etc. See the <a href="#theme-options">list of all theming options</a>.</p>
 
 <h3 id="add-an-advanced-theme-to-your-embed">Add an advanced theme to your embed</h3>
 
 <p><img src="./images/behavior-and-appearance.png" alt="Behavior and appearance"></p>
+
+<p>If you have a <a href="#embedding-themes">saved theme</a>, you can pick it directly in the embed wizard. The rest of this section covers further customization on top of (or instead of) a saved theme.</p>
 
 <p>Some appearance options like brand, text, and background color are configurable in the <a href="./modular-embedding#create-a-new-embed">embed wizard</a>.</p>
 
@@ -6653,28 +6803,6 @@ Roadmap</a>
 <!-- statuses -->
 <script src="/js/status.js" type="text/javascript"></script>
 <script src="/js/github-stars.js" type="text/javascript"></script>
-
-<!-- Sentry -->
-
-  <script src="https://js.sentry-cdn.com/4b0be007af0a45f3bf6f59e5381ffe74.min.js" crossorigin="anonymous" data-cfasync="false"></script>
-  <script type="text/javascript" defer="">
-    window.sentryOnLoad = function () {
-      Sentry.init({
-        attachStacktrace: true,
-        dsn:
-          "https://4b0be007af0a45f3bf6f59e5381ffe74@o408345.ingest.us.sentry.io/6722711",
-        environment: "production",
-        tracesSampleRate: 0.1, // performance monitoring
-        enableLogs: true,
-        ignoreErrors: [
-          "ResizeObserver loop limit exceeded",
-          "ResizeObserver loop completed with undelivered notifications.",
-        ],
-        sendDefaultPii: false,
-      });
-    };
-  </script>
-
 
 <!-- show/hide logic for More Resources button -->
 <script type="text/javascript">
