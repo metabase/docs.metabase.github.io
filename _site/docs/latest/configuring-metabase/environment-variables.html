@@ -150,6 +150,58 @@ window.redirectTo = function redirectTo(theLocation) {
 
   <script src="/js/promo-banner.js"></script>
 
+   
+     <!-- Sentry -->
+<script type="text/javascript">
+  window.SENTRY_REPLAY_ENABLED = false;
+
+  function sentryReplayInit () {
+    if (window.SENTRY_REPLAY_ENABLED) {
+      setTimeout(() => {
+        if (!window.Sentry || !window.Sentry.lazyLoadIntegration) {
+          return;
+        }
+        Sentry.lazyLoadIntegration("replayIntegration").then(function (replayIntegration) {
+          console.log({ loaded: !!replayIntegration, replayIntegration })
+          window.Sentry.addIntegration(replayIntegration({ maskAllText: false }));
+        });
+      }, 500);
+    }
+  }
+
+  function sentryInit() {
+    Sentry.init({
+      attachStacktrace: true,
+      dsn:
+        "https://4b0be007af0a45f3bf6f59e5381ffe74@o408345.ingest.us.sentry.io/6722711",
+      environment: "production",
+      tracesSampleRate: 0.1, // performance monitoring
+      replaysSessionSampleRate: 0.05,
+      enableLogs: true,
+      ignoreErrors: [
+        "ResizeObserver loop limit exceeded",
+        "ResizeObserver loop completed with undelivered notifications.",
+      ],
+      sendDefaultPii: false,
+    });
+    sentryReplayInit();
+  }
+
+  if (window.SENTRY_REPLAY_ENABLED) {
+    document.addEventListener("DOMContentLoaded", sentryInit);
+  } else {
+    window.sentryOnLoad = sentryInit;
+  }
+</script>
+
+
+
+
+  <script src="https://js.sentry-cdn.com/4b0be007af0a45f3bf6f59e5381ffe74.min.js" crossorigin="anonymous" data-cfasync="false"></script>
+
+
+   
+
   <!-- GDPR -->
   <script type="text/javascript" src="/gdpr-cookie-notice/dist/script.js"></script>
   <script type="text/javascript" src="/js/cookie-consent.js"></script>
@@ -5857,6 +5909,14 @@ Roadmap</a>
   <ul class="version__dropdown">
     
       
+        <li>
+          <a href="/docs/v0.61">
+            v0.61
+          </a>
+        </li>
+      
+    
+      
     
       
         <li>
@@ -5918,14 +5978,6 @@ Roadmap</a>
         <li>
           <a href="/docs/v0.52">
             v0.52
-          </a>
-        </li>
-      
-    
-      
-        <li>
-          <a href="/docs/v0.51">
-            v0.51
           </a>
         </li>
       
@@ -9532,28 +9584,6 @@ Default: <code class="language-plaintext highlighter-rouge">null</code></p>
 <!-- statuses -->
 <script src="/js/status.js" type="text/javascript"></script>
 <script src="/js/github-stars.js" type="text/javascript"></script>
-
-<!-- Sentry -->
-
-  <script src="https://js.sentry-cdn.com/4b0be007af0a45f3bf6f59e5381ffe74.min.js" crossorigin="anonymous" data-cfasync="false"></script>
-  <script type="text/javascript" defer="">
-    window.sentryOnLoad = function () {
-      Sentry.init({
-        attachStacktrace: true,
-        dsn:
-          "https://4b0be007af0a45f3bf6f59e5381ffe74@o408345.ingest.us.sentry.io/6722711",
-        environment: "production",
-        tracesSampleRate: 0.1, // performance monitoring
-        enableLogs: true,
-        ignoreErrors: [
-          "ResizeObserver loop limit exceeded",
-          "ResizeObserver loop completed with undelivered notifications.",
-        ],
-        sendDefaultPii: false,
-      });
-    };
-  </script>
-
 
 <!-- show/hide logic for More Resources button -->
 <script type="text/javascript">
