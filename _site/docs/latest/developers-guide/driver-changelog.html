@@ -57,7 +57,7 @@ window.redirectTo = function redirectTo(theLocation) {
 <meta name="twitter:site" content="@metabase">
 
 <meta name="twitter:title" content="Driver interface changelog | Metabase Documentation">
-<meta name="twitter:description" content="Driver Interface Changelog Metabase 0.60.0  Added validate-impersonated-query multimethod. This is used for drivers to perform validation on impersonated native queries. It should return the query if it is valid and throw otherwise.  Metabase 0.59.0 ...">
+<meta name="twitter:description" content="Driver Interface Changelog Metabase 0.61.0  metabase.driver.sql/set-role-statement has been deprecated in favor of metabase.driver.sql-jdbc/set-role-statement, which takes an additional java.sql.Connection parameter, so you use the connection to call quote_ident() or similar for identifier...">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -67,7 +67,7 @@ window.redirectTo = function redirectTo(theLocation) {
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://www.metabase.com/docs/latest/developers-guide/driver-changelog">
 <meta name="title" property="og:title" content="Driver interface changelog | Metabase Documentation">
-<meta name="description" property="og:description" content="Driver Interface Changelog Metabase 0.60.0  Added validate-impersonated-query multimethod. This is used for drivers to perform validation on impersonated native queries. It should return the query if it is valid and throw otherwise.  Metabase 0.59.0 ...">
+<meta name="description" property="og:description" content="Driver Interface Changelog Metabase 0.61.0  metabase.driver.sql/set-role-statement has been deprecated in favor of metabase.driver.sql-jdbc/set-role-statement, which takes an additional java.sql.Connection parameter, so you use the connection to call quote_ident() or similar for identifier...">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -6013,6 +6013,14 @@ Roadmap</a>
 
 
         <h1 id="driver-interface-changelog">Driver Interface Changelog</h1>
+
+<h2 id="metabase-0610">Metabase 0.61.0</h2>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">metabase.driver.sql/set-role-statement</code> has been deprecated in favor of
+<code class="language-plaintext highlighter-rouge">metabase.driver.sql-jdbc/set-role-statement</code>, which takes an additional <code class="language-plaintext highlighter-rouge">java.sql.Connection</code> parameter, so you use
+the connection to call <code class="language-plaintext highlighter-rouge">quote_ident()</code> or similar for identifier quoting/escaping purposes.</li>
+</ul>
 
 <h2 id="metabase-0600">Metabase 0.60.0</h2>
 
