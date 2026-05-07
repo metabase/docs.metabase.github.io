@@ -6115,9 +6115,9 @@ Roadmap</a>
   </li>
 </ol>
 
-<h2 id="explore-and-compare-metrics">Explore and compare metrics</h2>
+<h2 id="explore-compare-and-do-math-with-metrics">Explore, compare, and do math with metrics</h2>
 
-<p>You can explore metrics, break them out by different dimensions, and compare metrics and <a href="../data-studio/measures">measures</a> to each other in the <a href="../questions/metrics-explorer">Metrics Explorer</a>.</p>
+<p>To break metrics out by different dimensions, compare metrics and <a href="../data-studio/measures">measures</a>, and do math with metrics (like add or divide metrics by each other), check out the <a href="../questions/metrics-explorer">Metrics Explorer</a>.</p>
 
 <p><img src="./images/metric-explorer.png" alt="Metrics explorer"></p>
 
@@ -6140,7 +6140,7 @@ Roadmap</a>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> (CountIf([Score] &gt;= 9) - CountIf([Score] &lt;= 6) ) / Count() * 100
 </code></pre></div></div>
 
-<p>Metric formula must be an <em>aggregation</em>  of a column, meaning you can have a formula like <code class="language-plaintext highlighter-rouge">Sum([Price])</code> which will add up all the values in the <code class="language-plaintext highlighter-rouge">Price</code> column across all records, but you can’t have a formula like <code class="language-plaintext highlighter-rouge">[Price] + [Tax]</code> which adds two values on a per-record basis. If you need to create a “calculated” column, consider using <a href="../data-studio/transforms/transforms-overview">transforms</a> or <a href="../data-modeling/models">models</a> instead.</p>
+<p>A metric formula must be an <em>aggregation</em> of a column, meaning you can have a formula like <code class="language-plaintext highlighter-rouge">Sum([Price])</code> which will add up all the values in the <code class="language-plaintext highlighter-rouge">Price</code> column across all records, but you can’t have a formula like <code class="language-plaintext highlighter-rouge">[Price] + [Tax]</code> which adds two values on a per-record basis. If you want to create a “calculated” column, consider creating a <a href="../data-studio/transforms/transforms-overview">transform</a> or <a href="../data-modeling/models">model</a> instead.</p>
 
 <p>We don’t recommend adding filters into the metric definition to avoid filter conflicts when using metrics in the query builder. You can use conditional custom expressions like <a href="../questions/query-builder/expressions-list#aggregations"><code class="language-plaintext highlighter-rouge">CountIf</code>, <code class="language-plaintext highlighter-rouge">SumIf</code>, and <code class="language-plaintext highlighter-rouge">DistinctIf</code></a> to create conditional aggregations.</p>
 
