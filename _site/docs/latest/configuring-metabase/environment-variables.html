@@ -346,7 +346,7 @@ Cloud</a>
     <div class="nav-menu overflow-hidden">
       <div class="d-flex flex-row">
         <div class="menu-links-wrapper">
-          <a class="menu-link" href="/features/metabot-ai">
+          <a class="menu-link" href="/features/metabase-ai">
   
   
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"><path stroke="#8D93A5" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.25 4.75H6.75a2 2 0 0 0-2 2v10.5a2 2 0 0 0 2 2h10.5a2 2 0 0 0 2-2V6.75a2 2 0 0 0-2-2Z"></path><path stroke="#8D93A5" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15.57 7.177H8.43c-.75 0-1.36.461-1.36 1.03v5.413c0 .57.61 1.03 1.36 1.03h7.14c.75 0 1.36-.46 1.36-1.03V8.208c0-.57-.61-1.031-1.36-1.031Z"></path><circle cx="9.625" cy="9.774" r=".75" fill="#8D93A5"></circle><circle cx="14.375" cy="9.774" r=".75" fill="#8D93A5"></circle><path stroke="#8D93A5" d="M13.266 11.152a1.266 1.266 0 1 1-2.532 0"></path><path stroke="#8D93A5" stroke-linecap="round" stroke-width="1.5" d="M14.709 17.079h2.002"></path></svg>
@@ -354,7 +354,7 @@ Cloud</a>
 
   <div>
     <span class="menu-link-heading">
-      Metabot AI
+      Metabase AI
     </span>
 
     
@@ -1109,7 +1109,7 @@ Roadmap</a>
 </label>
 
 <div id="features-dropdown-mobile">
-  <a class="menu-link" href="/features/metabot-ai">
+  <a class="menu-link" href="/features/metabase-ai">
   
   
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"><path stroke="#8D93A5" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.25 4.75H6.75a2 2 0 0 0-2 2v10.5a2 2 0 0 0 2 2h10.5a2 2 0 0 0 2-2V6.75a2 2 0 0 0-2-2Z"></path><path stroke="#8D93A5" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15.57 7.177H8.43c-.75 0-1.36.461-1.36 1.03v5.413c0 .57.61 1.03 1.36 1.03h7.14c.75 0 1.36-.46 1.36-1.03V8.208c0-.57-.61-1.031-1.36-1.031Z"></path><circle cx="9.625" cy="9.774" r=".75" fill="#8D93A5"></circle><circle cx="14.375" cy="9.774" r=".75" fill="#8D93A5"></circle><path stroke="#8D93A5" d="M13.266 11.152a1.266 1.266 0 1 1-2.532 0"></path><path stroke="#8D93A5" stroke-linecap="round" stroke-width="1.5" d="M14.709 17.079h2.002"></path></svg>
@@ -1117,7 +1117,7 @@ Roadmap</a>
 
   <div>
     <span class="menu-link-heading">
-      Metabot AI
+      Metabase AI
     </span>
 
     
@@ -6078,6 +6078,17 @@ java --add-opens java.base/java.nio=ALL-UNNAMED -jar metabase.jar
 
 <p>Must be less than 1048575. See also MB_UNAGGREGATED_QUERY_ROW_LIMIT.</p>
 
+<h3 id="mb_ai_features_enabled"><code class="language-plaintext highlighter-rouge">MB_AI_FEATURES_ENABLED</code></h3>
+
+<ul>
+  <li>Type: boolean</li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">true</code></li>
+  <li><a href="../installation-and-operation/serialization">Exported as</a>: <code class="language-plaintext highlighter-rouge">ai-features-enabled</code>.</li>
+  <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">ai-features-enabled</code></li>
+</ul>
+
+<p>Whether AI features are enabled.</p>
+
 <h3 id="mb_allowed_iframe_hosts"><code class="language-plaintext highlighter-rouge">MB_ALLOWED_IFRAME_HOSTS</code></h3>
 
 <ul>
@@ -6684,6 +6695,17 @@ If set to 0, Metabase will keep all rows.</p>
 </ul>
 
 <p>Custom SMTP server username.</p>
+
+<h3 id="mb_embedded_metabot_enabled"><code class="language-plaintext highlighter-rouge">MB_EMBEDDED_METABOT_ENABLED</code></h3>
+
+<ul>
+  <li>Type: boolean</li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">true</code></li>
+  <li><a href="../installation-and-operation/serialization">Exported as</a>: <code class="language-plaintext highlighter-rouge">embedded-metabot-enabled</code>.</li>
+  <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">embedded-metabot-enabled</code></li>
+</ul>
+
+<p>Whether Metabot is enabled for embedding.</p>
 
 <h3 id="mb_embedding_app_origin-deprecated"><code class="language-plaintext highlighter-rouge">MB_EMBEDDING_APP_ORIGIN [DEPRECATED]</code></h3>
 
@@ -7444,6 +7466,26 @@ Options:</p>
 
 <p>The array of last two ISO8601 dates when an admin dismissed the license token missing banner.</p>
 
+<h3 id="mb_llm_anthropic_api_key"><code class="language-plaintext highlighter-rouge">MB_LLM_ANTHROPIC_API_KEY</code></h3>
+
+<ul>
+  <li>Type: string</li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">null</code></li>
+  <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">llm-anthropic-api-key</code></li>
+</ul>
+
+<p>The Anthropic API Key.</p>
+
+<h3 id="mb_llm_metabot_provider"><code class="language-plaintext highlighter-rouge">MB_LLM_METABOT_PROVIDER</code></h3>
+
+<ul>
+  <li>Type: string</li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">anthropic/claude-sonnet-4-6</code></li>
+  <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">llm-metabot-provider</code></li>
+</ul>
+
+<p>The AI provider and model for Metabot. Format: provider/model-name, e.g. <code class="language-plaintext highlighter-rouge">anthropic/claude-haiku-4-5</code>, <code class="language-plaintext highlighter-rouge">openai/gpt-4.1-mini</code>, <code class="language-plaintext highlighter-rouge">openrouter/anthropic/claude-haiku-4-5</code>.</p>
+
 <h3 id="mb_load_analytics_content"><code class="language-plaintext highlighter-rouge">MB_LOAD_ANALYTICS_CONTENT</code></h3>
 
 <ul>
@@ -7530,6 +7572,17 @@ Options:</p>
 </ul>
 
 <p>Popular MCP clients enabled for CORS, stored as CSV client keys (e.g. claude, vscode).</p>
+
+<h3 id="mb_metabot_enabled"><code class="language-plaintext highlighter-rouge">MB_METABOT_ENABLED</code></h3>
+
+<ul>
+  <li>Type: boolean</li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">true</code></li>
+  <li><a href="../installation-and-operation/serialization">Exported as</a>: <code class="language-plaintext highlighter-rouge">metabot-enabled</code>.</li>
+  <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">metabot-enabled</code></li>
+</ul>
+
+<p>Whether Metabot is enabled for regular usage.</p>
 
 <h3 id="mb_metabot_slack_signing_secret"><code class="language-plaintext highlighter-rouge">MB_METABOT_SLACK_SIGNING_SECRET</code></h3>
 
@@ -9408,7 +9461,7 @@ Default: <code class="language-plaintext highlighter-rouge">null</code></p>
 
       <div>
         <h6>Features</h6>
-        <a href="/features/metabot-ai">Metabot AI</a>
+        <a href="/features/metabase-ai">Metabase AI</a>
         <a href="/features/query-builder">Query Builder</a>
         <a href="/features/drill-through">Drill Through</a>
         <a href="/features/collections">Collections</a>
