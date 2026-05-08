@@ -44,3 +44,7 @@ Connect MCP-compatible AI clients to your Metabase.
 ## [Metabot in Slack](./metabot-slack)
 
 Chat with Metabot directly in Slack — ask questions, get charts, and manage subscriptions without leaving Slack.
+
+## [AI usage auditing](./usage-auditing)
+
+See how people are using the AI features in your Metabase.
