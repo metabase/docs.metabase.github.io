@@ -145,9 +145,6 @@ layout: new-docs
 | [MetabotAgentChartMessage](./api/MetabotAgentChartMessage)                 | -                                                                              |
 | [MetabotAgentMessage](./api/MetabotAgentMessage)                           | -                                                                              |
 | [MetabotAgentTextMessage](./api/MetabotAgentTextMessage)                   | -                                                                              |
-| [MetabotChartProps](./api/MetabotChartProps)                               | -                                                                              |
-| [MetabotErrorMessage](./api/MetabotErrorMessage)                           | -                                                                              |
-| [MetabotMessage](./api/MetabotMessage)                                     | -                                                                              |
 | [MetabotUserTextMessage](./api/MetabotUserTextMessage)                     | -                                                                              |
 | [ParameterValues](./api/ParameterValues)                                   | -                                                                              |
 | [ProtectedColorKey](./api/ProtectedColorKey)                               | Color keys that are protected and should not be exposed to embedding.          |
@@ -165,7 +162,6 @@ layout: new-docs
 | [SdkQuestionTitleProps](./api/SdkQuestionTitleProps)                       | -                                                                              |
 | [SdkUserId](./api/SdkUserId)                                               | -                                                                              |
 | [SqlParameterValues](./api/SqlParameterValues)                             | -                                                                              |
-| [UseMetabotResult](./api/UseMetabotResult)                                 | -                                                                              |
 | [UserBackendJwtResponse](./api/UserBackendJwtResponse)                     | -                                                                              |
 
 ## useApplicationName
@@ -201,6 +197,10 @@ layout: new-docs
 
 ## useMetabot
 
-| Function                          | Description                           |
-| :-------------------------------- | :------------------------------------ |
-| [useMetabot](./api/useMetabot) | Returns the Metabot conversation API. |
+| Name                                                | Description                           |
+| :-------------------------------------------------- | :------------------------------------ |
+| [useMetabot](./api/useMetabot)                   | Returns the Metabot conversation API. |
+| [MetabotChartProps](./api/MetabotChartProps)     | -                                     |
+| [MetabotErrorMessage](./api/MetabotErrorMessage) | -                                     |
+| [MetabotMessage](./api/MetabotMessage)           | -                                     |
+| [UseMetabotResult](./api/UseMetabotResult)       | -                                     |

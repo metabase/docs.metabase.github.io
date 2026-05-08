@@ -78,6 +78,15 @@ Maximum number of rows to return for aggregated queries via the API.
 
 Must be less than 1048575. See also MB_UNAGGREGATED_QUERY_ROW_LIMIT.
 
+### `MB_AI_FEATURES_ENABLED`
+
+- Type: boolean
+- Default: `true`
+- [Exported as](../installation-and-operation/serialization): `ai-features-enabled`.
+- [Configuration file name](./config-file): `ai-features-enabled`
+
+Whether AI features are enabled.
+
 ### `MB_ALLOWED_IFRAME_HOSTS`
 
 - Type: string
@@ -580,6 +589,15 @@ SMTP username.
 - [Configuration file name](./config-file): `email-smtp-username-override`
 
 Custom SMTP server username.
+
+### `MB_EMBEDDED_METABOT_ENABLED`
+
+- Type: boolean
+- Default: `true`
+- [Exported as](../installation-and-operation/serialization): `embedded-metabot-enabled`.
+- [Configuration file name](./config-file): `embedded-metabot-enabled`
+
+Whether Metabot is enabled for embedding.
 
 ### `MB_EMBEDDING_APP_ORIGIN [DEPRECATED]`
 
@@ -1168,6 +1186,22 @@ When set to `true`, users who log in via LDAP will automatically get a Metabase 
 
 The array of last two ISO8601 dates when an admin dismissed the license token missing banner.
 
+### `MB_LLM_ANTHROPIC_API_KEY`
+
+- Type: string
+- Default: `null`
+- [Configuration file name](./config-file): `llm-anthropic-api-key`
+
+The Anthropic API Key.
+
+### `MB_LLM_METABOT_PROVIDER`
+
+- Type: string
+- Default: `anthropic/claude-sonnet-4-6`
+- [Configuration file name](./config-file): `llm-metabot-provider`
+
+The AI provider and model for Metabot. Format: provider/model-name, e.g. `anthropic/claude-haiku-4-5`, `openai/gpt-4.1-mini`, `openrouter/anthropic/claude-haiku-4-5`.
+
 ### `MB_LOAD_ANALYTICS_CONTENT`
 
 - Type: boolean
@@ -1234,6 +1268,15 @@ Custom CORS origins for self-hosted MCP clients, space-separated.
 - [Configuration file name](./config-file): `mcp-apps-cors-enabled-clients`
 
 Popular MCP clients enabled for CORS, stored as CSV client keys (e.g. claude, vscode).
+
+### `MB_METABOT_ENABLED`
+
+- Type: boolean
+- Default: `true`
+- [Exported as](../installation-and-operation/serialization): `metabot-enabled`.
+- [Configuration file name](./config-file): `metabot-enabled`
+
+Whether Metabot is enabled for regular usage.
 
 ### `MB_METABOT_SLACK_SIGNING_SECRET`
 

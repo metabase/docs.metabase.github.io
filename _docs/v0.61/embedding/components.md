@@ -109,6 +109,8 @@ To render the AI chat interface:
 <metabase-metabot></metabase-metabot>
 ```
 
+If you're using the SDK, you can use either the [`MetabotQuestion`](./sdk/ai-chat#example) component or the [`useMetabot`](./sdk/ai-chat#building-custom-ai-chat-uis-with-usemetabot) hook for a custom UI.
+
 ### Attributes
 
 {% include_file "{{ dirname }}/eajs/snippets/MetabaseMetabotAttributes.md" snippet="properties" %}

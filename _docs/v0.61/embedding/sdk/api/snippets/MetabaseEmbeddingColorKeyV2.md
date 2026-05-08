@@ -70,6 +70,7 @@ type MetabaseEmbeddingColorKeyV2 = Exclude<
   | "background-tertiary"
   | "background-tertiary-inverse"
   | "background-warning"
+  | "background-warning-secondary"
   | "border"
   | "border-brand"
   | "border-filter"
