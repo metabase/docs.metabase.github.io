@@ -134,6 +134,8 @@ window.redirectTo = function redirectTo(theLocation) {
 
   <link href="/feed.xml" rel="alternate" title="Metabase | Business Intelligence, Dashboards, and Data Visualization" type="application/rss+xml">
 
+  
+
   <meta content="no-referrer-when-downgrade" name="referrer">
 
   
@@ -145,6 +147,58 @@ window.redirectTo = function redirectTo(theLocation) {
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
 
   <script src="/js/promo-banner.js"></script>
+
+   
+     <!-- Sentry -->
+<script type="text/javascript">
+  window.SENTRY_REPLAY_ENABLED = false;
+
+  function sentryReplayInit () {
+    if (window.SENTRY_REPLAY_ENABLED) {
+      setTimeout(() => {
+        if (!window.Sentry || !window.Sentry.lazyLoadIntegration) {
+          return;
+        }
+        Sentry.lazyLoadIntegration("replayIntegration").then(function (replayIntegration) {
+          console.log({ loaded: !!replayIntegration, replayIntegration })
+          window.Sentry.addIntegration(replayIntegration({ maskAllText: false }));
+        });
+      }, 500);
+    }
+  }
+
+  function sentryInit() {
+    Sentry.init({
+      attachStacktrace: true,
+      dsn:
+        "https://4b0be007af0a45f3bf6f59e5381ffe74@o408345.ingest.us.sentry.io/6722711",
+      environment: "production",
+      tracesSampleRate: 0.1, // performance monitoring
+      replaysSessionSampleRate: 0.05,
+      enableLogs: true,
+      ignoreErrors: [
+        "ResizeObserver loop limit exceeded",
+        "ResizeObserver loop completed with undelivered notifications.",
+      ],
+      sendDefaultPii: false,
+    });
+    sentryReplayInit();
+  }
+
+  if (window.SENTRY_REPLAY_ENABLED) {
+    document.addEventListener("DOMContentLoaded", sentryInit);
+  } else {
+    window.sentryOnLoad = sentryInit;
+  }
+</script>
+
+
+
+
+  <script src="https://js.sentry-cdn.com/4b0be007af0a45f3bf6f59e5381ffe74.min.js" crossorigin="anonymous" data-cfasync="false"></script>
+
+
+   
 
   <!-- GDPR -->
   <script type="text/javascript" src="/gdpr-cookie-notice/dist/script.js"></script>
@@ -290,7 +344,7 @@ Cloud</a>
     <div class="nav-menu overflow-hidden">
       <div class="d-flex flex-row">
         <div class="menu-links-wrapper">
-          <a class="menu-link" href="/features/metabot-ai">
+          <a class="menu-link" href="/features/metabase-ai">
   
   
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"><path stroke="#8D93A5" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.25 4.75H6.75a2 2 0 0 0-2 2v10.5a2 2 0 0 0 2 2h10.5a2 2 0 0 0 2-2V6.75a2 2 0 0 0-2-2Z"></path><path stroke="#8D93A5" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15.57 7.177H8.43c-.75 0-1.36.461-1.36 1.03v5.413c0 .57.61 1.03 1.36 1.03h7.14c.75 0 1.36-.46 1.36-1.03V8.208c0-.57-.61-1.031-1.36-1.031Z"></path><circle cx="9.625" cy="9.774" r=".75" fill="#8D93A5"></circle><circle cx="14.375" cy="9.774" r=".75" fill="#8D93A5"></circle><path stroke="#8D93A5" d="M13.266 11.152a1.266 1.266 0 1 1-2.532 0"></path><path stroke="#8D93A5" stroke-linecap="round" stroke-width="1.5" d="M14.709 17.079h2.002"></path></svg>
@@ -298,7 +352,7 @@ Cloud</a>
 
   <div>
     <span class="menu-link-heading">
-      Metabot AI
+      Metabase AI
     </span>
 
     
@@ -858,15 +912,15 @@ Roadmap</a>
         <span class="menu-heading">Recent Blog Posts</span>
         
         
-        <a class="w-100 post-with-image recent-blog-link mt-1" href="/blog/metabase-ai-hackathon">
+        <a class="w-100 post-with-image recent-blog-link mt-1" href="/blog/ten-custom-subagents">
           <div class="d-flex align-items-center position-relative overflow-hidden rounded-2 mb-3" id="recent-blog-image-wrapper">
-            <img alt="Resources Image" class="position-absolute w-100" src="/images/posts/ai-hackathon-og.png" loading="lazy">
+            <img alt="Resources Image" class="position-absolute w-100" src="/images/posts/engineering-2026/ten-custom-agents.png" loading="lazy">
           </div>
-          <span class="h6 neutral-40 recent-blog-link-heading mb-3">Metabase AI Hackathon</span>
+          <span class="h6 neutral-40 recent-blog-link-heading mb-3">How we built ten custom subagents to tame a 500K-line Clojure codebase</span>
         </a>
         
-          <a class="w-100 recent-blog-link" href="/blog/ten-custom-subagents">
-            <span class="h6 neutral-40 recent-blog-link-heading mb-3">How we built ten custom agents to tame our giant codebase</span>
+          <a class="w-100 recent-blog-link" href="/blog/metabase-ai-hackathon">
+            <span class="h6 neutral-40 recent-blog-link-heading mb-3">Metabase AI Hackathon</span>
           </a>
         
           <a class="w-100 recent-blog-link" href="/blog/reprobot-github-issue-triage-agent">
@@ -1053,7 +1107,7 @@ Roadmap</a>
 </label>
 
 <div id="features-dropdown-mobile">
-  <a class="menu-link" href="/features/metabot-ai">
+  <a class="menu-link" href="/features/metabase-ai">
   
   
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"><path stroke="#8D93A5" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.25 4.75H6.75a2 2 0 0 0-2 2v10.5a2 2 0 0 0 2 2h10.5a2 2 0 0 0 2-2V6.75a2 2 0 0 0-2-2Z"></path><path stroke="#8D93A5" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15.57 7.177H8.43c-.75 0-1.36.461-1.36 1.03v5.413c0 .57.61 1.03 1.36 1.03h7.14c.75 0 1.36-.46 1.36-1.03V8.208c0-.57-.61-1.031-1.36-1.031Z"></path><circle cx="9.625" cy="9.774" r=".75" fill="#8D93A5"></circle><circle cx="14.375" cy="9.774" r=".75" fill="#8D93A5"></circle><path stroke="#8D93A5" d="M13.266 11.152a1.266 1.266 0 1 1-2.532 0"></path><path stroke="#8D93A5" stroke-linecap="round" stroke-width="1.5" d="M14.709 17.079h2.002"></path></svg>
@@ -1061,7 +1115,7 @@ Roadmap</a>
 
   <div>
     <span class="menu-link-heading">
-      Metabot AI
+      Metabase AI
     </span>
 
     
@@ -5625,7 +5679,7 @@ Roadmap</a>
       
 
       <li class="">
-        <a href="/docs/latest/paid-features/" class="">
+        <a href="/paid-features/" class="">
         Pro and Enterprise features
 
           
@@ -5767,6 +5821,14 @@ Roadmap</a>
     
       
         <li>
+          <a href="/docs/v0.61">
+            v0.61
+          </a>
+        </li>
+      
+    
+      
+        <li>
           <a href="/docs/v0.60">
             v0.60
           </a>
@@ -5827,14 +5889,6 @@ Roadmap</a>
         <li>
           <a href="/docs/v0.52">
             v0.52
-          </a>
-        </li>
-      
-    
-      
-        <li>
-          <a href="/docs/v0.51">
-            v0.51
           </a>
         </li>
       
@@ -6130,6 +6184,27 @@ Roadmap</a>
           <input name="b_869fec0e4689e8fd1db91e795_b9664113a8" tabindex="-1" type="text" value="">
         </div>
       </form>
+      <script type="text/javascript">
+        const mcEmbeddedSubscribeForm = document.getElementById('mc-embedded-subscribe-form-footer');
+        if (mcEmbeddedSubscribeForm) {
+          mcEmbeddedSubscribeForm.action = `//metabase.us10.list-manage.com/subscribe/post?u=869fec0e4689e8fd1db91e795&amp;id=b9664113a8&SIGNUP=${window.location.href}`;
+        }
+      </script>
+      <script type="text/javascript" src="https://s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js"></script>
+<script type="text/javascript">
+  (function() {
+    window.fnames = new Array();
+    window.ftypes = new Array();
+    fnames[0] = "EMAIL";
+    ftypes[0] = "email";
+    fnames[1] = "FNAME";
+    ftypes[1] = "text";
+    fnames[2] = "LNAME";
+    ftypes[2] = "text";
+  })();
+  var $mcj = jQuery.noConflict(true);
+</script>
+
       <!-- End mc_embed_signup -->
     
 
@@ -6165,7 +6240,7 @@ Roadmap</a>
 
       <div>
         <h6>Features</h6>
-        <a href="/features/metabot-ai">Metabot AI</a>
+        <a href="/features/metabase-ai">Metabase AI</a>
         <a href="/features/query-builder">Query Builder</a>
         <a href="/features/drill-through">Drill Through</a>
         <a href="/features/collections">Collections</a>
@@ -6338,38 +6413,9 @@ Roadmap</a>
   </footer>
 </div>
 
-<script type="text/javascript">
-  const mcEmbeddedSubscribeForm = document.getElementById('mc-embedded-subscribe-form-footer');
-  if (mcEmbeddedSubscribeForm) {
-    mcEmbeddedSubscribeForm.action = `//metabase.us10.list-manage.com/subscribe/post?u=869fec0e4689e8fd1db91e795&amp;id=b9664113a8&SIGNUP=${window.location.href}`;
-  }
-</script>
-
 <!-- statuses -->
 <script src="/js/status.js" type="text/javascript"></script>
 <script src="/js/github-stars.js" type="text/javascript"></script>
-
-<!-- Sentry -->
-
-  <script src="https://js.sentry-cdn.com/4b0be007af0a45f3bf6f59e5381ffe74.min.js" crossorigin="anonymous" data-cfasync="false"></script>
-  <script type="text/javascript" defer="">
-    window.sentryOnLoad = function () {
-      Sentry.init({
-        attachStacktrace: true,
-        dsn:
-          "https://4b0be007af0a45f3bf6f59e5381ffe74@o408345.ingest.us.sentry.io/6722711",
-        environment: "production",
-        tracesSampleRate: 0.1, // performance monitoring
-        enableLogs: true,
-        ignoreErrors: [
-          "ResizeObserver loop limit exceeded",
-          "ResizeObserver loop completed with undelivered notifications.",
-        ],
-        sendDefaultPii: false,
-      });
-    };
-  </script>
-
 
 <!-- show/hide logic for More Resources button -->
 <script type="text/javascript">
@@ -6388,21 +6434,6 @@ Roadmap</a>
 <script src="/js/fillout-form-fallback.js"></script>
 
 <!-- forms -->
-<script type="text/javascript" src="https://s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js"></script>
-<script type="text/javascript">
-  (function() {
-    window.fnames = new Array();
-    window.ftypes = new Array();
-    fnames[0] = "EMAIL";
-    ftypes[0] = "email";
-    fnames[1] = "FNAME";
-    ftypes[1] = "text";
-    fnames[2] = "LNAME";
-    ftypes[2] = "text";
-  })();
-  var $mcj = jQuery.noConflict(true);
-</script>
-
 
 
 
