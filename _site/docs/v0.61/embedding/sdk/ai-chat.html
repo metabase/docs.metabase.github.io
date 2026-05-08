@@ -344,7 +344,7 @@ Cloud</a>
     <div class="nav-menu overflow-hidden">
       <div class="d-flex flex-row">
         <div class="menu-links-wrapper">
-          <a class="menu-link" href="/features/metabot-ai">
+          <a class="menu-link" href="/features/metabase-ai">
   
   
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"><path stroke="#8D93A5" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.25 4.75H6.75a2 2 0 0 0-2 2v10.5a2 2 0 0 0 2 2h10.5a2 2 0 0 0 2-2V6.75a2 2 0 0 0-2-2Z"></path><path stroke="#8D93A5" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15.57 7.177H8.43c-.75 0-1.36.461-1.36 1.03v5.413c0 .57.61 1.03 1.36 1.03h7.14c.75 0 1.36-.46 1.36-1.03V8.208c0-.57-.61-1.031-1.36-1.031Z"></path><circle cx="9.625" cy="9.774" r=".75" fill="#8D93A5"></circle><circle cx="14.375" cy="9.774" r=".75" fill="#8D93A5"></circle><path stroke="#8D93A5" d="M13.266 11.152a1.266 1.266 0 1 1-2.532 0"></path><path stroke="#8D93A5" stroke-linecap="round" stroke-width="1.5" d="M14.709 17.079h2.002"></path></svg>
@@ -352,7 +352,7 @@ Cloud</a>
 
   <div>
     <span class="menu-link-heading">
-      Metabot AI
+      Metabase AI
     </span>
 
     
@@ -1107,7 +1107,7 @@ Roadmap</a>
 </label>
 
 <div id="features-dropdown-mobile">
-  <a class="menu-link" href="/features/metabot-ai">
+  <a class="menu-link" href="/features/metabase-ai">
   
   
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"><path stroke="#8D93A5" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.25 4.75H6.75a2 2 0 0 0-2 2v10.5a2 2 0 0 0 2 2h10.5a2 2 0 0 0 2-2V6.75a2 2 0 0 0-2-2Z"></path><path stroke="#8D93A5" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15.57 7.177H8.43c-.75 0-1.36.461-1.36 1.03v5.413c0 .57.61 1.03 1.36 1.03h7.14c.75 0 1.36-.46 1.36-1.03V8.208c0-.57-.61-1.031-1.36-1.031Z"></path><circle cx="9.625" cy="9.774" r=".75" fill="#8D93A5"></circle><circle cx="14.375" cy="9.774" r=".75" fill="#8D93A5"></circle><path stroke="#8D93A5" d="M13.266 11.152a1.266 1.266 0 1 1-2.532 0"></path><path stroke="#8D93A5" stroke-linecap="round" stroke-width="1.5" d="M14.709 17.079h2.002"></path></svg>
@@ -1115,7 +1115,7 @@ Roadmap</a>
 
   <div>
     <span class="menu-link-heading">
-      Metabot AI
+      Metabase AI
     </span>
 
     
@@ -6158,6 +6158,227 @@ Roadmap</a>
   <li><code class="language-plaintext highlighter-rouge">sidebar</code>: the question visualization appears to the left of the chat interface, which is on a sidebar on the right.</li>
 </ul>
 
+<h2 id="building-custom-ai-chat-uis-with-usemetabot">Building custom AI chat UIs with <code class="language-plaintext highlighter-rouge">useMetabot</code></h2>
+
+<p>If <code class="language-plaintext highlighter-rouge">MetabotQuestion</code>’s built-in layouts don’t fit your app, use the <code class="language-plaintext highlighter-rouge">useMetabot</code> hook to read Metabot’s conversation state directly and render your own UI. The hook gives you the messages, the chart the agent most recently produced, processing and error state, and actions to submit, cancel, retry, or reset the conversation.</p>
+
+<h3 id="ai-chat-with-inline-charts">AI chat with inline charts</h3>
+
+<p><img src="../images/ai-chat-inline-chart.png" alt="AI chat inline charts"></p>
+
+<p>When an agent responds, the message can contain a <code class="language-plaintext highlighter-rouge">Chart</code> component. You can walk the agent’s messages and render charts inline alongside the chat transcript:</p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nx">React</span><span class="p">,</span> <span class="p">{</span> <span class="nx">useState</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">react</span><span class="dl">"</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span>
+  <span class="nx">MetabaseProvider</span><span class="p">,</span>
+  <span class="nx">defineMetabaseAuthConfig</span><span class="p">,</span>
+  <span class="nx">useMetabot</span><span class="p">,</span>
+<span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@metabase/embedding-sdk-react</span><span class="dl">"</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">authConfig</span> <span class="o">=</span> <span class="nf">defineMetabaseAuthConfig</span><span class="p">({</span>
+  <span class="na">metabaseInstanceUrl</span><span class="p">:</span> <span class="dl">"</span><span class="s2">https://your-metabase.example.com</span><span class="dl">"</span><span class="p">,</span>
+<span class="p">});</span>
+
+<span class="kd">function</span> <span class="nf">MetabotChat</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">metabot</span> <span class="o">=</span> <span class="nf">useMetabot</span><span class="p">();</span>
+  <span class="kd">const</span> <span class="p">[</span><span class="nx">prompt</span><span class="p">,</span> <span class="nx">setPrompt</span><span class="p">]</span> <span class="o">=</span> <span class="nf">useState</span><span class="p">(</span><span class="dl">""</span><span class="p">);</span>
+
+  <span class="c1">// useMetabot returns null until the SDK bundle has loaded</span>
+  <span class="c1">// and &lt;MetabaseProvider&gt; has mounted. Always guard before use.</span>
+  <span class="k">if </span><span class="p">(</span><span class="o">!</span><span class="nx">metabot</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span><span class="nx">Loading</span><span class="err">…</span><span class="o">&lt;</span><span class="sr">/div&gt;</span><span class="err">;
+</span>  <span class="p">}</span>
+
+  <span class="kd">const</span> <span class="nx">handleSubmit</span> <span class="o">=</span> <span class="p">(</span><span class="nx">event</span><span class="p">:</span> <span class="nx">React</span><span class="p">.</span><span class="nx">FormEvent</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">event</span><span class="p">.</span><span class="nf">preventDefault</span><span class="p">();</span>
+    <span class="k">if </span><span class="p">(</span><span class="o">!</span><span class="nx">prompt</span><span class="p">.</span><span class="nf">trim</span><span class="p">())</span> <span class="p">{</span>
+      <span class="k">return</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="nx">metabot</span><span class="p">.</span><span class="nf">submitMessage</span><span class="p">(</span><span class="nx">prompt</span><span class="p">);</span>
+    <span class="nf">setPrompt</span><span class="p">(</span><span class="dl">""</span><span class="p">);</span>
+  <span class="p">};</span>
+
+  <span class="k">return </span><span class="p">(</span>
+    <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">style</span><span class="o">=</span><span class="p">{{</span> <span class="na">display</span><span class="p">:</span> <span class="dl">"</span><span class="s2">flex</span><span class="dl">"</span><span class="p">,</span> <span class="na">flexDirection</span><span class="p">:</span> <span class="dl">"</span><span class="s2">column</span><span class="dl">"</span><span class="p">,</span> <span class="na">gap</span><span class="p">:</span> <span class="mi">12</span> <span class="p">}}</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">style</span><span class="o">=</span><span class="p">{{</span> <span class="na">display</span><span class="p">:</span> <span class="dl">"</span><span class="s2">flex</span><span class="dl">"</span><span class="p">,</span> <span class="na">flexDirection</span><span class="p">:</span> <span class="dl">"</span><span class="s2">column</span><span class="dl">"</span><span class="p">,</span> <span class="na">gap</span><span class="p">:</span> <span class="mi">8</span> <span class="p">}}</span><span class="o">&gt;</span>
+        <span class="p">{</span><span class="nx">metabot</span><span class="p">.</span><span class="nx">messages</span><span class="p">.</span><span class="nf">map</span><span class="p">((</span><span class="nx">message</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+          <span class="k">if </span><span class="p">(</span><span class="nx">message</span><span class="p">.</span><span class="nx">role</span> <span class="o">===</span> <span class="dl">"</span><span class="s2">user</span><span class="dl">"</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return </span><span class="p">(</span>
+              <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">key</span><span class="o">=</span><span class="p">{</span><span class="nx">message</span><span class="p">.</span><span class="nx">id</span><span class="p">}</span> <span class="nx">style</span><span class="o">=</span><span class="p">{{</span> <span class="na">alignSelf</span><span class="p">:</span> <span class="dl">"</span><span class="s2">flex-end</span><span class="dl">"</span> <span class="p">}}</span><span class="o">&gt;</span>
+                <span class="p">{</span><span class="nx">message</span><span class="p">.</span><span class="nx">message</span><span class="p">}</span>
+              <span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span>            <span class="p">);</span>
+          <span class="p">}</span>
+          <span class="k">if </span><span class="p">(</span><span class="nx">message</span><span class="p">.</span><span class="kd">type</span> <span class="o">===</span> <span class="dl">"</span><span class="s2">text</span><span class="dl">"</span><span class="p">)</span> <span class="p">{</span>
+            <span class="c1">// message.message is markdown: links, bold, lists, code.</span>
+            <span class="c1">// Wrap in a markdown renderer (react-markdown, markdown-to-jsx,</span>
+            <span class="c1">// etc.) for production use; rendered as plain text here for brevity.</span>
+            <span class="k">return</span> <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">key</span><span class="o">=</span><span class="p">{</span><span class="nx">message</span><span class="p">.</span><span class="nx">id</span><span class="p">}</span><span class="o">&gt;</span><span class="p">{</span><span class="nx">message</span><span class="p">.</span><span class="nx">message</span><span class="p">}</span><span class="o">&lt;</span><span class="sr">/div&gt;</span><span class="err">;
+</span>          <span class="p">}</span>
+          <span class="c1">// Agent chart message — render its bound Chart inline.</span>
+          <span class="kd">const</span> <span class="p">{</span> <span class="nx">Chart</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">message</span><span class="p">;</span>
+          <span class="k">return </span><span class="p">(</span>
+            <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">key</span><span class="o">=</span><span class="p">{</span><span class="nx">message</span><span class="p">.</span><span class="nx">id</span><span class="p">}</span> <span class="nx">style</span><span class="o">=</span><span class="p">{{</span> <span class="na">height</span><span class="p">:</span> <span class="mi">400</span> <span class="p">}}</span><span class="o">&gt;</span>
+              <span class="o">&lt;</span><span class="nx">Chart</span> <span class="nx">drills</span> <span class="nx">height</span><span class="o">=</span><span class="dl">"</span><span class="s2">100%</span><span class="dl">"</span> <span class="o">/&gt;</span>
+            <span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span>          <span class="p">);</span>
+        <span class="p">})}</span>
+      <span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span>
+      <span class="o">&lt;</span><span class="nx">form</span> <span class="nx">onSubmit</span><span class="o">=</span><span class="p">{</span><span class="nx">handleSubmit</span><span class="p">}</span> <span class="nx">style</span><span class="o">=</span><span class="p">{{</span> <span class="na">display</span><span class="p">:</span> <span class="dl">"</span><span class="s2">flex</span><span class="dl">"</span><span class="p">,</span> <span class="na">gap</span><span class="p">:</span> <span class="mi">8</span> <span class="p">}}</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">input</span>
+          <span class="nx">value</span><span class="o">=</span><span class="p">{</span><span class="nx">prompt</span><span class="p">}</span>
+          <span class="nx">onChange</span><span class="o">=</span><span class="p">{(</span><span class="nx">event</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nf">setPrompt</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">value</span><span class="p">)}</span>
+          <span class="nx">placeholder</span><span class="o">=</span><span class="dl">"</span><span class="s2">Ask Metabot…</span><span class="dl">"</span>
+          <span class="nx">disabled</span><span class="o">=</span><span class="p">{</span><span class="nx">metabot</span><span class="p">.</span><span class="nx">isProcessing</span><span class="p">}</span>
+          <span class="nx">style</span><span class="o">=</span><span class="p">{{</span> <span class="na">flex</span><span class="p">:</span> <span class="mi">1</span> <span class="p">}}</span>
+        <span class="sr">/</span><span class="err">&gt;
+</span>        <span class="o">&lt;</span><span class="nx">button</span> <span class="kd">type</span><span class="o">=</span><span class="dl">"</span><span class="s2">submit</span><span class="dl">"</span> <span class="nx">disabled</span><span class="o">=</span><span class="p">{</span><span class="nx">metabot</span><span class="p">.</span><span class="nx">isProcessing</span><span class="p">}</span><span class="o">&gt;</span>
+          <span class="nx">Send</span>
+        <span class="o">&lt;</span><span class="sr">/button</span><span class="err">&gt;
+</span>      <span class="o">&lt;</span><span class="sr">/form</span><span class="err">&gt;
+</span>    <span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span>  <span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">export</span> <span class="k">default</span> <span class="kd">function</span> <span class="nf">App</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">return </span><span class="p">(</span>
+    <span class="o">&lt;</span><span class="nx">MetabaseProvider</span> <span class="nx">authConfig</span><span class="o">=</span><span class="p">{</span><span class="nx">authConfig</span><span class="p">}</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="nx">MetabotChat</span> <span class="o">/&gt;</span>
+    <span class="o">&lt;</span><span class="sr">/MetabaseProvider</span><span class="err">&gt;
+</span>  <span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="ai-chat-with-dedicated-chart-panel">AI chat with dedicated chart panel</h3>
+
+<p><img src="../images/ai-chat-dedicated-chart.png" alt="AI chat dedicated chart"></p>
+
+<p>The <code class="language-plaintext highlighter-rouge">CurrentChart</code> component is bound to the latest chart the agent produced. Render <code class="language-plaintext highlighter-rouge">CurrentChart</code> once, and it will swap in new charts as the agent creates them. You’ll want to filter chart messages out of the transcript so they don’t render twice:</p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nx">React</span><span class="p">,</span> <span class="p">{</span> <span class="nx">useState</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">react</span><span class="dl">"</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span>
+  <span class="nx">MetabaseProvider</span><span class="p">,</span>
+  <span class="nx">defineMetabaseAuthConfig</span><span class="p">,</span>
+  <span class="nx">useMetabot</span><span class="p">,</span>
+<span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@metabase/embedding-sdk-react</span><span class="dl">"</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">authConfig</span> <span class="o">=</span> <span class="nf">defineMetabaseAuthConfig</span><span class="p">({</span>
+  <span class="na">metabaseInstanceUrl</span><span class="p">:</span> <span class="dl">"</span><span class="s2">https://your-metabase.example.com</span><span class="dl">"</span><span class="p">,</span>
+<span class="p">});</span>
+
+<span class="kd">function</span> <span class="nf">MetabotChat</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">metabot</span> <span class="o">=</span> <span class="nf">useMetabot</span><span class="p">();</span>
+  <span class="kd">const</span> <span class="p">[</span><span class="nx">prompt</span><span class="p">,</span> <span class="nx">setPrompt</span><span class="p">]</span> <span class="o">=</span> <span class="nf">useState</span><span class="p">(</span><span class="dl">""</span><span class="p">);</span>
+
+  <span class="c1">// useMetabot returns null until the SDK bundle has loaded</span>
+  <span class="c1">// and &lt;MetabaseProvider&gt; has mounted. Always guard before use.</span>
+  <span class="k">if </span><span class="p">(</span><span class="o">!</span><span class="nx">metabot</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span><span class="nx">Loading</span><span class="err">…</span><span class="o">&lt;</span><span class="sr">/div&gt;</span><span class="err">;
+</span>  <span class="p">}</span>
+
+  <span class="kd">const</span> <span class="nx">handleSubmit</span> <span class="o">=</span> <span class="p">(</span><span class="nx">event</span><span class="p">:</span> <span class="nx">React</span><span class="p">.</span><span class="nx">FormEvent</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">event</span><span class="p">.</span><span class="nf">preventDefault</span><span class="p">();</span>
+    <span class="k">if </span><span class="p">(</span><span class="o">!</span><span class="nx">prompt</span><span class="p">.</span><span class="nf">trim</span><span class="p">())</span> <span class="p">{</span>
+      <span class="k">return</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="nx">metabot</span><span class="p">.</span><span class="nf">submitMessage</span><span class="p">(</span><span class="nx">prompt</span><span class="p">);</span>
+    <span class="nf">setPrompt</span><span class="p">(</span><span class="dl">""</span><span class="p">);</span>
+  <span class="p">};</span>
+
+  <span class="kd">const</span> <span class="p">{</span> <span class="nx">CurrentChart</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">metabot</span><span class="p">;</span>
+
+  <span class="k">return </span><span class="p">(</span>
+    <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">style</span><span class="o">=</span><span class="p">{{</span> <span class="na">display</span><span class="p">:</span> <span class="dl">"</span><span class="s2">flex</span><span class="dl">"</span><span class="p">,</span> <span class="na">gap</span><span class="p">:</span> <span class="mi">16</span><span class="p">,</span> <span class="na">height</span><span class="p">:</span> <span class="mi">600</span> <span class="p">}}</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">style</span><span class="o">=</span><span class="p">{{</span> <span class="na">flex</span><span class="p">:</span> <span class="mi">1</span> <span class="p">}}</span><span class="o">&gt;</span>
+        <span class="p">{</span><span class="nx">CurrentChart</span> <span class="p">?</span> <span class="p">(</span>
+          <span class="o">&lt;</span><span class="nx">CurrentChart</span> <span class="nx">drills</span> <span class="nx">height</span><span class="o">=</span><span class="dl">"</span><span class="s2">100%</span><span class="dl">"</span> <span class="o">/&gt;</span>
+        <span class="p">)</span> <span class="p">:</span> <span class="p">(</span>
+          <span class="o">&lt;</span><span class="nx">div</span>
+            <span class="nx">style</span><span class="o">=</span><span class="p">{{</span> <span class="na">display</span><span class="p">:</span> <span class="dl">"</span><span class="s2">grid</span><span class="dl">"</span><span class="p">,</span> <span class="na">placeItems</span><span class="p">:</span> <span class="dl">"</span><span class="s2">center</span><span class="dl">"</span><span class="p">,</span> <span class="na">height</span><span class="p">:</span> <span class="dl">"</span><span class="s2">100%</span><span class="dl">"</span> <span class="p">}}</span>
+          <span class="o">&gt;</span>
+            <span class="nx">Ask</span> <span class="nx">Metabot</span> <span class="nx">to</span> <span class="nx">generate</span> <span class="nx">a</span> <span class="nx">chart</span>
+          <span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span>        <span class="p">)}</span>
+      <span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span>
+      <span class="o">&lt;</span><span class="nx">div</span>
+        <span class="nx">style</span><span class="o">=</span><span class="p">{{</span>
+          <span class="na">width</span><span class="p">:</span> <span class="mi">380</span><span class="p">,</span>
+          <span class="na">display</span><span class="p">:</span> <span class="dl">"</span><span class="s2">flex</span><span class="dl">"</span><span class="p">,</span>
+          <span class="na">flexDirection</span><span class="p">:</span> <span class="dl">"</span><span class="s2">column</span><span class="dl">"</span><span class="p">,</span>
+          <span class="na">gap</span><span class="p">:</span> <span class="mi">12</span><span class="p">,</span>
+        <span class="p">}}</span>
+      <span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">div</span>
+          <span class="nx">style</span><span class="o">=</span><span class="p">{{</span>
+            <span class="na">flex</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="na">overflowY</span><span class="p">:</span> <span class="dl">"</span><span class="s2">auto</span><span class="dl">"</span><span class="p">,</span>
+            <span class="na">display</span><span class="p">:</span> <span class="dl">"</span><span class="s2">flex</span><span class="dl">"</span><span class="p">,</span>
+            <span class="na">flexDirection</span><span class="p">:</span> <span class="dl">"</span><span class="s2">column</span><span class="dl">"</span><span class="p">,</span>
+            <span class="na">gap</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+          <span class="p">}}</span>
+        <span class="o">&gt;</span>
+          <span class="p">{</span><span class="nx">metabot</span><span class="p">.</span><span class="nx">messages</span><span class="p">.</span><span class="nf">map</span><span class="p">((</span><span class="nx">message</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+            <span class="c1">// Chart messages render in the dedicated panel on the left,</span>
+            <span class="c1">// so you should filter them out in the chat transcript</span>
+            <span class="c1">// so they don't render twice.</span>
+            <span class="k">if </span><span class="p">(</span><span class="nx">message</span><span class="p">.</span><span class="nx">role</span> <span class="o">===</span> <span class="dl">"</span><span class="s2">agent</span><span class="dl">"</span> <span class="o">&amp;&amp;</span> <span class="nx">message</span><span class="p">.</span><span class="kd">type</span> <span class="o">===</span> <span class="dl">"</span><span class="s2">chart</span><span class="dl">"</span><span class="p">)</span> <span class="p">{</span>
+              <span class="k">return</span> <span class="kc">null</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="c1">// Agent text (message.role === "agent") is markdown: links,</span>
+            <span class="c1">// bold, lists, code, etc. Wrap in a markdown renderer (react-markdown,</span>
+            <span class="c1">// markdown-to-jsx, etc.). Rendered as plain</span>
+            <span class="c1">// text here for brevity. User text (message.role === "user") is</span>
+            <span class="c1">// raw, so no markdown rendering needed.</span>
+            <span class="k">return </span><span class="p">(</span>
+              <span class="o">&lt;</span><span class="nx">div</span>
+                <span class="nx">key</span><span class="o">=</span><span class="p">{</span><span class="nx">message</span><span class="p">.</span><span class="nx">id</span><span class="p">}</span>
+                <span class="nx">style</span><span class="o">=</span><span class="p">{{</span>
+                  <span class="na">alignSelf</span><span class="p">:</span>
+                    <span class="nx">message</span><span class="p">.</span><span class="nx">role</span> <span class="o">===</span> <span class="dl">"</span><span class="s2">user</span><span class="dl">"</span> <span class="p">?</span> <span class="dl">"</span><span class="s2">flex-end</span><span class="dl">"</span> <span class="p">:</span> <span class="dl">"</span><span class="s2">flex-start</span><span class="dl">"</span><span class="p">,</span>
+                <span class="p">}}</span>
+              <span class="o">&gt;</span>
+                <span class="p">{</span><span class="nx">message</span><span class="p">.</span><span class="nx">message</span><span class="p">}</span>
+              <span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span>            <span class="p">);</span>
+          <span class="p">})}</span>
+        <span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span>
+        <span class="o">&lt;</span><span class="nx">form</span> <span class="nx">onSubmit</span><span class="o">=</span><span class="p">{</span><span class="nx">handleSubmit</span><span class="p">}</span> <span class="nx">style</span><span class="o">=</span><span class="p">{{</span> <span class="na">display</span><span class="p">:</span> <span class="dl">"</span><span class="s2">flex</span><span class="dl">"</span><span class="p">,</span> <span class="na">gap</span><span class="p">:</span> <span class="mi">8</span> <span class="p">}}</span><span class="o">&gt;</span>
+          <span class="o">&lt;</span><span class="nx">input</span>
+            <span class="nx">value</span><span class="o">=</span><span class="p">{</span><span class="nx">prompt</span><span class="p">}</span>
+            <span class="nx">onChange</span><span class="o">=</span><span class="p">{(</span><span class="nx">event</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nf">setPrompt</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">value</span><span class="p">)}</span>
+            <span class="nx">placeholder</span><span class="o">=</span><span class="dl">"</span><span class="s2">Ask Metabot…</span><span class="dl">"</span>
+            <span class="nx">disabled</span><span class="o">=</span><span class="p">{</span><span class="nx">metabot</span><span class="p">.</span><span class="nx">isProcessing</span><span class="p">}</span>
+            <span class="nx">style</span><span class="o">=</span><span class="p">{{</span> <span class="na">flex</span><span class="p">:</span> <span class="mi">1</span> <span class="p">}}</span>
+          <span class="sr">/</span><span class="err">&gt;
+</span>          <span class="o">&lt;</span><span class="nx">button</span> <span class="kd">type</span><span class="o">=</span><span class="dl">"</span><span class="s2">submit</span><span class="dl">"</span> <span class="nx">disabled</span><span class="o">=</span><span class="p">{</span><span class="nx">metabot</span><span class="p">.</span><span class="nx">isProcessing</span><span class="p">}</span><span class="o">&gt;</span>
+            <span class="nx">Send</span>
+          <span class="o">&lt;</span><span class="sr">/button</span><span class="err">&gt;
+</span>        <span class="o">&lt;</span><span class="sr">/form</span><span class="err">&gt;
+</span>      <span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span>    <span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span>  <span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">export</span> <span class="k">default</span> <span class="kd">function</span> <span class="nf">App</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">return </span><span class="p">(</span>
+    <span class="o">&lt;</span><span class="nx">MetabaseProvider</span> <span class="nx">authConfig</span><span class="o">=</span><span class="p">{</span><span class="nx">authConfig</span><span class="p">}</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="nx">MetabotChat</span> <span class="o">/&gt;</span>
+    <span class="o">&lt;</span><span class="sr">/MetabaseProvider</span><span class="err">&gt;
+</span>  <span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="notes-on-usemetabot">Notes on <code class="language-plaintext highlighter-rouge">useMetabot</code></h3>
+
+<ul>
+  <li><strong>Guard against null while waiting for the SDK bundle</strong>: <code class="language-plaintext highlighter-rouge">useMetabot</code> returns <code class="language-plaintext highlighter-rouge">null</code> until the SDK bundle has loaded and <code class="language-plaintext highlighter-rouge">&lt;MetabaseProvider&gt;</code> has mounted. Always guard before use. If you don’t guard it, the first render will throw <code class="language-plaintext highlighter-rouge">Cannot read properties of null</code> when you reach for <code class="language-plaintext highlighter-rouge">metabot.messages</code>, <code class="language-plaintext highlighter-rouge">metabot.submitMessage</code>, etc., because the SDK ships its Metabot internals via a code-split chunk that isn’t available synchronously.</li>
+  <li><strong>Bring your own Markdown renderer</strong>: <code class="language-plaintext highlighter-rouge">MetabotQuestion</code> renders agent text messages internally, including markdown formatting, transcript scrolling, and input styling. The <code class="language-plaintext highlighter-rouge">useMetabot</code> hook hands you the raw conversation state, which means you own the rendering. In particular, agent text messages (<code class="language-plaintext highlighter-rouge">message.type === 'text'</code>) contain <strong>markdown</strong>: links, bold, lists, inline code. The snippets above render <code class="language-plaintext highlighter-rouge">message.message</code> as plain text for brevity, but production usage should pass the text through a markdown renderer (<code class="language-plaintext highlighter-rouge">react-markdown</code>, <code class="language-plaintext highlighter-rouge">markdown-to-jsx</code>, or your own) so links and formatting display correctly.</li>
+  <li><strong>Strip links returned by the agent</strong>: the agent text may include links pointing back to the host Metabase (like a link to a chart it created). Those links require an authenticated Metabase session, so people won’t be able to view the links.</li>
+</ul>
+
 
         <div>
           <div class="widget-separator"></div>
@@ -6329,7 +6550,7 @@ Roadmap</a>
 
       <div>
         <h6>Features</h6>
-        <a href="/features/metabot-ai">Metabot AI</a>
+        <a href="/features/metabase-ai">Metabase AI</a>
         <a href="/features/query-builder">Query Builder</a>
         <a href="/features/drill-through">Drill Through</a>
         <a href="/features/collections">Collections</a>
