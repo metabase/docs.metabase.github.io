@@ -213,7 +213,7 @@ window.redirectTo = function redirectTo(theLocation) {
 
   
   <!-- Add Inkeep widget -->
-  <script type="module" src="https://unpkg.com/@inkeep/uikit-js@0.3.10/dist/embed.js" defer=""></script>
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@inkeep/cxkit-js@0.5.117/dist/embed.js" crossorigin="anonymous" defer=""></script>
   
 
   <script type="text/javascript" src="/js/ai-newsletter-subscribe-form.js" defer=""></script>
@@ -912,12 +912,20 @@ Roadmap</a>
         <span class="menu-heading">Recent Blog Posts</span>
         
         
-        <a class="w-100 post-with-image recent-blog-link mt-1" href="/blog/ten-custom-subagents">
+        <a class="w-100 post-with-image recent-blog-link mt-1" href="/blog/metabase-ai-hackathon-winners">
           <div class="d-flex align-items-center position-relative overflow-hidden rounded-2 mb-3" id="recent-blog-image-wrapper">
-            <img alt="Resources Image" class="position-absolute w-100" src="/images/posts/engineering-2026/ten-custom-agents.png" loading="lazy">
+            <img alt="Resources Image" class="position-absolute w-100" src="/images/posts/ai-hackathon-og.png" loading="lazy">
           </div>
-          <span class="h6 neutral-40 recent-blog-link-heading mb-3">How we built ten custom subagents to tame a 500K-line Clojure codebase</span>
+          <span class="h6 neutral-40 recent-blog-link-heading mb-3">Winners of the Metabase AI Hackathon</span>
         </a>
+        
+          <a class="w-100 recent-blog-link" href="/blog/improving-performance-clojure-development-tools">
+            <span class="h6 neutral-40 recent-blog-link-heading mb-3">Improving the performance of the popular Clojure development tool clojure-lsp</span>
+          </a>
+        
+          <a class="w-100 recent-blog-link" href="/blog/ten-custom-subagents">
+            <span class="h6 neutral-40 recent-blog-link-heading mb-3">How we built ten custom subagents to tame a 500K-line Clojure codebase</span>
+          </a>
         
           <a class="w-100 recent-blog-link" href="/blog/metabase-ai-hackathon">
             <span class="h6 neutral-40 recent-blog-link-heading mb-3">Metabase AI Hackathon</span>
@@ -925,14 +933,6 @@ Roadmap</a>
         
           <a class="w-100 recent-blog-link" href="/blog/reprobot-github-issue-triage-agent">
             <span class="h6 neutral-40 recent-blog-link-heading mb-3">Meet Repro-Bot, our GitHub issue triage agent</span>
-          </a>
-        
-          <a class="w-100 recent-blog-link" href="/blog/meet-data-studio-semantic-layer">
-            <span class="h6 neutral-40 recent-blog-link-heading mb-3">Meet Data Studio: tools to curate your semantic layer in Metabase</span>
-          </a>
-        
-          <a class="w-100 recent-blog-link" href="/blog/lessons-learned-building-ai-analytics-agents">
-            <span class="h6 neutral-40 recent-blog-link-heading mb-3">Lessons learned from building AI analytics agents: build for chaos</span>
           </a>
         
       </div>
@@ -6029,17 +6029,18 @@ Roadmap</a>
 
 <h2 id="what-metabot-can-do">What Metabot can do</h2>
 
-<p>Metabot can help you to:</p>
+<p>Here’s a non-exhaustive list of things Metabot can help with:</p>
 
 <ul>
-  <li><a href="#ai-exploration">AI exploration</a>.</li>
+  <li><a href="#ai-exploration">Answer data questions asked with natural language</a>.</li>
   <li><a href="#how-metabot-uses-the-query-builder">Create a chart using the query builder</a> from a natural language query.</li>
   <li><a href="../questions/native-editor/writing-sql">Generate SQL in the native editor</a> from natural language. (Currently, only SQL is supported.)</li>
   <li><a href="#inline-sql-editing">Edit SQL directly in the native editor</a>.</li>
   <li><a href="#analyze-charts-with-metabot">Analyze a chart</a>.</li>
   <li><a href="#have-metabot-fix-sql-queries">Fix errors in SQL code</a>.</li>
-  <li>Answer questions from our documentation (as in, the literature you’re reading right now).</li>
-  <li><a href="./metabot-slack">Chat with Metabot in Slack</a>.</li>
+  <li><a href="../data-studio/transforms/transforms-overview#use-metabot-to-generate-code-for-transforms">Generate transforms</a></li>
+  <li><a href="../documents/introduction">Generate charts in documents</a></li>
+  <li><a href="./metabot-slack">Answer questions from Slack</a>.</li>
 </ul>
 
 <p>Like with all generative AI, you’ll always need to double-check results.</p>
@@ -6156,8 +6157,6 @@ Roadmap</a>
 <p>Metabot is getting smarter all the time, but there are some things it can’t do yet:</p>
 
 <ul>
-  <li><strong>Custom expressions.</strong> Metabot can’t use <a href="../questions/query-builder/expressions-list">custom expressions</a> in query builder questions.</li>
-  <li><strong>Multi-level aggregation.</strong> Metabot is limited to a single level of aggregation and grouping.</li>
   <li><strong>SQL variables.</strong> Metabot can’t generate SQL queries that include <a href="../questions/native-editor/sql-parameters">SQL parameters</a> (like filters or field filters).</li>
   <li><strong>Goal lines.</strong> Metabot can’t add <a href="../questions/visualizations/line-bar-and-area-charts#goal-lines">goal lines</a> to charts.</li>
   <li><strong>Chart formatting.</strong> Metabot can’t change visualization settings like colors, axis labels, or number formatting.</li>

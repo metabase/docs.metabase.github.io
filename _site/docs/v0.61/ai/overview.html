@@ -50,12 +50,12 @@ window.redirectTo = function redirectTo(theLocation) {
 
 
 
-<title>Concat | Metabase Documentation</title>
+<title>AI in Metabase | Metabase Documentation</title>
 <!-- Twitter cards -->
 <meta name="twitter:site" content="@metabase">
 
-<meta name="twitter:title" content="Concat | Metabase Documentation">
-<meta name="twitter:description" content="Concat concat concatenates data from two or more columns or values, and returns a string. Syntax concat(value1, value2, ...)  value1, value2 … can be columns or values. Metabase will...">
+<meta name="twitter:title" content="AI in Metabase | Metabase Documentation">
+<meta name="twitter:description" content="Overview of all the ways you can use AI with Metabase.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -63,9 +63,9 @@ window.redirectTo = function redirectTo(theLocation) {
 <!-- Open Graph metadata -->
 <meta property="og:site_name" content="Metabase | Business Intelligence, Dashboards, and Data Visualization">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://www.metabase.com/docs/v0.61/questions/query-builder/expressions/concat">
-<meta name="title" property="og:title" content="Concat | Metabase Documentation">
-<meta name="description" property="og:description" content="Concat concat concatenates data from two or more columns or values, and returns a string. Syntax concat(value1, value2, ...)  value1, value2 … can be columns or values. Metabase will...">
+<meta property="og:url" content="https://www.metabase.com/docs/v0.61/ai/overview">
+<meta name="title" property="og:title" content="AI in Metabase | Metabase Documentation">
+<meta name="description" property="og:description" content="Overview of all the ways you can use AI with Metabase.">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -5876,7 +5876,7 @@ Roadmap</a>
 
             
             
-                <li class="breadcrumb-item"><a class="blue-60" href="/docs/v0.61/questions/start">Questions</a></li>
+                <li class="breadcrumb-item"><a class="blue-60" href="/docs/v0.61/ai/start">Ai</a></li>
             
             
         </ol>
@@ -6017,177 +6017,66 @@ Roadmap</a>
 </div>
 
 
-        <h1 id="concat">Concat</h1>
+        <h1 id="ai-in-metabase">AI in Metabase</h1>
 
-<p><code class="language-plaintext highlighter-rouge">concat</code> concatenates data from two or more columns or values, and returns a string.</p>
+<p>AI is in Metabase optional. You can use Metabase without AI at all. But if you do want to use AI to interact with Metabase, we have you covered.</p>
 
-<h2 id="syntax">Syntax</h2>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>concat(value1, value2, ...)
-</code></pre></div></div>
-
-<p><code class="language-plaintext highlighter-rouge">value1</code>, <code class="language-plaintext highlighter-rouge">value2</code> … can be columns or values. Metabase will convert non-string columns into strings before concatenating their values.</p>
-
-<h3 id="example">Example</h3>
-
-<table>
-  <thead>
-    <tr>
-      <th>Expression</th>
-      <th>Result</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td data-label="Expression"><code class="language-plaintext highlighter-rouge">concat("Vienna", "Austria")</code></td>
-      <td data-label="Result"><code class="language-plaintext highlighter-rouge">"ViennaAustria"</code></td>
-    </tr>
-    <tr>
-      <td data-label="Expression"><code class="language-plaintext highlighter-rouge">concat("Vienna", " is in " ,"Austria")</code></td>
-      <td data-label="Result"><code class="language-plaintext highlighter-rouge">"Vienna is in Austria"</code></td>
-    </tr>
-    <tr>
-      <td data-label="Expression"><code class="language-plaintext highlighter-rouge">concat([City], " is in " ,[Country])</code></td>
-      <td data-label="Result"><code class="language-plaintext highlighter-rouge">"Vienna is in Austria"</code></td>
-    </tr>
-  </tbody>
-</table>
-
-<h3 id="metabase-will-use-unformatted-values-for-non-string-columns">Metabase will use unformatted values for non-string columns</h3>
-
-<p>When you use non-string columns in <code class="language-plaintext highlighter-rouge">concat</code>, Metabase will ignore any <a href="../../../data-modeling/formatting">formatting</a> that you applied to the columns when converting the column to a string.</p>
-
-<p>For example, if you formatted a number to display only the first two decimal digits in the table results, the results of <code class="language-plaintext highlighter-rouge">concat</code> would still include additional decimal digits (if any) found in the raw results.</p>
-
-<table>
-  <thead>
-    <tr>
-      <th>Formatted display</th>
-      <th>Value</th>
-      <th><code class="language-plaintext highlighter-rouge">concat("Result:", " ", [Value])</code></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td data-label="Formatted display"><code class="language-plaintext highlighter-rouge">Kitten</code></td>
-      <td data-label="Value"><code class="language-plaintext highlighter-rouge">Kitten</code></td>
-      <td data-label="concat(&quot;Result:&quot;, &quot; &quot;, [Value])"><code class="language-plaintext highlighter-rouge">Result: Kitten</code></td>
-    </tr>
-    <tr>
-      <td data-label="Formatted display"><code class="language-plaintext highlighter-rouge">17</code></td>
-      <td data-label="Value"><code class="language-plaintext highlighter-rouge">17</code></td>
-      <td data-label="concat(&quot;Result:&quot;, &quot; &quot;, [Value])"><code class="language-plaintext highlighter-rouge">Result: 17</code></td>
-    </tr>
-    <tr>
-      <td data-label="Formatted display"><code class="language-plaintext highlighter-rouge">31.25</code></td>
-      <td data-label="Value"><code class="language-plaintext highlighter-rouge">31.24823945</code></td>
-      <td data-label="concat(&quot;Result:&quot;, &quot; &quot;, [Value])"><code class="language-plaintext highlighter-rouge">Result: 31.24823945</code></td>
-    </tr>
-    <tr>
-      <td data-label="Formatted display"><code class="language-plaintext highlighter-rouge">42%</code></td>
-      <td data-label="Value"><code class="language-plaintext highlighter-rouge">0.42</code></td>
-      <td data-label="concat(&quot;Result:&quot;, &quot; &quot;, [Value])"><code class="language-plaintext highlighter-rouge">Result: 0.42</code></td>
-    </tr>
-    <tr>
-      <td data-label="Formatted display"><code class="language-plaintext highlighter-rouge">January 1, 2024</code></td>
-      <td data-label="Value"><code class="language-plaintext highlighter-rouge">2025-02-11 21:40:27.892</code></td>
-      <td data-label="concat(&quot;Result:&quot;, &quot; &quot;, [Value])"><code class="language-plaintext highlighter-rouge">Result: 31.24823945</code></td>
-    </tr>
-  </tbody>
-</table>
-
-<h2 id="accepted-data-types">Accepted data types</h2>
-
-<table>
-  <thead>
-    <tr>
-      <th><a href="/learn/grow-your-data-skills/data-fundamentals/data-types-overview#examples-of-data-types">Data type</a></th>
-      <th>Works with <code class="language-plaintext highlighter-rouge">concat</code></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td data-label="Data type">String</td>
-      <td data-label="Works with concat">✅</td>
-    </tr>
-    <tr>
-      <td data-label="Data type">Number</td>
-      <td data-label="Works with concat">✅</td>
-    </tr>
-    <tr>
-      <td data-label="Data type">Timestamp</td>
-      <td data-label="Works with concat">✅</td>
-    </tr>
-    <tr>
-      <td data-label="Data type">Boolean</td>
-      <td data-label="Works with concat">✅</td>
-    </tr>
-    <tr>
-      <td data-label="Data type">JSON</td>
-      <td data-label="Works with concat">✅</td>
-    </tr>
-  </tbody>
-</table>
-
-<p>Non-string types will be converted to strings. Regardless of the type of the value passed to <code class="language-plaintext highlighter-rouge">concat</code>, the result will be a string.</p>
-
-<h2 id="related-functions">Related functions</h2>
-
-<p>This section covers functions and formulas that work the same way as the Metabase <code class="language-plaintext highlighter-rouge">concat</code> expression, with notes on how to choose the best option for your use case.</p>
+<p>Here are the different ways to use AI with Metabase:</p>
 
 <ul>
-  <li><a href="#sql">SQL</a></li>
-  <li><a href="#spreadsheets">Spreadsheets</a></li>
-  <li><a href="#python">Python</a></li>
+  <li><a href="#metabot">Metabot</a></li>
+  <li><a href="#mcp-server">MCP server</a></li>
+  <li><a href="#agent-driven-development-workflow">Agent-driven file-based development workflow</a></li>
 </ul>
 
-<h3 id="sql">SQL</h3>
+<h2 id="metabot">Metabot</h2>
 
-<p>In most cases (unless you’re using a NoSQL database), questions created from the <a href="/glossary/notebook-editor">notebook editor</a> are converted into SQL queries that run against your database or data warehouse.</p>
+<p><strong>Best for: daily tasks in Metabase; granular control over people’s AI usage.</strong></p>
 
-<p>If our sample data is stored in a relational database:</p>
+<p>Metabot is Metabase’s built-in AI agent. Metabot can help you with most daily tasks around Metabase, like answering questions about your data, creating queries, generating SQL code, explaining charts, or creating Documents. If you’re embedding Metabase into your product, you can get the Metabot agent through the <a href="../embedding/components#ai-chat">AI chat component</a>. See <a href="metabot#what-metabot-can-do">non-exhaustive list of things Metabot can do</a>, as well as its <a href="metabot#current-limitations">limitations</a>.</p>
 
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span>
-    <span class="n">CONCAT</span><span class="p">(</span><span class="n">City</span><span class="p">,</span> <span class="nv">", "</span><span class="p">,</span> <span class="n">Country</span><span class="p">)</span> <span class="k">AS</span> <span class="nv">"Location"</span>
-<span class="k">FROM</span>
-    <span class="n">richard_linklater_films</span><span class="p">;</span>
-</code></pre></div></div>
+<p><strong>Controls:</strong> Metabot will only see what the person using it can see. Metabot also comes with additional permission controls and usage limits so that you control who can use which Metabot tools (e.g. chat vs SQL generation) and how many tokens they can spend.</p>
 
-<p>is equivalent to the Metabase <code class="language-plaintext highlighter-rouge">concat</code> expression:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>concat([City], ", ", [Country])
-</code></pre></div></div>
-
-<h3 id="spreadsheets">Spreadsheets</h3>
-
-<p>If our sample data is in a spreadsheet where “City” is in column A, and “Country” in column B, we can create a third column “Location” like this:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>=CONCATENATE(A2, ", ", B2)
-</code></pre></div></div>
-
-<p>which is equivalent to the Metabase <code class="language-plaintext highlighter-rouge">concat</code> expression:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>concat([City], ", ", [Country])
-</code></pre></div></div>
-
-<h3 id="python">Python</h3>
-
-<p>Assuming the sample data is in a dataframe column called <code class="language-plaintext highlighter-rouge">df</code>:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>df["Location"] = df["City"] + ", " + df["Country"]
-</code></pre></div></div>
-
-<p>is the same as the Metabase <code class="language-plaintext highlighter-rouge">concat</code> expression:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>concat([City], ", ", [Country])
-</code></pre></div></div>
-
-<h2 id="further-reading">Further reading</h2>
+<p><strong>Provider</strong>: Choose from:</p>
 
 <ul>
-  <li><a href="../expressions">Custom expressions documentation</a></li>
-  <li><a href="/learn/metabase-basics/querying-and-dashboards/questions/custom-expressions">Custom expressions tutorial</a></li>
+  <li>Metabase’s own AI Service (available as an add-on exclusively for Metabase Cloud)</li>
+  <li>Third-party models via an API key (Anthropic models only for now).</li>
 </ul>
+
+<p><strong>Plans</strong>: available on all plans. You can only use Metabase’s AI Service on Metabase Cloud.</p>
+
+<p>See <a href="metabot">full docs for Metabot</a> and <a href="../embedding/components#ai-chat">embedded AI chat</a>.</p>
+
+<h2 id="mcp-server">MCP server</h2>
+
+<p><strong>Best for: asking ad-hoc, ephemeral questions; combining data from Metabase with data from other tools.</strong></p>
+
+<p>Connect your favorite third-party AI tool - like Claude or Codex - to the Metabase MCP server. MCP server’s main functionality is designed to for answering in-the-moment questions like “hey btw what’s our q3 revenue?”. The MCP server is also useful when combined with other MCP servers. for eFample, you can ask Claude a question about your customers that combines data from Metabase, your CRM, and your support ticket platform.</p>
+
+<p>Compared to the built-in Metabot, MCP server has somewhat restricted functionality (for example, it can’t generate code or built transforms for now). See <a href="mcp#available-tools">the ever-expanding list of MCP server tools</a>.</p>
+
+<p><strong>Controls</strong>: Metabase MCP server requires people to authenticate into Metabase, and all the responses it provides will be scoped to their permissions. However, Unlike built-in Metabot, MCP server doesn’t come with granular control over which <em>tools</em> people can use, or disable MCP server altogether.</p>
+
+<p><strong>Provider</strong>: Requests to Metabase MCP server are handled by the provider you choose connect to the MCP server (e.g. Claude, Cursor, etc).</p>
+
+<p><strong>Plans</strong>: MCP server is available on all plans.</p>
+
+<p>See <a href="mcp">full docs for MCP server</a>.</p>
+
+<h2 id="agent-driven-development-workflow">Agent-driven development workflow</h2>
+
+<p><strong>Best for: developers creating stuff that other people will use.</strong></p>
+
+<p>Use a coding agent like Claude Code to understand your database’s metadata, generate Metabase content as YAML files locally, verify the schema, then sync and import the generated into your production Metabase. Sky’s the limit on what you can accomplish.</p>
+
+<p><strong>Controls</strong>: Only admins can sync content to Metabase instances.</p>
+
+<p><strong>Provider</strong>: Everything is handled by your coding agent of choice.</p>
+
+<p><strong>Plans</strong>: Agent-driven workflows require a Pro/Enterprise plan.</p>
+
+<p>See <a href="./file-based-development">full docs for agent-driven workflow</a></p>
 
 
         <div>
@@ -6241,7 +6130,7 @@ Roadmap</a>
 
   
     <span class="paragraph-6 fs-13 neutral-60" id="page-feedback-footer">
-      Want to improve these docs? <a href="https://github.com/metabase/metabase/blob/master/docs/questions/query-builder/expressions/concat.md" target="_blank">Propose a change.</a>
+      Want to improve these docs? <a href="https://github.com/metabase/metabase/blob/master/docs/ai/overview.md" target="_blank">Propose a change.</a>
     </span>
   
 </div>
@@ -6263,8 +6152,8 @@ Roadmap</a>
 <script type="text/javascript" src="/js/position-feedback-widget.js"></script>
 
 <script>
-  const pageTitle = `Concat`;
-  const pageURL = '/docs/v0.61/questions/query-builder/expressions/concat';
+  const pageTitle = `AI in Metabase`;
+  const pageURL = '/docs/v0.61/ai/overview';
   const pageURLSplit = pageURL.split('/');
 
   let pageURLPrefix = '/' + pageURLSplit[1] + '/' + pageURLSplit[2];
