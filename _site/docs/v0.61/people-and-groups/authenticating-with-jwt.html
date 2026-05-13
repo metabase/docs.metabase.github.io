@@ -213,7 +213,7 @@ window.redirectTo = function redirectTo(theLocation) {
 
   
   <!-- Add Inkeep widget -->
-  <script type="module" src="https://unpkg.com/@inkeep/uikit-js@0.3.10/dist/embed.js" defer=""></script>
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@inkeep/cxkit-js@0.5.117/dist/embed.js" crossorigin="anonymous" defer=""></script>
   
 
   <script type="text/javascript" src="/js/ai-newsletter-subscribe-form.js" defer=""></script>
@@ -912,12 +912,20 @@ Roadmap</a>
         <span class="menu-heading">Recent Blog Posts</span>
         
         
-        <a class="w-100 post-with-image recent-blog-link mt-1" href="/blog/ten-custom-subagents">
+        <a class="w-100 post-with-image recent-blog-link mt-1" href="/blog/metabase-ai-hackathon-winners">
           <div class="d-flex align-items-center position-relative overflow-hidden rounded-2 mb-3" id="recent-blog-image-wrapper">
-            <img alt="Resources Image" class="position-absolute w-100" src="/images/posts/engineering-2026/ten-custom-agents.png" loading="lazy">
+            <img alt="Resources Image" class="position-absolute w-100" src="/images/posts/ai-hackathon-og.png" loading="lazy">
           </div>
-          <span class="h6 neutral-40 recent-blog-link-heading mb-3">How we built ten custom subagents to tame a 500K-line Clojure codebase</span>
+          <span class="h6 neutral-40 recent-blog-link-heading mb-3">Winners of the Metabase AI Hackathon</span>
         </a>
+        
+          <a class="w-100 recent-blog-link" href="/blog/improving-performance-clojure-development-tools">
+            <span class="h6 neutral-40 recent-blog-link-heading mb-3">Improving the performance of the popular Clojure development tool clojure-lsp</span>
+          </a>
+        
+          <a class="w-100 recent-blog-link" href="/blog/ten-custom-subagents">
+            <span class="h6 neutral-40 recent-blog-link-heading mb-3">How we built ten custom subagents to tame a 500K-line Clojure codebase</span>
+          </a>
         
           <a class="w-100 recent-blog-link" href="/blog/metabase-ai-hackathon">
             <span class="h6 neutral-40 recent-blog-link-heading mb-3">Metabase AI Hackathon</span>
@@ -925,14 +933,6 @@ Roadmap</a>
         
           <a class="w-100 recent-blog-link" href="/blog/reprobot-github-issue-triage-agent">
             <span class="h6 neutral-40 recent-blog-link-heading mb-3">Meet Repro-Bot, our GitHub issue triage agent</span>
-          </a>
-        
-          <a class="w-100 recent-blog-link" href="/blog/meet-data-studio-semantic-layer">
-            <span class="h6 neutral-40 recent-blog-link-heading mb-3">Meet Data Studio: tools to curate your semantic layer in Metabase</span>
-          </a>
-        
-          <a class="w-100 recent-blog-link" href="/blog/lessons-learned-building-ai-analytics-agents">
-            <span class="h6 neutral-40 recent-blog-link-heading mb-3">Lessons learned from building AI analytics agents: build for chaos</span>
           </a>
         
       </div>
@@ -6055,6 +6055,8 @@ Roadmap</a>
   <li>In the event of a successful sign-in, your authentication app should issue a GET request to your Metabase endpoint with the token and the “return to” URI: <code class="language-plaintext highlighter-rouge">http://localhost:3000/auth/sso?jwt=TOKEN_GOES_HERE&amp;return_to=/question/1-superb-question</code>.</li>
   <li>Metabase verifies the JSON Web Token, logs the person in, then redirects the person to their original destination, <code class="language-plaintext highlighter-rouge">/question/1-superb-question</code>.</li>
 </ol>
+
+<p>As an alternative to putting the JWT in the URL query string (which some environments log or cache), you can send the same token in the body of a <code class="language-plaintext highlighter-rouge">POST</code> request to <code class="language-plaintext highlighter-rouge">/auth/sso</code> with <code class="language-plaintext highlighter-rouge">Content-Type: application/json</code> and a JSON body like <code class="language-plaintext highlighter-rouge">{"jwt": "TOKEN_GOES_HERE"}</code>. You can still pass <code class="language-plaintext highlighter-rouge">return_to</code> as a query parameter on that URL (for example <code class="language-plaintext highlighter-rouge">POST /auth/sso?return_to=/question/1-superb-question</code>). The login behavior is otherwise the same as the GET flow.</p>
 
 <h2 id="set-up-jwt-authentication">Set up JWT authentication</h2>
 

@@ -181,6 +181,7 @@ type IconName =
   | "lock_filled"
   | "mail"
   | "mail_filled"
+  | "mcp"
   | "medallion"
   | "message_circle"
   | "metabot"
