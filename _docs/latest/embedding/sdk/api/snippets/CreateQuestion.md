@@ -1,5 +1,5 @@
 ---
-version: v0.60
+version: v0.61
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -12,7 +12,7 @@ latest: true
 ---
 
 ```ts
-function CreateQuestion(props: undefined | CreateQuestionProps): Element;
+function CreateQuestion(props: CreateQuestionProps | undefined): Element;
 ```
 
 ## Parameters
@@ -21,7 +21,7 @@ function CreateQuestion(props: undefined | CreateQuestionProps): Element;
 
 | Parameter | Type                                                                 |
 | :-------- | :------------------------------------------------------------------- |
-| `props`   | `undefined` \| [`CreateQuestionProps`](./api/CreateQuestionProps) |
+| `props`   | [`CreateQuestionProps`](./api/CreateQuestionProps) \| `undefined` |
 
 <!-- [<endsnippet parameters>] -->
 

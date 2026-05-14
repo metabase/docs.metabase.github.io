@@ -1,5 +1,5 @@
 ---
-version: v0.60
+version: v0.61
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -17,7 +17,7 @@ latest: true
 
 | Property                                       | Type               |
 | :--------------------------------------------- | :----------------- |
-| <a id="description"></a> `description`         | `null` \| `string` |
+| <a id="description"></a> `description`         | `string` \| `null` |
 | <a id="entityid"></a> `entityId`               | `string`           |
 | <a id="id"></a> `id`                           | `number`           |
 | <a id="issavedquestion"></a> `isSavedQuestion` | `boolean`          |

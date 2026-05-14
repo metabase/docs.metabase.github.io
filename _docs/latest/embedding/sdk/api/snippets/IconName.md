@@ -1,5 +1,5 @@
 ---
-version: v0.60
+version: v0.61
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -183,6 +183,7 @@ type IconName =
   | "lock_filled"
   | "mail"
   | "mail_filled"
+  | "mcp"
   | "medallion"
   | "message_circle"
   | "metabot"
@@ -239,6 +240,7 @@ type IconName =
   | "reference"
   | "refresh"
   | "refresh_downstream"
+  | "rename"
   | "repository"
   | "rocket"
   | "ruler"

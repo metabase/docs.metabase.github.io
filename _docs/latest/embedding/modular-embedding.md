@@ -1,5 +1,5 @@
 ---
-version: v0.60
+version: v0.61
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -17,8 +17,6 @@ latest: true
 ---
 
 # Modular embedding
-
-{% include shared/in-page-promo-embedding-workshop.html %}
 
 ![Modular embedding wizard](./images/modular-embedding-wizard.png)
 
@@ -74,7 +72,13 @@ The exact customization options you see will depend on what type of entity you'r
 
 ![Embed flow options for AI chat](./images/embed-flow-options.png)
 
-If you are on Metabase OSS/Starter plans, you'll be able to select light or dark themes for your components. On Metabase Pro/Enterprise, you'll also be able to pick specific colors for brand, text, and background in the embed wizard, and add more customization options through [appearance settings](./appearance) later.
+If you're on Metabase OSS/Starter plans, you can select light or dark themes for your components.
+
+On Metabase Pro/Enterprise, you can also:
+
+- Pick a [saved theme](./appearance#embedding-themes) you've created in **Admin settings > Embedding > Themes**.
+- Pick specific colors for brand, text, and background in the embed wizard.
+- Add more [advanced theme options](./appearance#advanced-theming) by editing the generated snippet later.
 
 All the customization options you select in this wizard will be reflected in the code snippet that the embed wizard will generate for you, and you'll be able to add more options later.
 

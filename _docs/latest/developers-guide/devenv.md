@@ -1,5 +1,5 @@
 ---
-version: v0.60
+version: v0.61
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -217,6 +217,17 @@ You can also start a REPL another way (e.g., through your editor) and then call:
 
 To start the server (at `localhost:3000`). This will also set up or migrate your application database. To actually
 use Metabase, don't forget to start the frontend as well (e.g. with `bun run build-hot`).
+
+### Proxying API calls to a remote backend (dev only)
+
+If you want to run the frontend locally but send `/api` requests to a different Metabase backend, set
+`MB_REMOTE_API_URL` when starting your local backend.
+
+```sh
+MB_REMOTE_API_URL="https://your-remote-metabase.example.com" clojure -M:run
+```
+
+This proxy is development-only and only applies to `/api` requests.
 
 ### Multiple Instances
 

@@ -1,5 +1,5 @@
 ---
-version: v0.60
+version: v0.61
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -23,8 +23,8 @@ latest: true
 
 ```ts
 Breakout: () =>
-  | null
-  | Element;
+  | Element
+  | null;
 ```
 
 **`Function`**
@@ -38,8 +38,8 @@ Uses question context for breakout functionality.
 
 <!-- [<snippet returns>] -->
 
-\| `null`
 \| [`Element`](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/0b728411cd1dfb4bd26992bb35a73cf8edaa22e7/types/react/jsx-runtime.d.ts#L6)
+\| `null`
 
 ---
 
@@ -51,8 +51,8 @@ Uses question context for breakout functionality.
 
 ```ts
 BreakoutDropdown: (props: InteractiveQuestionBreakoutDropdownProps) =>
-  | null
-  | Element;
+  | Element
+  | null;
 ```
 
 **`Function`**
@@ -75,8 +75,8 @@ Dropdown button for the Breakout component.
 
 <!-- [<snippet returns>] -->
 
-\| `null`
 \| [`Element`](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/0b728411cd1dfb4bd26992bb35a73cf8edaa22e7/types/react/jsx-runtime.d.ts#L6)
+\| `null`
 
 ---
 
@@ -158,8 +158,8 @@ Detailed chart type selection interface with recommended visualization options.
 
 ```ts
 DownloadWidget: (props: StackProps) =>
-  | null
-  | Element;
+  | Element
+  | null;
 ```
 
 **`Function`**
@@ -182,8 +182,8 @@ Provides a UI widget for downloading data in different formats (`CSV`, `XLSX`, `
 
 <!-- [<snippet returns>] -->
 
-\| `null`
 \| [`Element`](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/0b728411cd1dfb4bd26992bb35a73cf8edaa22e7/types/react/jsx-runtime.d.ts#L6)
+\| `null`
 
 ---
 
@@ -195,8 +195,8 @@ Provides a UI widget for downloading data in different formats (`CSV`, `XLSX`, `
 
 ```ts
 DownloadWidgetDropdown: (props: PopoverProps) =>
-  | null
-  | Element;
+  | Element
+  | null;
 ```
 
 **`Function`**
@@ -219,8 +219,8 @@ Provides a button that contains a dropdown that shows the `DownloadWidget`.
 
 <!-- [<snippet returns>] -->
 
-\| `null`
 \| [`Element`](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/0b728411cd1dfb4bd26992bb35a73cf8edaa22e7/types/react/jsx-runtime.d.ts#L6)
+\| `null`
 
 ---
 
@@ -267,8 +267,8 @@ Displays current filters as badges with an "Add another filter" option.
 
 ```ts
 FilterDropdown: (props: InteractiveQuestionFilterDropdownProps) =>
-  | null
-  | Element;
+  | Element
+  | null;
 ```
 
 **`Function`**
@@ -291,8 +291,8 @@ A dropdown button for the Filter component.
 
 <!-- [<snippet returns>] -->
 
-\| `null`
 \| [`Element`](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/0b728411cd1dfb4bd26992bb35a73cf8edaa22e7/types/react/jsx-runtime.d.ts#L6)
+\| `null`
 
 ---
 
@@ -304,8 +304,8 @@ A dropdown button for the Filter component.
 
 ```ts
 QuestionSettings: (props: StackProps) =>
-  | null
-  | Element;
+  | Element
+  | null;
 ```
 
 **`Function`**
@@ -329,8 +329,8 @@ Uses question context for settings.
 
 <!-- [<snippet returns>] -->
 
-\| `null`
 \| [`Element`](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/0b728411cd1dfb4bd26992bb35a73cf8edaa22e7/types/react/jsx-runtime.d.ts#L6)
+\| `null`
 
 ---
 
@@ -420,8 +420,8 @@ The main visualization component that renders the question results as a chart, t
 
 ```ts
 ResetButton: (props?: ButtonProps) =>
-  | null
-  | Element;
+  | Element
+  | null;
 ```
 
 **`Function`**
@@ -444,8 +444,8 @@ Button to reset question modifications. Only appears when there are unsaved chan
 
 <!-- [<snippet returns>] -->
 
-\| `null`
 \| [`Element`](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/0b728411cd1dfb4bd26992bb35a73cf8edaa22e7/types/react/jsx-runtime.d.ts#L6)
+\| `null`
 
 ---
 
@@ -457,8 +457,8 @@ Button to reset question modifications. Only appears when there are unsaved chan
 
 ```ts
 SqlParametersList: () =>
-  | null
-  | Element;
+  | Element
+  | null;
 ```
 
 **`Function`**
@@ -471,8 +471,8 @@ Parameters list for SQL questions
 
 <!-- [<snippet returns>] -->
 
-\| `null`
 \| [`Element`](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/0b728411cd1dfb4bd26992bb35a73cf8edaa22e7/types/react/jsx-runtime.d.ts#L6)
+\| `null`
 
 ---
 
@@ -547,8 +547,8 @@ Title: (props: {
   className?: string;
   style?: CSSProperties;
 }) =>
-  | undefined
-  | Element;
+  | Element
+  | undefined;
 ```
 
 **`Function`**
@@ -576,8 +576,8 @@ Displays a title based on the question's state. Shows:
 
 <!-- [<snippet returns>] -->
 
-\| `undefined`
 \| [`Element`](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/0b728411cd1dfb4bd26992bb35a73cf8edaa22e7/types/react/jsx-runtime.d.ts#L6)
+\| `undefined`
 
 <!-- [<endsnippet returns>] -->
 

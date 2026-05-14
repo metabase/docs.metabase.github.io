@@ -914,12 +914,16 @@ Roadmap</a>
         <span class="menu-heading">Recent Blog Posts</span>
         
         
-        <a class="w-100 post-with-image recent-blog-link mt-1" href="/blog/metabase-ai-hackathon-winners">
+        <a class="w-100 post-with-image recent-blog-link mt-1" href="/blog/strip-mining-era-of-open-source-security">
           <div class="d-flex align-items-center position-relative overflow-hidden rounded-2 mb-3" id="recent-blog-image-wrapper">
-            <img alt="Resources Image" class="position-absolute w-100" src="/images/posts/ai-hackathon-og.png" loading="lazy">
+            <img alt="Resources Image" class="position-absolute w-100" src="/images/posts/exploit-farming.png" loading="lazy">
           </div>
-          <span class="h6 neutral-40 recent-blog-link-heading mb-3">Winners of the Metabase AI Hackathon</span>
+          <span class="h6 neutral-40 recent-blog-link-heading mb-3">Welcome to the strip mining era of open source security</span>
         </a>
+        
+          <a class="w-100 recent-blog-link" href="/blog/metabase-ai-hackathon-winners">
+            <span class="h6 neutral-40 recent-blog-link-heading mb-3">Winners of the Metabase AI Hackathon</span>
+          </a>
         
           <a class="w-100 recent-blog-link" href="/blog/improving-performance-clojure-development-tools">
             <span class="h6 neutral-40 recent-blog-link-heading mb-3">Improving the performance of the popular Clojure development tool clojure-lsp</span>
@@ -931,10 +935,6 @@ Roadmap</a>
         
           <a class="w-100 recent-blog-link" href="/blog/metabase-ai-hackathon">
             <span class="h6 neutral-40 recent-blog-link-heading mb-3">Metabase AI Hackathon</span>
-          </a>
-        
-          <a class="w-100 recent-blog-link" href="/blog/reprobot-github-issue-triage-agent">
-            <span class="h6 neutral-40 recent-blog-link-heading mb-3">Meet Repro-Bot, our GitHub issue triage agent</span>
           </a>
         
       </div>
@@ -5898,7 +5898,7 @@ Roadmap</a>
 <div class="version__selector cursor-pointer">
   <span class="version__current">
     
-      v0.60
+      v0.61
     
 
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="chevron">
@@ -5909,13 +5909,13 @@ Roadmap</a>
   <ul class="version__dropdown">
     
       
+    
+      
         <li>
-          <a href="/docs/v0.61">
-            v0.61
+          <a href="/docs/v0.60">
+            v0.60
           </a>
         </li>
-      
-    
       
     
       
@@ -6062,6 +6062,14 @@ Roadmap</a>
 
 <p>If the site URL doesn’t match an address your MCP client can reach, like if you’re running Metabase in Docker and the site URL got auto-detected from an internal hostname like <code class="language-plaintext highlighter-rouge">metabase-dev:3000</code>, the client will register but fail the handshake. Your MCP client will typically report a connection failure rather than prompting you to authenticate (for example, Claude Code shows <code class="language-plaintext highlighter-rouge">✗ Failed to connect</code> rather than <code class="language-plaintext highlighter-rouge">! Needs authentication</code>).</p>
 
+<h2 id="with-the-mcp-server-your-client-provides-the-ai">With the MCP server, your client provides the AI</h2>
+
+<p>MCP server requests are handled by whatever AI client you’re using (like a desktop AI app or editor plugin). The MCP server just provides tools (like searching for an entity or running the query) for your AI.</p>
+
+<p>For example, if you ask your AI client to use your Metabase’s MCP server “what’s our q3 revenue,” your client will interact with the MCP server to figure out which tools it needs to field your request. Your AI can decide that it needs to use the tool <strong>construct_query</strong> and <strong>execute_query</strong>, and what those queries might be. Then your client will call those tools for Metabase to run.</p>
+
+<p>You don’t need to have an <a href="settings#supported-providers">AI provider</a> configured in Metabase to use your Metabase’s MCP server. If you <em>do</em> have an AI provider configured in Metabase to power Metabot, that provider will <em>not</em> be used for MCP server requests. MCP calls by your local client have no effect on token usage for your Metabase’s AI connection.</p>
+
 <h2 id="available-tools">Available tools</h2>
 
 <p>Some clients (like Claude Desktop) will ask you to approve each tool the first time it’s used. The MCP server builds on Metabase’s <a href="./agent-api">Agent API</a>, and exposes the following tools. If you’re building a custom integration and need full control, use the <a href="./agent-api">Agent API</a> directly instead.</p>
@@ -6075,6 +6083,8 @@ Roadmap</a>
   <li><strong>construct_query</strong>: Construct a query against a table or metric. Returns an opaque query string that can be executed with <code class="language-plaintext highlighter-rouge">execute_query</code>.</li>
   <li><strong>execute_query</strong>: Execute a previously constructed query and return the results with column metadata, row count, and execution time.</li>
   <li><strong>query</strong>: Query a table or metric and return results.</li>
+  <li><strong>create_question</strong>: Create questions.</li>
+  <li><strong>create_dashboard</strong>: Create dashboards.</li>
 </ul>
 
 <h2 id="use-the-mcp-server-with-file-based-development">Use the MCP server with file-based development</h2>

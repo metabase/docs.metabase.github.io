@@ -914,12 +914,16 @@ Roadmap</a>
         <span class="menu-heading">Recent Blog Posts</span>
         
         
-        <a class="w-100 post-with-image recent-blog-link mt-1" href="/blog/metabase-ai-hackathon-winners">
+        <a class="w-100 post-with-image recent-blog-link mt-1" href="/blog/strip-mining-era-of-open-source-security">
           <div class="d-flex align-items-center position-relative overflow-hidden rounded-2 mb-3" id="recent-blog-image-wrapper">
-            <img alt="Resources Image" class="position-absolute w-100" src="/images/posts/ai-hackathon-og.png" loading="lazy">
+            <img alt="Resources Image" class="position-absolute w-100" src="/images/posts/exploit-farming.png" loading="lazy">
           </div>
-          <span class="h6 neutral-40 recent-blog-link-heading mb-3">Winners of the Metabase AI Hackathon</span>
+          <span class="h6 neutral-40 recent-blog-link-heading mb-3">Welcome to the strip mining era of open source security</span>
         </a>
+        
+          <a class="w-100 recent-blog-link" href="/blog/metabase-ai-hackathon-winners">
+            <span class="h6 neutral-40 recent-blog-link-heading mb-3">Winners of the Metabase AI Hackathon</span>
+          </a>
         
           <a class="w-100 recent-blog-link" href="/blog/improving-performance-clojure-development-tools">
             <span class="h6 neutral-40 recent-blog-link-heading mb-3">Improving the performance of the popular Clojure development tool clojure-lsp</span>
@@ -931,10 +935,6 @@ Roadmap</a>
         
           <a class="w-100 recent-blog-link" href="/blog/metabase-ai-hackathon">
             <span class="h6 neutral-40 recent-blog-link-heading mb-3">Metabase AI Hackathon</span>
-          </a>
-        
-          <a class="w-100 recent-blog-link" href="/blog/reprobot-github-issue-triage-agent">
-            <span class="h6 neutral-40 recent-blog-link-heading mb-3">Meet Repro-Bot, our GitHub issue triage agent</span>
           </a>
         
       </div>
@@ -5898,7 +5898,7 @@ Roadmap</a>
 <div class="version__selector cursor-pointer">
   <span class="version__current">
     
-      v0.60
+      v0.61
     
 
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="chevron">
@@ -5909,13 +5909,13 @@ Roadmap</a>
   <ul class="version__dropdown">
     
       
+    
+      
         <li>
-          <a href="/docs/v0.61">
-            v0.61
+          <a href="/docs/v0.60">
+            v0.60
           </a>
         </li>
-      
-    
       
     
       
@@ -6118,8 +6118,13 @@ Roadmap</a>
       <td style="text-align: left" data-label="Description">Initial values for the SQL parameters.</td>
     </tr>
     <tr>
+      <td style="text-align: left" data-label="Property"><a id="query"></a> <code class="language-plaintext highlighter-rouge">query?</code></td>
+      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">undefined</code></td>
+      <td style="text-align: left" data-label="Description">-</td>
+    </tr>
+    <tr>
       <td style="text-align: left" data-label="Property"><a id="questionid"></a> <code class="language-plaintext highlighter-rouge">questionId?</code></td>
-      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">null</code> | <a href="./api/SdkQuestionId"><code class="language-plaintext highlighter-rouge">SdkQuestionId</code></a></td>
+      <td style="text-align: left" data-label="Type"><a href="./api/SdkQuestionId"><code class="language-plaintext highlighter-rouge">SdkQuestionId</code></a> | <code class="language-plaintext highlighter-rouge">null</code></td>
       <td style="text-align: left" data-label="Description">The ID of the question. <br> This is either: <br> - the numerical ID when accessing a question link, i.e. <code class="language-plaintext highlighter-rouge">http://localhost:3000/question/1-my-question</code> where the ID is <code class="language-plaintext highlighter-rouge">1</code> <br> - the string ID found in the <code class="language-plaintext highlighter-rouge">entity_id</code> key of the question object when using the API directly or using the SDK Collection Browser to return data <br> - <code class="language-plaintext highlighter-rouge">new</code> to show the notebook editor for creating new questions <br> - <code class="language-plaintext highlighter-rouge">new-native</code> to show the SQL editor for creating new native questions</td>
     </tr>
     <tr>
@@ -6134,7 +6139,7 @@ Roadmap</a>
     </tr>
     <tr>
       <td style="text-align: left" data-label="Property"><a id="token"></a> <code class="language-plaintext highlighter-rouge">token?</code></td>
-      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">null</code> | <code class="language-plaintext highlighter-rouge">string</code></td>
+      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">string</code> | <code class="language-plaintext highlighter-rouge">null</code></td>
       <td style="text-align: left" data-label="Description">A valid JWT token for the guest embed.</td>
     </tr>
     <tr>
@@ -6245,7 +6250,7 @@ Roadmap</a>
     </tr>
     <tr>
       <td style="text-align: left" data-label="Property"><a id="onbeforesave"></a> <code class="language-plaintext highlighter-rouge">onBeforeSave?</code></td>
-      <td style="text-align: left" data-label="Type">(<code class="language-plaintext highlighter-rouge">question</code>: <code class="language-plaintext highlighter-rouge">undefined</code> | <a href="./api/MetabaseQuestion"><code class="language-plaintext highlighter-rouge">MetabaseQuestion</code></a>, <code class="language-plaintext highlighter-rouge">context</code>: { <code class="language-plaintext highlighter-rouge">isNewQuestion</code>: <code class="language-plaintext highlighter-rouge">boolean</code>; }) =&gt; <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise"><code class="language-plaintext highlighter-rouge">Promise</code></a>&lt;<code class="language-plaintext highlighter-rouge">void</code>&gt;</td>
+      <td style="text-align: left" data-label="Type">(<code class="language-plaintext highlighter-rouge">question</code>: <a href="./api/MetabaseQuestion"><code class="language-plaintext highlighter-rouge">MetabaseQuestion</code></a> | <code class="language-plaintext highlighter-rouge">undefined</code>, <code class="language-plaintext highlighter-rouge">context</code>: { <code class="language-plaintext highlighter-rouge">isNewQuestion</code>: <code class="language-plaintext highlighter-rouge">boolean</code>; }) =&gt; <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise"><code class="language-plaintext highlighter-rouge">Promise</code></a>&lt;<code class="language-plaintext highlighter-rouge">void</code>&gt;</td>
       <td style="text-align: left" data-label="Description">A callback function that triggers before saving. Only relevant when <code class="language-plaintext highlighter-rouge">isSaveEnabled = true</code></td>
     </tr>
     <tr>
@@ -6255,7 +6260,7 @@ Roadmap</a>
     </tr>
     <tr>
       <td style="text-align: left" data-label="Property"><a id="onrun"></a> <code class="language-plaintext highlighter-rouge">onRun?</code></td>
-      <td style="text-align: left" data-label="Type">(<code class="language-plaintext highlighter-rouge">question</code>: <code class="language-plaintext highlighter-rouge">undefined</code> | <a href="./api/MetabaseQuestion"><code class="language-plaintext highlighter-rouge">MetabaseQuestion</code></a>) =&gt; <code class="language-plaintext highlighter-rouge">void</code></td>
+      <td style="text-align: left" data-label="Type">(<code class="language-plaintext highlighter-rouge">question</code>: <a href="./api/MetabaseQuestion"><code class="language-plaintext highlighter-rouge">MetabaseQuestion</code></a> | <code class="language-plaintext highlighter-rouge">undefined</code>) =&gt; <code class="language-plaintext highlighter-rouge">void</code></td>
       <td style="text-align: left" data-label="Description">A callback function that triggers when a question is updated, including when a user clicks the <code class="language-plaintext highlighter-rouge">Visualize</code> button in the question editor</td>
     </tr>
     <tr>
@@ -6274,9 +6279,14 @@ Roadmap</a>
       <td style="text-align: left" data-label="Description">-</td>
     </tr>
     <tr>
-      <td style="text-align: left" data-label="Property"><a id="questionid"></a> <code class="language-plaintext highlighter-rouge">questionId?</code></td>
-      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">null</code> | <a href="./api/SdkQuestionId"><code class="language-plaintext highlighter-rouge">SdkQuestionId</code></a></td>
+      <td style="text-align: left" data-label="Property"><a id="query"></a> <code class="language-plaintext highlighter-rouge">query?</code></td>
+      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">undefined</code></td>
       <td style="text-align: left" data-label="Description">-</td>
+    </tr>
+    <tr>
+      <td style="text-align: left" data-label="Property"><a id="questionid"></a> <code class="language-plaintext highlighter-rouge">questionId?</code></td>
+      <td style="text-align: left" data-label="Type"><a href="./api/SdkQuestionId"><code class="language-plaintext highlighter-rouge">SdkQuestionId</code></a> | <code class="language-plaintext highlighter-rouge">null</code></td>
+      <td style="text-align: left" data-label="Description">The ID of the question. <br> This is either: <br> - the numerical ID when accessing a question link, i.e. <code class="language-plaintext highlighter-rouge">http://localhost:3000/question/1-my-question</code> where the ID is <code class="language-plaintext highlighter-rouge">1</code> <br> - the string ID found in the <code class="language-plaintext highlighter-rouge">entity_id</code> key of the question object when using the API directly or using the SDK Collection Browser to return data <br> - <code class="language-plaintext highlighter-rouge">new</code> to show the notebook editor for creating new questions <br> - <code class="language-plaintext highlighter-rouge">new-native</code> to show the SQL editor for creating new native questions</td>
     </tr>
     <tr>
       <td style="text-align: left" data-label="Property"><a id="style"></a> <code class="language-plaintext highlighter-rouge">style?</code></td>
@@ -6292,6 +6302,11 @@ Roadmap</a>
       <td style="text-align: left" data-label="Property"><a id="title"></a> <code class="language-plaintext highlighter-rouge">title?</code></td>
       <td style="text-align: left" data-label="Type"><a href="./api/SdkQuestionTitleProps"><code class="language-plaintext highlighter-rouge">SdkQuestionTitleProps</code></a></td>
       <td style="text-align: left" data-label="Description">Determines whether the question title is displayed, and allows a custom title to be displayed instead of the default question title. Shown by default.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left" data-label="Property"><a id="token"></a> <code class="language-plaintext highlighter-rouge">token?</code></td>
+      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">string</code> | <code class="language-plaintext highlighter-rouge">null</code></td>
+      <td style="text-align: left" data-label="Description">A valid JWT token for the guest embed.</td>
     </tr>
     <tr>
       <td style="text-align: left" data-label="Property"><a id="width"></a> <code class="language-plaintext highlighter-rouge">width?</code></td>

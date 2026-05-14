@@ -1,5 +1,5 @@
 ---
-version: v0.60
+version: v0.61
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -106,7 +106,7 @@ For example, let's say you have a dashboard with a category filter (default valu
 
 ### Automatic caching logs
 
-To view the queries Metabase ran to automatically refresh the cache, check out the [query log](../usage-and-performance-tools/usage-analytics#query-log-model) and filter the `Query source` by `cache-refresh`.
+To view the queries Metabase ran to automatically refresh the cache, check out the [query log](../usage-and-performance-tools/usage-analytics-reference#query-log) and filter the `Query source` by `cache-refresh`.
 
 ## Set caching policies for dashboards, questions, and databases
 

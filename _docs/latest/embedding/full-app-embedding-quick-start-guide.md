@@ -1,5 +1,5 @@
 ---
-version: v0.60
+version: v0.61
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -20,8 +20,6 @@ latest: true
 > If you are just starting out with Metabase embedding, consider using [Modular embedding](./modular-embedding) - an improved, more customizable option for embedding Metabase components.
 
 You'll embed the full Metabase application in your app. Once logged in, people can view a Metabase dashboard in your web app, and be able to use the full Metabase application to explore their data, and only their data.
-
-{% include shared/in-page-promo-embedding-workshop.html %}
 
 ## Prerequisites
 

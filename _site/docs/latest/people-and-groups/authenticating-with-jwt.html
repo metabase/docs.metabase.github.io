@@ -914,12 +914,16 @@ Roadmap</a>
         <span class="menu-heading">Recent Blog Posts</span>
         
         
-        <a class="w-100 post-with-image recent-blog-link mt-1" href="/blog/metabase-ai-hackathon-winners">
+        <a class="w-100 post-with-image recent-blog-link mt-1" href="/blog/strip-mining-era-of-open-source-security">
           <div class="d-flex align-items-center position-relative overflow-hidden rounded-2 mb-3" id="recent-blog-image-wrapper">
-            <img alt="Resources Image" class="position-absolute w-100" src="/images/posts/ai-hackathon-og.png" loading="lazy">
+            <img alt="Resources Image" class="position-absolute w-100" src="/images/posts/exploit-farming.png" loading="lazy">
           </div>
-          <span class="h6 neutral-40 recent-blog-link-heading mb-3">Winners of the Metabase AI Hackathon</span>
+          <span class="h6 neutral-40 recent-blog-link-heading mb-3">Welcome to the strip mining era of open source security</span>
         </a>
+        
+          <a class="w-100 recent-blog-link" href="/blog/metabase-ai-hackathon-winners">
+            <span class="h6 neutral-40 recent-blog-link-heading mb-3">Winners of the Metabase AI Hackathon</span>
+          </a>
         
           <a class="w-100 recent-blog-link" href="/blog/improving-performance-clojure-development-tools">
             <span class="h6 neutral-40 recent-blog-link-heading mb-3">Improving the performance of the popular Clojure development tool clojure-lsp</span>
@@ -931,10 +935,6 @@ Roadmap</a>
         
           <a class="w-100 recent-blog-link" href="/blog/metabase-ai-hackathon">
             <span class="h6 neutral-40 recent-blog-link-heading mb-3">Metabase AI Hackathon</span>
-          </a>
-        
-          <a class="w-100 recent-blog-link" href="/blog/reprobot-github-issue-triage-agent">
-            <span class="h6 neutral-40 recent-blog-link-heading mb-3">Meet Repro-Bot, our GitHub issue triage agent</span>
           </a>
         
       </div>
@@ -5898,7 +5898,7 @@ Roadmap</a>
 <div class="version__selector cursor-pointer">
   <span class="version__current">
     
-      v0.60
+      v0.61
     
 
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="chevron">
@@ -5909,13 +5909,13 @@ Roadmap</a>
   <ul class="version__dropdown">
     
       
+    
+      
         <li>
-          <a href="/docs/v0.61">
-            v0.61
+          <a href="/docs/v0.60">
+            v0.60
           </a>
         </li>
-      
-    
       
     
       
@@ -6050,6 +6050,8 @@ Roadmap</a>
   <li>In the event of a successful sign-in, your authentication app should issue a GET request to your Metabase endpoint with the token and the “return to” URI: <code class="language-plaintext highlighter-rouge">http://localhost:3000/auth/sso?jwt=TOKEN_GOES_HERE&amp;return_to=/question/1-superb-question</code>.</li>
   <li>Metabase verifies the JSON Web Token, logs the person in, then redirects the person to their original destination, <code class="language-plaintext highlighter-rouge">/question/1-superb-question</code>.</li>
 </ol>
+
+<p>As an alternative to putting the JWT in the URL query string (which some environments log or cache), you can send the same token in the body of a <code class="language-plaintext highlighter-rouge">POST</code> request to <code class="language-plaintext highlighter-rouge">/auth/sso</code> with <code class="language-plaintext highlighter-rouge">Content-Type: application/json</code> and a JSON body like <code class="language-plaintext highlighter-rouge">{"jwt": "TOKEN_GOES_HERE"}</code>. You can still pass <code class="language-plaintext highlighter-rouge">return_to</code> as a query parameter on that URL (for example <code class="language-plaintext highlighter-rouge">POST /auth/sso?return_to=/question/1-superb-question</code>). The login behavior is otherwise the same as the GET flow.</p>
 
 <h2 id="set-up-jwt-authentication">Set up JWT authentication</h2>
 

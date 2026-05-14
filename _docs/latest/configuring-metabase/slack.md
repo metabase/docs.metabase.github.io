@@ -1,5 +1,5 @@
 ---
-version: v0.60
+version: v0.61
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -120,7 +120,7 @@ To check or edit your OAuth settings:
 
 > Natural language questions in Slack require [Metabot](../ai/metabot).
 
-![Natural language questions in Slack](../ai/metabot-slack.png)
+![Natural language questions in Slack](../ai/images/metabot-slack.png)
 
 Once you've connected Slack, you can let people chat with [Metabot](../ai/metabot) directly in Slack channels. For more on what Metabot can do in Slack, see [Metabot in Slack](../ai/metabot-slack).
 

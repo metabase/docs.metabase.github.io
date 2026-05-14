@@ -1,5 +1,5 @@
 ---
-version: v0.60
+version: v0.61
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -60,6 +60,7 @@ type MetabaseColorKey =
   | "background-tertiary"
   | "background-tertiary-inverse"
   | "background-warning"
+  | "background-warning-secondary"
   | "border"
   | "border-brand"
   | "border-filter"

@@ -1,5 +1,5 @@
 ---
-version: v0.60
+version: v0.61
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -19,8 +19,6 @@ latest: true
 Also known as: parameters for signed embeds, or standalone embeds.
 
 Parameters are pieces of information that are passed between Metabase and your website via the [embedding URL](./static-embedding#adding-the-embedding-url-to-your-website). You can use parameters to specify how Metabase items should look and behave inside the iframe on your website.
-
-{% include shared/in-page-promo-embedding-workshop.html %}
 
 ## Types of parameters
 

@@ -1,5 +1,5 @@
 ---
-version: v0.60
+version: v0.61
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -12,11 +12,11 @@ latest: true
 ---
 
 ```ts
-function useCreateDashboardApi(): null | {
+function useCreateDashboardApi(): {
   createDashboard: (
     params: CreateDashboardValues,
   ) => Promise<MetabaseDashboard>;
-};
+} | null;
 ```
 
 Creates a dashboard.
@@ -26,9 +26,9 @@ Returns `null` until the SDK is fully loaded and initialized.
 
 <!-- [<snippet returns>] -->
 
-\| `null`
 \| \{
 `createDashboard`: (`params`: [`CreateDashboardValues`](./api/CreateDashboardValues)) => [`Promise`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<[`MetabaseDashboard`](./api/MetabaseDashboard)\>;
 \}
+\| `null`
 
 <!-- [<endsnippet returns>] -->

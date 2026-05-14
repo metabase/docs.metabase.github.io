@@ -7,6 +7,7 @@ category: Embedding
 title: InteractiveQuestionChartTypeDropdownProps
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/embedding/sdk/api/snippets/InteractiveQuestionChartTypeDropdownProps.md'
 layout: new-docs
+latest: true
 ---
 
 **`Expand`**

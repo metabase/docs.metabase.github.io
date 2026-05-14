@@ -1,5 +1,5 @@
 ---
-version: v0.60
+version: v0.61
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -144,6 +144,10 @@ latest: true
 | [MetabasePluginsConfig](./api/MetabasePluginsConfig)                       | -                                                                              |
 | [MetabaseThemePreset](./api/MetabaseThemePreset)                           | -                                                                              |
 | [MetabaseUser](./api/MetabaseUser)                                         | The User entity                                                                |
+| [MetabotAgentChartMessage](./api/MetabotAgentChartMessage)                 | -                                                                              |
+| [MetabotAgentMessage](./api/MetabotAgentMessage)                           | -                                                                              |
+| [MetabotAgentTextMessage](./api/MetabotAgentTextMessage)                   | -                                                                              |
+| [MetabotUserTextMessage](./api/MetabotUserTextMessage)                     | -                                                                              |
 | [ParameterValues](./api/ParameterValues)                                   | -                                                                              |
 | [ProtectedColorKey](./api/ProtectedColorKey)                               | Color keys that are protected and should not be exposed to embedding.          |
 | [SdkCollectionId](./api/SdkCollectionId)                                   | -                                                                              |
@@ -192,3 +196,13 @@ latest: true
 | Function                                                | Description                                                                                                                                        |
 | :------------------------------------------------------ | :------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [useMetabaseAuthStatus](./api/useMetabaseAuthStatus) | Returns the authentication status of the current user in the Metabase embedding SDK. Returns `null` until the SDK is fully loaded and initialized. |
+
+## useMetabot
+
+| Name                                                | Description                           |
+| :-------------------------------------------------- | :------------------------------------ |
+| [useMetabot](./api/useMetabot)                   | Returns the Metabot conversation API. |
+| [MetabotChartProps](./api/MetabotChartProps)     | -                                     |
+| [MetabotErrorMessage](./api/MetabotErrorMessage) | -                                     |
+| [MetabotMessage](./api/MetabotMessage)           | -                                     |
+| [UseMetabotResult](./api/UseMetabotResult)       | -                                     |

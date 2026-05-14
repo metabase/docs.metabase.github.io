@@ -1,5 +1,5 @@
 ---
-version: v0.60
+version: v0.61
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -152,7 +152,7 @@ Alerts will continue to work _even if the person who set up the alert no longer 
 
 {% include plans-blockquote.html feature="Usage analytics" %}
 
-Admins can view a list of all alerts and dashboard subscriptions that people have set up in your Metabase in the **Usage analytics** collection. See [Usage analytics](../usage-and-performance-tools/usage-analytics#alerts-model).
+Admins can view a list of all alerts and dashboard subscriptions that people have set up in your Metabase in the **Usage analytics** collection. See the [Alerts model](../usage-and-performance-tools/usage-analytics-reference#alerts) in the Usage analytics reference.
 
 ## How permissions work with alerts
 

@@ -1,5 +1,5 @@
 ---
-version: v0.60
+version: v0.61
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -18,8 +18,6 @@ latest: true
 # Full app embedding
 
 {% include plans-blockquote.html feature="Full app embedding" convert_pro_link_to_embedding=true %}
-
-{% include shared/in-page-promo-embedding-workshop.html %}
 
 **Full app embedding** lets you embed the entire Metabase app in an iframe. Full app embedding integrates your [permissions](../permissions/introduction) and [SSO](../people-and-groups/start#authentication) to give people the right level of access to [query](../questions/query-builder/editor) and [drill-down](/learn/metabase-basics/querying-and-dashboards/questions/drill-through) into your data.
 

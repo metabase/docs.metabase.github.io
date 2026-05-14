@@ -57,7 +57,7 @@ window.redirectTo = function redirectTo(theLocation) {
 <meta name="twitter:site" content="@metabase">
 
 <meta name="twitter:title" content="API changelog | Metabase Documentation">
-<meta name="twitter:description" content="Breaking changes to the API interface Metabase 0.57.0  MBQL queries (in Cards and elsewhere) are now serialized as MBQL 5 as opposed to MBQL 4 (aka legacy MBQL) in the application database and in REST API responses. While we...">
+<meta name="twitter:description" content="Breaking changes to the API interface Metabase 0.61.0  POST /api/metabot/describe/card and POST /api/metabot/describe/dashboard/:id have been removed. These endpoints provided LLM-powered autodescription of cards and dashboards using the legacy OpenAI client. This functionality has been superseded...">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -67,7 +67,7 @@ window.redirectTo = function redirectTo(theLocation) {
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://www.metabase.com/docs/latest/developers-guide/api-changelog">
 <meta name="title" property="og:title" content="API changelog | Metabase Documentation">
-<meta name="description" property="og:description" content="Breaking changes to the API interface Metabase 0.57.0  MBQL queries (in Cards and elsewhere) are now serialized as MBQL 5 as opposed to MBQL 4 (aka legacy MBQL) in the application database and in REST API responses. While we...">
+<meta name="description" property="og:description" content="Breaking changes to the API interface Metabase 0.61.0  POST /api/metabot/describe/card and POST /api/metabot/describe/dashboard/:id have been removed. These endpoints provided LLM-powered autodescription of cards and dashboards using the legacy OpenAI client. This functionality has been superseded...">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -914,12 +914,16 @@ Roadmap</a>
         <span class="menu-heading">Recent Blog Posts</span>
         
         
-        <a class="w-100 post-with-image recent-blog-link mt-1" href="/blog/metabase-ai-hackathon-winners">
+        <a class="w-100 post-with-image recent-blog-link mt-1" href="/blog/strip-mining-era-of-open-source-security">
           <div class="d-flex align-items-center position-relative overflow-hidden rounded-2 mb-3" id="recent-blog-image-wrapper">
-            <img alt="Resources Image" class="position-absolute w-100" src="/images/posts/ai-hackathon-og.png" loading="lazy">
+            <img alt="Resources Image" class="position-absolute w-100" src="/images/posts/exploit-farming.png" loading="lazy">
           </div>
-          <span class="h6 neutral-40 recent-blog-link-heading mb-3">Winners of the Metabase AI Hackathon</span>
+          <span class="h6 neutral-40 recent-blog-link-heading mb-3">Welcome to the strip mining era of open source security</span>
         </a>
+        
+          <a class="w-100 recent-blog-link" href="/blog/metabase-ai-hackathon-winners">
+            <span class="h6 neutral-40 recent-blog-link-heading mb-3">Winners of the Metabase AI Hackathon</span>
+          </a>
         
           <a class="w-100 recent-blog-link" href="/blog/improving-performance-clojure-development-tools">
             <span class="h6 neutral-40 recent-blog-link-heading mb-3">Improving the performance of the popular Clojure development tool clojure-lsp</span>
@@ -931,10 +935,6 @@ Roadmap</a>
         
           <a class="w-100 recent-blog-link" href="/blog/metabase-ai-hackathon">
             <span class="h6 neutral-40 recent-blog-link-heading mb-3">Metabase AI Hackathon</span>
-          </a>
-        
-          <a class="w-100 recent-blog-link" href="/blog/reprobot-github-issue-triage-agent">
-            <span class="h6 neutral-40 recent-blog-link-heading mb-3">Meet Repro-Bot, our GitHub issue triage agent</span>
           </a>
         
       </div>
@@ -5898,7 +5898,7 @@ Roadmap</a>
 <div class="version__selector cursor-pointer">
   <span class="version__current">
     
-      v0.60
+      v0.61
     
 
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="chevron">
@@ -5909,13 +5909,13 @@ Roadmap</a>
   <ul class="version__dropdown">
     
       
+    
+      
         <li>
-          <a href="/docs/v0.61">
-            v0.61
+          <a href="/docs/v0.60">
+            v0.60
           </a>
         </li>
-      
-    
       
     
       
@@ -6013,6 +6013,14 @@ Roadmap</a>
 
 
         <h1 id="breaking-changes-to-the-api-interface">Breaking changes to the API interface</h1>
+
+<h2 id="metabase-0610">Metabase 0.61.0</h2>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">POST /api/metabot/describe/card</code> and <code class="language-plaintext highlighter-rouge">POST /api/metabot/describe/dashboard/:id</code> have been removed. These endpoints
+provided LLM-powered autodescription of cards and dashboards using the legacy OpenAI client. This functionality has
+been superseded by the Metabot agent.</li>
+</ul>
 
 <h2 id="metabase-0570">Metabase 0.57.0</h2>
 

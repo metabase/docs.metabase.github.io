@@ -1,5 +1,5 @@
 ---
-version: v0.60
+version: v0.61
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -17,8 +17,6 @@ latest: true
 ---
 
 # Embedding introduction
-
-{% include shared/in-page-promo-embedding-workshop.html %}
 
 You can embed Metabase tables, charts, and dashboards—even Metabase's query builder—in your website or application. Here are the different ways you can embed Metabase:
 

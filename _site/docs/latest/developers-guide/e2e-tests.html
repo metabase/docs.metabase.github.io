@@ -914,12 +914,16 @@ Roadmap</a>
         <span class="menu-heading">Recent Blog Posts</span>
         
         
-        <a class="w-100 post-with-image recent-blog-link mt-1" href="/blog/metabase-ai-hackathon-winners">
+        <a class="w-100 post-with-image recent-blog-link mt-1" href="/blog/strip-mining-era-of-open-source-security">
           <div class="d-flex align-items-center position-relative overflow-hidden rounded-2 mb-3" id="recent-blog-image-wrapper">
-            <img alt="Resources Image" class="position-absolute w-100" src="/images/posts/ai-hackathon-og.png" loading="lazy">
+            <img alt="Resources Image" class="position-absolute w-100" src="/images/posts/exploit-farming.png" loading="lazy">
           </div>
-          <span class="h6 neutral-40 recent-blog-link-heading mb-3">Winners of the Metabase AI Hackathon</span>
+          <span class="h6 neutral-40 recent-blog-link-heading mb-3">Welcome to the strip mining era of open source security</span>
         </a>
+        
+          <a class="w-100 recent-blog-link" href="/blog/metabase-ai-hackathon-winners">
+            <span class="h6 neutral-40 recent-blog-link-heading mb-3">Winners of the Metabase AI Hackathon</span>
+          </a>
         
           <a class="w-100 recent-blog-link" href="/blog/improving-performance-clojure-development-tools">
             <span class="h6 neutral-40 recent-blog-link-heading mb-3">Improving the performance of the popular Clojure development tool clojure-lsp</span>
@@ -931,10 +935,6 @@ Roadmap</a>
         
           <a class="w-100 recent-blog-link" href="/blog/metabase-ai-hackathon">
             <span class="h6 neutral-40 recent-blog-link-heading mb-3">Metabase AI Hackathon</span>
-          </a>
-        
-          <a class="w-100 recent-blog-link" href="/blog/reprobot-github-issue-triage-agent">
-            <span class="h6 neutral-40 recent-blog-link-heading mb-3">Meet Repro-Bot, our GitHub issue triage agent</span>
           </a>
         
       </div>
@@ -5898,7 +5898,7 @@ Roadmap</a>
 <div class="version__selector cursor-pointer">
   <span class="version__current">
     
-      v0.60
+      v0.61
     
 
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="chevron">
@@ -5909,13 +5909,13 @@ Roadmap</a>
   <ul class="version__dropdown">
     
       
+    
+      
         <li>
-          <a href="/docs/v0.61">
-            v0.61
+          <a href="/docs/v0.60">
+            v0.60
           </a>
         </li>
-      
-    
       
     
       
@@ -6193,6 +6193,12 @@ partial-match the payload provided. This is simply a convenience function for co
 <h3 id="running-tests-that-require-translation-dictionaries">Running tests that require translation dictionaries</h3>
 
 <p>Some of the tests are checking content translation functionality. These tests require to run <code class="language-plaintext highlighter-rouge">./bin/i18n/build-translation-resources</code> command before running the tests to precompile JSON files with translations.</p>
+
+<h3 id="pseudo-locale-for-e2e-tests">Pseudo locale for E2E tests</h3>
+
+<p>We provide a pseudo locale (<code class="language-plaintext highlighter-rouge">en_ZZ</code>) that prefixes all translated strings with <code class="language-plaintext highlighter-rouge">[zz]</code> (e.g., <code class="language-plaintext highlighter-rouge">"My text"</code> becomes <code class="language-plaintext highlighter-rouge">"[zz] My text"</code>). This is handy when writing E2E tests that assert translations are working correctly without relying on actual translated strings that may change over time.</p>
+
+<p>The pseudo locale PO file is generated at build time; to make it available in the UI, start the backend with <code class="language-plaintext highlighter-rouge">MB_ENABLE_TEST_LOCALES=true</code> and select “English (ZZ)” under Admin &gt; Settings &gt; Localization.</p>
 
 <h3 id="cypress-comes-with-lodash-for-free">Cypress comes with <code class="language-plaintext highlighter-rouge">Lodash</code> for free</h3>
 

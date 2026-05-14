@@ -1,5 +1,5 @@
 ---
-version: v0.60
+version: v0.61
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -12,7 +12,7 @@ latest: true
 ---
 
 ```ts
-function useMetabaseAuthStatus(): null | InitializationStatus;
+function useMetabaseAuthStatus(): InitializationStatus | null;
 ```
 
 Returns the authentication status of the current user in the Metabase embedding SDK.
@@ -22,6 +22,6 @@ Returns `null` until the SDK is fully loaded and initialized.
 
 <!-- [<snippet returns>] -->
 
-`null` \| [`InitializationStatus`](./api/InitializationStatus)
+[`InitializationStatus`](./api/InitializationStatus) \| `null`
 
 <!-- [<endsnippet returns>] -->

@@ -1,5 +1,5 @@
 ---
-version: v0.60
+version: v0.61
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -67,7 +67,7 @@ java --add-opens java.base/java.nio=ALL-UNNAMED -jar metabase.jar
 
 We recommend [PostgreSQL](#postgresql), but you can also use [MySQL](https://www.mysql.com/) or [MariaDB](https://www.mariadb.org/).
 
-The minimum recommended version is MySQL 8.0.17 or MariaDB 10.2.2. The `utf8mb4` character set is required.
+The minimum recommended version is MySQL 8.4.0 or MariaDB 10.6.0. The `utf8mb4` character set is required.
 
 We don't support ApsaraDB MySQL. You can instead use ApsaraDB PostgreSQL.
 

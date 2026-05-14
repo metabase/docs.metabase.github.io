@@ -1,5 +1,5 @@
 ---
-version: v0.60
+version: v0.61
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -14,6 +14,8 @@ latest: true
 # Driver Interface Changelog
 
 ## Metabase 0.61.0
+
+- `driver/field-reference-mlv2`, deprecated in 0.57.0, has now been removed.
 
 - `metabase.driver.sql/set-role-statement` has been deprecated in favor of
   `metabase.driver.sql-jdbc/set-role-statement`, which takes an additional `java.sql.Connection` parameter, so you use
