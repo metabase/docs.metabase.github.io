@@ -914,12 +914,16 @@ Roadmap</a>
         <span class="menu-heading">Recent Blog Posts</span>
         
         
-        <a class="w-100 post-with-image recent-blog-link mt-1" href="/blog/metabase-ai-hackathon-winners">
+        <a class="w-100 post-with-image recent-blog-link mt-1" href="/blog/strip-mining-era-of-open-source-security">
           <div class="d-flex align-items-center position-relative overflow-hidden rounded-2 mb-3" id="recent-blog-image-wrapper">
-            <img alt="Resources Image" class="position-absolute w-100" src="/images/posts/ai-hackathon-og.png" loading="lazy">
+            <img alt="Resources Image" class="position-absolute w-100" src="/images/posts/exploit-farming.png" loading="lazy">
           </div>
-          <span class="h6 neutral-40 recent-blog-link-heading mb-3">Winners of the Metabase AI Hackathon</span>
+          <span class="h6 neutral-40 recent-blog-link-heading mb-3">Welcome to the strip mining era of open source security</span>
         </a>
+        
+          <a class="w-100 recent-blog-link" href="/blog/metabase-ai-hackathon-winners">
+            <span class="h6 neutral-40 recent-blog-link-heading mb-3">Winners of the Metabase AI Hackathon</span>
+          </a>
         
           <a class="w-100 recent-blog-link" href="/blog/improving-performance-clojure-development-tools">
             <span class="h6 neutral-40 recent-blog-link-heading mb-3">Improving the performance of the popular Clojure development tool clojure-lsp</span>
@@ -931,10 +935,6 @@ Roadmap</a>
         
           <a class="w-100 recent-blog-link" href="/blog/metabase-ai-hackathon">
             <span class="h6 neutral-40 recent-blog-link-heading mb-3">Metabase AI Hackathon</span>
-          </a>
-        
-          <a class="w-100 recent-blog-link" href="/blog/reprobot-github-issue-triage-agent">
-            <span class="h6 neutral-40 recent-blog-link-heading mb-3">Meet Repro-Bot, our GitHub issue triage agent</span>
           </a>
         
       </div>
@@ -5898,7 +5898,7 @@ Roadmap</a>
 <div class="version__selector cursor-pointer">
   <span class="version__current">
     
-      v0.60
+      v0.61
     
 
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="chevron">
@@ -5909,13 +5909,13 @@ Roadmap</a>
   <ul class="version__dropdown">
     
       
+    
+      
         <li>
-          <a href="/docs/v0.61">
-            v0.61
+          <a href="/docs/v0.60">
+            v0.60
           </a>
         </li>
-      
-    
       
     
       
@@ -6014,23 +6014,6 @@ Roadmap</a>
 
         <h1 id="guest-embeds">Guest embeds</h1>
 
-<div>
-  <a href="/events/interactive-embedding-workshop" class="in-page-promo">
-    <img alt="interactive-embedding-workshop" class="no-zoom" src="/images/events/categories/embedding-workshop.png" loading="lazy">
-    <div>
-      <p>
-        Embed a real dashboard in just 30 minutes.
-      </p>
-      <p class="anchor-like">
-        Join our next Embedding Workshop<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="chevron">
-<path opacity="0.9" d="M3 8.96338L16 21.9634L29 8.96338" stroke="#509ee3" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"></path>
-</svg>
-
-      </p>
-    </div>
-  </a>
-</div>
-
 <p>Guest embeds are a way to embed basic Metabase components in your app without requiring you to create a Metabase account for each person viewing the charts and dashboards. But not logging people in to your Metabase has some major tradeoffs: see <a href="#guest-embed-limitations">limitations</a>.</p>
 
 <p>“Guest” refers to the authentication approach: Metabase doesn’t create a session for each person. Authentication has nothing to do with data freshness. Dashboards and charts in guest embeds always show live data from your database.</p>
@@ -6082,6 +6065,9 @@ Roadmap</a>
   <span class="nb">window</span><span class="p">.</span><span class="nx">metabaseConfig</span> <span class="o">=</span> <span class="p">{</span>
     <span class="na">isGuest</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
     <span class="na">instanceUrl</span><span class="p">:</span> <span class="dl">"</span><span class="s2">YOUR_METABASE_URL</span><span class="dl">"</span><span class="p">,</span>
+    <span class="c1">// Optional. Set this if you want the embed to fetch a fresh JWT</span>
+    <span class="c1">// when the current one expires. See "Refreshing the JWT" below.</span>
+    <span class="c1">// guestEmbedProviderUri: "/your/apps/endpoint",</span>
   <span class="p">};</span>
 <span class="nt">&lt;/script&gt;</span>
 </code></pre></div></div>
@@ -6150,6 +6136,14 @@ Roadmap</a>
     <tr>
       <td data-label="Attribute"><code class="language-plaintext highlighter-rouge">initial-parameters</code></td>
       <td data-label="Description">JSON string of parameter values. Example: <code class="language-plaintext highlighter-rouge">'{"category":["Gizmo"]}'</code>.</td>
+    </tr>
+    <tr>
+      <td data-label="Attribute"><code class="language-plaintext highlighter-rouge">auto-refresh-interval</code></td>
+      <td data-label="Description">Dashboards only. Auto-refresh interval in seconds.</td>
+    </tr>
+    <tr>
+      <td data-label="Attribute"><code class="language-plaintext highlighter-rouge">custom-context</code></td>
+      <td data-label="Description">Forwarded to your <a href="#refreshing-or-initializing-the-jwt-from-your-server"><code class="language-plaintext highlighter-rouge">guestEmbedProviderUri</code></a> endpoint as <code class="language-plaintext highlighter-rouge">customContext</code>. Either a string (e.g., <code class="language-plaintext highlighter-rouge">"gadgets-tab"</code>), or a JSON-stringified object like <code class="language-plaintext highlighter-rouge">initial-parameters</code> (e.g., <code class="language-plaintext highlighter-rouge">'{"tab":"gadgets","region":"us-east"}'</code>).</td>
     </tr>
   </tbody>
 </table>
@@ -6301,7 +6295,7 @@ Fetch the token from your backend and pass it to the component programmatically.
 
 <h3 id="include-all-locked-parameters-in-your-jwt">Include all locked parameters in your JWT</h3>
 
-<p>Once you publish a question or dashboard with a locked parameter, you <em>must</em> include the name of the locked parameter in the <code class="language-plaintext highlighter-rouge">params</code> object when you sign the JWT. If you leave the parameter out, Metabase will refuse the request and log: <code class="language-plaintext highlighter-rouge">You must specify a value for :parameter in the JWT</code>.</p>
+<p>Once you publish a question or dashboard with a locked parameter, you <em>must</em> include the name of the locked parameter in the <code class="language-plaintext highlighter-rouge">params</code> object when you sign the JWT. If you leave the parameter out, Metabase will refuse the request and log: <code class="language-plaintext highlighter-rouge">You must specify a value for :&lt;parameter-name&gt; in the JWT</code>. For example, if your locked parameter is <code class="language-plaintext highlighter-rouge">category</code>, the error will read <code class="language-plaintext highlighter-rouge">You must specify a value for :category in the JWT</code>.</p>
 
 <h3 id="pass-an-empty-array-to-turn-off-a-locked-parameter">Pass an empty array to turn off a locked parameter</h3>
 
@@ -6351,6 +6345,158 @@ Fetch the token from your backend and pass it to the component programmatically.
 </ul>
 
 <p>When the end-user changes a value in your custom widget, re-sign a new JWT on your server with the updated <code class="language-plaintext highlighter-rouge">params</code> and swap it onto the web component’s <code class="language-plaintext highlighter-rouge">token</code> attribute. The embed will re-request the data with the new locked value.</p>
+
+<h2 id="refreshing-or-initializing-the-jwt-from-your-server">Refreshing or initializing the JWT from your server</h2>
+
+<p>JWTs that you sign for guest embeds have an expiration (<code class="language-plaintext highlighter-rouge">exp</code>). Once a token expires, the embed can’t load fresh data, and any filter selections the viewer made will reset on the next request. To keep the embed alive without reloading the page, you can configure a guest token endpoint on your server to hand out fresh JWTs on demand.</p>
+
+<p>The endpoint can serve two flows:</p>
+
+<ul>
+  <li><strong>Refreshing tokens</strong>: when the embed’s current JWT is about to expire, the embed POSTs to your endpoint to get the new JWT, and swaps it in.</li>
+  <li><strong>Initializing with a token</strong> (optional): if you don’t want to pre-render a JWT in the HTML at all, the embed can call the same endpoint on load to fetch that first JWT.</li>
+</ul>
+
+<h3 id="setting-the-endpoint-url-in-the-guest-embed">Setting the endpoint URL in the guest embed</h3>
+
+<p>Add <code class="language-plaintext highlighter-rouge">guestEmbedProviderUri</code> to your <code class="language-plaintext highlighter-rouge">metabaseConfig</code>. The value is a path (or full URL) to an endpoint in your app:</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;script&gt;</span>
+  <span class="nb">window</span><span class="p">.</span><span class="nx">metabaseConfig</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">isGuest</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="na">instanceUrl</span><span class="p">:</span> <span class="dl">"</span><span class="s2">YOUR_METABASE_URL</span><span class="dl">"</span><span class="p">,</span>
+    <span class="na">guestEmbedProviderUri</span><span class="p">:</span> <span class="dl">"</span><span class="s2">/api/metabase-guest-token</span><span class="dl">"</span><span class="p">,</span>
+  <span class="p">};</span>
+<span class="nt">&lt;/script&gt;</span>
+</code></pre></div></div>
+
+<p>When the embed needs a token, it sends a <code class="language-plaintext highlighter-rouge">POST</code> request to <code class="language-plaintext highlighter-rouge">guestEmbedProviderUri</code> with a JSON body, which includes cookies, so you can authenticate the request with your app’s existing session.</p>
+
+<p>Request:</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"entityType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dashboard"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"entityId"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"customContext"</span><span class="p">:</span><span class="w"> </span><span class="s2">"..."</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td data-label="Field"><code class="language-plaintext highlighter-rouge">entityType</code></td>
+      <td data-label="Description"><code class="language-plaintext highlighter-rouge">"dashboard"</code> or <code class="language-plaintext highlighter-rouge">"question"</code>.</td>
+    </tr>
+    <tr>
+      <td data-label="Field"><code class="language-plaintext highlighter-rouge">entityId</code></td>
+      <td data-label="Description">The ID of the dashboard or question being embedded.</td>
+    </tr>
+    <tr>
+      <td data-label="Field"><code class="language-plaintext highlighter-rouge">customContext</code></td>
+      <td data-label="Description">Optional. The string or object you set on the <code class="language-plaintext highlighter-rouge">custom-context</code> attribute.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Response: a JSON object with a single <code class="language-plaintext highlighter-rouge">jwt</code> field:</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w"> </span><span class="nl">"jwt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"YOUR_NEWLY_SIGNED_JWT"</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<h3 id="refresh-flow">Refresh flow</h3>
+
+<p>Pre-render an initial JWT on the component (just like a regular guest embed) and configure <code class="language-plaintext highlighter-rouge">guestEmbedProviderUri</code>. When the JWT expires, the embed will call your endpoint to get a fresh one and swap it in.</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;script&gt;</span>
+  <span class="nb">window</span><span class="p">.</span><span class="nx">metabaseConfig</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">isGuest</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="na">instanceUrl</span><span class="p">:</span> <span class="dl">"</span><span class="s2">YOUR_METABASE_URL</span><span class="dl">"</span><span class="p">,</span>
+    <span class="na">guestEmbedProviderUri</span><span class="p">:</span> <span class="dl">"</span><span class="s2">/api/metabase-guest-token</span><span class="dl">"</span><span class="p">,</span>
+  <span class="p">};</span>
+<span class="nt">&lt;/script&gt;</span>
+
+<span class="nt">&lt;metabase-dashboard</span> <span class="na">token=</span><span class="s">"YOUR_INITIAL_JWT"</span><span class="nt">&gt;&lt;/metabase-dashboard&gt;</span>
+</code></pre></div></div>
+
+<h3 id="initialize-the-embed-without-a-jwt-in-the-html">Initialize the embed without a JWT in the HTML</h3>
+
+<p>If you don’t want to render the JWT in the HTML at all, omit the <code class="language-plaintext highlighter-rouge">token</code> attribute and use <code class="language-plaintext highlighter-rouge">dashboard-id</code> (or <code class="language-plaintext highlighter-rouge">question-id</code>) instead. If you’ve set the <code class="language-plaintext highlighter-rouge">guestEmbedProviderUri</code>, then the embed will call that endpoint on load to fetch the first JWT.</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;metabase-dashboard</span> <span class="na">dashboard-id=</span><span class="s">"10"</span><span class="nt">&gt;&lt;/metabase-dashboard&gt;</span>
+</code></pre></div></div>
+
+<p>This way you can keep all your token-issuing logic in one place on your server.</p>
+
+<h3 id="example-endpoint-nodejs--express">Example endpoint (Node.js / Express)</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">jwt</span> <span class="o">=</span> <span class="nf">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">jsonwebtoken</span><span class="dl">"</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">METABASE_SECRET_KEY</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">YOUR_METABASE_SECRET_KEY</span><span class="dl">"</span><span class="p">;</span>
+
+<span class="nx">app</span><span class="p">.</span><span class="nf">post</span><span class="p">(</span><span class="dl">"</span><span class="s2">/api/metabase-guest-token</span><span class="dl">"</span><span class="p">,</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="c1">// Authenticate using your app's existing session.</span>
+  <span class="kd">const</span> <span class="nx">user</span> <span class="o">=</span> <span class="nx">req</span><span class="p">.</span><span class="nx">session</span><span class="p">?.</span><span class="nx">user</span><span class="p">;</span>
+  <span class="k">if </span><span class="p">(</span><span class="o">!</span><span class="nx">user</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">res</span><span class="p">.</span><span class="nf">status</span><span class="p">(</span><span class="mi">403</span><span class="p">).</span><span class="nf">json</span><span class="p">({</span> <span class="na">error</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Not signed in</span><span class="dl">"</span> <span class="p">});</span>
+  <span class="p">}</span>
+
+  <span class="kd">const</span> <span class="p">{</span> <span class="nx">entityType</span><span class="p">,</span> <span class="nx">entityId</span><span class="p">,</span> <span class="nx">customContext</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">;</span>
+
+  <span class="kd">const</span> <span class="nx">payload</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">resource</span><span class="p">:</span> <span class="p">{</span> <span class="p">[</span><span class="nx">entityType</span><span class="p">]:</span> <span class="nx">entityId</span> <span class="p">},</span>
+    <span class="na">params</span><span class="p">:</span> <span class="nf">paramsFor</span><span class="p">(</span><span class="nx">user</span><span class="p">,</span> <span class="nx">customContext</span><span class="p">),</span>
+    <span class="na">exp</span><span class="p">:</span> <span class="nb">Math</span><span class="p">.</span><span class="nf">round</span><span class="p">(</span><span class="nb">Date</span><span class="p">.</span><span class="nf">now</span><span class="p">()</span> <span class="o">/</span> <span class="mi">1000</span><span class="p">)</span> <span class="o">+</span> <span class="mi">10</span> <span class="o">*</span> <span class="mi">60</span><span class="p">,</span> <span class="c1">// 10 minute expiration</span>
+  <span class="p">};</span>
+
+  <span class="nx">res</span><span class="p">.</span><span class="nf">json</span><span class="p">({</span> <span class="na">jwt</span><span class="p">:</span> <span class="nx">jwt</span><span class="p">.</span><span class="nf">sign</span><span class="p">(</span><span class="nx">payload</span><span class="p">,</span> <span class="nx">METABASE_SECRET_KEY</span><span class="p">)</span> <span class="p">});</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<p>Because the embed’s request includes your app’s session cookie, your endpoint can:</p>
+
+<ul>
+  <li>Refuse to issue a JWT (with a <code class="language-plaintext highlighter-rouge">403</code>) for visitors who aren’t signed in to your app.</li>
+  <li>Compute different <code class="language-plaintext highlighter-rouge">params</code> (i.e., locked filter values) per visitor.</li>
+</ul>
+
+<h3 id="sending-custom-context">Sending custom context</h3>
+
+<p>When you embed the same dashboard or question more than once on a page, you can use the <code class="language-plaintext highlighter-rouge">custom-context</code> attribute to tell your endpoint which copy is requesting a token. The value you pass is forwarded to your endpoint as <code class="language-plaintext highlighter-rouge">customContext</code>.</p>
+
+<p>For example, two copies of the same dashboard scoped to different categories:</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;metabase-dashboard</span>
+  <span class="na">dashboard-id=</span><span class="s">"10"</span>
+  <span class="na">custom-context=</span><span class="s">"gadgets-tab"</span>
+<span class="nt">&gt;&lt;/metabase-dashboard&gt;</span>
+</code></pre></div></div>
+
+<p>You can also pass a JSON-stringified object (the embed parses it before forwarding it on, so your endpoint receives a real object):</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;metabase-dashboard</span>
+  <span class="na">dashboard-id=</span><span class="s">"10"</span>
+  <span class="na">custom-context=</span><span class="s">'{"tab":"gadgets","region":"us-east"}'</span>
+<span class="nt">&gt;&lt;/metabase-dashboard&gt;</span>
+</code></pre></div></div>
+
+<p>Your endpoint can switch on <code class="language-plaintext highlighter-rouge">customContext</code> to set different locked parameters, like so:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nf">paramsFor</span><span class="p">(</span><span class="nx">user</span><span class="p">,</span> <span class="nx">customContext</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">switch </span><span class="p">(</span><span class="nx">customContext</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="dl">"</span><span class="s2">gadgets-tab</span><span class="dl">"</span><span class="p">:</span>
+      <span class="k">return</span> <span class="p">{</span> <span class="na">category</span><span class="p">:</span> <span class="p">[</span><span class="dl">"</span><span class="s2">Gadget</span><span class="dl">"</span><span class="p">]</span> <span class="p">};</span>
+    <span class="k">case</span> <span class="dl">"</span><span class="s2">doohickeys-tab</span><span class="dl">"</span><span class="p">:</span>
+      <span class="k">return</span> <span class="p">{</span> <span class="na">category</span><span class="p">:</span> <span class="p">[</span><span class="dl">"</span><span class="s2">Doohickey</span><span class="dl">"</span><span class="p">]</span> <span class="p">};</span>
+    <span class="nl">default</span><span class="p">:</span>
+      <span class="k">return</span> <span class="p">{};</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
 
 <h2 id="disabling-embedding-for-a-question-or-dashboard">Disabling embedding for a question or dashboard</h2>
 
@@ -6413,6 +6559,7 @@ Fetch the token from your backend and pass it to the component programmatically.
   <li>The web component sends the token to Metabase.</li>
   <li>Metabase verifies the JWT signature using your secret key.</li>
   <li>If valid, Metabase returns the embedded content.</li>
+  <li>If you’ve configured <a href="#refreshing-or-initializing-the-jwt-from-your-server">JWT refresh</a>, the embed will fetch a fresh JWT from your endpoint when it next needs to make a data request after the current token has expired — not on a background timer. An idle embed makes no refresh requests. (Optionally, the embed can also fetch the very first JWT from your endpoint on load.) The embed keeps working without a page reload.</li>
 </ol>
 
 <p>For interactive filters, you can pass initial parameter values via the <code class="language-plaintext highlighter-rouge">initial-parameters</code> attribute. When a visitor changes a filter, the web component handles the update automatically.</p>

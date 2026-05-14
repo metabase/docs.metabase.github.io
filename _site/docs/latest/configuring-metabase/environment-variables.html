@@ -914,12 +914,16 @@ Roadmap</a>
         <span class="menu-heading">Recent Blog Posts</span>
         
         
-        <a class="w-100 post-with-image recent-blog-link mt-1" href="/blog/metabase-ai-hackathon-winners">
+        <a class="w-100 post-with-image recent-blog-link mt-1" href="/blog/strip-mining-era-of-open-source-security">
           <div class="d-flex align-items-center position-relative overflow-hidden rounded-2 mb-3" id="recent-blog-image-wrapper">
-            <img alt="Resources Image" class="position-absolute w-100" src="/images/posts/ai-hackathon-og.png" loading="lazy">
+            <img alt="Resources Image" class="position-absolute w-100" src="/images/posts/exploit-farming.png" loading="lazy">
           </div>
-          <span class="h6 neutral-40 recent-blog-link-heading mb-3">Winners of the Metabase AI Hackathon</span>
+          <span class="h6 neutral-40 recent-blog-link-heading mb-3">Welcome to the strip mining era of open source security</span>
         </a>
+        
+          <a class="w-100 recent-blog-link" href="/blog/metabase-ai-hackathon-winners">
+            <span class="h6 neutral-40 recent-blog-link-heading mb-3">Winners of the Metabase AI Hackathon</span>
+          </a>
         
           <a class="w-100 recent-blog-link" href="/blog/improving-performance-clojure-development-tools">
             <span class="h6 neutral-40 recent-blog-link-heading mb-3">Improving the performance of the popular Clojure development tool clojure-lsp</span>
@@ -931,10 +935,6 @@ Roadmap</a>
         
           <a class="w-100 recent-blog-link" href="/blog/metabase-ai-hackathon">
             <span class="h6 neutral-40 recent-blog-link-heading mb-3">Metabase AI Hackathon</span>
-          </a>
-        
-          <a class="w-100 recent-blog-link" href="/blog/reprobot-github-issue-triage-agent">
-            <span class="h6 neutral-40 recent-blog-link-heading mb-3">Meet Repro-Bot, our GitHub issue triage agent</span>
           </a>
         
       </div>
@@ -5898,7 +5898,7 @@ Roadmap</a>
 <div class="version__selector cursor-pointer">
   <span class="version__current">
     
-      v0.60
+      v0.61
     
 
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="chevron">
@@ -5909,13 +5909,13 @@ Roadmap</a>
   <ul class="version__dropdown">
     
       
+    
+      
         <li>
-          <a href="/docs/v0.61">
-            v0.61
+          <a href="/docs/v0.60">
+            v0.60
           </a>
         </li>
-      
-    
       
     
       
@@ -6121,6 +6121,17 @@ x.com</code></li>
 
 <p>Allowed iframe hosts.</p>
 
+<h3 id="mb_analytics_pii_retention_enabled"><code class="language-plaintext highlighter-rouge">MB_ANALYTICS_PII_RETENTION_ENABLED</code></h3>
+
+<ul>
+  <li>Type: boolean</li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">false</code></li>
+  <li><a href="../installation-and-operation/serialization">Exported as</a>: <code class="language-plaintext highlighter-rouge">analytics-pii-retention-enabled</code>.</li>
+  <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">analytics-pii-retention-enabled</code></li>
+</ul>
+
+<p>Enable logging of embed path, query parameters, user agent, and IP address of who views your internal data and embeds. This information will be shown in your usage analytics.</p>
+
 <h3 id="mb_anon_tracking_enabled"><code class="language-plaintext highlighter-rouge">MB_ANON_TRACKING_ENABLED</code></h3>
 
 <ul>
@@ -6129,7 +6140,7 @@ x.com</code></li>
   <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">anon-tracking-enabled</code></li>
 </ul>
 
-<p>Enable the collection of anonymous usage data in order to help us improve.</p>
+<p>Enable the collection of anonymous usage data in order to help Metabase improve..</p>
 
 <h3 id="mb_api_key"><code class="language-plaintext highlighter-rouge">MB_API_KEY</code></h3>
 
@@ -9242,15 +9253,6 @@ Default: <code class="language-plaintext highlighter-rouge">"plugins"</code></p>
 <p>Path of the “plugins” directory, which is used to store the Metabase database drivers. The user who is running Metabase should have permission to write to the directory. When running the JAR, the default directory is <code class="language-plaintext highlighter-rouge">plugins</code>, created in the same location as the JAR file. When running Docker, the default directory is <code class="language-plaintext highlighter-rouge">/plugins</code>.</p>
 
 <p>The location is where custom third-party drivers should be added. Then Metabase will load the driver on startup, which can be verified in the log.</p>
-
-<h3 id="mb_prometheus_server_port"><code class="language-plaintext highlighter-rouge">MB_PROMETHEUS_SERVER_PORT</code></h3>
-
-<p>Type: integer<br>
-Default: <code class="language-plaintext highlighter-rouge">null</code></p>
-
-<p>Port to serve Prometheus metrics from. If set, Prometheus collectors are registered and served from <code class="language-plaintext highlighter-rouge">localhost:&lt;port&gt;/metrics</code>.</p>
-
-<p>See <a href="../installation-and-operation/observability-with-prometheus">Observability with Prometheus</a>.</p>
 
 <h3 id="mb_qp_cache_backend"><code class="language-plaintext highlighter-rouge">MB_QP_CACHE_BACKEND</code></h3>
 

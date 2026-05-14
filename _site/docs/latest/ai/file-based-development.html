@@ -52,12 +52,12 @@ window.redirectTo = function redirectTo(theLocation) {
 
 
 
-<title>File-based development | Metabase Documentation</title>
+<title>Agent-driven development | Metabase Documentation</title>
 <!-- Twitter cards -->
 <meta name="twitter:site" content="@metabase">
 
-<meta name="twitter:title" content="File-based development | Metabase Documentation">
-<meta name="twitter:description" content="Use a combination of agent skills, the Metabase MCP server, and serialization to develop Metabase content with agents on your local file system.">
+<meta name="twitter:title" content="Agent-driven development | Metabase Documentation">
+<meta name="twitter:description" content="Use an agent with skills to create Metabase content on your local machine as YAML files, then upload the files to your Metabase.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -66,8 +66,8 @@ window.redirectTo = function redirectTo(theLocation) {
 <meta property="og:site_name" content="Metabase | Business Intelligence, Dashboards, and Data Visualization">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://www.metabase.com/docs/latest/ai/file-based-development">
-<meta name="title" property="og:title" content="File-based development | Metabase Documentation">
-<meta name="description" property="og:description" content="Use a combination of agent skills, the Metabase MCP server, and serialization to develop Metabase content with agents on your local file system.">
+<meta name="title" property="og:title" content="Agent-driven development | Metabase Documentation">
+<meta name="description" property="og:description" content="Use an agent with skills to create Metabase content on your local machine as YAML files, then upload the files to your Metabase.">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -914,12 +914,16 @@ Roadmap</a>
         <span class="menu-heading">Recent Blog Posts</span>
         
         
-        <a class="w-100 post-with-image recent-blog-link mt-1" href="/blog/metabase-ai-hackathon-winners">
+        <a class="w-100 post-with-image recent-blog-link mt-1" href="/blog/strip-mining-era-of-open-source-security">
           <div class="d-flex align-items-center position-relative overflow-hidden rounded-2 mb-3" id="recent-blog-image-wrapper">
-            <img alt="Resources Image" class="position-absolute w-100" src="/images/posts/ai-hackathon-og.png" loading="lazy">
+            <img alt="Resources Image" class="position-absolute w-100" src="/images/posts/exploit-farming.png" loading="lazy">
           </div>
-          <span class="h6 neutral-40 recent-blog-link-heading mb-3">Winners of the Metabase AI Hackathon</span>
+          <span class="h6 neutral-40 recent-blog-link-heading mb-3">Welcome to the strip mining era of open source security</span>
         </a>
+        
+          <a class="w-100 recent-blog-link" href="/blog/metabase-ai-hackathon-winners">
+            <span class="h6 neutral-40 recent-blog-link-heading mb-3">Winners of the Metabase AI Hackathon</span>
+          </a>
         
           <a class="w-100 recent-blog-link" href="/blog/improving-performance-clojure-development-tools">
             <span class="h6 neutral-40 recent-blog-link-heading mb-3">Improving the performance of the popular Clojure development tool clojure-lsp</span>
@@ -931,10 +935,6 @@ Roadmap</a>
         
           <a class="w-100 recent-blog-link" href="/blog/metabase-ai-hackathon">
             <span class="h6 neutral-40 recent-blog-link-heading mb-3">Metabase AI Hackathon</span>
-          </a>
-        
-          <a class="w-100 recent-blog-link" href="/blog/reprobot-github-issue-triage-agent">
-            <span class="h6 neutral-40 recent-blog-link-heading mb-3">Meet Repro-Bot, our GitHub issue triage agent</span>
           </a>
         
       </div>
@@ -5898,7 +5898,7 @@ Roadmap</a>
 <div class="version__selector cursor-pointer">
   <span class="version__current">
     
-      v0.60
+      v0.61
     
 
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="chevron">
@@ -5909,13 +5909,13 @@ Roadmap</a>
   <ul class="version__dropdown">
     
       
+    
+      
         <li>
-          <a href="/docs/v0.61">
-            v0.61
+          <a href="/docs/v0.60">
+            v0.60
           </a>
         </li>
-      
-    
       
     
       
@@ -6012,7 +6012,7 @@ Roadmap</a>
 </div>
 
 
-        <h1 id="file-based-development">File-based development</h1>
+        <h1 id="agent-driven-development">Agent-driven development</h1>
 
 <div class="bootstrap">
   <div class="plans-blockquote bg-blue-95 rounded-3 p-6 d-flex flex-row border border-1 border-primary">
@@ -6028,7 +6028,7 @@ Roadmap</a>
       
 
     <p class="m-0 ms-2 paragraph-5 neutral-40">
-       File-based development is only available on
+       Agent-driven development is only available on
       <a class="fw-bold" href="/product/pro">Pro</a> and
       <a class="fw-bold link-purple" href="/product/enterprise">Enterprise</a>
       plans  (both self-hosted and on Metabase Cloud).
@@ -6036,131 +6036,293 @@ Roadmap</a>
   </div>
 </div>
 
-<p>Metabase content like questions and dashboards can be serialized as YAML files. You can edit those YAML files directly, but the most productive workflow is to let an agent do the editing for you — this article focuses on that agent-driven workflow.</p>
+<p>Metabase content like questions and dashboards can be serialized as YAML files. You can edit those YAML files by hand, sure, but now that we have actual genies, you can just ask them to edit them for you (call it “lamp-rubbing development”).</p>
 
-<h2 id="the-file-based-toolkit">The file-based toolkit</h2>
+<p>Paired with some skills we’ve developed, you can export your Metabase as YAML files, ask your agent to create new questions and dashboards YAML files, then import that new content into your Metabase. It’s a whole new way to work with Metabase.</p>
 
-<p>We provide a set of tools for using an AI agent to create and edit Metabase content <a href="../installation-and-operation/serialization">serialized</a> as YAML files.</p>
+<h2 id="the-agent-driven-development-toolkit">The agent-driven development toolkit</h2>
+
+<p>To develop your Metabase content on your local filesystem, we’ve put together a set of tools, including a set of agent skills.</p>
 
 <ul>
-  <li>The <a href="https://github.com/metabase/representations">Metabase Representation Format</a>. This is a directory that includes a spec, schemas, and examples for all Metabase entities as YAML files: questions, dashboards, and so on.</li>
-  <li>The <a href="https://github.com/metabase/agent-skills"><code class="language-plaintext highlighter-rouge">metabase-representation-format</code> agent skill</a> for working with these YAML files.</li>
-  <li>CLI commands and API endpoints to export and import content serialized in YAML.</li>
-  <li><a href="./mcp">MCP server</a> to look up database metadata when creating the YAML files.</li>
+  <li><a href="https://github.com/metabase/representations"><strong>Metabase Representation Format</strong></a>: the YAML schema and spec for every Metabase entity (questions, dashboards, collections, transforms, and so on).</li>
+  <li><strong><a href="https://github.com/metabase/database-metadata">Metabase Database Metadata Format</a></strong>: diff-friendly representations of synced databases, their tables, and their fields, as a tree of YAML files.</li>
+  <li><strong>Export and Import</strong> CLI and API endpoints to move serialized content between your local files and Metabase.</li>
+  <li><a href="../installation-and-operation/remote-sync"><strong>Remote Sync</strong></a> (Optional): push content from a Read-write Metabase into a git repo, and pull it into a Read-only Metabase in production.</li>
 </ul>
 
-<h2 id="prerequisites">Prerequisites</h2>
+<h2 id="how-content-moves-between-files-and-metabase">How content moves between files and Metabase</h2>
+
+<p>You’ll need a way to get YAML files out of Metabase to edit and back into Metabase to verify and ship. There are two options:</p>
+
+<ul>
+  <li><strong><a href="../installation-and-operation/remote-sync">Remote Sync</a></strong> — push and pull from inside Metabase. Requires a Read-write development instance and a Read-only production instance.</li>
+  <li><strong>Serialization API</strong> — <code class="language-plaintext highlighter-rouge">curl</code>-based export and import against the <code class="language-plaintext highlighter-rouge">/api/ee/serialization/</code> endpoints.</li>
+</ul>
+
+<p>Pick one before you start the <a href="#initial-setup">Initial setup</a>; the setup steps differ slightly (Remote Sync doesn’t need a separate API key in production).</p>
+
+<h2 id="initial-setup">Initial setup</h2>
+
+<p>Some things to put into place to get a workflow going:</p>
+
+<ol>
+  <li><a href="#set-up-a-development-metabase">Set up a development Metabase</a></li>
+  <li><a href="#set-up-a-repository-to-version-your-yaml-files">Set up a repository to version your YAML files</a></li>
+  <li><a href="#add-agent-skills-to-your-repository">Add agent skills to your repository</a></li>
+  <li><a href="#download-the-database-metadata">Download the database metadata</a></li>
+</ol>
+
+<p>Once you have these set up, you can step through one of the example workflows.</p>
 
 <h3 id="set-up-a-development-metabase">Set up a development Metabase</h3>
 
-<p>Set up a Metabase instance to check your work before pushing changes to production. This Metabase should connect to the same data warehouse(s) your production Metabase connects to. A <a href="../configuring-metabase/config-file">config file</a> will come in handy here.</p>
-
-<p>We also recommend turning off the sample content and usage analytics, so they don’t pollute the data model. If you’re using a <a href="../installation-and-operation/running-metabase-on-docker">docker compose file</a>, add these <a href="../configuring-metabase/environment-variables">environment variables</a>:</p>
+<ol>
+  <li>
+    <p>Set up a Metabase instance to check your work before pushing changes to production. This Metabase should connect to the same data warehouse(s) your production Metabase connects to. A <a href="../configuring-metabase/config-file">config file</a> will come in handy here.</p>
+  </li>
+  <li>
+    <p>Create an <a href="../people-and-groups/api-keys#create-an-api-key">API key</a> and assign it to the Admin group. The skills export and import all content and read database metadata, so they need Admin-level access. If you’re using the <a href="#how-content-moves-between-files-and-metabase">Serialization API workflow</a>, you’ll also need to create an API key in your production Metabase so you can import your files into it.</p>
+  </li>
+  <li>
+    <p>We also recommend turning off the sample content and usage analytics, so they don’t pollute the data model. If you’re using a <a href="../installation-and-operation/running-metabase-on-docker">docker compose file</a>, add these <a href="../configuring-metabase/environment-variables">environment variables</a>:</p>
+  </li>
+</ol>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>MB_LOAD_SAMPLE_CONTENT: "false"
 MB_INSTALL_ANALYTICS_DATABASE: "false"
 </code></pre></div></div>
 
-<h3 id="for-agent-driven-development">For agent-driven development</h3>
-
-<p>If you want an agent to do the editing, you also need:</p>
+<h3 id="set-up-a-repository-to-version-your-yaml-files">Set up a repository to version your YAML files</h3>
 
 <ol>
-  <li>
-    <p><strong>The <code class="language-plaintext highlighter-rouge">metabase-representation-format</code> skill added to your agent</strong> so the agent understands the YAML schemas. See <a href="https://github.com/metabase/agent-skills">Agent skills</a>.</p>
-  </li>
-  <li>
-    <p><strong>Your agent connected to your Metabase’s MCP server</strong>, so it can look up database metadata (table names, fields, and sample values) when writing questions and dashboards. The MCP server exposes tools like <code class="language-plaintext highlighter-rouge">search</code>, <code class="language-plaintext highlighter-rouge">get_table</code>, and <code class="language-plaintext highlighter-rouge">get_table_field_values</code>. See <a href="./mcp">MCP server</a>.</p>
-  </li>
+  <li>Initialize a new repo.</li>
+  <li>Add a <code class="language-plaintext highlighter-rouge">.gitignore</code> file and add <code class="language-plaintext highlighter-rouge">.metabase/</code> and <code class="language-plaintext highlighter-rouge">.env</code>.</li>
+  <li>Add the following to your <code class="language-plaintext highlighter-rouge">.env</code>:</li>
 </ol>
 
-<h2 id="example-agent-driven-workflow">Example agent-driven workflow</h2>
-
-<p>Here’s an example workflow for using an agent to create Metabase content as YAML on your local machine, then importing that content into your development and production Metabases.</p>
-
-<h3 id="1-create-a-git-repo">1. Create a git repo</h3>
-
-<p>Initialize a git repo with a README.md and an initial commit.</p>
-
-<h3 id="2-check-out-a-branch">2. Check out a branch</h3>
-
-<p>Create a new branch to track your work.</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git checkout -b your-branch-name
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   METABASE_URL={your-metabase-url}
+   METABASE_API_KEY={your-api-key}
 </code></pre></div></div>
 
-<h3 id="3-export-your-production-metabase">3. Export your production Metabase</h3>
+<h3 id="add-agent-skills-to-your-repository">Add agent skills to your repository</h3>
 
-<p>Always export before editing YAML files locally. If someone has updated a dashboard or question in the Metabase UI since your last export, and you edit and import stale local files, the import will overwrite those in-app changes. Re-export at the start of each editing session if the app may have changed since your last export.</p>
+<p>You should add the following skills to your agent so it has context it needs. If you commit the skills into <code class="language-plaintext highlighter-rouge">.claude/skills/</code> in your repo, for example, Claude loads them automatically whenever you run it from that directory.</p>
 
-<p>Your agent will also read these serialized YAML files to find info about existing content, so the agent can know what you mean when you ask it to “add the new question to the Handsome collection.”</p>
+<ul>
+  <li><a href="https://github.com/metabase/agent-skills/blob/main/skills/metabase-representation-format/SKILL.md"><strong><code class="language-plaintext highlighter-rouge">metabase-representation-format</code> agent skill</strong></a>: teaches the agent the representation format and ships the schema checker.</li>
+  <li><a href="https://github.com/metabase/agent-skills/blob/main/skills/metabase-database-metadata/SKILL.md"><strong><code class="language-plaintext highlighter-rouge">metabase-database-metadata</code> agent skill</strong></a>: fetches database metadata from your Metabase into an on-disk YAML tree the agent can read while editing.</li>
+  <li><a href="https://github.com/metabase/agent-skills/blob/main/skills/metabase-semantic-checker/SKILL.md"><strong><code class="language-plaintext highlighter-rouge">metabase-semantic-checker</code> agent skill</strong></a> (optional): runs Metabase’s semantic checker in Docker to catch referential and query errors the schema check doesn’t.</li>
+</ul>
 
-<p>To export your Metabase:</p>
+<h3 id="download-the-database-metadata">Download the database metadata</h3>
 
-<ol>
-  <li>Create an <a href="../people-and-groups/api-keys">API key</a>.</li>
-  <li>Assign the key to the Admin group.</li>
-  <li>
-    <p>Send a <code class="language-plaintext highlighter-rouge">curl</code> request to export data:</p>
+<p>Invoke the <code class="language-plaintext highlighter-rouge">metabase-database-metadata</code> skill and ask your agent to fetch the database metadata. The agent will:</p>
 
-    <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="se">\</span>
-  <span class="nt">-H</span> <span class="s1">'X-API-Key: YOUR_API_KEY'</span> <span class="se">\</span>
-  <span class="nt">-X</span> POST <span class="s1">'https://your-metabase-url/api/ee/serialization/export?data_model=false'</span> <span class="se">\</span>
-  <span class="nt">-o</span> metabase_data.tgz
-</code></pre></div>    </div>
+<ul>
+  <li>Check that <code class="language-plaintext highlighter-rouge">.env</code> exists. If it doesn’t, the agent will prompt you to create it.</li>
+  <li>Verify that <code class="language-plaintext highlighter-rouge">.env</code> and <code class="language-plaintext highlighter-rouge">.metabase/</code> are in <code class="language-plaintext highlighter-rouge">.gitignore</code>, asking before adding them.</li>
+  <li>Fetch <code class="language-plaintext highlighter-rouge">/api/database/metadata</code> into <code class="language-plaintext highlighter-rouge">.metabase/metadata.json</code> (raw API response; can be several GB on large warehouses).</li>
+  <li>Extract a diff-friendly YAML tree to <code class="language-plaintext highlighter-rouge">.metabase/databases/&lt;database&gt;/schemas/&lt;schema&gt;/tables/&lt;table&gt;.yaml</code> by running <code class="language-plaintext highlighter-rouge">npx @metabase/database-metadata extract-metadata</code>.</li>
+</ul>
 
-    <p>substituting <code class="language-plaintext highlighter-rouge">YOUR_API_KEY</code> with your API key and <code class="language-plaintext highlighter-rouge">your-metabase-url</code> with the URL of your Metabase instance.</p>
+<p>The agent can use the YAML extracted to your <code class="language-plaintext highlighter-rouge">.metabase</code> directory while creating and editing new questions and dashboards in YAML. That way your agent can refer to real column names, field types, and foreign-key relationships without making live API calls (which would be much slower).</p>
 
-    <p>Be sure to set the <code class="language-plaintext highlighter-rouge">data_model=false</code> query parameter excludes the data model from the export, since the data model payload can be large. Instead, your agent will use the MCP server to search for the metadata it needs to generate the YAML files. See <a href="../installation-and-operation/serialization">Serialization</a> for other export options.</p>
+<p>To refresh this database metadata, just ask your agent to re-fetch it.</p>
 
-    <p>This command will download the files as a GZIP-compressed Tar file named <code class="language-plaintext highlighter-rouge">metabase_data.tgz</code>.</p>
-  </li>
-  <li>
-    <p>Extract the archive:</p>
+<h2 id="example-workflows">Example workflows</h2>
 
-    <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">tar</span> <span class="nt">-xzf</span> metabase_data.tgz
-</code></pre></div>    </div>
-  </li>
-</ol>
+<p>The workflows below both assume you’ve completed the <a href="#initial-setup">Initial setup</a>.</p>
 
-<p>Instead of running this <code class="language-plaintext highlighter-rouge">curl</code> by hand every time, you can ask your agent to generate an <code class="language-plaintext highlighter-rouge">export.sh</code> script that wraps the <code class="language-plaintext highlighter-rouge">curl</code> and the <code class="language-plaintext highlighter-rouge">tar -xzf</code> extraction, so you can re-export with a single command.</p>
+<h3 id="example-prompts">Example prompts</h3>
 
-<h3 id="4-commit-the-export">4. Commit the export</h3>
+<p>Once your repo has the agent skills and a baseline of content, prompt the agent with a structured request:</p>
 
-<p>Commit the initial exported set of YAML files. If your AI goes off the rails, you can always revert to the original export.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Use the metabase-representation-format and metabase-database-metadata skills to create new YAML files in this directory:
 
-<h3 id="5-use-ai-to-edit-or-create-new-content">5. Use AI to edit or create new content</h3>
-
-<p>Change into the directory with your serialized files and ask your agent to create whatever you want. Make sure your agent actually invokes the skills, otherwise the agent may not get the YAML format right.</p>
-
-<p>Example prompt:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Use the metabase-representation-format skill and the Metabase MCP server to do the following by editing the YAML files in this directory:
-
-1. Create a new collection called "File-based collection".
-2. Create a new dashboard called "AI-created dashboard", saved to that collection.
-3. Create a question called "AI counts products" that counts the number of products by category.
-4. Add that question to the "AI-created dashboard".
+1. Create a new dashboard called "Support overview" in collections/main/.
+2. Add questions showing total ticket volume, open tickets, and average satisfaction rating.
 </code></pre></div></div>
 
-<p>Depending on how sophisticated your AI model is, you can also try more ambitious, open-ended requests:</p>
+<p>Or, depending on how capable your model is, try a more open-ended request:</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Use the metabase-representation-format skill and the Metabase MCP server to analyze the data in the sample postgresql
-database. Look at the orders, people, reviews, and products tables.
-
-Create a dashboard with some questions that gives an overview of how the business is doing.
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Use the metabase-representation-format and metabase-database-metadata skills to analyze our support data. Look at the tickets, customers, and interactions tables, and create a dashboard that gives an overview of our team's support workload.
 </code></pre></div></div>
+
+<p>The agent will read the representation format spec, check existing files for local conventions, consult <code class="language-plaintext highlighter-rouge">.metabase/databases/</code> for real column names, and write new YAML.</p>
+
+<h2 id="example-workflow-with-remote-sync">Example workflow with Remote Sync</h2>
+
+<h3 id="1-configure-remote-sync-on-both-instances">1. Configure Remote Sync on both instances</h3>
+
+<p>In your development Metabase, configure <a href="../installation-and-operation/remote-sync#setting-up-remote-sync">Remote Sync in Read-write mode</a> pointed at your repo. In production, configure a second Metabase in Read-only mode pointed at the same repo.</p>
+
+<h3 id="2-create-a-branch-from-the-metabase-ui">2. Create a branch from the Metabase UI</h3>
+
+<p>Switch branches in Metabase, as the Metabase UI is the source of truth for which branch the development instance pushes to and pulls from.</p>
+
+<p>In your development Metabase, click the <strong>branch dropdown</strong> at the top and <a href="../installation-and-operation/remote-sync#creating-a-branch">create a new branch</a> for your work, like <code class="language-plaintext highlighter-rouge">feature/support-dashboard</code>.</p>
+
+<h3 id="3-push-existing-content-to-seed-the-repo">3. Push existing content to seed the repo</h3>
+
+<p>Click the up arrow (<strong>push</strong>) icon to <a href="../installation-and-operation/remote-sync#committing-and-pushing-your-changes">commit and push</a> your existing synced collections to the branch.</p>
+
+<h3 id="4-clone-the-repo-locally-and-check-out-the-branch">4. Clone the repo locally and check out the branch</h3>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone your-metabase-repo
+<span class="nb">cd </span>your-metabase-repo
+git checkout feature/support-dashboard
+</code></pre></div></div>
+
+<h3 id="5-ask-the-agent-to-edit-or-create-content">5. Ask the agent to edit or create content</h3>
+
+<p>See <a href="#example-prompts">Example prompts</a> above for prompt patterns to use here.</p>
 
 <h3 id="6-validate-the-yaml-files">6. Validate the YAML files</h3>
 
-<p>Before importing, check your YAML files against the representation schemas. The <code class="language-plaintext highlighter-rouge">metabase-representation-format</code> skill should have the agent run the validator for you, but you can also run it yourself:</p>
+<p>Run the <a href="#schema-check">schema check</a> after every batch of edits, and optionally run the <a href="#semantic-checker-for-deeper-validation">semantic check</a> at the end of the session. See <a href="#validating-yaml-files">Validating YAML files</a> below.</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npx --yes @metabase/representations validate-schema
+<p>If anything fails, the agent should be able to fix the issue if you give it the error.</p>
+
+<h3 id="7-commit-and-open-a-pull-request">7. Commit and open a pull request</h3>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git add <span class="nt">-A</span>
+git commit <span class="nt">-m</span> <span class="s2">"Add support-overview dashboard"</span>
+git push origin feature/support-dashboard
 </code></pre></div></div>
 
-<p>You can also set up a workflow to run the validator on pull requests. Here’s an example, saved to <code class="language-plaintext highlighter-rouge">.github/workflows/schema-check.yml</code>:</p>
+<p>Open a pull request so your team can review the YAML diff.</p>
 
-<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">name</span><span class="pi">:</span> <span class="s">Schema Check</span>
+<h3 id="8-pull-the-branch-into-your-development-metabase">8. Pull the branch into your development Metabase</h3>
+
+<p>Click the <strong>pull</strong> (down arrow) icon in your development Metabase to load the agent’s changes. Verify the dashboard renders correctly and the questions return expected results.</p>
+
+<h3 id="9-merge-the-pr-so-production-picks-up-the-changes">9. Merge the PR so production picks up the changes</h3>
+
+<p>If you’ve enabled <a href="../installation-and-operation/remote-sync#pulling-changes-automatically">auto-sync</a>, your production Metabase (in Read-only mode) will pull the new main branch automatically on its next interval. Otherwise, trigger a pull from production manually.</p>
+
+<h2 id="example-workflow-with-import-and-export-endpoints">Example workflow with import and export endpoints</h2>
+
+<h3 id="1-clone-the-empty-repo-and-create-a-branch">1. Clone the empty repo and create a branch</h3>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone https://github.com/your-org/your-repo.git
+<span class="nb">cd </span>your-repo
+git checkout <span class="nt">-b</span> feature/support-dashboard
+</code></pre></div></div>
+
+<h3 id="2-export-existing-content-to-seed-the-repo">2. Export existing content to seed the repo</h3>
+
+<p>The agent does better work when the repo already holds your current Metabase content, so it can see real examples of the Representation Format and your collection conventions. Run the <a href="../installation-and-operation/serialization#serialization-workflow-example">serialization export</a> from inside the clone:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="se">\</span>
+  <span class="nt">-H</span> <span class="s1">'X-API-Key: YOUR_API_KEY'</span> <span class="se">\</span>
+  <span class="nt">-X</span> POST <span class="s1">'https://your-metabase-url/api/ee/serialization/export?data_model=false'</span> <span class="se">\</span>
+  <span class="nt">-o</span> metabase_data.tgz
+<span class="nb">tar</span> <span class="nt">-xzf</span> metabase_data.tgz
+</code></pre></div></div>
+
+<p>Set <code class="language-plaintext highlighter-rouge">data_model=false</code> to keep the export small. The agent should get its metadata from the <code class="language-plaintext highlighter-rouge">metabase-database-metadata</code> skill instead. For more on export options, see <a href="../installation-and-operation/serialization">Serialization</a>.</p>
+
+<p>Commit the extracted YAML so you have a baseline to revert to if the agent goes off the rails.</p>
+
+<h3 id="3-ask-the-agent-to-edit-or-create-content">3. Ask the agent to edit or create content</h3>
+
+<p>See <a href="#example-prompts">Example prompts</a> above for prompt patterns to use here.</p>
+
+<h3 id="4-validate-the-yaml-files">4. Validate the YAML files</h3>
+
+<p>Run the <a href="#schema-check">schema check</a> after every batch of edits, and optionally run the <a href="#semantic-checker-for-deeper-validation">semantic check</a> at the end of the session. See <a href="#validating-yaml-files">Validating YAML files</a> below.</p>
+
+<h3 id="5-commit-and-open-a-pull-request">5. Commit and open a pull request</h3>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git add <span class="nt">-A</span>
+git commit <span class="nt">-m</span> <span class="s2">"Add support-overview dashboard"</span>
+git push origin feature/support-dashboard
+</code></pre></div></div>
+
+<p>Then open open a pull request so your team can review the YAML diff.</p>
+
+<h3 id="6-import-the-yaml-into-your-development-metabase">6. Import the YAML into your development Metabase</h3>
+
+<p>Re-bundle the YAML and import it:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">tar</span> <span class="nt">-czf</span> metabase_data.tgz metabase_data
+curl <span class="nt">-X</span> POST <span class="se">\</span>
+  <span class="nt">-H</span> <span class="s1">'X-API-Key: YOUR_API_KEY'</span> <span class="se">\</span>
+  <span class="nt">-F</span> <span class="s1">'file=@metabase_data.tgz'</span> <span class="se">\</span>
+  <span class="s1">'https://your-metabase-url/api/ee/serialization/import'</span> <span class="se">\</span>
+  <span class="nt">-o</span> -
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">-o -</code> flag writes the import response to stdout, so you can see whether the import succeeded and check any warnings. You can ask the agent to generate <code class="language-plaintext highlighter-rouge">export.sh</code> and <code class="language-plaintext highlighter-rouge">import.sh</code> wrappers so you’re running a single command each time.</p>
+
+<p>Verify the dashboard renders correctly and the questions return expected results.</p>
+
+<h3 id="7-repeat-the-import-against-production">7. Repeat the import against production</h3>
+
+<p>Once you’re confident in the changes, run the same <code class="language-plaintext highlighter-rouge">tar</code> + <code class="language-plaintext highlighter-rouge">curl</code> import against your production Metabase, using its API key.</p>
+
+<h2 id="undoing-the-agents-changes">Undoing the agent’s changes</h2>
+
+<p>If you want to undo the agent’s changes, use <code class="language-plaintext highlighter-rouge">git</code> to revert your YAML files to the last known-good commit before pushing or re-importing.</p>
+
+<p>If you’re using Remote Sync, don’t try to fix things by re-pushing from Metabase: Metabase’s push only reflects its current state and won’t delete any new files the agent created locally.</p>
+
+<h2 id="validating-yaml-files">Validating YAML files</h2>
+
+<p>Run both checks locally before pushing. The same checks belong in CI — see <a href="#ci-example">CI example</a> below.</p>
+
+<h3 id="schema-check">Schema check</h3>
+
+<p>You can run a quick schema check:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npx <span class="nt">--yes</span> @metabase/representations validate-schema
+</code></pre></div></div>
+
+<p>The check validates the shape of every YAML file against the Representation Format spec. The <code class="language-plaintext highlighter-rouge">metabase-representation-format</code> skill should run this check for you automatically after the agent makes any edits.</p>
+
+<h3 id="semantic-checker-for-deeper-validation">Semantic checker for deeper validation</h3>
+
+<blockquote>
+  <p>The semantic checker is only available in the Pro/Enterprise plans.</p>
+</blockquote>
+
+<p>The <strong>semantic checker</strong> catches things like references to tables that don’t exist or columns the agent invented.</p>
+
+<p>What it validates beyond schema:</p>
+
+<ul>
+  <li>Cross-entity references: <code class="language-plaintext highlighter-rouge">collection_id</code>, <code class="language-plaintext highlighter-rouge">dashboard_id</code>, <code class="language-plaintext highlighter-rouge">parent_id</code>, snippet names, transform tags, card embeddings.</li>
+  <li>MBQL query compilation: <code class="language-plaintext highlighter-rouge">source-table</code>, field references, joins, segments, measures, expressions.</li>
+  <li>Native-query references: tables, columns, and snippets named in SQL.</li>
+</ul>
+
+<p>If you’ve installed the <code class="language-plaintext highlighter-rouge">metabase-semantic-checker</code> skill, just ask the agent to run the semantic checker; the skill picks the right image, passes the right flags, and summarizes the findings.</p>
+
+<p>You can manually run the semantic checker via Docker like so:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker pull metabase/metabase-enterprise:latest
+
+docker run <span class="nt">--rm</span> <span class="se">\</span>
+  <span class="nt">-v</span> <span class="s2">"</span><span class="nv">$PWD</span><span class="s2">:/workspace"</span> <span class="se">\</span>
+  <span class="nt">--entrypoint</span> <span class="s2">""</span> <span class="se">\</span>
+  <span class="nt">-w</span> /app <span class="se">\</span>
+  metabase/metabase-enterprise:latest <span class="se">\</span>
+  java <span class="nt">-jar</span> metabase.jar <span class="se">\</span>
+    <span class="nt">--mode</span> checker <span class="se">\</span>
+    <span class="nt">--export</span> /workspace <span class="se">\</span>
+    <span class="nt">--schema-dir</span> /workspace/.metabase/metadata.json <span class="se">\</span>
+    <span class="nt">--schema-format</span> concise
+</code></pre></div></div>
+
+<p>Match the image tag (<code class="language-plaintext highlighter-rouge">:latest</code>) to your Metabase build.</p>
+
+<h3 id="ci-example">CI example</h3>
+
+<p>You can hook the schema check into GitHub Actions so your team catches problems on the PR, before anyone pulls the changes into Metabase:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># .github/workflows/schema-check.yml</span>
+<span class="na">name</span><span class="pi">:</span> <span class="s">Schema Check</span>
 
 <span class="na">on</span><span class="pi">:</span>
   <span class="na">push</span><span class="pi">:</span>
@@ -6181,60 +6343,27 @@ Create a dashboard with some questions that gives an overview of how the busines
         <span class="na">run</span><span class="pi">:</span> <span class="s">npx --yes @metabase/representations validate-schema</span>
 </code></pre></div></div>
 
-<p>That way your team catches schema issues on the PR, before anyone imports the changes into Metabase.</p>
-
-<h3 id="7-import-the-changes-to-your-development-metabase">7. Import the changes to your development Metabase</h3>
-
-<p>Import your changes to your development Metabase, and check that the import works and the content is as expected.</p>
-
-<p>First, compress your directory of YAML files:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>tar -czf metabase_data.tgz metabase_data
-</code></pre></div></div>
-
-<p>Then import that compressed file:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl -X POST \
-  -H 'X-API-Key: YOUR_API_KEY' \
-  -F 'file=@metabase_data.tgz' \
-  'https://your-metabase-url/api/ee/serialization/import' \
-  -o -
-</code></pre></div></div>
-
-<p>The <code class="language-plaintext highlighter-rouge">-o -</code> flag writes the import response to stdout, so you can see whether the import succeeded and check any warnings.</p>
-
-<p>Just like with export, you can ask your agent to generate an <code class="language-plaintext highlighter-rouge">import.sh</code> script that handles the <code class="language-plaintext highlighter-rouge">tar -czf</code> compression and the <code class="language-plaintext highlighter-rouge">curl</code> in one shot.</p>
-
-<p>Log in to this Metabase and check that the changes are as you expect.</p>
-
-<h4 id="did-your-ai-go-off-the-rails">Did your AI go off the rails?</h4>
-
-<p>If you want to undo the agent’s changes, use <code class="language-plaintext highlighter-rouge">git</code> to revert your YAML files to the last known-good commit. Don’t try to undo the changes by re-exporting from your production Metabase: re-exporting will overwrite edits you made to existing files, but it <em>won’t</em> delete any new files the agent created, so your directory will still contain those unwanted files.</p>
-
-<h3 id="8-commit-your-changes">8. Commit your changes</h3>
-
-<p>If all looks good, commit your changes. If you get any errors, give the error info to the agent in the same session and the agent should iron out any issues.</p>
-
-<h3 id="9-import-to-your-production-metabase">9. Import to your production Metabase</h3>
-
-<p>Import your changes via the API, push your changes to a remote git repository and set up <a href="../installation-and-operation/remote-sync">remote sync</a> so that your production instance pulls in the changes automatically.</p>
+<p>For the semantic check, add a second workflow that fetches <code class="language-plaintext highlighter-rouge">.metabase/metadata.json</code> from your Metabase and then runs the Docker command above against the checkout. If you run the semantic check in more than one workflow (for example, a semantic check and per-PR preview environments), you should probably factor the database metadata fetch to run and cache once a day so you don’t hit the API on every push.</p>
 
 <h2 id="deleting-content">Deleting content</h2>
 
-<p>Since imports and exports <em>don’t</em> delete content, you’ll need to delete that content in the Metabase application itself, then update the YAML files as well.</p>
+<p>Since imports and exports <em>don’t</em> delete content, you’ll need to delete content in the Metabase application itself, then update the YAML files as well.</p>
 
 <ol>
-  <li>Delete the content in your production Metabase (in the app’s UI itself).</li>
-  <li>Export from your production Metabase to your repo.</li>
-  <li>Commit the changes so that the YAML files are updated. That way Metabase won’t recreate the deleted items the next time you import your changes.</li>
+  <li>Delete the content in your production Metabase (in the app’s UI).</li>
+  <li>Push (with Remote Sync) or re-export (without) so the change is reflected in the repo.</li>
+  <li>Commit the deletion. That way Metabase won’t recreate the deleted items the next time it pulls.</li>
 </ol>
 
 <h2 id="further-reading">Further reading</h2>
 
 <ul>
-  <li><a href="./mcp">MCP server</a></li>
+  <li><a href="../installation-and-operation/remote-sync">Remote Sync</a></li>
   <li><a href="../installation-and-operation/serialization">Serialization</a></li>
+  <li><a href="https://github.com/metabase/representations">Metabase Representation Format</a></li>
+  <li><a href="https://github.com/metabase/database-metadata">Metabase Database Metadata Format</a></li>
   <li><a href="https://github.com/metabase/agent-skills">Agent skills</a></li>
+  <li><a href="./mcp">MCP server</a> — for agents that need live metadata lookups outside the file-based workflow.</li>
 </ul>
 
 
@@ -6311,7 +6440,7 @@ Create a dashboard with some questions that gives an overview of how the busines
 <script type="text/javascript" src="/js/position-feedback-widget.js"></script>
 
 <script>
-  const pageTitle = `File-based development`;
+  const pageTitle = `Agent-driven development`;
   const pageURL = '/docs/latest/ai/file-based-development';
   const pageURLSplit = pageURL.split('/');
 

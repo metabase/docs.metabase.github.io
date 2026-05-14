@@ -914,12 +914,16 @@ Roadmap</a>
         <span class="menu-heading">Recent Blog Posts</span>
         
         
-        <a class="w-100 post-with-image recent-blog-link mt-1" href="/blog/metabase-ai-hackathon-winners">
+        <a class="w-100 post-with-image recent-blog-link mt-1" href="/blog/strip-mining-era-of-open-source-security">
           <div class="d-flex align-items-center position-relative overflow-hidden rounded-2 mb-3" id="recent-blog-image-wrapper">
-            <img alt="Resources Image" class="position-absolute w-100" src="/images/posts/ai-hackathon-og.png" loading="lazy">
+            <img alt="Resources Image" class="position-absolute w-100" src="/images/posts/exploit-farming.png" loading="lazy">
           </div>
-          <span class="h6 neutral-40 recent-blog-link-heading mb-3">Winners of the Metabase AI Hackathon</span>
+          <span class="h6 neutral-40 recent-blog-link-heading mb-3">Welcome to the strip mining era of open source security</span>
         </a>
+        
+          <a class="w-100 recent-blog-link" href="/blog/metabase-ai-hackathon-winners">
+            <span class="h6 neutral-40 recent-blog-link-heading mb-3">Winners of the Metabase AI Hackathon</span>
+          </a>
         
           <a class="w-100 recent-blog-link" href="/blog/improving-performance-clojure-development-tools">
             <span class="h6 neutral-40 recent-blog-link-heading mb-3">Improving the performance of the popular Clojure development tool clojure-lsp</span>
@@ -931,10 +935,6 @@ Roadmap</a>
         
           <a class="w-100 recent-blog-link" href="/blog/metabase-ai-hackathon">
             <span class="h6 neutral-40 recent-blog-link-heading mb-3">Metabase AI Hackathon</span>
-          </a>
-        
-          <a class="w-100 recent-blog-link" href="/blog/reprobot-github-issue-triage-agent">
-            <span class="h6 neutral-40 recent-blog-link-heading mb-3">Meet Repro-Bot, our GitHub issue triage agent</span>
           </a>
         
       </div>
@@ -5898,7 +5898,7 @@ Roadmap</a>
 <div class="version__selector cursor-pointer">
   <span class="version__current">
     
-      v0.60
+      v0.61
     
 
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="chevron">
@@ -5909,13 +5909,13 @@ Roadmap</a>
   <ul class="version__dropdown">
     
       
+    
+      
         <li>
-          <a href="/docs/v0.61">
-            v0.61
+          <a href="/docs/v0.60">
+            v0.60
           </a>
         </li>
-      
-    
       
     
       
@@ -6014,7 +6014,7 @@ Roadmap</a>
 
         <h1 id="metrics-explorer">Metrics explorer</h1>
 
-<p>The metrics Explorer is a space for ad-hoc analysis of <a href="../data-modeling/metrics">metrics</a> and <a href="../data-studio/measures">measures</a></p>
+<p>The metrics explorer is a space for ad-hoc analysis of <a href="../data-modeling/metrics">metrics</a> and <a href="../data-studio/measures">measures</a></p>
 
 <p><img src="../questions/images/metrics-explorer.png" alt="Metrics explorer"></p>
 
@@ -6025,6 +6025,7 @@ Roadmap</a>
 <ul>
   <li><a href="#explore-a-metric-or-a-measure">Explore metrics and measures along their dimensions</a></li>
   <li><a href="#compare-metrics-and-measures">Compare multiple metrics and measures</a></li>
+  <li><a href="#calculations-with-metrics-and-measures">Do math with metrics</a></li>
   <li><a href="#break-out-by-dimensions">Break out by additional dimensions</a></li>
   <li><a href="#filter-metrics-and-measures">Filter each metric or measure</a></li>
   <li>Zoom into time periods</li>
@@ -6036,6 +6037,8 @@ Roadmap</a>
 
 <h2 id="explore-a-metric-or-a-measure">Explore a metric or a measure</h2>
 
+<p>In the metrics explorer, you can explore how a measure or metric varies across dimensions.</p>
+
 <p>To open a <strong>metric</strong> in the Metrics Explorer:</p>
 
 <ol>
@@ -6045,21 +6048,43 @@ Roadmap</a>
     <p>To get to the metric’s home page, you can click on a metric from its collection, from the <a href="../data-modeling/metrics#see-all-metrics">metrics browser</a>, or from search.</p>
   </li>
   <li>
-    <p>Click <strong>Explore</strong> in the top right corner to open the metrics explorer</p>
+    <p>To view the metric in the explorer, click <strong>Explore</strong> in the top right corner.</p>
   </li>
 </ol>
 
-<p>To get back to the metric’s page from metrics explorer, right-click the metric card in the search bar and select <strong>Go to metric home page</strong>.</p>
+<p>To return to the metric’s home page, click the metric card in the search bar and select <strong>Go to metric home page</strong>.</p>
 
-<p>To open a <strong>measure</strong> in the metrics explorer, go directly to <code class="language-plaintext highlighter-rouge">[your metabase URL]/explore</code> and type the measure’s name in the search bar. To get back to the measure definition from metrics explorer, right-click the measure card in the search bar and select <strong>Edit in Data Studio</strong>.</p>
+<p>To open a <strong>measure</strong> in the metrics explorer:</p>
+
+<ol>
+  <li>Navigate to the measure in <strong>Data studio &gt; Tables &gt; [Your table] &gt; Measures</strong>.</li>
+  <li>Select your measure.</li>
+  <li>On the measure’s page, click <strong>three dots</strong> next to the measure’s name and select <strong>Explore</strong>.</li>
+</ol>
+
+<p>Once you open a measure or metric in the metrics explorer, Metabase will create tabs plotting the metric/measure along the most appropriate dimensions, as well as the <strong>Totals</strong> tab with the total result of the metric, without any dimensions applied.</p>
+
+<p>You can also <a href="#break-out-by-dimensions">break out</a> a metric/measure by additional dimensions or <a href="#filter-metrics-and-measures">filter the metric/measure</a>.</p>
 
 <h2 id="compare-metrics-and-measures">Compare metrics and measures</h2>
 
-<p>To compare multiple metrics or measures, search for measure or metric you want to add in the search bar.</p>
+<p>To compare multiple metrics or measures:</p>
 
-<p><img src="./images/compare-metrics.png" alt="Compare metrics"></p>
+<ol>
+  <li><a href="#explore-a-metric-or-a-measure">Open one of the metrics/measures in the metrics explorer</a>.</li>
+  <li>
+    <p>Click the top search bar and search for another measure or metric you want to add.</p>
+  </li>
+  <li>
+    <p>Press <strong>Enter</strong> or click <strong>Run</strong> in the search bar.</p>
 
-<p>You’ll see the dimensions of the first metric/measure below the search bar. You can pick a dimension to break out the metrics/measures (for example, if you want to see how both Number of Orders and Revenue change by date, state, or product category).</p>
+    <p><img src="./images/compare-metrics.png" alt="Compare metrics"></p>
+  </li>
+</ol>
+
+<p>You can add the same metric/measure multiple times. This is useful if you want to <a href="#break-out-by-dimensions">break out</a> or <a href="#filter-metrics-and-measures">filter</a> the metric, while keeping the total trend visibile. For example, you might want to compare the trend of total revenue to the revenue of a single product category.</p>
+
+<p>Once you pick the metrics, you’ll see the dimensions of the first metric/measure below the search bar. You can pick a dimension to compare metrics/measures (for example, if you want to see how both Number of Orders and Revenue change by date, state, or product category).</p>
 
 <p><img src="./images/two-metrics.png" alt="Compare metrics"></p>
 
@@ -6082,22 +6107,24 @@ Roadmap</a>
 
 <p>When your metrics/measures don’t have shared dimensions, Metabase has no way of knowing how the dimensions relate to each other, so it’s on you to make sure the dimensions you pick make sense to compare!</p>
 
+<p>You can <a href="#filter-metrics-and-measures">filter</a> or <a href="#break-out-by-dimensions">break out</a> each metric/measure separately, or <a href="#calculations-with-metrics-and-measures">do simple calculations with metrics/measures</a>.</p>
+
 <h2 id="break-out-by-dimensions">Break out by dimensions</h2>
 
 <p>You can also break out each metric by additional dimensions. For example, you might want to compare overall revenue to the number of orders for each product category.</p>
 
+<p><img src="./images/breakout-chart-explorer.png" alt="Break out"></p>
+
 <p>To break out a metric or measure by additional dimensions:</p>
 
 <ol>
-  <li>Right-click on the metric’s card in the search bar.</li>
+  <li>Click on the metric’s card in the search bar.</li>
   <li>Select <strong>Break out</strong>
 <img src="./images/break-out-metric.png" alt="Break out by"></li>
   <li>Choose the breakout dimension.</li>
 </ol>
 
-<p><img src="./images/breakout-chart-explorer.png" alt="Break out"></p>
-
-<p>To remove the breakout, right-click on the measure/metric card again and select <strong>Remove breakout</strong></p>
+<p>To remove the breakout, click on the measure/metric card in the search bar again and select <strong>Remove breakout</strong>.</p>
 
 <h2 id="filter-metrics-and-measures">Filter metrics and measures</h2>
 
@@ -6114,6 +6141,20 @@ Roadmap</a>
 <p>You’ll see the filter added below the metric or measure’s card in the search bar. To remove the filter, click the <strong>X</strong> on the filter’s card.</p>
 
 <p><img src="./images/filtered-metric.png" alt="Filtered metric"></p>
+
+<h2 id="calculations-with-metrics-and-measures">Calculations with metrics and measures</h2>
+
+<p>You can use the four basic math operations (<code class="language-plaintext highlighter-rouge">+</code>,<code class="language-plaintext highlighter-rouge">-</code>,<code class="language-plaintext highlighter-rouge">*</code>,<code class="language-plaintext highlighter-rouge">/</code>) on metrics/measures in the metrics explorer. For example, you can explore how revenue per user, <code class="language-plaintext highlighter-rouge">Revenue / Active users</code>, changes with time.</p>
+
+<p>The metrics explorer is especially useful when metrics and measures are associated with different data sources, likeif you have a  “Revenue” metric on the <code class="language-plaintext highlighter-rouge">Subscriptions</code> table and an “Active users” metric on the <code class="language-plaintext highlighter-rouge">Events</code> table. If you were to compare these metrics in the query builder, you’d have to wrangle their tables with joins, but the metrics explorer lets you compare these metrics by just typing out a formula.</p>
+
+<p><img src="./images/math-with-metrics.png" alt="Math with metrics"></p>
+
+<p>To write an expression with metrics/measures, just start entering the formula into the search bar. You can use <code class="language-plaintext highlighter-rouge">+</code>,<code class="language-plaintext highlighter-rouge">-</code>,<code class="language-plaintext highlighter-rouge">*</code>,<code class="language-plaintext highlighter-rouge">/</code>, parentheses, numbers, or other metrics (including using the same metric multiple times). To visualize the results, just press Enter.</p>
+
+<p>To edit the expression, click on the expression’s card in the search bar and click <strong>Edit</strong>.</p>
+
+<p>You can also rename your expressions. For example, you might want to rename your formula <code class="language-plaintext highlighter-rouge">Revenue / Active users</code> as <code class="language-plaintext highlighter-rouge">Per user revenue</code>. To rename the expression, click the expression’s card in the search bar, click <strong>Rename</strong>, and type the new name.</p>
 
 
         <div>

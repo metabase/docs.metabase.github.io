@@ -1,5 +1,5 @@
 ---
-version: v0.60
+version: v0.61
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -186,6 +186,12 @@ docker run -d -p 1080:1080 -p 1025:1025 maildev/maildev:latest
 ### Running tests that require translation dictionaries
 
 Some of the tests are checking content translation functionality. These tests require to run `./bin/i18n/build-translation-resources` command before running the tests to precompile JSON files with translations.
+
+### Pseudo locale for E2E tests
+
+We provide a pseudo locale (`en_ZZ`) that prefixes all translated strings with `[zz]` (e.g., `"My text"` becomes `"[zz] My text"`). This is handy when writing E2E tests that assert translations are working correctly without relying on actual translated strings that may change over time.
+
+The pseudo locale PO file is generated at build time; to make it available in the UI, start the backend with `MB_ENABLE_TEST_LOCALES=true` and select "English (ZZ)" under Admin > Settings > Localization.
 
 ### Cypress comes with `Lodash` for free
 

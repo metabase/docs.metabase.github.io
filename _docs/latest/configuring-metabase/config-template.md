@@ -1,5 +1,5 @@
 ---
-version: v0.60
+version: v0.61
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -102,6 +102,7 @@ config:
       linkedin.com,
       twitter.com,
       x.com
+    analytics-pii-retention-enabled: false
     anon-tracking-enabled: true
     api-key: null
     application-colors: {}

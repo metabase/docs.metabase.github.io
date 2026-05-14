@@ -1,5 +1,5 @@
 ---
-version: v0.60
+version: v0.61
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -12,7 +12,7 @@ latest: true
 ---
 
 ```ts
-function useCurrentUser(): null | MetabaseUser;
+function useCurrentUser(): MetabaseUser | null;
 ```
 
 Returns the current user.
@@ -22,6 +22,6 @@ Returns `null` until the SDK is fully loaded and initialized.
 
 <!-- [<snippet returns>] -->
 
-`null` \| [`MetabaseUser`](./api/MetabaseUser)
+[`MetabaseUser`](./api/MetabaseUser) \| `null`
 
 <!-- [<endsnippet returns>] -->

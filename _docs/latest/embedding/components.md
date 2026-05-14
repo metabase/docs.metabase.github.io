@@ -1,5 +1,5 @@
 ---
-version: v0.60
+version: v0.61
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -109,6 +109,8 @@ To render the AI chat interface:
 ```html
 <metabase-metabot></metabase-metabot>
 ```
+
+If you're using the SDK, you can use either the [`MetabotQuestion`](./sdk/ai-chat#example) component or the [`useMetabot`](./sdk/ai-chat#building-custom-ai-chat-uis-with-usemetabot) hook for a custom UI.
 
 ### Attributes
 

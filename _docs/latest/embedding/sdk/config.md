@@ -1,5 +1,5 @@
 ---
-version: v0.60
+version: v0.61
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -24,6 +24,8 @@ To use the SDK in your app, you need to import the `MetabaseProvider` component 
 ### `MetabaseProvider`
 
 A component that configures the SDK and provides the Metabase SDK's context and theme.
+
+To pass a theme, use `defineMetabaseTheme`. See [Reuse a saved theme in the SDK](../appearance#reuse-a-saved-theme-in-the-sdk).
 
 #### API Reference
 

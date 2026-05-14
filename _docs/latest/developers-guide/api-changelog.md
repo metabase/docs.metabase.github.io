@@ -1,5 +1,5 @@
 ---
-version: v0.60
+version: v0.61
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -12,6 +12,12 @@ latest: true
 ---
 
 # Breaking changes to the API interface
+
+## Metabase 0.61.0
+
+- `POST /api/metabot/describe/card` and `POST /api/metabot/describe/dashboard/:id` have been removed. These endpoints
+  provided LLM-powered autodescription of cards and dashboards using the legacy OpenAI client. This functionality has
+  been superseded by the Metabot agent.
 
 ## Metabase 0.57.0
 

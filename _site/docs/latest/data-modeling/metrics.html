@@ -914,12 +914,16 @@ Roadmap</a>
         <span class="menu-heading">Recent Blog Posts</span>
         
         
-        <a class="w-100 post-with-image recent-blog-link mt-1" href="/blog/metabase-ai-hackathon-winners">
+        <a class="w-100 post-with-image recent-blog-link mt-1" href="/blog/strip-mining-era-of-open-source-security">
           <div class="d-flex align-items-center position-relative overflow-hidden rounded-2 mb-3" id="recent-blog-image-wrapper">
-            <img alt="Resources Image" class="position-absolute w-100" src="/images/posts/ai-hackathon-og.png" loading="lazy">
+            <img alt="Resources Image" class="position-absolute w-100" src="/images/posts/exploit-farming.png" loading="lazy">
           </div>
-          <span class="h6 neutral-40 recent-blog-link-heading mb-3">Winners of the Metabase AI Hackathon</span>
+          <span class="h6 neutral-40 recent-blog-link-heading mb-3">Welcome to the strip mining era of open source security</span>
         </a>
+        
+          <a class="w-100 recent-blog-link" href="/blog/metabase-ai-hackathon-winners">
+            <span class="h6 neutral-40 recent-blog-link-heading mb-3">Winners of the Metabase AI Hackathon</span>
+          </a>
         
           <a class="w-100 recent-blog-link" href="/blog/improving-performance-clojure-development-tools">
             <span class="h6 neutral-40 recent-blog-link-heading mb-3">Improving the performance of the popular Clojure development tool clojure-lsp</span>
@@ -931,10 +935,6 @@ Roadmap</a>
         
           <a class="w-100 recent-blog-link" href="/blog/metabase-ai-hackathon">
             <span class="h6 neutral-40 recent-blog-link-heading mb-3">Metabase AI Hackathon</span>
-          </a>
-        
-          <a class="w-100 recent-blog-link" href="/blog/reprobot-github-issue-triage-agent">
-            <span class="h6 neutral-40 recent-blog-link-heading mb-3">Meet Repro-Bot, our GitHub issue triage agent</span>
           </a>
         
       </div>
@@ -5898,7 +5898,7 @@ Roadmap</a>
 <div class="version__selector cursor-pointer">
   <span class="version__current">
     
-      v0.60
+      v0.61
     
 
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="chevron">
@@ -5909,13 +5909,13 @@ Roadmap</a>
   <ul class="version__dropdown">
     
       
+    
+      
         <li>
-          <a href="/docs/v0.61">
-            v0.61
+          <a href="/docs/v0.60">
+            v0.60
           </a>
         </li>
-      
-    
       
     
       
@@ -6110,9 +6110,9 @@ Roadmap</a>
   </li>
 </ol>
 
-<h2 id="explore-and-compare-metrics">Explore and compare metrics</h2>
+<h2 id="explore-compare-and-do-math-with-metrics">Explore, compare, and do math with metrics</h2>
 
-<p>You can explore metrics, break them out by different dimensions, and compare metrics and <a href="../data-studio/measures">measures</a> to each other in the <a href="../questions/metrics-explorer">Metrics Explorer</a>.</p>
+<p>To break metrics out by different dimensions, compare metrics and <a href="../data-studio/measures">measures</a>, and do math with metrics (like add or divide metrics by each other), check out the <a href="../questions/metrics-explorer">Metrics Explorer</a>.</p>
 
 <p><img src="./images/metric-explorer.png" alt="Metrics explorer"></p>
 
@@ -6135,7 +6135,7 @@ Roadmap</a>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> (CountIf([Score] &gt;= 9) - CountIf([Score] &lt;= 6) ) / Count() * 100
 </code></pre></div></div>
 
-<p>Metric formula must be an <em>aggregation</em>  of a column, meaning you can have a formula like <code class="language-plaintext highlighter-rouge">Sum([Price])</code> which will add up all the values in the <code class="language-plaintext highlighter-rouge">Price</code> column across all records, but you can’t have a formula like <code class="language-plaintext highlighter-rouge">[Price] + [Tax]</code> which adds two values on a per-record basis. If you need to create a “calculated” column, consider using <a href="../data-studio/transforms/transforms-overview">transforms</a> or <a href="../data-modeling/models">models</a> instead.</p>
+<p>A metric formula must be an <em>aggregation</em> of a column, meaning you can have a formula like <code class="language-plaintext highlighter-rouge">Sum([Price])</code> which will add up all the values in the <code class="language-plaintext highlighter-rouge">Price</code> column across all records, but you can’t have a formula like <code class="language-plaintext highlighter-rouge">[Price] + [Tax]</code> which adds two values on a per-record basis. If you want to create a “calculated” column, consider creating a <a href="../data-studio/transforms/transforms-overview">transform</a> or <a href="../data-modeling/models">model</a> instead.</p>
 
 <p>We don’t recommend adding filters into the metric definition to avoid filter conflicts when using metrics in the query builder. You can use conditional custom expressions like <a href="../questions/query-builder/expressions-list#aggregations"><code class="language-plaintext highlighter-rouge">CountIf</code>, <code class="language-plaintext highlighter-rouge">SumIf</code>, and <code class="language-plaintext highlighter-rouge">DistinctIf</code></a> to create conditional aggregations.</p>
 

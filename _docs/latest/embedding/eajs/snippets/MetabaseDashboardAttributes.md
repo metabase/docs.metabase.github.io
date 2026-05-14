@@ -1,5 +1,5 @@
 ---
-version: v0.60
+version: v0.61
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -23,6 +23,7 @@ or `token` (for guest embeds), plus optional display configuration.
 | Property                                                         | Type                 | Description                                                                                                                                                                                                                                            |
 | :--------------------------------------------------------------- | :------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | <a id="auto-refresh-interval"></a> `auto-refresh-interval`       | `number`             | Auto-refresh interval in seconds. For example, `60` refreshes the dashboard every 60 seconds.<br>---<br>Optional<br>Available in Pro/Enterprise and Guest embed.                                                                                       |
+| <a id="custom-context"></a> `custom-context`                     | `string`             | Optional custom context string passed through to the guest token endpoint.<br>---<br>Optional<br>Available in Guest embed.                                                                                                                             |
 | <a id="dashboard-id"></a> `dashboard-id`                         | `string` \| `number` | The ID of the dashboard to embed. Can be a regular ID or an [entity ID](/docs/latest/installation-and-operation/serialization#entity-ids-work-with-embedding). Only for SSO embeds — guest embeds set the ID with `token`.     |
 | <a id="drills"></a> `drills`                                     | `boolean`            | Whether to enable drill-through on the dashboard.<br>---<br>Optional<br>Default: `true`<br>Available in Pro/Enterprise.                                                                                                                                |
 | <a id="enable-entity-navigation"></a> `enable-entity-navigation` | `boolean`            | Whether to enable internal entity navigation (links to dashboards/questions). Requires `drills` to be `true`<br>---<br>Optional<br>Default: `false`<br>Available in Pro/Enterprise.                                                                    |
