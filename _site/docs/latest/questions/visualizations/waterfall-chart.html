@@ -57,7 +57,7 @@ window.redirectTo = function redirectTo(theLocation) {
 <meta name="twitter:site" content="@metabase">
 
 <meta name="twitter:title" content="Waterfall charts | Metabase Documentation">
-<meta name="twitter:description" content="Waterfall charts Waterfall charts are a kind of bar chart useful for visualizing results that contain both positive and negative values. Each bar on a waterfall chart shows either an increase or decrease, with a final bar on the right of...">
+<meta name="twitter:description" content="Waterfall charts Waterfall charts are a type of bar chart for visualizing data with both positive and negative values. Each bar shows an increase or decrease, and a final bar on the right shows the running total. <img src=" ..="" images="" waterfall-chart.png"="" alt="Waterfall chart" ..."="">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -67,7 +67,7 @@ window.redirectTo = function redirectTo(theLocation) {
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://www.metabase.com/docs/latest/questions/visualizations/waterfall-chart">
 <meta name="title" property="og:title" content="Waterfall charts | Metabase Documentation">
-<meta name="description" property="og:description" content="Waterfall charts Waterfall charts are a kind of bar chart useful for visualizing results that contain both positive and negative values. Each bar on a waterfall chart shows either an increase or decrease, with a final bar on the right of...">
+<meta name="description" property="og:description" content="Waterfall charts Waterfall charts are a type of bar chart for visualizing data with both positive and negative values. Each bar shows an increase or decrease, and a final bar on the right shows the running total. <img src=" ..="" images="" waterfall-chart.png"="" alt="Waterfall chart" ..."="">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -6089,13 +6089,192 @@ Roadmap</a>
 
         <h1 id="waterfall-charts">Waterfall charts</h1>
 
-<p>Waterfall charts are a kind of bar chart useful for visualizing results that contain both positive and negative values. Each bar on a waterfall chart shows either an increase or decrease, with a final bar on the right of the chart that represents the total value.</p>
+<p>Waterfall charts are a type of bar chart for visualizing data with both positive and negative values. Each bar shows an increase or decrease, and a final bar on the right shows the running total.</p>
 
 <p><img src="../images/waterfall-chart.png" alt="Waterfall chart"></p>
 
-<p>In the example above, the waterfall chart displays “Profit” for each “Product:” apples, bananas, oranges, peaches, and mangos. From left to right, each bar indicates the change in total. The products with green bars indicate positive values (they made a profit). Peaches, however, lost money, indicated by a red bar, which signals a negative value. The bar at the end shows the total profit of all products combined. You can show values on each bar, and change the colors for increases and decreases.</p>
+<h2 id="when-to-use-a-waterfall-chart">When to use a waterfall chart</h2>
 
-<p>For waterfall charts, you’ll want a query that is a single metric grouped by a single dimension: by time or category.</p>
+<p>Use a waterfall chart to show how a starting value changes through a series of increases and decreases to arrive at a final total.</p>
+
+<p>Waterfall charts are useful for financial breakdowns, inventory changes, or anywhere you need to show how a value changes step by step.</p>
+
+<h2 id="data-shape-for-a-waterfall-chart">Data shape for a waterfall chart</h2>
+
+<p>To create a waterfall chart, create a question that returns a single metric grouped by a single dimension, such as time or category.</p>
+
+<p>Waterfall charts work best when each row represents a <em>change</em> in some value rather than the raw value itself. For example, use the change in sales from one month to the next, rather than the monthly sales totals.</p>
+
+<p>Here’s the data shape for the example chart above:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Month</th>
+      <th>Change in sales</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td data-label="Month">January</td>
+      <td data-label="Change in sales">12,500</td>
+    </tr>
+    <tr>
+      <td data-label="Month">February</td>
+      <td data-label="Change in sales">-3,200</td>
+    </tr>
+    <tr>
+      <td data-label="Month">March</td>
+      <td data-label="Change in sales">5,800</td>
+    </tr>
+    <tr>
+      <td data-label="Month">April</td>
+      <td data-label="Change in sales">-1,600</td>
+    </tr>
+    <tr>
+      <td data-label="Month">May</td>
+      <td data-label="Change in sales">7,100</td>
+    </tr>
+    <tr>
+      <td data-label="Month">June</td>
+      <td data-label="Change in sales">4,200</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Green bars represent months where sales increased, and red bars represent months where sales decreased. The dark bar at the end shows the net change across all six months.</p>
+
+<p>Here’s another example grouped by category instead of time:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Category</th>
+      <th>Net revenue</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td data-label="Category">Gizmo</td>
+      <td data-label="Net revenue">18,400</td>
+    </tr>
+    <tr>
+      <td data-label="Category">Doohickey</td>
+      <td data-label="Net revenue">-2,100</td>
+    </tr>
+    <tr>
+      <td data-label="Category">Widget</td>
+      <td data-label="Net revenue">9,700</td>
+    </tr>
+    <tr>
+      <td data-label="Category">Gadget</td>
+      <td data-label="Net revenue">-4,500</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="build-a-query-for-a-waterfall-chart">Build a query for a waterfall chart</h2>
+
+<p>Your data might contain raw values like monthly sales totals but not the change in sales from one month to the next:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Month</th>
+      <th>Sales</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td data-label="Month">January</td>
+      <td data-label="Sales">50,000</td>
+    </tr>
+    <tr>
+      <td data-label="Month">February</td>
+      <td data-label="Sales">46,800</td>
+    </tr>
+    <tr>
+      <td data-label="Month">March</td>
+      <td data-label="Sales">52,600</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>To compute the change from one row to the next, use the <code class="language-plaintext highlighter-rouge">Offset</code> <a href="../query-builder/expressions">custom expression</a> in a custom aggregation. <code class="language-plaintext highlighter-rouge">Offset</code> returns the value of an expression from another row, either earlier or later in the result set.</p>
+
+<p>To compute the change in sales from the previous month:</p>
+
+<ol>
+  <li>In the query builder, click <strong>Summarize</strong>.</li>
+  <li>Group by <strong>Created At: Month</strong>.</li>
+  <li>Add a <strong>Custom Expression</strong> with the formula: <code class="language-plaintext highlighter-rouge">Sum([Sales]) - Offset(Sum([Sales]), -1)</code>. Name the column “Change in sales”.</li>
+</ol>
+
+<p>The resulting question returns the data shape you need for a waterfall chart.</p>
+
+<p>If your data already contains the changes you want to plot (for example, individual transactions with positive and negative amounts), you can skip this step and use the data directly.</p>
+
+<h2 id="waterfall-chart-settings">Waterfall chart settings</h2>
+
+<p>To open chart settings, click the <strong>Gear</strong> icon in the bottom left of the visualization.</p>
+
+<h3 id="display">Display</h3>
+
+<p>In chart settings, click the <strong>Display</strong> tab to edit how the chart looks.</p>
+
+<p>To add a goal line to your waterfall chart, enable the <strong>Goal line</strong> toggle. Use the <strong>Goal value</strong> and <strong>Goal label</strong> fields to set the goal value and label.</p>
+
+<blockquote>
+  <p>You can’t set <a href="../alerts">alerts</a> on goal lines in waterfall charts.</p>
+</blockquote>
+
+<p>Set the colors for each bar type:</p>
+
+<ul>
+  <li><strong>Increase color:</strong> The color for bars that represent positive values (defaults to green)</li>
+  <li><strong>Decrease color:</strong> The color for bars that represent negative values (defaults to red)</li>
+  <li><strong>Total color:</strong> The color for the final total bar (defaults to black)</li>
+</ul>
+
+<p>To display the value for the final total bar, enable the <strong>Show total</strong> toggle.</p>
+
+<p>To display values for all bars, enable the <strong>Show values on data points</strong> toggle.</p>
+
+<h3 id="axes">Axes</h3>
+
+<p>In chart settings, click the <strong>Axes</strong> tab to edit the chart axes.</p>
+
+<h4 id="x-axis">X-axis</h4>
+
+<p>Use the following options for the x-axis:</p>
+
+<ul>
+  <li><strong>Show label:</strong> Enable the toggle to display the x-axis label.</li>
+  <li><strong>Label:</strong> Name the x-axis label.</li>
+  <li><strong>Show lines and tick marks:</strong> Display the x-axis line and tick marks.</li>
+</ul>
+
+<h4 id="y-axis">Y-axis</h4>
+
+<p>Use the following options for the y-axis:</p>
+
+<ul>
+  <li><strong>Show label:</strong> Enable the toggle to display the y-axis label.</li>
+  <li><strong>Label:</strong> Name the y-axis label.</li>
+  <li><strong>Auto y-axis range:</strong> When enabled, Metabase sets the y-axis range automatically based on your data. When disabled, use the <strong>Min</strong> and <strong>Max</strong> fields to set custom values.</li>
+  <li><strong>Scale:</strong> Choose how values are spaced along the y-axis. Choose between <strong>Linear</strong>, <strong>Power</strong>, and <strong>Log</strong>.</li>
+  <li><strong>Show lines and tick marks:</strong> Display the y-axis line and tick marks.</li>
+  <li><strong>Number of tick marks:</strong> Set how many tick marks appear on the y-axis. Defaults to <strong>auto</strong>.</li>
+</ul>
+
+<h2 id="limitations-and-alternatives">Limitations and alternatives</h2>
+
+<ul>
+  <li>If your data only contains positive values, or if you don’t need to track a running total, consider a <a href="./line-bar-and-area-charts">bar chart</a> instead.</li>
+  <li>If you want to show progress toward a single value, consider a <a href="./progress-bar">progress bar</a> or <a href="./gauge">gauge chart</a> instead.</li>
+  <li>Waterfall charts only support a single metric grouped by a single dimension. You can’t add breakouts or display multiple series.</li>
+  <li>You can’t set <a href="../alerts">alerts</a> on goal lines in waterfall charts.</li>
+</ul>
 
 
         <div>
