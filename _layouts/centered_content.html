@@ -1,0 +1,38 @@
+---
+layout: default
+---
+
+<div class="bootstrap">
+    <div class="pb-17 centered-content">
+
+        <div class="centered-content__header-container">
+            <div class="container">
+                <header class="col-lg-10 centered-content__header py-13 py-md-17">
+                    <h1>{{ page.title }}</h1>
+                    <p>{{ page.summary }}</p>
+                    {% if page.author or page.meta %}
+                    <p class='text-secondary'>{% if page.author %} by {{ page.author
+                        }}{% endif %}{% if page.meta %} • {{ page.meta }}{% endif %}</p>
+                    {% endif %}
+                </header>
+            </div>
+        </div>
+
+        <div class="container mt-8 mt-md-12 {% if page.toc %}toc toc--1{% endif %}">
+            <div class="col-xs-12 {% if page.toc %}offset-lg-3 col-lg-6{% else %}col-lg-9{% endif %} {% if page.checked-list %}checked-list{% endif %}">
+                <article>
+                    {{ content }}
+                </article>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+<script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https'; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = p + '://platform.twitter.com/widgets.js'; fjs.parentNode.insertBefore(js, fjs); } }(document, 'script', 'twitter-wjs');</script>
+
+<script type="text/javascript" src="/js/header.js"></script>
+{% if page.toc %}
+<script type="text/javascript" src="/js/scrollIntoView.min.js"></script>
+<script type="text/javascript" src="/js/table-of-content.js"></script>
+{% endif %}

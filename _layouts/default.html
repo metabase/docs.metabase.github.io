@@ -1,0 +1,26 @@
+{% if page.delay_gdpr_banner %}
+  {% assign body_class="delay-gdpr-banner" %}
+{% endif %}
+
+<!DOCTYPE html>
+<html prefix="og: https://ogp.me/ns#" lang="en-US">
+  {% include head.html %}
+  <body class="{{ body_class }}">
+    {% include navigation-header.html active=page.active %}
+
+    {% comment %}
+    The `unless` below is for the 2025 home page experiment (Visual Storytelling).
+    Safe to remove if the experiment is discontinued.
+    {% endcomment %}
+    <div {% unless page.home_page_2025 %}class="no-overflow"{% endunless %}>
+      {{ content }}
+    </div>
+
+    {% include footer.html %}
+  </body>
+  <script type="text/javascript" src="/js/contentloaded.min.js"></script>
+  <script type="text/javascript" src="/js/lightbox.js"></script>
+  <script type="text/javascript" src="/js/documentation.js"></script>
+  <script type="text/javascript" src="/js/blog.js"></script>
+  <script type="text/javascript" src="/js/syntax-highlight.js"></script>
+</html>

@@ -1,0 +1,61 @@
+<div id="right-hand-newsletter-subscribe-widget" class="{% if include.bleed_right %}bleed-right{% endif %}">
+  {% unless page.collection == "docs" or
+  page.hide_right_hand_newsletter_subscribe_widget %}
+  <div class="right-hand-newsletter-subscribe-form-container">
+    <h6>Subscribe to newsletter</h6>
+    <h5>
+      Updates and news from Metabase
+    </h5>
+
+    <iframe
+      src="/subscribe-to-ai-newsletter-righthandside"
+      id="subscribe-to-ai-newsletter-righthandside"
+      onload="javascript:(function(o){
+          o.style.height=o.contentWindow.document.getElementById('feedback-widget-newsletter-ajax-form-container').offsetHeight+'px';
+
+          const resizeObserver = new ResizeObserver(function(entries) {
+            const $firstEntry = entries[0];
+            if ($firstEntry && $firstEntry.borderBoxSize && $firstEntry.borderBoxSize[0]) {
+              const $form = $firstEntry.borderBoxSize[0];
+              if ($form) {
+                o.style.height = $form.blockSize + 'px';
+              }
+            }
+
+            if (window.resizeLearnRightSidebar) {
+              window.resizeLearnRightSidebar();
+            }
+          });
+          resizeObserver.observe(o.contentWindow.document.getElementById('feedback-widget-newsletter-ajax-form-container'));
+        }(this));"
+    ></iframe>
+  </div>
+  {% endunless %}
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const iframe = document.getElementById(
+      "subscribe-to-ai-newsletter-righthandside",
+    );
+
+    // Certain collections (e.g., "docs") do not display the newsletter iframe
+    if (!iframe) {
+      return;
+    }
+    const url = new URL(iframe.src, window.location.origin);
+
+    // Copy search params from the main window
+    const currentParams = new URLSearchParams(window.location.search);
+    for (const [key, value] of currentParams.entries()) {
+      url.searchParams.set(key, value);
+    }
+
+    // Add the current pathname as signup_path
+    url.searchParams.set("signup_path", window.location.pathname);
+
+    // Apply the new src
+    iframe.src = url.toString();
+  });
+</script>
+<script type="text/javascript" src="/js/right-hand-newsletter-subscribe-widget.js"></script>

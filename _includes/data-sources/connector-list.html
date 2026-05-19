@@ -1,0 +1,20 @@
+<div class="connector-list">
+  {% assign connectors = site.data-sources | where: "connector", include.connector %}
+  {% for data_source in connectors %}
+    {% if data_source.hide == true %}
+      {% continue %}
+    {% endif %}
+    {% if data_source.title == "CSV Uploads" %}
+      {% assign url = "/product/csv-uploads" %}
+    {% else %}
+      {% assign url = data_source.url %}
+    {% endif %}
+
+    <a href="{{ url }}">
+      <div class="logo-and-title">
+        <div style="background-image: url('{{data_source.logo_image}}')"></div>{{ data_source.title }}
+      </div>
+      <p>{{ data_source.summary }}</p>
+    </a>
+  {% endfor %}
+</div>

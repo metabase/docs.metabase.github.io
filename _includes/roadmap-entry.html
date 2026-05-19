@@ -1,0 +1,17 @@
+{% assign entry = include.entry %}
+
+<div class="roadmap__entry {{ include.entry.class }}">
+  {% if entry.paid == true %}
+    <span class="apply-tooltip" data-tippy-content="Only available on some paid plans" data-tippy-placement="top" data-tippy-theme="black" data-tippy-duration="200" data-tippy-trigger="mouseenter" data-tippy-maxwidth="250">
+      {% include svg-icons/diamond.html %}
+    </span>
+  {% endif %}
+	<p class="roadmap__entry__title">
+		<strong>{{ entry.title }}</strong>
+	</p>
+  <p class="roadmap__entry__description">{{ entry.description }}</p>
+
+  {% if entry.image.src  %}
+    <img src="{{entry.image.src}}" alt="{{entry.image.alt}}" loading="lazy" />
+  {% endif %}
+</div>

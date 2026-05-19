@@ -1,0 +1,50 @@
+---
+layout: default_new
+active: "learn"
+---
+
+{% include learn/post-constants.html %}
+
+{% if page.url =="/learn/sql/getting-started/introduction" %}
+  {% assign title = "Learn SQL with Metabase" %}
+{% else %}
+  {% assign title = article.name %}
+{% endif %}
+
+<div class="bootstrap">
+  <div class="learn blog-post MB-Page">
+    {% include learn/left-sidebar.html domain="learn" scrollable="true" %}
+
+    <article class="learn__post learn__article">
+      {% include learn/top-bar.html show_breadcrumb=true show_search="false" %}
+
+      <div class="learn__post__content">
+        {% unless page.page_type == 'search' %}
+        <header>
+          <h1>{{ title }}</h1>
+          <p class="learn__summary">{{ article.summary }}</h3>
+        </header>
+        {% endunless %}
+        {{ content }}
+        {% include shared/was-this-helpful-widget.html %}
+        {% include ai-newsletter-subscribe-form.html %}
+        {% include learn/article-nav.html %}
+      </div>
+
+      <div class="learn__right-sidebar">
+        <div id="sub-navigation-content">
+          {% comment %} Is populated by js/learn/right-sidebar.js {% endcomment %}
+        </div>
+        {% include shared/right-hand-newsletter-subscribe-widget.html %}
+      </div>
+    </article>
+  </div>
+</div>
+
+<script src="/js/image-zoom.js"></script>
+<script src="/js/new-docs-code-snippet-copy.js"></script>
+<script src="/js/new-docs-anchor-links.js"></script>
+<script src="/js/learn/left-sidebar.js"></script>
+<script src="/js/learn/right-sidebar.js"></script>
+<script src="/js/position-feedback-widget.js"></script>
+<script src="/js/learn/top-bar.js"></script>

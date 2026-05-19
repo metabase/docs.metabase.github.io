@@ -1,0 +1,43 @@
+<html lang="en-US">
+  <head>
+    <title>{{ page.title }}</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <meta property="og:site_name" content="{{ page.title }}" />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:url"
+      content="{{ page.url | replace: '/index.html', '' | prepend: site.url }}"
+    />
+    <meta name="title" property="og:title" content="{{ page.title }}" />
+    <meta
+      name="description"
+      property="og:description"
+      content="{{ page.summary }}"
+    />
+    <meta
+      name="image"
+      property="og:image"
+      content="{{ page.open_graph_image }}"
+    />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+
+    <style>
+      body {
+        margin: 0;
+        overflow: hidden;
+        padding: 0;
+      }
+      iframe {
+        border: none;
+        height: 100%;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    {{ content }}
+  </body>
+</html>
