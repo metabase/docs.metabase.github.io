@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+  {% include head.html %}
+
+    <body>
+
+
+    {% include navigation-header.html color=true active=page.active %}
+
+    <div class="MB-Documentation MB-Page ZoomImages">
+      {% if page.version and page.version != site.docs_version %}
+        <div class="bg-white text-centered py1">
+          <h5>You are viewing the documentation for Metabase {{ page.version }}. The
+            <a class="text-purple text-underline" href="/docs/latest/">most recent docs version is {{ site.docs_version }}.</a>
+          </h5>
+        </div>
+      {% endif %}
+
+      {{ content }}
+    </div>
+    {% include footer.html %}
+
+    <script type="text/javascript" src="/js/contentloaded.min.js"></script>
+    <script type="text/javascript" src="/js/lightbox.js"></script>
+    <script type="text/javascript" src="/js/documentation.js"></script>
+    <script type="text/javascript" src="/js/anchor.min.js"></script>
+    <script type="text/javascript" src="/js/anchor-links.js"></script>
+  </body>
+</html>

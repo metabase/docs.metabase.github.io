@@ -1,0 +1,40 @@
+<nav style="--bs-breadcrumb-divider: url('/images/chevron_blue_right.svg');" aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <a href="/learn/">Home</a>
+    </li>
+
+    {% if track and track.slug == "sql" %}
+      <li class="breadcrumb-item">
+        <a href="/learn/sql">Learn SQL</a>
+      </li>
+      {% if course and course.url contains '/learn/grow-your-data-skills/learn-sql/' %}
+        <li class="breadcrumb-item">
+          <a href="{{ course.url }}">{{ course.name }}</a>
+        </li>
+     {% elsif course %}
+        <li class="breadcrumb-item">
+          <a href="{{ course.url }}">{{ course.name }}</a>
+        </li>
+     {% endif %}
+    {% else %}
+      {% if track %}
+        <li class="breadcrumb-item">
+          <a href="/learn/{{category.slug}}/{{track.slug}}">
+            {{track.name}}
+          </a>
+        </li>
+      {% endif %}
+
+      {% if course %}
+        {% if lesson %}
+          <li class="breadcrumb-item">
+            <a href="/learn/{{category.slug}}/{{track.slug}}/{{course.slug}}">
+              {{course.name}}
+            </a>
+          </li>
+        {% endif %}
+      {% endif %}
+    {% endif %}
+  </ol>
+</nav>
