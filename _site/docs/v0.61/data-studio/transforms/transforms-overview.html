@@ -6102,7 +6102,7 @@ Roadmap</a>
 
 <p>You can’t create transforms on databases that have <a href="../../permissions/database-routing">Database routing</a> enabled, or on Metabase’s Sample Database.</p>
 
-<p>Transforms will create tables in your database, so the database user you use for your connection must have appropriate privileges. See <a href="../../databases/users-roles-privileges">Database users, roles, and privileges</a>. We suggest using a <a href="../../databases/writable-connection">Writable connection</a> option for your database.</p>
+<p>Transforms will create tables in your database, so the database user you use for your connection must have appropriate privileges. See <a href="../../databases/users-roles-privileges">Database users, roles, and privileges</a>. We suggest using a <a href="../../databases/writable-connection">Writable connection</a> for your database.</p>
 
 <h2 id="types-of-transforms">Types of transforms</h2>
 
@@ -6115,23 +6115,47 @@ Roadmap</a>
 
 <h2 id="permissions-for-transforms">Permissions for transforms</h2>
 
-<p>If you are running Metabase Open Source/Starter, Admins (and only Admins) can see and run transforms.</p>
-
-<p>Metabase Pro/Enterprise comes with additional permission controls for transforms:</p>
+<p>Permission configuration for transform depends on your plan.</p>
 
 <ul>
-  <li>To <strong>see</strong> the list of transforms on your instance, people need to be able to access Data Studio, so they need to be either an Admin or a member of the special <a href="../../people-and-groups/managing">Data Analyst group</a>.</li>
-  <li>To <strong>execute</strong> transforms on a database, people additionally need to have the <a href="../../permissions/data">Transform permissions</a> for that database.</li>
+  <li>
+    <p><strong>Metabase Open Source/Starter</strong>: Admins (and only Admins) can see and run transforms.</p>
+  </li>
+  <li>
+    <p><strong>Metabase Pro/Enterprise</strong> comes with additional permission controls for transforms: a special <a href="../../people-and-groups/managing">Data Analysts</a> group for non-Admins with potential transform access, and granular transform permissions for each database:</p>
+
+    <ul>
+      <li>To <strong>see</strong> the list of transforms on your instance, people need to be able to access Data Studio, so they need to be either an Admin or a member of the special <a href="../../people-and-groups/managing">Data Analyst group</a>.</li>
+      <li>To <strong>execute</strong> transforms on a database, people need to be either Admins on belong to the special <a href="../../people-and-groups/managing">Data Analyst group</a>. Additionally people need to have the <a href="../../permissions/data">Transform permissions</a> for that database.</li>
+    </ul>
+  </li>
 </ul>
+
+<h2 id="enable-transforms">Enable transforms</h2>
+
+<p>Before you can start writing transforms, you’ll need to enable transforms in your Metabase instance.</p>
+
+<p>If you are on a Metabase Cloud plan, only people logged in with an email of a <a href="../../cloud/accounts-and-billing#add-people-to-manage-your-metabase-store-account">Metabase Store admins</a> (not just Metabase <em>instance</em> admins) can enable basic transforms, because transforms incur a cost per run on Metabase Cloud.</p>
+
+<p>To enable transforms:</p>
+
+<ol>
+  <li>Navigate to <a href="../overview"><strong>Data Studio</strong></a> by click the <strong>grid icon</strong> in top right corner of your Metabase and selecing <strong>Data Studio</strong>.</li>
+  <li>In Data Studio, click <strong>Transforms</strong> in the right sidebar.</li>
+  <li>If the transforms have not been enabled on your instance yet, you’ll see a prompt to enable them. You can do just that.</li>
+</ol>
+
+<p>Once you’ve enabled transforms, you can <a href="#permissions-for-transforms">configure permissions</a> and start <a href="#create-a-transform">creating transforms</a>.</p>
 
 <h2 id="see-all-transforms">See all transforms</h2>
 
 <p><em>Data Studio &gt; Transforms</em></p>
 
+<p>See <a href="#permissions-for-transforms">permissions needed to see transforms</a>.</p>
+
 <p>You can see all your Metabase’s transforms:</p>
 
 <ol>
-  <li>Make sure you have <a href="#permissions-for-transforms">appropriate permissions to see transforms</a>.</li>
   <li>Click the <strong>grid</strong> icon on top right and go to <strong>Data Studio</strong>.</li>
   <li>In the left sidebar, select <strong>Transforms</strong>.</li>
 </ol>
@@ -6142,12 +6166,16 @@ Roadmap</a>
 
 <p><em>Data Studio &gt; Transforms</em></p>
 
-<p>If you’re using remote sync, you won’t be able to create transforms if your instance is in <a href="../../installation-and-operation/remote-sync">“read-only” sync mode</a>.</p>
+<blockquote>
+  <p>If you’re using remote sync, you won’t be able to create transforms if your instance is in <a href="../../installation-and-operation/remote-sync">“read-only” sync mode</a>.</p>
+</blockquote>
+
+<p>See <a href="#permissions-for-transforms">permissions needed to create transforms</a>.</p>
 
 <p>To create a transform:</p>
 
 <ol>
-  <li>Make sure you have <a href="#permissions-for-transforms">appropriate permissions for creating transforms</a>.</li>
+  <li><a href="#enable-transforms">Enable transforms</a>.</li>
   <li>Click the <strong>grid</strong> icon on top right and go to <strong>Data Studio</strong>.</li>
   <li>In the left sidebar, select <strong>Transforms</strong>.</li>
   <li>
@@ -6193,7 +6221,7 @@ Roadmap</a>
 <h2 id="use-metabot-to-generate-code-for-transforms">Use Metabot to generate code for transforms</h2>
 
 <blockquote>
-  <p>Code generation for transforms requires <a href="../../ai/settings#enable-ai-features">Metabot to be enabled</a> and the <strong>Transforms</strong> add-on.</p>
+  <p>Code generation for transforms requires <a href="../../ai/settings#enable-ai-features">AI features</a>.</p>
 </blockquote>
 
 <p>You can ask Metabot to generate a new SQL or Python-based transform, or edit an existing transform.</p>
@@ -6234,10 +6262,11 @@ Roadmap</a>
 
 <p><em>Data Studio &gt; Transforms &gt; Definition</em></p>
 
+<p>See <a href="#permissions-for-transforms">permissions to edit transforms</a>.</p>
+
 <p>To edit the transform’s query or script:</p>
 
 <ol>
-  <li>Make sure you have <a href="../../permissions/data">permissions to edit transforms</a>.</li>
   <li>Go to <strong>Data Studio &gt; Transforms</strong>.</li>
   <li>Find the transform you’d like to edit and click on <strong>Edit definition</strong> above the transform definition.</li>
   <li>
@@ -6261,11 +6290,16 @@ Roadmap</a>
 
 <p>You can run a transform manually or schedule the transform using tags and jobs.</p>
 
+<ul>
+  <li>
+    <p>To run a transform manually, visit the transform in <strong>Data Studio &gt; Transforms &gt; Runs</strong> and click <strong>Run</strong>.</p>
+  </li>
+  <li>
+    <p>To schedule a transform, you’ll need to assign one or more tags to it, then create a <a href="./jobs-and-runs">scheduled job</a> that picks up those tags.</p>
+  </li>
+</ul>
+
 <p>Running a transform for the first time will create and sync the table created by the transform, and you’ll be able to edit the table’s <a href="../../data-modeling/metadata-editing">metadata</a> and <a href="../../permissions/data">permissions</a>. Subsequent runs will drop and recreate the table, unless you use <a href="#incremental-transforms">Incremental transforms</a>.</p>
-
-<p>To run a transform manually, visit the transform in <strong>Data Studio &gt; Transforms &gt; Runs</strong> and click <strong>Run</strong>.</p>
-
-<p>To schedule a transform, you’ll need to assign one or more tags to it, then create a <a href="./jobs-and-runs">scheduled job</a> that picks up those tags.</p>
 
 <p>You can see the time and status of the latest transform run on the transform’s page, or in the <a href="./jobs-and-runs">Runs view</a>. The time of the run is given in the system’s timezone.</p>
 
@@ -6274,6 +6308,10 @@ Roadmap</a>
 <h2 id="inspect-a-transform">Inspect a transform</h2>
 
 <p><em>Data Studio &gt; Transforms &gt; [transform name] &gt; Inspect</em></p>
+
+<blockquote>
+  <p>Transform inspector requires the <a href="addons">Advanced transforms add-on</a></p>
+</blockquote>
 
 <p>The <a href="./transform-inspector">transform inspector</a> lets you poke at the input and outputs of your transform.</p>
 
@@ -6313,7 +6351,7 @@ Roadmap</a>
 
 <p>If a job includes a transform that depends on a table created by another transform, then the job will run all the tagged transforms and their dependencies, even if they lack tags, see <a href="jobs-and-runs">Jobs and runs</a> for more information.</p>
 
-<h3 id="incremental-transforms">Incremental transforms</h3>
+<h2 id="incremental-transforms">Incremental transforms</h2>
 
 <p><em>Data Studio &gt; Transforms &gt; Settings</em></p>
 
@@ -6334,6 +6372,28 @@ Roadmap</a>
 <h2 id="versioning-transforms">Versioning transforms</h2>
 
 <p><em>Admin &gt; General &gt; Remote sync</em></p>
+
+<div class="bootstrap">
+  <div class="plans-blockquote bg-blue-95 rounded-3 p-6 d-flex flex-row border border-1 border-primary">
+    <svg class="" width="24" height="24" viewBox="0 0 26 26" fill="none">
+  <path d="M12 13V15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
+  <path d="M12 10C12.5523 10 13 9.55228 13 9C13 8.44772 12.5523 8 12 8C11.4477 8 11 8.44772 11 9C11 9.55228 11.4477 10 12 10Z" fill="#509EE3"></path>
+  <path d="M12 19.25C16.0041 19.25 19.25 16.0041 19.25 12C19.25 7.99594 16.0041 4.75 12 4.75C7.99594 4.75 4.75 7.99594 4.75 12C4.75 16.0041 7.99594 19.25 12 19.25Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
+</svg>
+
+    
+    
+    
+      
+
+    <p class="m-0 ms-2 paragraph-5 neutral-40">
+       Versioning transforms is only available on
+      <a class="fw-bold" href="/product/pro">Pro</a> and
+      <a class="fw-bold link-purple" href="/product/enterprise">Enterprise</a>
+      plans  (both self-hosted and on Metabase Cloud).
+    </p>
+  </div>
+</div>
 
 <p>You can check your transforms into git with <a href="../../installation-and-operation/remote-sync">Remote Sync</a>. If you enable transform sync, Metabase will serialize transforms as YAML files and push them to your specified GitHub repo branch.</p>
 
@@ -6360,41 +6420,7 @@ Roadmap</a>
 
 <p>Use models to enable non-admins to create their own datasets within Metabase, and to add context like field descriptions and semantic types. Use transforms to create persisted datasets in your database and reuse them across Metabase. In future versions of Metabase, model persistence will be deprecated in favor of transforms.</p>
 
-<h2 id="convert-models-to-transforms">Convert models to transforms</h2>
-
-<p>If you have models you’d like to migrate to transforms, Metabase can convert them for you. When you convert a model, Metabase:</p>
-
-<ol>
-  <li>Creates a new transform based on the model’s query.</li>
-  <li>Runs the transform to create the output table in your database.</li>
-  <li>Replaces every question, dashboard, and other item that used the model with the transform’s output table.</li>
-  <li>Converts the original model to a question.</li>
-</ol>
-
-<p>You must be an admin to convert models, and the model’s database must <a href="#databases-that-support-transforms">support transforms</a>.</p>
-
-<p>Before converting models into transforms, review <a href="../dependencies/replace-data-sources">Replacing data sources</a> docs for overview and limitations of the process.</p>
-
-<p>To convert a model into a transform:</p>
-
-<ol>
-  <li>Open <strong>Data Studio</strong> and select <strong>Transforms</strong> in the sidebar.</li>
-  <li>Click <strong>Tools &gt; Migrate models</strong>.</li>
-  <li>Find the model you want to convert and click it to open its details panel. The panel shows the model’s name, database, and collection, and a list of items that depend on it.</li>
-  <li>Click <strong>Convert to a transform</strong>.</li>
-  <li>Fill out the transform settings. See <a href="#create-a-transform">Create a transform</a> for the overview of settings.</li>
-  <li>Click <strong>Convert to a transform</strong>.</li>
-</ol>
-
-<p>Metabase runs the conversion in the background. A status indicator at the bottom of the screen shows progress.</p>
-
-<p>If the transform run fails, Metabase stops and leaves the model unchanged—nothing is replaced.</p>
-
-<p>If the transform runs successfully but the source swap fails afterward, the transform and its output table are kept. The model is left unchanged. You can complete the migration manually using <a href="../dependencies/replace-data-sources">Replace data sources</a> to point remaining content from the model to the transform’s output table.</p>
-
-<p>Once conversion completes, all content that previously queried the model now queries the transform’s output table, and the model becomes a saved question.</p>
-
-<p>Newly created tables will be created with default permissions and will <em>not</em> inherit the model’s permissions. As an alternative, consider manually creating and running the transform first, setting up the permissions, then using <a href="../dependencies/replace-data-sources">Replace data sources</a> to swap the model for the transform’s output table once you configured permissions.</p>
+<p>On Metabase Pro/Enterprise plans, you can convert Metabase models to transforms in bulk, see <a href="query-transforms#convert-models-to-transforms">Convert models to transforms</a></p>
 
 
         <div>

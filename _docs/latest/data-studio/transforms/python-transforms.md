@@ -16,7 +16,7 @@ latest: true
 
 # Python transforms
 
-> Python transforms require the **Transforms add-on**.
+> Python transforms require the [Advanced transforms add-on](addons)
 
 Use Python to write [transforms](transforms-overview).
 

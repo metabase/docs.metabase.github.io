@@ -12,7 +12,7 @@ summary: 'Use Python to wrangle your data in Metabase and write the results back
 
 # Python transforms
 
-> Python transforms require the **Transforms add-on**.
+> Python transforms require the [Advanced transforms add-on](addons)
 
 Use Python to write [transforms](transforms-overview).
 

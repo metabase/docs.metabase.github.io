@@ -16,7 +16,7 @@ latest: true
 
 # Transform inspector
 
-> Transform inspector requires the **Advanced transforms** add-on.
+> Transform inspector requires the [Advanced transforms add-on](addons).
 
 _Data Studio > Transforms > [transform name] > Inspect_
 

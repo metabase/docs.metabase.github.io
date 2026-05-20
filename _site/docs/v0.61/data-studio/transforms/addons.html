@@ -50,12 +50,12 @@ window.redirectTo = function redirectTo(theLocation) {
 
 
 
-<title>Python runner | Metabase Documentation</title>
+<title>Transform add-ons | Metabase Documentation</title>
 <!-- Twitter cards -->
 <meta name="twitter:site" content="@metabase">
 
-<meta name="twitter:title" content="Python runner | Metabase Documentation">
-<meta name="twitter:description" content="Configure self-hosted Python execution environment to run Python transforms in Metabase.">
+<meta name="twitter:title" content="Transform add-ons | Metabase Documentation">
+<meta name="twitter:description" content="Metabase transforms come in two flavors - basic transforms for basic query-based functionality, and advanced transforms for Python workflows, transform inspector, and other functionality.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -63,9 +63,9 @@ window.redirectTo = function redirectTo(theLocation) {
 <!-- Open Graph metadata -->
 <meta property="og:site_name" content="Metabase | Business Intelligence, Dashboards, and Data Visualization">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://www.metabase.com/docs/v0.61/data-studio/transforms/python-runner">
-<meta name="title" property="og:title" content="Python runner | Metabase Documentation">
-<meta name="description" property="og:description" content="Configure self-hosted Python execution environment to run Python transforms in Metabase.">
+<meta property="og:url" content="https://www.metabase.com/docs/v0.61/data-studio/transforms/addons">
+<meta name="title" property="og:title" content="Transform add-ons | Metabase Documentation">
+<meta name="description" property="og:description" content="Metabase transforms come in two flavors - basic transforms for basic query-based functionality, and advanced transforms for Python workflows, transform inspector, and other functionality.">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -3063,7 +3063,7 @@ Roadmap</a>
 
       
 
-      <li class="expanded">
+      <li class="">
         <a href="/docs/v0.61/data-studio/overview" class="">
         Data Studio
 
@@ -3176,7 +3176,7 @@ Roadmap</a>
 
               
 
-              <li class="expanded">
+              <li class="">
                 <a href="" class="">
                   Transforms
 
@@ -3240,7 +3240,7 @@ Roadmap</a>
 
                       
                       <li class="">
-                        <a href="/docs/v0.61/data-studio/transforms/python-runner" class="selected">
+                        <a href="/docs/v0.61/data-studio/transforms/python-runner" class="">
                           Python runner
 
                           
@@ -6062,260 +6062,135 @@ Roadmap</a>
 </div>
 
 
-        <h1 id="python-runner">Python runner</h1>
+        <h1 id="transform-add-ons">Transform add-ons</h1>
 
-<blockquote>
-  <p>Self-hosted Python transforms require self-hosted Pro or Enterprise plan with the <a href="addons">Advanced transforms add-on</a>.</p>
-</blockquote>
+<p>At a glance:</p>
 
-<p>To run Python transforms from a self-hosted Metabase, you’ll need to configure a separate self-hosted execution environment. If you’re using Metabase Cloud, you’ll need to buy the Transforms add-on.</p>
-
-<h2 id="prerequisites">Prerequisites</h2>
+<p><a href="#basic-transforms"><strong>Basic transforms</strong></a>:</p>
 
 <ul>
-  <li>Docker installed and running.</li>
-  <li><strong>Self-hosted Metabase Pro or Enterprise license</strong> (Python Runner requires a Pro/Enterprise plan).</li>
-  <li>For production: an S3-compatible storage bucket (AWS S3, MinIO, etc.).</li>
+  <li>Run <a href="query-transforms">query-based transforms</a></li>
+  <li>Schedule transform <a href="jobs-and-runs">jobs</a>.</li>
+  <li>(Pro/Enterprise only) Configure <a href="transforms-overview#permissions-for-transforms">permissions for transforms</a>.</li>
 </ul>
 
-<h2 id="quickstart">Quickstart</h2>
+<p><a href="#advanced-transforms"><strong>Advanced transforms</strong></a>:</p>
 
-<p>The simplest way to try the Python Runner is to use the built-in S3 server (not for production):</p>
+<ul>
+  <li>Run <a href="query-transforms">query-based</a> and <a href="python-transforms">Python transforms</a>;</li>
+  <li>Schedule transform <a href="jobs-and-runs">jobs</a>.</li>
+  <li>(Pro/Enterprise only) Configure <a href="transforms-overview#permissions-for-transforms">permissions for transforms</a>.</li>
+  <li><a href="../../databases/writable-connection">Writable connection</a>: separate database connection used for write operations.</li>
+  <li><a href="transform-inspector">Transform inspector</a>.</li>
+</ul>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Create a Docker network for the containers to communicate</span>
-docker network create metabase-network
+<p>Availability and pricing depends on your plan and hosting method.</p>
 
-<span class="c"># Start the Python Runner with internal S3</span>
-docker run <span class="nt">-d</span> <span class="se">\</span>
-  <span class="nt">--network</span> metabase-network <span class="se">\</span>
-  <span class="nt">-e</span> <span class="nv">AUTH_TOKEN</span><span class="o">=</span>your-secure-token-here <span class="se">\</span>
-  <span class="nt">-e</span> <span class="nv">ENABLE_INTERNAL_S3</span><span class="o">=</span><span class="nb">true</span> <span class="se">\</span>
-  <span class="nt">--name</span> python-runner metabase/python-runner:latest
+<h2 id="basic-transforms">Basic transforms</h2>
 
-<span class="c"># Start Metabase Enterprise</span>
-docker run <span class="nt">-d</span> <span class="se">\</span>
-  <span class="nt">--network</span> metabase-network <span class="se">\</span>
-  <span class="nt">-p</span> 3000:3000 <span class="se">\</span>
-  <span class="nt">-e</span> <span class="nv">MB_PYTHON_RUNNER_URL</span><span class="o">=</span>http://python-runner:5000 <span class="se">\</span>
-  <span class="nt">-e</span> <span class="nv">MB_PYTHON_RUNNER_API_TOKEN</span><span class="o">=</span>your-secure-token-here <span class="se">\</span>
-  <span class="nt">-e</span> <span class="nv">MB_PYTHON_STORAGE_S_3_ENDPOINT</span><span class="o">=</span>http://python-runner:4566 <span class="se">\</span>
-  <span class="nt">-e</span> <span class="nv">MB_PYTHON_STORAGE_S_3_BUCKET</span><span class="o">=</span>metabase-python-runner <span class="se">\</span>
-  <span class="nt">-e</span> <span class="nv">MB_PYTHON_STORAGE_S_3_REGION</span><span class="o">=</span>us-east-1 <span class="se">\</span>
-  <span class="nt">-e</span> <span class="nv">MB_PYTHON_STORAGE_S_3_PATH_STYLE_ACCESS</span><span class="o">=</span><span class="nb">true</span> <span class="se">\</span>
-  <span class="nt">-e</span> <span class="nv">MB_PYTHON_STORAGE_S_3_ACCESS_KEY</span><span class="o">=</span><span class="nb">test</span> <span class="se">\</span>
-  <span class="nt">-e</span> <span class="nv">MB_PYTHON_STORAGE_S_3_SECRET_KEY</span><span class="o">=</span><span class="nb">test</span> <span class="se">\</span>
-  <span class="nt">--name</span> metabase metabase/metabase-enterprise:latest
-</code></pre></div></div>
+<p>With basic transforms, you can:</p>
 
-<h2 id="production-setup">Production setup</h2>
+<ul>
+  <li>Write and run <a href="query-transforms">query-based transforms</a> (but not Python transforms).</li>
+  <li><a href="jobs-and-runs">Schedule and run jobs</a>.</li>
+  <li>(Pro/Enterprise only) Configure <a href="transforms-overview#permissions-for-transforms">permissions for transforms</a>.</li>
+</ul>
 
-<p>For production, use an external S3-compatible storage service:</p>
+<h3 id="enable-basic-transforms">Enable basic transforms</h3>
 
-<h3 id="step-1-generate-a-secure-authentication-token">Step 1: Generate a secure authentication token</h3>
+<ul>
+  <li>
+    <p><strong>Self-hosted Metabases</strong>: Basic transform functionality is included on self-hosted Metabases by default. Just log into your Metabase, <a href="../transforms/transforms-overview#enable-transforms">enable transforms</a>, and you’re good to go.</p>
+  </li>
+  <li>
+    <p><strong>Metabase Cloud</strong>: Basic transform functionality on Metabase Cloud - Starter, Pro, or Enterprise - comes with an additional small fee per successful transform run, see <a href="/pricing">Pricing</a>.</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>openssl rand <span class="nt">-hex</span> 32
-</code></pre></div></div>
+    <p>Only people logged in with an email of a <a href="../../cloud/accounts-and-billing#add-people-to-manage-your-metabase-store-account">Metabase Store admins</a> (not just Metabase <em>instance</em> admins) can enable basic transforms. To enable Basic transforms on Metabase Cloud, see <a href="./transforms-overview#enable-transforms">Enable transforms</a>.</p>
+  </li>
+</ul>
 
-<p>Save this token securely - you’ll need it for both containers.</p>
+<h3 id="cancel-basic-transforms">Cancel basic transforms</h3>
 
-<h3 id="step-2-set-up-s3-storage">Step 2: Set up S3 storage</h3>
+<p>Once basic transforms are enabled on your Metabase Cloud instance, they can’t be disabled.</p>
 
-<p>Create a bucket in your S3-compatible storage service (AWS S3, MinIO, etc.) and note your access credentials.</p>
+<h2 id="advanced-transforms">Advanced transforms</h2>
 
-<h3 id="step-3-start-the-containers">Step 3: Start the containers</h3>
+<p>Advanced transforms include:</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker network create metabase-network
+<ul>
+  <li>Everything in <a href="#basic-transforms">basic transforms</a>.</li>
+  <li><a href="python-transforms">Python transforms</a> for more flexible data processing.</li>
+  <li><a href="../../databases/writable-connection">Writable connection</a>: separate database connection used for write operations.</li>
+  <li><a href="transform-inspector">Transform inspector</a>.</li>
+</ul>
 
-docker run <span class="nt">-d</span> <span class="se">\</span>
-  <span class="nt">--network</span> metabase-network <span class="se">\</span>
-  <span class="nt">-e</span> <span class="nv">AUTH_TOKEN</span><span class="o">=</span>your-secure-token-here <span class="se">\</span>
-  <span class="nt">--name</span> python-runner metabase/python-runner:latest
+<p>You can buy the Advanced transforms add-on for:</p>
 
-docker run <span class="nt">-d</span> <span class="se">\</span>
-  <span class="nt">--network</span> metabase-network <span class="se">\</span>
-  <span class="nt">-p</span> 3000:3000 <span class="se">\</span>
-  <span class="nt">-e</span> <span class="nv">MB_PYTHON_RUNNER_URL</span><span class="o">=</span>http://python-runner:5000 <span class="se">\</span>
-  <span class="nt">-e</span> <span class="nv">MB_PYTHON_RUNNER_API_TOKEN</span><span class="o">=</span>your-secure-token-here <span class="se">\</span>
-  <span class="nt">-e</span> <span class="nv">MB_PYTHON_STORAGE_S_3_ENDPOINT</span><span class="o">=</span>https://s3.amazonaws.com <span class="se">\</span>
-  <span class="nt">-e</span> <span class="nv">MB_PYTHON_STORAGE_S_3_BUCKET</span><span class="o">=</span>your-bucket-name <span class="se">\</span>
-  <span class="nt">-e</span> <span class="nv">MB_PYTHON_STORAGE_S_3_REGION</span><span class="o">=</span>us-east-1 <span class="se">\</span>
-  <span class="nt">-e</span> <span class="nv">MB_PYTHON_STORAGE_S_3_ACCESS_KEY</span><span class="o">=</span>your-access-key <span class="se">\</span>
-  <span class="nt">-e</span> <span class="nv">MB_PYTHON_STORAGE_S_3_SECRET_KEY</span><span class="o">=</span>your-secret-key <span class="se">\</span>
-  <span class="nt">--name</span> metabase metabase/metabase-enterprise:latest
-</code></pre></div></div>
+<ul>
+  <li>Any Metabase Cloud instance (Starter, Pro, Enterprise)</li>
+  <li>
+    <p>Self-hosted Pro or Enterprise instances.</p>
 
-<h2 id="configuration-reference">Configuration reference</h2>
+    <p>Currently, you can’t use Advanced transforms functionality on Open Source self-hosted plans.</p>
+  </li>
+</ul>
 
-<h3 id="python-runner-environment-variables">Python Runner environment variables</h3>
+<p>The Advanced transforms add-on comes with an additional charge per successful transform run (compare to <a href="#basic-transforms">Basic transforms</a>). See <a href="/pricing">Pricing</a>.</p>
 
-<table>
-  <thead>
-    <tr>
-      <th>Variable</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td data-label="Variable"><code class="language-plaintext highlighter-rouge">AUTH_TOKEN</code></td>
-      <td data-label="Description">Authentication token for API requests. Must match <code class="language-plaintext highlighter-rouge">MB_PYTHON_RUNNER_API_TOKEN</code> in Metabase.</td>
-    </tr>
-    <tr>
-      <td data-label="Variable"><code class="language-plaintext highlighter-rouge">ENABLE_INTERNAL_S3</code></td>
-      <td data-label="Description">Set to <code class="language-plaintext highlighter-rouge">true</code> to enable built-in S3 server on port 4566. Not for production.</td>
-    </tr>
-  </tbody>
-</table>
+<h3 id="enable-advanced-transforms">Enable Advanced transforms</h3>
 
-<h3 id="metabase-environment-variables">Metabase environment variables</h3>
+<p>To enable Advanced transforms functionality, you need to have <a href="#basic-transforms">Basic transforms</a> already, see <a href="#enable-basic-transforms">Enable basic transforms</a>.</p>
 
-<p>These settings can also be configured in the Metabase UI at <strong>Admin</strong> &gt; <strong>Settings</strong> &gt; <strong>Python Runner</strong>. Note that environment variables take precedence over UI settings.</p>
+<p>There are two ways to enable Advanced transforms:</p>
 
-<table>
-  <thead>
-    <tr>
-      <th>Variable</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td data-label="Variable"><code class="language-plaintext highlighter-rouge">MB_PYTHON_RUNNER_URL</code></td>
-      <td data-label="Description">URL where Metabase can reach the Python Runner (e.g., <code class="language-plaintext highlighter-rouge">http://python-runner:5000</code>)</td>
-    </tr>
-    <tr>
-      <td data-label="Variable"><code class="language-plaintext highlighter-rouge">MB_PYTHON_RUNNER_API_TOKEN</code></td>
-      <td data-label="Description">Authentication token. Must match <code class="language-plaintext highlighter-rouge">AUTH_TOKEN</code> in the Python Runner.</td>
-    </tr>
-    <tr>
-      <td data-label="Variable"><code class="language-plaintext highlighter-rouge">MB_PYTHON_STORAGE_S_3_ENDPOINT</code></td>
-      <td data-label="Description">S3 endpoint URL.</td>
-    </tr>
-    <tr>
-      <td data-label="Variable"><code class="language-plaintext highlighter-rouge">MB_PYTHON_STORAGE_S_3_BUCKET</code></td>
-      <td data-label="Description">S3 bucket name for storing Python artifacts</td>
-    </tr>
-    <tr>
-      <td data-label="Variable"><code class="language-plaintext highlighter-rouge">MB_PYTHON_STORAGE_S_3_REGION</code></td>
-      <td data-label="Description">AWS region (e.g., <code class="language-plaintext highlighter-rouge">us-east-1</code>)</td>
-    </tr>
-    <tr>
-      <td data-label="Variable"><code class="language-plaintext highlighter-rouge">MB_PYTHON_STORAGE_S_3_ACCESS_KEY</code></td>
-      <td data-label="Description">S3 access key</td>
-    </tr>
-    <tr>
-      <td data-label="Variable"><code class="language-plaintext highlighter-rouge">MB_PYTHON_STORAGE_S_3_SECRET_KEY</code></td>
-      <td data-label="Description">S3 secret key</td>
-    </tr>
-    <tr>
-      <td data-label="Variable"><code class="language-plaintext highlighter-rouge">MB_PYTHON_STORAGE_S_3_PATH_STYLE_ACCESS</code></td>
-      <td data-label="Description">(Optional) Set to <code class="language-plaintext highlighter-rouge">true</code> for S3-compatible services like MinIO or LocalStack</td>
-    </tr>
-  </tbody>
-</table>
+<ul>
+  <li>
+    <p><strong>From your Metabase instance</strong>: you can navigate to a feature requiring advanced transforms (like Python transforms or transform inspector), and follow the prompts to upgrade.</p>
 
-<h2 id="using-docker-compose">Using Docker Compose</h2>
+    <p>To enable Advanced transforms from your Metabase instance, you need to be logged into the instance with the same email as a <a href="../../cloud/accounts-and-billing#add-people-to-manage-your-metabase-store-account">Metabase Store admin</a>, because Advanced transform incur an additional charge.</p>
+  </li>
+  <li>
+    <p><strong>From <a href="https://store.metabase.com">Metabase Store</a></strong>:</p>
 
-<p>Docker Compose simplifies managing multiple containers. Below are example configurations for different scenarios.</p>
+    <ol>
+      <li>Log into <a href="https://store.metabase.com">Metabase Store</a> (your Metabase Store account might be different from your Metabase instance account).</li>
+      <li>Click on <strong>Manage plan</strong> next to the instance where you’d like to add Advanced transforms.</li>
+      <li>Under <strong>Manage Add-ons</strong>, find <strong>Advanced transforms</strong> and click <strong>Upgrade</strong>.</li>
+    </ol>
+  </li>
+</ul>
 
-<h3 id="simple-setup-with-localstack">Simple setup with LocalStack</h3>
+<p>Once you upgrade to Advanced transforms:</p>
 
-<p>For simple setup and local testing, you can use LocalStack to simulate S3:</p>
+<ul>
+  <li>You get access to Advanced transforms features/</li>
+  <li>All your existing query-based transforms will be charged at Advanced transforms rate.</li>
+</ul>
 
-<div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">name</span><span class="pi">:</span> <span class="s">metabase-python-runner</span>
-<span class="na">services</span><span class="pi">:</span>
-  <span class="na">metabase</span><span class="pi">:</span>
-    <span class="na">image</span><span class="pi">:</span> <span class="s">metabase/metabase-enterprise:latest</span>
-    <span class="na">ports</span><span class="pi">:</span>
-      <span class="pi">-</span> <span class="s2">"</span><span class="s">3000:3000"</span>
-    <span class="na">environment</span><span class="pi">:</span>
-      <span class="pi">-</span> <span class="s">MB_PYTHON_RUNNER_URL=http://python-runner:5000</span>
-      <span class="pi">-</span> <span class="s">MB_PYTHON_RUNNER_API_TOKEN=your-secure-token-here</span>
-      <span class="pi">-</span> <span class="s">MB_PYTHON_STORAGE_S_3_ENDPOINT=http://localstack:4566</span>
-      <span class="pi">-</span> <span class="s">MB_PYTHON_STORAGE_S_3_BUCKET=metabase-python-runner</span>
-      <span class="pi">-</span> <span class="s">MB_PYTHON_STORAGE_S_3_REGION=us-east-1</span>
-      <span class="pi">-</span> <span class="s">MB_PYTHON_STORAGE_S_3_PATH_STYLE_ACCESS=true</span>
-      <span class="pi">-</span> <span class="s">MB_PYTHON_STORAGE_S_3_ACCESS_KEY=test</span>
-      <span class="pi">-</span> <span class="s">MB_PYTHON_STORAGE_S_3_SECRET_KEY=test</span>
-    <span class="na">depends_on</span><span class="pi">:</span>
-      <span class="na">localstack-init</span><span class="pi">:</span>
-        <span class="na">condition</span><span class="pi">:</span> <span class="s">service_completed_successfully</span>
-      <span class="na">python-runner</span><span class="pi">:</span>
-        <span class="na">condition</span><span class="pi">:</span> <span class="s">service_started</span>
+<h3 id="cancel-advanced-transforms">Cancel Advanced transforms</h3>
 
-  <span class="na">python-runner</span><span class="pi">:</span>
-    <span class="na">image</span><span class="pi">:</span> <span class="s">metabase/python-runner:latest</span>
-    <span class="na">environment</span><span class="pi">:</span>
-      <span class="pi">-</span> <span class="s">AUTH_TOKEN=your-secure-token-here</span>
+<p>You can downgrade from Advanced transforms to <a href="#basic-transforms">Basic transforms</a>.</p>
 
-  <span class="na">localstack</span><span class="pi">:</span>
-    <span class="na">image</span><span class="pi">:</span> <span class="s">localstack/localstack:latest</span>
-    <span class="na">environment</span><span class="pi">:</span>
-      <span class="pi">-</span> <span class="s">SERVICES=s3</span>
-    <span class="na">healthcheck</span><span class="pi">:</span>
-      <span class="na">test</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">CMD"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">curl"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">-f"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">http://localhost:4566/_localstack/health"</span><span class="pi">]</span>
-      <span class="na">interval</span><span class="pi">:</span> <span class="s">5s</span>
-      <span class="na">timeout</span><span class="pi">:</span> <span class="s">5s</span>
-      <span class="na">retries</span><span class="pi">:</span> <span class="m">10</span>
+<ol>
+  <li>Log into <a href="https://store.metabase.com">Metabase Store</a> (your Metabase Store account might be different from your Metabase instance account).</li>
+  <li>Click on <strong>Manage plan</strong> next to the instance with Advanced transforms.</li>
+  <li>Under <strong>Manage Add-ons</strong>, find <strong>Advanced transforms</strong>, click <strong>three dos</strong> and select <strong>Downgrade to basic</strong>.</li>
+</ol>
 
-  <span class="na">localstack-init</span><span class="pi">:</span>
-    <span class="na">image</span><span class="pi">:</span> <span class="s">localstack/localstack:latest</span>
-    <span class="na">entrypoint</span><span class="pi">:</span>
-      <span class="pi">[</span><span class="s2">"</span><span class="s">/bin/sh"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">-c"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">awslocal</span><span class="nv"> </span><span class="s">s3</span><span class="nv"> </span><span class="s">mb</span><span class="nv"> </span><span class="s">s3://metabase-python-runner</span><span class="nv"> </span><span class="s">||</span><span class="nv"> </span><span class="s">true"</span><span class="pi">]</span>
-    <span class="na">environment</span><span class="pi">:</span>
-      <span class="pi">-</span> <span class="s">AWS_ENDPOINT_URL=http://localstack:4566</span>
-    <span class="na">depends_on</span><span class="pi">:</span>
-      <span class="na">localstack</span><span class="pi">:</span>
-        <span class="na">condition</span><span class="pi">:</span> <span class="s">service_healthy</span>
-</code></pre></div></div>
+<p>Once you downgrade from advanced transforms:</p>
 
-<p>Then run:</p>
+<ul>
+  <li>Your Python transforms will no longer run and will be removed.</li>
+  <li>Transforms and other write features will stop using the writable connection (if you had one configured.)</li>
+</ul>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker compose up <span class="nt">-d</span>
-</code></pre></div></div>
+<h2 id="how-billing-works-for-transforms">How billing works for transforms</h2>
 
-<h3 id="production-setup-1">Production setup</h3>
+<p>Unless you’re on an Enterprise plan, transforms - either basic (on Metabase Cloud) or advanced - are billed based on the number of successful runs. See <a href="jobs-and-runs">Jobs and runs</a> for more on transform runs, and <a href="/pricing">Pricing</a> for up-to-date information on pricing.</p>
 
-<p>For production, use an external S3-compatible storage service:</p>
+<p>When you upgrade from basic to advanced transforms, <em>all</em> your transforms will be billed at advanced transforms rate.</p>
 
-<div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">name</span><span class="pi">:</span> <span class="s">metabase-python-runner</span>
-<span class="na">services</span><span class="pi">:</span>
-  <span class="na">metabase</span><span class="pi">:</span>
-    <span class="na">image</span><span class="pi">:</span> <span class="s">metabase/metabase-enterprise:latest</span>
-    <span class="na">ports</span><span class="pi">:</span>
-      <span class="pi">-</span> <span class="s2">"</span><span class="s">3000:3000"</span>
-    <span class="na">environment</span><span class="pi">:</span>
-      <span class="pi">-</span> <span class="s">MB_PYTHON_RUNNER_URL=http://python-runner:5000</span>
-      <span class="pi">-</span> <span class="s">MB_PYTHON_RUNNER_API_TOKEN=${AUTH_TOKEN}</span>
-      <span class="pi">-</span> <span class="s">MB_PYTHON_STORAGE_S_3_ENDPOINT=${S3_ENDPOINT}</span>
-      <span class="pi">-</span> <span class="s">MB_PYTHON_STORAGE_S_3_BUCKET=${S3_BUCKET}</span>
-      <span class="pi">-</span> <span class="s">MB_PYTHON_STORAGE_S_3_REGION=${S3_REGION:-us-east-1}</span>
-      <span class="pi">-</span> <span class="s">MB_PYTHON_STORAGE_S_3_ACCESS_KEY=${S3_ACCESS_KEY}</span>
-      <span class="pi">-</span> <span class="s">MB_PYTHON_STORAGE_S_3_SECRET_KEY=${S3_SECRET_KEY}</span>
-    <span class="na">depends_on</span><span class="pi">:</span>
-      <span class="na">python-runner</span><span class="pi">:</span>
-        <span class="na">condition</span><span class="pi">:</span> <span class="s">service_started</span>
-
-  <span class="na">python-runner</span><span class="pi">:</span>
-    <span class="na">image</span><span class="pi">:</span> <span class="s">metabase/python-runner:latest</span>
-    <span class="na">environment</span><span class="pi">:</span>
-      <span class="pi">-</span> <span class="s">AUTH_TOKEN=${AUTH_TOKEN}</span>
-</code></pre></div></div>
-
-<p>Create a <code class="language-plaintext highlighter-rouge">.env</code> file with your configuration:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">AUTH_TOKEN</span><span class="o">=</span>your-secure-token-here
-<span class="nv">S3_ENDPOINT</span><span class="o">=</span>https://s3.amazonaws.com
-<span class="nv">S3_BUCKET</span><span class="o">=</span>metabase-python-runner
-<span class="nv">S3_REGION</span><span class="o">=</span>us-east-1
-<span class="nv">S3_ACCESS_KEY</span><span class="o">=</span>your-access-key
-<span class="nv">S3_SECRET_KEY</span><span class="o">=</span>your-secret-key
-</code></pre></div></div>
-
-<p>Then run:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker compose up <span class="nt">-d</span>
-</code></pre></div></div>
+<p>If you’re on an Enterprise plan and have questions about billing, <a href="/help-premium">contact us</a>.</p>
 
 
         <div>
@@ -6369,7 +6244,7 @@ docker run <span class="nt">-d</span> <span class="se">\</span>
 
   
     <span class="paragraph-6 fs-13 neutral-60" id="page-feedback-footer">
-      Want to improve these docs? <a href="https://github.com/metabase/metabase/blob/master/docs/data-studio/transforms/python-runner.md" target="_blank">Propose a change.</a>
+      Want to improve these docs? <a href="https://github.com/metabase/metabase/blob/master/docs/data-studio/transforms/addons.md" target="_blank">Propose a change.</a>
     </span>
   
 </div>
@@ -6391,8 +6266,8 @@ docker run <span class="nt">-d</span> <span class="se">\</span>
 <script type="text/javascript" src="/js/position-feedback-widget.js"></script>
 
 <script>
-  const pageTitle = `Python runner`;
-  const pageURL = '/docs/v0.61/data-studio/transforms/python-runner';
+  const pageTitle = `Transform add-ons`;
+  const pageURL = '/docs/v0.61/data-studio/transforms/addons';
   const pageURLSplit = pageURL.split('/');
 
   let pageURLPrefix = '/' + pageURLSplit[1] + '/' + pageURLSplit[2];

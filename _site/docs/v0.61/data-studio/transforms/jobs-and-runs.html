@@ -6094,10 +6094,6 @@ Roadmap</a>
 
 <p>Jobs run one or more transforms on schedule based on transform tags.</p>
 
-<p>To see all jobs, go to <strong>Data Studio</strong> and click on the <strong>Jobs</strong> at the bottom of the left sidebar.</p>
-
-<p>To create a new job, go to <strong>Data Studio &gt; Jobs</strong>, and click on the <strong>+ New</strong> button in the top right.</p>
-
 <p>Jobs have two components: schedule and tags.</p>
 
 <ul>
@@ -6105,7 +6101,87 @@ Roadmap</a>
   <li><strong>Tags</strong> determine <em>which</em> transforms a job runs, not when the job runs. For example, you can create a <code class="language-plaintext highlighter-rouge">Weekdays</code> tag, add that tag to a few transforms, then create a job that runs all the transforms with the <code class="language-plaintext highlighter-rouge">Weekdays</code> tag every weekday at 9:05AM.</li>
 </ul>
 
-<p>Job can use multiple tags, and will run all transforms that have <em>any</em> of those tags. For example, you can have a job “Weekend job” that is scheduled run at noon on Saturdays and Sundays that picks up all transforms tagged either “Saturday”, “Sunday”, or “Weekend”.</p>
+<p>Jobs will run all transforms tagged with any of the tags, plus any transforms that the tagged transforms depend on, see <a href="#jobs-will-run-all-dependent-transforms">Jobs will run all dependent transforms</a>.</p>
+
+<p>You can see which transforms a job will run and in which order on the job’s page.</p>
+
+<h3 id="see-all-jobs">See all jobs</h3>
+
+<p>To see all jobs, go to <strong>Data Studio</strong> and click the <strong>Jobs</strong> at the bottom of the left sidebar.</p>
+
+<h3 id="create-a-job">Create a job</h3>
+
+<p>To create a new job:</p>
+
+<ol>
+  <li>Go to <strong>Data Studio &gt; Jobs</strong></li>
+  <li>Click the <strong>+ New</strong> button in the top right.</li>
+  <li>
+    <p>Specify the schedule: select one of the built-in schedules or use cron syntax to specify a custom schedule,</p>
+
+    <p><img src="../images/jobs-schedule.png" alt="Jobs schedule"></p>
+
+    <p>Job can use multiple tags, and will run all transforms that have <em>any</em> of those tags. For example, you can have a job “Weekend job” that is scheduled run at noon on Saturdays and Sundays that picks up all transforms tagged either “Saturday”, “Sunday”, or “Weekend”.</p>
+  </li>
+</ol>
+
+<h3 id="disable-jobs">Disable jobs</h3>
+
+<p>You can disable jobs without deleting them. Unlike deletion (which is permanent), disabling a job just means it won’t run until you re-enable it. This is useful when you want to temporarily stop transforms from running - for example, for debugging purposes. This way you don’t your lose configuration settings like tags and schedules.</p>
+
+<p>To disable a specific job:</p>
+
+<ol>
+  <li>Go to <strong>Data studio &gt; Jobs</strong>.</li>
+  <li>Find the job you want to disable and click the <strong>three dots</strong> icon to the right of the job’s name.</li>
+  <li>Select <strong>Disable</strong></li>
+</ol>
+
+<p>To disable all jobs:</p>
+
+<ol>
+  <li>Go to <strong>Data studio &gt; Jobs</strong>.</li>
+  <li>
+    <p>Click the <strong>three dots</strong> icon above the table with all the jobs, and select <strong>Disable all</strong>.</p>
+
+    <p><img src="../images/disable-all-jobs.png" alt="Disable all jobs"></p>
+  </li>
+</ol>
+
+<p>Even if you disable all jobs, new jobs will still be created enabled by default.</p>
+
+<h3 id="re-enable-jobs">Re-enable jobs</h3>
+
+<p>If you <a href="#disable-jobs">disabled any jobs</a>, you can later re-enable them:</p>
+
+<p>To re-enable a specific job:</p>
+
+<ol>
+  <li>Go to <strong>Data studio &gt; Jobs</strong>.</li>
+  <li>Find the job you want to re-enable and click the <strong>three dots</strong> icon to the right of the job’s name.</li>
+  <li>Select <strong>Re-enable</strong></li>
+</ol>
+
+<p>To re-enable all jobs:</p>
+
+<ol>
+  <li>Go to <strong>Data studio &gt; Jobs</strong>.</li>
+  <li>Click the <strong>three dots</strong> icon above the table with all the jobs, and select <strong>Re-enable all</strong>.</li>
+</ol>
+
+<h3 id="delete-a-job">Delete a job</h3>
+
+<p>Deleting a job will not delete any transforms.</p>
+
+<p>Deleted jobs can’t be restored. If you want to temporarily stop a job from running, consider disabling the job instead.</p>
+
+<p>To delete a job:</p>
+
+<ol>
+  <li>Go to <strong>Data Studio &gt; Jobs</strong>.</li>
+  <li>Find the job you want to delete and click the <strong>three dots</strong> icon to the right of the job’s name.</li>
+  <li>Select <strong>Delete</strong>.</li>
+</ol>
 
 <h2 id="jobs-will-run-all-dependent-transforms">Jobs will run all dependent transforms</h2>
 
