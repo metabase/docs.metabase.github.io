@@ -1,0 +1,304 @@
+%btn-btn-primary {
+  @extend .fw-bold;
+
+  border: none;
+  color: $neutral-white;
+  transition: background-color 0.3s ease, border 0.3s ease, color 0.3s ease, opacity 0.3s ease;
+  width: fit-content;
+
+  &:focus,
+  &:active {
+    background-color: $primary;
+    box-shadow: none;
+    color: $neutral-white;
+  }
+
+  &:hover {
+    background-color: $blue-40;
+    color: $neutral-white;
+  }
+
+  &:focus-visible {
+    background-color: $blue-40;
+    color: $neutral-white;
+  }
+}
+
+.btn.btn-primary {
+  border: none;
+  color: white;
+  font-weight: 700;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: $blue-40;
+    color: white;
+  }
+}
+
+.btn.btn-primary-purple {
+  @extend %btn-btn-primary;
+
+  background-color: $secondary;
+
+  &:focus,
+  &:active {
+    background-color: $secondary;
+  }
+
+  &:hover {
+    background-color: $purple-50;
+  }
+
+  &:focus-visible {
+    background-color: $purple-50;
+  }
+}
+
+.btn.btn-primary-green {
+  @extend %btn-btn-primary;
+
+  background-color: $green-50;
+
+  &:hover {
+    background-color: $green-40;
+  }
+
+  &:focus-visible {
+    background-color: $green-40;
+  }
+}
+
+.btn.btn-primary-blue {
+  @extend %btn-btn-primary;
+
+  background-color: $blue-60;
+
+  &:hover {
+    background-color: $blue-40;
+  }
+
+  &:focus-visible {
+    background-color: $blue-40;
+  }
+}
+
+.btn.btn-blue-40 {
+  @extend %btn-btn-primary;
+
+  background-color: $blue-40;
+
+  &:hover {
+    background-color: $blue-40;
+    opacity: 0.8;
+  }
+
+  &:focus-visible {
+    background-color: $blue-40;
+    opacity: 0.8;
+  }
+}
+
+.btn.btn-primary-yellow {
+  @extend %btn-btn-primary;
+
+  background-color: $yellow-50;
+
+  &:hover {
+    background-color: $yellow-40;
+  }
+
+  &:focus-visible {
+    background-color: $yellow-40;
+  }
+}
+
+.btn.btn-outline-blue {
+  @extend %btn-btn-primary;
+
+  background-color: white;
+  border: $blue-60 solid 1px;
+  box-shadow: 0 1px 2px 0 #1018280d;
+  color: $blue-60;
+
+  &:focus,
+  &:active {
+    background-color: transparent;
+    color: $blue-60;
+  }
+
+  &:hover {
+    background-color: $blue-60;
+    color: $neutral-white;
+  }
+
+  &:focus-visible {
+    background-color: $blue-60;
+    color: $neutral-white;
+  }
+}
+
+// blue outline with solid white background
+.btn.btn-outline-blue-solid {
+  @extend %btn-btn-primary;
+
+  background-color: white;
+  border: $blue-60 solid 1px;
+  color: $blue-60;
+
+  &:focus,
+  &:active {
+    background-color: white;
+    color: $blue-60;
+  }
+
+  &:hover {
+    background-color: white;
+    border: $blue-40 solid 1px;
+    color: $blue-40;
+  }
+
+  &:focus-visible {
+    background-color: white;
+    border: $blue-40 solid 1px;
+    color: $blue-40;
+  }
+}
+
+// blue outline with solid white background
+.btn.btn-outline-white {
+  @extend %btn-btn-primary;
+
+  background: transparent;
+  border: $neutral-white solid 1px;
+  color: $neutral-white;
+
+  &:focus,
+  &:active,
+  &:hover,
+  &:focus-visible {
+    background: rgba(255, 255, 255, 0.2);
+  }
+}
+
+.btn.btn-transparent {
+  @extend %btn-btn-primary;
+
+  color: $neutral-40;
+  transition: color 0.1s ease, background-color 0.1s ease;
+
+  &:focus,
+  &:active {
+    background-color: transparent;
+    color: $neutral-40;
+  }
+
+  &:hover {
+    background-color: #f3f8fc;
+    color: $blue-60;
+  }
+
+  &:focus-visible {
+    background-color: #f3f8fc;
+    color: $blue-60;
+  }
+}
+
+a.btn.btn-link {
+  &:hover {
+    color: $neutral-white;
+  }
+}
+
+.btn-base {
+  align-items: center;
+  background-color: $neutral-95;
+  border: none;
+  color: $blue-60;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+
+  &:hover {
+    background-color: $blue-60;
+    color: $neutral-white !important;
+  }
+
+  &.selected {
+    background-color: $blue-25;
+    color: $neutral-white;
+  }
+
+  &.disabled {
+    background-color: $neutral-99;
+    color: $neutral-80;
+    pointer-events: none;
+  }
+
+  // VARIATIONS
+  &.btn-base-primary {
+    background-color: $primary;
+    color: $neutral-white;
+
+    &:hover {
+      background-color: $blue-40;
+    }
+
+    &.disabled {
+      background-color: $neutral-80;
+    }
+  }
+
+  &.btn-base-circle {
+    border-radius: 50%;
+    height: 32px;
+    padding-bottom: 1px;
+    width: 32px;
+  }
+
+  &.btn-base-toggle {
+    font-size: 16px;
+    line-height: 24px;
+    transition: background-color 0.15s ease, color 0.15s ease;
+
+    &.selected::after {
+      content: url("/images/filter_close.svg");
+      height: 12px;
+      margin-left: 4px;
+      padding-bottom: 23px;
+      width: 12px;
+    }
+  }
+}
+
+.btn.btn-subtle {
+  @extend %btn-btn-primary;
+
+  align-items: center;
+  background: $neutral-95;
+  color: $neutral-40;
+  display: flex;
+  font-size: 0.875rem;
+  padding: 0.75em 1.125rem;
+
+  &:hover {
+    background: $neutral-90;
+    color: $neutral-40;
+  }
+}
+
+// SPECIFIC TO LIST.JS PAGINATION FEATURE
+ul.pagination {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  li {
+    margin: 0;
+
+    &.active div {
+      background-color: $blue-40;
+      color: $neutral-white;
+    }
+  }
+}

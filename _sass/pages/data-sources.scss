@@ -1,0 +1,625 @@
+.data-sources {
+  background-color: $neutral-98;
+  box-shadow: 50vw 0 0 $neutral-98, -50vw 0 0 $neutral-98;
+  display: grid;
+  grid-template-columns: 312px 1fr;
+  margin: 0 auto;
+  max-width: 1280px;
+  padding-bottom: 80px;
+  position: relative;
+  width: 100%;
+
+  &::after {
+    background-color: $blue-90;
+    bottom: 0;
+    box-shadow: 50vw 0 0 $blue-90, -50vw 0 0 $blue-90;
+    content: "";
+    display: block;
+    height: 1px;
+    left: 0;
+    position: absolute;
+    width: 100%;
+  }
+
+  @include media-breakpoint-down(xxl) {
+    width: 1096px;
+  }
+
+  @include media-breakpoint-down(xl) {
+    width: 920px;
+  }
+
+  @include media-breakpoint-down(lg) {
+    display: flex;
+    flex-direction: column;
+    width: 680px;
+  }
+
+  @include media-breakpoint-down(md) {
+    max-width: calc(100% - 40px);
+    width: 468px;
+  }
+
+  &.entry-page {
+    blockquote,
+    .plans-blockquote {
+      background-color: $blue-95;
+      border: 1px solid $blue-60;
+      border-radius: 0.625rem;
+      color: $neutral-40;
+      margin: 0 0 2rem;
+      padding: 1.5rem;
+
+      p {
+        font-size: 16px !important;
+        line-height: 1.5rem !important;
+        margin: 0;
+      }
+    }
+
+    iframe {
+      pointer-events: none;
+    }
+
+    > div {
+      &:first-child {
+        a:not(.btn) {
+          &:hover {
+            svg path {
+              stroke: $blue-40;
+            }
+
+            svg path[use-stroke-for-fill="true"] {
+              fill: $blue-40;
+            }
+          }
+
+          svg {
+            path {
+              transition: all 0.3s ease;
+            }
+          }
+        }
+
+        > a {
+          display: flex;
+          font-size: 16px;
+          margin: 32px 0;
+
+          &:hover {
+            svg path {
+              stroke: $blue-40;
+            }
+          }
+
+          @include media-breakpoint-down(lg) {
+            font-size: 14px;
+
+            svg {
+              zoom: 0.32;
+            }
+          }
+
+          svg {
+            margin-right: 14px;
+            position: relative;
+            top: 13px;
+            transform: rotate(90deg);
+            zoom: 0.35;
+
+            path {
+              transition: stroke 0.3s ease;
+            }
+          }
+        }
+
+        > div {
+          background: white;
+          border: 1px solid $blue-90;
+          border-radius: 24px;
+          padding: 24px;
+
+          a {
+            &.btn {
+              align-items: center;
+              display: flex;
+              font-size: 14px;
+              gap: 7px;
+              justify-content: center;
+              margin-bottom: 12px;
+              padding: 12px 0;
+              width: 100%;
+
+              &:hover {
+                svg path {
+                  stroke: white;
+                }
+              }
+
+              svg {
+                position: relative;
+                top: 1px;
+
+                path {
+                  transition: stroke 0.3s ease;
+                }
+              }
+
+              @include media-breakpoint-down(lg) {
+                margin-bottom: 8px;
+                padding: 8px 0;
+              }
+            }
+
+            &.connector {
+              @include media-breakpoint-down(lg) {
+                svg:first-child {
+                  position: relative;
+                  top: -3px;
+                  zoom: 0.8;
+                }
+              }
+            }
+          }
+
+          img {
+            &.logo {
+              border: 1px solid $blue-90;
+              border-radius: 8px;
+              height: 96px;
+              margin-bottom: 12px;
+              padding: 24px;
+              width: 96px;
+
+              @include media-breakpoint-down(lg) {
+                height: 64px;
+                margin-bottom: 16px;
+                padding: 12px;
+                width: 64px;
+              }
+            }
+          }
+
+          h3 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 12px;
+
+            @include media-breakpoint-down(lg) {
+              font-size: 20px;
+            }
+          }
+
+          h5 {
+            font-size: 16px;
+
+            &:first-of-type {
+              margin-top: 16px;
+            }
+
+            @include media-breakpoint-down(lg) {
+              font-size: 14px;
+              margin-bottom: 5px;
+            }
+          }
+
+          hr {
+            border: 0;
+            border-top: 1px solid $neutral-70;
+            display: block;
+            height: 1px;
+
+            @include media-breakpoint-down(lg) {
+              margin: 5px 0 10px;
+            }
+          }
+
+          p {
+            color: $neutral-40;
+            font-size: 16px;
+            line-height: 24px;
+
+            @include media-breakpoint-down(lg) {
+              font-size: 14px;
+              margin-bottom: 10px;
+            }
+
+            &:first-of-type {
+              @include media-breakpoint-down(lg) {
+                margin-bottom: 22px;
+              }
+            }
+
+            &:last-of-type {
+              margin-bottom: 0;
+            }
+          }
+        }
+      }
+
+      &:last-child {
+        max-width: 696px;
+        padding: 92px 0 0 104px;
+        width: 100%;
+
+        @include media-breakpoint-down(xl) {
+          padding-left: 50px;
+          width: 606px;
+        }
+
+        @include media-breakpoint-down(lg) {
+          max-width: 712px;
+          padding-left: 0;
+          padding-top: 64px;
+          width: 100%;
+        }
+      }
+
+      ul {
+        padding: 0;
+
+        li {
+          font-size: 16px;
+          list-style: none;
+          margin-bottom: 8px;
+
+          a {
+            align-items: center;
+            display: flex;
+            gap: 6px;
+          }
+        }
+      }
+    }
+
+    ul {
+      &.checklist-outline li {
+        &::before {
+          height: 16px;
+          top: 6px;
+          width: 16px;
+        }
+
+        a {
+          display: inline;
+        }
+      }
+
+      li {
+        font-size: 18px;
+
+        @include media-breakpoint-down(lg) {
+          font-size: 16px;
+          line-height: 24px;
+        }
+      }
+
+      &.not-available {
+        li {
+          &::before {
+            background-image: url("/images/icons/close-blue-60.svg");
+            height: 16px;
+            top: 3px;
+            width: 16px;
+
+            @include media-breakpoint-down(lg) {
+              top: 5px;
+              zoom: 0.8;
+            }
+          }
+        }
+      }
+    }
+
+    .data-source-testimonial {
+      background-color: white;
+      border: 1px solid $blue-90;
+      border-radius: 12px;
+      box-shadow: 0 1px 2px 0 rgba(16, 24, 40, 0.05);
+      margin: 80px 0;
+      padding: 24px;
+
+      h4 {
+        font-size: 20px;
+        font-weight: 700;
+        line-height: 28px;
+        margin-bottom: 24px;
+      }
+
+      > div {
+        display: flex;
+        gap: 16px;
+
+        img {
+          border-radius: 50%;
+          height: 48px;
+        }
+
+        > div {
+          h5 {
+            font-size: 16px;
+            font-weight: 700;
+            line-height: 24px;
+            margin-bottom: 0;
+          }
+
+          p {
+            color: $neutral-40;
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 24px;
+            margin-bottom: 16px;
+          }
+        }
+      }
+    }
+
+    .numbered-list {
+      margin-bottom: 68px;
+
+      h3 {
+        font-size: 24px;
+        font-weight: 700;
+        line-height: 32px;
+        margin-bottom: 32px;
+      }
+
+      .numbered-list-item {
+        display: grid;
+        gap: 24px;
+        grid-template-columns: 36px 1fr;
+
+        > div:first-child {
+          align-items: center;
+          background-color: $blue-95;
+          border: 1px solid $blue-85;
+          border-radius: 50%;
+          color: $blue-60;
+          display: flex;
+          font-size: 18px;
+          font-weight: 700;
+          height: 36px;
+          justify-content: center;
+          line-height: 26px;
+          width: 36px;
+        }
+
+        > div:last-child {
+          h4 {
+            color: $neutral-40;
+            font-size: 18px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: 26px;
+            margin-bottom: 4px;
+          }
+
+          p {
+            color: $neutral-40;
+            font-size: 18px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 26px;
+          }
+        }
+      }
+
+      hr {
+        margin: 20px 0 32px;
+      }
+
+      a {
+        align-items: center;
+        display: flex;
+        font-size: 16px;
+        font-weight: 700;
+        gap: 4px;
+      }
+
+      svg {
+        position: relative;
+        top: 1px;
+        transform: rotate(-90deg);
+      }
+    }
+
+    .title-text-and-checks {
+      margin-bottom: 80px;
+
+      @include media-breakpoint-down(lg) {
+        margin-bottom: 64px;
+      }
+
+      h1 {
+        color: $neutral-15;
+        font-size: 30px;
+        font-weight: 700;
+        line-height: 36px;
+        margin-bottom: 16px;
+
+        @include media-breakpoint-down(lg) {
+          font-size: 24px;
+          line-height: 32px;
+        }
+      }
+
+      h2 {
+        color: $neutral-15;
+        font-size: 24px;
+        font-weight: 700;
+        line-height: 32px;
+        margin-bottom: 12px;
+
+        @include media-breakpoint-down(lg) {
+          font-size: 20px;
+          line-height: 28px;
+        }
+      }
+
+      p {
+        color: $neutral-40;
+        font-size: 20px;
+        line-height: 28px;
+        margin-bottom: 32px;
+
+        @include media-breakpoint-down(lg) {
+          font-size: 18px;
+          line-height: 26px;
+        }
+      }
+
+      ul {
+        li {
+          color: $neutral-40;
+          font-size: 18px;
+          line-height: 26px;
+
+          @include media-breakpoint-down(lg) {
+            font-size: 16px;
+            line-height: 24px;
+          }
+        }
+
+        &.checklist-outline li::before {
+          top: 9px;
+        }
+      }
+    }
+
+    .title {
+      h1 {
+        color: $neutral-15;
+        font-size: 30px;
+        font-weight: 700;
+        line-height: 36px;
+        margin-bottom: 16px;
+
+        @include media-breakpoint-down(lg) {
+          font-size: 24px;
+          line-height: 32px;
+        }
+      }
+    }
+
+    .faq-container {
+      @include media-breakpoint-down(lg) {
+        margin-left: 0;
+        margin-right: 0;
+        width: 100%;
+      }
+
+      .faq-headline {
+        text-align: left;
+
+        @include media-breakpoint-down(lg) {
+          font-size: 24px;
+          margin-bottom: 24px;
+        }
+      }
+    }
+
+    .two-checklists {
+      background-color: white;
+      border: 1px solid $blue-90;
+      border-radius: 24px;
+      margin-bottom: 80px;
+      padding: 24px;
+
+      a.see-all-features {
+        align-items: center;
+        display: flex;
+
+        svg {
+          left: 8px;
+          position: relative;
+          top: 2px;
+          transform: rotate(-90deg);
+          zoom: 0.35;
+
+          path {
+            stroke: $blue-60;
+            transition: stroke 0.3s ease;
+          }
+        }
+
+        @include media-breakpoint-down(lg) {
+          font-size: 14px;
+
+          svg {
+            top: -7px;
+            zoom: 0.32;
+          }
+        }
+      }
+
+      h2 {
+        font-size: 30px;
+        font-weight: 700;
+        margin-bottom: 16px;
+
+        @include media-breakpoint-down(lg) {
+          font-size: 24px;
+          line-height: 32px;
+        }
+      }
+
+      h3 {
+        color: $neutral-40;
+        font-size: 18px;
+        font-weight: 700;
+        padding-bottom: 8px;
+      }
+
+      hr {
+        border: 0;
+        border-top: 1px solid $neutral-70;
+        display: block;
+        height: 1px;
+        margin: 24px 0;
+
+        @include media-breakpoint-down(lg) {
+          margin: 18px 0;
+        }
+      }
+
+      p {
+        color: $neutral-40;
+        font-size: 20px;
+        line-height: 28px;
+
+        @include media-breakpoint-down(lg) {
+          font-size: 18px;
+          line-height: 26px;
+        }
+      }
+
+      span.apply-tooltip {
+        svg {
+          position: relative;
+          top: 2px;
+
+          path {
+            stroke: $neutral-80;
+          }
+        }
+      }
+
+      svg path {
+        stroke: $neutral-40;
+      }
+    }
+
+    .checklist-outline li::before {
+      @include media-breakpoint-down(lg) {
+        top: 7px;
+        zoom: 0.8;
+      }
+    }
+  }
+}
+
+.data-sources-footer {
+  .try-metabase-footer {
+    background-color: white;
+  }
+}

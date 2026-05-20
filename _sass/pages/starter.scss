@@ -1,0 +1,194 @@
+$green-with-transparency: rgba(128, 185, 70, 0.2);
+
+.starter-page {
+  #cloudHeroToggleList {
+    margin: 48px 0 !important;
+
+    @include media-breakpoint-down(lg) {
+      width: 80% !important;
+    }
+  }
+}
+
+.responsive-page.starter-page .hero-container {
+  // box-shadow: 1000px 0 0 $green-95, -1000px 0 0 $green-95;
+  position: relative;
+  width: 100%;
+
+  &::before {
+    background:
+      repeating-linear-gradient(
+        to right,
+        transparent,
+        transparent 90px,
+        $green-with-transparency 90px,
+        $green-with-transparency 91px
+      ),
+      repeating-linear-gradient(
+        to bottom,
+        transparent,
+        transparent 90px,
+        $green-with-transparency 90px,
+        $green-with-transparency 91px
+      ),
+      $green-95;
+    content: "";
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+  }
+
+  &::after {
+    background: linear-gradient(to bottom, $green-95, white 30%);
+    bottom: 0;
+    content: "";
+    height: 32%;
+    left: 0;
+    position: absolute;
+    width: 100%;
+    z-index: 3;
+  }
+}
+
+.responsive-page.starter-page .hero {
+  @keyframes cloud {
+    from { left: 2%; }
+    to { left: 90%; }
+  }
+
+  a {
+    &#get-started-btn-home,
+    &.btn-outline-blue {
+      padding: 12px 18px;
+    }
+  }
+
+  div {
+    &.align-items-center {
+      position: relative;
+      z-index: 3;
+    }
+
+    &#gradient-background {
+      background: radial-gradient(ellipse 110% 65% at 50% 44%, transparent 35%, $green-95 43%);
+      height: 100%;
+      position: absolute;
+      top: 0;
+      width: 100%;
+      z-index: 2;
+    }
+
+    &#cloud-cover-left {
+      background-color: $green-95;
+      height: 100%;
+      left: -100%;
+      position: absolute;
+      top: 0;
+      width: 100%;
+      z-index: 3;
+    }
+
+    &#cloud-cover-right {
+      background-color: $green-95;
+      height: 100%;
+      left: 100%;
+      position: absolute;
+      top: 0;
+      width: 100%;
+      z-index: 3;
+    }
+
+    &.cloud {
+      position: absolute;
+    }
+
+    &#cloud-1 {
+      animation: cloud 240s;
+      animation-delay: -36s;
+      animation-iteration-count: infinite;
+      animation-timing-function: linear;
+      background-image: url("/images/product/starter/hero/cloud-1.png");
+      background-size: 131px 33px;
+      height: 33px;
+      top: 24%;
+      width: 131px;
+    }
+
+    &#cloud-2 {
+      animation: cloud 220s;
+      animation-delay: -179s;
+      animation-iteration-count: infinite;
+      animation-timing-function: linear;
+      background-image: url("/images/product/starter/hero/cloud-2.png");
+      background-size: 81px 44px;
+      height: 44px;
+      top: 23%;
+      width: 81px;
+    }
+
+    &#cloud-3 {
+      animation: cloud 240s;
+      animation-delay: -214s;
+      animation-iteration-count: infinite;
+      animation-timing-function: linear;
+      background-image: url("/images/product/starter/hero/cloud-3.png");
+      background-size: 101px 23px;
+      height: 23px;
+      left: 26%;
+      top: 41%;
+      width: 101px;
+    }
+
+    &#cloud-4 {
+      animation: cloud 200s;
+      animation-delay: -77s;
+      animation-iteration-count: infinite;
+      animation-timing-function: linear;
+      background-image: url("/images/product/starter/hero/cloud-4.png");
+      background-size: 140px 30px;
+      height: 30px;
+      left: 84%;
+      position: absolute;
+      top: 46%;
+      width: 140px;
+    }
+  }
+
+  .cards-container {
+    z-index: 4;
+
+    .card {
+      border-color: $green-with-transparency;
+    }
+  }
+
+  .trusted-by {
+    z-index: 4;
+  }
+
+  .logos {
+    z-index: 4;
+  }
+
+  h6 {
+    background: $green-95;
+    border: 1px solid rgba(128, 185, 70, 0.2);
+    box-shadow: 0 1px 2px 0 rgba(16, 24, 40, 0.05);
+    color: $green-50;
+  }
+
+  @include media-breakpoint-down(lg) {
+    .cards-container {
+      flex-direction: column;
+      justify-content: center;
+      margin-top: 64px;
+      max-width: 592px;
+
+      .card {
+        padding-bottom: 25px;
+      }
+    }
+  }
+}

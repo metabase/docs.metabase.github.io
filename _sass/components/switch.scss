@@ -1,0 +1,33 @@
+.switch {
+  background-color: $blue-95;
+  border: 1px solid $blue-90;
+  border-radius: 12px;
+  cursor: pointer;
+  height: 24px;
+  overflow: hidden;
+  position: relative;
+  transition: all 0.2s;
+  width: 45px;
+
+  &::after {
+    background-color: $blue-60;
+    border-radius: 18px;
+    content: "";
+    display: inline-block;
+    height: 18px;
+    left: 2px;
+    position: absolute;
+    top: 2px;
+    transition: all 0.2s;
+    width: 18px;
+  }
+
+  &.active {
+    background-color: $blue-60;
+
+    &::after {
+      background-color: white;
+      left: 23px;
+    }
+  }
+}

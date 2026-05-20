@@ -1,0 +1,93 @@
+$feature-card-spacing: 1rem;
+
+.cta-cards {
+  margin: 0 (-1 * $feature-card-spacing);
+}
+
+.cta-card {
+  margin: 0 0 (2 * $feature-card-spacing);
+  padding: 0 $feature-card-spacing;
+  position: relative;
+
+  &__label {
+    background-color: $blue-95;
+    border: 1px solid $blue-60;
+    border-radius: 8px;
+    color: $blue-60;
+    display: inline-block;
+    font-size: 0.69rem;
+    font-weight: 700;
+    line-height: 1.3636;
+    padding: 8px 12px 6.5px;
+    text-transform: uppercase;
+    user-select: none;
+
+    @include media-breakpoint-up(lg) {
+      border-color: $blue-95;
+    }
+  }
+
+  &__link {
+    align-items: flex-start;
+    background-color: $neutral-97;
+    border: 2px solid $neutral-95;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: flex-start;
+    overflow: hidden;
+    padding: 1.5rem;
+    position: relative;
+    text-align: left;
+    transition: border-color 200ms;
+    width: 100%;
+
+    &.blue-bg {
+      background-color: $blue-95;
+
+      .cta-card__label {
+        background-color: $blue-90;
+      }
+    }
+
+    @include media-breakpoint-up(lg) {
+      background-color: $neutral-white;
+    }
+
+    &:hover,
+    &:focus {
+      border-color: $neutral-80;
+    }
+  }
+
+  &__icon {
+    border: none;
+    user-select: none;
+    width: 2rem;
+  }
+
+  &__title {
+    color: $neutral-15;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1.3333;
+  }
+
+  &__text {
+    color: $neutral-60;
+    flex: 1 0 auto;
+    font-size: 1.125rem;
+    font-weight: 400;
+    line-height: 1.4444;
+  }
+
+  .vjs-player {
+    height: auto;
+    width: 100%;
+
+    video {
+      width: 100%;
+    }
+  }
+}

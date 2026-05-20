@@ -1,0 +1,67 @@
+$quote-avatar-size: 3rem;
+
+.quote {
+  border-left: 4px solid $neutral-95;
+  margin: 0;
+  padding: 0 0 0 1.5rem;
+  width: 100%;
+
+  &__text {
+    color: $neutral-15;
+    font-size: 1.125rem;
+    font-weight: 400;
+    line-height: 1.4444;
+  }
+
+  &__footer {
+    align-items: center;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+  }
+
+  &__avatar {
+    display: flex;
+    margin-right: 0.5rem;
+    overflow: hidden;
+    user-select: none;
+
+    &__image {
+      border-radius: $quote-avatar-size;
+      height: $quote-avatar-size;
+      width: $quote-avatar-size;
+
+      &:nth-child(2) {
+        margin-left: -15px;
+      }
+    }
+  }
+
+  &__attribution {
+    &__name,
+    &__role {
+      color: $neutral-15;
+      font-size: 1rem;
+      font-weight: 700;
+      line-height: 1.25;
+      margin: 0;
+      padding: 0;
+    }
+
+    &__role {
+      font-weight: 400;
+    }
+  }
+}
+
+.bg-blue-60 {
+  .quote {
+    border-left-color: $blue-40;
+
+    &__text,
+    &__attribution__name,
+    &__attribution__role {
+      color: $neutral-white;
+    }
+  }
+}
