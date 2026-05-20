@@ -1,0 +1,18 @@
+#!/bin/sh
+# usage: script/links [output-file]
+#
+# Check for broken links
+
+#!/bin/bash
+OUT_FILE="${1:-htmlproofer.out}" #default to _site
+
+bundle exec htmlproofer _site \
+       --check-opengraph \
+       --check-html \
+       --assume-extension \
+       --disable-external \
+       --allow_hash_href \
+       --file-ignore '/\/community\//,/\/start\//,/\/plans\//,/\/pricing\//,/\/docs\/v.*/,/\/docs\/master/,/\/home\/new\//,/\/docs\/latest\/(contributing|faq)\.html/,/.*running-metabase-on-elastic-beanstalk.*/' \
+       --url-ignore "/docs/latest/api/" \
+       --checks-to-ignore HtmlCheck \
+       --empty-alt-ignore true > "$OUT_FILE" 2>&1
