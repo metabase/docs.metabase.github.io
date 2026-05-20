@@ -1,0 +1,153 @@
+---
+layout: error
+title: Page not found
+---
+
+<!-- TEMP -->
+
+<!-- Reload page -->
+<script data-prettify-ignore>
+
+  function redirectFrom404(theLocation) {
+    // trailing slash
+    if (theLocation.pathname[theLocation.pathname.length - 1] === '/') {
+      return `${theLocation.pathname.slice(0, -1)}${theLocation.search}${theLocation.hash}`;
+    }
+
+    // trailing /index.html
+    if (theLocation.pathname.indexOf('/index.html') > -1) {
+      return `${theLocation.pathname.replace('/index.html', '')}${theLocation.search}${theLocation.hash}`;
+    }
+
+    return null;
+  }
+
+  function is404(err) {
+    if (err) {
+      window.Sentry.captureException(err, {
+        tags: {
+          section: '404'
+        }
+      });
+    }
+    else {
+      window.Sentry.captureMessage(location.href, {
+        tags: {
+          section: '404'
+        }
+      });
+    }
+
+    // error message
+    document
+      .getElementById('error-404')
+      .classList.remove("hide");
+
+    // latest documentation link
+    if (window
+        .location
+        .href
+        .includes('/docs/')) {
+      document
+        .getElementById('notfound-docs')
+        .classList.remove("hide");
+    }
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    var redirectToUrl = redirectFrom404(window.location);
+
+    // Trailing slash
+    if (redirectToUrl) {
+      fetch(redirectToUrl, {
+        method: 'HEAD'
+      }).then((response) => {
+        if (!response.ok) {
+          is404();
+          return;
+        }
+        try {
+          window.location.replace(redirectToUrl);
+        } catch (err) {
+          window.location.href = redirectToUrl;
+        } finally {
+          window.history.replaceState({}, '', redirectToUrl);
+        }
+      }).catch((err) => {
+        is404(err);
+      });
+    }
+    // 404
+    else {
+      is404();
+    }
+  });
+
+</script>
+
+<script>
+  /**
+   * Lops off the last point so that point releases will overwrite (i.e., update) the
+   * existing docs for that major release. So docs for 40.3 will update the existing docs for 40.
+   * @param {String} version
+   * @returns {String}
+   */
+  function squashVersion(version) {
+    const versionPattern = new RegExp(/v\d+\.\d+\./);
+    if (version.search(versionPattern) < 0) {
+      return version;
+    }
+    else {
+      return version
+        .split('.')
+        .slice(0, 2)
+        .join('.');
+    }
+  }
+
+  // Redirect EE versions to latest
+  if (window
+      .location
+      .href
+      .includes('/docs/v1.')) {
+    window.location.replace(window
+      .location
+      .href
+      .replace(/docs\/v1\.[^\/]+/, 'docs/latest'));
+  }
+
+  // Redirect links to old docs versions (v0.x.x) to the corresponding major version.
+  // E.g., v0.40.2 or v0.40.0-SNAPSHOT to v0.40
+  const pointVersionFormat = new RegExp(/\/docs\/v\d+\.\d+\.[^\/]+/);
+  const version = window
+    .location
+    .href
+    .match(pointVersionFormat);
+  if (version && version.length > 0) {
+    const majorVersion = squashVersion(version[0]);
+    window.location.replace(window
+      .location
+      .href
+      .replace(version, majorVersion));
+  }
+</script>
+
+<div class="text-center">
+  <img alt="Not Found"
+  height="128"
+  src="/images/not_found.svg"
+  width="128"
+  title="Not found" />
+
+  <div id="error-404" class="text-center hide">
+    <h1 class="fs-5 m-0 mt-3">We're a little lost...</h1>
+    <p class="m-0 mt-2">The page you asked for couldn't be found</p>
+    <div class="align-center d-flex flex-column justify-center mt-7 w-100">
+      <a
+        class="Button hide"
+        href="/docs/latest/"
+        id="notfound-docs">Go to the latest version of the documentation</a>
+      <a class="Button m-0 mt-2" href="/">Go to Metabase homepage</a>
+    </div>
+  </div>
+</div>
