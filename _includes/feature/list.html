@@ -1,0 +1,16 @@
+<div class="full-width-centered how-to-analyze-csvs">
+  <h3>{{ include.data.title }}</h3>
+
+  {% if include.data.description %}
+    {{ include.data.description }}
+  {% endif %}
+
+  <div class="numbered-text">
+    {% for item in include.data.items %}
+      <div>
+        <div>{{ forloop.index }}</div>
+        <div>{{ item.description }}</div>
+      </div>
+    {% endfor %}
+  </div>
+</div>

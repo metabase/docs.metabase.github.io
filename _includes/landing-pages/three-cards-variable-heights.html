@@ -1,0 +1,23 @@
+{% assign component = include.component %}
+
+<div class="py4 bootstrap container landing-page__three-cards-variable-heights">
+  <div class="container">
+    <div class="col-sm-12 ps-lg-8">
+      <h2 class="h4 mb8 text-centered">{{ component.headline }}</h2>
+    </div>
+    <div class="cards-container">
+      {% for card in component.cards %}
+        <div class="card">
+          <img src="{{ card.image.src }}" alt="{{ card.image.alt }}" width="100" class="py2" loading="lazy" />
+          <p class="paragraph-5">
+            <strong class="neutral-black">
+              {{ card.headline }}
+            </strong>
+            <br>
+            {{card.text}}
+          </p>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>

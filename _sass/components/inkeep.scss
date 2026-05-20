@@ -1,0 +1,32 @@
+#inkeep {
+  background-color: $neutral-98;
+  flex: 1;
+  height: 40px;
+  position: relative;
+  width: 140px;
+
+  @include media-breakpoint-down(lg) {
+    flex: 0;
+
+    &::before {
+      background-image: linear-gradient(to right, #fafbfe00, $neutral-98, $neutral-98);
+      content: "";
+      height: 100%;
+      left: -30px;
+      position: absolute;
+      top: 0;
+      width: 30px;
+    }
+
+    &::after {
+      background-color: $neutral-98;
+      content: "";
+      height: 100%;
+      position: absolute;
+      right: -70px;
+      top: 0;
+      width: 100px;
+      z-index: 1;
+    }
+  }
+}

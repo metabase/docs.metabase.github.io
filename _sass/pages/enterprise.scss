@@ -1,0 +1,320 @@
+@import "pages/enterprise/hero";
+
+$animation-speed: 50s;
+
+@mixin white-gradient {
+  background: linear-gradient(to right, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);
+}
+
+// Animation
+@keyframes scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(calc(-470px * 7)); }
+}
+
+.slider {
+  align-items: flex-start;
+  background: white;
+  height: 330px;
+  margin: auto;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+
+  &::before,
+  &::after {
+    @include white-gradient;
+
+    content: "";
+    height: 100%;
+    position: absolute;
+    width: 200px;
+    z-index: 2;
+  }
+
+  &::after {
+    right: 0;
+    top: 0;
+    transform: rotateZ(180deg);
+  }
+
+  &::before {
+    left: 0;
+    top: 0;
+  }
+
+  .horizontal-review-card {
+    border: 1px solid $blue-95;
+    border-radius: 12px;
+    box-shadow: 0 1px 2px 0 rgba(16, 24, 40, 0.05);
+
+    .review-headshot {
+      border: 2px solid #fff;
+      box-shadow: 0 0.25rem 1.5rem rgba(0, 0, 0, 0.1);
+      box-sizing: border-box;
+      flex-shrink: 0;
+      height: 44px;
+      overflow: hidden;
+      text-align: center;
+      user-select: none;
+      width: 44px;
+
+      img {
+        min-height: 100%;
+        min-width: 100%;
+        object-fit: cover;
+        object-position: center center;
+      }
+    }
+
+    .review-quote {
+      color: #22242b;
+      font-size: 0.875rem;
+      line-height: 1.375rem;
+    }
+
+    .review-logo {
+      align-items: center;
+      background-color: #fff;
+      box-shadow: 0 0.25rem 1.5rem rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: row;
+      flex-shrink: 0;
+      height: 44px;
+      justify-content: center;
+      left: -6px;
+      overflow: hidden;
+      position: relative;
+      text-align: center;
+      user-select: none;
+      width: 44px;
+    }
+
+    .review-name {
+      color: #5a6072;
+      font-size: 0.875rem;
+      font-weight: 700;
+    }
+
+    .review-title {
+      color: #8d93a5;
+      font-size: 0.875rem;
+    }
+  }
+
+  .slide-track {
+    align-items: start;
+    animation: scroll $animation-speed linear infinite;
+    display: flex;
+    width: calc(470px * 14);
+  }
+
+  .slide {
+    height: auto;
+    margin-right: 20px;
+    position: relative;
+    top: 28px;
+    width: 470px;
+  }
+}
+
+.responsive-page.enterprise-page {
+  a {
+    &#get-started-btn-home {
+      background-color: $purple-50;
+      padding: 12px 18px;
+
+      &:hover {
+        background-color: $purple-40;
+      }
+    }
+  }
+
+  .horizontal-client-reviews {
+    height: 400px;
+    position: relative;
+
+    .review-card-absolute-container {
+      animation: scroll-left 64s infinite linear;
+      position: absolute;
+      width: 100%;
+
+      @keyframes scroll-left {
+        from {
+          transform: translateY(0);
+        }
+
+        to {
+          transform: translateX(-100%);
+        }
+      }
+
+      &.secondary-animation {
+        animation: secondary-scroll-left 64s infinite linear;
+      }
+
+      @keyframes secondary-scroll-left {
+        from {
+          transform: translateX(100%);
+        }
+
+        to {
+          transform: translateY(0);
+        }
+      }
+    }
+  }
+
+  .feature-container {
+    .success-engineers {
+      h6 {
+        color: $neutral-40;
+        font-size: 16px;
+        margin-bottom: 24px;
+        text-align: center;
+
+        img {
+          margin-right: 4px;
+        }
+      }
+
+      img.success-engineer-pics {
+        width: 80%;
+      }
+
+      .success-engineers-pics-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        justify-content: center;
+        max-width: 600px;
+      }
+
+      .success-engineer-caption {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        justify-content: flex-end;
+        left: 0;
+        opacity: 0;
+        position: absolute;
+        text-align: center;
+        top: 0;
+        transition: opacity 0.1s ease-in-out;
+        width: 100%;
+
+        span {
+          color: white;
+          display: block;
+          font-weight: 700;
+          width: 100%;
+          z-index: 2;
+
+          &.name {
+            font-size: 14px;
+          }
+
+          &.experience {
+            font-size: 12px;
+            margin-bottom: 12px;
+            opacity: 0.5;
+          }
+        }
+      }
+
+      .success-engineer-pic-container {
+        border: 2px solid white;
+        border-radius: 12px;
+        box-shadow: 0 1px 2px 0 rgba(16, 24, 40, 0.06), 0 1px 3px 0 rgba(16, 24, 40, 0.1);
+        overflow: hidden;
+        position: relative;
+
+        &::after {
+          background: linear-gradient(0deg, #000 0%, rgba(0, 0, 0, 0) 80%);
+          content: "";
+          height: 100%;
+          left: 0;
+          opacity: 0;
+          position: absolute;
+          top: 0;
+          transition: opacity 0.2s ease-in-out;
+          width: 100%;
+        }
+
+        &:hover {
+          border-color: $green-50;
+
+          .success-engineer-caption {
+            opacity: 1;
+          }
+
+          .success-engineer-pic {
+            transform: scale(1.1);
+          }
+
+          span {
+            display: block;
+
+            &.experience {
+              opacity: 0.7;
+            }
+          }
+
+          &::after {
+            opacity: 1;
+          }
+        }
+      }
+
+      .success-engineer-pic {
+        background-position: center;
+        background-size: cover;
+        height: 140px;
+        position: relative;
+        transition: border-color 0.2s ease-in-out, transform 0.4s ease-in-out;
+        width: 190px;
+
+        &#jacob-joseph {
+          background-image: url("/images/success-engineers/jacob-joseph.png");
+        }
+
+        &#leann-lewis {
+          background-image: url("/images/success-engineers/leann-lewis.jpg");
+        }
+
+        &#luis-paolini {
+          background-image: url("/images/success-engineers/luis-paolini.png");
+        }
+
+        &#zoltan-body {
+          background-image: url("/images/success-engineers/zoltan-bodi.jpeg");
+        }
+
+        &#tony-cini {
+          background-image: url("/images/success-engineers/tony-cini.png");
+        }
+
+        &#marcos-diaz {
+          background-image: url("/images/success-engineers/marcos-diaz.png");
+        }
+
+        &#rodrigo-lopez-dato {
+          background-image: url("/images/success-engineers/rodrigo-lopez-dato.jpg");
+        }
+      }
+    }
+  }
+
+  .premium-service {
+    margin: 0 0 128px;
+  }
+
+  .pro-enterprise-comparison {
+    margin-bottom: 128px;
+  }
+
+  .customer-facing-analytics {
+    margin-top: 64px;
+  }
+}

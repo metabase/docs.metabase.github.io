@@ -1,0 +1,155 @@
+.learn .learn__article {
+  margin-bottom: 0;
+  padding-top: 56px;
+
+  @include media-breakpoint-down(lg) {
+    overflow: hidden;
+  }
+
+  iframe.newsletter-subscribe {
+    background-color: transparent;
+    box-shadow: none;
+    margin-top: 40px;
+    width: 100%;
+  }
+
+  .fillout-container {
+    background-color: $blue-60;
+    border-radius: 12px;
+
+    iframe {
+      background-color: transparent;
+    }
+  }
+
+  h2 code {
+    font-size: 24px;
+    line-height: 36px;
+  }
+
+  table td code {
+    background-color: $neutral-95;
+  }
+
+  h4 {
+    font-size: 16px;
+    font-weight: 900;
+  }
+
+  img {
+    &.zoomImg {
+      // outline: 1000px solid $neutral-98;
+      border-radius: 0;
+      position: relative;
+      z-index: 2;
+    }
+  }
+
+  #the-overlay {
+    background: $neutral-98;
+    outline: 1000px solid $neutral-98;
+    position: relative;
+    z-index: 1;
+  }
+
+  &__nav__container {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(2, 1fr);
+
+    &.one-nav {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__nav {
+    background-color: white;
+    border: 1px solid $blue-90;
+    border-radius: 12px;
+    display: grid;
+    gap: 24px;
+    grid-template-columns: 30px 1fr;
+    padding: 24px;
+    transition: background-color 0.3s ease, border-color 0.3s ease !important;
+
+    &:hover {
+      background-color: $blue-95;
+      border-color: $blue-85;
+
+      h4 {
+        color: $blue-60;
+      }
+
+      .learn__article__nav__icon {
+        background-color: $blue-90;
+
+        svg path {
+          fill: $blue-60;
+        }
+      }
+    }
+
+    &.next {
+      grid-template-columns: 1fr 30px;
+    }
+
+    &__icon {
+      align-items: center;
+      border: 1px solid $blue-90;
+      border-radius: 50%;
+      display: flex;
+      height: 32px;
+      justify-content: center;
+      transition: all 0.3s ease;
+      width: 32px;
+
+      svg {
+        transition: all 0.3s ease;
+      }
+    }
+
+    h4 {
+      color: $neutral-40;
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 26px;
+      transition: all 0.3s ease;
+    }
+
+    h5 {
+      color: $neutral-60;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 22px;
+      margin-bottom: 4px;
+    }
+
+    svg {
+      height: 16px;
+      width: 16px;
+
+      path {
+        fill: $neutral-60;
+      }
+    }
+  }
+
+  .copy-clip-container {
+    align-items: end;
+    display: flex;
+    flex-direction: row;
+
+    &.h2 {
+      border-bottom: 1px solid $neutral-80;
+
+      h2 {
+        margin: 16px 0 0;
+        width: auto;
+      }
+    }
+
+    .copy-clip {
+      top: 3px;
+    }
+  }
+}

@@ -1,0 +1,100 @@
+{% assign prices = site.data.prices %}
+
+<section class="m-0 p-0 w-100">
+  {% for model in site.data.pricing-tiers %}
+    {% if model.slug == "bi" %}
+      <div class="flex flex-column flex-lg-row gap-3 plans-selection">
+        {% for tier in model.plans %}
+          <div class="card rounded-4 w-100 h-100 w-lg-25{% unless tier.embedding-pricing-2026 %} use-case-toggle use-case-toggle-bi{% endunless %}" data-use-case="bi">
+            <div class="p-4 p-md-6 content monthly flex flex-column plans-selection__top">
+              <div class="flex align-items-start">
+                <h2 class="fs-10"><span class="fw-700">{{ tier.name }}</span></h2>
+                {% if prices[tier.slug].annual %}
+                  <label class="form-check form-switch d-flex ml-auto p-0 cursor-pointer">
+                    <span class="form-check-label fs-14 mr-1">Annual</span>
+                    <input class="form-check-input m-0 cursor-pointer js-billing-toggler" type="checkbox" />
+                  </label>
+                {% endif %}
+              </div>
+
+              {% if prices[tier.slug].monthly %}
+                {% include price-container.html tier=tier exclude-free-unit-count=true %}
+
+              {% else %}
+                {{ prices[tier.slug].custom-primary-pricing-2026 }}
+              {% endif %}
+
+              <p class="fs-13 lh-base">
+                {{ tier.intro }}
+              </p>
+
+              <a
+                class="btn btn-primary fs-13 p-2 w-100 mt-auto"
+                href="{{ tier.ctas.first.url }}"
+                target="_blank"
+              >
+                {{ tier.ctas.first.label-pricing-2026 | default: tier.ctas.first.label }}
+              </a>
+            </div>
+            <div class="border--blue-90--top" style="border-top-style: dashed"></div>
+            <div class="px-6 py-3 flex align-items-center gap-2 fs-13">
+              {% for deployment_type in tier.deployment-types %}
+                {% unless forloop.first %}<span class="neutral-60">or</span>{% endunless %}
+                <span class="icon-container neutral-60" style="width: 20px; height: 20px; margin: 0 -2px;">
+                  {% if deployment_type == "Cloud" %}
+                    {% include svg-icons/cloud.html color="currentColor" %}
+                  {% else %}
+                    {% include svg-icons/cloud-or-self-hosted.html color="currentColor" %}
+                  {% endif %}
+                </span>
+                {{ deployment_type }}
+              {% endfor %}
+            </div>
+            <div class="border--blue-90--top" style="border-top-style: dashed"></div>
+            <div class="p-6 fs-13 lh-base">
+              <div class="use-case use-case-bi">
+                {% if tier.highlights-title-pricing-2026 %}
+                  <h6 class="fs-13 fw-400 neutral-40 mb-3">{{ tier.highlights-title-pricing-2026 }}</h6>
+                {% endif %}
+                <ul class="list-unstyled neutral-40 m-0 flex flex-column gap-3">
+                  {% for highlight in tier.highlights-pricing-2026 %}
+                  <li class="flex m-0">
+                    <span class="icon-container neutral-60 mt-1 mr-2 flex-shrink-0" style="width: 12px; height: 12px;">
+                      {% include svg-icons/tick-icon.html color="currentColor" %}
+                    </span>
+                    {{ highlight.text }}
+                  </li>
+                  {% endfor %}
+                </ul>
+              </div>
+              <div class="use-case use-case-ea d-none">
+                {% if tier.embedding-pricing-2026 %}
+                  <h6 class="fs-13 fw-400 neutral-40 mb-3">{{ tier.embedding-pricing-2026.highlights-title }}</h6>
+                  <ul class="list-unstyled neutral-40 m-0 flex flex-column gap-3">
+                    {% for highlight in tier.embedding-pricing-2026.highlights %}
+                    <li class="flex m-0">
+                      {% if highlight.class == "plus" %}
+                        <span class="icon-container neutral-60 mr-2 flex-shrink-0" style="margin-top: 2px;">
+                          {% include svg-icons/plus.svg color="currentColor" %}
+                          </span>
+                        {% else %}
+                        <span class="icon-container neutral-60 mt-1 mr-2 flex-shrink-0" style="width: 12px; height: 12px;">
+                          {% include svg-icons/tick-icon.html color="currentColor" %}
+                          </span>
+                        {% endif %}
+                      </span>
+                      {{ highlight.text }}
+                    </li>
+                    {% endfor %}
+                  </ul>
+                {% else %}
+                  Embedded Analytics not available
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+  {% endfor %}
+</section>

@@ -1,0 +1,16 @@
+{% assign component = include.component %}
+
+<div class="testimonial">
+  <p>{{component.testimony}}</p>
+  {% if component.img %}
+  <img
+    src="{{component.image.src}}"
+    alt="{{component.image.alt}}"
+    width="84px"
+    loading="lazy"
+  />
+  {% endif %} {% if component.author %}
+  <p class="author">{{component.author}}</p>
+  <p class="company">{{component.role-and-company}}</p>
+  {% endif %}
+</div>

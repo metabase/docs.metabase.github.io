@@ -1,0 +1,17 @@
+<div class="infinite-marquee-container container">
+  <div id="infinite-marquee-left-mask"></div>
+  <div id="infinite-marquee-right-mask"></div>
+  <h3>Need inspiration? See what other people are building with Metabase</h3>
+  <a href="/examples">Check out examples {% include svg-icons/chevron.html %}
+</a>
+    <div class="infinite-marquee-slider">
+      {% assign times_looped = 0 %}
+      {% for counter in (0..9) %}
+        {% for example in site.examples %}
+          <a href="{{ example.url }}" class="entry" data-categories="{{ example.categories }}">
+            <img src="{{ example.thumbnail_transparent_bg }}" alt="{{ example.author }}" loading="lazy" />
+          </a>
+        {% endfor %}
+      {% endfor %}
+    </div>
+</div>

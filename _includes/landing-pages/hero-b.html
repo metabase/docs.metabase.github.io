@@ -1,0 +1,34 @@
+{% assign component = include.component %}
+{% assign media = component.media %}
+
+<div class="container feature-container landing-page__hero-b">
+  <div>
+    {% if component.badge-text %}
+      <div class="badge">
+        {{ component.badge-text }}
+      </div>
+    {% endif %}
+
+    <h1>{{ component.headline }}</h1>
+    <p>{{ component.subheading }}</p>
+
+    <div class="d-flex justify-content-start gap-4">
+    {% for link in component.links %}
+      <a class="fs-13 Button btn btn-primary rounded-3 {{ link.extra-classes }}" href="{{ link.href }}">
+        {{ link.text }}
+      </a>
+    {% endfor %}
+    </div>
+  </div>
+
+  <div class="position-relative">
+    {% if component.media.type == 'image' %}
+      <img src="{{component.media.src}}" alt="{{component.media.alt}}">
+    {% elsif component.media.type == 'youtube' %}
+    <iframe width="100%" height="315" src="{{ component.media.src }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    {% else %}
+      {% include video-player.html id=component.media.id poster=component.media.poster source_mp4=component.media.source_mp4 source_webm=component.media.source_webm %}
+    {% endif %}
+  </div>
+</div>
+

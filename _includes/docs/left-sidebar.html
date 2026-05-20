@@ -1,0 +1,23 @@
+<div class="learn-left-sidebar" id="main-navigation-content">
+  {% include docs-learn-toggler.html domain=include.domain %}
+
+  {% if page.version %}
+    {% comment %}
+    For /docs/latest/cloud/start
+    {% endcomment %}
+    {% if page.latest %}
+      {% assign version_for_nav = "latest" %}
+    {% else %}
+      {% assign version_for_nav = page.version %}
+    {% endif %}
+  {% elsif page.version == "master" %}
+    {% assign version_for_nav = "master" %}
+  {% else %}
+    {% assign version_for_nav = site.docs_version %}
+  {% endif %}
+
+  {% assign page_version_no_period = version_for_nav | replace: ".", "" %}
+
+  {% assign nav_data_file = site.data.docs.nav[page_version_no_period] %}
+  {% include learn/left-nav.html categories=nav_data_file.categories %}
+</div>

@@ -1,0 +1,22 @@
+{% assign component = include.component %}
+
+<div class="feature-container container">
+  <div>
+    <h2>{{ component.headline }}</h2>
+    <p>{{ component.subheading }}</p>
+    {% if component.list-items %}
+      <ul class="checklist-outline">
+        {% for list-item in component.list-items %}
+          <li>{{ list-item }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </div>
+  <div class="no-background">
+    <div class="data-sources-marquee-container">
+      {% include data-sources-marquee.html %}
+    </div>
+  </div>
+</div>
+
+<script src="/js/cloud-self-hosted-comparison.js"></script>

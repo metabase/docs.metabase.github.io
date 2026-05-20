@@ -1,0 +1,116 @@
+.pricing-table-2026 {
+  --thead-height: 67px;
+
+  border-collapse: separate;
+  min-width: 720px;
+
+  @include media-breakpoint-down(lg) {
+    display: none;
+  }
+
+  .header + .header {
+    width: 17%;
+  }
+
+  th,
+  td {
+    background-color: $white;
+    padding: 12px;
+    text-align: center;
+    transition: background-color 200ms;
+    vertical-align: middle;
+  }
+
+  .table-group {
+    & > tr > * {
+      border: 1px solid $blue-85;
+    }
+
+    & > tr > *:not(:last-child) {
+      border-right: none;
+    }
+
+    &:not(:last-child) > tr:last-child > * {
+      border-bottom: none;
+    }
+
+    & > tr:not(:first-child) > * {
+      border-top: none;
+    }
+  }
+
+  thead {
+    top: var(--navigation-header-height);
+  }
+
+  &:not(.stuck) thead > tr:first-child > :first-child {
+    border-top-left-radius: 12px;
+  }
+
+  &:not(.stuck) thead > tr:first-child > :last-child {
+    border-top-right-radius: 12px;
+  }
+
+  tbody:last-child > tr:last-child > :first-child {
+    border-bottom-left-radius: 12px;
+  }
+
+  tbody:last-child > tr:last-child > :last-child {
+    border-bottom-right-radius: 12px;
+  }
+
+  .section-title {
+    background-color: $blue-95;
+    font-size: 14px;
+    height: 76px;
+    line-height: 1.2;
+    padding-bottom: 0;
+    padding-top: 0;
+    text-align: left;
+    top: calc(var(--navigation-header-height) + var(--thead-height));
+  }
+
+  .section-title-hdg {
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.44;
+    margin-bottom: 4px;
+  }
+
+  @for $i from 1 through 4 {
+    &[data-highlighted-column="#{$i}"] {
+      .table-group > tr > *:nth-child(#{$i + 1}) {
+        background-color: $blue-99;
+      }
+    }
+  }
+
+  // Overrides
+  img {
+    vertical-align: middle;
+  }
+
+  .check {
+    margin-top: -2px;
+    opacity: 0.7;
+  }
+
+  .info-icon {
+    margin-top: -2px;
+  }
+
+  .label {
+    font-weight: normal !important;
+  }
+
+  .label a,
+  .pricing-tier a {
+    font-weight: normal;
+  }
+
+  .pricing-tier p {
+    font-size: 14px;
+    line-height: 1.57;
+    margin: 0;
+  }
+}

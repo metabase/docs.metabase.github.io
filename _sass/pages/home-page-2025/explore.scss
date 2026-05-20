@@ -1,0 +1,76 @@
+.home-page-2025 .explore {
+  > div {
+    display: flex;
+
+    $top-offset: 15px;
+    $top-step: 44px;
+
+    .side {
+      @include media-breakpoint-down(lg) {
+        display: none;
+      }
+    }
+
+    ul {
+      position: relative;
+      text-align: right;
+      top: 33%;
+      translate: 0 -50%;
+
+      &.li-active-0 li:first-child::after {
+        top: $top-offset;
+      }
+
+      &.li-active-1 li:first-child::after {
+        top: $top-offset + $top-step;
+      }
+
+      &.li-active-2 li:first-child::after {
+        top: $top-offset + 2 * $top-step;
+      }
+
+      &.li-active-3 li:first-child::after {
+        top: $top-offset + 3 * $top-step;
+      }
+
+      li {
+        color: $blue-85;
+        font-size: 24px;
+        font-weight: 700;
+        letter-spacing: -1px;
+        list-style: none;
+        margin-bottom: 15px;
+        padding-right: 60px;
+        position: relative;
+        transition: color 0.3s;
+
+        &:first-child {
+          &::after {
+            background-color: $blue-60;
+            content: "";
+            display: inline-block;
+            height: 1px;
+            margin-left: 8px;
+            position: absolute;
+            top: 50%;
+            transition: top 0.3s ease-in-out;
+            width: 65px;
+          }
+        }
+
+        &.active {
+          color: $blue-60;
+        }
+      }
+    }
+  }
+
+  .title > div {
+    &::before {
+      background: url("/images/home-page-2025/explore.gif") no-repeat center/contain;
+      content: "";
+      inset: 5px;
+      position: absolute;
+    }
+  }
+}

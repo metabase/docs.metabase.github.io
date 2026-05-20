@@ -1,0 +1,118 @@
+---
+layout: default
+title: "Real-life example of Metabase"
+---
+
+{% assign example_components = site.data.public-metabase-examples[page.data] %}
+
+<div class="bootstrap">
+  <div class="data-sources public-metabase-example entry-page">
+    <div>
+      <a href="/examples" class="back-to-index">{% include svg-icons/chevron.html %} Browse other examples</a>
+      {% for item in page.components %}
+        {% if item.component == "intro" %}
+          {% include public-metabase-examples/intro.html component=item %}
+        {% endif %}
+      {% endfor %}
+    </div>
+
+    <div>
+      {% for item in page.components %}
+        {% if item.component == "intro" %}
+          {% continue %}
+        {% elsif item.component == "carousel" %}
+          {% include shared/{{item.component}}.html component=item %}
+        {% elsif item.component == "faq" %}
+          {% include shared/{{item.component}}.html component=item %}
+        {% elsif item.component == "try-metabase-footer" %}
+          {% continue %}
+        {% else %}
+          {% include public-metabase-examples/{{item.component}}.html component=item %}
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+  <div class="data-sources-footer">
+    {% include public-metabase-examples/try-metabase-footer-entry-page.html %}
+  </div>
+</div>
+
+<script src="https://vjs.zencdn.net/7.20.3/video.min.js"></script>
+<script src="/js/video-autoplay.js" type="text/javascript"></script>
+<script src="https://unpkg.com/@popperjs/core@2/dist/umd/popper.min.js"></script>
+<script src="https://unpkg.com/tippy.js@6/dist/tippy-bundle.umd.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+/>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+  var applyTT = document.querySelectorAll(".apply-tooltip");
+
+  tippy(applyTT, {
+    animation: "fade",
+    duration: [300, 300],
+    placement: "auto",
+    trigger: "mouseenter click",
+    popperOptions: {
+      strategy: "fixed",
+      modifiers: [
+        {
+          name: "flip",
+          options: {
+            fallbackPlacements: ["top", "right"],
+          },
+        },
+        {
+          name: "preventOverflow",
+          options: {
+            altAxis: true,
+            tether: false,
+          },
+        },
+      ],
+    },
+  });
+</script>
+
+<script>
+  var swiper = new Swiper(".mySwiper", {
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+    pagination: {
+      el: ".swiper-pagination",
+    },
+  });
+
+  // Pause all videos when changing slides
+  swiper.on("slideChange", function() {
+    for (YTPlayerId in window.YTPlayers) {
+      window.YTPlayers[YTPlayerId].pauseVideo();
+    }
+  });
+
+  swiper.on("click", function() {
+    const iframe = document.querySelector(".swiper-slide-active iframe");
+
+    if (iframe) {
+      const youtubeId = iframe.id;
+
+      const isVideoPlaying = window.YTPlayers[youtubeId].getPlayerState() === 1;
+
+      if (isVideoPlaying) {
+        window.YTPlayers[youtubeId].pauseVideo();
+      } else {
+        window.YTPlayers[youtubeId].playVideo();
+      }
+    }
+  });
+
+  const prevButton = document.querySelector(".swiper-button-prev");
+  const nextButton = document.querySelector(".swiper-button-next");
+  const navigation = document.querySelector(".swiper-pagination");
+
+  navigation.prepend(prevButton);
+  navigation.appendChild(nextButton);
+</script>

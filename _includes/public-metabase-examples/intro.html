@@ -1,0 +1,33 @@
+{% assign dashboard_domain = page.dashboard_url | split: '//' | slice: 1 | join: "" | split: "/"| slice: 0 | first | remove_first: "www." %}
+
+<div class="intro">
+  <h1>{{ include.component.title }}</h1>
+  <p>{{ include.component.summary }}</p>
+  <a href="{{ page.dashboard_url }}" class="btn btn-outline-blue">Visit {% include svg-icons/visit-page.html %}</a>
+
+  <h5>Built by</h5>
+  <p>{{ page.author }}</p>
+  <hr>
+  <h5>
+    {% if page.categories.size > 1 %}
+      Categories
+    {% else %}
+      Category
+    {% endif %}
+  </h5>
+  <ul>
+    {% for category_name in page.categories %}
+      {% assign category = site.data.public-metabase-example-categories | where: "name", category_name | first %}
+      {% if category.show == true %}
+        <li>
+          <a href="/examples?category={{category.name}}">
+            {% include svg-icons/{{ category.icon }}.html %}{{ category.name }}
+          </a>
+        </li>
+      {% endif %}
+    {% endfor %}
+  </ul>
+  <hr>
+  <h5>Website</h5>
+  <p><a href="{{ page.dashboard_url }}">{{ dashboard_domain }}</a></p>
+</div>

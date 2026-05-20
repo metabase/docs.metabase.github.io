@@ -1,0 +1,138 @@
+<table class="pricing-table-2026 neutral-15 fs-13 lh-base js-column-hover js-use-case-reorder js-toggle-stuck">
+  <thead class="sticky-md-top table-group">
+    <tr>
+      <th class="header">&nbsp;</th>
+      <th class="header js-column-hover-trigger">
+        Open Source
+        <div></div>
+        <a href="/start/oss/">Install</a>
+      </th>
+      <th class="header js-column-hover-trigger">
+        Starter
+        <div></div>
+        <a href="https://store.metabase.com/checkout/starter" target="_blank" rel="noreferrer">Start trial</a>
+      </th>
+      <th class="header js-column-hover-trigger">
+        Pro
+        <div></div>
+        <a href="https://store.metabase.com/checkout/pro" target="_blank" rel="noreferrer">Start trial</a>
+      </th>
+      <th class="header js-column-hover-trigger">
+        Enterprise
+        <div></div>
+        <a href="/sales/">Talk to Sales</a>
+      </th>
+    </tr>
+  </thead>
+  {% for section in site.data.feature-comparison %}
+    <tbody class="table-group" {% if section.primary-use-case %}data-primary-use-case="{{ section.primary-use-case }}"{% endif %}>
+      <tr>
+        <td colspan="5" class="section-title sticky-md-top">
+          {% if section.heading %}
+            <h3 class="section-title-hdg">
+              <span class="fw-700">
+                {{ section.heading }}
+              </span>
+            </h3>
+          {% endif %}
+          {{ section.description }}
+        </td>
+      </tr>
+
+      {% for row in section.rows %}
+        {% if row.pricing and row.pricing-2026 != false %}
+          <tr>
+            <th
+              class="label"
+              data-row="{{row.name}}"
+              id="{{ row.name | split: " " | join: "-" | downcase | replace: "(", "" | replace: ")", "" }}"
+            >
+              {% if row.link %}
+                <a href="{{row.link}}">
+                  {% if row.details %}
+                    <span class="apply-tooltip" data-tippy-content="{{ row.details }}">
+                      {{ row.name }}
+                      <img alt="Info" src="/images/info.svg" width="15" class="info-icon" />
+                    </span>
+                  {% else %}
+                    {{ row.name }}
+                  {% endif %}
+                </a>
+              {% else %}
+                {% if row.details %}
+                  <span class="apply-tooltip" data-tippy-content="{{ row.details }}">
+                    {{ row.name }}
+                    <img alt="Info" src="/images/info.svg" width="15" class="info-icon" />
+                  </span>
+                {% else %}
+                  {{ row.name }}
+                {% endif %}
+              {% endif %}
+            </th>
+
+            <td class="pricing-tier pricing-tier-oss js-column-hover-trigger" data-row="{{row.name}}">
+              {% if row.oss == true %}
+                <img class="check" src="/images/icons/rounded-checkmark.svg" alt="Yes" />
+              {% elsif row.oss == false %}
+                &nbsp;
+              {% else %}
+                {{ row.oss }}
+              {% endif %}
+            </td>
+
+            <td class="pricing-tier pricing-tier-starter js-column-hover-trigger" data-row="{{row.name}}">
+              {% if row.starter == true %}
+                {% unless row.checkmark == false %}
+                  <img class="check" src="/images/icons/rounded-checkmark.svg" alt="Yes" />
+                {% endunless %}
+                {% if row.prices_slug %}
+                  {% assign prices = site.data.prices[row.prices_slug] %}
+                  {% include pages/pricing/dynamic-price.html tier="starter" prices=prices %}
+                {% endif %}
+              {% elsif row.starter == false %}
+                &nbsp;
+              {% else %}
+                {{ row.starter }}
+              {% endif %}
+            </td>
+
+            <td class="pricing-tier pricing-tier-pro js-column-hover-trigger" data-row="{{row.name}}">
+              {% if row.pro == true %}
+                {% unless row.checkmark == false %}
+                  <img class="check" src="/images/icons/rounded-checkmark.svg" alt="Yes" />
+                {% endunless %}
+                {% if row.prices_slug %}
+                  {% assign prices = site.data.prices[row.prices_slug] %}
+                  {% include pages/pricing/dynamic-price.html tier="pro" prices=prices %}
+                {% endif %}
+              {% elsif row.pro == false %}
+                &nbsp;
+              {% else %}
+                {{ row.pro }}
+              {% endif %}
+            </td>
+
+            <td class="pricing-tier pricing-tier-enterprise js-column-hover-trigger" data-row="{{row.name}}">
+              {% if row.enterprise == true %}
+                {% unless row.checkmark == false %}
+                  <img class="check" src="/images/icons/rounded-checkmark.svg" alt="Yes" />
+                {% endunless %}
+                {% if row.prices_slug %}
+                  {% assign prices = site.data.prices[row.prices_slug] %}
+                  {% include pages/pricing/dynamic-price.html tier="enterprise" prices=prices %}
+                {% endif %}
+              {% elsif row.enterprise == false %}
+                &nbsp;
+              {% else %}
+                {{ row.enterprise }}
+              {% endif %}
+            </td>
+          </tr>
+        {% endif %}
+      {% endfor %}
+    </tbody>
+  {% endfor %}
+</table>
+
+
+<script src="/js/pricing/plans-compare-pricing-2026.js"></script>

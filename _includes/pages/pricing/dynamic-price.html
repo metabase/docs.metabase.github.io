@@ -1,0 +1,19 @@
+{% if include.prices %}
+  {% assign first_price = include.prices[0] %}
+  {% if first_price.comparison and first_price.comparison[include.tier] %}
+    {{ first_price.comparison[include.tier] }}
+  {% else %}
+    {% capture price_text %}${{ first_price.price.monthly }}/mo{% if include.tier != "starter" and first_price.is_cloud_only %} on Cloud{% endif %}{% endcapture %}
+    {% if first_price.price_tooltip %}
+      &nbsp;<span class="pricing-tooltip"><span class="apply-tooltip" data-tippy-content="{{ first_price.price_tooltip }}" data-tippy-placement="top">{{ price_text }}</span></span>
+    {% else %}
+      &nbsp;{{ price_text }}
+    {% endif %}
+    {% if include.prices.size > 1 %}
+      {% comment %} `absolute` to prevent center-alignment shift {% endcomment %}
+      <span class="absolute">
+        &nbsp;+
+      </span>
+    {% endif  %}
+  {% endif  %}
+{% endif %}

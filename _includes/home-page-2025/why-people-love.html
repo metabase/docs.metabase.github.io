@@ -1,0 +1,51 @@
+{% assign stories = site.data.love %}
+
+<div class="why-people-love">
+  <div class="title">
+    <span>Why people</span>
+    <div></div>
+    <span>Metabase</span>
+  </div>
+
+  <div class="infinite-marquee-container no-fades">
+    <div class="infinite-marquee-slider disable-stop-on-hover">
+      {% for counter in (0..3) %}
+        {% for story in stories %}
+          <div class="testimonial">
+            <div>
+              <img
+                src="{{story.user_avatar}}"
+                width="36px"
+                height="36px"
+                alt="photo of {{story.user}}"
+              loading="lazy"/>
+              <span>{{ story.user }}</span>
+            </div>
+            {{story.content | markdownify }}
+          </div>
+        {% endfor %}
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="infinite-marquee-container no-fades">
+    <div class="infinite-marquee-slider disable-stop-on-hover reverse-marquee">
+      {% for counter in (0..3) %}
+        {% for story in stories %}
+          <div class="testimonial">
+            <div>
+              <img
+                src="{{story.user_avatar}}"
+                width="36px"
+                height="36px"
+                alt="photo of {{story.user}}"
+              loading="lazy"/>
+              <span>{{ story.user }}</span>
+            </div>
+            {{story.content | markdownify }}
+          </div>
+        {% endfor %}
+      {% endfor %}
+    </div>
+  </div>
+</div>

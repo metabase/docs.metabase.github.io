@@ -1,0 +1,26 @@
+{% if page.latest != true and page.url != "/docs/all" %}
+<meta name="robots" content="noindex, nofollow">
+{% endif %}
+
+{% assign title = page.title | append: " | Embedded analytics SDK API" %}
+{% capture desc %}{% if page.description %}{{ page.description }}{% else %}Reference documentation for {{ page.title }}.{% endif %}{% endcapture %}
+{% assign img = "/images/twitter/default.png" %}
+{% assign author = page.author | default: "The Metabase Team" %}
+
+<!-- Twitter cards -->
+<meta name="twitter:site" content="@{{ site.twitter_username }}" />
+<meta name="twitter:creator" content="{{ author }}" />
+<meta name="twitter:title" content="{{ title }}" />
+<meta name="twitter:description" content="{{ desc }}" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="{{ site.url }}{{ img }}" />
+<!-- end of Twitter cards -->
+
+<!-- Open Graph metadata -->
+<meta property="og:site_name" content="Metabase | Business Intelligence, Dashboards, and Data Visualization" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="{{ page.url | replace '/index.html', '' | prepend: site.url }}" />
+<meta name="title" property="og:title" content="{{ title }}" />
+<meta name="description" property="og:description" content="{{ desc }}" />
+<meta name="image" property="og:image" content="{{ site.url }}{{ img }}" />
+<!-- end of Open Graph metadata -->

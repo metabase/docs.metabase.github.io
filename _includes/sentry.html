@@ -1,0 +1,65 @@
+<!-- Sentry -->
+<script type="text/javascript">
+  window.SENTRY_REPLAY_ENABLED = {{ page.sentry_replay_enabled | default: false }};
+
+  function sentryReplayInit () {
+    if (window.SENTRY_REPLAY_ENABLED) {
+      setTimeout(() => {
+        if (!window.Sentry || !window.Sentry.lazyLoadIntegration) {
+          return;
+        }
+        Sentry.lazyLoadIntegration("replayIntegration").then(function (replayIntegration) {
+          console.log({ loaded: !!replayIntegration, replayIntegration })
+          window.Sentry.addIntegration(replayIntegration({ maskAllText: false }));
+        });
+      }, 500);
+    }
+  }
+
+  function sentryInit() {
+    Sentry.init({
+      attachStacktrace: true,
+      dsn:
+        "https://4b0be007af0a45f3bf6f59e5381ffe74@o408345.ingest.us.sentry.io/6722711",
+      environment: "{{ jekyll.environment }}",
+      tracesSampleRate: 0.1, // performance monitoring
+      replaysSessionSampleRate: 0.05,
+      enableLogs: true,
+      ignoreErrors: [
+        "ResizeObserver loop limit exceeded",
+        "ResizeObserver loop completed with undelivered notifications.",
+      ],
+      sendDefaultPii: false,
+    });
+    sentryReplayInit();
+  }
+
+  if (window.SENTRY_REPLAY_ENABLED) {
+    document.addEventListener("DOMContentLoaded", sentryInit);
+  } else {
+    window.sentryOnLoad = sentryInit;
+  }
+</script>
+
+{% comment %}
+  We have to load a different script bundle for replays, since it's heavier,
+  we only load it for pages that have replays enabled
+  Also, the replay bundle doesn't automatically initialize the replay integration,
+  so we have to do that manually in sentryReplayInit. For non-replay bundle, the
+  init script will automatically call window.sentryOnLoad.
+{% endcomment%}
+
+{% if page.sentry_replay_enabled %}
+  <script
+    src="https://browser.sentry-cdn.com/10.51.0/bundle.tracing.replay.min.js"
+    integrity="sha384-toIv1RSDMp8CFZhcCrPa1yHvJu11OImyaytBecREIXyDm3bwfLJYyHR19Tbpd/hx"
+    crossorigin="anonymous"
+    defer
+  ></script>
+{% else %}
+  <script
+    src="https://js.sentry-cdn.com/4b0be007af0a45f3bf6f59e5381ffe74.min.js"
+    crossorigin="anonymous"
+    data-cfasync="false"
+  ></script>
+{% endif %}

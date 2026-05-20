@@ -1,0 +1,53 @@
+{% assign prices = site.data.prices %}
+
+<div class="container Pricing-Tier-Wrapper px2 flex justify-center" id="prices">
+  {% for model in site.data.oss-upgrade %}
+  <ol class="Pricing-Tiers row no-list-style mt0 mb2 mx0 pr0 pl0 sm-flex justify-center col-xl-10 col-xxl-8 col-sm-12">
+    {% for tier in model.plans %}
+    <li class="Pricing-Card-Container col-sm-12 col-lg-6 col-xl-6 col-sm-offset-0 p-0 mb-6 mb-lg-7">
+      <div class="recommended-for-you">
+        Recommended for you<img alt="Curved Arrow" src="/images/icons/curved-arrow.svg" />
+
+      </div>
+      <div class="card Pricing-Card py0 bg-white flex flex-column full-height transition-all text-left p-6 {{ tier.slug }} deploy-monthly">
+        {% if tier.banner %}
+        <div class="Pricing-Banner">{{ tier.banner }}</div>
+        {% endif %}
+        <div class="Pricing-Name">{{ tier.name }}</div>
+        <h2 class="Pricing-Title">{{ tier.headline }}</h2>
+        <div class="Pricing-Tagline">{{ tier.tagline }}</div>
+
+        <div class="plans-selection monthly">
+          {% include price-container.html tier=tier %}
+        </div>
+
+        <p class="Pricing-CTA text-centered">
+          {% if tier.slug == "starter" %}
+          <a href="https://store.metabase.com/checkout/?plan=starter&signupsource=upgrade" class="Button block only {{ tier.slug }}">
+          Upgrade to {{ tier.name }}
+          </a>
+          {% endif %}
+          {% if tier.slug == "pro" %}
+          <a href="https://store.metabase.com/checkout/?plan=pro&deployment=self-hosted&signupsource=upgrade" class="Button block mb1 pro">
+          Upgrade to {{ tier.name }} self-hosted
+          </a>
+          <a href="https://store.metabase.com/checkout/?plan=pro&deployment=cloud&signupsource=upgrade" class="Button block mb1 outline pro-cloud">
+          Upgrade to {{ tier.name }} Cloud
+          </a>
+          {% endif %}
+        </p>
+        <div class="Pricing-Intro">{{ tier.intro }}</div>
+        <ul class="Pricing-Highlights p-0">
+          {% for highlight in tier.highlights %}
+          <li>
+            {{ highlight.icon }}
+            <div class="Pricing-Highlight-Text">{{ highlight.text | markdownify }}</div>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </li>
+    {% endfor %}
+  </ol>
+  {% endfor %}
+</div>

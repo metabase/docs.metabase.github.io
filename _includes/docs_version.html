@@ -1,0 +1,25 @@
+{% assign versions = site.available_versions | reverse %}
+
+<div class="version__selector cursor-pointer">
+  <span class="version__current">
+    {% if page.version == "latest" %}
+      {{site.docs_version}}
+    {% else %}
+      {{page.version}}
+    {% endif %}
+
+    {% include svg-icons/chevron.html %}
+  </span>
+  <ul class="version__dropdown">
+    {% for version in versions limit: 10 %}
+      {% unless page.version == version %}
+        <li>
+          <a href="/docs/{{ version }}">
+            {{version}}
+          </a>
+        </li>
+      {% endunless %}
+    {% endfor %}
+    <li><a href="/docs/all">See more</a></li>
+  </ul>
+</div>

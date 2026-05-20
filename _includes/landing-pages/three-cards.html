@@ -1,0 +1,14 @@
+{% assign component = include.component %}
+
+<div class="full-width-centered container landing-page__three-cards">
+  <h3>{{ component.headline }}</h3>
+  <div class="cards-container">
+    {% for card in component.cards %}
+      <div class="card">
+        {% include svg-icons/{{card.icon}}.html %}
+        <h4>{{ card.headline }}</h4>
+        <p>{{ card.text }}</p>
+      </div>
+    {% endfor %}
+  </div>
+</div>

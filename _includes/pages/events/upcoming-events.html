@@ -1,0 +1,70 @@
+<div class="upcoming-events">
+  <section class="hero">
+    <h1>Events</h1>
+    <h2>Register to join a webinar or stream a past recording.</h2>
+  </section>
+
+  {% for event in site.data.events %}
+    {% if event.show_link_as_banner == true and event.banner_src %}
+      <a href="/join"" class="banner-entry">
+        <img src="{{ event.banner_src }}" alt="{{ event.name }}" />
+      </a>
+    {% endif %}
+  {% endfor %}
+
+
+  {% for event in site.data.events %}
+    {% unless event.show_link_as_banner == true %}
+      {% include pages/events/entry.html event=event %}
+    {% endunless %}
+  {% endfor %}
+
+  <div class="no-upcoming-events event">
+    <form
+      action="//metabase.us10.list-manage.com/subscribe/post?u=869fec0e4689e8fd1db91e795&amp;id=b9664113a8"
+      class="subscribe"
+      class="validate"
+      id="mc-embedded-subscribe-form"
+      method="post"
+      name="mc-embedded-subscribe-form-no-upcoming-events"
+      novalidate
+      target="_blank">
+      <h5>Oh, it seems like there are no upcoming events</h5>
+      <p>Don’t miss future live events and stay in touch with updates and news from Metabase.
+      </p>
+
+      <div>
+        <input
+          name="EMAIL"
+          placeholder="Email Address"
+          type="email" />
+        <input
+          class="btn btn-primary"
+          name="subscribe"
+          type="submit"
+          value="Subscribe" />
+      </div>
+
+      <div id="mce-responses">
+        <div class="response" id="mce-error-response"></div>
+        <div class="response" id="mce-success-response"></div>
+      </div>
+
+      <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+      <div class="avoid-fake-signup">
+        <input
+          name="b_869fec0e4689e8fd1db91e795_b9664113a8"
+          type="text"
+          value="" />
+      </div>
+    </form>
+  </div>
+</div>
+
+<script data-prettify-ignore>
+  window.addEventListener('DOMContentLoaded', () => {
+    document.querySelector('[name="mc-embedded-subscribe-form-no-upcoming-events"]').action = `//metabase.us10.list-manage.com/subscribe/post?u=869fec0e4689e8fd1db91e795&amp;id=b9664113a8&SIGNUP=${window.location.href}`;
+  });
+</script>
+
+{% include mc-validate.html %}

@@ -1,0 +1,453 @@
+.data-segregation {
+  .desktop {
+    @include media-breakpoint-down(lg) {
+      display: none !important;
+    }
+  }
+
+  .mobile {
+    @include media-breakpoint-up(lg) {
+      display: none !important;
+    }
+  }
+
+  h1 {
+    font-size: 36px;
+    font-weight: 900;
+    line-height: 40px;
+    margin: 0 auto 16px;
+    max-width: 592px;
+    text-align: center;
+  }
+
+  h2 {
+    color: $neutral-60;
+    display: inline-block;
+    font-size: 18px;
+    font-weight: 700;
+    left: 50%;
+    line-height: 26px;
+    margin: 64px 0 8px;
+    max-width: 592px;
+    position: relative;
+    text-align: center;
+    transform: translateX(-50%);
+  }
+
+  h4 {
+    color: $neutral-40;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 24px;
+    text-align: center;
+
+    @include media-breakpoint-down(lg) {
+      font-size: 20px;
+      line-height: 28px;
+    }
+
+    svg {
+      margin-right: 4px;
+
+      path {
+        stroke: $neutral-40;
+      }
+    }
+  }
+
+  .hero {
+    background-color: $neutral-98;
+    border-bottom: 1px solid $blue-90;
+
+    > .container {
+      div.summary {
+        display: none;
+
+        @include media-breakpoint-down(lg) {
+          margin-top: 44px;
+        }
+
+        &.show {
+          display: block;
+        }
+
+        > a {
+          display: inline-flex;
+          font-size: 16px;
+          font-weight: 700;
+          left: 50%;
+          line-height: 24px;
+          margin: 12px auto 96px;
+          position: relative;
+          text-align: center;
+          transform: translateX(-50%);
+
+          @include media-breakpoint-down(lg) {
+            margin-bottom: 24px;
+          }
+
+          svg {
+            height: 12px;
+            left: -4px;
+            position: relative;
+            rotate: -90deg;
+            top: 7px;
+          }
+        }
+
+        p {
+          max-width: 800px;
+        }
+      }
+
+      p {
+        color: $neutral-40;
+        font-size: 18px;
+        font-weight: 400;
+        line-height: 26px;
+        margin: 0 auto;
+        max-width: 592px;
+        text-align: center;
+      }
+
+      > div.images {
+        display: flex;
+        justify-content: center;
+
+        img {
+          display: none;
+
+          &:nth-of-type(1) {
+            display: block;
+          }
+        }
+      }
+    }
+
+    .hoverable-toggler {
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      margin: 24px auto 0;
+      max-width: none;
+      width: fit-content;
+
+      > a {
+        flex: 0 0 auto;
+        padding-left: 16px;
+        padding-right: 16px;
+        white-space: nowrap;
+        width: auto;
+      }
+
+      // The shared hoverable-toggler styles assume equal-width links (percent-based).
+      // On this page we want content-based widths; JS will set the hover-highlight
+      // position/size using offsetLeft/offsetWidth.
+      div.hover-highlight {
+        left: 0;
+        margin-left: 0;
+        width: 0;
+      }
+    }
+
+    .carousel__nav {
+      align-items: center;
+      margin: 24px auto 32px;
+      max-width: 1150px;
+
+      &--button {
+        @include shadow-xs;
+
+        background-color: white;
+        background-image: url("/images/chevron_blue_right.svg");
+        background-position: center;
+        background-repeat: no-repeat;
+        border: 1px solid $blue-90;
+        border-radius: 50%;
+        height: 24px;
+        width: 24px;
+
+        &:first-child {
+          margin-right: 0;
+        }
+
+        &.carousel__nav--left {
+          transform: rotate(180deg);
+        }
+
+        &:disabled {
+          opacity: 0.5;
+          pointer-events: none;
+        }
+      }
+
+      .swiper-pagination {
+        display: flex;
+        gap: 8px;
+        justify-content: center;
+        margin: 0 8px;
+        position: relative;
+      }
+
+      .swiper-pagination-bullet {
+        background-color: $blue-85;
+        border-radius: 50%;
+        cursor: pointer;
+        height: 12px;
+        opacity: 1;
+        width: 12px;
+
+        &.active {
+          background-color: $blue-60;
+        }
+      }
+    }
+  }
+
+  .compare {
+    padding-top: 96px;
+
+    @include media-breakpoint-down(lg) {
+      margin-top: 0;
+      padding-top: 36px;
+    }
+
+    > h3 {
+      font-size: 36px;
+      font-weight: 900;
+      line-height: 40px;
+      text-align: center;
+
+      @include media-breakpoint-down(lg) {
+        font-size: 28px;
+        margin-bottom: 24px;
+      }
+    }
+
+    > div.desktop {
+      border: 1px solid $blue-90;
+      border-radius: 12px;
+      border-top: 1px solid $blue-90;
+      display: grid;
+      grid-template-columns: 330px repeat(4, 1fr);
+      margin-top: 64px;
+
+      > div {
+        border-right: 1px solid $blue-90;
+        border-top: 1px solid $blue-90;
+        color: $neutral-40;
+        padding: 16px 24px;
+
+        &:nth-of-type(-n + 5) {
+          border-top: none;
+        }
+
+        &:nth-of-type(5n) {
+          border-right: none;
+        }
+
+        > div {
+          padding-top: 4px;
+
+          p:first-child {
+            margin-bottom: 1px;
+          }
+        }
+
+        ul {
+          list-style-type: none;
+          margin: 0;
+          padding-left: 0;
+
+          &.checkmarks li::before {
+            background-image: url("../images/icons/rounded-checkmark.svg");
+          }
+
+          &.not-a-fit li::before {
+            background-image: url("../images/icons/close.svg");
+          }
+
+          li {
+            margin-bottom: 10px;
+            padding-left: 28px;
+            position: relative;
+
+            &:last-of-type {
+              margin-bottom: 0;
+            }
+
+            &::before {
+              background-position: top center;
+              background-repeat: no-repeat;
+              background-size: 100%;
+              content: "";
+              height: 14px;
+              left: 0;
+              opacity: 0.6;
+              position: absolute;
+              top: 5px;
+              width: 14px;
+            }
+          }
+        }
+
+        p,
+        li {
+          font-size: 14px;
+          line-height: 22px;
+          margin: 0;
+        }
+
+        b {
+          color: $neutral-15;
+        }
+
+        svg {
+          border: 1px solid $blue-90;
+          border-radius: 8px;
+          float: left;
+          height: 48px;
+          margin-right: 12px;
+          padding: 12px;
+          width: 48px;
+        }
+      }
+    }
+
+    > div.mobile {
+      .compare-card {
+        margin-bottom: 26px;
+
+        &:first-child {
+          .header {
+            border-top: none;
+            margin-top: 0;
+          }
+        }
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+
+        .header {
+          align-items: center;
+          border-top: 1px solid $blue-90;
+          display: flex;
+          gap: 12px;
+          margin-bottom: 24px;
+          padding-top: 24px;
+
+          svg {
+            border: 1px solid $blue-90;
+            border-radius: 8px;
+            height: 48px;
+            padding: 12px;
+            width: 48px;
+          }
+
+          > div:last-child {
+            flex: 1;
+
+            p:first-child {
+              margin-bottom: 1px;
+            }
+          }
+
+          p {
+            color: $neutral-40;
+            font-size: 14px;
+            line-height: 22px;
+            margin: 0;
+
+            b {
+              color: $neutral-15;
+            }
+          }
+        }
+
+        .section {
+          margin-bottom: 24px;
+
+          &:last-child {
+            margin-bottom: 0;
+          }
+
+          .title {
+            border-bottom: 1px solid $blue-90;
+            color: $neutral-15;
+            font-size: 14px;
+            font-weight: 700;
+            line-height: 22px;
+            margin: 0 0 12px;
+            padding: 0 12px 12px;
+          }
+
+          > p:not(.title) {
+            color: $neutral-40;
+            font-size: 14px;
+            line-height: 22px;
+            margin: 0;
+          }
+
+          ul {
+            list-style-type: none;
+            margin: 0;
+            padding-left: 12px;
+
+            &.checkmarks li::before {
+              background-image: url("../images/icons/rounded-checkmark.svg");
+            }
+
+            &.not-a-fit li::before {
+              background-image: url("../images/icons/close.svg");
+            }
+
+            li {
+              margin-bottom: 10px;
+              padding-left: 28px;
+              position: relative;
+
+              &:last-of-type {
+                margin-bottom: 0;
+              }
+
+              &::before {
+                background-position: top center;
+                background-repeat: no-repeat;
+                background-size: 100%;
+                content: "";
+                height: 14px;
+                left: 0;
+                opacity: 0.6;
+                position: absolute;
+                top: 5px;
+                width: 14px;
+              }
+            }
+          }
+
+          p,
+          li {
+            color: $neutral-40;
+            font-size: 14px;
+            line-height: 22px;
+            margin: 0;
+
+            b {
+              color: $neutral-15;
+            }
+          }
+
+          p {
+            padding: 0 12px;
+          }
+        }
+      }
+    }
+  }
+
+  .try-metabase-footer {
+    margin-top: 80px;
+    overflow: hidden;
+    width: 100vw;
+  }
+}

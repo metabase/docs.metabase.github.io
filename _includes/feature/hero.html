@@ -1,0 +1,55 @@
+{% assign video = include.data.video %}
+
+<div class="feature-container hero">
+  <div>
+    <div class="feature-title">
+      <img alt="Metabase - {{ include.data.badge.text }}" src="{{ include.data.badge.icon }}">
+      {{ include.data.badge.text }}
+    </div>
+    <h1>{{ include.data.title }}</h1>
+    <p>{{ include.data.description }}</p>
+      {% if include.data.ctas %}
+        <div class="d-flex">
+          {% for cta in include.data.ctas %}
+            <a
+              class="btn btn-primary mt-6 px-4 px-lg-5 py-3 mr-2 {{ cta.extra-classes }}"
+              href="{{ cta.href }}"
+              id="get-started-btn-home"
+              title="Metabase - {{ cta.text }}">
+              {{ cta.text }}
+            </a>
+          {% endfor %}
+        </div>
+      {% endif %}
+  </div>
+
+  <div{% if video.provider == "youtube" %} class="youtube-wrapper" {% endif %}>
+    {% if include.data.image %}
+      <img alt="Metabase - {{ include.data.title }}" src="{{ include.data.image.src }}" loading="lazy" />
+    {% endif %}
+
+    {% if video %}
+      {% if video.provider == "youtube" %}
+          <iframe
+            id="{{ video.id }}"
+            src="{{ video.src }}"
+            title="{{ video.title | default: 'Video demo' }}"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen
+          ></iframe>
+      {% else %}
+        <video
+          class="vjs-player pause-observer lazy"
+          id="{{ video.id }}"
+          poster="{{ video.poster }}">
+          <source src="{{ video.src }}" type="video/mp4" />
+          <p class="vjs-no-js">
+            To view this video please enable JavaScript, and consider upgrading to a
+            web browser that
+            <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+          </p>
+        </video>
+      {% endif %}
+    {% endif %}
+  </div>
+</div>

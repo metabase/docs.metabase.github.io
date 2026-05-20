@@ -1,0 +1,108 @@
+.in-page-promo {
+  align-items: flex-start;
+  background-color: #eef6fc;
+  border-radius: 12px;
+  color: $neutral-40;
+  display: flex;
+  gap: 30px;
+  margin: 0 0 24px;
+  min-height: 100px;
+  padding: 22px 24px 24px;
+  position: relative;
+  text-align: left;
+  transition: background-color 0.3s ease !important;
+
+  &:hover {
+    background-color: $blue-90;
+
+    img {
+      rotate: 0deg;
+    }
+
+    .anchor-like {
+      color: $blue-40;
+    }
+  }
+
+  @include media-breakpoint-down(lg) {
+    align-items: center;
+    gap: 14px;
+    min-height: 100px;
+    padding: 14px;
+  }
+
+  div {
+    @include media-breakpoint-down(lg) {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+  }
+
+  img {
+    border-radius: 12px;
+    height: 124px;
+    margin: 0 0 -80px !important;
+    position: relative;
+    rotate: -10deg;
+    top: -31px;
+    transition: rotate 0.3s ease;
+    width: auto;
+
+    @include media-breakpoint-down(lg) {
+      height: 72px;
+      left: 0;
+      margin: 0 !important;
+      rotate: 0deg;
+      top: 0;
+    }
+  }
+
+  p {
+    color: $neutral-40;
+    font-size: 16px !important;
+    font-weight: 400;
+    line-height: 24px !important;
+    margin-bottom: 8px !important;
+    padding: 0 !important;
+    text-align: left !important;
+
+    &:last-child {
+      margin-bottom: 0 !important;
+    }
+
+    @include media-breakpoint-down(lg) {
+      font-size: 14px !important;
+      line-height: 22px !important;
+    }
+
+    &.anchor-like {
+      color: $blue-60;
+      font-weight: 700 !important;
+      transition: color 0.3s ease;
+    }
+
+    svg {
+      display: inline;
+      height: 12px;
+      margin-left: -4px;
+      position: relative;
+      rotate: -90deg;
+      top: -6px;
+
+      @include media-breakpoint-down(lg) {
+        height: 10px;
+        margin-left: -8px;
+        top: -5px;
+      }
+    }
+  }
+}
+
+p + div:has(> .in-page-promo) {
+  margin-top: 48px;
+}
+
+div:has(> .in-page-promo) + p {
+  margin-top: 54px;
+}

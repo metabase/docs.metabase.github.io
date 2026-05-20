@@ -1,0 +1,18 @@
+<section class="m-0 mb-15 mb-lg-20 p-0 center-xs">
+  <h2 class="fs-8 fw-bold mb-4 mb-lg-6 mx-auto">{{ include.data.title }}</h2>
+  <p class="mw--sm mx-auto my-0 neutral-40">{{ include.data.description }}</p>
+
+  <div class="align-stretch cards d-flex flex-column flex-md-row flex-wrap gap-6 gap-lg-8 justify-content-center mt-8 mt-lg-13 cards">
+    {% for item in include.data.items %}
+      <div class="bg-white border--blue-95 box-shadow-xs mx-0 mt-0 p-4 p-lg-6 rounded-4 text-left w-100 cards__card">
+        <img
+          alt="Worry-free upgrades, backups, and more - Upgrades"
+          class="mb-4 mb-lg-6 cards__card__icon"
+          src="{{ item.icon }}"
+          title="Metabase - {{ item.title }}" loading="lazy"/>
+        <h3 class="fs-12 fw-bold m-0 mb-2 mb-lg-4 neutral-40">{{ item.title }}</h3>
+        <p class="fs-12 lh-base m-0 neutral-60">{{ item.description }}</p>
+      </div>
+    {% endfor %}
+  </div>
+</section>

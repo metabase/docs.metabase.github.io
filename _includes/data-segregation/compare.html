@@ -1,0 +1,279 @@
+<div class="compare container">
+  <h3>Compare</h3>
+
+  <div class="desktop">
+    <div></div>
+    <div><p><b>What does it mean</b></p></div>
+    <div><p><b>When to use it</b></p></div>
+    <div><p><b>Example use case</b></p></div>
+    <div><p><b>Tradeoffs / when it's not a fit</b></p></div>
+
+    <div id="row-level-security">
+      {% include svg-icons/sandbox.html %}
+      <div>
+        <p><b>Row-level security</b></p>
+        <p>Set in the Metabase UI</p>
+      </div>
+    </div>
+    <div>
+      <p>Define rules inside Metabase that restrict which rows and columns users can see. Based on attributes like user ID, group, region, etc. Applied to questions and dashboards, not native SQL.</p>
+    </div>
+    <div>
+      <ul class="checkmarks">
+        <li>You need granular control over what data each person can see and use</li>
+        <li>You want UI-driven control over access</li>
+        <li>You need flexible control per group/org</li>
+      </ul>
+    </div>
+    <div>
+      <p>For internal business intelligence: West coast fleet managers in a nationwide logistics firm can only see data relating West Coast fleet and delivery data.</p>
+    </div>
+    <div>
+      <ul class="not-a-fit">
+        <li>Doesn't apply to native / SQL queries</li>
+        <li>You're using a non-SQL DB, like Druid (although Metabase does support basic RLS with MongoDB)</li>
+      </ul>
+    </div>
+
+    <div id="connection-impersonation">
+      <div>
+        {% include svg-icons/enter.html %}
+      </div>
+      <div>
+        <p><b>Connection impersonation</b></p>
+        <p>DB-enforced RLS</p>
+      </div>
+    </div>
+    <div>
+      <p>Metabase connects as the actual user (or role) in the DB. You define RLS policies, roles, and access controls in the database itself. Metabase just passes through the user identity (e.g. via <b>SET ROLE</b> or proxy users).</p>
+    </div>
+    <div>
+      <ul class="checkmarks">
+        <li>You want to centralize access logic in the DB</li>
+        <li>Native queries must respect access control</li>
+        <li>You have higher concerns about misconfiguration of user attributes</li>
+        <li>DBAs manage security centrally</li>
+      </ul>
+    </div>
+    <div>
+      <p>Set role-based permissions for users of your HR SaaS app so managers can only see data for their direct reports.</p>
+    </div>
+    <div>
+      <ul class="not-a-fit">
+        <li>Not all DBs support it</li>
+        <li>Adds complexity (user management, setup)</li>
+        <li>Doesn't cache well in Metabase</li>
+        <li>Less friendly for smaller teams or non-DBAs</li>
+      </ul>
+    </div>
+
+    <div id="database-routing">
+      <div>
+        {% include svg-icons/arrow-up-then-right.html %}
+      </div>
+      <div>
+        <p><b>Database routing</b></p>
+        <p>For one-DB-per-tenant setups</p>
+      </div>
+    </div>
+    <div>
+      <p>When you store tenant data in separate databases, DB routing ensures that each tenant can only see results from their corresponding database. Admins can build dashboards and questions in a primary db then route the queries to the right DB based on user attributes.</p>
+    </div>
+    <div>
+      <ul class="checkmarks">
+        <li>You want the strongest isolation. Ideal for compliance or noisy neighbors, especially in multi-tenant embedded analytics contexts</li>
+        <li>You have higher concerns about misconfiguration of user attributes</li>
+        <li>Avoids cross-tenant performance impact</li>
+      </ul>
+    </div>
+    <div>
+      <p>Acme's queries go to Acme's database when they run a query through an embedded dashboard in a SaaS app and backend data is separated at the DB level.</p>
+    </div>
+    <div>
+      <ul class="not-a-fit">
+        <li>Not necessary if you don't need to separate tenant data at the DB-level</li>
+        <li>Higher operational complexity - you'd prefer to manage permissions in the Metabase UI</li>
+      </ul>
+    </div>
+
+    <div id="locked-parameters">
+      <div>
+        {% include svg-icons/params-horizontal.html %}
+      </div>
+      <div>
+        <p><b>Locked parameters</b></p>
+      </div>
+    </div>
+    <div>
+      <p>Embed dashboards with filtered results before they're displayed (e.g. org_id = 123). These filters are invisible and tamper-proof. Controlled via attributes from your host app, like username or tenant_ID.</p>
+    </div>
+    <div>
+      <ul class="checkmarks">
+        <li>Lightweight tenant isolation for embedded analytics</li>
+        <li>Simple but safe access control</li>
+        <li>Avoids exposing sensitive filters to end users</li>
+      </ul>
+    </div>
+    <div>
+      <p>On embedded dashboards in your ecommerce app, show sales per seller using hidden seller ID passed by your host app.</p>
+    </div>
+    <div>
+      <ul class="not-a-fit">
+        <li>No user login, SSO, or role awareness</li>
+        <li>Not recommended for high-risk data</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="mobile">
+    <div class="compare-card" id="row-level-security">
+      <div class="header">
+        {% include svg-icons/sandbox.html %}
+        <div>
+          <p><b>Row-level security</b></p>
+          <p>Set in the Metabase UI</p>
+        </div>
+      </div>
+
+      <div class="section">
+        <p class="title"><b>What does it mean</b></p>
+        <p>Define rules inside Metabase that restrict which rows and columns users can see. Based on attributes like user ID, group, region, etc. Applied to questions and dashboards, not native SQL.</p>
+      </div>
+
+      <div class="section">
+        <p class="title"><b>When to use it</b></p>
+        <ul class="checkmarks">
+          <li>You need granular control over what data each person can see and use</li>
+          <li>You want UI-driven control over access</li>
+          <li>You need flexible control per group/org</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <p class="title"><b>Example use case</b></p>
+        <p>For internal business intelligence: West coast fleet managers in a nationwide logistics firm can only see data relating West Coast fleet and delivery data.</p>
+      </div>
+
+      <div class="section">
+        <p class="title"><b>Tradeoffs / when it's not a fit</b></p>
+        <ul class="not-a-fit">
+          <li>Doesn't apply to native / SQL queries</li>
+          <li>You're using a non-SQL DB, like Druid (although Metabase does support basic RLS with MongoDB)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="compare-card" id="connection-impersonation">
+      <div class="header">
+        {% include svg-icons/enter.html %}
+        <div>
+          <p><b>Connection impersonation</b></p>
+          <p>DB-enforced RLS</p>
+        </div>
+      </div>
+
+      <div class="section">
+        <p class="title"><b>What does it mean</b></p>
+        <p>Metabase connects as the actual user (or role) in the DB. You define RLS policies, roles, and access controls in the database itself. Metabase just passes through the user identity (e.g. via <b>SET ROLE</b> or proxy users).</p>
+      </div>
+
+      <div class="section">
+        <p class="title"><b>When to use it</b></p>
+        <ul class="checkmarks">
+          <li>You want to centralize access logic in the DB</li>
+          <li>Native queries must respect access control</li>
+          <li>You have higher concerns about misconfiguration of user attributes</li>
+          <li>DBAs manage security centrally</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <p class="title"><b>Example use case</b></p>
+        <p>Set role-based permissions for users of your HR SaaS app so managers can only see data for their direct reports.</p>
+      </div>
+
+      <div class="section">
+        <p class="title"><b>Tradeoffs / when it's not a fit</b></p>
+        <ul class="not-a-fit">
+          <li>Not all DBs support it</li>
+          <li>Adds complexity (user management, setup)</li>
+          <li>Doesn't cache well in Metabase</li>
+          <li>Less friendly for smaller teams or non-DBAs</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="compare-card" id="database-routing">
+      <div class="header">
+        {% include svg-icons/arrow-up-then-right.html %}
+        <div>
+          <p><b>Database routing</b></p>
+          <p>For one-DB-per-tenant setups</p>
+        </div>
+      </div>
+
+      <div class="section">
+        <p class="title"><b>What does it mean</b></p>
+        <p>When you store tenant data in separate databases, DB routing ensures that each tenant can only see results from their corresponding database. Admins can build dashboards and questions in a primary db then route the queries to the right DB based on user attributes.</p>
+      </div>
+
+      <div class="section">
+        <p class="title"><b>When to use it</b></p>
+        <ul class="checkmarks">
+          <li>You want the strongest isolation. Ideal for compliance or noisy neighbors, especially in multi-tenant embedded analytics contexts</li>
+          <li>You have higher concerns about misconfiguration of user attributes</li>
+          <li>Avoids cross-tenant performance impact</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <p class="title"><b>Example use case</b></p>
+        <p>Acme's queries go to Acme's database when they run a query through an embedded dashboard in a SaaS app and backend data is separated at the DB level.</p>
+      </div>
+
+      <div class="section">
+        <p class="title"><b>Tradeoffs / when it's not a fit</b></p>
+        <ul class="not-a-fit">
+          <li>Not necessary if you don't need to separate tenant data at the DB-level</li>
+          <li>Higher operational complexity - you'd prefer to manage permissions in the Metabase UI</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="compare-card" id="locked-parameters">
+      <div class="header">
+        {% include svg-icons/params-horizontal.html %}
+        <div>
+          <p><b>Locked parameters</b></p>
+        </div>
+      </div>
+
+      <div class="section">
+        <p class="title"><b>What does it mean</b></p>
+        <p>Embed dashboards with filtered results before they're displayed (e.g. org_id = 123). These filters are invisible and tamper-proof. Controlled via attributes from your host app, like username or tenant_ID.</p>
+      </div>
+
+      <div class="section">
+        <p class="title"><b>When to use it</b></p>
+        <ul class="checkmarks">
+          <li>Lightweight tenant isolation for embedded analytics</li>
+          <li>Simple but safe access control</li>
+          <li>Avoids exposing sensitive filters to end users</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <p class="title"><b>Example use case</b></p>
+        <p>On embedded dashboards in your ecommerce app, show sales per seller using hidden seller ID passed by your host app.</p>
+      </div>
+
+      <div class="section">
+        <p class="title"><b>Tradeoffs / when it's not a fit</b></p>
+        <ul class="not-a-fit">
+          <li>No user login, SSO, or role awareness</li>
+          <li>Not recommended for high-risk data</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,144 @@
+$dsr-2025-yellow: #feef98;
+
+.data-stack-report-2025 {
+  .hero {
+    background-image: url("/images/data-stack-report-2025/data-stack-report-20205-hero-background.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    > div.container {
+      padding: 124px 20px;
+    }
+
+    button {
+      background-color: white;
+      border: none;
+      font-family: "Geist Mono", monospace;
+      font-size: 18px;
+      font-style: medium;
+      font-weight: 500;
+      leading-trim: none;
+      letter-spacing: 10%;
+      line-height: 18px;
+      padding: 16px;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background-color: black;
+        color: white;
+      }
+    }
+
+    h1 {
+      color: black;
+      font-family: "Geist Mono", monospace;
+      font-size: 72px;
+      font-style: regular;
+      font-weight: 400;
+      leading-trim: none;
+      letter-spacing: -4%;
+      line-height: 1.14;
+      margin-bottom: 40px;
+      margin-left: -4px;
+
+      @include media-breakpoint-down(lg) {
+        font-size: 48px;
+      }
+    }
+
+    h2 {
+      color: black;
+      font-family: "Geist Mono", monospace;
+      font-size: 18px;
+      font-style: medium;
+      font-weight: 500;
+      leading-trim: none;
+      letter-spacing: 10%;
+      line-height: 18px;
+      text-transform: uppercase;
+    }
+  }
+
+  .dashboard-container {
+    display: flex;
+    justify-content: center;
+    padding: 40px 0;
+
+    iframe {
+      height: 3700px;
+      width: 100%;
+
+      @include media-breakpoint-down(xxl) {
+        height: 3240px;
+      }
+
+      @include media-breakpoint-down(lg) {
+        height: 5520px;
+      }
+
+      @include media-breakpoint-down(sm) {
+        height: 8520px;
+        width: calc(100% - 40px);
+      }
+    }
+  }
+
+  .social-buttons {
+    align-items: center;
+    background-color: $dsr-2025-yellow;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 110px 0 120px;
+
+    h3 {
+      color: black;
+      font-family: "Geist Mono", monospace;
+      font-size: 18px;
+      font-style: medium;
+      font-weight: 500;
+      leading-trim: none;
+      letter-spacing: 10%;
+      line-height: 18px;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    div {
+      display: flex;
+      gap: 24px;
+
+      a {
+        align-items: center;
+        background-color: white;
+        display: flex;
+        height: 64px;
+        justify-content: center;
+        transition: all 0.3s ease;
+        width: 64px;
+
+        &:hover {
+          background-color: black;
+          color: white;
+
+          svg path {
+            fill: white;
+          }
+        }
+
+        &.linkedin {
+          svg {
+            zoom: 1.2;
+          }
+        }
+
+        &.copy-to-clipboard {
+          svg {
+            zoom: 1.1;
+          }
+        }
+      }
+    }
+  }
+}

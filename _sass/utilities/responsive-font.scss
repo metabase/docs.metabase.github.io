@@ -1,0 +1,41 @@
+@mixin set-font($values, $max-width: false) {
+  // font size
+  $font-size: nth($values, 1);
+
+  font-size: $font-size;
+
+  // remaining properties
+  @if length($values) >= 2 {
+    @for $i from 2 through length($values) {
+      // line height
+      @if $i == 2 {
+        $line-height: nth($values, $i);
+
+        @if $line-height {
+          line-height: $line-height;
+        }
+      }
+    }
+  }
+
+  // max width
+  @if $max-width != false {
+    max-width: ($max-width * $font-size);
+  }
+}
+
+@mixin responsive-font($map, $max-width: false) {
+  @each $key, $value in $map {
+    // default
+    @if $key == null {
+      @include set-font($value, $max-width);
+    }
+
+    // responsive
+    @else {
+      @include media-breakpoint-up(#{$key}) {
+        @include set-font($value, $max-width);
+      }
+    }
+  }
+}

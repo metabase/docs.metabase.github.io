@@ -1,0 +1,162 @@
+{% assign dashboard_description = "Dashboard Examples. Find examples of dashboards, including valuable metrics, and how you can leverage Metabase." %}
+{% assign dashboards_title = "Dashboard for " | append: page.title | append: " | Metabase" %}
+{% assign dashboards_description = "Dashboard for " | append: page.title | append: ". Find examples of dashboards for " | append: page.title | append: ", including valuable metrics, and how you can leverage Metabase." %}
+
+{% if page.title %}
+  {% if page.url contains "/dashboards/" %}
+    {% if page.url == "/dashboards/index" %}
+      <title>{{ page.title }}</title>
+    {% else %}
+      {% if page.url contains "/docs/" %}
+        <title>{{ page.title }}</title>
+      {% else %}
+        <title>{{ dashboards_title }}</title>
+      {% endif %}
+    {% endif %}
+  {% else %}
+    <title>{{ page.title }}</title>
+  {% endif %}
+{% else %}
+  {% if page.url contains "/product/" %}
+    {% if page.url contains "/product/business-intelligence" %}
+      <title>Self Service Business Intelligence | Metabase</title>
+    {% elsif page.url contains "/product/interactive-dashboards" %}
+      <title>Interactive Dashboards | Metabase</title>
+    {% elsif page.url contains "/product/embedded-analytics" %}
+      <title>Embedded Analytics | Metabase</title>
+    {% elsif page.url contains "/product/starter" %}
+      <title>Small Business Analytics Tools | Metabase</title>
+    {% elsif page.url contains "/product/pro" %}
+      <title>Business Analytics Tools | Metabase</title>
+    {% elsif page.url contains "/product/enterprise" %}
+      <title>Enterprise Analytics and Business Intelligence Tools | Metabase</title>
+    {% else %}
+      <title>Metabase Dashboards & No-Code Query Builder</title>
+    {% endif %}
+  {% else %}
+    <title>Metabase | Open source Business Intelligence and Embedded Analytics</title>
+  {% endif %}
+{% endif %}
+
+<!-- Twitter cards -->
+<meta name="twitter:site" content="@{{ site.twitter_username }}" />
+{% if page.author %}
+  <meta name="twitter:creator" content="{{ page.author }}" />
+  {% endif %}
+
+{% if page.title %}
+  {% if page.url contains '/dashboards/' %}
+    {% if page.url == "/dashboards/index" %}
+      <meta name="twitter:title" content="{{ page.title }}" />
+    {% else %}
+      {% if page.url contains "/docs/" %}
+        <meta name="twitter:title" content="{{ page.title }}" />
+      {% else %}
+        <meta name="twitter:title" content="{{ dashboards_title }}" />
+      {% endif %}
+     {% endif %}
+  {% else %}
+      <meta name="twitter:title" content="{{ page.title }}" />
+   {% endif %}
+  {% else %}
+    <meta name="twitter:title" content="Metabase | Open source Business Intelligence and Embedded Analytics" />
+{% endif %}
+
+
+{% if page.summary %}
+  <meta name="twitter:description" content="{{ page.summary }}" />
+{% elsif page.url contains "/community-posts" %}
+  <meta name="twitter:description" content="{{ page.meta_description }}" />
+{% elsif page.url contains "/dashboards/" %}
+  {% if page.url == "/dashboards/" %}
+    <meta name="twitter:description" content="{{ dashboard_description }}" />
+  {% else %}
+    <meta name="twitter:description" content="{{ dashboards_description }}" />
+  {% endif %}
+{% else %}
+{% if page.url contains "/product" %}
+    {% if page.url contains "/product/business-intelligence" %}
+      <meta name="twitter:description" content="Self service business intelligence. Empower your team to leverage business analytics and dashboards using Metabase." />
+    {% elsif page.url contains "/product/interactive-dashboards" %}
+      <meta name="twitter:description" content="Interactive Dashboards. Quickly connect your business systems and build interactive dashboards in under 5 minutes." />
+    {% elsif page.url contains "/product/embedded-analytics" %}
+      <meta name="twitter:description" content="Embedded Analytics. Create and embed interactive analytics in your products, with simple but powerful tools to let you match the look and feel of your brand." />
+    {% elsif page.url contains "/product/starter" %}
+      <meta name="twitter:description" content="Small business analytics tools. Leverage powerful business analytics tools that empower small teams with actionable insights." />
+    {% elsif page.url contains "/product/pro" %}
+      <meta name="twitter:description" content="Business analytics tools. Metabase provides best-in-class business analytics tools that let you leverage business intelligence, interactive dashboards, and visualize data." />
+    {% elsif page.url contains "/product/enterprise" %}
+      <meta name="twitter:description" content="Enterprise analytics and business intelligence tools. Metabase provides best-in-class business analytics and intelligence tools that helps drive data-based decisions at scale." />
+    {% else %}
+    <meta name="twitter:description" content="Metabase dashboards and no-code query builder to understand your company data. Start exploring your data with dashboards and visualizations in under 5 minutes." />
+{% endif %}
+  {% elsif page.url contains "/data-sources/" %}
+    <meta name="twitter:description" content="Metabase Data Sources. Quickly connect, leverage data visualizations, and build dashboards using your company's software tools." />
+  {% else %}
+    <meta name="twitter:description" content="Metabase open source business intelligence and embedded analytics. Create and share dashboards. Dig deeper into your data with no-code tools for data visualization." />
+  {% endif %}
+{% endif %}
+{% if page.image %}
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="{{ site.url }}{{ page.image }}" />
+{% else %}
+<meta name="twitter:card"  content="summary" />
+<meta name="twitter:image" content="https://www.metabase.com/images/twitter/default-share.png" />
+{% endif %}
+<!-- end of Twitter cards -->
+
+<!-- Open Graph metadata -->
+<meta property="og:site_name" content="Metabase | Open source Business Intelligence and Embedded Analytics" />
+<meta property="og:type" content="article" />
+
+{% if page.title %}
+  {% if page.url contains '/dashboards/' %}
+    {% if page.url == "/dashboards/" %}
+      <meta name="title" property="og:title" content="{{ dashboard_title }}" />
+    {% else %}
+      <meta name="title" property="og:title" content="{{ dashboards_title }}" />
+    {% endif %}
+  {% else %}
+    <meta name="title" property="og:title" content="{{ page.title }}" />
+  {% endif %}
+{% else %}
+  <meta name="title" property="og:title" content="Metabase | Open source Business Intelligence and Embedded Analytics" />
+{% endif %}
+<meta property="og:url" content="{{ page.url | replace:'index.html','' | replace:'/index','' | prepend: site.url }}" />
+
+{% if page.summary %}
+  <meta name="description" property="og:description" content="{{ page.summary }}" />
+{% elsif page.url contains "/community-posts" %}
+  <meta name="description" property="og:description" content="{{ page.meta_description }}" />
+{% elsif page.url contains "/product/" %}
+  {% if page.url contains "/product/business-intelligence" %}
+    <meta name="description" property="og:description" content="Self service business intelligence. Empower your team to leverage business analytics and dashboards using Metabase." />
+  {% elsif page.url contains "/product/interactive-dashboards" %}
+    <meta name="description" property="og:description" content="Interactive Dashboards. Quickly connect your business systems and build interactive dashboards in under 5 minutes." />
+  {% elsif page.url contains "/product/embedded-analytics" %}
+    <meta name="description" property="og:description" content="Embedded Analytics. Create and embed interactive analytics in your products, with simple but powerful tools to let you match the look and feel of your brand." />
+  {% elsif page.url contains "/product/starter" %}
+    <meta name="description" property="og:description" content="Small business analytics tools. Leverage powerful business analytics tools that empower small teams with actionable insights." />
+  {% elsif page.url contains "/product/pro" %}
+    <meta name="description" property="og:description" content="Business analytics tools. Metabase provides best-in-class business analytics tools that let you leverage business intelligence, interactive dashboards, and visualize data." />
+  {% elsif page.url contains "/product/enterprise" %}
+    <meta name="description" property="og:description" content="Enterprise analytics and business intelligence tools. Metabase provides best-in-class business analytics and intelligence tools that helps drive data-based decisions at scale." />
+  {% else %}
+    <meta name="description" property="og:description" content="Metabase dashboards and no-code query builder to understand your company data. Start exploring your data with dashboards and visualizations in under 5 minutes." />
+  {% endif %}
+{% elsif page.url contains "/data-sources/" %}
+  <meta name="description" property="og:description" content="Metabase Data Sources. Quickly connect, leverage data visualizations, and build dashboards using your company's software tools." />
+{% elsif page.url contains "/dashboards/" %}
+  {% if page.title == "Dashboards" %}
+    <meta name="description" property="og:description" content="{{ dashboard_description }}" />
+  {% else %}
+    <meta name="description" property="og:description" content="{{ dashboards_description }}" />
+{% endif %}
+{% else %}
+  <meta name="description" property="og:description" content="{{ site.description }}" />
+{% endif %}
+
+{% if page.image %}
+<meta name="image" property="og:image" content="{{ site.url }}{{ page.image }}" />
+{% endif %}
+<!-- end of Open Graph metadata -->

@@ -1,0 +1,189 @@
+@import "pages/product/data-studio/hero";
+
+.data-studio-page {
+  // Subtle polka dots
+  background-image:
+    radial-gradient(
+      circle,
+      $blue-90 1px,
+      transparent 1px
+    );
+  background-size: 20px 20px;
+
+  .mobile {
+    display: none !important;
+
+    @include media-breakpoint-down(md) {
+      display: inline !important;
+    }
+  }
+
+  .desktop {
+    display: none !important;
+
+    @include media-breakpoint-up(md) {
+      display: inline !important;
+    }
+  }
+
+  section {
+    margin: 0 auto;
+    max-width: calc(100% - 32px);
+    text-align: center;
+
+    & + section {
+      > h3:first-child {
+        margin-top: 128px;
+
+        @include media-breakpoint-down(lg) {
+          margin-top: 48px;
+        }
+      }
+    }
+
+    h3 {
+      font-size: 30px;
+      font-weight: 700;
+      line-height: 36px;
+      margin: 0 auto 18px;
+      max-width: 800px;
+
+      span.icon-container {
+        @include shadow-xl;
+
+        align-items: center;
+        background-color: $blue-95;
+        border: 1px solid $blue-85;
+        border-radius: 12px;
+        color: $blue-60;
+        display: inline-flex;
+        height: 48px;
+        justify-content: center;
+        margin: 0 6px;
+        position: relative;
+        rotate: -15deg;
+        top: 4px;
+        width: 48px;
+
+        img {
+          height: 32px;
+          width: 32px;
+        }
+      }
+
+      @include media-breakpoint-down(lg) {
+        font-size: 24px;
+        line-height: 32px;
+
+        span.icon-container {
+          border-radius: 8px;
+          height: 36px;
+          width: 36px;
+
+          img {
+            height: 24px;
+            width: 24px;
+          }
+        }
+      }
+    }
+
+    > p {
+      color: $neutral-40;
+      font-size: 24px;
+      font-weight: 400;
+      line-height: 32px;
+      margin: 0 auto 64px;
+      max-width: 800px;
+
+      @include media-breakpoint-down(lg) {
+        font-size: 20px;
+        line-height: 28px;
+        margin-bottom: 32px;
+      }
+    }
+
+    .two-cards {
+      gap: 32px;
+      margin: 0 auto;
+      max-width: 800px;
+
+      .card {
+        h4 {
+          color: $neutral-15;
+          font-size: 20px;
+          line-height: 28px;
+          margin-bottom: 12px;
+        }
+
+        p {
+          color: $neutral-40;
+
+          @include media-breakpoint-down(lg) {
+            font-size: 14px;
+            line-height: 22px;
+          }
+        }
+      }
+    }
+  }
+
+  .off-white-bg {
+    background-color: $neutral-98;
+    border-bottom: 1px solid $blue-90;
+    border-top: 1px solid $blue-90;
+    margin-top: 128px;
+
+    @include media-breakpoint-down(lg) {
+      margin-top: 32px;
+    }
+  }
+
+  .padded {
+    @include shadow-xl;
+
+    max-width: 1014px;
+
+    @include media-breakpoint-down(lg) {
+      width: 100%;
+    }
+  }
+
+  .padded + h3 {
+    margin-top: 80px;
+  }
+
+  .faq-container {
+    margin: 160px auto;
+
+    @include media-breakpoint-down(lg) {
+      margin: 48px auto 96px;
+    }
+  }
+
+  .faq-headline {
+    font-size: 36px;
+    margin-bottom: 42px;
+
+    @include media-breakpoint-down(lg) {
+      font-size: 30px;
+    }
+  }
+
+  .try-metabase-footer {
+    background-color: white;
+    margin-top: 0;
+
+    @include media-breakpoint-down(lg) {
+      padding: 65px;
+    }
+
+    a {
+      padding: 12px 20px;
+    }
+
+    p {
+      text-align: center;
+    }
+  }
+}
