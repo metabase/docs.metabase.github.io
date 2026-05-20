@@ -355,7 +355,7 @@ def concatenate_documents(section_docs, source_dir)
   section_docs.map do |doc|
     # Read the source file
     source_file = File.join(source_dir, doc.relative_path)
-    content = File.read(source_file)
+    content = File.read(source_file, encoding: 'UTF-8')
 
     # Strip YAML frontmatter
     content = content.sub(/\A---\s*\n.*?\n---\s*\n/m, '')
