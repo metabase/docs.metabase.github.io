@@ -1,0 +1,13 @@
+<form action="/search" method="get" class="Search mt2 block">
+  <input type="text" id="docs-search-box" name="query" placeholder="Search the docs" class="Search-Input input" required>
+  <input type="submit" value="search" class="Search-Button">
+</form>
+{% comment %}
+Only focus on search bar on landing page.
+Expand pages with focused search bar by adding to array in _config.yml.
+{% endcomment %}
+{% if site.search_autofocus contains page.title %}
+<script type="text/javascript">
+    document.getElementById("docs-search-box").focus();
+</script>
+{% endif %}
