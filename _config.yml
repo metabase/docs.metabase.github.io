@@ -11,19 +11,13 @@ default_social_image: /images/twitter/default.png
 redcarpet:
   extensions:
     [no_intra_emphasis, fenced_code_blocks, autolink, tables, with_toc_data]
-plugins:
-  - jekyll-redirect-from
+plugins: []
 whitelist:
-  - jekyll-redirect-from
   - jekyll_include_plugin
   - jekyll_dirname_payload_plugin
   - jekyll_responsive_table_labels_plugin
 jekyll_include_plugin:
   snippet_prefix: ""
-sass:
-  sass_dir: _sass
-  style: compressed
-permalink: "/blog/:title"
 webrick:
   headers:
     { X-Frame-Options: deny, Content-Security-Policy: "frame-ancestors 'none'" }
@@ -80,7 +74,6 @@ available_versions:
   - v0.61
 collections:
   docs: { output: true }
-  community-posts: { output: true }
 defaults:
   - {
       scope: { type: docs },
@@ -93,25 +86,10 @@ docs_version: v0.61
 release_branch: release-x.61.x
 exclude:
   - "_docs/**/embedding/sdk/api/snippets/**"
-  - svg-icon-list.html
   - Gemfile
   - Gemfile.lock
-  - Gruntfile.js
-  - webpack.config.js
   - node_modules
-  - bower_components
-  - .idea
-  - .sass-cache
-  - package.json
-  - package-lock.json
-  - yarn.lock
-  - s3_website.template.yml
-  - src
-  - script
-  - lib
-  - spec
   - vendor
-  - typescript
   - "**/*.map"
   - "**/*.LICENSE.txt"
 per_incident_support: 350
