@@ -4,13 +4,13 @@ has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
 category: Ai
-title: 'AI in Metabase'
+title: 'AI in Metabase overview'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/ai/overview.md'
 layout: new-docs
 summary: 'Overview of all the ways you can use AI with Metabase.'
 ---
 
-# AI in Metabase
+# AI in Metabase overview
 
 AI in Metabase is optional. You can use Metabase without AI at all. But if you do want to use AI to interact with Metabase, we have you covered.
 
