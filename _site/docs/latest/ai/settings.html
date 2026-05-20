@@ -243,8 +243,8 @@ window.redirectTo = function redirectTo(theLocation) {
         <div class="promo-banner hidden">
   <div>
     <span class="button">New</span>
-    <span>Metabase 60: AI goes open source, Metabase MCP server, Metabot in Slack, split panel charts, metrics explorer, and more.</span>
-    <a href="/releases/metabase-60 ">
+    <span>Metabase 61: AI governance - access controls, token limits, Metabot customization, build dashboards with MCP, and more.</span>
+    <a href="/releases/metabase-61 ">
       Read the announcement<img alt="Chevron Blue Right" src="/images/chevron_blue_right.svg">
     </a>
   </div>
@@ -1748,29 +1748,6 @@ Roadmap</a>
 <div class="bootstrap">
   <div class="learn docs blog-post MB-Page">
     <div class="learn-left-sidebar" id="main-navigation-content">
-  <div class="hoverable-toggler">
-  <div class="hover-highlight"></div>
-  <a href="/docs/latest/" class="active">
-    <span><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M19.25 5.75C19.25 5.19772 18.8023 4.75 18.25 4.75H14C12.8954 4.75 12 5.64543 12 6.75V19.25L12.8284 18.4216C13.5786 17.6714 14.596 17.25 15.6569 17.25H18.25C18.8023 17.25 19.25 16.8023 19.25 16.25V5.75Z" stroke="#8D93A5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-<path d="M4.75 5.75C4.75 5.19772 5.19772 4.75 5.75 4.75H10C11.1046 4.75 12 5.64543 12 6.75V19.25L11.1716 18.4216C10.4214 17.6714 9.40401 17.25 8.34315 17.25H5.75C5.19772 17.25 4.75 16.8023 4.75 16.25V5.75Z" stroke="#8D93A5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-</svg>
- Docs</span>
-  </a>
-
-  
-  <a href="/learn/">
-    <span><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M12 14.0929L20 9.42144L12 4.75L4 9.42144L12 14.0929ZM12 14.0929L17.4756 10.8957C18.196 12.8186 18.4005 14.4134 18.0667 16.45C15.8121 16.68 13.6864 17.6604 12 19.25C10.3138 17.6606 8.18852 16.6802 5.93422 16.45C5.60018 14.4134 5.80465 12.8185 6.52533 10.8957L12 14.0929Z" stroke="#509EE3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-<path d="M12.5 9.5C12.5 9.7761 12.2761 10 12 10C11.7239 10 11.5 9.7761 11.5 9.5C11.5 9.2239 11.7239 9 12 9C12.2761 9 12.5 9.2239 12.5 9.5Z" stroke="#509EE3" stroke-linecap="round" stroke-linejoin="round"></path>
-</svg>
- Learn</span>
-  </a>
-</div>
-
-<script src="/js/components/hoverable-toggler.js"></script>
-
-
   
 
   
@@ -6089,10 +6066,6 @@ Roadmap</a>
 
         <h1 id="ai-settings">AI settings</h1>
 
-<blockquote>
-  <p>AI features are available on <a href="/features/metabot-ai">Metabase Cloud</a> and on self-hosted Metabase, using either the Metabase AI service or your own AI provider API key.</p>
-</blockquote>
-
 <p><em>Admin &gt; AI</em></p>
 
 <p>This page covers admin settings for AI features in Metabase, including <a href="./metabot">Metabot</a>. To limit <em>who</em> can use Metabot, see <a href="./usage-controls">AI controls</a>.</p>
@@ -6105,7 +6078,7 @@ Roadmap</a>
   <li>Go to <strong>Admin settings &gt; AI</strong>.</li>
   <li>In <strong>Connect to an AI provider</strong>, choose a <strong>Provider</strong>:
     <ul>
-      <li><strong>Metabase</strong>: The Metabase AI service. Metabase picks a benchmarked, cost-effective model for you, and billing is managed through your Metabase account. Agree to the <strong>Metabase AI add-on Terms of Service</strong> and click <strong>Connect</strong>.</li>
+      <li><strong>Metabase</strong>: The Metabase AI service. Metabase picks a benchmarked, cost-effective model for you, and charges you on token usage. See <a href="#choose-ai-provider">Choose AI provider</a></li>
       <li>Another supported provider. See <a href="#bring-your-own-api-key">bring your own API key</a>.</li>
     </ul>
   </li>
@@ -6116,9 +6089,52 @@ Roadmap</a>
   <p>The Metabase AI add-on only appears in your Metabase Store account after you’ve connected to the Metabase AI service in <strong>Admin settings &gt; AI</strong>. If you’re on a Pro trial and don’t see the add-on in <strong>Manage plan</strong>, connect it from Admin first; the Store will reflect it after.</p>
 </blockquote>
 
-<h2 id="bring-your-own-api-key">Bring your own API key</h2>
+<h2 id="choose-ai-provider">Choose AI provider</h2>
 
 <p><em>Admin &gt; AI</em></p>
+
+<p>You can choose which AI provider and model is used to power Metabase’s built-in agent.</p>
+
+<ul>
+  <li>If you’re <strong>self-hosting Metabase</strong> and want to use Metabot, you need to <a href="#bring-your-own-api-key">bring your own AI API key</a>.</li>
+  <li>On <strong>Metabase Cloud</strong>, you can either <a href="#bring-your-own-api-key">bring your own AI API key</a> or <a href="#metabase-ai-service">use the Metabase AI Service</a>.</li>
+</ul>
+
+<p>The AI provider that you specify in AI settings powers Metabase’s built-in AI functionality, not the MCP server. <a href="mcp#with-the-mcp-server-your-client-provides-the-ai">With the MCP server, your client provides the AI</a>.</p>
+
+<h3 id="metabase-ai-service">Metabase AI Service</h3>
+
+<p>On Metabase Cloud, you can have us manage the AI for you with our AI Service.</p>
+
+<p>Metabase’s AI Service is a good option if you don’t have a preferred AI provider, or if you want to manage all your Metabase AI costs through Metabase. We (Metabase the company) select the models for you. We use internal benchmarks to determine which AI models work best for different tasks, and we’re constantly iterating to improve performance.</p>
+
+<p>If you use Metabase’s AI Service, you’ll get charge based on token usage (in addition to your regular Metabase Cloud subscription fee). See <a href="/pricing">Pricing</a>.</p>
+
+<p>To enable Metabase’s AI Service on Metabase Cloud, you must me logged in to your Metabase instance with the email that matches the email for the admin of your <a href="https://store.metabase.com">Metabase Store account</a>.</p>
+
+<p>To use Metabase AI provider for your Metabot:</p>
+
+<ol>
+  <li>Go to <strong>Admin &gt; AI &gt; AI settings</strong>.</li>
+  <li>In <strong>Connect to an AI provider</strong>, choose <strong>Metabase</strong> as the provider.</li>
+  <li>Agree to the terms of service.</li>
+  <li>Click <strong>Connect</strong>.</li>
+</ol>
+
+<p>To disable Metabase AI provider and stop charges:</p>
+
+<ol>
+  <li>Go to <strong>Admin &gt; AI &gt; AI settings</strong>.</li>
+  <li>Under <strong>Connected to Metabase</strong>, click <strong>Disconnect</strong>.</li>
+</ol>
+
+<p>Any Metabase instance admin can disconnect the Metabase AI Service, even if they lack an admin account in the Metabase store.</p>
+
+<h3 id="bring-your-own-api-key">Bring your own API key</h3>
+
+<p>You can specify your own API key and model for Metabot from one of the supported providers. Currently, Metabase only supports models from Anthropic.</p>
+
+<p>If you’re interested in Metabase supporting more AI providers, let us know by submitting a <a href="../troubleshooting-guide/requesting-new-features">feature request</a>.</p>
 
 <p>To enable AI features with your own API key:</p>
 
@@ -6130,17 +6146,13 @@ Roadmap</a>
   <li>Select a <strong>Model</strong> from the dropdown. Available models are fetched from the provider using your API key.</li>
 </ol>
 
-<p>When your connection is active, the provider card header shows <strong>Connected to [provider]</strong> (for example, “Connected to Anthropic”) next to a green status dot. With your key connected, you get access to <a href="./metabot">Metabot</a>, <a href="./metabot#inline-sql-editing">inline SQL generation</a>, the <a href="./mcp">MCP server</a>, and the <a href="./agent-api">Agent API</a>.</p>
+<p>When your connection is active, the provider card header shows <strong>Connected to [provider]</strong> (for example, “Connected to Anthropic”) next to a green status dot. With your key connected, you get access to <a href="./metabot">Metabot</a>, and <a href="./metabot#inline-sql-editing">inline SQL generation</a>.</p>
 
 <p>To clear your provider connection, click <strong>Disconnect</strong>. Disconnecting removes the stored API key and turns off any AI features that depend on the provider.</p>
 
-<h3 id="supported-providers">Supported providers</h3>
-
-<p>Currently, Metabase only supports models from Anthropic.</p>
-
 <h2 id="configure-metabot">Configure Metabot</h2>
 
-<p><em>Admin &gt; AI &gt; Metabot settings</em></p>
+<p><em>Admin &gt; AI &gt; AI settings</em></p>
 
 <p><img src="./images/ai-settings.png" alt="Metabot settings"></p>
 
@@ -6199,43 +6211,6 @@ Roadmap</a>
 
 <p>Click <strong>Regenerate suggested prompts</strong> to generate a fresh set of prompts. You can also run individual prompts to test Metabot’s answers, or delete prompts that aren’t useful. The Internal and Embedded tabs each maintain their own set of suggestions, so regenerating on one tab doesn’t affect the other.</p>
 
-<h2 id="enable-mcp-server">Enable MCP server</h2>
-
-<p><em>Admin &gt; AI &gt; MCP</em></p>
-
-<p>MCP server and Agent API settings live on their own subpage. From <strong>Admin &gt; AI</strong>, open the <strong>MCP</strong> tab in the left sidebar.</p>
-
-<p>Use the <strong>MCP server</strong> toggle to turn external access to the <a href="./mcp">MCP server</a> on or off.</p>
-
-<h3 id="supported-mcp-clients">Supported MCP clients</h3>
-
-<p>Under <strong>Supported MCP clients</strong>, switch on any clients you want to allow:</p>
-
-<ul>
-  <li><strong>Claude</strong> (Claude Desktop and Claude on the web)</li>
-  <li><strong>Cursor and VS Code</strong></li>
-  <li><strong>ChatGPT</strong></li>
-</ul>
-
-<p>Toggling on a client automatically adds that client’s sandbox domains to Metabase’s CORS allowlist, which is what lets browser-based MCP clients make cross-origin requests to your Metabase.</p>
-
-<p>Some clients run outside the browser (like Claude Code on your own machine) and don’t need a CORS allowlist entry. You can connect those clients without toggling anything on (assuming you’ve turned on the main MCP server setting).</p>
-
-<h3 id="custom-mcp-client-domains">Custom MCP client domains</h3>
-
-<p>If you run a self-hosted MCP client or one that isn’t in the supported list, add its domain to the <strong>Custom MCP client domains</strong> field. Separate values with a space, for example:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://mcp.internal.example.com https://*.staging.example.com
-</code></pre></div></div>
-
-<p>The field accepts wildcards (<code class="language-plaintext highlighter-rouge">*</code>) for subdomains. Changes take effect in about a minute. Might be a good time to get up and pour yourself a glass of water.</p>
-
-<h2 id="agent-api-settings">Agent API settings</h2>
-
-<p><em>Admin &gt; AI &gt; MCP</em></p>
-
-<p>Use the <strong>Agent API</strong> toggle to turn external access to the <a href="./agent-api">Agent API</a> on or off.</p>
-
 <h2 id="disable-all-ai-features">Disable all AI features</h2>
 
 <p>The <strong>Disable all AI features</strong> toggle at the bottom of the AI features page is a master kill switch. When turned on, it hides all AI features across your instance — Metabot, inline SQL generation, the MCP server, the Agent API, and any embedded chat components — regardless of the individual toggles above.</p>
@@ -6287,19 +6262,13 @@ Roadmap</a>
 
 <h2 id="viewing-metabot-usage">Viewing Metabot usage</h2>
 
-<p>If you’re using the Metabase AI service, you can see how many Metabot requests people have made this month by going to <strong>Admin &gt; Settings &gt; License</strong>.</p>
+<p>If you’re using the Metabase AI service, you can see how many Metabot requests people have made this month by going to <strong>Admin &gt; AI</strong>.</p>
 
 <p>If you aren’t logged into the <a href="../cloud/accounts-and-billing">Metabase Store</a>, you’ll need to log in to the store before you can view the usage. Once logged in to the store, go back to your Metabase and view the license page.</p>
 
-<p>The <strong>Metabot AI requests used, this month (updated daily)</strong> field shows how many requests your Metabase has used this month. Each message sent to Metabot counts as a request.</p>
-
 <p>If you’re using your own API key, you can track usage and costs through your AI provider’s dashboard.</p>
 
-<h2 id="choosing-the-ai-model">Choosing the AI model</h2>
-
-<p>If you’re using your own API key, you can choose which AI model Metabase uses when you <a href="#bring-your-own-api-key">bring your own API key</a>.</p>
-
-<p>When using the Metabase AI service, Metabase selects models automatically. We use internal benchmarks to determine which AI models work best for different tasks, and we’re constantly iterating to improve performance.</p>
+<p>On Metabase Pro/Enterprise, you also get access to detailed <a href="usage-auditing">AI usage auditing</a> with detailed breakdown of AI usage by user, tool, feature etc.</p>
 
 <h2 id="privacy">Privacy</h2>
 
@@ -6319,7 +6288,18 @@ Roadmap</a>
   <li><strong>Timeseries data</strong>: For chart analysis, Metabot might see the timeseries data used to draw certain visualizations, depending on the chart type.</li>
 </ul>
 
-<p>This data may be included when you <a href="./metabot#giving-feedback-on-metabot-responses">submit feedback</a>.</p>
+<p>When you <a href="./metabot#giving-feedback-on-metabot-responses">submit feedback</a>, the context for the conversation - including this metadata and conversation prompts - might be sent to Metabase.</p>
+
+<h2 id="further-reading">Further reading</h2>
+
+<ul>
+  <li><a href="metabot">Using Metabot</a></li>
+  <li><a href="mcp">MCP server</a></li>
+  <li><a href="usage-controls">AI access and usage controls</a></li>
+  <li><a href="usage-auditing">AI usage auditing</a></li>
+  <li><a href="customization">Metabot customization</a></li>
+  <li><a href="system-prompts">Metabot system prompts</a></li>
+</ul>
 
 
         <div>
