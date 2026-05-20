@@ -6067,7 +6067,7 @@ Roadmap</a>
         <h1 id="query-based-transforms">Query-based transforms</h1>
 
 <blockquote>
-  <p>On Metabase Cloud, you need the <strong>Transforms</strong> add-on to run query-based transforms.</p>
+  <p>On Metabase Cloud, you need the <a href="addons"><strong>Basic transforms</strong> add-on</a> to run query-based transforms.</p>
 </blockquote>
 
 <p>With query-based transforms, you can write a query in SQL or Metabase’s query builder, and then write the results of the query back into the database on schedule.</p>
@@ -6088,9 +6088,10 @@ Roadmap</a>
 
 <h2 id="create-a-query-based-transform">Create a query-based transform</h2>
 
-<p>On Metabase Cloud, you need the <strong>Transforms</strong> add-on to create query-based transforms.</p>
+<p>On Metabase Cloud, you need the <a href="addons"><strong>Basic transforms</strong> add-on</a> to create query-based transforms.</p>
 
 <ol>
+  <li><a href="transforms-overview#enable-transforms">Enable transforms</a>.</li>
   <li>
     <p>Go to <strong>Data studio &gt; Transforms</strong>.</p>
   </li>
@@ -6120,9 +6121,7 @@ Roadmap</a>
       <li><strong>Incremental transformation</strong> (optional): see <a href="#incremental-query-transforms">Incremental query transforms</a></li>
     </ul>
   </li>
-  <li>
-    <p>Optionally, assign tags to your transforms. Tags are used by <a href="jobs-and-runs">jobs</a> to run transforms on schedule.</p>
-  </li>
+  <li>Optionally, assign tags to your transforms. Tags are used by <a href="jobs-and-runs">jobs</a> to run transforms on schedule.</li>
 </ol>
 
 <h2 id="variables-in-sql-transforms">Variables in SQL transforms</h2>
@@ -6160,8 +6159,6 @@ Roadmap</a>
 </ul>
 
 <p>The reason transform variables must have a default value (or be optional) is that transforms run on a schedule, so there’s no way to pass a value to the variable when the job runs the transform.</p>
-
-<p>The incremental <code class="language-plaintext highlighter-rouge">[[WHERE id &gt; {{checkpoint}}]]</code> pattern shown in <a href="#incremental-query-transforms">Incremental query transforms</a> is an example of this an optional variable in practice. See also <a href="../../questions/native-editor/optional-variables">optional variables</a>.</p>
 
 <h2 id="run-a-query-transform">Run a query transform</h2>
 
@@ -6233,6 +6230,63 @@ Roadmap</a>
   <li>Switch to <strong>Settings</strong> tab.</li>
   <li>In <strong>Column to check for new values</strong>, select the column in one of the source tables that Metabase should check to determine which values are new. Only some columns are eligible. See <a href="./transforms-overview#prerequisites-for-incremental-transforms">prerequisites for incremental transforms</a>.</li>
 </ol>
+
+<h2 id="convert-models-to-transforms">Convert models to transforms</h2>
+
+<div class="bootstrap">
+  <div class="plans-blockquote bg-blue-95 rounded-3 p-6 d-flex flex-row border border-1 border-primary">
+    <svg class="" width="24" height="24" viewBox="0 0 26 26" fill="none">
+  <path d="M12 13V15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
+  <path d="M12 10C12.5523 10 13 9.55228 13 9C13 8.44772 12.5523 8 12 8C11.4477 8 11 8.44772 11 9C11 9.55228 11.4477 10 12 10Z" fill="#509EE3"></path>
+  <path d="M12 19.25C16.0041 19.25 19.25 16.0041 19.25 12C19.25 7.99594 16.0041 4.75 12 4.75C7.99594 4.75 4.75 7.99594 4.75 12C4.75 16.0041 7.99594 19.25 12 19.25Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
+</svg>
+
+    
+    
+    
+      
+
+    <p class="m-0 ms-2 paragraph-5 neutral-40">
+       Converting models to transforms is only available on
+      <a class="fw-bold" href="/product/pro">Pro</a> and
+      <a class="fw-bold link-purple" href="/product/enterprise">Enterprise</a>
+      plans  (both self-hosted and on Metabase Cloud).
+    </p>
+  </div>
+</div>
+
+<p>If you have models you’d like to migrate to transforms, Metabase can convert them for you. When you convert a model, Metabase:</p>
+
+<ol>
+  <li>Creates a new transform based on the model’s query.</li>
+  <li>Runs the transform to create the output table in your database.</li>
+  <li>Replaces every question, dashboard, and other item that used the model with the transform’s output table.</li>
+  <li>Converts the original model to a question.</li>
+</ol>
+
+<p>You must be an admin to convert models, and the model’s database must <a href="transforms-overview#databases-that-support-transforms">support transforms</a>.</p>
+
+<p>To convert a model into a transform:</p>
+
+<ol>
+  <li>Review <a href="../dependencies/replace-data-sources">Replacing data sources</a> docs for overview and limitations of the process.</li>
+  <li>Open <strong>Data Studio</strong> and select <strong>Transforms</strong> in the sidebar.</li>
+  <li>Click <strong>Tools &gt; Migrate models</strong>.</li>
+  <li>Find the model you want to convert and click it to open its details panel. The panel shows the model’s name, database, and collection, and a list of items that depend on it.</li>
+  <li>Click <strong>Convert to a transform</strong>.</li>
+  <li>Fill out the transform settings. See <a href="#create-a-query-based-transform">Create a transform</a> for the overview of settings.</li>
+  <li>Click <strong>Convert to a transform</strong>.</li>
+</ol>
+
+<p>Metabase runs the conversion in the background. A status indicator at the bottom of the screen shows progress.</p>
+
+<p>If the transform run fails, Metabase stops and leaves the model unchanged—nothing is replaced.</p>
+
+<p>If the transform runs successfully, but the source swap fails afterward, the transform and its output table are kept. The model is left unchanged. You can complete the migration manually using <a href="../dependencies/replace-data-sources">Replace data sources</a> to point the remaining content from the model to the transform’s output table.</p>
+
+<p>Once conversion completes, all content that previously queried the model now queries the transform’s output table. The original model just becomes a question.</p>
+
+<p>Newly created tables will be created with default permissions and will <em>not</em> inherit the model’s permissions. As an alternative, consider manually creating and running the transform first, setting up the permissions, then using <a href="../dependencies/replace-data-sources">Replace data sources</a> to swap the model for the transform’s output table once you configured permissions.</p>
 
 
         <div>

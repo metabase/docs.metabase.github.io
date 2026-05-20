@@ -55,7 +55,7 @@ window.redirectTo = function redirectTo(theLocation) {
 <meta name="twitter:site" content="@metabase">
 
 <meta name="twitter:title" content="Scatterplots and bubble charts | Metabase Documentation">
-<meta name="twitter:description" content="Scatterplots and bubble charts Scatterplots are useful for visualizing the correlation between two variables, like comparing the age of your users vs. how many dollars they’ve spent on your products. To use a scatterplot, you’ll need to ask a question that...">
+<meta name="twitter:description" content="Scatterplots and bubble charts Scatterplots and bubble charts visualize the relationship between values. Scatterplots show two numeric values per data point, while bubble charts show three by using the size of each dot to represent a third value. In Metabase, both...">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -65,7 +65,7 @@ window.redirectTo = function redirectTo(theLocation) {
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://www.metabase.com/docs/v0.61/questions/visualizations/scatterplot-or-bubble-chart">
 <meta name="title" property="og:title" content="Scatterplots and bubble charts | Metabase Documentation">
-<meta name="description" property="og:description" content="Scatterplots and bubble charts Scatterplots are useful for visualizing the correlation between two variables, like comparing the age of your users vs. how many dollars they’ve spent on your products. To use a scatterplot, you’ll need to ask a question that...">
+<meta name="description" property="og:description" content="Scatterplots and bubble charts Scatterplots and bubble charts visualize the relationship between values. Scatterplots show two numeric values per data point, while bubble charts show three by using the size of each dot to represent a third value. In Metabase, both...">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -6064,13 +6064,350 @@ Roadmap</a>
 
         <h1 id="scatterplots-and-bubble-charts">Scatterplots and bubble charts</h1>
 
-<p><strong>Scatterplots</strong> are useful for visualizing the correlation between two variables, like comparing the age of your users vs. how many dollars they’ve spent on your products. To use a scatterplot, you’ll need to ask a question that results in two numeric columns, like <code class="language-plaintext highlighter-rouge">Count of Orders grouped by Customer Age</code>. Alternatively, you can use a table and select the two numeric fields you want to use in the chart options.</p>
+<p>Scatterplots and bubble charts visualize the relationship between values.</p>
 
-<p>If you have a third numeric field, you can also create a <strong>bubble chart</strong>. Select the Scatter visualization, then open up the chart settings and select a field in the <strong>bubble size</strong> dropdown. This field will be used to determine the size of each bubble on your chart. For example, you could use a field that contains the total dollar amount for each x-y pair —&nbsp;i.e. larger bubbles for larger total dollar amounts spent on orders.</p>
-
-<p>Scatterplots and bubble charts also have similar chart options as line, bar, and area charts, including the option to display trend or goal lines, or stack series.</p>
+<p>Scatterplots show two numeric values per data point, while bubble charts show three by using the size of each dot to represent a third value. In Metabase, both chart types use the same <strong>Scatter</strong> visualization type. Adding a bubble size column turns a scatterplot into a bubble chart.</p>
 
 <p><img src="../images/scatter.png" alt="Scatter"></p>
+
+<h2 id="how-to-create-a-scatterplot-or-bubble-chart">How to create a scatterplot or bubble chart</h2>
+
+<p>You can create a scatterplot or bubble chart from a few different data shapes, depending on whether you want to add bubble sizing or colored series.</p>
+
+<h3 id="create-a-scatterplot">Create a scatterplot</h3>
+
+<ol>
+  <li>
+    <p>Create a question that returns two numeric columns. For example, summarize <code class="language-plaintext highlighter-rouge">Count of orders</code> and <code class="language-plaintext highlighter-rouge">Average of total</code> grouped by <code class="language-plaintext highlighter-rouge">Product ID</code>:</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Product ID</th>
+          <th>Count of orders</th>
+          <th>Average of total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td data-label="Product ID">1</td>
+          <td data-label="Count of orders">93</td>
+          <td data-label="Average of total">42.48</td>
+        </tr>
+        <tr>
+          <td data-label="Product ID">2</td>
+          <td data-label="Count of orders">98</td>
+          <td data-label="Average of total">104.48</td>
+        </tr>
+        <tr>
+          <td data-label="Product ID">3</td>
+          <td data-label="Count of orders">77</td>
+          <td data-label="Average of total">52.68</td>
+        </tr>
+        <tr>
+          <td data-label="Product ID">4</td>
+          <td data-label="Count of orders">89</td>
+          <td data-label="Average of total">108.95</td>
+        </tr>
+        <tr>
+          <td data-label="Product ID">5</td>
+          <td data-label="Count of orders">97</td>
+          <td data-label="Average of total">117.08</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>You can also use one numeric column grouped by a category or time dimension. For example, summarize <code class="language-plaintext highlighter-rouge">Average of total</code> grouped by <code class="language-plaintext highlighter-rouge">Product Category</code>:</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Product Category</th>
+          <th>Average of total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td data-label="Product Category">Gizmo</td>
+          <td data-label="Average of total">84.12</td>
+        </tr>
+        <tr>
+          <td data-label="Product Category">Doohickey</td>
+          <td data-label="Average of total">76.95</td>
+        </tr>
+        <tr>
+          <td data-label="Product Category">Gadget</td>
+          <td data-label="Average of total">92.40</td>
+        </tr>
+        <tr>
+          <td data-label="Product Category">Widget</td>
+          <td data-label="Average of total">88.27</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <p>In the visualization picker, select <strong>Scatter</strong>.</p>
+  </li>
+</ol>
+
+<p>Each row in the result becomes a single dot on the chart. One column maps to the x-axis and the other to the y-axis.</p>
+
+<p><img src="../images/scatterplot-example.png" alt="Scatterplot example"></p>
+
+<h3 id="create-a-bubble-chart">Create a bubble chart</h3>
+
+<ol>
+  <li>
+    <p>Create a question that returns three numeric columns. For example, summarize <code class="language-plaintext highlighter-rouge">Count of orders</code>, <code class="language-plaintext highlighter-rouge">Average of total</code>, and <code class="language-plaintext highlighter-rouge">Sum of total</code> grouped by <code class="language-plaintext highlighter-rouge">Product ID</code>:</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Product ID</th>
+          <th>Count of orders</th>
+          <th>Average of total</th>
+          <th>Sum of total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td data-label="Product ID">1</td>
+          <td data-label="Count of orders">93</td>
+          <td data-label="Average of total">42.48</td>
+          <td data-label="Sum of total">3,950.53</td>
+        </tr>
+        <tr>
+          <td data-label="Product ID">2</td>
+          <td data-label="Count of orders">98</td>
+          <td data-label="Average of total">104.48</td>
+          <td data-label="Sum of total">10,238.92</td>
+        </tr>
+        <tr>
+          <td data-label="Product ID">3</td>
+          <td data-label="Count of orders">77</td>
+          <td data-label="Average of total">52.68</td>
+          <td data-label="Sum of total">4,056.36</td>
+        </tr>
+        <tr>
+          <td data-label="Product ID">4</td>
+          <td data-label="Count of orders">89</td>
+          <td data-label="Average of total">108.95</td>
+          <td data-label="Sum of total">9,696.46</td>
+        </tr>
+        <tr>
+          <td data-label="Product ID">5</td>
+          <td data-label="Count of orders">97</td>
+          <td data-label="Average of total">117.08</td>
+          <td data-label="Sum of total">11,356.66</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>You can also use two numeric columns grouped by a category or time dimension. For example, summarize <code class="language-plaintext highlighter-rouge">Average of total</code> and <code class="language-plaintext highlighter-rouge">Sum of total</code> grouped by <code class="language-plaintext highlighter-rouge">Product Category</code>:</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Product Category</th>
+          <th>Average of total</th>
+          <th>Sum of total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td data-label="Product Category">Gizmo</td>
+          <td data-label="Average of total">84.12</td>
+          <td data-label="Sum of total">425,000</td>
+        </tr>
+        <tr>
+          <td data-label="Product Category">Doohickey</td>
+          <td data-label="Average of total">76.95</td>
+          <td data-label="Sum of total">312,400</td>
+        </tr>
+        <tr>
+          <td data-label="Product Category">Gadget</td>
+          <td data-label="Average of total">92.40</td>
+          <td data-label="Sum of total">587,200</td>
+        </tr>
+        <tr>
+          <td data-label="Product Category">Widget</td>
+          <td data-label="Average of total">88.27</td>
+          <td data-label="Sum of total">401,800</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>You can also use one numeric column grouped by two category or time dimensions. For example, summarize <code class="language-plaintext highlighter-rouge">Average of total</code> grouped by <code class="language-plaintext highlighter-rouge">Product ID</code> and <code class="language-plaintext highlighter-rouge">Product Category</code>:</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Product ID</th>
+          <th>Product Category</th>
+          <th>Average of total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td data-label="Product ID">1</td>
+          <td data-label="Product Category">Gizmo</td>
+          <td data-label="Average of total">42.48</td>
+        </tr>
+        <tr>
+          <td data-label="Product ID">2</td>
+          <td data-label="Product Category">Doohickey</td>
+          <td data-label="Average of total">104.48</td>
+        </tr>
+        <tr>
+          <td data-label="Product ID">3</td>
+          <td data-label="Product Category">Doohickey</td>
+          <td data-label="Average of total">52.68</td>
+        </tr>
+        <tr>
+          <td data-label="Product ID">4</td>
+          <td data-label="Product Category">Doohickey</td>
+          <td data-label="Average of total">108.95</td>
+        </tr>
+        <tr>
+          <td data-label="Product ID">5</td>
+          <td data-label="Product Category">Gadget</td>
+          <td data-label="Average of total">117.08</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>In the visualization picker, select <strong>Scatter</strong>.</li>
+  <li>In chart settings, select a numeric column from the <strong>Bubble size</strong> menu.</li>
+</ol>
+
+<p>Each row in the result becomes a single dot on the chart. One column maps to the x-axis, one to the y-axis, and the bubble size column determines the size of the dot.</p>
+
+<p><img src="../images/bubble-chart-example.png" alt="Bubble chart example"></p>
+
+<h3 id="add-a-category-for-colored-series">Add a category for colored series</h3>
+
+<ol>
+  <li>
+    <p>Create a question with the data shape for a scatterplot or bubble chart. Include a category column for the colored series. For example, summarize <code class="language-plaintext highlighter-rouge">Count of orders</code> and <code class="language-plaintext highlighter-rouge">Average of total</code> grouped by <code class="language-plaintext highlighter-rouge">Product ID</code> and <code class="language-plaintext highlighter-rouge">Product Category</code>:</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Product ID</th>
+          <th>Product Category</th>
+          <th>Count of orders</th>
+          <th>Average of total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td data-label="Product ID">1</td>
+          <td data-label="Product Category">Gizmo</td>
+          <td data-label="Count of orders">93</td>
+          <td data-label="Average of total">42.48</td>
+        </tr>
+        <tr>
+          <td data-label="Product ID">2</td>
+          <td data-label="Product Category">Doohickey</td>
+          <td data-label="Count of orders">98</td>
+          <td data-label="Average of total">104.48</td>
+        </tr>
+        <tr>
+          <td data-label="Product ID">3</td>
+          <td data-label="Product Category">Doohickey</td>
+          <td data-label="Count of orders">77</td>
+          <td data-label="Average of total">52.68</td>
+        </tr>
+        <tr>
+          <td data-label="Product ID">4</td>
+          <td data-label="Product Category">Doohickey</td>
+          <td data-label="Count of orders">89</td>
+          <td data-label="Average of total">108.95</td>
+        </tr>
+        <tr>
+          <td data-label="Product ID">5</td>
+          <td data-label="Product Category">Gadget</td>
+          <td data-label="Count of orders">97</td>
+          <td data-label="Average of total">117.08</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <p>In the visualization picker, select <strong>Scatter</strong>.</p>
+  </li>
+</ol>
+
+<p>Each category becomes its own colored series. The example chart shows the Gizmo, Doohickey, Gadget, and Widget series.</p>
+
+<p><img src="../images/bubble-chart-colored-series-example.png" alt="Bubble chart colored series example"></p>
+
+<h2 id="scatterplot-and-bubble-chart-settings">Scatterplot and bubble chart settings</h2>
+
+<p>To open chart settings, click the <strong>Gear</strong> icon in the bottom left of the visualization.</p>
+
+<h3 id="data">Data</h3>
+
+<p>In chart settings, click the <strong>Data</strong> tab to configure which columns appear on the chart.</p>
+
+<ul>
+  <li><strong>X-axis:</strong> The column(s) to plot on the x-axis</li>
+  <li><strong>Y-axis:</strong> The column(s) to plot on the y-axis</li>
+  <li><strong>Bubble size:</strong> The column that determines the size of each dot (leave empty for a standard scatterplot)</li>
+</ul>
+
+<h3 id="display">Display</h3>
+
+<p>In chart settings, click the <strong>Display</strong> tab to edit how the chart looks.</p>
+
+<p>To add a goal line, enable the <strong>Goal line</strong> toggle. Use the <strong>Goal value</strong> and <strong>Goal label</strong> fields to set the value and label.</p>
+
+<blockquote>
+  <p>You can’t set <a href="../alerts">alerts</a> on goal lines in scatterplots or bubble charts.</p>
+</blockquote>
+
+<p>To stack series on top of each other, enable the <strong>Stack series</strong> toggle.</p>
+
+<p>To show extra information when hovering over a dot, add columns to <strong>Additional tooltip columns</strong>.</p>
+
+<h3 id="axes">Axes</h3>
+
+<p>In chart settings, click the <strong>Axes</strong> tab to edit the chart axes.</p>
+
+<h4 id="x-axis">X-axis</h4>
+
+<p>Use the following options for the x-axis:</p>
+
+<ul>
+  <li><strong>Show label:</strong> Enable the toggle to display the x-axis label.</li>
+  <li><strong>Label:</strong> Name the x-axis label.</li>
+  <li><strong>Show lines and tick marks:</strong> Select how to display the x-axis line, tick marks, and labels. Choose between <strong>Hide</strong>, <strong>Show</strong>, <strong>Compact</strong>, <strong>Rotate 45°</strong>, and <strong>Rotate 90°</strong>.</li>
+  <li><strong>Scale:</strong> Select how values are spaced along the x-axis. Choose between <strong>Linear</strong>, <strong>Power</strong>, <strong>Log</strong>, <strong>Histogram</strong>, and <strong>Ordinal</strong>.</li>
+</ul>
+
+<h4 id="y-axis">Y-axis</h4>
+
+<p>Use the following options for the y-axis:</p>
+
+<ul>
+  <li><strong>Show label:</strong> Enable the toggle to display the y-axis label.</li>
+  <li><strong>Label:</strong> Name the y-axis label.</li>
+  <li><strong>Split y-axis when necessary:</strong> When enabled, Metabase displays separate y-axes for series with very different value ranges.</li>
+  <li><strong>Auto y-axis range:</strong> When enabled, Metabase sets the y-axis range automatically based on your data. When disabled, use the <strong>Min</strong> and <strong>Max</strong> fields to set custom values.</li>
+  <li><strong>Unpin from zero:</strong> When enabled, the y-axis can start at a value other than zero.</li>
+  <li><strong>Scale:</strong> Select how values are spaced along the y-axis. Choose between <strong>Linear</strong>, <strong>Power</strong>, and <strong>Log</strong>.</li>
+  <li><strong>Show lines and tick marks:</strong> Select how to display the y-axis line, tick marks, and labels. Choose between <strong>Hide</strong>, <strong>Show</strong>, <strong>Compact</strong>, <strong>Rotate 45°</strong>, and <strong>Rotate 90°</strong>.</li>
+  <li><strong>Number of tick marks:</strong> Set how many tick marks appear on the y-axis. Defaults to <strong>auto</strong>.</li>
+</ul>
+
+<h2 id="limitations-and-alternatives">Limitations and alternatives</h2>
+
+<ul>
+  <li>If you only have one numeric value to plot, or if you want to show how a value changes over time, consider a <a href="./line-bar-and-area-charts">bar chart, histogram, or line chart</a> instead.</li>
+  <li>Scatterplots can become hard to read with very large datasets because of overlapping dots. For large datasets, consider aggregating your data, or using a <a href="./pivot-table#using-pivot-tables-as-heatmaps">heat map</a> or <a href="./box-plot">box plot</a> instead.</li>
+  <li>You can’t set <a href="../alerts">alerts</a> on goal lines in scatterplots or bubble charts.</li>
+</ul>
 
 
         <div>
