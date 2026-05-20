@@ -6091,9 +6091,40 @@ Roadmap</a>
 
 <p>Metabase includes an <a href="https://modelcontextprotocol.io/">MCP (Model Context Protocol)</a> server (using Streamable HTTP transport) that lets AI clients connect directly to your Metabase, all scoped to the connecting person’s permissions.</p>
 
+<h1 id="enable-mcp-server">Enable MCP server</h1>
+
+<p><em>Admin &gt; AI &gt; MCP</em></p>
+
+<p>MCP server and Agent API settings live on their own subpage. From <strong>Admin &gt; AI</strong>, open the <strong>MCP</strong> tab in the left sidebar.</p>
+
+<p>Use the <strong>MCP server</strong> toggle to turn external access to the <a href="./mcp">MCP server</a> on or off.</p>
+
+<h3 id="supported-mcp-clients">Supported MCP clients</h3>
+
+<p>Under <strong>Supported MCP clients</strong>, switch on any clients you want to allow:</p>
+
+<ul>
+  <li><strong>Claude</strong> (Claude Desktop and Claude on the web)</li>
+  <li><strong>Cursor and VS Code</strong></li>
+  <li><strong>ChatGPT</strong></li>
+</ul>
+
+<p>Toggling on a client automatically adds that client’s sandbox domains to Metabase’s CORS allowlist, which is what lets browser-based MCP clients make cross-origin requests to your Metabase.</p>
+
+<p>Some clients run outside the browser (like Claude Code on your own machine) and don’t need a CORS allowlist entry. You can connect those clients without toggling anything on (assuming you’ve turned on the main MCP server setting).</p>
+
+<h3 id="custom-mcp-client-domains">Custom MCP client domains</h3>
+
+<p>If you run a self-hosted MCP client, or a client that isn’t in the supported list, add the client’s domain to the <strong>Custom MCP client domains</strong> field. Separate values with a space, for example:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://mcp.internal.example.com https://*.staging.example.com
+</code></pre></div></div>
+
+<p>The field accepts wildcards (<code class="language-plaintext highlighter-rouge">*</code>) for subdomains. Changes take effect in about a minute. Might be a good time to get up and pour yourself a glass of water.</p>
+
 <h2 id="connect-an-mcp-client">Connect an MCP client</h2>
 
-<p>If your admin has turned on <a href="./settings#enable-mcp-server">your Metabase’s MCP server</a>, all you need to do is point your MCP client at Metabase’s MCP endpoint, <code class="language-plaintext highlighter-rouge">/api/mcp</code>. For example:</p>
+<p>If your admin has turned on <a href="#enable-mcp-server">your Metabase’s MCP server</a>, all you need to do is point your MCP client at Metabase’s MCP endpoint, <code class="language-plaintext highlighter-rouge">/api/mcp</code>. For example:</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://{your-metabase.example.com}/api/mcp
 </code></pre></div></div>
@@ -6141,7 +6172,7 @@ Roadmap</a>
 
 <p>For example, if you ask your AI client to use your Metabase’s MCP server “what’s our q3 revenue,” your client will interact with the MCP server to figure out which tools it needs to field your request. Your AI can decide that it needs to use the tool <strong>construct_query</strong> and <strong>execute_query</strong>, and what those queries might be. Then your client will call those tools for Metabase to run.</p>
 
-<p>You don’t need to have an <a href="settings#supported-providers">AI provider</a> configured in Metabase to use your Metabase’s MCP server. If you <em>do</em> have an AI provider configured in Metabase to power Metabot, that provider will <em>not</em> be used for MCP server requests. MCP calls by your local client have no effect on token usage for your Metabase’s AI connection.</p>
+<p>You don’t need to have an <a href="settings#choose-ai-provider">AI provider</a> configured in Metabase to use your Metabase’s MCP server. If you <em>do</em> have an AI provider configured in Metabase to power Metabot, that provider will <em>not</em> be used for MCP server requests. MCP calls by your local client have no effect on token usage for your Metabase’s AI connection.</p>
 
 <h2 id="available-tools">Available tools</h2>
 
