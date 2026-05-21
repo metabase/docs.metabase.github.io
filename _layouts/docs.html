@@ -34,6 +34,12 @@ active: 'docs'
     <div class='row'>
       <div class='ten columns release offset-by-one docs-footer py1'>
           <div class="bootstrap">
+            {% comment %}
+            Add feedback widget for pages that aren't landing pages for navigation, tables of contents, etc.
+            {% endcomment %}
+            {% unless page.title == 'Start' or page.title == 'README' or page.title == 'Index' or page.title == 'Search' %}
+              {% include shared/right-hand-newsletter-subscribe-widget.html %}
+            {% endunless %}
             <span class="paragraph-6 fs-13 neutral-60">See something that needs fixing? <a href='{{ page.source_url }}' target="_blank">Propose a change.</a></span>
           </div>
       </div>

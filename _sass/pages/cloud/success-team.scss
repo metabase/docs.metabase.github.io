@@ -1,0 +1,92 @@
+@use "sass:math";
+
+.success-team {
+  align-items: stretch;
+  position: relative;
+
+  &__quotes {
+    position: relative;
+
+    &::before,
+    &::after {
+      content: "";
+      height: 96px;
+      left: 0;
+      position: absolute;
+      right: 0;
+      z-index: 1;
+    }
+
+    &::before {
+      background: linear-gradient(0deg, transparentize($neutral-98, 1) 0%, $neutral-98 95%);
+      top: 0;
+    }
+
+    &::after {
+      background: linear-gradient(180deg, transparentize($neutral-98, 1) 0%, $neutral-98 95%);
+      bottom: 0;
+    }
+  }
+
+  &__quotes-container {
+    height: 334px;
+    overflow: hidden;
+    position: relative;
+
+    @include media-breakpoint-up(lg) {
+      bottom: 0;
+      height: auto;
+      left: 0;
+      position: absolute;
+      top: 0;
+      width: 100%;
+    }
+  }
+
+  &__quotes-animation {
+    position: relative;
+
+    @keyframes success-team-scroll-up {
+      from {
+        transform: translateY(0);
+      }
+
+      to {
+        transform: translateY(-100%);
+      }
+    }
+
+    &.animate {
+      animation: success-team-scroll-up 64s infinite linear;
+    }
+  }
+
+  &__quote {
+    $cloud-success-team-avatar-offset-ratio: math.div(3, 7);
+    $cloud-success-team-avatar-size: 32px;
+    $cloud-success-team-avatar-offset: $cloud-success-team-avatar-size * $cloud-success-team-avatar-offset-ratio;
+    $cloud-success-team-avatar-size-lg: 44px;
+    $cloud-success-team-avatar-offset-lg: $cloud-success-team-avatar-size-lg * $cloud-success-team-avatar-offset-ratio;
+
+    &__avatar {
+      border: 2px solid $neutral-white;
+      border-radius: 50%;
+      box-shadow: 0 0 2px -1px rgba(0, 0, 0, 0.08), 0 1px 2px 0 rgba(0, 0, 0, 0.08);
+      height: $cloud-success-team-avatar-size;
+      width: $cloud-success-team-avatar-size;
+
+      @include media-breakpoint-up(lg) {
+        height: $cloud-success-team-avatar-size-lg;
+        width: $cloud-success-team-avatar-size-lg;
+      }
+
+      &:last-child {
+        margin-left: -$cloud-success-team-avatar-offset;
+
+        @include media-breakpoint-up(lg) {
+          margin-left: -$cloud-success-team-avatar-offset-lg;
+        }
+      }
+    }
+  }
+}

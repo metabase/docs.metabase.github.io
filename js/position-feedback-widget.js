@@ -19,7 +19,7 @@ function resizeLearnRightSidebar() {
 
   const feedbackWidget = getFeedbackWidget();
 
-  const feedbackWidgetHeight = feedbackWidget?.checkVisibility()
+  const feedbackWidgetHeight = feedbackWidget.checkVisibility()
     ? feedbackWidget.offsetHeight
     : 0;
 
@@ -50,10 +50,6 @@ function maybeRestyleFeedbackWidget() {
   const subnavigationContent = document.getElementById(
     "sub-navigation-content",
   );
-
-  if (!feedbackWidget || !subnavigationContent) {
-    return;
-  }
 
   const lastAnchorInSubnavigationContent =
     subnavigationContent.lastElementChild;

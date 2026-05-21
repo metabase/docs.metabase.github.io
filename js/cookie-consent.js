@@ -195,6 +195,16 @@
       return;
     }
 
+    const hotjarScript = document.createElement("script");
+    hotjarScript.src = "/js/marketing-hotjar.js";
+    hotjarScript.type = "text/javascript";
+    document.body.appendChild(hotjarScript);
+
+    const snowplowScript = document.createElement("script");
+    snowplowScript.src = "/js/marketing-snowplow.js";
+    snowplowScript.type = "text/javascript";
+    document.body.appendChild(snowplowScript);
+
     // Only load Google Tag Manager on Marketing consent
     loadGoogleTagManager();
 

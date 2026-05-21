@@ -1,0 +1,474 @@
+.feature-container {
+  display: flex;
+  margin: 40px auto 140px;
+
+  &.mobile {
+    display: none !important;
+
+    @include media-breakpoint-down(sm) {
+      display: flex !important;
+    }
+
+    h4 {
+      color: $neutral-15;
+    }
+  }
+
+  &.desktop {
+    display: none !important;
+
+    @include media-breakpoint-up(sm) {
+      display: flex !important;
+    }
+  }
+
+  &.feature-container-carousel {
+    align-items: center;
+    height: 660px;
+    justify-content: center;
+    max-height: 800px;
+    padding-top: 140px;
+
+    > div {
+      max-height: 600px;
+
+      &:last-child {
+        padding: 96px 0 56px 28px;
+
+        &.centered {
+          padding: 56px 40px 24px;
+        }
+
+        img {
+          display: none;
+
+          &.show {
+            display: block;
+          }
+        }
+      }
+    }
+
+    > div > div {
+      margin-bottom: 16px;
+      padding-left: 20px;
+      position: relative;
+
+      h6 {
+        height: 0;
+        opacity: 0;
+        transition: height 0.25s ease, opacity 0.25s ease;
+      }
+
+      > div:first-child {
+        background-color: $neutral-95;
+        border-radius: 2px;
+        height: 100%;
+        left: 0;
+        position: absolute;
+        width: 4px;
+
+        > div.inner {
+          background-color: $blue-60;
+          border-radius: 2px;
+          height: 0;
+          opacity: 0;
+          position: absolute;
+          width: 100%;
+        }
+      }
+
+      > div:last-child {
+        max-height: 0;
+        opacity: 0;
+        transition: max-height 0.25s ease, opacity 0.25s ease;
+        will-change: max-height, opacity;
+      }
+    }
+
+    .expanded {
+      h6 {
+        height: 36px;
+        opacity: 1;
+        transition: height 0.45s ease, opacity 0.45s ease;
+      }
+
+      > div > div.inner {
+        opacity: 1 !important;
+      }
+
+      > div:last-child {
+        max-height: 226px;
+        opacity: 1;
+        transition: max-height 0.45s ease, opacity 0.45s ease;
+        will-change: max-height, opacity;
+      }
+
+      h4 {
+        color: $neutral-15;
+      }
+    }
+
+    p {
+      color: $neutral-40;
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 26px;
+    }
+
+    @include media-breakpoint-down(lg) {
+      > div > div {
+        padding-left: 0;
+
+        h4 {
+          color: $neutral-15;
+          font-size: 20px;
+          line-height: 28px;
+        }
+
+        h6 {
+          font-size: 16px;
+          height: auto;
+          line-height: 24px;
+          opacity: 1;
+        }
+
+        p {
+          font-size: 16px;
+          line-height: 24px;
+        }
+
+        > div:first-child {
+          display: none;
+        }
+
+        > div:last-child {
+          max-height: 1000px;
+          opacity: 1;
+        }
+      }
+    }
+  }
+
+  a {
+    align-items: center;
+    color: $blue-60;
+    display: flex;
+    font-size: 18px;
+    margin-bottom: 0;
+    margin-top: 28px;
+    transition: color 0.15s ease;
+
+    &.btn {
+      font-size: 16px;
+    }
+
+    &:hover {
+      color: $blue-40;
+
+      img path {
+        stroke: $blue-40;
+      }
+    }
+
+    img.chevron-blue-right {
+      height: 26px;
+      left: 4px;
+      position: relative;
+      top: 1px;
+    }
+  }
+
+  p > a {
+    display: inline;
+    font-size: inherit;
+  }
+
+  h4 {
+    color: $neutral-60;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 32px;
+    text-align: left;
+  }
+
+  h6 {
+    align-items: center;
+    color: $blue-60;
+    display: flex;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    gap: 6px;
+    line-height: 26px;
+  }
+
+  > div {
+    display: flex;
+    flex: 1 50%;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 72px;
+    padding-right: 72px;
+
+    > img {
+      margin: 0;
+      width: 100%;
+    }
+  }
+
+  > div:first-child {
+    padding-left: 0;
+    width: 50%;
+  }
+
+  &.two-checklists {
+    > div:last-child {
+      align-items: flex-start;
+      background-color: transparent;
+      border: none;
+      border-radius: 0;
+      box-shadow: none;
+      display: flex;
+      justify-content: start;
+      text-align: left;
+
+      ul {
+        margin: 0;
+      }
+    }
+  }
+
+  > div:last-child {
+    align-items: center;
+    background-color: $neutral-98;
+    border: 1px solid $blue-90;
+    border-radius: 24px;
+    box-shadow: 0 1px 2px 0 rgba(16, 24, 40, 0.05);
+    overflow: hidden;
+    padding: 0;
+
+    @include media-breakpoint-down(lg) {
+      padding-top: 44px;
+    }
+
+    p:empty {
+      margin-bottom: 31px;
+    }
+
+    ul {
+      margin: 32px 24px;
+    }
+  }
+
+  > div.no-background {
+    background-color: $white;
+    border: none;
+    box-shadow: none;
+  }
+
+  &.flex-row-reverse {
+    > div:first-child {
+      padding-left: 72px;
+    }
+  }
+
+  div.badge {
+    background-color: $blue-90;
+    border: 1px solid $blue-85;
+    border-radius: 8px;
+    color: $blue-60;
+    margin-bottom: 16px;
+    padding: 8px;
+    place-self: flex-start;
+    text-transform: uppercase;
+  }
+
+  ul.checklist-outline {
+    margin-bottom: 0;
+
+    li {
+      font-size: 18px;
+      line-height: 26px;
+      text-align: left;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      a {
+        display: inline;
+      }
+    }
+  }
+
+  .feature-title {
+    align-items: center;
+    color: $blue-60;
+    display: flex;
+    font-size: 18px;
+    font-weight: 700;
+    gap: 10px;
+    margin-bottom: 32px;
+    margin-top: 28px;
+  }
+
+  &.background-color-both-sides {
+    background-color: $neutral-98;
+    border: 1px solid $blue-90;
+    border-radius: 24px;
+    box-shadow: 0 1px 2px 0 rgba(16, 24, 40, 0.05);
+    overflow: hidden;
+
+    > div:first-child {
+      padding-bottom: 72px;
+      padding-left: 72px;
+      padding-top: 72px;
+    }
+
+    > div:last-child {
+      border: none;
+      border-radius: 0;
+    }
+
+    &.flex-row-reverse {
+      > div:first-child {
+        padding-left: 72px;
+      }
+
+      > div:last-child {
+        padding-left: 0;
+      }
+    }
+  }
+
+  h2 {
+    font-size: 30px;
+    font-weight: 700;
+    margin-bottom: 24px;
+    text-align: left;
+  }
+
+  h3 {
+    color: $neutral-60;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 26px; /* 144.444% */
+    text-align: left;
+  }
+
+  p {
+    font-size: 20px;
+    line-height: 28px;
+    text-align: left;
+
+    &.feature-container__subtitle {
+      color: $neutral-60;
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 22px;
+      margin: 0 20px;
+      text-align: center;
+
+      svg {
+        rotate: 180deg;
+        translate: 0 -4px;
+      }
+    }
+  }
+
+  .quote {
+    border-left: 4px solid $neutral-95;
+
+    &__text {
+      color: $neutral-40;
+      font-size: 18px;
+      font-style: italic;
+      font-weight: 400;
+      line-height: 26px;
+    }
+
+    &__attribution {
+      &__name {
+        color: $neutral-40;
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 24px;
+      }
+
+      &__role {
+        color: $neutral-60;
+        font-size: 16px;
+        line-height: 24px;
+      }
+    }
+  }
+}
+
+@include media-breakpoint-down(lg) {
+  .feature-container {
+    flex-direction: column;
+    gap: 40px;
+    margin-bottom: 80px;
+
+    > div:first-child {
+      padding: 0 8px;
+      width: 100%;
+    }
+
+    &.flex-row-reverse {
+      flex-direction: column !important;
+
+      > div:first-child {
+        padding-left: 8px;
+      }
+    }
+
+    &.background-color-both-sides {
+      padding: 0;
+
+      > div:first-child {
+        padding: 30px 28px 0;
+      }
+
+      > div:last-child {
+        padding-left: 0;
+        padding-right: 0;
+      }
+
+      &.flex-row-reverse {
+        > div:first-child {
+          padding-left: 28px;
+          padding-top: 28px;
+
+          div.feature-title {
+            margin-top: 0;
+          }
+        }
+
+        > div:last-child {
+          padding-left: 0;
+          padding-right: 0;
+        }
+      }
+    }
+
+    h2 {
+      font-size: 24px;
+    }
+
+    p {
+      font-size: 18px;
+      line-height: 26px;
+    }
+
+    ul.checklist-outline {
+      li {
+        font-size: 16px;
+        line-height: 24px;
+      }
+    }
+  }
+}

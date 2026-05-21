@@ -1,0 +1,85 @@
+.events .upcoming-events {
+  padding-top: 64px;
+
+  .hero {
+    margin: 64px 0;
+  }
+}
+
+.upcoming-events {
+  align-items: center;
+  background-color: $neutral-98;
+  display: flex;
+  flex-direction: column;
+  padding: 0 32px 96px;
+  text-align: center;
+
+  .hero {
+    display: flex;
+    flex-direction: column;
+    max-width: 660px;
+    padding: 64px 0;
+    text-align: center;
+
+    h1 {
+      font-size: 48px;
+    }
+  }
+
+  .events-entry {
+    display: none;
+  }
+
+  .no-upcoming-events {
+    background-color: white;
+    border: 1px solid $blue-95;
+    border-radius: 12px;
+    display: none;
+    margin: 0;
+    max-width: 100%;
+    padding: 32px;
+    width: 800px;
+
+    &.show {
+      display: block;
+    }
+
+    .subscribe {
+      border: none;
+      margin-bottom: 0;
+      max-width: 800px;
+
+      &#mc-embedded-subscribe-form {
+        box-shadow: none;
+        margin-top: 0;
+      }
+
+      > div {
+        margin: 32px auto 0;
+        max-width: 440px;
+        width: 100%;
+      }
+    }
+  }
+
+  &.show {
+    .events-entry {
+      display: flex;
+    }
+
+    .no-upcoming-events {
+      display: none;
+    }
+
+    h1 {
+      display: inline;
+    }
+  }
+
+  @include media-breakpoint-down(lg) {
+    .no-upcoming-events .subscribe#mc-embedded-subscribe-form {
+      margin: 0;
+      padding: 0;
+    }
+  }
+}

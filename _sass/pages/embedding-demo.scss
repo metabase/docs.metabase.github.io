@@ -1,0 +1,232 @@
+.embedding-demo {
+  .demo {
+    padding: 96px 0 0;
+
+    h1 {
+      font-size: 48px;
+      font-weight: 900;
+      line-height: 56px;
+      text-align: center;
+    }
+
+    p {
+      font-size: 20px;
+      font-weight: 400;
+      line-height: 28px;
+      margin-bottom: 48px;
+      text-align: center;
+    }
+  }
+
+  a:hover {
+    color: white;
+  }
+
+  .address__bar {
+    width: 46%;
+
+    @include media-breakpoint-up(sm) {
+      width: 60%;
+    }
+
+    @include media-breakpoint-up(md) {
+      width: 70%;
+    }
+
+    &--refresh {
+      right: 0.5rem;
+    }
+
+    span {
+      font-size: 0.725rem;
+    }
+  }
+
+  .in-page-promo {
+    margin: 60px auto 0;
+    max-width: 660px;
+  }
+
+  .tabs-with-timer {
+    &__container {
+      background-color: $neutral-98;
+      border-top: 1px solid $blue-90;
+    }
+
+    &__content {
+      flex-direction: column;
+    }
+
+    &__nav__list__item {
+      button {
+        color: $blue-75;
+      }
+
+      &.selected {
+        button {
+          color: $blue-60;
+        }
+      }
+    }
+
+    p {
+      max-width: 520px;
+    }
+  }
+
+  .iframe-container {
+    border-radius: 0.5rem;
+    box-shadow: 0 0.25rem 1.5rem rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    margin-top: 64px;
+    overflow: hidden;
+    width: 100%;
+  }
+
+  .embedding-options {
+    background-color: $neutral-98;
+    padding: 80px 0 0;
+
+    h3 {
+      font-size: 30px;
+      font-weight: 700;
+      line-height: 36px;
+      margin-bottom: 64px;
+      text-align: center;
+    }
+
+    > div {
+      column-gap: 32px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+
+      > div {
+        background-color: white;
+        border: 1px solid $blue-90;
+        border-radius: 12px;
+        padding: 24px;
+        position: relative;
+        text-align: left;
+
+        h5 {
+          font-size: 24px;
+          font-weight: 700;
+          line-height: 32px;
+        }
+
+        h6 {
+          color: $neutral-60;
+          font-size: 20px;
+          font-weight: 400;
+          line-height: 28px;
+
+          a {
+            &.pro {
+              color: $blue-60;
+
+              &:hover {
+                color: $blue-40;
+              }
+            }
+
+            &.enterprise {
+              color: $purple-50;
+
+              &:hover {
+                color: $purple-40;
+              }
+            }
+          }
+        }
+
+        ul li {
+          color: $neutral-40;
+          font-size: 20px;
+          font-weight: 400;
+          line-height: 28px;
+        }
+
+        .badge {
+          background-color: $blue-90;
+          color: $blue-60;
+          position: absolute;
+          right: 20px;
+          top: 20px;
+
+          + h5 {
+            max-width: calc(100% - 60px);
+          }
+        }
+      }
+    }
+  }
+
+  .embedding-page,
+  .ready-to-build-with-embedding {
+    align-items: center;
+    background-color: $neutral-98;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 0;
+    margin-top: 0;
+
+    > div {
+      max-width: 1258px;
+    }
+  }
+
+  .ready-to-build-with-embedding {
+    padding-top: 64px;
+  }
+
+  .embedding-options > div > div ul {
+    padding-left: 0;
+
+    li {
+      background: url("/images/icons/list-doc-icon.svg") no-repeat left center;
+      background-position: 0 16px;
+      list-style: none;
+      margin: 0;
+      padding: 5px 10px 5px 19px;
+    }
+  }
+
+  @include media-breakpoint-down(lg) {
+    .demo h1 {
+      font-size: 36px;
+    }
+
+    .tabs-with-timer {
+      p {
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+    }
+
+    .embedding-options {
+      h3 {
+        font-size: 24px;
+        padding-left: 28px;
+        padding-right: 28px;
+      }
+
+      > div {
+        grid-template-columns: 1fr;
+
+        > div {
+          margin-bottom: 32px;
+        }
+      }
+    }
+
+    .ready-to-build-with-embedding {
+      padding-top: 36px;
+
+      > div {
+        margin-left: 28px;
+        margin-right: 28px;
+      }
+    }
+  }
+}
