@@ -58,12 +58,13 @@
         <span class="menu-heading">Recent Blog Posts</span>
         {% assign visible_posts = site.posts | where_exp: "post", "post.exclude-from-recommended != true" %}
         {% assign featured = visible_posts | first %}
+        {% assign post_image = featured.featured_image | default: featured.image %}
         <a class="w-100 post-with-image recent-blog-link mt-1" href="{{ featured.url }}">
           <div class="d-flex align-items-center position-relative overflow-hidden rounded-2 mb-3" id="recent-blog-image-wrapper">
             <img
               alt="Resources Image"
               class="position-absolute w-100"
-              src="{{ featured.featured_image }}" loading="lazy"/>
+              src="{{ post_image }}" loading="lazy"/>
           </div>
           <span class="h6 neutral-40 recent-blog-link-heading mb-3">{{ featured.title }}</span>
         </a>
