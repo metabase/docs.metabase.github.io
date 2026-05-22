@@ -912,28 +912,12 @@ Roadmap</a>
         <span class="menu-heading">Recent Blog Posts</span>
         
         
-        <a class="w-100 post-with-image recent-blog-link mt-1" href="/blog/strip-mining-era-of-open-source-security">
+        <a class="w-100 post-with-image recent-blog-link mt-1" href="">
           <div class="d-flex align-items-center position-relative overflow-hidden rounded-2 mb-3" id="recent-blog-image-wrapper">
-            <img alt="Resources Image" class="position-absolute w-100" src="/images/posts/exploit-farming.png" loading="lazy">
+            <img alt="Resources Image" class="position-absolute w-100" src="" loading="lazy">
           </div>
-          <span class="h6 neutral-40 recent-blog-link-heading mb-3">Welcome to the strip mining era of open source security</span>
+          <span class="h6 neutral-40 recent-blog-link-heading mb-3"></span>
         </a>
-        
-          <a class="w-100 recent-blog-link" href="/blog/metabase-ai-hackathon-winners">
-            <span class="h6 neutral-40 recent-blog-link-heading mb-3">Winners of the Metabase AI Hackathon</span>
-          </a>
-        
-          <a class="w-100 recent-blog-link" href="/blog/improving-performance-clojure-development-tools">
-            <span class="h6 neutral-40 recent-blog-link-heading mb-3">Improving the performance of the popular Clojure development tool clojure-lsp</span>
-          </a>
-        
-          <a class="w-100 recent-blog-link" href="/blog/ten-custom-subagents">
-            <span class="h6 neutral-40 recent-blog-link-heading mb-3">How we built ten custom subagents to tame a 500K-line Clojure codebase</span>
-          </a>
-        
-          <a class="w-100 recent-blog-link" href="/blog/metabase-ai-hackathon">
-            <span class="h6 neutral-40 recent-blog-link-heading mb-3">Metabase AI Hackathon</span>
-          </a>
         
       </div>
     </div>
@@ -6141,7 +6125,7 @@ Roadmap</a>
 
 <h3 id="view-access">View access</h3>
 
-<p>The group can see all the questions, dashboards, and models in the collection, as well as <a href="../exploration-and-organization/events-and-timelines">events and timelines</a>.</p>
+<p>The group can see all the questions, dashboards, and models in the collection, as well as <a href="../exploration-and-organization/events-and-timelines">events and timelines</a>. Note: Curate access includes View access.</p>
 
 <h3 id="no-access">No access</h3>
 
@@ -6175,7 +6159,21 @@ Roadmap</a>
 
 <h2 id="permissions-and-sub-collections">Permissions and sub-collections</h2>
 
-<p>A group can be given access to a collection located somewhere within one or more sub-collections <em>without</em> having to have access to every collection “above” it. For example, if a group had access to the “Super Secret Collection” that’s saved several layers deep within a “Marketing” collection that the group lacks access to, the “Super Secret Collection” would show up at the top-most level that the group <em>does</em> have access to.</p>
+<ul>
+  <li>
+    <p>Changing access to a collection doesn’t automatically change access to <em>existing</em> subcollections, but all <em>new</em> subcollections will inherit the access level.</p>
+
+    <p>For example, let’s say you have a <code class="language-plaintext highlighter-rouge">Campaigns</code> collection with a <code class="language-plaintext highlighter-rouge">2025 reports</code> subcollection, and you change the “Data team” group’s access to <code class="language-plaintext highlighter-rouge">Campaigns</code> from “View” to “Curate”. Then by default, Data team will get Curate access to <code class="language-plaintext highlighter-rouge">Campaigns</code> but will retain only “View” access to <code class="language-plaintext highlighter-rouge">2025 reports</code>. However, if after these permissions are configured, someone adds a new subcollection <code class="language-plaintext highlighter-rouge">2026 reports</code>, then Data team will get Curate access to “2026 reports” because new subcollections inherit permissions from the parent collection.</p>
+  </li>
+  <li>
+    <p>To change access for existing subcollections as well, toggle <strong>Also change sub-collections</strong> when changing collection access.</p>
+  </li>
+  <li>
+    <p>A group can be given access to a collection located somewhere within one or more sub-collections <em>without</em> having to have access to every collection “above” it.</p>
+
+    <p>For example, if a group had access to the “Super Secret Collection” that’s saved several layers deep within a “Marketing” collection that the group lacks access to, the “Super Secret Collection” would show up at the top-most level that the group <em>does</em> have access to.</p>
+  </li>
+</ul>
 
 <h2 id="deleting-collections">Deleting collections</h2>
 
