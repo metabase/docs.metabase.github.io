@@ -1,59 +1,68 @@
-const fs = require("fs");
+const { promises: fs } = require("fs");
 const https = require("https");
 const path = require("path");
 
-const CHROME_URL =
-  process.env.SHARED_CHROME_URL || "https://www.metabase.com/shared/chrome.json";
-const OUTPUT_PATH = path.resolve(__dirname, "../../../_data/shared_chrome.json");
+const chromeUrl =
+  process.env.SHARED_CHROME_URL ||
+  "https://www.metabase.com/shared/chrome.json";
+const outputPath = path.resolve(__dirname, "../../../_data/shared_chrome.json");
+const requiredKeys = ["stylesheets", "scripts", "header_html", "footer_html"];
 
-async function fetchSharedChrome() {
+function get(url) {
   return new Promise((resolve, reject) => {
-    https
-      .get(CHROME_URL, (response) => {
-        let body = "";
+    const request = https.get(url, (response) => {
+      const chunks = [];
 
-        response.on("data", (chunk) => {
-          body += chunk;
-        });
+      response.on("data", (chunk) => chunks.push(chunk));
+      response.on("error", reject);
+      response.on("end", () => {
+        const { statusCode, statusMessage } = response;
+        const body = Buffer.concat(chunks).toString("utf8");
 
-        response.on("end", () => {
-          if (response.statusCode < 200 || response.statusCode >= 300) {
-            reject(
-              new Error(
-                `Failed to fetch shared chrome from ${CHROME_URL}: ${response.statusCode}`,
-              ),
-            );
-            return;
-          }
+        if (statusCode < 200 || statusCode >= 300) {
+          reject(
+            new Error(
+              `Failed to fetch shared chrome from ${url}: ${statusCode} ${statusMessage}`,
+            ),
+          );
+          return;
+        }
 
-          try {
-            resolve(JSON.parse(body));
-          } catch (error) {
-            reject(error);
-          }
-        });
-      })
-      .on("error", reject);
+        resolve(body);
+      });
+    });
+
+    request.on("error", reject);
   });
 }
 
-function validateSharedChrome(chrome) {
-  const requiredKeys = ["stylesheets", "scripts", "header_html", "footer_html"];
-  const missingKeys = requiredKeys.filter((key) => !chrome[key]);
+async function fetchJson(url) {
+  const body = await get(url);
+  return JSON.parse(body);
+}
+
+function requireSharedChromeKeys(chrome) {
+  const missingKeys = requiredKeys.filter((key) => chrome[key] == null);
 
   if (missingKeys.length > 0) {
     throw new Error(
-      `Shared chrome payload is missing required keys: ${missingKeys.join(", ")}`,
+      `Shared chrome payload is missing required keys: ${missingKeys.join(
+        ", ",
+      )}`,
     );
   }
 }
 
-async function main() {
-  const chrome = await fetchSharedChrome();
-  validateSharedChrome(chrome);
+async function writeJson(filePath, data) {
+  await fs.writeFile(filePath, `${JSON.stringify(data, null, 2)}\n`);
+}
 
-  fs.writeFileSync(OUTPUT_PATH, `${JSON.stringify(chrome, null, 2)}\n`);
-  console.log(`Wrote ${OUTPUT_PATH}`);
+async function main() {
+  const chrome = await fetchJson(chromeUrl);
+  requireSharedChromeKeys(chrome);
+
+  await writeJson(outputPath, chrome);
+  console.log(`Wrote ${outputPath}`);
 }
 
 main().catch((error) => {
