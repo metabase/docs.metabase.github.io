@@ -1,0 +1,11 @@
+{% for script in site.data.shared_chrome.scripts %}
+  {% assign script_src = script.attributes.src %}
+
+  {% if script_src and script_src contains "sentry-cdn" %}
+    {% continue %}
+  {% endif %}
+
+  {% if script_src %}
+    <{{ script.tag }}{% for attribute in script.attributes %} {{ attribute[0] }}="{{ attribute[1] }}"{% endfor %}></{{ script.tag }}>
+  {% endif %}
+{% endfor %}
