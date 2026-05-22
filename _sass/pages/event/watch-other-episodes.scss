@@ -1,0 +1,126 @@
+.event .watch-other-episodes {
+  border: 1px solid $blue-90;
+  border-radius: 24px;
+  column-gap: 16px;
+  display: grid;
+  grid-template-columns: 40% 60%;
+  margin: 142px auto 96px;
+  max-width: 1280px;
+  width: 100%;
+
+  > div {
+    &:first-child {
+      margin-top: -58px;
+      padding: 0 72px 40px;
+
+      img {
+        border-radius: 24px;
+        width: 95%;
+      }
+
+      h5 {
+        font-size: 30px;
+        font-weight: 700;
+        margin-top: 32px;
+      }
+
+      p {
+        color: $neutral-40;
+        font-size: 20px;
+        line-height: 28px;
+        margin-top: 12px;
+      }
+    }
+
+    &:last-child {
+      position: relative;
+
+      > div {
+        height: 500px;
+        overflow-y: scroll;
+        padding-right: 72px;
+        position: relative;
+
+        > h3 {
+          color: $neutral-40;
+          font-size: 16px;
+          font-weight: 700;
+          margin: 48px 0 36px;
+
+          img {
+            height: 20px;
+            margin-left: 5px;
+            transform: scaleX(-1);
+          }
+        }
+      }
+
+      &::before {
+        background: linear-gradient(rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
+        content: "";
+        height: 40px;
+        position: absolute;
+        top: 0;
+        width: calc(100% - 40px);
+        z-index: 2;
+      }
+
+      &::after {
+        background: linear-gradient(rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%);
+        bottom: 0;
+        content: "";
+        height: 60px;
+        position: absolute;
+        width: calc(100% - 40px);
+        z-index: 2;
+      }
+    }
+  }
+
+  @include media-breakpoint-down(lg) {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    margin: 96px 32px 48px;
+    padding: 0;
+    width: calc(100% - 64px);
+
+    > div {
+      &:first-child {
+        margin: -58px 0 0;
+        padding: 0 20px;
+
+        img {
+          border-radius: 12px;
+          height: 124px;
+          width: auto;
+        }
+
+        h5 {
+          font-size: 24px;
+          font-weight: 700;
+          margin-top: 32px;
+        }
+
+        p {
+          color: $neutral-40;
+          font-size: 20px;
+          line-height: 28px;
+          margin-top: 12px;
+        }
+      }
+
+      &:last-child {
+        padding: 0 20px;
+
+        > div {
+          padding-right: 0;
+        }
+
+        .events-entry {
+          width: 100%;
+        }
+      }
+    }
+  }
+}

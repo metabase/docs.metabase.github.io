@@ -1,0 +1,39 @@
+.padded {
+  backdrop-filter: blur(1px);
+  background-color: #eef6fc88;
+  border: 1px solid $blue-90;
+  border-radius: 24px;
+  display: block;
+  margin: 0 auto 42px;
+  max-width: 1216px;
+  padding: 12px;
+  position: relative;
+  width: 100%;
+  z-index: 2;
+
+  > * {
+    @include shadow-xs;
+
+    border: 1px solid $blue-90;
+    border-radius: 16px;
+  }
+
+  @include media-breakpoint-down(lg) {
+    border-radius: 16px;
+    padding: 8px;
+    width: calc(100% - 40px);
+
+    > * {
+      border-radius: 8px;
+    }
+  }
+}
+
+a.padded {
+  transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out, transform 0.3s ease-in-out !important;
+
+  &:hover {
+    background-color: #e4f0f988;
+    border-color: $blue-75;
+  }
+}

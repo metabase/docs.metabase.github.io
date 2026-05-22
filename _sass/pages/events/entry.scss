@@ -1,0 +1,104 @@
+.events .events-entry {
+  align-items: center;
+  background-color: white;
+  border: 1px solid $blue-90;
+  border-radius: 24px;
+  cursor: pointer;
+  display: flex;
+  gap: 24px;
+  margin-bottom: 24px;
+  max-width: 800px;
+  padding: 24px;
+  width: 100%;
+
+  &:hover {
+    background-color: $neutral-99;
+    border: 1px solid $blue-85;
+
+    div {
+      &.btn {
+        background-color: $blue-40;
+        color: white;
+      }
+    }
+  }
+
+  &.hidden {
+    display: none;
+  }
+
+  > img {
+    border-radius: 12px;
+    cursor: pointer;
+    height: 160px;
+  }
+
+  > div {
+    text-align: left;
+
+    h3 {
+      color: $neutral-15;
+      font-size: 24px;
+      font-weight: 700;
+      line-height: 32px;
+      margin-bottom: 16px;
+    }
+
+    p {
+      color: $neutral-60;
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 24px;
+      margin-bottom: 8px;
+
+      > img {
+        height: 20px;
+        margin-right: 4px;
+        position: relative;
+        top: -2px;
+        width: auto;
+      }
+    }
+
+    div {
+      &.btn {
+        padding: 12px 18px;
+        transition: background-color 0.1 ease;
+      }
+
+      &.watch {
+        align-items: center;
+        display: flex;
+        font-weight: 700;
+        gap: 8px;
+
+        div {
+          background-color: $blue-60;
+          border-radius: 50%;
+          font-size: 14px;
+
+          svg {
+            height: 8px;
+            margin: 7px 6px 7px 7px;
+            width: 8px;
+          }
+        }
+      }
+    }
+  }
+
+  @include media-breakpoint-down(lg) {
+    align-items: flex-start;
+    flex-direction: column;
+
+    img {
+      height: auto;
+      width: 96px;
+    }
+
+    p {
+      font-size: 14px;
+      line-height: 22px;
+    }
+  }
+}

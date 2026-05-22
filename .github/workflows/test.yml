@@ -1,0 +1,29 @@
+name: Test Docs Build
+
+on:
+  pull_request:
+  push:
+    branches:
+      - "master"
+
+jobs:
+  test-build:
+    name: Test Jekyll Build
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v6
+      - name: Setup Ruby # uses version from .ruby-version
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+          cache-version: 0
+      - name: Build the Jekyll Site
+        env:
+          JEKYLL_ENV: production
+          NODE_ENV: production
+        run: |
+          # Clear the existing site:
+          rm -rf _site
+          # Build the jekyll site:
+          script/build

@@ -1,0 +1,77 @@
+.hover-raise-sm {
+  transition: transform 0.3s;
+
+  &:hover {
+    transform: translateY(-0.25rem);
+  }
+}
+
+.hover-shadow {
+  transition: box-shadow 0.3s;
+
+  &:hover {
+    box-shadow: 0 0.25rem 1.5rem rgba(0, 0, 0, 0.1);
+  }
+}
+
+.hover-blue-60 {
+  transition: color 0.3s;
+
+  &:hover {
+    color: $blue-60;
+  }
+}
+
+.marquee {
+  display: flex;
+  flex-direction: row;
+  margin: auto;
+  max-width: 1320px;
+
+  .inner-marquee {
+    animation: marquee 90s linear infinite;
+  }
+
+  &.marquee--slower .inner-marquee {
+    animation: marquee 60s linear infinite;
+  }
+
+  &.marquee--faster .inner-marquee {
+    animation: marquee 80s linear infinite;
+  }
+
+  &.marquee__trusted:hover {
+    .inner-marquee {
+      animation-play-state: paused;
+      filter: blur(0.2rem);
+      opacity: 0.3;
+    }
+
+    .btn-primary {
+      opacity: 1;
+      z-index: 1;
+    }
+  }
+
+  .marquee__label {
+    box-shadow: $box-shadow;
+    color: $neutral-40;
+    font-size: 0.875rem;
+    font-weight: 400;
+    transition: all 0.2s ease-in-out;
+
+    &:hover {
+      color: $blue-60;
+    }
+  }
+}
+
+@keyframes marquee {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(-100%, 0); }
+}
+
+@keyframes marquee-reverse {
+  0% { transform: translate(-100%, 0); }
+  100% { transform: translate(0, 0); }
+}

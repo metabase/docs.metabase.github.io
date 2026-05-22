@@ -1,0 +1,114 @@
+.ai-data-generator {
+  column-gap: 30px;
+  display: grid;
+  grid-template-columns: 1fr 324px;
+  padding-left: 0;
+  row-gap: 0;
+
+  &::before {
+    background-color: $neutral-95;
+    bottom: 0;
+    box-shadow: 50vw 0 0 $neutral-95, -50vw 0 0 $neutral-95;
+    content: "";
+    display: block;
+    height: 1px;
+    position: absolute;
+    width: 100%;
+  }
+
+  @include media-breakpoint-down(lg) {
+    column-gap: 0;
+    grid-template-columns: 1fr;
+    row-gap: 120px;
+  }
+
+  > div {
+    &:first-child {
+      background-color: $neutral-98;
+      border-right: 1px solid $neutral-95;
+      box-shadow: -30vw 0 $neutral-98;
+
+      @include media-breakpoint-down(lg) {
+        border-right: none;
+        box-shadow: -50vw 0 $neutral-98, 50vw 0 $neutral-98;
+      }
+    }
+
+    &:last-child {
+      background-color: white;
+
+      @include media-breakpoint-down(lg) {
+        margin: 0;
+      }
+    }
+
+    > a {
+      align-items: center;
+      display: flex;
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 24px;
+      margin: 20px 0 40px;
+
+      svg {
+        height: 12px;
+        margin-left: -4px;
+        rotate: -90deg;
+      }
+    }
+
+    h1 {
+      font-size: 30px;
+      font-weight: 700;
+      line-height: 36px;
+      margin: 38px 0 32px;
+      text-align: left;
+    }
+
+    h2 {
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 26px;
+      margin-bottom: 24px;
+    }
+
+    .how-it-works {
+      display: grid;
+      grid-template-columns: 60px 1fr;
+
+      span {
+        align-items: center;
+        background-color: $neutral-95;
+        border: 1px solid $neutral-80;
+        border-radius: 50%;
+        display: flex;
+        font-size: 18px;
+        font-weight: 700;
+        height: 36px;
+        justify-content: center;
+        width: 36px;
+      }
+
+      p {
+        font-size: 18px;
+        line-height: 26px;
+      }
+    }
+
+    .faq {
+      margin: 0 0 120px;
+    }
+  }
+
+  iframe {
+    height: 1420px;
+    left: -16px;
+    position: relative;
+    width: calc(100% + 16px);
+
+    @include media-breakpoint-down(lg) {
+      left: 0;
+      width: 100%;
+    }
+  }
+}

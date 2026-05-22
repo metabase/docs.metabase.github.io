@@ -1,0 +1,68 @@
+.responsive-page .feature-container {
+  align-items: center;
+
+  &.see-who-did-what {
+    img {
+      margin: 70px 0 30px auto;
+      width: 94%;
+    }
+  }
+
+  > div.no-background {
+    &.slider-comparison-container {
+      padding: 50px;
+    }
+  }
+
+  > div.client-reviews {
+    box-shadow: none;
+    height: 400px;
+    overflow: hidden;
+
+    p.review-quote {
+      color: $neutral-15;
+      font-size: 0.875rem;
+    }
+  }
+
+  /* this video has extra transparent pixels */
+  div#sincera-video {
+    margin-bottom: -3px;
+  }
+
+  &.background-color-both-sides {
+    > div.client-reviews {
+      /* Prevents an odd tingle of color */
+      border-top: 1px solid $neutral-98;
+      height: inherit;
+
+      .review-card-container::before {
+        background-image: linear-gradient(to top, rgba(255, 255, 255, 0), $neutral-98 90%);
+      }
+
+      .review-card-container::after {
+        background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0), $neutral-98 90%);
+      }
+    }
+  }
+}
+
+@include media-breakpoint-down(lg) {
+  .responsive-page .product-intro {
+    padding-top: 0;
+  }
+
+  .responsive-page .feature-container {
+    > div.no-background {
+      &.slider-comparison-container {
+        padding: 50px 20px;
+      }
+    }
+  }
+}
+
+.responsive-page .product-intro .feature-container {
+  &.background-color-both-sides .client-reviews {
+    height: 400px;
+  }
+}

@@ -93,18 +93,6 @@ jobs:
         run: |
           bb script/cleanup_cloud_docs.clj
 
-      - name: Checkout Control files from Marketing Repo
-        uses: actions/checkout@v4
-        with:
-          repository: metabase/metabase.github.io
-          ref: master
-          path: .marketing_repo
-          token: ${{ secrets.METABASE_AUTOMATION_USER_TOKEN }}
-
-      - name: Merge control files from Marketing Repo
-        run: |
-          bb script/sync_repo.clj --from-repo .marketing_repo
-
       - name: "bun lint-markdown"
         run: |
           bun run lint-markdown
@@ -159,10 +147,6 @@ jobs:
           --annotation "$ANNOTATION" \
           --pr-number "$PR_NUMBER" \
           --update-dirs "$UPDATE_DIRS"
-
-      - name: Remove control files from Marketing Repo
-        run: |
-          bb script/sync_repo.clj --delete
 
       - name: Merge Updated Docs
         run: |

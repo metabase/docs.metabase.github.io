@@ -1,0 +1,130 @@
+.learn .checkpoint {
+  background-color: $blue-95;
+  border: 1px solid $blue-85;
+  border-radius: 12px;
+  overflow: auto;
+  padding: 24px;
+  position: relative;
+
+  button {
+    float: right;
+    margin-top: 10px;
+    overflow: auto;
+    padding: 8px 14px;
+
+    &.undo {
+      background-color: transparent;
+      border: none;
+      color: $blue-60;
+      font-weight: 700;
+      margin: 0;
+      padding: 0;
+    }
+  }
+
+  div {
+    margin-left: 22px;
+  }
+
+  &__content-container {
+    position: relative;
+  }
+
+  &__content {
+    max-height: 1000px;
+    overflow: hidden;
+    transition: max-height 0.5s ease-in-out;
+
+    &.hidden {
+      max-height: 0;
+    }
+  }
+
+  &__chevron {
+    cursor: pointer;
+    margin-top: 0;
+    opacity: 0;
+    position: absolute;
+    right: 14px;
+    top: 7px;
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    width: 18px;
+
+    &.show {
+      opacity: 1;
+    }
+
+    &.inverted {
+      transform: rotate(180deg);
+    }
+  }
+
+  &__checkmark {
+    cursor: pointer;
+    left: -30px;
+    position: absolute;
+    top: 2px;
+    transition: opacity 0.3s ease-in-out;
+    width: 60px;
+    z-index: 10;
+
+    &.hide {
+      opacity: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    &.unchecked {
+      opacity: 0.6;
+    }
+
+    &.checked {
+      opacity: 1;
+      top: 2px;
+
+      circle {
+        transition: stroke 0.3s ease-in-out, fill 0.3s ease-in-out;
+      }
+
+      &:hover {
+        circle {
+          fill: $green-40;
+          stroke: $green-40;
+        }
+      }
+    }
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  a {
+    &.copy-clip {
+      display: none !important;
+    }
+  }
+
+  h3 {
+    color: $neutral-40;
+    font-weight: 700;
+    margin: 0 0 4px 10px;
+    padding-right: 40px;
+  }
+
+  h6 {
+    color: $blue-60;
+    font-size: 11px;
+    letter-spacing: 1.1px;
+    text-transform: uppercase;
+  }
+
+  img {
+    background-color: transparent;
+    box-shadow: none;
+  }
+
+  p:last-child {
+    margin-bottom: 0;
+  }
+}

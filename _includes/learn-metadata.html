@@ -1,0 +1,30 @@
+{% comment %}
+Since we're storing Learn lesson summaries in the data/learn.yml,
+we'll need to grab that data here to populate the description for sharing the articles.
+{% endcomment %}
+
+{% include learn/post-constants.html %}
+
+{% assign title = article.name | append: " | Metabase Learn" %}
+
+<title>{{ title }}</title>
+
+<!-- Twitter cards -->
+<meta name="twitter:site" content="@{{ site.twitter_username }}" />
+{% if page.author %}
+<meta name="twitter:creator" content="{{ page.author }}" />
+{% endif %}
+<meta name="twitter:title" content="{{ title }}" />
+<meta name="twitter:description" content="{{ article.summary }}" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="{{ site.url }}{{ image_social }}" />
+<!-- end of Twitter cards -->
+
+<!-- Open Graph metadata -->
+<meta property="og:site_name" content="Metabase | Business Intelligence, Dashboards, and Data Visualization" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="{{ page.url | replace '/index.html', '' | prepend: site.url }}" />
+<meta name="title" property="og:title" content="{{ title }}" />
+<meta name="description" property="og:description" content="{{ article.summary }}" />
+<meta name="image" property="og:image" content="{{ site.url }}{{ image_social }}" />
+<!-- end of Open Graph metadata -->

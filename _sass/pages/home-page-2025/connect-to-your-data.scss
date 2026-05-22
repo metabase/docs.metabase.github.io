@@ -1,0 +1,61 @@
+.home-page-2025 .connect-to-your-data {
+  position: relative;
+
+  .container {
+    @include media-breakpoint-down(lg) {
+      padding: 0;
+    }
+  }
+
+  .lottie-container {
+    height: 520px;
+    left: 0;
+    position: absolute;
+    top: calc(50vh - 210px);
+    transform: translateY(-50%);
+    width: calc(50% - 372px);
+
+    @include media-breakpoint-down(lg) {
+      // TODO: can be displayed later,
+      // needs some mighty calculations to place the lottie correctly on any mobile viewport
+      display: none;
+
+      svg {
+        rotate: 90deg;
+      }
+    }
+
+    @include media-breakpoint-up(xl) {
+      top: 250px;
+    }
+
+    &.left {
+      mask-image: linear-gradient(to left, transparent 0, #000 0, #000 calc(100% - 32px), transparent 100%);
+    }
+
+    &.right {
+      left: auto;
+      mask-image: linear-gradient(to right, transparent 0, #000 0, #000 calc(100% - 32px), transparent 100%);
+      right: 0;
+      z-index: 1;
+    }
+
+    > svg {
+      height: auto !important;
+    }
+  }
+
+  img {
+    position: relative;
+    z-index: 2;
+  }
+
+  .title > div {
+    &::before {
+      background: url("/images/home-page-2025/connect.gif") no-repeat center/contain;
+      content: "";
+      inset: 5px;
+      position: absolute;
+    }
+  }
+}

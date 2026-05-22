@@ -1,0 +1,210 @@
+.home-page .hero {
+  align-items: center;
+  background-color: $neutral-98;
+  background-image: url("/images/home/bg-harbor.svg");
+  background-position: center top 48px;
+  background-repeat: no-repeat;
+  border-bottom: 1px solid $blue-90;
+  display: flex;
+  flex-direction: column;
+  margin: 0 0 30px;
+  padding-top: 2rem;
+  width: 100%;
+
+  @include media-breakpoint-up(sm) {
+    padding-top: 4rem;
+  }
+
+  h1 {
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 36px;
+    margin: 2px 0 16px;
+    max-width: calc(100% - 32px);
+    text-align: center;
+  }
+
+  > p {
+    color: $neutral-40;
+    font-size: 20px;
+    line-height: 28px;
+    margin-bottom: 1.5rem;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 592px;
+    text-align: center;
+    width: calc(100% - 32px);
+  }
+
+  > div {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    max-width: calc(100% - 32px);
+  }
+
+  .Button {
+    font-size: 16px;
+    padding: 10px 20px;
+
+    @include media-breakpoint-down(md) {
+      font-size: 14px;
+    }
+  }
+
+  p.zero-to-dashboard {
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 22px;
+    margin: 64px 0 20px;
+    text-align: center;
+
+    img {
+      margin-right: 5px;
+      position: relative;
+      top: 4px;
+    }
+
+    span {
+      color: $neutral-60;
+    }
+  }
+
+  a.padded {
+    max-width: 1032px;
+    width: calc(100% - 32px);
+
+    div {
+      align-items: center;
+      backdrop-filter: blur(4px);
+      background:
+        radial-gradient(
+          circle,
+          $blue-60 0 53px,
+          #c2daf080 53px 60px
+        );
+      border: none;
+      border-radius: 50%;
+      display: flex;
+      height: 120px;
+      justify-content: center;
+      left: 50%;
+      position: absolute;
+      top: 50%;
+      transform: translate(-50%, -50%) scale(1);
+      transform-origin: center;
+      transition: all 0.3s ease;
+      width: 120px;
+
+      @include media-breakpoint-down(md) {
+        background:
+          radial-gradient(
+            circle,
+            $blue-60 0 35px,
+            #c2daf080 35px 40px
+          );
+        height: 80px;
+        width: 80px;
+
+        svg {
+          height: 24px;
+          width: 24px;
+        }
+      }
+    }
+
+    &:hover {
+      transform: scale(1.02);
+
+      div {
+        transform: translate(-50%, -50%) scale(1.05);
+      }
+    }
+  }
+
+  .whats-new {
+    @include shadow-xs;
+
+    align-items: flex-start;
+    background-color: $blue-95;
+    border: 1px solid $blue-90;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    justify-content: space-between;
+    margin: 64px auto 80px;
+    max-width: 592px;
+    padding: 16px 24px;
+    position: relative;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    width: calc(100% - 32px);
+
+    &:hover {
+      @include shadow-md;
+
+      background-color: $blue-90;
+      border-color: $blue-60;
+
+      > svg {
+        background-color: $blue-85;
+      }
+    }
+
+    > * {
+      max-width: calc(100% - 80px);
+    }
+
+    h4 {
+      color: $blue-60;
+      font-size: 14px;
+      font-weight: 700;
+      left: -2px;
+      line-height: 22px;
+      margin-bottom: 4px;
+      position: relative;
+
+      svg {
+        height: 18px;
+        position: relative;
+        top: -2px;
+      }
+    }
+
+    h3 {
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 28px;
+      margin-bottom: 4px;
+    }
+
+    p {
+      color: $neutral-40;
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 24px;
+      margin: 0;
+    }
+
+    > svg {
+      align-items: center;
+      background-color: $blue-90;
+      border-radius: 50%;
+      display: flex;
+      flex-shrink: 0;
+      height: 46px;
+      justify-content: center;
+      padding: 16px;
+      position: absolute;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      transition: background-color 0.3s ease;
+      width: 46px;
+
+      path {
+        fill: $blue-60;
+      }
+    }
+  }
+}
