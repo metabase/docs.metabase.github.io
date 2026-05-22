@@ -39,10 +39,11 @@
     "opengraph-glossary": "node script/_data/bin/opengraph.js --folder _glossary --properties title",
     "opengraph-learn": "node script/_data/bin/opengraph.js --folder _learn --properties title,image,categories",
     "all-opengraphs": "bun run opengraph-community && bun run opengraph-case-studies && bun run opengraph-dashboards && bun run opengraph-data-sources && bun run opengraph-docs && bun run opengraph-glossary && bun run opengraph-learn",
+    "shared-chrome": "node script/_data/bin/shared-chrome.js",
     "jekyll:clean": "rm -f -r _site && rm -f -r .sass-cache && rm -f .jekyll-metadata",
-    "jekyll:start": "bundle exec jekyll serve --config _config.dev.yml --livereload --incremental --port=4321",
+    "jekyll:start": "bun run shared-chrome && bundle exec jekyll serve --config _config.dev.yml --livereload --incremental --port=4321",
     "jekyll:clean-start": "bun run jekyll:clean && bun run jekyll:start",
-    "jekyll:build": "bundle exec jekyll build --config _config.yml",
+    "jekyll:build": "bun run shared-chrome && bundle exec jekyll build --config _config.yml",
     "frontend:dev": "webpack --watch --mode=development --stats-error-details",
     "frontend:build": "webpack --progress --mode=production",
     "cloudflare:remove-heavy-files": "find ./_site -type f -size +25M | xargs rm"
