@@ -17,8 +17,6 @@ redirect_from:
 
 {% include plans-blockquote.html feature="Full app embedding" convert_pro_link_to_embedding=true %}
 
-{% include shared/in-page-promo-embedding-workshop.html %}
-
 **Full app embedding** lets you embed the entire Metabase app in an iframe. Full app embedding integrates your [permissions](../permissions/introduction) and [SSO](../people-and-groups/start#authentication) to give people the right level of access to [query](../questions/query-builder/editor) and [drill-down](/learn/metabase-basics/querying-and-dashboards/questions/drill-through) into your data.
 
 > If you are just starting out with Metabase embedding, consider using [Modular embedding](./modular-embedding) instead of full app embedding - it's an improved, more customizable option for embedding individual Metabase components.
@@ -173,8 +171,6 @@ To manually log someone out of Metabase, load the following URL (for example, in
 ```sh
 https://metabase.yourcompany.com/auth/logout
 ```
-
-If you're using [JWT](../people-and-groups/authenticating-with-jwt) for SSO, we recommend setting the `exp` (expiration time) property to a short duration (e.g., 1 minute).
 
 ## Supported postMessage messages _from_ embedded Metabase
 

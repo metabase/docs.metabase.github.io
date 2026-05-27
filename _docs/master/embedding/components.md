@@ -53,10 +53,6 @@ If you surround your attribute value with double quotes, make sure to use single
 ></metabase-dashboard>
 ```
 
-## Resizing dashboards to fit their content
-
-The `<metabase-dashboard>` web component automatically resizes to fit its content. No additional configuration is needed.
-
 ## Question
 
 To render a question (chart):
@@ -112,6 +108,8 @@ To render the AI chat interface:
 ```html
 <metabase-metabot></metabase-metabot>
 ```
+
+If you're using the SDK, you can use either the [`MetabotQuestion`](./sdk/ai-chat#example) component or the [`useMetabot`](./sdk/ai-chat#building-custom-ai-chat-uis-with-usemetabot) hook for a custom UI.
 
 ### Attributes
 

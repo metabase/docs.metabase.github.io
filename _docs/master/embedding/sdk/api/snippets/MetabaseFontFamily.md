@@ -15,6 +15,7 @@ type MetabaseFontFamily =
   | "Merriweather"
   | "Open Sans"
   | "Lato"
+  | "Inter"
   | "Noto Sans"
   | "Roboto Slab"
   | "Source Sans Pro"

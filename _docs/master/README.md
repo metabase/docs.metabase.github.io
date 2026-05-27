@@ -159,8 +159,13 @@ Metabase's reference documentation.
 - [AI overview](./ai/start)
 - [Metabot](./ai/metabot)
 - [AI settings](./ai/settings)
+- [AI usage controls](./ai/usage-controls)
+- [AI usage auditing](./ai/usage-auditing)
+- [AI customization](./ai/customization)
+- [AI system prompts](./ai/system-prompts)
 - [Agent API](./ai/agent-api)
 - [MCP server](./ai/mcp)
+- [Metabot in Slack](./ai/metabot-slack)
 
 ### Exploration and organization
 

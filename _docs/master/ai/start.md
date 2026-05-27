@@ -11,8 +11,6 @@ layout: new-docs
 
 # AI in Metabase
 
-> AI features are available as an add-on on [Metabase Cloud](/features/metabot-ai), or on self-hosted Metabase with your own AI provider API key.
-
 ## [Metabot](./metabot)
 
 Metabot is an AI assistant that helps you explore and analyze your data.
@@ -20,6 +18,18 @@ Metabot is an AI assistant that helps you explore and analyze your data.
 ## [AI settings](./settings)
 
 Connect an AI provider and configure AI features like Metabot.
+
+## [AI usage controls](./usage-controls)
+
+Control who can use Metabot, and set token and message limits.
+
+## [AI customization](./customization)
+
+Customize Metabot's name, icon, and illustrations.
+
+## [AI system prompts](./system-prompts)
+
+Add standing instructions for Metabot's tools.
 
 ## [Agent API](./agent-api)
 
@@ -32,3 +42,7 @@ Connect MCP-compatible AI clients to your Metabase.
 ## [Metabot in Slack](./metabot-slack)
 
 Chat with Metabot directly in Slack — ask questions, get charts, and manage subscriptions without leaving Slack.
+
+## [AI usage auditing](./usage-auditing)
+
+See how people are using the AI features in your Metabase.
