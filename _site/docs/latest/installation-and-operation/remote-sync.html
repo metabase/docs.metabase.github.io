@@ -6278,7 +6278,25 @@ Roadmap</a>
 <ul>
   <li><strong>GitHub</strong>: Create a <a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens">fine-grained personal access token</a> with <strong>Contents: Read and write</strong> and <strong>Metadata: Read-only</strong> permissions.</li>
   <li><strong>GitLab</strong>: In <strong>User Settings</strong> &gt; <strong>Personal access tokens</strong>, <a href="https://docs.gitlab.com/user/profile/personal_access_tokens/">create a token</a> with <strong>read_repository</strong> and <strong>write_repository</strong> scopes. Tokens have an expiration date (your admin may set a maximum lifetime).</li>
-  <li><strong>Bitbucket</strong>: In your <a href="https://id.atlassian.com/manage-profile/security">Atlassian account settings</a> under <strong>Security</strong>, click <strong>Create API token with scopes</strong>. Select Bitbucket, search for “repos”, and grant <code class="language-plaintext highlighter-rouge">read:repository:bitbucket</code> and <code class="language-plaintext highlighter-rouge">write:repository:bitbucket</code> (write does not include read). Tokens expire and can’t be modified after creation.</li>
+  <li>
+    <p><strong>Bitbucket</strong>: In your Bitbucket repository, go to <strong>Repository settings</strong> &gt; <strong>Security</strong> &gt; <strong>Access tokens</strong> and click <strong>Create access token</strong>. Give it a name and, under <strong>Scopes</strong>, select:</p>
+
+    <ul>
+      <li><strong>Repositories</strong>: <strong>Read</strong> and <strong>Write</strong></li>
+      <li><strong>Pull requests</strong>: <strong>Read</strong> and <strong>Write</strong></li>
+    </ul>
+
+    <p>Click <strong>Create</strong> and copy the token immediately, you can’t view the token again after closing the dialog.</p>
+
+    <p>The created token must have these scopes (visible in the <strong>View access token</strong> dialog after creation):</p>
+
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">repository</code></li>
+      <li><code class="language-plaintext highlighter-rouge">repository:write</code></li>
+      <li><code class="language-plaintext highlighter-rouge">pullrequest</code></li>
+      <li><code class="language-plaintext highlighter-rouge">pullrequest:write</code></li>
+    </ul>
+  </li>
 </ul>
 
 <h3 id="3-connect-your-development-metabase-to-your-repository">3. Connect your development Metabase to your repository</h3>
@@ -6355,7 +6373,23 @@ Roadmap</a>
 <ul>
   <li><strong>GitHub</strong>: Create a <a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens">fine-grained personal access token</a> with <strong>Contents: Read-only</strong> and <strong>Metadata: Read-only</strong> permissions.</li>
   <li><strong>GitLab</strong>: In <strong>User Settings</strong> &gt; <strong>Personal access tokens</strong>, <a href="https://docs.gitlab.com/user/profile/personal_access_tokens/">create a token</a> with <strong>read_repository</strong> scope only.</li>
-  <li><strong>Bitbucket</strong>: In your <a href="https://id.atlassian.com/manage-profile/security">Atlassian account settings</a> under <strong>Security</strong>, click <strong>Create API token with scopes</strong>. Select Bitbucket and grant <code class="language-plaintext highlighter-rouge">read:repository:bitbucket</code> only.</li>
+  <li>
+    <p><strong>Bitbucket</strong>: In your Bitbucket repository, go to <strong>Repository settings</strong> &gt; <strong>Security</strong> &gt; <strong>Access tokens</strong> and click <strong>Create access token</strong>. Under <strong>Scopes</strong>, select:</p>
+
+    <ul>
+      <li><strong>Repositories</strong>: <strong>Read</strong></li>
+      <li><strong>Pull requests</strong>: <strong>Read</strong></li>
+    </ul>
+
+    <p>Leave Write and all other scope groups unchecked. Click <strong>Create</strong> and copy the token immediately.</p>
+
+    <p>The created token must have these scopes (visible in the <strong>View access token</strong> dialog after creation):</p>
+
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">repository</code></li>
+      <li><code class="language-plaintext highlighter-rouge">pullrequest</code></li>
+    </ul>
+  </li>
 </ul>
 
 <h3 id="7-connect-your-production-metabase-to-your-repository">7. Connect your production Metabase to your repository</h3>
