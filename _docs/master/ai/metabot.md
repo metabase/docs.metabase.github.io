@@ -22,16 +22,17 @@ To set up Metabot, see [Metabot settings](./settings).
 
 ## What Metabot can do
 
-Metabot can help you to:
+Here's a non-exhaustive list of things Metabot can help with:
 
-- [AI exploration](#ai-exploration).
+- [Answer data questions asked with natural language](#ai-exploration).
 - [Create a chart using the query builder](#how-metabot-uses-the-query-builder) from a natural language query.
 - [Generate SQL in the native editor](../questions/native-editor/writing-sql) from natural language. (Currently, only SQL is supported.)
 - [Edit SQL directly in the native editor](#inline-sql-editing).
 - [Analyze a chart](#analyze-charts-with-metabot).
 - [Fix errors in SQL code](#have-metabot-fix-sql-queries).
-- Answer questions from our documentation (as in, the literature you're reading right now).
-- [Chat with Metabot in Slack](./metabot-slack).
+- [Generate transforms](../data-studio/transforms/transforms-overview#use-metabot-to-generate-code-for-transforms)
+- [Generate charts in documents](../documents/introduction)
+- [Answer questions from Slack](./metabot-slack).
 
 Like with all generative AI, you'll always need to double-check results.
 
@@ -136,8 +137,6 @@ When answering questions in AI exploration, Metabot searches a limited set of co
 
 Metabot is getting smarter all the time, but there are some things it can't do yet:
 
-- **Custom expressions.** Metabot can't use [custom expressions](../questions/query-builder/expressions-list) in query builder questions.
-- **Multi-level aggregation.** Metabot is limited to a single level of aggregation and grouping.
 - **SQL variables.** Metabot can't generate SQL queries that include [SQL parameters](../questions/native-editor/sql-parameters) (like filters or field filters).
 - **Goal lines.** Metabot can't add [goal lines](../questions/visualizations/line-bar-and-area-charts#goal-lines) to charts.
 - **Chart formatting.** Metabot can't change visualization settings like colors, axis labels, or number formatting.
