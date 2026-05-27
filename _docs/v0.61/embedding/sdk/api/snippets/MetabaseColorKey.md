@@ -56,6 +56,7 @@ type MetabaseColorKey =
   | "background-secondary-inverse"
   | "background-selected"
   | "background-success"
+  | "background-success-secondary"
   | "background-tertiary"
   | "background-tertiary-inverse"
   | "background-warning"
