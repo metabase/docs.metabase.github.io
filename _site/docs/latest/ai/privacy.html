@@ -9,7 +9,7 @@
 
   
    
-  <link href="https://www.metabase.com/docs/latest/installation-and-operation/privacy" rel="canonical">
+  <link href="https://www.metabase.com/docs/latest/ai/privacy" rel="canonical">
   
   
 
@@ -52,12 +52,12 @@ window.redirectTo = function redirectTo(theLocation) {
 
 
 
-<title>Privacy | Metabase Documentation</title>
+<title>AI privacy | Metabase Documentation</title>
 <!-- Twitter cards -->
 <meta name="twitter:site" content="@metabase">
 
-<meta name="twitter:title" content="Privacy | Metabase Documentation">
-<meta name="twitter:description" content="Privacy Do you need a Data Processing Agreement with Metabase to comply with GDPR? Self-hosted If you self-host your Metabase instance, we have no access to any of your data, UNLESS you opted in to give us anonymized...">
+<meta name="twitter:title" content="AI privacy | Metabase Documentation">
+<meta name="twitter:description" content="What data Metabase sends to AI providers and MCP clients when you use AI features, and what Metabase the company collects.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -65,9 +65,9 @@ window.redirectTo = function redirectTo(theLocation) {
 <!-- Open Graph metadata -->
 <meta property="og:site_name" content="Metabase | Business Intelligence, Dashboards, and Data Visualization">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://www.metabase.com/docs/latest/installation-and-operation/privacy">
-<meta name="title" property="og:title" content="Privacy | Metabase Documentation">
-<meta name="description" property="og:description" content="Privacy Do you need a Data Processing Agreement with Metabase to comply with GDPR? Self-hosted If you self-host your Metabase instance, we have no access to any of your data, UNLESS you opted in to give us anonymized...">
+<meta property="og:url" content="https://www.metabase.com/docs/latest/ai/privacy">
+<meta name="title" property="og:title" content="AI privacy | Metabase Documentation">
+<meta name="description" property="og:description" content="What data Metabase sends to AI providers and MCP clients when you use AI features, and what Metabase the company collects.">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -5955,8 +5955,8 @@ Roadmap</a>
 
       
 
-      <li class="expanded">
-        <a href="/docs/latest/installation-and-operation/privacy" class="selected">
+      <li class="">
+        <a href="/docs/latest/installation-and-operation/privacy" class="">
         Privacy
 
           
@@ -6012,7 +6012,7 @@ Roadmap</a>
 
             
             
-                <li class="breadcrumb-item"><a class="blue-60" href="/docs/latest/installation-and-operation/start">Installation and Operation</a></li>
+                <li class="breadcrumb-item"><a class="blue-60" href="/docs/latest/ai/start">Ai</a></li>
             
             
         </ol>
@@ -6146,24 +6146,47 @@ Roadmap</a>
 </div>
 
 
-        <h1 id="privacy">Privacy</h1>
+        <h1 id="ai-privacy">AI privacy</h1>
 
-<h2 id="do-you-need-a-data-processing-agreement-with-metabase-to-comply-with-gdpr">Do you need a Data Processing Agreement with Metabase to comply with GDPR?</h2>
+<p>AI in Metabase is optional.</p>
 
-<h3 id="self-hosted">Self-hosted</h3>
+<p>If you do use AI (which you can set up in <a href="./settings">AI settings</a>), we need to send some data outside of your Metabase. This page covers what gets sent, and to whom.</p>
 
-<p>If you self-host your Metabase instance, we have no access to any of your data, UNLESS you opted in to give us <a href="information-collection">anonymized usage stats</a>. Even in that case, Metabase doesn’t gather any personally-identifiable data. As such, if you’re self-hosting, we are not a data processor for the purposes of GDPR.</p>
+<h2 id="data-sent-to-the-metabase-ai-service">Data sent to the Metabase AI service</h2>
 
-<h3 id="metabase-cloud">Metabase Cloud</h3>
+<p>When using the Metabase AI service, we don’t send the <em>results</em> of your queries to a third-party AI provider, and we don’t look at them ourselves.</p>
 
-<p>If you’re a <a href="/pricing/">Metabase Cloud</a> customer, your <a href="/license/hosting">Terms of Service</a> include a Data Processing Agreement (DPA).</p>
+<p>What we send:</p>
+
+<ul>
+  <li>Your prompts.</li>
+  <li>Metadata (like table and field names), so Metabot knows what to query.</li>
+  <li>A sampling of field values from your database. For example, if you ask Metabot to “Filter everyone from Wisconsin,” it might check the values in the state field to see how the data is stored (like “WI” vs “Wisconsin”). See <a href="../databases/sync-scan">syncs</a>.</li>
+  <li>For chart analysis, AI won’t see the raw timeseries data, but it does see some metrics derived from that data (like slopes, series correlations, etc). AI may also see some categorical values. For example, if a question breaks out orders over time by a product category, the AI could see the category values (“Gadgets”, “Widgets”, etc).</li>
+</ul>
+
+<p>We, Metabase the company, also collect some of this metadata to gauge usage and improve the AI integration.</p>
+
+<h2 id="data-sent-to-your-own-ai-provider">Data sent to your own AI provider</h2>
+
+<p>If you’re using your own API key, everything listed above is sent to your selected AI provider. Review your provider’s data handling and privacy policies.</p>
+
+<h2 id="data-sent-to-the-mcp-client">Data sent to the MCP client</h2>
+
+<p>When using the <a href="./mcp">MCP server</a>, query <em>results</em> are sent to the connected MCP client.</p>
+
+<h2 id="data-sent-when-submitting-feedback">Data sent when submitting feedback</h2>
+
+<p>If you <a href="./metabot#giving-feedback-on-metabot-responses">submit feedback</a> on a Metabot response, the context for that conversation, including metadata and your prompts, might be sent to Metabase the company, and may contain sensitive data.</p>
 
 <h2 id="further-reading">Further reading</h2>
 
 <ul>
-  <li><a href="../ai/privacy">AI privacy</a> — what data Metabase’s AI features send, and to whom</li>
+  <li><a href="./settings">AI settings</a></li>
+  <li><a href="./metabot">Using Metabot</a></li>
+  <li><a href="./mcp">MCP server</a></li>
+  <li><a href="../installation-and-operation/privacy">Privacy and GDPR</a></li>
 </ul>
-
 
 
         <div>
@@ -6217,7 +6240,7 @@ Roadmap</a>
 
   
     <span class="paragraph-6 fs-13 neutral-60" id="page-feedback-footer">
-      Want to improve these docs? <a href="https://github.com/metabase/metabase/blob/master/docs/installation-and-operation/privacy.md" target="_blank">Propose a change.</a>
+      Want to improve these docs? <a href="https://github.com/metabase/metabase/blob/master/docs/ai/privacy.md" target="_blank">Propose a change.</a>
     </span>
   
 </div>
@@ -6239,8 +6262,8 @@ Roadmap</a>
 <script type="text/javascript" src="/js/position-feedback-widget.js"></script>
 
 <script>
-  const pageTitle = `Privacy`;
-  const pageURL = '/docs/latest/installation-and-operation/privacy';
+  const pageTitle = `AI privacy`;
+  const pageURL = '/docs/latest/ai/privacy';
   const pageURLSplit = pageURL.split('/');
 
   let pageURLPrefix = '/' + pageURLSplit[1] + '/' + pageURLSplit[2];
