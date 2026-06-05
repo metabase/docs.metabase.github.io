@@ -6202,45 +6202,44 @@ Roadmap</a>
 
 <p><a href="/pricing/">Pro and Enterprise</a> plans allow you to add a custom domain. Setting a custom domain will update your instance’s <a href="../configuring-metabase/settings#site-url">Site URL</a>. The Site URL is used for things like creating links in emails, auth redirects, and in some embedding scenarios.</p>
 
-<h2 id="how-to-add-a-custom-domain-to-your-metabase">How to add a custom domain to your Metabase</h2>
+<h2 id="add-a-custom-domain-to-your-metabase">Add a custom domain to your Metabase</h2>
+
+<p>To add a custom domain to your Metabase:</p>
 
 <ol>
+  <li>Log in to your Metabase <a href="https://store.metabase.com">Store account</a>.</li>
+  <li>Navigate to <strong>Instances</strong>.</li>
+  <li>In the instance you want to add the custom domain to, click <strong>Settings</strong>.</li>
+  <li>Find the <strong>Custom domain</strong> section.</li>
+  <li>Enter your custom domain (e.g., <code class="language-plaintext highlighter-rouge">your.custom.domain</code>).</li>
+  <li>Click <strong>Update</strong>.</li>
   <li>
-    <p>Log in to your <a href="https://store.metabase.com/">Metabase Store account</a>.</p>
-  </li>
-  <li>
-    <p>Find the Metabase instance that you want to add the custom domain to, and select <strong>Manage</strong> on the bottom right of the instance’s card. Then click on the <strong>Domains</strong> tab.</p>
+    <p>Ask the manager of your Domain Name System (DNS) records to add a CNAME pointing to:</p>
 
-    <p>You’ll see something like this:</p>
-
-    <p><img src="./images/domains-tab.png" alt="Metabase instance domains tab"></p>
-  </li>
-  <li>In the custom domain field (the input prefixed with <code class="language-plaintext highlighter-rouge">https://</code> in the Metabase Store), enter your custom domain (e.g., your.custom.domain).</li>
-  <li>
-    <p>Talk to whoever manages your Domain Name System (DNS) records, and have them add a CNAME to wherever you manage your DNS records. Point that CNAME to this URL:</p>
-
-    <pre><code class="language-url">us-1.cd.metabaseapp.com
-</code></pre>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>us-1.cd.metabaseapp.com
+</code></pre></div>    </div>
 
     <p>So your CNAME record would look something like:</p>
 
-    <pre><code class="language-domain">CNAME    your.custom.domain    us-1.cd.metabaseapp.com
-</code></pre>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>CNAME    your.custom.domain    us-1.cd.metabaseapp.com
+</code></pre></div>    </div>
 
-    <p>Just to be clear: you don’t enter this record in the Metabase Store; you enter it in wherever you manage your DNS records.</p>
+    <blockquote>
+      <p>Enter this record where you manage your DNS records, not in the Metabase Store</p>
+    </blockquote>
   </li>
-  <li>If you’ve already set up SSO (like SAML or LDAP) for your Metabase, you’ll need to update the return URL in your identity provider configuration to include this new custom domain.</li>
+  <li>If you’ve already set up SSO (like SAML or LDAP) for your Metabase, update the return URL in your identity provider configuration to include the new custom domain.</li>
 </ol>
 
-<p>That’s it. You may need to wait a bit for the CNAME to update (this delay is specific to how DNS works, and not something Metabase has control over). Metabase will take care of the rest: we’ll make sure that:</p>
+<p>You may need to wait for the CNAME to update (this delay is specific to how DNS works, not something Metabase has control over). Metabase takes care of the rest, making sure that:</p>
 
 <ul>
-  <li>the URL directs people to your Metabase,</li>
-  <li>your domain has SSL certificates set up to serve your instance over HTTPS to the new domain,</li>
-  <li>and that your <a href="/cloud/login">metabase.com/cloud/login</a> works as expected.</li>
+  <li>The URL directs users to your Metabase.</li>
+  <li>Your domain has SSL certificates set up to serve your instance over HTTPS to the new domain.</li>
+  <li>Your <a href="/cloud/login">metabase.com/cloud/login</a> works as expected.</li>
 </ul>
 
-<p>You’ll still be able to access your original, automatically provisioned domain (e.g., yourcompany.metabaseapp.com), so existing embedded links should continue to work.</p>
+<p>You’ll still be able to access your original, automatically provisioned domain (e.g., <code class="language-plaintext highlighter-rouge">yourcompany.metabaseapp.com</code>), so existing embedded links should continue to work.</p>
 
 <h2 id="why-youd-want-to-use-a-custom-domain">Why you’d want to use a custom domain</h2>
 
@@ -6251,7 +6250,15 @@ Roadmap</a>
 
 <h2 id="change-the-name-of-your-metabase-your-dns-alias">Change the name of your Metabase (your DNS alias)</h2>
 
-<p>Log in to your Metabase Store account and go to <strong>Instances</strong> &gt; <strong>DNS Alias</strong>, where you can update your alias.</p>
+<p>To change your DNS alias:</p>
+
+<ol>
+  <li>Log in to your Metabase <a href="https://store.metabase.com">Store account</a>.</li>
+  <li>Navigate to <strong>Instances</strong>.</li>
+  <li>Find the <strong>DNS Alias</strong> section.</li>
+  <li>Enter your new alias.</li>
+  <li>Click <strong>Update</strong>.</li>
+</ol>
 
 <h2 id="custom-smtp-server">Custom SMTP server</h2>
 
