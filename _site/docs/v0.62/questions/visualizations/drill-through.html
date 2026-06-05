@@ -50,12 +50,12 @@ window.redirectTo = function redirectTo(theLocation) {
 
 
 
-<title>General settings | Metabase Documentation</title>
+<title>Drill-through | Metabase Documentation</title>
 <!-- Twitter cards -->
 <meta name="twitter:site" content="@metabase">
 
-<meta name="twitter:title" content="General settings | Metabase Documentation">
-<meta name="twitter:description" content="General settings Admin > Settings > General This section contains settings for your whole instance, like its URL, the reporting timezone, and toggles for disabling or enabling some of Metabase’s optional features. You can configure these settings by clicking the grid...">
+<meta name="twitter:title" content="Drill-through | Metabase Documentation">
+<meta name="twitter:description" content="Click on charts, column headers, and table cells to filter, zoom in, see underlying records, and break out by time, location, or category.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -63,9 +63,9 @@ window.redirectTo = function redirectTo(theLocation) {
 <!-- Open Graph metadata -->
 <meta property="og:site_name" content="Metabase | Business Intelligence, Dashboards, and Data Visualization">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://www.metabase.com/docs/v0.62/configuring-metabase/settings">
-<meta name="title" property="og:title" content="General settings | Metabase Documentation">
-<meta name="description" property="og:description" content="General settings Admin > Settings > General This section contains settings for your whole instance, like its URL, the reporting timezone, and toggles for disabling or enabling some of Metabase’s optional features. You can configure these settings by clicking the grid...">
+<meta property="og:url" content="https://www.metabase.com/docs/v0.62/questions/visualizations/drill-through">
+<meta name="title" property="og:title" content="Drill-through | Metabase Documentation">
+<meta name="description" property="og:description" content="Click on charts, column headers, and table cells to filter, zoom in, see underlying records, and break out by time, location, or category.">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -4747,7 +4747,7 @@ Roadmap</a>
 
       
 
-      <li class="expanded">
+      <li class="">
         <a href="/docs/v0.62/configuring-metabase/start" class="">
         Configuration
 
@@ -4786,7 +4786,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.62/configuring-metabase/settings" class="selected">
+                <a href="/docs/v0.62/configuring-metabase/settings" class="">
                   General settings
 
                   
@@ -6069,7 +6069,7 @@ Roadmap</a>
 
             
             
-                <li class="breadcrumb-item"><a class="blue-60" href="/docs/v0.62/configuring-metabase/start">Configuring Metabase</a></li>
+                <li class="breadcrumb-item"><a class="blue-60" href="/docs/v0.62/questions/start">Questions</a></li>
             
             
         </ol>
@@ -6210,127 +6210,323 @@ Roadmap</a>
 </div>
 
 
-        <h1 id="general-settings">General settings</h1>
+        <h1 id="drill-through">Drill-through</h1>
 
-<p><em>Admin &gt; Settings &gt; General</em></p>
+<p>Drill-through lets you explore data in your Metabase by clicking a chart, a column header, or a table cell. Each click opens a menu with options like <strong>Filter by this value</strong>, <strong>See these records</strong>, <strong>Break out by</strong>, and <strong>Zoom in</strong>. Selecting one of these options generates a new query and visualizes the result.</p>
 
-<p>This section contains settings for your whole instance, like its URL, the reporting timezone, and toggles for disabling or enabling some of Metabase’s optional features.
-You can configure these settings by clicking the <strong>grid icon</strong> in the upper right, then going to <strong>Admin</strong> &gt; <strong>Settings</strong> &gt; <strong>General</strong>.</p>
+<p><img src="../images/drill-through-menu.png" alt="Drill-through menu"></p>
 
-<h2 id="site-name">Site name</h2>
+<h2 id="how-drill-through-works">How drill-through works</h2>
 
-<p>How you’d like to refer to this instance of Metabase.</p>
+<p>Every drill-through action creates a new query and visualizes the result. Metabase takes the original query and modifies it based on what you click. Switch to the editor to see and edit the new query.</p>
 
-<h2 id="site-url">Site URL</h2>
+<p>For example, say a bar chart shows order counts summarized by product category and month. Click the April bar in the Widgets series, then select <strong>See these orders</strong>. Metabase creates a new question that filters the orders to Widgets in April.</p>
 
-<p>The site URL is the web address that people use to access your Metabase instance. Make sure to include <code class="language-plaintext highlighter-rouge">http://</code> or <code class="language-plaintext highlighter-rouge">https://</code> to make sure it’s reachable. This feature is only available for self-hosted Metabases. For customers on Metabase Cloud, check out <a href="../cloud/custom-domain">Custom domains</a>.</p>
+<p>Some things to keep in mind:</p>
 
-<h3 id="redirect-to-https">Redirect to HTTPS</h3>
+<ul>
+  <li><strong>Drill-through requires query-building permissions.</strong> You must have permission to create queries on the underlying data to see the drill-through menu.</li>
+  <li><strong>The drill-through does not modify the original question.</strong> Drill-through creates a new question without overwriting or modifying your original question.</li>
+  <li><strong>The menu options depend on the type of data you click.</strong> Different options appear in the action menu depending on whether you click a chart, a column header, a table cell, or a point on a map.</li>
+</ul>
 
-<p>By default, Metabase is served over HTTP.</p>
+<h2 id="drill-through-types">Drill-through types</h2>
 
-<p>To force all traffic to use HTTPS via redirect, click <code class="language-plaintext highlighter-rouge">http://</code> (under the <strong>Site URL</strong> section) and select <code class="language-plaintext highlighter-rouge">https://</code> from the dropdown menu.</p>
+<p>There are two types of drill-through:</p>
 
-<p>For example, say you enable HTTPS redirect for a Metabase instance at the site URL “example.com”. When someone enters an address like <code class="language-plaintext highlighter-rouge">example.com/data</code> in their browser’s address bar, they’ll get automatically redirected to a secure connection at <code class="language-plaintext highlighter-rouge">https://example.com/data</code>.</p>
+<ul>
+  <li><strong>Results-based drill-through:</strong> Metabase takes the data in the query result and filters, distributes, or otherwise transforms it. Example options include <strong>Filter by this value</strong>, <strong>Distribution</strong>, and <strong>Sort</strong>. You can perform results-based drill-through on questions built with the query builder or native SQL.</li>
+  <li><strong>Query-rewriting drill-through:</strong> Metabase modifies your query. Example options include <strong>See these records</strong>, <strong>Break out by</strong>, and <strong>Zoom in</strong>. You can only perform query-rewriting drill-through on questions built with the query builder.</li>
+</ul>
+
+<h2 id="drill-through-options">Drill-through options</h2>
+
+<p>The drill-through menu options depend on what you click and on the underlying data.</p>
+
+<h3 id="tables">Tables</h3>
+
+<p>To drill-through a table, click either:</p>
+
+<ul>
+  <li>Column headers</li>
+  <li>Table cells</li>
+</ul>
+
+<h4 id="column-headers">Column headers</h4>
+
+<p><img src="../images/drill-through-column-header-menu.png" alt="Drill-through column header menu"></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Option</th>
+      <th>When it appears</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td data-label="Option"><strong>Filter by this column</strong></td>
+      <td data-label="When it appears">Any column</td>
+    </tr>
+    <tr>
+      <td data-label="Option"><strong>Sort</strong></td>
+      <td data-label="When it appears">Any column except JSON</td>
+    </tr>
+    <tr>
+      <td data-label="Option"><strong>Distribution</strong></td>
+      <td data-label="When it appears">Any column except primary keys, JSON, or description and comment fields</td>
+    </tr>
+    <tr>
+      <td data-label="Option"><strong>Sum / Average</strong></td>
+      <td data-label="When it appears">Numeric columns when the query isn’t summarized</td>
+    </tr>
+    <tr>
+      <td data-label="Option"><strong>Distinct values</strong></td>
+      <td data-label="When it appears">Any column when the query isn’t summarized</td>
+    </tr>
+    <tr>
+      <td data-label="Option"><strong>Sum over time</strong></td>
+      <td data-label="When it appears">Numeric columns when the query has a date column and isn’t summarized</td>
+    </tr>
+    <tr>
+      <td data-label="Option"><strong>Extract domain, host…</strong> / <strong>Extract day, month…</strong></td>
+      <td data-label="When it appears">URL, email, and date columns</td>
+    </tr>
+    <tr>
+      <td data-label="Option"><strong>Combine columns</strong></td>
+      <td data-label="When it appears">Text columns</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="table-cells">Table cells</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Option</th>
+      <th>When it appears</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td data-label="Option"><strong>Filter by this value</strong></td>
+      <td data-label="When it appears">Any column except primary keys and foreign keys</td>
+    </tr>
+    <tr>
+      <td data-label="Option"><strong>View details</strong></td>
+      <td data-label="When it appears">Rows that have a primary key</td>
+    </tr>
+    <tr>
+      <td data-label="Option"><strong>View this [related record]</strong></td>
+      <td data-label="When it appears">Foreign key values</td>
+    </tr>
+    <tr>
+      <td data-label="Option"><strong>View these [related rows]</strong></td>
+      <td data-label="When it appears">Foreign key values</td>
+    </tr>
+    <tr>
+      <td data-label="Option"><strong>View these records</strong></td>
+      <td data-label="When it appears">Aggregated values</td>
+    </tr>
+    <tr>
+      <td data-label="Option"><strong>Break out by [time / location / category]</strong></td>
+      <td data-label="When it appears">Aggregated values</td>
+    </tr>
+    <tr>
+      <td data-label="Option"><strong>Automatic insights</strong></td>
+      <td data-label="When it appears">Summarized queries, when <a href="../../exploration-and-organization/x-rays">X-rays</a> are enabled</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="charts">Charts</h3>
+
+<p>To drill-through a chart, click either:</p>
+
+<ul>
+  <li>Data points</li>
+  <li>Legend items</li>
+</ul>
 
 <blockquote>
-  <p>Note: if you haven’t set up HTTPS on your server, Metabase will not let you enable HTTPS redirect. Instead, you’ll get a warning saying “It looks like HTTPS is not properly configured.”</p>
+  <p><a href="./table#pivoted-tables">Pivoted tables</a> behave like charts. Cells in pivoted tables offer the same options as data points. This is different from the <a href="./pivot-table">pivot table visualization</a>, which offers a smaller subset of drill-through options.</p>
 </blockquote>
 
-<h2 id="homepage">Homepage</h2>
+<h4 id="data-points">Data points</h4>
 
-<p>Set the page people see when they first log in to your Metabase. Choose between:</p>
+<table>
+  <thead>
+    <tr>
+      <th>Option</th>
+      <th>When it appears</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td data-label="Option"><strong>Filter by this value</strong></td>
+      <td data-label="When it appears">Any column except primary keys and foreign keys</td>
+    </tr>
+    <tr>
+      <td data-label="Option"><strong>View these records</strong></td>
+      <td data-label="When it appears">Aggregated values</td>
+    </tr>
+    <tr>
+      <td data-label="Option"><strong>Break out by [time / location / category]</strong></td>
+      <td data-label="When it appears">Aggregated values</td>
+    </tr>
+    <tr>
+      <td data-label="Option"><strong>Automatic insights</strong></td>
+      <td data-label="When it appears">Summarized queries, when <a href="../../exploration-and-organization/x-rays">X-rays</a> are enabled</td>
+    </tr>
+    <tr>
+      <td data-label="Option"><strong>Zoom in</strong></td>
+      <td data-label="When it appears">Histograms, binned charts, and maps</td>
+    </tr>
+    <tr>
+      <td data-label="Option"><strong>See this [period] by [smaller period]</strong></td>
+      <td data-label="When it appears">Time series</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>On a time series or other chart with a continuous axis, click and drag across a range to filter the question to those values. This works like <strong>Filter by this value</strong>, but for a range of data instead of a single data point.</p>
+
+<h4 id="legend-items">Legend items</h4>
+
+<p>Clicking the colored circle on a legend item toggles the series on or off. Clicking the label on the legend item opens the drill-through menu.</p>
+
+<p>Drill-through on a legend item applies to the entire series, not just one data point. For example, clicking <strong>View these records</strong> on a legend item shows all the rows for that series across the whole chart.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Option</th>
+      <th>When it appears</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td data-label="Option"><strong>View these records</strong></td>
+      <td data-label="When it appears">Aggregated values</td>
+    </tr>
+    <tr>
+      <td data-label="Option"><strong>Break out by [time / location / category]</strong></td>
+      <td data-label="When it appears">Aggregated values</td>
+    </tr>
+    <tr>
+      <td data-label="Option"><strong>Automatic insights</strong></td>
+      <td data-label="When it appears">Summarized queries, when <a href="../../exploration-and-organization/x-rays">X-rays</a> are enabled</td>
+    </tr>
+    <tr>
+      <td data-label="Option"><strong>Zoom in</strong></td>
+      <td data-label="When it appears">Histograms, binned charts, and maps</td>
+    </tr>
+    <tr>
+      <td data-label="Option"><strong>See this [period] by [smaller period]</strong></td>
+      <td data-label="When it appears">Time series</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="drill-through-and-native-sql">Drill-through and native SQL</h2>
+
+<p>When you create a query with the query builder, Metabase can read and modify your query for any drill-through action.</p>
+
+<p>When you write a query with the native SQL editor, Metabase runs your query but doesn’t parse it. It can modify the results, but it can’t modify the query itself. This means you can use results-based drill-through, but not query-rewriting drill-through. For example:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Works on native SQL questions</th>
+      <th>Doesn’t work on native SQL questions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td data-label="Works on native SQL questions"><strong>Filter by this value</strong></td>
+      <td data-label="Doesn’t work on native SQL questions"><strong>See these records</strong></td>
+    </tr>
+    <tr>
+      <td data-label="Works on native SQL questions"><strong>Distribution</strong></td>
+      <td data-label="Doesn’t work on native SQL questions"><strong>Break out by</strong></td>
+    </tr>
+    <tr>
+      <td data-label="Works on native SQL questions"><strong>Sort</strong></td>
+      <td data-label="Doesn’t work on native SQL questions"><strong>Zoom in</strong></td>
+    </tr>
+  </tbody>
+</table>
+
+<blockquote>
+  <p>To use drill-through on a native SQL question, you must save the question.</p>
+</blockquote>
+
+<p>For more information, see <a href="#drill-through-types">drill-through types</a>.</p>
+
+<h3 id="make-native-sql-questions-interactive">Make native SQL questions interactive</h3>
+
+<p>Drill-through can’t rewrite a native SQL query, but you can still make a native SQL chart interactive using <a href="../../dashboards/interactive#customizing-click-behavior">custom click behavior</a>. Add the question to a dashboard, and set a click behavior on the card.</p>
+
+<p>A custom click behavior replaces the drill-through menu with an action you define. It can send you to another question, dashboard, external URL, or update a filter on the current dashboard. Set a <a href="../../dashboards/filters">dashboard filter</a> to the clicked value to scope the destination.</p>
+
+<h3 id="combine-native-sql-with-full-drill-through">Combine native SQL with full drill-through</h3>
+
+<p>If you need native SQL but also want to use the full drill-through menu, write your SQL query as a <a href="../../data-studio/transforms/transforms-overview">transform</a> and build the user-facing question with the query builder.</p>
+
+<p>Write the transform’s SQL to return the individual records, not summarized results. Build questions on the transform’s table with the query builder. These questions support the full drill-through menu.</p>
+
+<p>Drill-through actions can only reach data that the transform’s table contains.</p>
+
+<blockquote>
+  <p>To create transforms, you must have transform permissions. If you use Metabase Cloud, you must also have the <a href="../../data-studio/transforms/addons">transform add-on</a>.</p>
+</blockquote>
+
+<h2 id="drill-through-and-embedding">Drill-through and embedding</h2>
+
+<p>Drill-through behavior depends on the <a href="../../embedding/start">embedding type</a>, because drill-through requires a Metabase user with query permissions.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Embedding type</th>
+      <th>Drill-through</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td data-label="Embedding type"><strong>Authenticated modular embedding</strong></td>
+      <td data-label="Drill-through">Full drill-through, scoped to the user’s permissions</td>
+    </tr>
+    <tr>
+      <td data-label="Embedding type"><strong>Guest modular embeds</strong></td>
+      <td data-label="Drill-through">No drill-through</td>
+    </tr>
+    <tr>
+      <td data-label="Embedding type"><strong>Full app embedding</strong></td>
+      <td data-label="Drill-through">Full drill-through</td>
+    </tr>
+    <tr>
+      <td data-label="Embedding type"><strong>Public embeds</strong></td>
+      <td data-label="Drill-through">No drill-through</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>To turn off drill-through in modular embedding, use the <strong>Allow people to drill through on data points</strong> setting when you create the embed. In a dashboard, override drill-through on a single card with <a href="../../dashboards/interactive">custom click behavior</a>.</p>
+
+<p>Use <a href="../../embedding/sdk/introduction">modular embedding SDK plugins</a> to customize some drill-through menu options and click behavior in embedded apps.</p>
+
+<h2 id="alternatives-to-drill-through">Alternatives to drill-through</h2>
+
+<p>On a dashboard, you can replace drill-through with a different click action:</p>
 
 <ul>
-  <li><strong>Default Metabase home</strong>: The standard Metabase homepage.</li>
-  <li><strong>Dashboard</strong>: Pick a dashboard to serve as the homepage. If people lack permissions to view the selected dashboard, Metabase will redirect them to the default homepage.</li>
-  <li><strong>Custom URL</strong>: Send people to a specific URL (a collection, question, dashboard, or other page). Make sure people have access to the URL. This option is only available on Metabase <a href="/product/pro">Pro</a> and <a href="/product/enterprise">Enterprise</a> plans.</li>
+  <li><strong><a href="../../dashboards/interactive#customizing-click-behavior">Custom click behavior</a>:</strong> Send users to another question, dashboard, external URL, or update a filter on the current dashboard</li>
+  <li><strong><a href="../../dashboards/interactive#use-a-chart-to-filter-a-dashboard">Cross-filtering</a>:</strong> Update a filter on cards across a dashboard</li>
 </ul>
 
-<h2 id="email-address-for-help-requests">Email address for help requests</h2>
-
-<p>This email address will be displayed in various messages throughout Metabase when users encounter a scenario where they need assistance from an admin, such as a password reset request.</p>
-
-<h2 id="usage-tracking">Usage tracking</h2>
-
-<h3 id="send-anonymous-tracking-data-to-metabase">Send anonymous tracking data to Metabase</h3>
-
-<p>On self-hosted Metabases, this option determines whether or not you allow <a href="../installation-and-operation/information-collection">anonymous data about your usage of Metabase</a> to be sent back to us to help us improve the product. <a href="/security">Your database’s data is never tracked or sent</a>.</p>
-
-<h3 id="collect-user-data-to-display-in-usage-analytics">Collect user data to display in usage analytics</h3>
-
-<div class="bootstrap">
-  <div class="plans-blockquote bg-blue-95 rounded-3 p-6 d-flex flex-row border border-1 border-primary">
-    <svg class="" width="24" height="24" viewBox="0 0 26 26" fill="none">
-  <path d="M12 13V15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
-  <path d="M12 10C12.5523 10 13 9.55228 13 9C13 8.44772 12.5523 8 12 8C11.4477 8 11 8.44772 11 9C11 9.55228 11.4477 10 12 10Z" fill="#509EE3"></path>
-  <path d="M12 19.25C16.0041 19.25 19.25 16.0041 19.25 12C19.25 7.99594 16.0041 4.75 12 4.75C7.99594 4.75 4.75 7.99594 4.75 12C4.75 16.0041 7.99594 19.25 12 19.25Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
-</svg>
-
-    
-    
-    
-      
-
-    <p class="m-0 ms-2 paragraph-5 neutral-40">
-       Collecting user data is only available on
-      <a class="fw-bold" href="/product/pro">Pro</a> and
-      <a class="fw-bold link-purple" href="/product/enterprise">Enterprise</a>
-      plans  (both self-hosted and on Metabase Cloud).
-    </p>
-  </div>
-</div>
-
-<p>You can switch on logging of IP addresses, user agents, embed path, query parameters, and Metabot conversation metadata for people using your Metabase, both for people directly by logging into Metabase, or for people who view an embedded Metabase component in your app. If enabled, you can find this information in your <a href="../usage-and-performance-tools/usage-analytics">usage analytics</a>.</p>
-
-<p>By default, collection of user data is turned <strong>off</strong>.</p>
-
-<h2 id="friendly-table-and-field-names">Friendly table and field names</h2>
-
-<p>By default, Metabase attempts to make field and table names more readable by changing things like <code class="language-plaintext highlighter-rouge">somehorriblename</code> to <code class="language-plaintext highlighter-rouge">Some Horrible Name</code>. This does not work well for languages other than English, or for fields that have lots of abbreviations or codes in them. If you’d like to turn this setting off, you can do so from the Admin Panel under <strong>Admin</strong> <strong>&gt; Settings</strong> &gt; <strong>General</strong>.</p>
-
-<p>If you re-enable this setting, Metabase will run a <a href="../databases/sync-scan#how-database-scans-work">scan</a> against your database to review your table and column names again.</p>
-
-<p>To manually label field or table names in Metabase, check out the <a href="../data-modeling/metadata-editing">Table Metadata</a> section in your admin panel. Metadata in the Table Metadata can be further curated in <a href="../data-modeling/models">models</a>.</p>
-
-<h2 id="enable-x-rays">Enable X-rays</h2>
-
-<p><a href="../exploration-and-organization/x-rays">X-rays</a> are a great way for people to get quick summary stats on your data. If these X-ray queries get too slow or expensive, you can turn them off here.</p>
-
-<h2 id="allowed-domains-for-iframes-in-dashboards">Allowed domains for iframes in dashboards</h2>
-
-<p>Make sure you trust the sources that you allow people to embed in dashboards.</p>
-
-<p>You can include multiple domains separated by a comma. Including a subdomain is more restrictive than including the domain.</p>
-
-<ul>
-  <li>For <strong>Domains</strong>, (e.g., <code class="language-plaintext highlighter-rouge">example.com</code>), Metabase will allow any iframe from the domain (<code class="language-plaintext highlighter-rouge">example.com</code>) <em>and</em> its subdomains (e.g., <code class="language-plaintext highlighter-rouge">data.example.com</code>, <code class="language-plaintext highlighter-rouge">docs.example.com</code>, etc.).</li>
-  <li>For <strong>Subdomains</strong> (e.g., <code class="language-plaintext highlighter-rouge">data.example.com</code>) Metabase will restrict iframes to those subdomains. In this case, iframes <em>must</em> be from <code class="language-plaintext highlighter-rouge">data.example.com</code> (or any of the other allowed domains). Metabase will block iframes from all other subdomains, including <code class="language-plaintext highlighter-rouge">example.com</code>.</li>
-</ul>
-
-<p>So if you included the following:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>data.example.com,
-docs.example.com
-</code></pre></div></div>
-
-<p>Metabase would only allow iframes from <code class="language-plaintext highlighter-rouge">data.example.com</code> and <code class="language-plaintext highlighter-rouge">docs.example.com</code>. Metabase would block iframes from all other domains, including iframes from <code class="language-plaintext highlighter-rouge">example.com</code> and its other subdomains.</p>
-
-<p>See <a href="../dashboards/introduction#iframe-cards">iframes in dashboards</a>.</p>
-
-<h2 id="restrict-image-domains">Restrict image domains</h2>
-
-<p>When on, Metabase restricts the browser’s Content Security Policy so images can only load from this Metabase instance or the domains listed in <a href="#allowed-domains-for-images">Allowed domains for images</a>.</p>
-
-<p>By default, images from any domain are allowed.</p>
-
-<h2 id="allowed-domains-for-images">Allowed domains for images</h2>
-
-<p>When the <a href="#restrict-image-domains">Restrict image domains</a> setting is on, Metabase will only allow images served from this Metabase instance, and any domains listed here.</p>
-
-<p>Leave this input empty to only allow images hosted by your Metabase instance.</p>
-
-<p>Add multiple domains separated by a comma. Domains follow the same matching rules as <a href="#allowed-domains-for-iframes-in-dashboards">Allowed domains for iframes in dashboards</a>: listing a domain like <code class="language-plaintext highlighter-rouge">example.com</code> also allows its subdomains, while listing a subdomain like <code class="language-plaintext highlighter-rouge">images.example.com</code> allows only that subdomain.</p>
+<p>Setting one of these alternatives on a card replaces the drill-through menu for that card.</p>
 
 
         <div>
@@ -6384,7 +6580,7 @@ docs.example.com
 
   
     <span class="paragraph-6 fs-13 neutral-60" id="page-feedback-footer">
-      Want to improve these docs? <a href="https://github.com/metabase/metabase/blob/master/docs/configuring-metabase/settings.md" target="_blank">Propose a change.</a>
+      Want to improve these docs? <a href="https://github.com/metabase/metabase/blob/master/docs/questions/visualizations/drill-through.md" target="_blank">Propose a change.</a>
     </span>
   
 </div>
@@ -6406,8 +6602,8 @@ docs.example.com
 <script type="text/javascript" src="/js/position-feedback-widget.js"></script>
 
 <script>
-  const pageTitle = `General settings`;
-  const pageURL = '/docs/v0.62/configuring-metabase/settings';
+  const pageTitle = `Drill-through`;
+  const pageURL = '/docs/v0.62/questions/visualizations/drill-through';
   const pageURLSplit = pageURL.split('/');
 
   let pageURLPrefix = '/' + pageURLSplit[1] + '/' + pageURLSplit[2];

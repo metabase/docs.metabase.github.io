@@ -50,12 +50,12 @@ window.redirectTo = function redirectTo(theLocation) {
 
 
 
-<title>General settings | Metabase Documentation</title>
+<title>Metabase CLI | Metabase Documentation</title>
 <!-- Twitter cards -->
 <meta name="twitter:site" content="@metabase">
 
-<meta name="twitter:title" content="General settings | Metabase Documentation">
-<meta name="twitter:description" content="General settings Admin > Settings > General This section contains settings for your whole instance, like its URL, the reporting timezone, and toggles for disabling or enabling some of Metabase’s optional features. You can configure these settings by clicking the grid...">
+<meta name="twitter:title" content="Metabase CLI | Metabase Documentation">
+<meta name="twitter:description" content="The Metabase CLI (mb) is a command-line client that drives a Metabase instance over its API. Use it yourself, or hand it to an AI agent with the metabase-cli skill.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -63,9 +63,9 @@ window.redirectTo = function redirectTo(theLocation) {
 <!-- Open Graph metadata -->
 <meta property="og:site_name" content="Metabase | Business Intelligence, Dashboards, and Data Visualization">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://www.metabase.com/docs/v0.62/configuring-metabase/settings">
-<meta name="title" property="og:title" content="General settings | Metabase Documentation">
-<meta name="description" property="og:description" content="General settings Admin > Settings > General This section contains settings for your whole instance, like its URL, the reporting timezone, and toggles for disabling or enabling some of Metabase’s optional features. You can configure these settings by clicking the grid...">
+<meta property="og:url" content="https://www.metabase.com/docs/v0.62/installation-and-operation/metabase-cli">
+<meta name="title" property="og:title" content="Metabase CLI | Metabase Documentation">
+<meta name="description" property="og:description" content="The Metabase CLI (mb) is a command-line client that drives a Metabase instance over its API. Use it yourself, or hand it to an AI agent with the metabase-cli skill.">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -4747,7 +4747,7 @@ Roadmap</a>
 
       
 
-      <li class="expanded">
+      <li class="">
         <a href="/docs/v0.62/configuring-metabase/start" class="">
         Configuration
 
@@ -4786,7 +4786,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/v0.62/configuring-metabase/settings" class="selected">
+                <a href="/docs/v0.62/configuring-metabase/settings" class="">
                   General settings
 
                   
@@ -6069,7 +6069,7 @@ Roadmap</a>
 
             
             
-                <li class="breadcrumb-item"><a class="blue-60" href="/docs/v0.62/configuring-metabase/start">Configuring Metabase</a></li>
+                <li class="breadcrumb-item"><a class="blue-60" href="/docs/v0.62/installation-and-operation/start">Installation and Operation</a></li>
             
             
         </ol>
@@ -6210,127 +6210,79 @@ Roadmap</a>
 </div>
 
 
-        <h1 id="general-settings">General settings</h1>
+        <h1 id="metabase-cli">Metabase CLI</h1>
 
-<p><em>Admin &gt; Settings &gt; General</em></p>
-
-<p>This section contains settings for your whole instance, like its URL, the reporting timezone, and toggles for disabling or enabling some of Metabase’s optional features.
-You can configure these settings by clicking the <strong>grid icon</strong> in the upper right, then going to <strong>Admin</strong> &gt; <strong>Settings</strong> &gt; <strong>General</strong>.</p>
-
-<h2 id="site-name">Site name</h2>
-
-<p>How you’d like to refer to this instance of Metabase.</p>
-
-<h2 id="site-url">Site URL</h2>
-
-<p>The site URL is the web address that people use to access your Metabase instance. Make sure to include <code class="language-plaintext highlighter-rouge">http://</code> or <code class="language-plaintext highlighter-rouge">https://</code> to make sure it’s reachable. This feature is only available for self-hosted Metabases. For customers on Metabase Cloud, check out <a href="../cloud/custom-domain">Custom domains</a>.</p>
-
-<h3 id="redirect-to-https">Redirect to HTTPS</h3>
-
-<p>By default, Metabase is served over HTTP.</p>
-
-<p>To force all traffic to use HTTPS via redirect, click <code class="language-plaintext highlighter-rouge">http://</code> (under the <strong>Site URL</strong> section) and select <code class="language-plaintext highlighter-rouge">https://</code> from the dropdown menu.</p>
-
-<p>For example, say you enable HTTPS redirect for a Metabase instance at the site URL “example.com”. When someone enters an address like <code class="language-plaintext highlighter-rouge">example.com/data</code> in their browser’s address bar, they’ll get automatically redirected to a secure connection at <code class="language-plaintext highlighter-rouge">https://example.com/data</code>.</p>
+<p>The Metabase CLI (<code class="language-plaintext highlighter-rouge">mb</code>) is a command-line client for Metabase. <code class="language-plaintext highlighter-rouge">mb</code> authenticates against a Metabase instance with an API key and lets you or an AI agent read and write content like questions, dashboards, collections, and transforms over the Metabase API.</p>
 
 <blockquote>
-  <p>Note: if you haven’t set up HTTPS on your server, Metabase will not let you enable HTTPS redirect. Instead, you’ll get a warning saying “It looks like HTTPS is not properly configured.”</p>
+  <p>Looking for the commands built into the Metabase JAR, like <code class="language-plaintext highlighter-rouge">migrate</code> or <code class="language-plaintext highlighter-rouge">load-from-h2</code>? Check out <a href="./commands">Metabase JAR commands</a>.</p>
 </blockquote>
 
-<h2 id="homepage">Homepage</h2>
-
-<p>Set the page people see when they first log in to your Metabase. Choose between:</p>
+<h2 id="requirements">Requirements</h2>
 
 <ul>
-  <li><strong>Default Metabase home</strong>: The standard Metabase homepage.</li>
-  <li><strong>Dashboard</strong>: Pick a dashboard to serve as the homepage. If people lack permissions to view the selected dashboard, Metabase will redirect them to the default homepage.</li>
-  <li><strong>Custom URL</strong>: Send people to a specific URL (a collection, question, dashboard, or other page). Make sure people have access to the URL. This option is only available on Metabase <a href="/product/pro">Pro</a> and <a href="/product/enterprise">Enterprise</a> plans.</li>
+  <li>Node.js, to install the CLI from npm.</li>
+  <li>A Metabase instance on version 58 or later.</li>
+  <li>An <a href="../people-and-groups/api-keys#create-an-api-key">API key</a> to authenticate the CLI against your instance.</li>
+  <li>A Pro or Enterprise plan for some command groups. For example, <code class="language-plaintext highlighter-rouge">git-sync</code> needs the premium <a href="./remote-sync">Remote sync</a> feature.</li>
 </ul>
 
-<h2 id="email-address-for-help-requests">Email address for help requests</h2>
+<h2 id="install-the-cli">Install the CLI</h2>
 
-<p>This email address will be displayed in various messages throughout Metabase when users encounter a scenario where they need assistance from an admin, such as a password reset request.</p>
-
-<h2 id="usage-tracking">Usage tracking</h2>
-
-<h3 id="send-anonymous-tracking-data-to-metabase">Send anonymous tracking data to Metabase</h3>
-
-<p>On self-hosted Metabases, this option determines whether or not you allow <a href="../installation-and-operation/information-collection">anonymous data about your usage of Metabase</a> to be sent back to us to help us improve the product. <a href="/security">Your database’s data is never tracked or sent</a>.</p>
-
-<h3 id="collect-user-data-to-display-in-usage-analytics">Collect user data to display in usage analytics</h3>
-
-<div class="bootstrap">
-  <div class="plans-blockquote bg-blue-95 rounded-3 p-6 d-flex flex-row border border-1 border-primary">
-    <svg class="" width="24" height="24" viewBox="0 0 26 26" fill="none">
-  <path d="M12 13V15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
-  <path d="M12 10C12.5523 10 13 9.55228 13 9C13 8.44772 12.5523 8 12 8C11.4477 8 11 8.44772 11 9C11 9.55228 11.4477 10 12 10Z" fill="#509EE3"></path>
-  <path d="M12 19.25C16.0041 19.25 19.25 16.0041 19.25 12C19.25 7.99594 16.0041 4.75 12 4.75C7.99594 4.75 4.75 7.99594 4.75 12C4.75 16.0041 7.99594 19.25 12 19.25Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
-</svg>
-
-    
-    
-    
-      
-
-    <p class="m-0 ms-2 paragraph-5 neutral-40">
-       Collecting user data is only available on
-      <a class="fw-bold" href="/product/pro">Pro</a> and
-      <a class="fw-bold link-purple" href="/product/enterprise">Enterprise</a>
-      plans  (both self-hosted and on Metabase Cloud).
-    </p>
-  </div>
-</div>
-
-<p>You can switch on logging of IP addresses, user agents, embed path, query parameters, and Metabot conversation metadata for people using your Metabase, both for people directly by logging into Metabase, or for people who view an embedded Metabase component in your app. If enabled, you can find this information in your <a href="../usage-and-performance-tools/usage-analytics">usage analytics</a>.</p>
-
-<p>By default, collection of user data is turned <strong>off</strong>.</p>
-
-<h2 id="friendly-table-and-field-names">Friendly table and field names</h2>
-
-<p>By default, Metabase attempts to make field and table names more readable by changing things like <code class="language-plaintext highlighter-rouge">somehorriblename</code> to <code class="language-plaintext highlighter-rouge">Some Horrible Name</code>. This does not work well for languages other than English, or for fields that have lots of abbreviations or codes in them. If you’d like to turn this setting off, you can do so from the Admin Panel under <strong>Admin</strong> <strong>&gt; Settings</strong> &gt; <strong>General</strong>.</p>
-
-<p>If you re-enable this setting, Metabase will run a <a href="../databases/sync-scan#how-database-scans-work">scan</a> against your database to review your table and column names again.</p>
-
-<p>To manually label field or table names in Metabase, check out the <a href="../data-modeling/metadata-editing">Table Metadata</a> section in your admin panel. Metadata in the Table Metadata can be further curated in <a href="../data-modeling/models">models</a>.</p>
-
-<h2 id="enable-x-rays">Enable X-rays</h2>
-
-<p><a href="../exploration-and-organization/x-rays">X-rays</a> are a great way for people to get quick summary stats on your data. If these X-ray queries get too slow or expensive, you can turn them off here.</p>
-
-<h2 id="allowed-domains-for-iframes-in-dashboards">Allowed domains for iframes in dashboards</h2>
-
-<p>Make sure you trust the sources that you allow people to embed in dashboards.</p>
-
-<p>You can include multiple domains separated by a comma. Including a subdomain is more restrictive than including the domain.</p>
-
-<ul>
-  <li>For <strong>Domains</strong>, (e.g., <code class="language-plaintext highlighter-rouge">example.com</code>), Metabase will allow any iframe from the domain (<code class="language-plaintext highlighter-rouge">example.com</code>) <em>and</em> its subdomains (e.g., <code class="language-plaintext highlighter-rouge">data.example.com</code>, <code class="language-plaintext highlighter-rouge">docs.example.com</code>, etc.).</li>
-  <li>For <strong>Subdomains</strong> (e.g., <code class="language-plaintext highlighter-rouge">data.example.com</code>) Metabase will restrict iframes to those subdomains. In this case, iframes <em>must</em> be from <code class="language-plaintext highlighter-rouge">data.example.com</code> (or any of the other allowed domains). Metabase will block iframes from all other subdomains, including <code class="language-plaintext highlighter-rouge">example.com</code>.</li>
-</ul>
-
-<p>So if you included the following:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>data.example.com,
-docs.example.com
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm install -g @metabase/cli
 </code></pre></div></div>
 
-<p>Metabase would only allow iframes from <code class="language-plaintext highlighter-rouge">data.example.com</code> and <code class="language-plaintext highlighter-rouge">docs.example.com</code>. Metabase would block iframes from all other domains, including iframes from <code class="language-plaintext highlighter-rouge">example.com</code> and its other subdomains.</p>
+<p>The binary is <code class="language-plaintext highlighter-rouge">mb</code>.</p>
 
-<p>See <a href="../dashboards/introduction#iframe-cards">iframes in dashboards</a>.</p>
+<p>For commands, run:</p>
 
-<h2 id="restrict-image-domains">Restrict image domains</h2>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mb --help
+</code></pre></div></div>
 
-<p>When on, Metabase restricts the browser’s Content Security Policy so images can only load from this Metabase instance or the domains listed in <a href="#allowed-domains-for-images">Allowed domains for images</a>.</p>
+<h2 id="authenticate-the-cli">Authenticate the CLI</h2>
 
-<p>By default, images from any domain are allowed.</p>
+<p>Log in once per Metabase instance.</p>
 
-<h2 id="allowed-domains-for-images">Allowed domains for images</h2>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mb auth login --url https://metabase.example.com
+</code></pre></div></div>
 
-<p>When the <a href="#restrict-image-domains">Restrict image domains</a> setting is on, Metabase will only allow images served from this Metabase instance, and any domains listed here.</p>
+<p>The CLI prompts for an API key, or reads it from the <code class="language-plaintext highlighter-rouge">METABASE_API_KEY</code> environment variable or stdin. To create a key, see <a href="../people-and-groups/api-keys#create-an-api-key">API keys</a>.</p>
 
-<p>Leave this input empty to only allow images hosted by your Metabase instance.</p>
+<p>Credentials are stored per profile, so you can manage more than one Metabase (like dev and prod Metabases):</p>
 
-<p>Add multiple domains separated by a comma. Domains follow the same matching rules as <a href="#allowed-domains-for-iframes-in-dashboards">Allowed domains for iframes in dashboards</a>: listing a domain like <code class="language-plaintext highlighter-rouge">example.com</code> also allows its subdomains, while listing a subdomain like <code class="language-plaintext highlighter-rouge">images.example.com</code> allows only that subdomain.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mb auth login --profile prod --url https://prod.example.com
+mb auth list
+</code></pre></div></div>
+
+<p>Add <code class="language-plaintext highlighter-rouge">--profile &lt;name&gt;</code> to any command to run it against that instance.</p>
+
+<h2 id="use-the-cli-with-an-ai-agent">Use the CLI with an AI agent</h2>
+
+<p>The CLI is built to be driven by an AI coding agent like Claude Code. Instead of running commands yourself, you install a skill and describe what you want in plain language; the agent works out the commands.</p>
+
+<h3 id="the-metabase-cli-skill">The metabase-cli skill</h3>
+
+<p>The <a href="https://github.com/metabase/agent-skills/tree/main/skills/metabase-cli">metabase-cli skill</a> teaches your agent the CLI’s conventions. Once installed, you can run:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/metabase-cli Create a dashboard summarizing this month's signups by plan.
+</code></pre></div></div>
+
+<p>And your agent will go to work, creating content directly in your Metabase via the <code class="language-plaintext highlighter-rouge">mb</code> CLI.</p>
+
+<h2 id="use-the-cli-for-agent-driven-development">Use the CLI for agent-driven development</h2>
+
+<p>Pair the CLI with version control to build content with an agent in a development Metabase, commit the changes, and pull the changes into your production Metabase. Check out <a href="../ai/file-based-development">Agent-driven development</a>.</p>
+
+<h2 id="further-reading">Further reading</h2>
+
+<ul>
+  <li><a href="https://www.npmjs.com/package/@metabase/cli">@metabase/cli on npm</a></li>
+  <li><a href="../ai/file-based-development">Agent-driven development</a></li>
+  <li><a href="https://github.com/metabase/agent-skills">Agent skills</a></li>
+  <li><a href="./remote-sync">Remote sync</a></li>
+  <li><a href="./serialization">Serialization</a></li>
+  <li><a href="./commands">Metabase JAR commands</a></li>
+</ul>
 
 
         <div>
@@ -6384,7 +6336,7 @@ docs.example.com
 
   
     <span class="paragraph-6 fs-13 neutral-60" id="page-feedback-footer">
-      Want to improve these docs? <a href="https://github.com/metabase/metabase/blob/master/docs/configuring-metabase/settings.md" target="_blank">Propose a change.</a>
+      Want to improve these docs? <a href="https://github.com/metabase/metabase/blob/master/docs/installation-and-operation/metabase-cli.md" target="_blank">Propose a change.</a>
     </span>
   
 </div>
@@ -6406,8 +6358,8 @@ docs.example.com
 <script type="text/javascript" src="/js/position-feedback-widget.js"></script>
 
 <script>
-  const pageTitle = `General settings`;
-  const pageURL = '/docs/v0.62/configuring-metabase/settings';
+  const pageTitle = `Metabase CLI`;
+  const pageURL = '/docs/v0.62/installation-and-operation/metabase-cli';
   const pageURLSplit = pageURL.split('/');
 
   let pageURLPrefix = '/' + pageURLSplit[1] + '/' + pageURLSplit[2];
