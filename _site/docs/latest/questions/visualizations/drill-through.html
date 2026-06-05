@@ -9,7 +9,7 @@
 
   
    
-  <link href="https://www.metabase.com/docs/latest/cloud/accounts-and-billing" rel="canonical">
+  <link href="https://www.metabase.com/docs/latest/questions/visualizations/drill-through" rel="canonical">
   
   
 
@@ -52,12 +52,12 @@ window.redirectTo = function redirectTo(theLocation) {
 
 
 
-<title>Accounts and billing | Metabase Documentation</title>
+<title>Drill-through | Metabase Documentation</title>
 <!-- Twitter cards -->
 <meta name="twitter:site" content="@metabase">
 
-<meta name="twitter:title" content="Accounts and billing | Metabase Documentation">
-<meta name="twitter:description" content="Accounts and billing Managing billing and accounts in the Metabase Store. Upgrade to Pro (or downgrade to Starter) To switch your plan:  Log in to your Metabase Store account. In the Instances section, select the instance you want...">
+<meta name="twitter:title" content="Drill-through | Metabase Documentation">
+<meta name="twitter:description" content="Click on charts, column headers, and table cells to filter, zoom in, see underlying records, and break out by time, location, or category.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -65,9 +65,9 @@ window.redirectTo = function redirectTo(theLocation) {
 <!-- Open Graph metadata -->
 <meta property="og:site_name" content="Metabase | Business Intelligence, Dashboards, and Data Visualization">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://www.metabase.com/docs/latest/cloud/accounts-and-billing">
-<meta name="title" property="og:title" content="Accounts and billing | Metabase Documentation">
-<meta name="description" property="og:description" content="Accounts and billing Managing billing and accounts in the Metabase Store. Upgrade to Pro (or downgrade to Starter) To switch your plan:  Log in to your Metabase Store account. In the Instances section, select the instance you want...">
+<meta property="og:url" content="https://www.metabase.com/docs/latest/questions/visualizations/drill-through">
+<meta name="title" property="og:title" content="Drill-through | Metabase Documentation">
+<meta name="description" property="og:description" content="Click on charts, column headers, and table cells to filter, zoom in, see underlying records, and break out by time, location, or category.">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -5850,7 +5850,7 @@ Roadmap</a>
 
       
 
-      <li class="expanded">
+      <li class="">
         <a href="/docs/latest/cloud/how-billing-works" class="">
         Billing
 
@@ -5889,7 +5889,7 @@ Roadmap</a>
               
 
               <li class="">
-                <a href="/docs/latest/cloud/accounts-and-billing" class="selected">
+                <a href="/docs/latest/cloud/accounts-and-billing" class="">
                   Accounts and billing
 
                   
@@ -6056,7 +6056,7 @@ Roadmap</a>
 
             
             
-                <li class="breadcrumb-item"><a class="blue-60" href="/docs/latest/cloud/start">Cloud</a></li>
+                <li class="breadcrumb-item"><a class="blue-60" href="/docs/latest/questions/start">Questions</a></li>
             
             
         </ol>
@@ -6094,12 +6094,6 @@ Roadmap</a>
         </li>
       
     
-      
-        <li>
-          <a href="/docs/v0.61">
-            v0.61
-          </a>
-        </li>
       
     
       
@@ -6196,175 +6190,331 @@ Roadmap</a>
 </div>
 
 
-        <h1 id="accounts-and-billing">Accounts and billing</h1>
+        <h1 id="drill-through">Drill-through</h1>
 
-<p>Managing billing and accounts in the Metabase Store.</p>
+<p>Drill-through lets you explore data in your Metabase by clicking a chart, a column header, or a table cell. Each click opens a menu with options like <strong>Filter by this value</strong>, <strong>See these records</strong>, <strong>Break out by</strong>, and <strong>Zoom in</strong>. Selecting one of these options generates a new query and visualizes the result.</p>
 
-<h2 id="upgrade-to-pro-or-downgrade-to-starter">Upgrade to Pro (or downgrade to Starter)</h2>
+<p><img src="../images/drill-through-menu.png" alt="Drill-through menu"></p>
 
-<p>To switch your plan:</p>
+<h2 id="how-drill-through-works">How drill-through works</h2>
 
-<ol>
-  <li>Log in to your Metabase <a href="https://store.metabase.com">Store account</a>.</li>
-  <li>In the <strong>Instances</strong> section, select the instance you want to change.</li>
-  <li>Click <strong>Manage plan</strong>.</li>
-  <li>Select the plan you want.</li>
-  <li>Click <strong>Change plan</strong>.</li>
-</ol>
+<p>Every drill-through action creates a new query and visualizes the result. Metabase takes the original query and modifies it based on what you click. Switch to the editor to see and edit the new query.</p>
 
-<h2 id="add-managers">Add managers</h2>
+<p>For example, say a bar chart shows order counts summarized by product category and month. Click the April bar in the Widgets series, then select <strong>See these orders</strong>. Metabase creates a new question that filters the orders to Widgets in April.</p>
 
-<p>To invite users to manage your Metabase Store account:</p>
-
-<ol>
-  <li>Log in to your Metabase <a href="https://store.metabase.com">Store account</a>.</li>
-  <li>Navigate to <strong>Settings</strong>.</li>
-  <li>Find the <strong>Managers</strong> section.</li>
-  <li>In the <strong>Invite managers</strong> field, enter the email address of each user you want to invite.</li>
-  <li>Metabase sends them an email prompting them to create a Metabase Store account.</li>
-</ol>
-
-<blockquote>
-  <p>This action adds each invited user as a manager of your Metabase Store account only, not as a user of your Metabase instance.</p>
-</blockquote>
-
-<h2 id="add-contacts-to-receive-billing-or-technical-notifications">Add contacts to receive billing or technical notifications</h2>
-
-<p>To add contacts who receive billing or technical notifications:</p>
-
-<ol>
-  <li>Log in to your Metabase <a href="https://store.metabase.com">Store account</a>.</li>
-  <li>Navigate to <strong>Settings</strong>.</li>
-  <li>Find the <strong>Contacts</strong> section.</li>
-  <li>In the <strong>Add contacts</strong> field, enter the email address of each contact you want to add.</li>
-  <li>In the <strong>Email type</strong> dropdown, choose between <strong>All</strong>, <strong>Billing</strong>, and <strong>Technical</strong>.</li>
-  <li>Click <strong>Add</strong>.</li>
-  <li>Metabase sends each contact an email notifying them that they’ve been added to your contact list.</li>
-</ol>
-
-<h2 id="cancel-a-subscription-or-trial">Cancel a subscription or trial</h2>
-
-<p>To cancel a Starter or Pro plan:</p>
-
-<ol>
-  <li>Log in to your Metabase <a href="https://store.metabase.com">Store account</a>.</li>
-  <li>Navigate to <strong>Instances</strong>.</li>
-  <li>In the instance you want to cancel, click <strong>Settings</strong>.</li>
-  <li>Click <strong>Cancel subscription and delete instance</strong>. If you have an Enterprise plan, <a href="/help-premium">contact support</a>.</li>
-  <li>Optional: let us know why you’re cancelling so we can improve Metabase. Click <strong>Share feedback</strong>, or click <strong>Skip</strong>.</li>
-  <li>To confirm, click <strong>Yes, cancel</strong>.</li>
-</ol>
-
-<h2 id="update-payment-information">Update payment information</h2>
-
-<ol>
-  <li>Log in to your Metabase <a href="https://store.metabase.com">Store account</a>.</li>
-  <li>Navigate to <strong>Billing</strong>.</li>
-  <li>Click on the payment method that you want to update.</li>
-  <li>Enter new credit card information.</li>
-  <li>Click on <strong>Update</strong>.</li>
-</ol>
-
-<p>If your Metabase was suspended due to a failed payment, the Store will automatically restore your Metabase upon a successful payment.</p>
-
-<h2 id="switch-to-annual-billing">Switch to annual billing</h2>
-
-<p>To switch to annual billing:</p>
-
-<ol>
-  <li>Log in to your Metabase <a href="https://store.metabase.com">Store account</a>.</li>
-  <li>Navigate to <strong>Instances</strong>.</li>
-  <li>In the instance you want to switch, click <strong>Manage plan</strong>.</li>
-  <li>Enable the <strong>Switch to annual billing</strong> toggle.</li>
-  <li>Click <strong>Change plan</strong>.</li>
-</ol>
-
-<blockquote>
-  <p>You can’t switch back to monthly billing until your annual cycle has completed.</p>
-</blockquote>
-
-<h2 id="download-past-invoices">Download past invoices</h2>
-
-<ol>
-  <li>Log in to your Metabase <a href="https://store.metabase.com">Store account</a>.</li>
-  <li>Go to <strong>Billing</strong>.</li>
-  <li>Scroll down to <strong>Invoices</strong> to view past or open invoices.</li>
-</ol>
-
-<h2 id="w-9-form-requests">W-9 form requests</h2>
-
-<p>See Metabase’s updated <a href="/files/2024_W9_signed.pdf">W9 form</a>.</p>
-
-<h2 id="update-your-tax-id">Update your Tax ID</h2>
-
-<ol>
-  <li>Log in to your Metabase <a href="https://store.metabase.com">Store account</a>.</li>
-  <li>Navigate to <strong>Billing</strong>.</li>
-  <li>Find the <strong>Payment details</strong> section.</li>
-  <li>In the <strong>Invoice Tax IDs</strong> field, select your country from the drop-down and enter your Tax ID.</li>
-  <li>Click <strong>Save</strong>.</li>
-</ol>
-
-<h2 id="change-the-company-name-on-invoicesreceipts">Change the company name on invoices/receipts</h2>
-
-<p>The primary account holder should request a name change by emailing <a href="mailto:billing@metabase.com">billing@metabase.com</a>.</p>
-
-<h2 id="reset-your-admin-password">Reset your Admin password</h2>
-
-<p>If you need to reset your Admin password, <a href="/help-premium">contact support</a>.</p>
-
-<h2 id="change-your-company-name">Change your company name</h2>
-
-<ol>
-  <li>Log in to your Metabase <a href="https://store.metabase.com">Store account</a>.</li>
-  <li>Navigate to <strong>Settings</strong>.</li>
-  <li>Find the <strong>Company name</strong> section.</li>
-  <li>In the <strong>Change company name</strong> field, enter a new company name.</li>
-  <li>Click <strong>Update</strong>.</li>
-</ol>
-
-<h2 id="change-your-billing-address">Change your billing address</h2>
-
-<ol>
-  <li>Log in to your Metabase <a href="https://store.metabase.com">Store account</a>.</li>
-  <li>Navigate to <strong>Billing</strong>.</li>
-  <li>Find the <strong>Payment details</strong> section.</li>
-  <li>In the <strong>Billing address</strong> field, enter your new billing address.</li>
-  <li>Click <strong>Save</strong>.</li>
-</ol>
-
-<h2 id="add-or-change-your-shipping-address">Add or change your shipping address</h2>
-
-<ol>
-  <li>Log in to your Metabase <a href="https://store.metabase.com">Store account</a>.</li>
-  <li>Navigate to <strong>Billing</strong>.</li>
-  <li>Find the <strong>Payment details</strong> section.</li>
-  <li>In the <strong>Shipping address</strong> field, add or update your shipping address.</li>
-  <li>Click <strong>Save</strong>.</li>
-</ol>
-
-<h2 id="change-the-primary-account-holder">Change the primary account holder</h2>
-
-<p>If you need to change your primary account holder, for example if your primary account holder left your company:</p>
+<p>Some things to keep in mind:</p>
 
 <ul>
-  <li>If another person at your company holds a Metabase Store account, work with them to add you to your company’s Metabase Store account.</li>
-  <li>If there is no other account holder, email <a href="mailto:billing@metabase.com">billing@metabase.com</a> to request access to your company’s Metabase Store account. Please note that if the primary account holder is unavailable, there is a 48-hour waiting period to process changes to Metabase Store accounts.</li>
+  <li><strong>Drill-through requires query-building permissions.</strong> You must have permission to create queries on the underlying data to see the drill-through menu.</li>
+  <li><strong>The drill-through does not modify the original question.</strong> Drill-through creates a new question without overwriting or modifying your original question.</li>
+  <li><strong>The menu options depend on the type of data you click.</strong> Different options appear in the action menu depending on whether you click a chart, a column header, a table cell, or a point on a map.</li>
 </ul>
 
-<h2 id="move-from-metabase-cloud-to-self-hosting-metabase">Move from Metabase Cloud to self-hosting Metabase</h2>
+<h2 id="drill-through-types">Drill-through types</h2>
 
-<p>If you’re on Metabase Cloud but need to switch to hosting Metabase yourself, <a href="/help-premium">contact us</a> and we’ll give you a backup of your application database that you can use to restore Metabase on your own infrastructure.</p>
-
-<h2 id="further-reading">Further reading</h2>
+<p>There are two types of drill-through:</p>
 
 <ul>
-  <li><a href="./how-billing-works">How billing works</a></li>
+  <li><strong>Results-based drill-through:</strong> Metabase takes the data in the query result and filters, distributes, or otherwise transforms it. Example options include <strong>Filter by this value</strong>, <strong>Distribution</strong>, and <strong>Sort</strong>. You can perform results-based drill-through on questions built with the query builder or native SQL.</li>
+  <li><strong>Query-rewriting drill-through:</strong> Metabase modifies your query. Example options include <strong>See these records</strong>, <strong>Break out by</strong>, and <strong>Zoom in</strong>. You can only perform query-rewriting drill-through on questions built with the query builder.</li>
 </ul>
+
+<h2 id="drill-through-options">Drill-through options</h2>
+
+<p>The drill-through menu options depend on what you click and on the underlying data.</p>
+
+<h3 id="tables">Tables</h3>
+
+<p>To drill-through a table, click either:</p>
+
+<ul>
+  <li>Column headers</li>
+  <li>Table cells</li>
+</ul>
+
+<h4 id="column-headers">Column headers</h4>
+
+<p><img src="../images/drill-through-column-header-menu.png" alt="Drill-through column header menu"></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Option</th>
+      <th>When it appears</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td data-label="Option"><strong>Filter by this column</strong></td>
+      <td data-label="When it appears">Any column</td>
+    </tr>
+    <tr>
+      <td data-label="Option"><strong>Sort</strong></td>
+      <td data-label="When it appears">Any column except JSON</td>
+    </tr>
+    <tr>
+      <td data-label="Option"><strong>Distribution</strong></td>
+      <td data-label="When it appears">Any column except primary keys, JSON, or description and comment fields</td>
+    </tr>
+    <tr>
+      <td data-label="Option"><strong>Sum / Average</strong></td>
+      <td data-label="When it appears">Numeric columns when the query isn’t summarized</td>
+    </tr>
+    <tr>
+      <td data-label="Option"><strong>Distinct values</strong></td>
+      <td data-label="When it appears">Any column when the query isn’t summarized</td>
+    </tr>
+    <tr>
+      <td data-label="Option"><strong>Sum over time</strong></td>
+      <td data-label="When it appears">Numeric columns when the query has a date column and isn’t summarized</td>
+    </tr>
+    <tr>
+      <td data-label="Option"><strong>Extract domain, host…</strong> / <strong>Extract day, month…</strong></td>
+      <td data-label="When it appears">URL, email, and date columns</td>
+    </tr>
+    <tr>
+      <td data-label="Option"><strong>Combine columns</strong></td>
+      <td data-label="When it appears">Text columns</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="table-cells">Table cells</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Option</th>
+      <th>When it appears</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td data-label="Option"><strong>Filter by this value</strong></td>
+      <td data-label="When it appears">Any column except primary keys and foreign keys</td>
+    </tr>
+    <tr>
+      <td data-label="Option"><strong>View details</strong></td>
+      <td data-label="When it appears">Rows that have a primary key</td>
+    </tr>
+    <tr>
+      <td data-label="Option"><strong>View this [related record]</strong></td>
+      <td data-label="When it appears">Foreign key values</td>
+    </tr>
+    <tr>
+      <td data-label="Option"><strong>View these [related rows]</strong></td>
+      <td data-label="When it appears">Foreign key values</td>
+    </tr>
+    <tr>
+      <td data-label="Option"><strong>View these records</strong></td>
+      <td data-label="When it appears">Aggregated values</td>
+    </tr>
+    <tr>
+      <td data-label="Option"><strong>Break out by [time / location / category]</strong></td>
+      <td data-label="When it appears">Aggregated values</td>
+    </tr>
+    <tr>
+      <td data-label="Option"><strong>Automatic insights</strong></td>
+      <td data-label="When it appears">Summarized queries, when <a href="../../exploration-and-organization/x-rays">X-rays</a> are enabled</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="charts">Charts</h3>
+
+<p>To drill-through a chart, click either:</p>
+
+<ul>
+  <li>Data points</li>
+  <li>Legend items</li>
+</ul>
+
+<blockquote>
+  <p><a href="./table#pivoted-tables">Pivoted tables</a> behave like charts. Cells in pivoted tables offer the same options as data points. This is different from the <a href="./pivot-table">pivot table visualization</a>, which offers a smaller subset of drill-through options.</p>
+</blockquote>
+
+<h4 id="data-points">Data points</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Option</th>
+      <th>When it appears</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td data-label="Option"><strong>Filter by this value</strong></td>
+      <td data-label="When it appears">Any column except primary keys and foreign keys</td>
+    </tr>
+    <tr>
+      <td data-label="Option"><strong>View these records</strong></td>
+      <td data-label="When it appears">Aggregated values</td>
+    </tr>
+    <tr>
+      <td data-label="Option"><strong>Break out by [time / location / category]</strong></td>
+      <td data-label="When it appears">Aggregated values</td>
+    </tr>
+    <tr>
+      <td data-label="Option"><strong>Automatic insights</strong></td>
+      <td data-label="When it appears">Summarized queries, when <a href="../../exploration-and-organization/x-rays">X-rays</a> are enabled</td>
+    </tr>
+    <tr>
+      <td data-label="Option"><strong>Zoom in</strong></td>
+      <td data-label="When it appears">Histograms, binned charts, and maps</td>
+    </tr>
+    <tr>
+      <td data-label="Option"><strong>See this [period] by [smaller period]</strong></td>
+      <td data-label="When it appears">Time series</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>On a time series or other chart with a continuous axis, click and drag across a range to filter the question to those values. This works like <strong>Filter by this value</strong>, but for a range of data instead of a single data point.</p>
+
+<h4 id="legend-items">Legend items</h4>
+
+<p>Clicking the colored circle on a legend item toggles the series on or off. Clicking the label on the legend item opens the drill-through menu.</p>
+
+<p>Drill-through on a legend item applies to the entire series, not just one data point. For example, clicking <strong>View these records</strong> on a legend item shows all the rows for that series across the whole chart.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Option</th>
+      <th>When it appears</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td data-label="Option"><strong>View these records</strong></td>
+      <td data-label="When it appears">Aggregated values</td>
+    </tr>
+    <tr>
+      <td data-label="Option"><strong>Break out by [time / location / category]</strong></td>
+      <td data-label="When it appears">Aggregated values</td>
+    </tr>
+    <tr>
+      <td data-label="Option"><strong>Automatic insights</strong></td>
+      <td data-label="When it appears">Summarized queries, when <a href="../../exploration-and-organization/x-rays">X-rays</a> are enabled</td>
+    </tr>
+    <tr>
+      <td data-label="Option"><strong>Zoom in</strong></td>
+      <td data-label="When it appears">Histograms, binned charts, and maps</td>
+    </tr>
+    <tr>
+      <td data-label="Option"><strong>See this [period] by [smaller period]</strong></td>
+      <td data-label="When it appears">Time series</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="drill-through-and-native-sql">Drill-through and native SQL</h2>
+
+<p>When you create a query with the query builder, Metabase can read and modify your query for any drill-through action.</p>
+
+<p>When you write a query with the native SQL editor, Metabase runs your query but doesn’t parse it. It can modify the results, but it can’t modify the query itself. This means you can use results-based drill-through, but not query-rewriting drill-through. For example:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Works on native SQL questions</th>
+      <th>Doesn’t work on native SQL questions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td data-label="Works on native SQL questions"><strong>Filter by this value</strong></td>
+      <td data-label="Doesn’t work on native SQL questions"><strong>See these records</strong></td>
+    </tr>
+    <tr>
+      <td data-label="Works on native SQL questions"><strong>Distribution</strong></td>
+      <td data-label="Doesn’t work on native SQL questions"><strong>Break out by</strong></td>
+    </tr>
+    <tr>
+      <td data-label="Works on native SQL questions"><strong>Sort</strong></td>
+      <td data-label="Doesn’t work on native SQL questions"><strong>Zoom in</strong></td>
+    </tr>
+  </tbody>
+</table>
+
+<blockquote>
+  <p>To use drill-through on a native SQL question, you must save the question.</p>
+</blockquote>
+
+<p>For more information, see <a href="#drill-through-types">drill-through types</a>.</p>
+
+<h3 id="make-native-sql-questions-interactive">Make native SQL questions interactive</h3>
+
+<p>Drill-through can’t rewrite a native SQL query, but you can still make a native SQL chart interactive using <a href="../../dashboards/interactive#customizing-click-behavior">custom click behavior</a>. Add the question to a dashboard, and set a click behavior on the card.</p>
+
+<p>A custom click behavior replaces the drill-through menu with an action you define. It can send you to another question, dashboard, external URL, or update a filter on the current dashboard. Set a <a href="../../dashboards/filters">dashboard filter</a> to the clicked value to scope the destination.</p>
+
+<h3 id="combine-native-sql-with-full-drill-through">Combine native SQL with full drill-through</h3>
+
+<p>If you need native SQL but also want to use the full drill-through menu, write your SQL query as a <a href="../../data-studio/transforms/transforms-overview">transform</a> and build the user-facing question with the query builder.</p>
+
+<p>Write the transform’s SQL to return the individual records, not summarized results. Build questions on the transform’s table with the query builder. These questions support the full drill-through menu.</p>
+
+<p>Drill-through actions can only reach data that the transform’s table contains.</p>
+
+<blockquote>
+  <p>To create transforms, you must have transform permissions. If you use Metabase Cloud, you must also have the <a href="../../data-studio/transforms/addons">transform add-on</a>.</p>
+</blockquote>
+
+<h2 id="drill-through-and-embedding">Drill-through and embedding</h2>
+
+<p>Drill-through behavior depends on the <a href="../../embedding/start">embedding type</a>, because drill-through requires a Metabase user with query permissions.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Embedding type</th>
+      <th>Drill-through</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td data-label="Embedding type"><strong>Authenticated modular embedding</strong></td>
+      <td data-label="Drill-through">Full drill-through, scoped to the user’s permissions</td>
+    </tr>
+    <tr>
+      <td data-label="Embedding type"><strong>Guest modular embeds</strong></td>
+      <td data-label="Drill-through">No drill-through</td>
+    </tr>
+    <tr>
+      <td data-label="Embedding type"><strong>Full app embedding</strong></td>
+      <td data-label="Drill-through">Full drill-through</td>
+    </tr>
+    <tr>
+      <td data-label="Embedding type"><strong>Public embeds</strong></td>
+      <td data-label="Drill-through">No drill-through</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>To turn off drill-through in modular embedding, use the <strong>Allow people to drill through on data points</strong> setting when you create the embed. In a dashboard, override drill-through on a single card with <a href="../../dashboards/interactive">custom click behavior</a>.</p>
+
+<p>Use <a href="../../embedding/sdk/introduction">modular embedding SDK plugins</a> to customize some drill-through menu options and click behavior in embedded apps.</p>
+
+<h2 id="alternatives-to-drill-through">Alternatives to drill-through</h2>
+
+<p>On a dashboard, you can replace drill-through with a different click action:</p>
+
+<ul>
+  <li><strong><a href="../../dashboards/interactive#customizing-click-behavior">Custom click behavior</a>:</strong> Send users to another question, dashboard, external URL, or update a filter on the current dashboard</li>
+  <li><strong><a href="../../dashboards/interactive#use-a-chart-to-filter-a-dashboard">Cross-filtering</a>:</strong> Update a filter on cards across a dashboard</li>
+</ul>
+
+<p>Setting one of these alternatives on a card replaces the drill-through menu for that card.</p>
 
 
         <div>
           <div class="widget-separator"></div>
+          
+            <p>
+              Read docs for other <a href="/docs/all">versions of Metabase</a>.
+            </p>
           
         </div>
       </div>
@@ -6410,7 +6560,7 @@ Roadmap</a>
 
   
     <span class="paragraph-6 fs-13 neutral-60" id="page-feedback-footer">
-      Want to improve these docs? <a href="https://github.com/metabase/metabase/blob/master/docs/cloud/accounts-and-billing.md" target="_blank">Propose a change.</a>
+      Want to improve these docs? <a href="https://github.com/metabase/metabase/blob/master/docs/questions/visualizations/drill-through.md" target="_blank">Propose a change.</a>
     </span>
   
 </div>
@@ -6432,8 +6582,8 @@ Roadmap</a>
 <script type="text/javascript" src="/js/position-feedback-widget.js"></script>
 
 <script>
-  const pageTitle = `Accounts and billing`;
-  const pageURL = '/docs/latest/cloud/accounts-and-billing';
+  const pageTitle = `Drill-through`;
+  const pageURL = '/docs/latest/questions/visualizations/drill-through';
   const pageURLSplit = pageURL.split('/');
 
   let pageURLPrefix = '/' + pageURLSplit[1] + '/' + pageURLSplit[2];
