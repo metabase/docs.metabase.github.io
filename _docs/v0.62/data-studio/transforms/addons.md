@@ -44,7 +44,7 @@ With basic transforms, you can:
 
 - **Metabase Cloud**: Basic transform functionality on Metabase Cloud - Starter, Pro, or Enterprise - comes with an additional small fee per successful transform run, see [Pricing](/pricing).
 
-  Only people logged in with an email of a [Metabase Store admins](../../cloud/accounts-and-billing#add-people-to-manage-your-metabase-store-account) (not just Metabase _instance_ admins) can enable basic transforms. To enable Basic transforms on Metabase Cloud, see [Enable transforms](./transforms-overview#enable-transforms).
+    Only people logged in with an email of a [Metabase Store admin](../../cloud/accounts-and-billing#add-managers) (not just Metabase _instance_ admins) can [enable basic transforms](./transforms-overview#enable-transforms).
 
 ### Cancel basic transforms
 
@@ -76,7 +76,7 @@ There are two ways to enable Advanced transforms:
 
 - **From your Metabase instance**: you can navigate to a feature requiring advanced transforms (like Python transforms or transform inspector), and follow the prompts to upgrade.
 
-  To enable Advanced transforms from your Metabase instance, you need to be logged into the instance with the same email as a [Metabase Store admin](../../cloud/accounts-and-billing#add-people-to-manage-your-metabase-store-account), because Advanced transform incur an additional charge.
+  To enable Advanced transforms from your Metabase instance, you need to be logged into the instance with the same email as a [Metabase Store admin](../../cloud/accounts-and-billing#add-managers), because Advanced transform incur an additional charge.
 
 - **From [Metabase Store](https://store.metabase.com)**:
 
