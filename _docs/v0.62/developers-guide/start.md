@@ -50,6 +50,10 @@ This guide contains detailed information on how to work on Metabase codebase.
 - [Community drivers](./community-drivers)
 - [Guide to writing a driver](drivers/start)
 
+## Customizing Metabase
+
+- [Building custom visualizations](./custom-visualizations)
+
 ## Metabase documentation
 
 - [Developing Metabase documentation](./docs)

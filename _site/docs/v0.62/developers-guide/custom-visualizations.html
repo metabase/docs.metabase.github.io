@@ -50,12 +50,12 @@ window.redirectTo = function redirectTo(theLocation) {
 
 
 
-<title>Metabase documentation | Metabase Documentation</title>
+<title>Building custom visualizations | Metabase Documentation</title>
 <!-- Twitter cards -->
 <meta name="twitter:site" content="@metabase">
 
-<meta name="twitter:title" content="Metabase documentation | Metabase Documentation">
-<meta name="twitter:description" content="Metabase documentation  Metabase is an open-source business intelligence platform. You can use Metabase to ask questions about your data, or embed Metabase in your app to let your customers explore their data on their own. <h2...">
+<meta name="twitter:title" content="Building custom visualizations | Metabase Documentation">
+<meta name="twitter:description" content="Use the Custom Visualizations SDK to build, develop, and package your own chart types for Metabase.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -63,9 +63,9 @@ window.redirectTo = function redirectTo(theLocation) {
 <!-- Open Graph metadata -->
 <meta property="og:site_name" content="Metabase | Business Intelligence, Dashboards, and Data Visualization">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://www.metabase.com/docs/v0.62/index.html">
-<meta name="title" property="og:title" content="Metabase documentation | Metabase Documentation">
-<meta name="description" property="og:description" content="Metabase documentation  Metabase is an open-source business intelligence platform. You can use Metabase to ask questions about your data, or embed Metabase in your app to let your customers explore their data on their own. <h2...">
+<meta property="og:url" content="https://www.metabase.com/docs/v0.62/developers-guide/custom-visualizations">
+<meta name="title" property="og:title" content="Building custom visualizations | Metabase Documentation">
+<meta name="description" property="og:description" content="Use the Custom Visualizations SDK to build, develop, and package your own chart types for Metabase.">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -6050,6 +6050,36 @@ Roadmap</a>
       <div class="top-bar">
   <div>
     
+      <div class="learn-breadcrumb-trail">
+        
+          
+
+
+
+
+
+
+
+<div class="bootstrap">
+    
+    <nav style="--bs-breadcrumb-divider: url('/images/chevron_blue_right.svg');" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/docs/v0.62/">Home</a></li>
+            
+
+            
+            
+                <li class="breadcrumb-item"><a class="blue-60" href="/docs/v0.62/developers-guide/start">Developers Guide</a></li>
+            
+            
+        </ol>
+    </nav>
+    
+</div>
+
+        
+      </div>
+    
   </div>
 
   <div>
@@ -6167,100 +6197,6 @@ Roadmap</a>
 
       <div class="learn__post__content">
         
-          
-
-<div class="version__selector cursor-pointer">
-  <span class="version__current">
-    
-      v0.62
-    
-
-    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="chevron">
-<path opacity="0.9" d="M3 8.96338L16 21.9634L29 8.96338" stroke="#509ee3" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"></path>
-</svg>
-
-  </span>
-  <ul class="version__dropdown">
-    
-      
-    
-      
-        <li>
-          <a href="/docs/v0.61">
-            v0.61
-          </a>
-        </li>
-      
-    
-      
-        <li>
-          <a href="/docs/v0.60">
-            v0.60
-          </a>
-        </li>
-      
-    
-      
-        <li>
-          <a href="/docs/v0.59">
-            v0.59
-          </a>
-        </li>
-      
-    
-      
-        <li>
-          <a href="/docs/v0.58">
-            v0.58
-          </a>
-        </li>
-      
-    
-      
-        <li>
-          <a href="/docs/v0.57">
-            v0.57
-          </a>
-        </li>
-      
-    
-      
-        <li>
-          <a href="/docs/v0.56">
-            v0.56
-          </a>
-        </li>
-      
-    
-      
-        <li>
-          <a href="/docs/v0.55">
-            v0.55
-          </a>
-        </li>
-      
-    
-      
-        <li>
-          <a href="/docs/v0.54">
-            v0.54
-          </a>
-        </li>
-      
-    
-      
-        <li>
-          <a href="/docs/v0.53">
-            v0.53
-          </a>
-        </li>
-      
-    
-    <li><a href="/docs/all">See more</a></li>
-  </ul>
-</div>
-
-        
 
         <div>
   
@@ -6274,375 +6210,683 @@ Roadmap</a>
 </div>
 
 
-        <h1 id="metabase-documentation">Metabase documentation</h1>
+        <h1 id="building-custom-visualizations">Building custom visualizations</h1>
 
-<p><img src="./images/metabase-product-screenshot.png" alt="Metabase dashboard"></p>
+<div class="bootstrap">
+  <div class="plans-blockquote bg-blue-95 rounded-3 p-6 d-flex flex-row border border-1 border-primary">
+    <svg class="" width="24" height="24" viewBox="0 0 26 26" fill="none">
+  <path d="M12 13V15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
+  <path d="M12 10C12.5523 10 13 9.55228 13 9C13 8.44772 12.5523 8 12 8C11.4477 8 11 8.44772 11 9C11 9.55228 11.4477 10 12 10Z" fill="#509EE3"></path>
+  <path d="M12 19.25C16.0041 19.25 19.25 16.0041 19.25 12C19.25 7.99594 16.0041 4.75 12 4.75C7.99594 4.75 4.75 7.99594 4.75 12C4.75 16.0041 7.99594 19.25 12 19.25Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="#509EE3"></path>
+</svg>
 
-<p>Metabase is an open-source business intelligence platform. You can use Metabase to ask questions about your data, or embed Metabase in your app to let your customers explore their data on their own.</p>
+    
+    
+    
+      
 
-<h2 id="first-steps">First steps</h2>
+    <p class="m-0 ms-2 paragraph-5 neutral-40">
+       Custom visualizations is only available on
+      <a class="fw-bold" href="/product/pro">Pro</a> and
+      <a class="fw-bold link-purple" href="/product/enterprise">Enterprise</a>
+      plans  (both self-hosted and on Metabase Cloud).
+    </p>
+  </div>
+</div>
 
-<h3 id="metabase-cloud">Metabase Cloud</h3>
+<p>You can create a custom chart type for Metabase that you build with React and TypeScript and ship as a plugin.</p>
 
-<p>The easiest way to get started with Metabase is to sign up for a free trial of <a href="https://store.metabase.com/checkout">Metabase Cloud</a>. You get support, backups, upgrades, an SMTP server, SSL certificate, SoC2 Type 2 security auditing, and more (plus your money goes toward improving Metabase). Check out our quick overview of <a href="./cloud/cloud-vs-self-hosting">cloud vs self-hosting</a>. If you need to, you can always switch to <a href="./installation-and-operation/installing-metabase">self-hosting</a> Metabase at any time (or vice versa).</p>
+<p>You scaffold a project with the <code class="language-plaintext highlighter-rouge">@metabase/custom-viz</code> package, write your visualization, and package it into a <code class="language-plaintext highlighter-rouge">.tgz</code> bundle. An admin uploads the plugin to Metabase (see <a href="../questions/visualizations/custom">Custom visualizations</a>), and you’re in business.</p>
 
-<h3 id="installing-metabase"><a href="./installation-and-operation/installing-metabase">Installing Metabase</a></h3>
+<h2 id="overview-of-a-custom-visualization">Overview of a custom visualization</h2>
 
-<p>Run as a JAR, using Docker, or on <a href="https://store.metabase.com/checkout">Metabase Cloud</a>.</p>
+<p>A custom visualization is a small React app that Metabase renders in place of a built-in chart.</p>
 
-<h3 id="setting-up-metabase"><a href="./configuring-metabase/setting-up-metabase">Setting up Metabase</a></h3>
+<p>Building a custom viz from scaffolding to adding it to your Metabase looks something like:</p>
 
-<p>Once installed, set up your Metabase and connect to your data.</p>
+<ol>
+  <li><strong>Scaffold</strong> a project with the <code class="language-plaintext highlighter-rouge">@metabase/custom-viz</code> CLI. The command sets up the build, the manifest, and a working starter visualization.</li>
+  <li><strong>Develop</strong> against a locally running Metabase with hot reload while you write your component and settings.</li>
+  <li><strong>Handle the data</strong>: read query results from <code class="language-plaintext highlighter-rouge">series</code>, wire up clicks and tooltips, and add any settings your chart needs.</li>
+  <li><strong>Match the look</strong> with Metabase’s formatters, theme variables, and color scheme.</li>
+  <li><strong>Build and package</strong> the project into a <code class="language-plaintext highlighter-rouge">.tgz</code> bundle.</li>
+  <li><strong>Add it to your Metabase</strong>: an admin uploads the bundle, and your chart type becomes available in your Metabase.</li>
+</ol>
 
-<h3 id="getting-started"><a href="/learn/metabase-basics/getting-started/index">Getting started</a></h3>
-
-<p>With your data connected, get started asking questions, creating dashboards, and sharing your work.</p>
-
-<h3 id="a-tour-of-metabase"><a href="/learn/metabase-basics/overview/tour-of-metabase">A tour of Metabase</a></h3>
-
-<p>Metabase is a deep product with a lot of tools to simplify business intelligence, from embeddable charts and interactive dashboards, to GUI and SQL editors, to auditing and row and column security, and more.</p>
-
-<h2 id="documentation-topics">Documentation topics</h2>
-
-<p>Metabase’s reference documentation.</p>
-
-<h3 id="installation">Installation</h3>
-
-<ul>
-  <li><a href="./installation-and-operation/start">Installation overview</a></li>
-  <li><a href="./installation-and-operation/installing-metabase">Installing Metabase</a></li>
-  <li><a href="./installation-and-operation/upgrading-metabase">Upgrading Metabase</a></li>
-  <li><a href="./installation-and-operation/configuring-application-database">Configuring the Metabase application database</a></li>
-  <li><a href="./installation-and-operation/backing-up-metabase-application-data">Backing up Metabase</a></li>
-  <li><a href="./installation-and-operation/migrating-from-h2">Migrating to a production application database</a></li>
-  <li><a href="./installation-and-operation/monitoring-metabase">Monitoring your Metabase</a></li>
-  <li><a href="./installation-and-operation/development-instance">Development instances</a></li>
-  <li><a href="./installation-and-operation/serialization">Serialization</a></li>
-  <li><a href="./installation-and-operation/remote-sync">Remote sync</a></li>
-  <li><a href="./installation-and-operation/metabase-cli">Metabase CLI</a></li>
-  <li><a href="./installation-and-operation/commands">Metabase JAR commands</a></li>
-  <li><a href="./installation-and-operation/supported-browsers">Supported browsers</a></li>
-  <li><a href="./installation-and-operation/privacy">Privacy</a></li>
-  <li><a href="./installation-and-operation/information-collection">About the anonymous usage data we collect</a></li>
-</ul>
-
-<h3 id="databases">Databases</h3>
+<h2 id="prerequisites">Prerequisites</h2>
 
 <ul>
-  <li><a href="./databases/start">Databases overview</a></li>
-  <li><a href="./databases/connecting">Adding and managing databases</a></li>
-  <li><a href="./databases/users-roles-privileges">Database users, roles, and privileges</a></li>
-  <li><a href="./databases/sync-scan">Syncing and scanning databases</a></li>
-  <li><a href="./databases/encrypting-details-at-rest">Encrypting your database connection</a></li>
-  <li><a href="./databases/ssh-tunnel">SSH tunneling</a></li>
-  <li><a href="./databases/ssl-certificates">SSL certificate</a></li>
-  <li><a href="./databases/uploads">Uploading data</a></li>
+  <li>Node.js 22 or newer.</li>
+  <li>Familiarity with React and TypeScript.</li>
+  <li>A Metabase on a <a href="/pricing/">Pro or Enterprise plan</a> to load your plugin into.</li>
 </ul>
 
-<h3 id="questions">Questions</h3>
+<h2 id="scaffold-a-custom-visualization-project">Scaffold a custom visualization project</h2>
+
+<p>Generate a new project with the <code class="language-plaintext highlighter-rouge">@metabase/custom-viz</code> CLI:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npx @metabase/custom-viz init my-viz
+</code></pre></div></div>
+
+<p>Then install dependencies and start the dev server:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd my-viz
+npm install
+npm run dev
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">npm run dev</code> runs in watch mode and rebuilds your plugin on every change.</p>
+
+<h3 id="project-structure">Project structure</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>src/
+  index.tsx             # Your visualization code — start here
+metabase-plugin.json    # Plugin manifest (name, icon, version)
+public/
+  assets/
+    icon.svg            # Visualization icon (shown in the chart type picker)
+package.json
+vite.config.ts          # Build configuration — don't edit
+pack.mjs                # Packages the build into a .tgz — don't edit
+tsconfig.json
+</code></pre></div></div>
+
+<p>Only <code class="language-plaintext highlighter-rouge">index.tsx</code> has to export the factory. For a more sophisticated plugin, you’d want to split the component, settings, types, and helpers into their own modules (check out the <a href="#example-plugins">calendar-heatmap example</a>, which keeps the definition in <code class="language-plaintext highlighter-rouge">index.tsx</code>, the React component in <code class="language-plaintext highlighter-rouge">Visualization.tsx</code>, and chart configuration and utilities under <code class="language-plaintext highlighter-rouge">src/</code>).</p>
+
+<h3 id="the-starter-visualization">The starter visualization</h3>
+
+<p>The scaffold ships a complete, working example: a chart that shows a thumbs-up emoji (👍) when a single numeric result meets a <code class="language-plaintext highlighter-rouge">threshold</code> setting, and a thumbs-down (👎) otherwise.</p>
+
+<h2 id="develop-against-a-running-metabase">Develop against a running Metabase</h2>
+
+<p>To develop your plugin against a live Metabase with hot reload:</p>
+
+<ol>
+  <li>Start Metabase with the <code class="language-plaintext highlighter-rouge">MB_CUSTOM_VIZ_PLUGIN_DEV_MODE_ENABLED</code> environment variable set to <code class="language-plaintext highlighter-rouge">true</code>. Dev mode is meant for local development, so you can only turn it on with this environment variable. Like any Metabase that runs custom visualizations, this local instance needs a <a href="/pricing/">Pro or Enterprise</a> token.</li>
+  <li>Run <code class="language-plaintext highlighter-rouge">npm run dev</code> in your project. By default, the dev server listens on <code class="language-plaintext highlighter-rouge">http://localhost:5174</code>.</li>
+  <li>In Metabase, go to <strong>Admin</strong> &gt; <strong>Settings</strong> &gt; <strong>Custom visualizations</strong> &gt; <strong>Development</strong> and set the <strong>Dev server URL</strong> to your dev server’s address.</li>
+</ol>
+
+<p>Your plugin shows up in the <strong>Custom visualizations</strong> section of the visualization sidebar (alongside any installed plugins) and is labeled as a dev visualization.</p>
+
+<p>If you’re running Metabase in a Docker container, you’ll need to set the <strong>Dev server URL</strong> to:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>http://host.docker.internal:5174
+</code></pre></div></div>
+
+<h2 id="the-plugin-manifest">The plugin manifest</h2>
+
+<p>Every plugin includes a <code class="language-plaintext highlighter-rouge">metabase-plugin.json</code> file at the root of the project:</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"my-viz"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"icon"</span><span class="p">:</span><span class="w"> </span><span class="s2">"icon.svg"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"metabase"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&gt;=1.62.0"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td data-label="Field"><code class="language-plaintext highlighter-rouge">name</code></td>
+      <td data-label="Description">Unique identifier for the plugin. Metabase registers your visualization under this name and uses it to match replacement bundles.</td>
+    </tr>
+    <tr>
+      <td data-label="Field"><code class="language-plaintext highlighter-rouge">icon</code></td>
+      <td data-label="Description">Path to the visualization icon (SVG recommended). Metabase serves the icon automatically. It’s the only file Metabase serves alongside your bundle. See <a href="#bundling-assets">Bundling assets</a>.</td>
+    </tr>
+    <tr>
+      <td data-label="Field"><code class="language-plaintext highlighter-rouge">metabase.version</code></td>
+      <td data-label="Description">Semver range of Metabase versions the plugin supports (for example, <code class="language-plaintext highlighter-rouge">"&gt;=1.62.0"</code>, <code class="language-plaintext highlighter-rouge">"^1.62"</code>, <code class="language-plaintext highlighter-rouge">"&gt;=1.62 &lt;1.64"</code>).</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="defining-a-visualization">Defining a visualization</h2>
+
+<p><code class="language-plaintext highlighter-rouge">src/index.tsx</code> exports a factory function. Metabase calls the function with two helpers: <code class="language-plaintext highlighter-rouge">defineSetting</code> (for declaring settings) and the current <code class="language-plaintext highlighter-rouge">locale</code>. The factory function should return the result of <code class="language-plaintext highlighter-rouge">defineConfig</code>, which wraps your <code class="language-plaintext highlighter-rouge">VisualizationComponent</code>.</p>
+
+<div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span>
+  <span class="nx">defineConfig</span><span class="p">,</span>
+  <span class="kd">type</span> <span class="nx">CreateCustomVisualization</span><span class="p">,</span>
+  <span class="kd">type</span> <span class="nx">CustomVisualizationProps</span><span class="p">,</span>
+<span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@metabase/custom-viz</span><span class="dl">"</span><span class="p">;</span>
+
+<span class="kd">type</span> <span class="nx">Settings</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nx">threshold</span><span class="p">?:</span> <span class="kr">number</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="kd">const</span> <span class="nx">createVisualization</span><span class="p">:</span> <span class="nx">CreateCustomVisualization</span><span class="o">&lt;</span><span class="nx">Settings</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">({</span>
+  <span class="nx">defineSetting</span><span class="p">,</span>
+  <span class="nx">locale</span><span class="p">,</span>
+<span class="p">})</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">VisualizationComponent</span> <span class="o">=</span> <span class="p">({</span>
+    <span class="nx">series</span><span class="p">,</span>
+    <span class="nx">settings</span><span class="p">,</span>
+    <span class="nx">width</span><span class="p">,</span>
+    <span class="nx">height</span><span class="p">,</span>
+  <span class="p">}:</span> <span class="nx">CustomVisualizationProps</span><span class="o">&lt;</span><span class="nx">Settings</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="c1">// Render your visualization with React</span>
+    <span class="k">return</span> <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span><span class="si">{</span><span class="cm">/* ... */</span><span class="si">}</span><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;;</span>
+  <span class="p">};</span>
+
+  <span class="k">return</span> <span class="nx">defineConfig</span><span class="o">&lt;</span><span class="nx">Settings</span><span class="o">&gt;</span><span class="p">({</span>
+    <span class="na">id</span><span class="p">:</span> <span class="dl">"</span><span class="s2">my-viz</span><span class="dl">"</span><span class="p">,</span>
+    <span class="na">getName</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="dl">"</span><span class="s2">My visualization</span><span class="dl">"</span><span class="p">,</span>
+    <span class="na">minSize</span><span class="p">:</span> <span class="p">{</span> <span class="na">width</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="na">height</span><span class="p">:</span> <span class="mi">2</span> <span class="p">},</span>
+    <span class="na">defaultSize</span><span class="p">:</span> <span class="p">{</span> <span class="na">width</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="na">height</span><span class="p">:</span> <span class="mi">4</span> <span class="p">},</span>
+    <span class="nf">checkRenderable</span><span class="p">(</span><span class="nx">series</span><span class="p">,</span> <span class="nx">settings</span><span class="p">)</span> <span class="p">{</span>
+      <span class="c1">// Throw if the visualization can't render with this data or these settings</span>
+      <span class="k">if </span><span class="p">(</span><span class="nx">series</span><span class="p">.</span><span class="nx">length</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="nc">Error</span><span class="p">(</span><span class="dl">"</span><span class="s2">No data</span><span class="dl">"</span><span class="p">);</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="na">settings</span><span class="p">:</span> <span class="p">{</span>
+      <span class="na">threshold</span><span class="p">:</span> <span class="nf">defineSetting</span><span class="p">({</span>
+        <span class="na">id</span><span class="p">:</span> <span class="dl">"</span><span class="s2">threshold</span><span class="dl">"</span><span class="p">,</span>
+        <span class="na">title</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Threshold</span><span class="dl">"</span><span class="p">,</span>
+        <span class="na">widget</span><span class="p">:</span> <span class="dl">"</span><span class="s2">number</span><span class="dl">"</span><span class="p">,</span>
+      <span class="p">}),</span>
+    <span class="p">},</span>
+    <span class="nx">VisualizationComponent</span><span class="p">,</span>
+  <span class="p">});</span>
+<span class="p">};</span>
+
+<span class="k">export</span> <span class="k">default</span> <span class="nx">createVisualization</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="visualization-definition-properties">Visualization definition properties</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td data-label="Property"><code class="language-plaintext highlighter-rouge">id</code></td>
+      <td data-label="Type"><code class="language-plaintext highlighter-rouge">string</code></td>
+      <td data-label="Description">Identifier for the visualization definition.</td>
+    </tr>
+    <tr>
+      <td data-label="Property"><code class="language-plaintext highlighter-rouge">getName()</code></td>
+      <td data-label="Type"><code class="language-plaintext highlighter-rouge">() =&gt; string</code></td>
+      <td data-label="Description">Display name for the visualization.</td>
+    </tr>
+    <tr>
+      <td data-label="Property"><code class="language-plaintext highlighter-rouge">minSize</code></td>
+      <td data-label="Type"><code class="language-plaintext highlighter-rouge">{ width, height }</code></td>
+      <td data-label="Description">Minimum size on a dashboard grid.</td>
+    </tr>
+    <tr>
+      <td data-label="Property"><code class="language-plaintext highlighter-rouge">defaultSize</code></td>
+      <td data-label="Type"><code class="language-plaintext highlighter-rouge">{ width, height }</code></td>
+      <td data-label="Description">Default size on a dashboard grid.</td>
+    </tr>
+    <tr>
+      <td data-label="Property"><code class="language-plaintext highlighter-rouge">noHeader</code></td>
+      <td data-label="Type"><code class="language-plaintext highlighter-rouge">boolean</code></td>
+      <td data-label="Description">When <code class="language-plaintext highlighter-rouge">true</code>, hides the default card title and description header.</td>
+    </tr>
+    <tr>
+      <td data-label="Property"><code class="language-plaintext highlighter-rouge">canSavePng</code></td>
+      <td data-label="Type"><code class="language-plaintext highlighter-rouge">boolean</code></td>
+      <td data-label="Description">Set to <code class="language-plaintext highlighter-rouge">true</code> to enable PNG export of the live, interactive chart. Disabled by default.</td>
+    </tr>
+    <tr>
+      <td data-label="Property"><code class="language-plaintext highlighter-rouge">checkRenderable</code></td>
+      <td data-label="Type"><code class="language-plaintext highlighter-rouge">(series, settings) =&gt; void</code></td>
+      <td data-label="Description">Let people know the chart doesn’t work with the current data or settings.</td>
+    </tr>
+    <tr>
+      <td data-label="Property"><code class="language-plaintext highlighter-rouge">settings</code></td>
+      <td data-label="Type"><code class="language-plaintext highlighter-rouge">Record&lt;string, SettingDefinition&gt;</code></td>
+      <td data-label="Description">Map of setting definitions created with <code class="language-plaintext highlighter-rouge">defineSetting()</code>.</td>
+    </tr>
+    <tr>
+      <td data-label="Property"><code class="language-plaintext highlighter-rouge">VisualizationComponent</code></td>
+      <td data-label="Type"><code class="language-plaintext highlighter-rouge">React.ComponentType</code></td>
+      <td data-label="Description">The interactive React component that renders the visualization in questions and dashboards.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="props-passed-to-your-component">Props passed to your component</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Prop</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td data-label="Prop"><code class="language-plaintext highlighter-rouge">series</code></td>
+      <td data-label="Type"><code class="language-plaintext highlighter-rouge">Series</code></td>
+      <td data-label="Description">Query results — an array of series; each has <code class="language-plaintext highlighter-rouge">data.rows</code> and <code class="language-plaintext highlighter-rouge">data.cols</code>.</td>
+    </tr>
+    <tr>
+      <td data-label="Prop"><code class="language-plaintext highlighter-rouge">settings</code></td>
+      <td data-label="Type"><code class="language-plaintext highlighter-rouge">CustomVisualizationSettings&lt;TSettings&gt;</code></td>
+      <td data-label="Description">The resolved visualization settings.</td>
+    </tr>
+    <tr>
+      <td data-label="Prop"><code class="language-plaintext highlighter-rouge">width</code></td>
+      <td data-label="Type"><code class="language-plaintext highlighter-rouge">number \| null</code></td>
+      <td data-label="Description">Container width in pixels. <code class="language-plaintext highlighter-rouge">null</code> until the first measure — render <code class="language-plaintext highlighter-rouge">null</code> to avoid a flash.</td>
+    </tr>
+    <tr>
+      <td data-label="Prop"><code class="language-plaintext highlighter-rouge">height</code></td>
+      <td data-label="Type"><code class="language-plaintext highlighter-rouge">number \| null</code></td>
+      <td data-label="Description">Container height in pixels. <code class="language-plaintext highlighter-rouge">null</code> until the first measure.</td>
+    </tr>
+    <tr>
+      <td data-label="Prop"><code class="language-plaintext highlighter-rouge">colorScheme</code></td>
+      <td data-label="Type"><code class="language-plaintext highlighter-rouge">"light" \| "dark"</code></td>
+      <td data-label="Description">Metabase’s current color scheme.</td>
+    </tr>
+    <tr>
+      <td data-label="Prop"><code class="language-plaintext highlighter-rouge">onClick</code></td>
+      <td data-label="Type"><code class="language-plaintext highlighter-rouge">(clickObject) =&gt; void</code></td>
+      <td data-label="Description">Call to trigger drill-through actions on a data point.</td>
+    </tr>
+    <tr>
+      <td data-label="Prop"><code class="language-plaintext highlighter-rouge">onHover</code></td>
+      <td data-label="Type"><code class="language-plaintext highlighter-rouge">(hoverObject?) =&gt; void</code></td>
+      <td data-label="Description">Call to show a tooltip on a data point.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="handling-query-results">Handling query results</h2>
+
+<p><code class="language-plaintext highlighter-rouge">series</code> is an array of result sets, with one entry per series on the chart. A single question produces one entry; a dashboard card with <a href="../dashboards/multiple-series">multiple series</a> produces several entries. Each entry has a <code class="language-plaintext highlighter-rouge">data</code> object:</p>
 
 <ul>
-  <li><a href="./questions/start">Questions overview</a></li>
-  <li><a href="./questions/alerts">Alerts</a></li>
-  <li><a href="./questions/exporting-results">Exporting data</a></li>
+  <li><code class="language-plaintext highlighter-rouge">data.rows</code>: an array of rows; each row is an array of cell values in column order. Row order is preserved, so when you map rows to chart points one-to-one, a point’s index maps straight back to <code class="language-plaintext highlighter-rouge">data.rows[i]</code>. Useful for grabbing the whole row, not just the clicked cell.</li>
+  <li><code class="language-plaintext highlighter-rouge">data.cols</code>: an array of column objects describing each value. The fields you’ll reach for most: <code class="language-plaintext highlighter-rouge">name</code> (database column name), <code class="language-plaintext highlighter-rouge">display_name</code> (label shown in the UI), <code class="language-plaintext highlighter-rouge">base_type</code> (Metabase type, for example <code class="language-plaintext highlighter-rouge">"type/Integer"</code>), and <code class="language-plaintext highlighter-rouge">semantic_type</code> (for example <code class="language-plaintext highlighter-rouge">"type/Currency"</code> or <code class="language-plaintext highlighter-rouge">"type/Latitude"</code>).</li>
 </ul>
 
-<h4 id="query-builder">Query builder</h4>
+<div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="p">[{</span> <span class="nx">data</span> <span class="p">}]</span> <span class="o">=</span> <span class="nx">series</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">total</span> <span class="o">=</span> <span class="nx">data</span><span class="p">.</span><span class="nx">rows</span><span class="p">.</span><span class="nf">reduce</span><span class="p">((</span><span class="nx">sum</span><span class="p">,</span> <span class="p">[</span><span class="nx">value</span><span class="p">])</span> <span class="o">=&gt;</span> <span class="nx">sum</span> <span class="o">+</span> <span class="nc">Number</span><span class="p">(</span><span class="nx">value</span><span class="p">),</span> <span class="mi">0</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>To classify a column without matching type strings by hand, use the column-type predicates the SDK exports: <code class="language-plaintext highlighter-rouge">isNumeric</code>, <code class="language-plaintext highlighter-rouge">isDate</code>, <code class="language-plaintext highlighter-rouge">isString</code>, <code class="language-plaintext highlighter-rouge">isBoolean</code>, <code class="language-plaintext highlighter-rouge">isCurrency</code>, <code class="language-plaintext highlighter-rouge">isLatitude</code>, <code class="language-plaintext highlighter-rouge">isCoordinate</code>, <code class="language-plaintext highlighter-rouge">isFK</code>, <code class="language-plaintext highlighter-rouge">isPK</code>, <code class="language-plaintext highlighter-rouge">isCategory</code>, <code class="language-plaintext highlighter-rouge">isURL</code>. These predicates take a <code class="language-plaintext highlighter-rouge">Column</code> and resolve type metadata from the host, so they only work inside a running Metabase. See <a href="#formatting-and-theming">Formatting and theming</a>.</p>
+
+<div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">isNumeric</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@metabase/custom-viz</span><span class="dl">"</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">numericColumns</span> <span class="o">=</span> <span class="nx">data</span><span class="p">.</span><span class="nx">cols</span><span class="p">.</span><span class="nf">filter</span><span class="p">(</span><span class="nx">isNumeric</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h2 id="clicks-and-tooltips">Clicks and tooltips</h2>
+
+<p>Your component receives <code class="language-plaintext highlighter-rouge">onClick</code> and <code class="language-plaintext highlighter-rouge">onHover</code>. Call them with an object that identifies the data point being interacted with. Metabase positions popovers from it, and for clicks it offers the matching drill-through actions (filter by this value, view these rows, and so on).</p>
+
+<div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">&lt;</span><span class="nt">rect</span>
+  <span class="na">onClick</span><span class="p">=</span><span class="si">{</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="o">=&gt;</span>
+    <span class="nf">onClick</span><span class="p">({</span>
+      <span class="na">value</span><span class="p">:</span> <span class="nx">row</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+      <span class="na">column</span><span class="p">:</span> <span class="nx">cols</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+      <span class="na">dimensions</span><span class="p">:</span> <span class="p">[{</span> <span class="na">value</span><span class="p">:</span> <span class="nx">row</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="na">column</span><span class="p">:</span> <span class="nx">cols</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">}],</span>
+      <span class="na">event</span><span class="p">:</span> <span class="nx">event</span><span class="p">.</span><span class="nx">nativeEvent</span><span class="p">,</span>
+      <span class="na">element</span><span class="p">:</span> <span class="nx">event</span><span class="p">.</span><span class="nx">currentTarget</span><span class="p">,</span>
+    <span class="p">})</span>
+  <span class="si">}</span>
+  <span class="na">onMouseMove</span><span class="p">=</span><span class="si">{</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="o">=&gt;</span>
+    <span class="nf">onHover</span><span class="p">({</span>
+      <span class="na">element</span><span class="p">:</span> <span class="nx">event</span><span class="p">.</span><span class="nx">currentTarget</span><span class="p">,</span>
+      <span class="na">data</span><span class="p">:</span> <span class="nx">cols</span><span class="p">.</span><span class="nf">map</span><span class="p">((</span><span class="nx">col</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">({</span>
+        <span class="nx">col</span><span class="p">,</span>
+        <span class="na">value</span><span class="p">:</span> <span class="nx">row</span><span class="p">[</span><span class="nx">i</span><span class="p">],</span>
+        <span class="na">key</span><span class="p">:</span> <span class="nx">col</span><span class="p">.</span><span class="nx">display_name</span><span class="p">,</span>
+      <span class="p">})),</span>
+    <span class="p">})</span>
+  <span class="si">}</span>
+  <span class="na">onMouseLeave</span><span class="p">=</span><span class="si">{</span><span class="p">()</span> <span class="o">=&gt;</span> <span class="nf">onHover</span><span class="p">(</span><span class="kc">null</span><span class="p">)</span><span class="si">}</span>
+<span class="p">/&gt;</span>
+</code></pre></div></div>
+
+<p>Pass <code class="language-plaintext highlighter-rouge">null</code> to <code class="language-plaintext highlighter-rouge">onHover</code> to dismiss the tooltip. <code class="language-plaintext highlighter-rouge">onClick</code> also takes an <code class="language-plaintext highlighter-rouge">origin: { row, cols }</code> when a drill-through needs the whole row, not just the clicked cell. It can take a <code class="language-plaintext highlighter-rouge">data</code> array of <code class="language-plaintext highlighter-rouge">{ col, value }</code> pairs (one per column) when an action needs every column’s value. You can include <code class="language-plaintext highlighter-rouge">settings</code> (the current resolved settings) in the click object too, so dashboard click behaviors configured against your visualization have what they need.</p>
+
+<p>The hover object accepts more than <code class="language-plaintext highlighter-rouge">element</code> and <code class="language-plaintext highlighter-rouge">data</code>. Optional fields like <code class="language-plaintext highlighter-rouge">index</code> and <code class="language-plaintext highlighter-rouge">seriesIndex</code> (to highlight a series in the legend) and <code class="language-plaintext highlighter-rouge">value</code>, <code class="language-plaintext highlighter-rouge">column</code>, <code class="language-plaintext highlighter-rouge">dimensions</code>, and <code class="language-plaintext highlighter-rouge">event</code> (for a simpler single-point tooltip) are available when you need them.</p>
+
+<h2 id="settings-and-widgets">Settings and widgets</h2>
+
+<p>Define settings with the <code class="language-plaintext highlighter-rouge">defineSetting()</code> helper. Each setting shows up in the visualization settings sidebar.</p>
+
+<div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">settings</span><span class="p">:</span> <span class="p">{</span>
+  <span class="nl">threshold</span><span class="p">:</span> <span class="nf">defineSetting</span><span class="p">({</span>
+    <span class="na">id</span><span class="p">:</span> <span class="dl">"</span><span class="s2">threshold</span><span class="dl">"</span><span class="p">,</span>
+    <span class="na">title</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Threshold</span><span class="dl">"</span><span class="p">,</span>
+    <span class="na">getSection</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="dl">"</span><span class="s2">Display</span><span class="dl">"</span><span class="p">,</span>
+    <span class="na">widget</span><span class="p">:</span> <span class="dl">"</span><span class="s2">number</span><span class="dl">"</span><span class="p">,</span>
+    <span class="na">getDefault</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="na">getProps</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">({</span>
+      <span class="na">placeholder</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Enter threshold</span><span class="dl">"</span><span class="p">,</span>
+      <span class="na">options</span><span class="p">:</span> <span class="p">{</span> <span class="na">isNonNegative</span><span class="p">:</span> <span class="kc">true</span> <span class="p">},</span>
+    <span class="p">}),</span>
+  <span class="p">}),</span>
+<span class="p">},</span>
+</code></pre></div></div>
+
+<h3 id="setting-definition-properties">Setting definition properties</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td data-label="Property"><code class="language-plaintext highlighter-rouge">id</code></td>
+      <td data-label="Description">Unique key — has to match the key in your <code class="language-plaintext highlighter-rouge">Settings</code> type.</td>
+    </tr>
+    <tr>
+      <td data-label="Property"><code class="language-plaintext highlighter-rouge">title</code></td>
+      <td data-label="Description">Label shown in the sidebar.</td>
+    </tr>
+    <tr>
+      <td data-label="Property"><code class="language-plaintext highlighter-rouge">getSection()</code></td>
+      <td data-label="Description">Function returning the section the setting appears under (for example, <code class="language-plaintext highlighter-rouge">"Data"</code> or <code class="language-plaintext highlighter-rouge">"Display"</code>).</td>
+    </tr>
+    <tr>
+      <td data-label="Property"><code class="language-plaintext highlighter-rouge">group</code></td>
+      <td data-label="Description">Sub-heading within a section for grouping related settings.</td>
+    </tr>
+    <tr>
+      <td data-label="Property"><code class="language-plaintext highlighter-rouge">index</code></td>
+      <td data-label="Description">Display order within a group.</td>
+    </tr>
+    <tr>
+      <td data-label="Property"><code class="language-plaintext highlighter-rouge">inline</code></td>
+      <td data-label="Description">When <code class="language-plaintext highlighter-rouge">true</code>, renders the widget on the same line as <code class="language-plaintext highlighter-rouge">title</code> (handy for <code class="language-plaintext highlighter-rouge">"toggle"</code>).</td>
+    </tr>
+    <tr>
+      <td data-label="Property"><code class="language-plaintext highlighter-rouge">widget</code></td>
+      <td data-label="Description">A <a href="#built-in-widgets">built-in widget</a> name, or a <a href="#custom-widgets">custom React component</a>.</td>
+    </tr>
+    <tr>
+      <td data-label="Property"><code class="language-plaintext highlighter-rouge">getDefault(series, settings)</code></td>
+      <td data-label="Description">Computes the default value when none is stored.</td>
+    </tr>
+    <tr>
+      <td data-label="Property"><code class="language-plaintext highlighter-rouge">getValue(series, settings)</code></td>
+      <td data-label="Description">Always-computed value — overrides the stored value on every render.</td>
+    </tr>
+    <tr>
+      <td data-label="Property"><code class="language-plaintext highlighter-rouge">getProps(series, settings)</code></td>
+      <td data-label="Description">Returns widget-specific props.</td>
+    </tr>
+    <tr>
+      <td data-label="Property"><code class="language-plaintext highlighter-rouge">isValid(series, settings)</code></td>
+      <td data-label="Description">Return <code class="language-plaintext highlighter-rouge">false</code> to discard a stored value and fall back to <code class="language-plaintext highlighter-rouge">getDefault</code>.</td>
+    </tr>
+    <tr>
+      <td data-label="Property"><code class="language-plaintext highlighter-rouge">readDependencies</code></td>
+      <td data-label="Description">Setting IDs that have to resolve before this one.</td>
+    </tr>
+    <tr>
+      <td data-label="Property"><code class="language-plaintext highlighter-rouge">writeDependencies</code></td>
+      <td data-label="Description">Setting IDs whose current values are persisted when this setting changes.</td>
+    </tr>
+    <tr>
+      <td data-label="Property"><code class="language-plaintext highlighter-rouge">eraseDependencies</code></td>
+      <td data-label="Description">Setting IDs reset to <code class="language-plaintext highlighter-rouge">null</code> when this setting changes.</td>
+    </tr>
+    <tr>
+      <td data-label="Property"><code class="language-plaintext highlighter-rouge">persistDefault</code></td>
+      <td data-label="Description">When <code class="language-plaintext highlighter-rouge">true</code>, writes the value from <code class="language-plaintext highlighter-rouge">getDefault</code> to stored settings on first render.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="built-in-widgets">Built-in widgets</h3>
+
+<p>Widgets for the settings UI.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Widget</th>
+      <th><code class="language-plaintext highlighter-rouge">getProps()</code> return type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td data-label="Widget"><code class="language-plaintext highlighter-rouge">"input"</code></td>
+      <td data-label="getProps() return type"><code class="language-plaintext highlighter-rouge">{ placeholder? }</code></td>
+      <td data-label="Description">Text input</td>
+    </tr>
+    <tr>
+      <td data-label="Widget"><code class="language-plaintext highlighter-rouge">"number"</code></td>
+      <td data-label="getProps() return type"><code class="language-plaintext highlighter-rouge">{ placeholder?, options?: { isInteger?, isNonNegative? } }</code></td>
+      <td data-label="Description">Numeric input</td>
+    </tr>
+    <tr>
+      <td data-label="Widget"><code class="language-plaintext highlighter-rouge">"toggle"</code></td>
+      <td data-label="getProps() return type"><em>(none — omit <code class="language-plaintext highlighter-rouge">getProps</code>)</em></td>
+      <td data-label="Description">Boolean toggle</td>
+    </tr>
+    <tr>
+      <td data-label="Widget"><code class="language-plaintext highlighter-rouge">"radio"</code></td>
+      <td data-label="getProps() return type"><code class="language-plaintext highlighter-rouge">{ options: { name, value }[] }</code></td>
+      <td data-label="Description">Radio button group</td>
+    </tr>
+    <tr>
+      <td data-label="Widget"><code class="language-plaintext highlighter-rouge">"select"</code></td>
+      <td data-label="getProps() return type"><code class="language-plaintext highlighter-rouge">{ options: { name, value }[], placeholder?, placeholderNoOptions? }</code></td>
+      <td data-label="Description">Dropdown</td>
+    </tr>
+    <tr>
+      <td data-label="Widget"><code class="language-plaintext highlighter-rouge">"segmentedControl"</code></td>
+      <td data-label="getProps() return type"><code class="language-plaintext highlighter-rouge">{ options: { name, value }[] }</code></td>
+      <td data-label="Description">Segmented button control</td>
+    </tr>
+    <tr>
+      <td data-label="Widget"><code class="language-plaintext highlighter-rouge">"color"</code></td>
+      <td data-label="getProps() return type"><code class="language-plaintext highlighter-rouge">{ title? }</code></td>
+      <td data-label="Description">Color picker</td>
+    </tr>
+    <tr>
+      <td data-label="Widget"><code class="language-plaintext highlighter-rouge">"multiselect"</code></td>
+      <td data-label="getProps() return type"><code class="language-plaintext highlighter-rouge">{ options: { label, value }[], placeholder?, placeholderNoOptions? }</code></td>
+      <td data-label="Description">Multi-select dropdown</td>
+    </tr>
+    <tr>
+      <td data-label="Widget"><code class="language-plaintext highlighter-rouge">"field"</code></td>
+      <td data-label="getProps() return type"><code class="language-plaintext highlighter-rouge">{ columns, options: { name, value }[], showColumnSetting? }</code></td>
+      <td data-label="Description">Single column picker</td>
+    </tr>
+    <tr>
+      <td data-label="Widget"><code class="language-plaintext highlighter-rouge">"fields"</code></td>
+      <td data-label="getProps() return type"><code class="language-plaintext highlighter-rouge">{ columns, options: { name, value }[], addAnother?, showColumnSetting? }</code></td>
+      <td data-label="Description">Multi-column picker</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="custom-widgets">Custom widgets</h3>
+
+<p>When the built-in widgets don’t fit, set <code class="language-plaintext highlighter-rouge">widget</code> to your own React component instead of a built-in name. Metabase renders the component in the settings sidebar, inside the same <a href="#sandbox-restrictions">sandbox</a> as your visualization. A widget that reaches for a blocked API is removed, so keep widgets to plain inputs and display.</p>
+
+<p>Metabase injects these props into your widget component (import the type with <code class="language-plaintext highlighter-rouge">BaseWidgetProps&lt;TValue, TSettings&gt;</code>):</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Prop</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td data-label="Prop"><code class="language-plaintext highlighter-rouge">id</code></td>
+      <td data-label="Type"><code class="language-plaintext highlighter-rouge">string</code></td>
+      <td data-label="Description">The setting’s <code class="language-plaintext highlighter-rouge">id</code>.</td>
+    </tr>
+    <tr>
+      <td data-label="Prop"><code class="language-plaintext highlighter-rouge">value</code></td>
+      <td data-label="Type"><code class="language-plaintext highlighter-rouge">TValue \| undefined</code></td>
+      <td data-label="Description">The setting’s current value.</td>
+    </tr>
+    <tr>
+      <td data-label="Prop"><code class="language-plaintext highlighter-rouge">onChange</code></td>
+      <td data-label="Type"><code class="language-plaintext highlighter-rouge">(value?) =&gt; void</code></td>
+      <td data-label="Description">Update this setting’s value.</td>
+    </tr>
+    <tr>
+      <td data-label="Prop"><code class="language-plaintext highlighter-rouge">onChangeSettings</code></td>
+      <td data-label="Type"><code class="language-plaintext highlighter-rouge">(settings) =&gt; void</code></td>
+      <td data-label="Description">Update other settings at the same time.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Add any extra props your component needs with <code class="language-plaintext highlighter-rouge">getProps()</code>. Its return type is your component’s own props, minus the base props Metabase injects.</p>
+
+<div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">defineConfig</span><span class="p">,</span> <span class="kd">type</span> <span class="nx">BaseWidgetProps</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@metabase/custom-viz</span><span class="dl">"</span><span class="p">;</span>
+
+<span class="kd">type</span> <span class="nx">Settings</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">label</span><span class="p">?:</span> <span class="kr">string</span> <span class="p">};</span>
+
+<span class="kd">function</span> <span class="nf">LabelWidget</span><span class="p">({</span> <span class="nx">value</span><span class="p">,</span> <span class="nx">onChange</span> <span class="p">}:</span> <span class="nx">BaseWidgetProps</span><span class="o">&lt;</span><span class="kr">string</span><span class="p">,</span> <span class="nx">Settings</span><span class="o">&gt;</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return </span><span class="p">(</span>
+    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">value</span><span class="p">=</span><span class="si">{</span><span class="nx">value</span> <span class="o">??</span> <span class="dl">""</span><span class="si">}</span> <span class="na">onChange</span><span class="p">=</span><span class="si">{</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nf">onChange</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">value</span><span class="p">)</span><span class="si">}</span> <span class="p">/&gt;</span>
+  <span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">// ...in your visualization's settings:</span>
+<span class="nl">settings</span><span class="p">:</span> <span class="p">{</span>
+  <span class="na">label</span><span class="p">:</span> <span class="nf">defineSetting</span><span class="p">({</span>
+    <span class="na">id</span><span class="p">:</span> <span class="dl">"</span><span class="s2">label</span><span class="dl">"</span><span class="p">,</span>
+    <span class="na">title</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Label</span><span class="dl">"</span><span class="p">,</span>
+    <span class="na">widget</span><span class="p">:</span> <span class="nx">LabelWidget</span><span class="p">,</span>
+  <span class="p">}),</span>
+<span class="p">},</span>
+</code></pre></div></div>
+
+<h2 id="formatting-and-theming">Formatting and theming</h2>
+
+<p>Render numbers, dates, and currencies the way the rest of Metabase does with <code class="language-plaintext highlighter-rouge">formatValue</code>. Pass the cell’s column to pick up that column’s formatting settings, or override with options like <code class="language-plaintext highlighter-rouge">currency</code>, <code class="language-plaintext highlighter-rouge">decimals</code>, <code class="language-plaintext highlighter-rouge">compact</code>, or <code class="language-plaintext highlighter-rouge">date_style</code>:</p>
+
+<div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">formatValue</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@metabase/custom-viz</span><span class="dl">"</span><span class="p">;</span>
+
+<span class="nf">formatValue</span><span class="p">(</span><span class="nx">row</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="p">{</span> <span class="na">column</span><span class="p">:</span> <span class="nx">cols</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="p">});</span>
+<span class="nf">formatValue</span><span class="p">(</span><span class="mf">0.084</span><span class="p">,</span> <span class="p">{</span> <span class="na">number_style</span><span class="p">:</span> <span class="dl">"</span><span class="s2">percent</span><span class="dl">"</span><span class="p">,</span> <span class="na">decimals</span><span class="p">:</span> <span class="mi">1</span> <span class="p">});</span> <span class="c1">// "8.4%"</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">formatValue</code> and the column-type predicates (like <code class="language-plaintext highlighter-rouge">isNumeric</code> and <code class="language-plaintext highlighter-rouge">isDate</code>) read formatting and type metadata from Metabase. If you call them outside of Metabase, like in a unit test, they’ll throw <code class="language-plaintext highlighter-rouge">Metabase Viz API not initialized</code>.</p>
+
+<p>For layout math (like fitting labels or sizing axes), <code class="language-plaintext highlighter-rouge">measureText(text, { size, family, weight })</code> returns <code class="language-plaintext highlighter-rouge">{ width, height }</code> in pixels. There’s also <code class="language-plaintext highlighter-rouge">measureTextWidth</code> and <code class="language-plaintext highlighter-rouge">measureTextHeight</code> if you only need one dimension.</p>
+
+<p>To match Metabase’s look (and follow <a href="../people-and-groups/account-settings#theme">dark mode</a>), you have two paths. For anything you render as DOM or SVG, you can style with Metabase’s CSS variables: <code class="language-plaintext highlighter-rouge">var(--mb-color-brand)</code> and the other <code class="language-plaintext highlighter-rouge">--mb-color-*</code> variables, and the theme follows automatically.</p>
+
+<p>Canvas-based charting libraries (like ECharts and Chart.js) can’t read CSS variables, so in those cases you branch on the <code class="language-plaintext highlighter-rouge">colorScheme</code> prop (<code class="language-plaintext highlighter-rouge">"light"</code> or <code class="language-plaintext highlighter-rouge">"dark"</code>) and pass explicit colors. See the <a href="#example-plugins">calendar-heatmap example</a> for one built with ECharts.</p>
+
+<h2 id="bundling-assets">Bundling assets</h2>
+
+<p>The build produces a single JavaScript bundle (<code class="language-plaintext highlighter-rouge">dist/index.js</code>), and the <a href="#the-visualization-icon">icon</a> is the only file Metabase serves alongside it. Metabase doesn’t serve arbitrary static files, so bundling images into your plugin is the most reliable approach. The <a href="#sandbox-restrictions">sandbox</a> blocks scripted network access like <code class="language-plaintext highlighter-rouge">fetch</code> and <code class="language-plaintext highlighter-rouge">XMLHttpRequest</code>, but it doesn’t stop the browser from loading an <code class="language-plaintext highlighter-rouge">&lt;img&gt;</code> or CSS <code class="language-plaintext highlighter-rouge">url()</code>: an external image still loads as long as its domain is allowed by the image-domains Content Security Policy (see below).</p>
+
+<p>Bundled images always render, including when an admin has turned on <a href="../configuring-metabase/settings#restrict-image-domains">Restrict image domains</a>. That Content Security Policy setting limits which external hosts images can load from, but inline and <code class="language-plaintext highlighter-rouge">data:</code> images ship inside your bundle, so they’re never blocked.</p>
+
+<p>Your <code class="language-plaintext highlighter-rouge">npm</code> dependencies are bundled in too. You can pull in a charting library (the calendar-heatmap example bundles <a href="https://echarts.apache.org/">ECharts</a>), but everything ships in that single <code class="language-plaintext highlighter-rouge">dist/index.js</code>, so your code and its dependencies all count toward the packaged plugin’s <a href="#build-and-package-the-plugin">size limits</a>.</p>
+
+<p>So anything your visualization renders has to live inside that bundle. For images, you have a few options:</p>
 
 <ul>
-  <li><a href="./questions/query-builder/editor">The query editor</a></li>
-  <li><a href="./questions/query-builder/filters">Filtering</a></li>
-  <li><a href="./questions/query-builder/summarizing-and-grouping">Summarizing and grouping</a></li>
-  <li><a href="./questions/query-builder/expressions">Custom expressions</a></li>
-  <li><a href="./questions/query-builder/expressions-list">List of expressions</a></li>
-  <li><a href="./questions/query-builder/join">Joining data</a></li>
+  <li><strong>Inline SVG or emoji.</strong> What the starter visualization does (it renders 👍 / 👎). Drop the SVG markup straight into your JSX.</li>
+  <li><strong>Import the image.</strong> Import an image from <code class="language-plaintext highlighter-rouge">src/</code> and the bundler inlines small files as a base64 data URL. Vite inlines assets below its <code class="language-plaintext highlighter-rouge">assetsInlineLimit</code> (4 KB by default); larger files are emitted as separate assets that won’t ship in the single bundle, so keep imported images small or raise the limit.</li>
+  <li><strong>Embed a data URL directly.</strong> Paste a <code class="language-plaintext highlighter-rouge">data:image/png;base64,...</code> string into your component’s <code class="language-plaintext highlighter-rouge">src</code>.</li>
 </ul>
 
-<h4 id="sql-and-native-queries">SQL and native queries</h4>
+<div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nx">logo</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./logo.svg</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// inlined as a data URL at build time</span>
+
+<span class="kd">const</span> <span class="nx">VisualizationComponent</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="p">=</span><span class="si">{</span><span class="nx">logo</span><span class="si">}</span> <span class="na">alt</span><span class="p">=</span><span class="s">""</span> <span class="p">/&gt;;</span>
+</code></pre></div></div>
+
+<h2 id="the-visualization-icon">The visualization icon</h2>
+
+<p>The icon shows up in the chart type picker and elsewhere in the Metabase UI.</p>
 
 <ul>
-  <li><a href="./questions/native-editor/writing-sql">The SQL editor</a></li>
-  <li><a href="./questions/native-editor/sql-parameters">SQL parameters</a></li>
-  <li><a href="./questions/native-editor/table-variables">Table variables</a></li>
-  <li><a href="./questions/native-editor/referencing-saved-questions-in-queries">Referencing models and saved questions</a></li>
-  <li><a href="./questions/native-editor/snippets">Snippets</a></li>
-  <li><a href="./permissions/snippets">Snippet folder permissions</a></li>
+  <li>Declare it with <code class="language-plaintext highlighter-rouge">"icon"</code> in <code class="language-plaintext highlighter-rouge">metabase-plugin.json</code>. The default location is <code class="language-plaintext highlighter-rouge">public/assets/icon.svg</code>.</li>
+  <li>Use <code class="language-plaintext highlighter-rouge">currentColor</code> for fills and strokes so the icon adapts to light and dark themes, as well as to hover and active states (like when it’s highlighted in a menu):</li>
 </ul>
 
-<h4 id="visualizing-data">Visualizing data</h4>
+<pre><code class="language-svg">&lt;svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"&gt;
+  &lt;path d="..." stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/&gt;
+&lt;/svg&gt;
+</code></pre>
 
 <ul>
-  <li><a href="./questions/visualizations/visualizing-results">Visualizing data</a></li>
-  <li><a href="./questions/visualizations/box-plot">Box plots</a></li>
-  <li><a href="./questions/visualizations/combo-chart">Combo charts</a></li>
-  <li><a href="./questions/visualizations/custom">Custom visualizations</a></li>
-  <li><a href="./questions/visualizations/detail">Detail</a></li>
-  <li><a href="./questions/visualizations/funnel">Funnel charts</a></li>
-  <li><a href="./questions/visualizations/gauge">Gauge charts</a></li>
-  <li><a href="./questions/visualizations/line-bar-and-area-charts">Line, bar, and area charts</a></li>
-  <li><a href="./questions/visualizations/map">Maps</a></li>
-  <li><a href="./questions/visualizations/numbers">Numbers</a></li>
-  <li><a href="./questions/visualizations/pie-or-donut-chart">Pie or donut charts</a></li>
-  <li><a href="./questions/visualizations/pivot-table">Pivot table</a></li>
-  <li><a href="./questions/visualizations/progress-bar">Progress bar</a></li>
-  <li><a href="./questions/visualizations/sankey">Sankey chart</a></li>
-  <li><a href="./questions/visualizations/scatterplot-or-bubble-chart">Scatterplot or bubble chart</a></li>
-  <li><a href="./questions/visualizations/table">Table</a></li>
-  <li><a href="./questions/visualizations/tooltips">Tooltips</a></li>
-  <li><a href="./questions/visualizations/trend">Trend</a></li>
-  <li><a href="./questions/visualizations/waterfall-chart">Waterfall chart</a></li>
+  <li>For more control, you can use Metabase’s CSS variables inside an inline SVG, like <code class="language-plaintext highlighter-rouge">fill="var(--mb-color-brand)"</code>.</li>
+  <li>Keep the icon simple and monochromatic. Skip gradients and multiple colors.</li>
 </ul>
 
-<h3 id="dashboards">Dashboards</h3>
+<h2 id="build-and-package-the-plugin">Build and package the plugin</h2>
+
+<p>Run:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm run build
+</code></pre></div></div>
+
+<p>This compiles <code class="language-plaintext highlighter-rouge">src/</code> to <code class="language-plaintext highlighter-rouge">dist/</code> and packages the result into <code class="language-plaintext highlighter-rouge">&lt;name&gt;-&lt;version&gt;.tgz</code> at the project root. The archive contains <code class="language-plaintext highlighter-rouge">metabase-plugin.json</code>, <code class="language-plaintext highlighter-rouge">dist/index.js</code>, and the whitelisted icon under <code class="language-plaintext highlighter-rouge">dist/assets/</code>, and has to come in under 5 MiB. The packaging step also rejects an archive whose uncompressed contents exceed 25 MiB. You don’t need to commit <code class="language-plaintext highlighter-rouge">dist/</code>.</p>
+
+<p>For uploading and managing plugins, see <a href="../questions/visualizations/custom">Custom visualizations</a>.</p>
+
+<h2 id="versioning-and-compatibility">Versioning and compatibility</h2>
+
+<p>The Custom Visualizations SDK works with Metabase 1.62 and newer. Declare the versions your plugin supports with <code class="language-plaintext highlighter-rouge">metabase.version</code> in <code class="language-plaintext highlighter-rouge">metabase-plugin.json</code>, using <a href="https://github.com/npm/node-semver#ranges">npm semver range</a> syntax — <code class="language-plaintext highlighter-rouge">"&gt;=1.62.0"</code>, <code class="language-plaintext highlighter-rouge">"^1.62"</code>, <code class="language-plaintext highlighter-rouge">"&gt;=1.62 &lt;1.64"</code>. Write the range against the full version number (<code class="language-plaintext highlighter-rouge">"&gt;=1.62.0"</code>), not a bare major version (<code class="language-plaintext highlighter-rouge">"&gt;=62"</code>), which won’t match.</p>
+
+<p>If you upload a bundle to a Metabase outside the plugin’s declared range, Metabase rejects the upload.</p>
+
+<h2 id="sandbox-restrictions">Sandbox restrictions</h2>
+
+<p>Metabase runs plugin code in an isolated sandbox, so a visualization works only from the <code class="language-plaintext highlighter-rouge">series</code> and <code class="language-plaintext highlighter-rouge">settings</code> it’s given. The sandbox blocks:</p>
 
 <ul>
-  <li><a href="./dashboards/start">Dashboards overview</a></li>
-  <li><a href="./dashboards/introduction">Introduction to dashboards</a></li>
-  <li><a href="./dashboards/filters">Dashboard filters</a></li>
-  <li><a href="./dashboards/interactive">Interactive dashboards</a></li>
-  <li><a href="./dashboards/multiple-series">Charts with multiple series</a></li>
-  <li><a href="./dashboards/subscriptions">Dashboard subscriptions</a></li>
-  <li><a href="./dashboards/actions">Actions on dashboards</a></li>
+  <li><strong>Network access</strong>: <code class="language-plaintext highlighter-rouge">fetch</code>, <code class="language-plaintext highlighter-rouge">XMLHttpRequest</code>, <code class="language-plaintext highlighter-rouge">WebSocket</code>, <code class="language-plaintext highlighter-rouge">EventSource</code>, <code class="language-plaintext highlighter-rouge">Worker</code>, <code class="language-plaintext highlighter-rouge">SharedWorker</code>, <code class="language-plaintext highlighter-rouge">RTCPeerConnection</code>, <code class="language-plaintext highlighter-rouge">WebTransport</code>, <code class="language-plaintext highlighter-rouge">BroadcastChannel</code>, <code class="language-plaintext highlighter-rouge">navigator.sendBeacon</code>, and <code class="language-plaintext highlighter-rouge">FontFace.load</code>. You can’t call Metabase’s APIs or any other service.</li>
+  <li><strong>Browser storage and cookies</strong>: <code class="language-plaintext highlighter-rouge">localStorage</code>, <code class="language-plaintext highlighter-rouge">sessionStorage</code>, <code class="language-plaintext highlighter-rouge">indexedDB</code>, the Cache API, <code class="language-plaintext highlighter-rouge">document.cookie</code>, and the <code class="language-plaintext highlighter-rouge">CookieStore</code> API.</li>
+  <li><strong>Device and credential APIs</strong>: clipboard, geolocation, camera and microphone, service workers, the Credentials and Permissions APIs, USB, Bluetooth, HID, serial, WebXR, and Web Share.</li>
+  <li><strong>Browser UI</strong>: <code class="language-plaintext highlighter-rouge">window.open</code>, dialogs (<code class="language-plaintext highlighter-rouge">alert</code>, <code class="language-plaintext highlighter-rouge">confirm</code>, <code class="language-plaintext highlighter-rouge">prompt</code>, <code class="language-plaintext highlighter-rouge">print</code>), notifications, modal dialogs, fullscreen, and payment requests.</li>
+  <li><strong>Navigation and the rest of the app</strong>: history changes, the host page’s URL and referrer, and any DOM outside the plugin’s own container.</li>
+  <li><strong>Unsafe DOM and timing APIs</strong>: <code class="language-plaintext highlighter-rouge">document.write</code>, <code class="language-plaintext highlighter-rouge">execCommand</code>, constructable stylesheets, raw HTML parsers (<code class="language-plaintext highlighter-rouge">DOMParser</code>, <code class="language-plaintext highlighter-rouge">setHTMLUnsafe</code>, <code class="language-plaintext highlighter-rouge">XSLTProcessor</code>), and resource-timing APIs that expose other requests the page has made.</li>
 </ul>
 
-<h3 id="documents">Documents</h3>
+<h3 id="custom-visualizations-only-render-in-the-live-app">Custom visualizations only render in the live app</h3>
+
+<p>Custom visualizations only render in the live, interactive app. Static renders, like dashboard subscriptions sent by <a href="../dashboards/subscriptions">email</a>, Slack, or webhook, fall back to a table for any card that uses a custom visualization. The same goes for <a href="../embedding/introduction">embedded</a> questions and dashboards: a card that uses a custom visualization falls back to a table.</p>
+
+<h2 id="example-plugins">Example plugins</h2>
 
 <ul>
-  <li><a href="./documents/introduction">Introduction to documents</a></li>
+  <li><a href="https://github.com/metabase/custom-viz-calendar-heatmap">Calendar heatmap</a>. Read through <code class="language-plaintext highlighter-rouge">src/</code> for an example of <code class="language-plaintext highlighter-rouge">checkRenderable</code>, settings, and rendering against <code class="language-plaintext highlighter-rouge">series</code> data.</li>
+  <li><a href="https://github.com/metabase/custom-viz-thumbs">Thumbs</a>. Thumbs up or down depending on a threshold.</li>
 </ul>
 
-<h3 id="data-modeling">Data modeling</h3>
+<h2 id="further-reading">Further reading</h2>
 
 <ul>
-  <li><a href="./data-modeling/start">Data modeling overview</a></li>
-  <li><a href="./data-modeling/models">Models</a></li>
-  <li><a href="./data-modeling/model-persistence">Model persistence</a></li>
-  <li><a href="./data-modeling/metrics">Metrics</a></li>
-  <li><a href="./data-modeling/metadata-editing">Table metadata admin settings</a></li>
-  <li><a href="./data-modeling/semantic-types">Field types</a></li>
-  <li><a href="./data-modeling/formatting">Formatting defaults</a></li>
-  <li><a href="./data-modeling/json-unfolding">Working with JSON</a></li>
-  <li><a href="./data-modeling/segments">Segments</a></li>
+  <li><a href="../questions/visualizations/custom">Custom visualizations</a></li>
+  <li><a href="https://www.npmjs.com/package/@metabase/custom-viz"><code class="language-plaintext highlighter-rouge">@metabase/custom-viz</code> on npm</a></li>
+  <li><a href="../questions/visualizations/visualizing-results">Visualization overview</a></li>
 </ul>
-
-<h3 id="actions">Actions</h3>
-
-<ul>
-  <li><a href="./actions/start">Actions overview</a></li>
-  <li><a href="./actions/introduction">Introduction to actions</a></li>
-  <li><a href="./actions/basic">Basic actions</a></li>
-  <li><a href="./actions/custom">Custom actions</a></li>
-</ul>
-
-<h3 id="ai">AI</h3>
-
-<ul>
-  <li><a href="./ai/start">AI overview</a></li>
-  <li><a href="./ai/metabot">Metabot</a></li>
-  <li><a href="./ai/settings">AI settings</a></li>
-  <li><a href="./ai/usage-controls">AI usage controls</a></li>
-  <li><a href="./ai/usage-auditing">AI usage auditing</a></li>
-  <li><a href="./ai/customization">AI customization</a></li>
-  <li><a href="./ai/system-prompts">AI system prompts</a></li>
-  <li><a href="./ai/agent-api">Agent API</a></li>
-  <li><a href="./ai/mcp">MCP server</a></li>
-  <li><a href="./ai/metabot-slack">Metabot in Slack</a></li>
-  <li><a href="./ai/privacy">AI privacy</a></li>
-</ul>
-
-<h3 id="exploration-and-organization">Exploration and organization</h3>
-
-<ul>
-  <li><a href="./exploration-and-organization/start">Organization overview</a></li>
-  <li><a href="./exploration-and-organization/exploration">Basic exploration</a></li>
-  <li><a href="./exploration-and-organization/collections">Collections</a></li>
-  <li><a href="./exploration-and-organization/keyboard-shortcuts">Keyboard shortcuts</a></li>
-  <li><a href="./exploration-and-organization/history">History</a></li>
-  <li><a href="./exploration-and-organization/delete-and-restore">Trash</a></li>
-  <li><a href="./exploration-and-organization/data-model-reference">Data reference</a></li>
-  <li><a href="./exploration-and-organization/events-and-timelines">Events and timelines</a></li>
-  <li><a href="./exploration-and-organization/x-rays">X-rays</a></li>
-  <li><a href="./exploration-and-organization/content-verification">Content verification</a></li>
-</ul>
-
-<h3 id="people">People</h3>
-
-<ul>
-  <li><a href="./people-and-groups/start">People overview</a></li>
-  <li><a href="./people-and-groups/account-settings">Account settings</a></li>
-  <li><a href="./people-and-groups/managing">Managing people and groups</a></li>
-  <li><a href="./people-and-groups/changing-password-complexity">Password complexity</a></li>
-  <li><a href="./people-and-groups/changing-session-expiration">Session expiration</a></li>
-  <li><a href="./people-and-groups/google-sign-in">Google Sign-In</a></li>
-  <li><a href="./people-and-groups/ldap">LDAP</a></li>
-  <li><a href="./people-and-groups/api-keys">API keys</a></li>
-</ul>
-
-<h4 id="paid-sso-options">Paid SSO options</h4>
-
-<ul>
-  <li><a href="./people-and-groups/authenticating-with-jwt">JWT-based authentication</a></li>
-  <li><a href="./people-and-groups/authenticating-with-oidc">OIDC-based authentication</a>
-    <ul>
-      <li><a href="./people-and-groups/oidc-keycloak">OIDC with Keycloak</a></li>
-    </ul>
-  </li>
-  <li><a href="./people-and-groups/authenticating-with-saml">SAML-based authentication</a>
-    <ul>
-      <li><a href="./people-and-groups/saml-auth0">SAML with Auth0</a></li>
-      <li><a href="./people-and-groups/saml-azure">SAML with Microsoft Entra ID</a></li>
-      <li><a href="./people-and-groups/saml-google">SAML with Google</a></li>
-      <li><a href="./people-and-groups/saml-keycloak">SAML with Keycloak</a></li>
-      <li><a href="./people-and-groups/saml-okta">SAML with Okta</a></li>
-    </ul>
-  </li>
-  <li><a href="./people-and-groups/user-provisioning">User provisioning with SCIM</a></li>
-</ul>
-
-<h3 id="permissions">Permissions</h3>
-
-<ul>
-  <li><a href="./permissions/start">Permissions overview</a></li>
-  <li><a href="./permissions/introduction">Permissions introduction</a></li>
-  <li><a href="./permissions/data">Data permissions</a></li>
-  <li><a href="./permissions/collections">Collection permissions</a></li>
-  <li><a href="./permissions/application">Application permissions</a></li>
-  <li><a href="./permissions/row-and-column-security">Row and column security</a></li>
-  <li><a href="./permissions/row-and-column-security-examples">Row and column security examples</a></li>
-  <li><a href="./permissions/impersonation">Connection impersonation</a></li>
-  <li><a href="./permissions/database-routing">Database routing</a></li>
-  <li><a href="./permissions/snippets">Snippets folder permissions</a></li>
-  <li><a href="./permissions/notifications">Notification permissions</a></li>
-  <li><a href="./permissions/embedding">Configuring permissions for embedding</a></li>
-</ul>
-
-<h3 id="embedding">Embedding</h3>
-
-<ul>
-  <li><a href="./embedding/start">Embedding overview</a></li>
-  <li><a href="./embedding/introduction">Embedding introduction</a></li>
-  <li>Modular embedding
-    <ul>
-      <li><a href="./embedding/modular-embedding">SSO</a></li>
-      <li><a href="./embedding/guest-embedding">Guest</a></li>
-      <li><a href="./embedding/sdk/introduction">SDK</a></li>
-    </ul>
-  </li>
-  <li><a href="./embedding/full-app-embedding">Full app embedding</a></li>
-  <li><a href="./embedding/securing-embeds">Securing embeds</a></li>
-  <li><a href="./embedding/ai-agent-resources">AI agent resources</a></li>
-</ul>
-
-<h3 id="configuration">Configuration</h3>
-
-<ul>
-  <li><a href="./configuring-metabase/start">Configuration overview</a></li>
-  <li><a href="./configuring-metabase/setting-up-metabase">Setting up Metabase</a></li>
-  <li><a href="./configuring-metabase/settings">General settings</a></li>
-  <li><a href="./configuring-metabase/email">Email</a></li>
-  <li><a href="./configuring-metabase/slack">Slack</a></li>
-  <li><a href="./configuring-metabase/webhooks">Webhooks</a></li>
-  <li><a href="./configuring-metabase/environment-variables">Environment variables</a></li>
-  <li><a href="./configuring-metabase/config-file">Configuration file</a></li>
-  <li><a href="./configuring-metabase/log-configuration">Metabase log configuration</a></li>
-  <li><a href="./configuring-metabase/timezones">Timezones</a></li>
-  <li><a href="./configuring-metabase/localization">Languages and localization</a></li>
-  <li><a href="./configuring-metabase/appearance">Appearance</a></li>
-  <li><a href="./configuring-metabase/caching">Caching query results</a></li>
-  <li><a href="./configuring-metabase/custom-maps">Custom maps</a></li>
-  <li><a href="./configuring-metabase/customizing-jetty-webserver">Customizing the Metabase Jetty webserver</a></li>
-</ul>
-
-<h3 id="tools">Tools</h3>
-
-<ul>
-  <li><a href="./usage-and-performance-tools/start">Tools overview</a></li>
-  <li><a href="./usage-and-performance-tools/usage-analytics">Usage analytics</a></li>
-  <li><a href="./usage-and-performance-tools/tools">Admin tools</a></li>
-</ul>
-
-<h3 id="metabase-cloud-1">Metabase Cloud</h3>
-
-<ul>
-  <li><a href="./cloud/start">Documentation for Metabase Cloud and Store</a></li>
-</ul>
-
-<h3 id="metabase-api">Metabase API</h3>
-
-<ul>
-  <li><a href="./api">Metabase API documentation</a></li>
-  <li><a href="/learn/metabase-basics/administration/administration-and-operation/metabase-api">API tutorial</a></li>
-</ul>
-
-<h3 id="troubleshooting">Troubleshooting</h3>
-
-<ul>
-  <li><a href="./troubleshooting-guide/index">Troubleshooting guides</a></li>
-</ul>
-
-<h3 id="developer-guide">Developer guide</h3>
-
-<ul>
-  <li><a href="./developers-guide/start">Developer guide</a></li>
-</ul>
-
-<h2 id="getting-help">Getting help</h2>
-
-<h3 id="troubleshooting-1">Troubleshooting</h3>
-
-<ul>
-  <li><a href="troubleshooting-guide/index">Troubleshooting guides</a></li>
-  <li><a href="https://discourse.metabase.com/">Metabase forum</a></li>
-  <li><a href="./configuring-metabase/log-configuration">Configuring logging</a></li>
-</ul>
-
-<h3 id="tutorials-and-guides">Tutorials and guides</h3>
-
-<p><a href="/learn">Learn Metabase</a> has a ton of articles on how to use Metabase, data best practices, and more.</p>
-
-<h2 id="more-resources">More resources</h2>
-
-<h3 id="discussion"><a href="https://discourse.metabase.com">Discussion</a></h3>
-
-<p>Share and connect with other Metabasers.</p>
-
-<h3 id="community-stories"><a href="/community">Community stories</a></h3>
-
-<p>Practical advice from our community.</p>
-
-<h3 id="metabase-blog"><a href="/blog">Metabase blog</a></h3>
-
-<p>News, updates, and ideas.</p>
-
-<h3 id="customers"><a href="/case-studies">Customers</a></h3>
-
-<p>Real companies, real data, real stories.</p>
-
-<h3 id="metabase-twitter"><a href="https://twitter.com/metabase">Metabase Twitter</a></h3>
-
-<p>We tweet stuff.</p>
-
-<h3 id="source-code-repository-on-github"><a href="https://github.com/metabase/metabase">Source code repository on GitHub</a></h3>
-
-<p>Follow us on GitHub.</p>
-
-<h3 id="list-of-releases"><a href="https://github.com/metabase/metabase/releases">List of releases</a></h3>
-
-<p>A list of all Metabase releases, including both the Enterprise Edition and the Open Source Edition.</p>
-
-<h3 id="developers-guide"><a href="./developers-guide/start">Developers guide</a></h3>
-
-<p>Contribute to the Metabase open source project!</p>
-
-<h3 id="data-and-business-intelligence-glossary"><a href="/glossary">Data and Business Intelligence Glossary</a></h3>
-
-<p>Data jargon explained.</p>
-
-<h3 id="metabase-experts"><a href="/partners/">Metabase Experts</a></h3>
-
-<p>If you’d like more technical resources to set up your data stack with Metabase, connect with a <a href="/partners/">Metabase Expert</a>.</p>
-
-<!-- bump 2 -->
 
 
         <div>
@@ -6696,7 +6940,7 @@ Roadmap</a>
 
   
     <span class="paragraph-6 fs-13 neutral-60" id="page-feedback-footer">
-      Want to improve these docs? <a href="https://github.com/metabase/metabase/blob/master/docs/README.md" target="_blank">Propose a change.</a>
+      Want to improve these docs? <a href="https://github.com/metabase/metabase/blob/master/docs/developers-guide/custom-visualizations.md" target="_blank">Propose a change.</a>
     </span>
   
 </div>
@@ -6718,8 +6962,8 @@ Roadmap</a>
 <script type="text/javascript" src="/js/position-feedback-widget.js"></script>
 
 <script>
-  const pageTitle = `Metabase documentation`;
-  const pageURL = '/docs/v0.62/index.html';
+  const pageTitle = `Building custom visualizations`;
+  const pageURL = '/docs/v0.62/developers-guide/custom-visualizations';
   const pageURLSplit = pageURL.split('/');
 
   let pageURLPrefix = '/' + pageURLSplit[1] + '/' + pageURLSplit[2];
