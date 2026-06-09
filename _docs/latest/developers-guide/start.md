@@ -1,5 +1,5 @@
 ---
-version: v0.61
+version: v0.62
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: false
@@ -51,6 +51,10 @@ This guide contains detailed information on how to work on Metabase codebase.
 
 - [Community drivers](./community-drivers)
 - [Guide to writing a driver](drivers/start)
+
+## Customizing Metabase
+
+- [Building custom visualizations](./custom-visualizations)
 
 ## Metabase documentation
 

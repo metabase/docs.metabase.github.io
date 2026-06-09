@@ -1,5 +1,5 @@
 ---
-version: v0.61
+version: v0.62
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -70,6 +70,10 @@ A dashboard component with the features available in the `InteractiveDashboard` 
 ```typescript
 {% include_file "{{ dirname }}/snippets/dashboards/interactive-dashboard.tsx" %}
 ```
+
+## Pass parameter values to a dashboard
+
+See [Modular embedding parameters](../parameters#pass-parameter-values-to-a-dashboard).
 
 ## Customizing dashboard height
 

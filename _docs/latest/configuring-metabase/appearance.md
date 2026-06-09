@@ -1,5 +1,5 @@
 ---
-version: v0.61
+version: v0.62
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -171,7 +171,7 @@ What people see when Metabase prompts them to log in.
 
 ### Landing page
 
-The landing page is what people will see whenever they login. You can set the URL to a collection, question, dashboard or whatever, just make sure that everyone has access to that URL.
+The illustration people see on the landing page when they log in. To choose which page people land on, see [Homepage](./settings#homepage).
 
 - Lighthouse
 - No illustration

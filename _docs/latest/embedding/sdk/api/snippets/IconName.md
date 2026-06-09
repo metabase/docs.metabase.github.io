@@ -1,5 +1,5 @@
 ---
-version: v0.61
+version: v0.62
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -102,6 +102,7 @@ type IconName =
   | "database"
   | "database_routing"
   | "dependencies"
+  | "dependent"
   | "data_studio"
   | "dash"
   | "curve"
@@ -294,6 +295,7 @@ type IconName =
   | "verified_round"
   | "view_archive"
   | "warning"
+  | "warning_round"
   | "warning_round_filled"
   | "warning_triangle_filled"
   | "webhook"

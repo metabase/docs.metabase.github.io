@@ -57,7 +57,7 @@ window.redirectTo = function redirectTo(theLocation) {
 <meta name="twitter:site" content="@metabase">
 
 <meta name="twitter:title" content="Driver interface changelog | Metabase Documentation">
-<meta name="twitter:description" content="Driver Interface Changelog Metabase 0.61.0   driver/field-reference-mlv2, deprecated in 0.57.0, has now been removed.   metabase.driver.sql/set-role-statement has been deprecated in favor of metabase.driver.sql-jdbc/set-role-statement, which takes an additional java.sql.Connection parameter, so...">
+<meta name="twitter:description" content="Driver Interface Changelog Metabase 0.62.0   sql.params.substitution/field->clause, to-clause, desugar-filter-clause, wrap-value-literals-in-mbql, and date-string->filter, introduced in 0.61.0, have been removed; they are no longer necessary. They have been replaced by a...">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -67,7 +67,7 @@ window.redirectTo = function redirectTo(theLocation) {
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://www.metabase.com/docs/latest/developers-guide/driver-changelog">
 <meta name="title" property="og:title" content="Driver interface changelog | Metabase Documentation">
-<meta name="description" property="og:description" content="Driver Interface Changelog Metabase 0.61.0   driver/field-reference-mlv2, deprecated in 0.57.0, has now been removed.   metabase.driver.sql/set-role-statement has been deprecated in favor of metabase.driver.sql-jdbc/set-role-statement, which takes an additional java.sql.Connection parameter, so...">
+<meta name="description" property="og:description" content="Driver Interface Changelog Metabase 0.62.0   sql.params.substitution/field->clause, to-clause, desugar-filter-clause, wrap-value-literals-in-mbql, and date-string->filter, introduced in 0.61.0, have been removed; they are no longer necessary. They have been replaced by a...">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -208,6 +208,12 @@ window.redirectTo = function redirectTo(theLocation) {
    
 
   
+  
+
+  
+
+  
+
   
 
   
@@ -1022,9 +1028,47 @@ Roadmap</a>
 </div>
 </div>
 
-            <div class="Button btn btn-transparent px-3 py-2 button-desktop flex-column">
+            <div class="Button btn btn-transparent px-3 py-2 button-desktop flex-column pricing-control">
               <a class="fs-13 Button btn btn-transparent px-0 py-2" href="https://www.metabase.com/pricing/">Pricing</a>
             </div>
+            <div class="Button btn btn-transparent px-3 py-2 button-desktop pricing-new" id="pricing-nav-button-desktop" tabindex="0">
+  <div class="fs-13 d-flex align-items-center">
+    Pricing
+    <svg class="nav-button-chevron" fill="none" height="7" viewBox="0 0 11 7" width="11" xmlns="http://www.w3.org/2000/svg">
+  <path d="M1.5 1L5.5 5L9.5 1" stroke-width="1.5" stroke="#509EE3"></path>
+</svg>
+
+  </div>
+  <div class="text-start fw-normal" id="pricing-nav-menu-wrapper">
+    <div class="nav-menu overflow-hidden">
+      <div class="button-style-link-container">
+        <a href="https://www.metabase.com/pricing-plans?use_case=bi" data-use-case-switcher="">
+          <div class="flex flex-column justify-content-between">
+            <div class="mb-4">
+              <img src="https://www.metabase.com/images/navigation-header/pricing-bi.svg" alt="">
+            </div>
+            <div>
+              <h6>Business Intelligence pricing</h6>
+              <p>Self-service analytics for your team</p>
+            </div>
+          </div>
+        </a>
+        <a href="https://www.metabase.com/pricing-plans?use_case=ea" data-use-case-switcher="">
+          <div class="flex flex-column justify-content-between">
+            <div class="mb-4">
+              <img src="https://www.metabase.com/images/navigation-header/pricing-ea.svg" alt="">
+            </div>
+            <div>
+              <h6>Embedded Analytics pricing</h6>
+              <p>Fast, flexible customer-facing analytics</p>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
           </div>
         
 
@@ -1804,9 +1848,48 @@ Roadmap</a>
 </div>
 
 
-  <a class="nav-button-mobile py-6 px-7" href="https://www.metabase.com/pricing/">
+  <a class="nav-button-mobile py-6 px-7 pricing-control" href="https://www.metabase.com/pricing/">
     <span class="h4 m-0">Pricing</span>
   </a>
+  <div class="pricing-new">
+    <input autocomplete="off" class="nav-button-input" id="pricing-nav-button-mobile" type="checkbox">
+
+<label class="nav-button-mobile hover-pointer user-select-none py-6 px-7 d-flex justify-content-between align-items-center" for="pricing-nav-button-mobile">
+  <span class="h4 m-0">Pricing</span>
+  <svg class="nav-button-chevron" fill="none" height="7" viewBox="0 0 11 7" width="11" xmlns="http://www.w3.org/2000/svg">
+  <path d="M1.5 1L5.5 5L9.5 1" stroke-width="1.5" stroke="#509EE3"></path>
+</svg>
+
+</label>
+
+<div id="pricing-dropdown-mobile">
+  <div class="button-style-link-container">
+    <a href="https://www.metabase.com/pricing-plans?use_case=bi" data-use-case-switcher="">
+      <div class="flex">
+        <div>
+          <img src="https://www.metabase.com/images/navigation-header/pricing-bi.svg" alt="">
+        </div>
+        <div>
+          <h6>Business Intelligence pricing</h6>
+          <p>Self-service analytics for your team</p>
+        </div>
+      </div>
+    </a>
+    <a href="https://www.metabase.com/pricing-plans?use_case=ea" data-use-case-switcher="">
+      <div class="flex">
+        <div>
+          <img src="https://www.metabase.com/images/navigation-header/pricing-ea.svg" alt="">
+        </div>
+        <div>
+          <h6>Embedded Analytics pricing</h6>
+          <p>Fast, flexible customer-facing analytics</p>
+        </div>
+      </div>
+    </a>
+  </div>
+</div>
+
+  </div>
 
   <a class="py-8 d-flex justify-content-center bg-neutral-99" href="https://www.metabase.com/cloud/login" id="mobile-login-button">
     <span class="h4 mb-0">Log in</span>
@@ -1818,6 +1901,17 @@ Roadmap</a>
 
 <script src="https://www.metabase.com/js/main-nav.js"></script>
 <script src="https://www.metabase.com/js/promo-banner.js"></script>
+
+
+<style>
+html[data-pricing-variant="new"] .pricing-control {
+  display: none !important;
+}
+
+html:not([data-pricing-variant="new"]) .pricing-new {
+  display: none !important;
+}
+</style>
 
 
 
@@ -3634,6 +3728,21 @@ Roadmap</a>
               <li class="">
                 <a href="/docs/latest/embedding/components" class="">
                   Components
+
+                  
+                </a>
+                
+              </li>
+            
+              
+
+              
+
+              
+
+              <li class="">
+                <a href="/docs/latest/embedding/parameters" class="">
+                  Filters and parameters
 
                   
                 </a>
@@ -6076,7 +6185,7 @@ Roadmap</a>
 <div class="version__selector cursor-pointer">
   <span class="version__current">
     
-      v0.61
+      v0.62
     
 
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="chevron">
@@ -6087,13 +6196,13 @@ Roadmap</a>
   <ul class="version__dropdown">
     
       
+    
+      
         <li>
-          <a href="/docs/v0.62">
-            v0.62
+          <a href="/docs/v0.61">
+            v0.61
           </a>
         </li>
-      
-    
       
     
       
@@ -6192,17 +6301,100 @@ Roadmap</a>
 
         <h1 id="driver-interface-changelog">Driver Interface Changelog</h1>
 
-<h2 id="metabase-0610">Metabase 0.61.0</h2>
+<h2 id="metabase-0620">Metabase 0.62.0</h2>
 
 <ul>
   <li>
-    <p><code class="language-plaintext highlighter-rouge">driver/field-reference-mlv2</code>, deprecated in 0.57.0, has now been removed.</p>
+    <p><code class="language-plaintext highlighter-rouge">sql.params.substitution/field-&gt;clause</code>, <code class="language-plaintext highlighter-rouge">to-clause</code>, <code class="language-plaintext highlighter-rouge">desugar-filter-clause</code>, <code class="language-plaintext highlighter-rouge">wrap-value-literals-in-mbql</code>, and
+<code class="language-plaintext highlighter-rouge">date-string-&gt;filter</code>, introduced in 0.61.0, have been removed; they are no longer necessary. They have been
+replaced by a single method, <code class="language-plaintext highlighter-rouge">sql.params.substitution/-&gt;honeysql</code>, which compiles an MBQL 5 clause to HoneySQL with
+the given options.</p>
   </li>
   <li>
-    <p><code class="language-plaintext highlighter-rouge">metabase.driver.sql/set-role-statement</code> has been deprecated in favor of
-<code class="language-plaintext highlighter-rouge">metabase.driver.sql-jdbc/set-role-statement</code>, which takes an additional <code class="language-plaintext highlighter-rouge">java.sql.Connection</code> parameter, so you use
-the connection to call <code class="language-plaintext highlighter-rouge">quote_ident()</code> or similar for identifier quoting/escaping purposes.</p>
+    <p>The <code class="language-plaintext highlighter-rouge">metabase.driver.commmon.parameters</code> and <code class="language-plaintext highlighter-rouge">metabase.driver.commmon.parameters.parse</code> namespaces, deprecated in
+0.57.0, have been removed. Please use the Lib implementations instead. Relevant functions are aliased in
+<code class="language-plaintext highlighter-rouge">metabase.lib.core</code>, for example <code class="language-plaintext highlighter-rouge">metabase.lib.core/parse-parameters</code>, <code class="language-plaintext highlighter-rouge">metabase.lib.core/parsed-parameter</code>, and
+<code class="language-plaintext highlighter-rouge">metabase.lib.core/parsed-parameter?</code>.</p>
   </li>
+  <li>
+    <p>The <code class="language-plaintext highlighter-rouge">metabase.driver.common.parameters.dates</code> and <code class="language-plaintext highlighter-rouge">metabase.driver.common.parameters.operators</code> namespaces,
+deprecated in 0.57.0, have been removed. Use the equivalent QP namespaces instead:
+<code class="language-plaintext highlighter-rouge">metabase.query-processor.parameters.dates</code> and <code class="language-plaintext highlighter-rouge">metabase.query-processor.parameters.operators</code>, respectively. These
+namespaces return MBQL 5 clauses rather than MBQL 4; use <code class="language-plaintext highlighter-rouge">metabase.lib.core/-&gt;legacy-MBQL</code> if needed until your
+driver has been fully updated to MBQL 5.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">metabase.driver.sql.parameters.substitution/align-temporal-unit-with-param-type</code>, deprecated in 0.49.0, has been
+removed.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">metabase.driver-api.core/desugar-filter-clause</code>, <code class="language-plaintext highlighter-rouge">metabase.driver-api.core/negate-filter-clause</code>, and
+<code class="language-plaintext highlighter-rouge">metabase.driver-api.core/simplify-compound-filter</code>, deprecated in 0.57.0, have been removed; use the
+<code class="language-plaintext highlighter-rouge">metabase.lib.core</code> versions instead. The new versions operate on MBQL 5 instead of MBQL 4.</p>
+  </li>
+  <li>
+    <p>Added <code class="language-plaintext highlighter-rouge">metabase.driver.sql/table-qualification-style</code> multimethod. Returns one of
+<code class="language-plaintext highlighter-rouge">:table-qualification-style/{table,schema-table,db-table,db-schema-table}</code> describing the per-driver
+SQL identifier shape. Used by workspace table remapping
+(<code class="language-plaintext highlighter-rouge">metabase-enterprise.workspaces.core/engine-namespace-positions</code>) to decide tuple shape when
+storing <code class="language-plaintext highlighter-rouge">:model/TableRemapping</code> rows and matching AST positions during query rewriting. Defaults
+to <code class="language-plaintext highlighter-rouge">:table-qualification-style/schema-table</code> – the common case, so Postgres/Redshift/H2/ClickHouse
+need no override. Drivers that emit <code class="language-plaintext highlighter-rouge">db.table</code> (MySQL) override to
+<code class="language-plaintext highlighter-rouge">:table-qualification-style/db-table</code>; drivers that emit <code class="language-plaintext highlighter-rouge">db.schema.table</code> (SQL Server, BigQuery)
+override to <code class="language-plaintext highlighter-rouge">:table-qualification-style/db-schema-table</code>. Drivers that emit a bare <code class="language-plaintext highlighter-rouge">table</code> use
+<code class="language-plaintext highlighter-rouge">:table-qualification-style/table</code>.</p>
+  </li>
+  <li>
+    <p>Added <code class="language-plaintext highlighter-rouge">metabase.driver.sql/db-slot-value</code> multimethod. Returns the <code class="language-plaintext highlighter-rouge">:db</code> AST slot string (catalog,
+project id, etc.) for a <code class="language-plaintext highlighter-rouge">Database</code> row. Required for <code class="language-plaintext highlighter-rouge">:table-qualification-style/db-table</code> and
+<code class="language-plaintext highlighter-rouge">:table-qualification-style/db-schema-table</code> drivers; the default returns <code class="language-plaintext highlighter-rouge">nil</code>. Overridden by
+MySQL and SQL Server (<code class="language-plaintext highlighter-rouge">(:db (:details db))</code>) and BigQuery (<code class="language-plaintext highlighter-rouge">(:project-id (:details db))</code>).</p>
+  </li>
+  <li>
+    <p>Added <code class="language-plaintext highlighter-rouge">metabase.driver/qualified-name-components</code> multimethod. Returns the ordered subset of
+<code class="language-plaintext highlighter-rouge">#{:db :schema}</code> identifier positions a driver populates when referencing a table in compiled
+SQL. Defaults to <code class="language-plaintext highlighter-rouge">[:schema]</code>. Drivers that emit bare table names (Mongo) override to <code class="language-plaintext highlighter-rouge">[]</code>;
+MySQL overrides to <code class="language-plaintext highlighter-rouge">[:db]</code> (its “database” rides on the connection but participates as the
+<code class="language-plaintext highlighter-rouge">:db</code> AST slot for cross-DB consumers); drivers that emit a 3-part <code class="language-plaintext highlighter-rouge">catalog.schema.table</code>
+identifier (SQL Server, BigQuery) override to <code class="language-plaintext highlighter-rouge">[:db :schema]</code>.</p>
+  </li>
+</ul>
+
+<h2 id="metabase-0610">Metabase 0.61.0</h2>
+
+<ul>
+  <li>Added the following driver multimethods to support MBQL5 compilation migration:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">sql.qp/compile-mbql</code> - Compiles an MBQL inner query to HoneySQL.</li>
+      <li><code class="language-plaintext highlighter-rouge">sql.qp/mbql-clause-with-opts</code> - Returns an MBQL clause in the desired MBQL format of the driver.</li>
+      <li><code class="language-plaintext highlighter-rouge">sql.qp/expression-by-name</code> - Gets an expression from a query or stage (<code class="language-plaintext highlighter-rouge">*inner-query</code>) by name.</li>
+      <li><code class="language-plaintext highlighter-rouge">sql.qp/aggregation-name</code> - Returns the name of an aggregation clause.</li>
+      <li><code class="language-plaintext highlighter-rouge">sql.qp/over-order-by-&gt;honeysql</code> - Returns the HoneySQL for an order by clause in the over clause of a window function.</li>
+      <li><code class="language-plaintext highlighter-rouge">sql.qp/clause-value-idx</code> - Returns the index of the value in a value clause.</li>
+      <li><code class="language-plaintext highlighter-rouge">sql.qp/breakout-options-index</code> - Returns the index of options in a breakout clause.</li>
+      <li><code class="language-plaintext highlighter-rouge">sql.params.substitution/field-&gt;clause</code> - Returns an MBQL field clause with the given options.</li>
+      <li><code class="language-plaintext highlighter-rouge">sql.params.substitution/to-clause</code> - Helper to dispatch to <code class="language-plaintext highlighter-rouge">params.ops/to-clause</code> or <code class="language-plaintext highlighter-rouge">qp.params.ops/to-clause</code>.</li>
+      <li><code class="language-plaintext highlighter-rouge">sql.params.substitution/desugar-filter-clause</code> - Helper to dispatch to <code class="language-plaintext highlighter-rouge">driver-api/desugar-filter-clause</code> or <code class="language-plaintext highlighter-rouge">lib/desugar-filter-clause</code>.</li>
+      <li><code class="language-plaintext highlighter-rouge">sql.params.substitution/wrap-value-literals-in-mbql</code> - Helper to dispatch to <code class="language-plaintext highlighter-rouge">driver-api/wrap-value-literals-in-mbql</code> or <code class="language-plaintext highlighter-rouge">driver-api/wrap-value-literals-in-mbql5</code>.</li>
+      <li><code class="language-plaintext highlighter-rouge">sql.params.substitution/date-string-&gt;filter</code> - Helper to dispatch to <code class="language-plaintext highlighter-rouge">params.dates/date-string-&gt;filter</code> or <code class="language-plaintext highlighter-rouge">qp.params.dates/date-string-&gt;filter</code>.</li>
+    </ul>
+
+    <p>These methods have implementations for the <code class="language-plaintext highlighter-rouge">:sql</code> and <code class="language-plaintext highlighter-rouge">:sql-mbql5</code> drivers. Concrete drivers should <em>not</em> need to
+implement these methods. Drivers can opt-in to MBQL5 compilation by adding the <code class="language-plaintext highlighter-rouge">:sql-mbql5</code> driver as a parent, and updating the <code class="language-plaintext highlighter-rouge">sql.qp/-&gt;honeysql</code>
+methods to handle the clause options argument as the second parameter. See the <code class="language-plaintext highlighter-rouge">:h2</code> driver in https://github.com/metabase/metabase/pull/71439 for
+an example. Drivers will need to be migrated to work with MBQL5 compilation over the next three releases by v64. After v64 these methods will be deprecated
+in favour of the <code class="language-plaintext highlighter-rouge">:sql-mbql5</code> implementations once all drivers have been migrated.</p>
+  </li>
+  <li>
+    <p>Added a <code class="language-plaintext highlighter-rouge">driver</code> parameter to <code class="language-plaintext highlighter-rouge">sql.qp/maybe-cast-uuid-for-text-compare</code>. Any drivers that call this function should
+update it to pass in the <code class="language-plaintext highlighter-rouge">driver</code> parameter now. An example is in the Snowflake driver’s <code class="language-plaintext highlighter-rouge">string-filter</code> function.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">driver/field-reference-mlv2</code>, deprecated in 0.57.0, has now been removed.</p>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">metabase.driver.sql/set-role-statement</code> has been deprecated in favor of
+<code class="language-plaintext highlighter-rouge">metabase.driver.sql-jdbc/set-role-statement</code>, which takes an additional <code class="language-plaintext highlighter-rouge">java.sql.Connection</code> parameter, so you use
+the connection to call <code class="language-plaintext highlighter-rouge">quote_ident()</code> or similar for identifier quoting/escaping purposes.</li>
 </ul>
 
 <h2 id="metabase-0600">Metabase 0.60.0</h2>

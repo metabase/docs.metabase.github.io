@@ -1,5 +1,5 @@
 ---
-version: v0.61
+version: v0.62
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: false
@@ -43,6 +43,10 @@ Try out your changes before deploying to production.
 
 Export your questions, dashboards, and more as YAML files that you can check into version control.
 
+## [Metabase CLI](./metabase-cli)
+
+A command-line client that drives a Metabase instance over its API, on its own or through an AI agent.
+
 ## [Monitoring your Metabase](./monitoring-metabase)
 
 Monitor your Metabase with JMX.
@@ -63,9 +67,9 @@ We collect anonymous Metabase usage data to improve the product. We don't collec
 
 Notes on Metabase's accessibility.
 
-## [Command line commands](./commands)
+## [Metabase JAR commands](./commands)
 
-Metabase's CLI.
+Administrative commands built into the Metabase JAR.
 
 ---
 

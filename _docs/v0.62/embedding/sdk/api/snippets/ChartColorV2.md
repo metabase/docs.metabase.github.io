@@ -7,6 +7,7 @@ category: Embedding
 title: ChartColorV2
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/embedding/sdk/api/snippets/ChartColorV2.md'
 layout: new-docs
+latest: true
 ---
 
 ```ts

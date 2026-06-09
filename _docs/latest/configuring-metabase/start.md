@@ -1,5 +1,5 @@
 ---
-version: v0.61
+version: v0.62
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: false
@@ -70,6 +70,10 @@ Cache query results for faster loading times.
 ## [Custom maps](./custom-maps)
 
 Upload custom maps to your Metabase.
+
+## [Custom visualizations](../questions/visualizations/custom)
+
+Add your own chart types by uploading visualization plugins.
 
 ## [Customizing the Metabase Jetty webserver](./customizing-jetty-webserver)
 

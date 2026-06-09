@@ -1,5 +1,5 @@
 ---
-version: v0.61
+version: v0.62
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -186,6 +186,10 @@ When you're creating a new embed using **Admin > Embedding > Setup guide > Embed
 - **Allow editing dashboards and questions**: lets people create and edit dashboards or questions in the current collection, including both visual and native (SQL) questions. When disabled, they can still perform actions like filter, summarize, and drill-through, but won't be able to save results.
 
 - **Allow alerts**: lets people set up [alerts](../questions/alerts) on embedded questions. Requires [email setup](../configuring-metabase/email). Only for authenticated (SSO) question embeds.
+
+## Pass parameter values to embedded components
+
+See [Modular embedding parameters](./parameters#pass-parameter-values-to-embedded-components).
 
 ## Page-level config
 

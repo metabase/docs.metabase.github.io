@@ -1,5 +1,5 @@
 ---
-version: v0.61
+version: v0.62
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -177,6 +177,10 @@ If you have a bar chart like Count of Users by Age, where the x-axis is a number
 
 ![Scatter](../images/scatter.png)
 
+## Custom visualizations
+
+On [Pro and Enterprise plans](/pricing/), admins can add [custom visualizations](./custom): chart types you build with the Custom Visualizations SDK and upload to Metabase. Once a custom visualization is installed, it shows up in the visualization picker alongside the built-in charts.
+
 ## Styling and formatting data in charts
 
 ![Chart formatting options](../images/chart-formatting-options.png)
@@ -190,5 +194,6 @@ See also [Formatting defaults](../../data-modeling/formatting).
 ## Further reading
 
 - [Charts with multiple series](../../dashboards/multiple-series)
+- [Custom visualizations](./custom)
 - [Appearance](../../configuring-metabase/appearance)
 - [BI dashboard best practices](/learn/metabase-basics/querying-and-dashboards/dashboards/bi-dashboard-best-practices)

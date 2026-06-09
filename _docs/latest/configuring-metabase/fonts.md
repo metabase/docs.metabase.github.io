@@ -1,5 +1,5 @@
 ---
-version: v0.61
+version: v0.62
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -136,6 +136,12 @@ raw.githubusercontent.com/${user}/${repo}/${branch}/${path}
 ```
 
 Note that in the raw link, there is no `/blob/` directory in the URL.
+
+### Custom fonts and Content Security Policy
+
+When you add a custom font hosted on another domain, Metabase automatically allows that domain in the browser's Content Security Policy for fonts. You don't need to configure anything for the font to work.
+
+If you don't add any custom fonts, Metabase only allows fonts served from your own instance.
 
 ### Supporting multiple languages
 
