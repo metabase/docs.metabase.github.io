@@ -66,6 +66,7 @@
 
 (def artifacts-to-include ["_data/shared_chrome.json"
                            "_site/docs/all.html"
+                           "_site/docs/sitemap.xml"
                            "_site/docs/llms.txt"
                            "_site/docs/llms-embedding-full.txt"
                            "_site/docs/llms-agent-api-full.txt"])

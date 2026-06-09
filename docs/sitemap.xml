@@ -1,0 +1,18 @@
+---
+layout: null
+title: Docs Sitemap
+permalink: /docs/sitemap.xml
+---
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+{% assign latest_docs = site.docs | where_exp: "doc", "doc.url contains '/docs/latest/'" | sort: "url" %}
+{% for doc in latest_docs %}
+  {% assign canonical = doc.canonical | default: "" %}
+  {% unless canonical contains "http" or doc.url contains ".json" %}
+    {% assign loc = doc.url | replace: "/index", "/" | replace: "/.html", "/" | replace: ".html", "" %}
+  <url>
+    <loc>https://www.metabase.com{{ loc | xml_escape }}</loc>
+  </url>
+  {% endunless %}
+{% endfor %}
+</urlset>
