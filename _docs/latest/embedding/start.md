@@ -1,5 +1,5 @@
 ---
-version: v0.61
+version: v0.62
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: false

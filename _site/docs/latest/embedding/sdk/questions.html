@@ -225,6 +225,12 @@ window.redirectTo = function redirectTo(theLocation) {
   
 
   
+
+  
+
+  
+
+  
     <script src="https://www.metabase.com/js/navigation-header.js"></script>
   
 
@@ -1022,9 +1028,47 @@ Roadmap</a>
 </div>
 </div>
 
-            <div class="Button btn btn-transparent px-3 py-2 button-desktop flex-column">
+            <div class="Button btn btn-transparent px-3 py-2 button-desktop flex-column pricing-control">
               <a class="fs-13 Button btn btn-transparent px-0 py-2" href="https://www.metabase.com/pricing/">Pricing</a>
             </div>
+            <div class="Button btn btn-transparent px-3 py-2 button-desktop pricing-new" id="pricing-nav-button-desktop" tabindex="0">
+  <div class="fs-13 d-flex align-items-center">
+    Pricing
+    <svg class="nav-button-chevron" fill="none" height="7" viewBox="0 0 11 7" width="11" xmlns="http://www.w3.org/2000/svg">
+  <path d="M1.5 1L5.5 5L9.5 1" stroke-width="1.5" stroke="#509EE3"></path>
+</svg>
+
+  </div>
+  <div class="text-start fw-normal" id="pricing-nav-menu-wrapper">
+    <div class="nav-menu overflow-hidden">
+      <div class="button-style-link-container">
+        <a href="https://www.metabase.com/pricing-plans?use_case=bi" data-use-case-switcher="">
+          <div class="flex flex-column justify-content-between">
+            <div class="mb-4">
+              <img src="https://www.metabase.com/images/navigation-header/pricing-bi.svg" alt="">
+            </div>
+            <div>
+              <h6>Business Intelligence pricing</h6>
+              <p>Self-service analytics for your team</p>
+            </div>
+          </div>
+        </a>
+        <a href="https://www.metabase.com/pricing-plans?use_case=ea" data-use-case-switcher="">
+          <div class="flex flex-column justify-content-between">
+            <div class="mb-4">
+              <img src="https://www.metabase.com/images/navigation-header/pricing-ea.svg" alt="">
+            </div>
+            <div>
+              <h6>Embedded Analytics pricing</h6>
+              <p>Fast, flexible customer-facing analytics</p>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
           </div>
         
 
@@ -1804,9 +1848,48 @@ Roadmap</a>
 </div>
 
 
-  <a class="nav-button-mobile py-6 px-7" href="https://www.metabase.com/pricing/">
+  <a class="nav-button-mobile py-6 px-7 pricing-control" href="https://www.metabase.com/pricing/">
     <span class="h4 m-0">Pricing</span>
   </a>
+  <div class="pricing-new">
+    <input autocomplete="off" class="nav-button-input" id="pricing-nav-button-mobile" type="checkbox">
+
+<label class="nav-button-mobile hover-pointer user-select-none py-6 px-7 d-flex justify-content-between align-items-center" for="pricing-nav-button-mobile">
+  <span class="h4 m-0">Pricing</span>
+  <svg class="nav-button-chevron" fill="none" height="7" viewBox="0 0 11 7" width="11" xmlns="http://www.w3.org/2000/svg">
+  <path d="M1.5 1L5.5 5L9.5 1" stroke-width="1.5" stroke="#509EE3"></path>
+</svg>
+
+</label>
+
+<div id="pricing-dropdown-mobile">
+  <div class="button-style-link-container">
+    <a href="https://www.metabase.com/pricing-plans?use_case=bi" data-use-case-switcher="">
+      <div class="flex">
+        <div>
+          <img src="https://www.metabase.com/images/navigation-header/pricing-bi.svg" alt="">
+        </div>
+        <div>
+          <h6>Business Intelligence pricing</h6>
+          <p>Self-service analytics for your team</p>
+        </div>
+      </div>
+    </a>
+    <a href="https://www.metabase.com/pricing-plans?use_case=ea" data-use-case-switcher="">
+      <div class="flex">
+        <div>
+          <img src="https://www.metabase.com/images/navigation-header/pricing-ea.svg" alt="">
+        </div>
+        <div>
+          <h6>Embedded Analytics pricing</h6>
+          <p>Fast, flexible customer-facing analytics</p>
+        </div>
+      </div>
+    </a>
+  </div>
+</div>
+
+  </div>
 
   <a class="py-8 d-flex justify-content-center bg-neutral-99" href="https://www.metabase.com/cloud/login" id="mobile-login-button">
     <span class="h4 mb-0">Log in</span>
@@ -1818,6 +1901,17 @@ Roadmap</a>
 
 <script src="https://www.metabase.com/js/main-nav.js"></script>
 <script src="https://www.metabase.com/js/promo-banner.js"></script>
+
+
+<style>
+html[data-pricing-variant="new"] .pricing-control {
+  display: none !important;
+}
+
+html:not([data-pricing-variant="new"]) .pricing-new {
+  display: none !important;
+}
+</style>
 
 
 
@@ -3634,6 +3728,21 @@ Roadmap</a>
               <li class="">
                 <a href="/docs/latest/embedding/components" class="">
                   Components
+
+                  
+                </a>
+                
+              </li>
+            
+              
+
+              
+
+              
+
+              <li class="">
+                <a href="/docs/latest/embedding/parameters" class="">
+                  Filters and parameters
 
                   
                 </a>
@@ -6076,7 +6185,7 @@ Roadmap</a>
 <div class="version__selector cursor-pointer">
   <span class="version__current">
     
-      v0.61
+      v0.62
     
 
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="chevron">
@@ -6087,13 +6196,13 @@ Roadmap</a>
   <ul class="version__dropdown">
     
       
+    
+      
         <li>
-          <a href="/docs/v0.62">
-            v0.62
+          <a href="/docs/v0.61">
+            v0.61
           </a>
         </li>
-      
-    
       
     
       
@@ -6293,7 +6402,12 @@ Roadmap</a>
     <tr>
       <td style="text-align: left" data-label="Property"><a id="initialsqlparameters"></a> <code class="language-plaintext highlighter-rouge">initialSqlParameters?</code></td>
       <td style="text-align: left" data-label="Type"><a href="./api/SqlParameterValues"><code class="language-plaintext highlighter-rouge">SqlParameterValues</code></a></td>
-      <td style="text-align: left" data-label="Description">Initial values for the SQL parameters.</td>
+      <td style="text-align: left" data-label="Description">Initial values for SQL parameters, slug-keyed. Applied once on mount; user widget edits afterwards are not reflected back to the host. <br> For each parameter: <br> - set to a value: that value is applied. <br> - set to <code class="language-plaintext highlighter-rouge">null</code>: strictly cleared, ignoring the parameter’s default. <br> - omitted (or set to <code class="language-plaintext highlighter-rouge">undefined</code>): falls back to the parameter’s default (or <code class="language-plaintext highlighter-rouge">null</code> if it has no default).</td>
+    </tr>
+    <tr>
+      <td style="text-align: left" data-label="Property"><a id="onsqlparameterschange"></a> <code class="language-plaintext highlighter-rouge">onSqlParametersChange?</code></td>
+      <td style="text-align: left" data-label="Type">(<code class="language-plaintext highlighter-rouge">payload</code>: <a href="./api/SqlParameterChangePayload"><code class="language-plaintext highlighter-rouge">SqlParameterChangePayload</code></a>) =&gt; <code class="language-plaintext highlighter-rouge">void</code></td>
+      <td style="text-align: left" data-label="Description">Fires on SQL parameters change. The payload’s <code class="language-plaintext highlighter-rouge">source</code> distinguishes the initial state on load (<code class="language-plaintext highlighter-rouge">'initial-state'</code>), user edits in the UI (<code class="language-plaintext highlighter-rouge">'manual-change'</code>), and auto-updates (<code class="language-plaintext highlighter-rouge">'auto-change'</code>).</td>
     </tr>
     <tr>
       <td style="text-align: left" data-label="Property"><a id="query"></a> <code class="language-plaintext highlighter-rouge">query?</code></td>
@@ -6304,6 +6418,11 @@ Roadmap</a>
       <td style="text-align: left" data-label="Property"><a id="questionid"></a> <code class="language-plaintext highlighter-rouge">questionId?</code></td>
       <td style="text-align: left" data-label="Type"><a href="./api/SdkQuestionId"><code class="language-plaintext highlighter-rouge">SdkQuestionId</code></a> | <code class="language-plaintext highlighter-rouge">null</code></td>
       <td style="text-align: left" data-label="Description">The ID of the question. <br> This is either: <br> - the numerical ID when accessing a question link, i.e. <code class="language-plaintext highlighter-rouge">http://localhost:3000/question/1-my-question</code> where the ID is <code class="language-plaintext highlighter-rouge">1</code> <br> - the string ID found in the <code class="language-plaintext highlighter-rouge">entity_id</code> key of the question object when using the API directly or using the SDK Collection Browser to return data <br> - <code class="language-plaintext highlighter-rouge">new</code> to show the notebook editor for creating new questions <br> - <code class="language-plaintext highlighter-rouge">new-native</code> to show the SQL editor for creating new native questions</td>
+    </tr>
+    <tr>
+      <td style="text-align: left" data-label="Property"><a id="sqlparameters"></a> <code class="language-plaintext highlighter-rouge">sqlParameters?</code></td>
+      <td style="text-align: left" data-label="Type"><a href="./api/SqlParameterValues"><code class="language-plaintext highlighter-rouge">SqlParameterValues</code></a></td>
+      <td style="text-align: left" data-label="Description">Controlled SQL parameter values, slug-keyed. On every render, this object replaces the question’s parameter values: <br> - a parameter set to a value uses that value. <br> - a parameter set to <code class="language-plaintext highlighter-rouge">null</code> is cleared, even if it has a default. <br> - a parameter omitted from the object (or set to <code class="language-plaintext highlighter-rouge">undefined</code>) uses its default (or <code class="language-plaintext highlighter-rouge">null</code> if it has no default). <br> <br> Pair with <code class="language-plaintext highlighter-rouge">onSqlParametersChange</code> to stay in sync with user edits.</td>
     </tr>
     <tr>
       <td style="text-align: left" data-label="Property"><a id="style"></a> <code class="language-plaintext highlighter-rouge">style?</code></td>
@@ -6424,7 +6543,7 @@ Roadmap</a>
     <tr>
       <td style="text-align: left" data-label="Property"><a id="initialsqlparameters"></a> <code class="language-plaintext highlighter-rouge">initialSqlParameters?</code></td>
       <td style="text-align: left" data-label="Type"><a href="./api/SqlParameterValues"><code class="language-plaintext highlighter-rouge">SqlParameterValues</code></a></td>
-      <td style="text-align: left" data-label="Description">Initial values for the SQL parameters.</td>
+      <td style="text-align: left" data-label="Description">Initial values for SQL parameters, slug-keyed. Applied once on mount; user widget edits afterwards are not reflected back to the host. <br> For each parameter: <br> - set to a value: that value is applied. <br> - set to <code class="language-plaintext highlighter-rouge">null</code>: strictly cleared, ignoring the parameter’s default. <br> - omitted (or set to <code class="language-plaintext highlighter-rouge">undefined</code>): falls back to the parameter’s default (or <code class="language-plaintext highlighter-rouge">null</code> if it has no default).</td>
     </tr>
     <tr>
       <td style="text-align: left" data-label="Property"><a id="issaveenabled"></a> <code class="language-plaintext highlighter-rouge">isSaveEnabled?</code></td>
@@ -6452,6 +6571,11 @@ Roadmap</a>
       <td style="text-align: left" data-label="Description">A callback function that triggers when a user saves the question. Only relevant when <code class="language-plaintext highlighter-rouge">isSaveEnabled = true</code></td>
     </tr>
     <tr>
+      <td style="text-align: left" data-label="Property"><a id="onsqlparameterschange"></a> <code class="language-plaintext highlighter-rouge">onSqlParametersChange?</code></td>
+      <td style="text-align: left" data-label="Type">(<code class="language-plaintext highlighter-rouge">payload</code>: <a href="./api/SqlParameterChangePayload"><code class="language-plaintext highlighter-rouge">SqlParameterChangePayload</code></a>) =&gt; <code class="language-plaintext highlighter-rouge">void</code></td>
+      <td style="text-align: left" data-label="Description">Fires on SQL parameters change. The payload’s <code class="language-plaintext highlighter-rouge">source</code> distinguishes the initial state on load (<code class="language-plaintext highlighter-rouge">'initial-state'</code>), user edits in the UI (<code class="language-plaintext highlighter-rouge">'manual-change'</code>), and auto-updates (<code class="language-plaintext highlighter-rouge">'auto-change'</code>).</td>
+    </tr>
+    <tr>
       <td style="text-align: left" data-label="Property"><a id="onvisualizationchange"></a> <code class="language-plaintext highlighter-rouge">onVisualizationChange?</code></td>
       <td style="text-align: left" data-label="Type">(<code class="language-plaintext highlighter-rouge">display</code>: | <code class="language-plaintext highlighter-rouge">"object"</code> | <code class="language-plaintext highlighter-rouge">"table"</code> | <code class="language-plaintext highlighter-rouge">"bar"</code> | <code class="language-plaintext highlighter-rouge">"line"</code> | <code class="language-plaintext highlighter-rouge">"pie"</code> | <code class="language-plaintext highlighter-rouge">"scalar"</code> | <code class="language-plaintext highlighter-rouge">"row"</code> | <code class="language-plaintext highlighter-rouge">"area"</code> | <code class="language-plaintext highlighter-rouge">"combo"</code> | <code class="language-plaintext highlighter-rouge">"pivot"</code> | <code class="language-plaintext highlighter-rouge">"smartscalar"</code> | <code class="language-plaintext highlighter-rouge">"gauge"</code> | <code class="language-plaintext highlighter-rouge">"progress"</code> | <code class="language-plaintext highlighter-rouge">"funnel"</code> | <code class="language-plaintext highlighter-rouge">"map"</code> | <code class="language-plaintext highlighter-rouge">"scatter"</code> | <code class="language-plaintext highlighter-rouge">"boxplot"</code> | <code class="language-plaintext highlighter-rouge">"waterfall"</code> | <code class="language-plaintext highlighter-rouge">"sankey"</code> | <code class="language-plaintext highlighter-rouge">"list"</code>) =&gt; <code class="language-plaintext highlighter-rouge">void</code></td>
       <td style="text-align: left" data-label="Description">A callback function that triggers when the visualization type changes.</td>
@@ -6470,6 +6594,11 @@ Roadmap</a>
       <td style="text-align: left" data-label="Property"><a id="questionid"></a> <code class="language-plaintext highlighter-rouge">questionId?</code></td>
       <td style="text-align: left" data-label="Type"><a href="./api/SdkQuestionId"><code class="language-plaintext highlighter-rouge">SdkQuestionId</code></a> | <code class="language-plaintext highlighter-rouge">null</code></td>
       <td style="text-align: left" data-label="Description">The ID of the question. <br> This is either: <br> - the numerical ID when accessing a question link, i.e. <code class="language-plaintext highlighter-rouge">http://localhost:3000/question/1-my-question</code> where the ID is <code class="language-plaintext highlighter-rouge">1</code> <br> - the string ID found in the <code class="language-plaintext highlighter-rouge">entity_id</code> key of the question object when using the API directly or using the SDK Collection Browser to return data <br> - <code class="language-plaintext highlighter-rouge">new</code> to show the notebook editor for creating new questions <br> - <code class="language-plaintext highlighter-rouge">new-native</code> to show the SQL editor for creating new native questions</td>
+    </tr>
+    <tr>
+      <td style="text-align: left" data-label="Property"><a id="sqlparameters"></a> <code class="language-plaintext highlighter-rouge">sqlParameters?</code></td>
+      <td style="text-align: left" data-label="Type"><a href="./api/SqlParameterValues"><code class="language-plaintext highlighter-rouge">SqlParameterValues</code></a></td>
+      <td style="text-align: left" data-label="Description">Controlled SQL parameter values, slug-keyed. On every render, this object replaces the question’s parameter values: <br> - a parameter set to a value uses that value. <br> - a parameter set to <code class="language-plaintext highlighter-rouge">null</code> is cleared, even if it has a default. <br> - a parameter omitted from the object (or set to <code class="language-plaintext highlighter-rouge">undefined</code>) uses its default (or <code class="language-plaintext highlighter-rouge">null</code> if it has no default). <br> <br> Pair with <code class="language-plaintext highlighter-rouge">onSqlParametersChange</code> to stay in sync with user edits.</td>
     </tr>
     <tr>
       <td style="text-align: left" data-label="Property"><a id="style"></a> <code class="language-plaintext highlighter-rouge">style?</code></td>
@@ -6511,20 +6640,17 @@ Roadmap</a>
       <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">boolean</code></td>
       <td style="text-align: left" data-label="Description">Enables the ability to download results in the question.</td>
     </tr>
+    <tr>
+      <td style="text-align: left" data-label="Property"><a id="witheditorbutton"></a> <code class="language-plaintext highlighter-rouge">withEditorButton?</code></td>
+      <td style="text-align: left" data-label="Type"><code class="language-plaintext highlighter-rouge">boolean</code></td>
+      <td style="text-align: left" data-label="Description">Determines whether the editor button is shown. Only relevant when using the default layout.</td>
+    </tr>
   </tbody>
 </table>
 
-<h2 id="pass-sql-parameters-to-sql-questions-with-initialsqlparameters">Pass SQL parameters to SQL questions with <code class="language-plaintext highlighter-rouge">initialSqlParameters</code></h2>
+<h2 id="pass-parameters-to-sql-questions">Pass parameters to SQL questions</h2>
 
-<p>You can pass parameter values to questions defined with SQL via the <code class="language-plaintext highlighter-rouge">initialSqlParameters</code> prop, in the format of <code class="language-plaintext highlighter-rouge">{parameter_name: parameter_value}</code>. Learn more about <a href="../../questions/native-editor/sql-parameters">SQL parameters</a>.</p>
-
-<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="nx">StaticQuestion</span>
-  <span class="nx">questionId</span><span class="o">=</span><span class="p">{</span><span class="nx">questionId</span><span class="p">}</span>
-  <span class="nx">initialSqlParameters</span><span class="o">=</span><span class="p">{{</span> <span class="na">product_id</span><span class="p">:</span> <span class="mi">50</span> <span class="p">}}</span>
-<span class="sr">/</span><span class="err">&gt;
-</span></code></pre></div></div>
-
-<p><code class="language-plaintext highlighter-rouge">initialSqlParameters</code> can’t be used with questions built using the query builder.</p>
+<p>See <a href="../parameters#pass-parameters-to-sql-questions">Modular embedding parameters</a>.</p>
 
 <h2 id="enable-alerts-on-embedded-questions">Enable alerts on embedded questions</h2>
 

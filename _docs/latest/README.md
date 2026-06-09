@@ -1,5 +1,5 @@
 ---
-version: v0.61
+version: v0.62
 has_magic_breadcrumbs: true
 show_category_breadcrumb: false
 show_title_breadcrumb: true
@@ -61,7 +61,8 @@ Metabase's reference documentation.
 - [Development instances](./installation-and-operation/development-instance)
 - [Serialization](./installation-and-operation/serialization)
 - [Remote sync](./installation-and-operation/remote-sync)
-- [Commands](./installation-and-operation/commands)
+- [Metabase CLI](./installation-and-operation/metabase-cli)
+- [Metabase JAR commands](./installation-and-operation/commands)
 - [Supported browsers](./installation-and-operation/supported-browsers)
 - [Privacy](./installation-and-operation/privacy)
 - [About the anonymous usage data we collect](./installation-and-operation/information-collection)
@@ -106,6 +107,7 @@ Metabase's reference documentation.
 - [Visualizing data](./questions/visualizations/visualizing-results)
 - [Box plots](./questions/visualizations/box-plot)
 - [Combo charts](./questions/visualizations/combo-chart)
+- [Custom visualizations](./questions/visualizations/custom)
 - [Detail](./questions/visualizations/detail)
 - [Funnel charts](./questions/visualizations/funnel)
 - [Gauge charts](./questions/visualizations/gauge)

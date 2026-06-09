@@ -1,6 +1,6 @@
 # Metabase Embedding - Complete Reference for AI agents
 
-> **This documentation is for Metabase 61 (latest).**
+> **This documentation is for Metabase 62 (latest).**
 >
 > Table of contents: https://metabase.com/docs/latest/llms.txt
 
@@ -956,19 +956,20 @@ or `token` (for guest embeds), plus optional display configuration.
 
 <!-- [<snippet properties>] -->
 
-| Property                                                         | Type                 | Description                                                                                                                                                                                                                                            |
-| :--------------------------------------------------------------- | :------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| <a id="auto-refresh-interval"></a> `auto-refresh-interval`       | `number`             | Auto-refresh interval in seconds. For example, `60` refreshes the dashboard every 60 seconds.<br>---<br>Optional<br>Available in Pro/Enterprise and Guest embed.                                                                                       |
-| <a id="custom-context"></a> `custom-context`                     | `string`             | Optional custom context string passed through to the guest token endpoint.<br>---<br>Optional<br>Available in Guest embed.                                                                                                                             |
-| <a id="dashboard-id"></a> `dashboard-id`                         | `string` \| `number` | The ID of the dashboard to embed. Can be a regular ID or an [entity ID](/docs/latest/installation-and-operation/serialization#entity-ids-work-with-embedding). Only for SSO embeds — guest embeds set the ID with `token`.     |
-| <a id="drills"></a> `drills`                                     | `boolean`            | Whether to enable drill-through on the dashboard.<br>---<br>Optional<br>Default: `true`<br>Available in Pro/Enterprise.                                                                                                                                |
-| <a id="enable-entity-navigation"></a> `enable-entity-navigation` | `boolean`            | Whether to enable internal entity navigation (links to dashboards/questions). Requires `drills` to be `true`<br>---<br>Optional<br>Default: `false`<br>Available in Pro/Enterprise.                                                                    |
-| <a id="hidden-parameters"></a> `hidden-parameters`               | `string`[]           | List of filter names to hide from the dashboard, e.g. `['productId']`.<br>---<br>Optional<br>Available in Pro/Enterprise.                                                                                                                              |
-| <a id="initial-parameters"></a> `initial-parameters`             | `object`             | Default values for dashboard filters, e.g. `{ 'productId': '42' }`.<br>---<br>Optional<br>Available in Pro/Enterprise and Guest embed.                                                                                                                 |
-| <a id="token"></a> `token`                                       | `string`             | The token for guest embeds. Set automatically by the guest embed flow.<br>---<br>Optional<br>Available in Guest embed.                                                                                                                                 |
-| <a id="with-downloads"></a> `with-downloads`                     | `boolean`            | Whether to show the button to download the dashboard as PDF and download question results.<br>---<br>Optional<br>Default: `true` on OSS/Starter, `false` on Pro/Enterprise<br>Available in Guest embed.                                                |
-| <a id="with-subscriptions"></a> `with-subscriptions`             | `boolean`            | Whether to let people set up [dashboard subscriptions](/docs/latest/dashboards/subscriptions). Subscriptions sent from embedded dashboards exclude links to Metabase items.<br>---<br>Optional<br>Available in Pro/Enterprise. |
-| <a id="with-title"></a> `with-title`                             | `boolean`            | Whether to show the dashboard title in the embed.<br>---<br>Optional<br>Default: `true`<br>Available in Guest embed.                                                                                                                                   |
+| Property                                                         | Type                 | Description                                                                                                                                                                                                                                                                                                       |
+| :--------------------------------------------------------------- | :------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| <a id="auto-refresh-interval"></a> `auto-refresh-interval`       | `number`             | Auto-refresh interval in seconds. For example, `60` refreshes the dashboard every 60 seconds.<br>---<br>Optional<br>Available in Pro/Enterprise and Guest embed.                                                                                                                                                  |
+| <a id="custom-context"></a> `custom-context`                     | `string`             | Optional custom context string passed through to the guest token endpoint.<br>---<br>Optional<br>Available in Guest embed.                                                                                                                                                                                        |
+| <a id="dashboard-id"></a> `dashboard-id`                         | `string` \| `number` | The ID of the dashboard to embed. Can be a regular ID or an [entity ID](/docs/latest/installation-and-operation/serialization#entity-ids-work-with-embedding). Only for SSO embeds — guest embeds set the ID with `token`.                                                                |
+| <a id="drills"></a> `drills`                                     | `boolean`            | Whether to enable drill-through on the dashboard.<br>---<br>Optional<br>Default: `true`<br>Available in Pro/Enterprise.                                                                                                                                                                                           |
+| <a id="enable-entity-navigation"></a> `enable-entity-navigation` | `boolean`            | Whether to enable internal entity navigation (links to dashboards/questions). Requires `drills` to be `true`<br>---<br>Optional<br>Default: `false`<br>Available in Pro/Enterprise.                                                                                                                               |
+| <a id="hidden-parameters"></a> `hidden-parameters`               | `string`[]           | List of filter names to hide from the dashboard, e.g. `['productId']`.<br>---<br>Optional<br>Available in Pro/Enterprise.                                                                                                                                                                                         |
+| <a id="initial-parameters"></a> `initial-parameters`             | `object`             | Default values for dashboard filters, e.g. `{ 'productId': '42' }`.<br>---<br>Optional<br>Available in Pro/Enterprise and Guest embed.                                                                                                                                                                            |
+| <a id="parameters"></a> `parameters`                             | `object`             | Controlled dashboard filters values, e.g. `{ 'productId': '42' }`. Setting this attribute supersedes `initial-parameters` as the seed and stays in sync with subsequent mutations. Pair with the `parameters-change` DOM event to track edits.<br>---<br>Optional<br>Available in Pro/Enterprise and Guest embed. |
+| <a id="token"></a> `token`                                       | `string`             | The token for guest embeds. Set automatically by the guest embed flow.<br>---<br>Optional<br>Available in Guest embed.                                                                                                                                                                                            |
+| <a id="with-downloads"></a> `with-downloads`                     | `boolean`            | Whether to show the button to download the dashboard as PDF and download question results.<br>---<br>Optional<br>Default: `true` on OSS/Starter, `false` on Pro/Enterprise<br>Available in Guest embed.                                                                                                           |
+| <a id="with-subscriptions"></a> `with-subscriptions`             | `boolean`            | Whether to let people set up [dashboard subscriptions](/docs/latest/dashboards/subscriptions). Subscriptions sent from embedded dashboards exclude links to Metabase items.<br>---<br>Optional<br>Available in Pro/Enterprise.                                                            |
+| <a id="with-title"></a> `with-title`                             | `boolean`            | Whether to show the dashboard title in the embed.<br>---<br>Optional<br>Default: `true`<br>Available in Guest embed.                                                                                                                                                                                              |
 
 <!-- [<endsnippet properties>] -->
 
@@ -1020,6 +1021,7 @@ Use `question-id="new-native"` to embed the SQL editor interface.
 | <a id="initial-sql-parameters"></a> `initial-sql-parameters` | `object`             | Default values for SQL parameters, only applicable to native SQL questions, e.g. `{ "productId": "42" }`.<br>---<br>Optional<br>Available in Pro/Enterprise and Guest embed.                                                                                                                                             |
 | <a id="is-save-enabled"></a> `is-save-enabled`               | `boolean`            | Whether the save button is enabled.<br>---<br>Optional<br>Default: `false`<br>Available in Pro/Enterprise.                                                                                                                                                                                                               |
 | <a id="question-id"></a> `question-id`                       | `string` \| `number` | The ID of the question to embed. Can be a regular ID or an [entity ID](/docs/latest/installation-and-operation/serialization#entity-ids-work-with-embedding). Use `"new"` to embed the query builder, or `"new-native"` to embed the SQL editor. Only for SSO embeds — guest embeds use `token`. |
+| <a id="sql-parameters"></a> `sql-parameters`                 | `object`             | Controlled SQL parameter values, e.g. `{ "productId": "42" }`. Setting this attribute supersedes `initial-sql-parameters` as the seed and stays in sync with subsequent mutations. Pair with the `sql-parameters-change` DOM event to track edits.<br>---<br>Optional<br>Available in Pro/Enterprise and Guest embed.    |
 | <a id="target-collection"></a> `target-collection`           | `string` \| `number` | The collection to save a question to. Values: regular ID, entity ID, `"personal"`, `"root"`.<br>---<br>Optional<br>Available in Pro/Enterprise.                                                                                                                                                                          |
 | <a id="token"></a> `token`                                   | `string`             | The token for guest embeds. Set automatically by the guest embed flow.<br>---<br>Optional<br>Available in Guest embed.                                                                                                                                                                                                   |
 | <a id="with-alerts"></a> `with-alerts`                       | `boolean`            | Whether to show the alerts button.<br>---<br>Optional<br>Default: `false`<br>Available in Pro/Enterprise.                                                                                                                                                                                                                |
@@ -1850,7 +1852,8 @@ You can set different attributes to enable/disable UI. Here are some example att
 | `token`                 | Required. The signed JWT token from your server.                                                                                                                                                                                                                                 |
 | `with-title`            | Show or hide the title. Values: `"true"` or `"false"`.                                                                                                                                                                                                                           |
 | `with-downloads`\*      | Enable or disable downloads. Values: `"true"` or `"false"`.                                                                                                                                                                                                                      |
-| `initial-parameters`    | JSON string of parameter values. Example: `'{"category":["Gizmo"]}'`.                                                                                                                                                                                                            |
+| `initial-parameters`    | JSON string of initial parameter values (uncontrolled). Example: `'{"category":["Gizmo"]}'`. See [Modular embedding parameters](./parameters#pass-parameter-values-to-embedded-components).                                                                                   |
+| `parameters`            | JSON string of parameter values (controlled). Example: `'{"category":["Gizmo"]}'`. See [Modular embedding parameters](./parameters#pass-parameter-values-to-embedded-components).                                                                                             |
 | `auto-refresh-interval` | Dashboards only. Auto-refresh interval in seconds.                                                                                                                                                                                                                               |
 | `custom-context`        | Forwarded to your [`guestEmbedProviderUri`](#refreshing-or-initializing-the-jwt-from-your-server) endpoint as `customContext`. Either a string (e.g., `"gadgets-tab"`), or a JSON-stringified object like `initial-parameters` (e.g., `'{"tab":"gadgets","region":"us-east"}'`). |
 
@@ -1933,6 +1936,8 @@ Fetch the JWT token from your backend and programmatically pass it to the 'metab
 >
 </metabase-dashboard>
 ```
+
+See [Modular embedding parameters](./parameters#pass-parameter-values-to-embedded-components) for controlled parameters documentation.
 
 ### Locked parameters
 
@@ -2560,6 +2565,10 @@ When you're creating a new embed using **Admin > Embedding > Setup guide > Embed
 
 - **Allow alerts**: lets people set up [alerts](../questions/alerts) on embedded questions. Requires [email setup](../configuring-metabase/email). Only for authenticated (SSO) question embeds.
 
+## Pass parameter values to embedded components
+
+See [Modular embedding parameters](./parameters#pass-parameter-values-to-embedded-components).
+
 ## Page-level config
 
 To define the configuration that applies to every embed on the page, use the `defineMetabaseConfig()` function. Its parameters include:
@@ -2579,6 +2588,177 @@ To define the configuration that applies to every embed on the page, use the `de
 ## Authentication
 
 For authentication setup including API keys for local testing, SSO with JWT/SAML, and cross-domain configuration, see [Modular embedding - authentication](./authentication).
+
+---
+
+# Modular embedding parameters
+
+This page covers how to pass parameter values to embedded dashboards and SQL questions.
+
+## Modular embedding SDK (React)
+
+### Pass parameter values to a dashboard
+
+You can set initial values for embeds (uncontrolled), and optionally keep your app in sync with values as people change them (controlled). You can pick either `initialParameters` and `parameters`, but don't combine them.
+
+#### `initialParameters` (uncontrolled)
+
+Set the filter values once on load. Your app won't know when people change filters in the dashboard. Pick this when you don't need to track those changes.
+
+```typescript
+
+```
+
+See [How parameter values are resolved](#how-parameter-values-are-resolved) for null / missing-slug semantics.
+
+#### `parameters` + `onParametersChange` (controlled)
+
+Push values from your app, and observe every applied change via `onParametersChange`. This works like a controlled `<input value onChange>`. Your app holds the source of truth, the dashboard re-renders when the prop changes, and you receive a callback whenever applied values change.
+
+```typescript
+
+```
+
+`onParametersChange` receives the [dashboard parameter change payload](#dashboard-parameter-change-payload).
+
+
+> Don't combine `initialParameters` and `parameters` - pick one. For controlled behavior, only use `parameters`.
+
+### Pass parameters to SQL questions
+
+You can pass [parameter](../questions/native-editor/sql-parameters) values to SQL questions in the format `{parameter_name: parameter_value}`. You can set initial values for embeds (uncontrolled), and optionally keep your app in sync with values as people change them (controlled).
+
+These props only work with SQL questions, not query-builder questions.
+
+#### `initialSqlParameters` (uncontrolled)
+
+Set the parameter values once on load. Your app won't know when people change parameters in the question. Pick this when you don't need to track those changes.
+
+```typescript
+
+```
+
+See [How parameter values are resolved](#how-parameter-values-are-resolved) for null / missing-slug semantics.
+
+#### `sqlParameters` + `onSqlParametersChange` (controlled)
+
+Push values from your app, and observe every applied change via `onSqlParametersChange`. This works like a controlled `<input value onChange>` - your app holds the source of truth, the question re-renders when the prop changes, and you receive a callback whenever applied values change.
+
+```typescript
+
+```
+
+`onSqlParametersChange` receives the [SQL question parameter change payload](#sql-question-parameter-change-payload).
+
+## Modular embedding (web components)
+
+### Pass parameter values to embedded components
+
+You can set dashboard filters and SQL parameters from your page, push new values at runtime, and listen for applied changes.
+
+#### Seed values once with `initial-parameters` / `initial-sql-parameters`
+
+Set values on mount via attributes. The component reads them once on load and ignores any subsequent changes to the attribute. User widget edits are not reflected back to your page.
+
+```html
+<metabase-dashboard
+  dashboard-id="1"
+  initial-parameters='{"state": "NY"}'
+></metabase-dashboard>
+
+<metabase-question
+  question-id="42"
+  initial-sql-parameters='{"product_id": 50}'
+></metabase-question>
+```
+
+Attributes carry JSON. Pass an object whose keys are parameter slugs (dashboards) or SQL variable names (questions). See [How parameter values are resolved](#how-parameter-values-are-resolved) for null / missing-slug semantics.
+
+#### Push values at runtime with `parameters` / `sqlParameters`
+
+For controlled behavior, set the JS property on the element instead of the attribute. The component re-renders to apply the new values.
+
+```html
+<metabase-dashboard id="my-dashboard" dashboard-id="1"></metabase-dashboard>
+
+<script>
+  const el = document.getElementById("my-dashboard");
+  el.parameters = { state: "NY" };
+</script>
+```
+
+The same pattern works for `metabase-question` via the `sqlParameters` property.
+
+To switch a component back to uncontrolled mode (leaving the last applied values in place), set the property to `undefined`.
+
+#### Clearing parameters
+
+To clear a single parameter, set its value to `null`. This strictly clears the parameter and ignores its default value.
+
+```html
+<script>
+  const el = document.getElementById("my-dashboard");
+  // `null` strictly clears the parameter (ignores its default).
+  el.parameters = { ...el.parameters, state: null };
+</script>
+```
+
+To clear every parameter, assign an empty object `{}`.
+
+```html
+<script>
+  const el = document.getElementById("my-dashboard");
+  el.parameters = {};
+</script>
+```
+
+#### Observe applied changes with `parameters-change` / `sql-parameters-change`
+
+Listen for events to keep your page in sync with what's actually applied:
+
+```html
+<metabase-dashboard id="my-dashboard" dashboard-id="1"></metabase-dashboard>
+
+<script>
+  const el = document.getElementById("my-dashboard");
+
+  el.addEventListener("parameters-change", (event) => {
+    const { source, parameters, defaultParameters, lastUsedParameters } =
+      event.detail;
+    console.log(source, parameters);
+  });
+</script>
+```
+
+The `event.detail` carries the [dashboard parameter change payload](#dashboard-parameter-change-payload).
+
+For SQL questions, listen for `sql-parameters-change` on `<metabase-question>`. Its `event.detail` carries the [SQL question parameter change payload](#sql-question-parameter-change-payload).
+
+## How parameter values are resolved
+
+These rules apply to all four props — `initialParameters` / `parameters` (dashboards) and `initialSqlParameters` / `sqlParameters` (SQL questions) — and to the matching web component attributes (`initial-parameters`, `parameters`, etc.). For each parameter slug:
+
+- **Set a value**: Pass a `string` for a single-option filter, and an array of `string`s for multi-option filters.
+- **Clear a value:** Set to `null`: the parameter is cleared and its default is not used.
+- **Reset to the default value**: Omit a value (or set to `undefined`) and the embed will fall back to the parameter's default (or `null` if it has no default).
+
+## Dashboard parameter change payload
+
+Delivered to `onParametersChange` (SDK) and as `event.detail` for the `parameters-change` event (web components).
+
+
+
+`source` indicates why the callback fired:
+
+
+
+## SQL question parameter change payload
+
+Delivered to `onSqlParametersChange` (SDK) and as `event.detail` for the `sql-parameters-change` event (web components).
+
+
+
+`source` indicates why the callback fired:
 
 ---
 
@@ -3014,6 +3194,10 @@ A dashboard component with the features available in the `InteractiveDashboard` 
 ```typescript
 
 ```
+
+## Pass parameter values to a dashboard
+
+See [Modular embedding parameters](../parameters#pass-parameter-values-to-a-dashboard).
 
 ## Customizing dashboard height
 
@@ -3464,15 +3648,9 @@ Use this component when you want to allow people to explore their data and custo
 
 
 
-## Pass SQL parameters to SQL questions with `initialSqlParameters`
+## Pass parameters to SQL questions
 
-You can pass parameter values to questions defined with SQL via the `initialSqlParameters` prop, in the format of `{parameter_name: parameter_value}`. Learn more about [SQL parameters](../../questions/native-editor/sql-parameters).
-
-```typescript
-
-```
-
-`initialSqlParameters` can't be used with questions built using the query builder.
+See [Modular embedding parameters](../parameters#pass-parameters-to-sql-questions).
 
 ## Enable alerts on embedded questions
 

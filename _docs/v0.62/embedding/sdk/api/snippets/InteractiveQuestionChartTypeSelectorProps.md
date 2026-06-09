@@ -7,6 +7,7 @@ category: Embedding
 title: InteractiveQuestionChartTypeSelectorProps
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/embedding/sdk/api/snippets/InteractiveQuestionChartTypeSelectorProps.md'
 layout: new-docs
+latest: true
 ---
 
 ```ts

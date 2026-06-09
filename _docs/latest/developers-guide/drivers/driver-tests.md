@@ -1,5 +1,5 @@
 ---
-version: v0.61
+version: v0.62
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -237,7 +237,7 @@ be-tests-postgres-latest-ee:
         POSTGRES_DB: circle_test
         POSTGRES_HOST_AUTH_METHOD: trust
   steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
     - name: Test Postgres driver (latest)
       uses: ./.github/actions/test-driver
       with:

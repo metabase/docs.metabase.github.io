@@ -1,5 +1,5 @@
 ---
-version: v0.61
+version: v0.62
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -204,6 +204,8 @@ Columns:
 - IP Address
 - Tenant ID
 - Request ID
+- Cache Creation Tokens
+- Cache Read Tokens
 
 ### Alerts
 
@@ -582,6 +584,9 @@ The Topic column on the [Activity log](#activity-log) model takes one of:
 - comment-delete
 - comment-update
 - create-permission-failure
+- custom-viz-plugin-create
+- custom-viz-plugin-delete
+- custom-viz-plugin-update
 - dashboard-add-cards
 - dashboard-create
 - dashboard-delete
@@ -644,7 +649,9 @@ The Topic column on the [Activity log](#activity-log) model takes one of:
 - transform-delete
 - transform-inspect-discover
 - transform-inspect-lens
+- transform-run-canceled
 - transform-run-start
+- transform-run-timeout
 - update-permission-failure
 - update-transform
 - upload-append

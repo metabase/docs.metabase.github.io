@@ -225,6 +225,12 @@ window.redirectTo = function redirectTo(theLocation) {
   
 
   
+
+  
+
+  
+
+  
     <script src="https://www.metabase.com/js/navigation-header.js"></script>
   
 
@@ -1022,9 +1028,47 @@ Roadmap</a>
 </div>
 </div>
 
-            <div class="Button btn btn-transparent px-3 py-2 button-desktop flex-column">
+            <div class="Button btn btn-transparent px-3 py-2 button-desktop flex-column pricing-control">
               <a class="fs-13 Button btn btn-transparent px-0 py-2" href="https://www.metabase.com/pricing/">Pricing</a>
             </div>
+            <div class="Button btn btn-transparent px-3 py-2 button-desktop pricing-new" id="pricing-nav-button-desktop" tabindex="0">
+  <div class="fs-13 d-flex align-items-center">
+    Pricing
+    <svg class="nav-button-chevron" fill="none" height="7" viewBox="0 0 11 7" width="11" xmlns="http://www.w3.org/2000/svg">
+  <path d="M1.5 1L5.5 5L9.5 1" stroke-width="1.5" stroke="#509EE3"></path>
+</svg>
+
+  </div>
+  <div class="text-start fw-normal" id="pricing-nav-menu-wrapper">
+    <div class="nav-menu overflow-hidden">
+      <div class="button-style-link-container">
+        <a href="https://www.metabase.com/pricing-plans?use_case=bi" data-use-case-switcher="">
+          <div class="flex flex-column justify-content-between">
+            <div class="mb-4">
+              <img src="https://www.metabase.com/images/navigation-header/pricing-bi.svg" alt="">
+            </div>
+            <div>
+              <h6>Business Intelligence pricing</h6>
+              <p>Self-service analytics for your team</p>
+            </div>
+          </div>
+        </a>
+        <a href="https://www.metabase.com/pricing-plans?use_case=ea" data-use-case-switcher="">
+          <div class="flex flex-column justify-content-between">
+            <div class="mb-4">
+              <img src="https://www.metabase.com/images/navigation-header/pricing-ea.svg" alt="">
+            </div>
+            <div>
+              <h6>Embedded Analytics pricing</h6>
+              <p>Fast, flexible customer-facing analytics</p>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
           </div>
         
 
@@ -1804,9 +1848,48 @@ Roadmap</a>
 </div>
 
 
-  <a class="nav-button-mobile py-6 px-7" href="https://www.metabase.com/pricing/">
+  <a class="nav-button-mobile py-6 px-7 pricing-control" href="https://www.metabase.com/pricing/">
     <span class="h4 m-0">Pricing</span>
   </a>
+  <div class="pricing-new">
+    <input autocomplete="off" class="nav-button-input" id="pricing-nav-button-mobile" type="checkbox">
+
+<label class="nav-button-mobile hover-pointer user-select-none py-6 px-7 d-flex justify-content-between align-items-center" for="pricing-nav-button-mobile">
+  <span class="h4 m-0">Pricing</span>
+  <svg class="nav-button-chevron" fill="none" height="7" viewBox="0 0 11 7" width="11" xmlns="http://www.w3.org/2000/svg">
+  <path d="M1.5 1L5.5 5L9.5 1" stroke-width="1.5" stroke="#509EE3"></path>
+</svg>
+
+</label>
+
+<div id="pricing-dropdown-mobile">
+  <div class="button-style-link-container">
+    <a href="https://www.metabase.com/pricing-plans?use_case=bi" data-use-case-switcher="">
+      <div class="flex">
+        <div>
+          <img src="https://www.metabase.com/images/navigation-header/pricing-bi.svg" alt="">
+        </div>
+        <div>
+          <h6>Business Intelligence pricing</h6>
+          <p>Self-service analytics for your team</p>
+        </div>
+      </div>
+    </a>
+    <a href="https://www.metabase.com/pricing-plans?use_case=ea" data-use-case-switcher="">
+      <div class="flex">
+        <div>
+          <img src="https://www.metabase.com/images/navigation-header/pricing-ea.svg" alt="">
+        </div>
+        <div>
+          <h6>Embedded Analytics pricing</h6>
+          <p>Fast, flexible customer-facing analytics</p>
+        </div>
+      </div>
+    </a>
+  </div>
+</div>
+
+  </div>
 
   <a class="py-8 d-flex justify-content-center bg-neutral-99" href="https://www.metabase.com/cloud/login" id="mobile-login-button">
     <span class="h4 mb-0">Log in</span>
@@ -1818,6 +1901,17 @@ Roadmap</a>
 
 <script src="https://www.metabase.com/js/main-nav.js"></script>
 <script src="https://www.metabase.com/js/promo-banner.js"></script>
+
+
+<style>
+html[data-pricing-variant="new"] .pricing-control {
+  display: none !important;
+}
+
+html:not([data-pricing-variant="new"]) .pricing-new {
+  display: none !important;
+}
+</style>
 
 
 
@@ -3634,6 +3728,21 @@ Roadmap</a>
               <li class="">
                 <a href="/docs/latest/embedding/components" class="">
                   Components
+
+                  
+                </a>
+                
+              </li>
+            
+              
+
+              
+
+              
+
+              <li class="">
+                <a href="/docs/latest/embedding/parameters" class="">
+                  Filters and parameters
 
                   
                 </a>
@@ -6046,7 +6155,7 @@ Roadmap</a>
 <div class="version__selector cursor-pointer">
   <span class="version__current">
     
-      v0.61
+      v0.62
     
 
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="chevron">
@@ -6057,13 +6166,13 @@ Roadmap</a>
   <ul class="version__dropdown">
     
       
+    
+      
         <li>
-          <a href="/docs/v0.62">
-            v0.62
+          <a href="/docs/v0.61">
+            v0.61
           </a>
         </li>
-      
-    
       
     
       
@@ -6159,7 +6268,7 @@ Roadmap</a>
 <div class="version__selector cursor-pointer">
   <span class="version__current">
     
-      v0.61
+      v0.62
     
 
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="chevron">
@@ -6170,13 +6279,13 @@ Roadmap</a>
   <ul class="version__dropdown">
     
       
+    
+      
         <li>
-          <a href="/docs/v0.62">
-            v0.62
+          <a href="/docs/v0.61">
+            v0.61
           </a>
         </li>
-      
-    
       
     
       
@@ -6299,7 +6408,8 @@ Roadmap</a>
   <li><a href="./installation-and-operation/development-instance">Development instances</a></li>
   <li><a href="./installation-and-operation/serialization">Serialization</a></li>
   <li><a href="./installation-and-operation/remote-sync">Remote sync</a></li>
-  <li><a href="./installation-and-operation/commands">Commands</a></li>
+  <li><a href="./installation-and-operation/metabase-cli">Metabase CLI</a></li>
+  <li><a href="./installation-and-operation/commands">Metabase JAR commands</a></li>
   <li><a href="./installation-and-operation/supported-browsers">Supported browsers</a></li>
   <li><a href="./installation-and-operation/privacy">Privacy</a></li>
   <li><a href="./installation-and-operation/information-collection">About the anonymous usage data we collect</a></li>
@@ -6354,6 +6464,7 @@ Roadmap</a>
   <li><a href="./questions/visualizations/visualizing-results">Visualizing data</a></li>
   <li><a href="./questions/visualizations/box-plot">Box plots</a></li>
   <li><a href="./questions/visualizations/combo-chart">Combo charts</a></li>
+  <li><a href="./questions/visualizations/custom">Custom visualizations</a></li>
   <li><a href="./questions/visualizations/detail">Detail</a></li>
   <li><a href="./questions/visualizations/funnel">Funnel charts</a></li>
   <li><a href="./questions/visualizations/gauge">Gauge charts</a></li>
