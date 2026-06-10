@@ -1018,12 +1018,16 @@ Roadmap</a>
         
         
         
-        <a class="w-100 post-with-image recent-blog-link mt-1" href="https://www.metabase.com/blog/ai-for-everyone-with-confidence">
+        <a class="w-100 post-with-image recent-blog-link mt-1" href="https://www.metabase.com/blog/claude-skill-learn-metabase">
           <div class="d-flex align-items-center position-relative overflow-hidden rounded-2 mb-3" id="recent-blog-image-wrapper">
-            <img alt="Resources Image" class="position-absolute w-100" src="https://www.metabase.com/images/posts/ai-for-everyone-with-confidence.png" loading="lazy">
+            <img alt="Resources Image" class="position-absolute w-100" src="https://www.metabase.com/images/posts/category-images/News.png" loading="lazy">
           </div>
-          <span class="h6 neutral-40 recent-blog-link-heading mb-3">AI for everyone, with confidence</span>
+          <span class="h6 neutral-40 recent-blog-link-heading mb-3">Introducing the Claude skill for learning Metabase</span>
         </a>
+        
+          <a class="w-100 recent-blog-link" href="https://www.metabase.com/blog/ai-for-everyone-with-confidence">
+            <span class="h6 neutral-40 recent-blog-link-heading mb-3">AI for everyone, with confidence</span>
+          </a>
         
           <a class="w-100 recent-blog-link" href="https://www.metabase.com/blog/metabase-plugin-openai-codex-announcement">
             <span class="h6 neutral-40 recent-blog-link-heading mb-3">Metabase + OpenAI Codex </span>
@@ -1035,10 +1039,6 @@ Roadmap</a>
         
           <a class="w-100 recent-blog-link" href="https://www.metabase.com/blog/metabase-ai-hackathon-winners">
             <span class="h6 neutral-40 recent-blog-link-heading mb-3">Winners of the Metabase AI Hackathon</span>
-          </a>
-        
-          <a class="w-100 recent-blog-link" href="https://www.metabase.com/blog/improving-performance-clojure-development-tools">
-            <span class="h6 neutral-40 recent-blog-link-heading mb-3">Improving the performance of the popular Clojure development tool clojure-lsp</span>
           </a>
         
       </div>
@@ -6449,28 +6449,6 @@ x.com</code></li>
 
 <p>Allowed iframe hosts.</p>
 
-<h3 id="mb_csp_img_enabled"><code class="language-plaintext highlighter-rouge">MB_CSP_IMG_ENABLED</code></h3>
-
-<ul>
-  <li>Type: boolean</li>
-  <li>Default: <code class="language-plaintext highlighter-rouge">false</code></li>
-  <li><a href="../installation-and-operation/serialization">Exported as</a>: <code class="language-plaintext highlighter-rouge">csp-img-enabled</code>.</li>
-  <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">csp-img-enabled</code></li>
-</ul>
-
-<p>When on, the browser Content Security Policy restricts <code class="language-plaintext highlighter-rouge">img-src</code> so images can only load from this Metabase instance and the domains listed in <code class="language-plaintext highlighter-rouge">MB_CSP_IMG_ALLOWED_HOSTS</code>. Must be turned on to enable Custom Visualizations.</p>
-
-<h3 id="mb_csp_img_allowed_hosts"><code class="language-plaintext highlighter-rouge">MB_CSP_IMG_ALLOWED_HOSTS</code></h3>
-
-<ul>
-  <li>Type: string</li>
-  <li>Default: <code class="language-plaintext highlighter-rouge">""</code></li>
-  <li><a href="../installation-and-operation/serialization">Exported as</a>: <code class="language-plaintext highlighter-rouge">csp-img-allowed-hosts</code>.</li>
-  <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">csp-img-allowed-hosts</code></li>
-</ul>
-
-<p>Comma-separated list of domains that images can load from in dashboard text cards, entity descriptions, and custom visualizations when <code class="language-plaintext highlighter-rouge">MB_CSP_IMG_ENABLED</code> is on. Empty by default, which restricts images to those hosted by your Metabase instance. See <a href="./settings#allowed-domains-for-images">Allowed domains for images</a>.</p>
-
 <h3 id="mb_analytics_pii_retention_enabled"><code class="language-plaintext highlighter-rouge">MB_ANALYTICS_PII_RETENTION_ENABLED</code></h3>
 
 <blockquote>
@@ -6745,6 +6723,28 @@ If set to 0, Metabase will keep all rows.</p>
 
 <p>Whether to (asynchronously) sync newly created Databases during config-from-file initialization. By default, true,
   but you can disable this behavior if you want to sync it manually or use SerDes to populate its data model.</p>
+
+<h3 id="mb_csp_img_allowed_hosts"><code class="language-plaintext highlighter-rouge">MB_CSP_IMG_ALLOWED_HOSTS</code></h3>
+
+<ul>
+  <li>Type: string</li>
+  <li>Default: ``</li>
+  <li><a href="../installation-and-operation/serialization">Exported as</a>: <code class="language-plaintext highlighter-rouge">csp-img-allowed-hosts</code>.</li>
+  <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">csp-img-allowed-hosts</code></li>
+</ul>
+
+<p>Comma-separated list of hosts that images may load from (e.g. in dashboard text, entity descriptions, and custom visualizations) when <code class="language-plaintext highlighter-rouge">csp-img-enabled</code> is on. Empty by default, which restricts images to this Metabase instance.</p>
+
+<h3 id="mb_csp_img_enabled"><code class="language-plaintext highlighter-rouge">MB_CSP_IMG_ENABLED</code></h3>
+
+<ul>
+  <li>Type: boolean</li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">false</code></li>
+  <li><a href="../installation-and-operation/serialization">Exported as</a>: <code class="language-plaintext highlighter-rouge">csp-img-enabled</code>.</li>
+  <li><a href="./config-file">Configuration file name</a>: <code class="language-plaintext highlighter-rouge">csp-img-enabled</code></li>
+</ul>
+
+<p>Restrict the browser Content Security Policy so images can only load from this Metabase instance or the hosts listed in <code class="language-plaintext highlighter-rouge">csp-img-allowed-hosts</code>. Must be on to enable Custom Visualizations.</p>
 
 <h3 id="mb_csv_field_separator"><code class="language-plaintext highlighter-rouge">MB_CSV_FIELD_SEPARATOR</code></h3>
 
