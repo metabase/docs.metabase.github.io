@@ -7,7 +7,6 @@ category: Embedding
 title: IconName
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/embedding/sdk/api/snippets/IconName.md'
 layout: new-docs
-latest: true
 ---
 
 ```ts
@@ -248,6 +247,7 @@ type IconName =
   | "segment"
   | "shield"
   | "shield_outline"
+  | "shield_stroke"
   | "sidebar_closed"
   | "sidebar_open"
   | "slack"
