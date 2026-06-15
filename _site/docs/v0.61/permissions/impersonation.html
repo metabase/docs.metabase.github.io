@@ -151,6 +151,25 @@ window.redirectTo = function redirectTo(theLocation) {
   <meta content="no-referrer-when-downgrade" name="referrer">
 
   
+  
+  <!-- Start VWO Async SmartCode -->
+  <link rel="preconnect" href="https://dev.visualwebsiteoptimizer.com">
+  <script type="text/javascript" id="vwoCode">
+    window._vwo_code ||
+    (function () {
+    var w=window,
+    d=document;
+    var account_id=576439,
+    version=2.2,
+    settings_tolerance=2000,
+    hide_element='body',
+    hide_element_style = 'opacity:0 !important;filter:alpha(opacity=0) !important;background:none !important';
+    /* DO NOT EDIT BELOW THIS LINE */
+    var f=0, v;
+    if(f=!1,v=d.querySelector('#vwoCode'),cc={},-1<d.URL.indexOf('__vwo_disable__')||w._vwo_code)return;try{var e=JSON.parse(localStorage.getItem('_vwo_'+account_id+'_config'));cc=e&&'object'==typeof e?e:{}}catch(e){}function r(t){try{return decodeURIComponent(t)}catch(e){return t}}var s=function(){var e={combination:[],combinationChoose:[],split:[],exclude:[],uuid:null,consent:null,optOut:null},t=d.cookie||'';if(!t)return e;for(var n,i,o=/(?:^|;\s*)(?:(_vis_opt_exp_(\d+)_combi=([^;]*))|(_vis_opt_exp_(\d+)_combi_choose=([^;]*))|(_vis_opt_exp_(\d+)_split=([^:;]*))|(_vis_opt_exp_(\d+)_exclude=[^;]*)|(_vis_opt_out=([^;]*))|(_vwo_global_opt_out=[^;]*)|(_vwo_uuid=([^;]*))|(_vwo_consent=([^;]*)))/g;null!==(n=o.exec(t));)try{n[1]?e.combination.push({id:n[2],value:r(n[3])}):n[4]?e.combinationChoose.push({id:n[5],value:r(n[6])}):n[7]?e.split.push({id:n[8],value:r(n[9])}):n[10]?e.exclude.push({id:n[11]}):n[12]?e.optOut=r(n[13]):n[14]?e.optOut=!0:n[15]?e.uuid=r(n[16]):n[17]&&(i=r(n[18]),e.consent=i&&3<=i.length?i.substring(0,3):null)}catch(e){}return e}();function i(){var e=function(){if(w.VWO&&Array.isArray(w.VWO))for(var e=0;e<w.VWO.length;e++){var t=w.VWO[e];if(Array.isArray(t)&&('setVisitorId'===t[0]||'setSessionId'===t[0]))return!0}return!1}(),t='a='+account_id+'&u='+encodeURIComponent(w._vis_opt_url||d.URL)+'&vn='+version+'&ph=1'+('undefined'!=typeof platform?'&p='+platform:'')+'&st='+w.performance.now();e||((n=function(){var e,t=[],n={},i=w.VWO&&w.VWO.appliedCampaigns||{};for(e in i){var o=i[e]&&i[e].v;o&&(t.push(e+'-'+o+'-1'),n[e]=!0)}if(s&&s.combination)for(var r=0;r<s.combination.length;r++){var a=s.combination[r];n[a.id]||t.push(a.id+'-'+a.value)}return t.join('|')}())&&(t+='&c='+n),(n=function(){var e=[],t={};if(s&&s.combinationChoose)for(var n=0;n<s.combinationChoose.length;n++){var i=s.combinationChoose[n];e.push(i.id+'-'+i.value),t[i.id]=!0}if(s&&s.split)for(var o=0;o<s.split.length;o++)t[(i=s.split[o]).id]||e.push(i.id+'-'+i.value);return e.join('|')}())&&(t+='&cc='+n),(n=function(){var e={},t=[];if(w.VWO&&Array.isArray(w.VWO))for(var n=0;n<w.VWO.length;n++){var i=w.VWO[n];if(Array.isArray(i)&&'setVariation'===i[0]&&i[1]&&Array.isArray(i[1]))for(var o=0;o<i[1].length;o++){var r,a=i[1][o];a&&'object'==typeof a&&(r=a.e,a=a.v,r&&a&&(e[r]=a))}}for(r in e)t.push(r+'-'+e[r]);return t.join('|')}())&&(t+='&sv='+n)),s&&s.optOut&&(t+='&o='+s.optOut);var n=function(){var e=[],t={};if(s&&s.exclude)for(var n=0;n<s.exclude.length;n++){var i=s.exclude[n];t[i.id]||(e.push(i.id),t[i.id]=!0)}return e.join('|')}();return n&&(t+='&e='+n),s&&s.uuid&&(t+='&id='+s.uuid),s&&s.consent&&(t+='&consent='+s.consent),w.name&&-1<w.name.indexOf('_vis_preview')&&(t+='&pM=true'),w.VWO&&w.VWO.ed&&(t+='&ed='+w.VWO.ed),t}code={nonce:v&&v.nonce,library_tolerance:function(){return'undefined'!=typeof library_tolerance?library_tolerance:void 0},settings_tolerance:function(){return cc.sT||settings_tolerance},hide_element_style:function(){return'{'+(cc.hES||hide_element_style)+'}'},hide_element:function(){return performance.getEntriesByName('first-contentful-paint')[0]?'':'string'==typeof cc.hE?cc.hE:hide_element},getVersion:function(){return version},finish:function(e){var t;f||(f=!0,(t=d.getElementById('_vis_opt_path_hides'))&&t.parentNode.removeChild(t),e&&((new Image).src='https://dev.visualwebsiteoptimizer.com/ee.gif?a='+account_id+e))},finished:function(){return f},addScript:function(e){var t=d.createElement('script');t.type='text/javascript',e.src?t.src=e.src:t.text=e.text,v&&t.setAttribute('nonce',v.nonce),d.getElementsByTagName('head')[0].appendChild(t)},load:function(e,t){t=t||{};var n=new XMLHttpRequest;n.open('GET',e,!0),n.withCredentials=!t.dSC,n.responseType=t.responseType||'text',n.onload=function(){if(t.onloadCb)return t.onloadCb(n,e);200===n.status?_vwo_code.addScript({text:n.responseText}):_vwo_code.finish('&e=loading_failure:'+e)},n.onerror=function(){if(t.onerrorCb)return t.onerrorCb(e);_vwo_code.finish('&e=loading_failure:'+e)},n.send()},init:function(){var e,t=this.settings_tolerance();w._vwo_settings_timer=setTimeout(function(){_vwo_code.finish()},t),'body'!==this.hide_element()?(n=d.createElement('style'),e=(t=this.hide_element())?t+this.hide_element_style():'',t=d.getElementsByTagName('head')[0],n.setAttribute('id','_vis_opt_path_hides'),v&&n.setAttribute('nonce',v.nonce),n.setAttribute('type','text/css'),n.styleSheet?n.styleSheet.cssText=e:n.appendChild(d.createTextNode(e)),t.appendChild(n)):(n=d.getElementsByTagName('head')[0],(e=d.createElement('div')).style.cssText='z-index: 2147483647 !important;position: fixed !important;left: 0 !important;top: 0 !important;width: 100% !important;height: 100% !important;background: white !important;',e.setAttribute('id','_vis_opt_path_hides'),e.classList.add('_vis_hide_layer'),n.parentNode.insertBefore(e,n.nextSibling));var n='https://dev.visualwebsiteoptimizer.com/j.php?'+i();-1!==w.location.search.indexOf('_vwo_xhr')?this.addScript({src:n}):this.load(n+'&x=true',{l:1})}};w._vwo_code=code;code.init();})();
+  </script>
+  <!-- End VWO Async SmartCode -->
+
 
 
    
@@ -206,6 +225,12 @@ window.redirectTo = function redirectTo(theLocation) {
    
 
   
+  
+
+  
+
+  
+
   
 
   
@@ -316,12 +341,12 @@ window.redirectTo = function redirectTo(theLocation) {
 <header class="bootstrap sticky">
   <div class="navigation-header bg-neutral-white bg-neutral-white">
     
-        <div class="promo-banner hidden">
+        <div class="promo-banner outer-join hidden" data-date="2026-10-05" data-time="00-00">
   <div>
-    <span class="button">New</span>
-    <span>Metabase 61: AI governance - access controls, token limits, Metabot customization, build dashboards with MCP, and more.</span>
-    <a href="https://www.metabase.com/releases/metabase-61 ">
-      Read the announcement<img alt="Chevron Blue Right" src="https://www.metabase.com/images/chevron_blue_right.svg">
+    <img class="outer-join-logo" alt="OUTER JOIN" src="https://www.metabase.com/images/promo-banner/outer-join-logo.svg">
+    <span>Where data people meet. Oct 5–7, 2026 · Denver, CO</span>
+    <a href="https://www.metabase.com/events/outer-join-2026">
+      Book your seat<img alt="Chevron Right" src="https://www.metabase.com/images/chevron_blue_right.svg">
     </a>
   </div>
   <button>×</button>
@@ -991,12 +1016,20 @@ Roadmap</a>
         
         
         
-        <a class="w-100 post-with-image recent-blog-link mt-1" href="https://www.metabase.com/blog/metabase-plugin-openai-codex-announcement">
+        <a class="w-100 post-with-image recent-blog-link mt-1" href="https://www.metabase.com/blog/claude-skill-learn-metabase">
           <div class="d-flex align-items-center position-relative overflow-hidden rounded-2 mb-3" id="recent-blog-image-wrapper">
-            <img alt="Resources Image" class="position-absolute w-100" src="https://www.metabase.com/images/posts/engineering-2026/openai-announcement.png" loading="lazy">
+            <img alt="Resources Image" class="position-absolute w-100" src="https://www.metabase.com/images/posts/category-images/News.png" loading="lazy">
           </div>
-          <span class="h6 neutral-40 recent-blog-link-heading mb-3">Metabase + OpenAI Codex </span>
+          <span class="h6 neutral-40 recent-blog-link-heading mb-3">Introducing the Claude skill for learning Metabase</span>
         </a>
+        
+          <a class="w-100 recent-blog-link" href="https://www.metabase.com/blog/ai-for-everyone-with-confidence">
+            <span class="h6 neutral-40 recent-blog-link-heading mb-3">AI for everyone, with confidence</span>
+          </a>
+        
+          <a class="w-100 recent-blog-link" href="https://www.metabase.com/blog/metabase-plugin-openai-codex-announcement">
+            <span class="h6 neutral-40 recent-blog-link-heading mb-3">Metabase + OpenAI Codex </span>
+          </a>
         
           <a class="w-100 recent-blog-link" href="https://www.metabase.com/blog/strip-mining-era-of-open-source-security">
             <span class="h6 neutral-40 recent-blog-link-heading mb-3">Welcome to the strip mining era of open source security</span>
@@ -1006,23 +1039,53 @@ Roadmap</a>
             <span class="h6 neutral-40 recent-blog-link-heading mb-3">Winners of the Metabase AI Hackathon</span>
           </a>
         
-          <a class="w-100 recent-blog-link" href="https://www.metabase.com/blog/improving-performance-clojure-development-tools">
-            <span class="h6 neutral-40 recent-blog-link-heading mb-3">Improving the performance of the popular Clojure development tool clojure-lsp</span>
-          </a>
-        
-          <a class="w-100 recent-blog-link" href="https://www.metabase.com/blog/ten-custom-subagents">
-            <span class="h6 neutral-40 recent-blog-link-heading mb-3">How we built ten custom subagents to tame a 500K-line Clojure codebase</span>
-          </a>
-        
       </div>
     </div>
   </div>
 </div>
 </div>
 
-            <div class="Button btn btn-transparent px-3 py-2 button-desktop flex-column">
+            <div class="Button btn btn-transparent px-3 py-2 button-desktop flex-column pricing-control">
               <a class="fs-13 Button btn btn-transparent px-0 py-2" href="https://www.metabase.com/pricing/">Pricing</a>
             </div>
+            <div class="Button btn btn-transparent px-3 py-2 button-desktop pricing-new" id="pricing-nav-button-desktop" tabindex="0">
+  <div class="fs-13 d-flex align-items-center">
+    Pricing
+    <svg class="nav-button-chevron" fill="none" height="7" viewBox="0 0 11 7" width="11" xmlns="http://www.w3.org/2000/svg">
+  <path d="M1.5 1L5.5 5L9.5 1" stroke-width="1.5" stroke="#509EE3"></path>
+</svg>
+
+  </div>
+  <div class="text-start fw-normal" id="pricing-nav-menu-wrapper">
+    <div class="nav-menu overflow-hidden">
+      <div class="button-style-link-container">
+        <a href="https://www.metabase.com/pricing-plans?use_case=bi" data-use-case-switcher="">
+          <div class="flex flex-column justify-content-between">
+            <div class="mb-4">
+              <img src="https://www.metabase.com/images/navigation-header/pricing-bi.svg" alt="">
+            </div>
+            <div>
+              <h6>Business Intelligence pricing</h6>
+              <p>Self-service analytics for your team</p>
+            </div>
+          </div>
+        </a>
+        <a href="https://www.metabase.com/pricing-plans?use_case=ea" data-use-case-switcher="">
+          <div class="flex flex-column justify-content-between">
+            <div class="mb-4">
+              <img src="https://www.metabase.com/images/navigation-header/pricing-ea.svg" alt="">
+            </div>
+            <div>
+              <h6>Embedded Analytics pricing</h6>
+              <p>Fast, flexible customer-facing analytics</p>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
           </div>
         
 
@@ -1802,9 +1865,48 @@ Roadmap</a>
 </div>
 
 
-  <a class="nav-button-mobile py-6 px-7" href="https://www.metabase.com/pricing/">
+  <a class="nav-button-mobile py-6 px-7 pricing-control" href="https://www.metabase.com/pricing/">
     <span class="h4 m-0">Pricing</span>
   </a>
+  <div class="pricing-new">
+    <input autocomplete="off" class="nav-button-input" id="pricing-nav-button-mobile" type="checkbox">
+
+<label class="nav-button-mobile hover-pointer user-select-none py-6 px-7 d-flex justify-content-between align-items-center" for="pricing-nav-button-mobile">
+  <span class="h4 m-0">Pricing</span>
+  <svg class="nav-button-chevron" fill="none" height="7" viewBox="0 0 11 7" width="11" xmlns="http://www.w3.org/2000/svg">
+  <path d="M1.5 1L5.5 5L9.5 1" stroke-width="1.5" stroke="#509EE3"></path>
+</svg>
+
+</label>
+
+<div id="pricing-dropdown-mobile">
+  <div class="button-style-link-container">
+    <a href="https://www.metabase.com/pricing-plans?use_case=bi" data-use-case-switcher="">
+      <div class="flex">
+        <div>
+          <img src="https://www.metabase.com/images/navigation-header/pricing-bi.svg" alt="">
+        </div>
+        <div>
+          <h6>Business Intelligence pricing</h6>
+          <p>Self-service analytics for your team</p>
+        </div>
+      </div>
+    </a>
+    <a href="https://www.metabase.com/pricing-plans?use_case=ea" data-use-case-switcher="">
+      <div class="flex">
+        <div>
+          <img src="https://www.metabase.com/images/navigation-header/pricing-ea.svg" alt="">
+        </div>
+        <div>
+          <h6>Embedded Analytics pricing</h6>
+          <p>Fast, flexible customer-facing analytics</p>
+        </div>
+      </div>
+    </a>
+  </div>
+</div>
+
+  </div>
 
   <a class="py-8 d-flex justify-content-center bg-neutral-99" href="https://www.metabase.com/cloud/login" id="mobile-login-button">
     <span class="h4 mb-0">Log in</span>
@@ -1816,6 +1918,17 @@ Roadmap</a>
 
 <script src="https://www.metabase.com/js/main-nav.js"></script>
 <script src="https://www.metabase.com/js/promo-banner.js"></script>
+
+
+<style>
+html[data-pricing-variant="new"] .pricing-control {
+  display: none !important;
+}
+
+html:not([data-pricing-variant="new"]) .pricing-new {
+  display: none !important;
+}
+</style>
 
 
 
@@ -6185,6 +6298,13 @@ Roadmap</a>
 
         <div>
   
+    
+      <blockquote>
+        These are the docs for Metabase v0.61.
+        Check out the <a class="text-purple text-underline" href="/docs/latest/">docs for the current stable version, Metabase v0.62.</a>
+      </blockquote>
+    
+  
 </div>
 
 
@@ -6638,7 +6758,7 @@ Roadmap</a>
 
           <span class="ml-2" style="padding-bottom: 1px;">GitHub</span>
           <div class="mini-box bg-light-yellow text-dark-yellow ml-2 flex align-center">
-            <span class="github-stars mr-1"></span>
+            <span class="mr-1">47.7k</span>
             <svg fill="none" height="11" viewBox="0 0 12 11" width="12">
               <path d="M6 1.07149L7.39167 3.70919L7.50639 3.92663L7.74864 3.96855L10.6873 4.47701L8.60874 6.61565L8.43739 6.79196L8.47239 7.03531L8.89691 9.98725L6.22062 8.67131L6 8.56283L5.77938 8.67131L3.10309 9.98725L3.52761 7.03531L3.56261 6.79196L3.39126 6.61565L1.31271 4.47701L4.25136 3.96855L4.49361 3.92663L4.60833 3.70919L6 1.07149Z" fill="#F7C217" stroke="#F7C217"></path>
             </svg>
@@ -6765,7 +6885,6 @@ Roadmap</a>
 
 <!-- statuses -->
 <script src="https://www.metabase.com/js/status.js" type="text/javascript"></script>
-<script src="https://www.metabase.com/js/github-stars.js" type="text/javascript"></script>
 
 <!-- show/hide logic for More Resources button -->
 <script type="text/javascript">
