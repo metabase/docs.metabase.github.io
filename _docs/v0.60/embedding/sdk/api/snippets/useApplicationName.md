@@ -7,7 +7,6 @@ category: Embedding
 title: useApplicationName
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/embedding/sdk/api/snippets/useApplicationName.md'
 layout: new-docs
-latest: true
 ---
 
 ```ts
