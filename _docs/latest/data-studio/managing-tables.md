@@ -136,3 +136,4 @@ Measures are saved aggregations on a table that people can use in the query buil
 - [Table metadata editing](../data-modeling/metadata-editing)
 - [Segments](./segments)
 - [Measures](./measures)
+- [Schema viewer](./schema-viewer)

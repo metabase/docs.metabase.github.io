@@ -50,12 +50,12 @@ window.redirectTo = function redirectTo(theLocation) {
 
 
 
-<title>Dependency graph | Metabase Documentation</title>
+<title>Schema viewer | Metabase Documentation</title>
 <!-- Twitter cards -->
 <meta name="twitter:site" content="@metabase">
 
-<meta name="twitter:title" content="Dependency graph | Metabase Documentation">
-<meta name="twitter:description" content="Visualize how your content connects and what depends on what in Metabase.">
+<meta name="twitter:title" content="Schema viewer | Metabase Documentation">
+<meta name="twitter:description" content="Visualize relationships between tables in your database using an entity-relationship diagram (ERD)">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Twitter cards -->
@@ -63,9 +63,9 @@ window.redirectTo = function redirectTo(theLocation) {
 <!-- Open Graph metadata -->
 <meta property="og:site_name" content="Metabase | Business Intelligence, Dashboards, and Data Visualization">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://www.metabase.com/docs/v0.62/data-studio/dependencies/graph">
-<meta name="title" property="og:title" content="Dependency graph | Metabase Documentation">
-<meta name="description" property="og:description" content="Visualize how your content connects and what depends on what in Metabase.">
+<meta property="og:url" content="https://www.metabase.com/docs/v0.62/data-studio/schema-viewer">
+<meta name="title" property="og:title" content="Schema viewer | Metabase Documentation">
+<meta name="description" property="og:description" content="Visualize relationships between tables in your database using an entity-relationship diagram (ERD)">
 <meta name="image" property="og:image" content="https://www.metabase.com/images/docs/docs-og.png">
 <!-- end of Open Graph metadata -->
 
@@ -3301,7 +3301,7 @@ html:not([data-pricing-variant="new"]) .pricing-new {
 
       
 
-      <li class="expanded">
+      <li class="">
         <a href="/docs/v0.62/data-studio/overview" class="">
         Data Studio
 
@@ -3414,7 +3414,7 @@ html:not([data-pricing-variant="new"]) .pricing-new {
 
               
 
-              <li class="expanded">
+              <li class="">
                 <a href="" class="">
                   Dependencies
 
@@ -3436,7 +3436,7 @@ html:not([data-pricing-variant="new"]) .pricing-new {
 
                       
                       <li class="">
-                        <a href="/docs/v0.62/data-studio/dependencies/graph" class="selected">
+                        <a href="/docs/v0.62/data-studio/dependencies/graph" class="">
                           Dependency graph
 
                           
@@ -6427,7 +6427,9 @@ html:not([data-pricing-variant="new"]) .pricing-new {
 </div>
 
 
-        <h1 id="dependency-graph">Dependency graph</h1>
+        <h1 id="schema-viewer">Schema viewer</h1>
+
+<p><em>Data Studio &gt; Schema viewer</em></p>
 
 <div class="bootstrap">
   <div class="plans-blockquote bg-blue-95 rounded-3 p-6 d-flex flex-row border border-1 border-primary">
@@ -6443,7 +6445,7 @@ html:not([data-pricing-variant="new"]) .pricing-new {
       
 
     <p class="m-0 ms-2 paragraph-5 neutral-40">
-       Dependency graph is only available on
+       Schema viewer is only available on
       <a class="fw-bold" href="/product/pro">Pro</a> and
       <a class="fw-bold link-purple" href="/product/enterprise">Enterprise</a>
       plans  (both self-hosted and on Metabase Cloud).
@@ -6451,91 +6453,63 @@ html:not([data-pricing-variant="new"]) .pricing-new {
   </div>
 </div>
 
-<p><img src="../images/dependency-graph.png" alt="Dependency graph"></p>
+<p>The schema viewer helps you understand relationships between tables in your database.</p>
 
-<p>The dependency graph provides a visual representation of how your Metabase content is connected. You can use it to follow how data flows through your Metabase to better understand the impact of any changes you make.</p>
+<p><img src="./images/schema-viewer.png" alt="Schema viewer"></p>
 
-<p>If you’re looking for a visual representation of foreign key relationships between tables, check out the <a href="../schema-viewer">Schema viewer</a> instead.</p>
+<p>If you’re looking for a visual representation of dependencies between <em>Metabase entities</em> (questions, metrics etc) and their underlying tables, check out the <a href="./dependencies/graph">dependency graph</a> instead.</p>
 
-<h2 id="what-the-dependency-graph-tracks">What the dependency graph tracks</h2>
+<h2 id="what-the-schema-viewer-shows">What the schema viewer shows</h2>
 
-<p>The dependency graph tracks the relationships between Metabase entities:</p>
+<p>For a particular schema (if your), the schema viewer will display:</p>
 
 <ul>
-  <li><a href="../../questions/introduction">Questions</a></li>
-  <li><a href="../../data-modeling/models">Models</a></li>
-  <li><a href="../../questions/native-editor/snippets">Snippets</a></li>
-  <li><a href="../transforms/transforms-overview">Transforms</a></li>
-  <li><a href="../../data-modeling/metrics">Metrics</a></li>
-  <li><a href="../../dashboards/introduction">Dashboards</a></li>
-  <li><a href="../../documents/introduction">Documents</a></li>
+  <li>All tables in the schema (including hidden tables)</li>
+  <li>Database names for tables and fields</li>
+  <li>Database types for fields</li>
+  <li>Foreign key relationships <em>set in Metabase</em> (as arrows between tables)</li>
+  <li>Entity keys <em>set in Metabase</em></li>
 </ul>
 
-<p>Dependency graph will also show the dependencies of Metabase entities on the tables that serve as data sources for those entities.</p>
+<p>Schema viewer displays relationships based on the <a href="../data-modeling/metadata-editing">Foreign Key semantic type</a> defined in Metabase, not based on constraints defined directly in your database. However, during <a href="../databases/sync-scan">database sync</a>, Metabase automatically maps database foreign key constraints to foreign key semantic types, so in most cases you won’t need to set these manually.</p>
 
-<p>To see foreign key relationships between tables, see the <a href="../schema-viewer">Schema viewer</a> instead.</p>
+<p>If you’ve defined additional foreign key relationships in Metabase table metadata that don’t have corresponding database constraints, schema viewer will display those as well.</p>
 
-<h2 id="viewing-the-dependency-graph">Viewing the dependency graph</h2>
+<p>Similarly, schema viewer displays entity keys based on the <a href="../data-modeling/metadata-editing">Entity Key semantic type</a> defined in Metabase, not on primary key constraints in your database. During sync, Metabase automatically maps database primary keys to entity key semantic types, so they’ll usually match. If you’ve manually set an entity key on a field that isn’t a database primary key, schema viewer will display that as well.</p>
 
-<p>To open the full dependency graph:</p>
+<h2 id="using-the-schema-viewer">Using the schema viewer</h2>
+
+<p>To see the table relationships in the schema viewer:</p>
 
 <ol>
-  <li>Open <a href="../overview">Data Studio</a>.</li>
-  <li>Click <strong>Dependency graph</strong> in the left sidebar.</li>
+  <li>Go to <strong>Data Studio &gt; Schema viewer</strong></li>
+  <li>In the top left, select a database.</li>
+  <li>(For databases that have schemas) Select a schema.</li>
 </ol>
 
-<p>This opens a canvas view where you can search for and visualize the dependencies of any item across your entire Metabase instance.</p>
-
-<p>You can also view the dependency graph from any item in Data Studio by switching to the Dependencies tab.</p>
-
-<h2 id="what-the-dependency-graph-shows">What the dependency graph shows</h2>
-
-<p>The dependency graph shows both the content an item relies on and the content that relies on it, displayed as connected items you can explore.</p>
-
-<p>Each item in the graph shows:</p>
+<p>In the schema viewer, you can:</p>
 
 <ul>
-  <li>Type (table, model, question, etc.)</li>
-  <li>Name</li>
-  <li>Dependent counts showing how many other items rely on it</li>
+  <li>Use the mini-map in the bottom right to focus on specific parts of your schema.</li>
+  <li>Search for a table and center the schema viewer on that table.</li>
+  <li>Drag and rearrange the tables.</li>
+  <li>Click a table header to open an info panel.</li>
+  <li>Click a foreign key field to navigate to the connected table.</li>
 </ul>
 
-<p>These counts show how important an item is. Items with many dependents usually need extra care before making changes.</p>
+<h2 id="permissions-for-schema-viewer">Permissions for schema viewer</h2>
 
-<h2 id="how-metabase-finds-dependencies">How Metabase finds dependencies</h2>
+<p>The schema viewer is part of Data Studio, which only people in the Admin or <a href="../people-and-groups/managing#data-analysts">Data Analysts</a> groups can access.</p>
 
-<p>Metabase determines dependencies by analyzing how items are constructed and reused, not just by tracing their immediate data source.
-It inspects things like:</p>
-
-<ul>
-  <li>Query structure and joins</li>
-  <li>References to other questions or models</li>
-  <li>How items are used in dashboards, filters, and other content</li>
-</ul>
-
-<p>Because of this, dependencies can exist even when no data is directly queried. For example:</p>
-
-<ul>
-  <li>A SQL question may depend on another GUI question it queries</li>
-  <li>A question used only to populate a dashboard filter dropdown still counts as a dependency</li>
-  <li>Questions that are joined together may appear as separate dependent items</li>
-</ul>
-
-<p>Some dependencies are inferred rather than explicitly defined. SQL queries can introduce implicit joins, and complex questions may have multiple internal dependency paths instead of a single source to result flow. As a result, a dependency may appear in the graph even if it’s not obvious from the question editor.</p>
-
-<p>If a dependency looks unexpected, it usually reflects an indirect or inferred relationship. In those cases, review how the item is used before changing or removing it.</p>
-
-<h2 id="replace-data-sources">Replace data sources</h2>
-
-<p>You can use the dependency graph to replace query sources in bulk. See <a href="replace-data-sources">Replace data sources</a>.</p>
+<p>The Data Analyst group additionally needs to have at least <a href="../permissions/data">query builder</a> permissions for one or more tables in a database to use the schema viewer for that database.</p>
 
 <h2 id="further-reading">Further reading</h2>
 
 <ul>
-  <li><a href="../library">Library</a></li>
-  <li><a href="./diagnostics">Dependency diagnostics</a></li>
-  <li><a href="./replace-data-sources">Replace data sources</a></li>
-  <li><a href="../schema-viewer">Schema viewer</a></li>
+  <li><a href="./managing-tables">Managing tables</a></li>
+  <li><a href="../data-modeling/metadata-editing">Table metadata</a></li>
+  <li><a href="../databases/sync-scan">Syncs and scans</a></li>
+  <li><a href="./dependencies/graph">Dependency graph</a></li>
 </ul>
 
 
@@ -6590,7 +6564,7 @@ It inspects things like:</p>
 
   
     <span class="paragraph-6 fs-13 neutral-60" id="page-feedback-footer">
-      Want to improve these docs? <a href="https://github.com/metabase/metabase/blob/master/docs/data-studio/dependencies/graph.md" target="_blank">Propose a change.</a>
+      Want to improve these docs? <a href="https://github.com/metabase/metabase/blob/master/docs/data-studio/schema-viewer.md" target="_blank">Propose a change.</a>
     </span>
   
 </div>
@@ -6612,8 +6586,8 @@ It inspects things like:</p>
 <script type="text/javascript" src="/js/position-feedback-widget.js"></script>
 
 <script>
-  const pageTitle = `Dependency graph`;
-  const pageURL = '/docs/v0.62/data-studio/dependencies/graph';
+  const pageTitle = `Schema viewer`;
+  const pageURL = '/docs/v0.62/data-studio/schema-viewer';
   const pageURLSplit = pageURL.split('/');
 
   let pageURLPrefix = '/' + pageURLSplit[1] + '/' + pageURLSplit[2];
