@@ -41,18 +41,20 @@ jobs:
             exit 1
           fi
 
-      - name: Get App Id
+      - name: Get App Id & Deploy Role
         run: | # sh
           if [[ "${GITHUB_REF}" == "refs/heads/master" ]]; then
             echo "APP_ID=${{ env.PROD_APP_ID }}" >> $GITHUB_ENV
+            echo "DEPLOY_ROLE=${{ secrets.AMPLIFY_DEPLOY_ROLE_PROD }}" >> $GITHUB_ENV
           else
             echo "APP_ID=${{ env.STAGING_APP_ID }}" >> $GITHUB_ENV
+            echo "DEPLOY_ROLE=${{ secrets.AMPLIFY_DEPLOY_ROLE_DEV }}" >> $GITHUB_ENV
           fi
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: ${{ secrets.AMPLIFY_DEPLOY_ROLE }}
+          role-to-assume: ${{ env.DEPLOY_ROLE }}
           aws-region: us-east-1
 
       - name: Deploy redirects.json to Amplify
