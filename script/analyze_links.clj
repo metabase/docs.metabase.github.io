@@ -1,4 +1,6 @@
 (ns analyze-links
+  (:import
+   (java.net URI))
   (:require
    [babashka.cli :as cli]
    [babashka.curl :as curl]
@@ -9,6 +11,9 @@
    [clojure.walk :as walk]
    [ice.core :as ice]
    [util :as u]))
+
+(def ^:private metabase-base-url
+  "https://www.metabase.com")
 
 (defn- url-ok?
   "Returns true if the given URL responds with a 2xx HTTP status.
@@ -22,14 +27,14 @@
 
 (defn- broken-links*
   "Takes a collection of relative paths and checks their availability
-  by making HTTP GET requests to https://metabase.com/<path>. Uses a fixed-size
+  by making HTTP GET requests to https://www.metabase.com<path>. Uses a fixed-size
   thread pool to parallelize the checks. Returns a map with:
     - :broken-count — the number of unreachable URLs
     - :broken       — a vector of paths that failed the check"
   [missing-paths]
   (let [pool (java.util.concurrent.Executors/newFixedThreadPool 100)
         tasks (map (fn [p]
-                     (fn [] (if (url-ok? (str "https://metabase.com/" p)) nil p)))
+                     (fn [] (if (url-ok? (str metabase-base-url p)) nil p)))
                    missing-paths)
         futures (mapv #(.submit pool ^Callable %) tasks)
         broken (vec (keep #(.get %) futures))]
@@ -77,12 +82,24 @@
     (and (string? s) (str/ends-with? s "/"))
     (subs 0 (dec (count s)))))
 
+(defn- normalize-route [path]
+  (if (= "/" path)
+    path
+    (no-trailing-slash path)))
+
+(defn- loc->path [loc]
+  (-> loc
+      str/trim
+      URI.
+      .getPath
+      normalize-route))
+
 (defn- gather-htmlproofer-links [file]
   (let [possibly-broken-links (transient #{})]
     (with-open [rdr (io/reader file)]
       (doseq [line (line-seq rdr)]
         (when-let [link (extract-path line)]
-          (conj! possibly-broken-links (no-trailing-slash link)))))
+          (conj! possibly-broken-links (normalize-route link)))))
     (persistent! possibly-broken-links)))
 
 (defn- parse-frontmatter [file]
@@ -107,8 +124,15 @@
       (conj! redirect-froms (normalize-redirect redirect)))
     (persistent! redirect-froms)))
 
-(defn- docs-link? [link]
-  (str/starts-with? link "/docs"))
+(def ^:private default-marketing-sitemap-url
+  "https://www.metabase.com/sitemap_marketing.xml")
+
+(defn- sitemap-paths [sitemap-url]
+  (let [body (-> (curl/get sitemap-url {:throw true}) :body)]
+    (->> (re-seq #"<loc>\s*([^<]+?)\s*</loc>" body)
+         (map second)
+         (map loc->path)
+         set)))
 
 (def cli-spec
   {:spec
@@ -118,9 +142,8 @@
     :limit {:desc "The maximum number of broken links to allow. Default: 1"
             :default 1
             :parse-fn #(Integer/parseInt %)}
-    :check-all-fallback-links {:desc "Fallback-check non-/docs paths on metabase.com too. Default: false"
-                               :default false
-                               :coerce :boolean}}})
+    :marketing-sitemap-url {:desc "Sitemap to use for checking metabase.com paths."
+                            :default default-marketing-sitemap-url}}})
 
 (defn- usage
   []
@@ -130,7 +153,7 @@
   #{"/events/metabase-setup-workshop" "/learn/building-analytics/dashboards/cross-filtering"})
 
 (defn -main [& args]
-  (let [{:keys [check-all-fallback-links limit] :as opts}
+  (let [{:keys [limit marketing-sitemap-url] :as opts}
         (try (cli/parse-opts args cli-spec)
              (catch Exception _
                (println "Usage: script/analyze_links.clj --htmlproofer-output <file>")
@@ -151,23 +174,23 @@
         external-or-missing-links (->> htmlproofer-links
                                        (remove redirects)
                                        (remove (into #{} (map #(str % ".html") redirects))))
-        ;; GRO-569: docs CI should not live-probe marketing-site paths. The main
-        ;; website CI already owns broader link checking, and these fallback
-        ;; probes can be blocked by Amplify/firewall behavior.
+        fallback-links            (remove excluded-links external-or-missing-links)
+        ;; GRO-569: the marketing sitemap is published by the main website
+        ;; build, so it is a safer first-pass route manifest than one-off live
+        ;; probes that can be blocked by Amplify/firewall behavior.
         ;; https://linear.app/metabase/issue/GRO-569/update-link-check-job-to-use-a-local-website-build
-        fallback-links            (cond->> external-or-missing-links
-                                    (not check-all-fallback-links) (filter docs-link?)
-                                    true (remove excluded-links))
-        skipped-fallback-links    (when-not check-all-fallback-links
-                                    (remove docs-link? external-or-missing-links))
+        marketing-sitemap-paths   (sitemap-paths marketing-sitemap-url)
+        sitemap-links             (filter marketing-sitemap-paths fallback-links)
+        live-fallback-links       (remove marketing-sitemap-paths fallback-links)
         _                         (doseq [hl (sort htmlproofer-links)] (println "htmlproofer reported: " hl))
         _                         (println (count htmlproofer-links) "missing links reported by htmlproofer.")
         _                         (println (count redirects) "unique redirect links gathered from in _docs.")
         _                         (println (count external-or-missing-links) "reported links without redirects.")
-        _                         (when skipped-fallback-links
-                                    (println (count skipped-fallback-links) "non-/docs links skipped from metabase.com fallback checks."))
-        _                         (println "Checking if the missing links are live on https://metabase.com ...")
-        report                    (check-broken-links fallback-links limit)]
+        _                         (println (count marketing-sitemap-paths) "paths gathered from" marketing-sitemap-url ".")
+        _                         (println (count sitemap-links) "links found in the marketing sitemap.")
+        _                         (println (count live-fallback-links) "links absent from the marketing sitemap; checking those live.")
+        _                         (println "Checking if the remaining missing links are live on" metabase-base-url "...")
+        report                    (check-broken-links live-fallback-links limit)]
     (if (>= limit (:broken-count report))
       (do
         (ice/p [:green "Done! OK."])
