@@ -6333,9 +6333,11 @@ html:not([data-pricing-variant="new"]) .pricing-new {
 
 <p><img src="./images/library-in-data-studio.png" alt="The Library in Data Studio"></p>
 
-<p>The Library is a special section in the navigation sidebar of the main Metabase app that you curate in <a href="./overview">Data Studio</a> (and only in Data Studio). Unlike regular collections, each folder in the Library restricts which type of content it contains (which helps keep the Library tidy).</p>
+<p>The Library is a special section in the navigation sidebar of the main Metabase app that you curate in <a href="./overview">Data Studio</a> (and only in Data Studio). It has three root sections — <strong>Data</strong>, <strong>Metrics</strong>, and <strong>Snippets</strong> — each of which restricts the type of content it contains. You can create subcollections within Data and Metrics to further organize content - for example, you can group together tables useful for Marketing or Sales.</p>
 
 <h2 id="adding-items-to-the-library">Adding items to the Library</h2>
+
+<p>To add items to the Library:</p>
 
 <ol>
   <li>Click the grid icon in the upper right.</li>
@@ -6349,7 +6351,37 @@ html:not([data-pricing-variant="new"]) .pricing-new {
   <li><a href="#publishing-tables">Publish a table</a></li>
   <li><a href="#metrics">Create a metric</a></li>
   <li><a href="#sql-snippets">Create a SQL snippet or folder</a></li>
+  <li><a href="#library-organization">Create a subcollection or snippet folder</a></li>
 </ul>
+
+<h2 id="library-organization">Library organization</h2>
+
+<p><img src="./images/library-org.png" alt="Library organization"></p>
+
+<p>Library is essentially a special collection. It has three special “subcollections”:</p>
+
+<ul>
+  <li><strong>Data</strong> - for <a href="#publishing-tables">published tables</a>;</li>
+  <li><strong>Metrics</strong> - for <a href="#metrics">official metrics</a>;</li>
+  <li><strong>Snippets</strong> - for all the <a href="#sql-snippets">SQL snippets</a> on your instance.</li>
+</ul>
+
+<p>These special collections are predefined. You can’t rename or archive them, (but you can use <a href="#library-permissions"> permissions</a> to control who sees these collections).</p>
+
+<p>Each of these special collections can have further subcollections. For example, if your Metabase has a lot of published tables, you might want to organize the <strong>Library &gt; Data</strong> collection into “Sales”, “Marketing”, “Product” subcollections.</p>
+
+<p>People will see the Library structure in the navigation sidebar and in the data picker in the query builder:</p>
+
+<p><img src="./images/library-data-picker.png" alt="Library organization"></p>
+
+<p>To create a new subcollection for one of the Library’s special collections:</p>
+
+<ol>
+  <li>Go to <strong>Data Studio &gt; Library</strong>.</li>
+  <li>Click <strong>+ New</strong> in the top right corner.</li>
+  <li>Under <strong>Collection it’s saved in</strong>, select the parent collection.</li>
+  <li>Add the name and description for the collection and click <strong>Create</strong>.</li>
+</ol>
 
 <h2 id="publishing-tables">Publishing tables</h2>
 
@@ -6361,6 +6393,12 @@ html:not([data-pricing-variant="new"]) .pricing-new {
 
 <p>Tables published to the Library remain available via the data browser as well.</p>
 
+<p>To publish a table to the library:</p>
+
+<ol>
+  <li>Go to <strong>Data Studio &gt; Library</strong></li>
+</ol>
+
 <h3 id="managing-tables">Managing tables</h3>
 
 <p>Once a table is published, you can view and manage its metadata, and more.</p>
@@ -6368,8 +6406,8 @@ html:not([data-pricing-variant="new"]) .pricing-new {
 <ul>
   <li>Overview</li>
   <li>Fields</li>
-  <li><a href="../data-modeling/segments">Segments</a></li>
-  <li>Measures</li>
+  <li><a href="segments">Segments</a></li>
+  <li><a href="measures">Measures</a></li>
   <li><a href="./dependencies/graph">Dependencies</a></li>
 </ul>
 
@@ -6401,9 +6439,19 @@ html:not([data-pricing-variant="new"]) .pricing-new {
 
 <p>Unpublishing a table just removes the table from the Library. That table will still be available via the data browser and data pickers.</p>
 
+<blockquote>
+  <p><strong>Archiving a subcollection unpublishes its tables.</strong> If you archive a Data subcollection, Metabase will automatically unpublish all tables inside it, including tables in any nested subcollections.</p>
+</blockquote>
+
 <h2 id="metrics">Metrics</h2>
 
-<p><a href="../data-modeling/metrics">Metrics</a> are standardized calculations that people can trust. Only the metrics you save directly to the Library are included.</p>
+<p><a href="../data-modeling/metrics">Metrics</a> are standardized calculations that people can trust.</p>
+
+<p>Metrics can live in any collection, but metrics in the Library will be prioritized in navigation, search, the query builder, and other places. Use the Library as a place for curated, “official” metrics, like your company’s revenue.</p>
+
+<p>To add an already existing metric to the Library, move the metric to the <strong>Library &gt; Metrics</strong> collection (or any of its subcollections).</p>
+
+<p>To create a new Library metric, go to <strong>Data Studio &gt; Library</strong> and select <strong>+ New &gt; Metric</strong>. See <a href="../data-modeling/metrics#create-a-metric">creating metrics</a> for more on building metrics.</p>
 
 <h2 id="sql-snippets">SQL snippets</h2>
 
@@ -6415,19 +6463,124 @@ html:not([data-pricing-variant="new"]) .pricing-new {
 
 <h2 id="library-permissions">Library permissions</h2>
 
+<p>Library is essentially a special collection. Metabase uses the standard <a href="../permissions/collections">collection permissions</a> to determine who can view and edit items in the Library, with some caveats. Library collection permissions are only relevant to the Data and Metrics collections. Snippets permissions are handled by <a href="../permissions/snippets">permissions for snippet folders</a>.</p>
+
 <p><img src="./images/library-permissions.png" alt="Library collection permissions"></p>
 
-<p>Metabase uses the standard <a href="../permissions/collections">collection permissions</a> to determine who can view and edit items in the Library. One difference to note is that people in the Data Analyst group always have Curate access to the Library. Like with the Admin group, you can’t change the Data Analyst’s Curate access to the Library.</p>
+<p>To configure permissions for the library:</p>
 
-<p><a href="../permissions/data">Data permissions</a> work the same way in the Library as everywhere else in Metabase. One thing to call out: like with models, if you publish a table to the Library, it will grant query access to a group with view access to the database, even if their group has Create Queries set to No in <a href="../permissions/data">data permissions</a> for that particular table.</p>
+<ol>
+  <li>Go to <strong>Admin &gt; Permissions</strong>.</li>
+  <li>Switch to <strong>Collections</strong> in the left sidebar.</li>
+  <li>
+    <p>Select <strong>Curate</strong>, <strong>View</strong>, or <strong>No access</strong> permissions for the Library and its subcollecitons.</p>
+
+    <p>See below for the access that each permission level provides for each part of the Library.</p>
+  </li>
+</ol>
+
+<h3 id="curate-permissions">Curate permissions</h3>
+
+<ul>
+  <li><strong>Data</strong> collection and its subcollections: The group can view tables in the Data collection, provided they have <a href="../permissions/data">data permissions</a> for the tables. But they can’t add, edit, or remove tables. The Admin and Data Analyst groups are the <em>only</em> groups that can publish tables to the Library.</li>
+  <li><strong>Metrics</strong> collection and its subcollections: the group can add, edit, and archive metrics. Groups don’t need access to Data Studio to curate metrics.</li>
+</ul>
+
+<h3 id="view-permissions">View permissions</h3>
+
+<p>Controls whether a group can view the Library and its items.</p>
+
+<ul>
+  <li><strong>Data</strong> and its subcollections: The group can view tables in the Data collection, provided they have <a href="../permissions/data">data permissions</a> for the tables.</li>
+  <li><strong>Metrics</strong> and its subcollections: the group can view the metrics and use them in their queries.</li>
+</ul>
+
+<h3 id="no-access">No access</h3>
+
+<p>Groups with <strong>No access</strong> won’t even see the Library (including in the navigation sidebar and the query builder).</p>
+
+<p>The group may still have access to tables published to the Library, if they have <a href="../permissions/data">data permissions</a> to those tables. Do not use collction permissions to <strong>Library &gt; Data</strong> to block access to tables - use <a href="../permissions/data">data permissions</a> instead.</p>
+
+<h3 id="permissions-to-edit-the-library">Permissions to edit the Library</h3>
+
+<p>Admins and people in the Data Analyst group always have Curate access to the Library.</p>
+
+<p>There are some caveats through, depending on which part of the Library you’re working with.</p>
+
+<ul>
+  <li>
+    <p><strong>Data</strong> (published tables):</p>
+
+    <ul>
+      <li>Only <a href="../people-and-groups/managing">admins and data analysts</a> can publish tables to the Data section of the Library;</li>
+      <li>Even if you give “Curate” permissions to <strong>Library &gt; Data</strong> or its subcollections to a non-admin and non-analyst group, people in that group will <strong>not</strong> be able to publish tables. People can only publish tables if they have access to Data Studio, and only admins or data analysts can access Sata Studio.</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Metrics</strong>:</p>
+
+    <ul>
+      <li><a href="../people-and-groups/managing">Admins and data analysts</a> can always manage metrics in the Library and its subollections;</li>
+      <li>If you give “Curate” permissions to <strong>Library &gt; Metrics</strong> or its subcollections to a non-admin and non-analyst group, people in that group will be able to save or move metrics to those subcollections from the main app only. “Curate” permissions to <strong>Library &gt; Metrics</strong> or subcolelcitons do <em>not</em> give access to Data Studio.</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Snippets</strong></p>
+
+    <ul>
+      <li>Snippet management is controlled by <a href="../permissions/snippets">snippet permissions</a> - not regular collection permissions.</li>
+    </ul>
+  </li>
+</ul>
+
+<p>The root sections (Data, Metrics, Snippets) have fixed properties and can’t be renamed or deleted. Subcollections you create follow the normal collection permission rules.</p>
+
+<h2 id="permissions-to-use-library-content">Permissions to use Library content</h2>
+
+<p>People who have View or Curate collection permissions to the <strong>Library</strong> subcollections will be able to use the content in their queries - with some caveats</p>
+
+<ul>
+  <li>
+    <p><strong>Data</strong> (published tables):</p>
+
+    <ul>
+      <li>
+        <p>People who have View or Curate collection permissions to <strong>Library &gt; Data</strong> or its subcollections will be able to see published tables the in the navigation sidebar, see the published tables in the query builder, and search for published tables (all restricted to subcollections they have access to, of course).</p>
+      </li>
+      <li>
+        <p><strong>Don’t use collection permissions on the Data subcollections for restricting access to tables</strong>. Use <a href="../permissions/data">Data permissions</a> to control access to tables. Collection permissions on <strong>Library &gt; Data</strong> subcollections only control what people see in navigation and data picker, but do not restrict data access. Collection permissions on Data subcollections are useful when you want to declutter the UI for your users - like removing Sales tables from the default view for Marketing group, without necessarily forbidding Marketing from accessing Sales tables altogether.</p>
+      </li>
+      <li>
+        <p>Use <a href="../permissions/data">Data permissions</a> - not Library collection permissions to control access to the actual data in the tables published to <strong>Library &gt; Data</strong>. Data permissions work the same way in the Library as everywhere else in Metabase.</p>
+      </li>
+      <li>
+        <p>Like with models, if you publish a table to the Library, it will grant query access to a group with view access to the database, even if their group has Create Queries set to No in <a href="../permissions/data">data permissions</a> for that particular table.</p>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Metrics</strong>:</p>
+
+    <ul>
+      <li>Only people who have View or Curate collection permissions to <strong>Library &gt; Metrics</strong> or its subcollections will be able use the metrics from the appropriate collections. Removing collection access to a <strong>Library &gt; Metrics</strong> subcollection also blocks any usage of metric there.</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Snippets</strong>:</p>
+
+    <ul>
+      <li>Snippet access is controlled by <a href="../permissions/snippets">snippet permissions</a> - not regular collection permissions.</li>
+    </ul>
+  </li>
+</ul>
 
 <h2 id="further-reading">Further reading</h2>
 
 <ul>
   <li><a href="./dependencies/graph">Dependency graph</a></li>
   <li><a href="../installation-and-operation/remote-sync">Remote sync</a></li>
-  <li><a href="../data-modeling/models">Models</a></li>
   <li><a href="../data-modeling/metrics">Metrics</a></li>
+  <li><a href="../questions/native-editor/snippets">Snippets</a>.</li>
 </ul>
 
 

@@ -6326,7 +6326,7 @@ html:not([data-pricing-variant="new"]) .pricing-new {
       <li><strong>Client ID</strong>: Enter <code class="language-plaintext highlighter-rouge">metabase</code> in lowercase.</li>
       <li><strong>Client type</strong>: Select <code class="language-plaintext highlighter-rouge">SAML</code> from the dropdown.</li>
       <li>Click <strong>Next</strong>.</li>
-      <li><strong>Valid Redirect URIs</strong>: The URL where you are hosting your Metabase instance followed by a slash (/) and an asterisk (_). For example, if you are hosting Metabase locally at <code class="language-plaintext highlighter-rouge">http://localhost:3000</code>, the URL would be <code class="language-plaintext highlighter-rouge">http://localhost:3000/_</code>.</li>
+      <li><strong>Valid Redirect URIs</strong>: The URL where you are hosting your Metabase instance followed by a slash (/) and an asterisk (*). For example, if you are hosting Metabase locally at <code class="language-plaintext highlighter-rouge">http://localhost:3000</code>, the URL would be <code class="language-plaintext highlighter-rouge">http://localhost:3000/*</code>. If you’ve set a custom <code class="language-plaintext highlighter-rouge">MB_SITE_URL</code>, use that base URL instead — it may be <code class="language-plaintext highlighter-rouge">127.0.0.1</code> rather than <code class="language-plaintext highlighter-rouge">localhost</code>.</li>
       <li><strong>Home URL</strong>: In your Metabase, go to <strong>Admin</strong> &gt; <strong>Settings</strong> &gt; <strong>Authentication</strong> &gt; <strong>SAML</strong>. You’ll find your Home URL in the field <strong>URL the IdP should redirect back to</strong>.</li>
       <li>Click <strong>Save</strong>.</li>
     </ul>
@@ -6350,7 +6350,7 @@ html:not([data-pricing-variant="new"]) .pricing-new {
   <li>Configure the service provider (Metabase) from <strong>Configure</strong> &gt; <strong>Realm Settings</strong>.
     <ul>
       <li>From <strong>Endpoints</strong>, select “SAML 2.0 Identity Provider Metadata”.</li>
-      <li>An XML file will open in a new tab.</li>
+      <li>An XML file will open in a new tab. If your browser renders a formatted view, use <strong>View Page Source</strong> to see the raw XML with all the tags.</li>
       <li>Keep this for reference, we will use it in the next section to configure Metabase.</li>
     </ul>
   </li>
@@ -6369,7 +6369,6 @@ html:not([data-pricing-variant="new"]) .pricing-new {
     </ul>
   </li>
   <li>Click <strong>Save Changes</strong>.</li>
-  <li>Check that <strong>SAML Authentication</strong> is toggled <strong>ON</strong> at the top of the page.</li>
 </ol>
 
 <h2 id="mapping-attributes-from-users-in-keycloak-to-metabase">Mapping attributes from users in Keycloak to Metabase</h2>

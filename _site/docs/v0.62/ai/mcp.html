@@ -6303,7 +6303,7 @@ html:not([data-pricing-variant="new"]) .pricing-new {
 
 <p>Metabase includes an <a href="https://modelcontextprotocol.io/">MCP (Model Context Protocol)</a> server (using Streamable HTTP transport) that lets AI clients connect directly to your Metabase, all scoped to the connecting person’s permissions.</p>
 
-<h1 id="enable-mcp-server">Enable MCP server</h1>
+<h2 id="enable-mcp-server">Enable MCP server</h2>
 
 <p><em>Admin &gt; AI &gt; MCP</em></p>
 
@@ -6318,7 +6318,7 @@ html:not([data-pricing-variant="new"]) .pricing-new {
 <ul>
   <li><strong>Claude</strong> (Claude Desktop and Claude on the web)</li>
   <li><strong>Cursor and VS Code</strong></li>
-  <li><strong>ChatGPT</strong></li>
+  <li><strong>ChatGPT</strong>, including <strong>Codex</strong></li>
 </ul>
 
 <p>Toggling on a client automatically adds that client’s sandbox domains to Metabase’s CORS allowlist, which is what lets browser-based MCP clients make cross-origin requests to your Metabase.</p>
@@ -6334,21 +6334,23 @@ html:not([data-pricing-variant="new"]) .pricing-new {
 
 <p>The field accepts wildcards (<code class="language-plaintext highlighter-rouge">*</code>) for subdomains. Changes take effect in about a minute. Might be a good time to get up and pour yourself a glass of water.</p>
 
-<h2 id="connect-an-mcp-client">Connect an MCP client</h2>
+<h2 id="connect-a-client-to-your-metabase-mcp-server">Connect a client to your Metabase MCP server</h2>
 
-<p>If your admin has turned on <a href="#enable-mcp-server">your Metabase’s MCP server</a>, all you need to do is point your MCP client at Metabase’s MCP endpoint, <code class="language-plaintext highlighter-rouge">/api/mcp</code>. For example:</p>
+<p>If your admin has turned on <a href="#enable-mcp-server">your Metabase’s MCP server</a>, all you need to do is point your MCP client at Metabase’s MCP endpoint, <code class="language-plaintext highlighter-rouge">/api/metabase-mcp</code>. For example:</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://{your-metabase.example.com}/api/mcp
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://{your-metabase.example.com}/api/metabase-mcp
 </code></pre></div></div>
 
-<p>In the terminal, for example, you can run the following command.</p>
+<p>You can find your instance’s MCP URL in <strong>Admin &gt; AI &gt; MCP</strong>.</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>claude mcp add --transport http metabase https://{your-metabase-url}/api/mcp
+<p>For Claude Code, for example, you can run the following command.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>claude mcp add --transport http metabase https://{your-metabase-url}/api/metabase-mcp
 </code></pre></div></div>
 
-<p>Replacing {your-metabase-url} with your Metabase address. Once added, Claude Code will handle the OAuth flow for you:</p>
+<p>replacing {your-metabase-url} with your Metabase address.</p>
 
-<p>For Claude Desktop, you can create a <a href="https://support.claude.com/en/articles/11175166-get-started-with-custom-connectors-using-remote-mcp">custom connector</a> by just giving it that URL to your Metabase’s mcp endpoint.</p>
+<p>Once you add the MCP server, your client will direct you to authentication page for your Metabase instance.</p>
 
 <h2 id="authentication">Authentication</h2>
 
@@ -6386,27 +6388,42 @@ html:not([data-pricing-variant="new"]) .pricing-new {
 
 <p>You don’t need to have an <a href="settings#choose-ai-provider">AI provider</a> configured in Metabase to use your Metabase’s MCP server. If you <em>do</em> have an AI provider configured in Metabase to power Metabot, that provider will <em>not</em> be used for MCP server requests. MCP calls by your local client have no effect on token usage for your Metabase’s AI connection.</p>
 
+<h2 id="using-the-mcp-server">Using the MCP server</h2>
+
+<p>The MCP server will return results as either text or an inline chart, depending on the question you asked.</p>
+
+<p>If you want the MCP server to return an inline chart, ask it to “show” or “visualize” the data:</p>
+
+<p><img src="./images/mcp-chart.png" alt="Show me the stuff"></p>
+
+<p>Currently,  the Metabase MCP server supports bar and line charts. You can drill-through through the charts, change time granularity, or explore them in Metabase.</p>
+
+<p>If your client is connected to other MCP servers, you can asks questions that combine data from multiple sources. For example, you can ask a question about your customers that combines data from Metabase, your CRM, and your support ticket platform (Though maybe you should put all that data into your Metabase).</p>
+
+<p>See <a href="#available-tools">Available tools</a> for the list of functionality supported by the MCP server.</p>
+
 <h2 id="available-tools">Available tools</h2>
 
 <p>Some clients (like Claude Desktop) will ask you to approve each tool the first time it’s used. The MCP server builds on Metabase’s <a href="./agent-api">Agent API</a>, and exposes the following tools. If you’re building a custom integration and need full control, use the <a href="./agent-api">Agent API</a> directly instead.</p>
 
-<h3 id="discovery-and-reading">Discovery and reading</h3>
+<h4 id="find-and-read-content">Find and read content</h4>
 
 <ul>
   <li><strong>search</strong>: Find tables, metrics, cards, dashboards, and collections using keyword or natural language search.</li>
   <li><strong>read_resource</strong>: Read one or more Metabase entities by <code class="language-plaintext highlighter-rouge">metabase://</code> URI. Covers database / schema / table / collection / card / dashboard / metric / transform navigation in a single tool. Up to 5 URIs per call.</li>
 </ul>
 
-<h3 id="query-construction-and-execution">Query construction and execution</h3>
+<h4 id="query-and-visualize-data">Query and visualize data</h4>
 
 <ul>
   <li><strong>construct_query</strong>: Construct a query against a table or metric. Returns an opaque query handle that can be passed to <code class="language-plaintext highlighter-rouge">execute_query</code>.</li>
   <li><strong>query</strong>: Query a table or metric and return results.</li>
   <li><strong>execute_query</strong>: Execute a previously constructed query and return the results with column metadata, row count, and execution time.</li>
   <li><strong>execute_sql</strong>: Execute a raw SQL query against a database. Requires native-query permission on the target database. An admin can disable this tool instance-wide via the <code class="language-plaintext highlighter-rouge">mcp-execute-sql-enabled</code> setting.</li>
+  <li><strong>visualize_query</strong>: render a chart inline in your AI client (bar or line chart only).</li>
 </ul>
 
-<h3 id="writing">Writing</h3>
+<h4 id="create-content">Create content</h4>
 
 <ul>
   <li><strong>create_question</strong>: Save a query as a named question (card).</li>
@@ -6416,11 +6433,11 @@ html:not([data-pricing-variant="new"]) .pricing-new {
   <li><strong>create_collection</strong>: Create a new collection, optionally nested under a parent collection.</li>
 </ul>
 
-<h2 id="use-the-mcp-server-with-file-based-development">Use the MCP server with file-based development</h2>
+<h2 id="use-the-mcp-server-with-agent-driven-development">Use the MCP server with agent-driven development</h2>
 
 <p>You can use the MCP server to help you create Metabase content as serialized YAML files that you can import into your Metabase. Point your agent at the MCP server to give it access to your Metabase’s database metadata (table names, fields, and sample values) so it can write questions and dashboards that point at real columns.</p>
 
-<p>See <a href="./file-based-development">File-based development</a>.</p>
+<p>See <a href="./file-based-development">Agent-driven development</a>.</p>
 
 <h2 id="further-reading">Further reading</h2>
 
