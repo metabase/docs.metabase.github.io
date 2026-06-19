@@ -107,6 +107,9 @@
       (conj! redirect-froms (normalize-redirect redirect)))
     (persistent! redirect-froms)))
 
+(defn- docs-link? [link]
+  (str/starts-with? link "/docs"))
+
 (def cli-spec
   {:spec
    {:htmlproofer-output {:desc "The file that htmlproofer was piped into."
@@ -114,7 +117,10 @@
                          :validate fs/regular-file?}
     :limit {:desc "The maximum number of broken links to allow. Default: 1"
             :default 1
-            :parse-fn #(Integer/parseInt %)}}})
+            :parse-fn #(Integer/parseInt %)}
+    :check-all-fallback-links {:desc "Fallback-check non-/docs paths on metabase.com too. Default: false"
+                               :default false
+                               :coerce :boolean}}})
 
 (defn- usage
   []
@@ -124,12 +130,13 @@
   #{"/events/metabase-setup-workshop" "/learn/building-analytics/dashboards/cross-filtering"})
 
 (defn -main [& args]
-  (let [{:keys [limit] :as opts}  (try (cli/parse-opts args cli-spec)
-                                       (catch Exception _
-                                         (println "Usage: script/analyze_links.clj --htmlproofer-output <file>")
-                                         (println)
-                                         (println (usage))
-                                         (System/exit 1)))
+  (let [{:keys [check-all-fallback-links limit] :as opts}
+        (try (cli/parse-opts args cli-spec)
+             (catch Exception _
+               (println "Usage: script/analyze_links.clj --htmlproofer-output <file>")
+               (println)
+               (println (usage))
+               (System/exit 1)))
         _                         (when (or (:help opts) (:h opts))
                                     (println (usage))
                                     (System/exit 1))
@@ -144,12 +151,23 @@
         external-or-missing-links (->> htmlproofer-links
                                        (remove redirects)
                                        (remove (into #{} (map #(str % ".html") redirects))))
+        ;; GRO-569: docs CI should not live-probe marketing-site paths. The main
+        ;; website CI already owns broader link checking, and these fallback
+        ;; probes can be blocked by Amplify/firewall behavior.
+        ;; https://linear.app/metabase/issue/GRO-569/update-link-check-job-to-use-a-local-website-build
+        fallback-links            (cond->> external-or-missing-links
+                                    (not check-all-fallback-links) (filter docs-link?)
+                                    true (remove excluded-links))
+        skipped-fallback-links    (when-not check-all-fallback-links
+                                    (remove docs-link? external-or-missing-links))
         _                         (doseq [hl (sort htmlproofer-links)] (println "htmlproofer reported: " hl))
         _                         (println (count htmlproofer-links) "missing links reported by htmlproofer.")
         _                         (println (count redirects) "unique redirect links gathered from in _docs.")
         _                         (println (count external-or-missing-links) "reported links without redirects.")
+        _                         (when skipped-fallback-links
+                                    (println (count skipped-fallback-links) "non-/docs links skipped from metabase.com fallback checks."))
         _                         (println "Checking if the missing links are live on https://metabase.com ...")
-        report                    (check-broken-links (remove excluded-links external-or-missing-links) limit)]
+        report                    (check-broken-links fallback-links limit)]
     (if (>= limit (:broken-count report))
       (do
         (ice/p [:green "Done! OK."])
