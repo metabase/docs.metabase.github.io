@@ -31,7 +31,7 @@ const baseConfig = {
   shouldShowAskAICard: false,
   askAILabel: "Ask",
   forceDefaultView: "search",
-  modalSettings: { shortcutKey: null },
+  modalSettings: { shortcutKey: "k" },
 };
 
 const getSearchQuery = () =>
