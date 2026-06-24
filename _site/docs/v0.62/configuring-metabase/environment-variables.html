@@ -6367,7 +6367,6 @@ Roadmap</a>
       
 <div id="inkeep"></div>
 
-
 <script src="/js/inkeep.js" type="module" defer=""></script>
     
   </div>
@@ -7322,6 +7321,18 @@ If set to 0, Metabase will keep all rows.</p>
 </ul>
 
 <p>Allow users to explore data using X-rays.</p>
+
+<h3 id="mb_fingerprint_max_fields_per_table"><code class="language-plaintext highlighter-rouge">MB_FINGERPRINT_MAX_FIELDS_PER_TABLE</code></h3>
+
+<ul>
+  <li>Type: integer</li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">10000</code></li>
+  <li><a href="../installation-and-operation/serialization">Exported as</a>: <code class="language-plaintext highlighter-rouge">fingerprint-max-fields-per-table</code>.</li>
+</ul>
+
+<p>Maximum number of fields per table to fingerprint. If a table has more eligible fields than this, the rest are
+  skipped during fingerprinting analysis – loading that many fields into memory at once can exhaust the heap (this has
+  OOM’d instances syncing document databases like MongoDB with very large or dynamic schemas).</p>
 
 <h3 id="mb_follow_up_email_sent"><code class="language-plaintext highlighter-rouge">MB_FOLLOW_UP_EMAIL_SENT</code></h3>
 
@@ -8715,6 +8726,18 @@ using, this usually looks like <code class="language-plaintext highlighter-rouge
 
 <p>When set to <code class="language-plaintext highlighter-rouge">true</code>, users who log in via SAML will automatically get a Metabase account if they don’t have one, or get their existing account reactivated. When set to <code class="language-plaintext highlighter-rouge">false</code>, only users with active Metabase accounts can log in via SAML.</p>
 
+<h3 id="mb_scan_max_fields_per_table"><code class="language-plaintext highlighter-rouge">MB_SCAN_MAX_FIELDS_PER_TABLE</code></h3>
+
+<ul>
+  <li>Type: integer</li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">10000</code></li>
+  <li><a href="../installation-and-operation/serialization">Exported as</a>: <code class="language-plaintext highlighter-rouge">scan-max-fields-per-table</code>.</li>
+</ul>
+
+<p>Maximum number of fields per table to scan for field values. If a table has more active fields than this, the rest
+  are skipped when scanning field values – scanning that many fields would load them all into memory and, on non-SQL
+  drivers like MongoDB, issue a warehouse request per field.</p>
+
 <h3 id="mb_scim_enabled"><code class="language-plaintext highlighter-rouge">MB_SCIM_ENABLED</code></h3>
 
 <ul>
@@ -9147,6 +9170,18 @@ using, this usually looks like <code class="language-plaintext highlighter-rouge
 </ul>
 
 <p>Maximum number of leaf fields synced per collection of document database. Currently relevant for Mongo. Not to be confused with total number of synced fields. For every chosen leaf field, all intermediate fields from root to leaf are synced as well.</p>
+
+<h3 id="mb_sync_max_fields_per_table"><code class="language-plaintext highlighter-rouge">MB_SYNC_MAX_FIELDS_PER_TABLE</code></h3>
+
+<ul>
+  <li>Type: integer</li>
+  <li>Default: <code class="language-plaintext highlighter-rouge">10000</code></li>
+  <li><a href="../installation-and-operation/serialization">Exported as</a>: <code class="language-plaintext highlighter-rouge">sync-max-fields-per-table</code>.</li>
+</ul>
+
+<p>Maximum number of fields per table to sync as :model/Field rows. If a table’s warehouse schema has more fields than
+  this, only the first (by name) are synced and the rest are skipped – keeps document databases with very large or
+  dynamic schemas (e.g. MongoDB) from creating an unbounded number of Fields.</p>
 
 <h3 id="mb_synchronous_batch_updates"><code class="language-plaintext highlighter-rouge">MB_SYNCHRONOUS_BATCH_UPDATES</code></h3>
 
@@ -9925,7 +9960,6 @@ Default: <code class="language-plaintext highlighter-rouge">null</code></p>
   }
 </script>
 
-<script src="/js/learn/top-bar.js"></script>
 <script src="/js/use-custom-header-checkout-link.js"></script>
 
     </div>
