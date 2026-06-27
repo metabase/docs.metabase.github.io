@@ -145,4 +145,4 @@ See [Caching question policies](../../configuring-metabase/caching#question-cach
 [sql-gloss]: /glossary/sql
 [troubleshooting-sql]: ../../troubleshooting-guide/sql
 [variable-gloss]: /glossary/variable
-[drill-through]: /learn/metabase-basics/querying-and-dashboards/questions/drill-through
+[drill-through]: /docs/questions/visualizations/drill-through
