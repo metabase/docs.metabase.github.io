@@ -1312,7 +1312,7 @@ You can [customize how Metabase looks](../configuring-metabase/appearance) in yo
 
 
 
-**Full app embedding** lets you embed the entire Metabase app in an iframe. Full app embedding integrates your [permissions](../permissions/introduction) and [SSO](../people-and-groups/start#authentication) to give people the right level of access to [query](../questions/query-builder/editor) and [drill-down](/learn/metabase-basics/querying-and-dashboards/questions/drill-through) into your data.
+**Full app embedding** lets you embed the entire Metabase app in an iframe. Full app embedding integrates your [permissions](../permissions/introduction) and [SSO](../people-and-groups/start#authentication) to give people the right level of access to [query](../questions/query-builder/editor) and [drill-down](../questions/visualizations/drill-through) into your data.
 
 > If you are just starting out with Metabase embedding, consider using [Modular embedding](./modular-embedding) instead of full app embedding - it's an improved, more customizable option for embedding individual Metabase components.
 
@@ -2257,7 +2257,7 @@ For interactive filters, you can pass initial parameter values via the `initial-
 
 The signed JWT is generated using your [Metabase secret key](#regenerating-the-embedding-secret-key). The secret key tells Metabase that the request can be trusted. Note that this secret key is shared for all guest embeds, so whoever has access to that key will have access to all embedded artifacts.
 
-If you want to embed charts with additional interactive features, like [drill-down](/learn/metabase-basics/querying-and-dashboards/questions/drill-through) and [self-service querying](../questions/query-builder/editor), see [Modular embedding](./modular-embedding).
+If you want to embed charts with additional interactive features, like [drill-down](../questions/visualizations/drill-through) and [self-service querying](../questions/query-builder/editor), see [Modular embedding](./modular-embedding).
 
 ## Using guest embeds with the SDK
 
@@ -2273,7 +2273,7 @@ Guest embeds can't take advantage of:
 
 - [Row and column security](../permissions/row-and-column-security)
 - [Database routing](../permissions/database-routing)
-- [Drill-through](/learn/metabase-basics/querying-and-dashboards/questions/drill-through)
+- [Drill-through](../questions/visualizations/drill-through)
 - [Usage analytics](../usage-and-performance-tools/usage-analytics)
 - [Query builder](../questions/query-builder/editor)
 - [AI chat](./sdk/ai-chat)
@@ -2353,7 +2353,7 @@ If you'd like to share your data with the good people of the internet, admins ca
 | Export results\*                                                                                                     | ✅                                   | ✅                                    | ✅                                    | ✅                                  | ✅                                     |
 | [Locked filters](./static-embedding-parameters#restricting-data-in-a-static-embed-with-locked-parameters)         | ❌                                   | ❌                                    | ✅                                    | ❌                                  | ❌                                     |
 | [Data segregation](../permissions/embedding)                                                                      | ✅                                   | ✅                                    | ❌                                    | ✅                                  | ❌                                     |
-| [Drill-through menu](/learn/metabase-basics/querying-and-dashboards/questions/drill-through) | ✅                                   | ✅                                    | ❌                                    | ✅                                  | ❌                                     |
+| [Drill-through menu](../questions/visualizations/drill-through) | ✅                                   | ✅                                    | ❌                                    | ✅                                  | ❌                                     |
 | [Query builder](../questions/query-builder/editor)                                                                | ✅                                   | ✅                                    | ❌                                    | ✅                                  | ❌                                     |
 | [Basic appearance customization](../configuring-metabase/appearance)\*\*                                          | ✅                                   | ✅                                    | ✅                                    | ✅                                  | ✅                                     |
 | [Advanced theming](./appearance)                                                                                  | ✅                                   | ✅                                    | ❌                                    | ❌                                  | ❌                                     |
@@ -2551,7 +2551,7 @@ The exact customization options you see will depend on which type of entity you'
 
 When you're creating a new embed using **Admin > Embedding > Setup guide > Embed in your code**, you'll see some or all of the following customization options in the interactive creation flow. These options correspond to parameters in [components](./components).
 
-- **Allow people to drill through on data points**: determines whether people can interact with the chart (or charts on a dashboard). Interactivity includes [drilling down](/learn/metabase-basics/querying-and-dashboards/questions/drill-through) to individual records from aggregated questions, filtering on click, zooming in, etc. Disabling drill-through for an embedded _question_ also disables people's ability to add filters and summaries.
+- **Allow people to drill through on data points**: determines whether people can interact with the chart (or charts on a dashboard). Interactivity includes [drilling down](../questions/visualizations/drill-through) to individual records from aggregated questions, filtering on click, zooming in, etc. Disabling drill-through for an embedded _question_ also disables people's ability to add filters and summaries.
 
 - **Allow downloads**. Determines whether people can download question results and save dashboards as PDFs.
 
@@ -2822,7 +2822,7 @@ See docs for the [export format endpoint](/docs/latest/api#tag/public/GET/public
 
 ## Simulating drill-through with public links
 
-Metabase's automatic [drill-through](/learn/metabase-basics/querying-and-dashboards/questions/drill-through) won't work on public dashboards because public links don't give people access to your raw data.
+Metabase's automatic [drill-through](../questions/visualizations/drill-through) won't work on public dashboards because public links don't give people access to your raw data.
 
 You can simulate drill-through on a public dashboard by setting up a [custom click behavior](../dashboards/interactive) that sends people from one public link to another public link.
 
@@ -4873,7 +4873,7 @@ If your static embedding URL exceeds the maximum header size, you'll see a log m
 
 In general, embedding works by displaying a Metabase URL inside an iframe in your website. A **static embed** (or signed embed) is an iframe that's loading a Metabase URL secured with a signed JSON Web Token (JWT). Metabase will only load the URL if the request supplies a JWT signed with the secret shared between your app and your Metabase. The JWT also includes a reference to the resource to load, e.g., the dashboard ID, and any values for locked parameters.
 
-You can't use static embeds with [row and column security](../permissions/row-and-column-security), [drill-through](/learn/metabase-basics/querying-and-dashboards/questions/drill-through), and user-specific data isn't captured in [usage analytics](../usage-and-performance-tools/usage-analytics) because signed JWTs don't create user sessions (server-side sessions). For those features, check out [Modular embedding](./modular-embedding).
+You can't use static embeds with [row and column security](../permissions/row-and-column-security), [drill-through](../questions/visualizations/drill-through), and user-specific data isn't captured in [usage analytics](../usage-and-performance-tools/usage-analytics) because signed JWTs don't create user sessions (server-side sessions). For those features, check out [Modular embedding](./modular-embedding).
 
 You can, however, restrict data in static embeds for specific people or groups by [locking parameters](./static-embedding-parameters#restricting-data-in-a-static-embed-with-locked-parameters).
 
@@ -4895,7 +4895,7 @@ your_metabase_embedding_url/your_signed_jwt?filter=true
 
 The signed JWT is generated using your [Metabase secret key](#regenerating-the-static-embedding-secret-key). The secret key tells Metabase that the request for filtered data can be trusted, so it's safe to display the results at the new embedding URL. Note that this secret key is shared for all static embeds, so whoever has access to that key will have access to all embedded artifacts.
 
-If you want to embed charts with additional interactive features, like [drill-down](/learn/metabase-basics/querying-and-dashboards/questions/drill-through) and [self-service querying](../questions/query-builder/editor), see [Modular embedding](./modular-embedding).
+If you want to embed charts with additional interactive features, like [drill-down](../questions/visualizations/drill-through) and [self-service querying](../questions/query-builder/editor), see [Modular embedding](./modular-embedding).
 
 ## Turning on the embedding feature in Metabase
 
