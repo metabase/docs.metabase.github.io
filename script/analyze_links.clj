@@ -127,6 +127,9 @@
 (def ^:private default-marketing-sitemap-url
   "https://www.metabase.com/sitemap_marketing.xml")
 
+(def ^:private default-astro-marketing-sitemap-url
+  "https://www.metabase.com/sitemap_marketing_astro.xml")
+
 (defn- sitemap-paths [sitemap-url]
   (let [body (-> (curl/get sitemap-url {:throw true}) :body)]
     (->> (re-seq #"<loc>\s*([^<]+?)\s*</loc>" body)
@@ -143,7 +146,9 @@
             :default 1
             :parse-fn #(Integer/parseInt %)}
     :marketing-sitemap-url {:desc "Sitemap to use for checking metabase.com paths."
-                            :default default-marketing-sitemap-url}}})
+                            :default default-marketing-sitemap-url}
+    :astro-marketing-sitemap-url {:desc "Astro marketing sitemap fallback for pages migrated from Jekyll to Astro."
+                                    :default default-astro-marketing-sitemap-url}}})
 
 (defn- usage
   []
@@ -179,16 +184,24 @@
         ;; build, so it is a safer first-pass route manifest than one-off live
         ;; probes that can be blocked by Amplify/firewall behavior.
         ;; https://linear.app/metabase/issue/GRO-569/update-link-check-job-to-use-a-local-website-build
+        astro-marketing-sitemap-url (:astro-marketing-sitemap-url opts)
         marketing-sitemap-paths   (sitemap-paths marketing-sitemap-url)
-        sitemap-links             (filter marketing-sitemap-paths fallback-links)
-        live-fallback-links       (remove marketing-sitemap-paths fallback-links)
+        ;; GRO-591: pages migrated to Astro won't appear in the primary
+        ;; marketing sitemap, so check the Astro marketing sitemap as a
+        ;; fallback before resorting to live HTTP probes.
+        ;; https://linear.app/metabase/issue/GRO-591/have-docs-link-checker-search-sitemap-urls
+        astro-sitemap-paths       (sitemap-paths astro-marketing-sitemap-url)
+        all-sitemap-paths         (into marketing-sitemap-paths astro-sitemap-paths)
+        sitemap-links             (filter all-sitemap-paths fallback-links)
+        live-fallback-links       (remove all-sitemap-paths fallback-links)
         _                         (doseq [hl (sort htmlproofer-links)] (println "htmlproofer reported: " hl))
         _                         (println (count htmlproofer-links) "missing links reported by htmlproofer.")
         _                         (println (count redirects) "unique redirect links gathered from in _docs.")
         _                         (println (count external-or-missing-links) "reported links without redirects.")
         _                         (println (count marketing-sitemap-paths) "paths gathered from" marketing-sitemap-url ".")
-        _                         (println (count sitemap-links) "links found in the marketing sitemap.")
-        _                         (println (count live-fallback-links) "links absent from the marketing sitemap; checking those live.")
+        _                         (println (count astro-sitemap-paths) "paths gathered from" astro-marketing-sitemap-url ".")
+        _                         (println (count sitemap-links) "links found in sitemaps.")
+        _                         (println (count live-fallback-links) "links absent from sitemaps; checking those live.")
         _                         (println "Checking if the remaining missing links are live on" metabase-base-url "...")
         report                    (check-broken-links live-fallback-links limit)]
     (if (>= limit (:broken-count report))
