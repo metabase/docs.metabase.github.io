@@ -64,12 +64,7 @@
          cmd))
 
 
-(def artifacts-to-include ["_data/shared_chrome.json"
-                           "_site/docs/all.html"
-                           "_site/docs/sitemap.xml"
-                           "_site/docs/llms.txt"
-                           "_site/docs/llms-embedding-full.txt"
-                           "_site/docs/llms-agent-api-full.txt"])
+(def artifacts-to-include ["_data/shared_chrome.json"])
 
 (defn ->artifacts
   "Returns a list of directories and files that are considered artifacts
@@ -79,17 +74,13 @@
      (->artifacts category release-num)))
   ([category release-num]
    (-> (cond
-         (= category :master) ["_docs/master"
-                               "_site/docs/master"]
+         (= category :master) ["_docs/master"]
 
          (= (config-docs-version) release-num)
          ["_docs/latest"
-          "_site/docs/latest"
-          (str "_docs/v0." release-num)
-          (str "_site/docs/v0." release-num)]
+          (str "_docs/v0." release-num)]
 
-         (= category :release) [(str "_docs/v0." release-num)
-                                (str "_site/docs/v0." release-num)]
+         (= category :release) [(str "_docs/v0." release-num)]
          :else [])
        (concat artifacts-to-include))))
 
