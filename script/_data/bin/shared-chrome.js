@@ -10,7 +10,15 @@ const requiredKeys = ["stylesheets", "scripts", "header_html", "footer_html"];
 
 function get(url) {
   return new Promise((resolve, reject) => {
-    const request = https.get(url, (response) => {
+    const options = {
+      headers: {
+        "User-Agent": "metabase-docs-build",
+        Accept: "application/json",
+      },
+    };
+
+    const request = https.get(url, options, (response) => {
+
       const chunks = [];
 
       response.on("data", (chunk) => chunks.push(chunk));
