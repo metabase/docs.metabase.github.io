@@ -1,9 +1,10 @@
 ---
-import { getCollection, render } from "astro:content";
+import { getCollection } from "astro:content";
+import { renderJekyllPage } from "../../lib/jekyll-layouts";
 
 export async function getStaticPaths() {
   const docs = await getCollection("docs");
-  return docs.map((doc) => {
+  return docs.flatMap((doc) => {
     // Honor Jekyll front-matter permalink overrides ("/docs/",
     // "/docs/v0.xx/index.html"); otherwise the URL is the file path,
     // matching Jekyll's `/:collection/:path` default.
@@ -14,20 +15,36 @@ export async function getStaticPaths() {
       : doc.id;
     // Trailing-slash permalinks are Jekyll directory indexes
     if (slug === "" || slug.endsWith("/")) slug += "index";
-    return { params: { slug }, props: { doc } };
+    const paths = [{ params: { slug }, props: { doc } }];
+    // Dev-only: the dev server routes by params (not files), so /docs/v0.58/
+    // wouldn't match the "v0.58/index" slug that produces v0.58/index.html.
+    // Register the directory URL as an alias; in builds a static host serves
+    // index.html for directory requests, so no extra output is wanted.
+    if (import.meta.env.DEV && (slug === "index" || slug.endsWith("/index"))) {
+      paths.push({
+        params: { slug: slug.slice(0, -"index".length).replace(/\/$/, "") || undefined },
+        props: { doc },
+      });
+    }
+    return paths;
   });
 }
 
 const { doc } = Astro.props;
-const { Content } = await render(doc);
+
+// Jekyll's page.url: the permalink verbatim when set, else the default
+// collection URL (no extension).
+const url = doc.data.permalink
+  ? String(doc.data.permalink)
+  : `/docs/${doc.id}`;
+
+const html = await renderJekyllPage(
+  String(doc.data.layout ?? "new-docs"),
+  doc.rendered?.html ?? "",
+  // content: Jekyll exposes the converted page HTML to layouts/includes
+  // (docs-metadata.html derives og:description from it).
+  { ...doc.data, url, content: doc.rendered?.html ?? "" }
+);
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>{doc.data.title ?? "Metabase documentation"}</title>
-  </head>
-  <body>
-    <Content />
-  </body>
-</html>
+<Fragment set:html={html} />

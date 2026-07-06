@@ -11,16 +11,56 @@ import { load as loadYaml } from "js-yaml";
 
 const ROOT = process.cwd();
 
-const site = loadYaml(
-  fs.readFileSync(path.join(ROOT, "_config.yml"), "utf8")
-) as Record<string, any>;
+// Mirror of Jekyll's site.data: _data/** mapped to a nested object keyed by
+// directory names and file basenames (e.g. _data/docs/nav/latest.yml →
+// site.data.docs.nav.latest).
+function loadDataDir(dir: string): Record<string, any> {
+  const data: Record<string, any> = {};
+  if (!fs.existsSync(dir)) return data;
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    const full = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      data[entry.name] = loadDataDir(full);
+    } else if (/\.(yml|yaml)$/.test(entry.name)) {
+      data[entry.name.replace(/\.(yml|yaml)$/, "")] = loadYaml(
+        fs.readFileSync(full, "utf8")
+      );
+    } else if (entry.name.endsWith(".json")) {
+      data[entry.name.replace(/\.json$/, "")] = JSON.parse(
+        fs.readFileSync(full, "utf8")
+      );
+    }
+  }
+  return data;
+}
 
-const engine = new Liquid({
+export const site: Record<string, any> = {
+  ...(loadYaml(fs.readFileSync(path.join(ROOT, "_config.yml"), "utf8")) as Record<
+    string,
+    any
+  >),
+  data: loadDataDir(path.join(ROOT, "_data")),
+};
+
+export const jekyll = {
+  environment: process.env.JEKYLL_ENV || "production",
+};
+
+export const engine = new Liquid({
   root: [path.join(ROOT, "_includes")],
   // Jekyll-style includes: unquoted filename, params exposed as include.*
   jekyllInclude: true,
   cache: true,
 });
+
+// Jekyll's slugify filter (default mode): lowercase, non-alphanumeric runs
+// become single hyphens, trimmed at both ends.
+engine.registerFilter("slugify", (str: unknown) =>
+  String(str ?? "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+);
 
 // ---------------------------------------------------------------------------
 // {% include_file %} — port of the jekyll_include_plugin gem (v1.3.0), which
@@ -153,6 +193,7 @@ export async function renderDocsLiquid(
   const dir = path.dirname(rel).split(path.sep).join("/");
   return engine.parseAndRender(body, {
     site,
+    jekyll,
     page: frontmatter,
     dirname: dir === "." ? "/" : `/${dir}`,
   });
