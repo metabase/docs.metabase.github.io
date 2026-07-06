@@ -1,0 +1,33 @@
+---
+import { getCollection, render } from "astro:content";
+
+export async function getStaticPaths() {
+  const docs = await getCollection("docs");
+  return docs.map((doc) => {
+    // Honor Jekyll front-matter permalink overrides ("/docs/",
+    // "/docs/v0.xx/index.html"); otherwise the URL is the file path,
+    // matching Jekyll's `/:collection/:path` default.
+    let slug = doc.data.permalink
+      ? String(doc.data.permalink)
+          .replace(/^\/docs\//, "")
+          .replace(/\.html$/, "")
+      : doc.id;
+    // Trailing-slash permalinks are Jekyll directory indexes
+    if (slug === "" || slug.endsWith("/")) slug += "index";
+    return { params: { slug }, props: { doc } };
+  });
+}
+
+const { doc } = Astro.props;
+const { Content } = await render(doc);
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>{doc.data.title ?? "Metabase documentation"}</title>
+  </head>
+  <body>
+    <Content />
+  </body>
+</html>
