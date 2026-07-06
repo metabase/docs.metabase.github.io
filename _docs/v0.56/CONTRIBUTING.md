@@ -7,8 +7,6 @@ category: 'Table of Contents'
 title: 'Contributing to Metabase'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/CONTRIBUTING.md'
 layout: new-docs
-redirect_from:
-    - /docs/v0.56/developers-guide/contributing
 ---
 
 # Contributing to Metabase

@@ -1,0 +1,21 @@
+[
+  {
+    "description": "Legacy top-level lowercase contributing page (existed v0.16-v0.43). From v0.44-v0.51 its canonical home was developers-guide/contributing, so redirect that band straight there (single hop). Versions below v0.44 keep serving their own lowercase page.",
+    "source": "/docs/<version>/contributing",
+    "minVersion": "0.44",
+    "maxVersion": "0.51",
+    "target": "/docs/<version>/developers-guide/contributing"
+  },
+  {
+    "description": "Same legacy lowercase page, v0.52 onward: the canonical home became the top-level uppercase CONTRIBUTING, so redirect directly there (single hop, no chaining through developers-guide).",
+    "source": "/docs/<version>/contributing",
+    "minVersion": "0.52",
+    "target": "/docs/<version>/CONTRIBUTING"
+  },
+  {
+    "description": "Legacy developers-guide location of the contributing page (existed v0.41-v0.51), superseded by the top-level uppercase CONTRIBUTING at v0.52. Redirect only versions where CONTRIBUTING exists so we never 301 into a 404; older versions keep serving developers-guide/contributing.",
+    "source": "/docs/<version>/developers-guide/contributing",
+    "minVersion": "0.52",
+    "target": "/docs/<version>/CONTRIBUTING"
+  }
+]
