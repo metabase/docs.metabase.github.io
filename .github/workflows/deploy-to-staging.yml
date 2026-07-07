@@ -85,20 +85,10 @@ jobs:
               echo "Creating Amplify branch $br on $app"
               aws amplify create-branch --app-id "$app" --branch-name "$br" >/dev/null
             fi
-            # Amplify allows only one in-flight job per branch. Creating/connecting a
-            # branch (or a push) can auto-trigger a RELEASE build, so reuse any
-            # pending/running job instead of starting a second one (LimitExceededException).
             local job
-            job=$(aws amplify list-jobs --app-id "$app" --branch-name "$br" \
-              --query "jobSummaries[?jobStatus=='PENDING'||jobStatus=='RUNNING'].jobId | [0]" \
-              --output text)
-            if [ -z "$job" ] || [ "$job" = "None" ]; then
-              job=$(aws amplify start-job --app-id "$app" --branch-name "$br" \
-                --job-type RELEASE --query 'jobSummary.jobId' --output text)
-              echo "Started job $job on $app/$br"
-            else
-              echo "Reusing in-flight job $job on $app/$br"
-            fi
+            job=$(aws amplify start-job --app-id "$app" --branch-name "$br" \
+              --job-type RELEASE --query 'jobSummary.jobId' --output text)
+            echo "Started job $job on $app/$br"
             for _ in $(seq 1 80); do
               local st
               st=$(aws amplify get-job --app-id "$app" --branch-name "$br" --job-id "$job" \
