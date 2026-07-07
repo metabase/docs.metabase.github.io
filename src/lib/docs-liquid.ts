@@ -43,7 +43,8 @@ export const site: Record<string, any> = {
 };
 
 export const jekyll = {
-  environment: process.env.JEKYLL_ENV || "production",
+  // TODO: Maybe use NODE_ENV or something?
+  environment: process.env.JEKYLL_ENV || "development",
 };
 
 export const engine = new Liquid({
@@ -183,6 +184,88 @@ engine.registerTag("include_file", {
 });
 
 // ---------------------------------------------------------------------------
+// Kramdown recognizes a raw HTML block by tracking real tag nesting and keeps
+// it open until the block's own tags balance back out, so a blank line left
+// behind by a no-op Liquid tag (e.g. {% assign %}) inside an _include never
+// ends the block. Astro's markdown pipeline (remark/micromark, CommonMark)
+// uses a simpler rule for the same "block-level tag" HTML blocks: raw text is
+// consumed line-by-line until the first blank line, full stop. Liquid-rendered
+// includes routinely leave such artifact blank lines (control tags render to
+// nothing but keep their own line), which then get misread by micromark as
+// ending the HTML block early — e.g. an indented `<p>` right after the blank
+// line starts a new block and, being indented 4+ spaces, becomes a code block.
+// This reproduces Kramdown's tag-balance behavior: blank lines are dropped
+// while a block-level tag's nesting hasn't returned to zero, so micromark
+// never sees them and only encounters real blank lines once a block is
+// legitimately finished.
+// ---------------------------------------------------------------------------
+
+const HTML_BLOCK_TAGS = new Set([
+  "address", "article", "aside", "base", "basefont", "blockquote", "body",
+  "caption", "center", "col", "colgroup", "dd", "details", "dialog", "dir",
+  "div", "dl", "dt", "fieldset", "figcaption", "figure", "footer", "form",
+  "frame", "frameset", "h1", "h2", "h3", "h4", "h5", "h6", "head", "header",
+  "hr", "html", "iframe", "legend", "li", "link", "main", "menu", "menuitem",
+  "nav", "noframes", "ol", "optgroup", "option", "p", "param", "section",
+  "summary", "table", "tbody", "td", "tfoot", "th", "thead", "title", "tr",
+  "track", "ul",
+]);
+
+const VOID_TAGS = new Set([
+  "area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta",
+  "param", "source", "track", "wbr",
+]);
+
+// Matches one HTML tag anywhere in the text. `[^>]` (a negated class, unlike
+// `.`) matches newlines, so this also finds tags whose attributes are spread
+// across multiple lines (as Prettier formats them).
+const TAG_RE = /<(\/?)([a-zA-Z][a-zA-Z0-9-]*)\b[^>]*?(\/)?>/g;
+
+function findHtmlBlockRanges(text: string): Array<[number, number]> {
+  const ranges: Array<[number, number]> = [];
+  let depth = 0;
+  let blockStart = -1;
+  TAG_RE.lastIndex = 0;
+  let match: RegExpExecArray | null;
+  while ((match = TAG_RE.exec(text))) {
+    const [full, closing, rawName, selfClose] = match;
+    const name = rawName.toLowerCase();
+    if (selfClose || VOID_TAGS.has(name)) continue;
+    if (depth === 0) {
+      if (closing || !HTML_BLOCK_TAGS.has(name)) continue;
+      const lineStart = text.lastIndexOf("\n", match.index) + 1;
+      if (match.index - lineStart > 3) continue; // CommonMark's ≤3-space rule
+      blockStart = lineStart;
+      depth = 1;
+    } else {
+      depth += closing ? -1 : 1;
+      if (depth === 0) {
+        ranges.push([blockStart, match.index + full.length]);
+        blockStart = -1;
+      }
+    }
+  }
+  return ranges;
+}
+
+function collapseHtmlBlockBlankLines(text: string): string {
+  const ranges = findHtmlBlockRanges(text);
+  if (ranges.length === 0) return text;
+  let rangeIdx = 0;
+  let offset = 0;
+  return lines(text)
+    .filter((line) => {
+      const start = offset;
+      offset += line.length;
+      while (rangeIdx < ranges.length && ranges[rangeIdx][1] <= start) rangeIdx++;
+      const inBlock =
+        rangeIdx < ranges.length &&
+        ranges[rangeIdx][0] <= start &&
+        start < ranges[rangeIdx][1];
+      return !(inBlock && isBlank(line));
+    })
+    .join("");
+}
 
 export async function renderDocsLiquid(
   body: string,
@@ -191,10 +274,11 @@ export async function renderDocsLiquid(
 ): Promise<string> {
   const rel = path.relative(ROOT, path.resolve(ROOT, filePath));
   const dir = path.dirname(rel).split(path.sep).join("/");
-  return engine.parseAndRender(body, {
+  const rendered = await engine.parseAndRender(body, {
     site,
     jekyll,
     page: frontmatter,
     dirname: dir === "." ? "/" : `/${dir}`,
   });
+  return collapseHtmlBlockBlankLines(rendered);
 }

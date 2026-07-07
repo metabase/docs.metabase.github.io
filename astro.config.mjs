@@ -1,10 +1,25 @@
 // @ts-check
 import { defineConfig, passthroughImageService } from "astro/config";
+import { satteri } from "@astrojs/markdown-satteri";
+import {
+  jekyllInlineCodePlugin,
+  jekyllAttributeListPlugin,
+} from "./src/lib/markdown-plugins.ts";
 
 export default defineConfig({
   // TEMPORARY until image handling is decided: copy markdown-referenced
   // images as-is instead of recompressing them through sharp.
   image: { service: passthroughImageService() },
+  markdown: {
+    processor: satteri({
+      hastPlugins: [jekyllInlineCodePlugin, jekyllAttributeListPlugin],
+    }),
+    shikiConfig: {
+      // Light theme to match the live docs (white code blocks with a soft shadow).
+      theme: "github-light",
+      wrap: true,
+    },
+  },
   vite: {
     // Don't resolve TS path aliases from tsconfigs — _docs contains vendored
     // tsconfig.json files whose `extends` targets don't exist, which crashes
