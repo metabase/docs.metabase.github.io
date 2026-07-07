@@ -1,6 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import { renderJekyllPage } from "../../lib/jekyll-layouts";
+import { renderDoc } from "../../lib/render-doc";
 
 export async function getStaticPaths() {
   const docs = await getCollection("docs");
@@ -15,7 +16,11 @@ export async function getStaticPaths() {
       : doc.id;
     // Trailing-slash permalinks are Jekyll directory indexes
     if (slug === "" || slug.endsWith("/")) slug += "index";
-    const paths = [{ params: { slug }, props: { doc } }];
+    // Only pass the id through, not the entry itself: renderDoc() (below)
+    // reads the file fresh off disk on every request instead of relying on
+    // a cached entry, so edits to a _docs file always show up without a
+    // dev-server restart. See render-doc.ts for why.
+    const paths = [{ params: { slug }, props: { id: doc.id } }];
     // Dev-only: the dev server routes by params (not files), so /docs/v0.58/
     // wouldn't match the "v0.58/index" slug that produces v0.58/index.html.
     // Register the directory URL as an alias; in builds a static host serves
@@ -23,27 +28,26 @@ export async function getStaticPaths() {
     if (import.meta.env.DEV && (slug === "index" || slug.endsWith("/index"))) {
       paths.push({
         params: { slug: slug.slice(0, -"index".length).replace(/\/$/, "") || undefined },
-        props: { doc },
+        props: { id: doc.id },
       });
     }
     return paths;
   });
 }
 
-const { doc } = Astro.props;
+const { id } = Astro.props;
+const { data, html: renderedHtml } = await renderDoc(id);
 
 // Jekyll's page.url: the permalink verbatim when set, else the default
 // collection URL (no extension).
-const url = doc.data.permalink
-  ? String(doc.data.permalink)
-  : `/docs/${doc.id}`;
+const url = data.permalink ? String(data.permalink) : `/docs/${id}`;
 
 const html = await renderJekyllPage(
-  String(doc.data.layout ?? "new-docs"),
-  doc.rendered?.html ?? "",
+  String(data.layout ?? "new-docs"),
+  renderedHtml,
   // content: Jekyll exposes the converted page HTML to layouts/includes
   // (docs-metadata.html derives og:description from it).
-  { ...doc.data, url, content: doc.rendered?.html ?? "" }
+  { ...data, url, content: renderedHtml }
 );
 ---
 
