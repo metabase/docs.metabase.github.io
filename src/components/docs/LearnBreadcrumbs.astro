@@ -1,0 +1,54 @@
+---
+// Converted from _includes/learn/breadcrumbs.html. Jekyll's learn layouts
+// assign `category`/`track`/`course`/`lesson` from the nav data before
+// including this partial; callers pass the equivalent here as props.
+interface NavRef {
+  name: string;
+  slug: string;
+  url?: string;
+}
+
+interface Props {
+  category?: NavRef;
+  track?: NavRef;
+  course?: NavRef;
+  lesson?: NavRef;
+}
+const { category, track, course, lesson } = Astro.props;
+---
+
+<nav style="--bs-breadcrumb-divider: url('/images/chevron_blue_right.svg');" aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <a href="/learn/">Home</a>
+    </li>
+
+    {
+      track?.slug === "sql" ? (
+        <>
+          <li class="breadcrumb-item">
+            <a href="/learn/sql">Learn SQL</a>
+          </li>
+          {course && (
+            <li class="breadcrumb-item">
+              <a href={course.url}>{course.name}</a>
+            </li>
+          )}
+        </>
+      ) : (
+        <>
+          {track && (
+            <li class="breadcrumb-item">
+              <a href={`/learn/${category?.slug}/${track.slug}`}>{track.name}</a>
+            </li>
+          )}
+          {course && lesson && (
+            <li class="breadcrumb-item">
+              <a href={`/learn/${category?.slug}/${track?.slug}/${course.slug}`}>{course.name}</a>
+            </li>
+          )}
+        </>
+      )
+    }
+  </ol>
+</nav>

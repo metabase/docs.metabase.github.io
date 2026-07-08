@@ -1,0 +1,50 @@
+---
+// Converted from _includes/learn/top-bar.html
+import DocsBreadcrumb from "./DocsBreadcrumb.astro";
+import LearnBreadcrumbs from "./LearnBreadcrumbs.astro";
+import DocsVersionSelector from "./DocsVersionSelector.astro";
+import SearchInput from "./SearchInput.astro";
+import Stars from "../icons/Stars.astro";
+import type { ComponentProps } from "astro/types";
+
+interface Props {
+  page: Record<string, any>;
+  domain: "docs" | "learn";
+  showBreadcrumb?: boolean;
+  showSearch?: boolean;
+  learnBreadcrumbs?: ComponentProps<typeof LearnBreadcrumbs>;
+}
+const { page, domain, showBreadcrumb = true, showSearch = true, learnBreadcrumbs } = Astro.props;
+---
+
+<div class="top-bar">
+  <div>
+    {
+      showBreadcrumb && (
+        <div class="learn-breadcrumb-trail">
+          {domain === "docs" ? (
+            <DocsBreadcrumb page={page} />
+          ) : (
+            <LearnBreadcrumbs {...learnBreadcrumbs} />
+          )}
+        </div>
+      )
+    }
+  </div>
+
+  <div>
+    {
+      domain === "docs" && (
+        <>
+          <DocsVersionSelector page={page} />
+          <a href="/releases" class="whats-new">
+            <Stars />
+            What’s new
+          </a>
+        </>
+      )
+    }
+
+    {showSearch && <SearchInput />}
+  </div>
+</div>

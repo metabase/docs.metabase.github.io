@@ -1,13 +1,26 @@
 ---
-// Temporary page to verify the Astro toolchain works. Delete after migration.
+// Temporary page to sanity-check the docs components in isolation from the
+// (pre-existing, broken) DefaultNewLayout parent. Delete after checking.
+import LeftSidebar from "../components/docs/LeftSidebar.astro";
+import TopBar from "../components/docs/TopBar.astro";
+import DocsVersionSelector from "../components/docs/DocsVersionSelector.astro";
+import VersionBlockquote from "../components/docs/VersionBlockquote.astro";
+import WasThisHelpfulWidget from "../components/docs/WasThisHelpfulWidget.astro";
+import NewDocsLayout from "../layouts/NewDocsLayout.astro";
+
+const page = {
+  version: "v0.62",
+  latest: true,
+  category: "Getting Started",
+  title: "Test Page",
+  has_magic_breadcrumbs: true,
+  show_category_breadcrumb: true,
+  source_url: "https://github.com/metabase/metabase/blob/master/docs/README.md",
+  permalink: "/docs/latest/getting-started/index.html",
+  url: "/docs/latest/getting-started",
+};
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>Astro smoke test</title>
-  </head>
-  <body>
-    <h1>Astro is wired up</h1>
-  </body>
-</html>
+<NewDocsLayout page={page}>
+  <div>test</div>
+</NewDocsLayout>

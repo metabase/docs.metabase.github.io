@@ -1,0 +1,69 @@
+---
+// Converted from _includes/sentry.html
+import { jekyll } from "../../lib/docs-liquid";
+
+interface Props {
+  page: Record<string, any>;
+}
+const { page } = Astro.props;
+
+const replayEnabled = Boolean(page.sentry_replay_enabled);
+---
+
+<script type="text/javascript" define:vars={{ replayEnabled, environment: jekyll.environment }}>
+  window.SENTRY_REPLAY_ENABLED = replayEnabled;
+
+  function sentryReplayInit() {
+    if (window.SENTRY_REPLAY_ENABLED) {
+      setTimeout(() => {
+        if (!window.Sentry || !window.Sentry.lazyLoadIntegration) {
+          return;
+        }
+        Sentry.lazyLoadIntegration("replayIntegration").then(function (replayIntegration) {
+          console.log({ loaded: !!replayIntegration, replayIntegration });
+          window.Sentry.addIntegration(replayIntegration({ maskAllText: false }));
+        });
+      }, 500);
+    }
+  }
+
+  function sentryInit() {
+    Sentry.init({
+      attachStacktrace: true,
+      dsn: "https://4b0be007af0a45f3bf6f59e5381ffe74@o408345.ingest.us.sentry.io/6722711",
+      environment: environment,
+      tracesSampleRate: 0.1, // performance monitoring
+      replaysSessionSampleRate: 0.05,
+      enableLogs: true,
+      ignoreErrors: [
+        "ResizeObserver loop limit exceeded",
+        "ResizeObserver loop completed with undelivered notifications.",
+      ],
+      sendDefaultPii: false,
+    });
+    sentryReplayInit();
+  }
+
+  if (window.SENTRY_REPLAY_ENABLED) {
+    document.addEventListener("DOMContentLoaded", sentryInit);
+  } else {
+    window.sentryOnLoad = sentryInit;
+  }
+</script>
+
+{
+  replayEnabled ? (
+    <script
+      src="https://browser.sentry-cdn.com/10.51.0/bundle.tracing.replay.min.js"
+      integrity="sha384-toIv1RSDMp8CFZhcCrPa1yHvJu11OImyaytBecREIXyDm3bwfLJYyHR19Tbpd/hx"
+      crossorigin="anonymous"
+      defer
+    />
+  ) : (
+    <script
+      src="https://js.sentry-cdn.com/4b0be007af0a45f3bf6f59e5381ffe74.min.js"
+      crossorigin="anonymous"
+      data-cfasync="false"
+    />
+  )
+}

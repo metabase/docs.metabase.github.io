@@ -1,0 +1,26 @@
+---
+// Converted from _includes/learn/left-nav.html
+import NavItem, { type NavPage } from "./NavItem.astro";
+
+interface NavCategory {
+  name: string;
+  pages: NavPage[];
+}
+
+interface Props {
+  categories: NavCategory[];
+  currentUrl: string;
+}
+const { categories, currentUrl } = Astro.props;
+---
+
+{
+  categories.map((category) => (
+    <>
+      <h5>{category.name}</h5>
+      <ul>
+        {category.pages.map((page) => <NavItem item={page} currentUrl={currentUrl} />)}
+      </ul>
+    </>
+  ))
+}

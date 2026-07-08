@@ -1,0 +1,31 @@
+---
+// Converted from _includes/startup-guide-metadata.html
+import { site } from "../../lib/docs-liquid";
+
+interface Props {
+  page: Record<string, any>;
+}
+const { page } = Astro.props;
+
+const ogImage = `${site.url}${page["image-og"] ?? ""}`;
+---
+
+<title>{page.title}</title>
+<meta name="description" content={page.description} />
+
+<meta name="twitter:site" content={`@${site.twitter_username}`} />
+{page.author && <meta name="twitter:creator" content={page.author} />}
+<meta name="twitter:title" content={page.title} />
+<meta name="twitter:description" content={page.description} />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content={ogImage} />
+
+<meta
+  property="og:site_name"
+  content="Metabase | Business Intelligence, Dashboards, and Data Visualization"
+/>
+<meta property="og:type" content="article" />
+<meta property="og:url" content={`${site.url}${page.url}`} />
+<meta name="title" property="og:title" content={page.title} />
+<meta name="description" property="og:description" content={page.description} />
+<meta name="image" property="og:image" content={ogImage} />

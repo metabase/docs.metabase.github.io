@@ -1,0 +1,77 @@
+---
+// Converted from _includes/docs_breadcrumb.html
+import { site, slugify } from "../../lib/docs-liquid";
+
+interface Props {
+  page: Record<string, any>;
+}
+const { page } = Astro.props;
+
+const version = page.version === "latest" ? site.docs_version : page.version;
+const latestOrExplicitVersion =
+  site.docs_version === page.version && String(page.url ?? "").includes("/docs/latest/")
+    ? "latest"
+    : page.version;
+const categorySlug = slugify(page.category);
+const categorySlugPart =
+  categorySlug === "troubleshooting-guide"
+    ? "/"
+    : categorySlug === "api"
+      ? "api-documentation"
+      : "/start";
+const categoryHref = `/docs/${latestOrExplicitVersion}/${page.category !== "Api" ? categorySlug : ""}${categorySlugPart}`;
+---
+
+<div class="bootstrap">
+  {
+    page.has_magic_breadcrumbs ? (
+      <nav style="--bs-breadcrumb-divider: url('/images/chevron_blue_right.svg');" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href={`/docs/${latestOrExplicitVersion}/`}>Home</a>
+          </li>
+          {page.title === "README" ? (
+            <li class="breadcrumb-item">
+              <p class="neutral-40">{page.category}</p>
+            </li>
+          ) : (
+            page.show_category_breadcrumb && (
+              <li class="breadcrumb-item">
+                <a class="blue-60" href={categoryHref}>
+                  {page.category}
+                </a>
+              </li>
+            )
+          )}
+        </ol>
+      </nav>
+    ) : (
+      <nav style="--bs-breadcrumb-divider: url('/images/chevron_blue_right.svg');" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          {page.title === "Search" ? (
+            <li class="breadcrumb-item">
+              <p class="m-0 paragraph-5 neutral-40 fw-bold">
+                <a href="/docs/latest/">{site.latest_version}</a>
+              </p>
+            </li>
+          ) : (
+            <li class="breadcrumb-item">
+              <p class="neutral-40">{version}</p>
+            </li>
+          )}
+
+          {page.category === "Api" && (
+            <li class="breadcrumb-item">
+              <p class="neutral-40">{page.category}</p>
+            </li>
+          )}
+          {page.title !== "README" && (
+            <li class="breadcrumb-item">
+              <p class="neutral-40">{page.title}</p>
+            </li>
+          )}
+        </ol>
+      </nav>
+    )
+  }
+</div>

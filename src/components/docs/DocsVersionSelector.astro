@@ -1,0 +1,32 @@
+---
+// Converted from _includes/docs_version.html
+import Chevron from "../icons/Chevron.astro";
+import { site } from "../../lib/docs-liquid";
+
+interface Props {
+  page: Record<string, any>;
+}
+const { page } = Astro.props;
+
+const versions: string[] = [...(site.available_versions ?? [])].reverse().slice(0, 10);
+const current = page.version === "latest" ? site.docs_version : page.version;
+---
+
+<div class="version__selector cursor-pointer">
+  <span class="version__current">
+    {current}
+    <Chevron />
+  </span>
+  <ul class="version__dropdown">
+    {
+      versions
+        .filter((version) => page.version !== version)
+        .map((version) => (
+          <li>
+            <a href={`/docs/${version}`}>{version}</a>
+          </li>
+        ))
+    }
+    <li><a href="/docs/all">See more</a></li>
+  </ul>
+</div>

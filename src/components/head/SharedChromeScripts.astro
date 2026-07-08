@@ -1,0 +1,18 @@
+---
+// Converted from _includes/shared-chrome/scripts.html. Only entries with a
+// `src` attribute are emitted (matching the original's `{% if script_src %}`
+// guard) -- inline entries in the shared_chrome.json snapshot are ignored.
+import { site } from "../../lib/docs-liquid";
+
+const scripts = (site.data.shared_chrome?.scripts ?? []).filter(
+  (script: { tag: string; attributes: Record<string, string> }) =>
+    script.attributes?.src && !script.attributes.src.includes("sentry-cdn"),
+);
+---
+
+{
+  scripts.map((script: { tag: string; attributes: Record<string, string> }) => {
+    const Tag = script.tag;
+    return <Tag {...script.attributes}></Tag>;
+  })
+}

@@ -1,0 +1,152 @@
+---
+// Converted from _includes/metadata.html
+import { site } from "../../lib/docs-liquid";
+
+interface Props {
+  page: Record<string, any>;
+}
+const { page } = Astro.props;
+
+const url = String(page.url ?? "");
+
+const dashboardDescription =
+  "Dashboard Examples. Find examples of dashboards, including valuable metrics, and how you can leverage Metabase.";
+const dashboardsTitle = `Dashboard for ${page.title} | Metabase`;
+const dashboardsDescription = `Dashboard for ${page.title}. Find examples of dashboards for ${page.title}, including valuable metrics, and how you can leverage Metabase.`;
+
+const PRODUCT_TITLES: Array<[string, string]> = [
+  ["/product/business-intelligence", "Self Service Business Intelligence | Metabase"],
+  ["/product/interactive-dashboards", "Interactive Dashboards | Metabase"],
+  ["/product/embedded-analytics", "Embedded Analytics | Metabase"],
+  ["/product/starter", "Small Business Analytics Tools | Metabase"],
+  ["/product/pro", "Business Analytics Tools | Metabase"],
+  ["/product/enterprise", "Enterprise Analytics and Business Intelligence Tools | Metabase"],
+];
+
+const PRODUCT_DESCRIPTIONS: Array<[string, string]> = [
+  [
+    "/product/business-intelligence",
+    "Self service business intelligence. Empower your team to leverage business analytics and dashboards using Metabase.",
+  ],
+  [
+    "/product/interactive-dashboards",
+    "Interactive Dashboards. Quickly connect your business systems and build interactive dashboards in under 5 minutes.",
+  ],
+  [
+    "/product/embedded-analytics",
+    "Embedded Analytics. Create and embed interactive analytics in your products, with simple but powerful tools to let you match the look and feel of your brand.",
+  ],
+  [
+    "/product/starter",
+    "Small business analytics tools. Leverage powerful business analytics tools that empower small teams with actionable insights.",
+  ],
+  [
+    "/product/pro",
+    "Business analytics tools. Metabase provides best-in-class business analytics tools that let you leverage business intelligence, interactive dashboards, and visualize data.",
+  ],
+  [
+    "/product/enterprise",
+    "Enterprise analytics and business intelligence tools. Metabase provides best-in-class business analytics and intelligence tools that helps drive data-based decisions at scale.",
+  ],
+];
+
+const DEFAULT_PRODUCT_DESCRIPTION =
+  "Metabase dashboards and no-code query builder to understand your company data. Start exploring your data with dashboards and visualizations in under 5 minutes.";
+
+function matchByUrl(table: Array<[string, string]>, fallback: string): string {
+  const hit = table.find(([needle]) => url.includes(needle));
+  return hit ? hit[1] : fallback;
+}
+
+const title = page.title
+  ? url.includes("/dashboards/")
+    ? url === "/dashboards/index"
+      ? page.title
+      : url.includes("/docs/")
+        ? page.title
+        : dashboardsTitle
+    : page.title
+  : url.includes("/product/")
+    ? matchByUrl(PRODUCT_TITLES, "Metabase Dashboards & No-Code Query Builder")
+    : "Metabase | Open source Business Intelligence and Embedded Analytics";
+
+// twitter:title mirrors the same dashboards branching as <title>, but --
+// unlike <title> -- falls back to one generic string for every no-title
+// page, including product pages. That asymmetry is in the original Jekyll
+// template, not introduced here.
+const twitterTitle = page.title
+  ? url.includes("/dashboards/")
+    ? url === "/dashboards/index"
+      ? page.title
+      : url.includes("/docs/")
+        ? page.title
+        : dashboardsTitle
+    : page.title
+  : "Metabase | Open source Business Intelligence and Embedded Analytics";
+
+const twitterDescription = page.summary
+  ? page.summary
+  : url.includes("/community-posts")
+    ? page.meta_description
+    : url.includes("/dashboards/")
+      ? url === "/dashboards/"
+        ? dashboardDescription
+        : dashboardsDescription
+      : url.includes("/product")
+        ? matchByUrl(PRODUCT_DESCRIPTIONS, DEFAULT_PRODUCT_DESCRIPTION)
+        : url.includes("/data-sources/")
+          ? "Metabase Data Sources. Quickly connect, leverage data visualizations, and build dashboards using your company's software tools."
+          : "Metabase open source business intelligence and embedded analytics. Create and share dashboards. Dig deeper into your data with no-code tools for data visualization.";
+
+const twitterCard = page.image ? "summary_large_image" : "summary";
+const twitterImage = page.image
+  ? `${site.url}${page.image}`
+  : "https://www.metabase.com/images/twitter/default-share.png";
+
+// og:title's "/dashboards/" index branch references an undefined
+// `dashboard_title` Liquid variable (only `dashboards_title`, plural, is
+// ever assigned) -- Liquid renders missing variables as empty, reproduced
+// here rather than "fixed", to keep behavior identical to the source.
+const ogTitle = page.title
+  ? url.includes("/dashboards/")
+    ? url === "/dashboards/"
+      ? ""
+      : dashboardsTitle
+    : page.title
+  : "Metabase | Open source Business Intelligence and Embedded Analytics";
+
+const ogUrl = `${site.url}${url.replaceAll("index.html", "").replaceAll("/index", "")}`;
+
+const ogDescription = page.summary
+  ? page.summary
+  : url.includes("/community-posts")
+    ? page.meta_description
+    : url.includes("/product/")
+      ? matchByUrl(PRODUCT_DESCRIPTIONS, DEFAULT_PRODUCT_DESCRIPTION)
+      : url.includes("/data-sources/")
+        ? "Metabase Data Sources. Quickly connect, leverage data visualizations, and build dashboards using your company's software tools."
+        : url.includes("/dashboards/")
+          ? page.title === "Dashboards"
+            ? dashboardDescription
+            : dashboardsDescription
+          : site.description;
+---
+
+<title>{title}</title>
+
+<meta name="twitter:site" content={`@${site.twitter_username}`} />
+{page.author && <meta name="twitter:creator" content={page.author} />}
+<meta name="twitter:title" content={twitterTitle} />
+<meta name="twitter:description" content={twitterDescription} />
+<meta name="twitter:card" content={twitterCard} />
+<meta name="twitter:image" content={twitterImage} />
+
+<meta
+  property="og:site_name"
+  content="Metabase | Open source Business Intelligence and Embedded Analytics"
+/>
+<meta property="og:type" content="article" />
+<meta name="title" property="og:title" content={ogTitle} />
+<meta property="og:url" content={ogUrl} />
+<meta name="description" property="og:description" content={ogDescription} />
+{page.image && <meta name="image" property="og:image" content={`${site.url}${page.image}`} />}

@@ -1,0 +1,80 @@
+---
+// Converted from _layouts/new-docs.html (layout: default_new)
+import DefaultNewLayout from "./DefaultNewLayout.astro";
+import LeftSidebar from "../components/docs/LeftSidebar.astro";
+import TopBar from "../components/docs/TopBar.astro";
+import DocsVersionSelector from "../components/docs/DocsVersionSelector.astro";
+import VersionBlockquote from "../components/docs/VersionBlockquote.astro";
+import WasThisHelpfulWidget from "../components/docs/WasThisHelpfulWidget.astro";
+
+interface Props {
+  // Mirrors Jekyll's `page`: _docs frontmatter plus the computed `url`/
+  // `permalink` a real page render would add.
+  page: Record<string, any>;
+}
+const { page } = Astro.props;
+
+// Do not show breadcrumb on home page.
+const permalinkParts = String(page.permalink ?? "").split("/");
+const showBreadcrumb = !(
+  permalinkParts[1] === "docs" &&
+  permalinkParts.length === 4 &&
+  permalinkParts[3] === "index.html"
+);
+
+const pageTitle = String(page.title ?? "").replaceAll("''", "'");
+---
+
+<DefaultNewLayout page={page}>
+  <div class="bootstrap">
+    <div class="learn docs blog-post MB-Page">
+      <LeftSidebar page={page} />
+
+      <article class="learn__post learn__article">
+        <TopBar domain="docs" showBreadcrumb={showBreadcrumb} page={page} />
+
+        <div class="learn__post__content">
+          {!showBreadcrumb && <DocsVersionSelector page={page} />}
+
+          <VersionBlockquote page={page} />
+
+          <slot />
+
+          <div>
+            <div class="widget-separator" />
+            {
+              page.category !== "Cloud" && (
+                <p>Read docs for other <a href="/docs/all">versions of Metabase</a>.</p>
+              )
+            }
+          </div>
+        </div>
+
+        <div class="learn__right-sidebar">
+          <div id="sub-navigation-content" />
+          <WasThisHelpfulWidget page={page} shouldAddProposeAChangeDialog={true} />
+        </div>
+      </article>
+    </div>
+  </div>
+
+  <script type="text/javascript" src="/js/new-docs-version-selector.js"></script>
+  <script type="text/javascript" src="/js/new-docs-anchor-links.js"></script>
+  <script type="text/javascript" src="/js/new-docs-code-snippet-copy.js"></script>
+  <script type="text/javascript" src="/js/new-docs-table-overflow.js"></script>
+  <script type="text/javascript" src="/js/image-zoom.js"></script>
+  <script type="text/javascript" src="/js/learn/left-sidebar.js"></script>
+  <script type="text/javascript" src="/js/docs/right-sidebar.js"></script>
+  <script type="text/javascript" src="/js/position-feedback-widget.js"></script>
+
+  <script define:vars={{ pageTitle, pageURL: page.url }}>
+    const pageURLSplit = pageURL.split("/");
+
+    let pageURLPrefix = "/" + pageURLSplit[1] + "/" + pageURLSplit[2];
+    if (pageURLPrefix.includes("search") || pageURLPrefix.includes("all")) {
+      pageURLPrefix = "/docs/latest";
+    }
+  </script>
+
+  <script is:inline src="/js/use-custom-header-checkout-link.js"></script>
+</DefaultNewLayout>

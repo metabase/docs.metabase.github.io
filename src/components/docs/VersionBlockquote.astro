@@ -1,0 +1,34 @@
+---
+// Converted from _includes/docs/blockquotes.html
+import { site } from "../../lib/docs-liquid";
+
+interface Props {
+  page: Record<string, any>;
+}
+const { page } = Astro.props;
+
+const showOldVersionNotice =
+  page.version && page.version !== site.docs_version && page.version !== "latest";
+---
+
+<div>
+  {
+    showOldVersionNotice &&
+      (page.version === "master" ? (
+        <blockquote>
+          These are the docs for the Metabase master branch. Some features documented here may not
+          yet be available in the current release. Check out the{" "}
+          <a class="text-purple text-underline" href="/docs/latest/">
+            docs for the current stable version, Metabase {site.docs_version}.
+          </a>
+        </blockquote>
+      ) : (
+        <blockquote>
+          These are the docs for Metabase {page.version}. Check out the{" "}
+          <a class="text-purple text-underline" href="/docs/latest/">
+            docs for the current stable version, Metabase {site.docs_version}.
+          </a>
+        </blockquote>
+      ))
+  }
+</div>

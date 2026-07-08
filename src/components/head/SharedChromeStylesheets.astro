@@ -1,0 +1,27 @@
+---
+// Converted from _includes/shared-chrome/stylesheets.html
+import { site } from "../../lib/docs-liquid";
+
+interface Props {
+  page: Record<string, any>;
+}
+const { page } = Astro.props;
+
+// On the Scalar API reference page (layout: docs-api), the Metabase theme
+// stylesheets bleed into Scalar's own styles (e.g. white-on-white titles in
+// dark mode), so skip them there and load everything else as usual.
+const cssDenylist =
+  page.layout === "docs-api" ? ["css/main.css", "css/styles.css", "css/docs.css"] : [];
+
+const stylesheets = (site.data.shared_chrome?.stylesheets ?? []).filter(
+  (stylesheet: { tag: string; attributes: Record<string, string> }) =>
+    !cssDenylist.some((css) => stylesheet.attributes?.href?.includes(css)),
+);
+---
+
+{
+  stylesheets.map((stylesheet: { tag: string; attributes: Record<string, string> }) => {
+    const Tag = stylesheet.tag;
+    return <Tag {...stylesheet.attributes} />;
+  })
+}

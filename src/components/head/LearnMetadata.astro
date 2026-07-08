@@ -1,0 +1,37 @@
+---
+// Converted from _includes/learn-metadata.html. Jekyll's version includes
+// learn/post-constants.html to derive `article`/`image_social`, but that
+// include doesn't exist in this repo (a pre-existing dead reference) --
+// callers pass the equivalent data in as props instead.
+import { site } from "../../lib/docs-liquid";
+
+interface Props {
+  page: Record<string, any>;
+  article?: { name?: string; summary?: string };
+  imageSocial?: string;
+}
+const { page, article, imageSocial } = Astro.props;
+
+const title = `${article?.name ?? ""} | Metabase Learn`;
+const ogUrl = `${site.url}${String(page.url ?? "").replaceAll("/index.html", "")}`;
+const image = `${site.url}${imageSocial ?? ""}`;
+---
+
+<title>{title}</title>
+
+<meta name="twitter:site" content={`@${site.twitter_username}`} />
+{page.author && <meta name="twitter:creator" content={page.author} />}
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={article?.summary} />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content={image} />
+
+<meta
+  property="og:site_name"
+  content="Metabase | Business Intelligence, Dashboards, and Data Visualization"
+/>
+<meta property="og:type" content="article" />
+<meta property="og:url" content={ogUrl} />
+<meta name="title" property="og:title" content={title} />
+<meta name="description" property="og:description" content={article?.summary} />
+<meta name="image" property="og:image" content={image} />

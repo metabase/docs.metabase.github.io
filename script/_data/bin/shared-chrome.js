@@ -1,10 +1,10 @@
 const { promises: fs } = require("fs");
-const https = require("https");
+const http = require("http");
 const path = require("path");
 
 const chromeUrl =
   process.env.SHARED_CHROME_URL ||
-  "https://www.metabase.com/shared/chrome.json";
+  "http://localhost:4000/shared/chrome.json";
 const outputPath = path.resolve(__dirname, "../../../_data/shared_chrome.json");
 const requiredKeys = ["stylesheets", "scripts", "header_html", "footer_html"];
 
@@ -17,7 +17,7 @@ function get(url) {
       },
     };
 
-    const request = https.get(url, options, (response) => {
+    const request = http.get(url, options, (response) => {
 
       const chunks = [];
 

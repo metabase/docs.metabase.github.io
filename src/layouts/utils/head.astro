@@ -1,0 +1,152 @@
+---
+// Converted from _includes/head.html
+import { site, jekyll } from "../../lib/docs-liquid";
+import StartupGuideMetadata from "../../components/head/StartupGuideMetadata.astro";
+import LearnMetadata from "../../components/head/LearnMetadata.astro";
+import DocsMetadata from "../../components/head/DocsMetadata.astro";
+import GlossaryMetadata from "../../components/head/GlossaryMetadata.astro";
+import DefaultMetadata from "../../components/head/DefaultMetadata.astro";
+import SchemaMarkup from "../../components/head/SchemaMarkup.astro";
+import SharedChromeStylesheets from "../../components/head/SharedChromeStylesheets.astro";
+import SharedChromeScripts from "../../components/head/SharedChromeScripts.astro";
+import MarketingVwo from "../../components/head/MarketingVwo.astro";
+import Sentry from "../../components/head/Sentry.astro";
+
+interface Props {
+  page?: Record<string, any>;
+}
+const { page = {} } = Astro.props;
+
+const url = String(page.url ?? "");
+// Shared by the noindex meta tag and the canonical-link gate below.
+const isUnpublishedDocsVersion = url.includes("/docs/") && page.latest !== true && url !== "/docs/all";
+
+const noIndexNoFollow = Boolean(page.no_index_no_follow) || isUnpublishedDocsVersion;
+
+const canonicalHref = page.canonical
+  ? page.canonical
+  : `${site.url}${url.replaceAll("/index.html", "/").replaceAll("/index", "/")}`;
+
+const favicon =
+  jekyll.environment === "development"
+    ? "/images/favicon-dev.svg"
+    : jekyll.environment === "staging"
+      ? "/images/favicon-staging.svg"
+      : "/images/favicon.svg";
+---
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="IE=edge" http-equiv="X-UA-Compatible" />
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport" />
+
+  <meta content="frame-ancestors 'none'" http-equiv="Content-Security-Policy" />
+  <meta content="deny" http-equiv="X-Frame-Options" />
+  {noIndexNoFollow && <meta name="robots" content="noindex, nofollow" />}
+
+  {!isUnpublishedDocsVersion && <link href={canonicalHref} rel="canonical" />}
+
+  <script type="text/javascript" define:vars={{ environment: jekyll.environment }}>
+    window.environment = environment;
+    window.HELP_IMPROVE_VIDEOJS = false;
+
+    window.redirectTo = function redirectTo(theLocation) {
+      if (typeof theLocation === "string") {
+        theLocation = new URL(theLocation);
+      }
+
+      var redirectionSuffixes = ["/index.html", ".html", "/index"];
+      for (var i = 0; i < redirectionSuffixes.length; i = i + 1) {
+        var redirectionSuffix = redirectionSuffixes[i];
+        if (
+          theLocation.pathname &&
+          theLocation.pathname.length > redirectionSuffix.length &&
+          theLocation.pathname.indexOf(redirectionSuffix) ===
+            theLocation.pathname.length - redirectionSuffix.length
+        ) {
+          var pathname = theLocation.pathname.replace(redirectionSuffix, "");
+          if (pathname[pathname.length - 1] === "/") {
+            pathname = pathname.slice(0, -1);
+          }
+
+          return `${pathname}${theLocation.search}${theLocation.hash}`;
+        }
+      }
+
+      return null;
+    };
+  </script>
+
+  {
+    url.includes("/startup-guide/") ? (
+      <StartupGuideMetadata page={page} />
+    ) : url.includes("/learn/") && url !== "/learn/index" ? (
+      <LearnMetadata page={page} />
+    ) : url.includes("/docs/") ? (
+      <DocsMetadata page={page} />
+    ) : url.includes("/glossary/") ? (
+      <GlossaryMetadata page={page} />
+    ) : (
+      <DefaultMetadata page={page} />
+    )
+  }
+
+  <SchemaMarkup page={page} />
+
+  <link href={favicon} rel="shortcut icon" />
+  <link rel="apple-touch-icon" href="/images/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <SharedChromeStylesheets page={page} />
+
+  {url.includes("/data-stack-report-2023/") && (
+    <link rel="stylesheet" href="https://use.typekit.net/tiw6flt.css" />
+  )}
+
+  {url.includes("/data-stack-report-2025") && (
+    <link
+      href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+  )}
+
+  <link href="/feed.xml" rel="alternate" title={site.title} type="application/rss+xml" />
+
+  {page.markdown_alternate && (
+    <link rel="alternate" type="text/markdown" href={page.markdown_alternate} />
+  )}
+
+  <meta content="no-referrer-when-downgrade" name="referrer" />
+
+  <MarketingVwo page={page} />
+
+  {jekyll.environment === "production" && <Sentry page={page} />}
+
+  <SharedChromeScripts />
+
+  {(url.includes("/pricing") || url.includes("/product") || url.includes("/features")) && (
+    <script type="text/javascript">
+      window.$crisp = [];
+      window.CRISP_WEBSITE_ID = "333d0a2c-cc54-49cf-8846-b61c75a35409";
+      (function () {
+        d = document;
+        s = d.createElement("script");
+        s.src = "https://client.crisp.chat/l.js";
+        s.async = 1;
+        d.getElementsByTagName("head")[0].appendChild(s);
+      })();
+    </script>
+  )}
+
+  {(url.includes("/learn") ||
+    url.includes("/docs") ||
+    url.includes("/search") ||
+    url.includes("/changelog")) && (
+    <script
+      type="module"
+      src="https://cdn.jsdelivr.net/npm/@inkeep/cxkit-js@0.5.117/dist/embed.js"
+      crossorigin="anonymous"
+      defer
+    />
+  )}
+</head>

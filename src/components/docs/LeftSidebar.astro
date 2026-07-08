@@ -1,0 +1,22 @@
+---
+// Converted from _includes/docs/left-sidebar.html
+import LeftNav from "./LeftNav.astro";
+import { site } from "../../lib/docs-liquid";
+
+interface Props {
+  page: Record<string, any>;
+}
+const { page } = Astro.props;
+
+// Mirrors Jekyll's version_for_nav: page.version is used verbatim (it's
+// already "latest"/"master"/"v0.NN" in _docs frontmatter) except when the
+// page opts into showing the current stable version's nav via page.latest.
+const versionForNav = page.version ? (page.latest ? "latest" : page.version) : site.docs_version;
+const pageVersionNoPeriod = String(versionForNav).replace(/\./g, "");
+const navData = site.data.docs?.nav?.[pageVersionNoPeriod];
+const cleanPageUrl = String(page.url ?? "").replace("/index", "");
+---
+
+<div class="learn-left-sidebar" id="main-navigation-content">
+  <LeftNav categories={navData?.categories ?? []} currentUrl={cleanPageUrl} />
+</div>

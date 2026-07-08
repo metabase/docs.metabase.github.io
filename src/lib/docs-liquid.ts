@@ -56,12 +56,14 @@ export const engine = new Liquid({
 
 // Jekyll's slugify filter (default mode): lowercase, non-alphanumeric runs
 // become single hyphens, trimmed at both ends.
-engine.registerFilter("slugify", (str: unknown) =>
-  String(str ?? "")
+export function slugify(str: unknown): string {
+  return String(str ?? "")
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "")
-);
+    .replace(/^-+|-+$/g, "");
+}
+
+engine.registerFilter("slugify", slugify);
 
 // ---------------------------------------------------------------------------
 // {% include_file %} — port of the jekyll_include_plugin gem (v1.3.0), which

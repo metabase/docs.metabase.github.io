@@ -1,0 +1,30 @@
+---
+// Converted from _includes/glossary-metadata.html
+import { site } from "../../lib/docs-liquid";
+
+interface Props {
+  page: Record<string, any>;
+}
+const { page } = Astro.props;
+
+const title = page.headline ?? page.title;
+const description = page.def ?? page.summary ?? "Data and Business Intelligence Glossary";
+const image = "/images/twitter/default.png";
+const ogUrl = `${site.url}${String(page.url ?? "").replaceAll("/index.html", "")}`;
+---
+
+<title>{title}</title>
+<meta name="twitter:site" content={`@${site.twitter_username}`} />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={`${site.url}${image}`} />
+
+<meta
+  property="og:site_name"
+  content="Metabase | Business Intelligence, Dashboards, and Data Visualization"
+/>
+<meta property="og:type" content="article" />
+<meta property="og:url" content={ogUrl} />
+<meta name="title" property="og:title" content={title} />
+<meta name="description" property="og:description" content={description} />
+<meta name="image" property="og:image" content={`${site.url}${image}`} />

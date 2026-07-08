@@ -1,0 +1,46 @@
+---
+// Converted from _includes/learn/left-nav.html (one recursion level per
+// nav depth: track > course > lesson > section in the Jekyll version).
+import Chevron from "../icons/Chevron.astro";
+
+export interface NavPage {
+  name: string;
+  navName?: string;
+  url?: string;
+  pages?: NavPage[];
+}
+
+interface Props {
+  item: NavPage;
+  currentUrl: string;
+}
+const { item, currentUrl } = Astro.props;
+
+function containsUrl(node: NavPage, url: string): boolean {
+  if (node.url === url) return true;
+  return (node.pages ?? []).some((child) => containsUrl(child, url));
+}
+
+const name = item.navName ?? item.name;
+const hasChildren = Boolean(item.pages && item.pages.length > 0);
+const expanded = containsUrl(item, currentUrl);
+const selected = item.url === currentUrl;
+---
+
+<li class:list={{ expanded }}>
+  <a href={item.url} class:list={{ selected }}>
+    {name}
+
+    {hasChildren && (
+      <div>
+        <Chevron />
+      </div>
+    )}
+  </a>
+
+  {hasChildren && (
+    <ul>
+      {item.pages!.map((child) => <Astro.self item={child} currentUrl={currentUrl} />)}
+    </ul>
+  )}
+</li>

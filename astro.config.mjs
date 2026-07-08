@@ -1,8 +1,58 @@
 // @ts-check
 import { defineConfig, passthroughImageService } from "astro/config";
 import { docsMarkdownProcessor, shikiConfig } from "./src/lib/render-doc.ts";
+import awsAmplify from "astro-aws-amplify";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+console.log(__dirname);
 
 export default defineConfig({
+  output: "server",
+  adapter: awsAmplify(),
+  integrations: [
+    {
+      name: "heavy-folder-watcher",
+      hooks: {
+        "astro:server:setup": ({ server }) => {
+          // 1. Only run this heavy process during local development
+          if (server.config.mode !== "development") return;
+
+          // 2. Resolve your target massive directory
+          const massiveFolderPath = path.resolve(__dirname, "_docs");
+
+          // 3. Register the path to Vite's root file watcher (Chokidar instance)
+          server.watcher.add(massiveFolderPath);
+
+          // 5. Throttling / Stability tweaks for large file counts
+          // server.watcher.options.stabilityThreshold = 100; // Waits for changes to stop
+          // server.watcher.options.awaitWriteFinish = {
+          //   stabilityThreshold: 200,
+          //   pollInterval: 100,
+          // };
+
+          // 6. Handle the event and trigger a smart browser refresh
+          server.watcher.on("change", (filePath) => {
+            if (filePath.startsWith(massiveFolderPath)) {
+              console.log(
+                `\x1b[32m[Watcher]\x1b[0m File changed: ${path.relative(
+                  __dirname,
+                  filePath,
+                )}`,
+              );
+
+              // Safely tell Vite's Hot Module Replacement to refresh the current page
+              server.ws.send({
+                type: "full-reload",
+              });
+            }
+          });
+        },
+      },
+    },
+  ],
+
   // TEMPORARY until image handling is decided: copy markdown-referenced
   // images as-is instead of recompressing them through sharp.
   image: { service: passthroughImageService() },
