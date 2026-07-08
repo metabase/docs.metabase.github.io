@@ -1,0 +1,157 @@
+---
+version: v0.63
+has_magic_breadcrumbs: true
+show_category_breadcrumb: true
+show_title_breadcrumb: true
+category: Embedding
+title: 'Modular embedding SDK'
+source_url: 'https://github.com/metabase/metabase/blob/master/docs/embedding/sdk/introduction.md'
+layout: new-docs
+redirect_from:
+    - /docs/v0.63/embedding/sdk
+---
+
+# Modular embedding SDK
+
+{% include plans-blockquote.html feature="Modular embedding SDK" sdk=true %}
+
+With the modular embedding SDK, you can embed individual Metabase components with React (like standalone charts, dashboards, the query builder, and more). You can manage access and interactivity per component, and you have advanced customization for seamless styling.
+
+## Example apps built with the modular embedding SDK
+
+To give you an idea of what's possible with the SDK, we've put together example sites at [metaba.se/sdk-demo](https://metaba.se/sdk-demo). Navigate between different shop websites. Check them out and poke around their products and analytics sections, as well as the New Question and New Dashboard options.
+
+![Pug and play example app built with modular embedding SDK](../images/pug-and-play.png)
+
+Here's the [Shoppy source code](https://github.com/metabase/shoppy).
+
+## Modular embedding SDK playground
+
+![Modular embedding SDK playground](../images/embedding-sdk-playground.png)
+
+Try out the SDK in the [Modular embedding SDK playground](https://sdk-playground.metabase.com/), no setup required. The playground lets you experiment with components, theming, and interactivity in your browser.
+
+## Modular embedding SDK prerequisites
+
+- React application using React 18 or React 19.
+- Nodejs 20.x or higher.
+- Metabase version 1.52 or higher.
+
+## Quickstarts
+
+The best way to get started with Modular embedding SDK depends on what you already have:
+
+- You have an app and a Metabase instance: go to [main quickstart](./quickstart)
+- You have an app but no Metabase: go to [quickstart with CLI](./quickstart-cli)
+- You don't have an app: go to [quickstart with a sample React app](./quickstart-with-sample-app)
+
+## Installation
+
+To use the SDK, you'll need to enable the SDK in Metabase, and install the SDK in your React app.
+
+### Enable the SDK in Metabase
+
+1. Enable the Modular embedding SDK by going to **Admin > Embedding**.
+2. Toggle on **Modular embedding SDK**.
+3. In **Cross-Origin Resource Sharing (CORS)**, enter the origins for your website or app where you want to allow SDK embedding, separated by a space. Localhost is automatically included.
+
+### Install the SDK in your React application
+
+Install the SDK Package matching your Metabase major with the `@{major}-stable` dist-tag, so the package's TypeScript types and exported components stay in sync with your instance's SDK Bundle:
+
+```bash
+npm install @metabase/embedding-sdk-react@60-stable
+```
+
+or with Yarn:
+
+```bash
+yarn add @metabase/embedding-sdk-react@60-stable
+```
+
+On **Metabase 56 or earlier**, the SDK major _must_ match your Metabase major. On **Metabase 57 and later**, you can also install without a dist-tag to track the latest published SDK major.
+
+See [SDK versions](./version) for more on compatibility.
+
+### Resolving `@types/react` version mismatches
+
+In rare scenarios, the modular embedding SDK and your application may use different major versions of `@types/react`, causing TypeScript conflicts.
+
+To enforce a single `@types/react` version across all dependencies, add an `overrides` (npm) or `resolutions` (Yarn) section to your `package.json` and specify the `@types/react` version your application uses.
+
+#### npm set @types/react version
+
+```json
+{
+  "overrides": {
+    "@types/react": "..."
+  }
+}
+```
+
+#### Yarn set @types/react version
+
+```json
+{
+  "resolutions": {
+    "@types/react": "..."
+  }
+}
+```
+
+## Architecture
+
+Starting with Metabase 57, the SDK consists of two parts:
+
+- **SDK Package** – The `@metabase/embedding-sdk-react` npm package is a lightweight bootstrapper library. Its primary purpose is to load and run the main SDK Bundle code.
+- **SDK Bundle** – The full SDK code, served directly from your self-hosted Metabase instance or Metabase Cloud, and it's a part of Metabase. This ensures that the main SDK code is always compatible with its corresponding Metabase instance.
+
+## Developing with the modular embedding SDK
+
+Start with one of the quickstarts, then see these pages for more info on components, theming, and more.
+
+- [Authentication](../authentication)
+- [Questions](./questions)
+- [AI chat](./ai-chat)
+- [Dashboards](./dashboards)
+- [Actions](./actions)
+- [Appearance](../appearance)
+- [Collections](./collections)
+- [Plugins](./plugins)
+- [Config](./config)
+- [Versioning](./version)
+- [Notes on Next.js](./next-js)
+
+## Modular embedding SDK source code
+
+You can find the [Modular embedding SDK source code in the Metabase repo](https://github.com/metabase/metabase/tree/master/enterprise/frontend/src/embedding-sdk).
+
+## Modular embedding SDK on npm
+
+Check out the Metabase Modular embedding SDK on npm: [metaba.se/sdk-npm](https://metaba.se/sdk-npm).
+
+## SDK limitations
+
+The SDK doesn't support:
+
+- Verified content
+- Official collections
+- Dashboard link cards
+- Server-side rendering (SSR)
+
+Other limitations:
+
+- You can only have one dashboard per application page. You can, however, embed multiple questions on the same app page, or use [dashboard tabs](../../dashboards/introduction#dashboard-tabs) to create multiple different card layouts on one dashboard.
+- If you have Leaflet 1.x as a dependency in your app, you may run into compatibility issues. You can try using Leaflet 2.x instead.
+
+## Issues, feature requests and support
+
+[Bugs](https://github.com/metabase/metabase/issues/?q=is%3Aissue%20state%3Aopen%20label%3AType%3ABug%20label%3AEmbedding%2FSDK) and [feature requests](https://github.com/metabase/metabase/issues/?q=is%3Aissue%20state%3Aopen%20label%3AEmbedding%2FSDK%20label%3A%22Type%3ANew%20Feature%22) are tracked on GitHub.
+
+You can upvote an existing feature request by leaving a thumbs up emoji reaction on the issue. Feel free to leave comments with context that could be useful. [Read more](/docs/latest/troubleshooting-guide/requesting-new-features).
+
+Before creating new issues, please make sure an issue for your problem or feature request doesn't already exist.
+To seek help:
+
+- Paid customers can contact our success team through the usual channels.
+- People using the open-source edition can post on our [discussion forums](https://discourse.metabase.com/).

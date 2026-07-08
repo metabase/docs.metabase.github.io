@@ -1,0 +1,91 @@
+---
+version: v0.63
+has_magic_breadcrumbs: true
+show_category_breadcrumb: true
+show_title_breadcrumb: true
+category: 'Installation and Operation'
+title: 'About the anonymous usage data we collect'
+source_url: 'https://github.com/metabase/metabase/blob/master/docs/installation-and-operation/information-collection.md'
+layout: new-docs
+redirect_from:
+    - /docs/v0.63/information-collection
+---
+
+# About the anonymous usage data we collect
+
+If you're self-hosting Metabase and you've opted in to provide us with anonymous usage data (thank you!), Metabase will phone home some data collected via Snowplow.
+
+**[We only collect anonymous Metabase data; we don't collect any of your data](/security).** We don't collect any usernames, emails, server IPs, database details of any kind, or any personally identifiable information (PII).
+
+This anonymous data helps us understand how people are using Metabase, which in turn helps us prioritize what to work on next.
+
+## Examples of the anonymous data we collect and how we use it
+
+In a nutshell: we track some basic events to find opportunities for improving the product and evaluating project outcomes. We _don't_ use the data for sales or advertising (and the data's anonymous, so we couldn't use it for that anyway).
+
+We collect things like:
+
+- Events in the product (for example, when people create models)
+- Some performance data
+- The number and types of DBs you've connected to your Metabase
+- The number of questions and dashboards and other items you've created
+
+This anonymous data helps us figure out things like:
+
+- Which features you're using
+- Where people get stuck
+- How performance for key workflows (like querying or loading) changes over time
+
+## Embedding telemetry
+
+When anonymous tracking is enabled, Metabase collects usage data from embedded iframes and components. This usage data is anonymous, and just concerns embedding feature usage. It doesn't collect query content, result data, or user identifiers.
+
+### Data collected by modular embeds
+
+[Modular embedding components](../embedding/modular-embedding) collect usage events when the components are rendered in your app. Each event includes:
+
+- Which components were used (for example, a dashboard or question)
+- The component's configuration options (for example, whether downloads or drill-through are enabled)
+- The authentication method (like SSO or guest)
+- Whether a custom locale is configured
+
+Within a session, an in-memory identifier groups related events, but this identifier is regenerated on every page load and is never written to cookies or localStorage, so there's no persistent cross-session identifier.  
+
+### Data collected by iframe embeds
+
+For iframe embeds, like public links, or when embedding the full Metabase app, Metabase records query execution counts grouped by embedding type.
+
+## Opting out of anonymous usage data collection for self-hosted Metabases
+
+If you're self-hosting Metabase, you can opt out of providing us with your anonymous usage data:
+
+1. Click the grid icon.
+2. Select **Admin**.
+3. Go to the **Settings** tab.
+4. Click **General**
+5. Toggle the **Anonymous tracking** option.
+
+If you're in the process of setting up your Metabase, you can also toggle off tracking during the `Usage Data Preferences` onboarding step. We collect a few anonymous events before that point, but won't do so anymore if you choose to opt out.
+
+## Token validation requests for paid plans
+
+If you're on a paid plan (Pro, Enterprise, or a trial), Metabase periodically sends a token validation request to verify your license. This is separate from the anonymous usage data described above.
+
+### Data included in token validation requests
+
+The token validation request includes:
+
+- Count of active users (used for billing)
+- Count of external users
+- Count of internal users
+- Count of email domains
+- Count of embedded dashboards and questions
+- Types of embedding (modular, guest, SDK, full app)
+- Site UUID (just an identifier for your Metabase)
+- Metabase version
+- Query execution counts for the previous UTC day, broken down by embedding type (SDK, interactive, static, public link, simple, and internal)
+- Metabot usage statistics: count of tokens, queries, users, and date (just counts and the date).
+
+## Further reading
+
+Check out our page on [data privacy and security](/security).
