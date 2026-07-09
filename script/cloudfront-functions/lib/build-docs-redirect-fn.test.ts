@@ -282,6 +282,9 @@ test("generate emits a compilable function that stays under 10 KB", () => {
   const output = generate(versionsPath);
   expect(output.includes("async function handler(event)")).toBeTruthy();
   expect(output.includes('LATEST = "v0.62"')).toBeTruthy();
+  expect(output.includes('VERSIONS = {"v0.61":1,"v0.62":1}')).toBeTruthy();
+  // Both build placeholders must be substituted — no leftover @@BUILD:@@ marker.
+  expect(output.includes("@@BUILD:")).toBeFalsy();
   expect(Buffer.byteLength(output)).toBeLessThanOrEqual(MAX_FN_BYTES);
   fs.rmSync(dir, { recursive: true, force: true });
 });
