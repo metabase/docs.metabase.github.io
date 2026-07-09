@@ -31,29 +31,6 @@ function getRenderer() {
   return rendererPromise;
 }
 
-// "v0.63" -> "release-x.63.x"
-// TODO: This could be more robust
-const versionToReleaseBranch = (version: string) => {
-  return `release-x.${version.split('.')[1]}.x`
-}
-
-// Reads a _docs entry straight off disk, bypassing astro:content's
-// getCollection/getEntry entirely. Those read from a module-level singleton
-// (globalDataStore in astro/dist/content/data-store.js) that's loaded once
-// and cached for the life of the dev process — a different object from the
-// mutable store the loader's file-watcher updates, and it doesn't reliably
-// pick up edits without a full server restart. Reading the file ourselves,
-// fresh, on every call sidesteps that cache entirely.
-function readDocSource(version: string, slug: string) {
-  const subdir = version === 'latest' ? "docs" : `__worktrees_docs/${versionToReleaseBranch(version)}/docs`
-  const filePath = path.join(METABASE_ROOT, subdir, `${slug}.md`);
-  const raw = fs.readFileSync(filePath, "utf8");
-  const fmMatch = FRONTMATTER_RE.exec(raw);
-  const data = (fmMatch ? loadYaml(fmMatch[1]) : {}) as Record<string, unknown>;
-  const body = fmMatch ? raw.slice(fmMatch[0].length) : raw;
-  return { data, body, filePath };
-}
-
 // _docs pages run Liquid + Markdown here, at page-render time, rather than
 // eagerly for all ~9,800 files during content-collection sync (which is what
 // a wrapped loader in content.config.ts used to do). Doing it on demand means

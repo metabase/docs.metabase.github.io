@@ -8,9 +8,6 @@ export const getStaticPaths = async () => {
   const docsPrevious = await getCollection("docsPrevious");
   return [
     ...docsLatest.map(function (doc: { id: string }) {
-      if (doc.id === "embedding/eajs/snippets") {
-        console.log(doc);
-      }
       return {
         params: {
           slug: doc.id === "readme" ? undefined : doc.id,
