@@ -1,0 +1,39 @@
+---
+import DefaultNewLayout from "../layouts/DefaultNewLayout.astro";
+
+const getAttemptedVersion = (): string | null => {
+  if (!import.meta.env.DEV) {
+    return null;
+  }
+  const match = Astro.url.pathname.match(/\/docs\/v0\.(\d+)\b/);
+  return match ? match[1] : null;
+};
+
+const attemptedVersion = getAttemptedVersion();
+---
+
+<DefaultNewLayout>
+  <div class="bootstrap">
+    {
+      attemptedVersion && (
+        <div class="p-12 text-center mx-auto" style="max-width: 42rem;">
+          <p>It looks like you don't have that version pulled down locally.</p>
+          <p>
+            Run the following command from your local <strong>metabase</strong>{" "}
+            repo:
+          </p>
+          <div class="language-plaintext highlighter-rouge">
+            <div class="highlight">
+              <pre class="highlight">
+                <code>./bin/docs-worktree release-x.{attemptedVersion}.x</code>
+              </pre>
+            </div>
+          </div>
+          <p>This message is only shown for dev builds.</p>
+        </div>
+      )
+    }
+  </div>
+  <script type="text/javascript" src="/js/new-docs-code-snippet-copy.js"
+  ></script>
+</DefaultNewLayout>
