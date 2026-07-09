@@ -1,12 +1,42 @@
 ---
-import { getCollection, getEntry } from "astro:content";
-import { renderJekyllPage } from "../../../lib/jekyll-layouts";
+import { getCollection } from "astro:content";
 import { renderDoc } from "../../../lib/render-doc";
 import NewDocsLayout from "../../../layouts/NewDocsLayout.astro";
 
-const { version = "latest", slug = "README" } = Astro.params;
+export const getStaticPaths = async () => {
+  const docsLatest = await getCollection("docsLatest");
+  const docsPrevious = await getCollection("docsPrevious");
+  return [
+    ...docsLatest.map(function (doc: { id: string }) {
+      if (doc.id === "embedding/eajs/snippets") {
+        console.log(doc);
+      }
+      return {
+        params: {
+          slug: doc.id === "readme" ? undefined : doc.id,
+          version: "latest",
+        },
+        props: { doc },
+      };
+    }),
+    ...docsPrevious.map((doc: { id: string }) => {
+      const [worktreeDir, slug] = doc.id.split("/docs/");
+      const [, versionStr] = worktreeDir.match(/release-x(\d+)x/) as string[];
+      return {
+        params: {
+          slug: slug === "readme" ? undefined : slug,
+          version: `v0.${versionStr}`,
+        },
+        props: { doc },
+      };
+    }),
+  ];
+};
 
-const { data, html: renderedHtml, id } = await renderDoc(version, slug);
+const { slug, version } = Astro.params;
+const { doc } = Astro.props;
+
+const { html: renderedHtml } = await renderDoc(doc);
 
 const toTitleCase = (str: string) => {
   return str
@@ -50,9 +80,9 @@ function constructDocMetadata(path: string, version: string) {
 
   return metadata;
 }
-const url = data.permalink ? String(data.permalink) : `/docs/${id}`;
+const url = doc.data.permalink ? String(doc.data.permalink) : `/docs/${doc.id}`;
 const page = {
-  ...data,
+  ...doc.data,
   url,
   ...constructDocMetadata(`/docs/${slug}`, version),
 };
@@ -61,16 +91,3 @@ const page = {
 <NewDocsLayout page={page}>
   <Fragment set:html={renderedHtml} />
 </NewDocsLayout>
-
-<!-- 
-<script>
-  if (import.meta.hot) {
-    import.meta.hot.accept(() => {
-      console.log("Module updated, triggering custom HMR...");
-      // Add logic here to re-render, or let the framework handle it
-    });
-
-    // Force a full browser reload
-    import.meta.hot.decline();
-  }
-</script> -->

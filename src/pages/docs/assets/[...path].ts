@@ -1,5 +1,6 @@
-import type { APIRoute } from "astro";
-import fs from "node:fs/promises";
+import type { APIRoute, GetStaticPaths } from "astro";
+import fs from "node:fs";
+import fsPromises from "node:fs/promises";
 import path from "node:path";
 import { METABASE_ROOT } from "../../../lib/metabase-paths";
 
@@ -7,9 +8,17 @@ import { METABASE_ROOT } from "../../../lib/metabase-paths";
 // location (e.g. `dashboards/actions.md` linking `./images/foo.png`). The
 // localDocImagePlugin hast plugin (src/lib/markdown-plugins.ts) rewrites
 // those relative links to `/docs/assets/<path relative to METABASE_ROOT>`
-// at render time; this route resolves that path back to a file on disk and
-// streams it as-is (no astro:assets optimization — see the
-// passthroughImageService comment in astro.config.mjs).
+// at render time; this route resolves that path back to a file on disk.
+//
+// Statically prerendered (getStaticPaths below) rather than served
+// on-demand: this project builds to a plain static `_site` (see
+// astro.config.mjs — no adapter, no `output: "server"`), so a dynamic route
+// with no getStaticPaths simply wouldn't be included in the build. Walking
+// the docs image trees is cheap (a few hundred files per version), and
+// prerendering means `astro build` writes the actual image bytes into
+// `_site/docs/assets/...` — the same mechanism it already uses for the
+// ~9,800 rendered doc pages — so deploy artifact steps that just upload
+// whatever's in `_site` pick these up with no extra config.
 //
 // Lives at `docs/assets/...`, not `docs/_assets/...`: Astro excludes any
 // path segment starting with `_` from routing (its "private" convention),
@@ -26,6 +35,47 @@ const MIME_TYPES: Record<string, string> = {
   ".ico": "image/x-icon",
 };
 
+function walkImages(dir: string, out: string[] = []): string[] {
+  let entries: fs.Dirent[];
+  try {
+    entries = fs.readdirSync(dir, { withFileTypes: true });
+  } catch {
+    return out;
+  }
+  for (const entry of entries) {
+    const full = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      walkImages(full, out);
+    } else if (MIME_TYPES[path.extname(entry.name).toLowerCase()]) {
+      out.push(full);
+    }
+  }
+  return out;
+}
+
+// Each previous-version worktree keeps its own docs/ subtree; walk only
+// those (not the whole checkout, which also contains source code).
+function worktreeDocRoots(): string[] {
+  const worktreesDir = path.join(METABASE_ROOT, "__worktrees_docs");
+  let entries: fs.Dirent[];
+  try {
+    entries = fs.readdirSync(worktreesDir, { withFileTypes: true });
+  } catch {
+    return [];
+  }
+  return entries
+    .filter((entry) => entry.isDirectory())
+    .map((entry) => path.join(worktreesDir, entry.name, "docs"));
+}
+
+export const getStaticPaths: GetStaticPaths = () => {
+  const roots = [path.join(METABASE_ROOT, "docs"), ...worktreeDocRoots()];
+  const images = roots.flatMap((root) => walkImages(root));
+  return images.map((absPath) => ({
+    params: { path: path.relative(METABASE_ROOT, absPath).split(path.sep).join("/") },
+  }));
+};
+
 export const GET: APIRoute = async ({ params }) => {
   const relPath = params.path;
   if (!relPath) return new Response("Not found", { status: 404 });
@@ -40,7 +90,7 @@ export const GET: APIRoute = async ({ params }) => {
   }
 
   try {
-    const data = await fs.readFile(absPath);
+    const data = await fsPromises.readFile(absPath);
     return new Response(data, {
       headers: { "Content-Type": mimeType, "Cache-Control": "public, max-age=3600" },
     });

@@ -62,13 +62,11 @@ function readDocSource(version: string, slug: string) {
 // dev-server restart, since there's no separate "already processed" cache to
 // go stale (see readDocSource above for why we read the file ourselves
 // instead of going through astro:content for this part).
-export async function renderDoc(version: string, slug: string) {
-  const id = version + '/' + slug;
-  const { data, body, filePath } = readDocSource(version, slug);
-  const liquidBody = await renderDocsLiquid(body, filePath, data);
+export async function renderDoc(doc: {}) {
+  const liquidBody = await renderDocsLiquid(doc.body, doc.filePath, doc.data);
   const renderer = await getRenderer();
   const { code, metadata } = await renderer.render(liquidBody, {
-    fileURL: pathToFileURL(path.resolve(filePath)),
+    fileURL: pathToFileURL(path.resolve(doc.filePath)),
   });
-  return { data, html: code, metadata, id };
+  return { html: code };
 }
