@@ -4,9 +4,13 @@ import path from "node:path";
 import { load as loadYaml } from "js-yaml";
 import { satteri } from "@astrojs/markdown-satteri";
 import { renderDocsLiquid } from "./docs-liquid";
-import { jekyllInlineCodePlugin, jekyllAttributeListPlugin } from "./markdown-plugins";
+import {
+  jekyllInlineCodePlugin,
+  jekyllAttributeListPlugin,
+  localDocImagePlugin,
+} from "./markdown-plugins";
+import { METABASE_ROOT } from "./metabase-paths";
 
-const DOCS_ROOT = path.join(process.cwd(), "_docs");
 const FRONTMATTER_RE = /^---\r?\n([\s\S]*?)\r?\n---\r?\n?/;
 
 // Shared with astro.config.mjs so the on-demand renderer below and Astro's
@@ -18,13 +22,19 @@ export const shikiConfig = {
 } as const;
 
 export const docsMarkdownProcessor = satteri({
-  hastPlugins: [jekyllInlineCodePlugin, jekyllAttributeListPlugin],
+  hastPlugins: [jekyllInlineCodePlugin, jekyllAttributeListPlugin, localDocImagePlugin],
 });
 
 let rendererPromise: ReturnType<typeof docsMarkdownProcessor.createRenderer> | undefined;
 function getRenderer() {
   rendererPromise ??= docsMarkdownProcessor.createRenderer({ shikiConfig });
   return rendererPromise;
+}
+
+// "v0.63" -> "release-x.63.x"
+// TODO: This could be more robust
+const versionToReleaseBranch = (version: string) => {
+  return `release-x.${version.split('.')[1]}.x`
 }
 
 // Reads a _docs entry straight off disk, bypassing astro:content's
@@ -34,8 +44,9 @@ function getRenderer() {
 // mutable store the loader's file-watcher updates, and it doesn't reliably
 // pick up edits without a full server restart. Reading the file ourselves,
 // fresh, on every call sidesteps that cache entirely.
-function readDocSource(id: string) {
-  const filePath = path.join(DOCS_ROOT, `${id}.md`);
+function readDocSource(version: string, slug: string) {
+  const subdir = version === 'latest' ? "docs" : `__worktrees_docs/${versionToReleaseBranch(version)}/docs`
+  const filePath = path.join(METABASE_ROOT, subdir, `${slug}.md`);
   const raw = fs.readFileSync(filePath, "utf8");
   const fmMatch = FRONTMATTER_RE.exec(raw);
   const data = (fmMatch ? loadYaml(fmMatch[1]) : {}) as Record<string, unknown>;
@@ -51,12 +62,13 @@ function readDocSource(id: string) {
 // dev-server restart, since there's no separate "already processed" cache to
 // go stale (see readDocSource above for why we read the file ourselves
 // instead of going through astro:content for this part).
-export async function renderDoc(id: string) {
-  const { data, body, filePath } = readDocSource(id);
+export async function renderDoc(version: string, slug: string) {
+  const id = version + '/' + slug;
+  const { data, body, filePath } = readDocSource(version, slug);
   const liquidBody = await renderDocsLiquid(body, filePath, data);
   const renderer = await getRenderer();
   const { code, metadata } = await renderer.render(liquidBody, {
     fileURL: pathToFileURL(path.resolve(filePath)),
   });
-  return { data, html: code, metadata };
+  return { data, html: code, metadata, id };
 }

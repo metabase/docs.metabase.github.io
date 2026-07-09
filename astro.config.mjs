@@ -20,10 +20,15 @@ export default defineConfig({
           if (server.config.mode !== "development") return;
 
           // 2. Resolve your target massive directory
-          const massiveFolderPath = path.resolve(__dirname, "_docs");
+          const folderPaths = [
+            path.resolve(__dirname, "../metabase/docs"),
+            path.resolve(__dirname, "../metabase/__worktrees_docs"),
+          ];
 
           // 3. Register the path to Vite's root file watcher (Chokidar instance)
-          server.watcher.add(massiveFolderPath);
+          folderPaths.forEach((folderPath) => {
+            server.watcher.add(folderPath);
+          });
 
           // 5. Throttling / Stability tweaks for large file counts
           // server.watcher.options.stabilityThreshold = 100; // Waits for changes to stop
@@ -34,7 +39,9 @@ export default defineConfig({
 
           // 6. Handle the event and trigger a smart browser refresh
           server.watcher.on("change", (filePath) => {
-            if (filePath.startsWith(massiveFolderPath)) {
+            if (
+              folderPaths.some((folderPath) => filePath.startsWith(folderPath))
+            ) {
               console.log(
                 `\x1b[32m[Watcher]\x1b[0m File changed: ${path.relative(
                   __dirname,
