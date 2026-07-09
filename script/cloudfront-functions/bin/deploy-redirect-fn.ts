@@ -49,7 +49,13 @@ import {
 import "@aws-sdk/signature-v4a";
 import { Command } from "commander";
 import { chunkDiff, diffKvs, generateKvs } from "../lib/build-kvs";
-import { generate, MAX_FN_BYTES } from "../lib/build-docs-redirect-fn";
+import {
+  generate,
+  loadDocsVersion,
+  loadVersions,
+  MAX_FN_BYTES,
+} from "../lib/build-docs-redirect-fn";
+import { findChains, formatChain } from "../lib/check-chains";
 import {
   GENERATED_RULES,
   MANUAL_RULES,
@@ -233,12 +239,29 @@ program
   .option("--dist-id <id>", "fronting distribution id (skip association when empty)")
   .action(async (opts: { fnName: string; kvsName: string; distId?: string }) => {
     // Build the desired KVS payload + function source in-process (validates the rule files).
+    const versionsPath = path.resolve(VERSIONS_CONFIG);
     const desired = generateKvs(
       path.resolve(MANUAL_RULES),
       path.resolve(GENERATED_RULES),
-      path.resolve(VERSIONS_CONFIG),
+      versionsPath,
     );
-    const code = Buffer.from(generate(path.resolve(VERSIONS_CONFIG)), "utf8");
+
+    // Refuse to publish a table with multi-hop chains or loops (the browser would follow
+    // several 301s, or spin forever). Runs on the exact payload being deployed, so a chain
+    // can never reach the live KVS even if the CI gate was skipped.
+    const chains = await findChains(
+      desired,
+      loadVersions(versionsPath),
+      loadDocsVersion(versionsPath),
+    );
+    if (chains.length > 0) {
+      chains.forEach((c) => log(formatChain(c)));
+      throw new Error(
+        `Refusing to deploy: ${chains.length} multi-hop redirect chain(s)/loop(s) — collapse each to a single hop.`,
+      );
+    }
+
+    const code = Buffer.from(generate(versionsPath), "utf8");
     log(`Function size: ${code.length} bytes (CloudFront limit: ${MAX_FN_BYTES})`);
     if (code.length > MAX_FN_BYTES) {
       throw new Error(`Function is ${code.length} bytes, over the ${MAX_FN_BYTES}-byte limit`);

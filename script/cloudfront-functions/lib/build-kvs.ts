@@ -23,6 +23,11 @@ import {
   validateRule,
   type ValidatedRule,
 } from "./build-docs-redirect-fn";
+import {
+  collectPairs,
+  computeBands,
+  type RedirectPair,
+} from "./generate-redirects";
 
 const MAX_KEY_BYTES = 512;
 export const MAX_VALUE_BYTES = 1024;
@@ -148,6 +153,21 @@ export function generateKvs(
   const manual = loadRules(manualPath);
   const generated = safeLoadRules(generatedPath);
   return buildKvs(manual, generated, loadVersions(versionsPath));
+}
+
+// Fresh-scan sibling of generateKvs: instead of reading the committed generated-redirects.json,
+// it rescans the docs tree so the payload reflects the current redirect_from frontmatter even
+// when that committed file is stale. Returns the scanned pairs too, so a caller that also needs
+// the raw redirect_from observations (e.g. the parity gate) doesn't scan the tree twice.
+export function buildKvsFromDocsTree(
+  docsDir: string,
+  manualPath: string,
+  versions: string[],
+): { pairs: RedirectPair[]; kvs: Record<string, string> } {
+  const pairs = collectPairs(docsDir);
+  const manual = loadRules(manualPath);
+  const generated = computeBands(pairs, versions);
+  return { pairs, kvs: buildKvs(manual, generated, versions) };
 }
 
 function safeLoadRules(p: string): unknown[] {

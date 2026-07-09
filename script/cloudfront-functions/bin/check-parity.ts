@@ -17,11 +17,9 @@ import { Command } from "commander";
 import {
   compileForSimulation,
   loadDocsVersion,
-  loadRules,
   loadVersions,
 } from "../lib/build-docs-redirect-fn";
-import { buildKvs } from "../lib/build-kvs";
-import { collectPairs, computeBands } from "../lib/generate-redirects";
+import { buildKvsFromDocsTree } from "../lib/build-kvs";
 import { DOCS_DIR, MANUAL_RULES, VERSIONS_CONFIG } from "./constants";
 import { runCli } from "./cli";
 
@@ -36,10 +34,11 @@ program
     const latest = loadDocsVersion(versionsPath);
 
     // Scan the docs tree once; reuse the observations for both the rule table and the check.
-    const pairs = collectPairs(docsDir);
-    const manual = loadRules(path.resolve(MANUAL_RULES));
-    const generated = computeBands(pairs, versions);
-    const kvs = buildKvs(manual, generated, versions);
+    const { pairs, kvs } = buildKvsFromDocsTree(
+      docsDir,
+      path.resolve(MANUAL_RULES),
+      versions,
+    );
     const handler = compileForSimulation(kvs, versions, latest);
 
     let regressions = 0;
