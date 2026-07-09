@@ -80,7 +80,9 @@ function constructDocMetadata(path: string, version: string) {
 
   return metadata;
 }
-const url = doc.data.permalink ? String(doc.data.permalink) : `/docs/${version}/${doc.id}`;
+const url = doc.data.permalink
+  ? String(doc.data.permalink)
+  : `/docs/${version}${slug ? `/${slug}` : ""}`;
 const page = {
   ...doc.data,
   url,

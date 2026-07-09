@@ -17,8 +17,7 @@ const { page } = Astro.props;
 // Do not show breadcrumb on home page.
 const permalinkParts = String(page.url ?? "").split("/");
 const showBreadcrumb = !(
-  permalinkParts[1] === "docs" &&
-  permalinkParts[2] === "readme"
+  permalinkParts[1] === "docs" && permalinkParts.length === 3
 );
 
 const pageTitle = String(page.title ?? "").replaceAll("''", "'");
