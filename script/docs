@@ -20,7 +20,8 @@ program
   .option("-l, --latest") // copy docs into _docs/latest
   .option("-s, --set-version <version>") // Specify target directory and version
   .option("-u, --update") // Download docs from current release_branch
-  .option("-b, --source-branch <dir>"); // When set, we grab the tarball for this branch
+  .option("-b, --source-branch <dir>") // When set, we grab the tarball for this branch
+  .option("-r, --repo-dir <dir>"); // Use a local metabase repo checkout instead of downloading a tarball
 
 program.parse(process.argv);
 
@@ -60,12 +61,11 @@ if (options.setVersion) {
   console.log("Version set to", options.setVersion);
 }
 
-// If no repoDir is specified, download and extract a tarball. That will not
-// work for branch previews, so we usually (todo: always?) need to setup the
-// repo before running this script.
+// If --repo-dir is specified, we copy docs out of that local metabase checkout
+// instead of downloading a tarball from GitHub.
 if (options.repoDir) {
-  console.log("Metabase docs data downloaded already in:", options.repoDir);
-  settings.newDir = options.repoDir;
+  settings.repoDir = path.resolve(options.repoDir);
+  console.log("Using local metabase repo checkout at:", settings.repoDir);
 } else {
   console.log("Downloading metabase docs data from branch:", settings.version);
 }
