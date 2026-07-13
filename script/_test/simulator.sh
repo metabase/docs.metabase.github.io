@@ -37,7 +37,7 @@ echo "  - Ruby (>= 2.7.0)"
 echo "  - Jekyll (>= 3.8.5)"
 echo "  - Bundler (>= 2.0.1)"
 echo "  - Node.js (>= 12.0.0)"
-echo "  - Yarn (>= 1.22.0)"
+echo "  - Bun (>= 1.3.14)"
 echo "  - Babashka"
 echo ""
 echo "Directory Structure:"
@@ -64,17 +64,17 @@ bb script/cleanup_cloud_docs.clj
 printf '\n\n\n================= copy marketing files =================z\n'
 bb script/sync_repo.clj --from-repo "$MARKETING_REPO"
 
-printf '\n\n\n================= yarn lint-markdown =================z\n'
-yarn lint-markdown
+printf '\n\n\n================= bun lint-markdown =================z\n'
+bun lint-markdown
 
-printf '\n\n\n================= yarn lint-styles =================z\n'
-yarn lint-styles
+printf '\n\n\n================= bun lint-styles =================z\n'
+bun lint-styles
 
-printf '\n\n\n================= yarn lint-scripts =================z\n'
-yarn lint-scripts
+printf '\n\n\n================= bun lint-scripts =================z\n'
+bun lint-scripts
 
-printf '\n\n\n================= yarn lint-links =================z\n'
-yarn lint-links
+printf '\n\n\n================= bun lint-links =================z\n'
+bun lint-links
 
 printf '\n\n\n================= Clear the existing site: =================z\n'
 rm -rf _site

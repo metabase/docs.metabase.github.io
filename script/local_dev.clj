@@ -99,10 +99,10 @@
 
       (if run-checks
         (do
-          (p/sh "yarn lint-markdown")
-          (p/sh "yarn lint-styles")
-          (p/sh "yarn lint-scripts")
-          (p/sh "yarn lint-links"))
+          (p/sh "bun lint-markdown")
+          (p/sh "bun lint-styles")
+          (p/sh "bun lint-scripts")
+          (p/sh "bun lint-links"))
         (report [:blue "Skipping checks for source branch:" [:green source-branch]]))
       (fs/delete-tree "_site")
 
