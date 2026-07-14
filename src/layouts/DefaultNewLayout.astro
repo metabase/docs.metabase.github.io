@@ -1,0 +1,34 @@
+---
+import LiquidInclude from "../components/LiquidInclude.astro";
+import config from "../../_config.yml?raw";
+
+const page = {
+  url: "", // TODO: Populate this
+};
+---
+
+<!doctype html>
+<html prefix="og: https://ogp.me/ns#" lang="en-US">
+  <LiquidInclude src="head.html" />
+
+  <body>
+    <LiquidInclude src="shared-chrome/header.html" />
+
+    <div>
+      <slot />
+    </div>
+
+    <LiquidInclude src="shared-chrome/footer.html" />
+    <script type="text/javascript" src="/js/contentloaded.min.js"></script>
+    <script type="text/javascript" src="/js/lightbox.js"></script>
+    <script type="text/javascript" src="/js/documentation.js"></script>
+    <script type="text/javascript" src="/js/blog.js"></script>
+    <script type="text/javascript" src="/js/syntax-highlight.js"></script>
+
+    {
+      page.url.includes("/docs/") && page.url.includes("embedding") && (
+        <script type="text/javascript" src="/js/docs/checkpoints.js" />
+      )
+    }
+  </body>
+</html>
