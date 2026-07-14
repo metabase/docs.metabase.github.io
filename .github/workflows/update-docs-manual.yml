@@ -22,32 +22,12 @@ on:
           - hotfix
           - release
         default: 'manual'
-      package_manager:
-        description: 'Package manager (bun for 59+, yarn for 58 and below)'
-        required: true
-        type: choice
-        options:
-          - bun
-          - yarn
-        default: 'bun'
 
 run-name: Manual docs update | ${{ inputs.source_branch }} -> ${{ inputs.target_branch }}
 
 jobs:
   update-docs-bun:
-    if: inputs.package_manager == 'bun'
     uses: ./.github/workflows/update-docs-base-bun.yml
-    with:
-      source_branch: ${{ inputs.source_branch }}
-      target_branch: ${{ inputs.target_branch }}
-      annotation: ${{ inputs.annotation }}
-      run_name: "Manual docs build"
-    secrets:
-      METABASE_AUTOMATION_USER_TOKEN: ${{ secrets.METABASE_AUTOMATION_USER_TOKEN }}
-
-  update-docs-yarn:
-    if: inputs.package_manager == 'yarn'
-    uses: ./.github/workflows/update-docs-base.yml
     with:
       source_branch: ${{ inputs.source_branch }}
       target_branch: ${{ inputs.target_branch }}
