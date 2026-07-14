@@ -116,6 +116,8 @@ You can export a dashboard as a PDF. Click on the **Sharing** button, then selec
 
 The PDF will only include screenshots of the charts as they are visible on the dashboard.
 
+To get a PDF of a dashboard delivered on a schedule, [attach a PDF to a dashboard subscription](../dashboards/subscriptions#attach-a-pdf-of-the-dashboard).
+
 ### Exporting results of a dashboard card
 
 To export the results of a particular card, hover over the dashboard card, click on the three dot menu (**...**), and select **Download results**.
@@ -135,7 +137,7 @@ If you don't see this option, you may not have [permissions to download results]
 
 ### Exporting results of a dashboard via dashboard subscriptions
 
-You can use [dashboard subscriptions](../dashboards/subscriptions) to regularly export data from all questions on a dashboard, and include those results as an attachment.
+You can use [dashboard subscriptions](../dashboards/subscriptions) to regularly export data from all questions on a dashboard, and include those results as an attachment. You can also [attach a PDF](../dashboards/subscriptions#attach-a-pdf-of-the-dashboard) of the entire dashboard.
 
 ## Remove Metabase branding from exports
 
