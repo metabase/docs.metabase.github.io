@@ -14,7 +14,7 @@
   },
   "scripts": {
     "build": "astro build",
-    "dev": "astro dev",
+    "dev": "concurrently 'bundle exec jekyll serve --incremental --port=4002' 'wait-on http://localhost:4002 -i 1000 && astro dev'",
     "preview": "astro preview",
     "lint-scripts": "eslint .",
     "lint-scripts-fix": "eslint . --fix",
@@ -68,6 +68,7 @@
     "@html-eslint/parser": "^0.13.2",
     "@linthtml/linthtml": "^0.8.6",
     "@linthtml/linthtml-config-recommended": "^0.1.0",
+    "concurrently": "^10.0.3",
     "eslint": "^8.29.0",
     "eslint-plugin-frontmatter": "^0.0.8",
     "eslint-plugin-markdown": "^2.2.1",
@@ -78,7 +79,8 @@
     "semver": "^7.7.2",
     "stylelint": "^14.9.0",
     "stylelint-config-standard-scss": "^4.0.0",
-    "stylelint-order": "^5.0.0"
+    "stylelint-order": "^5.0.0",
+    "wait-on": "^9.0.10"
   },
   "resolutions": {
     "graceful-fs": "^4.2.9"
