@@ -32,14 +32,16 @@ jobs:
     steps:
       - uses: actions/checkout@v6
         with:
-          sparse-checkout: redirects.json
+          sparse-checkout: |
+            redirects.json
+            package.json
+            bun.lock
+            script/cloudfront-functions
 
-      - name: Check redirects.json
-        run: |
-          if ! jq -e . redirects.json > /dev/null; then
-            echo "Invalid JSON in redirects.json"
-            exit 1
-          fi
+      - uses: oven-sh/setup-bun@v2
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
 
       - name: Get App Id & Deploy Role
         run: | # sh
@@ -58,11 +60,7 @@ jobs:
           aws-region: us-east-1
 
       - name: Deploy redirects.json to Amplify
-        run: |
-          RULES=$(jq -c . redirects.json)
-          aws amplify update-app \
-            --app-id "$APP_ID" \
-            --custom-rules "$RULES"
+        run: bun script/cloudfront-functions/bin/deploy-amplify-redirects.ts --app-id "$APP_ID"
 
 
 

@@ -1,0 +1,94 @@
+name: Update Docs Redirect Function
+
+# Builds + publishes the version-conditional /docs redirect CloudFront Function and the
+# associated KeyValueStore (KVS) that holds the redirect table.
+#
+# deploy-redirect-fn.ts builds both artifacts in-process (from lib/) and deploys them:
+#   redirect table (~400 rules)  = conditional-redirects.json (manual)
+#                                + generated-redirects.json  (from redirect_from frontmatter)
+#     -> lib/build-kvs           -> KVS payload  -> written to the KVS (diff: changed keys only)
+#   small function (reads the KVS) = lib/build-docs-redirect-fn
+#     -> published + associated with the fronting distribution's /docs* viewer-request behavior
+#
+#   push to master -> prod function (docs-version-redirects)          + KVS docs-redirects
+#                     + PROD_DISTRIBUTION_ID
+#   PR / dispatch  -> staging function (docs-version-redirects-staging) + KVS docs-redirects-staging
+#                     + STAGING_DISTRIBUTION_ID
+#
+# Required repo config:
+#   secrets.AMPLIFY_DEPLOY_ROLE_DEV / _PROD — OIDC roles with CloudFront + CloudFront
+#     KeyValueStore perms (Describe/Create/Update/PublishFunction, GetDistributionConfig,
+#     UpdateDistribution, cloudfront: Create/List/DescribeKeyValueStore,
+#     cloudfront-keyvaluestore: DescribeKeyValueStore/ListKeys/UpdateKeys).
+#   vars.STAGING_DISTRIBUTION_ID / PROD_DISTRIBUTION_ID — fronting distribution IDs.
+#     Association is skipped (with a warning) when the relevant variable is unset.
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - conditional-redirects.json
+      - generated-redirects.json
+      - _config.yml
+      - script/cloudfront-functions/**
+      - .github/workflows/update-docs-redirect-fn.yml
+  push:
+    branches: [master]
+    paths:
+      - conditional-redirects.json
+      - generated-redirects.json
+      - _config.yml
+      - script/cloudfront-functions/**
+      - .github/workflows/update-docs-redirect-fn.yml
+
+permissions:
+  id-token: write
+  contents: read
+
+concurrency:
+  group: docs-redirect-fn-${{ github.ref == 'refs/heads/master' && 'prod' || 'staging' }}
+  cancel-in-progress: true
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Resolve target env # master -> prod fn/kvs/role, else -> staging
+        run: |
+          if [[ "${GITHUB_REF}" == "refs/heads/master" ]]; then
+            echo "FN_NAME=docs-version-redirects" >> "$GITHUB_ENV"
+            echo "KVS_NAME=docs-redirects" >> "$GITHUB_ENV"
+            echo "DEPLOY_ROLE=${{ secrets.AMPLIFY_DEPLOY_ROLE_PROD }}" >> "$GITHUB_ENV"
+            echo "DIST_ID=${{ vars.PROD_DISTRIBUTION_ID }}" >> "$GITHUB_ENV"
+          else
+            echo "FN_NAME=docs-version-redirects-staging" >> "$GITHUB_ENV"
+            echo "KVS_NAME=docs-redirects-staging" >> "$GITHUB_ENV"
+            echo "DEPLOY_ROLE=${{ secrets.AMPLIFY_DEPLOY_ROLE_DEV }}" >> "$GITHUB_ENV"
+            echo "DIST_ID=${{ vars.STAGING_DISTRIBUTION_ID }}" >> "$GITHUB_ENV"
+          fi
+
+      - uses: oven-sh/setup-bun@v2
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Typecheck and test
+        run: |
+          set -euo pipefail
+          bun run typecheck
+          bun run test
+          bun run redirects:chains
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ env.DEPLOY_ROLE }}
+          aws-region: us-east-1
+
+      - name: Deploy redirect function + KeyValueStore
+        run: |
+          bun script/cloudfront-functions/bin/deploy-redirect-fn.ts \
+            --fn-name "$FN_NAME" --kvs-name "$KVS_NAME" --dist-id "$DIST_ID"

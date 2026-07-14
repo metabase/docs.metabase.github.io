@@ -64,7 +64,11 @@
          cmd))
 
 
-(def artifacts-to-include ["_data/shared_chrome.json"])
+(def artifacts-to-include
+  ["_data/shared_chrome.json"
+   ;; Regenerated from redirect_from frontmatter on every run (see the "Generate /docs
+   ;; redirect table" step); committed so a push to master redeploys the edge KVS.
+   "generated-redirects.json"])
 
 (defn ->artifacts
   "Returns a list of directories and files that are considered artifacts

@@ -27,3 +27,18 @@ jobs:
           rm -rf _site
           # Build the jekyll site:
           script/build
+
+  test-scripts:
+    name: Typecheck & Test Scripts
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+      - uses: oven-sh/setup-bun@v2
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+      - name: Typecheck and test
+        run: |
+          set -euo pipefail
+          bun run typecheck
+          bun run test

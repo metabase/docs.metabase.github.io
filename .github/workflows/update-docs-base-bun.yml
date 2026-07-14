@@ -93,6 +93,13 @@ jobs:
         run: |
           bb script/cleanup_cloud_docs.clj
 
+      # Full-rescan the _docs tree and rewrite generated-redirects.json (the version-banded
+      # /docs redirect table derived from redirect_from frontmatter). Committed via
+      # ->artifacts; a push to master then redeploys the edge KVS (update-docs-redirect-fn.yml).
+      - name: Generate /docs redirect table
+        run: |
+          bun script/cloudfront-functions/bin/generate-redirects.ts --out generated-redirects.json
+
       - name: "bun lint-markdown"
         run: |
           bun run lint-markdown

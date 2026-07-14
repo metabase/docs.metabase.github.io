@@ -7,6 +7,8 @@ category: ignore
 
 # Available docs versions
 
+_Staging deploy verification — 2026-07-07._
+
 We version our docs for every major release, with docs for each major release covering each point release. E.g., docs for v0.XX cover v0.XX.1, v0.XX.2, and so on.
 
 For product releases, see the list of [Metabase releases](https://github.com/metabase/metabase/releases).
