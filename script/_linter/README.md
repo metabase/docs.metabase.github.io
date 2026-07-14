@@ -28,11 +28,3 @@ npm install
 ```
 
 This command downloads the node_modules.
-
-## Tests
-
-From the metabase.github.io directory, run:
-
-```
-npm run test-linter
-```

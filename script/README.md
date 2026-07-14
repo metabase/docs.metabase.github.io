@@ -58,15 +58,3 @@ npm install
 ```
 
 This command downloads the node_modules.
-
-## Tests
-
-From the metabase.github.io directory, run:
-
-```
-npm run test-linter
-```
-
-## Adding checks
-
-Add checks to the `lib/checks` directory. You can add unit tests, and update the linter.test.js test for an end-to-end test.
