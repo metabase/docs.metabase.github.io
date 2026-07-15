@@ -1,7 +1,9 @@
 import { satteri } from "@astrojs/markdown-satteri";
+import { ialHastPlugin } from "./plugins/ialHastPlugin";
+import { inlineCodeHastPlugin } from "./plugins/inlineCodeHastPlugin";
 
 const docsMarkdownProcessor = satteri({
-  hastPlugins: [],
+  hastPlugins: [ialHastPlugin, inlineCodeHastPlugin],
 });
 
 let rendererPromise:
@@ -10,10 +12,7 @@ let rendererPromise:
 export const getMarkdownRenderer = () => {
   if (!rendererPromise) {
     rendererPromise = docsMarkdownProcessor.createRenderer({
-      shikiConfig: {
-        theme: "github-light",
-        wrap: true,
-      },
+      syntaxHighlight: false, // Preserve syntax highlighting added when this was a jekyll site
     });
   }
   return rendererPromise;

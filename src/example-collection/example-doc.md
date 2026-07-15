@@ -29,3 +29,17 @@ Specific snippet:
 ```js
 {% include_file "{{ dirname }}/sdk/snippets/authentication/auth-config-base.tsx" snippet="example" %}
 ```
+
+## Miscellaneous edge cases
+
+### Inline attribute lists
+
+```
+[Metabase Expert](/partners/){:target="_blank"}
+```
+
+gets rendered as [Metabase Expert](/partners/){:target="_blank"}.
+
+### Inline code snippet
+
+Inline backticks like `this` get rendered as inline code with no copy button.
