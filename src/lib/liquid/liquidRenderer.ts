@@ -2,6 +2,7 @@ import { Liquid, type LiquidOptions } from "liquidjs";
 import path from "node:path";
 import YAML from "yamljs";
 import fs from "node:fs";
+import { registerIncludeFileTag } from "./tags/includeFileTag";
 
 const ROOT = process.cwd();
 const INCLUDES_ROOT = path.join(ROOT, "_includes");
@@ -32,8 +33,10 @@ const loadDataDir = (dir: string): Record<string, unknown> => {
 export const getLiquidRenderer = (
   {
     page,
+    dirname,
   }: {
     page: Record<string, unknown>;
+    dirname: string,
   },
   options?: LiquidOptions,
 ) => {
@@ -45,8 +48,11 @@ export const getLiquidRenderer = (
     ...options,
   });
 
+  registerIncludeFileTag(liquidEngine);
+
   const ctx = {
     page,
+    dirname,
     site: {
       ...YAML.parse(fs.readFileSync(path.join(ROOT, "_config.yml"), "utf8")),
       data: loadDataDir(path.join(ROOT, "_data")),
@@ -57,23 +63,10 @@ export const getLiquidRenderer = (
   };
 
   return {
-    render: (html: string) => {
+    render: (html: string, { include }: { include?: Record<string, unknown>} = {}) => {
       return liquidEngine.parseAndRender(html, {
-        dirname: "", // TODO
         ...ctx,
-      });
-    },
-    include: (src: string, params?: Record<string, unknown>) => {
-      const rel = path.relative(ROOT, path.resolve(ROOT, src));
-      const dir = path
-        .dirname(rel)
-        .split(path.sep)
-        .join("/");
-
-      return liquidEngine.renderFile(src, {
-        ...ctx,
-        dirname: dir === "." ? "/" : `/${dir}`,
-        include: params,
+        include,
       });
     },
   };

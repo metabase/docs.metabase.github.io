@@ -1,5 +1,9 @@
 ---
-import { type LiquidRenderer } from "@/lib/liquid";
+import { type LiquidRenderer } from "@/lib/liquid/liquidRenderer";
+import fs from "node:fs";
+import path from "node:path";
+
+const INCLUDES_ROOT = path.join(process.cwd(), "_includes");
 
 // Astro equivalent of Jekyll's `{% include %}` tag. Extra props are passed
 // through as `include.*` inside the partial, just like Jekyll:
@@ -12,7 +16,7 @@ interface Props {
 
 const { lq, src, ...params } = Astro.props;
 
-const html = await lq.include(src, {
+const html = await lq.render(fs.readFileSync(path.join(INCLUDES_ROOT, src), 'utf-8'), {
   include: params,
 });
 ---

@@ -15,3 +15,17 @@ layout: new-docs
 {% include youtube.html id='yTRzCQeTmO8' %}
 
 {% include beta-blockquote.html %}
+
+## Custom include_file examples
+
+Whole file (remove snippet comments):
+
+```js
+{% include_file "{{ dirname }}/sdk/snippets/next-js/app-router-authentication-api-route.ts" %}
+```
+
+Specific snippet:
+
+```js
+{% include_file "{{ dirname }}/sdk/snippets/authentication/auth-config-base.tsx" snippet="example" %}
+```
