@@ -1,25 +1,26 @@
 ---
 import DefaultNewLayout from "./DefaultNewLayout.astro";
-import { getLiquidRenderer } from "@/lib/liquid";
+import { getLiquidRenderer } from "@/lib/liquid/liquidRenderer";
 import LiquidInclude from "@/components/LiquidInclude.astro";
 
 type Props = {
   page: {
     category: string;
   };
+  dirname: string;
 };
 
-const { page } = Astro.props;
+const { page, dirname } = Astro.props;
 
 /* Do not show breadcrumb on home page */
 const parts = Astro.url.pathname.split("/");
 const showBreadcrumb =
   parts[1] == "docs" && parts.length == 4 && parts[3] === "index.html";
 
-const lq = getLiquidRenderer({ page });
+const lq = getLiquidRenderer({ page, dirname });
 ---
 
-<DefaultNewLayout page={page}>
+<DefaultNewLayout page={page} dirname={dirname}>
   <div class="bootstrap">
     <div class="learn docs blog-post MB-Page">
       <LiquidInclude lq={lq} src="docs/left-sidebar.html" domain="docs" />

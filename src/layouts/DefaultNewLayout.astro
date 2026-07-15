@@ -1,14 +1,15 @@
 ---
-import { getLiquidRenderer } from "@/lib/liquid";
+import { getLiquidRenderer } from "@/lib/liquid/liquidRenderer";
 import LiquidInclude from "@/components/LiquidInclude.astro";
 
 type Props = {
   page: Record<string, unknown>;
+  dirname: string;
 };
 
-const { page } = Astro.props;
+const { page, dirname } = Astro.props;
 
-const lq = getLiquidRenderer({ page });
+const lq = getLiquidRenderer({ page, dirname });
 ---
 
 <!doctype html>
