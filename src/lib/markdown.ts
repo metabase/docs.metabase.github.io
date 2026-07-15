@@ -5,8 +5,7 @@ const docsMarkdownProcessor = satteri({
 });
 
 let rendererPromise:
-  | ReturnType<typeof docsMarkdownProcessor.createRenderer>
-  | undefined;
+  ReturnType<typeof docsMarkdownProcessor.createRenderer> | undefined;
 
 export const getMarkdownRenderer = () => {
   if (!rendererPromise) {

@@ -7,5 +7,4 @@ const examples = defineCollection({
   }),
 });
 
-
 export const collections = { examples };
