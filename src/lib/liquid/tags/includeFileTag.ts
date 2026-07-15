@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
-import { type TagToken, type Context, type Liquid } from "liquidjs";
+import type { Context, Liquid, TagToken } from "liquidjs";
 
 // ---------------------------------------------------------------------------
 // {% include_file %} — port of the jekyll_include_plugin gem (v1.3.0), which
@@ -31,9 +31,15 @@ function pickSnippet(text: string, name: string): string {
       content += line;
     }
   }
-  if (!started) throw new Error(`Snippet '${name}' has not been found`);
-  if (!ended) throw new Error(`End of the snippet '${name}' has not been found`);
-  if (!content) throw new Error(`Snippet '${name}' appears to be empty`);
+  if (!started) {
+    throw new Error(`Snippet '${name}' has not been found`);
+  }
+  if (!ended) {
+    throw new Error(`End of the snippet '${name}' has not been found`);
+  }
+  if (!content) {
+    throw new Error(`Snippet '${name}' appears to be empty`);
+  }
   return content;
 }
 
@@ -47,8 +53,14 @@ function removeIgnoredLines(text: string): string {
   let ignoring = false;
   return lines(text)
     .filter((line) => {
-      if (/^\s*\/\/\s*\[<ignore>\]/.test(line)) return void (ignoring = true);
-      if (/^\s*\/\/\s*\[<endignore>\]/.test(line)) return void (ignoring = false);
+      if (/^\s*\/\/\s*\[<ignore>\]/.test(line)) {
+        ignoring = true;
+        return;
+      }
+      if (/^\s*\/\/\s*\[<endignore>\]/.test(line)) {
+        ignoring = false;
+        return;
+      }
       return !ignoring;
     })
     .join("");
@@ -106,7 +118,7 @@ export const registerIncludeFileTag = (engine: Liquid) => {
       for (const [, key, value] of paramStr.matchAll(/([-\w]+)="([^"]+)"/g)) {
         params[key] = value;
       }
-  
+
       let text = fs.readFileSync(path.join(ROOT, filePath), "utf8");
       text = params.snippet
         ? pickSnippet(text, params.snippet)
@@ -120,4 +132,4 @@ export const registerIncludeFileTag = (engine: Liquid) => {
     },
   });
   return engine;
-}
+};

@@ -1,7 +1,7 @@
-import { Liquid, type LiquidOptions } from "liquidjs";
-import path from "node:path";
-import YAML from "yamljs";
 import fs from "node:fs";
+import path from "node:path";
+import { Liquid, type LiquidOptions } from "liquidjs";
+import YAML from "yamljs";
 import { registerIncludeFileTag } from "./tags/includeFileTag";
 
 const ROOT = process.cwd();
@@ -36,7 +36,7 @@ export const getLiquidRenderer = (
     dirname,
   }: {
     page: Record<string, unknown>;
-    dirname: string,
+    dirname: string;
   },
   options?: LiquidOptions,
 ) => {
@@ -63,7 +63,10 @@ export const getLiquidRenderer = (
   };
 
   return {
-    render: (html: string, { include }: { include?: Record<string, unknown>} = {}) => {
+    render: (
+      html: string,
+      { include }: { include?: Record<string, unknown> } = {},
+    ) => {
       return liquidEngine.parseAndRender(html, {
         ...ctx,
         include,
