@@ -43,3 +43,9 @@ gets rendered as [Metabase Expert](/partners/){:target="_blank"}.
 ### Inline code snippet
 
 Inline backticks like `this` get rendered as inline code with no copy button.
+
+### Relative images
+
+This image loads even though it's not in src or public (e.g. every _docs image).
+
+![Migrate to Metabase Cloud button](../../_docs/latest/embedding/images/action-buttons.png)

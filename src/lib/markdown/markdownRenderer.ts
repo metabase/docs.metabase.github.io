@@ -1,9 +1,10 @@
 import { satteri } from "@astrojs/markdown-satteri";
 import { ialHastPlugin } from "./plugins/ialHastPlugin";
 import { inlineCodeHastPlugin } from "./plugins/inlineCodeHastPlugin";
+import { localImagePlugin } from "./plugins/localImagePlugin";
 
 const docsMarkdownProcessor = satteri({
-  hastPlugins: [ialHastPlugin, inlineCodeHastPlugin],
+  hastPlugins: [ialHastPlugin, inlineCodeHastPlugin, localImagePlugin],
 });
 
 let rendererPromise:

@@ -1,4 +1,6 @@
 ---
+import path from "node:path";
+import { pathToFileURL } from "node:url";
 import NewDocsLayout from "@/layouts/NewDocsLayout.astro";
 import { getLiquidRenderer } from "@/lib/liquid/liquidRenderer";
 import { getMarkdownRenderer } from "@/lib/markdown/markdownRenderer";
@@ -33,7 +35,9 @@ const lqProcessed = lqOutput.replace(/>\s+</g, "><");
 
 // Convert processed markdown to html
 const md = await getMarkdownRenderer();
-const renderResult = await md.render(lqProcessed);
+const renderResult = await md.render(lqProcessed, {
+  fileURL: pathToFileURL(path.resolve(example.filePath!)),
+});
 ---
 
 <NewDocsLayout page={example.data} dirname={dirname}>
