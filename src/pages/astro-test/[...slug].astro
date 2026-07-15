@@ -1,0 +1,38 @@
+---
+import { getCollection, type DataEntryMap } from "astro:content";
+import NewDocsLayout from "@/layouts/NewDocsLayout.astro";
+import { getLiquidRenderer } from "@/lib/liquid";
+import { getMarkdownRenderer } from "@/lib/markdown";
+
+type Props = {
+  example: DataEntryMap["examples"][number];
+};
+
+export const getStaticPaths = async () => {
+  const examples = await getCollection("examples");
+  return [
+    ...examples.map((example) => ({
+      props: { example },
+      params: { slug: example.id.replace(/^src\//, "") },
+    })),
+  ];
+};
+
+const { example } = Astro.props;
+
+// Process liquid (includes, variables) first
+const lq = getLiquidRenderer({ page: example.data });
+const lqOutput = await lq.render(example.body!);
+
+// Remove whitespace between elements so satteri doesn't turn them into code snippets.
+// Mimics previous behavior (which used jekyll + kramdown).
+const lqProcessed = lqOutput.replace(/>\s+</g, '><');
+
+// Convert processed markdown to html
+const md = await getMarkdownRenderer();
+const renderResult = await md.render(lqProcessed);
+---
+
+<NewDocsLayout page={example.data}>
+  <Fragment set:html={renderResult.code} />
+</NewDocsLayout>

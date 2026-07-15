@@ -1,54 +1,19 @@
 ---
-import fs from "node:fs";
-import path from "node:path";
-import { liquidEngine } from "../lib/liquid";
-import YAML from "yamljs";
+import { type LiquidRenderer } from "@/lib/liquid";
 
 // Astro equivalent of Jekyll's `{% include %}` tag. Extra props are passed
 // through as `include.*` inside the partial, just like Jekyll:
 //   {% include foo.html param="x" %}  ->  <LiquidInclude src="foo.html" param="x" />
 interface Props {
+  lq: LiquidRenderer;
   src: string;
   [param: string]: unknown;
 }
 
-const { src, ...params } = Astro.props;
+const { lq, src, ...params } = Astro.props;
 
-const ROOT = process.cwd();
-
-function loadDataDir(dir: string): Record<string, unknown> {
-  const data: Record<string, any> = {};
-  if (!fs.existsSync(dir)) return data;
-  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
-    const full = path.join(dir, entry.name);
-    if (entry.isDirectory()) {
-      data[entry.name] = loadDataDir(full);
-    } else if (/\.(yml|yaml)$/.test(entry.name)) {
-      data[entry.name.replace(/\.(yml|yaml)$/, "")] = YAML.parse(
-        fs.readFileSync(full, "utf8"),
-      );
-    } else if (entry.name.endsWith(".json")) {
-      data[entry.name.replace(/\.json$/, "")] = JSON.parse(
-        fs.readFileSync(full, "utf8"),
-      );
-    }
-  }
-  return data;
-}
-
-const site: Record<string, unknown> = {
-  ...YAML.parse(fs.readFileSync(path.join(ROOT, "_config.yml"), "utf8")),
-  data: loadDataDir(path.join(ROOT, "_data")),
-};
-
-const jekyll = {
-  environment: process.env.NODE_ENV || "development",
-};
-
-const html = await liquidEngine.renderFile(src, {
+const html = await lq.include(src, {
   include: params,
-  site,
-  jekyll,
 });
 ---
 
