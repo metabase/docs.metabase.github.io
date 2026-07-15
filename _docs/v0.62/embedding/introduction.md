@@ -105,8 +105,6 @@ If you're using an AI agent to help you embed Metabase in your app, check out [A
 
 [Usage Analytics](../usage-and-performance-tools/usage-analytics) tracks embed usage, including embedding context, authentication methods, hostname, and other metadata. Check out the [Embedding usage dashboard](../usage-and-performance-tools/usage-analytics-reference#embedding-usage).
 
-For information about the anonymous usage data Metabase collects from embedded components, see [Embedding telemetry](../installation-and-operation/information-collection#embedding-telemetry).
-
 ## Embedding limitations
 
 - Currently, you can't embed [documents](../documents/introduction) (though you can create [public documents](./public-links)).
