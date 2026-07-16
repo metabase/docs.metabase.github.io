@@ -1,9 +1,14 @@
 import { satteri } from "@astrojs/markdown-satteri";
 import { ialHastPlugin } from "./plugins/ialHastPlugin";
 import { inlineCodeHastPlugin } from "./plugins/inlineCodeHastPlugin";
+import { responsiveTableLabelsHastPlugin } from "./plugins/responsiveTableLabelsHastPlugin";
 
 const docsMarkdownProcessor = satteri({
-  hastPlugins: [ialHastPlugin, inlineCodeHastPlugin],
+  hastPlugins: [
+    ialHastPlugin,
+    inlineCodeHastPlugin,
+    responsiveTableLabelsHastPlugin,
+  ],
 });
 
 let rendererPromise:

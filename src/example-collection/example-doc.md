@@ -30,7 +30,7 @@ Specific snippet:
 {% include_file "{{ dirname }}/sdk/snippets/authentication/auth-config-base.tsx" snippet="example" %}
 ```
 
-## Miscellaneous edge cases
+## Miscellaneous cases
 
 ### Inline attribute lists
 
@@ -43,3 +43,9 @@ gets rendered as [Metabase Expert](/partners/){:target="_blank"}.
 ### Inline code snippet
 
 Inline backticks like `this` get rendered as inline code with no copy button.
+
+### Responsive tables
+
+The columns should stack on small screens.
+
+{% include_file "{{ dirname }}/sdk/api/snippets/ParameterChangePayload.md" snippet="properties" %}
