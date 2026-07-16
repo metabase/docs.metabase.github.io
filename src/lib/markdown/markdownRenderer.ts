@@ -1,6 +1,7 @@
 import { satteri } from "@astrojs/markdown-satteri";
 import { ialHastPlugin } from "./plugins/ialHastPlugin";
 import { inlineCodeHastPlugin } from "./plugins/inlineCodeHastPlugin";
+import { relativeImagePlugin } from "./plugins/relativeImagePlugin";
 import { responsiveTableLabelsHastPlugin } from "./plugins/responsiveTableLabelsHastPlugin";
 
 const docsMarkdownProcessor = satteri({
@@ -8,6 +9,7 @@ const docsMarkdownProcessor = satteri({
     ialHastPlugin,
     inlineCodeHastPlugin,
     responsiveTableLabelsHastPlugin,
+    relativeImagePlugin,
   ],
 });
 

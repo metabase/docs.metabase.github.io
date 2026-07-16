@@ -1,10 +1,12 @@
 import { defineCollection } from "astro:content";
 import { glob } from "astro/loaders";
+import { DOCS_SRC_ROOT } from "./constants";
 
-const examples = defineCollection({
+const docs = defineCollection({
   loader: glob({
-    pattern: ["src/example-collection/**/*.md"],
+    pattern: ["**/*.md", "!**/embedding/sdk/api/snippets/**"],
+    base: DOCS_SRC_ROOT,
   }),
 });
 
-export const collections = { examples };
+export const collections = { docs };

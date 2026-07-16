@@ -1,0 +1,50 @@
+---
+import path from "node:path";
+import { pathToFileURL } from "node:url";
+import NewDocsLayout from "@/layouts/NewDocsLayout.astro";
+import { getLiquidRenderer } from "@/lib/liquid/liquidRenderer";
+import { getMarkdownRenderer } from "@/lib/markdown/markdownRenderer";
+import { getCollection, type DataEntryMap } from "astro:content";
+
+type Props = {
+  doc: DataEntryMap["docs"][number];
+};
+
+export const getStaticPaths = async () => {
+  const splitAtFirst = (str: string, delimiter: string) => {
+    const index = str.indexOf(delimiter);
+    return index !== -1 ? [str.slice(0, index), str.slice(index + 1)] : [str];
+  };
+  const docs = await getCollection("docs");
+  return [
+    ...docs.map((doc) => {
+      const [version, slug] = splitAtFirst(doc.id, "/");
+      return {
+        props: { doc },
+        params: { version, slug },
+      };
+    }),
+  ];
+};
+
+const { doc } = Astro.props;
+const dirname = path.dirname(doc.filePath!);
+
+// Process liquid first (e.g. control flow, includes, variables, etc)
+const lq = getLiquidRenderer({ page: doc.data, dirname });
+const lqOutput = await lq.render(doc.body!);
+
+// Remove whitespace between elements so satteri doesn't turn them into code snippets.
+// Mimics previous behavior (which used jekyll + kramdown).
+const lqProcessed = lqOutput.replace(/>\s+</g, "><");
+
+// Convert processed markdown to html
+const md = await getMarkdownRenderer();
+const renderResult = await md.render(lqProcessed, {
+  fileURL: pathToFileURL(path.resolve(doc.filePath!)),
+});
+---
+
+<NewDocsLayout page={doc.data} dirname={dirname}>
+  <Fragment set:html={renderResult.code} />
+</NewDocsLayout>
