@@ -204,6 +204,8 @@ See [Modular embedding parameters](./parameters#pass-parameter-values-to-embedde
 
 Locked parameters let you filter data without exposing the filter to the end-user. Locking parameters is useful for restricting data based on who's viewing the embed (for example, showing each customer only their own data).
 
+![Locked parameters](./images/locked-parameters.png)
+
 To use locked parameters, you need to:
 
 1. Set the parameter to **Locked** in the embed settings.
