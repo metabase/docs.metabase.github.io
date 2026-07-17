@@ -1,8 +1,43 @@
 import fs from "node:fs";
 import path from "node:path";
-import { Liquid } from "liquidjs";
+import { Liquid, ParseError, TokenizationError } from "liquidjs";
 import YAML from "yamljs";
 import { registerIncludeFileTag } from "./tags/includeFileTag";
+
+const MAX_LIQUID_SYNTAX_ERRORS = 25;
+
+// Old markdown docs sometimes contain text that merely looks like Liquid
+// (e.g. "{{#...}}" used to describe template tag syntax) but isn't valid
+// Liquid. Jekyll/Ruby rendered these as blank rather than failing the build,
+// so on a syntax error we cut out just the offending "{{ }}"/"{% %}" span and
+// retry, instead of taking down the whole page.
+const stripInvalidLiquidSpan = (
+  source: string,
+  err: unknown,
+): string | null => {
+  if (!(err instanceof TokenizationError) && !(err instanceof ParseError)) {
+    return null;
+  }
+
+  let { begin, end } = err.token;
+  if (!(source.startsWith("{{", begin) || source.startsWith("{%", begin))) {
+    const outputOpen = source.lastIndexOf("{{", begin);
+    const tagOpen = source.lastIndexOf("{%", begin);
+    let openStart = outputOpen;
+    let closer = "}}";
+    if (tagOpen > outputOpen) {
+      openStart = tagOpen;
+      closer = "%}";
+    }
+    if (openStart === -1) return null;
+    const closeIdx = source.indexOf(closer, end);
+    if (closeIdx === -1) return null;
+    begin = openStart;
+    end = closeIdx + closer.length;
+  }
+
+  return source.slice(0, begin) + source.slice(end);
+};
 
 const ROOT = process.cwd();
 const INCLUDES_ROOT = path.join(ROOT, "_includes");
@@ -63,14 +98,31 @@ export const getLiquidRenderer = ({
   };
 
   return {
-    render: (
+    render: async (
       html: string,
       { include }: { include?: Record<string, unknown> } = {},
     ) => {
-      return liquidEngine.parseAndRender(html, {
-        ...ctx,
-        include,
-      });
+      let source = html;
+      for (let attempt = 0; attempt < MAX_LIQUID_SYNTAX_ERRORS; attempt++) {
+        try {
+          return await liquidEngine.parseAndRender(source, {
+            ...ctx,
+            include,
+          });
+        } catch (err) {
+          const stripped = stripInvalidLiquidSpan(source, err);
+          if (stripped === null) throw err;
+          console.warn(
+            `[liquid] Ignoring invalid Liquid syntax in ${dirname}: ${
+              (err as Error).message
+            }`,
+          );
+          source = stripped;
+        }
+      }
+      throw new Error(
+        `[liquid] Too many invalid Liquid syntax errors in ${dirname}`,
+      );
     },
   };
 };
