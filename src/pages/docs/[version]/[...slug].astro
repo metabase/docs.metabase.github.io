@@ -15,6 +15,9 @@ export const getStaticPaths = async () => {
     const index = str.indexOf(delimiter);
     return index !== -1 ? [str.slice(0, index), str.slice(index + 1)] : [str];
   };
+  // TODO: Handle README -> index
+  // TODO: Handle permalink in frontmatter
+  // TODO: Handle redirect_to/redirect_from
   const docs = await getCollection("docs");
   return [
     ...docs.map((doc) => {
