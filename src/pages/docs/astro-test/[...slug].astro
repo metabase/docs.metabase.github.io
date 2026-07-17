@@ -23,7 +23,7 @@ const { example } = Astro.props;
 // This is for debug purposes only. When rendering _docs, the dirname will be the source md file's path.
 const dirname = "_docs/latest/embedding";
 
-// Process liquid (includes, variables) first
+// Process liquid first (e.g. control flow, includes, variables, etc)
 const lq = getLiquidRenderer({ page: example.data, dirname });
 const lqOutput = await lq.render(example.body!);
 

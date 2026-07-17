@@ -4,6 +4,7 @@ has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
 layout: new-docs
+no_index_no_follow: true
 ---
 
 # Example markdown astro page

@@ -51,7 +51,7 @@ export const getLiquidRenderer = ({
       root: [INCLUDES_ROOT],
       jekyllInclude: true,
       jekyllWhere: true,
-      strictVariables: false, // TODO: Can we flip this to true?
+      strictVariables: false, // TODO: Would be nice to flip this to true
     });
     registerIncludeFileTag(liquidEngine);
   }

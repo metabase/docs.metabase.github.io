@@ -87,16 +87,5 @@ const lq = getLiquidRenderer({ page, dirname });
   <script is:inline type="text/javascript" src="/js/position-feedback-widget.js"
   ></script>
 
-  <script is:inline>
-    const pageTitle = `{{page.title | replace: "''", "'"}}`;
-    const pageURL = "{{page.url}}";
-    const pageURLSplit = pageURL.split("/");
-
-    let pageURLPrefix = "/" + pageURLSplit[1] + "/" + pageURLSplit[2];
-    if (pageURLPrefix.includes("search") || pageURLPrefix.includes("all")) {
-      pageURLPrefix = "/docs/latest";
-    }
-  </script>
-
   <script is:inline src="/js/use-custom-header-checkout-link.js"></script>
 </DefaultNewLayout>

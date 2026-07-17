@@ -24,16 +24,23 @@ const lq = getLiquidRenderer({ page, dirname });
     </div>
 
     <LiquidInclude lq={lq} src="shared-chrome/footer.html" />
-    <script type="text/javascript" src="/js/contentloaded.min.js"></script>
-    <script type="text/javascript" src="/js/lightbox.js"></script>
-    <script type="text/javascript" src="/js/documentation.js"></script>
-    <script type="text/javascript" src="/js/blog.js"></script>
-    <script type="text/javascript" src="/js/syntax-highlight.js"></script>
+    <script is:inline type="text/javascript" src="/js/contentloaded.min.js"
+    ></script>
+    <script is:inline type="text/javascript" src="/js/lightbox.js"></script>
+    <script is:inline type="text/javascript" src="/js/documentation.js"
+    ></script>
+    <script is:inline type="text/javascript" src="/js/blog.js"></script>
+    <script is:inline type="text/javascript" src="/js/syntax-highlight.js"
+    ></script>
 
     {
       Astro.url.pathname.includes("/docs/") &&
         Astro.url.pathname.includes("embedding") && (
-          <script type="text/javascript" src="/js/docs/checkpoints.js" />
+          <script
+            is:inline
+            type="text/javascript"
+            src="/js/docs/checkpoints.js"
+          />
         )
     }
   </body>
