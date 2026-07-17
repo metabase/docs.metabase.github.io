@@ -1,5 +1,5 @@
-import { defineHastPlugin } from "satteri";
 import type { Element, ElementContent } from "hast";
+import { defineHastPlugin } from "satteri";
 
 // Ported from _plugins/jekyll_responsive_table_labels_plugin.rb: the site's
 // responsive CSS shows a `data-label` before each `<td>`'s content when a

@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
-import { Liquid, type LiquidOptions } from "liquidjs";
+import { Liquid } from "liquidjs";
 import YAML from "yamljs";
 import { registerIncludeFileTag } from "./tags/includeFileTag";
 
@@ -27,39 +27,39 @@ const loadDataDir = (dir: string): Record<string, unknown> => {
   return data;
 };
 
-// Renders Jekyll's `_includes/*.html` partials, matching Jekyll's Liquid
-// dialect: `{% include foo.html param="x" %}` style tags and `include.param`
-// lookups inside the partial.
-export const getLiquidRenderer = (
-  {
-    page,
-    dirname,
-  }: {
-    page: Record<string, unknown>;
-    dirname: string;
+const baseCtx = {
+  site: {
+    ...YAML.parse(fs.readFileSync(path.join(ROOT, "_config.yml"), "utf8")),
+    data: loadDataDir(path.join(ROOT, "_data")),
   },
-  options?: LiquidOptions,
-) => {
-  const liquidEngine = new Liquid({
-    root: [INCLUDES_ROOT],
-    jekyllInclude: true,
-    jekyllWhere: true,
-    strictVariables: false, // TODO: Can we flip this to true?
-    ...options,
-  });
+  jekyll: {
+    environment: process.env.NODE_ENV || "development",
+  },
+};
 
-  registerIncludeFileTag(liquidEngine);
+let liquidEngine: Liquid;
+
+export const getLiquidRenderer = ({
+  page,
+  dirname,
+}: {
+  page: Record<string, unknown>;
+  dirname: string;
+}) => {
+  if (!liquidEngine) {
+    liquidEngine = new Liquid({
+      root: [INCLUDES_ROOT],
+      jekyllInclude: true,
+      jekyllWhere: true,
+      strictVariables: false, // TODO: Can we flip this to true?
+    });
+    registerIncludeFileTag(liquidEngine);
+  }
 
   const ctx = {
+    ...baseCtx,
     page,
     dirname,
-    site: {
-      ...YAML.parse(fs.readFileSync(path.join(ROOT, "_config.yml"), "utf8")),
-      data: loadDataDir(path.join(ROOT, "_data")),
-    },
-    jekyll: {
-      environment: process.env.NODE_ENV || "development",
-    },
   };
 
   return {
