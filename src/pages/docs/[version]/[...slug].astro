@@ -15,13 +15,15 @@ export const getStaticPaths = async () => {
     const index = str.indexOf(delimiter);
     return index !== -1 ? [str.slice(0, index), str.slice(index + 1)] : [str];
   };
-  // TODO: Handle README -> index
-  // TODO: Handle permalink in frontmatter
   // TODO: Handle redirect_to/redirect_from
   const docs = await getCollection("docs");
   return [
     ...docs.map((doc) => {
-      const [version, slug] = splitAtFirst(doc.id, "/");
+      const id =
+        doc.data.permalink
+          ?.replace(/^\/docs\//, "")
+          .replace(/\/index\.html$/, "") ?? doc.id;
+      const [version, slug] = splitAtFirst(id, "/");
       return {
         props: { doc },
         params: { version, slug },
@@ -48,6 +50,9 @@ const renderResult = await md.render(lqProcessed, {
 });
 ---
 
-<NewDocsLayout page={doc.data} dirname={dirname}>
+<NewDocsLayout
+  page={{ url: Astro.url.pathname, ...doc.data }}
+  dirname={dirname}
+>
   <Fragment set:html={renderResult.code} />
 </NewDocsLayout>

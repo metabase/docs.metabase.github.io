@@ -103,6 +103,7 @@ export const getLiquidRenderer = ({
       { include }: { include?: Record<string, unknown> } = {},
     ) => {
       let source = html;
+      // TODO: Always fail on error for `latest` version
       for (let attempt = 0; attempt < MAX_LIQUID_SYNTAX_ERRORS; attempt++) {
         try {
           return await liquidEngine.parseAndRender(source, {
