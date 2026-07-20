@@ -7,6 +7,7 @@ category: Embedding
 title: MetabaseAuthConfig
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/embedding/sdk/api/snippets/MetabaseAuthConfig.md'
 layout: new-docs
+latest: true
 ---
 
 ```ts

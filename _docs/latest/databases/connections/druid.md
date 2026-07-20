@@ -1,5 +1,5 @@
 ---
-version: v0.62
+version: v0.63
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -12,8 +12,6 @@ latest: true
 ---
 
 # Druid
-
-> Prefer the Druid JDBC connection.
 
 To add a database connection, click the **grid** icon in the top right, and navigate to **Admin** > **Databases** > **Add a database**.
 
@@ -43,15 +41,11 @@ See our [guide to SSH tunneling](../ssh-tunnel).
 
 ### Allow unfolding of JSON columns
 
-> Only available for the Druid JDBC connection.
-
 This enables unfolding of JSON columns into their component fields.
 
 See [JSON unfolding](../../data-modeling/json-unfolding).
 
 ### Authentication
-
-> Only available for the Druid JDBC connection.
 
 Toggle on to enable basic authentication with a username and password.
 

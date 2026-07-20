@@ -1,5 +1,5 @@
 ---
-version: v0.62
+version: v0.63
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: false
@@ -35,6 +35,10 @@ Granting group access to different Metabase features.
 ## [Row and column security](./row-and-column-security)
 
 Setting up row and column security to restrict access to rows and columns in tables.
+
+## [Choosing a data isolation method](./data-isolation-methods)
+
+Compare row and column security, impersonation, database routing, and locked parameters for multi-tenant setups.
 
 ## [Snippet folder permissions](./snippets)
 

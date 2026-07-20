@@ -1,5 +1,5 @@
 ---
-version: v0.62
+version: v0.63
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -116,6 +116,7 @@ Start with one of the quickstarts, then see these pages for more info on compone
 - [Questions](./questions)
 - [AI chat](./ai-chat)
 - [Dashboards](./dashboards)
+- [Actions](./actions)
 - [Appearance](../appearance)
 - [Collections](./collections)
 - [Plugins](./plugins)

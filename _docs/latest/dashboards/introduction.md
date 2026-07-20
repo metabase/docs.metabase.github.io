@@ -1,5 +1,5 @@
 ---
-version: v0.62
+version: v0.63
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -91,7 +91,7 @@ You can use [Markdown](https://commonmark.org/help/) to format the text in your 
 
 ![Result](images/result.png)
 
-To learn more, see [Fun with Markdown in your dashboards](/learn/metabase-basics/querying-and-dashboards/dashboards/markdown).
+To learn more, see [Format text with Markdown](./markdown).
 
 ### Including variables in text cards
 
@@ -339,6 +339,8 @@ Public links can be viewed by anyone, even if they don't have access to Metabase
 ## Exporting results from a dashboard
 
 You can export the entire dashboard as PDF, or export results of individual questions on the dashboard. See [Exporting results](../questions/exporting-results).
+
+To get a PDF of a dashboard delivered on a schedule, [attach a PDF to a dashboard subscription](./subscriptions#attach-a-pdf-of-the-dashboard).
 
 ## Configuring a dashboard through its URL
 

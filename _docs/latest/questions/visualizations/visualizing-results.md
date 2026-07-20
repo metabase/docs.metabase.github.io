@@ -1,5 +1,5 @@
 ---
-version: v0.62
+version: v0.63
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -128,6 +128,12 @@ A [sunburst chart](./pie-or-donut-chart) is a pie chart with more than one ring 
 [Pivot tables](./pivot-table) allow you swap rows and columns, group data, and include subtotals in your table. You can group one or more metrics by one or more dimensions.
 
 ![Pivot table options](../images/pivot-table-options.png)
+
+## Treemaps
+
+[Treemaps](./treemap) display hierarchical data as nested rectangles, sized by a metric. Use them to break a total down across one or two nested categorical dimensions.
+
+![Treemap](../images/treemap.png)
 
 ## Progress bars
 

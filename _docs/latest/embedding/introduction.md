@@ -1,5 +1,5 @@
 ---
-version: v0.62
+version: v0.63
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -71,23 +71,24 @@ If you'd like to share your data with the good people of the internet, admins ca
 
 ## Comparison of embedding types
 
-| Action                                                                                                               | [Modular SDK](./sdk/introduction) | [Modular SSO](./modular-embedding) | [Modular Guest](./guest-embedding) | [Full app](./full-app-embedding) | [Public](../embedding/public-links) |
-| -------------------------------------------------------------------------------------------------------------------- | ------------------------------------ | ------------------------------------- | ------------------------------------- | ----------------------------------- | -------------------------------------- |
-| Charts and dashboards                                                                                                | ✅                                   | ✅                                    | ✅                                    | ✅                                  | ✅                                     |
-| [Filter widgets](/glossary/filter-widget)                                                    | ✅                                   | ✅                                    | ✅                                    | ✅                                  | ✅                                     |
-| Export results\*                                                                                                     | ✅                                   | ✅                                    | ✅                                    | ✅                                  | ✅                                     |
-| [Locked filters](./static-embedding-parameters#restricting-data-in-a-static-embed-with-locked-parameters)         | ❌                                   | ❌                                    | ✅                                    | ❌                                  | ❌                                     |
-| [Data segregation](../permissions/embedding)                                                                      | ✅                                   | ✅                                    | ❌                                    | ✅                                  | ❌                                     |
-| [Drill-through menu](../questions/visualizations/drill-through) | ✅                                   | ✅                                    | ❌                                    | ✅                                  | ❌                                     |
-| [Query builder](../questions/query-builder/editor)                                                                | ✅                                   | ✅                                    | ❌                                    | ✅                                  | ❌                                     |
-| [Basic appearance customization](../configuring-metabase/appearance)\*\*                                          | ✅                                   | ✅                                    | ✅                                    | ✅                                  | ✅                                     |
-| [Advanced theming](./appearance)                                                                                  | ✅                                   | ✅                                    | ❌                                    | ❌                                  | ❌                                     |
-| [Usage analytics](../usage-and-performance-tools/usage-analytics)                                                 | ✅                                   | ✅                                    | ❌                                    | ✅                                  | ❌                                     |
-| Embed individual Metabase components                                                                                 | ✅                                   | ✅                                    | ❌                                    | ❌                                  | ❌                                     |
-| Manage access and interactivity per component                                                                        | ✅                                   | ✅                                    | ❌                                    | ❌                                  | ❌                                     |
-| Custom layouts                                                                                                       | ✅                                   | ❌                                    | ❌                                    | ❌                                  | ❌                                     |
-| Customize behavior with [plugins](./sdk/plugins)                                                                  | ✅                                   | ❌                                    | ❌                                    | ❌                                  | ❌                                     |
-| AI chat                                                                                                              | ✅                                   | ✅                                    | ❌                                    | ✅                                  | ❌                                     |
+| Action                                                                                                       | [Modular SDK](./sdk/introduction) | [Modular SSO](./modular-embedding) | [Modular Guest](./guest-embedding) | [Full app](./full-app-embedding) | [Public](../embedding/public-links) |
+| ------------------------------------------------------------------------------------------------------------ | ------------------------------------ | ------------------------------------- | ------------------------------------- | ----------------------------------- | -------------------------------------- |
+| Charts and dashboards                                                                                        | ✅                                   | ✅                                    | ✅                                    | ✅                                  | ✅                                     |
+| [Filter widgets](/glossary/filter-widget)                                            | ✅                                   | ✅                                    | ✅                                    | ✅                                  | ✅                                     |
+| Export results\*                                                                                             | ✅                                   | ✅                                    | ✅                                    | ✅                                  | ✅                                     |
+| [Locked filters](./static-embedding-parameters#restricting-data-in-a-static-embed-with-locked-parameters) | ❌                                   | ❌                                    | ✅                                    | ❌                                  | ❌                                     |
+| [Data segregation](../permissions/embedding)                                                              | ✅                                   | ✅                                    | ❌                                    | ✅                                  | ❌                                     |
+| [Drill-through menu](../questions/visualizations/drill-through)                                           | ✅                                   | ✅                                    | ❌                                    | ✅                                  | ❌                                     |
+| [Query builder](../questions/query-builder/editor)                                                        | ✅                                   | ✅                                    | ❌                                    | ✅                                  | ❌                                     |
+| [Basic appearance customization](../configuring-metabase/appearance)\*\*                                  | ✅                                   | ✅                                    | ✅                                    | ✅                                  | ✅                                     |
+| [Advanced theming](./appearance)                                                                          | ✅                                   | ✅                                    | ❌                                    | ❌                                  | ❌                                     |
+| [Usage analytics](../usage-and-performance-tools/usage-analytics)                                         | ✅                                   | ✅                                    | ❌                                    | ✅                                  | ❌                                     |
+| Embed individual Metabase components                                                                         | ✅                                   | ✅                                    | ❌                                    | ❌                                  | ❌                                     |
+| Manage access and interactivity per component                                                                | ✅                                   | ✅                                    | ❌                                    | ❌                                  | ❌                                     |
+| Custom layouts                                                                                               | ✅                                   | ❌                                    | ❌                                    | ❌                                  | ❌                                     |
+| Customize behavior with [plugins](./sdk/plugins)                                                          | ✅                                   | ❌                                    | ❌                                    | ❌                                  | ❌                                     |
+| [Custom visualizations](../questions/visualizations/custom)                                               | ✅                                   | ❌                                    | ❌                                    | ❌                                  | ❌                                     |
+| AI chat                                                                                                      | ✅                                   | ✅                                    | ❌                                    | ✅                                  | ❌                                     |
 
 \* Each embedding type allows data downloads by default, but only [Pro and Enterprise](/pricing/) plans can disable data downloads.
 
@@ -109,10 +110,12 @@ If you're using an AI agent to help you embed Metabase in your app, check out [A
 
 [Usage Analytics](../usage-and-performance-tools/usage-analytics) tracks embed usage, including embedding context, authentication methods, hostname, and other metadata. Check out the [Embedding usage dashboard](../usage-and-performance-tools/usage-analytics-reference#embedding-usage).
 
+For information about the anonymous usage data Metabase collects from embedded components, see [Embedding telemetry](../installation-and-operation/information-collection#embedding-telemetry).
+
 ## Embedding limitations
 
 - Currently, you can't embed [documents](../documents/introduction) (though you can create [public documents](./public-links)).
-- Embeds don't render [custom visualizations](../questions/visualizations/custom): any card that uses one falls back to the default visualization (a table).
+- Only the [Modular embedding SDK](./sdk/introduction) renders [custom visualizations](../questions/visualizations/custom), and only ones you allowlist with the [`allowedCustomVisualizations` prop](./sdk/config#custom-visualizations). In other embedding types, any card that uses a custom visualization falls back to the default visualization for the query's results.
 
 ## Further reading
 

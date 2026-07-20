@@ -1,5 +1,5 @@
 ---
-version: v0.62
+version: v0.63
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -21,6 +21,11 @@ type ProtectedColorKey =
   | "upsell-primary"
   | "upsell-secondary"
   | "upsell-gem"
+  | "core-metabase_brand"
+  | "core-metabase_brand-hover"
+  | "navbar-admin"
+  | "navbar-admin-secondary"
+  | "navbar-admin-inverse"
   | "accent0"
   | "accent1"
   | "accent2"

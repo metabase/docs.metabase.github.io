@@ -1,5 +1,5 @@
 ---
-version: v0.62
+version: v0.63
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -167,6 +167,19 @@ By adding metrics to your Library, the query builder will display the metrics mo
 On [Pro](/product/pro) and [Enterprise](/product/enterprise) plans, you can [mark metrics as verified](../exploration-and-organization/content-verification).
 
 Prefer using the [Library](../data-studio/library#metrics) to let people know which metrics they should use.
+
+## Caching a metric
+
+{% include plans-blockquote.html feature="Caching results of individual metrics" %}
+
+You can cache results of a metric to improve performance:
+
+1. Visit the metric.
+2. Click **three dots** in the top right corner.
+3. Click **Caching**.
+4. Select the [caching policy](../configuring-metabase/caching#cache-invalidation-policies).
+
+See [Query caching](../configuring-metabase/caching).
 
 ## Limitations
 

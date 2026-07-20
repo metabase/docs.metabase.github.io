@@ -1,5 +1,5 @@
 ---
-version: v0.62
+version: v0.63
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -19,6 +19,8 @@ latest: true
 {% include plans-blockquote.html feature="Database routing" %}
 
 With database routing, an admin can build a question once using one database, and the question will run its query against a different database with the same schema depending on who is viewing the question.
+
+![Database routing diagram](./images/database-routing-diagram.png)
 
 Database routing is useful for:
 
