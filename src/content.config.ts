@@ -6,6 +6,9 @@ const docs = defineCollection({
   loader: glob({
     pattern: ["**/*.md", "!**/embedding/sdk/api/snippets/**"],
     base: DOCS_SRC_ROOT,
+
+    // Preserves dots (.) in pathnames
+    generateId: ({ entry }) => entry.replace(/\.md$/, ""),
   }),
 });
 

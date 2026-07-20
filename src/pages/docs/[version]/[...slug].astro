@@ -26,12 +26,13 @@ export const getStaticPaths = async () => {
       const [version, slug] = splitAtFirst(id, "/");
       return {
         props: { doc },
-        params: { version: version || 'latest', slug },
+        params: { version: version || "latest", slug },
       };
     }),
   ];
 };
 
+const { version, slug = "" } = Astro.params;
 const { doc } = Astro.props;
 const dirname = path.dirname(doc.filePath!);
 
@@ -51,7 +52,7 @@ const renderResult = await md.render(lqProcessed, {
 ---
 
 <NewDocsLayout
-  page={{ url: Astro.url.pathname, ...doc.data }}
+  page={{ url: `/docs/${version}/${slug}`, ...doc.data }}
   dirname={dirname}
 >
   <Fragment set:html={renderResult.code} />
