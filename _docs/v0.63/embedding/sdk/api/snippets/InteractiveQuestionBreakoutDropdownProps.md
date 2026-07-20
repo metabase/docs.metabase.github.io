@@ -7,6 +7,7 @@ category: Embedding
 title: InteractiveQuestionBreakoutDropdownProps
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/embedding/sdk/api/snippets/InteractiveQuestionBreakoutDropdownProps.md'
 layout: new-docs
+latest: true
 ---
 
 ```ts

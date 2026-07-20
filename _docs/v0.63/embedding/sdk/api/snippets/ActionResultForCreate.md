@@ -7,6 +7,7 @@ category: Embedding
 title: ActionResultForCreate
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/embedding/sdk/api/snippets/ActionResultForCreate.md'
 layout: new-docs
+latest: true
 ---
 
 ```ts

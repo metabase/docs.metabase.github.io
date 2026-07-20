@@ -1,5 +1,5 @@
 ---
-version: v0.62
+version: v0.63
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -370,7 +370,7 @@ Whether to (asynchronously) sync newly created Databases during config-from-file
 - [Exported as](../installation-and-operation/serialization): `csp-img-allowed-hosts`.
 - [Configuration file name](./config-file): `csp-img-allowed-hosts`
 
-Comma-separated list of hosts that images may load from (e.g. in dashboard text, entity descriptions, and custom visualizations) when `csp-img-enabled` is on. Empty by default, which restricts images to this Metabase instance.
+Comma-separated list of hosts that images may load from (e.g. in dashboard text, entity descriptions, and custom visualizations) when `csp-img-enabled` is on. Empty by default, which restricts images to this Metabase instance and the map tile server used by map visualizations.
 
 ### `MB_CSP_IMG_ENABLED`
 
@@ -538,6 +538,17 @@ The email address you want to use for the sender of emails from your custom SMTP
 - [Configuration file name](./config-file): `email-from-name`
 
 The name you want to use for the sender of emails.
+
+### `MB_EMAIL_MAX_RECIPIENTS_PER_MESSAGE`
+
+- Type: integer
+- Default: `50`
+- [Exported as](../installation-and-operation/serialization): `email-max-recipients-per-message`.
+- [Configuration file name](./config-file): `email-max-recipients-per-message`
+
+The maximum number of recipients allowed on a single email. Notifications with more recipients than
+                this are split into multiple messages. This guards against SMTP providers (e.g. Amazon SES) that reject
+                any message exceeding their per-message recipient cap. Defaults to 50; set to 0 to disable batching.
 
 ### `MB_EMAIL_MAX_RECIPIENTS_PER_SECOND`
 
@@ -1299,7 +1310,7 @@ The Anthropic API Key.
 - Default: `anthropic/claude-sonnet-4-6`
 - [Configuration file name](./config-file): `llm-metabot-provider`
 
-The AI provider and model for Metabot. Format: provider/model-name, e.g. `anthropic/claude-haiku-4-5`, `openai/gpt-4.1-mini`, `openrouter/anthropic/claude-haiku-4-5`.
+The AI provider and model for Metabot. Format: provider/model-name, e.g. `anthropic/claude-haiku-4-5`, `openai/gpt-5.4`, `openrouter/anthropic/claude-haiku-4.5`.
 
 ### `MB_LOAD_ANALYTICS_CONTENT`
 
@@ -1377,6 +1388,13 @@ Popular MCP clients enabled for CORS, stored as CSV client keys (e.g. claude, vs
 
 Whether Metabot is enabled for regular usage.
 
+### `MB_METABOT_RECENT_VIEWS_ENABLED`
+
+- Type: boolean
+- Default: `true`
+
+Whether the user's recently viewed items are included in the Metabot system prompt.
+
 ### `MB_METABOT_SLACK_SIGNING_SECRET`
 
 - Type: string
@@ -1384,6 +1402,21 @@ Whether Metabot is enabled for regular usage.
 - [Configuration file name](./config-file): `metabot-slack-signing-secret`
 
 Signing secret for verifying requests from the Metabot Slack app.
+
+### `MB_MFA_CHALLENGE_SIGNING_KEY`
+
+- Type: string
+- Default: `null`
+
+Key used to sign MFA challenge tokens. Generated automatically on first use.
+
+### `MB_MFA_ENFORCEMENT`
+
+- Type: keyword
+- Default: `off`
+- [Configuration file name](./config-file): `mfa-enforcement`
+
+Controls whether two-factor authentication is available to users. :off disables it entirely; :optional allows users to enroll voluntarily.
 
 ### `MB_NATIVE_QUERY_AUTOCOMPLETE_MATCH_STYLE`
 
@@ -1611,6 +1644,14 @@ The remote branch to sync with, e.g. `main`.
 - [Configuration file name](./config-file): `remote-sync-check-changes-cache-ttl-seconds`
 
 Time-to-live in seconds for the remote changes check cache. Default is 60 seconds.
+
+### `MB_REMOTE_SYNC_GIT_TIMEOUT_SECONDS`
+
+- Type: integer
+- Default: `60`
+- [Configuration file name](./config-file): `remote-sync-git-timeout-seconds`
+
+Network timeout (in seconds) for remote git operations such as fetch, push, clone, and ls-remote. A stalled connection would otherwise hang a sync indefinitely.
 
 ### `MB_REMOTE_SYNC_TASK_TIME_LIMIT_MS`
 
@@ -2369,6 +2410,34 @@ Upload settings.
 - Default: `null`
 
 Prefix for upload table names.
+
+### `MB_USAGE_METADATA_ENABLED`
+
+- Type: boolean
+- Default: `false`
+
+Whether usage-driven metadata batch processing is enabled.
+
+### `MB_USAGE_METADATA_LAST_COMPLETED_DAY`
+
+- Type: string
+- Default: `null`
+
+Internal watermark for the last completed usage metadata day.
+
+### `MB_USAGE_METADATA_RETENTION_DAYS`
+
+- Type: integer
+- Default: `90`
+
+How many days of usage metadata rollups to retain.
+
+### `MB_USAGE_METADATA_SCHEDULE`
+
+- Type: string
+- Default: `0 0 2 * * ? *`
+
+Cron schedule (in UTC) for usage metadata batch processing.
 
 ### `MB_USER_VISIBILITY`
 

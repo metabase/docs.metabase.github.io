@@ -22,7 +22,7 @@ System prompts let you customize instructions for Metabot. You can write a separ
 - **Natural language queries**: query-builder questions generated from natural language.
 - **SQL generation**: SQL written from prompts (sidebar or [inline](./metabot#inline-sql-editing)).
 
-Like text cards on dashboards, prompts support [Markdown](/learn/metabase-basics/querying-and-dashboards/dashboards/markdown).
+Like text cards on dashboards, prompts support [Markdown](../dashboards/markdown).
 
 ## Prompt tips
 

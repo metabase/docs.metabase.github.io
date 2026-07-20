@@ -7,6 +7,7 @@ category: Embedding
 title: ActionKind
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/embedding/sdk/api/snippets/ActionKind.md'
 layout: new-docs
+latest: true
 ---
 
 ```ts

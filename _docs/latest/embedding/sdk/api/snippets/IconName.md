@@ -1,5 +1,5 @@
 ---
-version: v0.62
+version: v0.63
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -16,6 +16,7 @@ type IconName =
   | "string"
   | "number"
   | "function"
+  | "sql"
   | "collection"
   | "dashboard"
   | "question"
@@ -34,6 +35,7 @@ type IconName =
   | "boxplot"
   | "waterfall"
   | "sankey"
+  | "treemap"
   | "list"
   | "revert"
   | "add"
@@ -224,7 +226,6 @@ type IconName =
   | "settings"
   | "smile"
   | "split"
-  | "sql"
   | "subscription"
   | "straight"
   | "stepped"
@@ -257,6 +258,7 @@ type IconName =
   | "sidebar_open"
   | "slack"
   | "slack_colorized"
+  | "sliders"
   | "snail"
   | "snippet"
   | "sparkles"
@@ -299,6 +301,7 @@ type IconName =
   | "warning_round_filled"
   | "warning_triangle_filled"
   | "webhook"
+  | "workspace"
   | "10k"
   | "1m"
   | "zap"

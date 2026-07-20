@@ -7,6 +7,7 @@ category: Embedding
 title: MetabaseBrowserAttributes
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/embedding/eajs/snippets/MetabaseBrowserAttributes.md'
 layout: new-docs
+latest: true
 ---
 
 Attributes for the `<metabase-browser>` web component.

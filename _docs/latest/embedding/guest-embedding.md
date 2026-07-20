@@ -1,5 +1,5 @@
 ---
-version: v0.62
+version: v0.63
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -205,6 +205,8 @@ See [Modular embedding parameters](./parameters#pass-parameter-values-to-embedde
 ### Locked parameters
 
 Locked parameters let you filter data without exposing the filter to the end-user. Locking parameters is useful for restricting data based on who's viewing the embed (for example, showing each customer only their own data).
+
+![Locked parameters](./images/locked-parameters.png)
 
 To use locked parameters, you need to:
 

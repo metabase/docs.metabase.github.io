@@ -1,5 +1,5 @@
 ---
-version: v0.62
+version: v0.63
 has_magic_breadcrumbs: true
 show_category_breadcrumb: true
 show_title_breadcrumb: true
@@ -154,6 +154,7 @@ latest: true
 | [MetabotUserTextMessage](./api/MetabotUserTextMessage)                     | -                                                                              |
 | [ParameterValues](./api/ParameterValues)                                   | -                                                                              |
 | [ProtectedColorKey](./api/ProtectedColorKey)                               | Color keys that are protected and should not be exposed to embedding.          |
+| [SdkActionId](./api/SdkActionId)                                           | -                                                                              |
 | [SdkCollectionId](./api/SdkCollectionId)                                   | -                                                                              |
 | [SdkDashboardEntityPublicProps](./api/SdkDashboardEntityPublicProps)       | -                                                                              |
 | [SdkDashboardId](./api/SdkDashboardId)                                     | -                                                                              |
@@ -169,6 +170,22 @@ latest: true
 | [SdkUserId](./api/SdkUserId)                                               | -                                                                              |
 | [SqlParameterValues](./api/SqlParameterValues)                             | -                                                                              |
 | [UserBackendJwtResponse](./api/UserBackendJwtResponse)                     | -                                                                              |
+
+## useAction
+
+| Name                                                    | Description                                                                                                                                                                                                                                                                                                                                           |
+| :------------------------------------------------------ | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------- |
+| [useAction](./api/useAction)                         | Triggers a pre-existing Metabase action. The first arg is the action's numeric id or its `entity_id` string; supply `TParameters` as the first generic to type the `execute` argument, and optionally `TKind` as the second generic to type the discriminated `result` shape.                                                                         |
+| [UseActionResult](./api/UseActionResult)             | -                                                                                                                                                                                                                                                                                                                                                     |
+| [ActionExecuteError](./api/ActionExecuteError)       | Shape of the thrown error captured into the hook's `error` state on a non-2xx response. The hook types `error` as `ActionExecuteError                                                                                                                                                                                                                 | null`, so consumers read its fields directly — no cast needed: |
+| [ActionKind](./api/ActionKind)                       | Flat public kind union. Maps onto the backend's namespaced `row/*` + `bulk/*` `implicitKind` and the `query` `type` value, but exposes a simpler five-value surface to callers: `create` / `update` / `delete` always refer to a single row, `bulk` covers any bulk variant, and `sql` covers custom SQL actions (the backend's `query`-type action). |
+| [ActionResultForBulk](./api/ActionResultForBulk)     | Response from any bulk variant — a success flag plus optional counts.                                                                                                                                                                                                                                                                                 |
+| [ActionResultForCreate](./api/ActionResultForCreate) | Response from a single-row create — the inserted row.                                                                                                                                                                                                                                                                                                 |
+| [ActionResultForDelete](./api/ActionResultForDelete) | Response from a single-row delete — the affected primary keys.                                                                                                                                                                                                                                                                                        |
+| [ActionResultForKind](./api/ActionResultForKind)     | Maps an `ActionKind` literal to the discriminated `result` shape. Omit `TKind` (`undefined`) to fall back to the `AnyActionResult` union.                                                                                                                                                                                                             |
+| [ActionResultForSql](./api/ActionResultForSql)       | Response from a custom SQL action — the affected row count.                                                                                                                                                                                                                                                                                           |
+| [ActionResultForUpdate](./api/ActionResultForUpdate) | Response from a single-row update — the affected primary keys.                                                                                                                                                                                                                                                                                        |
+| [AnyActionResult](./api/AnyActionResult)             | Union of every possible response body. Used as the `result` default when `TKind` is omitted, so authors who don't know the action's kind upfront still get TS-narrowable shapes (via `"<key>" in result`) instead of a permissive `Record<string, unknown>` that swallows mistyped reads.                                                             |
 
 ## useApplicationName
 
