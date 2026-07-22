@@ -1,7 +1,9 @@
 import fs from "node:fs";
 import path from "node:path";
+import { compose } from "@/lib/fn";
 import { Liquid, ParseError, TokenizationError } from "liquidjs";
 import YAML from "yamljs";
+import { registerCustomIncludeTag } from "./tags/customIncludeTag";
 import { registerIncludeFileTag } from "./tags/includeFileTag";
 
 const MAX_LIQUID_SYNTAX_ERRORS = 25;
@@ -74,6 +76,11 @@ const baseCtx = {
 
 let liquidEngine: Liquid;
 
+// Remove multiple newlines between elements so satteri doesn't turn them into code snippets.
+// Needed to preserve previous behavior (which used jekyll + kramdown).
+const collapseBlankLines = (html: string): string =>
+  html.replace(/>([ \t]*\r?\n){2,}[ \t]*</g, ">\n<");
+
 export const getLiquidRenderer = ({
   page,
   dirname,
@@ -88,7 +95,10 @@ export const getLiquidRenderer = ({
       jekyllWhere: true,
       strictVariables: false, // TODO: Would be nice to flip this to true
     });
-    registerIncludeFileTag(liquidEngine);
+    compose(
+      registerIncludeFileTag,
+      registerCustomIncludeTag(collapseBlankLines),
+    )(liquidEngine);
   }
 
   const ctx = {

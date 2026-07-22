@@ -40,13 +40,9 @@ const dirname = path.dirname(doc.filePath!);
 const lq = getLiquidRenderer({ page: doc.data, dirname });
 const lqOutput = await lq.render(doc.body!);
 
-// Remove whitespace between elements so satteri doesn't turn them into code snippets.
-// Mimics previous behavior (which used jekyll + kramdown).
-const lqProcessed = lqOutput.replace(/>\s+</g, "><");
-
 // Convert processed markdown to html
 const md = await getMarkdownRenderer();
-const renderResult = await md.render(lqProcessed, {
+const renderResult = await md.render(lqOutput, {
   fileURL: pathToFileURL(path.resolve(doc.filePath!)),
 });
 ---
