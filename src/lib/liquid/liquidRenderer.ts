@@ -6,8 +6,6 @@ import YAML from "yamljs";
 import { registerCustomIncludeTag } from "./tags/customIncludeTag";
 import { registerIncludeFileTag } from "./tags/includeFileTag";
 
-const MAX_LIQUID_SYNTAX_ERRORS = 25;
-
 // Old markdown docs sometimes contain text that merely looks like Liquid
 // (e.g. "{{#...}}" used to describe template tag syntax) but isn't valid
 // Liquid. Jekyll/Ruby rendered these as blank rather than failing the build,
@@ -111,10 +109,10 @@ export const getLiquidRenderer = ({
     render: async (
       html: string,
       { include }: { include?: Record<string, unknown> } = {},
+      { maxSyntaxErrors = 0 }: { maxSyntaxErrors?: number } = {},
     ) => {
       let source = html;
-      // TODO: Always fail on error for `latest` version
-      for (let attempt = 0; attempt < MAX_LIQUID_SYNTAX_ERRORS; attempt++) {
+      for (let attempt = 0; attempt < maxSyntaxErrors + 1; attempt++) {
         try {
           return await liquidEngine.parseAndRender(source, {
             ...ctx,
