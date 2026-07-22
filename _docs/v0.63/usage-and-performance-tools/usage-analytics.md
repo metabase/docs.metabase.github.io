@@ -7,6 +7,9 @@ category: 'Usage and Performance Tools'
 title: 'Usage analytics'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/usage-and-performance-tools/usage-analytics.md'
 layout: new-docs
+redirect-from:
+    - /docs/latest/enterprise-guide/audit
+    - /docs/latest/usage-and-performance-tools/audit
 ---
 
 # Usage analytics
