@@ -2,38 +2,41 @@
 import path from "node:path";
 import { pathToFileURL } from "node:url";
 import NewDocsLayout from "@/layouts/NewDocsLayout.astro";
+import { resolveDocUrl } from "@/lib/docs/resolveDoc";
 import { getLiquidRenderer } from "@/lib/liquid/liquidRenderer";
 import { getMarkdownRenderer } from "@/lib/markdown/markdownRenderer";
 import { getCollection, type DataEntryMap } from "astro:content";
 
-type Props = {
-  doc: DataEntryMap["docs"][number];
-};
+type Props =
+  | { kind: "md"; doc: DataEntryMap["docs"][number] }
+  | { kind: "html"; doc: DataEntryMap["docsHtml"][number] };
 
+// `redirect_from` is handled at the config level (see collectRedirects.ts,
+// wired into astro.config.mjs's `redirects` option). `redirect_to` is
+// intentionally unhandled here: it's only used by _docs/index.md, and that
+// redirect is already covered by the root redirects.json (Amplify rules).
 export const getStaticPaths = async () => {
-  const splitAtFirst = (str: string, delimiter: string) => {
-    const index = str.indexOf(delimiter);
-    return index !== -1 ? [str.slice(0, index), str.slice(index + 1)] : [str];
+  const [docs, docsHtml] = await Promise.all([
+    getCollection("docs"),
+    getCollection("docsHtml"),
+  ]);
+
+  const toPath = <Kind extends Props["kind"]>(kind: Kind) => (doc: {
+    id: string;
+    data: { permalink?: string };
+  }) => {
+    const { version, slug } = resolveDocUrl({
+      id: doc.id,
+      permalink: doc.data.permalink,
+    });
+    return { props: { kind, doc }, params: { version, slug } };
   };
-  // TODO: Handle redirect_to/redirect_from
-  const docs = await getCollection("docs");
-  return [
-    ...docs.map((doc) => {
-      const id =
-        doc.data.permalink
-          ?.replace(/^\/docs\//, "")
-          .replace(/\/index\.html$/, "") ?? doc.id;
-      const [version, slug] = splitAtFirst(id, "/");
-      return {
-        props: { doc },
-        params: { version: version || "latest", slug },
-      };
-    }),
-  ];
+
+  return [...docs.map(toPath("md")), ...docsHtml.map(toPath("html"))];
 };
 
 const { version, slug = "" } = Astro.params;
-const { doc } = Astro.props;
+const { kind, doc } = Astro.props;
 const dirname = path.dirname(doc.filePath!);
 
 // Process liquid first (e.g. control flow, includes, variables, etc)
@@ -42,16 +45,32 @@ const lqOutput = await lq.render(doc.body!, undefined, {
   maxSyntaxErrors: version === "latest" ? 0 : 3,
 });
 
-// Convert processed markdown to html
-const md = await getMarkdownRenderer();
-const renderResult = await md.render(lqOutput, {
-  fileURL: pathToFileURL(path.resolve(doc.filePath!)),
-});
+// `.html` docs (TypeDoc SDK API reference pages, api.html ToC pages) are
+// already complete standalone HTML documents — only Liquid needs to run on
+// them (e.g. the embedded-analytics-sdk-metadata include), no markdown
+// conversion, and no NewDocsLayout chrome (mirrors the old Jekyll
+// `docs-api` layout, which was a bare passthrough).
+let renderedHtml: string;
+if (kind === "html") {
+  renderedHtml = lqOutput;
+} else {
+  const md = await getMarkdownRenderer();
+  const renderResult = await md.render(lqOutput, {
+    fileURL: pathToFileURL(path.resolve(doc.filePath!)),
+  });
+  renderedHtml = renderResult.code;
+}
 ---
 
-<NewDocsLayout
-  page={{ url: `/docs/${version}/${slug}`, ...doc.data }}
-  dirname={dirname}
->
-  <Fragment set:html={renderResult.code} />
-</NewDocsLayout>
+{
+  kind === "html" ? (
+    <Fragment set:html={renderedHtml} />
+  ) : (
+    <NewDocsLayout
+      page={{ url: `/docs/${version}/${slug}`, ...doc.data }}
+      dirname={dirname}
+    >
+      <Fragment set:html={renderedHtml} />
+    </NewDocsLayout>
+  )
+}

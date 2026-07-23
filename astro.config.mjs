@@ -1,10 +1,14 @@
 // @ts-check
 import { defineConfig } from "astro/config";
 import { viteStaticCopy } from "vite-plugin-static-copy";
+import { collectRedirects } from "./src/lib/docs/collectRedirects";
 import { noopMarkdownProcessor } from "./src/lib/markdown/noopMarkdownProcessor";
 
 // https://astro.build/config
 export default defineConfig({
+  // Static equivalent of the old jekyll-redirect-from plugin: builds one
+  // meta-refresh stub page per `redirect_from` entry across all _docs files.
+  redirects: collectRedirects(),
   vite: {
     plugins: [
       viteStaticCopy({
@@ -14,6 +18,14 @@ export default defineConfig({
             src: "_docs/**/*.{jpg,png}",
             dest: "docs",
             rename: { stripBase: 1 }, // strips `_docs/`
+          },
+          {
+            // TODO: Is this actually needed?
+            // TypeDoc-generated CSS/JS/icons the SDK API reference .html
+            // docs load via relative `assets/...` URLs.
+            src: "_docs/**/embedding/sdk/api/assets/*.{css,js,svg,ico}",
+            dest: "docs",
+            rename: { stripBase: 1 },
           },
         ],
       }),
