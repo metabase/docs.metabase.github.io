@@ -1,0 +1,88 @@
+---
+import LiquidInclude from "@/components/LiquidInclude.astro";
+import { getLiquidRenderer } from "@/lib/liquid/liquidRenderer";
+import DefaultLayout from "./DefaultLayout.astro";
+
+type Props = {
+  page: {
+    category: string;
+    version: string;
+    url: string;
+    title?: string;
+    source_url?: string;
+  };
+  dirname: string;
+};
+
+const { page, dirname } = Astro.props;
+
+const lq = getLiquidRenderer({ page, dirname });
+
+const currentDocsVersion = await lq.render("{{ site.docs_version }}");
+const latestOrExplicitVersion =
+  page.version === currentDocsVersion && page.url.includes("/docs/latest/")
+    ? "latest"
+    : page.version;
+
+const showChrome = page.category !== "ignore";
+const showFeedbackWidget = !["Start", "README", "Index", "Search"].includes(
+  page.title ?? "",
+);
+---
+
+<DefaultLayout page={page} dirname={dirname} active="docs">
+  <section class="text-white pt0 text-centered pt4">
+    <div class="container">
+      <h2>
+        <a
+          class="text-white text-white-hover"
+          href={`/docs/${latestOrExplicitVersion}`}>
+          Metabase Documentation
+        </a>
+      </h2>
+      {
+        showChrome && (
+          <a class="text-white text-white-hover" href={`/docs/${page.version}`}>
+            {page.version}{" "}
+            {page.version === currentDocsVersion && " (Latest) "}
+          </a>
+        )
+      }
+    </div>
+    <LiquidInclude lq={lq} src="docs_search_bar.html" />
+  </section>
+
+  <section class="docs bg-white py2">
+    <div class="container-docs">
+      <div class="row">
+        <div class="ten columns release offset-by-one">
+          {showChrome && <LiquidInclude lq={lq} src="docs-old-breadcrumbs.html" />}
+
+          <slot />
+        </div>
+      </div>
+      {
+        showChrome && (
+          <div class="row">
+            <div class="ten columns release offset-by-one docs-footer py1">
+              <div class="bootstrap">
+                {showFeedbackWidget && (
+                  <LiquidInclude
+                    lq={lq}
+                    src="shared/right-hand-newsletter-subscribe-widget.html"
+                  />
+                )}
+                <span class="paragraph-6 fs-13 neutral-60">
+                  See something that needs fixing?{" "}
+                  <a href={page.source_url} target="_blank">
+                    Propose a change.
+                  </a>
+                </span>
+              </div>
+            </div>
+          </div>
+        )
+      }
+    </div>
+  </section>
+</DefaultLayout>

@@ -2,6 +2,7 @@
 import path from "node:path";
 import { pathToFileURL } from "node:url";
 import NewDocsLayout from "@/layouts/NewDocsLayout.astro";
+import OldDocsLayout from "@/layouts/OldDocsLayout.astro";
 import { resolveDocUrl } from "@/lib/docs/resolveDoc";
 import { getLiquidRenderer } from "@/lib/liquid/liquidRenderer";
 import { getMarkdownRenderer } from "@/lib/markdown/markdownRenderer";
@@ -21,16 +22,15 @@ export const getStaticPaths = async () => {
     getCollection("docsHtml"),
   ]);
 
-  const toPath = <Kind extends Props["kind"]>(kind: Kind) => (doc: {
-    id: string;
-    data: { permalink?: string };
-  }) => {
-    const { version, slug } = resolveDocUrl({
-      id: doc.id,
-      permalink: doc.data.permalink,
-    });
-    return { props: { kind, doc }, params: { version, slug } };
-  };
+  const toPath =
+    <Kind extends Props["kind"]>(kind: Kind) =>
+    (doc: { id: string; data: { permalink?: string } }) => {
+      const { version, slug } = resolveDocUrl({
+        id: doc.id,
+        permalink: doc.data.permalink,
+      });
+      return { props: { kind, doc }, params: { version, slug } };
+    };
 
   return [...docs.map(toPath("md")), ...docsHtml.map(toPath("html"))];
 };
@@ -60,17 +60,19 @@ if (kind === "html") {
   });
   renderedHtml = renderResult.code;
 }
+
+const Layout = doc.data.layout === "docs" ? OldDocsLayout : NewDocsLayout;
 ---
 
 {
   kind === "html" ? (
     <Fragment set:html={renderedHtml} />
   ) : (
-    <NewDocsLayout
+    <Layout
       page={{ url: `/docs/${version}/${slug}`, ...doc.data }}
       dirname={dirname}
     >
       <Fragment set:html={renderedHtml} />
-    </NewDocsLayout>
+    </Layout>
   )
 }
