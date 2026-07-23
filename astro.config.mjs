@@ -9,6 +9,10 @@ export default defineConfig({
   // Static equivalent of the old jekyll-redirect-from plugin: builds one
   // meta-refresh stub page per `redirect_from` entry across all _docs files.
   redirects: collectRedirects(),
+  build: {
+    // Generates /about.html instead of /about/index.html (preserving previous jekyll behavior)
+    format: "preserve",
+  },
   vite: {
     plugins: [
       viteStaticCopy({

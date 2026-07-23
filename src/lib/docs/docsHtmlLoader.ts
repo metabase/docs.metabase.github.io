@@ -11,9 +11,11 @@ import { DOCS_SRC_ROOT } from "@/constants";
 // and per-version api.html ToC pages under _docs (raw, standalone HTML
 // documents with the same frontmatter shape as the .md docs) need their own
 // loader. Unlike the `docs` collection's ids, these ids KEEP the `.html`
-// extension — production serves these pages at a flat, extension-preserving
-// URL, and Astro's static build emits a literal file (not a `<slug>/index.html`
-// directory) whenever the resolved path already ends in an extension.
+// extension, since that's what identifies the source file on disk. The
+// `.html` is stripped back off when resolving the doc's URL (see
+// `resolveDocUrl`) — `build.format: "file"` always appends its own `.html`
+// suffix to the output filename, so leaving it in the slug would double it
+// up (`api.html.html`).
 export const docsHtmlLoader = (): Loader => ({
   name: "docs-html-loader",
   load: async ({ config, store, parseData, generateDigest, logger }) => {

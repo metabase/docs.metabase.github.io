@@ -10,8 +10,9 @@ export const resolveDocUrl = ({
   id: string;
   permalink?: string;
 }): { version: string; slug: string; url: string } => {
-  const resolvedId =
-    permalink?.replace(/^\/docs\//, "").replace(/\/index\.html$/, "") ?? id;
+  const resolvedId = (
+    permalink?.replace(/^\/docs\//, "").replace(/\/index\.html$/, "") ?? id
+  ).replace(/\.html$/, "");
   const separatorIndex = resolvedId.indexOf("/");
   const version =
     (separatorIndex !== -1
