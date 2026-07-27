@@ -26,6 +26,10 @@ window.addEventListener("DOMContentLoaded", () => {
       }
     });
 
+    if (typeof hljs === "undefined") {
+      return;
+    }
+
     hljs.configure({ ignoreUnescapedHTML: true });
 
     hljs.highlightAll();
