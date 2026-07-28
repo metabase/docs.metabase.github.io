@@ -6,10 +6,17 @@
         Check out the <a class="text-purple text-underline" href="/docs/latest/">docs for the current stable version, Metabase {{site.docs_version}}.</a>
       </blockquote>
     {% else %}
-      <blockquote>
-        These are the docs for Metabase {{ page.version }}.
-        Check out the <a class="text-purple text-underline" href="/docs/latest/">docs for the current stable version, Metabase {{site.docs_version}}.</a>
-      </blockquote>
+      {% assign support = site.data.version_support[page.version] %}
+      {% if support.status == "unsupported" %}
+        <blockquote class="version-unsupported-notice">
+          Version {{ page.version }} of Metabase is no longer <a class="text-purple text-underline" href="/version-support">supported</a>. Check out the <a class="text-purple text-underline" href="/docs/latest/">docs for the current stable version, Metabase {{site.docs_version}}.</a>
+        </blockquote>
+      {% else %}
+        <blockquote>
+          These are the docs for Metabase {{ page.version }}.
+          Check out the <a class="text-purple text-underline" href="/docs/latest/">docs for the current stable version, Metabase {{site.docs_version}}.</a>
+        </blockquote>
+      {% endif %}
     {% endif %}
   {% endif %}
 </div>

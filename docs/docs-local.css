@@ -1,0 +1,55 @@
+/* because stylesheets mainly live in the marketing repo, this is a subset of the styles
+ * that are specific to this repo, pending a larger refactor to move all docs-specific styles into this repo. */
+
+.bootstrap .learn .version__dropdown {
+  width: auto !important;
+
+  .version__dropdown--item {
+    align-items: center;
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 0.5rem;
+    justify-content: space-between;
+    padding-inline: 1rem;
+    text-align: left;
+  }
+}
+
+.version__tag {
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  padding: 3px 5px;
+  text-transform: uppercase;
+}
+
+.version__tag--unsupported {
+  background-color: #f1f2f4;
+  color: #5a6072;
+}
+
+.version__tag--lts {
+  background-color: #f3faec;
+  color: #669438;
+}
+
+/* Notice on docs for versions past their EOL date. The `.docs` ancestor is
+ * present in both the current and legacy layouts, and matches the specificity
+ * of the blockquote rules in css/styles.css and css/docs.css — this file wins
+ * the tie because it's the last stylesheet in the head. */
+.docs blockquote.version-unsupported-notice {
+  background-color: #fef9e6;
+  border: 1px solid #f7be08;
+  border-radius: 0.625rem;
+  color: #4c5773;
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 1.5rem 0;
+  padding: 0.75rem 1rem;
+}
+
+.docs blockquote.version-unsupported-notice a {
+  display: inline;
+}

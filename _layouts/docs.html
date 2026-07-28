@@ -26,6 +26,14 @@ active: 'docs'
         {% include docs-old-breadcrumbs.html %}
         {% endif %}
 
+        {% assign support = site.data.version_support[page.version] %}
+        {% if support.status == "unsupported" %}
+          <blockquote class="version-unsupported-notice">
+            Version {{ page.version }} of Metabase is no longer <a href="/version-support">supported</a>.
+            Check out the <a href="/docs/latest/">docs for the current stable version, Metabase {{site.docs_version}}.</a>
+          </blockquote>
+        {% endif %}
+
         {{ content }}
 
       </div>

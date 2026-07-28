@@ -13,9 +13,19 @@
   <ul class="version__dropdown">
     {% for version in versions limit: 10 %}
       {% unless page.version == version %}
+        {% assign support = site.data.version_support[version] %}
         <li>
           <a href="/docs/{{ version }}">
-            {{version}}
+            <div class="version__dropdown--item">
+              <span>
+                {{version}}
+              </span>
+              {% if support.status == "unsupported" %}
+                <span class="version__tag version__tag--unsupported">unsupported</span>
+              {% elsif support.lts %}
+                <span class="version__tag version__tag--lts">lts</span>
+              {% endif %}
+            </div>
           </a>
         </li>
       {% endunless %}
