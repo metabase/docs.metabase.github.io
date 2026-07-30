@@ -11,7 +11,10 @@ We version our docs for every major release, with docs for each major release co
 
 For product releases, see the list of [Metabase releases](https://github.com/metabase/metabase/releases).
 
-{% for version in site.available_versions reversed %}
+Versions marked <span class="version__tag version__tag--unsupported">unsupported</span> have passed their end-of-life date. See our [version support policy](/version-support) for details.
 
-- [{{ version }}](/docs/{{ version }}/)
+{% for version in site.available_versions reversed %}
+{% assign support = site.data.version_support[version] %}
+
+- [{{ version }}](/docs/{{ version }}/){% if support.status == "unsupported" %} <span class="version__tag version__tag--unsupported">unsupported</span>{% elsif support.lts %} <span class="version__tag version__tag--lts">lts</span>{% endif %}
 {% endfor %}

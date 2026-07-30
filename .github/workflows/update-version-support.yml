@@ -1,0 +1,104 @@
+name: Update version support data
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Nightly, an hour before the nightly docs update
+    - cron: "0 1 * * *"
+
+run-name: Nightly version support update
+
+env:
+  VERSION_INFO_URL: https://static.metabase.com/version-info.json
+  DATA_FILE: _data/major_version_support.json
+
+concurrency:
+  group: update-version-support
+  cancel-in-progress: false
+
+jobs:
+  update:
+    name: Update major_version_support.json
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      GH_TOKEN: ${{ secrets.METABASE_AUTOMATION_USER_TOKEN }}
+      BRANCH_NAME: update-version-support-${{ github.run_id }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: master
+          token: ${{ secrets.METABASE_AUTOMATION_USER_TOKEN }}
+
+      - name: Fetch major_version_support from version-info.json
+        run: |
+          curl --fail --silent --show-error --retry 3 --retry-delay 5 \
+            "$VERSION_INFO_URL" -o version-info.json
+
+          # Bail out rather than commit garbage if the key is missing or empty
+          if ! jq -e '.major_version_support | arrays and length > 0' version-info.json > /dev/null; then
+            echo "::error::major_version_support is missing or empty in $VERSION_INFO_URL"
+            exit 1
+          fi
+
+          # Every entry needs a numeric major, otherwise the docs templates can't match on it
+          if ! jq -e '.major_version_support | all(.major | numbers)' version-info.json > /dev/null; then
+            echo "::error::every major_version_support entry must have a numeric \"major\""
+            exit 1
+          fi
+
+          jq '.major_version_support' version-info.json > "$DATA_FILE"
+          rm version-info.json
+
+      - name: Check for changes
+        id: diff
+        run: |
+          if git diff --quiet -- "$DATA_FILE"; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "No changes to $DATA_FILE"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            git --no-pager diff -- "$DATA_FILE"
+          fi
+
+      - name: Push the update
+        if: steps.diff.outputs.changed == 'true'
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+
+          git checkout -B "$BRANCH_NAME"
+          git add "$DATA_FILE"
+          git commit -m "Update major version support data"
+          git push --force origin "$BRANCH_NAME"
+
+      - name: Open PR
+        id: create_pr
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.METABASE_AUTOMATION_USER_TOKEN }}
+        run: | # sh
+          DATE=$(date +'%Y-%m-%d')
+
+          URL=$(gh pr create \
+            --base master \
+            --head "$BRANCH_NAME" \
+            --title "Update version support data $DATE" \
+            --body "Automated nightly update of major version support data.")
+
+          PR_NUMBER=${URL##*/}
+          echo "pr_number=$PR_NUMBER" >> "$GITHUB_OUTPUT"
+
+      - name: Auto approve PR
+        if: steps.diff.outputs.changed == 'true'
+        uses: juliangruber/approve-pull-request-action@68fcc9a5a73b5641cadf757cf99d73720dcb05d0 # v2.1.0
+        with:
+          github-token: ${{ github.token }}
+          number: ${{ steps.create_pr.outputs.pr_number }}
+
+      - name: Enable Pull Request Automerge
+        if: steps.diff.outputs.changed == 'true'
+        run: gh pr merge --squash --auto "$PR_NUMBER"
+        env:
+          GH_TOKEN: ${{ secrets.METABASE_AUTOMATION_USER_TOKEN }}
+          PR_NUMBER: ${{ steps.create_pr.outputs.pr_number }}
