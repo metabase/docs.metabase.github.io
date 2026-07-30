@@ -10,19 +10,15 @@
 
 (def cli-spec
   {:spec
-   {:target-branch {:ref "<target-branch>"
-                    :desc "The target branch of the triggering PR."
-                    :alias :t
-                    :require true}
-    :source-branch {:ref "<source-branch>"
-                    :desc "The source branch of the triggering PR."
-                    :alias :r
-                    :require true}}
+   {:versions {:ref "<versions>"
+               :desc "Comma separated major versions included in this build, eg. \"63,62\"."
+               :alias :v
+               :require true}}
    :error-fn u/cli-error-fn})
 
-(defn- find-pr-list [source-branch target-branch]
+(defn- find-pr-list [head-ref]
   (let [pr (-> (p/sh "gh" "pr" "list"
-                     "--head" (u/head-ref-name source-branch target-branch)
+                     "--head" head-ref
                      "--json" "number,headRefName")
                :out
                (json/parse-string true)
@@ -31,13 +27,12 @@
       (do (ice/p [:green "Found PR #" (:number pr)])
           (:number pr))
       (throw (ex-info
-               (str "No PR found for " (u/head-ref-name source-branch target-branch))
-               {:source-branch source-branch
-                :target-branch target-branch
+               (str "No PR found for " head-ref)
+               {:head-ref head-ref
                 :babashka/exit 1})))))
 
-(defn- find-pr-view [source-branch target-branch]
-  (let [pr-num (-> (p/sh "gh" "pr" "view" (u/head-ref-name source-branch target-branch)
+(defn- find-pr-view [head-ref]
+  (let [pr-num (-> (p/sh "gh" "pr" "view" head-ref
                          "--json" "number"
                          "--jq" ".number")
                    :out
@@ -79,44 +74,42 @@
                   (resolve-conflicts-for-file file strat))))
             (resolve-conflicts-for-file artifact strat)))))))
 
-(defn- update-and-merge-pr [source-branch target-branch pr-number merge-strategy]
-  (let [head-ref-name (u/head-ref-name source-branch target-branch)]
+(defn- update-and-merge-pr [head-ref-name versions pr-number merge-strategy]
+  (ice/p [:blue "Updating PR branch..."])
+  (ice/p [:blue "Attempting merge with origin/master..."])
+  (let [merge-result (p/sh {:continue true} "git" "merge" "origin/master")]
+    (when-not (zero? (:exit merge-result))
+      (ice/p [:red "✗ Merge failed: " (:err merge-result)])
+      (let [winner (if (= merge-strategy :ours) "PR" "master")]
+        (ice/p [:yellow "Attempting to resolve conflicts with git, preferring changes from " winner "..."])
+        (resolve-conflicts (u/versions->artifacts versions) merge-strategy)
+        ;; Do the commit, now that we've resolved conflicts
+        (pr-str (p/sh "git" "commit" "--no-edit" "-m"
+                      (str "Merge master into " head-ref-name " for PR #(" pr-number ")"
+                           ", preferring changes from " winner)))))
 
+    (ice/p [:blue "Pushing changes to PR branch..."])
+    (ice/p "Result: " (pr-str (p/sh "git" "push" "origin" head-ref-name))))
 
-    (ice/p [:blue "Updating PR branch..."])
-    (ice/p [:blue "Attempting merge with origin/master..."])
-    (let [merge-result (p/sh {:continue true} "git" "merge" "origin/master")]
-      (when-not (zero? (:exit merge-result))
-        (ice/p [:red "✗ Merge failed: " (:err merge-result)])
-        (let [winner (if (= merge-strategy :ours) "PR" "master")]
-          (ice/p [:yellow "Attempting to resolve conflicts with git, preferring changes from " winner "..."])
-          (resolve-conflicts (u/->artifacts target-branch) merge-strategy)
-          ;; Do the commit, now that we've resolved conflicts
-          (pr-str (p/sh "git" "commit" "--no-edit" "-m"
-                        (str "Merge " target-branch " for PR #(" pr-number ")"
-                             ", preferring changes from " winner)))))
+  ;; Wait a bit for GitHub to process to avoid a race condition
+  (Thread/sleep 5000)
 
-      (ice/p [:blue "Pushing changes to PR branch..."])
-      (ice/p "Result: " (pr-str (p/sh "git" "push" "origin" head-ref-name))))
-
-    ;; Wait a bit for GitHub to process to avoid a race condition
-    (Thread/sleep 5000)
-
-    ;; Merge the PR
-    (ice/p [:blue "Merging PR #" pr-number "..."])
-    (let [merge-result (p/sh {:continue true}
-                             "gh" "pr" "merge" (str pr-number)
-                             "--squash" "--delete-branch"
-                             "--repo" "metabase/docs.metabase.github.io")]
-      (if (zero? (:exit merge-result))
-        (ice/p [:green "✓ PR merged successfully!"])
-        (ice/p [:red "✗ Merge failed: " [:bold (:err merge-result)]])))))
+  ;; Merge the PR
+  (ice/p [:blue "Merging PR #" pr-number "..."])
+  (let [merge-result (p/sh {:continue true}
+                           "gh" "pr" "merge" (str pr-number)
+                           "--squash" "--delete-branch"
+                           "--repo" "metabase/docs.metabase.github.io")]
+    (if (zero? (:exit merge-result))
+      (ice/p [:green "✓ PR merged successfully!"])
+      (ice/p [:red "✗ Merge failed: " [:bold (:err merge-result)]]))))
 
 (defn- should-pr-win?
-  "Determine if the current PR should win conflicts based on PR number comparison"
-  [current-pr-number target-branch]
+  "Determine if the current PR should win conflicts based on PR number comparison.
+   Compares against master, which is what these PRs are always based on."
+  [current-pr-number]
   (let [_ (p/sh "git" "fetch" "origin")
-        latest-master-commit (-> (p/sh "git" "log" "--oneline" "-1" (str "origin/" target-branch))
+        latest-master-commit (-> (p/sh "git" "log" "--oneline" "-1" "origin/master")
                                  :out
                                  str/trim)
         ;; Extract PR number from commit message like "[auto] adding content to docs-rc-notes->master (#380)"
@@ -165,9 +158,9 @@
 
 (defn -main [& args]
   (println "Merge opertaion running at: " (str (java.time.Instant/now)))
-  (let [{:keys [source-branch target-branch]} (cli/parse-opts args cli-spec)
-        [source-branch target-branch] (mapv str/trim [source-branch target-branch])
-        head-ref-name (u/head-ref-name source-branch target-branch)]
+  (let [{:keys [versions]} (cli/parse-opts args cli-spec)
+        versions      (u/parse-versions versions)
+        head-ref-name (u/versions->head-ref-name versions)]
 
     ;; Ensure we're working with the latest remote state
     (ice/p [:blue "Fetching latest from origin..."]) (p/sh "git" "fetch" "origin")
@@ -175,16 +168,16 @@
 
     (let [current-branch (:out (p/sh "git" "branch" "--show-current"))
           _ (ice/p [:green "Currently on branch: " (str/trim current-branch)])
-          pr-number-view (try (find-pr-view source-branch target-branch)
+          pr-number-view (try (find-pr-view head-ref-name)
                               (catch Exception e
                                 (ice/p [:red "Error finding pr-number via view: " (ex-message e)])))
-          pr-number-list (try (find-pr-list source-branch target-branch)
+          pr-number-list (try (find-pr-list head-ref-name)
                               (catch Exception e
                                 (ice/p [:red "Error finding pr-number via list: " (ex-message e)])))
           pr-number (or pr-number-view pr-number-list)
-          merge-strategy (if (should-pr-win? pr-number target-branch) :ours :theirs)]
-      (ice/p [:green "Merging PR #" pr-number ": " (u/head-ref-name source-branch target-branch) " | with strategy: " [:blue merge-strategy]])
-      (update-and-merge-pr source-branch target-branch pr-number merge-strategy))))
+          merge-strategy (if (should-pr-win? pr-number) :ours :theirs)]
+      (ice/p [:green "Merging PR #" pr-number ": " head-ref-name " | with strategy: " [:blue merge-strategy]])
+      (update-and-merge-pr head-ref-name versions pr-number merge-strategy))))
 
 (when (= *file* (System/getProperty "babashka.file"))
   (apply -main *command-line-args*))

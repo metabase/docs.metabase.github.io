@@ -22,13 +22,13 @@
     true))
 
 (defn runs-for-head-ref-name [head-ref-name all-runs]
-  (let [[from to] (str/split head-ref-name #"->")]
+  ;; Head refs from before the multi-version build look like "<source>-><target>";
+  ;; newer ones ("docs-update-v63-v62") have no arrow, so match on whichever parts we get.
+  (let [parts (remove str/blank? (str/split head-ref-name #"->"))]
     (into []
           (filter
             (fn [{:keys [name]}]
-              (let [[from-name to-name] (str/split name #"->")]
-                (and (str/includes? from-name from)
-                     (str/includes? to-name to)))))
+              (every? #(str/includes? (str name) %) parts)))
           all-runs)))
 
 (defn- ->epoch [time-str]

@@ -1,24 +1,25 @@
 name: Update Docs
 run-name: >-
   ${{ github.event_name == 'schedule'
-      && 'Nightly docs build - latest'
-      || format('Manual docs build - v{0}', inputs.major_version) }}
+      && 'Nightly docs build'
+      || format('Manual docs build - v{0}', inputs.major_versions) }}
 
 on:
-  # This triggers the auto docs build every night and uses the hard-coded LATEST_VERSION
+  # This triggers the auto docs build every night and uses the hard-coded DOC_VERSIONS
   schedule:
     - cron: "0 2 * * *"
-  # This triggers a build of any numeric docs version
+  # This triggers a build of any set of numeric docs versions
   workflow_dispatch:
     inputs:
-      major_version:
-        description: 'Major version to pull docs from metabase/metabase release branch'
+      major_versions:
+        description: 'Comma separated major versions to pull docs from metabase/metabase release branches, eg. "63,62"'
         required: true
-        type: number
-        default: 999
+        type: string
+        default: "999"
 
 env:
-  LATEST_VERSION: 63
+  # Every version listed here is pulled in and published by a single nightly build.
+  DOC_VERSIONS: "63,62"
 
 jobs:
   params:
@@ -26,22 +27,36 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     outputs:
-      major_version: ${{ steps.set-major-version.outputs.major_version }}
+      versions: ${{ steps.set-versions.outputs.versions }}
     steps:
-      - name: Set major version
-        id: set-major-version
+      - name: Resolve and validate versions
+        id: set-versions
+        env:
+          RAW_VERSIONS: ${{ inputs.major_versions || env.DOC_VERSIONS }}
         run: |
-          echo "major_version=${{ inputs.major_version || env.LATEST_VERSION }}" >> $GITHUB_OUTPUT
+          versions="$(echo "$RAW_VERSIONS" | tr -d '[:space:]')"
+          if ! echo "$versions" | grep -Eq '^[0-9]+(,[0-9]+)*$'; then
+            echo "::error::Expected a comma separated list of major versions (eg. \"63,62\"), got: '$RAW_VERSIONS'"
+            exit 1
+          fi
+          case ",$versions," in
+            *,999,*)
+              echo "::error::999 is the placeholder value - pick real major versions (eg. \"63,62\")."
+              exit 1 ;;
+          esac
+          echo "versions=$versions" >> "$GITHUB_OUTPUT"
+          echo "Building docs for versions: $versions"
 
   build:
     needs: params
-    name: Build docs v${{ needs.params.outputs.major_version }}
+    name: Build docs v${{ needs.params.outputs.versions }}
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    # The docs pull step can retry up to 3x30 minutes on its own, so leave room for
+    # that plus the jekyll build and htmlproofer.
+    timeout-minutes: 150
     env:
       GH_TOKEN: ${{ secrets.METABASE_AUTOMATION_USER_TOKEN }}
-      MAIN_REPO_SOURCE_BRANCH: release-x.${{ needs.params.outputs.major_version }}.x
-      MAIN_REPO_TARGET_BRANCH: release-x.${{ needs.params.outputs.major_version }}.x
+      DOC_VERSIONS: ${{ needs.params.outputs.versions }}
     steps:
       - uses: actions/checkout@v4
 
@@ -63,7 +78,9 @@ jobs:
 
       - name: Filter non-documented branches
         run: |
-          bb script/check_incoming_branchname.clj --target-branch "$MAIN_REPO_TARGET_BRANCH"
+          for v in ${DOC_VERSIONS//,/ }; do
+            bb script/check_incoming_branchname.clj --target-branch "release-x.$v.x"
+          done
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -89,14 +106,20 @@ jobs:
           git remote set-url origin "https://x-access-token:${{ secrets.METABASE_AUTOMATION_USER_TOKEN }}@github.com/metabase/docs.metabase.github.io.git"
 
       # observed this failing during sdk docs generation deps downloads, so adding retry logic
+      # note: a retry re-pulls every version, since the whole loop is the retried unit
       - name: Update docs for branchname
         uses: nick-fields/retry@v3
         with:
-          timeout_minutes: 20
+          timeout_minutes: 30
           max_attempts: 3
           retry_on: error
+          shell: bash
           command: |
-            bb script/update_docs_for_branchname.clj --source-branch "$MAIN_REPO_SOURCE_BRANCH" --target-branch "$MAIN_REPO_TARGET_BRANCH"
+            for v in ${DOC_VERSIONS//,/ }; do
+              echo "::group::Pulling docs from release-x.$v.x"
+              bb script/update_docs_for_branchname.clj --source-branch "release-x.$v.x" --target-branch "release-x.$v.x"
+              echo "::endgroup::"
+            done
 
       - name: Cleanup cloud docs (move them to latest, remove from all other versions)
         run: |
@@ -151,11 +174,10 @@ jobs:
       - name: Update or Create the Pull Request
         run: |
           bb script/update_or_create_pr.clj \
-          --source-branch "$MAIN_REPO_SOURCE_BRANCH" \
-          --target-branch "$MAIN_REPO_TARGET_BRANCH" \
+          --versions "$DOC_VERSIONS" \
           --pr-number "$PR_NUMBER" \
           --update-dirs "$UPDATE_DIRS"
 
       - name: Merge Updated Docs
         run: |
-          bb script/merge.clj --source-branch "$MAIN_REPO_SOURCE_BRANCH" --target-branch "$MAIN_REPO_TARGET_BRANCH"
+          bb script/merge.clj --versions "$DOC_VERSIONS"
