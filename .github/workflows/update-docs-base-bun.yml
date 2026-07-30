@@ -1,38 +1,47 @@
-name: Update Docs (Base - Bun)
+name: Update Docs
+run-name: >-
+  ${{ github.event_name == 'schedule'
+      && 'Nightly docs build - latest'
+      || format('Manual docs build - v{0}', inputs.major_version) }}
 
 on:
-  workflow_call:
+  # This triggers the auto docs build every night and uses the hard-coded LATEST_VERSION
+  schedule:
+    - cron: "0 2 * * *"
+  # This triggers a build of any numeric docs version
+  workflow_dispatch:
     inputs:
-      source_branch:
-        description: 'Source branch to pull docs from'
+      major_version:
+        description: 'Major version to pull docs from metabase/metabase release branch'
         required: true
-        type: string
-      target_branch:
-        description: 'Target branch to update'
-        required: true
-        type: string
-      annotation:
-        description: 'Annotation for the update (e.g., nightly, manual)'
-        required: true
-        type: string
-      run_name:
-        description: 'Custom run name for the workflow'
-        required: true
-        type: string
-    secrets:
-      METABASE_AUTOMATION_USER_TOKEN:
-        description: 'GitHub token for automation'
-        required: true
+        type: number
+        default: 999
+
+env:
+  LATEST_VERSION: 63
 
 jobs:
-  build:
-    name: ${{ inputs.run_name }}
+  params:
+    name: Prep params
     runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      major_version: ${{ steps.set-major-version.outputs.major_version }}
+    steps:
+      - name: Set major version
+        id: set-major-version
+        run: |
+          echo "major_version=${{ inputs.major_version || env.LATEST_VERSION }}" >> $GITHUB_OUTPUT
+
+  build:
+    needs: params
+    name: Build docs v${{ needs.params.outputs.major_version }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
     env:
       GH_TOKEN: ${{ secrets.METABASE_AUTOMATION_USER_TOKEN }}
-      MAIN_REPO_SOURCE_BRANCH: ${{ inputs.source_branch }}
-      MAIN_REPO_TARGET_BRANCH: ${{ inputs.target_branch }}
-      ANNOTATION: ${{ inputs.annotation }}
+      MAIN_REPO_SOURCE_BRANCH: release-x.${{ needs.params.outputs.major_version }}.x
+      MAIN_REPO_TARGET_BRANCH: release-x.${{ needs.params.outputs.major_version }}.x
     steps:
       - uses: actions/checkout@v4
 
@@ -144,7 +153,6 @@ jobs:
           bb script/update_or_create_pr.clj \
           --source-branch "$MAIN_REPO_SOURCE_BRANCH" \
           --target-branch "$MAIN_REPO_TARGET_BRANCH" \
-          --annotation "$ANNOTATION" \
           --pr-number "$PR_NUMBER" \
           --update-dirs "$UPDATE_DIRS"
 

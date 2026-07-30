@@ -8,6 +8,9 @@
 
 (def cli-spec
   {:spec
+   ;; note: target branch is a misnomer, the purpose of this param is to specify the target
+   ;; folder, whether it should be a numbered version or master. This should probably always
+   ;; be derived from the source branch alone
    {:target-branch {:ref "<target-branch>"
                     :desc "The target branch to update docs for."
                     :alias :t
