@@ -79,7 +79,6 @@ config:
     admin-email: null
     aggregated-query-row-limit: null
     ai-features-enabled: true
-    ai-usage-max-retention-days: null
     allowed-iframe-hosts: |-
       youtube.com,
       youtu.be,
@@ -114,7 +113,6 @@ config:
     application-name: Metabase
     attachment-row-limit: null
     attachment-table-row-limit: 20
-    audit-max-retention-days: null
     bcc-enabled: true
     breakout-bin-width: 10.0
     breakout-bins-num: 8
@@ -179,7 +177,6 @@ config:
     http-channel-host-strategy: external-only
     humanization-strategy: simple
     index-update-thread-count: 2
-    install-analytics-database: true
     jdbc-data-warehouse-connection-pool-checkout-timeout-ms: 0
     jdbc-data-warehouse-connection-pool-max-pending-checkouts: 0
     jdbc-data-warehouse-max-connection-pool-size: 15
@@ -239,7 +236,6 @@ config:
     llm-rate-limit-per-ip: 100
     llm-rate-limit-per-user: 20
     llm-request-timeout-ms: 60000
-    load-analytics-content: true
     loading-message: doing-science
     login-page-illustration: default
     login-page-illustration-custom: null
@@ -261,7 +257,6 @@ config:
     not-behind-proxy: false
     notification-link-base-url: null
     notification-system-event-thread-pool-size: 5
-    notification-temp-file-size-max-bytes: 10485760
     notification-thread-pool-size: 3
     oidc-allowed-networks: allow-all
     oidc-providers: []
@@ -313,7 +308,6 @@ config:
     sdk-encryption-validation-key: null
     search-language: null
     search-typeahead-enabled: true
-    send-email-on-first-login-from-new-device: true
     send-new-sso-user-admin-email: null
     session-cookie-samesite: lax
     session-cookies: null
@@ -321,7 +315,6 @@ config:
     setup-embedding-autoenabled: false
     setup-license-active-at-setup: false
     show-database-syncing-modal: null
-    show-google-sheets-integration: null
     show-homepage-data: true
     show-homepage-xrays: true
     show-metabase-links: true

@@ -14,7 +14,7 @@ summary: 'Embed an AI chat component in your app that can create queries from na
 
 ![Embedded AI chat](../images/ai-chat.png)
 
-{% include plans-blockquote.html feature="Modular embedding SDK" sdk=true convert_pro_link_to_embedding=true%}
+{% include plans-blockquote.html feature="Modular embedding SDK" sdk=true convert_pro_link_to_embedding=true %}
 
 You can embed an AI chat in your application similar to [Metabot](../modular-embedding) in Metabase.
 
@@ -34,7 +34,7 @@ You can check out a [demo of the AI chat component](https://embedded-analytics-s
 {% include_file "{{ dirname }}/snippets/questions/ai-question.tsx" %}
 ```
 
-## Props
+## `MetabotQuestion` props
 
 {% include_file "{{ dirname }}/api/snippets/MetabotQuestionProps.md" snippet="properties" %}
 
