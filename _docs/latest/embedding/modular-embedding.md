@@ -62,7 +62,7 @@ You can also go to **Admin > Embedding > Modular embedding** and click **New emb
 
 {% include plans-blockquote.html feature="Authenticated modular embedding" convert_pro_link_to_embedding=true %}
 
-With SSO, Metabase can know who is viewing the embed, and it can unlock all of its bells and whistles (see this [comparison between SSO and guest embeds](./introduction#comparison-of-embedding-types)).
+With SSO, Metabase can know who is viewing the embed, and it can unlock all of its bells and whistles (see this [comparison between SSO and guest embeds](./introduction#comparison-between-sso-and-guest-embeds)).
 
 This page covers the [SSO setup for your Metabase](./authentication). If you don't need to set up SSO, check out the [guest embed docs](./guest-embedding).
 
