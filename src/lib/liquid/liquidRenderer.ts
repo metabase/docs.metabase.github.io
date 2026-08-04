@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import { buildVersionSupportTable } from "@/lib/docs/versionSupport";
 import { compose } from "@/lib/fn";
 import { Liquid, ParseError, TokenizationError } from "liquidjs";
 import YAML from "yamljs";
@@ -62,10 +63,17 @@ const loadDataDir = (dir: string): Record<string, unknown> => {
   return data;
 };
 
+const siteConfig = YAML.parse(
+  fs.readFileSync(path.join(ROOT, "_config.yml"), "utf8"),
+);
+
 const baseCtx = {
   site: {
-    ...YAML.parse(fs.readFileSync(path.join(ROOT, "_config.yml"), "utf8")),
-    data: loadDataDir(path.join(ROOT, "_data")),
+    ...siteConfig,
+    data: {
+      ...loadDataDir(path.join(ROOT, "_data")),
+      version_support: buildVersionSupportTable(siteConfig.available_versions),
+    },
   },
   jekyll: {
     environment: process.env.NODE_ENV || "development",
