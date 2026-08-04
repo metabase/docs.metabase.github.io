@@ -100,6 +100,7 @@ export const getLiquidRenderer = ({
       jekyllInclude: true,
       jekyllWhere: true,
       strictVariables: false, // TODO: Would be nice to flip this to true
+      cache: import.meta.env.MODE === "production",
     });
     compose(
       registerIncludeFileTag,
