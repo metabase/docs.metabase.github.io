@@ -12,9 +12,9 @@ type Props = {
 
 const { page, dirname } = Astro.props;
 
-/* Do not show breadcrumb on home page */
 const parts = Astro.url.pathname.split("/");
-const showBreadcrumb = parts.length >= 3 && !!parts[3];
+const isHomePage = parts[3] === "index" || !parts[3];
+const showBreadcrumb = !isHomePage;
 
 const lq = getLiquidRenderer({ page, dirname });
 ---

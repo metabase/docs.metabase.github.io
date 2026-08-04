@@ -28,9 +28,6 @@ const latestOrExplicitVersion =
 const support = getVersionSupport(page.version);
 
 const showChrome = page.category !== "ignore";
-const showFeedbackWidget = !["Start", "README", "Index", "Search"].includes(
-  page.title ?? "",
-);
 ---
 
 <DefaultLayout page={page} dirname={dirname} active="docs">
@@ -86,12 +83,6 @@ const showFeedbackWidget = !["Start", "README", "Index", "Search"].includes(
           <div class="row">
             <div class="ten columns release offset-by-one docs-footer py1">
               <div class="bootstrap">
-                {showFeedbackWidget && (
-                  <LiquidInclude
-                    lq={lq}
-                    src="shared/right-hand-newsletter-subscribe-widget.html"
-                  />
-                )}
                 <span class="paragraph-6 fs-13 neutral-60">
                   See something that needs fixing?{" "}
                   <a href={page.source_url} target="_blank">
