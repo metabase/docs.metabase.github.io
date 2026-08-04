@@ -10,14 +10,16 @@ export const resolveDocUrl = ({
   id: string;
   permalink?: string;
 }): { version: string; slug: string; url: string } => {
-  const resolvedId = (
-    permalink?.replace(/^\/docs\//, "").replace(/\/index\.html$/, "") ?? id
-  ).replace(/\.html$/, "");
+  const resolvedId = (permalink?.replace(/^\/docs\//, "") ?? id).replace(
+    /\.html$/,
+    "",
+  );
   const separatorIndex = resolvedId.indexOf("/");
   const version =
     (separatorIndex !== -1
       ? resolvedId.slice(0, separatorIndex)
       : resolvedId) || "latest";
-  const slug = separatorIndex !== -1 ? resolvedId.slice(separatorIndex + 1) : "";
+  const slug =
+    separatorIndex !== -1 ? resolvedId.slice(separatorIndex + 1) : "";
   return { version, slug, url: `/docs/${version}/${slug}` };
 };

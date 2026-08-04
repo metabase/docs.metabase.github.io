@@ -19,7 +19,7 @@ export default defineConfig({
         targets: [
           {
             // TODO: What other extensions?
-            src: "_docs/**/*.{jpg,png}",
+            src: "_docs/**/*.{jpg,png,gif,json}",
             dest: "docs",
             rename: { stripBase: 1 }, // strips `_docs/`
           },
