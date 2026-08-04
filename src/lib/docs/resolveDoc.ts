@@ -10,10 +10,14 @@ export const resolveDocUrl = ({
   id: string;
   permalink?: string;
 }): { version: string; slug: string; url: string } => {
-  const resolvedId = (permalink?.replace(/^\/docs\//, "") ?? id).replace(
+  let resolvedId = (permalink?.replace(/^\/docs\//, "") ?? id).replace(
     /\.html$/,
     "",
   );
+  // For prod builds, we want to output like folder/index.html, but for the dev server, the route should exclude /index
+  if (import.meta.env.MODE === "development") {
+    resolvedId = resolvedId.replace(/index$/, "");
+  }
   const separatorIndex = resolvedId.indexOf("/");
   const version =
     (separatorIndex !== -1
