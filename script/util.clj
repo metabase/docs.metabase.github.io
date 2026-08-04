@@ -84,5 +84,33 @@
          :else [])
        (concat artifacts-to-include))))
 
-(defn head-ref-name [source-branch target-branch]
-  (str source-branch "->" target-branch))
+(defn parse-versions
+  "Parse a comma separated list of major versions (eg. \"63,62\") into a seq of
+   longs, sorted newest first and deduped. Throws on anything that isn't a
+   positive integer so a typo fails here instead of halfway through a build."
+  [s]
+  (let [parts (->> (str/split (str s) #",")
+                   (map str/trim)
+                   (remove str/blank?))
+        nums  (mapv (fn [part]
+                      (let [n (parse-long part)]
+                        (when-not (and n (pos? n))
+                          (throw (ex-info (str "Not a major version number: " (pr-str part))
+                                          {:babashka/exit 1 :versions s})))
+                        n))
+                    parts)]
+    (when (empty? nums)
+      (throw (ex-info "No versions given, expected something like \"63,62\""
+                      {:babashka/exit 1 :versions s})))
+    (vec (distinct (sort > nums)))))
+
+(defn versions->artifacts
+  "The union of artifact paths across every release number in `versions`."
+  [versions]
+  (into [] (distinct) (mapcat #(->artifacts :release %) versions)))
+
+(defn versions->head-ref-name
+  "The PR head branch for a docs update covering `versions`. Sorted newest first
+   so the name depends on the set of versions, not the order they were listed in."
+  [versions]
+  (str "docs-update-" (str/join "-" (map #(str "v" %) (sort > versions)))))
