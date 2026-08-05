@@ -7,7 +7,6 @@ category: Embedding
 title: MetabotAgentMessage
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/embedding/sdk/api/snippets/MetabotAgentMessage.md'
 layout: new-docs
-latest: true
 ---
 
 ```ts

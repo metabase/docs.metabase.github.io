@@ -7,7 +7,6 @@ category: Embedding
 title: MetabaseMetabotAttributes
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/embedding/eajs/snippets/MetabaseMetabotAttributes.md'
 layout: new-docs
-latest: true
 ---
 
 Attributes for the `<metabase-metabot>` web component.
