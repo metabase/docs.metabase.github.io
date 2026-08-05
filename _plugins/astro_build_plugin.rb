@@ -7,5 +7,5 @@ Jekyll::Hooks.register :site, :post_write do |site|
 
   shuffle_directories = "rsync -a dist/* _site && rm -rf dist"
 
-  raise "Astro sitemap rename / sync failed" unless system("#{shuffle_directories}")
+  raise "Astro sync failed" unless system("#{shuffle_directories}")
 end
