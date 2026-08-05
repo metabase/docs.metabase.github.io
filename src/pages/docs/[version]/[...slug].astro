@@ -12,10 +12,6 @@ type Props =
   | { kind: "md"; doc: DataEntryMap["docs"][number] }
   | { kind: "html"; doc: DataEntryMap["docsHtml"][number] };
 
-// `redirect_from` is handled at the config level (see collectRedirects.ts,
-// wired into astro.config.mjs's `redirects` option). `redirect_to` is
-// intentionally unhandled here: it's only used by _docs/index.md, and that
-// redirect is already covered by the root redirects.json (Amplify rules).
 export const getStaticPaths = async () => {
   const [docs, docsHtml] = await Promise.all([
     getCollection("docs"),

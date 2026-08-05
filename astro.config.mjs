@@ -7,11 +7,15 @@ import { noopMarkdownProcessor } from "./src/lib/markdown/noopMarkdownProcessor"
 // https://astro.build/config
 export default defineConfig({
   site: "https://www.metabase.com",
+
   // Static equivalent of the old jekyll-redirect-from plugin: builds one
   // meta-refresh stub page per `redirect_from` entry across all _docs files.
   redirects: collectRedirects(),
+
   build: {
-    // Generates /about.html instead of /about/index.html (preserving previous jekyll behavior)
+    // TLDR mimic what jekyll did to prevent broken links.
+    // E.g. some old hrefs point to like `start.html` so moving the file to `start/index.html` would break the link.
+    // But we also want the ability to have like `about/index.html` instead of `about.html` as well.
     format: "preserve",
   },
   vite: {
@@ -19,13 +23,11 @@ export default defineConfig({
       viteStaticCopy({
         targets: [
           {
-            // TODO: What other extensions?
             src: "_docs/**/*.{jpg,png,gif,json}",
             dest: "docs",
             rename: { stripBase: 1 }, // strips `_docs/`
           },
           {
-            // TODO: Is this actually needed?
             // TypeDoc-generated CSS/JS/icons the SDK API reference .html
             // docs load via relative `assets/...` URLs.
             src: "_docs/**/embedding/sdk/api/assets/*.{css,js,svg,ico}",

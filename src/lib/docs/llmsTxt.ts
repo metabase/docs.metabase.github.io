@@ -1,11 +1,7 @@
 // Astro port of `_plugins/jekyll_generate_llms_files_plugin.rb`, which ran as
-// a Jekyll `post_write` hook. Docs are no longer rendered by Jekyll (see
-// `_config.yml`'s removed `docs: { output: true }` and
-// `src/pages/docs/[version]/[...slug].astro`), so this logic now lives here
-// and is consumed by `src/pages/docs/[version]/llms.txt.ts` and
-// `src/pages/docs/[version]/llms-[section]-full.txt.ts` (plus their
-// `/docs/llms*.txt` "latest" convenience counterparts, mirroring the old
-// plugin's copy-latest-to-root step).
+// a Jekyll `post_write` hook. Docs are no longer rendered by Jekyll so this
+// logic now lives here and is consumed by `src/pages/docs/[version]/llms.txt.ts`
+// and `src/pages/docs/[version]/llms-[section]-full.txt.ts`.
 //
 // See: https://llmstxt.org for the spec.
 

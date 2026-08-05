@@ -1,8 +1,7 @@
-// Pure, framework-agnostic: no `astro:content` import. Used both by the
-// `[...slug].astro` route (at Astro/Vite runtime) and by `collectRedirects.ts`
-// (at plain Node/bun config-evaluation time, where `astro:content` isn't
-// available). Keep it that way.
-
+// Derives a doc's version/slug/URL from its content collection id (or
+// frontmatter `permalink` override), since docs are stored as
+// `<version>/<slug>.md` but need a canonical `/docs/<version>/<slug>` URL for
+// routing, sitemaps, and redirects.
 export const resolveDocUrl = ({
   id,
   permalink,

@@ -1,21 +1,16 @@
 import { promises as fs } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { DOCS_SRC_ROOT } from "@/constants";
+import type { Loader } from "astro/loaders";
 import glob from "glob";
 import matter from "gray-matter";
-import type { Loader } from "astro/loaders";
-import { DOCS_SRC_ROOT } from "@/constants";
 
-// Astro's built-in glob() loader only parses frontmatter/body for
-// markdown-family files, so the TypeDoc-generated SDK API reference pages
-// and per-version api.html ToC pages under _docs (raw, standalone HTML
-// documents with the same frontmatter shape as the .md docs) need their own
-// loader. Unlike the `docs` collection's ids, these ids KEEP the `.html`
-// extension, since that's what identifies the source file on disk. The
-// `.html` is stripped back off when resolving the doc's URL (see
-// `resolveDocUrl`) — `build.format: "file"` always appends its own `.html`
-// suffix to the output filename, so leaving it in the slug would double it
-// up (`api.html.html`).
+// Astro's built-in glob() loader only parses frontmatter and body content for
+// *markdown* files, but our docs root also contains HTML files (TypeDoc-generated
+// SDK API reference pages and per-version api.html pages) that use the same
+// frontmatter-plus-Liquid conventions as the Markdown docs. This custom loader
+// lets us process both file types consistently.
 export const docsHtmlLoader = (): Loader => ({
   name: "docs-html-loader",
   load: async ({ config, store, parseData, generateDigest, logger }) => {
