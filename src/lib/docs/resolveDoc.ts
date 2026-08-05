@@ -6,16 +6,17 @@
 export const resolveDocUrl = ({
   id,
   permalink,
+  includeTrailingIndex,
 }: {
   id: string;
   permalink?: string;
+  includeTrailingIndex?: boolean;
 }): { version: string; slug: string; url: string } => {
   let resolvedId = (permalink?.replace(/^\/docs\//, "") ?? id).replace(
     /\.html$/,
     "",
   );
-  // For prod builds, we want to output like folder/index.html, but for the dev server, the route should exclude /index
-  if (import.meta.env.MODE === "development") {
+  if (!includeTrailingIndex) {
     resolvedId = resolvedId.replace(/index$/, "");
   }
   const separatorIndex = resolvedId.indexOf("/");

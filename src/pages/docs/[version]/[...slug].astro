@@ -28,6 +28,8 @@ export const getStaticPaths = async () => {
       const { version, slug } = resolveDocUrl({
         id: doc.id,
         permalink: doc.data.permalink,
+        // For prod builds, we want to output like folder/index.html, but for the dev server, the route should exclude /index
+        includeTrailingIndex: import.meta.env.MODE !== "development",
       });
       return { props: { kind, doc }, params: { version, slug } };
     };
