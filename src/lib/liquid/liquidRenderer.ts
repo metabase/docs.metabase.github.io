@@ -67,7 +67,7 @@ const siteConfig = YAML.parse(
   fs.readFileSync(path.join(ROOT, "_config.yml"), "utf8"),
 );
 
-const baseCtx = {
+export const baseCtx = {
   site: {
     ...siteConfig,
     data: {
