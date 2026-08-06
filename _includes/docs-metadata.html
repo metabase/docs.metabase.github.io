@@ -8,7 +8,7 @@
 {% assign desc = page.content | truncatewords: 42 | strip_html %}
 {% endif %}
 
-{% assign img = "/images/docs/docs-og.png" %}
+{% assign img = "https://cdn.metabase.com/images/docs/docs-og.png" %}
 
 <title>{{title}}</title>
 <!-- Twitter cards -->
@@ -19,7 +19,7 @@
 <meta name="twitter:title" content="{{ title }}" />
 <meta name="twitter:description" content="{{ desc  }}" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="{{ site.url }}{{ img }}" />
+<meta name="twitter:image" content="{{ img }}" />
 <!-- end of Twitter cards -->
 
 <!-- Open Graph metadata -->
@@ -28,5 +28,5 @@
 <meta property="og:url" content="{{ page.url | replace '/index.html', '' | prepend: site.url }}" />
 <meta name="title" property="og:title" content="{{ title }}" />
 <meta name="description" property="og:description" content="{{ desc }}" />
-<meta name="image" property="og:image" content="{{ site.url }}{{ img }}" />
+<meta name="image" property="og:image" content="{{ img }}" />
 <!-- end of Open Graph metadata -->
