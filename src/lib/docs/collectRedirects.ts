@@ -37,6 +37,13 @@ export const collectRedirects = (): Record<string, string> => {
       const { url } = resolveDocUrl({ id, permalink: data.permalink });
 
       for (const source of redirectFrom) {
+        if (source === url) {
+          console.warn(
+            `[collectRedirects] ${relPath} redirects to itself; skipping.`,
+          );
+          continue;
+        }
+
         const existingOwner = claimedBy.get(source);
         if (existingOwner && redirects[source] !== url) {
           console.warn(
