@@ -7,6 +7,7 @@ import { noopMarkdownProcessor } from "./src/lib/markdown/noopMarkdownProcessor"
 // https://astro.build/config
 export default defineConfig({
   site: "https://www.metabase.com",
+  outDir: "_site",
 
   // Static equivalent of the old jekyll-redirect-from plugin: builds one
   // meta-refresh stub page per `redirect_from` entry across all _docs files.

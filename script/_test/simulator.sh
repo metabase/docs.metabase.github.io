@@ -33,9 +33,6 @@ echo ""
 echo "Marketing Repo must exist locally. Set MARKETING_REPO: $MARKETING_REPO"
 echo ""
 echo "Installed:"
-echo "  - Ruby (>= 2.7.0)"
-echo "  - Jekyll (>= 3.8.5)"
-echo "  - Bundler (>= 2.0.1)"
 echo "  - Node.js (>= 12.0.0)"
 echo "  - Bun (>= 1.3.14)"
 echo "  - Babashka"
@@ -80,8 +77,8 @@ printf '\n\n\n================= Clear the existing site: =================z\n'
 rm -rf _site
 echo "done"
 
-printf '\n\n\n================= Build the docs jekyll site: =================z\n'
-bundle exec jekyll build
+printf '\n\n\n================= Build the docs site: =================z\n'
+bun run build
 echo "built. docs site is now in _site"
 
 printf '\n\n\n================= Run HTMLProofer on docs site: =================z\n'

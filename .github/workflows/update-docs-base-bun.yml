@@ -52,7 +52,7 @@ jobs:
     name: Build docs v${{ needs.params.outputs.versions }}
     runs-on: ubuntu-latest
     # The docs pull step can retry up to 3x30 minutes on its own, so leave room for
-    # that plus the jekyll build and htmlproofer.
+    # that plus the astro build and htmlproofer.
     timeout-minutes: 150
     env:
       GH_TOKEN: ${{ secrets.METABASE_AUTOMATION_USER_TOKEN }}
@@ -92,12 +92,6 @@ jobs:
 
       - name: Install js dependencies
         run: bun install --frozen-lockfile
-
-      - name: Setup Ruby # uses version from .ruby-version
-        uses: ruby/setup-ruby@v1
-        with:
-          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
-          cache-version: 0
 
       - name: Setup Git Authentication
         run: |
@@ -152,14 +146,13 @@ jobs:
           name: sdk-files-debug
           path: _docs/v0.57/
 
-      - name: Build the Jekyll Site
+      - name: Build the Docs Site
         env:
-          JEKYLL_ENV: production
           NODE_ENV: production
         run: |
           # Clear the existing site:
           rm -rf _site
-          # Build the jekyll site:
+          # Build the docs site:
           script/build
 
       - name: Run htmlproofer + metabase.com-aware link checks
