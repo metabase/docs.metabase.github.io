@@ -1,7 +1,9 @@
 // Astro port of `_plugins/jekyll_generate_llms_files_plugin.rb`, which ran as
 // a Jekyll `post_write` hook. Docs are no longer rendered by Jekyll so this
-// logic now lives here and is consumed by `src/pages/docs/[version]/llms.txt.ts`
-// and `src/pages/docs/[version]/llms-[section]-full.txt.ts`.
+// logic now lives here and is consumed by `src/pages/docs/[version]/llms.txt.ts`,
+// `src/pages/docs/[version]/llms-[section]-full.txt.ts`, and their unversioned
+// (latest-only) counterparts `src/pages/docs/llms.txt.ts` and
+// `src/pages/docs/llms-[section]-full.txt.ts`.
 //
 // See: https://llmstxt.org for the spec.
 
