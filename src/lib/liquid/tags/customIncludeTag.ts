@@ -6,7 +6,7 @@ import { IncludeTag, Liquid, type Context, type Emitter } from "liquidjs";
 class BufferingEmitter implements Emitter {
   buffer = "";
   write(html: unknown) {
-    this.buffer += String(html);
+    this.buffer += html == null ? "" : String(html);
   }
 }
 
