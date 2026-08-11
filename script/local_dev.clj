@@ -108,13 +108,13 @@
 
       (if build-only
         (do
-          (report [:green "Building Jekyll site..."])
-          (p/sh "bundle exec jekyll build")
-          (report [:green "Done building Jekyll site."])
+          (report [:green "Building Docs site..."])
+          (p/sh "bun run build")
+          (report [:green "Done building Docs site."])
           (System/exit 0))
         (do
-          (report [:green "Building and serving Jekyll site..."])
-          (p/sh "bundle exec jekyll serve")
+          (report [:green "Building and serving Docs site..."])
+          (p/sh "bun astro preview")
           (deref (promise)))))))
 
 (when (= *file* (System/getProperty "babashka.file"))
