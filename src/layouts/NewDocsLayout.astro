@@ -12,10 +12,9 @@ type Props = {
 
 const { page, dirname } = Astro.props;
 
-/* Do not show breadcrumb on home page */
 const parts = Astro.url.pathname.split("/");
-const showBreadcrumb =
-  parts[1] == "docs" && parts.length == 4 && parts[3] === "index.html";
+const isHomePage = parts[3] === "index" || !parts[3];
+const showBreadcrumb = !isHomePage;
 
 const lq = getLiquidRenderer({ page, dirname });
 ---
@@ -30,7 +29,7 @@ const lq = getLiquidRenderer({ page, dirname });
           lq={lq}
           src="learn/top-bar.html"
           domain="docs"
-          show_breadcrumb="show_breadcrumb"
+          show_breadcrumb={showBreadcrumb}
         />
 
         <div class="learn__post__content">

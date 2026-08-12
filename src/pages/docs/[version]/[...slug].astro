@@ -1,0 +1,76 @@
+---
+import path from "node:path";
+import { pathToFileURL } from "node:url";
+import NewDocsLayout from "@/layouts/NewDocsLayout.astro";
+import OldDocsLayout from "@/layouts/OldDocsLayout.astro";
+import { resolveDocUrl } from "@/lib/docs/resolveDoc";
+import { getLiquidRenderer } from "@/lib/liquid/liquidRenderer";
+import { getMarkdownRenderer } from "@/lib/markdown/markdownRenderer";
+import { getCollection, type DataEntryMap } from "astro:content";
+
+type Props =
+  | { kind: "md"; doc: DataEntryMap["docs"][number] }
+  | { kind: "html"; doc: DataEntryMap["docsHtml"][number] };
+
+export const getStaticPaths = async () => {
+  const [docs, docsHtml] = await Promise.all([
+    getCollection("docs"),
+    getCollection("docsHtml"),
+  ]);
+
+  const toPath =
+    <Kind extends Props["kind"]>(kind: Kind) =>
+    (doc: { id: string; data: { permalink?: string } }) => {
+      const { version, slug } = resolveDocUrl({
+        id: doc.id,
+        permalink: doc.data.permalink,
+        // For prod builds, we want to output like folder/index.html, but for the dev server, the route should exclude /index
+        includeTrailingIndex: import.meta.env.MODE !== "development",
+      });
+      return { props: { kind, doc }, params: { version, slug } };
+    };
+
+  return [...docs.map(toPath("md")), ...docsHtml.map(toPath("html"))];
+};
+
+const { version, slug = "" } = Astro.params;
+const { kind, doc } = Astro.props;
+const dirname = path.dirname(doc.filePath!);
+
+// Process liquid first (e.g. control flow, includes, variables, etc)
+const lq = getLiquidRenderer({ page: doc.data, dirname });
+const lqOutput = await lq.render(doc.body!, undefined, {
+  maxSyntaxErrors: version === "latest" ? 0 : 3,
+});
+
+// `.html` docs (TypeDoc SDK API reference pages, api.html ToC pages) are
+// already complete standalone HTML documents — only Liquid needs to run on
+// them (e.g. the embedded-analytics-sdk-metadata include), no markdown
+// conversion, and no NewDocsLayout chrome (mirrors the old Jekyll
+// `docs-api` layout, which was a bare passthrough).
+let renderedHtml: string;
+if (kind === "html") {
+  renderedHtml = lqOutput;
+} else {
+  const md = await getMarkdownRenderer();
+  const renderResult = await md.render(lqOutput, {
+    fileURL: pathToFileURL(path.resolve(doc.filePath!)),
+  });
+  renderedHtml = renderResult.code;
+}
+
+const Layout = doc.data.layout === "docs" ? OldDocsLayout : NewDocsLayout;
+---
+
+{
+  kind === "html" ? (
+    <Fragment set:html={renderedHtml} />
+  ) : (
+    <Layout
+      page={{ url: `/docs/${version}/${slug}`, ...doc.data }}
+      dirname={dirname}
+    >
+      <Fragment set:html={renderedHtml} />
+    </Layout>
+  )
+}
