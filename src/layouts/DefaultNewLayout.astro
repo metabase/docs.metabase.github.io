@@ -1,0 +1,47 @@
+---
+import LiquidInclude from "@/components/LiquidInclude.astro";
+import { getLiquidRenderer } from "@/lib/liquid/liquidRenderer";
+
+type Props = {
+  page: Record<string, unknown>;
+  dirname: string;
+};
+
+const { page, dirname } = Astro.props;
+
+const lq = getLiquidRenderer({ page, dirname });
+---
+
+<!doctype html>
+<html prefix="og: https://ogp.me/ns#" lang="en-US">
+  <LiquidInclude lq={lq} src="head.html" />
+
+  <body>
+    <LiquidInclude lq={lq} src="shared-chrome/header.html" />
+
+    <div>
+      <slot />
+    </div>
+
+    <LiquidInclude lq={lq} src="shared-chrome/footer.html" />
+    <script is:inline type="text/javascript" src="/js/contentloaded.min.js"
+    ></script>
+    <script is:inline type="text/javascript" src="/js/lightbox.js"></script>
+    <script is:inline type="text/javascript" src="/js/documentation.js"
+    ></script>
+    <script is:inline type="text/javascript" src="/js/blog.js"></script>
+    <script is:inline type="text/javascript" src="/js/syntax-highlight.js"
+    ></script>
+
+    {
+      Astro.url.pathname.includes("/docs/") &&
+        Astro.url.pathname.includes("embedding") && (
+          <script
+            is:inline
+            type="text/javascript"
+            src="/js/docs/checkpoints.js"
+          />
+        )
+    }
+  </body>
+</html>

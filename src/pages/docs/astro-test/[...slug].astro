@@ -1,0 +1,41 @@
+---
+import NewDocsLayout from "@/layouts/NewDocsLayout.astro";
+import { getLiquidRenderer } from "@/lib/liquid/liquidRenderer";
+import { getMarkdownRenderer } from "@/lib/markdown/markdownRenderer";
+import { getCollection, type DataEntryMap } from "astro:content";
+
+type Props = {
+  example: DataEntryMap["examples"][number];
+};
+
+export const getStaticPaths = async () => {
+  const examples = await getCollection("examples");
+  return [
+    ...examples.map((example) => ({
+      props: { example },
+      params: { slug: example.id.replace(/^src\//, "") },
+    })),
+  ];
+};
+
+const { example } = Astro.props;
+
+// This is for debug purposes only. When rendering _docs, the dirname will be the source md file's path.
+const dirname = "_docs/latest/embedding";
+
+// Process liquid first (e.g. control flow, includes, variables, etc)
+const lq = getLiquidRenderer({ page: example.data, dirname });
+const lqOutput = await lq.render(example.body!);
+
+// Remove whitespace between elements so satteri doesn't turn them into code snippets.
+// Mimics previous behavior (which used jekyll + kramdown).
+const lqProcessed = lqOutput.replace(/>\s+</g, "><");
+
+// Convert processed markdown to html
+const md = await getMarkdownRenderer();
+const renderResult = await md.render(lqProcessed);
+---
+
+<NewDocsLayout page={example.data} dirname={dirname}>
+  <Fragment set:html={renderResult.code} />
+</NewDocsLayout>

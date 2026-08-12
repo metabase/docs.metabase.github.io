@@ -1,0 +1,25 @@
+---
+import fs from "node:fs";
+import path from "node:path";
+import type { LiquidRenderer } from "@/lib/liquid/liquidRenderer";
+
+const INCLUDES_ROOT = path.join(process.cwd(), "_includes");
+
+// Astro equivalent of Jekyll's `{% include %}` tag. Extra props are passed
+// through as `include.*` inside the partial, just like Jekyll:
+//   {% include foo.html param="x" %}  ->  <LiquidInclude src="foo.html" param="x" />
+interface Props {
+  lq: LiquidRenderer;
+  src: string;
+  [param: string]: unknown;
+}
+
+const { lq, src, ...params } = Astro.props;
+
+const html = await lq.render(
+  fs.readFileSync(path.join(INCLUDES_ROOT, src), "utf-8"),
+  { include: params },
+);
+---
+
+<Fragment set:html={html} />

@@ -13,6 +13,13 @@
     "url": "https://github.com/metabase/metabase/issues"
   },
   "scripts": {
+    "build": "astro build",
+    "check": "bun lint-scripts && bun fmt:check && bun ts",
+    "dev": "concurrently 'bundle exec jekyll serve --incremental --port=4002' 'wait-on http://localhost:4002 -i 1000 && astro dev'",
+    "preview": "astro preview",
+    "fmt": "prettier --write \"src/**/*.{ts,astro}\"",
+    "fmt:check": "prettier --check \"src/**/*.{ts,astro}\"",
+    "ts": "astro check",
     "lint-scripts": "eslint .",
     "lint-scripts-fix": "eslint . --fix",
     "lint-styles": "stylelint '**/*.scss' --quiet && stylelint '**/*.css' --quiet",
@@ -58,21 +65,30 @@
     "yamljs": "^0.2.3"
   },
   "devDependencies": {
+    "@astrojs/check": "^0.9.9",
     "@html-eslint/eslint-plugin": "^0.13.2",
     "@html-eslint/parser": "^0.13.2",
+    "@ianvs/prettier-plugin-sort-imports": "^4.7.1",
     "@linthtml/linthtml": "^0.8.6",
     "@linthtml/linthtml-config-recommended": "^0.1.0",
+    "@types/yamljs": "^0.2.34",
+    "astro": "^7.0.9",
+    "concurrently": "^10.0.3",
     "eslint": "^8.29.0",
     "eslint-plugin-frontmatter": "^0.0.8",
     "eslint-plugin-markdown": "^2.2.1",
     "eslint-plugin-mdx": "^2.0.0",
     "eslint-plugin-react": "^7.30.0",
+    "liquidjs": "^10.27.2",
     "markdownlint-cli": "^0.33.0",
-    "prettier": "^1.18.2",
+    "prettier": "^3.9.5",
+    "prettier-plugin-astro": "^0.14.1",
     "semver": "^7.7.2",
     "stylelint": "^14.9.0",
     "stylelint-config-standard-scss": "^4.0.0",
-    "stylelint-order": "^5.0.0"
+    "stylelint-order": "^5.0.0",
+    "typescript": "^6.0.3",
+    "wait-on": "^9.0.10"
   },
   "resolutions": {
     "graceful-fs": "^4.2.9"
