@@ -5,16 +5,17 @@ import { getLiquidRenderer } from "@/lib/liquid/liquidRenderer";
 type Props = {
   page: Record<string, unknown>;
   dirname: string;
+  unify?: boolean;
 };
 
-const { page, dirname } = Astro.props;
+const { page, dirname, unify } = Astro.props;
 
 const lq = getLiquidRenderer({ page, dirname });
 ---
 
 <!doctype html>
 <html prefix="og: https://ogp.me/ns#" lang="en-US">
-  <LiquidInclude lq={lq} src="head.html" />
+  <LiquidInclude lq={lq} src="head.html" {unify} />
 
   <body>
     <LiquidInclude lq={lq} src="shared-chrome/header.html" />

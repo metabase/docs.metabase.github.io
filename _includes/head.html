@@ -6,31 +6,9 @@
   <meta content="frame-ancestors 'none'" http-equiv="Content-Security-Policy" />
   <meta content="deny" http-equiv="X-Frame-Options" />
 
-  {%- comment -%}
-  Unify tracking opt-in. Single source of truth for docs is
-  `_data/unify-enabled-pages.yml`: a page is tracked when its URL contains any
-  entry in that list. The marketing site's list of the same name holds only
-  non-docs pages; the two are disjoint.
-
-  This tag is only a signal. The marketing site's `js/cookie-consent.js` —
-  already delivered here through the shared chrome — looks for it and injects
-  `/js/unify.js`, but only after the visitor grants marketing consent. That
-  root-relative path resolves to the marketing site's copy: this repo builds a
-  `js/` tree too, but the marketing app owns `/js/*` on www.metabase.com and
-  shadows ours there.
-
-  Individual doc pages no longer come from Jekyll: Astro renders this same
-  include through `LiquidInclude` (src/layouts/DefaultNewLayout.astro), with
-  `site.data` loaded by src/lib/liquid/liquidRenderer.ts and `page.url` supplied
-  by src/pages/docs/[version]/[...slug].astro. Keep this block Liquid that both
-  renderers understand.
-  {%- endcomment -%}
-  {%- for unify_path in site.data["unify-enabled-pages"] -%}
-    {%- if page.url contains unify_path %}
+  {% if include.unify %}
   <meta name="unify" content="true" />
-    {%- break -%}
-    {%- endif -%}
-  {%- endfor %}
+  {% endif %}
 
   {% if page.no_index_no_follow %}
   <meta name="robots" content="noindex, nofollow" />
