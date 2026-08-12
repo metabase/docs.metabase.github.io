@@ -1,0 +1,37 @@
+# Docs pages that load Unify (visitor de-anonymization for outbound).
+#
+# THIS IS THE ONLY PLACE DOCS PATHS LIVE. The marketing site has a list of the
+# same name at metabase.github.io -> apps/marketing-jekyll/_data/unify-enabled-pages.yml,
+# but it holds only non-docs pages: the two lists are disjoint, so there is
+# nothing to keep in sync. What the marketing repo contributes is the generic
+# hook, not the paths — see below.
+#
+# NOTE: nothing verifies this list. The marketing repo's `lint-unify-enabled-pages`
+# cannot see docs pages (they are not built into its _site), and this repo has no
+# equivalent, so a renamed docs URL fails silently. Re-check these paths by hand
+# when embedding docs move.
+#
+# A page is tracked when its URL CONTAINS one of these lines. Write a line as it
+# is served: start with "/", no trailing "/", no ".html".
+#
+# Entries cannot reach /docs/latest/embedding/sdk/api/*: those TypeDoc pages are
+# emitted without a layout (src/pages/docs/[version]/[...slug].astro), so they
+# never render head.html and can never carry the tag.
+#
+# Unify only fires after the visitor accepts marketing cookies. Docs pages load
+# the marketing site's /js/cookie-consent.js through the shared chrome, and that
+# script is what looks for the tag this list stamps and injects /js/unify.js —
+# a root-relative path, so it resolves to the marketing build's copy. This repo
+# does build a js/ tree of its own, but the marketing app owns /js/* on
+# www.metabase.com and shadows it there (js/github-stars.js exists only here and
+# 404s in production), which is why shipping a unify.js here would be pointless.
+#
+# Do NOT put this opt-in in a page's front matter instead: `_docs/latest/**` is
+# deleted and recopied nightly from the metabase/metabase repo
+# (.github/workflows/update-docs-base-bun.yml), so front matter added here would
+# survive at most one night.
+
+- /docs/latest/embedding/modular-embedding
+- /docs/latest/embedding/sdk/quickstart-with-sample-app
+- /docs/latest/embedding/sdk/quickstart-cli
+- /docs/latest/embedding/full-app-embedding-quick-start-guide
