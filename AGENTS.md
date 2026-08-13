@@ -2,7 +2,7 @@
 
 When starting the dev server, use background mode:
 
-```
+```bash
 astro dev --background
 ```
 
