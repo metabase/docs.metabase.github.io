@@ -5,6 +5,11 @@
 
   <meta content="frame-ancestors 'none'" http-equiv="Content-Security-Policy" />
   <meta content="deny" http-equiv="X-Frame-Options" />
+
+  {% if include.unify %}
+  <meta name="unify" content="true" />
+  {% endif %}
+
   {% if page.no_index_no_follow %}
   <meta name="robots" content="noindex, nofollow" />
   {% elsif page.url contains "/docs/" and page.latest != true and page.url != "/docs/all" %}

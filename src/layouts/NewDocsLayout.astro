@@ -1,11 +1,13 @@
 ---
 import LiquidInclude from "@/components/LiquidInclude.astro";
+import { UNIFY_ENABLED_PAGES } from "@/constants";
 import { getLiquidRenderer } from "@/lib/liquid/liquidRenderer";
 import DefaultNewLayout from "./DefaultNewLayout.astro";
 
 type Props = {
   page: {
     category: string;
+    url: string
   };
   dirname: string;
 };
@@ -17,9 +19,11 @@ const isHomePage = parts[3] === "index" || !parts[3];
 const showBreadcrumb = !isHomePage;
 
 const lq = getLiquidRenderer({ page, dirname });
+
+const unify = UNIFY_ENABLED_PAGES.includes(page.url);
 ---
 
-<DefaultNewLayout page={page} dirname={dirname}>
+<DefaultNewLayout page={page} dirname={dirname} {unify}>
   <div class="bootstrap">
     <div class="learn docs blog-post MB-Page">
       <LiquidInclude lq={lq} src="docs/left-sidebar.html" domain="docs" />
