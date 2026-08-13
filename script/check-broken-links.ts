@@ -38,7 +38,7 @@ const TARGET_IGNORE_PATTERNS = [/^\/docs\/latest\/api\//];
 // Not a full HTML parser, but good enough for a static, machine-generated
 // site: matches the href/src of the tags that can point at another page.
 const TAG_RE =
-  /<(?:a|link|img|script|iframe|source|track)\b[^>]*?\s(?:href|src)="([^"]*)"[^>]*>/gi;
+  /<(?:a|link|img|script|iframe|source|track)\b[^>]*?\s(?:href|src)=(?:"([^"]*)"|'([^']*)')[^>]*>/gi;
 
 // A trailing ".xyz" only counts as a file extension if it starts with a
 // letter - version-y segments like "v0.37" or "v0.63.1" end in ".37"/".1",
@@ -100,7 +100,7 @@ const checkFile = (file: string, broken: BrokenLink[]): void => {
   const dirUrlPath = path.posix.dirname(sourceUrlPath);
 
   for (const match of html.matchAll(TAG_RE)) {
-    const rawUrl = match[1].trim();
+    const rawUrl = (match[1] ?? match[2]).trim();
     if (!rawUrl || isExternal(rawUrl)) continue;
 
     // Existence only depends on the path; fragments/query strings don't
