@@ -1,0 +1,30 @@
+---
+import LiquidInclude from "@/components/LiquidInclude.astro";
+import { getLiquidRenderer } from "@/lib/liquid/liquidRenderer";
+
+type Props = {
+  page: Record<string, unknown>;
+  dirname: string;
+};
+
+const { page, dirname } = Astro.props;
+
+const lq = getLiquidRenderer({ page, dirname });
+---
+
+<!doctype html>
+<html lang="en-US">
+  <LiquidInclude lq={lq} src="head.html" />
+
+  <body>
+    <LiquidInclude lq={lq} src="shared-chrome/header.html" />
+
+    <div class="bootstrap">
+      <div class="container pt-6 pb-9">
+        <slot />
+      </div>
+    </div>
+
+    <LiquidInclude lq={lq} src="shared-chrome/footer.html" />
+  </body>
+</html>

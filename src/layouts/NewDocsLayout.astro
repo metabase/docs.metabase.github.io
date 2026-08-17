@@ -6,8 +6,9 @@ import DefaultNewLayout from "./DefaultNewLayout.astro";
 
 type Props = {
   page: {
-    category: string;
-    url: string
+    title: string;
+    url: string;
+    category?: string;
   };
   dirname: string;
 };
@@ -16,7 +17,7 @@ const { page, dirname } = Astro.props;
 
 const parts = Astro.url.pathname.split("/");
 const isHomePage = parts[3] === "index" || !parts[3];
-const showBreadcrumb = !isHomePage;
+const showBreadcrumb = !isHomePage || parts[2] === "all";
 
 const lq = getLiquidRenderer({ page, dirname });
 
