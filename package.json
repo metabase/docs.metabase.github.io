@@ -15,7 +15,7 @@
   "scripts": {
     "build": "astro build",
     "check": "bun lint-scripts && bun fmt:check && bun ts",
-    "dev": "concurrently 'bundle exec jekyll serve --incremental --port=4002' 'wait-on http://localhost:4002 -i 1000 && astro dev'",
+    "dev": "astro dev",
     "preview": "astro preview",
     "fmt": "prettier --write \"src/**/*.{ts,astro}\"",
     "fmt:check": "prettier --check \"src/**/*.{ts,astro}\"",
@@ -41,10 +41,6 @@
     "opengraph-learn": "node script/_data/bin/opengraph.js --folder _learn --properties title,image,categories",
     "all-opengraphs": "bun run opengraph-community && bun run opengraph-case-studies && bun run opengraph-dashboards && bun run opengraph-data-sources && bun run opengraph-docs && bun run opengraph-glossary && bun run opengraph-learn",
     "shared-chrome": "node script/_data/bin/shared-chrome.js",
-    "jekyll:clean": "rm -f -r _site && rm -f -r .sass-cache && rm -f .jekyll-metadata",
-    "jekyll:start": "bun run shared-chrome && bundle exec jekyll serve --config _config.dev.yml --livereload --incremental --port=4321",
-    "jekyll:clean-start": "bun run jekyll:clean && bun run jekyll:start",
-    "jekyll:build": "bun run shared-chrome && bundle exec jekyll build --config _config.yml",
     "cloudflare:remove-heavy-files": "find ./_site -type f -size +25M | xargs rm"
   },
   "homepage": "https://metabase.com",

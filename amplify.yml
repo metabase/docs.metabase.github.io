@@ -3,18 +3,13 @@ frontend:
   phases:
     preBuild:
       commands:
-        - sudo yum install -y xz rsync
-        - rvm install 3.3.2
-        - rvm use 3.3.2
-        - gem install bundler -v 2.5.22
-        - bundle _2.5.22_ config set --local path 'vendor/bundle'
-        - bundle _2.5.22_ install
+        - sudo yum install -y rsync
         - curl -fsSL https://bun.sh/install | bash
         - export PATH="$HOME/.bun/bin:$PATH"
         - bun ci
     build:
       commands:
-        - export JEKYLL_ENV=$([ "$AWS_BRANCH" = "master" ] && echo "production" || echo "staging") && export NODE_ENV=$JEKYLL_ENV && bundle exec jekyll build
+        - export NODE_ENV=$([ "$AWS_BRANCH" = "master" ] && echo "production" || echo "staging") && bun run build
   artifacts:
     baseDirectory: _site
     files:
