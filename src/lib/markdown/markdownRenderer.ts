@@ -11,6 +11,9 @@ const docsMarkdownProcessor = satteri({
     responsiveTableLabelsHastPlugin,
     relativeImagePlugin,
   ],
+  features: {
+    headingAttributes: true,
+  },
 });
 
 let rendererPromise:
