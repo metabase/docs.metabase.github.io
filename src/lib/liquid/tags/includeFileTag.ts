@@ -119,7 +119,17 @@ export const registerIncludeFileTag = (engine: Liquid) => {
         params[key] = value;
       }
 
-      let text = fs.readFileSync(path.join(ROOT, filePath), "utf8");
+      // TODO: Hit our own cdn (also change mb repo to upload artifacts to cdn)
+      const ghUrl = `https://raw.githubusercontent.com/metabase/docs.metabase.github.io/refs/heads/master/${filePath.replace("../metabase/docs", "_docs/latest")}`;
+      const response = await fetch(ghUrl);
+      if (!response.ok) {
+        throw new Error(
+          `Failed to fetch ${ghUrl}: ${response.status} ${response.statusText}`,
+        );
+      }
+      let text = await response.text();
+
+      // let text = fs.readFileSync(path.join(ROOT, filePath), "utf8");
       text = params.snippet
         ? pickSnippet(text, params.snippet)
         : removeAllSnippets(text);

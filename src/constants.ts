@@ -1,4 +1,4 @@
-export const DOCS_SRC_ROOT = "_docs";
+export const DOCS_SRC_ROOT = "../metabase/docs";
 
 export const UNIFY_ENABLED_PAGES = [
   "/docs/latest/embedding/modular-embedding",

@@ -15,6 +15,9 @@ export const resolveDocUrl = ({
     /\.html$/,
     "",
   );
+  if (resolvedId === "latest/README") {
+    resolvedId = "latest/index";
+  }
   if (!includeTrailingIndex) {
     resolvedId = resolvedId.replace(/index$/, "");
   }

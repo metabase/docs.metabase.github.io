@@ -3,6 +3,14 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import ErrorLayout from "@/layouts/ErrorLayout.astro";
 
+// Rendered on demand too (not just prerendered) so docs/[version]/[...slug]
+// can Astro.rewrite() into this page when a doc fetch 404s, while keeping
+// the original request URL — its client-side script relies on that to run
+// version-squashing/trailing-slash redirects.
+export const prerender = false;
+
+Astro.response.status = 404;
+
 const page = { title: "Page not found", url: "/docs/404" };
 const dirname = path.dirname(fileURLToPath(import.meta.url));
 ---

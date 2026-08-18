@@ -1,70 +1,46 @@
 ---
 import path from "node:path";
+import { pathToFileURL } from "node:url";
 import NewDocsLayout from "@/layouts/NewDocsLayout.astro";
 import OldDocsLayout from "@/layouts/OldDocsLayout.astro";
+import { resolveDocUrl } from "@/lib/docs/resolveDoc";
 import { getLiquidRenderer } from "@/lib/liquid/liquidRenderer";
 import { getMarkdownRenderer } from "@/lib/markdown/markdownRenderer";
-import matter from "gray-matter";
+import { getCollection, type DataEntryMap } from "astro:content";
 import toTitleCase from "titlecase";
 
-// Rendered on demand: doc content for every version (including old ones no
-// longer checked out locally) lives in the docs.metabase.github.io repo,
-// mirroring this repo's old _docs/<version>/<slug>.{md,html} layout. We fetch
-// it at request time instead of pre-building every version from a local
-// content collection (see includeFileTag.ts for the same pattern applied to
-// {% include_file %} assets).
-export const prerender = false;
+type Props =
+  | { kind: "md"; doc: DataEntryMap["docs"][number] }
+  | { kind: "html"; doc: DataEntryMap["docsHtml"][number] };
 
-const DOCS_RAW_BASE =
-  "https://raw.githubusercontent.com/metabase/docs.metabase.github.io/refs/heads/master/_docs";
+export const getStaticPaths = async () => {
+  const [docs, docsHtml] = await Promise.all([
+    getCollection("docs"),
+    getCollection("docsHtml"),
+  ]);
 
-type FetchedDoc = {
-  kind: "md" | "html";
-  fileId: string;
-  text: string;
-  url: string;
+  const toPath =
+    <Kind extends Props["kind"]>(kind: Kind) =>
+    (doc: { id: string; data: { permalink?: string } }) => {
+      const { version, slug } = resolveDocUrl({
+        id: `latest/${doc.id}`,
+        permalink: doc.data.permalink,
+        // For prod builds, we want to output like folder/index.html, but for the dev server, the route should exclude /index
+        includeTrailingIndex: import.meta.env.MODE !== "development",
+      });
+      return { props: { kind, doc }, params: { version, slug } };
+    };
+
+  return [...docs.map(toPath("md")), ...docsHtml.map(toPath("html"))];
 };
 
-async function fetchDoc(
-  version: string,
-  slug: string,
-): Promise<FetchedDoc | null> {
-  const fileId = slug === "" ? "README" : slug;
-  for (const kind of ["md", "html"] as const) {
-    const url = `${DOCS_RAW_BASE}/${version}/${fileId}.${kind}`;
-    const response = await fetch(url);
-    if (response.ok) {
-      return { kind, fileId, text: await response.text(), url };
-    }
-    if (response.status !== 404) {
-      throw new Error(
-        `Failed to fetch ${url}: ${response.status} ${response.statusText}`,
-      );
-    }
-  }
-  return null;
-}
-
 const { version = "latest", slug = "" } = Astro.params;
-
-const found = await fetchDoc(version, slug);
-if (!found) {
-  Astro.response.status = 404;
-  return Astro.rewrite("/docs/404");
-}
-const { kind, fileId, text, url: docUrl } = found;
-// `data` is intentionally `any` (matches the schemaless `docs`/`docsHtml`
-// content collections this route used to read from) since frontmatter is
-// spread directly into `page` below.
-const { data, content: body }: { data: any; content: string } = matter(text);
-const dirname = path.posix.join(
-  `_docs/${version}`,
-  path.posix.dirname(fileId),
-);
+const { kind, doc } = Astro.props;
+const dirname = path.dirname(doc.filePath!);
 
 // Process liquid first (e.g. control flow, includes, variables, etc)
-const lq = getLiquidRenderer({ page: data, dirname });
-const lqOutput = await lq.render(body, undefined, {
+const lq = getLiquidRenderer({ page: doc.data, dirname });
+const lqOutput = await lq.render(doc.body!, undefined, {
   maxSyntaxErrors: version === "latest" ? 0 : 3,
 });
 
@@ -79,13 +55,13 @@ if (kind === "html") {
 } else {
   const md = await getMarkdownRenderer();
   const renderResult = await md.render(lqOutput, {
-    fileURL: new URL(docUrl),
+    fileURL: pathToFileURL(path.resolve(doc.filePath!)),
     frontmatter: { version },
   });
   renderedHtml = renderResult.code;
 }
 
-const Layout = data.layout === "docs" ? OldDocsLayout : NewDocsLayout;
+const Layout = doc.data.layout === "docs" ? OldDocsLayout : NewDocsLayout;
 
 const ACRONYMS = [
   "API",
@@ -161,11 +137,11 @@ function constructSourceUrl(path: string) {
 
 function buildDocsMetadata(docPath: string, version: string) {
   const metadata = constructDocMetadata(docPath);
-  metadata.source_url = constructSourceUrl(fileId);
+  metadata.source_url = constructSourceUrl(doc.id.replace(/^latest\//, ""));
 
-  if (parseInt(version.split(".").pop()!, 10) > 43) {
+  // if (parseInt(version.split(".").pop()!, 10) > 43) {
     metadata.layout = "new-docs";
-  }
+  // }
   return metadata;
 }
 
@@ -179,7 +155,7 @@ const metadata = buildDocsMetadata(slug + "." + kind, version);
     <Layout
       page={{
         url: `/docs/${version}/${slug}`,
-        ...data,
+        ...doc.data,
         ...metadata,
         version,
       }}

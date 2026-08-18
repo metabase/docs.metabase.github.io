@@ -10,8 +10,12 @@ frontend:
     build:
       commands:
         - export NODE_ENV=$([ "$AWS_BRANCH" = "master" ] && echo "production" || echo "staging") && bun run build
+        - mv node_modules ./.amplify-hosting/compute/default
   artifacts:
-    baseDirectory: _site
+    # docs/[version]/[...slug] now renders on demand (astro-aws-amplify
+    # adapter), so the deployable artifact is the adapter's compute+static
+    # bundle, not the plain static `_site` output.
+    baseDirectory: .amplify-hosting
     files:
       - "**/*"
   cache:
