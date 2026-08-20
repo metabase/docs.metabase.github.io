@@ -28,36 +28,50 @@ if [[ ! -d "$CLONE_DIR" ]]; then
   git -C "$CLONE_DIR" remote add origin "$METABASE_REPO_URL"
 fi
 
-for nn in $(seq 12 63); do
-  worktree_dir="$TMP_ROOT/wt_metabase_${nn}"
-  dest_dir="$REPO_ROOT/_docs/v0.${nn}"
+# Resolve every ref up front from two bulk ls-remote calls instead of one
+# per version, then fetch them all in a single batched `git fetch`. This
+# turns ~100 sequential network round trips into 3.
+echo "Listing remote refs"
+all_tags="$(git ls-remote --tags "$METABASE_REPO_URL")"
+all_heads="$(git ls-remote --heads "$METABASE_REPO_URL")"
 
-  detached=false
+declare -a resolved_ref
+declare -a is_detached
+refspecs=()
+
+for nn in $(seq 12 63); do
   if (( nn <= 43 )); then
-    ref=$(git ls-remote --tags "$METABASE_REPO_URL" "v0.${nn}.*" \
-      | sed 's#.*refs/tags/##' \
-      | grep -E "^v0\.${nn}\.[0-9]+(\.[0-9]+)?\$" \
-      | sort -V | tail -1)
+    ref=$(grep -oE "refs/tags/v0\.${nn}\.[0-9]+(\.[0-9]+)?\$" <<< "$all_tags" \
+      | sed 's#refs/tags/##' | sort -V | tail -1)
     if [[ -z "$ref" ]]; then
       echo "Skipping v0.${nn}: no matching tag found"
       continue
     fi
-    detached=true
-    fetch_refspec="refs/tags/${ref}:refs/tags/${ref}"
+    resolved_ref[nn]="$ref"
+    is_detached[nn]=1
+    refspecs+=("refs/tags/${ref}:refs/tags/${ref}")
   else
     ref="release-x.${nn}.x"
-    if ! git ls-remote --exit-code --heads "$METABASE_REPO_URL" "$ref" > /dev/null; then
+    if ! grep -q "refs/heads/${ref}\$" <<< "$all_heads"; then
       echo "Skipping v0.${nn}: no such remote branch (release-x.${nn}.x)"
       continue
     fi
-    fetch_refspec="refs/heads/${ref}:refs/remotes/origin/${ref}"
+    resolved_ref[nn]="$ref"
+    is_detached[nn]=0
+    refspecs+=("refs/heads/${ref}:refs/remotes/origin/${ref}")
   fi
+done
 
-  echo "Fetching ${ref}"
-  git -C "$CLONE_DIR" fetch -q --depth=1 --filter=tree:0 origin "$fetch_refspec"
+echo "Fetching ${#refspecs[@]} refs"
+git -C "$CLONE_DIR" fetch -q --depth=1 --filter=tree:0 origin "${refspecs[@]}"
+
+for nn in "${!resolved_ref[@]}"; do
+  ref="${resolved_ref[nn]}"
+  worktree_dir="$TMP_ROOT/wt_metabase_${nn}"
+  dest_dir="$REPO_ROOT/_docs/v0.${nn}"
 
   echo "Adding worktree for ${ref} at ${worktree_dir}"
-  if [[ "$detached" == true ]]; then
+  if [[ "${is_detached[nn]}" == 1 ]]; then
     git -C "$CLONE_DIR" worktree add --no-checkout --detach "$worktree_dir" "$ref"
   else
     git -C "$CLONE_DIR" worktree add --no-checkout -B "${ref}" "$worktree_dir" "origin/${ref}"
@@ -71,7 +85,7 @@ for nn in $(seq 12 63); do
   cp -R "$worktree_dir/docs/." "$dest_dir/"
 
   git -C "$CLONE_DIR" worktree remove "$worktree_dir" --force
-  if [[ "$detached" == false ]]; then
+  if [[ "${is_detached[nn]}" == 0 ]]; then
     git -C "$CLONE_DIR" branch -D "${ref}"
   fi
 done
