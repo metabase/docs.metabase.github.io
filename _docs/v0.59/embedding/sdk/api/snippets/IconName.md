@@ -239,6 +239,7 @@ type IconName =
   | "segment2"
   | "shield"
   | "shield_outline"
+  | "shield_stroke"
   | "sidebar_closed"
   | "sidebar_open"
   | "slack"
