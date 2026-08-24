@@ -23,6 +23,7 @@ export default defineConfig({
     plugins: [
       viteStaticCopy({
         targets: [
+          // FIXME: Serve static files (as latest) from METABASE_REPO_PATH if defined
           {
             src: "_docs/**/*.{jpg,png,gif,json}",
             dest: "docs",

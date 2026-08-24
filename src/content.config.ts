@@ -19,6 +19,10 @@ const docsLatest = defineCollection({
       "**/*.md",
       "!**/embedding/sdk/api/snippets/**",
       "!**/_includes/**",
+      // FIXME: Should this be ignored in the "docs" collection? (Is this a regression?)
+      // script/docs (lib/fetch-docs.js) ignores this dir too — it has its
+      // own README.md, which would otherwise collide with the root one.
+      "!util/**",
     ],
     base: DOCS_LATEST_ROOT,
 

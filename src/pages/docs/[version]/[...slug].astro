@@ -3,6 +3,8 @@ import path from "node:path";
 import { pathToFileURL } from "node:url";
 import NewDocsLayout from "@/layouts/NewDocsLayout.astro";
 import OldDocsLayout from "@/layouts/OldDocsLayout.astro";
+import { buildRawDocMetadata } from "@/lib/docs/buildRawDocMetadata";
+import { reformatMarkdownUrls } from "@/lib/docs/reformatMarkdownUrls";
 import { resolveDocUrl } from "@/lib/docs/resolveDoc";
 import { getLiquidRenderer } from "@/lib/liquid/liquidRenderer";
 import { getMarkdownRenderer } from "@/lib/markdown/markdownRenderer";
@@ -13,27 +15,55 @@ type Props =
   | { kind: "html"; doc: DataEntryMap["docsHtml"][number] };
 
 export const getStaticPaths = async () => {
+  // FIXME: Maybe define IS_LOCAL_MB is constants.ts?
+  // getStaticPaths runs in its own isolated scope and can't see top-level
+  // consts from the rest of the file (only imports) — recompute locally.
+  const isLocalMb = !!import.meta.env.METABASE_REPO_PATH;
+
   const [docs, docsLatest, docsHtml] = await Promise.all([
     getCollection("docs"),
     getCollection("docsLatest"),
     getCollection("docsHtml"),
+    // FIXME: Does docsHtml need a latest counterpart?
   ]);
 
   const toPath =
-    <Kind extends Props["kind"]>(kind: Kind) =>
-    (doc: { id: string; data: { permalink?: string } }) => {
+    <Kind extends Props["kind"]>(kind: Kind, isRaw?: boolean) =>
+    (doc: {
+      id: string;
+      data: { permalink?: string; [key: string]: unknown };
+      body?: string;
+    }) => {
+      // FIXME: Figure out if it makes sense to process doc.data and doc.body here or outside getStaticPaths
+
+      // Raw docs are read straight from a metabase checkout (see
+      // docsLatest in content.config.ts), so they haven't been through
+      // `script/docs`'s frontmatter/link rewriting yet — do the local
+      // equivalent here so /latest renders the same as the deployed docs.
+      // This has to run before resolveDocUrl, since it's what computes the
+      // README's permalink override.
+      const processedDoc = isRaw
+        ? {
+            ...doc,
+            data: buildRawDocMetadata(
+              doc.id.replace(/^latest\//, ""),
+              doc.data,
+            ),
+            body: reformatMarkdownUrls(doc.body ?? ""),
+          }
+        : doc;
       const { version, slug } = resolveDocUrl({
         id: doc.id,
-        permalink: doc.data.permalink,
+        permalink: processedDoc.data.permalink as string | undefined,
         // For prod builds, we want to output like folder/index.html, but for the dev server, the route should exclude /index
         includeTrailingIndex: import.meta.env.MODE !== "development",
       });
-      return { props: { kind, doc }, params: { version, slug } };
+      return { props: { kind, doc: processedDoc }, params: { version, slug } };
     };
 
   return [
     ...docs.map(toPath("md")),
-    ...docsLatest.map(toPath("md")),
+    ...docsLatest.map(toPath("md", isLocalMb)),
     ...docsHtml.map(toPath("html")),
   ];
 };
