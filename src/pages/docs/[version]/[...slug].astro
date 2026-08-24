@@ -36,9 +36,14 @@ export const getStaticPaths = async () => {
 const { version, slug = "" } = Astro.params;
 const { kind, doc } = Astro.props;
 const dirname = path.dirname(doc.filePath!);
+const _includes = `${version}/_includes`;
 
 // Process liquid first (e.g. control flow, includes, variables, etc)
-const lq = getLiquidRenderer({ page: doc.data, dirname });
+const lq = getLiquidRenderer({
+  page: doc.data,
+  dirname,
+  _includes,
+});
 const lqOutput = await lq.render(doc.body!, undefined, {
   maxSyntaxErrors: version === "latest" ? 0 : 3,
 });

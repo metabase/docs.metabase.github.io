@@ -21,7 +21,7 @@ export const docsHtmlLoader = (): Loader => ({
     const rootDir = fileURLToPath(config.root);
     const entries: string[] = glob.sync("**/*.html", {
       cwd: baseDir,
-      ignore: ["**/embedding/sdk/api/snippets/**"],
+      ignore: ["**/embedding/sdk/api/snippets/**", "**/_includes/**"],
     });
 
     for (const entry of entries) {

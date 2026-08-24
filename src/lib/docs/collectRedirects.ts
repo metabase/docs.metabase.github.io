@@ -5,7 +5,7 @@ import matter from "gray-matter";
 import { DOCS_SRC_ROOT } from "../../constants";
 import { resolveDocUrl } from "./resolveDoc";
 
-const EXCLUDE = ["**/embedding/sdk/api/snippets/**"];
+const EXCLUDE = ["**/embedding/sdk/api/snippets/**", "**/_includes/**"];
 
 type ScanTarget = { extension: "md" | "html"; stripExtension: boolean };
 

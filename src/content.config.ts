@@ -5,7 +5,7 @@ import { DOCS_SRC_ROOT } from "./constants";
 
 const docs = defineCollection({
   loader: glob({
-    pattern: ["**/*.md", "!**/embedding/sdk/api/snippets/**"],
+    pattern: ["**/*.md", "!**/embedding/sdk/api/snippets/**", "!**/_includes/**"],
     base: DOCS_SRC_ROOT,
 
     // Preserves dots (.) in pathnames

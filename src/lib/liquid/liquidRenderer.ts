@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import { DOCS_SRC_ROOT } from "@/constants";
 import { buildVersionSupportTable } from "@/lib/docs/versionSupport";
 import { compose } from "@/lib/fn";
 import { Liquid, ParseError, TokenizationError } from "liquidjs";
@@ -41,7 +42,8 @@ const stripInvalidLiquidSpan = (
 };
 
 const ROOT = process.cwd();
-const INCLUDES_ROOT = path.join(ROOT, "_includes");
+const INCLUDES_ROOT_SITE = path.join(ROOT, "_includes");
+const INCLUDES_ROOT_DOCS = path.join(ROOT, DOCS_SRC_ROOT);
 
 const loadDataDir = (dir: string): Record<string, unknown> => {
   const data: Record<string, any> = {};
@@ -90,13 +92,15 @@ const collapseBlankLines = (html: string): string =>
 export const getLiquidRenderer = ({
   page,
   dirname,
+  _includes,
 }: {
   page: Record<string, unknown>;
   dirname: string;
+  _includes?: string;
 }) => {
   if (!liquidEngine) {
     liquidEngine = new Liquid({
-      root: [INCLUDES_ROOT],
+      root: [INCLUDES_ROOT_SITE, INCLUDES_ROOT_DOCS],
       jekyllInclude: true,
       jekyllWhere: true,
       strictVariables: false, // TODO: Would be nice to flip this to true
@@ -112,6 +116,7 @@ export const getLiquidRenderer = ({
     ...baseCtx,
     page,
     dirname,
+    _includes,
   };
 
   return {
