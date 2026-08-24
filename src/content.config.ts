@@ -1,15 +1,29 @@
 import { defineCollection } from "astro:content";
 import { glob } from "astro/loaders";
+import { DOCS_LATEST_ROOT, DOCS_SRC_ROOT } from "./constants";
 import { docsHtmlLoader } from "./lib/docs/docsHtmlLoader";
-import { DOCS_SRC_ROOT } from "./constants";
 
 const docs = defineCollection({
   loader: glob({
-    pattern: ["**/*.md", "!**/embedding/sdk/api/snippets/**"],
+    pattern: ["**/*.md", "!**/embedding/sdk/api/snippets/**", "!latest/**"],
     base: DOCS_SRC_ROOT,
 
     // Preserves dots (.) in pathnames
     generateId: ({ entry }) => entry.replace(/\.md$/, ""),
+  }),
+});
+
+const docsLatest = defineCollection({
+  loader: glob({
+    pattern: [
+      "**/*.md",
+      "!**/embedding/sdk/api/snippets/**",
+      "!**/_includes/**",
+    ],
+    base: DOCS_LATEST_ROOT,
+
+    // Preserves dots (.) in pathnames
+    generateId: ({ entry }) => `latest/${entry.replace(/\.md$/, "")}`,
   }),
 });
 
@@ -19,4 +33,4 @@ const docsHtml = defineCollection({
   loader: docsHtmlLoader(),
 });
 
-export const collections = { docs, docsHtml };
+export const collections = { docs, docsLatest, docsHtml };
