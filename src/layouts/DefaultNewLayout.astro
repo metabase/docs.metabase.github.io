@@ -1,4 +1,6 @@
 ---
+import StaticFooter from "@/components/chrome/StaticFooter.astro";
+import StaticHeader from "@/components/chrome/StaticHeader.astro";
 import LiquidInclude from "@/components/LiquidInclude.astro";
 import { getLiquidRenderer } from "@/lib/liquid/liquidRenderer";
 
@@ -18,13 +20,13 @@ const lq = getLiquidRenderer({ page, dirname });
   <LiquidInclude lq={lq} src="head.html" {unify} />
 
   <body>
-    <LiquidInclude lq={lq} src="shared-chrome/header.html" />
+    <StaticHeader />
 
     <div>
       <slot />
     </div>
 
-    <LiquidInclude lq={lq} src="shared-chrome/footer.html" />
+    <StaticFooter />
     <script is:inline type="text/javascript" src="/js/contentloaded.min.js"
     ></script>
     <script is:inline type="text/javascript" src="/js/lightbox.js"></script>

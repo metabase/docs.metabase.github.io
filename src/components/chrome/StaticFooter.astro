@@ -1,0 +1,12 @@
+---
+import footerTemplate from "./fragments/footer.html?raw";
+
+const footerHtml = footerTemplate.replace(
+  /© Metabase \d{4}/,
+  `© Metabase ${new Date().getUTCFullYear()}`,
+);
+---
+
+<Fragment set:html={footerHtml} />
+<script is:inline src="/docs/chrome/js/status.js"></script>
+<script is:inline src="/docs/chrome/js/fillout-form-fallback.js"></script>
