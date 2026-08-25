@@ -10,9 +10,10 @@ import { getLiquidRenderer } from "@/lib/liquid/liquidRenderer";
 import { getMarkdownRenderer } from "@/lib/markdown/markdownRenderer";
 import { getCollection, type DataEntryMap } from "astro:content";
 
-type Props =
+type Props = { isRaw?: boolean } & (
   | { kind: "md"; doc: DataEntryMap["docs"][number] }
-  | { kind: "html"; doc: DataEntryMap["docsHtml"][number] };
+  | { kind: "html"; doc: DataEntryMap["docsHtml"][number] }
+);
 
 export const getStaticPaths = async () => {
   // FIXME: Maybe define IS_LOCAL_MB is constants.ts?
@@ -29,36 +30,16 @@ export const getStaticPaths = async () => {
 
   const toPath =
     <Kind extends Props["kind"]>(kind: Kind, isRaw?: boolean) =>
-    (doc: {
-      id: string;
-      data: { permalink?: string; [key: string]: unknown };
-      body?: string;
-    }) => {
-      // FIXME: Figure out if it makes sense to process doc.data and doc.body here or outside getStaticPaths
-
-      // Raw docs are read straight from a metabase checkout (see
-      // docsLatest in content.config.ts), so they haven't been through
-      // `script/docs`'s frontmatter/link rewriting yet — do the local
-      // equivalent here so /latest renders the same as the deployed docs.
-      // This has to run before resolveDocUrl, since it's what computes the
-      // README's permalink override.
-      const processedDoc = isRaw
-        ? {
-            ...doc,
-            data: buildRawDocMetadata(
-              doc.id.replace(/^latest\//, ""),
-              doc.data,
-            ),
-            body: reformatMarkdownUrls(doc.body ?? ""),
-          }
-        : doc;
+    (doc: { id: string; data: { [key: string]: unknown }; body?: string }) => {
       const { version, slug } = resolveDocUrl({
         id: doc.id,
-        permalink: processedDoc.data.permalink as string | undefined,
         // For prod builds, we want to output like folder/index.html, but for the dev server, the route should exclude /index
         includeTrailingIndex: import.meta.env.MODE !== "development",
       });
-      return { props: { kind, doc: processedDoc }, params: { version, slug } };
+      return {
+        props: { kind, doc, isRaw },
+        params: { version, slug },
+      };
     };
 
   return [
@@ -69,7 +50,17 @@ export const getStaticPaths = async () => {
 };
 
 const { version, slug = "" } = Astro.params;
-const { kind, doc } = Astro.props;
+const { kind, doc: propsDoc, isRaw } = Astro.props;
+const doc = isRaw
+  ? {
+      ...propsDoc,
+      data: buildRawDocMetadata(
+        propsDoc.id.replace(/^latest\//, ""),
+        propsDoc.data,
+      ),
+      body: reformatMarkdownUrls(propsDoc.body ?? ""),
+    }
+  : propsDoc;
 const dirname = path.dirname(doc.filePath!);
 
 // Process liquid first (e.g. control flow, includes, variables, etc)

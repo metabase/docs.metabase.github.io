@@ -3,6 +3,7 @@ import { glob } from "astro/loaders";
 import { DOCS_LATEST_ROOT, DOCS_SRC_ROOT } from "./constants";
 import { docsHtmlLoader } from "./lib/docs/docsHtmlLoader";
 
+// FIXME: This is a big collection and it slows down dev builds. Maybe we can disable it by default for dev in .env?
 const docs = defineCollection({
   loader: glob({
     pattern: ["**/*.md", "!**/embedding/sdk/api/snippets/**", "!latest/**"],

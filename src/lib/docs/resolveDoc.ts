@@ -4,17 +4,12 @@
 // routing, sitemaps, and redirects.
 export const resolveDocUrl = ({
   id,
-  permalink,
   includeTrailingIndex,
 }: {
   id: string;
-  permalink?: string;
   includeTrailingIndex?: boolean;
 }): { version: string; slug: string; url: string } => {
-  let resolvedId = (permalink?.replace(/^\/docs\//, "") ?? id).replace(
-    /\.html$/,
-    "",
-  );
+  let resolvedId = id.replace(/\.html$/, "").replace(/\/README$/, "/index");
   if (!includeTrailingIndex) {
     resolvedId = resolvedId.replace(/index$/, "");
   }
