@@ -47,7 +47,7 @@ Once you have your Google API `Client ID` (ending in `.apps.googleusercontent.co
 
 ## Creating Metabase accounts with Google Sign-in
 
-> On [paid plans](/pricing/), you're [charged for each active account](../cloud/how-billing-works#what-counts-as-a-user-account).
+> On [paid plans](/pricing/), you're [charged for each active account](/how-billing-works#what-counts-as-a-user-account).
 
 If people's Google account email addresses are from a specific domain, and you want to allow them to sign up on their own, you can enter that domain in the **Domain** field.
 
