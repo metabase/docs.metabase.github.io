@@ -5,7 +5,7 @@ export const GAP = 24;
 // `--navigation-header-height` is a static 77/85px that does not account for it —
 // nor for the 5px it is already short by. Measure instead.
 const HEADER = "header.bootstrap, .navigation-header";
-const BANNER_REMOVAL_DELAY = 2500;
+const BANNER_PARENT = ".navigation-header";
 
 // The header is sticky at top: 0, so its bottom edge is where content may start.
 export const modalTop = (headerBottom: number): string =>
@@ -27,19 +27,19 @@ export function trackHeaderOffset(doc: Document): () => void {
   const publish = () => publishHeaderOffset(doc);
   publish();
 
+  // A ResizeObserver on the header does not fire when promo-banner.js removes the
+  // banner, even though the header visibly shrinks — measured, not assumed. The
+  // banner is a direct child, so childList alone catches it without subtree noise.
+  const banners = doc.querySelector(BANNER_PARENT);
+  const mutation = new MutationObserver(publish);
+  if (banners) mutation.observe(banners, { childList: true });
+
+  // Still worth observing for the 77/85px breakpoint and font reflow.
   const resize = new ResizeObserver(publish);
   resize.observe(header);
 
-  // promo-banner.js removes the banner on a timer after transitioning it to zero
-  // height, which does not always fire the ResizeObserver.
-  const mutation = new MutationObserver(() => {
-    publish();
-    setTimeout(publish, BANNER_REMOVAL_DELAY);
-  });
-  mutation.observe(header, { childList: true, subtree: true });
-
   return () => {
-    resize.disconnect();
     mutation.disconnect();
+    resize.disconnect();
   };
 }

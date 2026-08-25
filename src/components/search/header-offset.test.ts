@@ -1,6 +1,12 @@
 // @vitest-environment happy-dom
 import { beforeEach, describe, expect, test } from "vitest";
-import { GAP, MODAL_TOP, modalTop, publishHeaderOffset } from "./header-offset";
+import {
+  GAP,
+  MODAL_TOP,
+  modalTop,
+  publishHeaderOffset,
+  trackHeaderOffset,
+} from "./header-offset";
 
 const HEADER_HEIGHT = 82;
 const BANNER_HEIGHT = 48;
@@ -75,5 +81,42 @@ describe("publishHeaderOffset", () => {
     expect(
       doc.documentElement.style.getPropertyValue("--navigation-header-height"),
     ).toBe("");
+  });
+});
+
+describe("trackHeaderOffset", () => {
+  // A ResizeObserver on the header does not fire when the banner is removed, so
+  // this is the only thing keeping the offset correct after a dismissal.
+  test("republishes when the banner is removed", async () => {
+    document.documentElement.innerHTML =
+      '<body><header class="bootstrap"><div class="navigation-header">' +
+      '<div class="promo-banner"></div></div></header></body>';
+
+    const header = document.querySelector("header.bootstrap") as HTMLElement;
+    header.getBoundingClientRect = () =>
+      ({
+        bottom: document.querySelector(".promo-banner")
+          ? HEADER_HEIGHT + BANNER_HEIGHT
+          : HEADER_HEIGHT,
+      }) as DOMRect;
+
+    const stop = trackHeaderOffset(document);
+    const read = () =>
+      document.documentElement.style.getPropertyValue(MODAL_TOP);
+
+    expect(read()).toBe("154px");
+
+    document.querySelector(".promo-banner")?.remove();
+    await new Promise((resolve) => setTimeout(resolve, 0));
+
+    expect(read()).toBe("106px");
+    stop();
+  });
+
+  test("is a no-op without a header", () => {
+    document.documentElement.innerHTML = "<body></body>";
+
+    expect(() => trackHeaderOffset(document)()).not.toThrow();
+    expect(document.documentElement.style.getPropertyValue(MODAL_TOP)).toBe("");
   });
 });
