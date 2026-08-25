@@ -185,6 +185,28 @@
 
       document.body.appendChild(GTagScript);
     }
+
+    // Load the ad-tracking container independently from the existing Google
+    // tag while sharing the site's dataLayer. This function only runs after
+    // marketing consent in regions where prior consent is required.
+    if (
+      window.environment === "production" &&
+      !document.getElementById("gtmAdTrackingHead")
+    ) {
+      const GTMID = "GTM-KHLBGV9";
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        "gtm.start": new Date().getTime(),
+        event: "gtm.js",
+      });
+
+      const GTagHead = document.createElement("script");
+      GTagHead.src = `https://www.googletagmanager.com/gtm.js?id=${GTMID}`;
+      GTagHead.type = "text/javascript";
+      GTagHead.async = true;
+      GTagHead.id = "gtmAdTrackingHead";
+      document.head.appendChild(GTagHead);
+    }
   }
 
   // marketing
