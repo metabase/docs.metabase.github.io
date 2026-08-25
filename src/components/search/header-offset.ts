@@ -7,10 +7,12 @@ export const GAP = 24;
 const HEADER = "header.bootstrap, .navigation-header";
 const BANNER_PARENT = ".navigation-header";
 
-// The header is sticky at top: 0, so its bottom edge is where content may start.
 export const modalTop = (headerBottom: number): string =>
   `${Math.max(0, Math.round(headerBottom)) + GAP}px`;
 
+// The header is sticky at `top: -48px` so the promo banner scrolls away while the
+// nav row stays pinned — its bottom edge moves between 130px and 82px. Read the
+// live rect rather than assuming a resting height.
 export function publishHeaderOffset(doc: Document): string | null {
   const header = doc.querySelector(HEADER);
   if (!header) return null;
@@ -22,23 +24,39 @@ export function publishHeaderOffset(doc: Document): string | null {
 
 export function trackHeaderOffset(doc: Document): () => void {
   const header = doc.querySelector(HEADER);
-  if (!header) return () => {};
+  const view = doc.defaultView;
+  if (!header || !view) return () => {};
 
-  const publish = () => publishHeaderOffset(doc);
-  publish();
+  let last = publishHeaderOffset(doc);
+
+  // Scrolling moves the header's bottom edge without firing either observer. The
+  // browser already caps scroll events at one per frame, so read straight through
+  // and skip the style write while the value holds.
+  const onScroll = () => {
+    const top = modalTop(header.getBoundingClientRect().bottom);
+    if (top === last) return;
+    last = top;
+    doc.documentElement.style.setProperty(MODAL_TOP, top);
+  };
+  view.addEventListener("scroll", onScroll, { passive: true });
+
+  const republish = () => {
+    last = publishHeaderOffset(doc);
+  };
 
   // A ResizeObserver on the header does not fire when promo-banner.js removes the
   // banner, even though the header visibly shrinks — measured, not assumed. The
   // banner is a direct child, so childList alone catches it without subtree noise.
-  const banners = doc.querySelector(BANNER_PARENT);
-  const mutation = new MutationObserver(publish);
-  if (banners) mutation.observe(banners, { childList: true });
+  const bannerParent = doc.querySelector(BANNER_PARENT);
+  const mutation = new MutationObserver(republish);
+  if (bannerParent) mutation.observe(bannerParent, { childList: true });
 
   // Still worth observing for the 77/85px breakpoint and font reflow.
-  const resize = new ResizeObserver(publish);
+  const resize = new ResizeObserver(republish);
   resize.observe(header);
 
   return () => {
+    view.removeEventListener("scroll", onScroll);
     mutation.disconnect();
     resize.disconnect();
   };
