@@ -6,15 +6,18 @@ import OldDocsLayout from "@/layouts/OldDocsLayout.astro";
 import { resolveDocUrl } from "@/lib/docs/resolveDoc";
 import { getLiquidRenderer } from "@/lib/liquid/liquidRenderer";
 import { getMarkdownRenderer } from "@/lib/markdown/markdownRenderer";
+import { renderMdxEntry, type MdxRenderResult } from "@/lib/markdown/mdxRenderer";
 import { getCollection, type DataEntryMap } from "astro:content";
 
 type Props =
   | { kind: "md"; doc: DataEntryMap["docs"][number] }
+  | { kind: "mdx"; doc: DataEntryMap["docsMdx"][number] }
   | { kind: "html"; doc: DataEntryMap["docsHtml"][number] };
 
 export const getStaticPaths = async () => {
-  const [docs, docsHtml] = await Promise.all([
+  const [docs, docsMdx, docsHtml] = await Promise.all([
     getCollection("docs"),
+    getCollection("docsMdx"),
     getCollection("docsHtml"),
   ]);
 
@@ -30,7 +33,11 @@ export const getStaticPaths = async () => {
       return { props: { kind, doc }, params: { version, slug } };
     };
 
-  return [...docs.map(toPath("md")), ...docsHtml.map(toPath("html"))];
+  return [
+    ...docs.map(toPath("md")),
+    ...docsMdx.map(toPath("mdx")),
+    ...docsHtml.map(toPath("html")),
+  ];
 };
 
 const { version, slug = "" } = Astro.params;
@@ -38,33 +45,46 @@ const { kind, doc } = Astro.props;
 const dirname = path.dirname(doc.filePath!);
 const _includes = `${version}/_includes`;
 
-// Process liquid first (e.g. control flow, includes, variables, etc)
-const lq = getLiquidRenderer({
-  page: doc.data,
-  dirname,
-  _includes,
-});
-const lqOutput = await lq.render(doc.body!, undefined, {
-  maxSyntaxErrors: version === "latest" ? 0 : 3,
-});
-
-// `.html` docs (TypeDoc SDK API reference pages, api.html ToC pages) are
-// already complete standalone HTML documents — only Liquid needs to run on
-// them (e.g. the embedded-analytics-sdk-metadata include), no markdown
-// conversion, and no NewDocsLayout chrome (mirrors the old Jekyll
-// `docs-api` layout, which was a bare passthrough).
-let renderedHtml: string;
-if (kind === "html") {
-  renderedHtml = lqOutput;
+// `.mdx` docs use native import/JSX (compiled by @astrojs/mdx) instead of
+// Liquid for includes, so they skip Liquid entirely and are rendered via
+// Astro's own content renderer rather than the manual markdown pipeline below.
+let MdxContent: MdxRenderResult["Content"] | undefined;
+let renderedHtml: string | undefined;
+if (kind === "mdx") {
+  const rendered = await renderMdxEntry(doc);
+  MdxContent = rendered.Content;
 } else {
-  const md = await getMarkdownRenderer();
-  const renderResult = await md.render(lqOutput, {
-    fileURL: pathToFileURL(path.resolve(doc.filePath!)),
+  const lq = getLiquidRenderer({
+    page: doc.data,
+    dirname,
+    _includes,
   });
-  renderedHtml = renderResult.code;
+  const lqOutput = await lq.render(doc.body!, undefined, {
+    maxSyntaxErrors: version === "latest" ? 0 : 3,
+  });
+
+  // `.html` docs (TypeDoc SDK API reference pages, api.html ToC pages) are
+  // already complete standalone HTML documents — only Liquid needs to run on
+  // them (e.g. the embedded-analytics-sdk-metadata include), no markdown
+  // conversion, and no NewDocsLayout chrome (mirrors the old Jekyll
+  // `docs-api` layout, which was a bare passthrough).
+  if (kind === "html") {
+    renderedHtml = lqOutput;
+  } else {
+    const md = await getMarkdownRenderer();
+    const renderResult = await md.render(lqOutput, {
+      fileURL: pathToFileURL(path.resolve(doc.filePath!)),
+    });
+    renderedHtml = renderResult.code;
+  }
 }
 
-const Layout = doc.data.layout === "docs" ? OldDocsLayout : NewDocsLayout;
+// `@astrojs/mdx` treats a frontmatter `layout` key as an import specifier to
+// auto-wrap the component with, so `.mdx` docs use `docsLayout` instead to
+// avoid colliding with that (our `layout: docs` / `new-docs` values aren't
+// real module paths, and would fail to resolve).
+const layoutMarker = kind === "mdx" ? doc.data.docsLayout : doc.data.layout;
+const Layout = layoutMarker === "docs" ? OldDocsLayout : NewDocsLayout;
 ---
 
 {
@@ -75,7 +95,11 @@ const Layout = doc.data.layout === "docs" ? OldDocsLayout : NewDocsLayout;
       page={{ url: `/docs/${version}/${slug}`, ...doc.data }}
       dirname={dirname}
     >
-      <Fragment set:html={renderedHtml} />
+      {kind === "mdx" && MdxContent ? (
+        <MdxContent />
+      ) : (
+        <Fragment set:html={renderedHtml} />
+      )}
     </Layout>
   )
 }

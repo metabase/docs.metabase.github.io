@@ -13,10 +13,20 @@ const docs = defineCollection({
   }),
 });
 
+const docsMdx = defineCollection({
+  loader: glob({
+    pattern: ["**/*.mdx", "!**/_includes/**"],
+    base: DOCS_SRC_ROOT,
+
+    // Preserves dots (.) in pathnames
+    generateId: ({ entry }) => entry.replace(/\.mdx$/, ""),
+  }),
+});
+
 // Raw, standalone HTML docs (TypeDoc-generated SDK API reference pages,
 // per-version api.html ToC pages) that the glob() loader can't parse.
 const docsHtml = defineCollection({
   loader: docsHtmlLoader(),
 });
 
-export const collections = { docs, docsHtml };
+export const collections = { docs, docsMdx, docsHtml };

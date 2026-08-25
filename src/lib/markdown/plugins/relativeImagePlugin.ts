@@ -1,6 +1,6 @@
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { DOCS_SRC_ROOT } from "@/constants";
+import { DOCS_SRC_ROOT } from "../../../constants";
 import { defineHastPlugin } from "satteri";
 
 // Resolves relative images from docs md files.

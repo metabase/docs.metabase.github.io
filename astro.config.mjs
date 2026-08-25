@@ -1,8 +1,10 @@
 // @ts-check
+import mdx from "@astrojs/mdx";
 import { defineConfig } from "astro/config";
 import { viteStaticCopy } from "vite-plugin-static-copy";
 import { collectRedirects } from "./src/lib/docs/collectRedirects";
-import { noopMarkdownProcessor } from "./src/lib/markdown/noopMarkdownProcessor";
+import { includesAwareMarkdownProcessor } from "./src/lib/markdown/includesAwareMarkdownProcessor";
+import { docsMarkdownProcessor } from "./src/lib/markdown/markdownRenderer";
 
 // https://astro.build/config
 export default defineConfig({
@@ -19,6 +21,7 @@ export default defineConfig({
     // But we also want the ability to have like `about/index.html` instead of `about.html` as well.
     format: "preserve",
   },
+
   vite: {
     plugins: [
       viteStaticCopy({
@@ -39,6 +42,7 @@ export default defineConfig({
       }),
     ],
   },
+
   markdown: {
     // Use `getMarkdownRenderer` instead for faster dev builds. There are
     // thousands of docs md files, and astro processes the markdown for all of
@@ -48,6 +52,13 @@ export default defineConfig({
     // plugin would be unnecessarily and frustratingly slow for dev builds
     // since it would need to resolve all the includes for thousands of
     // markdown files.
-    processor: noopMarkdownProcessor,
+    processor: includesAwareMarkdownProcessor,
   },
+
+  integrations: [
+    // Give MDX the same satteri processor (hast plugins, features) as `getMarkdownRenderer`
+    // instead of inheriting `markdown.processor` above (the no-op used to skip unvisited
+    // .md files) — the no-op can't compile MDX (imports/JSX), so MDX needs its own.
+    mdx({ processor: docsMarkdownProcessor }),
+  ],
 });

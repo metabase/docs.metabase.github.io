@@ -1,0 +1,31 @@
+<div data-component="counter">
+  Counter:
+  <span data-element="value">0</span>
+  <button data-element="increment" data-amount="1" type="button">-</button>
+  <button data-element="increment" data-amount="-1" type="button">+</button>
+
+  <script>
+    function setup(root: Element) {
+      let count = 0;
+
+      const valueEl = root.querySelector<HTMLElement>('[data-element="value"]');
+      root.querySelectorAll("[data-element=increment]").forEach((el) => {
+        el.addEventListener("click", () => {
+          const amount = parseInt(el.getAttribute("data-amount")!, 10);
+          if (amount) {
+            count += amount;
+            render();
+          }
+        });
+      });
+
+      function render() {
+        if (valueEl) {
+          valueEl.textContent = String(count);
+        }
+      }
+    }
+
+    document.querySelectorAll("[data-component=counter]").forEach(setup);
+  </script>
+</div>
