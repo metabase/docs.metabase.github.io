@@ -1,28 +1,20 @@
-inkeep-portal {
-  position: relative;
-  z-index: 100000;
-}
+/* Search-widget shadow DOM. Twin of metabase.github.io
+   apps/marketing-astro/src/components/search/inkeep-shadow.css — keep the two in sync. */
 
-/* cxkit-js builds class names from each component's `_id` debug prop via a
-   helper that kebab-cases and lowercases the suffix (e.g., `modal__Content`
-   becomes `.ikp-modal__content`). The widget fixes the modal at `top: 5%`, so
-   the gap under our header scaled with the viewport; anchor it to the header
-   instead so the spacing is constant. */
-.ikp-modal__content {
-  max-height: calc(100dvh - var(--navigation-header-height, 77px) - 48px);
-  top: calc(var(--navigation-header-height, 77px) + 24px);
+/* `--inkeep-modal-top` is published by header-offset.ts: the widget pins the modal
+   at `top: 5%`, and CSS in here cannot measure the header past the shadow boundary.
+   The fallback is the desktop header plus the same gap.
+
+   Below 768px the widget sets `data-mobile` and goes full-screen via `inset: 0`, at a
+   specificity a bare class cannot reach — `:not()` opts us out rather than losing `top`
+   while `max-height` still applied and stranded a dead strip at the bottom. */
+.ikp-modal__content:not([data-mobile]) {
+  max-height: calc(100dvh - var(--inkeep-modal-top, 101px) - 24px);
+  top: var(--inkeep-modal-top, 101px);
 }
 
 .ikp-search-bar-trigger__container {
   font-family: Lato, "Helvetica Neue", Helvetica, sans-serif;
-}
-
-.ikp-modal-widget__content {
-  font-family: Lato, sans-serif;
-}
-
-.ikp-ai-chat__toolbar-header {
-  visibility: hidden;
 }
 
 .ikp-search-bar-trigger__wrapper .ikp-btn {
@@ -40,12 +32,8 @@ inkeep-portal {
   background-color: white;
 }
 
-.ikp-search-bar-trigger__container--variant_subtle:is(:hover,[data-hover]) {
+.ikp-search-bar-trigger__container--variant_subtle:is(:hover, [data-hover]) {
   background-color: #eef6fc !important;
-}
-
-.ikp-ai-chat-page-wrapper {
-  padding-top: 10px;
 }
 
 .ikp-search-bar-trigger__text--size_compact {
@@ -63,7 +51,9 @@ inkeep-portal {
   font-weight: 700;
   margin-left: 6px;
   padding: 18px;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
 }
 
 .ikp-switch-view-toggle button:hover {
@@ -91,31 +81,10 @@ inkeep-portal {
   fill: #509ee3;
 }
 
-.ikp-code {
-  background-color: #f9fbfe;
-  color: #5a6072;
-  font-weight: 400;
-}
-
-.ikp-chat-bubble__user-message img {
-  left: -2px;
-  position: relative;
-  zoom: 1.3;
-}
-
+/* prettier-ignore -- wrapping this selector trips stylelint's indentation rule */
 div.ikp-d_flex.ikp-flex_row.ikp-items_center.ikp-pt_3.ikp-pb_1:has(.ikp-search-bar-stand-alone__search-input) {
   margin-right: -2px;
   margin-top: 6px;
-}
-
-.ikp-ai-chat__message-box {
-  background-color: #eef6fc;
-  border: 1px solid #e4ecfb;
-  box-shadow: none;
-}
-
-.ikp-ai-chat-footer__content-wrapper {
-  padding-bottom: 30px;
 }
 
 @media screen and (max-width: 992px) {

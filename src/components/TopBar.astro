@@ -1,0 +1,33 @@
+---
+import LiquidInclude from "@/components/LiquidInclude.astro";
+import Search from "@/components/search/Search.astro";
+import type { LiquidRenderer } from "@/lib/liquid/liquidRenderer";
+
+interface Props {
+  lq: LiquidRenderer;
+  showBreadcrumb?: boolean;
+}
+
+const { lq, showBreadcrumb = false } = Astro.props;
+---
+
+<div class="top-bar">
+  <div>
+    {
+      showBreadcrumb && (
+        <div class="learn-breadcrumb-trail">
+          <LiquidInclude lq={lq} src="docs_breadcrumb.html" />
+        </div>
+      )
+    }
+  </div>
+
+  <div>
+    <LiquidInclude lq={lq} src="docs_version.html" />
+    <a href="/releases" class="whats-new">
+      <LiquidInclude lq={lq} src="svg-icons/stars.html" />
+      What’s new
+    </a>
+    <Search />
+  </div>
+</div>
