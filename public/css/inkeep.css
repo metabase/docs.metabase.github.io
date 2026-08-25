@@ -5,13 +5,12 @@ inkeep-portal {
 
 /* cxkit-js builds class names from each component's `_id` debug prop via a
    helper that kebab-cases and lowercases the suffix (e.g., `modal__Content`
-   becomes `.ikp-modal__content`). Push the modal below our fixed header. */
+   becomes `.ikp-modal__content`). The widget fixes the modal at `top: 5%`, so
+   the gap under our header scaled with the viewport; anchor it to the header
+   instead so the spacing is constant. */
 .ikp-modal__content {
-  margin-top: var(--navigation-header-height, 77px);
-}
-
-.ikp-modal__overlay {
-  padding-top: var(--navigation-header-height, 77px);
+  max-height: calc(100dvh - var(--navigation-header-height, 77px) - 48px);
+  top: calc(var(--navigation-header-height, 77px) + 24px);
 }
 
 .ikp-search-bar-trigger__container {
