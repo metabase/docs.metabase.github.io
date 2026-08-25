@@ -1,8 +1,40 @@
 // @ts-check
+import path from "node:path";
 import { defineConfig } from "astro/config";
 import { viteStaticCopy } from "vite-plugin-static-copy";
+import { DOCS_LATEST_ROOT } from "./src/constants";
 import { collectRedirects } from "./src/lib/docs/collectRedirects";
 import { noopMarkdownProcessor } from "./src/lib/markdown/noopMarkdownProcessor";
+
+// vite-plugin-static-copy resolves each matched file's dest as
+// `dest + <full dir the glob matched under, relative to cwd>`, then
+// `stripBase` walks back up that many segments before re-appending the
+// remainder — so this must be the segment count of DOCS_LATEST_ROOT itself
+// (relative to cwd, with any leading `../` collapsed) for the stripped
+// result to land on `dest` with the original subdirectory structure intact.
+const DOCS_LATEST_ROOT_DEPTH = path
+  .relative(process.cwd(), path.resolve(DOCS_LATEST_ROOT))
+  .replace(/^(?:\.\.[/\\])+/, "")
+  .split(/[/\\]/).length;
+
+// One target pair per asset glob: committed _docs assets, plus the
+// /docs/latest counterpart sourced from DOCS_LATEST_ROOT (METABASE_REPO_PATH
+// when set, for local dev against a metabase checkout).
+/** @param {string} globSuffix */
+function docsCopyTargets(globSuffix) {
+  return [
+    {
+      src: [`_docs/**/${globSuffix}`, "!_docs/latest/**"],
+      dest: "docs",
+      rename: { stripBase: 1 },
+    },
+    {
+      src: `${DOCS_LATEST_ROOT}/**/${globSuffix}`,
+      dest: "docs/latest",
+      rename: { stripBase: DOCS_LATEST_ROOT_DEPTH },
+    },
+  ];
+}
 
 // https://astro.build/config
 export default defineConfig({
@@ -23,19 +55,10 @@ export default defineConfig({
     plugins: [
       viteStaticCopy({
         targets: [
-          // FIXME: Serve static files (as latest) from METABASE_REPO_PATH if defined
-          {
-            src: "_docs/**/*.{jpg,png,gif,json}",
-            dest: "docs",
-            rename: { stripBase: 1 }, // strips `_docs/`
-          },
-          {
-            // TypeDoc-generated CSS/JS/icons the SDK API reference .html
-            // docs load via relative `assets/...` URLs.
-            src: "_docs/**/embedding/sdk/api/assets/*.{css,js,svg,ico}",
-            dest: "docs",
-            rename: { stripBase: 1 },
-          },
+          ...docsCopyTargets("*.{jpg,png,gif,json}"),
+          // TypeDoc-generated CSS/JS/icons the SDK API reference .html
+          // docs load via relative `assets/...` URLs.
+          ...docsCopyTargets("embedding/sdk/api/assets/*.{css,js,svg,ico}"),
         ],
       }),
     ],
