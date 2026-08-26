@@ -16,25 +16,43 @@ Reference material for embedding a chart or a query editor: the attributes you c
 
 For how to set all this up, check out [Embed a chart](./chart) and [Embed the query builder](./query-builder).
 
-## `metabase-question` web component attributes
+## Web component `metabase-question` attributes
 
-These attributes apply to the `<metabase-question>` web component. For the SDK, see [`StaticQuestion` props](#staticquestion-props) and [`InteractiveQuestion` props](#interactivequestion-props).
+These attributes apply to the `<metabase-question>` web component. For the SDK, see [`StaticQuestion` props](#react-sdk-staticquestion-props) and [`InteractiveQuestion` props](#react-sdk-interactivequestion-props).
 
 {% include_file "{{ dirname }}/eajs/snippets/MetabaseQuestionAttributes.md" snippet="properties" %}
 
-## `StaticQuestion` props
+Depending on the framework you're using, you may need to stringify attributes before passing them to the component. And if you surround an attribute's value with double quotes, use single quotes inside it:
+
+```html
+<metabase-question
+  question-id="1"
+  initial-sql-parameters="{ 'productId': '42' }"
+  hidden-parameters="['productId']"
+></metabase-question>
+```
+
+These examples use sequential IDs — the number in the item's URL. On Pro and Enterprise plans, you can use [entity IDs](../installation-and-operation/serialization#entity-ids-work-with-embedding) instead; they stay the same when you [serialize](../installation-and-operation/serialization) content from one Metabase to another, like from staging to production.
+
+## React SDK `StaticQuestion` props
 
 {% include plans-blockquote.html feature="Modular embedding SDK" sdk=true convert_pro_link_to_embedding=true %}
 
 `StaticQuestion` embeds a [view-only chart](./chart#embed-a-view-only-chart).
 
+- [Component](./sdk/api/StaticQuestion)
+- [Props](./sdk/api/StaticQuestionProps)
+
 {% include_file "{{ dirname }}/sdk/api/snippets/StaticQuestionProps.md" snippet="properties" %}
 
-## `InteractiveQuestion` props
+## React SDK `InteractiveQuestion` props
 
 {% include plans-blockquote.html feature="Interactive charts" convert_pro_link_to_embedding=true is_plural=true %}
 
 `InteractiveQuestion` embeds an [interactive chart](./chart#embed-an-interactive-chart) or [a query editor](./query-builder).
+
+- [Component](./sdk/api/InteractiveQuestion)
+- [Props](./sdk/api/InteractiveQuestionProps)
 
 {% include_file "{{ dirname }}/sdk/api/snippets/InteractiveQuestionProps.md" snippet="properties" %}
 
@@ -52,7 +70,7 @@ To build your own layout, use namespaced components inside `InteractiveQuestion`
 {% include_file "{{ dirname }}/sdk/snippets/questions/customize-interactive-question.tsx" snippet="example-customized-interactive-question" %}
 ```
 
-## `InteractiveQuestion` components
+## React SDK `InteractiveQuestion` components
 
 These components are available via the `InteractiveQuestion` namespace (like `<InteractiveQuestion.Filter />`). Use them to [customize the layout](#customize-the-layout-of-an-interactive-chart) of an interactive question.
 
@@ -86,6 +104,7 @@ These components are available via the `InteractiveQuestion` namespace (like `<I
 
 - [Embed a chart](./chart)
 - [Embed the query builder](./query-builder)
+- [Dashboard component reference](./dashboard-reference)
 - [Modular embedding components](./components)
 - [Modular embedding parameters](./parameters)
 - [Appearance](./appearance)

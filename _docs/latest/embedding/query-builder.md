@@ -83,6 +83,8 @@ With a web component, turn saving on with `is-save-enabled="true"`. `target-coll
 ></metabase-question>
 ```
 
+These examples use sequential IDs — the number in the item's URL. On Pro and Enterprise plans, you can use [entity IDs](../installation-and-operation/serialization#entity-ids-work-with-embedding) instead; they stay the same when you [serialize](../installation-and-operation/serialization) content from one Metabase to another, like from staging to production.
+
 ### Saving with the React SDK
 
 With the SDK, saving is already on, so `targetCollection` is all you need. Setting `targetCollection` also hides the collection picker, so nobody has to decide where their question goes.
@@ -91,12 +93,14 @@ For the `isSaveEnabled`, `onBeforeSave`, and `onSave` props, check out [Let peop
 
 ## Customize the query builder's layout
 
-With the SDK, you can build your own layout out of the namespaced components inside `InteractiveQuestion`, like `<InteractiveQuestion.Editor />`. See [InteractiveQuestion components](./question-reference#interactivequestion-components).
+With the SDK, you can build your own layout out of the namespaced components inside `InteractiveQuestion`, like `<InteractiveQuestion.Editor />`. See [InteractiveQuestion components](./question-reference#react-sdk-interactivequestion-components).
 
 ## Further reading
 
 - [Embed a chart](./chart)
 - [Question component reference](./question-reference)
+- [Embed a dashboard](./dashboard)
+- [Dashboard component reference](./dashboard-reference)
 - [Modular embedding](./modular-embedding)
 - [Modular embedding SDK](./sdk/introduction)
 - [Modular embedding components](./components)
