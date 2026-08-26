@@ -60,7 +60,7 @@ All SSO options require a Pro or Enterprise plan.
 | [Query builder](../questions/query-builder/editor)                                     | ✅  | ❌    |
 | [SQL editor](../questions/native-editor/writing-sql)                                   | ✅  | ❌    |
 | [AI chat](./sdk/ai-chat)                                                               | ✅  | ❌    |
-| [Collection browser](./sdk/collections)                                                | ✅  | ❌    |
+| [Collection browser](./browser)                                                        | ✅  | ❌    |
 | Advanced [Tenant](./tenants) and [permissions](../permissions/embedding) management | ✅  | ❌    |
 | [Advanced theming](./appearance)                                                       | ✅  | ❌    |
 | [Usage analytics](../usage-and-performance-tools/usage-analytics)                      | ✅  | ❌    |
