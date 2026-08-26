@@ -7,7 +7,7 @@ const PREFIX = DOCS_VERSION ? `${DOCS_VERSION}/` : "";
 
 const docs = defineCollection({
   loader: glob({
-    pattern: ["**/*.md", "!**/embedding/sdk/api/snippets/**", "!util/**"],
+    pattern: ["**/*.md", "!**/embedding/sdk/api/snippets/**", "!**/util/**"],
     base: DOCS_SRC_ROOT,
 
     // Preserves dots (.) in pathnames
