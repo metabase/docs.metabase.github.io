@@ -94,12 +94,22 @@
   ;; Wait a bit for GitHub to process to avoid a race condition
   (Thread/sleep 5000)
 
-  ;; Merge the PR
+  ;; Merge the PR. With branch protection on master, --auto queues the merge
+  ;; until required status checks pass instead of failing on pending checks.
+  ;; If auto-merge is unavailable (eg. no branch protection), fall back to an
+  ;; immediate merge, which is the pre-protection behavior.
   (ice/p [:blue "Merging PR #" pr-number "..."])
-  (let [merge-result (p/sh {:continue true}
-                           "gh" "pr" "merge" (str pr-number)
-                           "--squash" "--delete-branch"
-                           "--repo" "metabase/docs.metabase.github.io")]
+  (let [gh-merge (fn [& extra-args]
+                   (apply p/sh {:continue true}
+                          "gh" "pr" "merge" (str pr-number)
+                          "--squash" "--delete-branch"
+                          "--repo" "metabase/docs.metabase.github.io"
+                          extra-args))
+        auto-result (gh-merge "--auto")
+        merge-result (if (zero? (:exit auto-result))
+                       auto-result
+                       (do (ice/p [:yellow "Auto-merge unavailable (" (str/trim (str (:err auto-result))) "), merging directly..."])
+                           (gh-merge)))]
     (if (zero? (:exit merge-result))
       (ice/p [:green "✓ PR merged successfully!"])
       (ice/p [:red "✗ Merge failed: " [:bold (:err merge-result)]]))))
