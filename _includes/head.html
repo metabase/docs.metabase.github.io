@@ -53,10 +53,10 @@
   <link rel="apple-touch-icon" href="/images/apple-touch-icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  {% include shared-chrome/stylesheets.html %}
+  {% include chrome/stylesheets.html %}
 
   {% comment %}
-  Loaded after the shared chrome so it can override those stylesheets. Must stay
+  Loaded after the local chrome so it can override those stylesheets. Must stay
   outside the canonical-URL block above, which skips versioned docs pages.
   {% endcomment %}
   <link rel="stylesheet" href="/docs/css/docs-local.css" />
@@ -84,7 +84,7 @@
      {% include sentry.html %}
    {% endif %}
 
-  {% include shared-chrome/scripts.html %}
+  {% include chrome/scripts.html %}
 
   <!-- Start of crisp.chat script -->
   {% if page.url contains "/pricing" or page.url contains "/product" or page.url

@@ -9,7 +9,7 @@ const baseConfig = {
     organizationDisplayName: "Metabase",
     primaryBrandColor: "#509EE3",
     theme: {
-      styles: [{ type: "link", value: "/css/inkeep.css" }],
+      styles: [{ type: "link", value: "/docs/css/inkeep.css" }],
     },
   },
   aiChatSettings: {

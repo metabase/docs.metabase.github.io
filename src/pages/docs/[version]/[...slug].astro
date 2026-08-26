@@ -50,7 +50,13 @@ const lqOutput = await lq.render(doc.body!, undefined, {
 // `docs-api` layout, which was a bare passthrough).
 let renderedHtml: string;
 if (kind === "html") {
-  renderedHtml = lqOutput;
+  // TypeDoc's standalone HTML is generated upstream with root-relative asset
+  // paths. In production, those paths resolve against the marketing site, so
+  // keep the generated sources untouched and scope their local assets here.
+  renderedHtml = lqOutput
+    .replaceAll('"/gdpr-cookie-notice/', '"/docs/gdpr-cookie-notice/')
+    .replaceAll('"/js/', '"/docs/js/')
+    .replaceAll('"/css/', '"/docs/css/');
 } else {
   const md = await getMarkdownRenderer();
   const renderResult = await md.render(lqOutput, {

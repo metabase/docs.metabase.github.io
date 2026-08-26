@@ -41,6 +41,29 @@ function getPromoBanner() {
   return document.querySelector(".promo-banner");
 }
 
+function waitForElement(selector, callback) {
+  const element = document.querySelector(selector);
+
+  if (element) {
+    callback(element);
+    return;
+  }
+
+  const observer = new MutationObserver(() => {
+    const element = document.querySelector(selector);
+
+    if (element) {
+      observer.disconnect();
+      callback(element);
+    }
+  });
+
+  observer.observe(document.documentElement, {
+    childList: true,
+    subtree: true,
+  });
+}
+
 function initHeader() {
   const isPromoBannerHidden = checkIfPromoBannerIsHidden();
   const promoBanner = getPromoBanner();
@@ -100,11 +123,9 @@ function handleHidePromoBanner() {
 function initDocumentationNavigationContent() {
   const isPromoBannerHidden = checkIfPromoBannerIsHidden();
   if (isPromoBannerHidden) {
-    const documentationNavigationContent = document.querySelector(
-      "#documentation-navigation-content",
-    );
-
-    documentationNavigationContent.classList.add("promo-banner-hidden");
+    waitForElement("#sub-navigation-content", (subNavigationContent) => {
+      subNavigationContent.classList.add("promo-banner-hidden");
+    });
   }
 }
 
@@ -133,6 +154,15 @@ function populatePromoBannerCountdownMinutes(minutesTillEvent) {
 
 function populatePromoBannerCountdown(howMany, unit) {
   const $container = document.querySelector(".promo-banner .button");
+
+  // The countdown writes into the small pill earlier banners carried
+  // (`<span class="button">New</span>`). The OUTER JOIN design dropped it for the
+  // logo, so there is nowhere to put the text and the banner simply goes without
+  // one — reinstating the pill is what turns this back on for a future banner.
+  if (!$container) {
+    return;
+  }
+
   $container.classList.add("countdown-active");
 
   const text = `In ${howMany} ${unit}`;
@@ -200,12 +230,16 @@ function trackPromoBannerClicks() {
 
   promoBanner.querySelectorAll("a").forEach((anchor) => {
     anchor.addEventListener("click", function() {
-      window.snowplow("promo-banner-click", "anchor-click", anchor.href);
+      window.snowplow("trackStructEvent", {
+        category: "promo-banner-click",
+        action: "anchor-click",
+        label: anchor.href,
+      });
     });
   });
 }
 
-window.addEventListener("DOMContentLoaded", () => {
+function initPromoBannerScripts() {
   initHeader();
 
   if (getPromoBanner()) {
@@ -214,4 +248,10 @@ window.addEventListener("DOMContentLoaded", () => {
     initPromoBannerCountdown();
     trackPromoBannerClicks();
   }
-});
+}
+
+if (!window.promoBannerInitialized) {
+  initPromoBannerScripts();
+
+  window.promoBannerInitialized = true;
+}

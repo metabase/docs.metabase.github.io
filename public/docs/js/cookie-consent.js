@@ -20,18 +20,21 @@
     { name: "Czech Republic", country: "CZ", country_3: "CZE" },
     { name: "Denmark", country: "DK", country_3: "DNK" },
     { name: "Estonia", country: "EE", country_3: "EST" },
-    { name: "Finland", country: "FN", country_3: "FIN" },
+    { name: "Finland", country: "FI", country_3: "FIN" },
     { name: "France", country: "FR", country_3: "FRA" },
     { name: "Germany", country: "DE", country_3: "DEU" },
     { name: "Greece", country: "GR", country_3: "GRC" },
     { name: "Hungary", country: "HU", country_3: "HUN" },
+    { name: "Iceland", country: "IS", country_3: "ISL" },
     { name: "Ireland", country: "IE", country_3: "IRL" },
     { name: "Italy", country: "IT", country_3: "ITA" },
     { name: "Latvia", country: "LV", country_3: "LVA" },
+    { name: "Liechtenstein", country: "LI", country_3: "LIE" },
     { name: "Lithuania", country: "LT", country_3: "LTU" },
     { name: "Luxembourg", country: "LU", country_3: "LUX" },
     { name: "Malta", country: "MT", country_3: "MLT" },
     { name: "The Netherlands", country: "NL", country_3: "NLD" },
+    { name: "Norway", country: "NO", country_3: "NOR" },
     { name: "Poland", country: "PL", country_3: "POL" },
     { name: "Portugal", country: "PT", country_3: "PRT" },
     { name: "Romania", country: "RO", country_3: "ROU" },
@@ -94,60 +97,19 @@
 
   const geolocation = await loadGeolocation(0);
 
+  function whenDomReady(callback) {
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", callback, { once: true });
+    } else {
+      callback();
+    }
+  }
+
   ////////////////////////////////////////
   // GDPR
   ////////////////////////////////////////
 
-  // locales
-  gdprCookieNoticeLocales = {
-    en: {
-      description:
-        "Like so many others, we use cookies to improve your experience on this website. We assume you're OK with it, but you can opt out if you want.",
-      settings: "Settings",
-      accept: "Accept cookies",
-      statement: "Our cookie statement",
-      save: "Save settings",
-      always_on: "Always on",
-      cookie_essential_title: "Essential website cookies",
-      cookie_essential_desc:
-        "Necessary cookies help make a website usable by enabling basic functions like page navigation and access to secure areas of the website. The website cannot function properly without these cookies.",
-      cookie_performance_title: "Performance cookies",
-      cookie_performance_desc:
-        "These cookies are used to enhance the performance and functionality of our websites but are non-essential to their use. For example it stores your preferred language or the region that you are in.",
-      cookie_analytics_title: "Analytics cookies",
-      cookie_analytics_desc:
-        "We use analytics cookies to help us measure how users interact with website content, which helps us customize our websites and application for you in order to enhance your experience.",
-      cookie_marketing_title: "Marketing cookies",
-      cookie_marketing_desc:
-        "These cookies are used to make advertising messages more relevant to you and your interests. The intention is to display ads that are relevant and engaging for the individual user and thereby more valuable for publishers and third party advertisers.",
-    },
-  };
-
-  // initialize plugin
-  gdprCookieNotice({
-    statement: "https://www.metabase.com/privacy",
-    performance: ["JSESSIONID"],
-    analytics: ["_gat", "ga"],
-    domain: ".metabase.com",
-    marketing: ["SSID"],
-    timeout: 300,
-  });
-
-  // read cookie value
-  const readCookieValue = document.cookie
-    .split(";")
-    .map((cookie) => cookie.split("="))
-    .reduce(
-      (accumulator, [key, value]) => ({
-        ...accumulator,
-        [key.trim()]: decodeURIComponent(value),
-      }),
-      {},
-    );
-
-  const gdprcookie = readCookieValue.gdprcookienotice
-    ? JSON.parse(readCookieValue.gdprcookienotice)
-    : {};
+  let gdprcookie = {};
 
   function hideBar() {
     document
@@ -181,7 +143,7 @@
       document.body.appendChild(GTagConfig);
 
       const GTagScript = document.createElement("script");
-      GTagScript.src = "/js/google-tag-manager.js";
+      GTagScript.src = "/docs/js/google-tag-manager.js";
 
       document.body.appendChild(GTagScript);
     }
@@ -218,17 +180,27 @@
     }
 
     const hotjarScript = document.createElement("script");
-    hotjarScript.src = "/js/marketing-hotjar.js";
+    hotjarScript.src = "/docs/js/marketing-hotjar.js";
     hotjarScript.type = "text/javascript";
     document.body.appendChild(hotjarScript);
 
     const snowplowScript = document.createElement("script");
-    snowplowScript.src = "/js/marketing-snowplow.js";
+    snowplowScript.src = "/docs/js/marketing-snowplow.js";
     snowplowScript.type = "text/javascript";
     document.body.appendChild(snowplowScript);
 
     // Only load Google Tag Manager on Marketing consent
     loadGoogleTagManager();
+
+    // Unify de-anonymizes visitors for outbound, so it is a marketing script.
+    // Pages opt in by stamping <meta name="unify"> in their head; see
+    // _includes/head.html (Jekyll) and layouts/utils/BaseHead.astro (Astro).
+    if (document.querySelector('meta[name="unify"]')) {
+      const unifyScript = document.createElement("script");
+      unifyScript.src = "/docs/js/unify.js";
+      unifyScript.type = "text/javascript";
+      document.body.appendChild(unifyScript);
+    }
 
     hasMarketingScripts = true;
   }
@@ -240,7 +212,7 @@
     }
 
     const anonSnowplow = document.createElement("script");
-    anonSnowplow.src = "/js/anonymous-snowplow.js";
+    anonSnowplow.src = "/docs/js/anonymous-snowplow.js";
     anonSnowplow.type = "text/javascript";
     document.body.appendChild(anonSnowplow);
 
@@ -250,35 +222,30 @@
   // analytics
 
   let hasAnalyticsScripts = false;
+  let haveConsent;
   function loadAnalyticsScripts(accepted) {
-    window.metabaseProductAnalyticsBeforeSend = (type, payload) => {
-      return Object.assign({ have_consent: accepted }, payload);
-    };
+    haveConsent = accepted;
 
     if (hasAnalyticsScripts) {
+      window.mb_track?.update({ haveConsent, persistence: haveConsent });
       return;
     }
 
     if (window.environment === "production") {
       const metabaseProductAnalyticsScript = document.createElement("script");
       metabaseProductAnalyticsScript.src =
-        "https://static.metabase.com/analytics_tracker.js";
+        "https://cdn.metabase.com/mb-track/1.0.0-alpha.1/track.js";
       metabaseProductAnalyticsScript.type = "text/javascript";
       metabaseProductAnalyticsScript.async = true;
-      metabaseProductAnalyticsScript.setAttribute(
-        "data-website-id",
-        "23eefa30-4c4f-490e-aa4f-084cd23b1561",
-      );
-      metabaseProductAnalyticsScript.setAttribute(
-        "data-host-url",
-        "https://product-analytics-ingestion.staging.metabase.com/api",
-      );
-      metabaseProductAnalyticsScript.setAttribute("data-auto-track", "true");
-      metabaseProductAnalyticsScript.setAttribute("data-tag", "www");
-      metabaseProductAnalyticsScript.setAttribute(
-        "data-before-send",
-        "metabaseProductAnalyticsBeforeSend",
-      );
+      metabaseProductAnalyticsScript.setAttribute("data-auto-track", "false");
+      metabaseProductAnalyticsScript.onload = () => {
+        window.mb_track?.init({
+          website: "23eefa30-4c4f-490e-aa4f-084cd23b1561",
+          tag: "www",
+          haveConsent,
+          persistence: haveConsent,
+        });
+      };
       document.head.appendChild(metabaseProductAnalyticsScript);
     }
 
@@ -311,18 +278,73 @@
     }
   }
 
-  // on page load - have you accepted already?
-  loadAnonymousMarketingScripts();
-  checkMarketingConsent();
-  checkAnalyticsConsent();
-  checkBarDismissed();
+  whenDomReady(function() {
+    // locales
+    gdprCookieNoticeLocales = {
+      en: {
+        description:
+          "Like so many others, we use cookies to improve your experience on this website. We assume you're OK with it, but you can opt out if you want.",
+        settings: "Settings",
+        accept: "Accept cookies",
+        statement: "Our cookie statement",
+        save: "Save settings",
+        always_on: "Always on",
+        cookie_essential_title: "Essential website cookies",
+        cookie_essential_desc:
+          "Necessary cookies help make a website usable by enabling basic functions like page navigation and access to secure areas of the website. The website cannot function properly without these cookies.",
+        cookie_performance_title: "Performance cookies",
+        cookie_performance_desc:
+          "These cookies are used to enhance the performance and functionality of our websites but are non-essential to their use. For example it stores your preferred language or the region that you are in.",
+        cookie_analytics_title: "Analytics cookies",
+        cookie_analytics_desc:
+          "We use analytics cookies to help us measure how users interact with website content, which helps us customize our websites and application for you in order to enhance your experience.",
+        cookie_marketing_title: "Marketing cookies",
+        cookie_marketing_desc:
+          "These cookies are used to make advertising messages more relevant to you and your interests. The intention is to display ads that are relevant and engaging for the individual user and thereby more valuable for publishers and third party advertisers.",
+      },
+    };
+
+    // initialize plugin
+    gdprCookieNotice({
+      statement: "https://www.metabase.com/privacy",
+      performance: ["JSESSIONID"],
+      analytics: ["_gat", "ga"],
+      domain: ".metabase.com",
+      marketing: ["SSID"],
+      timeout: 300,
+    });
+
+    // read cookie value
+    const readCookieValue = document.cookie
+      .split(";")
+      .map((cookie) => cookie.split("="))
+      .reduce(
+        (accumulator, [key, value]) => ({
+          ...accumulator,
+          [key.trim()]: decodeURIComponent(value),
+        }),
+        {},
+      );
+
+    gdprcookie = readCookieValue.gdprcookienotice
+      ? JSON.parse(readCookieValue.gdprcookienotice)
+      : {};
+
+    // on page load - have you accepted already?
+    loadAnonymousMarketingScripts();
+    checkMarketingConsent();
+    checkAnalyticsConsent();
+    checkBarDismissed();
+  });
 
   document.addEventListener("gdprCookiesEnabled", function(e) {
     if (e.detail.marketing) {
       loadMarketingScripts();
     }
 
-    loadAnalyticsScripts(e.detail.analytics);
+    loadAnalyticsScripts(
+      typeof e.detail === "boolean" ? e.detail : e.detail.analytics,
+    );
 
     document.body.classList.add("cookies-accepted");
     hideBar();

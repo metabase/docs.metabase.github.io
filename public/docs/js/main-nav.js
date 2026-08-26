@@ -5,6 +5,10 @@ function initMainNav() {
     "resources-nav-button-desktop",
   );
 
+  if (!productButton || !featuresButton || !resourcesButton) {
+    return;
+  }
+
   productButton.addEventListener("keydown", function(e) {
     if (e.key === "Enter") {
       productButton.classList.toggle("open");
@@ -12,14 +16,14 @@ function initMainNav() {
       featuresButton.classList.remove("open");
     }
   });
-  resourcesButton.addEventListener("keydown", function(e) {
+  resourcesButton?.addEventListener("keydown", function(e) {
     if (e.key === "Enter") {
       resourcesButton.classList.toggle("open");
       productButton.classList.remove("open");
       featuresButton.classList.remove("open");
     }
   });
-  featuresButton.addEventListener("keydown", function(e) {
+  featuresButton?.addEventListener("keydown", function(e) {
     if (e.key === "Enter") {
       featuresButton.classList.toggle("open");
       productButton.classList.remove("open");
@@ -32,6 +36,10 @@ function initToggleMobileMainNav() {
   const hamburger = document.getElementById("mobile-nav-hamburger-wrapper");
   const mobileNavMenu = document.getElementById("nav-menu-mobile");
 
+  if (!hamburger || !mobileNavMenu) {
+    return;
+  }
+
   hamburger.addEventListener("click", function() {
     hamburger.classList.toggle("open");
     mobileNavMenu.classList.toggle("d-none");
@@ -41,6 +49,10 @@ function initToggleMobileMainNav() {
 function initResizeMobileMainNav() {
   const navMenuMobile = document.getElementById("nav-menu-mobile");
   let navMenuMobileHeight = 0;
+
+  if (!navMenuMobile) {
+    return;
+  }
 
   function setMenuMobileHeight() {
     if (window.innerHeight - 72 !== navMenuMobileHeight) {
@@ -59,8 +71,12 @@ function initNavigationHeaderHoverHighlight() {
   const $navigationHeader = document.querySelector(".navigation-header");
   const $buttons = document.querySelectorAll(".button-desktop");
 
+  if (!$navigationHeader || !document.getElementById("hover-highlight")) {
+    return;
+  }
+
   setTimeout(() => {
-    document.getElementById("hover-highlight").classList.remove("hidden");
+    document.getElementById("hover-highlight")?.classList.remove("hidden");
   }, 200);
 
   $buttons.forEach(($button) => {
@@ -84,6 +100,11 @@ function mainNavHandleHoverHighlight($button) {
   const $hoverHighlight = document.querySelector(
     ".navigation-header #hover-highlight",
   );
+
+  if (!$hoverHighlight) {
+    return;
+  }
+
   const buttonLeft = $button.offsetLeft;
   const buttonWidth = $button.offsetWidth;
   const buttonHeight = $button.offsetHeight;

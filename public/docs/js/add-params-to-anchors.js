@@ -11,6 +11,10 @@ function initAddReferralParamsToAnchors() {
 
     const url = new URL(anchor.href);
 
+    if (!isHttpUrl(url)) {
+      return;
+    }
+
     const matches = targetPagesToAddReferralTo.some((targetPage) =>
       anchor.href.includes(targetPage),
     );
@@ -28,6 +32,13 @@ function initAddReferralParamsToAnchors() {
       anchor.href = `${url.origin}${url.pathname}?${rawSearch}`;
     }
   });
+}
+
+// Rebuilding an href from a non-http(s) URL is unsafe: `url.origin` is the
+// literal string "null" for unknown schemes (e.g. a typo like "htttps://"),
+// which turns the link into a relative "null/..." path on the current page.
+function isHttpUrl(url) {
+  return url.protocol === "https:" || url.protocol === "http:";
 }
 
 function getCookie(name) {
@@ -99,11 +110,15 @@ function addUseCaseParamsToAnchors(useCase) {
   const anchors = document.querySelectorAll("a");
 
   anchors.forEach((anchor) => {
-    if (!anchor.href) {
+    if (!anchor.href || anchor.hasAttribute("data-use-case-switcher")) {
       return;
     }
 
     const url = new URL(anchor.href);
+
+    if (!isHttpUrl(url)) {
+      return;
+    }
 
     url.searchParams.set("use_case", useCase);
 

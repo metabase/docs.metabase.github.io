@@ -89,7 +89,6 @@
         "the current version also publishes to _docs/latest")
     (is (some #{(str "_docs/v0." current)} artifacts))
     (is (some #{(str "_docs/v0." previous)} artifacts))
-    (is (some #{"_data/shared_chrome.json"} artifacts))
     (is (not (some #{"_docs/master"} artifacts))
         "master docs are never published")))
 

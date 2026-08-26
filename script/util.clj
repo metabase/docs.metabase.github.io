@@ -64,7 +64,7 @@
          cmd))
 
 
-(def artifacts-to-include ["_data/shared_chrome.json"])
+(def artifacts-to-include [])
 
 (defn ->artifacts
   "Returns a list of directories and files that are considered artifacts

@@ -17,7 +17,7 @@ function maybeHideFooterLinks() {
   const hideFooter = urlParams.get("hide_nav");
 
   if (hideFooter === "true") {
-    const footerLinks = document.querySelector(".body-footer .links");
+    const footerLinks = document.querySelector(".site-footer .site-footer-cols");
     if (footerLinks) {
       footerLinks.style.display = "none";
     }
