@@ -143,7 +143,7 @@
       document.body.appendChild(GTagConfig);
 
       const GTagScript = document.createElement("script");
-      GTagScript.src = "/js/google-tag-manager.js";
+      GTagScript.src = "/docs/js/google-tag-manager.js";
 
       document.body.appendChild(GTagScript);
     }
@@ -180,12 +180,12 @@
     }
 
     const hotjarScript = document.createElement("script");
-    hotjarScript.src = "/js/marketing-hotjar.js";
+    hotjarScript.src = "/docs/js/marketing-hotjar.js";
     hotjarScript.type = "text/javascript";
     document.body.appendChild(hotjarScript);
 
     const snowplowScript = document.createElement("script");
-    snowplowScript.src = "/js/marketing-snowplow.js";
+    snowplowScript.src = "/docs/js/marketing-snowplow.js";
     snowplowScript.type = "text/javascript";
     document.body.appendChild(snowplowScript);
 
@@ -197,7 +197,7 @@
     // _includes/head.html (Jekyll) and layouts/utils/BaseHead.astro (Astro).
     if (document.querySelector('meta[name="unify"]')) {
       const unifyScript = document.createElement("script");
-      unifyScript.src = "/js/unify.js";
+      unifyScript.src = "/docs/js/unify.js";
       unifyScript.type = "text/javascript";
       document.body.appendChild(unifyScript);
     }
@@ -212,7 +212,7 @@
     }
 
     const anonSnowplow = document.createElement("script");
-    anonSnowplow.src = "/js/anonymous-snowplow.js";
+    anonSnowplow.src = "/docs/js/anonymous-snowplow.js";
     anonSnowplow.type = "text/javascript";
     document.body.appendChild(anonSnowplow);
 
