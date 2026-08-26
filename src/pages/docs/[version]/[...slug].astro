@@ -10,22 +10,14 @@ import { getLiquidRenderer } from "@/lib/liquid/liquidRenderer";
 import { getMarkdownRenderer } from "@/lib/markdown/markdownRenderer";
 import { getCollection, type DataEntryMap } from "astro:content";
 
-type Props = { isRaw?: boolean } & (
+type Props =
   | { kind: "md"; doc: DataEntryMap["docs"][number] }
-  | { kind: "html"; doc: DataEntryMap["docsHtml"][number] }
-);
+  | { kind: "html"; doc: DataEntryMap["docsHtml"][number] };
 
 export const getStaticPaths = async () => {
-  // FIXME: Maybe define IS_LOCAL_MB is constants.ts?
-  // getStaticPaths runs in its own isolated scope and can't see top-level
-  // consts from the rest of the file (only imports) — recompute locally.
-  const isLocalMb = !!import.meta.env.METABASE_REPO_PATH;
-
-  const [docs, docsLatest, docsHtml] = await Promise.all([
+  const [docs, docsHtml] = await Promise.all([
     getCollection("docs"),
-    getCollection("docsLatest"),
     getCollection("docsHtml"),
-    // FIXME: Does docsHtml need a latest counterpart?
   ]);
 
   const toPath =
@@ -42,25 +34,17 @@ export const getStaticPaths = async () => {
       };
     };
 
-  return [
-    ...docs.map(toPath("md")),
-    ...docsLatest.map(toPath("md", isLocalMb)),
-    ...docsHtml.map(toPath("html")),
-  ];
+  return [...docs.map(toPath("md")), ...docsHtml.map(toPath("html"))];
 };
 
 const { version, slug = "" } = Astro.params;
-const { kind, doc: propsDoc, isRaw } = Astro.props;
-const doc = isRaw
-  ? {
-      ...propsDoc,
-      data: buildRawDocMetadata(
-        propsDoc.id.replace(/^latest\//, ""),
-        propsDoc.data,
-      ),
-      body: reformatMarkdownUrls(propsDoc.body ?? ""),
-    }
-  : propsDoc;
+const { kind, doc: rawDoc } = Astro.props;
+// FIXME: Verify already-processed docs (via script/docs) can be re-processed here w/o breaking anything
+const doc = {
+  ...rawDoc,
+  data: buildRawDocMetadata(rawDoc.id.replace(/^latest\//, ""), rawDoc.data),
+  body: reformatMarkdownUrls(rawDoc.body ?? ""),
+};
 const dirname = path.dirname(doc.filePath!);
 
 // Process liquid first (e.g. control flow, includes, variables, etc)

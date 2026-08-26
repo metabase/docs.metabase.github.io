@@ -1,15 +1,13 @@
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { DOCS_LATEST_ROOT, DOCS_SRC_ROOT } from "@/constants";
+import { DOCS_DEST, DOCS_SRC_ROOT } from "@/constants";
 import { defineHastPlugin } from "satteri";
 
 // Resolves relative images from docs md files.
 // The images themselves are copied via viteStaticCopy in astro.config.mjs.
 
-// When METABASE_REPO_PATH is set, DOCS_LATEST_ROOT points outside
-// DOCS_SRC_ROOT entirely (at <metabaseRepoPath>/docs), so /latest images
-// must be resolved against it separately.
-const DOCS_LATEST_ROOT_ABS = path.resolve(DOCS_LATEST_ROOT);
+const ROOT_ABS = path.resolve(DOCS_SRC_ROOT);
+const URL_PREFIX = `/${DOCS_DEST}/`;
 
 const toSitePath = (relPath: string) =>
   relPath.split(path.sep).map(encodeURIComponent).join("/");
@@ -26,17 +24,10 @@ export const relativeImagePlugin = defineHastPlugin({
       if (!ctx.fileURL) return;
 
       const absPath = fileURLToPath(new URL(decodeURI(rawSrc), ctx.fileURL));
-
-      const latestRelPath = path.relative(DOCS_LATEST_ROOT_ABS, absPath);
-      if (!latestRelPath.startsWith("..") && !path.isAbsolute(latestRelPath)) {
-        ctx.setProperty(node, "src", `/docs/latest/${toSitePath(latestRelPath)}`);
-        return;
-      }
-
-      const relPath = path.relative(DOCS_SRC_ROOT, absPath);
+      const relPath = path.relative(ROOT_ABS, absPath);
       if (relPath.startsWith("..") || path.isAbsolute(relPath)) return;
 
-      ctx.setProperty(node, "src", `/docs/${toSitePath(relPath)}`);
+      ctx.setProperty(node, "src", `${URL_PREFIX}${toSitePath(relPath)}`);
     },
   },
 });

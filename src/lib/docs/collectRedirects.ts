@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import glob from "glob";
 import matter from "gray-matter";
-import { DOCS_SRC_ROOT } from "../../constants";
+import { DOCS_SRC_ROOT, DOCS_VERSION } from "../../constants";
 import { resolveDocUrl } from "./resolveDoc";
 
 const EXCLUDE = ["**/embedding/sdk/api/snippets/**"];
@@ -18,7 +18,9 @@ type DocEntry = { relPath: string; url: string; redirectFrom: string[] };
 
 // Scans every doc under DOCS_SRC_ROOT once, returning each doc's canonical
 // URL (for detecting collisions with real pages) alongside the subset that
-// declare `redirect_from`.
+// declare `redirect_from`. When METABASE_REPO_PATH is set, scans that local
+// checkout's docs/ instead, treating it as the `latest` version (matching
+// the `docs` and `docsHtml` collections in content.config.ts).
 const scanDocEntries = (): {
   validUrls: Set<string>;
   docsWithRedirects: DocEntry[];
@@ -37,8 +39,13 @@ const scanDocEntries = (): {
       const absPath = path.join(base, relPath);
       const { data } = matter(fs.readFileSync(absPath, "utf8"));
 
-      const id = stripExtension ? relPath.replace(/\.md$/, "") : relPath;
-      const { url } = resolveDocUrl({ id, permalink: data.permalink });
+      const strippedPath = stripExtension
+        ? relPath.replace(/\.md$/, "")
+        : relPath;
+      const id = DOCS_VERSION
+        ? `${DOCS_VERSION}/${strippedPath}`
+        : strippedPath;
+      const { url } = resolveDocUrl({ id });
       validUrls.add(url);
 
       const redirectFrom: string[] | undefined = data.redirect_from;
