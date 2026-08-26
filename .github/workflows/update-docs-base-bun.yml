@@ -5,6 +5,9 @@ run-name: >-
       || format('Manual docs build - v{0}', inputs.major_versions) }}
 
 on:
+  pull_request: # FIXME: just for testing, remove before merge
+    paths:
+      - .github/workflows/update-docs-base-bun.yml
   # This triggers the auto docs build every night and uses the hard-coded DOC_VERSIONS
   schedule:
     - cron: "0 2 * * *"
@@ -20,6 +23,10 @@ on:
 env:
   # Every version listed here is pulled in and published by a single nightly build.
   DOC_VERSIONS: "63,62"
+
+concurrency:
+  group: update-docs
+  cancel-in-progress: false
 
 jobs:
   params:
@@ -57,6 +64,8 @@ jobs:
     env:
       GH_TOKEN: ${{ secrets.METABASE_AUTOMATION_USER_TOKEN }}
       DOC_VERSIONS: ${{ needs.params.outputs.versions }}
+      # Every run gets its own branch, so nothing has to be merged by hand.
+      BRANCH_NAME: docs-update-${{ github.run_id }}
     steps:
       - uses: actions/checkout@v4
 
@@ -164,13 +173,59 @@ jobs:
           echo "htmlproofer spit out a report of length: $(wc -l < htmlproofer.out)"
           bb script/analyze_links.clj --htmlproofer-output htmlproofer.out --limit 1
 
-      - name: Update or Create the Pull Request
-        run: |
-          bb script/update_or_create_pr.clj \
-          --versions "$DOC_VERSIONS" \
-          --pr-number "$PR_NUMBER" \
-          --update-dirs "$UPDATE_DIRS"
+      - name: Push the updated docs
+        id: diff
+        run: | # sh
+          # The current docs version is also published to _docs/latest
+          latest="$(sed -n 's/^docs_version: v0\.\([0-9]*\).*/\1/p' _config.yml)"
+          for v in ${DOC_VERSIONS//,/ }; do
+            git add "_docs/v0.$v" || echo "::warning::nothing to stage for _docs/v0.$v"
+            if [[ "$v" == "$latest" ]]; then
+              git add _docs/latest
+            fi
+          done
 
-      - name: Merge Updated Docs
-        run: |
-          bb script/merge.clj --versions "$DOC_VERSIONS"
+          if git diff --cached --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "No docs changes to commit."
+            exit 0
+          fi
+
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+          git --no-pager diff --cached --stat
+
+          git checkout -B "$BRANCH_NAME"
+          git commit -m "Update docs for v$DOC_VERSIONS"
+          git push --force origin "$BRANCH_NAME"
+
+      - name: Open PR
+        id: create_pr
+        if: steps.diff.outputs.changed == 'true'
+        run: | # sh
+          {
+            echo "Automated docs update, pulled from:"
+            for v in ${DOC_VERSIONS//,/ }; do
+              echo "- \`release-x.$v.x\`"
+            done
+          } > "$RUNNER_TEMP/pr-body.md"
+
+          URL=$(gh pr create \
+            --base master \
+            --head "$BRANCH_NAME" \
+            --title "Update docs: v0.${DOC_VERSIONS//,/, v0.}" \
+            --body-file "$RUNNER_TEMP/pr-body.md")
+
+          echo "pr_number=${URL##*/}" >> "$GITHUB_OUTPUT"
+
+      - name: Auto approve PR
+        if: steps.diff.outputs.changed == 'true'
+        uses: juliangruber/approve-pull-request-action@68fcc9a5a73b5641cadf757cf99d73720dcb05d0 # v2.1.0
+        with:
+          github-token: ${{ github.token }}
+          number: ${{ steps.create_pr.outputs.pr_number }}
+
+      - name: Enable Pull Request Automerge
+        if: steps.diff.outputs.changed == 'true'
+        run: gh pr merge --squash --auto "$PR_NUMBER"
+        env:
+          PR_NUMBER: ${{ steps.create_pr.outputs.pr_number }}
