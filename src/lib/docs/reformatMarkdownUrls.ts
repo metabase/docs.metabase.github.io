@@ -58,7 +58,7 @@ const getReplacements = (
 };
 
 export const reformatMarkdownUrls = (body: string): string => {
-  let formattedBody = body;
+  let formattedBody = `${body}\n`;
 
   const bodyReplacements = getReplacements(
     formattedBody.match(MARKDOWN_LINK_REGEX),
