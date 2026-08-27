@@ -1,3 +1,4 @@
+// Extracted from lib/fetch-docs.js so it can be used in script/docs (for cross-repo ingestion) and [...slug].astro for JIT processing
 import path from "node:path";
 import toTitleCase from "titlecase";
 
