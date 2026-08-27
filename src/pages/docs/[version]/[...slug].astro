@@ -3,10 +3,10 @@ import path from "node:path";
 import { pathToFileURL } from "node:url";
 import NewDocsLayout from "@/layouts/NewDocsLayout.astro";
 import OldDocsLayout from "@/layouts/OldDocsLayout.astro";
-import { buildRawDocMetadata } from "@/lib/docs/buildRawDocMetadata";
+import { constructDocMetadata } from "@/lib/docs/constructDocMetadata";
 import { reformatMarkdownUrls } from "@/lib/docs/reformatMarkdownUrls";
 import { resolveDocUrl } from "@/lib/docs/resolveDoc";
-import { getLiquidRenderer } from "@/lib/liquid/liquidRenderer";
+import { baseCtx, getLiquidRenderer } from "@/lib/liquid/liquidRenderer";
 import { getMarkdownRenderer } from "@/lib/markdown/markdownRenderer";
 import { getCollection, type DataEntryMap } from "astro:content";
 
@@ -39,10 +39,17 @@ export const getStaticPaths = async () => {
 
 const { version, slug = "" } = Astro.params;
 const { kind, doc: rawDoc } = Astro.props;
+const url = `/docs/${version}/${slug}`;
 // FIXME: Verify already-processed docs (via script/docs) can be re-processed here w/o breaking anything
 const doc = {
   ...rawDoc,
-  data: buildRawDocMetadata(rawDoc.id.replace(/^latest\//, ""), rawDoc.data),
+  data: {
+    ...constructDocMetadata(
+      url.slice(1), // remove leading slash for parity with fetchDocs
+      version === "latest" ? baseCtx.site.docs_version : version,
+    ),
+    ...rawDoc.data,
+  },
   body: reformatMarkdownUrls(rawDoc.body ?? ""),
 };
 const dirname = path.dirname(doc.filePath!);
@@ -82,10 +89,7 @@ const Layout = doc.data.layout === "docs" ? OldDocsLayout : NewDocsLayout;
   kind === "html" ? (
     <Fragment set:html={renderedHtml} />
   ) : (
-    <Layout
-      page={{ url: `/docs/${version}/${slug}`, ...doc.data }}
-      dirname={dirname}
-    >
+    <Layout page={{ url, ...doc.data }} dirname={dirname}>
       <Fragment set:html={renderedHtml} />
     </Layout>
   )
