@@ -52,6 +52,7 @@ export type DocMetadata = {
   source_url: string;
   layout: "docs" | "new-docs";
   permalink?: string;
+  latest?: boolean;
 };
 
 // The `page` shape passed to doc layouts: metadata plus the resolved page URL.
@@ -60,6 +61,7 @@ export type DocPage = DocMetadata & { url: string };
 export function constructDocMetadata(
   docPath: string,
   version: string,
+  isLatest = false,
 ): DocMetadata {
   const versionNumber = parseInt(version.split(".").pop() || "", 10);
   const metadata: Partial<DocMetadata> = {
@@ -97,6 +99,10 @@ export function constructDocMetadata(
   if (path.basename(docPath, ".md") === "README") {
     metadata.permalink =
       "/" + path.join("docs", version, "index.html").split(path.sep).join("/");
+  }
+
+  if (isLatest) {
+    metadata.latest = true;
   }
 
   return metadata as DocMetadata;

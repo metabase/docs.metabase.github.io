@@ -1,6 +1,7 @@
 ---
 import path from "node:path";
 import { pathToFileURL } from "node:url";
+import { METABASE_REPO_PATH } from "@/constants";
 import NewDocsLayout from "@/layouts/NewDocsLayout.astro";
 import OldDocsLayout from "@/layouts/OldDocsLayout.astro";
 import { constructDocMetadata } from "@/lib/docs/constructDocMetadata";
@@ -38,19 +39,27 @@ export const getStaticPaths = async () => {
 };
 
 const { version, slug = "" } = Astro.params;
-const { kind, doc: rawDoc } = Astro.props;
+const { kind, doc: propsDoc } = Astro.props;
 const url = `/docs/${version}/${slug}`;
-const doc = {
-  ...rawDoc,
-  data: {
-    ...constructDocMetadata(
-      url.slice(1), // remove leading slash for parity with fetchDocs
-      version === "latest" ? baseCtx.site.docs_version : version,
-    ),
-    ...rawDoc.data,
-  },
-  body: reformatMarkdownUrls(rawDoc.body ?? ""),
-};
+// TODO: GRO-688 Remove processing from /script/docs so src files are raw whether reading from _docs or METABASE_REPO_PATH
+// The only known gap is updateRedirectsAndLinks for non-latest versions, which is two separate fixes:
+// 1. replaceVersionInUrls belongs alongside reformatMarkdownUrls
+// 2. redirect_from rewriting belongs in collectRedirects
+const isRaw = !!METABASE_REPO_PATH;
+const doc = !isRaw
+  ? propsDoc
+  : {
+      ...propsDoc,
+      data: {
+        ...constructDocMetadata(
+          url.slice(1), // remove leading slash for parity with fetchDocs
+          version === "latest" ? baseCtx.site.docs_version : version,
+          version === "latest",
+        ),
+        ...propsDoc.data,
+      },
+      body: reformatMarkdownUrls(propsDoc.body ?? ""),
+    };
 const dirname = path.dirname(doc.filePath!);
 
 // Process liquid first (e.g. control flow, includes, variables, etc)

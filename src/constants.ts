@@ -5,7 +5,7 @@ import { loadEnv } from "vite";
 // see import.meta.env values.
 const env = loadEnv(process.env.NODE_ENV ?? "development", process.cwd(), "");
 
-const METABASE_REPO_PATH = env.METABASE_REPO_PATH;
+export const METABASE_REPO_PATH = env.METABASE_REPO_PATH;
 
 export const DOCS_SRC_ROOT = METABASE_REPO_PATH
   ? `${METABASE_REPO_PATH}/docs`
