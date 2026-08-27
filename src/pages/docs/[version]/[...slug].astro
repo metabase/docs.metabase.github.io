@@ -40,7 +40,6 @@ export const getStaticPaths = async () => {
 const { version, slug = "" } = Astro.params;
 const { kind, doc: rawDoc } = Astro.props;
 const url = `/docs/${version}/${slug}`;
-// FIXME: Verify already-processed docs (via script/docs) can be re-processed here w/o breaking anything
 const doc = {
   ...rawDoc,
   data: {

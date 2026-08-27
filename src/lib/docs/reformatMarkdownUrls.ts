@@ -1,8 +1,4 @@
-// Ports reformatMarkdownUrls from ../../../lib/utils.js (used by `script/docs`
-// to rewrite links once docs are copied into _docs/) so local /latest pages,
-// read straight from a metabase checkout, get the same link rewriting live:
-// strip .md/.html extensions from links, and shorten absolute metabase.com
-// links to root-relative paths.
+// Extracted from lib/utils.js so it can be used in script/docs (for cross-repo ingestion) and [...slug].astro for JIT processing
 const MARKDOWN_LINK_REGEX = /\[(.+?)\]\((.+?)\)/gim;
 const FOOTER_LINK_REGEX = /^\[(.+?)\]:\s+(.+?)\n/gim;
 
@@ -30,10 +26,12 @@ const isMetabaseUrl = (url: string): boolean =>
 
 const formatUrl = (url: string): string =>
   url
+    // Remove extensions
     .replace(".md", "")
     .replace(".markdown", "")
     .replace(".html", "")
     .replace(".htm", "")
+    // Remove metabase.com
     .replace("http://metabase.com", "")
     .replace("https://metabase.com", "")
     .replace("http://www.metabase.com", "")
@@ -62,12 +60,16 @@ const getReplacements = (
 export const reformatMarkdownUrls = (body: string): string => {
   let formattedBody = body;
 
-  const bodyReplacements = getReplacements(formattedBody.match(MARKDOWN_LINK_REGEX));
+  const bodyReplacements = getReplacements(
+    formattedBody.match(MARKDOWN_LINK_REGEX),
+  );
   bodyReplacements?.forEach(({ match, updatedMatch }) => {
     formattedBody = formattedBody.replace(match, updatedMatch);
   });
 
-  const footerReplacements = getReplacements(formattedBody.match(FOOTER_LINK_REGEX));
+  const footerReplacements = getReplacements(
+    formattedBody.match(FOOTER_LINK_REGEX),
+  );
   footerReplacements?.forEach(({ match, updatedMatch }) => {
     formattedBody = formattedBody.replace(match, updatedMatch);
   });
