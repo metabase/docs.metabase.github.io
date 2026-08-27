@@ -26,7 +26,7 @@ env:
 
 concurrency:
   group: update-docs
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   params:
@@ -67,7 +67,10 @@ jobs:
       # Every run gets its own branch, so nothing has to be merged by hand.
       BRANCH_NAME: docs-update-${{ github.run_id }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
+        with:
+          ref: master
+          token: ${{ secrets.METABASE_AUTOMATION_USER_TOKEN }}
 
       - name: Prepare java
         uses: actions/setup-java@v4
@@ -101,12 +104,6 @@ jobs:
 
       - name: Install js dependencies
         run: bun install --frozen-lockfile
-
-      - name: Setup Git Authentication
-        run: |
-          git config --global user.name "Metabase Docs bot"
-          git config --global user.email "metabase-bot@metabase.com"
-          git remote set-url origin "https://x-access-token:${{ secrets.METABASE_AUTOMATION_USER_TOKEN }}@github.com/metabase/docs.metabase.github.io.git"
 
       # observed this failing during sdk docs generation deps downloads, so adding retry logic
       # note: a retry re-pulls every version, since the whole loop is the retried unit
