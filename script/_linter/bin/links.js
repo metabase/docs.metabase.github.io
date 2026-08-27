@@ -100,6 +100,11 @@ const allFiles = glob
       `${folderPath}/spec/**/*`,
       `${folderPath}/tmp/**/*`,
       `${folderPath}/vendor/**/*`,
+
+      // TODO: Shared chrome removal generated a lot of ignorable errors.
+      // We plan on redoing the docs header/footer, re-enable when that's done.
+      `${folderPath}/src/components/chrome/fragments/footer.html`,
+      `${folderPath}/src/components/chrome/fragments/header.html`,
     ],
   });
 
