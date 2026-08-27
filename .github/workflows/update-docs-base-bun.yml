@@ -173,6 +173,8 @@ jobs:
       - name: Push the updated docs
         id: diff
         run: | # sh
+          git config --global user.name "Metabase Automation User"
+          git config --global user.email "metabase-bot@metabase.com"
           # The current docs version is also published to _docs/latest
           latest="$(sed -n 's/^docs_version: v0\.\([0-9]*\).*/\1/p' _config.yml)"
           for v in ${DOC_VERSIONS//,/ }; do
