@@ -234,7 +234,7 @@
     if (window.environment === "production") {
       const metabaseProductAnalyticsScript = document.createElement("script");
       metabaseProductAnalyticsScript.src =
-        "https://cdn.metabase.com/mb-track/1.0.0-alpha.1/track.js";
+        "https://cdn.metabase.com/mb-track/1.0.0-alpha.2/track.js";
       metabaseProductAnalyticsScript.type = "text/javascript";
       metabaseProductAnalyticsScript.async = true;
       metabaseProductAnalyticsScript.setAttribute("data-auto-track", "false");
