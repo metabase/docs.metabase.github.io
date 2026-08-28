@@ -23,7 +23,7 @@ jobs:
     timeout-minutes: 10
     env:
       GH_TOKEN: ${{ secrets.METABASE_AUTOMATION_USER_TOKEN }}
-      BRANCH_NAME: update-version-support-${{ github.run_id }}
+      BRANCH_NAME: update-version-support-${{ github.run_id }}-TEST
     steps:
       - uses: actions/checkout@v6
         with:
@@ -72,11 +72,9 @@ jobs:
           git commit -m "Update major version support data"
           git push --force origin "$BRANCH_NAME"
 
-      - name: Open PR
+      - name: Open PR and enable automerge
         id: create_pr
         if: steps.diff.outputs.changed == 'true'
-        env:
-          GH_TOKEN: ${{ secrets.METABASE_AUTOMATION_USER_TOKEN }}
         run: | # sh
           DATE=$(date +'%Y-%m-%d')
 
@@ -86,19 +84,13 @@ jobs:
             --title "Update version support data $DATE" \
             --body "Automated nightly update of major version support data.")
 
-          PR_NUMBER=${URL##*/}
-          echo "pr_number=$PR_NUMBER" >> "$GITHUB_OUTPUT"
+          echo "pr_number=${URL##*/}" >> "$GITHUB_OUTPUT"
+          gh pr merge --squash --auto "$URL"
 
       - name: Auto approve PR
         if: steps.diff.outputs.changed == 'true'
-        uses: juliangruber/approve-pull-request-action@68fcc9a5a73b5641cadf757cf99d73720dcb05d0 # v2.1.0
-        with:
-          github-token: ${{ github.token }}
-          number: ${{ steps.create_pr.outputs.pr_number }}
-
-      - name: Enable Pull Request Automerge
-        if: steps.diff.outputs.changed == 'true'
-        run: gh pr merge --squash --auto "$PR_NUMBER"
         env:
-          GH_TOKEN: ${{ secrets.METABASE_AUTOMATION_USER_TOKEN }}
-          PR_NUMBER: ${{ steps.create_pr.outputs.pr_number }}
+          # Must be GITHUB_TOKEN, not the job's PAT: the PAT opened the PR and
+          # GitHub rejects self-approval.
+          GH_TOKEN: ${{ github.token }}
+        run: gh pr review "${{ steps.create_pr.outputs.pr_number }}" --approve

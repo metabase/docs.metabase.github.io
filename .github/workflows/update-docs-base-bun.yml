@@ -188,7 +188,8 @@ jobs:
 
       - name: Auto approve PR
         if: steps.diff.outputs.changed == 'true'
-        uses: juliangruber/approve-pull-request-action@68fcc9a5a73b5641cadf757cf99d73720dcb05d0 # v2.1.0
-        with:
-          github-token: ${{ github.token }}
-          number: ${{ steps.create_pr.outputs.pr_number }}
+        env:
+          # Must be GITHUB_TOKEN, not the job's PAT: the PAT opened the PR and
+          # GitHub rejects self-approval.
+          GH_TOKEN: ${{ github.token }}
+        run: gh pr review "${{ steps.create_pr.outputs.pr_number }}" --approve
