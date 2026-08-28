@@ -5,9 +5,6 @@ run-name: >-
       || format('Manual docs build - v{0}', inputs.major_versions) }}
 
 on:
-  pull_request: # FIXME: just for testing, remove before merge
-    paths:
-      - .github/workflows/update-docs-base-bun.yml
   # This triggers the auto docs build every night and uses the hard-coded DOC_VERSIONS
   schedule:
     - cron: "0 2 * * *"
@@ -65,7 +62,7 @@ jobs:
       GH_TOKEN: ${{ secrets.METABASE_AUTOMATION_USER_TOKEN }}
       DOC_VERSIONS: ${{ needs.params.outputs.versions }}
       # Every run gets its own branch, so nothing has to be merged by hand.
-      BRANCH_NAME: docs-update-${{ github.run_id }}-FIXME
+      BRANCH_NAME: docs-update-${{ github.run_id }}
     steps:
       - uses: actions/checkout@v6
         with:
