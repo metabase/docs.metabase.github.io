@@ -1,0 +1,166 @@
+---
+import fs from "node:fs";
+import path from "node:path";
+import Chevron from "@/components/chrome/Chevron.astro";
+import { DOCS_SRC_ROOT, METABASE_REPO_PATH } from "@/constants";
+import YAML from "yamljs";
+
+type NavNode = {
+  name: string;
+  navName?: string;
+  url?: string;
+  pages?: NavNode[];
+};
+
+type Props = {
+  url: string;
+  version?: string;
+};
+
+const { url, version = "latest" } = Astro.props;
+
+const navPath = path.resolve(
+  process.cwd(),
+  DOCS_SRC_ROOT,
+  METABASE_REPO_PATH ? "" : version,
+  "_includes/data/nav.yml",
+);
+
+if (!fs.existsSync(navPath)) {
+  throw new Error(`nav.yml not found for version "${version}" at ${navPath}`);
+}
+
+const { categories } = YAML.parse(fs.readFileSync(navPath, "utf8")) as {
+  categories: NavNode[];
+};
+
+// TODO: Is the `replace` necessary?
+const cleanPageUrl = url.replace("/index", "");
+
+const getName = (node: NavNode) => node.navName || node.name;
+
+const subtreeContainsUrl = (node: NavNode, targetUrl: string): boolean => {
+  if (node.url === targetUrl) {
+    return true;
+  }
+  return (
+    node.pages?.some((child) => subtreeContainsUrl(child, targetUrl)) ?? false
+  );
+};
+
+const descendantsContainUrl = (node: NavNode, targetUrl: string): boolean =>
+  node.pages?.some((child) => subtreeContainsUrl(child, targetUrl)) ?? false;
+---
+
+<div class="learn-left-sidebar" id="main-navigation-content">
+  {
+    categories.map((category) => (
+      <>
+        <h5>{category.name}</h5>
+
+        <ul>
+          {category.pages?.map((track) => {
+            const trackExpanded = subtreeContainsUrl(track, cleanPageUrl);
+
+            return (
+              <li class={trackExpanded ? "expanded" : ""}>
+                <a
+                  href={track.url}
+                  class={cleanPageUrl === track.url ? "selected" : ""}
+                >
+                  {getName(track)}
+
+                  {track.pages && track.pages.length > 0 && (
+                    <div>
+                      <Chevron />
+                    </div>
+                  )}
+                </a>
+
+                {track.pages && (
+                  <ul>
+                    {track.pages.map((course) => {
+                      const courseExpanded = descendantsContainUrl(
+                        course,
+                        cleanPageUrl,
+                      );
+
+                      return (
+                        <li class={courseExpanded ? "expanded" : ""}>
+                          <a
+                            href={course.url}
+                            class={
+                              cleanPageUrl === course.url ? "selected" : ""
+                            }
+                          >
+                            {getName(course)}
+
+                            {course.pages && course.pages.length > 0 && (
+                              <div>
+                                <Chevron />
+                              </div>
+                            )}
+                          </a>
+                          {course.pages && (
+                            <ul>
+                              {course.pages.map((lesson) => {
+                                const lessonExpanded = descendantsContainUrl(
+                                  lesson,
+                                  cleanPageUrl,
+                                );
+
+                                return (
+                                  <li class={lessonExpanded ? "expanded" : ""}>
+                                    <a
+                                      href={lesson.url}
+                                      class={
+                                        cleanPageUrl === lesson.url
+                                          ? "selected"
+                                          : ""
+                                      }
+                                    >
+                                      {getName(lesson)}
+
+                                      {lesson.pages &&
+                                        lesson.pages.length > 0 && (
+                                          <div>
+                                            <Chevron />
+                                          </div>
+                                        )}
+                                    </a>
+                                    {lesson.pages && (
+                                      <ul>
+                                        {lesson.pages.map((section) => (
+                                          <li>
+                                            <a
+                                              href={section.url}
+                                              class={
+                                                cleanPageUrl === section.url
+                                                  ? "selected"
+                                                  : ""
+                                              }
+                                            >
+                                              {getName(section)}
+                                            </a>
+                                          </li>
+                                        ))}
+                                      </ul>
+                                    )}
+                                  </li>
+                                );
+                              })}
+                            </ul>
+                          )}
+                        </li>
+                      );
+                    })}
+                  </ul>
+                )}
+              </li>
+            );
+          })}
+        </ul>
+      </>
+    ))
+  }
+</div>
