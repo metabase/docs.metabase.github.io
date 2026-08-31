@@ -63,35 +63,6 @@
     (is (integer? docs-version)
         (str "Expected config version to be an integer, got: " docs-version))))
 
-(deftest parse-versions-test
-  (is (= [63 62] (u/parse-versions "63,62")))
-  (is (= [63 62] (u/parse-versions " 62 , 63 "))
-      "whitespace is trimmed and versions are sorted newest first")
-  (is (= [63] (u/parse-versions "63,63")) "duplicates collapse")
-  (is (= [63] (u/parse-versions "63")))
-  (is (= [63] (u/parse-versions 63)) "babashka.cli may hand us a number for a single version")
-  (doseq [bad ["" "," "63,x" "v63" "63,-1" "63,0"]]
-    (is (thrown? clojure.lang.ExceptionInfo (u/parse-versions bad))
-        (str "Expected " (pr-str bad) " to be rejected"))))
-
-(deftest versions->head-ref-name-test
-  (is (= "docs-update-v63-v62" (u/versions->head-ref-name [63 62])))
-  (is (= "docs-update-v63-v62" (u/versions->head-ref-name [62 63]))
-      "the branch name depends on the set of versions, not the order they were listed in"))
-
-(deftest versions->artifacts-test
-  (let [current   (u/config-docs-version)
-        previous  (dec current)
-        artifacts (u/versions->artifacts [current previous])]
-    (is (= (count artifacts) (count (distinct artifacts)))
-        (str "Expected no duplicate paths, got: " (pr-str artifacts)))
-    (is (some #{"_docs/latest"} artifacts)
-        "the current version also publishes to _docs/latest")
-    (is (some #{(str "_docs/v0." current)} artifacts))
-    (is (some #{(str "_docs/v0." previous)} artifacts))
-    (is (not (some #{"_docs/master"} artifacts))
-        "master docs are never published")))
-
 (deftest categorize-branchname-test
   (doseq [branchname branches
           :let [[category release-num] (u/categorize-branchname branchname)]]

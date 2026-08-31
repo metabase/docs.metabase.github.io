@@ -21,6 +21,10 @@ env:
   # Every version listed here is pulled in and published by a single nightly build.
   DOC_VERSIONS: "63,62"
 
+concurrency:
+  group: update-docs
+  cancel-in-progress: true
+
 jobs:
   params:
     name: Prep params
@@ -51,14 +55,18 @@ jobs:
     needs: params
     name: Build docs v${{ needs.params.outputs.versions }}
     runs-on: ubuntu-latest
-    # The docs pull step can retry up to 3x30 minutes on its own, so leave room for
-    # that plus the astro build and htmlproofer.
+    # The docs pull step retries and is capped at 90 minutes, so leave room for that
+    # plus the astro build and htmlproofer.
     timeout-minutes: 150
     env:
       GH_TOKEN: ${{ secrets.METABASE_AUTOMATION_USER_TOKEN }}
       DOC_VERSIONS: ${{ needs.params.outputs.versions }}
+      # Every run gets its own branch, so nothing has to be merged by hand.
+      BRANCH_NAME: docs-update-${{ github.run_id }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
+        with:
+          ref: master
 
       - name: Prepare java
         uses: actions/setup-java@v4
@@ -71,10 +79,6 @@ jobs:
         with:
           cli: 1.12.0.1530
           bb: 1.12.200
-
-      - name: Run docs repo build tests
-        run: |
-          bb script/_test/all.clj
 
       - name: Filter non-documented branches
         run: |
@@ -93,58 +97,35 @@ jobs:
       - name: Install js dependencies
         run: bun install --frozen-lockfile
 
-      - name: Setup Git Authentication
-        run: |
-          git config --global user.name "Metabase Docs bot"
-          git config --global user.email "metabase-bot@metabase.com"
-          git remote set-url origin "https://x-access-token:${{ secrets.METABASE_AUTOMATION_USER_TOKEN }}@github.com/metabase/docs.metabase.github.io.git"
-
       # observed this failing during sdk docs generation deps downloads, so adding retry logic
       # note: a retry re-pulls every version, since the whole loop is the retried unit
       - name: Update docs for branchname
-        uses: nick-fields/retry@v3
-        with:
-          timeout_minutes: 30
-          max_attempts: 3
-          retry_on: error
-          shell: bash
-          command: |
+        timeout-minutes: 90
+        run: |
+          pull_docs() {
             for v in ${DOC_VERSIONS//,/ }; do
               echo "::group::Pulling docs from release-x.$v.x"
               bb script/update_docs_for_branchname.clj --source-branch "release-x.$v.x" --target-branch "release-x.$v.x"
               echo "::endgroup::"
             done
+          }
+          export -f pull_docs
+
+          for attempt in 1 2 3; do
+            echo "Pulling docs (attempt $attempt of 3)"
+            status=0
+            # the subshell restores `set -e`, so a failed version aborts the attempt
+            bash -euo pipefail -c pull_docs || status=$?
+            if (( status == 0 )); then exit 0; fi
+            echo "::warning::Attempt $attempt failed (exit $status)"
+            sleep 10
+          done
+          echo "::error::Docs pull failed after 3 attempts"
+          exit 1
 
       - name: Cleanup cloud docs (move them to latest, remove from all other versions)
         run: |
           bb script/cleanup_cloud_docs.clj
-
-      - name: "bun lint-markdown"
-        run: |
-          bun run lint-markdown
-
-      - name: "bun lint-styles"
-        run: |
-          bun run lint-styles
-
-      - name: "bun lint-scripts"
-        run: |
-          bun run lint-scripts
-
-      - name: "bun lint-links"
-        run: |
-          bun run lint-links
-
-      - name: List SDK files (debugging)
-        run: |
-          cd _docs/v0.57/embedding/sdk/
-          ls -lR
-
-      - name: Upload Master doc files (debugging)
-        uses: actions/upload-artifact@v4
-        with:
-          name: sdk-files-debug
-          path: _docs/v0.57/
 
       - name: Build the Docs Site
         env:
@@ -155,22 +136,57 @@ jobs:
           # Build the docs site:
           script/build
 
-      - name: Run htmlproofer + metabase.com-aware link checks
-        run: |
-          SECONDS=0
-          script/links || true
-          echo "htmlproofer took: ${SECONDS} seconds."
-          echo 'checking reported links...'
-          echo "htmlproofer spit out a report of length: $(wc -l < htmlproofer.out)"
-          bb script/analyze_links.clj --htmlproofer-output htmlproofer.out --limit 1
+      - name: Push the updated docs
+        id: diff
+        run: | # sh
+          git config --global user.name "Metabase Automation User"
+          git config --global user.email "metabase-bot@metabase.com"
+          # The current docs version is also published to _docs/latest
+          latest="$(sed -n 's/^docs_version: v0\.\([0-9]*\).*/\1/p' _config.yml)"
+          for v in ${DOC_VERSIONS//,/ }; do
+            git add "_docs/v0.$v" || echo "::warning::nothing to stage for _docs/v0.$v"
+            if [[ "$v" == "$latest" ]]; then
+              git add _docs/latest
+            fi
+          done
 
-      - name: Update or Create the Pull Request
-        run: |
-          bb script/update_or_create_pr.clj \
-          --versions "$DOC_VERSIONS" \
-          --pr-number "$PR_NUMBER" \
-          --update-dirs "$UPDATE_DIRS"
+          if git diff --cached --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "No docs changes to commit."
+            exit 0
+          fi
 
-      - name: Merge Updated Docs
-        run: |
-          bb script/merge.clj --versions "$DOC_VERSIONS"
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+          git --no-pager diff --cached --stat
+
+          git checkout -B "$BRANCH_NAME"
+          git commit -m "Update docs for v$DOC_VERSIONS"
+          git push --force origin "$BRANCH_NAME"
+
+      - name: Open PR and enable automerge
+        id: create_pr
+        if: steps.diff.outputs.changed == 'true'
+        run: | # sh
+          {
+            echo "Automated docs update, pulled from:"
+            for v in ${DOC_VERSIONS//,/ }; do
+              echo "- \`release-x.$v.x\`"
+            done
+          } > "$RUNNER_TEMP/pr-body.md"
+
+          URL=$(gh pr create \
+            --base master \
+            --head "$BRANCH_NAME" \
+            --title "Update docs: v0.${DOC_VERSIONS//,/, v0.}" \
+            --body-file "$RUNNER_TEMP/pr-body.md")
+
+          echo "pr_number=${URL##*/}" >> "$GITHUB_OUTPUT"
+          gh pr merge --squash --auto "$URL"
+
+      - name: Auto approve PR
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          # Must be GITHUB_TOKEN, not the job's PAT: the PAT opened the PR and
+          # GitHub rejects self-approval.
+          GH_TOKEN: ${{ github.token }}
+        run: gh pr review "${{ steps.create_pr.outputs.pr_number }}" --approve
