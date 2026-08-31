@@ -1,23 +1,16 @@
 ---
 import fs from "node:fs";
 import path from "node:path";
-import Chevron from "@/components/chrome/Chevron.astro";
+import NavItem, { type NavNode } from "@/components/chrome/NavItem.astro";
 import { DOCS_SRC_ROOT, METABASE_REPO_PATH } from "@/constants";
 import YAML from "yamljs";
-
-type NavNode = {
-  name: string;
-  navName?: string;
-  url?: string;
-  pages?: NavNode[];
-};
 
 type Props = {
   url: string;
   version?: string;
 };
 
-const { url, version = "latest" } = Astro.props;
+const { url: pageUrl, version = "latest" } = Astro.props;
 
 const navPath = path.resolve(
   process.cwd(),
@@ -34,131 +27,32 @@ const { categories } = YAML.parse(fs.readFileSync(navPath, "utf8")) as {
   categories: NavNode[];
 };
 
-// TODO: Is the `replace` necessary?
-const cleanPageUrl = url.replace("/index", "");
+const isRelativeUrl = (url: string) => !/^(\/|[a-z][a-z0-9+.-]*:)/i.test(url);
 
-const getName = (node: NavNode) => node.navName || node.name;
+// TODO: This seems expensive. Is there a cheaper way to do it? Or a way to cache/memoize?
 
-const subtreeContainsUrl = (node: NavNode, targetUrl: string): boolean => {
-  if (node.url === targetUrl) {
-    return true;
-  }
-  return (
-    node.pages?.some((child) => subtreeContainsUrl(child, targetUrl)) ?? false
-  );
-};
+const resolveUrls = (node: NavNode): NavNode => ({
+  ...node,
+  url:
+    node.url && isRelativeUrl(node.url)
+      ? `/docs/${version}/${node.url}`
+      : node.url,
+  pages: node.pages?.map(resolveUrls),
+});
 
-const descendantsContainUrl = (node: NavNode, targetUrl: string): boolean =>
-  node.pages?.some((child) => subtreeContainsUrl(child, targetUrl)) ?? false;
+const resolvedCategories = categories.map(resolveUrls);
 ---
 
 <div class="learn-left-sidebar" id="main-navigation-content">
   {
-    categories.map((category) => (
+    resolvedCategories.map((category) => (
       <>
         <h5>{category.name}</h5>
 
         <ul>
-          {category.pages?.map((track) => {
-            const trackExpanded = subtreeContainsUrl(track, cleanPageUrl);
-
-            return (
-              <li class={trackExpanded ? "expanded" : ""}>
-                <a
-                  href={track.url}
-                  class={cleanPageUrl === track.url ? "selected" : ""}
-                >
-                  {getName(track)}
-
-                  {track.pages && track.pages.length > 0 && (
-                    <div>
-                      <Chevron />
-                    </div>
-                  )}
-                </a>
-
-                {track.pages && (
-                  <ul>
-                    {track.pages.map((course) => {
-                      const courseExpanded = descendantsContainUrl(
-                        course,
-                        cleanPageUrl,
-                      );
-
-                      return (
-                        <li class={courseExpanded ? "expanded" : ""}>
-                          <a
-                            href={course.url}
-                            class={
-                              cleanPageUrl === course.url ? "selected" : ""
-                            }
-                          >
-                            {getName(course)}
-
-                            {course.pages && course.pages.length > 0 && (
-                              <div>
-                                <Chevron />
-                              </div>
-                            )}
-                          </a>
-                          {course.pages && (
-                            <ul>
-                              {course.pages.map((lesson) => {
-                                const lessonExpanded = descendantsContainUrl(
-                                  lesson,
-                                  cleanPageUrl,
-                                );
-
-                                return (
-                                  <li class={lessonExpanded ? "expanded" : ""}>
-                                    <a
-                                      href={lesson.url}
-                                      class={
-                                        cleanPageUrl === lesson.url
-                                          ? "selected"
-                                          : ""
-                                      }
-                                    >
-                                      {getName(lesson)}
-
-                                      {lesson.pages &&
-                                        lesson.pages.length > 0 && (
-                                          <div>
-                                            <Chevron />
-                                          </div>
-                                        )}
-                                    </a>
-                                    {lesson.pages && (
-                                      <ul>
-                                        {lesson.pages.map((section) => (
-                                          <li>
-                                            <a
-                                              href={section.url}
-                                              class={
-                                                cleanPageUrl === section.url
-                                                  ? "selected"
-                                                  : ""
-                                              }
-                                            >
-                                              {getName(section)}
-                                            </a>
-                                          </li>
-                                        ))}
-                                      </ul>
-                                    )}
-                                  </li>
-                                );
-                              })}
-                            </ul>
-                          )}
-                        </li>
-                      );
-                    })}
-                  </ul>
-                )}
-              </li>
-            );
-          })}
+          {category.pages?.map((node) => (
+            <NavItem node={node} pageUrl={pageUrl} />
+          ))}
         </ul>
       </>
     ))

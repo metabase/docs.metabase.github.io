@@ -1,0 +1,51 @@
+---
+import Chevron from "@/components/chrome/Chevron.astro";
+import NavItem from "@/components/chrome/NavItem.astro";
+
+export type NavNode = {
+  name: string;
+  navName?: string;
+  url?: string;
+  pages?: NavNode[];
+};
+
+type Props = {
+  node: NavNode;
+  pageUrl: string;
+};
+
+const { node, pageUrl } = Astro.props;
+
+const getName = (n: NavNode) => n.navName || n.name;
+
+const containsUrl = (n: NavNode, targetUrl: string): boolean =>
+  n.url === targetUrl ||
+  (n.pages?.some((child) => containsUrl(child, targetUrl)) ?? false);
+
+const hasChildren = Boolean(node.pages && node.pages.length > 0);
+const expanded = containsUrl(node, pageUrl);
+---
+
+<li class={expanded ? "expanded" : ""}>
+  <a href={node.url} class={pageUrl === node.url ? "selected" : ""}>
+    {getName(node)}
+
+    {
+      hasChildren && (
+        <div>
+          <Chevron />
+        </div>
+      )
+    }
+  </a>
+
+  {
+    hasChildren && (
+      <ul>
+        {node.pages!.map((child) => (
+          <NavItem node={child} pageUrl={pageUrl} />
+        ))}
+      </ul>
+    )
+  }
+</li>
