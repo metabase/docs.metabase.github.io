@@ -11,8 +11,8 @@
 #    getNavForVersion).
 #
 # For each version v0.44 - v0.63 plus latest (master), sparse-checkout only
-# docs/_includes/data/nav.yml from the metabase/metabase repo into a throwaway
-# worktree, copy that file out to _docs/<version>/_includes/data/nav.yml, then
+# docs/util/data/nav.yml from the metabase/metabase repo into a throwaway
+# worktree, copy that file out to _docs/<version>/util/data/nav.yml, then
 # remove the worktree.
 #
 # v0.44 - v0.63 use the release-x.NN.x branch; latest uses master.
@@ -30,7 +30,7 @@ mkdir -p "$TMP_ROOT"
 # a repo this size. We only need ~20 specific refs, so instead: resolve each
 # ref remotely with ls-remote (cheap, no clone) and shallow-fetch just that
 # one commit (--depth=1 --filter=tree:0) into an initially-empty repo.
-# sparse-checkout then lazily pulls only the docs/_includes/data blobs for that commit.
+# sparse-checkout then lazily pulls only the docs/util/data blobs for that commit.
 CLONE_DIR="$TMP_ROOT/metabase-metabase"
 if [[ ! -d "$CLONE_DIR" ]]; then
   echo "Initializing ${CLONE_DIR}"
@@ -82,15 +82,15 @@ for i in "${!labels[@]}"; do
   git -C "$CLONE_DIR" worktree add --no-checkout -B "${ref}" "$worktree_dir" "origin/${ref}"
 
   git -C "$worktree_dir" sparse-checkout init --cone
-  git -C "$worktree_dir" sparse-checkout set docs/_includes/data
+  git -C "$worktree_dir" sparse-checkout set docs/util/data
   git -C "$worktree_dir" checkout "${ref}"
 
-  src_file="$worktree_dir/docs/_includes/data/nav.yml"
+  src_file="$worktree_dir/docs/util/data/nav.yml"
   if [[ ! -f "$src_file" ]]; then
-    echo "Skipping ${label}: no docs/_includes/data/nav.yml at ${ref}"
+    echo "Skipping ${label}: no docs/util/data/nav.yml at ${ref}"
   else
-    mkdir -p "$dest_dir/_includes/data"
-    cp "$src_file" "$dest_dir/_includes/data/nav.yml"
+    mkdir -p "$dest_dir/util/data"
+    cp "$src_file" "$dest_dir/util/data/nav.yml"
   fi
 
   git -C "$CLONE_DIR" worktree remove "$worktree_dir" --force
