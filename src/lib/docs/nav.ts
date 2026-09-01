@@ -30,7 +30,6 @@ export const getNavForVersion = (version: string): Nav => {
   });
 
   const computeNav = (): Nav => {
-    console.log("COMPUTE!");
     const navPath = path.resolve(
       process.cwd(),
       DOCS_SRC_ROOT,
