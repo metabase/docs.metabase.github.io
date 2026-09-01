@@ -35,7 +35,7 @@ export default defineConfig({
       viteStaticCopy({
         targets: [
           {
-            src: `${DOCS_SRC_ROOT}/**/*.{jpg,png,gif,json,yml}`,
+            src: `${DOCS_SRC_ROOT}/**/*.{jpg,png,gif,json}`,
             dest: DOCS_DEST,
             rename: { stripBase: docsSrcStripBase },
           },
