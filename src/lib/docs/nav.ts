@@ -35,7 +35,7 @@ export const getNavForVersion = (version: string): Nav => {
       process.cwd(),
       DOCS_SRC_ROOT,
       METABASE_REPO_PATH ? "" : version,
-      "_includes/data/nav.yml",
+      "util/data/nav.yml",
     );
     const navRaw: Nav = fs.existsSync(navPath)
       ? YAML.parse(fs.readFileSync(navPath, "utf8"))
