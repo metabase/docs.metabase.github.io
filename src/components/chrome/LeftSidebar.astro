@@ -1,9 +1,6 @@
 ---
-import fs from "node:fs";
-import path from "node:path";
-import NavItem, { type NavNode } from "@/components/chrome/NavItem.astro";
-import { DOCS_SRC_ROOT, METABASE_REPO_PATH } from "@/constants";
-import YAML from "yamljs";
+import NavItem from "@/components/chrome/NavItem.astro";
+import { getNavForVersion } from "@/lib/docs/nav";
 
 type Props = {
   url: string;
@@ -11,44 +8,13 @@ type Props = {
 };
 
 const { url: pageUrl, version = "latest" } = Astro.props;
-
-const navPath = path.resolve(
-  process.cwd(),
-  DOCS_SRC_ROOT,
-  METABASE_REPO_PATH ? "" : version,
-  "_includes/data/nav.yml",
-);
-
-if (!fs.existsSync(navPath)) {
-  throw new Error(`nav.yml not found for version "${version}" at ${navPath}`);
-}
-
-const { categories } = YAML.parse(fs.readFileSync(navPath, "utf8")) as {
-  categories: NavNode[];
-};
-
-const isRelativeUrl = (url: string) => !/^(\/|[a-z][a-z0-9+.-]*:)/i.test(url);
-
-// TODO: This seems expensive. Is there a cheaper way to do it? Or a way to cache/memoize?
-
-const resolveUrls = (node: NavNode): NavNode => ({
-  ...node,
-  url:
-    node.url && isRelativeUrl(node.url)
-      ? `/docs/${version}/${node.url}`
-      : node.url,
-  pages: node.pages?.map(resolveUrls),
-});
-
-const resolvedCategories = categories.map(resolveUrls);
 ---
 
 <div class="learn-left-sidebar" id="main-navigation-content">
   {
-    resolvedCategories.map((category) => (
+    getNavForVersion(version).categories.map((category) => (
       <>
         <h5>{category.name}</h5>
-
         <ul>
           {category.pages?.map((node) => (
             <NavItem node={node} pageUrl={pageUrl} />
