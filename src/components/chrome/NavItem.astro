@@ -1,13 +1,7 @@
 ---
 import Chevron from "@/components/chrome/Chevron.astro";
 import NavItem from "@/components/chrome/NavItem.astro";
-
-export type NavNode = {
-  name: string;
-  navName?: string;
-  url?: string;
-  pages?: NavNode[];
-};
+import { containsUrl, type NavNode } from "@/lib/docs/nav";
 
 type Props = {
   node: NavNode;
@@ -16,19 +10,13 @@ type Props = {
 
 const { node, pageUrl } = Astro.props;
 
-const getName = (n: NavNode) => n.navName || n.name;
-
-const containsUrl = (n: NavNode, targetUrl: string): boolean =>
-  n.url === targetUrl ||
-  (n.pages?.some((child) => containsUrl(child, targetUrl)) ?? false);
-
 const hasChildren = Boolean(node.pages && node.pages.length > 0);
 const expanded = containsUrl(node, pageUrl);
 ---
 
 <li class={expanded ? "expanded" : ""}>
   <a href={node.url} class={pageUrl === node.url ? "selected" : ""}>
-    {getName(node)}
+    {node.name}
 
     {
       hasChildren && (
