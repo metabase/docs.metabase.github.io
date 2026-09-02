@@ -21,4 +21,6 @@ Point `METABASE_REPO_PATH` at your local Metabase repo (defaults to `../metabase
 
 With `METABASE_REPO_PATH` set, `/docs/latest` serves your current branch (NOT the latest branch), and hot-reloads files from your local Metabase repo. Only `/latest` routes are available, which again, are the docs from whatever branch your Metabase repo is on.
 
+If you change the `.env` file, restart the server.
+
 To serve all versions from `./_docs`, comment out `METABASE_REPO_PATH` in your `.env`.
