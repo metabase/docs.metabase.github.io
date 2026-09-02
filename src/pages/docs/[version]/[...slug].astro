@@ -1,7 +1,7 @@
 ---
 import path from "node:path";
 import { pathToFileURL } from "node:url";
-import { METABASE_REPO_PATH } from "@/constants";
+import { DOCS_SRC_ROOT, METABASE_REPO_PATH } from "@/constants";
 import NewDocsLayout from "@/layouts/NewDocsLayout.astro";
 import OldDocsLayout from "@/layouts/OldDocsLayout.astro";
 import { constructDocMetadata } from "@/lib/docs/constructDocMetadata";
@@ -49,7 +49,9 @@ const doc = !isRaw
       ...propsDoc,
       data: {
         ...constructDocMetadata(
-          url.slice(1), // remove leading slash for parity with fetchDocs
+          METABASE_REPO_PATH
+            ? `/${path.relative(METABASE_REPO_PATH, propsDoc.filePath!)}`
+            : `/docs/${path.relative(`${DOCS_SRC_ROOT}/${version}`, propsDoc.filePath!)}`,
           version === "latest" ? baseCtx.site.docs_version : version,
           version === "latest",
         ),
