@@ -1,10 +1,13 @@
 ---
 import path from "node:path";
 import { pathToFileURL } from "node:url";
+import { DOCS_SRC_ROOT, METABASE_REPO_PATH } from "@/constants";
 import NewDocsLayout from "@/layouts/NewDocsLayout.astro";
 import OldDocsLayout from "@/layouts/OldDocsLayout.astro";
+import { constructDocMetadata } from "@/lib/docs/constructDocMetadata";
+import { reformatMarkdownUrls } from "@/lib/docs/reformatMarkdownUrls";
 import { resolveDocUrl } from "@/lib/docs/resolveDoc";
-import { getLiquidRenderer } from "@/lib/liquid/liquidRenderer";
+import { baseCtx, getLiquidRenderer } from "@/lib/liquid/liquidRenderer";
 import { getMarkdownRenderer } from "@/lib/markdown/markdownRenderer";
 import { getCollection, type DataEntryMap } from "astro:content";
 
@@ -20,10 +23,9 @@ export const getStaticPaths = async () => {
 
   const toPath =
     <Kind extends Props["kind"]>(kind: Kind) =>
-    (doc: { id: string; data: { permalink?: string } }) => {
+    (doc: { id: string; data: Record<string, unknown>; body?: string }) => {
       const { version, slug } = resolveDocUrl({
         id: doc.id,
-        permalink: doc.data.permalink,
         // For prod builds, we want to output like folder/index.html, but for the dev server, the route should exclude /index
         includeTrailingIndex: import.meta.env.MODE !== "development",
       });
@@ -34,7 +36,29 @@ export const getStaticPaths = async () => {
 };
 
 const { version, slug = "" } = Astro.params;
-const { kind, doc } = Astro.props;
+const { kind, doc: propsDoc } = Astro.props;
+const url = `/docs/${version}/${slug}`;
+// TODO: GRO-688 Remove processing from /script/docs so src files are raw whether reading from _docs or METABASE_REPO_PATH
+// The only known gap is updateRedirectsAndLinks for non-latest versions, which is two separate fixes:
+// 1. replaceVersionInUrls belongs alongside reformatMarkdownUrls
+// 2. redirect_from rewriting belongs in collectRedirects
+const isRaw = !!METABASE_REPO_PATH;
+const doc = !isRaw
+  ? propsDoc
+  : {
+      ...propsDoc,
+      data: {
+        ...constructDocMetadata(
+          METABASE_REPO_PATH
+            ? `/${path.relative(METABASE_REPO_PATH, propsDoc.filePath!)}`
+            : `/docs/${path.relative(`${DOCS_SRC_ROOT}/${version}`, propsDoc.filePath!)}`,
+          version === "latest" ? baseCtx.site.docs_version : version,
+          version === "latest",
+        ),
+        ...propsDoc.data,
+      },
+      body: reformatMarkdownUrls(propsDoc.body ?? ""),
+    };
 const dirname = path.dirname(doc.filePath!);
 
 // Process liquid first (e.g. control flow, includes, variables, etc)
@@ -72,10 +96,7 @@ const Layout = doc.data.layout === "docs" ? OldDocsLayout : NewDocsLayout;
   kind === "html" ? (
     <Fragment set:html={renderedHtml} />
   ) : (
-    <Layout
-      page={{ url: `/docs/${version}/${slug}`, ...doc.data }}
-      dirname={dirname}
-    >
+    <Layout page={{ url, ...doc.data }} dirname={dirname}>
       <Fragment set:html={renderedHtml} />
     </Layout>
   )

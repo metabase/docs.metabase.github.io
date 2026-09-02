@@ -1,8 +1,19 @@
 // @ts-check
+import path from "node:path";
 import { defineConfig } from "astro/config";
 import { viteStaticCopy } from "vite-plugin-static-copy";
+import { DOCS_DEST, DOCS_SRC_ROOT } from "./src/constants";
 import { collectRedirects } from "./src/lib/docs/collectRedirects";
 import { noopMarkdownProcessor } from "./src/lib/markdown/noopMarkdownProcessor";
+
+// The number of leading path segments to strip from each copied file's directory.
+// Computes the directory relative to the project root and strips any leading `../`.
+// e.g. `_docs` -> 1, `../metabase/docs` -> 2
+const docsSrcStripBase = path
+  .relative(process.cwd(), path.resolve(DOCS_SRC_ROOT))
+  .replace(/^(?:\.\.\/)+/, "")
+  .split("/")
+  .filter(Boolean).length;
 
 // https://astro.build/config
 export default defineConfig({
@@ -24,16 +35,16 @@ export default defineConfig({
       viteStaticCopy({
         targets: [
           {
-            src: "_docs/**/*.{jpg,png,gif,json}",
-            dest: "docs",
-            rename: { stripBase: 1 }, // strips `_docs/`
+            src: `${DOCS_SRC_ROOT}/**/*.{jpg,png,gif,json}`,
+            dest: DOCS_DEST,
+            rename: { stripBase: docsSrcStripBase },
           },
           {
             // TypeDoc-generated CSS/JS/icons the SDK API reference .html
             // docs load via relative `assets/...` URLs.
-            src: "_docs/**/embedding/sdk/api/assets/*.{css,js,svg,ico}",
-            dest: "docs",
-            rename: { stripBase: 1 },
+            src: `${DOCS_SRC_ROOT}/**/embedding/sdk/api/assets/*.{css,js,svg,ico}`,
+            dest: DOCS_DEST,
+            rename: { stripBase: docsSrcStripBase },
           },
         ],
       }),

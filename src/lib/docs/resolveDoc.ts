@@ -1,20 +1,14 @@
-// Derives a doc's version/slug/URL from its content collection id (or
-// frontmatter `permalink` override), since docs are stored as
-// `<version>/<slug>.md` but need a canonical `/docs/<version>/<slug>` URL for
-// routing, sitemaps, and redirects.
+// Derives a doc's version/slug/URL from its content collection id, since
+// docs are stored as `<version>/<slug>.md` but need a canonical
+// `/docs/<version>/<slug>` URL for routing, sitemaps, and redirects.
 export const resolveDocUrl = ({
   id,
-  permalink,
   includeTrailingIndex,
 }: {
   id: string;
-  permalink?: string;
   includeTrailingIndex?: boolean;
 }): { version: string; slug: string; url: string } => {
-  let resolvedId = (permalink?.replace(/^\/docs\//, "") ?? id).replace(
-    /\.html$/,
-    "",
-  );
+  let resolvedId = id.replace(/\.html$/, "").replace(/\/README$/, "/index");
   if (!includeTrailingIndex) {
     resolvedId = resolvedId.replace(/index$/, "");
   }

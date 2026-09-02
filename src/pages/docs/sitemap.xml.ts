@@ -14,9 +14,7 @@ export const GET: APIRoute = async () => {
   ]);
 
   const paths = [...docs, ...docsHtml]
-    .map(
-      (doc) => resolveDocUrl({ id: doc.id, permalink: doc.data.permalink }).url,
-    )
+    .map((doc) => resolveDocUrl({ id: doc.id }).url)
     .sort();
 
   const body = `<?xml version="1.0" encoding="UTF-8"?>
