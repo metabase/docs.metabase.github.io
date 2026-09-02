@@ -116,7 +116,7 @@ If the strings you want to translate include markdown formatting, you'll need to
 
 ## The AI chat component isn't translated
 
-One exception is that Metabase won't translate the text in the [AI chat component](./sdk/ai-chat). While Metabot can understand other languages, it works best in English.
+One exception is that Metabase won't translate the text in the [AI chat component](./ai-chat). While Metabot can understand other languages, it works best in English.
 
 ## Further reading
 

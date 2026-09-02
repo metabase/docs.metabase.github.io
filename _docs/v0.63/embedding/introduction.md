@@ -55,7 +55,7 @@ All SSO options require a Pro or Enterprise plan.
 | [Drill-through menus](../questions/visualizations/drill-through)                       | ✅  | ❌    |
 | [Query builder](../questions/query-builder/editor)                                     | ✅  | ❌    |
 | [SQL editor](../questions/native-editor/writing-sql)                                   | ✅  | ❌    |
-| [AI chat](./sdk/ai-chat)                                                               | ✅  | ❌    |
+| [AI chat](./ai-chat)                                                                   | ✅  | ❌    |
 | [Collection browser](./browser)                                                        | ✅  | ❌    |
 | Advanced [Tenant](./tenants) and [permissions](../permissions/embedding) management | ✅  | ❌    |
 | [Advanced theming](./appearance)                                                       | ✅  | ❌    |

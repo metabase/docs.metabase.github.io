@@ -7,33 +7,35 @@ category: Embedding
 title: 'Modular embedding components'
 source_url: 'https://github.com/metabase/metabase/blob/master/docs/embedding/components.md'
 layout: new-docs
-summary: 'Embed dashboards, questions, query builder, AI chat, and a collection browser.'
+summary: 'A map of the modular embedding docs: dashboards, charts, the query builder, a collection browser, and AI chat.'
 ---
 
 # Modular embedding components
 
-There are different components you can embed, each with various options.
+Modular embedding gives you a handful of components you can drop into your app, with either web components or the React SDK. This page maps out the docs for each one.
 
-> While you can use component parameters to show or hide parts of the embedded component, these parameters are _not_ a substitute for [permissions](../permissions/start). Even if you hide stuff, people could still grab their token from the frontend and use it to query the Metabase API.
-
-This page covers what you can embed. For theming your embeds, see [Appearance](./appearance).
-
-> Depending on the framework you're using, you may need to stringify attributes before passing them to the embedded components.
+> While you can use attributes and props to show or hide parts of an embedded component, they're _not_ a substitute for [permissions](../permissions/start). Even if you hide stuff, people could still grab their token from the frontend and use it to query the Metabase API.
 
 ## Dashboard
+
+Embed a dashboard view-only, interactive, or editable, and let people create dashboards from your app.
 
 - [Embed a dashboard](./dashboard)
 - [Dashboard component reference](./dashboard-reference), for `<metabase-dashboard>` attributes and SDK props
 
 ## Question
 
+Embed a single chart, or the query builder and SQL editor so people can build questions from scratch.
+
 - [Embed a chart](./chart)
-- [Embed a query editor](./query-builder)
+- [Embed the query builder](./query-builder)
 - [Question component reference](./question-reference), for `<metabase-question>` attributes and SDK props
 
 ## Browser
 
 {% include plans-blockquote.html feature="Browser component" convert_pro_link_to_embedding=true%}
+
+Embed a browsable collection, so people can find and open dashboards and questions themselves.
 
 - [Embed a collection browser](./browser)
 - [Browser component reference](./browser-reference), for `<metabase-browser>` attributes and SDK props
@@ -42,33 +44,24 @@ This page covers what you can embed. For theming your embeds, see [Appearance](.
 
 {% include plans-blockquote.html feature="AI chat component" convert_pro_link_to_embedding=true%}
 
-AI chat component is only available for authenticated modular embeds. It's unavailable for [Guest embeds](./guest-embedding).
+Embed an AI chat, so people can ask questions of their data in natural language.
 
-To render the AI chat interface:
+- [Embed an AI chat](./ai-chat), for the `<metabase-metabot>` attributes, the `MetabotQuestion` props, and the `useMetabot` hook
 
-```html
-<metabase-metabot></metabase-metabot>
-```
+## Things you can only do with the React SDK
 
-If you're using the SDK, you can use either the [`MetabotQuestion`](./sdk/ai-chat#example) component or the [`useMetabot`](./sdk/ai-chat#building-custom-ai-chat-uis-with-usemetabot) hook for a custom UI.
+Web components cover the components above. A few features are React-only, because they take React components or hooks that an HTML attribute can't carry. For those, use the [Modular embedding SDK](./sdk/introduction).
 
-### Attributes
-
-{% include_file "{{ dirname }}/eajs/snippets/MetabaseMetabotAttributes.md" snippet="properties" %}
-
-## Customizing loader and error components
-
-{% include plans-blockquote.html feature="Customizing loader and error components" convert_pro_link_to_embedding=true%}
-
-If you're using the [modular embedding SDK](./sdk/introduction), you can provide your own components for loading and error states by specifying `loaderComponent` and `errorComponent` as props to `MetabaseProvider`.
-
-```tsx
-{% include_file "{{ dirname }}/sdk/snippets/appearance/customizing-loader-and-components.tsx" snippet="imports" %}
-
-{% include_file "{{ dirname }}/sdk/snippets/appearance/customizing-loader-and-components.tsx" snippet="example" %}
-```
+- [Plugins](./sdk/plugins), to customize component menus and click actions
+- [Actions](./sdk/actions), to run Metabase actions from your app with the `useAction` hook
+- [Custom question layouts](./question-reference#customize-the-layout-of-an-interactive-chart), to lay out a question yourself with namespaced `InteractiveQuestion` components
+- [Customize loading, error, and empty states](./sdk/loading-and-errors), to swap in your own loading and error components, and your own no-results image
 
 ## Further reading
 
 - [Appearance](./appearance)
-- [Modular embedding SDK](./sdk/introduction).
+- [Modular embedding SDK config](./sdk/config), for the `MetabaseProvider` props
+- [Modular embedding parameters](./parameters)
+- [Translating embeds](./translations)
+- [Authentication](./authentication)
+- [Modular embedding SDK](./sdk/introduction)
