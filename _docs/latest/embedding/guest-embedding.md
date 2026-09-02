@@ -42,7 +42,7 @@ To create a guest embed:
 3. Select **Embed**.
 4. Under **Authentication**, select **Guest**.
 5. Optional: [customize the appearance of the embed](./appearance)
-6. Optional: [Add parameters to the embed](./components).
+6. Optional: [set the visibility of each parameter](#configuring-parameters).
 7. Click **Publish**.
 8. Get the code snippet that the wizard generates and add it to your app.
 
@@ -50,7 +50,7 @@ To create a guest embed:
 
 ## Notes on the code the wizard generates
 
-You can edit the code (see [components](./components) and [appearance](./appearance)). But here's an overview of the code the wizard generates, and where to put it.
+You can edit the code (see the [question component reference](./question-reference), the [dashboard component reference](./dashboard-reference), and [appearance](./appearance)). But here's an overview of the code the wizard generates, and where to put it.
 
 ### Client-side code
 
@@ -122,7 +122,7 @@ You can set different attributes to enable/disable UI. Here are some example att
 
 \* Disabling downloads is only available on [Pro](/product/pro) and [Enterprise](/product/enterprise) plans.
 
-Attributes will differ based on the type of thing you're embedding. Guest embeds have fewer options than embeds that use SSO. See more on [components and their attributes](./components).
+Attributes will differ based on the type of thing you're embedding. Guest embeds have fewer options than embeds that use SSO. For every attribute, see the [dashboard component reference](./dashboard-reference) and the [question component reference](./question-reference).
 
 ### Customizing appearance of guest embeds
 
@@ -549,7 +549,8 @@ Guest embeds can't take advantage of:
 - [Drill-through](../questions/visualizations/drill-through)
 - [Usage analytics](../usage-and-performance-tools/usage-analytics)
 - [Query builder](../questions/query-builder/editor)
-- [AI chat](./sdk/ai-chat)
+- [AI chat](./ai-chat)
+- [Custom visualizations](./sdk/config#custom-visualizations)
 
 For those features, check out [Modular embedding with SSO](./modular-embedding).
 

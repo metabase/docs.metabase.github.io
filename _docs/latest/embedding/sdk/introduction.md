@@ -114,13 +114,14 @@ Start with one of the quickstarts, then see these pages for more info on compone
 
 - [Authentication](../authentication)
 - [Embed a chart](../chart)
-- [AI chat](./ai-chat)
+- [Embed an AI chat](../ai-chat)
 - [Embed a dashboard](../dashboard)
 - [Actions](./actions)
 - [Appearance](../appearance)
 - [Embed a collection browser](../browser)
 - [Plugins](./plugins)
 - [Config](./config)
+- [Customize loading, error, and empty states](./loading-and-errors)
 - [Versioning](./version)
 - [Notes on Next.js](./next-js)
 

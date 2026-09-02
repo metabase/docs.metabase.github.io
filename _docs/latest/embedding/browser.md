@@ -152,3 +152,4 @@ One quirk: when someone clicks on a collection, `CollectionBrowser` navigates in
 - [Collection permissions](../permissions/collections)
 - [Authentication](./authentication)
 - [Modular embedding SDK](./sdk/introduction)
+- [Modular embedding components](./components)

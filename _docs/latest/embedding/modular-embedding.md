@@ -117,7 +117,7 @@ The code snippet has three parts:
 
 - Loading the modular embedding library from your Metabase instance.
 - Setting global configuration settings, like the URL of your Metabase and the `theme`. See [Page-level config](#page-level-config).
-- The component(s) to embed, with their parameters. See [Components](./components).
+- The component(s) to embed, with their attributes. To pick a component, see [Modular embedding components](./components). For the attributes each one takes, see the [dashboard](./dashboard-reference), [question](./question-reference), and [browser](./browser-reference) component references.
 
 Here's an example snippet:
 
@@ -173,7 +173,7 @@ In addition to this, we consider shared accounts to be unfair usage. Fair usage 
 
 The exact customization options you see will depend on which type of entity you're embedding. These are the settings for authenticated embeds available on [Pro](/product/pro) and [Enterprise](/product/enterprise) plans. For guest embeds (OSS and paid), see [guest embedding options](./guest-embedding#component-attributes).
 
-When you're creating a new embed using **Admin > Embedding > Setup guide > Embed in your code**, you'll see some or all of the following customization options in the interactive creation flow. These options correspond to parameters in [components](./components).
+When you're creating a new embed using **Admin > Embedding > Setup guide > Embed in your code**, you'll see some or all of the following customization options in the interactive creation flow. These options correspond to attributes on the component you're embedding. For each attribute, see the [dashboard](./dashboard-reference) and [question](./question-reference) component references.
 
 - **Allow people to drill through on data points**: determines whether people can interact with the chart (or charts on a dashboard). Interactivity includes [drilling down](../questions/visualizations/drill-through) to individual records from aggregated questions, filtering on click, zooming in, etc. Disabling drill-through for an embedded _question_ also disables people's ability to add filters and summaries.
 

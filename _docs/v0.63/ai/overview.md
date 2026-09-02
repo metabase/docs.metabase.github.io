@@ -26,7 +26,7 @@ Here are the different ways to use AI with Metabase:
 
 **Best for: daily tasks in Metabase; granular control over people's AI usage.**
 
-Metabot is Metabase's built-in AI agent. Metabot can help you with most daily tasks around Metabase, like answering questions about your data, creating queries, generating SQL code, explaining charts, or creating Documents. If you're embedding Metabase into your product, you can get the Metabot agent through the [AI chat component](../embedding/components#ai-chat). See [non-exhaustive list of things Metabot can do](metabot#what-metabot-can-do), as well as its [limitations](metabot#current-limitations).
+Metabot is Metabase's built-in AI agent. Metabot can help you with most daily tasks around Metabase, like answering questions about your data, creating queries, generating SQL code, explaining charts, or creating Documents. If you're embedding Metabase into your product, you can get the Metabot agent through the [AI chat component](../embedding/ai-chat). See a [non-exhaustive list of things Metabot can do](metabot#what-metabot-can-do), as well as its [limitations](metabot#current-limitations).
 
 **Controls:** Metabot will only see what the person using it can see. Metabot also comes with additional permission controls and usage limits so that you control who can use which Metabot tools (e.g. chat vs SQL generation) and how many tokens they can spend.
 
@@ -37,7 +37,7 @@ Metabot is Metabase's built-in AI agent. Metabot can help you with most daily ta
 
 **Plans**: available on all plans. You can only use Metabase's AI Service on Metabase Cloud.
 
-See [full docs for Metabot](metabot) and [embedded AI chat](../embedding/components#ai-chat).
+See [full docs for Metabot](metabot) and [embedded AI chat](../embedding/ai-chat).
 
 ## MCP server
 
