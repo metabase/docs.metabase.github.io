@@ -1,4 +1,6 @@
 ---
+import StaticFooter from "@/components/chrome/StaticFooter.astro";
+import StaticHeader from "@/components/chrome/StaticHeader.astro";
 import LiquidInclude from "@/components/LiquidInclude.astro";
 import { getLiquidRenderer } from "@/lib/liquid/liquidRenderer";
 
@@ -7,10 +9,9 @@ type Props = {
     version?: string;
   };
   dirname: string;
-  active?: string;
 };
 
-const { page, dirname, active } = Astro.props;
+const { page, dirname } = Astro.props;
 
 const lq = getLiquidRenderer({ page, dirname });
 
@@ -22,12 +23,7 @@ const currentDocsVersion = await lq.render("{{ site.docs_version }}");
   <LiquidInclude lq={lq} src="head.html" />
 
   <body>
-    <LiquidInclude
-      lq={lq}
-      src="navigation-header.html"
-      color={true}
-      active={active}
-    />
+    <StaticHeader />
 
     <div class="MB-Documentation MB-Page ZoomImages">
       {
@@ -45,7 +41,7 @@ const currentDocsVersion = await lq.render("{{ site.docs_version }}");
 
       <slot />
     </div>
-    <LiquidInclude lq={lq} src="footer.html" />
+    <StaticFooter />
 
     <script is:inline type="text/javascript" src="/docs/js/contentloaded.min.js"
     ></script>
