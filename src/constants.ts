@@ -22,5 +22,4 @@ export const DOCS_DEST = DOCS_VERSION ? `docs/${DOCS_VERSION}` : "docs";
 export const UNIFY_ENABLED_PAGES = [
   "/docs/latest/embedding/sdk/quickstart",
   "/docs/latest/embedding/full-app-embedding-quick-start-guide",
-  
 ];
