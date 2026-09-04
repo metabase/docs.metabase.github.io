@@ -14,12 +14,10 @@ frontend:
     postBuild:
       commands:
         - |
-          if [ "$AWS_BRANCH" = "master" ]; then
-            for dir in _site/docs/v0.*/; do
-              version=$(basename "$dir")
-              aws s3 sync "$dir" "s3://metabase-docs-archive/$version/" --delete
-            done
-          fi
+          for dir in _site/docs/v0.*/; do
+            version=$(basename "$dir")
+            aws s3 sync "$dir" "s3://metabase-docs-archive/$version/" --delete
+          done
   artifacts:
     baseDirectory: _site
     files:
