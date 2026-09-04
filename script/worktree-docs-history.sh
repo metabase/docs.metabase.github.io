@@ -42,12 +42,12 @@ refspecs=()
 # Only iterate over currently-supported major versions (eol in the future),
 # per _data/major_version_support.json.
 today="$(date -u +%Y-%m-%d)"
-supported_majors=(58 62 63)
-# while IFS= read -r nn; do
-#   supported_majors+=("$nn")
-# done < <(jq -r --arg today "$today" \
-#   '[.[] | select(.eol > $today) | .major] | sort | .[]' \
-#   "$REPO_ROOT/_data/major_version_support.json")
+supported_majors=()
+while IFS= read -r nn; do
+  supported_majors+=("$nn")
+done < <(jq -r --arg today "$today" \
+  '[.[] | select(.eol > $today) | .major] | sort | .[]' \
+  "$REPO_ROOT/_data/major_version_support.json")
 
 for nn in "${supported_majors[@]}"; do
   if (( nn <= 43 )); then
