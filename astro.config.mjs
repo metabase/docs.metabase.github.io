@@ -25,10 +25,8 @@ export default defineConfig({
   redirects: collectRedirects(),
 
   build: {
-    // TLDR mimic what jekyll did to prevent broken links.
-    // E.g. some old hrefs point to like `start.html` so moving the file to `start/index.html` would break the link.
-    // But we also want the ability to have like `about/index.html` instead of `about.html` as well.
-    format: "preserve",
+    // Use `directory` so archived pages can be more easily served from s3
+    format: "directory",
   },
   vite: {
     plugins: [

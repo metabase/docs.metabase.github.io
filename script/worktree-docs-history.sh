@@ -42,7 +42,7 @@ refspecs=()
 # Only iterate over currently-supported major versions (eol in the future),
 # per _data/major_version_support.json.
 today="$(date -u +%Y-%m-%d)"
-supported_majors=(58 62 63)
+supported_majors=(12 58 62 63)
 # while IFS= read -r nn; do
 #   supported_majors+=("$nn")
 # done < <(jq -r --arg today "$today" \
