@@ -42,23 +42,20 @@ const url = `/docs/${version}/${slug}`;
 // The only known gap is updateRedirectsAndLinks for non-latest versions, which is two separate fixes:
 // 1. replaceVersionInUrls belongs alongside reformatMarkdownUrls
 // 2. redirect_from rewriting belongs in collectRedirects
-const isRaw = !!METABASE_REPO_PATH;
-const doc = !isRaw
-  ? propsDoc
-  : {
-      ...propsDoc,
-      data: {
-        ...constructDocMetadata(
-          METABASE_REPO_PATH
-            ? `/${path.relative(METABASE_REPO_PATH, propsDoc.filePath!)}`
-            : `/docs/${path.relative(`${DOCS_SRC_ROOT}/${version}`, propsDoc.filePath!)}`,
-          version === "latest" ? baseCtx.site.docs_version : version,
-          version === "latest",
-        ),
-        ...propsDoc.data,
-      },
-      body: reformatMarkdownUrls(propsDoc.body ?? ""),
-    };
+const doc = {
+  ...propsDoc,
+  data: {
+    ...constructDocMetadata(
+      METABASE_REPO_PATH
+        ? `/${path.relative(METABASE_REPO_PATH, propsDoc.filePath!)}`
+        : `/docs/${path.relative(`${DOCS_SRC_ROOT}/${version}`, propsDoc.filePath!)}`,
+      version === "latest" ? baseCtx.site.docs_version : version,
+      version === "latest",
+    ),
+    ...propsDoc.data,
+  },
+  body: reformatMarkdownUrls(propsDoc.body ?? ""),
+};
 const dirname = path.dirname(doc.filePath!);
 
 // Process liquid first (e.g. control flow, includes, variables, etc)

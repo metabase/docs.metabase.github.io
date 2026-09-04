@@ -39,7 +39,17 @@ declare -a resolved_ref
 declare -a is_detached
 refspecs=()
 
-for nn in $(seq 12 63); do
+# Only iterate over currently-supported major versions (eol in the future),
+# per _data/major_version_support.json.
+today="$(date -u +%Y-%m-%d)"
+supported_majors=()
+while IFS= read -r nn; do
+  supported_majors+=("$nn")
+done < <(jq -r --arg today "$today" \
+  '[.[] | select(.eol > $today) | .major] | sort | .[]' \
+  "$REPO_ROOT/_data/major_version_support.json")
+
+for nn in "${supported_majors[@]}"; do
   if (( nn <= 43 )); then
     ref=$(grep -oE "refs/tags/v0\.${nn}\.[0-9]+(\.[0-9]+)?\$" <<< "$all_tags" \
       | sed 's#refs/tags/##' | sort -V | tail -1)
@@ -89,5 +99,25 @@ for nn in "${!resolved_ref[@]}"; do
     git -C "$CLONE_DIR" branch -D "${ref}"
   fi
 done
+
+# Copy _docs/<docs_version> to _docs/latest
+# TODO: Would it make sense to use major_version_support.json here too?
+latest_nn="$(grep -E '^docs_version:' "$REPO_ROOT/_config.yml" | sed -E 's/^docs_version:[[:space:]]*v0\.([0-9]+).*/\1/')"
+if [[ -z "$latest_nn" ]]; then
+  echo "Could not determine docs_version from ${REPO_ROOT}/_config.yml" >&2
+  exit 1
+fi
+
+latest_src="$REPO_ROOT/_docs/v0.${latest_nn}"
+latest_dest="$REPO_ROOT/_docs/latest"
+if [[ ! -d "$latest_src" ]]; then
+  echo "Cannot copy latest: ${latest_src} not found" >&2
+  exit 1
+fi
+
+echo "Copying ${latest_src} to ${latest_dest}"
+rm -rf "$latest_dest"
+mkdir -p "$latest_dest"
+cp -R "$latest_src/." "$latest_dest/"
 
 echo "Done."
