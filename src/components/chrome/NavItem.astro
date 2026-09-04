@@ -1,0 +1,39 @@
+---
+import NavItem from "@/components/chrome/NavItem.astro";
+import Chevron from "@/icons/chevron.svg";
+import { containsUrl, type NavNode } from "@/lib/docs/nav";
+
+type Props = {
+  node: NavNode;
+  pageUrl: string;
+};
+
+const { node, pageUrl } = Astro.props;
+
+const hasChildren = Boolean(node.pages && node.pages.length > 0);
+const expanded = containsUrl(node, pageUrl);
+---
+
+<li class={expanded ? "expanded" : ""}>
+  <a href={node.url} class={pageUrl === node.url ? "selected" : ""}>
+    {node.name}
+
+    {
+      hasChildren && (
+        <div>
+          <Chevron />
+        </div>
+      )
+    }
+  </a>
+
+  {
+    hasChildren && (
+      <ul>
+        {node.pages!.map((child) => (
+          <NavItem node={child} pageUrl={pageUrl} />
+        ))}
+      </ul>
+    )
+  }
+</li>
