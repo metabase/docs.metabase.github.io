@@ -1,4 +1,5 @@
 ---
+import LeftSidebar from "@/components/chrome/LeftSidebar.astro";
 import LiquidInclude from "@/components/LiquidInclude.astro";
 import { UNIFY_ENABLED_PAGES } from "@/constants";
 import { getLiquidRenderer } from "@/lib/liquid/liquidRenderer";
@@ -9,6 +10,8 @@ type Props = {
     title: string;
     url: string;
     category?: string;
+    version?: string;
+    latest?: string;
   };
   dirname: string;
 };
@@ -27,7 +30,7 @@ const unify = UNIFY_ENABLED_PAGES.includes(page.url);
 <DefaultNewLayout page={page} dirname={dirname} {unify}>
   <div class="bootstrap">
     <div class="learn docs blog-post MB-Page">
-      <LiquidInclude lq={lq} src="docs/left-sidebar.html" domain="docs" />
+      <LeftSidebar url={page.url} version={page.latest ? 'latest' : page.version} />
 
       <article class="learn__post learn__article">
         <LiquidInclude

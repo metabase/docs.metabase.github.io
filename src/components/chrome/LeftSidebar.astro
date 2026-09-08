@@ -1,0 +1,26 @@
+---
+import NavItem from "@/components/chrome/NavItem.astro";
+import { getNavForVersion } from "@/lib/docs/nav";
+
+type Props = {
+  url: string;
+  version?: string;
+};
+
+const { url: pageUrl, version = "latest" } = Astro.props;
+---
+
+<div class="learn-left-sidebar" id="main-navigation-content">
+  {
+    getNavForVersion(version).categories.map((category) => (
+      <>
+        <h5>{category.name}</h5>
+        <ul>
+          {category.pages?.map((node) => (
+            <NavItem node={node} pageUrl={pageUrl} />
+          ))}
+        </ul>
+      </>
+    ))
+  }
+</div>
