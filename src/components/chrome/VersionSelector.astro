@@ -1,0 +1,47 @@
+---
+import Chevron from "@/icons/chevron.svg";
+import { baseCtx } from "@/lib/liquid/liquidRenderer";
+
+type Props = {
+  version?: string;
+};
+
+const { version } = Astro.props;
+const { site } = baseCtx;
+
+const currentVersion = version === "latest" ? site.docs_version : version;
+const versions = [...site.available_versions].reverse().slice(0, 10);
+---
+
+<div class="version__selector cursor-pointer">
+  <span class="version__current">
+    {currentVersion}
+    <Chevron />
+  </span>
+  <ul class="version__dropdown">
+    {
+      versions
+        .filter((v: string) => v !== version)
+        .map((v: string) => {
+          const support = site.data.version_support[v];
+          return (
+            <li>
+              <a href={`/docs/${v}/`}>
+                <div class="version__dropdown--item">
+                  <span>{v}</span>
+                  {support?.status === "unsupported" ? (
+                    <span class="version__tag version__tag--unsupported">
+                      unsupported
+                    </span>
+                  ) : support?.lts ? (
+                    <span class="version__tag version__tag--lts">lts</span>
+                  ) : null}
+                </div>
+              </a>
+            </li>
+          );
+        })
+    }
+    <li><a href="/docs/all">See more</a></li>
+  </ul>
+</div>

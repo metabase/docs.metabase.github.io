@@ -1,0 +1,42 @@
+---
+import Breadcrumb from "@/components/chrome/Breadcrumb.astro";
+import SearchInput from "@/components/chrome/SearchInput.astro";
+import VersionSelector from "@/components/chrome/VersionSelector.astro";
+import Stars from "@/icons/stars.svg";
+
+type Props = {
+  page: {
+    version?: string;
+    url: string;
+    title?: string;
+    category?: string;
+    has_magic_breadcrumbs?: boolean;
+    show_category_breadcrumb?: boolean;
+  };
+  showBreadcrumb?: boolean;
+};
+
+const { page, showBreadcrumb } = Astro.props;
+---
+
+<div class="top-bar">
+  <div>
+    {
+      showBreadcrumb && (
+        <div class="learn-breadcrumb-trail">
+          <Breadcrumb page={page} />
+        </div>
+      )
+    }
+  </div>
+
+  <div>
+    <VersionSelector version={page.version} />
+    <a href="/releases" class="whats-new">
+      <Stars />
+      What’s new
+    </a>
+
+    <SearchInput />
+  </div>
+</div>
