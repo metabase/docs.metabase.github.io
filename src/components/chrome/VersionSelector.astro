@@ -1,4 +1,5 @@
 ---
+import { renderVersionListItems } from "@/components/chrome/utils/versionDropdown";
 import Chevron from "@/icons/chevron.svg";
 import { baseCtx } from "@/lib/liquid/liquidRenderer";
 
@@ -9,39 +10,55 @@ type Props = {
 const { version } = Astro.props;
 const { site } = baseCtx;
 
-const currentVersion = version === "latest" ? site.docs_version : version;
-const versions = [...site.available_versions].reverse().slice(0, 10);
+const latest = version === site.docs_version;
+
+const dropdownItemsHtml = renderVersionListItems(
+  site.available_versions,
+  version,
+  site.data.version_support,
+);
 ---
 
 <div class="version__selector cursor-pointer">
   <span class="version__current">
-    {currentVersion}
+    {version}
     <Chevron />
   </span>
-  <ul class="version__dropdown">
-    {
-      versions
-        .filter((v: string) => v !== version)
-        .map((v: string) => {
-          const support = site.data.version_support[v];
-          return (
-            <li>
-              <a href={`/docs/${v}/`}>
-                <div class="version__dropdown--item">
-                  <span>{v}</span>
-                  {support?.status === "unsupported" ? (
-                    <span class="version__tag version__tag--unsupported">
-                      unsupported
-                    </span>
-                  ) : support?.lts ? (
-                    <span class="version__tag version__tag--lts">lts</span>
-                  ) : null}
-                </div>
-              </a>
-            </li>
-          );
-        })
-    }
-    <li><a href="/docs/all">See more</a></li>
-  </ul>
+  <ul
+    class="version__dropdown"
+    data-component="versions-list"
+    data-version={version ?? ""}
+    {...latest && { "data-latest": true }}
+    set:html={dropdownItemsHtml}
+  />
 </div>
+
+<script>
+  import type { VersionsInfo } from "@/pages/docs/versions.json";
+  import { renderVersionListItems } from "./utils/versionDropdown";
+
+  let versionsPromise: Promise<VersionsInfo>;
+
+  const updateVersionsList = async (ul: Element) => {
+    const latest = ul.hasAttribute("data-latest");
+    if (latest) {
+      // `docs/latest/*` gets rebuilt frequently enough that it doesn't need to update client-side.
+      // This client-side update is for like v0.44 pages which will almost never get rebuilt but
+      // should still show up-to-date versions info in the version selector.
+      return;
+    }
+    versionsPromise ??= fetch("/docs/versions.json").then((res) => res.json());
+    const version = ul.getAttribute("data-version");
+    const versions = await versionsPromise;
+    const { available_versions, version_support } = versions;
+    ul.innerHTML = renderVersionListItems(
+      available_versions,
+      version,
+      version_support,
+    );
+  };
+
+  document
+    .querySelectorAll('[data-component="versions-list"]')
+    .forEach(updateVersionsList);
+</script>
