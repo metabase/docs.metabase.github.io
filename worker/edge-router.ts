@@ -4,31 +4,18 @@ export interface Env {
 
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
-    // TODO: Use static assets for supported versions, only use the worker for getting old versions from r2
+    // Path: e.g. /docs/v0.63/getting-started
     const url = new URL(request.url);
     const path = url.pathname.replace(/^\/+|\/+$/g, "");
     const parts = path.split("/");
 
-    if (parts[0] !== "docs" && parts[0] !== "previews") {
+    if (parts[0] !== "docs") {
       return new Response("Not Found", { status: 404 });
     }
 
-    let prefix = "";
-    let version = "";
-    let fileKey = "";
-
-    if (parts[0] === "previews") {
-      // Path: /previews/pr-102/v0.63/getting-started
-      const [_, prId, ver, ...rest] = parts;
-      prefix = `previews/${prId}`;
-      version = ver;
-      fileKey = rest.join("/");
-    } else {
-      // Path: /docs/v0.63/getting-started
-      const [_, ver, ...rest] = parts;
-      version = ver;
-      fileKey = rest.join("/");
-    }
+    const [_, ver, ...rest] = parts;
+    const version = ver;
+    let fileKey = rest.join("/");
 
     // Handle index.html resolution for directory roots
     if (!fileKey || fileKey.endsWith("/")) {
@@ -37,9 +24,7 @@ export default {
       fileKey += "/index.html";
     }
 
-    const objectKey = prefix
-      ? `${prefix}/${version}/${fileKey}`
-      : `docs/${version}/${fileKey}`;
+    const objectKey = `docs/${version}/${fileKey}`;
     const object = await env.DOCS_BUCKET.get(objectKey);
 
     if (!object) {
