@@ -1,6 +1,6 @@
 ---
-import StaticFooter from "@/components/chrome/StaticFooter.astro";
-import StaticHeader from "@/components/chrome/StaticHeader.astro";
+import Footer from "@/components/chrome/Footer.astro";
+import Header from "@/components/chrome/Header.astro";
 import LiquidInclude from "@/components/LiquidInclude.astro";
 import { getLiquidRenderer } from "@/lib/liquid/liquidRenderer";
 
@@ -20,13 +20,13 @@ const lq = getLiquidRenderer({ page, dirname });
   <LiquidInclude lq={lq} src="head.html" {unify} />
 
   <body>
-    <StaticHeader />
+    <Header includeGithubStars={!page.version || !!page.latest} />
 
     <div>
       <slot />
     </div>
 
-    <StaticFooter />
+    <Footer />
     <script
       is:inline
       type="text/javascript"
