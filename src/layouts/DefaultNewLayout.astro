@@ -20,7 +20,7 @@ const lq = getLiquidRenderer({ page, dirname });
   <LiquidInclude lq={lq} src="head.html" {unify} />
 
   <body>
-    <StaticHeader includeGithubStars={!!page.latest} />
+    <StaticHeader includeGithubStars={!page.version || !!page.latest} />
 
     <div>
       <slot />
