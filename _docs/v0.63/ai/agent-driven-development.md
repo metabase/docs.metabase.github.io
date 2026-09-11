@@ -5,9 +5,11 @@ show_category_breadcrumb: true
 show_title_breadcrumb: true
 category: Ai
 title: 'Agent-driven development'
-source_url: 'https://github.com/metabase/metabase/blob/master/docs/ai/file-based-development.md'
+source_url: 'https://github.com/metabase/metabase/blob/master/docs/ai/agent-driven-development.md'
 layout: new-docs
 summary: 'Use a coding agent and the Metabase CLI to create Metabase content, then version that content as YAML files with Remote Sync.'
+redirect_from:
+    - /docs/v0.63/ai/file-based-development
 ---
 
 # Agent-driven development
@@ -53,7 +55,7 @@ Once you have these set up, you can step through the example workflow.
 
 1. Set up a Metabase instance to check your work before pushing changes to production. This Metabase should connect to the same data warehouse(s) your production Metabase connects to. A [config file](../configuring-metabase/config-file) will come in handy here.
 
-2. Create an [API key](../people-and-groups/api-keys#create-an-api-key) in this development Metabase and assign it to the Admin group, so the agent can create content and work with Remote Sync.
+2. Make sure the agent can log in as an admin, so it can create content and work with Remote Sync. The CLI can sign in through your browser with an admin account. If you'll run the CLI from a script, create an [API key](../people-and-groups/api-keys#create-an-api-key) in this development Metabase and assign it to the Admin group.
 
 3. We also recommend turning off the sample content and usage analytics, so they don't pollute the data model. If you're using a [docker compose file](../installation-and-operation/running-metabase-on-docker), add these [environment variables](../configuring-metabase/environment-variables):
 
@@ -80,11 +82,17 @@ Then authenticate it against your development Metabase:
 mb auth login --url your-metabase-url-here
 ```
 
-Authenticate with the API key you created in your Metabase instance.
+The CLI offers to open your Metabase in a browser so you can sign in and approve the CLI. On Metabase versions before 63, or if you pick **With an API key** at the prompt, paste the API key you created in your development Metabase. Check out [Authenticate the CLI](../installation-and-operation/metabase-cli#authenticate-the-cli) for details.
 
 ### Add the agent skill
 
-Add the [`/metabase-cli` skill](https://github.com/metabase/agent-skills/tree/main/skills/metabase-cli) to your agent so it knows how to use the CLI to create content directly in your Metabase.
+Add the [`/metabase-cli` skill](https://github.com/metabase/agent-skills/tree/main/skills/metabase-cli) to your agent so it knows how to use the CLI to create content directly in your Metabase:
+
+```
+npx skills add metabase/agent-skills --skill metabase-cli -a claude-code
+```
+
+For other ways to install the skill, check out [The metabase-cli skill](../installation-and-operation/metabase-cli#the-metabase-cli-skill).
 
 ## Example prompts
 
@@ -149,4 +157,4 @@ Since the agent uses the CLI to create content directly in Metabase, to undo cha
 - [Metabase CLI](../installation-and-operation/metabase-cli)
 - [Metabase Representation Format](https://github.com/metabase/representations)
 - [Agent skills](https://github.com/metabase/agent-skills)
-- [MCP server](./mcp): for agents that need live metadata lookups outside the file-based workflow.
+- [MCP server](./mcp): for agents that need live metadata lookups outside the agent-driven workflow.
