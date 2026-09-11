@@ -42,9 +42,11 @@ const unify = UNIFY_ENABLED_PAGES.includes(page.url);
         <TopBar page={page} showBreadcrumb={showBreadcrumb} />
 
         <div class="learn__post__content">
-          {!showBreadcrumb && <VersionSelector version={page.version} />}
+          {!showBreadcrumb && (
+            <VersionSelector version={page.version} latest={!!page.latest} />
+          )}
 
-          <VersionNotice version={page.version} />
+          <VersionNotice version={page.version} latest={!!page.latest} />
 
           <slot />
 

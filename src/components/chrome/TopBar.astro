@@ -7,6 +7,7 @@ import Stars from "@/icons/stars.svg";
 type Props = {
   page: {
     version?: string;
+    latest?: boolean;
     url: string;
     title?: string;
     category?: string;
@@ -29,7 +30,7 @@ const { page, showBreadcrumb } = Astro.props;
   </div>
 
   <div>
-    <VersionSelector version={page.version} />
+    <VersionSelector version={page.version} latest={!!page.latest} />
     <a href="/releases" class="whats-new">
       <Stars />
       What’s new
