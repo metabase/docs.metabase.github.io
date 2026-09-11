@@ -19,7 +19,7 @@ Here are the different ways to use AI with Metabase:
 
 - [Metabot](#metabot)
 - [MCP server](#mcp-server)
-- [Agent-driven file-based development workflow](#agent-driven-development-workflow)
+- [Agent-driven development workflow](#agent-driven-development-workflow)
 
 ## Metabot
 
@@ -66,4 +66,4 @@ Use a coding agent like Claude Code with the Metabase CLI to create Metabase con
 
 **Plans**: Agent-driven workflows require a Pro/Enterprise plan.
 
-See [full docs for agent-driven workflow](./file-based-development)
+See [full docs for agent-driven workflow](./agent-driven-development)
