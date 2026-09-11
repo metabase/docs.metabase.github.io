@@ -1,7 +1,7 @@
 ---
-import { renderVersionListItems } from "@/components/chrome/utils/versionDropdown";
 import Chevron from "@/icons/chevron.svg";
 import { baseCtx } from "@/lib/liquid/liquidRenderer";
+import { renderVersionListItems } from "./utils/versionUtils";
 
 type Props = {
   version?: string;
@@ -9,14 +9,7 @@ type Props = {
 
 const { version } = Astro.props;
 const { site } = baseCtx;
-
 const latest = version === site.docs_version;
-
-const dropdownItemsHtml = renderVersionListItems(
-  site.available_versions,
-  version,
-  site.data.version_support,
-);
 ---
 
 <div class="version__selector cursor-pointer">
@@ -28,37 +21,34 @@ const dropdownItemsHtml = renderVersionListItems(
     class="version__dropdown"
     data-component="versions-list"
     data-version={version ?? ""}
-    {...latest && { "data-latest": true }}
-    set:html={dropdownItemsHtml}
+    set:html={renderVersionListItems(
+      version,
+      site.data.version_support,
+      site.available_versions,
+    )}
   />
 </div>
 
-<script>
-  import type { VersionsInfo } from "@/pages/docs/versions.json";
-  import { renderVersionListItems } from "./utils/versionDropdown";
+{/*
+`latest` is excluded since it gets rebuilt often enough to stay current on its own. This targets
+older pages (e.g. v0.44) that rarely get rebuilt but should still show an up-to-date version list
+in the selector.
+*/}
+{!latest && <script>
+  import { fetchVersions, renderVersionListItems } from "./utils/versionUtils";
 
-  let versionsPromise: Promise<VersionsInfo>;
-
-  const updateVersionsList = async (ul: Element) => {
-    const latest = ul.hasAttribute("data-latest");
-    if (latest) {
-      // `docs/latest/*` gets rebuilt frequently enough that it doesn't need to update client-side.
-      // This client-side update is for like v0.44 pages which will almost never get rebuilt but
-      // should still show up-to-date versions info in the version selector.
-      return;
-    }
-    versionsPromise ??= fetch("/docs/versions.json").then((res) => res.json());
-    const version = ul.getAttribute("data-version");
-    const versions = await versionsPromise;
+  const updateVersionsList = async (el: Element) => {
+    const versions = await fetchVersions();
+    const pageVersion = el.getAttribute("data-version");
     const { available_versions, version_support } = versions;
-    ul.innerHTML = renderVersionListItems(
-      available_versions,
-      version,
+    el.innerHTML = renderVersionListItems(
+      pageVersion,
       version_support,
+      available_versions,
     );
   };
 
   document
     .querySelectorAll('[data-component="versions-list"]')
     .forEach(updateVersionsList);
-</script>
+</script>}
