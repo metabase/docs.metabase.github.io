@@ -41,13 +41,11 @@ const showChrome = page.category !== "ignore";
           Metabase Documentation
         </a>
       </h2>
-      {
-        showChrome && (
-          <a class="text-white text-white-hover" href={`/docs/${page.version}`}>
-            {page.version} {page.version === currentDocsVersion && " (Latest) "}
-          </a>
-        )
-      }
+      {showChrome && (
+        <a class="text-white text-white-hover" href={`/docs/${page.version}`}>
+          {page.version} {page.version === currentDocsVersion && " (Latest) "}
+        </a>
+      )}
     </div>
     <LiquidInclude lq={lq} src="docs_search_bar.html" />
   </section>
@@ -56,44 +54,38 @@ const showChrome = page.category !== "ignore";
     <div class="container-docs">
       <div class="row">
         <div class="ten columns release offset-by-one">
-          {
-            showChrome && (
-              <LiquidInclude lq={lq} src="docs-old-breadcrumbs.html" />
-            )
-          }
+          {showChrome && (
+            <LiquidInclude lq={lq} src="docs-old-breadcrumbs.html" />
+          )}
 
-          {
-            support?.status === "unsupported" && (
-              <blockquote class="version-unsupported-notice">
-                Version {page.version} of Metabase is no longer{" "}
-                <a href="/version-support">supported</a>. Check out the{" "}
-                <a href="/docs/latest/">
-                  docs for the current stable version, Metabase{" "}
-                  {currentDocsVersion}.
-                </a>
-              </blockquote>
-            )
-          }
+          {support?.status === "unsupported" && (
+            <blockquote class="version-unsupported-notice">
+              Version {page.version} of Metabase is no longer{" "}
+              <a href="/version-support">supported</a>. Check out the{" "}
+              <a href="/docs/latest/">
+                docs for the current stable version, Metabase{" "}
+                {currentDocsVersion}.
+              </a>
+            </blockquote>
+          )}
 
           <slot />
         </div>
       </div>
-      {
-        showChrome && (
-          <div class="row">
-            <div class="ten columns release offset-by-one docs-footer py1">
-              <div class="bootstrap">
-                <span class="paragraph-6 fs-13 neutral-60">
-                  See something that needs fixing?{" "}
-                  <a href={page.source_url} target="_blank">
-                    Propose a change.
-                  </a>
-                </span>
-              </div>
+      {showChrome && (
+        <div class="row">
+          <div class="ten columns release offset-by-one docs-footer py1">
+            <div class="bootstrap">
+              <span class="paragraph-6 fs-13 neutral-60">
+                See something that needs fixing?{" "}
+                <a href={page.source_url} target="_blank">
+                  Propose a change.
+                </a>
+              </span>
             </div>
           </div>
-        )
-      }
+        </div>
+      )}
     </div>
   </section>
 </DefaultLayout>

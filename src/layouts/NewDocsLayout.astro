@@ -30,7 +30,10 @@ const unify = UNIFY_ENABLED_PAGES.includes(page.url);
 <DefaultNewLayout page={page} dirname={dirname} {unify}>
   <div class="bootstrap">
     <div class="learn docs blog-post MB-Page">
-      <LeftSidebar url={page.url} version={page.latest ? 'latest' : page.version} />
+      <LeftSidebar
+        url={page.url}
+        version={page.latest ? "latest" : page.version}
+      />
 
       <article class="learn__post learn__article">
         <LiquidInclude
@@ -49,21 +52,17 @@ const unify = UNIFY_ENABLED_PAGES.includes(page.url);
 
           <div>
             <div class="widget-separator"></div>
-            {
-              page.category !== "Cloud" && (
-                <p>
-                  Read docs for other{" "}
-                  <a href="/docs/all">versions of Metabase</a>.
-                </p>
-              )
-            }
+            {page.category !== "Cloud" && (
+              <p>
+                Read docs for other <a href="/docs/all">versions of Metabase</a>
+                .
+              </p>
+            )}
           </div>
         </div>
 
         <div class="learn__right-sidebar">
-          <div id="sub-navigation-content">
-            {/* Is populated via js */}
-          </div>
+          <div id="sub-navigation-content">{/* Is populated via js */}</div>
           <LiquidInclude
             lq={lq}
             src="shared/was-this-helpful-widget.html"
@@ -77,29 +76,42 @@ const unify = UNIFY_ENABLED_PAGES.includes(page.url);
   <script
     is:inline
     type="text/javascript"
-    src="/docs/js/new-docs-version-selector.js"></script>
-  <script
-    is:inline
-    type="text/javascript"
-    src="/docs/js/new-docs-anchor-links.js"></script>
-  <script
-    is:inline
-    type="text/javascript"
-    src="/docs/js/new-docs-code-snippet-copy.js"></script>
-  <script
-    is:inline
-    type="text/javascript"
-    src="/docs/js/new-docs-table-overflow.js"></script>
-  <script is:inline type="text/javascript" src="/docs/js/image-zoom.js"
-  ></script>
-  <script is:inline type="text/javascript" src="/docs/js/learn/left-sidebar.js"
-  ></script>
-  <script is:inline type="text/javascript" src="/docs/js/docs/right-sidebar.js"
+    src="/docs/js/new-docs-version-selector.js"
   ></script>
   <script
     is:inline
     type="text/javascript"
-    src="/docs/js/position-feedback-widget.js"></script>
-
+    src="/docs/js/new-docs-anchor-links.js"
+  ></script>
+  <script
+    is:inline
+    type="text/javascript"
+    src="/docs/js/new-docs-code-snippet-copy.js"
+  ></script>
+  <script
+    is:inline
+    type="text/javascript"
+    src="/docs/js/new-docs-table-overflow.js"
+  ></script>
+  <script
+    is:inline
+    type="text/javascript"
+    src="/docs/js/image-zoom.js"
+  ></script>
+  <script
+    is:inline
+    type="text/javascript"
+    src="/docs/js/learn/left-sidebar.js"
+  ></script>
+  <script
+    is:inline
+    type="text/javascript"
+    src="/docs/js/docs/right-sidebar.js"
+  ></script>
+  <script
+    is:inline
+    type="text/javascript"
+    src="/docs/js/position-feedback-widget.js"
+  ></script>
   <script is:inline src="/docs/js/use-custom-header-checkout-link.js"></script>
 </DefaultNewLayout>

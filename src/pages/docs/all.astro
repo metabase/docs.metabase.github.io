@@ -24,40 +24,39 @@ const dirname = path.dirname(fileURLToPath(import.meta.url));
   </p>
 
   <p>
-    For product releases, see the list of <a
-      href="https://github.com/metabase/metabase/releases">Metabase releases</a
-    >.
+    For product releases, see the list of{" "}
+    <a href="https://github.com/metabase/metabase/releases">
+      Metabase releases
+    </a>
+    .
   </p>
 
   <p>
-    Versions marked <span class="version__tag version__tag--unsupported"
-      >unsupported</span
-    > have passed their end-of-life date. See our <a href="/version-support"
-      >version support policy</a
-    > for details.
+    Versions marked{" "}
+    <span class="version__tag version__tag--unsupported">unsupported</span> have
+    passed their end-of-life date. See our{" "}
+    <a href="/version-support">version support policy</a> for details.
   </p>
 
   <ul>
-    {
-      [...site.available_versions].reverse().map((version: string) => {
-        const support = site.data.version_support[version];
-        return (
-          <li>
-            <p>
-              <a href={`/docs/${version}/`}>
-                {version}{" "}
-                {support.status === "unsupported" ? (
-                  <span class="version__tag version__tag--unsupported">
-                    unsupported
-                  </span>
-                ) : support.lts ? (
-                  <span class="version__tag version__tag--lts">lts</span>
-                ) : null}
-              </a>
-            </p>
-          </li>
-        );
-      })
-    }
+    {[...site.available_versions].reverse().map((version: string) => {
+      const support = site.data.version_support[version];
+      return (
+        <li>
+          <p>
+            <a href={`/docs/${version}/`}>
+              {version}{" "}
+              {support.status === "unsupported" ? (
+                <span class="version__tag version__tag--unsupported">
+                  unsupported
+                </span>
+              ) : support.lts ? (
+                <span class="version__tag version__tag--lts">lts</span>
+              ) : null}
+            </a>
+          </p>
+        </li>
+      );
+    })}
   </ul>
 </NewDocsLayout>

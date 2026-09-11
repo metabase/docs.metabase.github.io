@@ -18,22 +18,18 @@ const expanded = containsUrl(node, pageUrl);
   <a href={node.url} class={pageUrl === node.url ? "selected" : ""}>
     {node.name}
 
-    {
-      hasChildren && (
-        <div>
-          <Chevron />
-        </div>
-      )
-    }
+    {hasChildren && (
+      <div>
+        <Chevron />
+      </div>
+    )}
   </a>
 
-  {
-    hasChildren && (
-      <ul>
-        {node.pages!.map((child) => (
-          <NavItem node={child} pageUrl={pageUrl} />
-        ))}
-      </ul>
-    )
-  }
+  {hasChildren && (
+    <ul>
+      {node.pages!.map((child) => (
+        <NavItem node={child} pageUrl={pageUrl} />
+      ))}
+    </ul>
+  )}
 </li>
