@@ -21,20 +21,16 @@ export const renderVersionNotice = (
   if (support?.status == "unsupported") {
     return `<blockquote class="version-unsupported-notice">
       Version ${pageVersion} of Metabase is
-      <strong>
-        <a class="text-purple text-underline" href="/version-support">
-          no longer supported
-        </a>
-      </strong>.
+      <strong><a class="text-purple" href="/version-support">no longer supported</a></strong>.
       Check out the
-      <a class="text-purple text-underline" href="/docs/latest/">
+      <a class="text-purple" href="/docs/latest/">
         docs for the current stable version, Metabase ${docsVersion}.
       </a>
     </blockquote>`;
   } else {
     return `<blockquote>
       These are the docs for Metabase ${pageVersion}. Check out the
-      <a class="text-purple text-underline" href="/docs/latest/">
+      <a class="text-purple" href="/docs/latest/">
         docs for the current stable version, Metabase ${docsVersion}.
       </a>
     </blockquote>`;
