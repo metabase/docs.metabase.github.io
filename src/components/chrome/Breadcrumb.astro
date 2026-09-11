@@ -1,0 +1,94 @@
+---
+import { baseCtx } from "@/lib/liquid/liquidRenderer";
+
+type Props = {
+  page: {
+    version?: string;
+    url: string;
+    title?: string;
+    category?: string;
+    has_magic_breadcrumbs?: boolean;
+    show_category_breadcrumb?: boolean;
+  };
+};
+
+const { page } = Astro.props;
+const { site } = baseCtx;
+
+const slugify = (str: string) =>
+  str
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+
+const version = page.version === "latest" ? site.docs_version : page.version;
+const latestOrExplicitVersion =
+  site.docs_version === page.version && page.url.includes("/docs/latest/")
+    ? "latest"
+    : (page.version ?? "");
+const categorySlug = slugify(page.category ?? "");
+const categorySlugPart =
+  categorySlug === "troubleshooting-guide"
+    ? "/"
+    : categorySlug === "api"
+      ? "api-documentation"
+      : "/start";
+const breadcrumbDividerStyle = `--bs-breadcrumb-divider: url('/images/chevron_blue_right.svg');`;
+---
+
+<div class="bootstrap">
+  {page.has_magic_breadcrumbs ? (
+    <nav style={breadcrumbDividerStyle} aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href={`/docs/${latestOrExplicitVersion}/`}>Home</a>
+        </li>
+
+        {page.title === "README" ? (
+          <li class="breadcrumb-item">
+            <p class="neutral-40">{page.category}</p>
+          </li>
+        ) : (
+          page.show_category_breadcrumb && (
+            <li class="breadcrumb-item">
+              <a
+                class="blue-60"
+                href={`/docs/${latestOrExplicitVersion}/${page.category !== "Api" ? categorySlug : ""}${categorySlugPart}`}
+              >
+                {page.category}
+              </a>
+            </li>
+          )
+        )}
+      </ol>
+    </nav>
+  ) : (
+    <nav style={breadcrumbDividerStyle} aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        {page.title === "Search" ? (
+          <li class="breadcrumb-item">
+            <span class="m-0 paragraph-5 neutral-40 fw-bold">
+              <a href="/docs/latest/">{site.latest_version}</a>
+            </span>
+          </li>
+        ) : (
+          <li class="breadcrumb-item">
+            <span class="neutral-40">{version}</span>
+          </li>
+        )}
+
+        {page.category === "Api" && (
+          <li class="breadcrumb-item">
+            <span class="neutral-40">{page.category}</span>
+          </li>
+        )}
+        {page.title !== "README" && (
+          <li class="breadcrumb-item">
+            <span class="neutral-40">{page.title}</span>
+          </li>
+        )}
+      </ol>
+    </nav>
+  )}
+</div>

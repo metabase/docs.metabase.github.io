@@ -1,0 +1,46 @@
+---
+import { baseCtx } from "@/lib/liquid/liquidRenderer";
+import { renderVersionNotice } from "./utils/versionUtils";
+
+type Props = {
+  version?: string;
+  latest?: boolean;
+};
+
+const { version, latest } = Astro.props;
+const { site } = baseCtx;
+---
+
+<div
+  data-component="version-notice"
+  data-version={version}
+  set:html={renderVersionNotice(
+    version,
+    site.data.version_support,
+    site.docs_version,
+  )}
+/>
+
+{/*
+`latest` is excluded since updating it client-side would just be a no-op (we only warn users when
+they're NOT on the latest version). This targets older pages (e.g. v0.44) that rarely get rebuilt
+but should still show accurate version info.
+*/}
+{!latest && <script>
+  import { fetchVersions, renderVersionNotice } from "./utils/versionUtils";
+
+  const updateVersionNotice = async (el: Element) => {
+    const versions = await fetchVersions();
+    const pageVersion = el.getAttribute("data-version");
+    const { version_support, docs_version } = versions;
+    el.innerHTML = renderVersionNotice(
+      pageVersion,
+      version_support,
+      docs_version,
+    );
+  };
+
+  document
+    .querySelectorAll('[data-component="version-notice"]')
+    .forEach(updateVersionNotice);
+</script>}
