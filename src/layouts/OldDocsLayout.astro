@@ -1,4 +1,5 @@
 ---
+import VersionNotice from "@/components/chrome/VersionNotice.astro";
 import LiquidInclude from "@/components/LiquidInclude.astro";
 import { getVersionSupport } from "@/lib/docs/versionSupport";
 import { getLiquidRenderer } from "@/lib/liquid/liquidRenderer";
@@ -58,16 +59,7 @@ const showChrome = page.category !== "ignore";
             <LiquidInclude lq={lq} src="docs-old-breadcrumbs.html" />
           )}
 
-          {support?.status === "unsupported" && (
-            <blockquote class="version-unsupported-notice">
-              Version {page.version} of Metabase is no longer{" "}
-              <a href="/version-support">supported</a>. Check out the{" "}
-              <a href="/docs/latest/">
-                docs for the current stable version, Metabase{" "}
-                {currentDocsVersion}.
-              </a>
-            </blockquote>
-          )}
+          <VersionNotice version={page.version} />
 
           <slot />
         </div>
