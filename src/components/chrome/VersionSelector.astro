@@ -5,11 +5,11 @@ import { renderVersionListItems } from "./utils/versionUtils";
 
 type Props = {
   version?: string;
+  latest?: boolean;
 };
 
-const { version } = Astro.props;
+const { version, latest } = Astro.props;
 const { site } = baseCtx;
-const latest = version === site.docs_version;
 ---
 
 <div class="version__selector cursor-pointer">
