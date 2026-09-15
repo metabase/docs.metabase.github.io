@@ -67,6 +67,10 @@ const siteConfig = YAML.parse(
   fs.readFileSync(path.join(ROOT, "_config.yml"), "utf8"),
 );
 
+export const resolveLiquidEnvironment = (
+  environment: Record<string, string | undefined> = process.env,
+): string => environment.DEPLOY_ENV || environment.NODE_ENV || "development";
+
 export const baseCtx = {
   site: {
     ...siteConfig,
@@ -76,7 +80,7 @@ export const baseCtx = {
     },
   },
   jekyll: {
-    environment: process.env.NODE_ENV || "development",
+    environment: resolveLiquidEnvironment(),
   },
 };
 
