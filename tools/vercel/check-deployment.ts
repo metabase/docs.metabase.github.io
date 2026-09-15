@@ -29,13 +29,11 @@ export function checkDeployment(
     },
   ];
   for (const check of checks) {
-    const failOnHttpError = check.status[0] !== "4";
     const response = runner(
       "curl",
       [
         "--silent",
         "--show-error",
-        ...(failOnHttpError ? ["--fail"] : []),
         "--retry",
         "6",
         "--retry-all-errors",
@@ -53,7 +51,10 @@ export function checkDeployment(
     );
     const [status, redirectUrl = ""] = response.split("\n", 2);
     if (status !== check.status || redirectUrl !== check.redirectUrl) {
-      if (redirectUrl.startsWith("https://vercel.com/sso-api?")) {
+      if (
+        status === "401" ||
+        redirectUrl.startsWith("https://vercel.com/sso-api?")
+      ) {
         throw new Error(
           `Docs route ${check.path} is protected by Vercel Authentication; preview deployments must be publicly accessible`,
         );

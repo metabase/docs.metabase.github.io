@@ -14,12 +14,25 @@ type VercelRedirect = {
   statusCode?: number;
 };
 
+type VercelHeaderRule = {
+  source: string;
+  has?: Array<{
+    type: string;
+    value: { suf: string };
+  }>;
+  headers: Array<{ key: string; value: string }>;
+};
+
 const amplifyRules = JSON.parse(
   readFileSync(new URL("../../redirects.json", import.meta.url), "utf8"),
 ) as AmplifyRule[];
 const vercelConfig = JSON.parse(
   readFileSync(new URL("../../vercel.json", import.meta.url), "utf8"),
-) as { redirects: VercelRedirect[]; trailingSlash?: boolean };
+) as {
+  redirects: VercelRedirect[];
+  headers: VercelHeaderRule[];
+  trailingSlash?: boolean;
+};
 
 function canonicalPath(path: string): string {
   if (path === "/" || /^https?:\/\//.test(path)) return path;
@@ -60,5 +73,40 @@ describe("Vercel redirects", () => {
         permanent: false,
       },
     );
+  });
+
+  test("protects every route from indexing and cross-origin framing", () => {
+    const noIndexRules = vercelConfig.headers.filter(({ has }) => has);
+    expect(noIndexRules.map(({ source }) => source)).toEqual(["/", "/(.*)"]);
+    expect(
+      noIndexRules.every(
+        ({ has, headers }) =>
+          has?.[0]?.type === "host" &&
+          has[0].value.suf === ".vercel.app" &&
+          headers.some(
+            ({ key, value }) => key === "X-Robots-Tag" && value === "noindex",
+          ),
+      ),
+    ).toBe(true);
+
+    const frameRules = vercelConfig.headers.filter(({ has }) => !has);
+    expect(frameRules.map(({ source }) => source)).toEqual(["/", "/(.*)"]);
+    expect(
+      frameRules.every(({ headers }) =>
+        headers.some(
+          ({ key, value }) =>
+            key === "Content-Security-Policy" &&
+            value === "frame-ancestors 'self'",
+        ),
+      ),
+    ).toBe(true);
+    expect(
+      frameRules.every(({ headers }) =>
+        headers.some(
+          ({ key, value }) =>
+            key === "X-Frame-Options" && value === "SAMEORIGIN",
+        ),
+      ),
+    ).toBe(true);
   });
 });

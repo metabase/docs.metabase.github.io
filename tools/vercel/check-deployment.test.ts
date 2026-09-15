@@ -41,14 +41,11 @@ describe("checkDeployment", () => {
         .every(
           ({ command, args }) =>
             command === "curl" &&
+            !args.includes("--fail") &&
             args.includes("--retry") &&
             args.includes("--write-out"),
         ),
     ).toBe(true);
-    expect(calls.slice(0, 4).every(({ args }) => args.includes("--fail"))).toBe(
-      true,
-    );
-    expect(calls[4]?.args).not.toContain("--fail");
     expect(calls.every(({ options }) => options?.capture)).toBe(true);
   });
 
@@ -56,6 +53,9 @@ describe("checkDeployment", () => {
     expect(() =>
       checkDeployment("https://docs-test.vercel.app", () => "500"),
     ).toThrow("HTTP 500");
+    expect(() =>
+      checkDeployment("https://docs-test.vercel.app", () => "401"),
+    ).toThrow("protected by Vercel Authentication");
     expect(() =>
       checkDeployment(
         "https://docs-test.vercel.app",
