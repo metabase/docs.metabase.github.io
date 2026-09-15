@@ -18,17 +18,23 @@ export function checkDeployment(
     },
     {
       path: "/docs",
-      status: "307",
+      status: "301",
       redirectUrl: new URL("/docs/latest", origin).href,
+    },
+    {
+      path: "/docs/latest/vercel-deployment-404-check",
+      status: "404",
+      redirectUrl: "",
     },
   ];
   for (const check of checks) {
+    const failOnHttpError = check.status[0] !== "4";
     const response = runner(
       "curl",
       [
         "--silent",
         "--show-error",
-        "--fail",
+        ...(failOnHttpError ? ["--fail"] : []),
         "--retry",
         "6",
         "--retry-all-errors",
@@ -55,6 +61,26 @@ export function checkDeployment(
         `Docs route ${check.path} returned HTTP ${status}${redirectUrl ? ` redirecting to ${redirectUrl}` : ""}`,
       );
     }
+  }
+
+  const notFoundBody = runner(
+    "curl",
+    [
+      "--silent",
+      "--show-error",
+      "--retry",
+      "6",
+      "--retry-all-errors",
+      "--retry-delay",
+      "5",
+      "--max-time",
+      "30",
+      new URL("/docs/latest/vercel-deployment-404-check", origin).href,
+    ],
+    { capture: true },
+  );
+  if (!notFoundBody.includes('id="error-404"')) {
+    throw new Error("Docs route returned Vercel's default 404 page");
   }
 }
 

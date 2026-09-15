@@ -13,25 +13,39 @@ describe("checkDeployment", () => {
       (command, args, options) => {
         calls.push({ command, args, options });
         const path = new URL(args.at(-1)!).pathname;
-        return path === "/docs/latest"
-          ? "200\n"
-          : "307\nhttps://docs-test.vercel.app/docs/latest";
+        if (path === "/docs/latest") return "200\n";
+        if (path === "/") {
+          return "307\nhttps://docs-test.vercel.app/docs/latest";
+        }
+        if (path === "/docs") {
+          return "301\nhttps://docs-test.vercel.app/docs/latest";
+        }
+        return args.includes("--write-out")
+          ? "404\n"
+          : '<div id="error-404">Not found</div>';
       },
     );
     expect(calls.map(({ args }) => args.at(-1))).toEqual([
       "https://docs-test.vercel.app/docs/latest",
       "https://docs-test.vercel.app/",
       "https://docs-test.vercel.app/docs",
+      "https://docs-test.vercel.app/docs/latest/vercel-deployment-404-check",
+      "https://docs-test.vercel.app/docs/latest/vercel-deployment-404-check",
     ]);
     expect(
-      calls.every(
-        ({ command, args }) =>
-          command === "curl" &&
-          args.includes("--fail") &&
-          args.includes("--retry") &&
-          args.includes("--write-out"),
-      ),
+      calls
+        .slice(0, 4)
+        .every(
+          ({ command, args }) =>
+            command === "curl" &&
+            args.includes("--retry") &&
+            args.includes("--write-out"),
+        ),
     ).toBe(true);
+    expect(calls.slice(0, 3).every(({ args }) => args.includes("--fail"))).toBe(
+      true,
+    );
+    expect(calls[3]?.args).not.toContain("--fail");
     expect(calls.every(({ options }) => options?.capture)).toBe(true);
   });
 
