@@ -21,6 +21,7 @@ export function checkDeployment(
       status: "301",
       redirectUrl: new URL("/docs/latest", origin).href,
     },
+    { path: "/docs/images/not_found.svg", status: "200", redirectUrl: "" },
     {
       path: "/docs/latest/vercel-deployment-404-check",
       status: "404",

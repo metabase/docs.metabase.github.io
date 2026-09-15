@@ -13,7 +13,9 @@ describe("checkDeployment", () => {
       (command, args, options) => {
         calls.push({ command, args, options });
         const path = new URL(args.at(-1)!).pathname;
-        if (path === "/docs/latest") return "200\n";
+        if (path === "/docs/latest" || path === "/docs/images/not_found.svg") {
+          return "200\n";
+        }
         if (path === "/") {
           return "307\nhttps://docs-test.vercel.app/docs/latest";
         }
@@ -29,12 +31,13 @@ describe("checkDeployment", () => {
       "https://docs-test.vercel.app/docs/latest",
       "https://docs-test.vercel.app/",
       "https://docs-test.vercel.app/docs",
+      "https://docs-test.vercel.app/docs/images/not_found.svg",
       "https://docs-test.vercel.app/docs/latest/vercel-deployment-404-check",
       "https://docs-test.vercel.app/docs/latest/vercel-deployment-404-check",
     ]);
     expect(
       calls
-        .slice(0, 4)
+        .slice(0, 5)
         .every(
           ({ command, args }) =>
             command === "curl" &&
@@ -42,10 +45,10 @@ describe("checkDeployment", () => {
             args.includes("--write-out"),
         ),
     ).toBe(true);
-    expect(calls.slice(0, 3).every(({ args }) => args.includes("--fail"))).toBe(
+    expect(calls.slice(0, 4).every(({ args }) => args.includes("--fail"))).toBe(
       true,
     );
-    expect(calls[3]?.args).not.toContain("--fail");
+    expect(calls[4]?.args).not.toContain("--fail");
     expect(calls.every(({ options }) => options?.capture)).toBe(true);
   });
 
