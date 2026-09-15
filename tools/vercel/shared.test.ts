@@ -124,6 +124,7 @@ describe("Vercel deployment helpers", () => {
     };
     const preview = deployArguments("preview", { ...common, pullNumber: 42 });
     expect(preview).not.toContain("--prod");
+    expect(preview).toContain("--archive=tgz");
     expect(preview).toContain("ciRepositoryId=12345");
     expect(preview).toContain("ciPullRequest=42");
     expect(preview).toContain("ciBuildSha=merge-sha");
@@ -132,6 +133,7 @@ describe("Vercel deployment helpers", () => {
     );
     const production = deployArguments("production", common);
     expect(production).toContain("--prod");
+    expect(production).toContain("--archive=tgz");
     expect(production.some((value) => value.startsWith("ciPullRequest="))).toBe(
       false,
     );

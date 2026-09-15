@@ -214,7 +214,14 @@ export function deployArguments(
   },
 ): string[] {
   const { owner, repo } = repositoryParts(values.repository);
-  const args = ["deploy", "--prebuilt", "--yes", "--token", values.token];
+  const args = [
+    "deploy",
+    "--prebuilt",
+    "--archive=tgz",
+    "--yes",
+    "--token",
+    values.token,
+  ];
   if (target === "production") args.push("--prod");
   const metadata: Record<string, string> = {
     githubDeployment: "1",
