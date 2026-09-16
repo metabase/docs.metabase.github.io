@@ -63,6 +63,8 @@ jobs:
       - name: Check the Vercel project root is repository root
         run: bun tools/vercel/check-project.ts
       - name: Build preview
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         run: vercel build
       - name: Deploy preview
         run: bun tools/vercel/deploy.ts preview
@@ -101,6 +103,8 @@ jobs:
       - name: Check the Vercel project root is repository root
         run: bun tools/vercel/check-project.ts
       - name: Build production
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         run: vercel build --prod
       - name: Deploy production
         run: bun tools/vercel/deploy.ts production

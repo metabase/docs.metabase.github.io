@@ -91,11 +91,17 @@ describe("Vercel workflows", () => {
 
   test("builds and deploys each target with one script call", () => {
     expect(step(preview, "Build preview").run).toBe("vercel build");
+    expect(step(preview, "Build preview").env.GITHUB_TOKEN).toBe(
+      "${{ github.token }}",
+    );
     expect(step(preview, "Deploy preview").run).toBe(
       "bun tools/vercel/deploy.ts preview",
     );
     expect(step(production, "Build production").run).toBe(
       "vercel build --prod",
+    );
+    expect(step(production, "Build production").env.GITHUB_TOKEN).toBe(
+      "${{ github.token }}",
     );
     expect(step(production, "Deploy production").run).toBe(
       "bun tools/vercel/deploy.ts production",
