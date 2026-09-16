@@ -49,6 +49,7 @@ describe("Vercel workflows", () => {
     expect(Object.keys(cleanupWorkflow.jobs)).toEqual(["cleanup", "sweep"]);
     for (const workflow of [deploy, cleanupWorkflow]) {
       expect(workflow.env.VERCEL_PROJECT_NAME).toBeUndefined();
+      expect(workflow.env.VERCEL_ORG_ID).toBe("${{ vars.VERCEL_ORG_ID }}");
       expect(workflow.env.VERCEL_PROJECT_ID).toBe(
         "${{ vars.VERCEL_DOCS_PROJECT_ID }}",
       );
@@ -106,7 +107,6 @@ describe("Vercel workflows", () => {
     }
     expect(preview.env.DEPLOY_ENV).toBe("staging");
     expect(production.env.DEPLOY_ENV).toBe("production");
-    expect(deploy.env.VERCEL_ORG_ID).toBe("${{ secrets.VERCEL_ORG_ID }}");
     expect(deploy.env.VERCEL_TOKEN).toBe("${{ secrets.VERCEL_TOKEN }}");
     expect(deploy.env.VERCEL_TEAM_SLUG).toBe("metaboat");
   });
