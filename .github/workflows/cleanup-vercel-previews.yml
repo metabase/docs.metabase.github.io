@@ -1,0 +1,72 @@
+name: Clean up PR previews on Vercel
+
+on:
+  pull_request_target:
+    branches: [master]
+    types: [closed]
+  schedule:
+    - cron: "0 7 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: write
+
+env:
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ vars.VERCEL_DOCS_PROJECT_ID }}
+  VERCEL_TEAM_SLUG: metaboat
+  VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+
+jobs:
+  cleanup:
+    name: Clean up preview
+    if: github.event_name == 'pull_request_target' && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    concurrency:
+      group: vercel-docs-preview-pr-${{ github.event.pull_request.number }}
+      cancel-in-progress: false
+    env:
+      GH_TOKEN: ${{ github.token }}
+      PR_NUMBER: ${{ github.event.pull_request.number }}
+    steps:
+      - name: Check out trusted cleanup code
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          persist-credentials: false
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version-file: package.json
+      - name: Install workspace packages
+        run: bun install --frozen-lockfile
+      - name: Remove the preview alias and tagged deployments
+        run: bun tools/vercel/previews.ts cleanup
+
+  sweep:
+    name: Sweep previews
+    if: github.event_name != 'pull_request_target'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read
+      pull-requests: read
+    concurrency:
+      group: vercel-docs-preview-sweep
+      cancel-in-progress: false
+    env:
+      GH_TOKEN: ${{ github.token }}
+      MAX_AGE_DAYS: "14"
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          persist-credentials: false
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version-file: package.json
+      - name: Install workspace packages
+        run: bun install --frozen-lockfile
+      - name: Remove preview deployments older than MAX_AGE_DAYS
+        run: bun tools/vercel/previews.ts sweep

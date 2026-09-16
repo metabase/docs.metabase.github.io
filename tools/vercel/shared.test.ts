@@ -1,16 +1,16 @@
+import { SDKError } from "@vercel/sdk/models/sdkerror.js";
 import { describe, expect, test } from "bun:test";
 import {
   assertClosedPullRequest,
   assertOpenCurrentPullRequest,
-  choice,
   deployArguments,
   githubRunUrl,
+  ifFound,
   isCurrentPullRequest,
   matchesPreviewDeployment,
   previewHostname,
   requireEnvironment,
   validateDeploymentUrl,
-  vercelRequest,
 } from "./shared.ts";
 
 describe("Vercel deployment helpers", () => {
@@ -22,18 +22,6 @@ describe("Vercel deployment helpers", () => {
     expect(() => requireEnvironment(["ONE", "TWO"], { ONE: "1" })).toThrow(
       "Missing TWO",
     );
-  });
-
-  test("validates a script argument against its choices", () => {
-    expect(choice("preview", ["preview", "production"], "deploy.ts")).toBe(
-      "preview",
-    );
-    expect(() =>
-      choice(undefined, ["preview", "production"], "deploy.ts"),
-    ).toThrow("Usage: deploy.ts <preview|production>");
-    expect(() =>
-      choice("staging", ["preview", "production"], "deploy.ts"),
-    ).toThrow("Usage: deploy.ts <preview|production>");
   });
 
   test("builds workflow run URLs with an optional attempt", () => {
@@ -52,10 +40,9 @@ describe("Vercel deployment helpers", () => {
   });
 
   test("builds a team-scoped preview hostname", () => {
-    expect(previewHostname(42, "metaboat")).toBe(
+    expect(previewHostname("docs", 42, "metaboat")).toBe(
       "docs-pr-42-metaboat.vercel.app",
     );
-    expect(() => previewHostname(42, "Meta Boat")).toThrow("team slug");
   });
 
   test("rejects stale and closed pull requests", () => {
@@ -111,7 +98,6 @@ describe("Vercel deployment helpers", () => {
 
   test("tags preview deployments for safe cleanup", () => {
     const common = {
-      token: "token",
       repository: "metabase/docs.metabase.github.io",
       repositoryId: "12345",
       ref: "feature",
@@ -133,11 +119,11 @@ describe("Vercel deployment helpers", () => {
     );
     const production = deployArguments("production", common);
     expect(production).toContain("--prod");
+    expect(production).toContain("--skip-domain");
     expect(production).toContain("--archive=tgz");
     expect(production.some((value) => value.startsWith("ciPullRequest="))).toBe(
       false,
     );
-    expect(() => deployArguments("preview", common)).toThrow("PR number");
   });
 
   test("validates deployment origins", () => {
@@ -152,56 +138,22 @@ describe("Vercel deployment helpers", () => {
     ).toThrow("HTTPS");
   });
 
-  test("scopes Vercel API requests to the team", async () => {
-    const credentials = { token: "token", teamId: "team_metaboat" };
-    const requests: Array<{ url: string; method?: string }> = [];
-    const respond =
-      (response: Response) =>
-      async (input: string | URL | Request, init?: RequestInit) => {
-        requests.push({ url: String(input), method: init?.method });
-        expect(new Headers(init?.headers).get("Authorization")).toBe(
-          "Bearer token",
-        );
-        return response;
-      };
-
-    const page = await vercelRequest<{ ok: boolean }>(
-      "/v7/deployments",
-      credentials,
-      { query: { limit: "100" } },
-      respond(Response.json({ ok: true })),
-    );
-    expect(page).toEqual({ ok: true });
-    expect(requests[0]).toEqual({
-      url: "https://api.vercel.com/v7/deployments?teamId=team_metaboat&limit=100",
-      method: "GET",
+  test("treats a 404 from Vercel as a missing resource and rethrows the rest", async () => {
+    const httpError = (status: number) =>
+      new SDKError("nope", {
+        response: new Response(null, { status }),
+        request: new Request("https://api.vercel.com/v4/aliases/x"),
+        body: "",
+      });
+    await expect(ifFound(Promise.resolve({ ok: true }))).resolves.toEqual({
+      ok: true,
     });
-
-    expect(
-      await vercelRequest(
-        "/v2/aliases/alias_1",
-        credentials,
-        { method: "DELETE", missingOK: true },
-        respond(new Response(null, { status: 204 })),
-      ),
-    ).toBeNull();
-    expect(requests[1]?.method).toBe("DELETE");
-
-    expect(
-      await vercelRequest(
-        "/v4/aliases/missing",
-        credentials,
-        { missingOK: true },
-        respond(new Response(null, { status: 404 })),
-      ),
-    ).toBeNull();
-    await expect(
-      vercelRequest(
-        "/v4/aliases/missing",
-        credentials,
-        {},
-        respond(new Response(null, { status: 404 })),
-      ),
-    ).rejects.toThrow("Vercel GET /v4/aliases/missing: HTTP 404");
+    await expect(ifFound(Promise.reject(httpError(404)))).resolves.toBeNull();
+    await expect(ifFound(Promise.reject(httpError(403)))).rejects.toThrow(
+      "nope",
+    );
+    await expect(ifFound(Promise.reject(new Error("offline")))).rejects.toThrow(
+      "offline",
+    );
   });
 });

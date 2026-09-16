@@ -1,18 +1,21 @@
 import {
-  DOCS_PROJECT,
+  appendGithubFile,
+  assertOpenCurrentPullRequest,
   GITHUB_ACTIONS_BOT,
   githubRepositoryUrl,
   githubRequest,
   githubRunUrl,
-  positiveInteger,
+  ifFound,
+  isCurrentPullRequest,
   PREVIEW_COMMENT_MARKER,
   previewHostname,
+  PROJECT_NAME,
+  readPullRequest,
   requireEnvironment,
-  validateDeploymentUrl,
-  vercelRequest,
+  vercelApi,
+  type Deployment,
   type Environment,
-  type FetchImplementation,
-  type VercelCredentials,
+  type VercelApi,
 } from "./shared.ts";
 
 export type Comment = {
@@ -27,28 +30,30 @@ export type CommentTarget = {
   token: string;
 };
 
-export type PreviewCommentStatus = "building" | "ready" | "failed";
+type Project = { name: string; id: string };
+
+export type PreviewRowStatus = "building" | "ready" | "failed";
+
+export type PreviewRow = {
+  project: Project;
+  status: PreviewRowStatus;
+  previewUrl: string;
+  deploymentDashboardUrl?: string;
+  /** Set on a failed row when the preview address still serves an older commit. */
+  previousSha?: string;
+};
 
 export type PreviewCommentContext = {
   sha: string;
   repositoryUrl: string;
-  projectId: string;
   teamId: string;
   teamSlug: string;
   runUrl: string;
 };
 
 export type PreviewCommentOptions = PreviewCommentContext & {
-  status: PreviewCommentStatus;
+  row: PreviewRow;
   updatedAt?: Date;
-  deploymentDashboardUrl?: string;
-  previousSha?: string;
-  previewUrl?: string;
-};
-
-export type VercelLookup = VercelCredentials & {
-  projectSlug: string;
-  teamSlug: string;
 };
 
 export type VercelDeploymentReference = {
@@ -59,9 +64,9 @@ export type VercelDeploymentReference = {
 export type PreviewContext = {
   env: Record<string, string>;
   target: CommentTarget;
-  lookup: VercelLookup;
+  api: VercelApi;
+  project: Project;
   comment: PreviewCommentContext;
-  previewHost: string;
   previewUrl: string;
 };
 
@@ -82,8 +87,7 @@ export function readPreviewContext(
   environment: Environment = process.env,
 ): PreviewContext {
   const env = requireEnvironment(PREVIEW_ENVIRONMENT, environment);
-  const pullNumber = positiveInteger(env.PR_NUMBER, "PR number");
-  const previewHost = previewHostname(pullNumber, env.VERCEL_TEAM_SLUG);
+  const pullNumber = Number(env.PR_NUMBER);
   return {
     env,
     target: {
@@ -91,59 +95,54 @@ export function readPreviewContext(
       pullNumber,
       token: env.GH_TOKEN,
     },
-    lookup: {
-      projectSlug: DOCS_PROJECT,
-      teamId: env.VERCEL_ORG_ID,
-      teamSlug: env.VERCEL_TEAM_SLUG,
-      token: env.VERCEL_TOKEN,
-    },
+    api: vercelApi({ token: env.VERCEL_TOKEN, teamId: env.VERCEL_ORG_ID }),
+    project: { name: PROJECT_NAME, id: env.VERCEL_PROJECT_ID },
     comment: {
       sha: env.PR_HEAD_SHA,
       repositoryUrl: githubRepositoryUrl(env),
-      projectId: env.VERCEL_PROJECT_ID,
       teamId: env.VERCEL_ORG_ID,
       teamSlug: env.VERCEL_TEAM_SLUG,
       runUrl: githubRunUrl(env),
     },
-    previewHost,
-    previewUrl: `https://${previewHost}`,
+    previewUrl: `https://${previewHostname(PROJECT_NAME, pullNumber, env.VERCEL_TEAM_SLUG)}`,
+  };
+}
+
+/** Turns a deployment read from Vercel into what the comment needs from it. */
+export function deploymentReference(
+  deployment: Pick<Deployment, "meta"> & { id: string },
+  location: { teamSlug: string; project: string },
+): VercelDeploymentReference {
+  // Dashboard URLs use the deployment ID without its `dpl_` prefix.
+  return {
+    dashboardUrl: `https://vercel.com/${location.teamSlug}/${location.project}/${deployment.id.slice(4)}`,
+    commitSha: deployment.meta?.githubCommitSha,
   };
 }
 
 export async function findVercelDeployment(
   deploymentUrl: string,
-  lookup: VercelLookup,
-  fetchImplementation: FetchImplementation = fetch,
+  api: VercelApi,
+  location: { teamSlug: string; project: string },
 ): Promise<VercelDeploymentReference | null> {
-  const deploymentHost = validateDeploymentUrl(deploymentUrl).host;
-  const deployment = await vercelRequest<{
-    id?: string;
-    meta?: { githubCommitSha?: string };
-  }>(
-    `/v13/deployments/${encodeURIComponent(deploymentHost)}`,
-    lookup,
-    { missingOK: true },
-    fetchImplementation,
+  const deployment = await ifFound(
+    api.sdk.deployments.getDeployment({
+      idOrUrl: new URL(deploymentUrl).host,
+      teamId: api.teamId,
+    }),
   );
-  if (!deployment) return null;
-  const deploymentId = deployment.id;
-  if (!deploymentId?.match(/^dpl_[A-Za-z0-9]+$/)) {
-    throw new Error("Vercel deployment is missing its ID");
-  }
-  return {
-    dashboardUrl: `https://vercel.com/${lookup.teamSlug}/${lookup.projectSlug}/${deploymentId.slice(4)}`,
-    commitSha: deployment.meta?.githubCommitSha,
-  };
+  return deployment ? deploymentReference(deployment, location) : null;
 }
 
 /** Like findVercelDeployment, but a lookup failure only degrades the comment. */
 export async function tryFindVercelDeployment(
   deploymentUrl: string,
-  lookup: VercelLookup,
+  api: VercelApi,
+  location: { teamSlug: string; project: string },
   description: string,
 ): Promise<VercelDeploymentReference | null> {
   try {
-    return await findVercelDeployment(deploymentUrl, lookup);
+    return await findVercelDeployment(deploymentUrl, api, location);
   } catch (error) {
     console.warn(`Could not resolve the ${description}: ${error}`);
     return null;
@@ -156,20 +155,10 @@ function commitLink(options: PreviewCommentContext, sha: string): string {
 
 function stateSentence(options: PreviewCommentOptions): string {
   const commit = commitLink(options, options.sha);
-  if (options.status === "building") {
-    return `Deploying commit ${commit}…`;
-  }
-  if (options.status === "failed") {
-    if (options.previousSha) {
-      const previousCommit = commitLink(options, options.previousSha);
-      return `Deploying commit ${commit} failed, the address still serves commit ${previousCommit}`;
-    }
-    return `Deploying commit ${commit} failed, nothing is deployed for this pull request yet`;
-  }
-  if (!options.previewUrl) {
-    throw new Error("A ready preview comment requires its preview URL");
-  }
-  return `Commit ${commit} is live at [${options.previewUrl}](${options.previewUrl})`;
+  const { row } = options;
+  if (row.status === "building") return `Deploying commit ${commit}…`;
+  if (row.status === "failed") return `Deploying commit ${commit} failed`;
+  return `Commit ${commit} is live at [${row.previewUrl}](${row.previewUrl})`;
 }
 
 function utcTimestamp(date: Date): string {
@@ -185,25 +174,44 @@ function utcTimestamp(date: Date): string {
   return `${month} ${date.getUTCDate()}, ${date.getUTCFullYear()} ${displayHour}:${minute}${meridiem}`;
 }
 
-export function previewComment(options: PreviewCommentOptions): string {
-  const projectUrl = `https://vercel.com/${options.teamSlug}/${DOCS_PROJECT}`;
+const STATUS = {
+  building: { emoji: "🟡", label: "Building" },
+  ready: { emoji: "🟢", label: "Ready" },
+  failed: { emoji: "🔴", label: "Failed" },
+} as const;
+
+function tableRow(
+  options: PreviewCommentOptions,
+  row: PreviewRow,
+  updated: string,
+): string {
+  const projectUrl = `https://vercel.com/${options.teamSlug}/${row.project.name}`;
   const avatarUrl = new URL("https://vercel.com/api/www/avatar");
-  avatarUrl.searchParams.set("projectId", options.projectId);
+  avatarUrl.searchParams.set("projectId", row.project.id);
+  // The avatar endpoint answers 400 without the owning team.
   avatarUrl.searchParams.set("teamId", options.teamId);
   avatarUrl.searchParams.set("s", "32");
-  const project = `<a href="${projectUrl}"><sup><img src="${avatarUrl}" width="16" height="16" align="middle" alt="" /></sup></a> [${DOCS_PROJECT}](${projectUrl})`;
-  const status = {
-    building: { emoji: "🟡", label: "Building" },
-    ready: { emoji: "🟢", label: "Ready" },
-    failed: { emoji: "🔴", label: "Failed" },
-  }[options.status];
-  const statusUrl =
-    options.deploymentDashboardUrl ?? `${projectUrl}/deployments`;
+  const project = `<a href="${projectUrl}"><sup><img src="${avatarUrl}" width="16" height="16" align="middle" alt="" /></sup></a> [${row.project.name}](${projectUrl})`;
+  const status = STATUS[row.status];
+  const statusUrl = row.deploymentDashboardUrl ?? `${projectUrl}/deployments`;
+  // A failed row keeps its Preview link only while an older deployment still serves it.
+  const hasPreview =
+    row.status === "ready" || (row.status === "failed" && row.previousSha);
   const actions =
     [
-      ...(options.previewUrl ? [`[Preview](${options.previewUrl})`] : []),
-      ...(options.status === "failed" ? [`[Logs](${options.runUrl})`] : []),
+      ...(hasPreview ? [`[Preview](${row.previewUrl})`] : []),
+      ...(row.status === "failed" ? [`[Logs](${options.runUrl})`] : []),
     ].join(", ") || "—";
+  return `| ${project} | ${status.emoji} [${status.label}](${statusUrl}) | ${actions} | ${updated} |`;
+}
+
+export function previewComment(options: PreviewCommentOptions): string {
+  const { row } = options;
+  const updated = utcTimestamp(options.updatedAt ?? new Date());
+  const note =
+    row.status === "failed" && row.previousSha
+      ? `Preview still serves commit ${commitLink(options, row.previousSha)}.`
+      : undefined;
 
   return [
     PREVIEW_COMMENT_MARKER,
@@ -211,8 +219,9 @@ export function previewComment(options: PreviewCommentOptions): string {
     "",
     "| Project | Deployment | Actions | Updated (UTC) |",
     "| :-- | :-- | :-- | :-- |",
-    `| ${project} | ${status.emoji} [${status.label}](${statusUrl}) | ${actions} | ${utcTimestamp(options.updatedAt ?? new Date())} |`,
-    ...(options.status === "ready"
+    tableRow(options, row, updated),
+    ...(note ? ["", note] : []),
+    ...(row.status === "ready"
       ? [
           "",
           "<hr>",
@@ -226,7 +235,7 @@ export function previewComment(options: PreviewCommentOptions): string {
 export function previewRemovedComment(): string {
   return [
     PREVIEW_COMMENT_MARKER,
-    "The deployment was removed when this pull request closed. Reopening it deploys again at the same address.",
+    "The deployments were removed when this pull request closed. Reopening it deploys again at the same address.",
   ].join("\n");
 }
 
@@ -284,12 +293,82 @@ async function createComment(
   );
 }
 
+/** Creates or updates the preview comment for this PR. */
 export async function upsertPreviewComment(
   target: CommentTarget,
-  options: PreviewCommentOptions,
+  body: string,
 ): Promise<void> {
-  const body = previewComment(options);
   const existing = await findPreviewComment(target);
   if (existing) await updateComment(target, existing.id, body);
   else await createComment(target, body);
 }
+
+/**
+ * What a project's row shows once its deploy job has finished. The stable
+ * preview address only moves after a deployment passed its checks, so serving
+ * the PR's head commit means success and anything else means failure.
+ */
+export function previewRowFor(
+  project: Project,
+  previewUrl: string,
+  deployment: VercelDeploymentReference | null,
+  sha: string,
+): PreviewRow {
+  if (deployment?.commitSha === sha) {
+    return {
+      project,
+      status: "ready",
+      previewUrl,
+      deploymentDashboardUrl: deployment.dashboardUrl,
+    };
+  }
+  return {
+    project,
+    status: "failed",
+    previewUrl,
+    previousSha: deployment?.commitSha,
+  };
+}
+
+/** Posts the build status, then reports what the stable preview address serves. */
+export async function main(): Promise<void> {
+  const mode = process.argv[2];
+  if (mode !== "start" && mode !== "finish") {
+    throw new Error("Usage: preview-comment.ts <start|finish>");
+  }
+  const { env, target, api, project, comment, previewUrl } =
+    readPreviewContext();
+  const pullRequest = await readPullRequest(
+    target.repository,
+    target.pullNumber,
+    target.token,
+  );
+
+  if (mode === "start") {
+    assertOpenCurrentPullRequest(pullRequest, env.PR_HEAD_SHA);
+    const row: PreviewRow = {
+      project,
+      status: "building",
+      previewUrl,
+    };
+    await upsertPreviewComment(target, previewComment({ ...comment, row }));
+    return;
+  }
+
+  // A newer push will update the comment from its own preview job.
+  if (!isCurrentPullRequest(pullRequest, env.PR_HEAD_SHA)) return;
+  const deployment = await tryFindVercelDeployment(
+    previewUrl,
+    api,
+    { teamSlug: comment.teamSlug, project: project.name },
+    `${project.name} preview`,
+  );
+  const row = previewRowFor(project, previewUrl, deployment, comment.sha);
+  await upsertPreviewComment(target, previewComment({ ...comment, row }));
+  appendGithubFile(
+    "GITHUB_STEP_SUMMARY",
+    `${project.name} preview (${row.status}): ${previewUrl}`,
+  );
+}
+
+if (import.meta.main) await main();

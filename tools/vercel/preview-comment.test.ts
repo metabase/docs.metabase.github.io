@@ -1,17 +1,15 @@
 import { describe, expect, test } from "bun:test";
 import {
-  findVercelDeployment,
+  deploymentReference,
   previewComment,
   previewRemovedComment,
+  previewRowFor,
   readPreviewContext,
 } from "./preview-comment.ts";
 
 const MARKER = "<!-- vercel-docs-pr-preview -->";
 const REPOSITORY_URL = "https://github.com/metabase/docs.metabase.github.io";
 const RUN_URL = `${REPOSITORY_URL}/actions/runs/1`;
-const PREVIEW_URL = "https://docs-pr-42-metaboat.vercel.app";
-const PROJECT_URL = "https://vercel.com/metaboat/docs";
-const PROJECT_CELL = `<a href="${PROJECT_URL}"><sup><img src="https://vercel.com/api/www/avatar?projectId=prj_docs&teamId=team_metaboat&s=32" width="16" height="16" align="middle" alt="" /></sup></a> [docs](${PROJECT_URL})`;
 const TABLE_HEADER = [
   "| Project | Deployment | Actions | Updated (UTC) |",
   "| :-- | :-- | :-- | :-- |",
@@ -19,95 +17,104 @@ const TABLE_HEADER = [
 const COMMIT = `[abcdef1](${REPOSITORY_URL}/commit/abcdef123)`;
 const UPDATED = "Sep 14, 2026 11:21pm";
 
+const docs = { name: "docs", id: "prj_docs" };
+const DOCS_URL = "https://docs-pr-42-metaboat.vercel.app";
+
+function projectCell(project: { name: string; id: string }): string {
+  const projectUrl = `https://vercel.com/metaboat/${project.name}`;
+  return `<a href="${projectUrl}"><sup><img src="https://vercel.com/api/www/avatar?projectId=${project.id}&teamId=team_metaboat&s=32" width="16" height="16" align="middle" alt="" /></sup></a> [${project.name}](${projectUrl})`;
+}
+
 const common = {
   sha: "abcdef123",
   repositoryUrl: REPOSITORY_URL,
-  projectId: "prj_docs",
   teamId: "team_metaboat",
   teamSlug: "metaboat",
   runUrl: RUN_URL,
   updatedAt: new Date("2026-09-14T23:21:00Z"),
 };
 
-const lookup = {
-  projectSlug: "docs",
-  teamId: "team_metaboat",
-  teamSlug: "metaboat",
-  token: "token",
-};
-
 describe("preview comment", () => {
-  test("renders the building state", () => {
-    expect(previewComment({ status: "building", ...common })).toBe(
+  test("renders the Building state", () => {
+    expect(
+      previewComment({
+        ...common,
+        row: {
+          project: docs,
+          status: "building",
+          previewUrl: DOCS_URL,
+        },
+      }),
+    ).toBe(
       [
         MARKER,
         `Deploying commit ${COMMIT}…`,
         "",
         TABLE_HEADER,
-        `| ${PROJECT_CELL} | 🟡 [Building](${PROJECT_URL}/deployments) | — | ${UPDATED} |`,
+        `| ${projectCell(docs)} | 🟡 [Building](https://vercel.com/metaboat/docs/deployments) | — | ${UPDATED} |`,
       ].join("\n"),
     );
   });
 
-  test("renders the ready state with the deployment dashboard and footer", () => {
+  test("renders the ready state with the preview link, dashboard and footer", () => {
     expect(
       previewComment({
-        status: "ready",
         ...common,
-        deploymentDashboardUrl: `${PROJECT_URL}/deployment123`,
-        previewUrl: PREVIEW_URL,
+        row: {
+          project: docs,
+          status: "ready",
+          previewUrl: DOCS_URL,
+          deploymentDashboardUrl:
+            "https://vercel.com/metaboat/docs/deployment123",
+        },
       }),
     ).toBe(
       [
         MARKER,
-        `Commit ${COMMIT} is live at [${PREVIEW_URL}](${PREVIEW_URL})`,
+        `Commit ${COMMIT} is live at [${DOCS_URL}](${DOCS_URL})`,
         "",
         TABLE_HEADER,
-        `| ${PROJECT_CELL} | 🟢 [Ready](${PROJECT_URL}/deployment123) | [Preview](${PREVIEW_URL}) | ${UPDATED} |`,
+        `| ${projectCell(docs)} | 🟢 [Ready](https://vercel.com/metaboat/docs/deployment123) | [Preview](${DOCS_URL}) | ${UPDATED} |`,
         "",
         "<hr>",
         "",
         `Deployed to Vercel via [GitHub Actions](${RUN_URL})`,
       ].join("\n"),
     );
-    expect(() => previewComment({ status: "ready", ...common })).toThrow(
-      "preview URL",
-    );
   });
 
-  test("renders the failed state with and without a prior deployment", () => {
-    expect(previewComment({ status: "failed", ...common })).toBe(
+  test("reports failure while retaining the previous preview link", () => {
+    const row = {
+      project: docs,
+      status: "failed" as const,
+      previewUrl: DOCS_URL,
+      previousSha: "123456789",
+    };
+    expect(previewComment({ ...common, row })).toBe(
       [
         MARKER,
-        `Deploying commit ${COMMIT} failed, nothing is deployed for this pull request yet`,
+        `Deploying commit ${COMMIT} failed`,
         "",
         TABLE_HEADER,
-        `| ${PROJECT_CELL} | 🔴 [Failed](${PROJECT_URL}/deployments) | [Logs](${RUN_URL}) | ${UPDATED} |`,
-      ].join("\n"),
-    );
-    expect(
-      previewComment({
-        status: "failed",
-        ...common,
-        previousSha: "123456789",
-        previewUrl: PREVIEW_URL,
-      }),
-    ).toBe(
-      [
-        MARKER,
-        `Deploying commit ${COMMIT} failed, the address still serves commit [1234567](${REPOSITORY_URL}/commit/123456789)`,
+        `| ${projectCell(docs)} | 🔴 [Failed](https://vercel.com/metaboat/docs/deployments) | [Preview](${DOCS_URL}), [Logs](${RUN_URL}) | ${UPDATED} |`,
         "",
-        TABLE_HEADER,
-        `| ${PROJECT_CELL} | 🔴 [Failed](${PROJECT_URL}/deployments) | [Preview](${PREVIEW_URL}), [Logs](${RUN_URL}) | ${UPDATED} |`,
+        `Preview still serves commit [1234567](${REPOSITORY_URL}/commit/123456789).`,
       ].join("\n"),
     );
+    const withoutPrevious = previewComment({
+      ...common,
+      row: { ...row, previousSha: undefined },
+    });
+    expect(withoutPrevious).toContain(`[Logs](${RUN_URL})`);
+    expect(withoutPrevious).not.toContain("[Preview]");
+    expect(withoutPrevious).not.toContain("still serves");
   });
 
   test("renders the removed state with the marker so it stays updatable", () => {
     expect(previewRemovedComment()).toBe(
       [
         MARKER,
-        "The deployment was removed when this pull request closed. Reopening it deploys again at the same address.",
+        "The deployments were removed when this pull request closed. Reopening it deploys again at the same address.",
       ].join("\n"),
     );
   });
@@ -121,7 +128,7 @@ describe("preview comment", () => {
       PR_HEAD_SHA: "abcdef123",
       PR_NUMBER: "42",
       VERCEL_ORG_ID: "team_metaboat",
-      VERCEL_PROJECT_ID: "prj_docs",
+      VERCEL_PROJECT_ID: docs.id,
       VERCEL_TEAM_SLUG: "metaboat",
       VERCEL_TOKEN: "token",
     });
@@ -130,46 +137,53 @@ describe("preview comment", () => {
       pullNumber: 42,
       token: "gh",
     });
-    expect(context.lookup).toEqual(lookup);
+    expect(context.api.teamId).toBe("team_metaboat");
+    expect(context.project).toEqual(docs);
     expect(context.comment).toEqual({
       sha: "abcdef123",
       repositoryUrl: REPOSITORY_URL,
-      projectId: "prj_docs",
       teamId: "team_metaboat",
       teamSlug: "metaboat",
       runUrl: RUN_URL,
     });
-    expect(context.previewHost).toBe("docs-pr-42-metaboat.vercel.app");
-    expect(context.previewUrl).toBe(PREVIEW_URL);
+    expect(context.previewUrl).toBe(DOCS_URL);
   });
 
-  test("resolves a deployment's dashboard URL and commit", async () => {
-    const found = await findVercelDeployment(
-      "https://docs-abc-metaboat.vercel.app",
-      lookup,
-      async (input, init) => {
-        expect(String(input)).toBe(
-          "https://api.vercel.com/v13/deployments/docs-abc-metaboat.vercel.app?teamId=team_metaboat",
-        );
-        expect(new Headers(init?.headers).get("Authorization")).toBe(
-          "Bearer token",
-        );
-        return Response.json({
-          id: "dpl_deployment123",
-          meta: { githubCommitSha: "abcdef123" },
-        });
-      },
-    );
-    expect(found).toEqual({
-      dashboardUrl: `${PROJECT_URL}/deployment123`,
+  test("derives a row from what the preview address serves", () => {
+    const deployment = {
+      dashboardUrl: "https://vercel.com/metaboat/docs/deployment123",
+      commitSha: "abcdef123",
+    };
+    expect(previewRowFor(docs, DOCS_URL, deployment, "abcdef123")).toEqual({
+      project: docs,
+      status: "ready",
+      previewUrl: DOCS_URL,
+      deploymentDashboardUrl: deployment.dashboardUrl,
+    });
+    expect(previewRowFor(docs, DOCS_URL, deployment, "fedcba987")).toEqual({
+      project: docs,
+      status: "failed",
+      previewUrl: DOCS_URL,
+      previousSha: "abcdef123",
+    });
+    expect(previewRowFor(docs, DOCS_URL, null, "abcdef123")).toEqual({
+      project: docs,
+      status: "failed",
+      previewUrl: DOCS_URL,
+      previousSha: undefined,
+    });
+  });
+
+  test("reduces a deployment to its dashboard URL and commit", () => {
+    const location = { teamSlug: "metaboat", project: "docs" };
+    expect(
+      deploymentReference(
+        { id: "dpl_deployment123", meta: { githubCommitSha: "abcdef123" } },
+        location,
+      ),
+    ).toEqual({
+      dashboardUrl: "https://vercel.com/metaboat/docs/deployment123",
       commitSha: "abcdef123",
     });
-
-    const missing = await findVercelDeployment(
-      PREVIEW_URL,
-      lookup,
-      async () => new Response(null, { status: 404 }),
-    );
-    expect(missing).toBeNull();
   });
 });

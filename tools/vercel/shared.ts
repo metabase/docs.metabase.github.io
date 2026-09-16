@@ -1,14 +1,13 @@
 import { appendFileSync } from "node:fs";
+import { Vercel } from "@vercel/sdk";
+import { VercelError } from "@vercel/sdk/models/vercelerror.js";
 
-export const DOCS_PROJECT = "docs";
+export const PROJECT_NAME = "docs";
+
 export const GITHUB_ACTIONS_BOT = "github-actions[bot]";
 export const PREVIEW_COMMENT_MARKER = "<!-- vercel-docs-pr-preview -->";
 
 export type Environment = Record<string, string | undefined>;
-export type FetchImplementation = (
-  input: string | URL | Request,
-  init?: RequestInit,
-) => Promise<Response>;
 export type PullRequest = {
   state?: string;
   head?: { sha?: string };
@@ -27,17 +26,6 @@ export type PreviewDeploymentTarget = {
   pullNumber: number;
 };
 
-export function choice<T extends string>(
-  value: string | undefined,
-  choices: readonly T[],
-  usage: string,
-): T {
-  if (!choices.includes(value as T)) {
-    throw new Error(`Usage: ${usage} <${choices.join("|")}>`);
-  }
-  return value as T;
-}
-
 export function requireEnvironment(
   names: readonly string[],
   environment: Environment = process.env,
@@ -49,24 +37,6 @@ export function requireEnvironment(
       return [name, value];
     }),
   );
-}
-
-export function positiveInteger(value: string, name: string): number {
-  if (!/^\d+$/.test(value)) throw new Error(`Expected numeric ${name}`);
-  const parsed = Number(value);
-  if (!Number.isSafeInteger(parsed) || parsed <= 0) {
-    throw new Error(`Expected positive ${name}`);
-  }
-  return parsed;
-}
-
-export function repositoryParts(repository: string): {
-  owner: string;
-  repo: string;
-} {
-  const match = /^([^/]+)\/([^/]+)$/.exec(repository);
-  if (!match) throw new Error("Expected GITHUB_REPOSITORY as owner/repository");
-  return { owner: match[1], repo: match[2] };
 }
 
 export function githubRepositoryUrl(env: Record<string, string>): string {
@@ -87,9 +57,8 @@ export async function githubRequest<T>(
   path: string,
   token: string,
   options: RequestInit = {},
-  fetchImplementation: FetchImplementation = fetch,
 ): Promise<{ data: T; response: Response }> {
-  const response = await fetchImplementation(`https://api.github.com${path}`, {
+  const response = await fetch(`https://api.github.com${path}`, {
     ...options,
     headers: {
       Accept: "application/vnd.github+json",
@@ -107,46 +76,34 @@ export async function githubRequest<T>(
   return { data: (await response.json()) as T, response };
 }
 
-export async function vercelRequest<T>(
-  path: string,
-  credentials: VercelCredentials,
-  options: {
-    method?: string;
-    query?: Record<string, string>;
-    missingOK?: boolean;
-  } = {},
-  fetchImplementation: FetchImplementation = fetch,
-): Promise<T | null> {
-  const method = options.method ?? "GET";
-  const url = new URL(path, "https://api.vercel.com");
-  url.search = new URLSearchParams({
+/** A configured Vercel SDK client plus the team every call is scoped to. */
+export type VercelApi = { sdk: Vercel; teamId: string };
+
+export function vercelApi(credentials: VercelCredentials): VercelApi {
+  return {
+    sdk: new Vercel({ bearerToken: credentials.token }),
     teamId: credentials.teamId,
-    ...options.query,
-  }).toString();
-  const response = await fetchImplementation(url, {
-    method,
-    headers: { Authorization: `Bearer ${credentials.token}` },
-    signal: AbortSignal.timeout(30_000),
-  });
-  if (options.missingOK && response.status === 404) return null;
-  if (!response.ok) {
-    throw new Error(`Vercel ${method} ${path}: HTTP ${response.status}`);
+  };
+}
+
+/** Resolves an SDK call to null when Vercel reports the resource missing. */
+export async function ifFound<T>(call: Promise<T>): Promise<T | null> {
+  try {
+    return await call;
+  } catch (error) {
+    if (error instanceof VercelError && error.statusCode === 404) return null;
+    throw error;
   }
-  if (response.status === 204) return null;
-  return (await response.json()) as T;
 }
 
 export async function readPullRequest(
   repository: string,
   pullNumber: number,
   token: string,
-  fetchImplementation: FetchImplementation = fetch,
 ): Promise<PullRequest> {
   const { data } = await githubRequest<PullRequest>(
     `/repos/${repository}/pulls/${pullNumber}`,
     token,
-    {},
-    fetchImplementation,
   );
   return data;
 }
@@ -175,14 +132,12 @@ export function assertClosedPullRequest(pullRequest: PullRequest): void {
   }
 }
 
-export function previewHostname(pullNumber: number, teamSlug: string): string {
-  if (!Number.isSafeInteger(pullNumber) || pullNumber <= 0) {
-    throw new Error("Expected positive PR number");
-  }
-  if (!/^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/.test(teamSlug)) {
-    throw new Error("Expected a lowercase Vercel team slug");
-  }
-  return `${DOCS_PROJECT}-pr-${pullNumber}-${teamSlug}.vercel.app`;
+export function previewHostname(
+  project: string,
+  pullNumber: number,
+  teamSlug: string,
+): string {
+  return `${project}-pr-${pullNumber}-${teamSlug}.vercel.app`;
 }
 
 export function matchesPreviewDeployment(
@@ -201,7 +156,6 @@ export function matchesPreviewDeployment(
 export function deployArguments(
   target: "preview" | "production",
   values: {
-    token: string;
     repository: string;
     repositoryId: string;
     ref: string;
@@ -213,21 +167,15 @@ export function deployArguments(
     pullNumber?: number;
   },
 ): string[] {
-  const { owner, repo } = repositoryParts(values.repository);
-  const args = [
-    "deploy",
-    "--prebuilt",
-    "--archive=tgz",
-    "--yes",
-    "--token",
-    values.token,
-  ];
-  if (target === "production") args.push("--prod");
+  const [owner, repo] = values.repository.split("/");
+  const args = ["deploy", "--prebuilt", "--archive=tgz", "--yes"];
+  // Production deployments get their domains only after the post-deploy checks pass.
+  if (target === "production") args.push("--prod", "--skip-domain");
   const metadata: Record<string, string> = {
     githubDeployment: "1",
     ciRepositoryId: values.repositoryId,
-    githubCommitOrg: owner,
-    githubCommitRepo: repo,
+    githubCommitOrg: owner ?? "",
+    githubCommitRepo: repo ?? "",
     githubCommitRef: values.ref,
     githubCommitSha: values.sha,
     githubCommitMessage: values.message,
@@ -235,9 +183,7 @@ export function deployArguments(
     ciBuildSha: values.buildSha,
     ciRunUrl: values.runUrl,
   };
-  if (target === "preview") {
-    if (!values.pullNumber)
-      throw new Error("Preview deployment requires a PR number");
+  if (values.pullNumber !== undefined) {
     metadata.ciPullRequest = String(values.pullNumber);
   }
   for (const [key, value] of Object.entries(metadata)) {

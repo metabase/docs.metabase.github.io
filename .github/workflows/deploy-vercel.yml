@@ -1,0 +1,106 @@
+name: Deploy to Vercel
+
+on:
+  pull_request:
+    branches: [master]
+    types: [opened, synchronize, reopened]
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  ASTRO_TELEMETRY_DISABLED: "1"
+  VERCEL_CLI_VERSION: "59.16.0"
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ vars.VERCEL_DOCS_PROJECT_ID }}
+  VERCEL_TEAM_SLUG: metaboat
+  VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+
+jobs:
+  preview:
+    name: Deploy preview
+    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && github.event.pull_request.user.login != 'dependabot[bot]' && github.actor != 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    # The deploy script re-reads the PR before moving the stable preview address.
+    permissions:
+      contents: read
+      pull-requests: write
+    concurrency:
+      group: vercel-docs-preview-pr-${{ github.event.pull_request.number }}
+      cancel-in-progress: true
+    env:
+      COMMIT_AUTHOR: ${{ github.event.pull_request.user.login }}
+      COMMIT_MESSAGE: ${{ github.event.pull_request.title }}
+      DEPLOY_ENV: staging
+      GH_TOKEN: ${{ github.token }}
+      PR_BRANCH: ${{ github.head_ref }}
+      PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+      PR_NUMBER: ${{ github.event.pull_request.number }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version-file: package.json
+      - name: Install workspace packages
+        run: bun install --frozen-lockfile
+      - name: Post the preview comment
+        id: preview-comment
+        run: bun tools/vercel/preview-comment.ts start
+      - name: Install Vercel CLI
+        run: npm install --global "vercel@$VERCEL_CLI_VERSION"
+      - name: Pull preview settings
+        run: vercel pull --yes --environment=preview --git-branch="$PR_BRANCH"
+      - name: Check the Vercel project root is repository root
+        run: bun tools/vercel/check-project.ts
+      - name: Build preview
+        run: vercel build
+      - name: Deploy preview
+        run: bun tools/vercel/deploy.ts preview
+      - name: Update the preview comment
+        if: ${{ always() && steps.preview-comment.outcome == 'success' }}
+        run: bun tools/vercel/preview-comment.ts finish
+
+  production:
+    name: Deploy production
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    concurrency:
+      group: vercel-docs-production
+      cancel-in-progress: false
+    env:
+      COMMIT_AUTHOR: ${{ github.event.head_commit.author.name || github.actor }}
+      COMMIT_MESSAGE: ${{ github.event.head_commit.message || github.sha }}
+      DEPLOY_ENV: production
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version-file: package.json
+      - name: Install workspace packages
+        run: bun install --frozen-lockfile
+      - name: Install Vercel CLI
+        run: npm install --global "vercel@$VERCEL_CLI_VERSION"
+      - name: Pull production settings
+        run: vercel pull --yes --environment=production
+      - name: Check the Vercel project root is repository root
+        run: bun tools/vercel/check-project.ts
+      - name: Build production
+        run: vercel build --prod
+      - name: Deploy production
+        run: bun tools/vercel/deploy.ts production
