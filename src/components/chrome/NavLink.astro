@@ -1,0 +1,31 @@
+---
+import type { AstroComponentFactory } from "astro/runtime/server/index.js";
+
+// Ported from the marketing site's navbar/NavLink.astro, which types `icon`
+// as an Astro/SVG component the same way this does.
+export interface Props {
+  title: string;
+  href: string;
+  icon: AstroComponentFactory;
+  description?: string;
+  badge?: string;
+}
+
+const { title, href, icon: Icon, description, badge } = Astro.props;
+---
+
+<a class="menu-link" href={href}>
+  <Icon />
+  <div>
+    <span class="menu-link-heading">
+      {title}
+      {badge && (
+        <>
+          {" "}
+          <span class="badge">{badge}</span>
+        </>
+      )}
+    </span>
+    {description && <p class="menu-link-description">{description}</p>}
+  </div>
+</a>
