@@ -1,6 +1,6 @@
 ---
-import { baseCtx } from "@/lib/liquid/liquidRenderer";
-import { renderVersionNotice } from "./utils/versionUtils";
+import type { VersionSupport } from "@/lib/docs/versionSupport";
+import { VERSIONS_STORAGE_KEY } from "./utils/versionUtils";
 
 type Props = {
   version?: string;
@@ -8,39 +8,97 @@ type Props = {
 };
 
 const { version, latest } = Astro.props;
-const { site } = baseCtx;
+
+declare global {
+  interface Window {
+    renderVersionNotice?: (
+      pageVersion: string | null | undefined,
+      versionSupport: Record<string, VersionSupport>,
+      docsVersion: string,
+    ) => string;
+  }
+}
 ---
 
-<div
-  data-component="version-notice"
-  data-version={version}
-  set:html={renderVersionNotice(
-    version,
-    site.data.version_support,
-    site.docs_version,
-  )}
-/>
+<div data-component="version-notice" data-version={version} />
 
 {/*
 `latest` is excluded since updating it client-side would just be a no-op (we only warn users when
 they're NOT on the latest version). This targets older pages (e.g. v0.44) that rarely get rebuilt
 but should still show accurate version info.
 */}
-{!latest && <script>
-  import { fetchVersions, renderVersionNotice } from "./utils/versionUtils";
+{!latest && (
+  <>
+    <script is:inline define:vars={{ VERSIONS_STORAGE_KEY }}>
+      (() => {
+        window.renderVersionNotice = (
+          pageVersion,
+          versionSupport,
+          docsVersion,
+        ) => {
+          const latest = pageVersion === docsVersion;
+          if (!pageVersion || latest) {
+            return "";
+          }
+          const support = versionSupport[pageVersion];
+          if (support?.status == "unsupported") {
+            return `
+<blockquote class="version-unsupported-notice">
+  Version ${pageVersion} of Metabase is
+  <strong><a class="text-purple" href="/version-support">no longer supported</a></strong>.
+  Check out the
+  <a class="text-purple" href="/docs/latest/">
+    docs for the current stable version, Metabase ${docsVersion}.
+  </a>
+</blockquote>`;
+          } else {
+            return `
+<blockquote>
+  These are the docs for Metabase ${pageVersion}. Check out the
+  <a class="text-purple" href="/docs/latest/">
+    docs for the current stable version, Metabase ${docsVersion}.
+  </a>
+</blockquote>`;
+          }
+        };
+      })();
 
-  const updateVersionNotice = async (el: Element) => {
-    const versions = await fetchVersions();
-    const pageVersion = el.getAttribute("data-version");
-    const { version_support, docs_version } = versions;
-    el.innerHTML = renderVersionNotice(
-      pageVersion,
-      version_support,
-      docs_version,
-    );
-  };
+      try {
+        const cached = localStorage.getItem(VERSIONS_STORAGE_KEY);
+        if (cached) {
+          const { version_support, docs_version } = JSON.parse(cached);
+          const el = document.querySelector(
+            '[data-component="version-notice"]',
+          );
+          if (el) {
+            el.innerHTML = window.renderVersionNotice(
+              el.getAttribute("data-version"),
+              version_support,
+              docs_version,
+            );
+          }
+        }
+      } catch {}
+    </script>
+    <script>
+      import { fetchVersions } from "./utils/versionUtils";
 
-  document
-    .querySelectorAll('[data-component="version-notice"]')
-    .forEach(updateVersionNotice);
-</script>}
+      const updateVersionNotice = async (el: Element) => {
+        const versions = await fetchVersions();
+        const pageVersion = el.getAttribute("data-version");
+        const { version_support, docs_version } = versions;
+        if (!window.renderVersionNotice) return;
+        el.innerHTML = window.renderVersionNotice(
+          pageVersion,
+          version_support,
+          docs_version,
+        );
+      };
+
+      const el = document.querySelector('[data-component="version-notice"]');
+      if (el) {
+        updateVersionNotice(el);
+      }
+    </script>
+  </>
+)}
