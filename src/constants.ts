@@ -23,3 +23,5 @@ export const UNIFY_ENABLED_PAGES = [
   "/docs/latest/embedding/sdk/quickstart",
   "/docs/latest/embedding/full-app-embedding-quick-start-guide",
 ];
+
+export const TOP_BAR_ID = "top-bar";
