@@ -21,6 +21,7 @@ describe("docs Vercel configuration", () => {
         destination: "/docs/latest/",
         permanent: true,
       },
+      { source: "/docs/", destination: "/docs/latest/", statusCode: 301 },
       ...parseAmplifyRedirects(JSON.parse(redirectsJson)).map((redirect) =>
         redirect.destination === "/docs/latest"
           ? { ...redirect, destination: "/docs/latest/" }

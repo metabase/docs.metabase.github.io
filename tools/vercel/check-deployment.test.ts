@@ -22,7 +22,7 @@ describe("checkDeployment", () => {
         if (path === "/") {
           return "307\nhttps://docs-test.vercel.app/docs/latest/";
         }
-        if (path === "/docs") {
+        if (path === "/docs" || path === "/docs/") {
           return "301\nhttps://docs-test.vercel.app/docs/latest/";
         }
         return args.includes("--write-out")
@@ -35,13 +35,14 @@ describe("checkDeployment", () => {
       "https://docs-test.vercel.app/docs/latest",
       "https://docs-test.vercel.app/",
       "https://docs-test.vercel.app/docs",
+      "https://docs-test.vercel.app/docs/",
       "https://docs-test.vercel.app/docs/images/not_found.svg",
       "https://docs-test.vercel.app/docs/latest/vercel-deployment-404-check",
       "https://docs-test.vercel.app/docs/latest/vercel-deployment-404-check",
     ]);
     expect(
       calls
-        .slice(0, 6)
+        .slice(0, 7)
         .every(
           ({ command, args }) =>
             command === "curl" &&

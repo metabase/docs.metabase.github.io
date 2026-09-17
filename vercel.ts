@@ -17,6 +17,7 @@ export const config = {
   redirects: [
     { source: "/", destination: "/docs/latest/", permanent: false },
     { source: "/docs/latest", destination: "/docs/latest/", permanent: true },
+    { source: "/docs/", destination: "/docs/latest/", statusCode: 301 },
     ...redirects,
   ],
   headers: [
