@@ -10,16 +10,21 @@ export function checkDeployment(
 ): void {
   const origin = validateDeploymentUrl(deploymentUrl);
   const checks = [
-    { path: "/docs/latest", status: "200", redirectUrl: "" },
+    { path: "/docs/latest/", status: "200", redirectUrl: "" },
+    {
+      path: "/docs/latest",
+      status: "308",
+      redirectUrl: new URL("/docs/latest/", origin).href,
+    },
     {
       path: "/",
       status: "307",
-      redirectUrl: new URL("/docs/latest", origin).href,
+      redirectUrl: new URL("/docs/latest/", origin).href,
     },
     {
       path: "/docs",
       status: "301",
-      redirectUrl: new URL("/docs/latest", origin).href,
+      redirectUrl: new URL("/docs/latest/", origin).href,
     },
     { path: "/docs/images/not_found.svg", status: "200", redirectUrl: "" },
     {

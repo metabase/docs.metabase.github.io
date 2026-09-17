@@ -2,7 +2,11 @@ import type { VercelConfig } from "@vercel/config/v1";
 import amplifyRedirects from "./redirects.json";
 import { parseAmplifyRedirects } from "./tools/vercel/redirects";
 
-const redirects = parseAmplifyRedirects(amplifyRedirects);
+const redirects = parseAmplifyRedirects(amplifyRedirects).map((redirect) =>
+  redirect.destination === "/docs/latest"
+    ? { ...redirect, destination: "/docs/latest/" }
+    : redirect,
+);
 
 export const config = {
   framework: "astro",
@@ -10,9 +14,9 @@ export const config = {
   buildCommand: "bun run build",
   outputDirectory: "_site",
   cleanUrls: true,
-  trailingSlash: false,
   redirects: [
-    { source: "/", destination: "/docs/latest", permanent: false },
+    { source: "/", destination: "/docs/latest/", permanent: false },
+    { source: "/docs/latest", destination: "/docs/latest/", permanent: true },
     ...redirects,
   ],
   headers: [

@@ -15,8 +15,17 @@ const redirectsJson = readFileSync(
 describe("docs Vercel configuration", () => {
   test("derives its redirects directly from redirects.json", () => {
     expect(config.redirects).toEqual([
-      { source: "/", destination: "/docs/latest", permanent: false },
-      ...parseAmplifyRedirects(JSON.parse(redirectsJson)),
+      { source: "/", destination: "/docs/latest/", permanent: false },
+      {
+        source: "/docs/latest",
+        destination: "/docs/latest/",
+        permanent: true,
+      },
+      ...parseAmplifyRedirects(JSON.parse(redirectsJson)).map((redirect) =>
+        redirect.destination === "/docs/latest"
+          ? { ...redirect, destination: "/docs/latest/" }
+          : redirect,
+      ),
     ]);
   });
 

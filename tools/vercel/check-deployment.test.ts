@@ -13,14 +13,17 @@ describe("checkDeployment", () => {
       (command, args, options) => {
         calls.push({ command, args, options });
         const path = new URL(args.at(-1)!).pathname;
-        if (path === "/docs/latest" || path === "/docs/images/not_found.svg") {
+        if (path === "/docs/latest/" || path === "/docs/images/not_found.svg") {
           return "200\n";
         }
+        if (path === "/docs/latest") {
+          return "308\nhttps://docs-test.vercel.app/docs/latest/";
+        }
         if (path === "/") {
-          return "307\nhttps://docs-test.vercel.app/docs/latest";
+          return "307\nhttps://docs-test.vercel.app/docs/latest/";
         }
         if (path === "/docs") {
-          return "301\nhttps://docs-test.vercel.app/docs/latest";
+          return "301\nhttps://docs-test.vercel.app/docs/latest/";
         }
         return args.includes("--write-out")
           ? "404\n"
@@ -28,6 +31,7 @@ describe("checkDeployment", () => {
       },
     );
     expect(calls.map(({ args }) => args.at(-1))).toEqual([
+      "https://docs-test.vercel.app/docs/latest/",
       "https://docs-test.vercel.app/docs/latest",
       "https://docs-test.vercel.app/",
       "https://docs-test.vercel.app/docs",
@@ -37,7 +41,7 @@ describe("checkDeployment", () => {
     ]);
     expect(
       calls
-        .slice(0, 5)
+        .slice(0, 6)
         .every(
           ({ command, args }) =>
             command === "curl" &&
