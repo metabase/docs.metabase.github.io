@@ -169,7 +169,7 @@ const resourceLinks: NavLinkProps[] = [
       data-navbar
     >
       <div class="container">
-        <div class="row flex-grow-1">
+        <div class="row flex-grow-1 flex-nowrap">
           <div
             class:list={[
               "home-link col-xs-4 d-flex align-items-center",
@@ -710,10 +710,7 @@ const resourceLinks: NavLinkProps[] = [
               <a href="/pricing?use_case=bi" data-use-case-switcher>
                 <div class="flex">
                   <div>
-                    <img
-                      src="/images/navigation-header/pricing-bi.svg"
-                      alt=""
-                    />
+                    <img src="/docs/images/pricing-bi.svg" alt="" />
                   </div>
                   <div>
                     <h6>Business Intelligence pricing</h6>
@@ -724,10 +721,7 @@ const resourceLinks: NavLinkProps[] = [
               <a href="/pricing?use_case=ea" data-use-case-switcher>
                 <div class="flex">
                   <div>
-                    <img
-                      src="/images/navigation-header/pricing-ea.svg"
-                      alt=""
-                    />
+                    <img src="/docs/images/pricing-ea.svg" alt="" />
                   </div>
                   <div>
                     <h6>Embedded Analytics pricing</h6>
@@ -823,3 +817,35 @@ const resourceLinks: NavLinkProps[] = [
 
   initNavbar();
 </script>
+
+<style>
+  .home-link {
+    font-size: clamp(28px, 8vw, 50px);
+  }
+
+  .home-link svg {
+    flex-shrink: 0;
+    height: 1em;
+    width: 1em;
+  }
+
+  .home-link-wordmark {
+    color: #4c5773;
+    font-size: 0.48em;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1;
+    margin-left: calc(1em / 3);
+    white-space: nowrap;
+  }
+
+  #mobile-nav-hamburger-wrapper {
+    appearance: none;
+    background-color: transparent;
+    border: 0;
+  }
+
+  .legacy-scope {
+    display: contents;
+  }
+</style>
