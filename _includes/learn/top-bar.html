@@ -1,0 +1,27 @@
+<div class="top-bar">
+  <div>
+    {% if include.show_breadcrumb %}
+      <div class="learn-breadcrumb-trail">
+        {% if include.domain == "docs" %}
+          {% include docs_breadcrumb.html %}
+        {% else %}
+          {% include learn/breadcrumbs.html %}
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
+
+  <div>
+    {% if include.domain == "docs" %}
+      {% include docs_version.html %}
+        <a href="/releases" class="whats-new">
+          {% include svg-icons/stars.html %}
+          What’s new
+        </a>
+    {% endif %}
+
+    {% unless include.show_search == "false" %}
+      {% include learn/search-input.html domain=include.domain %}
+    {% endunless %}
+  </div>
+</div>
