@@ -21,7 +21,7 @@ env:
 
 jobs:
   preview:
-    name: Deploy preview
+    name: Preview
     if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && github.event.pull_request.user.login != 'dependabot[bot]' && github.actor != 'dependabot[bot]'
     runs-on: ubuntu-latest
     timeout-minutes: 20
@@ -73,7 +73,7 @@ jobs:
         run: bun tools/vercel/preview-comment.ts finish
 
   production:
-    name: Deploy production
+    name: Production
     if: github.event_name != 'pull_request' && github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
     timeout-minutes: 20

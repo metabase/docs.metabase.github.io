@@ -82,8 +82,8 @@ describe("Vercel workflows", () => {
   });
 
   test("names the deployment jobs plainly", () => {
-    expect(preview.name).toBe("Deploy preview");
-    expect(production.name).toBe("Deploy production");
+    expect(preview.name).toBe("Preview");
+    expect(production.name).toBe("Production");
     for (const job of [preview, production, cleanup, sweep]) {
       expect(job.name).not.toContain("${{");
     }
