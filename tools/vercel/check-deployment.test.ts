@@ -37,8 +37,8 @@ describe("checkDeployment", () => {
       "https://docs-test.vercel.app/docs",
       "https://docs-test.vercel.app/docs/",
       "https://docs-test.vercel.app/docs/images/not_found.svg",
-      "https://docs-test.vercel.app/docs/latest/vercel-deployment-404-check",
-      "https://docs-test.vercel.app/docs/latest/vercel-deployment-404-check",
+      "https://docs-test.vercel.app/docs/latest/vercel-deployment-404-check/",
+      "https://docs-test.vercel.app/docs/latest/vercel-deployment-404-check/",
     ]);
     expect(
       calls

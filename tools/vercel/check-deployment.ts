@@ -33,7 +33,7 @@ export function checkDeployment(
     },
     { path: "/docs/images/not_found.svg", status: "200", redirectUrl: "" },
     {
-      path: "/docs/latest/vercel-deployment-404-check",
+      path: "/docs/latest/vercel-deployment-404-check/",
       status: "404",
       redirectUrl: "",
     },
@@ -87,7 +87,7 @@ export function checkDeployment(
       "5",
       "--max-time",
       "30",
-      new URL("/docs/latest/vercel-deployment-404-check", origin).href,
+      new URL("/docs/latest/vercel-deployment-404-check/", origin).href,
     ],
     { capture: true },
   );
