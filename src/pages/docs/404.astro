@@ -1,6 +1,7 @@
 ---
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import DocsHeader from "@/components/chrome/DocsHeader.astro";
 import ErrorLayout from "@/layouts/ErrorLayout.astro";
 
 const page = { title: "Page not found", url: "/docs/404" };
@@ -8,6 +9,7 @@ const dirname = path.dirname(fileURLToPath(import.meta.url));
 ---
 
 <ErrorLayout page={page} dirname={dirname}>
+  <DocsHeader slot="header" version="latest" pageUrl={page.url} />
   <script is:inline>
     function redirectFrom404(theLocation) {
       // trailing slash
@@ -129,7 +131,8 @@ const dirname = path.dirname(fileURLToPath(import.meta.url));
           Go to the latest version of the documentation
         </a>
         <a class="Button m-0 mt-2" href="/">
-          Go to Metabase homepage
+          {" "}
+          Go to Metabase homepage{" "}
         </a>
       </div>
     </div>

@@ -1,24 +1,26 @@
 ---
 import NavItem from "@/components/chrome/NavItem.astro";
-import { getNavForVersion } from "@/lib/docs/nav";
+import { getActiveCategory, getNavForVersion } from "@/lib/docs/nav";
 
+// Renders only the nav category the current page belongs to; the docs header
+// tabs (DocsHeader.astro) switch between categories, so both use
+// getActiveCategory to stay in sync.
 type Props = {
   url: string;
   version?: string;
 };
 
 const { url: pageUrl, version = "latest" } = Astro.props;
+
+const category = getActiveCategory(getNavForVersion(version), pageUrl);
 ---
 
 <div class="learn-left-sidebar" id="main-navigation-content">
-  {getNavForVersion(version).categories.map((category) => (
-    <>
-      <h5>{category.name}</h5>
-      <ul>
-        {category.pages?.map((node) => (
-          <NavItem node={node} pageUrl={pageUrl} />
-        ))}
-      </ul>
-    </>
-  ))}
+  {category && (
+    <ul>
+      {category.pages?.map((node) => (
+        <NavItem node={node} pageUrl={pageUrl} />
+      ))}
+    </ul>
+  )}
 </div>

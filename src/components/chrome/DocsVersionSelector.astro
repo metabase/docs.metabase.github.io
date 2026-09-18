@@ -1,0 +1,162 @@
+---
+import Chevron from "@/icons/chevron.svg";
+import { getVersionSupport } from "@/lib/docs/versionSupport";
+import { baseCtx } from "@/lib/liquid/liquidRenderer";
+
+// Astro port of _includes/docs_version.html, so the version dropdown can live
+// in the docs header (outside the `.bootstrap .learn` scope its old CSS
+// depended on). Class names are kept so new-docs-version-selector.js and the
+// .version__tag rules in docs-local.css keep working unchanged.
+type Props = {
+  version: string;
+};
+
+const { version } = Astro.props;
+
+const { available_versions: availableVersions, docs_version: docsVersion } =
+  baseCtx.site as { available_versions: string[]; docs_version: string };
+
+const currentLabel = version === "latest" ? docsVersion : version;
+
+const otherVersions = [...availableVersions]
+  .reverse()
+  .slice(0, 10)
+  .filter((v) => v !== version)
+  .map((v) => ({ version: v, support: getVersionSupport(v) }));
+---
+
+<div class="version__selector">
+  <span class="version__current">
+    {currentLabel}
+    <Chevron />
+  </span>
+  <ul class="version__dropdown">
+    {otherVersions.map(({ version: v, support }) => (
+      <li>
+        <a href={`/docs/${v}/`}>
+          <span class="version__dropdown--item">
+            <span>{v}</span>
+            {support?.status === "unsupported" ? (
+              <span class="version__tag version__tag--unsupported">
+                unsupported
+              </span>
+            ) : support?.lts ? (
+              <span class="version__tag version__tag--lts">lts</span>
+            ) : null}
+          </span>
+        </a>
+      </li>
+    ))}
+    <li>
+      <a class="version__more" href="/docs/all">
+        {" "}
+        See more{" "}
+      </a>
+    </li>
+  </ul>
+</div>
+
+<style>
+  .version__selector {
+    cursor: pointer;
+    position: relative;
+  }
+
+  .version__current {
+    align-items: center;
+    border-radius: 8px;
+    color: #8d93a5;
+    display: flex;
+    font-size: 14px;
+    gap: 6px;
+    line-height: 20px;
+    padding: 6px 8px 6px 12px;
+    transition: background-color 0.3s ease;
+    user-select: none;
+  }
+
+  .version__current:hover,
+  .version__selector.open .version__current {
+    background-color: #e4ecfb;
+    color: #509ee3;
+  }
+
+  .version__current svg {
+    height: 12px;
+    transition: rotate 0.2s ease;
+    width: 12px;
+  }
+
+  .version__current svg path {
+    stroke: #8d93a5;
+  }
+
+  .version__current:hover svg path,
+  .version__selector.open .version__current svg path {
+    stroke: #509ee3;
+  }
+
+  .version__selector.open .version__current svg {
+    rotate: 180deg;
+  }
+
+  .version__dropdown {
+    background: #fff;
+    border: 1px solid #e4ecfb;
+    border-radius: 8px;
+    box-shadow: 0 3px 24px rgba(0, 0, 0, 0.08);
+    list-style: none;
+    margin: 0;
+    min-width: 160px;
+    opacity: 0;
+    overflow: hidden;
+    padding: 4px 0;
+    pointer-events: none;
+    position: absolute;
+    right: 0;
+    scale: 0.97;
+    top: calc(100% + 6px);
+    transition:
+      scale 0.2s ease-in-out,
+      opacity 0.2s ease-in-out;
+    z-index: 5;
+  }
+
+  .version__selector.open .version__dropdown {
+    opacity: 1;
+    pointer-events: all;
+    scale: 1;
+  }
+
+  .version__dropdown li {
+    margin: 0;
+  }
+
+  .version__dropdown li:hover {
+    background-color: #fafbfe;
+  }
+
+  .version__dropdown a {
+    color: #8d93a5;
+    display: block;
+    font-size: 14px;
+    padding: 8px 16px;
+    text-decoration: none;
+  }
+
+  .version__dropdown li:hover a,
+  .version__dropdown a.version__more {
+    color: #509ee3;
+  }
+
+  .version__dropdown a.version__more {
+    font-weight: 700;
+  }
+
+  .version__dropdown--item {
+    align-items: center;
+    display: flex;
+    gap: 0.5rem;
+    justify-content: space-between;
+  }
+</style>

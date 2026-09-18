@@ -53,3 +53,21 @@
 .docs blockquote.version-unsupported-notice a {
   display: inline;
 }
+
+/* The docs header (DocsHeader.astro) is taller than the marketing navbar the
+ * sticky offsets in css/styles.css assume, so re-derive them from the header
+ * height variable it sets. Relative gaps match the original 77px header. */
+.bootstrap .learn #main-navigation-content.learn-left-sidebar {
+  max-height: calc(100vh - var(--navigation-header-height, 77px) - 7px);
+  top: calc(var(--navigation-header-height, 77px) + 10px);
+}
+
+.bootstrap .learn .learn__right-sidebar {
+  top: calc(var(--navigation-header-height, 77px) - 14px);
+}
+
+/* Search and the version selector moved to the header; let the breadcrumb use
+ * the top bar's full width. */
+.bootstrap .learn.docs .top-bar > div:first-child {
+  width: 100%;
+}

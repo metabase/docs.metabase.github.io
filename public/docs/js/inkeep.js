@@ -45,6 +45,24 @@ const handleOpenChange = (isOpen) => {
   });
 };
 
+// "Ask AI" buttons in the docs header open the widget straight into chat.
+const initAskAiButtons = () => {
+  document.querySelectorAll("[data-inkeep-ask-ai]").forEach((button) => {
+    button.addEventListener("click", () => {
+      if (!inkeepWidget) return;
+      inkeepWidget.update({
+        modalSettings: { isOpen: true, onOpenChange: handleOpenChange },
+      });
+      try {
+        inkeepWidget.setView("chat");
+      } catch (_e) {
+        // Older widget builds without setView still open in search view,
+        // which has its own "Ask" toggle.
+      }
+    });
+  });
+};
+
 const initializeInkeep = () => {
   const initialQuery = getSearchQuery();
   const shouldOpenOnLoad =
@@ -63,6 +81,8 @@ const initializeInkeep = () => {
     : baseConfig;
 
   inkeepWidget = window.Inkeep.SearchBar("#inkeep", config);
+
+  initAskAiButtons();
 
   if (shouldOpenOnLoad) {
     try {

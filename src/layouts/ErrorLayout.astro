@@ -19,7 +19,9 @@ const lq = getLiquidRenderer({ page, dirname });
   <LiquidInclude lq={lq} src="head.html" />
 
   <body>
-    <Header />
+    <slot name="header">
+      <Header />
+    </slot>
 
     <div class="bootstrap">
       <div class="container pt-6 pb-9">
