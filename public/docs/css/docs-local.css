@@ -71,3 +71,39 @@
 .bootstrap .learn.docs .top-bar > div:first-child {
   width: 100%;
 }
+
+/* Pin the left nav to the viewport edge and center the article in the space
+ * that remains. css/styles.css centers the whole .learn grid at a max-width
+ * (920/1100/1280px), which is what pushed the nav toward the middle. Scoped to
+ * ≥992px, where the sidebar is shown; below that the sidebar is hidden and the
+ * centered single-column layout is kept as-is. */
+@media screen and (min-width: 992px) {
+  .bootstrap .learn.docs {
+    /* The bundle painted #fafbfe only to the right of the centered box via a
+     * box-shadow; with the grid full-bleed, paint it on the grid itself so the
+     * gap on either side of the centered article matches. */
+    background-color: #fafbfe;
+    box-shadow: none;
+    margin: 0;
+    max-width: none;
+  }
+
+  /* Keep today's widest article width (1280 container − 226 nav) and center it
+   * inside the 1fr grid column. .learn__post is itself the `1fr 200px` grid
+   * holding the article AND the "On this page" TOC, so centering it as one box
+   * keeps the TOC hugging the article's right edge exactly as it does today.
+   * .top-bar (breadcrumb) is absolutely positioned inside .learn__post, so it
+   * follows automatically. */
+  .bootstrap .learn.docs .learn__post {
+    margin: 0 auto;
+    max-width: 1054px;
+    width: 100%;
+  }
+
+  /* Nav links have 8px left padding; add 12px so the text lines up with the
+   * header wordmark, which sits at the header row's 20px padding. */
+  .bootstrap .learn.docs #main-navigation-content.learn-left-sidebar {
+    background-color: #fff;
+    padding-left: 12px;
+  }
+}
