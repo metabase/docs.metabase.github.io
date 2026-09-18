@@ -1,0 +1,253 @@
+---
+import Github from "@/icons/github.svg";
+import Linkedin from "@/icons/linkedin.svg";
+import TwitterX from "@/icons/twitter-x.svg";
+import Youtube from "@/icons/youtube.svg";
+
+type Link = { label: string; href: string; badge?: string; status?: boolean };
+type Group = { heading: string; links: Link[] };
+
+// Hrefs below are written relative to https://www.metabase.com, matching the
+// marketing site's Footer.astro (which this is ported from).
+const columns: Group[][] = [
+  [
+    {
+      heading: "Product",
+      links: [
+        { label: "Watch Demo", href: "/demo" },
+        { label: "Data Sources", href: "/data-sources" },
+        { label: "Security", href: "/security" },
+        { label: "Cloud", href: "/cloud" },
+        { label: "Roadmap", href: "/roadmap" },
+        { label: "What’s New", href: "/releases" },
+      ],
+    },
+    {
+      heading: "Pricing",
+      links: [
+        { label: "Plans", href: "/pricing/" },
+        { label: "Open Source", href: "/start/oss/" },
+      ],
+    },
+  ],
+  [
+    {
+      heading: "Use cases",
+      links: [
+        {
+          label: "Self-Service Business Intelligence",
+          href: "/product/business-intelligence",
+        },
+        { label: "Embedded Analytics", href: "/product/embedded-analytics" },
+      ],
+    },
+    {
+      heading: "Metabase plans",
+      links: [
+        { label: "Starter and Open Source", href: "/product/starter" },
+        { label: "Pro", href: "/product/pro" },
+        { label: "Enterprise", href: "/product/enterprise" },
+      ],
+    },
+  ],
+  [
+    {
+      heading: "Features",
+      links: [
+        { label: "Metabase AI", href: "/features/metabase-ai" },
+        { label: "Query Builder", href: "/features/query-builder" },
+        { label: "Drill Through", href: "/features/drill-through" },
+        { label: "Collections", href: "/features/collections" },
+        {
+          label: "Dashboards and reporting",
+          href: "/features/analytics-dashboards",
+        },
+        { label: "SQL editor", href: "/features/sql-editor" },
+        { label: "Permissions", href: "/features/permissions" },
+        {
+          label: "Embedded analytics SDK",
+          href: "/product/embedded-analytics-sdk",
+        },
+      ],
+    },
+  ],
+  [
+    {
+      heading: "Company",
+      links: [
+        { label: "Jobs", href: "/jobs", badge: "We’re hiring!" },
+        { label: "Privacy Policies", href: "/privacy-policies" },
+        { label: "Terms of Service", href: "/terms" },
+        { label: "License", href: "/license/" },
+        {
+          label: "Brand Guidelines",
+          href: "https://drive.google.com/drive/folders/1PbjChaDs_IROrrDz4n6eqmtcDITdVBf-?usp=sharing",
+        },
+      ],
+    },
+    {
+      heading: "Support",
+      links: [
+        { label: "Documentation", href: "/docs/latest/" },
+        { label: "Help", href: "/help/" },
+        {
+          label: "Professional Services",
+          href: "/product/professional-services",
+        },
+        { label: "Status", href: "https://status.metabase.com/", status: true },
+      ],
+    },
+  ],
+  [
+    {
+      heading: "Resources",
+      links: [
+        { label: "Case Studies", href: "/case-studies" },
+        { label: "Blog", href: "/blog" },
+        { label: "Learn", href: "/learn" },
+        { label: "Community Stories", href: "/community" },
+        { label: "Partners", href: "/partners/" },
+        { label: "Example Dashboards", href: "/dashboards/" },
+      ],
+    },
+    {
+      heading: "Comparisons",
+      links: [
+        { label: "Metabase vs. Tableau", href: "/lp/metabase-vs-tableau" },
+        { label: "Metabase vs. Looker", href: "/lp/metabase-vs-looker" },
+        {
+          label: "Metabase vs. Looker Studio",
+          href: "/lp/metabase-vs-looker-studio",
+        },
+        { label: "Metabase vs. PowerBI", href: "/lp/metabase-vs-power-bi" },
+        { label: "Metabase vs. Superset", href: "/lp/metabase-vs-superset" },
+        { label: "Metabase vs. Omni", href: "/lp/metabase-vs-omni" },
+      ],
+    },
+  ],
+];
+
+const year = new Date().getUTCFullYear();
+---
+
+<div class="legacy-scope">
+  <div class="bootstrap">
+    <footer class="site-footer" data-site-footer>
+      <div class="site-footer-inner">
+        <div class="site-footer-cols">
+          {columns.map((groups) => (
+            <div class="site-footer-col">
+              {groups.map((group) => (
+                <div class="site-footer-group">
+                  <span class="site-footer-heading">{group.heading}</span>
+                  {group.links.map((link) => (
+                    <a href={link.href}>
+                      {link.label}
+                      {link.badge && (
+                        <span class="site-footer-badge">{link.badge}</span>
+                      )}
+                      {link.status && (
+                        <span
+                          class="site-footer-status-dot status-circle"
+                          aria-hidden="true"
+                        />
+                      )}
+                    </a>
+                  ))}
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div class="site-footer-bottom">
+        <div class="site-footer-brand">
+          <a href="/" aria-label="Metabase home">
+            <div class="MB-Logo-small"></div>
+          </a>
+          <span>© Metabase {year}</span>
+        </div>
+        <div class="site-footer-social">
+          <a
+            href="https://www.youtube.com/channel/UCvg53nhM-xPUiFGqDJDhjaw"
+            target="_blank"
+            rel="noopener"
+            aria-label="YouTube"
+          >
+            <Youtube fill="#8D93A5" />
+          </a>
+          <a
+            href="https://github.com/metabase"
+            target="_blank"
+            rel="noopener"
+            aria-label="GitHub"
+          >
+            <Github width="24" height="24" fill="#8D93A5" />
+          </a>
+          <a
+            href="https://x.com/metabase"
+            target="_blank"
+            rel="noopener"
+            aria-label="X"
+          >
+            <TwitterX fill="#8D93A5" />
+          </a>
+          <a
+            href="https://www.linkedin.com/company/metabase/"
+            target="_blank"
+            rel="noopener"
+            aria-label="LinkedIn"
+          >
+            <Linkedin width="28" height="28" fill="#8D93A5" />
+          </a>
+        </div>
+      </div>
+    </footer>
+  </div>
+</div>
+
+<script>
+  function initFooters(root: ParentNode = document) {
+    root
+      .querySelectorAll<HTMLElement>("[data-site-footer]")
+      .forEach((footer) => {
+        if (footer.dataset.initialized === "true") return;
+        footer.dataset.initialized = "true";
+
+        if (
+          new URLSearchParams(window.location.search).get("hide_nav") === "true"
+        ) {
+          footer
+            .querySelector<HTMLElement>(".site-footer-cols")
+            ?.setAttribute("hidden", "");
+        }
+
+        const circles = footer.querySelectorAll<HTMLElement>(".status-circle");
+        if (!circles.length) return;
+
+        fetch("https://status.metabase.com/")
+          .then((response) => response.text())
+          .then((html) => {
+            const status = new DOMParser()
+              .parseFromString(html, "text/html")
+              .querySelector(".page-status");
+            if (!status) return;
+            let color = "#84BB4C";
+            if (status.matches(".status-minor, .status-major")) {
+              color = "#F9CF48";
+            } else if (status.classList.contains("status-critical")) {
+              color = "#ED6E6E";
+            } else if (status.classList.contains("status-maintenance")) {
+              color = "#509EE3";
+            }
+            circles.forEach((circle) => (circle.style.backgroundColor = color));
+          })
+          .catch((error: unknown) => {
+            window.Sentry?.captureException?.(error);
+          });
+      });
+  }
+
+  initFooters();
+</script>

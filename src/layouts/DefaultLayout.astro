@@ -1,6 +1,6 @@
 ---
-import StaticFooter from "@/components/chrome/StaticFooter.astro";
-import StaticHeader from "@/components/chrome/StaticHeader.astro";
+import Footer from "@/components/chrome/Footer.astro";
+import Header from "@/components/chrome/Header.astro";
 import LiquidInclude from "@/components/LiquidInclude.astro";
 import { getLiquidRenderer } from "@/lib/liquid/liquidRenderer";
 
@@ -23,7 +23,7 @@ const currentDocsVersion = await lq.render("{{ site.docs_version }}");
   <LiquidInclude lq={lq} src="head.html" />
 
   <body>
-    <StaticHeader />
+    <Header />
 
     <div class="MB-Documentation MB-Page ZoomImages">
       {page.version && page.version !== currentDocsVersion && (
@@ -39,7 +39,7 @@ const currentDocsVersion = await lq.render("{{ site.docs_version }}");
 
       <slot />
     </div>
-    <StaticFooter />
+    <Footer />
 
     <script
       is:inline

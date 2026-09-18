@@ -1,0 +1,834 @@
+---
+import Balloon from "@/icons/chrome/balloon-rounded.svg";
+import Book from "@/icons/chrome/book.svg";
+import Box from "@/icons/chrome/box.svg";
+import CloudOrSelfHosted from "@/icons/chrome/cloud-or-self-hosted.svg";
+import CloudOutline from "@/icons/chrome/cloud-outline.svg";
+import CsvUpload from "@/icons/chrome/csv-upload.svg";
+import DataSources from "@/icons/chrome/data-sources.svg";
+import DataStudio from "@/icons/chrome/data-studio.svg";
+import EmbeddedSdk from "@/icons/chrome/embedded-analytics-sdk.svg";
+import Github from "@/icons/chrome/github-icon.svg";
+import Administration from "@/icons/chrome/gridded-circles/administration.svg";
+import Embedding from "@/icons/chrome/gridded-circles/embedding.svg";
+import Querying from "@/icons/chrome/gridded-circles/querying.svg";
+import Hamburger from "@/icons/chrome/hamburger.svg";
+import Heart from "@/icons/chrome/heart.svg";
+import InteractiveDashboards from "@/icons/chrome/interactive-dashboards.svg";
+import Learn from "@/icons/chrome/learn.svg";
+import MagnifyingGlass from "@/icons/chrome/magnifying-glass.svg";
+import Chevron from "@/icons/chrome/main-nav-chevron.svg";
+import MapIcon from "@/icons/chrome/map.svg";
+import MetabaseWordmark from "@/icons/chrome/metabase-wordmark.svg";
+import Metabot from "@/icons/chrome/metabot-icon.svg";
+import Model from "@/icons/chrome/model.svg";
+import Person from "@/icons/chrome/person-in-circle.svg";
+import Play from "@/icons/chrome/play-outline-boxed.svg";
+import PlayOutline from "@/icons/chrome/play-outline.svg";
+import Ribbon from "@/icons/chrome/ribbon.svg";
+import Rows from "@/icons/chrome/rows.svg";
+import Sandbox from "@/icons/chrome/sandbox.svg";
+import SecureShieldOutline from "@/icons/chrome/secure-shield-outline.svg";
+import StarOutline from "@/icons/chrome/star-outline.svg";
+import Stars from "@/icons/chrome/stars.svg";
+import Support from "@/icons/chrome/support-bubble.svg";
+import UsageAnalytics from "@/icons/chrome/usage-analytics.svg";
+import View from "@/icons/chrome/view.svg";
+import WhiteLabel from "@/icons/chrome/white-label.svg";
+import { formatGithubStars, getGithubStars } from "@/lib/github/getGithubStars";
+import NavLink, { type Props as NavLinkProps } from "./NavLink.astro";
+
+export interface Props {
+  hideMenu?: boolean;
+  scrollable?: boolean;
+  checkoutHref?: string;
+}
+
+const {
+  hideMenu = false,
+  scrollable = false,
+  checkoutHref = "https://store.metabase.com/checkout",
+} = Astro.props;
+
+const showPromoBanner = false;
+const githubStars = formatGithubStars(await getGithubStars());
+
+const featureColumns: NavLinkProps[][] = [
+  [
+    { title: "Metabase AI", href: "/features/metabase-ai", icon: Metabot },
+    {
+      title: "Data Studio",
+      href: "/product/data-studio",
+      icon: DataStudio,
+      badge: "New",
+    },
+    {
+      title: "Dashboards and reporting",
+      href: "/features/analytics-dashboards",
+      icon: InteractiveDashboards,
+    },
+    {
+      title: "Query builder",
+      href: "/features/query-builder",
+      icon: CloudOrSelfHosted,
+    },
+    {
+      title: "Data segregation",
+      href: "/features/data-segregation",
+      icon: Sandbox,
+    },
+    {
+      title: "Usage analytics",
+      href: "/features/usage-analytics",
+      icon: UsageAnalytics,
+    },
+  ],
+  [
+    {
+      title: "Embedded analytics SDK",
+      href: "/product/embedded-analytics-sdk",
+      icon: EmbeddedSdk,
+    },
+    {
+      title: "White-label analytics",
+      href: "/features/white-label-analytics",
+      icon: WhiteLabel,
+    },
+    {
+      title: "Drill-through",
+      href: "/features/drill-through",
+      icon: MagnifyingGlass,
+    },
+    { title: "SQL editor", href: "/features/sql-editor", icon: Rows },
+    { title: "Permissions", href: "/features/permissions", icon: View },
+    { title: "CSV upload", href: "/product/csv-uploads", icon: CsvUpload },
+  ],
+];
+
+const mobileFeatures: NavLinkProps[] = [
+  ...featureColumns.flat(),
+  { title: "Semantic layer", href: "/features/semantic-layer", icon: Model },
+];
+
+const resourceLinks: NavLinkProps[] = [
+  {
+    title: "Blog",
+    description: "News, updates, and ideas",
+    href: "/blog",
+    icon: Ribbon,
+  },
+  {
+    title: "Events",
+    description: "Join a live event or watch on demand",
+    href: "/events",
+    icon: Play,
+  },
+  {
+    title: "Customers",
+    description: "Real companies, real data, real stories",
+    href: "/case-studies",
+    icon: Heart,
+  },
+  {
+    title: "Discussion",
+    description: "Share and connect with other users",
+    href: "https://discourse.metabase.com/",
+    icon: Balloon,
+  },
+  {
+    title: "Professional Services",
+    description: "Extra help from our team",
+    href: "/product/professional-services",
+    icon: Person,
+  },
+  {
+    title: "Metabase Experts",
+    description: "Find a local expert",
+    href: "/partners/",
+    icon: Support,
+  },
+];
+---
+
+<div class="legacy-scope">
+  <header
+    class:list={[
+      "bootstrap",
+      scrollable ? "scrollable" : "sticky",
+      !showPromoBanner && "promo-banner-hidden",
+    ]}
+  >
+    <div
+      class:list={[
+        "navigation-header bg-neutral-white",
+        !showPromoBanner && "promo-banner-hidden",
+      ]}
+      data-navbar
+    >
+      <div class="container">
+        <div class="row flex-grow-1 flex-nowrap">
+          <div
+            class:list={[
+              "home-link col-xs-4 d-flex align-items-center",
+              hideMenu ? "col-lg-6" : "col-lg-2",
+            ]}
+          >
+            <a
+              href="/"
+              aria-label="Metabase home"
+              class="d-flex align-items-center"
+            >
+              <MetabaseWordmark />
+            </a>
+          </div>
+
+          {!hideMenu && (
+            <div class="submenus-container">
+              <div class="hidden" id="hover-highlight" />
+
+              <div
+                class="Button btn btn-transparent button-desktop px-3 py-2"
+                id="product-nav-button-desktop"
+                tabindex="0"
+                role="button"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                <div class="fs-13 d-flex align-items-center">
+                  Product <Chevron />
+                </div>
+                <div class="fw-normal text-start" id="product-nav-menu-wrapper">
+                  <div class="nav-menu overflow-hidden">
+                    <div class="button-style-link-container">
+                      <a
+                        href="/product/business-intelligence"
+                        id="graph-bars-container"
+                      >
+                        <div>
+                          <div id="graph-bars">
+                            {Array.from({ length: 6 }, () => (
+                              <div />
+                            ))}
+                          </div>
+                          <div>
+                            <h6>Business Intelligence</h6>
+                            <p>Self-service analytics for your team</p>
+                          </div>
+                        </div>
+                      </a>
+                      <a
+                        href="/product/embedded-analytics"
+                        id="embed-animation-container"
+                      >
+                        <div>
+                          <div id="embed-animation">
+                            <img
+                              src="/images/navigation-header/embed.svg"
+                              alt=""
+                            />
+                          </div>
+                          <div>
+                            <h6>Embedded Analytics</h6>
+                            <p>Fast, flexible customer-facing analytics</p>
+                          </div>
+                        </div>
+                      </a>
+                    </div>
+                    <div class="menu-footer buttons">
+                      <a href="/data-sources">
+                        <DataSources /> Data sources
+                      </a>
+                      <a href="/security">
+                        <SecureShieldOutline /> Security
+                      </a>
+                      <a href="/cloud">
+                        <CloudOutline /> Cloud
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class="Button btn btn-transparent button-desktop px-3 py-2"
+                id="features-nav-button-desktop"
+                tabindex="0"
+                role="button"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                <div class="fs-13 d-flex align-items-center">
+                  <a href="/features">Features</a>
+                  <Chevron />
+                </div>
+                <div
+                  class="fw-normal text-start"
+                  id="features-nav-menu-wrapper"
+                >
+                  <div class="nav-menu overflow-hidden">
+                    <div class="d-flex flex-row">
+                      {featureColumns.map((links) => (
+                        <div class="menu-links-wrapper">
+                          {links.map((link) => (
+                            <NavLink {...link} />
+                          ))}
+                        </div>
+                      ))}
+                    </div>
+                    <div class="menu-footer buttons">
+                      <a href="/releases">
+                        <Stars /> What’s new
+                      </a>
+                      <a href="/roadmap">
+                        <Box /> Roadmap
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class="Button btn btn-transparent button-desktop px-3 py-2"
+                id="docs-nav-button-desktop"
+                tabindex="0"
+                role="button"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                <div class="fs-13 d-flex align-items-center">
+                  Docs <Chevron />
+                </div>
+                <div class="fw-normal text-start" id="docs-nav-menu-wrapper">
+                  <div class="nav-menu overflow-hidden">
+                    <div class="button-style-link-container">
+                      <a href="/docs/latest/">
+                        <div>
+                          <Book color="#509EE3" />
+                        </div>
+                        <div>
+                          <h6>Documentation</h6>
+                          <p>The Metabase manual</p>
+                        </div>
+                      </a>
+                      <a href="/learn">
+                        <div>
+                          <img src="/images/icons/Type=Learn.svg" alt="" />
+                        </div>
+                        <div>
+                          <h6>Learn</h6>
+                          <p>Guides and tutorials</p>
+                        </div>
+                      </a>
+                    </div>
+                    <div>
+                      <div>
+                        <span class="menu-heading">Getting Started</span>
+                        <a href="/learn/metabase-basics/getting-started">
+                          <div>
+                            <Querying />
+                          </div>
+                          <div>
+                            <p>Querying and Dashboards</p>
+                            <p>Everyone exploring and analyzing data</p>
+                          </div>
+                        </a>
+                        <a href="/learn/metabase-basics/embedding/overview">
+                          <div>
+                            <Embedding />
+                          </div>
+                          <div>
+                            <p>Embedding</p>
+                            <p>Developers building in-product analytics</p>
+                          </div>
+                        </a>
+                        <a href="/learn/metabase-basics/administration/administration-and-operation/guide">
+                          <div>
+                            <Administration />
+                          </div>
+                          <div>
+                            <p>Administration</p>
+                            <p>People running their company’s instance</p>
+                          </div>
+                        </a>
+                      </div>
+                      <div>
+                        <span class="menu-heading">Guides</span>
+                        <a href="/docs/latest/installation-and-operation/installing-metabase">
+                          Installing Metabase
+                        </a>
+                        <a href="/docs/latest/databases/connecting">
+                          Adding a database
+                        </a>
+                        <a href="/docs/latest/questions/introduction">
+                          Asking questions
+                        </a>
+                        <a href="/docs/latest/dashboards/introduction">
+                          Creating a dashboard
+                        </a>
+                        <a href="/docs/latest/troubleshooting-guide/">
+                          Solving common problems
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class="Button btn btn-transparent button-desktop px-3 py-2"
+                id="resources-nav-button-desktop"
+                tabindex="0"
+                role="button"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                <div class="fs-13 d-flex align-items-center">
+                  Resources <Chevron />
+                </div>
+                <div
+                  class="fw-normal text-start"
+                  id="resources-nav-menu-wrapper"
+                >
+                  <div class="nav-menu overflow-hidden">
+                    <div
+                      class="nav-menu d-flex flex-row"
+                      id="resources-nav-menu-desktop"
+                    >
+                      <div class="menu-links-wrapper">
+                        {resourceLinks.map((link) => (
+                          <NavLink {...link} />
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class="Button btn btn-transparent button-desktop px-3 py-2"
+                id="pricing-nav-button-desktop"
+                tabindex="0"
+                role="button"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                <div class="fs-13 d-flex align-items-center">
+                  Pricing <Chevron />
+                </div>
+                <div class="fw-normal text-start" id="pricing-nav-menu-wrapper">
+                  <div class="nav-menu overflow-hidden">
+                    <div class="button-style-link-container">
+                      <a href="/pricing?use_case=bi" data-use-case-switcher>
+                        <div class="flex-column justify-content-between flex">
+                          <div class="mb-4">
+                            <img src="/docs/images/pricing-bi.svg" alt="" />
+                          </div>
+                          <div>
+                            <h6>Business Intelligence pricing</h6>
+                            <p>Self-service analytics for your team</p>
+                          </div>
+                        </div>
+                      </a>
+                      <a href="/pricing?use_case=ea" data-use-case-switcher>
+                        <div class="flex-column justify-content-between flex">
+                          <div class="mb-4">
+                            <img src="/docs/images/pricing-ea.svg" alt="" />
+                          </div>
+                          <div>
+                            <h6>Embedded Analytics pricing</h6>
+                            <p>Fast, flexible customer-facing analytics</p>
+                          </div>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          <div
+            class:list={[
+              "nav-actions col-xs-8 d-flex align-items-center justify-content-end",
+              hideMenu ? "col-lg-6" : "col-lg-3",
+            ]}
+          >
+            {!hideMenu && (
+              <a
+                class="nav-github-stars d-none d-lg-flex"
+                href="https://github.com/metabase/metabase"
+                target="_blank"
+                rel="noopener"
+                aria-label="Metabase on GitHub"
+              >
+                <StarOutline />
+                <span class="github-stars">{githubStars}</span>
+                <Github />
+              </a>
+            )}
+            {!hideMenu && (
+              <a
+                class="fs-13 d-none d-lg-block Button btn btn-transparent px-3 py-2"
+                href="/cloud/login"
+              >
+                Log in
+              </a>
+            )}
+            <a
+              class="fs-13 Button btn btn-primary rounded-3 ms-lg-2"
+              href={checkoutHref}
+              id="get-started-btn"
+            >
+              Get started
+            </a>
+            {!hideMenu && (
+              <button
+                class="d-lg-none rounded-3 ms-2 p-3"
+                id="mobile-nav-hamburger-wrapper"
+                type="button"
+                aria-controls="nav-menu-mobile"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+              >
+                <Hamburger />
+              </button>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {!hideMenu && (
+        <div
+          class="col-xs-12 d-flex d-none d-lg-none flex-column bg-neutral-white p-0"
+          id="nav-menu-mobile"
+        >
+          <input
+            autocomplete="off"
+            class="nav-button-input"
+            id="product-nav-button-mobile"
+            type="checkbox"
+          />
+          <label
+            class="nav-button-mobile hover-pointer user-select-none d-flex justify-content-between align-items-center px-7 py-6"
+            for="product-nav-button-mobile"
+          >
+            <span class="h4 m-0">Product</span>
+            <Chevron />
+          </label>
+          <div id="product-dropdown-mobile">
+            <div class="button-style-link-container">
+              <a
+                href="/product/business-intelligence"
+                id="graph-bars-container"
+              >
+                <div>
+                  <div id="graph-bars">
+                    {Array.from({ length: 6 }, () => (
+                      <div />
+                    ))}
+                  </div>
+                  <div>
+                    <h6>Business Intelligence</h6>
+                    <p>Self-service analytics for your team</p>
+                  </div>
+                </div>
+              </a>
+              <a
+                href="/product/embedded-analytics"
+                id="embed-animation-container"
+              >
+                <div>
+                  <div id="embed-animation">
+                    <img src="/images/navigation-header/embed.svg" alt="" />
+                  </div>
+                  <div>
+                    <h6>Embedded Analytics</h6>
+                    <p>Fast, flexible customer-facing analytics</p>
+                  </div>
+                </div>
+              </a>
+            </div>
+            <span class="menu-heading mobile">Platform</span>
+            <NavLink
+              title="Data Sources"
+              href="/data-sources"
+              icon={DataSources}
+            />
+            <NavLink
+              title="Security"
+              href="/security"
+              icon={SecureShieldOutline}
+            />
+            <NavLink title="Cloud" href="/cloud" icon={CloudOutline} />
+            <span class="menu-heading mobile">Demo</span>
+            <a class="menu-footer" href="/demo">
+              <div class="menu-footer-text-wrapper">
+                <PlayOutline width="24" height="24" stroke="#509EE3" />
+                <p>Watch 5-minute demo</p>
+              </div>
+            </a>
+          </div>
+          <input
+            autocomplete="off"
+            class="nav-button-input"
+            id="features-nav-button-mobile"
+            type="checkbox"
+          />
+          <label
+            class="nav-button-mobile hover-pointer user-select-none d-flex justify-content-between align-items-center px-7 py-6"
+            for="features-nav-button-mobile"
+          >
+            <span class="h4 m-0">Features</span>
+            <Chevron />
+          </label>
+          <div id="features-dropdown-mobile">
+            {mobileFeatures.map((link) => (
+              <NavLink {...link} />
+            ))}
+            <span class="menu-heading mobile">Updates</span>
+            <NavLink title="What’s new" href="/releases" icon={Stars} />
+            <NavLink title="Roadmap" href="/roadmap" icon={MapIcon} />
+          </div>
+          <input
+            autocomplete="off"
+            class="nav-button-input"
+            id="docs-nav-button-mobile"
+            type="checkbox"
+          />
+          <label
+            class="nav-button-mobile hover-pointer user-select-none d-flex justify-content-between align-items-center px-7 py-6"
+            for="docs-nav-button-mobile"
+          >
+            <span class="h4 m-0">Docs</span>
+            <Chevron />
+          </label>
+          <div id="docs-dropdown-mobile">
+            <div>
+              <a class="menu-link" href="/docs/latest/">
+                <Book color="#509EE3" />
+                <div>
+                  <span class="menu-link-heading">Documentation</span>
+                  <p class="menu-link-description">The Metabase manual</p>
+                </div>
+              </a>
+              <a class="menu-link" href="/learn">
+                <Learn />
+                <div>
+                  <span class="menu-link-heading">Learn</span>
+                  <p class="menu-link-description">Guides and tutorials</p>
+                </div>
+              </a>
+            </div>
+            <div>
+              <div>
+                <span class="menu-heading">Getting Started</span>
+                <a href="/learn/metabase-basics/getting-started">
+                  <div>
+                    <Querying />
+                  </div>
+                  <div>
+                    <p>Querying and Dashboards</p>
+                    <p>Everyone exploring and analyzing data</p>
+                  </div>
+                </a>
+                <a href="/learn/metabase-basics/embedding/overview">
+                  <div>
+                    <Embedding />
+                  </div>
+                  <div>
+                    <p>Embedding</p>
+                    <p>Developers building in-product analytics</p>
+                  </div>
+                </a>
+                <a href="/learn/metabase-basics/administration/administration-and-operation/guide">
+                  <div>
+                    <Administration />
+                  </div>
+                  <div>
+                    <p>Administration</p>
+                    <p>People running their company’s instance</p>
+                  </div>
+                </a>
+              </div>
+              <div>
+                <span class="menu-heading">Guides</span>
+                <a href="/docs/latest/installation-and-operation/installing-metabase">
+                  Installing Metabase
+                </a>
+                <a href="/docs/latest/databases/connecting">
+                  Adding a database
+                </a>
+                <a href="/docs/latest/questions/introduction">
+                  Asking questions
+                </a>
+                <a href="/docs/latest/dashboards/introduction">
+                  Creating a dashboard
+                </a>
+                <a href="/docs/latest/troubleshooting-guide/">
+                  Solving common problems
+                </a>
+              </div>
+            </div>
+          </div>
+          <input
+            autocomplete="off"
+            class="nav-button-input"
+            id="resources-nav-button-mobile"
+            type="checkbox"
+          />
+          <label
+            class="nav-button-mobile hover-pointer user-select-none d-flex justify-content-between align-items-center px-7 py-6"
+            for="resources-nav-button-mobile"
+          >
+            <span class="h4 m-0">Resources</span>
+            <Chevron />
+          </label>
+          <div id="resources-dropdown-mobile">
+            {resourceLinks.map((link) => (
+              <NavLink {...link} description={undefined} />
+            ))}
+          </div>
+          <input
+            autocomplete="off"
+            class="nav-button-input"
+            id="pricing-nav-button-mobile"
+            type="checkbox"
+          />
+          <label
+            class="nav-button-mobile hover-pointer user-select-none d-flex justify-content-between align-items-center px-7 py-6"
+            for="pricing-nav-button-mobile"
+          >
+            <span class="h4 m-0">Pricing</span>
+            <Chevron />
+          </label>
+          <div id="pricing-dropdown-mobile">
+            <div class="button-style-link-container">
+              <a href="/pricing?use_case=bi" data-use-case-switcher>
+                <div class="flex">
+                  <div>
+                    <img src="/docs/images/pricing-bi.svg" alt="" />
+                  </div>
+                  <div>
+                    <h6>Business Intelligence pricing</h6>
+                    <p>Self-service analytics for your team</p>
+                  </div>
+                </div>
+              </a>
+              <a href="/pricing?use_case=ea" data-use-case-switcher>
+                <div class="flex">
+                  <div>
+                    <img src="/docs/images/pricing-ea.svg" alt="" />
+                  </div>
+                  <div>
+                    <h6>Embedded Analytics pricing</h6>
+                    <p>Fast, flexible customer-facing analytics</p>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+          <a
+            class="d-flex justify-content-center bg-neutral-99 py-8"
+            href="/cloud/login"
+            id="mobile-login-button"
+          >
+            <span class="h4 mb-0">Log in</span>
+          </a>
+        </div>
+      )}
+    </div>
+  </header>
+</div>
+
+<script>
+  const OPEN_CLASS = "open";
+
+  function setOpen(button: HTMLElement, open: boolean) {
+    button.classList.toggle(OPEN_CLASS, open);
+    button.setAttribute("aria-expanded", String(open));
+  }
+
+  function initNavbar(root: ParentNode = document) {
+    root.querySelectorAll<HTMLElement>("[data-navbar]").forEach((navbar) => {
+      if (navbar.dataset.initialized === "true") return;
+      navbar.dataset.initialized = "true";
+
+      const desktopButtons = [
+        ...navbar.querySelectorAll<HTMLElement>(".button-desktop"),
+      ];
+      desktopButtons.forEach((button) => {
+        button.addEventListener("keydown", (event) => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            const open = !button.classList.contains(OPEN_CLASS);
+            desktopButtons.forEach((item) =>
+              setOpen(item, item === button && open),
+            );
+          }
+          if (event.key === "Escape") setOpen(button, false);
+        });
+      });
+
+      const hamburger = navbar.querySelector<HTMLElement>(
+        "#mobile-nav-hamburger-wrapper",
+      );
+      const mobileMenu = navbar.querySelector<HTMLElement>("#nav-menu-mobile");
+      const resizeMobileMenu = () => {
+        if (mobileMenu)
+          mobileMenu.style.height = `${window.innerHeight - 72}px`;
+      };
+
+      hamburger?.addEventListener("click", () => {
+        const open = !hamburger.classList.contains(OPEN_CLASS);
+        hamburger.classList.toggle(OPEN_CLASS, open);
+        hamburger.setAttribute("aria-expanded", String(open));
+        mobileMenu?.classList.toggle("d-none", !open);
+        if (open) resizeMobileMenu();
+      });
+
+      window.addEventListener("resize", resizeMobileMenu);
+      resizeMobileMenu();
+
+      const highlight = navbar.querySelector<HTMLElement>("#hover-highlight");
+      if (highlight) {
+        window.setTimeout(() => highlight.classList.remove("hidden"), 200);
+        desktopButtons.forEach((button) =>
+          button.addEventListener("mouseenter", () => {
+            highlight.style.left = `${button.offsetLeft}px`;
+            highlight.style.width = `${button.offsetWidth}px`;
+            highlight.style.height = `${button.offsetHeight}px`;
+          }),
+        );
+      }
+
+      if (
+        new URLSearchParams(window.location.search).get("hide_nav") === "true"
+      ) {
+        navbar
+          .closest<HTMLElement>("header.bootstrap")
+          ?.setAttribute("hidden", "");
+      }
+    });
+  }
+
+  initNavbar();
+</script>
+
+<style>
+  .home-link svg {
+    flex-shrink: 0;
+    height: clamp(24px, 7vw, 32px);
+    max-width: none;
+    width: auto;
+  }
+
+  #mobile-nav-hamburger-wrapper {
+    appearance: none;
+    background-color: transparent;
+    border: 0;
+  }
+
+  .legacy-scope {
+    display: contents;
+  }
+</style>
