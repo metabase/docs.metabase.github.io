@@ -205,7 +205,14 @@ async function extract({ name, tree }: { name: string; tree: string }) {
   await rm(stamp, { force: true }); // an interrupted run must not look complete
   await rm(dest, { recursive: true, force: true });
   await mkdir(dest, { recursive: true });
-  await $`git -C ${CACHE_DIR} archive ${seedRef(name)} docs | tar -x --strip-components=1 -C ${dest}`.quiet();
+
+  // Not piped: a pipeline only reports the last command's exit code, so a
+  // failed `git archive` would leave a truncated tree that looks complete.
+  const tarball = `${dest}.tar`;
+  await git("archive", "-o", tarball, seedRef(name), "docs");
+  await $`tar -x -f ${tarball} --strip-components=1 -C ${dest}`.quiet();
+  await rm(tarball);
+
   await mkdir(STAMP_DIR, { recursive: true });
   await writeFile(stamp, tree);
 }
