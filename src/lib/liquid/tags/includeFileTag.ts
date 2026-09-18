@@ -119,7 +119,17 @@ export const registerIncludeFileTag = (engine: Liquid) => {
         params[key] = value;
       }
 
-      let text = fs.readFileSync(path.join(ROOT, filePath), "utf8");
+      // TODO: DO NOT MERGE
+      // Changed error->warning for testing only
+      let text: string;
+      try {
+        text = fs.readFileSync(path.join(ROOT, filePath), "utf8");
+      } catch (err) {
+        if ((err as NodeJS.ErrnoException).code !== "ENOENT") throw err;
+        console.warn(`[liquid] include_file not found: ${filePath}`);
+        return "";
+      }
+
       text = params.snippet
         ? pickSnippet(text, params.snippet)
         : removeAllSnippets(text);
