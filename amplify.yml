@@ -9,7 +9,7 @@ frontend:
         - bun ci
     build:
       commands:
-        - export NODE_ENV=$([ "$AWS_BRANCH" = "master" ] && echo "production" || echo "staging") && bun run build
+        - export NODE_ENV=$([ "$AWS_BRANCH" = "master" ] && echo "production" || echo "staging") && bun script/seed-docs-history.ts all && bun run build
   artifacts:
     baseDirectory: _site
     files:
