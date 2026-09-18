@@ -79,6 +79,10 @@
  * centered single-column layout is kept as-is. */
 @media screen and (min-width: 992px) {
   .bootstrap .learn.docs {
+    /* Width of the article's paragraph text, matching the measure on Stripe's
+     * docs. The centered box below is derived from it. */
+    --docs-article-width: 722px;
+
     /* The bundle painted #fafbfe only to the right of the centered box via a
      * box-shadow; with the grid full-bleed, paint it on the grid itself so the
      * gap on either side of the centered article matches. */
@@ -88,15 +92,17 @@
     max-width: none;
   }
 
-  /* Keep today's widest article width (1280 container − 226 nav) and center it
-   * inside the 1fr grid column. .learn__post is itself the `1fr 200px` grid
-   * holding the article AND the "On this page" TOC, so centering it as one box
-   * keeps the TOC hugging the article's right edge exactly as it does today.
+  /* Center the article and TOC as one box inside the 1fr grid column.
+   * .learn__post is itself the `1fr 200px` grid holding the article text AND
+   * the "On this page" TOC, so its width is the text measure plus the fixed
+   * pieces from css/styles.css (box-sizing is border-box, so padding counts):
+   *   72px article padding-left + text + 72px content padding-right + 200px TOC
+   * Centering it as one box keeps the TOC hugging the article's right edge.
    * .top-bar (breadcrumb) is absolutely positioned inside .learn__post, so it
    * follows automatically. */
   .bootstrap .learn.docs .learn__post {
     margin: 0 auto;
-    max-width: 1054px;
+    max-width: calc(72px + var(--docs-article-width) + 72px + 200px); /* 1066px */
     width: 100%;
   }
 
