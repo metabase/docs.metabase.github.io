@@ -166,9 +166,7 @@ const year = new Date().getUTCFullYear();
           <a href="/" aria-label="Metabase home">
             <div class="MB-Logo-small"></div>
           </a>
-          <span>
-            © Metabase <span data-component="mb-copyright-year">{year}</span>
-          </span>
+          <span>© Metabase {year}</span>
         </div>
         <div class="site-footer-social">
           <a
@@ -252,13 +250,4 @@ const year = new Date().getUTCFullYear();
   }
 
   initFooters();
-</script>
-
-{/* Keep copyright year up-to-date for pages that are rarely rebuilt (e.g. v0.44) */}
-<script>
-  document
-    .querySelectorAll('[data-component="mb-copyright-year"]')
-    .forEach((el) => {
-      el.innerHTML = `${new Date().getUTCFullYear()}`;
-    });
 </script>

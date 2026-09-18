@@ -42,19 +42,16 @@ export interface Props {
   hideMenu?: boolean;
   scrollable?: boolean;
   checkoutHref?: string;
-  includeGithubStars?: boolean;
 }
 
 const {
   hideMenu = false,
   scrollable = false,
   checkoutHref = "https://store.metabase.com/checkout",
-  includeGithubStars,
 } = Astro.props;
 
 const showPromoBanner = false;
-const githubStars =
-  includeGithubStars && formatGithubStars(await getGithubStars());
+const githubStars = formatGithubStars(await getGithubStars());
 
 const featureColumns: NavLinkProps[][] = [
   [
@@ -456,7 +453,7 @@ const resourceLinks: NavLinkProps[] = [
               hideMenu ? "col-lg-6" : "col-lg-3",
             ]}
           >
-            {!hideMenu && githubStars && (
+            {!hideMenu && (
               <a
                 class="nav-github-stars d-none d-lg-flex"
                 href="https://github.com/metabase/metabase"
