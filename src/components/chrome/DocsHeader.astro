@@ -55,16 +55,6 @@ const tabs = nav.categories.map((category) => ({
     </div>
 
     <div class="docs-header__actions">
-      <button
-        type="button"
-        class="docs-header__theme"
-        data-theme-toggle
-        aria-label="Switch to dark theme"
-        aria-pressed="false"
-      >
-        <Sun />
-        <Moon />
-      </button>
       <a class="docs-header__home" href="/">
         Metabase home
       </a>
@@ -98,6 +88,16 @@ const tabs = nav.categories.map((category) => ({
       </ul>
     )}
     <div class="docs-header__version">
+      <button
+        type="button"
+        class="docs-header__theme"
+        data-theme-toggle
+        aria-label="Switch to dark theme"
+        aria-pressed="false"
+      >
+        <Sun />
+        <Moon />
+      </button>
       <DocsVersionSelector version={version} />
     </div>
   </nav>
@@ -214,28 +214,35 @@ const tabs = nav.categories.map((category) => ({
     width: 16px;
   }
 
-  /* Same box as the Ask AI button; the icons take the button's color. */
+  /* Quiet icon button sized and styled like the version selector's
+     .version__current beside it, so the pair reads as one group in the
+     44px tabs row. The icons take the button's color. */
   .docs-header__theme {
     align-items: center;
-    background-color: var(--mb-surface);
-    border: 1px solid var(--mb-border);
+    background: none;
+    border: 0;
     border-radius: 8px;
     color: var(--mb-text-secondary);
     cursor: pointer;
     display: flex;
     flex-shrink: 0;
-    height: 40px;
+    height: 32px;
     justify-content: center;
     padding: 0;
     transition:
       background-color 0.3s ease,
       color 0.3s ease;
-    width: 40px;
+    width: 32px;
   }
 
   .docs-header__theme:hover {
-    background-color: var(--mb-surface-hover);
+    background-color: var(--mb-surface-active);
     color: var(--mb-brand);
+  }
+
+  .docs-header__theme:focus-visible {
+    outline: 2px solid var(--mb-brand);
+    outline-offset: 2px;
   }
 
   .docs-header__theme svg {
@@ -313,11 +320,13 @@ const tabs = nav.categories.map((category) => ({
     height: var(--docs-header-tabs-height);
   }
 
-  /* Pins the version selector to the far right, apart from the section tabs,
-     even when there is no tab list. */
+  /* Pins the theme toggle and version selector to the far right, apart from
+     the section tabs, even when there is no tab list. */
   .docs-header__version {
+    align-items: center;
     display: flex;
     flex-shrink: 0;
+    gap: 4px;
     margin-left: auto;
   }
 
@@ -406,13 +415,6 @@ const tabs = nav.categories.map((category) => ({
 
     .docs-header__ask {
       padding: 0 10px;
-    }
-  }
-
-  @media screen and (max-width: 480px) {
-    .docs-header__theme {
-      height: 36px;
-      width: 36px;
     }
   }
 
