@@ -35,14 +35,14 @@ const tabs = nav.categories.map((category) => ({
 
 <header class="docs-header navigation-header">
   <div class="docs-header__row docs-header__main">
-    <div class="docs-header__brand">
-      <a class="docs-header__logo" href="/" aria-label="Metabase home">
-        <MetabaseWordmark />
-      </a>
-      <a class="docs-header__docs" href={`/docs/${version}/`}>
-        Docs
-      </a>
-    </div>
+    <a
+      class="docs-header__brand"
+      href={`/docs/${version}/`}
+      aria-label="Metabase docs home"
+    >
+      <MetabaseWordmark />
+      <span class="docs-header__docs">docs</span>
+    </a>
 
     <div class="docs-header__search">
       <div id="inkeep"></div>
@@ -58,6 +58,9 @@ const tabs = nav.categories.map((category) => ({
     </div>
 
     <div class="docs-header__actions">
+      <a class="docs-header__home" href="/">
+        Metabase home
+      </a>
       <a id="get-started-btn" class="docs-header__cta" href={checkoutHref}>
         Get started
       </a>
@@ -125,27 +128,30 @@ const tabs = nav.categories.map((category) => ({
     flex: 1 1 0;
     gap: 8px;
     min-width: 0;
+    text-decoration: none;
+    transition: opacity 0.3s ease;
   }
 
-  .docs-header__logo {
-    display: flex;
+  .docs-header__brand:hover {
+    opacity: 0.75;
+  }
+
+  .docs-header__brand svg {
     flex-shrink: 0;
-  }
-
-  .docs-header__logo svg {
     height: 24px;
     max-width: none;
     width: auto;
   }
 
+  /* Matches the wordmark's "Metabase", which is Lato Bold with a 12.2px cap
+     height when the SVG renders at 24px (17px Lato). The 24px line box plus
+     1px bottom padding puts the text baseline on the wordmark's baseline. */
   .docs-header__docs {
     color: #509ee3;
-    font-size: 18px;
-    font-weight: 900;
-    letter-spacing: 0.04em;
-    line-height: 1;
-    text-decoration: none;
-    text-transform: uppercase;
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 24px;
+    padding-bottom: 1px;
   }
 
   .docs-header__search {
@@ -167,7 +173,7 @@ const tabs = nav.categories.map((category) => ({
     align-items: center;
     background-color: #fff;
     border: 1px solid #e4ecfb;
-    border-radius: 6px;
+    border-radius: 8px;
     color: #5a6072;
     cursor: pointer;
     display: flex;
@@ -193,9 +199,31 @@ const tabs = nav.categories.map((category) => ({
   }
 
   .docs-header__actions {
+    align-items: center;
     display: flex;
     flex: 1 1 0;
+    gap: 8px;
     justify-content: flex-end;
+  }
+
+  /* Quiet text button back to the marketing site. Same type size, height,
+     and padding as the CTA beside it so the pair reads as one button group. */
+  .docs-header__home {
+    border-radius: 8px;
+    color: #5a6072;
+    font-size: 14px;
+    line-height: 20px;
+    padding: 10px 14px;
+    text-decoration: none;
+    transition:
+      background-color 0.3s ease,
+      color 0.3s ease;
+    white-space: nowrap;
+  }
+
+  .docs-header__home:hover {
+    background-color: #e4ecfb;
+    color: #509ee3;
   }
 
   .docs-header__cta {
@@ -251,6 +279,7 @@ const tabs = nav.categories.map((category) => ({
   .docs-header__tab {
     align-items: center;
     border-bottom: 2px solid transparent;
+    border-radius: 8px 8px 0 0;
     color: #5a6072;
     display: flex;
     font-size: 14px;
@@ -258,12 +287,14 @@ const tabs = nav.categories.map((category) => ({
     padding: 0 8px;
     text-decoration: none;
     transition:
+      background-color 0.3s ease,
       color 0.3s ease,
       border-color 0.3s ease;
     white-space: nowrap;
   }
 
   .docs-header__tab:hover {
+    background-color: #f9fbfc;
     color: #509ee3;
   }
 
@@ -271,6 +302,18 @@ const tabs = nav.categories.map((category) => ({
     border-bottom-color: #509ee3;
     color: #509ee3;
     font-weight: 700;
+  }
+
+  .docs-header a:focus-visible,
+  .docs-header button:focus-visible {
+    border-radius: 8px;
+    outline: 2px solid #509ee3;
+    outline-offset: 2px;
+  }
+
+  /* Tabs fill the 44px row, so keep the ring inside it to avoid clipping. */
+  .docs-header__tab:focus-visible {
+    outline-offset: -2px;
   }
 
   @media screen and (max-width: 992px) {
@@ -285,6 +328,7 @@ const tabs = nav.categories.map((category) => ({
     }
 
     .docs-header__docs,
+    .docs-header__home,
     .docs-header__ask-label {
       display: none;
     }
