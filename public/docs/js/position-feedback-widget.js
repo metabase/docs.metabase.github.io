@@ -19,9 +19,10 @@ function resizeLearnRightSidebar() {
 
   const feedbackWidget = getFeedbackWidget();
 
-  const feedbackWidgetHeight = feedbackWidget.checkVisibility()
-    ? feedbackWidget.offsetHeight
-    : 0;
+  const feedbackWidgetHeight =
+    feedbackWidget && feedbackWidget.checkVisibility()
+      ? feedbackWidget.offsetHeight
+      : 0;
 
   const header = document.querySelector("header");
 
@@ -30,9 +31,9 @@ function resizeLearnRightSidebar() {
   // Header can be scrollable or sticky
   const bottomOfHeader = Math.max(0, header.getBoundingClientRect().bottom);
 
-  const bottomOfTopBar = document
-    .querySelector(".top-bar")
-    .getBoundingClientRect().bottom;
+  // The top bar is not rendered on the docs home page
+  const topBar = document.querySelector(".top-bar");
+  const bottomOfTopBar = topBar ? topBar.getBoundingClientRect().bottom : 0;
 
   $subNavigationContent.style.height = `calc(100vh - ${Math.max(
     bottomOfTopBar,
@@ -46,6 +47,10 @@ function maybeRestyleFeedbackWidget() {
   const extraTopPadding = 0;
 
   const feedbackWidget = getFeedbackWidget();
+
+  if (!feedbackWidget) {
+    return;
+  }
 
   const subnavigationContent = document.getElementById(
     "sub-navigation-content",

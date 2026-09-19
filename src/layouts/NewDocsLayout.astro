@@ -66,11 +66,13 @@ const version = page.latest ? "latest" : (page.version ?? "latest");
 
         <div class="learn__right-sidebar">
           <div id="sub-navigation-content">{/* Is populated via js */}</div>
-          <LiquidInclude
-            lq={lq}
-            src="shared/was-this-helpful-widget.html"
-            should_add_propose_a_change_dialog="true"
-          />
+          {!isHomePage && (
+            <LiquidInclude
+              lq={lq}
+              src="shared/was-this-helpful-widget.html"
+              should_add_propose_a_change_dialog="true"
+            />
+          )}
         </div>
       </article>
     </div>
