@@ -26,6 +26,7 @@ jobs:
           # Clear the existing site:
           rm -rf _site
           # Build the docs site:
+          bun script/seed-docs-history.ts
           script/build
       - run: bun run lint-markdown
       - run: bun run lint-styles

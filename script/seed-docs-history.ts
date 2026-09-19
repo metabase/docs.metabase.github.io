@@ -52,6 +52,7 @@ async function main() {
   }
 
   await copyLatest(config.docs_version);
+  await rm(CLONE_DIR, { recursive: true, force: true });
   console.log(`seeded ${versions.length} versions`);
 }
 
