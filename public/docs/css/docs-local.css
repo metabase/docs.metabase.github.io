@@ -1,5 +1,6 @@
-/* because stylesheets mainly live in the marketing repo, this is a subset of the styles
- * that are specific to this repo, pending a larger refactor to move all docs-specific styles into this repo. */
+/* Layout overrides for the docs on top of the vendored styles.css / main.css
+ * bundle. Colors come from docs-tokens.css; color rules for the themed docs
+ * layout live in docs-theme.css. */
 
 .version__tag {
   border-radius: 4px;
@@ -12,24 +13,19 @@
 }
 
 .version__tag--unsupported {
-  background-color: #f1f2f4;
-  color: #5a6072;
+  background-color: var(--mb-tag-bg);
+  color: var(--mb-text-secondary);
 }
 
 .version__tag--lts {
-  background-color: #f3faec;
-  color: #669438;
+  background-color: var(--mb-tag-lts-bg);
+  color: var(--mb-tag-lts-text);
 }
 
-/* Notice on docs for versions past their EOL date. The `.docs` ancestor is
- * present in both the current and legacy layouts, and matches the specificity
- * of the blockquote rules in css/styles.css and css/docs.css — this file wins
- * the tie because it's the last stylesheet in the head. */
+/* Notice on docs for versions past their EOL date. Its colors are in
+ * docs-theme.css, after the generic blockquote rule they override. */
 .docs blockquote.version-unsupported-notice {
-  background-color: #fef9e6;
-  border: 1px solid #f7be08;
   border-radius: 0.625rem;
-  color: #4c5773;
   font-size: 14px;
   line-height: 1.5;
   margin: 1.5rem 0;
@@ -75,14 +71,14 @@
     --docs-article-width: 800px;
     --docs-nav-width: 280px;
 
+    /* styles.css painted #fafbfe only right of the centered box; paint the
+     * full-bleed grid instead. */
+    background-color: var(--mb-bg);
+    box-shadow: none;
+
     /* styles.css sets 226px for the Learn sidebar; docs nav labels are
      * longer ("Dashboard heading and text cards"), so give it more room. */
     grid-template-columns: var(--docs-nav-width) 1fr;
-
-    /* styles.css painted #fafbfe only right of the centered box; paint the
-     * full-bleed grid instead. */
-    background-color: #fafbfe;
-    box-shadow: none;
     margin: 0;
     max-width: none;
   }
@@ -100,7 +96,7 @@
    * padding-top replaces the 80px styles.css reserved for the old Learn "home"
    * link, which this sidebar no longer renders. */
   .bootstrap .learn.docs #main-navigation-content.learn-left-sidebar {
-    background-color: #fff;
+    background-color: var(--mb-surface);
     padding-left: 12px;
     padding-top: 30px;
   }

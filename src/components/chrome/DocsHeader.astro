@@ -1,7 +1,9 @@
 ---
 import DocsVersionSelector from "@/components/chrome/DocsVersionSelector.astro";
 import MetabaseWordmark from "@/icons/chrome/metabase-wordmark.svg";
+import Moon from "@/icons/chrome/moon.svg";
 import Stars from "@/icons/chrome/stars.svg";
+import Sun from "@/icons/chrome/sun.svg";
 import {
   getActiveCategory,
   getLandingUrl,
@@ -53,6 +55,16 @@ const tabs = nav.categories.map((category) => ({
     </div>
 
     <div class="docs-header__actions">
+      <button
+        type="button"
+        class="docs-header__theme"
+        data-theme-toggle
+        aria-label="Switch to dark theme"
+        aria-pressed="false"
+      >
+        <Sun />
+        <Moon />
+      </button>
       <a class="docs-header__home" href="/">
         Metabase home
       </a>
@@ -107,8 +119,8 @@ const tabs = nav.categories.map((category) => ({
 
 <style>
   .docs-header {
-    background-color: #fff;
-    border-bottom: 1px solid #e4ecfb;
+    background-color: var(--mb-surface);
+    border-bottom: 1px solid var(--mb-border);
     font-family: Lato, "Helvetica Neue", Helvetica, sans-serif;
     position: sticky;
     top: 0;
@@ -151,7 +163,7 @@ const tabs = nav.categories.map((category) => ({
      height when the SVG renders at 24px (17px Lato). The 24px line box plus
      1px bottom padding puts the text baseline on the wordmark's baseline. */
   .docs-header__docs {
-    color: #509ee3;
+    color: var(--mb-brand);
     font-size: 17px;
     font-weight: 700;
     line-height: 24px;
@@ -175,10 +187,10 @@ const tabs = nav.categories.map((category) => ({
 
   .docs-header__ask {
     align-items: center;
-    background-color: #fff;
-    border: 1px solid #e4ecfb;
+    background-color: var(--mb-surface);
+    border: 1px solid var(--mb-border);
     border-radius: 8px;
-    color: #5a6072;
+    color: var(--mb-text-secondary);
     cursor: pointer;
     display: flex;
     flex-shrink: 0;
@@ -193,13 +205,62 @@ const tabs = nav.categories.map((category) => ({
   }
 
   .docs-header__ask:hover {
-    background-color: #eef6fc;
-    color: #509ee3;
+    background-color: var(--mb-surface-hover);
+    color: var(--mb-brand);
   }
 
   .docs-header__ask svg {
     height: 16px;
     width: 16px;
+  }
+
+  /* Same box as the Ask AI button; the icons take the button's color. */
+  .docs-header__theme {
+    align-items: center;
+    background-color: var(--mb-surface);
+    border: 1px solid var(--mb-border);
+    border-radius: 8px;
+    color: var(--mb-text-secondary);
+    cursor: pointer;
+    display: flex;
+    flex-shrink: 0;
+    height: 40px;
+    justify-content: center;
+    padding: 0;
+    transition:
+      background-color 0.3s ease,
+      color 0.3s ease;
+    width: 40px;
+  }
+
+  .docs-header__theme:hover {
+    background-color: var(--mb-surface-hover);
+    color: var(--mb-brand);
+  }
+
+  .docs-header__theme svg {
+    height: 18px;
+    width: 18px;
+  }
+
+  /* Sun in light mode, moon in dark mode. */
+  .docs-header__theme svg:last-child,
+  :global([data-theme="dark"]) .docs-header__theme svg:first-child {
+    display: none;
+  }
+
+  :global([data-theme="dark"]) .docs-header__theme svg:last-child {
+    display: block;
+  }
+
+  /* The wordmark's "Metabase" text is filled #5A6072 in the SVG (shared with
+     the legacy header, so the file is left alone); lift it on dark. The path
+     is :global() because Astro only scopes the svg element itself. */
+  :global([data-theme="dark"])
+    .docs-header__brand
+    svg
+    :global(path[fill="#5A6072" i]) {
+    fill: var(--mb-heading);
   }
 
   .docs-header__actions {
@@ -214,7 +275,7 @@ const tabs = nav.categories.map((category) => ({
      and padding as the CTA beside it so the pair reads as one button group. */
   .docs-header__home {
     border-radius: 8px;
-    color: #5a6072;
+    color: var(--mb-text-secondary);
     font-size: 14px;
     line-height: 20px;
     padding: 10px 14px;
@@ -226,12 +287,12 @@ const tabs = nav.categories.map((category) => ({
   }
 
   .docs-header__home:hover {
-    background-color: #e4ecfb;
-    color: #509ee3;
+    background-color: var(--mb-surface-active);
+    color: var(--mb-brand);
   }
 
   .docs-header__cta {
-    background-color: #509ee3;
+    background-color: var(--mb-brand);
     border-radius: 8px;
     color: #fff;
     font-size: 13px;
@@ -286,7 +347,7 @@ const tabs = nav.categories.map((category) => ({
     align-items: center;
     border-bottom: 2px solid transparent;
     border-radius: 8px 8px 0 0;
-    color: #5a6072;
+    color: var(--mb-text-secondary);
     display: flex;
     font-size: 14px;
     line-height: 20px;
@@ -300,20 +361,20 @@ const tabs = nav.categories.map((category) => ({
   }
 
   .docs-header__tab:hover {
-    background-color: #f9fbfc;
-    color: #509ee3;
+    background-color: var(--mb-surface-hover);
+    color: var(--mb-brand);
   }
 
   .docs-header__tab[aria-current="page"] {
-    border-bottom-color: #509ee3;
-    color: #509ee3;
+    border-bottom-color: var(--mb-brand);
+    color: var(--mb-brand);
     font-weight: 700;
   }
 
   .docs-header a:focus-visible,
   .docs-header button:focus-visible {
     border-radius: 8px;
-    outline: 2px solid #509ee3;
+    outline: 2px solid var(--mb-brand);
     outline-offset: 2px;
   }
 
@@ -345,6 +406,13 @@ const tabs = nav.categories.map((category) => ({
 
     .docs-header__ask {
       padding: 0 10px;
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    .docs-header__theme {
+      height: 36px;
+      width: 36px;
     }
   }
 

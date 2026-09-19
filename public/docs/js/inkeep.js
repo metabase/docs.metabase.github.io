@@ -11,6 +11,15 @@ const baseConfig = {
     theme: {
       styles: [{ type: "link", value: "/docs/css/inkeep.css" }],
     },
+    // Follow the docs theme (data-theme on <html>, set by theme-init.js and
+    // new-docs-theme-toggle.js).
+    colorMode: {
+      sync: {
+        target: document.documentElement,
+        attributes: ["data-theme"],
+        isDarkMode: (attributes) => attributes["data-theme"] === "dark",
+      },
+    },
   },
   aiChatSettings: {
     aiAssistantName: "Metabase",

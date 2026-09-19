@@ -12,7 +12,6 @@ imageZoomWrapper.style.left = "0";
 imageZoomWrapper.style.height = "100vh";
 imageZoomWrapper.style.width = "100vw";
 imageZoomWrapper.style.zIndex = "2000";
-imageZoomWrapper.style.backgroundColor = "#FAFBFE";
 imageZoomWrapper.style.visibility = "hidden";
 
 imageZoomInnerWrapper.style.transition = "transform 0.2s";
@@ -33,6 +32,16 @@ closeImageButton.style.cursor = "pointer";
 
 imageZoomWrapper.appendChild(imageZoomInnerWrapper);
 imageZoomWrapper.appendChild(closeImageButton);
+
+// The overlay follows the docs theme (docs-tokens.css); resolved when the
+// overlay opens so a theme change while the page is open is picked up.
+function applyOverlayTheme() {
+  const root = document.documentElement;
+  const isDark = root.getAttribute("data-theme") === "dark";
+  const background = getComputedStyle(root).getPropertyValue("--mb-bg").trim();
+  imageZoomWrapper.style.backgroundColor = background || "#FAFBFE";
+  closeImageButton.style.filter = isDark ? "invert(0.8)" : "";
+}
 document.body.appendChild(imageZoomWrapper);
 
 imageZoomWrapper.addEventListener("click", function() {
@@ -66,6 +75,7 @@ contentImages.forEach(function(image) {
   });
 
   wrapper.addEventListener("click", function() {
+    applyOverlayTheme();
     imageZoomWrapper.style.visibility = "visible";
     imageZoomWrapper.style.opacity = "1";
 

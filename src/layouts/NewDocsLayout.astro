@@ -30,7 +30,7 @@ const unify = UNIFY_ENABLED_PAGES.includes(page.url);
 const version = page.latest ? "latest" : (page.version ?? "latest");
 ---
 
-<DefaultNewLayout page={page} dirname={dirname} {unify}>
+<DefaultNewLayout page={page} dirname={dirname} {unify} docsTheme>
   <DocsHeader slot="header" version={version} pageUrl={page.url} />
 
   <div class="bootstrap">
@@ -82,6 +82,11 @@ const version = page.latest ? "latest" : (page.version ?? "latest");
     is:inline
     type="text/javascript"
     src="/docs/js/new-docs-version-selector.js"
+  ></script>
+  <script
+    is:inline
+    type="text/javascript"
+    src="/docs/js/new-docs-theme-toggle.js"
   ></script>
   <script
     is:inline

@@ -53,13 +53,26 @@
   <link rel="apple-touch-icon" href="/images/apple-touch-icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  {% include chrome/stylesheets.html %}
+  {% comment %}
+  Docs theme (dark mode). Runs before any stylesheet so data-theme is on
+  <html> at first paint. Only NewDocsLayout passes docs_theme.
+  {% endcomment %}
+  {% if include.docs_theme %}
+  <script>
+    {% include docs/theme-init.js %}
+  </script>
+  {% endif %}
+  {% include chrome/stylesheets.html docs_theme=include.docs_theme %}
 
   {% comment %}
   Loaded after the local chrome so it can override those stylesheets. Must stay
   outside the canonical-URL block above, which skips versioned docs pages.
   {% endcomment %}
+  <link rel="stylesheet" href="/docs/css/docs-tokens.css" />
   <link rel="stylesheet" href="/docs/css/docs-local.css" />
+  {% if include.docs_theme %}
+  <link rel="stylesheet" href="/docs/css/docs-theme.css" />
+  {% endif %}
 
   {% if page.url contains "/data-stack-report-2023/" %}
   <!-- Cooper Font -->
