@@ -35,14 +35,13 @@ export const getLandingUrl = (node: NavNode): string | undefined => {
   )?.url;
 };
 
-// Category containing pageUrl; first category for pages outside the nav
-// (home, /docs/all, 404).
+// Category containing pageUrl; undefined for pages outside the nav (home,
+// /docs/all, 404), so callers decide whether to fall back.
 export const getActiveCategory = (
   nav: Nav,
   pageUrl: string,
 ): NavNode | undefined =>
-  nav.categories.find((category) => containsUrl(category, pageUrl)) ??
-  nav.categories[0];
+  nav.categories.find((category) => containsUrl(category, pageUrl));
 
 const isRelativeUrl = (url: string) => !/^(\/|[a-z][a-z0-9+.-]*:)/i.test(url);
 

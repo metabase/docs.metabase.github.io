@@ -2,7 +2,8 @@
 import NavItem from "@/components/chrome/NavItem.astro";
 import { getActiveCategory, getNavForVersion } from "@/lib/docs/nav";
 
-// Only the active category's pages; the header tabs switch categories.
+// Only the active category's pages; the header tabs switch categories. Pages
+// outside the nav (home, /docs/all, 404) show the first category.
 type Props = {
   url: string;
   version?: string;
@@ -10,7 +11,8 @@ type Props = {
 
 const { url: pageUrl, version = "latest" } = Astro.props;
 
-const category = getActiveCategory(getNavForVersion(version), pageUrl);
+const nav = getNavForVersion(version);
+const category = getActiveCategory(nav, pageUrl) ?? nav.categories[0];
 ---
 
 <div class="learn-left-sidebar" id="main-navigation-content">

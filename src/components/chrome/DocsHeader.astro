@@ -14,14 +14,9 @@ import {
 type Props = {
   version?: string;
   pageUrl: string;
-  checkoutHref?: string;
 };
 
-const {
-  version = "latest",
-  pageUrl,
-  checkoutHref = "https://store.metabase.com/checkout",
-} = Astro.props;
+const { version = "latest", pageUrl } = Astro.props;
 
 const nav = getNavForVersion(version);
 const activeCategory = getActiveCategory(nav, pageUrl);
@@ -61,7 +56,11 @@ const tabs = nav.categories.map((category) => ({
       <a class="docs-header__home" href="/">
         Metabase home
       </a>
-      <a id="get-started-btn" class="docs-header__cta" href={checkoutHref}>
+      <a
+        id="get-started-btn"
+        class="docs-header__cta"
+        href="https://store.metabase.com/checkout"
+      >
         Get started
       </a>
     </div>
@@ -92,12 +91,17 @@ const tabs = nav.categories.map((category) => ({
   </nav>
 </header>
 
-<script is:inline src="/docs/js/inkeep.js" type="module" defer></script>
+<script is:inline src="/docs/js/inkeep.js" type="module"></script>
 
 <style is:global>
-  /* Read by inkeep.css to keep the search modal below the fixed header. */
+  /* --navigation-header-height is read by inkeep.css and docs-local.css to keep
+     the search modal and sticky sidebars below the fixed header. */
   :root {
-    --navigation-header-height: 108px;
+    --docs-header-main-height: 64px;
+    --docs-header-tabs-height: 44px;
+    --navigation-header-height: calc(
+      var(--docs-header-main-height) + var(--docs-header-tabs-height)
+    );
   }
 </style>
 
@@ -119,7 +123,7 @@ const tabs = nav.categories.map((category) => ({
   }
 
   .docs-header__main {
-    height: 64px;
+    height: var(--docs-header-main-height);
   }
 
   .docs-header__brand {
@@ -245,7 +249,7 @@ const tabs = nav.categories.map((category) => ({
   }
 
   .docs-header__tabs {
-    height: 44px;
+    height: var(--docs-header-tabs-height);
   }
 
   /* Pins the version selector to the far right, apart from the section tabs,
@@ -256,6 +260,8 @@ const tabs = nav.categories.map((category) => ({
     margin-left: auto;
   }
 
+  /* -8px cancels the first tab's own padding so its label lines up with the
+     wordmark and the sidebar text at the 20px row gutter. */
   .docs-header__tab-list {
     align-items: stretch;
     display: flex;
@@ -263,7 +269,7 @@ const tabs = nav.categories.map((category) => ({
     gap: 8px;
     height: 100%;
     list-style: none;
-    margin: 0;
+    margin: 0 0 0 -8px;
     min-width: 0;
     overflow-x: auto;
     padding: 0;

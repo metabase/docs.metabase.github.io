@@ -19,15 +19,15 @@ const currentLabel = version === "latest" ? docsVersion : version;
 const otherVersions = [...availableVersions]
   .reverse()
   .slice(0, 10)
-  .filter((v) => v !== version)
+  .filter((v) => v !== currentLabel)
   .map((v) => ({ version: v, support: getVersionSupport(v) }));
 ---
 
 <div class="version__selector">
-  <span class="version__current">
+  <button type="button" class="version__current" aria-haspopup="true">
     {currentLabel}
     <Chevron />
-  </span>
+  </button>
   <ul class="version__dropdown">
     {otherVersions.map(({ version: v, support }) => (
       <li>
@@ -59,17 +59,28 @@ const otherVersions = [...availableVersions]
     position: relative;
   }
 
+  /* A button so the selector is reachable by keyboard; the click bubbles to
+     .version__selector, which new-docs-version-selector.js toggles. */
   .version__current {
     align-items: center;
+    background: none;
+    border: 0;
     border-radius: 8px;
-    color: #8d93a5;
+    color: #5a6072;
+    cursor: pointer;
     display: flex;
+    font: inherit;
     font-size: 14px;
     gap: 6px;
     line-height: 20px;
     padding: 6px 8px 6px 12px;
     transition: background-color 0.3s ease;
     user-select: none;
+  }
+
+  .version__current:focus-visible {
+    outline: 2px solid #509ee3;
+    outline-offset: 2px;
   }
 
   .version__current:hover,
@@ -85,7 +96,7 @@ const otherVersions = [...availableVersions]
   }
 
   .version__current svg path {
-    stroke: #8d93a5;
+    stroke: #5a6072;
   }
 
   .version__current:hover svg path,
@@ -134,7 +145,7 @@ const otherVersions = [...availableVersions]
   }
 
   .version__dropdown a {
-    color: #8d93a5;
+    color: #5a6072;
     display: block;
     font-size: 14px;
     padding: 8px 16px;

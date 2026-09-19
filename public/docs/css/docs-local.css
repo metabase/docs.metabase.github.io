@@ -1,20 +1,6 @@
 /* because stylesheets mainly live in the marketing repo, this is a subset of the styles
  * that are specific to this repo, pending a larger refactor to move all docs-specific styles into this repo. */
 
-.bootstrap .learn .version__dropdown {
-  width: auto !important;
-
-  .version__dropdown--item {
-    align-items: center;
-    display: flex;
-    flex-wrap: nowrap;
-    gap: 0.5rem;
-    justify-content: space-between;
-    padding-inline: 1rem;
-    text-align: left;
-  }
-}
-
 .version__tag {
   border-radius: 4px;
   font-size: 10px;
@@ -55,10 +41,11 @@
 }
 
 /* Sticky offsets in styles.css assume the 77px marketing navbar; derive them
- * from the docs header's height variable instead. */
+ * from the docs header's height variable instead. The sidebar is painted white,
+ * so it runs edge to edge from the header to the viewport bottom. */
 .bootstrap .learn #main-navigation-content.learn-left-sidebar {
-  max-height: calc(100vh - var(--navigation-header-height, 77px) - 7px);
-  top: calc(var(--navigation-header-height, 77px) + 10px);
+  max-height: calc(100vh - var(--navigation-header-height, 77px));
+  top: var(--navigation-header-height, 77px);
 }
 
 .bootstrap .learn .learn__right-sidebar {
@@ -71,10 +58,18 @@
   width: 100%;
 }
 
-/* ≥992px (sidebar visible): pin the nav to the viewport edge and center the
+/* styles.css hides the sidebar at max-width: 992px but only collapses the grid
+ * at 991px, which leaves an empty column at exactly 992px. */
+@media screen and (max-width: 992px) {
+  .bootstrap .learn.docs {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* >992px (sidebar visible; styles.css hides it at max-width: 992px): pin the nav to the viewport edge and center the
  * article in the remaining space. styles.css centers the whole grid, which
  * pushed the nav inward. */
-@media screen and (min-width: 992px) {
+@media screen and (min-width: 993px) {
   .bootstrap .learn.docs {
     /* Paragraph measure; the centered box below is derived from it. */
     --docs-article-width: 800px;
@@ -107,6 +102,20 @@
   .bootstrap .learn.docs #main-navigation-content.learn-left-sidebar {
     background-color: #fff;
     padding-left: 12px;
-    padding-top: 20px;
+    padding-top: 30px;
+  }
+
+  /* styles.css centers the top bar across the full .learn__post box (left: 50%
+   * + translateX(-50%)) and indents the breadcrumb 64px. Pin it to the text
+   * column instead so its divider lines up with the h2 rules below it. */
+  .bootstrap .learn.docs .top-bar {
+    left: 72px;
+    padding-left: 0;
+    transform: none;
+    width: var(--docs-article-width);
+  }
+
+  .bootstrap .learn.docs .top-bar .breadcrumb {
+    margin-left: 0;
   }
 }
