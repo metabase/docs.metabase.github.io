@@ -38,13 +38,15 @@ const version = page.latest ? "latest" : (page.version ?? "latest");
       <LeftSidebar url={page.url} version={version} />
 
       <article class="learn__post learn__article">
-        <LiquidInclude
-          lq={lq}
-          src="learn/top-bar.html"
-          domain="docs"
-          show_breadcrumb={showBreadcrumb}
-          show_search="false"
-        />
+        {showBreadcrumb && (
+          <LiquidInclude
+            lq={lq}
+            src="learn/top-bar.html"
+            domain="docs"
+            show_breadcrumb={showBreadcrumb}
+            show_search="false"
+          />
+        )}
 
         <div class="learn__post__content">
           <LiquidInclude lq={lq} src="docs/blockquotes.html" />
