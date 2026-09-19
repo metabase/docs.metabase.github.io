@@ -83,7 +83,9 @@ const tabs = nav.categories.map((category) => ({
         ))}
       </ul>
     )}
-    <DocsVersionSelector version={version} />
+    <div class="docs-header__version">
+      <DocsVersionSelector version={version} />
+    </div>
   </nav>
 </header>
 
@@ -219,14 +221,18 @@ const tabs = nav.categories.map((category) => ({
     height: 44px;
   }
 
-  /* Right-aligns the version selector even when there is no tab list. */
-  .docs-header__tabs > :last-child {
+  /* Pins the version selector to the far right, apart from the section tabs,
+     even when there is no tab list. */
+  .docs-header__version {
+    display: flex;
+    flex-shrink: 0;
     margin-left: auto;
   }
 
   .docs-header__tab-list {
     align-items: stretch;
     display: flex;
+    flex: 1 1 auto;
     gap: 8px;
     height: 100%;
     list-style: none;
