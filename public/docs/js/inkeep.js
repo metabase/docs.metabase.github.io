@@ -53,12 +53,7 @@ const initAskAiButtons = () => {
       inkeepWidget.update({
         modalSettings: { isOpen: true, onOpenChange: handleOpenChange },
       });
-      try {
-        inkeepWidget.setView("chat");
-      } catch (_e) {
-        // Older widget builds without setView still open in search view,
-        // which has its own "Ask" toggle.
-      }
+      inkeepWidget.setView("chat");
     });
   });
 };

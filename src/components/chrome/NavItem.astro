@@ -12,8 +12,7 @@ type Props = {
 const { node, pageUrl, depth = 0 } = Astro.props;
 
 const hasChildren = Boolean(node.pages && node.pages.length > 0);
-// Top-level sections start open; deeper sections open only when they contain
-// the current page.
+// Top-level sections start open; deeper ones only when they contain the page.
 const expanded = containsUrl(node, pageUrl) || (depth === 0 && hasChildren);
 ---
 

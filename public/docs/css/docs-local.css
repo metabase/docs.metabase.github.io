@@ -54,9 +54,8 @@
   display: inline;
 }
 
-/* The docs header (DocsHeader.astro) is taller than the marketing navbar the
- * sticky offsets in css/styles.css assume, so re-derive them from the header
- * height variable it sets. Relative gaps match the original 77px header. */
+/* Sticky offsets in styles.css assume the 77px marketing navbar; derive them
+ * from the docs header's height variable instead. */
 .bootstrap .learn #main-navigation-content.learn-left-sidebar {
   max-height: calc(100vh - var(--navigation-header-height, 77px) - 7px);
   top: calc(var(--navigation-header-height, 77px) + 10px);
@@ -66,50 +65,43 @@
   top: calc(var(--navigation-header-height, 77px) - 14px);
 }
 
-/* Search and the version selector moved to the header; let the breadcrumb use
- * the top bar's full width. */
+/* Search and version selector moved to the header; let the breadcrumb fill
+ * the top bar. */
 .bootstrap .learn.docs .top-bar > div:first-child {
   width: 100%;
 }
 
-/* Pin the left nav to the viewport edge and center the article in the space
- * that remains. css/styles.css centers the whole .learn grid at a max-width
- * (920/1100/1280px), which is what pushed the nav toward the middle. Scoped to
- * ≥992px, where the sidebar is shown; below that the sidebar is hidden and the
- * centered single-column layout is kept as-is. */
+/* ≥992px (sidebar visible): pin the nav to the viewport edge and center the
+ * article in the remaining space. styles.css centers the whole grid, which
+ * pushed the nav inward. */
 @media screen and (min-width: 992px) {
   .bootstrap .learn.docs {
-    /* Width of the article's paragraph text, matching the measure on Stripe's
-     * docs. The centered box below is derived from it. */
+    /* Paragraph measure; the centered box below is derived from it. */
     --docs-article-width: 722px;
 
-    /* The bundle painted #fafbfe only to the right of the centered box via a
-     * box-shadow; with the grid full-bleed, paint it on the grid itself so the
-     * gap on either side of the centered article matches. */
+    /* styles.css painted #fafbfe only right of the centered box; paint the
+     * full-bleed grid instead. */
     background-color: #fafbfe;
     box-shadow: none;
     margin: 0;
     max-width: none;
   }
 
-  /* Center the article and TOC as one box inside the 1fr grid column.
-   * .learn__post is itself the `1fr 200px` grid holding the article text AND
-   * the "On this page" TOC, so its width is the text measure plus the fixed
-   * pieces from css/styles.css (box-sizing is border-box, so padding counts):
-   *   72px article padding-left + text + 72px content padding-right + 200px TOC
-   * Centering it as one box keeps the TOC hugging the article's right edge.
-   * .top-bar (breadcrumb) is absolutely positioned inside .learn__post, so it
-   * follows automatically. */
+  /* Center article + TOC as one box: 72px padding + text + 72px padding +
+   * 200px TOC (border-box). The breadcrumb is absolutely positioned inside,
+   * so it follows. */
   .bootstrap .learn.docs .learn__post {
     margin: 0 auto;
     max-width: calc(72px + var(--docs-article-width) + 72px + 200px); /* 1066px */
     width: 100%;
   }
 
-  /* Nav links have 8px left padding; add 12px so the text lines up with the
-   * header wordmark, which sits at the header row's 20px padding. */
+  /* 8px link padding + 12px aligns nav text with the header wordmark at 20px.
+   * padding-top replaces the 80px styles.css reserved for the old Learn "home"
+   * link, which this sidebar no longer renders. */
   .bootstrap .learn.docs #main-navigation-content.learn-left-sidebar {
     background-color: #fff;
     padding-left: 12px;
+    padding-top: 20px;
   }
 }

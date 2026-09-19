@@ -20,24 +20,23 @@ const descendants = (node: NavNode): NavNode[] =>
 
 const isDocsUrl = (url: string) => url.startsWith("/docs/");
 
-// A landing page for a nav node: its own url, else (depth-first among its
-// descendants) the first docs section that has its own sub-pages, else the
-// first docs url, else the first url of any kind. Categories often open with
-// links to /learn or to chrome-less pages like the API reference, which make
-// poor tab targets.
+// Tab target for a category: prefer a docs section with sub-pages, then any
+// docs url, then anything. Categories often open with /learn links or
+// chrome-less pages like the API reference.
 export const getLandingUrl = (node: NavNode): string | undefined => {
   if (node.url) return node.url;
-  const nodes = descendants(node);
-  const urls = nodes.map((n) => n.url).filter((url): url is string => !!url);
-  return (
-    nodes.find((n) => n.url && isDocsUrl(n.url) && n.pages?.length)?.url ??
-    urls.find(isDocsUrl) ??
-    urls[0]
+  const linked = descendants(node).filter(
+    (n): n is NavNode & { url: string } => !!n.url,
   );
+  return (
+    linked.find((n) => isDocsUrl(n.url) && n.pages?.length) ??
+    linked.find((n) => isDocsUrl(n.url)) ??
+    linked[0]
+  )?.url;
 };
 
-// The top-level category that contains `pageUrl`, falling back to the first
-// category for pages outside the nav tree (docs home, /docs/all, 404).
+// Category containing pageUrl; first category for pages outside the nav
+// (home, /docs/all, 404).
 export const getActiveCategory = (
   nav: Nav,
   pageUrl: string,

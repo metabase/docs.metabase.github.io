@@ -8,15 +8,9 @@ import {
   getNavForVersion,
 } from "@/lib/docs/nav";
 
-// Docs-specific header (replaces the marketing navbar on modern docs pages):
-// row 1 is wordmark / search + Ask AI / Get started, row 2 is one tab per
-// top-level nav.yml category plus the version selector.
-//
-// Rendered outside any `.bootstrap` wrapper on purpose: the marketing
-// `.bootstrap .navigation-header …` rules in styles.css don't apply here, but
-// the `navigation-header` class and `#get-started-btn` id are kept so
-// navigation-header.js (?hide_nav=true) and use-custom-header-checkout-link.js
-// keep working.
+// Docs header that replaces the marketing navbar on modern docs pages. Rendered
+// outside `.bootstrap` so the marketing navbar styles don't apply; `navigation-header`
+// and `#get-started-btn` are kept for navigation-header.js and use-custom-header-checkout-link.js.
 type Props = {
   version?: string;
   pageUrl: string;
@@ -39,7 +33,7 @@ const tabs = nav.categories.map((category) => ({
 }));
 ---
 
-<header class="docs-header navigation-header" data-docs-header>
+<header class="docs-header navigation-header">
   <div class="docs-header__row docs-header__main">
     <div class="docs-header__brand">
       <a class="docs-header__logo" href="/" aria-label="Metabase home">
@@ -95,14 +89,6 @@ const tabs = nav.categories.map((category) => ({
 
 <script is:inline src="/docs/js/inkeep.js" type="module" defer></script>
 
-<script>
-  if (new URLSearchParams(window.location.search).get("hide_nav") === "true") {
-    document
-      .querySelector<HTMLElement>("[data-docs-header]")
-      ?.setAttribute("hidden", "");
-  }
-</script>
-
 <style is:global>
   /* Read by inkeep.css to keep the search modal below the fixed header. */
   :root {
@@ -118,10 +104,6 @@ const tabs = nav.categories.map((category) => ({
     position: sticky;
     top: 0;
     z-index: 10000;
-  }
-
-  .docs-header[hidden] {
-    display: none;
   }
 
   .docs-header__row {
@@ -235,10 +217,9 @@ const tabs = nav.categories.map((category) => ({
   .docs-header__tabs {
     border-top: 1px solid #f1f2f4;
     height: 44px;
-    justify-content: space-between;
   }
 
-  /* Keeps the version selector right-aligned on versions without a nav.yml. */
+  /* Right-aligns the version selector even when there is no tab list. */
   .docs-header__tabs > :last-child {
     margin-left: auto;
   }

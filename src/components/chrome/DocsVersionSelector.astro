@@ -3,10 +3,8 @@ import Chevron from "@/icons/chevron.svg";
 import { getVersionSupport } from "@/lib/docs/versionSupport";
 import { baseCtx } from "@/lib/liquid/liquidRenderer";
 
-// Astro port of _includes/docs_version.html, so the version dropdown can live
-// in the docs header (outside the `.bootstrap .learn` scope its old CSS
-// depended on). Class names are kept so new-docs-version-selector.js and the
-// .version__tag rules in docs-local.css keep working unchanged.
+// Astro port of the old _includes/docs_version.html. Class names are kept for
+// new-docs-version-selector.js and the .version__tag rules in docs-local.css.
 type Props = {
   version: string;
 };
@@ -49,8 +47,7 @@ const otherVersions = [...availableVersions]
     ))}
     <li>
       <a class="version__more" href="/docs/all">
-        {" "}
-        See more{" "}
+        See more
       </a>
     </li>
   </ul>
