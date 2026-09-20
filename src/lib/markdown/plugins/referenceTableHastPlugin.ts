@@ -23,7 +23,8 @@ import {
 //
 // By the time hast plugins run, inline HTML is opaque `raw` nodes: `<br>` is
 // one, and `<a id="…"></a>` is two (`<a id="…">` then `</a>`), never an element
-// with children. Smartypants has already turned the `---` rule into an em dash.
+// with children. Smartypants turns the `---` rule into an em dash, so the rule
+// is matched in both forms.
 //
 // Nodes from the source tree are read-only views: only changes made through
 // `ctx` (replaceNode, setProperty) take effect, and mutating a node in place
@@ -34,7 +35,7 @@ type Node = ElementContent | RawNode;
 
 const NAME_HEADERS = new Set(["property", "parameter", "name", "prop"]);
 const BR_RE = /^<br\s*\/?>$/i;
-const RULE = "—";
+const RULES = new Set(["---", "\u2014"]);
 const ANCHOR_OPEN_RE = /^<a\s+id=["']([^"']+)["']\s*>$/i;
 const ANCHOR_CLOSE_RE = /^<\/a>$/i;
 const FLAG_RE = /^(optional|required)\.?$/i;
@@ -106,7 +107,7 @@ function splitDescription(
     const n = children[i];
     if (
       isText(n) &&
-      n.value.trim() === RULE &&
+      RULES.has(n.value.trim()) &&
       isBr(children[i - 1]) &&
       isBr(children[i + 1])
     ) {
