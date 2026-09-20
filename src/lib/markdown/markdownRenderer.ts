@@ -1,6 +1,7 @@
 import { satteri } from "@astrojs/markdown-satteri";
 import { codeDefaultsHastPlugin } from "./plugins/codeDefaultsHastPlugin";
 import { ialHastPlugin } from "./plugins/ialHastPlugin";
+import { referenceTableHastPlugin } from "./plugins/referenceTableHastPlugin";
 import { relativeImagePlugin } from "./plugins/relativeImagePlugin";
 import { responsiveTableLabelsHastPlugin } from "./plugins/responsiveTableLabelsHastPlugin";
 
@@ -9,6 +10,7 @@ const docsMarkdownProcessor = satteri({
     ialHastPlugin,
     codeDefaultsHastPlugin,
     responsiveTableLabelsHastPlugin,
+    referenceTableHastPlugin,
     relativeImagePlugin,
   ],
   features: {

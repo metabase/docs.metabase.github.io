@@ -1,0 +1,197 @@
+/* Table layout for the docs on top of the vendored styles.css / main.css
+ * bundle. Colors come from docs-tokens.css.
+ *
+ * styles.css stacks every `.learn__post table` into labeled cards below
+ * 1399.98px (thead hidden, each td a block prefixed with its data-label),
+ * which is a phone layout applied to most laptops. The article column is
+ * 800px wide from 993px up, and new-docs-table-overflow.js gives tables a
+ * horizontal scroll wrapper, so the real table layout is restored here from
+ * 768px up. docs-theme.css scopes its stacked-mode colors to the same 767.98px
+ * breakpoint.
+ *
+ * src/lib/markdown/plugins/referenceTableHastPlugin.ts tags Property / Type /
+ * Description tables `table-reference` and adds the .prop-* hooks below. */
+
+@media (min-width: 768px) and (max-width: 1399.98px) {
+  .bootstrap .learn__post table {
+    background: var(--mb-surface);
+    border: 1px solid var(--mb-border-subtle);
+    border-radius: 0.5rem;
+  }
+
+  .bootstrap .learn__post table thead {
+    clip: auto;
+    height: auto;
+    margin: 0;
+    overflow: visible;
+    position: static;
+    width: 100%;
+  }
+
+  .bootstrap .learn__post table tr {
+    border: 0;
+    border-radius: 0;
+    display: table-row;
+    margin-bottom: 0;
+    overflow: visible;
+  }
+
+  .bootstrap .learn__post table tr td {
+    border-bottom: 1px solid var(--mb-border-subtle);
+    display: table-cell;
+    font-size: inherit;
+  }
+
+  .bootstrap .learn__post table tr td::before {
+    content: none;
+  }
+
+  .bootstrap .learn__post table tr td:first-child {
+    background: var(--mb-surface);
+    font-weight: inherit;
+  }
+
+  .bootstrap .learn__post table tr:last-child td {
+    border-bottom: 0;
+  }
+}
+
+/* Density and scanning aids for the table layout (768px up). main.css pads
+ * every cell 1em on a 1.6rem line-height; the header is 11px uppercase. */
+@media (min-width: 768px) {
+  .bootstrap .learn__post table {
+    margin-bottom: 2rem !important;
+  }
+
+  /* The overflow fade is offset by the table's bottom margin. */
+  .bootstrap .table-overflow-indicator::after {
+    bottom: 2rem;
+  }
+
+  .bootstrap .learn__post table th,
+  .bootstrap .learn__post table td {
+    padding: 0.625rem 0.875rem;
+  }
+
+  .bootstrap .learn__post table th {
+    font-size: 0.75rem;
+  }
+
+  .bootstrap .learn__post table td {
+    font-size: 0.9375rem;
+    line-height: 1.5;
+  }
+
+  .bootstrap .learn__post table tbody tr:hover td {
+    background: var(--mb-surface-hover);
+  }
+
+  /* Reference tables: names never wrap, the type column is capped so long
+   * typedoc signatures wrap instead of squeezing the description. */
+  .bootstrap .learn__post table.table-reference td:first-child {
+    white-space: nowrap;
+    width: 1%;
+  }
+
+  .bootstrap .learn__post table.table-reference td:not(:last-child) .prop-type {
+    max-width: 20rem;
+    min-width: 6rem;
+  }
+}
+
+.bootstrap .learn .learn__article table td code {
+  font-size: 0.875em;
+  padding: 0.0625rem 0.1875rem;
+}
+
+.bootstrap .learn__post table.table-reference .prop-type code {
+  overflow-wrap: anywhere;
+}
+
+.bootstrap .learn__post table.table-reference .prop-type.is-short {
+  white-space: nowrap;
+}
+
+/* Row permalink, revealed on hover or keyboard focus. */
+.bootstrap .learn__post table.table-reference tr[id] {
+  scroll-margin-top: calc(var(--navigation-header-height, 77px) + 1rem);
+}
+
+.bootstrap .learn__post table .table-reference-anchor {
+  color: var(--mb-text-muted);
+  font-weight: 700;
+  margin-left: 0.375rem;
+  opacity: 0;
+  text-decoration: none;
+  transition: opacity 0.15s ease;
+}
+
+.bootstrap .learn__post table .table-reference-anchor:hover {
+  color: var(--mb-brand);
+}
+
+.bootstrap .learn__post table .table-reference-anchor:focus-visible {
+  opacity: 1;
+}
+
+.bootstrap .learn__post table tr:hover .table-reference-anchor,
+.bootstrap .learn__post table tr:target .table-reference-anchor {
+  opacity: 1;
+}
+
+.bootstrap .learn__post table tr:target td {
+  background: var(--mb-surface-hover);
+}
+
+/* Metadata lifted out of the description: Optional / Default / Possible
+ * values / Available in, laid out as a wrapping row of small items. Items are
+ * plain inline flow so a label and its value share a baseline and wrap
+ * together like text. */
+.bootstrap .learn__post table .prop-meta {
+  align-items: baseline;
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 0.8125rem;
+  gap: 0.25rem 1rem;
+  line-height: 1.5;
+}
+
+.bootstrap .learn__post table .prop-desc + .prop-meta {
+  margin-top: 0.5rem;
+}
+
+.bootstrap .learn__post table .prop-meta-item {
+  display: inline;
+}
+
+.bootstrap .learn__post table .prop-meta-label {
+  color: var(--mb-text-muted);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  margin-right: 0.375rem;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.bootstrap .learn .learn__article table td .prop-meta code {
+  font-size: 0.9em;
+}
+
+.bootstrap .learn__post table .prop-meta-flag {
+  background: var(--mb-tag-bg);
+  border-radius: 999px;
+  color: var(--mb-text-secondary);
+  display: inline-block;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  line-height: 1.125rem;
+  padding: 0 0.5rem;
+  text-transform: uppercase;
+}
+
+.bootstrap .learn__post table .prop-meta-flag.is-required {
+  background: var(--mb-surface-active);
+  color: var(--mb-brand-hover);
+}
