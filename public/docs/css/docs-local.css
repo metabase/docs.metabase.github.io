@@ -36,37 +36,6 @@
   display: inline;
 }
 
-/* Hyphenated prose, justified on the desktop measure. Only paragraphs and
- * list items: headings, code, tables and the summary stay ragged. Needs
- * lang="en-US" on <html> (set in the layouts) so the browser has a hyphenation
- * dictionary. hyphenate-limit-chars (min word / before / after) and
- * text-wrap: pretty are progressive enhancements; browsers without them still
- * justify and hyphenate. */
-.bootstrap .learn.docs div.learn__post__content p,
-.bootstrap .learn.docs div.learn__post__content li {
-  hyphenate-limit-chars: 7 4 3;
-  hyphens: auto;
-  text-wrap: pretty;
-}
-
-/* Below the sidebar breakpoint the measure is short and unbreakable inline
- * code spans open big gaps in justified lines, so keep the mobile column
- * ragged. */
-@media screen and (min-width: 993px) {
-  .bootstrap .learn.docs div.learn__post__content p,
-  .bootstrap .learn.docs div.learn__post__content li {
-    text-align: justify;
-  }
-}
-
-/* Never break identifiers, and keep code blocks and tables start-aligned. */
-.bootstrap .learn.docs div.learn__post__content pre,
-.bootstrap .learn.docs div.learn__post__content code,
-.bootstrap .learn.docs div.learn__post__content table {
-  hyphens: manual;
-  text-align: start;
-}
-
 /* Sticky offsets in styles.css assume the 77px marketing navbar; derive them
  * from the docs header's height variable instead. The sidebar is painted white,
  * so it runs edge to edge from the header to the viewport bottom. */
