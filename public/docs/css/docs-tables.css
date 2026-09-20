@@ -172,11 +172,20 @@
  * caps those at --docs-article-width and sizes the box for
  * --docs-table-width), so tables grow past them before the bleed even starts.
  * 993-1199px pads only 40px and renders stacked cards, so no bleed there.
+ * The h2 section rules (drawn on the .copy-clip-container.h2 wrapper) bleed
+ * the same amount so they end where the tables end, on every page. styles.css
+ * gives the wrapper `width: 100%` through its .h2 class, which would pin it to
+ * the column and swallow the negative margin, so the width goes back to auto.
  * Direct child only: a table nested in a list or blockquote keeps its indent.
  * new-docs-table-overflow.js adds .docs-table-wrap to the wrapper. */
 @media (min-width: 1200px) {
-  .bootstrap .learn.docs div.learn__post__content > .docs-table-wrap {
+  .bootstrap .learn.docs div.learn__post__content > .docs-table-wrap,
+  .bootstrap .learn.docs div.learn__post__content > .copy-clip-container.h2 {
     margin-right: -32px;
+  }
+
+  .bootstrap .learn.docs div.learn__post__content > .copy-clip-container.h2 {
+    width: auto;
   }
 }
 
