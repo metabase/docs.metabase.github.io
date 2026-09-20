@@ -1,35 +1,20 @@
-/*
 function initDocsVersionSelector() {
   const versionSelectors = document.querySelectorAll(".version__selector");
 
-  versionSelectors.forEach(function(versionSelector) {
-    versionSelector.addEventListener("click", function() {
-      versionSelector.classList.toggle("open");
-    });
-  });
-
-  // Close selector on click outside
-  document.addEventListener("click", function(event) {
-    versionSelectors.forEach(function(versionSelector) {
-      if (!versionSelector.contains(event.target)) {
-        versionSelector.classList.remove("open");
-      }
-    });
-  });
-}
-
-window.addEventListener("DOMContentLoaded", () => {
-  initDocsVersionSelector();
-});
-*/
-
-function initDocsVersionSelector() {
-  const versionSelectors = document.querySelectorAll(".version__selector");
+  // Mirror the .open class on the trigger button for assistive tech.
+  const setOpen = (versionSelector, open) => {
+    versionSelector.classList.toggle("open", open);
+    const trigger = versionSelector.querySelector(".version__current");
+    if (trigger) {
+      trigger.setAttribute("aria-expanded", open ? "true" : "false");
+    }
+  };
 
   versionSelectors.forEach(function(versionSelector) {
+    setOpen(versionSelector, false);
     versionSelector.addEventListener("click", function(event) {
       event.stopPropagation(); // Prevent this click from triggering the outside click event
-      versionSelector.classList.toggle("open");
+      setOpen(versionSelector, !versionSelector.classList.contains("open"));
     });
   });
 
@@ -38,10 +23,23 @@ function initDocsVersionSelector() {
     setTimeout(() => {
       versionSelectors.forEach(function(versionSelector) {
         if (!versionSelector.contains(event.target)) {
-          versionSelector.classList.remove("open");
+          setOpen(versionSelector, false);
         }
       });
     }, 10); // Small delay to ensure clicks inside elements get registered first
+  });
+
+  // Close on Escape and hand focus back to the trigger.
+  document.addEventListener("keydown", function(event) {
+    if (event.key !== "Escape") return;
+    versionSelectors.forEach(function(versionSelector) {
+      if (!versionSelector.classList.contains("open")) return;
+      setOpen(versionSelector, false);
+      const trigger = versionSelector.querySelector(".version__current");
+      if (trigger && versionSelector.contains(document.activeElement)) {
+        trigger.focus();
+      }
+    });
   });
 }
 

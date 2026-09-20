@@ -1,13 +1,25 @@
 ---
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import DocsHeader from "@/components/chrome/DocsHeader.astro";
 import ErrorLayout from "@/layouts/ErrorLayout.astro";
 
 const page = { title: "Page not found", url: "/docs/404" };
 const dirname = path.dirname(fileURLToPath(import.meta.url));
 ---
 
-<ErrorLayout page={page} dirname={dirname}>
+<ErrorLayout page={page} dirname={dirname} docsTheme>
+  <DocsHeader slot="header" version="latest" pageUrl={page.url} />
+  <script
+    is:inline
+    type="text/javascript"
+    src="/docs/js/new-docs-theme-toggle.js"
+  ></script>
+  <script
+    is:inline
+    type="text/javascript"
+    src="/docs/js/new-docs-version-selector.js"
+  ></script>
   <script is:inline>
     function redirectFrom404(theLocation) {
       // trailing slash

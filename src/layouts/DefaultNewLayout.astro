@@ -8,19 +8,23 @@ type Props = {
   page: Record<string, unknown>;
   dirname: string;
   unify?: boolean;
+  /** Enables the light/dark theme (init script + docs-theme.css). */
+  docsTheme?: boolean;
 };
 
-const { page, dirname, unify } = Astro.props;
+const { page, dirname, unify, docsTheme } = Astro.props;
 
 const lq = getLiquidRenderer({ page, dirname });
 ---
 
 <!doctype html>
 <html prefix="og: https://ogp.me/ns#" lang="en-US">
-  <LiquidInclude lq={lq} src="head.html" {unify} />
+  <LiquidInclude lq={lq} src="head.html" {unify} docs_theme={docsTheme} />
 
   <body>
-    <Header />
+    <slot name="header">
+      <Header />
+    </slot>
 
     <div>
       <slot />

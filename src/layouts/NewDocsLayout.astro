@@ -1,4 +1,5 @@
 ---
+import DocsHeader from "@/components/chrome/DocsHeader.astro";
 import LeftSidebar from "@/components/chrome/LeftSidebar.astro";
 import LiquidInclude from "@/components/LiquidInclude.astro";
 import { UNIFY_ENABLED_PAGES } from "@/constants";
@@ -25,27 +26,37 @@ const showBreadcrumb = !isHomePage || parts[2] === "all";
 const lq = getLiquidRenderer({ page, dirname });
 
 const unify = UNIFY_ENABLED_PAGES.includes(page.url);
+
+const version = page.latest ? "latest" : (page.version ?? "latest");
 ---
 
-<DefaultNewLayout page={page} dirname={dirname} {unify}>
+<DefaultNewLayout page={page} dirname={dirname} {unify} docsTheme>
+  <DocsHeader slot="header" version={version} pageUrl={page.url} sidebar />
+
   <div class="bootstrap">
     <div class="learn docs blog-post MB-Page">
-      <LeftSidebar
-        url={page.url}
-        version={page.latest ? "latest" : page.version}
-      />
+      <LeftSidebar url={page.url} version={version} />
+      {/* Click target behind the mobile nav drawer; docs-local.css shows it. */}
+      <div class="docs-nav-backdrop" data-docs-nav-close></div>
 
-      <article class="learn__post learn__article">
-        <LiquidInclude
-          lq={lq}
-          src="learn/top-bar.html"
-          domain="docs"
-          show_breadcrumb={showBreadcrumb}
-        />
+      <article
+        class:list={[
+          "learn__post",
+          "learn__article",
+          { "learn__article--no-top-bar": !showBreadcrumb },
+        ]}
+      >
+        {showBreadcrumb && (
+          <LiquidInclude
+            lq={lq}
+            src="learn/top-bar.html"
+            domain="docs"
+            show_breadcrumb="true"
+            show_search="false"
+          />
+        )}
 
         <div class="learn__post__content">
-          {!showBreadcrumb && <LiquidInclude lq={lq} src="docs_version.html" />}
-
           <LiquidInclude lq={lq} src="docs/blockquotes.html" />
 
           <slot />
@@ -63,11 +74,13 @@ const unify = UNIFY_ENABLED_PAGES.includes(page.url);
 
         <div class="learn__right-sidebar">
           <div id="sub-navigation-content">{/* Is populated via js */}</div>
-          <LiquidInclude
-            lq={lq}
-            src="shared/was-this-helpful-widget.html"
-            should_add_propose_a_change_dialog="true"
-          />
+          {!isHomePage && (
+            <LiquidInclude
+              lq={lq}
+              src="shared/was-this-helpful-widget.html"
+              should_add_propose_a_change_dialog="true"
+            />
+          )}
         </div>
       </article>
     </div>
@@ -77,6 +90,16 @@ const unify = UNIFY_ENABLED_PAGES.includes(page.url);
     is:inline
     type="text/javascript"
     src="/docs/js/new-docs-version-selector.js"
+  ></script>
+  <script
+    is:inline
+    type="text/javascript"
+    src="/docs/js/new-docs-theme-toggle.js"
+  ></script>
+  <script
+    is:inline
+    type="text/javascript"
+    src="/docs/js/new-docs-mobile-nav.js"
   ></script>
   <script
     is:inline

@@ -1,19 +1,6 @@
-/* because stylesheets mainly live in the marketing repo, this is a subset of the styles
- * that are specific to this repo, pending a larger refactor to move all docs-specific styles into this repo. */
-
-.bootstrap .learn .version__dropdown {
-  width: auto !important;
-
-  .version__dropdown--item {
-    align-items: center;
-    display: flex;
-    flex-wrap: nowrap;
-    gap: 0.5rem;
-    justify-content: space-between;
-    padding-inline: 1rem;
-    text-align: left;
-  }
-}
+/* Layout overrides for the docs on top of the vendored styles.css / main.css
+ * bundle. Colors come from docs-tokens.css; color rules for the themed docs
+ * layout live in docs-theme.css. */
 
 .version__tag {
   border-radius: 4px;
@@ -26,24 +13,24 @@
 }
 
 .version__tag--unsupported {
-  background-color: #f1f2f4;
-  color: #5a6072;
+  background-color: var(--mb-tag-bg);
+  color: var(--mb-text-secondary);
 }
 
 .version__tag--lts {
-  background-color: #f3faec;
-  color: #669438;
+  background-color: var(--mb-tag-lts-bg);
+  color: var(--mb-tag-lts-text);
 }
 
-/* Notice on docs for versions past their EOL date. The `.docs` ancestor is
- * present in both the current and legacy layouts, and matches the specificity
- * of the blockquote rules in css/styles.css and css/docs.css — this file wins
- * the tie because it's the last stylesheet in the head. */
-.docs blockquote.version-unsupported-notice {
-  background-color: #fef9e6;
-  border: 1px solid #f7be08;
+/* Notice on docs for versions past their EOL date. Lives here, not in
+ * docs-theme.css, because legacy pages show it too; the second selector
+ * outranks docs-theme.css's `.bootstrap .learn blockquote`. */
+.docs blockquote.version-unsupported-notice,
+.bootstrap .learn blockquote.version-unsupported-notice {
+  background-color: var(--mb-notice-bg);
+  border: 1px solid var(--mb-notice-border);
   border-radius: 0.625rem;
-  color: #4c5773;
+  color: var(--mb-text);
   font-size: 14px;
   line-height: 1.5;
   margin: 1.5rem 0;
@@ -52,4 +39,361 @@
 
 .docs blockquote.version-unsupported-notice a {
   display: inline;
+}
+
+/* Prose (NewDocsLayout). The vendored bundle sizes code and headings by
+ * inheritance and in px, so the same element renders differently depending
+ * on where it sits; the rules below set each value once. The selector
+ * `.bootstrap .learn.docs div.learn__post__content` (0,4,1) outranks every
+ * prose rule in styles.css / main.css, including `.blog-post code`, which
+ * reaches the docs because the wrapper still carries `blog-post`. */
+
+/* Metric-matched local fallbacks so the swap to Lato does not reflow. Lato's
+ * line box is 1.2em (ascender 1974 / descender 426 on a 2000 em); the widths
+ * were measured against docs prose in Chrome: Lato is 95.7% of Helvetica
+ * Neue and 96.8% of Arial. */
+@font-face {
+  ascent-override: 98.7%;
+  descent-override: 21.3%;
+  font-family: "Lato Fallback";
+  line-gap-override: 0%;
+  size-adjust: 95.7%;
+  src: local("Helvetica Neue");
+}
+
+@font-face {
+  ascent-override: 98.7%;
+  descent-override: 21.3%;
+  font-family: "Lato Fallback Arial";
+  line-gap-override: 0%;
+  size-adjust: 96.8%;
+  src: local("Arial");
+}
+
+html[data-theme] body {
+  font-family: Lato, "Lato Fallback", "Lato Fallback Arial", "Helvetica Neue", Helvetica, sans-serif;
+}
+
+/* Leading and rag. Unitless line-height replaces the 30px in styles.css,
+ * which inherited as an absolute value into code blocks and images inside
+ * list items. text-wrap is a progressive enhancement: `pretty` avoids
+ * orphans and very short last lines, `balance` evens out wrapped headings. */
+.bootstrap .learn.docs div.learn__post__content p,
+.bootstrap .learn.docs div.learn__post__content li {
+  line-height: 1.65;
+  text-wrap: pretty;
+}
+
+.bootstrap .learn.docs div.learn__post__content h1,
+.bootstrap .learn.docs div.learn__post__content h2,
+.bootstrap .learn.docs div.learn__post__content h3,
+.bootstrap .learn.docs div.learn__post__content h4 {
+  text-wrap: balance;
+}
+
+/* Heading scale: 36 / 28 / 22 / 18 / 16 over an 18px body (styles.css had h4
+ * at 16px, smaller than its paragraphs). The .copy-clip-container.hN wrappers
+ * from new-docs-anchor-links.js carry the heading margins in em, so they
+ * get the same font-size. */
+.bootstrap .learn.docs div.learn__post__content h1 {
+  font-size: 2.25rem;
+}
+
+.bootstrap .learn.docs div.learn__post__content h2,
+.bootstrap .learn.docs div.learn__post__content .copy-clip-container.h2 {
+  font-size: 1.75rem;
+}
+
+.bootstrap .learn.docs div.learn__post__content h3,
+.bootstrap .learn.docs div.learn__post__content .copy-clip-container.h3 {
+  font-size: 1.375rem;
+}
+
+.bootstrap .learn.docs div.learn__post__content h4,
+.bootstrap .learn.docs div.learn__post__content .copy-clip-container.h4 {
+  font-size: 1.125rem;
+  font-weight: 700;
+}
+
+.bootstrap .learn.docs div.learn__post__content h5,
+.bootstrap .learn.docs div.learn__post__content h6 {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+/* styles.css pins code inside h2 / h3 to 24px / 20px. */
+.bootstrap .learn.docs div.learn__post__content h2 code,
+.bootstrap .learn.docs div.learn__post__content h3 code,
+.bootstrap .learn.docs div.learn__post__content h4 code {
+  font-size: 0.9em;
+  line-height: inherit;
+}
+
+/* Code. Inline code was 14px in 18px prose (`.blog-post code`). Blocks
+ * inherited their size and leading from the parent, so a top-level block was
+ * 14px / normal and the same block inside a list item 15.75px / 30px. */
+.bootstrap .learn.docs div.learn__post__content code {
+  font-size: 0.875em;
+}
+
+.bootstrap .learn.docs div.learn__post__content pre,
+.bootstrap .learn.docs div.learn__post__content pre code {
+  font-size: 0.9375rem;
+  line-height: 1.6;
+}
+
+/* Lato 900 is no longer requested for the docs (stylesheets.html), so the
+ * two remaining 900 users in styles.css drop to 700 rather than synthesize. */
+.bootstrap .learn.docs div.code-snippet-wrapper .copy-code-button p {
+  font-weight: 700;
+}
+
+.bootstrap .learn.docs #main-navigation-content.learn-left-sidebar h5,
+.bootstrap .learn.docs #main-navigation-content.learn-left-sidebar .h5 {
+  font-weight: 700;
+}
+
+/* Lists. One rhythm for tight and loose items: styles.css gave a tight
+ * item 12px below and a loose item (li > p) 16px + 12px. */
+.bootstrap .learn.docs div.learn__post__content li {
+  margin-bottom: 0.5rem;
+}
+
+.bootstrap .learn.docs div.learn__post__content li > p {
+  margin-bottom: 0.5rem;
+}
+
+.bootstrap .learn.docs div.learn__post__content li > :last-child {
+  margin-bottom: 0;
+}
+
+/* Blocks inside a step keep page-level margins otherwise: a callout inside a
+ * step had 32px above and below in a list whose items are 8px apart.
+ * .code-snippet-wrapper is added around highlighted blocks by
+ * new-docs-code-snippet-copy.js; plaintext blocks stay a bare pre.
+ * .image-wrapper is added by image-zoom.js. */
+.bootstrap .learn.docs div.learn__post__content li > blockquote,
+.bootstrap .learn.docs div.learn__post__content li > pre,
+.bootstrap .learn.docs div.learn__post__content li > .code-snippet-wrapper,
+.bootstrap .learn.docs div.learn__post__content li > img,
+.bootstrap .learn.docs div.learn__post__content li > .image-wrapper {
+  margin-block: 0.75rem;
+}
+
+.bootstrap .learn.docs div.learn__post__content li > blockquote {
+  padding: 1rem 1.25rem;
+}
+
+/* Same nested-list gap on every viewport; styles.css gave 0.5em above 60em
+ * and main.css 1.3em below it. */
+.bootstrap .learn.docs div.learn__post__content li > ul,
+.bootstrap .learn.docs div.learn__post__content li > ol {
+  margin-bottom: 0;
+  margin-top: 0.5rem;
+}
+
+/* Indent in rem so nested lists match top-level ones: 20px for bullets as before, 28px
+ * for numbers so two-digit steps do not hang into the gutter. */
+.bootstrap .learn.docs div.learn__post__content ul {
+  padding-inline-start: 1.25rem;
+}
+
+.bootstrap .learn.docs div.learn__post__content ol {
+  padding-inline-start: 1.75rem;
+}
+
+/* Numbered steps read as steps; bullets stay quiet. */
+.bootstrap .learn.docs div.learn__post__content ol > li::marker {
+  color: var(--mb-text-secondary);
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+}
+
+.bootstrap .learn.docs div.learn__post__content ul > li::marker {
+  color: var(--mb-text-muted);
+}
+
+/* Sticky offsets in styles.css assume the 77px marketing navbar; derive them
+ * from the docs header's height variable instead. The sidebar runs from the
+ * header to the viewport bottom; the TOC keeps styles.css's 14px overlap
+ * (63px under a 77px navbar). */
+.bootstrap .learn #main-navigation-content.learn-left-sidebar {
+  max-height: calc(100vh - var(--navigation-header-height));
+  top: var(--navigation-header-height);
+}
+
+.bootstrap .learn .learn__right-sidebar {
+  top: calc(var(--navigation-header-height) - 14px);
+}
+
+/* Search and version selector moved to the header; let the breadcrumb fill
+ * the top bar. */
+.bootstrap .learn.docs .top-bar > div:first-child {
+  width: 100%;
+}
+
+/* styles.css reserves 56px above the article for the absolutely positioned
+ * breadcrumb bar. The docs home page renders no bar, so drop the gap. */
+.bootstrap .learn.docs .learn__article--no-top-bar {
+  padding-top: 0;
+}
+
+/* Click target behind the open mobile nav drawer (NewDocsLayout). It sits in
+ * the .learn.docs grid, so keep it out of layout until the drawer exists. */
+.docs-nav-backdrop {
+  display: none;
+}
+
+/* styles.css hides the sidebar at max-width: 992px but only collapses the grid
+ * at 991px, which leaves an empty column at exactly 992px. */
+@media screen and (max-width: 992px) {
+  .bootstrap .learn.docs {
+    grid-template-columns: 1fr;
+  }
+
+  /* The sidebar becomes a drawer under the header, opened by the header's
+   * menu button (new-docs-mobile-nav.js sets data-docs-nav on <html>). The
+   * selector outranks the three display: none rules in styles.css. visibility
+   * keeps the closed drawer's links out of the tab order; its delay lets the
+   * slide-out play first. */
+  .bootstrap .learn.docs #main-navigation-content.learn-left-sidebar {
+    bottom: 0;
+    box-shadow: var(--mb-shadow);
+    display: block;
+    height: auto;
+    left: 0;
+    max-height: none;
+    overflow-y: auto;
+    padding: 16px 12px 32px;
+    position: fixed;
+    top: var(--navigation-header-height);
+    transform: translateX(-100%);
+    transition:
+      transform 0.25s ease,
+      visibility 0s linear 0.25s;
+    visibility: hidden;
+    width: min(320px, 85vw);
+
+    /* Below the header (1001), above the article. */
+    z-index: 1000;
+  }
+
+  html[data-docs-nav="open"] .bootstrap .learn.docs #main-navigation-content.learn-left-sidebar {
+    transform: none;
+    transition-delay: 0s;
+    visibility: visible;
+  }
+
+  .docs-nav-backdrop {
+    display: block;
+    inset: var(--navigation-header-height) 0 0;
+    opacity: 0;
+    position: fixed;
+    transition:
+      opacity 0.25s ease,
+      visibility 0s linear 0.25s;
+    visibility: hidden;
+    z-index: 999;
+  }
+
+  html[data-docs-nav="open"] .docs-nav-backdrop {
+    opacity: 1;
+    transition-delay: 0s;
+    visibility: visible;
+  }
+
+  /* No page scroll behind the open drawer. */
+  html[data-docs-nav="open"] {
+    overflow: hidden;
+  }
+
+  .bootstrap .learn.docs .docs-sections {
+    border-bottom: 1px solid var(--mb-border-subtle);
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .bootstrap .learn.docs #main-navigation-content.learn-left-sidebar,
+    .docs-nav-backdrop {
+      transition: none;
+    }
+  }
+}
+
+/* With the sidebar visible, pin the nav to the viewport edge and center the
+ * article in the remaining space. styles.css centers the whole grid, which
+ * pushed the nav inward. */
+@media screen and (min-width: 993px) {
+  .bootstrap .learn.docs {
+    /* Paragraph measure. Tables run past it into the gutter (docs-tables.css)
+     * up to --docs-table-width; the centered box below is sized to that. */
+    --docs-article-width: 800px;
+    --docs-table-width: 960px;
+    --docs-nav-width: 280px;
+
+    /* styles.css painted #fafbfe only right of the centered box; paint the
+     * full-bleed grid instead. */
+    background-color: var(--mb-bg);
+    box-shadow: none;
+
+    /* styles.css sets 226px for the Learn sidebar; docs nav labels are
+     * longer ("Dashboard heading and text cards"), so give it more room. */
+    grid-template-columns: var(--docs-nav-width) 1fr;
+    margin: 0;
+    max-width: none;
+  }
+
+  /* Center article + TOC as one box sized to the widest table; on narrower
+   * viewports the box shrinks and the text column with it. */
+  .bootstrap .learn.docs .learn__post {
+    margin: 0 auto;
+    max-width: calc(72px + var(--docs-table-width) + 40px + 200px); /* 1272px */
+    width: 100%;
+  }
+
+  /* The text column is wider than the paragraph measure on big screens, so
+   * cap everything in it except the table wrappers and the h2 wrappers.
+   * new-docs-anchor-links.js wraps each h2 in div.copy-clip-container.h2 and
+   * styles.css draws the section rule on that wrapper, so exempting it lets
+   * the rule span the column like a table does; the heading text inside is
+   * capped separately so long headings still wrap at the measure. */
+  .bootstrap
+    .learn.docs
+    div.learn__post__content
+    > :not(.docs-table-wrap):not(.copy-clip-container.h2) {
+    max-width: var(--docs-article-width);
+  }
+
+  .bootstrap .learn.docs div.learn__post__content > .copy-clip-container.h2 > h2 {
+    max-width: var(--docs-article-width);
+  }
+
+  /* 8px link padding + 12px aligns nav text with the header wordmark at 20px.
+   * padding-top replaces the 80px styles.css reserved for the old Learn "home"
+   * link, which this sidebar no longer renders. */
+  .bootstrap .learn.docs #main-navigation-content.learn-left-sidebar {
+    background-color: var(--mb-surface);
+    padding-left: 12px;
+    padding-top: 30px;
+  }
+
+  /* The header tabs switch sections on desktop. */
+  .bootstrap .learn.docs .docs-sections {
+    display: none;
+  }
+
+  /* styles.css centers the top bar across the whole .learn__post box. Pin it
+   * to the text column instead so its divider lines up with the h2 rules and
+   * tables, which end 72px padding + 200px TOC + 40px short of the box. */
+  .bootstrap .learn.docs .top-bar {
+    left: 72px;
+    padding-left: 0;
+    transform: none;
+    width: calc(100% - 72px - 200px - 40px);
+  }
+
+  .bootstrap .learn.docs .top-bar .breadcrumb {
+    margin-left: 0;
+  }
 }

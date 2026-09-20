@@ -6,12 +6,14 @@ import { containsUrl, type NavNode } from "@/lib/docs/nav";
 type Props = {
   node: NavNode;
   pageUrl: string;
+  /** Start open even when the item does not contain the current page. */
+  open?: boolean;
 };
 
-const { node, pageUrl } = Astro.props;
+const { node, pageUrl, open = false } = Astro.props;
 
 const hasChildren = Boolean(node.pages && node.pages.length > 0);
-const expanded = containsUrl(node, pageUrl);
+const expanded = containsUrl(node, pageUrl) || (open && hasChildren);
 ---
 
 <li class={expanded ? "expanded" : ""}>

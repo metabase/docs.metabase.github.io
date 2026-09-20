@@ -11,6 +11,13 @@ const baseConfig = {
     theme: {
       styles: [{ type: "link", value: "/docs/css/inkeep.css" }],
     },
+    colorMode: {
+      sync: {
+        target: document.documentElement,
+        attributes: ["data-theme"],
+        isDarkMode: (attributes) => attributes["data-theme"] === "dark",
+      },
+    },
   },
   aiChatSettings: {
     aiAssistantName: "Metabase",
@@ -45,6 +52,19 @@ const handleOpenChange = (isOpen) => {
   });
 };
 
+// "Ask AI" buttons in the docs header open the widget straight into chat.
+const initAskAiButtons = () => {
+  document.querySelectorAll("[data-inkeep-ask-ai]").forEach((button) => {
+    button.addEventListener("click", () => {
+      if (!inkeepWidget) return;
+      inkeepWidget.update({
+        modalSettings: { isOpen: true, onOpenChange: handleOpenChange },
+      });
+      inkeepWidget.setView("chat");
+    });
+  });
+};
+
 const initializeInkeep = () => {
   const initialQuery = getSearchQuery();
   const shouldOpenOnLoad =
@@ -63,6 +83,8 @@ const initializeInkeep = () => {
     : baseConfig;
 
   inkeepWidget = window.Inkeep.SearchBar("#inkeep", config);
+
+  initAskAiButtons();
 
   if (shouldOpenOnLoad) {
     try {

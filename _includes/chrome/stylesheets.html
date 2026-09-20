@@ -1,6 +1,15 @@
+{% comment %}
+Themed docs pages use only Lato 400/700 and Roboto Mono; docs-local.css and
+docs-tables.css drop the two Lato 900 uses in styles.css. Other pages keep the
+marketing set.
+{% endcomment %}
+{% if include.docs_theme %}
+<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400;1,700&family=Roboto+Mono&display=swap" rel="stylesheet" />
+{% else %}
 <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;0,900&display=swap" rel="stylesheet" />
 <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet" />
 <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Roboto+Mono&display=swap" rel="stylesheet" />
+{% endif %}
 <link href="/docs/gdpr-cookie-notice/dist/style.css" rel="stylesheet" />
 {% unless page.layout == "docs-api" %}
 <link href="/docs/css/docs.css" rel="stylesheet" />
@@ -11,4 +20,7 @@
 <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet" />
 <link href="https://cdnjs.cloudflare.com/ajax/libs/flexboxgrid/6.3.1/flexboxgrid.min.css" rel="stylesheet" type="text/css" />
 <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet" />
+{% comment %}Themed docs pages get their syntax colors from docs-theme.css.{% endcomment %}
+{% unless include.docs_theme %}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/base16/atelier-sulphurpool-light.min.css" integrity="sha512-qrwjMzcPG1EHhhg9z2nH7VW7hj525RVx0o7GlxQc4ZhWkghp9slpnTjOUu5thnPaRfRqfAUlX7anvAqD9EonfQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+{% endunless %}

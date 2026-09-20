@@ -12,7 +12,7 @@ imageZoomWrapper.style.left = "0";
 imageZoomWrapper.style.height = "100vh";
 imageZoomWrapper.style.width = "100vw";
 imageZoomWrapper.style.zIndex = "2000";
-imageZoomWrapper.style.backgroundColor = "#FAFBFE";
+imageZoomWrapper.style.backgroundColor = "var(--mb-bg, #FAFBFE)";
 imageZoomWrapper.style.visibility = "hidden";
 
 imageZoomInnerWrapper.style.transition = "transform 0.2s";
@@ -22,6 +22,7 @@ imageZoomInnerWrapper.style.display = "flex";
 imageZoomInnerWrapper.style.alignItems = "center";
 imageZoomInnerWrapper.style.justifyContent = "center";
 
+closeImageButton.classList.add("image-zoom-close");
 closeImageButton.src = "/images/close-grey.svg";
 closeImageButton.alt = "Close Image Button";
 closeImageButton.width = 16;

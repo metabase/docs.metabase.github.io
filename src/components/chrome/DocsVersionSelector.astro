@@ -1,0 +1,176 @@
+---
+import Chevron from "@/icons/chevron.svg";
+import { getVersionSupport } from "@/lib/docs/versionSupport";
+import { baseCtx } from "@/lib/liquid/liquidRenderer";
+
+// Class names are kept for new-docs-version-selector.js and the .version__tag
+// rules in docs-local.css.
+type Props = {
+  version: string;
+};
+
+const { version } = Astro.props;
+
+const { available_versions: availableVersions, docs_version: docsVersion } =
+  baseCtx.site as { available_versions: string[]; docs_version: string };
+
+const currentLabel = version === "latest" ? docsVersion : version;
+
+const otherVersions = [...availableVersions]
+  .reverse()
+  .slice(0, 10)
+  .filter((v) => v !== currentLabel)
+  .map((v) => ({ version: v, support: getVersionSupport(v) }));
+---
+
+<div class="version__selector">
+  <button type="button" class="version__current" aria-haspopup="true">
+    {currentLabel}
+    <Chevron />
+  </button>
+  <ul class="version__dropdown">
+    {otherVersions.map(({ version: v, support }) => (
+      <li>
+        <a href={`/docs/${v}/`}>
+          <span class="version__dropdown--item">
+            <span>{v}</span>
+            {support?.status === "unsupported" ? (
+              <span class="version__tag version__tag--unsupported">
+                unsupported
+              </span>
+            ) : support?.lts ? (
+              <span class="version__tag version__tag--lts">lts</span>
+            ) : null}
+          </span>
+        </a>
+      </li>
+    ))}
+    <li>
+      <a class="version__more" href="/docs/all">
+        See more
+      </a>
+    </li>
+  </ul>
+</div>
+
+<style>
+  .version__selector {
+    cursor: pointer;
+    position: relative;
+  }
+
+  /* A button so the selector is reachable by keyboard; the click bubbles to
+     .version__selector, which new-docs-version-selector.js toggles. */
+  .version__current {
+    align-items: center;
+    background: none;
+    border: 0;
+    border-radius: 8px;
+    color: var(--mb-text-secondary);
+    cursor: pointer;
+    display: flex;
+    font: inherit;
+    font-size: 14px;
+    gap: 6px;
+    line-height: 20px;
+    padding: 6px 8px 6px 12px;
+    transition: background-color 0.3s ease;
+    user-select: none;
+  }
+
+  .version__current:focus-visible {
+    outline: 2px solid var(--mb-brand);
+    outline-offset: 2px;
+  }
+
+  .version__current:hover,
+  .version__selector.open .version__current {
+    background-color: var(--mb-surface-active);
+    color: var(--mb-brand);
+  }
+
+  .version__current svg {
+    height: 12px;
+    transition: rotate 0.2s ease;
+    width: 12px;
+  }
+
+  .version__current svg path {
+    stroke: var(--mb-text-secondary);
+  }
+
+  .version__current:hover svg path,
+  .version__selector.open .version__current svg path {
+    stroke: var(--mb-brand);
+  }
+
+  .version__selector.open .version__current svg {
+    rotate: 180deg;
+  }
+
+  .version__dropdown {
+    background: var(--mb-surface-elevated);
+    border: 1px solid var(--mb-border);
+    border-radius: 8px;
+    box-shadow: var(--mb-shadow);
+    list-style: none;
+    margin: 0;
+    min-width: 160px;
+    opacity: 0;
+    overflow: hidden;
+    padding: 4px 0;
+    pointer-events: none;
+    position: absolute;
+    right: 0;
+    scale: 0.97;
+    top: calc(100% + 6px);
+    /* visibility keeps the closed menu's links out of the tab order; its delay
+       lets the fade-out play before the menu disappears. */
+    transition:
+      scale 0.2s ease-in-out,
+      opacity 0.2s ease-in-out,
+      visibility 0s linear 0.2s;
+    visibility: hidden;
+    z-index: 5;
+  }
+
+  .version__selector.open .version__dropdown {
+    opacity: 1;
+    pointer-events: all;
+    scale: 1;
+    transition-delay: 0s;
+    visibility: visible;
+  }
+
+  .version__dropdown li {
+    margin: 0;
+  }
+
+  .version__dropdown li:hover {
+    background-color: var(--mb-bg);
+  }
+
+  .version__dropdown a {
+    color: var(--mb-text-secondary);
+    display: block;
+    font-size: 14px;
+    padding: 8px 16px;
+    text-decoration: none;
+  }
+
+  .version__dropdown li:hover a,
+  .version__dropdown a.version__more {
+    color: var(--mb-brand);
+  }
+
+  .version__dropdown a.version__more {
+    font-weight: 700;
+  }
+
+  .version__dropdown--item {
+    align-items: center;
+    display: flex;
+    gap: 0.5rem;
+    justify-content: space-between;
+  }
+</style>

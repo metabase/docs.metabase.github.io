@@ -1,0 +1,398 @@
+/* Color rules for the themed docs layout (NewDocsLayout), written once with the
+ * tokens in docs-tokens.css. Each rule replaces a hardcoded-color rule in the
+ * vendored styles.css / main.css bundle at equal or higher specificity; this
+ * sheet loads last, so it wins ties. Rules whose colors are the same in both
+ * themes (brand-blue hovers, CTAs) are left to the vendored sheet. Tables are
+ * styled end to end, colors included, in docs-tables.css. */
+
+/* Page shell */
+
+[data-theme] body {
+  background-color: var(--mb-bg);
+  color: var(--mb-text-secondary);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  [data-theme] body {
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease;
+  }
+}
+
+/* styles.css paints the page to the right of the grid with a 1000px
+ * box-shadow; docs-local.css turns it off above 992px. */
+@media screen and (max-width: 992px) {
+  .bootstrap .learn.docs {
+    border-bottom-color: var(--mb-surface-hover);
+    box-shadow: 1000px 0 0 var(--mb-bg);
+  }
+}
+
+.bootstrap .learn article {
+  background-color: var(--mb-bg);
+  box-shadow: 1000px 0 0 var(--mb-bg);
+}
+
+.bootstrap .learn .top-bar {
+  border-bottom-color: var(--mb-border);
+}
+
+/* Typography */
+
+.bootstrap h1,
+.bootstrap h2,
+.bootstrap h3,
+.bootstrap h4,
+.bootstrap h5,
+.bootstrap h6,
+.bootstrap .h1,
+.bootstrap .h2,
+.bootstrap .h3,
+.bootstrap .h4,
+.bootstrap .h5,
+.bootstrap .h6 {
+  color: var(--mb-heading);
+}
+
+.bootstrap .learn p,
+.bootstrap .learn li {
+  color: var(--mb-text);
+}
+
+.bootstrap .learn article > p,
+.bootstrap .learn article .learn__summary {
+  color: var(--mb-text-secondary);
+}
+
+.bootstrap .learn.docs a {
+  color: var(--mb-brand);
+}
+
+.bootstrap .learn div.learn__post__content > h2 {
+  border-bottom-color: var(--mb-border-strong);
+}
+
+.bootstrap blockquote p em {
+  color: var(--mb-text-secondary);
+}
+
+.bootstrap .neutral-40 {
+  color: var(--mb-text-secondary);
+}
+
+.bootstrap .neutral-60 {
+  color: var(--mb-text-muted);
+}
+
+/* Footer */
+
+.bootstrap .site-footer {
+  background-color: var(--mb-surface);
+  color: var(--mb-text-secondary);
+}
+
+.bootstrap .site-footer .site-footer-heading,
+.bootstrap .site-footer .site-footer-brand span {
+  color: var(--mb-text-muted);
+}
+
+.bootstrap .site-footer .site-footer-group a {
+  color: var(--mb-text-secondary);
+}
+
+.bootstrap .site-footer .site-footer-badge {
+  background-color: var(--mb-tag-bg);
+  color: var(--mb-text-secondary);
+}
+
+.bootstrap .site-footer .site-footer-bottom {
+  border-top-color: var(--mb-border-subtle);
+}
+
+/* Right sidebar: table of contents */
+
+.bootstrap #sub-navigation-content > *:first-child::before {
+  color: var(--mb-heading);
+}
+
+.bootstrap #sub-navigation-content a {
+  color: var(--mb-text-muted);
+}
+
+.bootstrap #sub-navigation-content a.selected,
+.bootstrap #sub-navigation-content a:hover {
+  color: var(--mb-text-secondary);
+}
+
+/* Left sidebar */
+
+.bootstrap .learn #main-navigation-content.learn-left-sidebar {
+  border-right-color: var(--mb-border-subtle);
+  box-shadow: 4px 2px 4px 0 var(--mb-shadow-chrome);
+}
+
+/* As a mobile drawer (docs-local.css) it is painted over the article. */
+@media screen and (max-width: 992px) {
+  .bootstrap .learn.docs #main-navigation-content.learn-left-sidebar {
+    background-color: var(--mb-surface);
+  }
+
+  .docs-nav-backdrop {
+    background-color: var(--mb-backdrop);
+  }
+}
+
+.bootstrap .learn #main-navigation-content.learn-left-sidebar h5,
+.bootstrap .learn #main-navigation-content.learn-left-sidebar .h5 {
+  color: var(--mb-text-muted);
+}
+
+.bootstrap .learn #main-navigation-content.learn-left-sidebar ul a,
+.bootstrap .learn #main-navigation-content.learn-left-sidebar ul li a {
+  color: var(--mb-text-secondary);
+}
+
+.bootstrap .learn #main-navigation-content.learn-left-sidebar ul a:hover,
+.bootstrap .learn #main-navigation-content.learn-left-sidebar ul a.selected {
+  background-color: var(--mb-surface-hover);
+  color: var(--mb-brand);
+}
+
+.bootstrap .learn #main-navigation-content.learn-left-sidebar ul a > div svg path {
+  stroke: var(--mb-border-strong);
+}
+
+.bootstrap .learn #main-navigation-content.learn-left-sidebar ul li ul li {
+  border-left-color: var(--mb-border);
+}
+
+/* Code */
+
+.bootstrap .learn pre,
+.bootstrap .learn pre code {
+  box-shadow: var(--mb-shadow);
+}
+
+.bootstrap .learn__post h2 code,
+.bootstrap .learn__post h3 code,
+.bootstrap .learn__post h4 code,
+.bootstrap .learn__post h5 code {
+  background: var(--mb-code-heading-bg);
+  color: var(--mb-text-secondary);
+}
+
+.bootstrap .learn article code {
+  background-color: var(--mb-code-bg);
+  color: var(--mb-text-secondary);
+}
+
+.bootstrap .learn article pre code {
+  background: var(--mb-pre-bg);
+  color: var(--mb-pre-text);
+}
+
+/* new-docs-code-snippet-copy.js wraps highlighted blocks in
+ * div.code-snippet-wrapper; styles.css restyles them at 0,3,2. */
+.bootstrap .learn div.code-snippet-wrapper pre,
+.bootstrap .learn div.code-snippet-wrapper code {
+  background: var(--mb-pre-bg);
+  box-shadow: var(--mb-shadow);
+  color: var(--mb-pre-text);
+}
+
+/* Syntax highlighting: highlight.js classes, ported from the base16
+ * atelier-sulphurpool-light theme that legacy pages still load from cdnjs.
+ * The base16 accent colors are shared by the light and dark variants; only
+ * the foreground and comment colors are tokens. styles.css already sets
+ * `.hljs-string` and `.hljs-attr` at this specificity; `.hljs-attr` is
+ * re-declared here with a token so it can change in the dark theme. */
+
+.bootstrap code.hljs {
+  padding: 3px 5px;
+}
+
+.bootstrap pre code.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 1em;
+}
+
+.bootstrap .hljs {
+  background: var(--mb-pre-bg);
+  color: var(--mb-syntax-fg);
+}
+
+.bootstrap .hljs::selection,
+.bootstrap .hljs ::selection {
+  background-color: rgba(80, 158, 227, 0.35);
+  color: inherit;
+}
+
+.bootstrap .hljs-comment {
+  color: var(--mb-syntax-comment);
+}
+
+.bootstrap .hljs-tag,
+.bootstrap .hljs-operator,
+.bootstrap .hljs-punctuation,
+.bootstrap .hljs-subst {
+  color: var(--mb-syntax-fg);
+}
+
+.bootstrap .hljs-operator {
+  opacity: 0.7;
+}
+
+.bootstrap .hljs-bullet,
+.bootstrap .hljs-deletion,
+.bootstrap .hljs-name,
+.bootstrap .hljs-selector-tag,
+.bootstrap .hljs-template-variable,
+.bootstrap .hljs-variable {
+  color: #c94922;
+}
+
+.bootstrap .hljs-link,
+.bootstrap .hljs-literal,
+.bootstrap .hljs-number,
+.bootstrap .hljs-symbol,
+.bootstrap .hljs-variable.constant_ {
+  color: #c76b29;
+}
+
+.bootstrap .hljs-attr {
+  color: var(--mb-syntax-attr);
+}
+
+.bootstrap .hljs-title,
+.bootstrap .hljs-class .hljs-title,
+.bootstrap .hljs-title.class_ {
+  color: #c08b30;
+}
+
+.bootstrap .hljs-strong {
+  color: #c08b30;
+  font-weight: 700;
+}
+
+.bootstrap .hljs-addition,
+.bootstrap .hljs-code,
+.bootstrap .hljs-title.class_.inherited__ {
+  color: #ac9739;
+}
+
+.bootstrap .hljs-built_in,
+.bootstrap .hljs-doctag,
+.bootstrap .hljs-keyword.hljs-atrule,
+.bootstrap .hljs-quote,
+.bootstrap .hljs-regexp {
+  color: #22a2c9;
+}
+
+.bootstrap .hljs-attribute,
+.bootstrap .hljs-function .hljs-title,
+.bootstrap .hljs-section,
+.bootstrap .hljs-title.function_,
+.bootstrap .ruby .hljs-property {
+  color: #3d8fd1;
+}
+
+.bootstrap .hljs-meta {
+  color: var(--mb-syntax-meta);
+}
+
+.bootstrap .diff .hljs-meta,
+.bootstrap .hljs-keyword,
+.bootstrap .hljs-template-tag,
+.bootstrap .hljs-type {
+  color: #6679cc;
+}
+
+.bootstrap .hljs-emphasis {
+  color: #6679cc;
+  font-style: italic;
+}
+
+.bootstrap .hljs-meta .hljs-keyword,
+.bootstrap .hljs-meta .hljs-string {
+  color: var(--mb-syntax-meta);
+}
+
+.bootstrap .hljs-meta .hljs-keyword,
+.bootstrap .hljs-meta-keyword {
+  font-weight: 700;
+}
+
+/* Blockquotes */
+
+/* The version-unsupported notice keeps its own colors in docs-local.css,
+ * which outranks this rule. */
+.bootstrap .learn blockquote,
+.bootstrap .learn .plans-blockquote {
+  background-color: var(--mb-blockquote-bg);
+  color: var(--mb-text-secondary);
+}
+
+/* Images */
+
+[data-theme="dark"] .image-zoom-close {
+  filter: invert(0.8);
+}
+
+.bootstrap .learn article img,
+.bootstrap .learn article iframe {
+  background-color: var(--mb-surface);
+  box-shadow: var(--mb-shadow);
+  filter: var(--mb-image-filter);
+}
+
+/* "Was this helpful?" widget */
+
+.bootstrap .learn #was-this-helpful-widget {
+  border-bottom-color: var(--mb-border);
+}
+
+.bootstrap .learn #was-this-helpful-widget h6,
+.bootstrap .learn #was-this-helpful-widget .h6,
+.bootstrap .learn #was-this-helpful-widget div#page-comment p {
+  color: var(--mb-text-secondary);
+}
+
+.bootstrap .learn #was-this-helpful-widget div#page-feedback h6,
+.bootstrap .learn #was-this-helpful-widget div#page-feedback .h6,
+.bootstrap .learn #was-this-helpful-widget div#page-feedback-message h6,
+.bootstrap .learn #was-this-helpful-widget div#page-feedback-message .h6 {
+  color: var(--mb-heading);
+}
+
+.bootstrap .learn #was-this-helpful-widget button.vote-button {
+  background-color: transparent;
+  border-color: var(--mb-border);
+  color: var(--mb-text-muted);
+}
+
+.bootstrap .learn #was-this-helpful-widget button.vote-button:hover {
+  border-color: var(--mb-brand);
+  color: var(--mb-brand);
+}
+
+.bootstrap .learn #was-this-helpful-widget button.vote-button.active {
+  background-color: var(--mb-brand);
+  border-color: var(--mb-brand);
+  color: #fff;
+}
+
+.bootstrap .learn #was-this-helpful-widget form {
+  background-color: var(--mb-surface-elevated);
+  border-color: var(--mb-border-subtle);
+}
+
+.bootstrap .learn #was-this-helpful-widget form textarea {
+  background-color: transparent;
+  color: var(--mb-text-muted);
+}
+
+.bootstrap .learn #was-this-helpful-widget div#page-feedback-email-container {
+  color: var(--mb-text-muted);
+}
