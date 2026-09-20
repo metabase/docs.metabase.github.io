@@ -1,6 +1,6 @@
 ---
 import DocsVersionSelector from "@/components/chrome/DocsVersionSelector.astro";
-import MetabaseWordmark from "@/icons/chrome/metabase-wordmark.svg";
+import MetabaseWordmark from "@/icons/chrome/metabase-wordmark-docs.svg";
 import Moon from "@/icons/chrome/moon.svg";
 import Stars from "@/icons/chrome/stars.svg";
 import Sun from "@/icons/chrome/sun.svg";
@@ -93,7 +93,6 @@ const tabs = nav.categories.map((category) => ({
         class="docs-header__theme"
         data-theme-toggle
         aria-label="Switch to dark theme"
-        aria-pressed="false"
       >
         <Sun />
         <Moon />
@@ -138,8 +137,10 @@ const tabs = nav.categories.map((category) => ({
     height: var(--docs-header-main-height);
   }
 
+  /* The wordmark's "Metabase" text is currentColor. */
   .docs-header__brand {
     align-items: center;
+    color: var(--mb-text-secondary);
     display: flex;
     flex: 1 1 0;
     gap: 4px;
@@ -150,6 +151,10 @@ const tabs = nav.categories.map((category) => ({
 
   .docs-header__brand:hover {
     opacity: 0.75;
+  }
+
+  :global([data-theme="dark"]) .docs-header__brand {
+    color: var(--mb-heading);
   }
 
   .docs-header__brand svg {
@@ -258,16 +263,6 @@ const tabs = nav.categories.map((category) => ({
 
   :global([data-theme="dark"]) .docs-header__theme svg:last-child {
     display: block;
-  }
-
-  /* The wordmark's "Metabase" text is filled #5A6072 in the SVG (shared with
-     the legacy header, so the file is left alone); lift it on dark. The path
-     is :global() because Astro only scopes the svg element itself. */
-  :global([data-theme="dark"])
-    .docs-header__brand
-    svg
-    :global(path[fill="#5A6072" i]) {
-    fill: var(--mb-heading);
   }
 
   .docs-header__actions {

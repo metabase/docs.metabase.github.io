@@ -40,12 +40,12 @@
  * from the docs header's height variable instead. The sidebar is painted white,
  * so it runs edge to edge from the header to the viewport bottom. */
 .bootstrap .learn #main-navigation-content.learn-left-sidebar {
-  max-height: calc(100vh - var(--navigation-header-height, 77px));
-  top: var(--navigation-header-height, 77px);
+  max-height: calc(100vh - var(--navigation-header-height));
+  top: var(--navigation-header-height);
 }
 
 .bootstrap .learn .learn__right-sidebar {
-  top: calc(var(--navigation-header-height, 77px) - 14px);
+  top: calc(var(--navigation-header-height) - 14px);
 }
 
 /* Search and version selector moved to the header; let the breadcrumb fill
@@ -62,7 +62,7 @@
   }
 }
 
-/* >992px (sidebar visible; styles.css hides it at max-width: 992px): pin the nav to the viewport edge and center the
+/* With the sidebar visible, pin the nav to the viewport edge and center the
  * article in the remaining space. styles.css centers the whole grid, which
  * pushed the nav inward. */
 @media screen and (min-width: 993px) {

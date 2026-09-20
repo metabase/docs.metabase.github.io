@@ -1,73 +1,54 @@
-// Light/dark theme toggle for the docs header. theme-init.js (inlined in
-// <head>) has already set data-theme on <html> from localStorage or the OS
-// preference; this script flips it, persists the choice, keeps the toggle
-// button's ARIA state in sync, and tells other scripts via a "themechange"
-// event on document.
-(function () {
-  var KEY = "mb-docs-theme";
-  var root = document.documentElement;
-  var media = window.matchMedia
-    ? window.matchMedia("(prefers-color-scheme: dark)")
-    : null;
+// theme-init.js (inlined in <head>) has already set data-theme on <html>
+// before first paint. This flips it, persists the choice, and announces the
+// change to other scripts via a "themechange" event on document.
+(() => {
+  const KEY = "mb-docs-theme";
+  const root = document.documentElement;
 
-  function getTheme() {
-    return root.getAttribute("data-theme") === "dark" ? "dark" : "light";
-  }
+  const getTheme = () => (root.dataset.theme === "dark" ? "dark" : "light");
 
-  function hasStoredPreference() {
+  const hasStoredPreference = () => {
     try {
-      var stored = window.localStorage.getItem(KEY);
+      const stored = localStorage.getItem(KEY);
       return stored === "light" || stored === "dark";
-    } catch (e) {
+    } catch {
       return false;
     }
-  }
+  };
 
-  function syncButtons(theme) {
-    var label =
+  const syncButtons = (theme) => {
+    const label =
       theme === "dark" ? "Switch to light theme" : "Switch to dark theme";
-    document.querySelectorAll("[data-theme-toggle]").forEach(function (button) {
-      button.setAttribute("aria-pressed", String(theme === "dark"));
+    document.querySelectorAll("[data-theme-toggle]").forEach((button) => {
       button.setAttribute("aria-label", label);
       button.setAttribute("title", label);
     });
-  }
+  };
 
-  function applyTheme(theme, persist) {
-    root.setAttribute("data-theme", theme);
+  const applyTheme = (theme, persist) => {
+    root.dataset.theme = theme;
     if (persist) {
       try {
-        window.localStorage.setItem(KEY, theme);
-      } catch (e) {
+        localStorage.setItem(KEY, theme);
+      } catch {
         /* storage blocked; the choice lasts for this page only */
       }
     }
     syncButtons(theme);
-    document.dispatchEvent(
-      new CustomEvent("themechange", { detail: { theme: theme } }),
-    );
-  }
+    document.dispatchEvent(new CustomEvent("themechange", { detail: { theme } }));
+  };
 
-  document.addEventListener("DOMContentLoaded", function () {
+  document.addEventListener("DOMContentLoaded", () => {
     syncButtons(getTheme());
-    document.querySelectorAll("[data-theme-toggle]").forEach(function (button) {
-      button.addEventListener("click", function () {
+    document.querySelectorAll("[data-theme-toggle]").forEach((button) => {
+      button.addEventListener("click", () => {
         applyTheme(getTheme() === "dark" ? "light" : "dark", true);
       });
     });
   });
 
   // Follow the OS while the visitor has not chosen explicitly.
-  if (media) {
-    var onChange = function (event) {
-      if (!hasStoredPreference()) {
-        applyTheme(event.matches ? "dark" : "light", false);
-      }
-    };
-    if (media.addEventListener) {
-      media.addEventListener("change", onChange);
-    } else if (media.addListener) {
-      media.addListener(onChange);
-    }
-  }
+  matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (e) => {
+    if (!hasStoredPreference()) applyTheme(e.matches ? "dark" : "light", false);
+  });
 })();

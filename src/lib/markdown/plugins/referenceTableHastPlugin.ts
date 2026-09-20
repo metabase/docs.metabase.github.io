@@ -15,25 +15,21 @@ import { defineHastPlugin } from "satteri";
 // for those hooks lives in public/docs/css/docs-tables.css. Tables whose
 // header row doesn't match are left untouched.
 //
-// By the time hast plugins run, `<br>` and `<a id="…"></a>` are `raw` nodes
-// and smartypants has already turned the `---` rule into an em dash.
+// By the time hast plugins run, inline HTML is opaque `raw` nodes: `<br>` is
+// one, and `<a id="…"></a>` is two (`<a id="…">` then `</a>`), never an element
+// with children. Smartypants has already turned the `---` rule into an em dash.
+//
+// Nodes from the source tree are read-only views: only changes made through
+// `ctx` (replaceNode, setProperty) take effect, and mutating a node in place
+// is silently dropped. Edits therefore build new nodes.
 
 type RawNode = { type: "raw"; value: string };
 type Node = ElementContent | RawNode;
 
-const NAME_HEADERS = new Set([
-  "property",
-  "prop",
-  "attribute",
-  "parameter",
-  "name",
-  "option",
-  "field",
-  "key",
-]);
+const NAME_HEADERS = new Set(["property", "parameter", "name", "prop"]);
 const BR_RE = /^<br\s*\/?>$/i;
-const RULE_RE = /^(—|---)$/;
-const ANCHOR_OPEN_RE = /^<a\s+id=["']([^"']+)["']\s*>(?:<\/a>)?$/i;
+const RULE = "—";
+const ANCHOR_OPEN_RE = /^<a\s+id=["']([^"']+)["']\s*>$/i;
 const ANCHOR_CLOSE_RE = /^<\/a>$/i;
 const FLAG_RE = /^(optional|required)\.?$/i;
 const AVAILABLE_RE = /^Available in\s+/i;
@@ -70,6 +66,10 @@ function el(
 
 function text(value: string): Text {
   return { type: "text", value };
+}
+
+function withChildren(node: Element, children: Node[]): Element {
+  return { ...node, children } as Element;
 }
 
 function textOf(nodes: Node[]): string {
@@ -120,7 +120,7 @@ function splitDescription(
     const n = children[i];
     if (
       isText(n) &&
-      RULE_RE.test(n.value.trim()) &&
+      n.value.trim() === RULE &&
       isBr(children[i - 1]) &&
       isBr(children[i + 1])
     ) {
@@ -158,9 +158,10 @@ function metaItem(line: Node[]): Element {
   if (first && isText(first)) {
     if (AVAILABLE_RE.test(first.value)) {
       const rest = first.value.replace(AVAILABLE_RE, "");
-      const value: Node[] = [text(rest), ...line.slice(1)];
-      stripTrailingPeriod(value);
-      return labeledItem("Available in", value);
+      return labeledItem(
+        "Available in",
+        withoutTrailingPeriod([text(rest), ...line.slice(1)]),
+      );
     }
     const labeled = LABEL_RE.exec(first.value);
     if (labeled) {
@@ -174,9 +175,10 @@ function metaItem(line: Node[]): Element {
   return el("div", { className: ["prop-meta-item"] }, line);
 }
 
-function stripTrailingPeriod(nodes: Node[]): void {
-  const last = nodes[nodes.length - 1];
-  if (last && isText(last)) last.value = last.value.replace(/\.\s*$/, "");
+function withoutTrailingPeriod(nodes: Node[]): Node[] {
+  const last = nodes.at(-1);
+  if (!last || !isText(last)) return nodes;
+  return [...nodes.slice(0, -1), text(last.value.replace(/\.\s*$/, ""))];
 }
 
 /** Strip the row anchor from a name cell; returns its id and the remaining nodes. */
@@ -203,23 +205,17 @@ function foldArraySuffix(nodes: Node[]): Node[] {
   const out: Node[] = [];
   for (const n of nodes) {
     const prev = out[out.length - 1];
-    if (
-      isText(n) &&
-      n.value.startsWith("[]") &&
-      prev &&
-      isElement(prev) &&
-      prev.tagName === "code"
-    ) {
-      const suffix = /^(\[\])+/.exec(n.value)![0];
-      out[out.length - 1] = el("code", { ...(prev.properties ?? {}) }, [
-        ...(prev.children as Node[]),
+    const suffix = isText(n) ? /^(\[\])+/.exec(n.value)?.[0] : undefined;
+    if (suffix && prev && isElement(prev) && prev.tagName === "code") {
+      out[out.length - 1] = withChildren(prev, [
+        ...prev.children,
         text(suffix),
       ]);
-      const rest = n.value.slice(suffix.length);
+      const rest = (n as Text).value.slice(suffix.length);
       if (rest) out.push(text(rest));
-      continue;
+    } else {
+      out.push(n);
     }
-    out.push(n);
   }
   return out;
 }
@@ -227,13 +223,14 @@ function foldArraySuffix(nodes: Node[]): Node[] {
 /** Strip typedoc's trailing `?` from the name's code span; returns whether it was there. */
 function stripOptionalMarker(nodes: Node[]): boolean {
   const idx = nodes.findIndex((n) => isElement(n) && n.tagName === "code");
-  if (idx === -1) return false;
-  const code = nodes[idx] as Element;
-  const last = code.children[code.children.length - 1];
-  if (!last || !isText(last) || !/\?$/.test(last.value)) return false;
-  nodes[idx] = el("code", { ...(code.properties ?? {}) }, [
-    ...(code.children.slice(0, -1) as Node[]),
-    text(last.value.replace(/\?$/, "")),
+  const code = nodes[idx] as Element | undefined;
+  const last = code?.children.at(-1);
+  if (!code || !last || !isText(last) || !last.value.endsWith("?")) {
+    return false;
+  }
+  nodes[idx] = withChildren(code, [
+    ...code.children.slice(0, -1),
+    text(last.value.slice(0, -1)),
   ]);
   return true;
 }

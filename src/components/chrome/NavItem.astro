@@ -6,14 +6,14 @@ import { containsUrl, type NavNode } from "@/lib/docs/nav";
 type Props = {
   node: NavNode;
   pageUrl: string;
-  depth?: number;
+  /** Start open even when the item does not contain the current page. */
+  open?: boolean;
 };
 
-const { node, pageUrl, depth = 0 } = Astro.props;
+const { node, pageUrl, open = false } = Astro.props;
 
 const hasChildren = Boolean(node.pages && node.pages.length > 0);
-// Top-level sections start open; deeper ones only when they contain the page.
-const expanded = containsUrl(node, pageUrl) || (depth === 0 && hasChildren);
+const expanded = containsUrl(node, pageUrl) || (open && hasChildren);
 ---
 
 <li class={expanded ? "expanded" : ""}>
@@ -30,7 +30,7 @@ const expanded = containsUrl(node, pageUrl) || (depth === 0 && hasChildren);
   {hasChildren && (
     <ul>
       {node.pages!.map((child) => (
-        <NavItem node={child} pageUrl={pageUrl} depth={depth + 1} />
+        <NavItem node={child} pageUrl={pageUrl} />
       ))}
     </ul>
   )}

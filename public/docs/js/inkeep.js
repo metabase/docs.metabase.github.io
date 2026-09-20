@@ -11,8 +11,7 @@ const baseConfig = {
     theme: {
       styles: [{ type: "link", value: "/docs/css/inkeep.css" }],
     },
-    // Follow the docs theme (data-theme on <html>, set by theme-init.js and
-    // new-docs-theme-toggle.js).
+    // Follow the docs theme.
     colorMode: {
       sync: {
         target: document.documentElement,
