@@ -6,13 +6,10 @@ import {
   getNavForVersion,
 } from "@/lib/docs/nav";
 
-// Only the active category's pages; the header tabs switch categories. Pages
-// outside the nav (home, /docs/all, 404) show the first category. Top-level
-// sections start open.
-//
-// Below 992px docs-local.css turns this into a drawer opened from the header
-// (new-docs-mobile-nav.js), where the tabs are hidden, so the drawer starts
-// with the section list. docs-local.css hides it on desktop.
+// Only the active category's pages, with top-level sections open; the header
+// tabs switch categories. Pages outside the nav (home, /docs/all, 404) show
+// the first category. The section list is for the mobile drawer, where the
+// header tabs are hidden; docs-local.css hides it on desktop.
 type Props = {
   url: string;
   version?: string;

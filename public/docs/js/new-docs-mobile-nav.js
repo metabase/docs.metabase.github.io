@@ -1,4 +1,4 @@
-// Below 992px docs-local.css turns the left sidebar (#main-navigation-content)
+// At 992px and below docs-local.css turns the left sidebar (#main-navigation-content)
 // into a drawer under the header. This opens and closes it from the header's
 // menu button, mirroring the state on <html data-docs-nav="open"> for the CSS
 // and on the button's aria-expanded for assistive tech.

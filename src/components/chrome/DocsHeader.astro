@@ -16,8 +16,8 @@ import {
 type Props = {
   version?: string;
   pageUrl: string;
-  /** The page renders a LeftSidebar; below 992px the section tabs give way
-   *  to a menu button that opens it as a drawer (new-docs-mobile-nav.js). */
+  /** The page renders a LeftSidebar; at 992px and below the section tabs give
+   *  way to a menu button that opens it as a drawer (new-docs-mobile-nav.js). */
   sidebar?: boolean;
 };
 
@@ -157,11 +157,9 @@ const tabs = nav.categories.map((category) => ({
     --docs-header-tabs-height: 44px;
   }
 
-  /* --navigation-header-height is read by inkeep.css and docs-local.css to keep
-     the search modal and sticky sidebars below the fixed header. styles.css
-     sets the same variable on :root for the marketing navbar (85px below
-     992px); html:root outranks it whatever the load order, and unlike a
-     [data-theme] selector does not wait on the inline theme script. */
+  /* Read by inkeep.css and docs-local.css to keep the search modal and sticky
+     sidebars below the header. styles.css sets the marketing navbar's value
+     on :root; html:root outranks it whatever the load order. */
   html:root {
     --navigation-header-height: calc(
       var(--docs-header-main-height) + var(--docs-header-tabs-height)
@@ -370,7 +368,7 @@ const tabs = nav.categories.map((category) => ({
     height: var(--docs-header-tabs-height);
   }
 
-  /* Mobile-only. Shown below 992px on pages with a sidebar, in place of the
+  /* Mobile-only. Shown at 992px and below on pages with a sidebar, in place of the
      tab list; labeled with the active section so the row still says where
      you are. new-docs-mobile-nav.js toggles aria-expanded. */
   .docs-header__menu {

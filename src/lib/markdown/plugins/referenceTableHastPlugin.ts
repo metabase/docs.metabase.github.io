@@ -24,11 +24,8 @@ import {
 // By the time hast plugins run, inline HTML is opaque `raw` nodes: `<br>` is
 // one, and `<a id="…"></a>` is two (`<a id="…">` then `</a>`), never an element
 // with children. Smartypants turns the `---` rule into an em dash, so the rule
-// is matched in both forms.
-//
-// Nodes from the source tree are read-only views: only changes made through
-// `ctx` (replaceNode, setProperty) take effect, and mutating a node in place
-// is silently dropped. Edits therefore build new nodes.
+// is matched in both forms. Source nodes are read-only (see hastUtils.ts), so
+// every edit builds a new node and applies it through `ctx`.
 
 type RawNode = { type: "raw"; value: string };
 type Node = ElementContent | RawNode;

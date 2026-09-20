@@ -22,10 +22,17 @@
   color: var(--mb-tag-lts-text);
 }
 
-/* Notice on docs for versions past their EOL date. Its colors are in
- * docs-theme.css, after the generic blockquote rule they override. */
-.docs blockquote.version-unsupported-notice {
+/* Notice on docs for versions past their EOL date. `.docs` is present in
+ * both the current and legacy layouts, so this rule (not docs-theme.css,
+ * which only themed pages load) carries the colors. The second selector
+ * outranks the generic `.bootstrap .learn blockquote` in docs-theme.css,
+ * which loads later. */
+.docs blockquote.version-unsupported-notice,
+.bootstrap .learn blockquote.version-unsupported-notice {
+  background-color: var(--mb-notice-bg);
+  border: 1px solid var(--mb-notice-border);
   border-radius: 0.625rem;
+  color: var(--mb-text);
   font-size: 14px;
   line-height: 1.5;
   margin: 1.5rem 0;
@@ -341,9 +348,7 @@ html[data-theme] body {
     max-width: none;
   }
 
-  /* Center article + TOC as one box: 72px padding + widest table + 40px (the
-   * 72px content padding minus the 32px table bleed) + 200px TOC (border-box).
-   * The breadcrumb is absolutely positioned inside, so it follows. On narrower
+  /* Center article + TOC as one box sized to the widest table; on narrower
    * viewports the box shrinks and the text column with it. */
   .bootstrap .learn.docs .learn__post {
     margin: 0 auto;
@@ -382,13 +387,9 @@ html[data-theme] body {
     display: none;
   }
 
-  /* styles.css centers the top bar across the full .learn__post box (left: 50%
-   * + translateX(-50%)) and indents the breadcrumb 64px. Pin it to the text
-   * column instead so its divider lines up with the h2 rules and tables below
-   * it. Those end 312px short of the box on every desktop width: 72px left
-   * padding + 200px TOC + 40px, where 40px is the 72px right padding minus the
-   * 32px bleed from 1200px up, or the plain 40px right padding below that. At
-   * the full 1272px box that is --docs-table-width. */
+  /* styles.css centers the top bar across the whole .learn__post box. Pin it
+   * to the text column instead so its divider lines up with the h2 rules and
+   * tables, which end 72px padding + 200px TOC + 40px short of the box. */
   .bootstrap .learn.docs .top-bar {
     left: 72px;
     padding-left: 0;

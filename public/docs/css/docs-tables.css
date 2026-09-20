@@ -3,16 +3,12 @@
  * the historic light values on pages without a theme.
  *
  * styles.css stacks every `.learn__post table` into labeled cards below
- * 1399.98px (thead hidden, each td a block prefixed with its data-label),
- * which is a phone layout applied to most laptops. new-docs-table-overflow.js
- * gives tables a horizontal scroll wrapper, so the real table layout is
- * restored here wherever the article column is wide enough: 768–992px, where
- * the sidebar is hidden and the article has the full width, and 1200px up.
- * Between 993px and 1199px the 280px sidebar and 200px table of contents leave
- * the text column under 650px, and a three-column table there squeezes the
- * description to a sliver, so those widths keep the stacked cards. From 1200px
- * up, tables also run 32px into the gutter between the text column and the
- * table of contents.
+ * 1399.98px, a phone layout applied to most laptops. Since
+ * new-docs-table-overflow.js gives tables a horizontal scroll wrapper, the
+ * real table layout is restored wherever the article column is wide enough:
+ * 768–992px (no sidebar) and 1200px up. Between 993px and 1199px the sidebar
+ * and table of contents leave the text column under 650px, so those widths
+ * keep the stacked cards.
  *
  * src/lib/markdown/plugins/referenceTableHastPlugin.ts tags Property / Type /
  * Description tables `table-reference` and adds the .prop-* hooks below. */
@@ -165,19 +161,11 @@
   }
 }
 
-/* Tables run into the gutter between the text column and the table of
- * contents. The column has 72px of right padding from 1200px up and the TOC
- * pulls itself 20px into it, so 32px keeps a 20px gap to the TOC text. On
- * wide screens the column itself is wider than the paragraphs (docs-local.css
- * caps those at --docs-article-width and sizes the box for
- * --docs-table-width), so tables grow past them before the bleed even starts.
- * 993-1199px pads only 40px and renders stacked cards, so no bleed there.
- * The h2 section rules (drawn on the .copy-clip-container.h2 wrapper) bleed
- * the same amount so they end where the tables end, on every page. styles.css
- * gives the wrapper `width: 100%` through its .h2 class, which would pin it to
- * the column and swallow the negative margin, so the width goes back to auto.
- * Direct child only: a table nested in a list or blockquote keeps its indent.
- * new-docs-table-overflow.js adds .docs-table-wrap to the wrapper. */
+/* From 1200px up, tables and the h2 section rules bleed 32px into the 72px
+ * gutter before the table of contents (the TOC pulls 20px into it, leaving a
+ * 20px gap). Direct children only, so a table nested in a list keeps its
+ * indent. The h2 wrapper's `width: 100%` from styles.css would swallow the
+ * negative margin, so it goes back to auto. */
 @media (min-width: 1200px) {
   .bootstrap .learn.docs div.learn__post__content > .docs-table-wrap,
   .bootstrap .learn.docs div.learn__post__content > .copy-clip-container.h2 {
