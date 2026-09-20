@@ -37,7 +37,13 @@ const version = page.latest ? "latest" : (page.version ?? "latest");
     <div class="learn docs blog-post MB-Page">
       <LeftSidebar url={page.url} version={version} />
 
-      <article class="learn__post learn__article">
+      <article
+        class:list={[
+          "learn__post",
+          "learn__article",
+          { "learn__article--no-top-bar": !showBreadcrumb },
+        ]}
+      >
         {showBreadcrumb && (
           <LiquidInclude
             lq={lq}

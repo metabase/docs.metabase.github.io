@@ -131,7 +131,9 @@ const tabs = nav.categories.map((category) => ({
     font-family: Lato, "Helvetica Neue", Helvetica, sans-serif;
     position: sticky;
     top: 0;
-    z-index: 10000;
+    /* Same as the marketing navbar it replaces: above page content, below the
+       image-zoom overlay (2000, image-zoom.js) and the search modal (100000). */
+    z-index: 1001;
   }
 
   .docs-header__row {
@@ -415,6 +417,18 @@ const tabs = nav.categories.map((category) => ({
 
     .docs-header__ask {
       padding: 0 10px;
+    }
+
+    /* The tab list scrolls with its scrollbar hidden, so fade its right edge
+       to show there is more. The row keeps its 44px height because
+       --navigation-header-height positions the search modal from it. */
+    .docs-header__tab-list {
+      mask-image: linear-gradient(
+        to right,
+        #000 calc(100% - 32px),
+        transparent
+      );
+      padding-right: 32px;
     }
   }
 

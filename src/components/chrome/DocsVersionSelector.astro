@@ -124,9 +124,13 @@ const otherVersions = [...availableVersions]
     right: 0;
     scale: 0.97;
     top: calc(100% + 6px);
+    /* visibility keeps the closed menu's links out of the tab order; its delay
+       lets the fade-out play before the menu disappears. */
     transition:
       scale 0.2s ease-in-out,
-      opacity 0.2s ease-in-out;
+      opacity 0.2s ease-in-out,
+      visibility 0s linear 0.2s;
+    visibility: hidden;
     z-index: 5;
   }
 
@@ -134,6 +138,8 @@ const otherVersions = [...availableVersions]
     opacity: 1;
     pointer-events: all;
     scale: 1;
+    transition-delay: 0s;
+    visibility: visible;
   }
 
   .version__dropdown li {

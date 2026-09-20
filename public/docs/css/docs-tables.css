@@ -4,15 +4,19 @@
  *
  * styles.css stacks every `.learn__post table` into labeled cards below
  * 1399.98px (thead hidden, each td a block prefixed with its data-label),
- * which is a phone layout applied to most laptops. The article column is
- * 800px wide from 993px up, and new-docs-table-overflow.js gives tables a
- * horizontal scroll wrapper, so the real table layout is restored here from
- * 768px up.
+ * which is a phone layout applied to most laptops. new-docs-table-overflow.js
+ * gives tables a horizontal scroll wrapper, so the real table layout is
+ * restored here wherever the article column is wide enough: 768–992px, where
+ * the sidebar is hidden and the article has the full width, and 1200px up.
+ * Between 993px and 1199px the 280px sidebar and 200px table of contents leave
+ * the text column under 650px, and a three-column table there squeezes the
+ * description to a sliver, so those widths keep the stacked cards.
  *
  * src/lib/markdown/plugins/referenceTableHastPlugin.ts tags Property / Type /
  * Description tables `table-reference` and adds the .prop-* hooks below. */
 
-@media (min-width: 768px) and (max-width: 1399.98px) {
+@media (min-width: 768px) and (max-width: 992px),
+  (min-width: 1200px) and (max-width: 1399.98px) {
   .bootstrap .learn__post table {
     background: var(--mb-surface);
     border: 1px solid var(--mb-border-subtle);
@@ -77,8 +81,8 @@
   color: var(--mb-text);
 }
 
-/* Stacked card layout below the 768px breakpoint above. */
-@media (max-width: 767.98px) {
+/* Stacked card layout: phones, and the narrow-article band beside the sidebar. */
+@media (max-width: 767.98px), (min-width: 993px) and (max-width: 1199.98px) {
   .bootstrap .learn__post table {
     background: none;
   }
@@ -102,9 +106,10 @@
   background: linear-gradient(270deg, var(--mb-surface) 0%, transparent 100%);
 }
 
-/* Density and scanning aids for the table layout (768px up). main.css pads
- * every cell 1em on a 1.6rem line-height; the header is 11px uppercase. */
-@media (min-width: 768px) {
+/* Density and scanning aids for the table layout (same widths as above).
+ * main.css pads every cell 1em on a 1.6rem line-height; the header is 11px
+ * uppercase. */
+@media (min-width: 768px) and (max-width: 992px), (min-width: 1200px) {
   .bootstrap .learn__post table {
     margin-bottom: 2rem !important;
   }
