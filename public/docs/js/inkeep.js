@@ -11,7 +11,6 @@ const baseConfig = {
     theme: {
       styles: [{ type: "link", value: "/docs/css/inkeep.css" }],
     },
-    // Follow the docs theme.
     colorMode: {
       sync: {
         target: document.documentElement,

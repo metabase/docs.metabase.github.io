@@ -34,7 +34,6 @@ closeImageButton.style.cursor = "pointer";
 
 imageZoomWrapper.appendChild(imageZoomInnerWrapper);
 imageZoomWrapper.appendChild(closeImageButton);
-
 document.body.appendChild(imageZoomWrapper);
 
 imageZoomWrapper.addEventListener("click", function() {

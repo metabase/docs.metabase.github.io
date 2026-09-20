@@ -41,11 +41,8 @@ function hasDarkBackground(codeSnippet) {
   if (document.documentElement.getAttribute("data-theme") === "dark") {
     return true;
   }
-  const codeElementBackgroundColor = window.getComputedStyle(codeSnippet)
-    .backgroundColor;
   return (
-    codeElementBackgroundColor === "rgb(34, 36, 43)" ||
-    codeElementBackgroundColor === "#22242b"
+    window.getComputedStyle(codeSnippet).backgroundColor === "rgb(34, 36, 43)"
   );
 }
 

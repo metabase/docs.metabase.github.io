@@ -1,5 +1,11 @@
 import type { Element, ElementContent, Text } from "hast";
 import { defineHastPlugin } from "satteri";
+import {
+  childElements,
+  findAllDescendants,
+  findFirstDescendant,
+  isElement,
+} from "./hastUtils";
 
 // Reference tables (Property / Type / Description) come from generators in the
 // metabase repo: the web-component attribute snippets
@@ -35,10 +41,6 @@ const FLAG_RE = /^(optional|required)\.?$/i;
 const AVAILABLE_RE = /^Available in\s+/i;
 const LABEL_RE = /^([A-Z][\w ]{0,30}?):\s*/;
 const SHORT_TYPE_LENGTH = 24;
-
-function isElement(node: Node): node is Element {
-  return node.type === "element";
-}
 
 function isRaw(node: Node): node is RawNode {
   return node.type === "raw";
@@ -78,22 +80,6 @@ function textOf(nodes: Node[]): string {
       isText(n) ? n.value : isElement(n) ? textOf(n.children as Node[]) : "",
     )
     .join("");
-}
-
-function findAll(node: Element, tagName: string): Element[] {
-  const results: Element[] = [];
-  for (const child of node.children) {
-    if (!isElement(child)) continue;
-    if (child.tagName === tagName) results.push(child);
-    results.push(...findAll(child, tagName));
-  }
-  return results;
-}
-
-function cellsOf(tr: Element, tags: string[]): Element[] {
-  return tr.children.filter(
-    (c): c is Element => isElement(c) && tags.includes(c.tagName),
-  );
 }
 
 function classNames(node: Element): unknown[] {
@@ -141,10 +127,20 @@ function flagItem(flag: string): Element {
   );
 }
 
+function withoutTrailingPeriod(nodes: Node[]): Node[] {
+  const last = nodes.at(-1);
+  if (!last || !isText(last)) return nodes;
+  return [...nodes.slice(0, -1), text(last.value.replace(/\.\s*$/, ""))];
+}
+
 function labeledItem(label: string, value: Node[]): Element {
   return el("div", { className: ["prop-meta-item"] }, [
     el("span", { className: ["prop-meta-label"] }, [text(label)]),
-    el("span", { className: ["prop-meta-value"] }, value),
+    el(
+      "span",
+      { className: ["prop-meta-value"] },
+      withoutTrailingPeriod(value),
+    ),
   ]);
 }
 
@@ -158,10 +154,7 @@ function metaItem(line: Node[]): Element {
   if (first && isText(first)) {
     if (AVAILABLE_RE.test(first.value)) {
       const rest = first.value.replace(AVAILABLE_RE, "");
-      return labeledItem(
-        "Available in",
-        withoutTrailingPeriod([text(rest), ...line.slice(1)]),
-      );
+      return labeledItem("Available in", [text(rest), ...line.slice(1)]);
     }
     const labeled = LABEL_RE.exec(first.value);
     if (labeled) {
@@ -173,12 +166,6 @@ function metaItem(line: Node[]): Element {
     }
   }
   return el("div", { className: ["prop-meta-item"] }, line);
-}
-
-function withoutTrailingPeriod(nodes: Node[]): Node[] {
-  const last = nodes.at(-1);
-  if (!last || !isText(last)) return nodes;
-  return [...nodes.slice(0, -1), text(last.value.replace(/\.\s*$/, ""))];
 }
 
 /** Strip the row anchor from a name cell; returns its id and the remaining nodes. */
@@ -220,19 +207,37 @@ function foldArraySuffix(nodes: Node[]): Node[] {
   return out;
 }
 
-/** Strip typedoc's trailing `?` from the name's code span; returns whether it was there. */
-function stripOptionalMarker(nodes: Node[]): boolean {
+/** Strip typedoc's trailing `?` from the name's code span: `` `foo?` `` → `foo`. */
+function stripOptionalMarker(nodes: Node[]): {
+  nodes: Node[];
+  optional: boolean;
+} {
   const idx = nodes.findIndex((n) => isElement(n) && n.tagName === "code");
   const code = nodes[idx] as Element | undefined;
   const last = code?.children.at(-1);
   if (!code || !last || !isText(last) || !last.value.endsWith("?")) {
-    return false;
+    return { nodes, optional: false };
   }
-  nodes[idx] = withChildren(code, [
+  const stripped = withChildren(code, [
     ...code.children.slice(0, -1),
     text(last.value.slice(0, -1)),
   ]);
-  return true;
+  return {
+    nodes: [...nodes.slice(0, idx), stripped, ...nodes.slice(idx + 1)],
+    optional: true,
+  };
+}
+
+function permalink(id: string): Element {
+  return el(
+    "a",
+    {
+      className: ["table-reference-anchor"],
+      href: `#${id}`,
+      ariaLabel: `Link to ${id}`,
+    },
+    [text("#")],
+  );
 }
 
 export const referenceTableHastPlugin = defineHastPlugin({
@@ -240,13 +245,13 @@ export const referenceTableHastPlugin = defineHastPlugin({
   element: {
     filter: ["table"],
     visit(table, ctx) {
-      const thead = findAll(table, "thead")[0];
+      const thead = findFirstDescendant(table, "thead");
       const headerRow = thead
-        ? findAll(thead, "tr")[0]
-        : findAll(table, "tr")[0];
+        ? findFirstDescendant(thead, "tr")
+        : findFirstDescendant(table, "tr");
       if (!headerRow) return;
 
-      const headers = cellsOf(headerRow, ["th", "td"]).map((c) =>
+      const headers = childElements(headerRow, ["th", "td"]).map((c) =>
         ctx.textContent(c).trim().toLowerCase(),
       );
       const isReference =
@@ -261,33 +266,25 @@ export const referenceTableHastPlugin = defineHastPlugin({
         "table-reference",
       ]);
 
-      for (const tr of findAll(table, "tr")) {
+      for (const tr of findAllDescendants(table, "tr")) {
         if (tr === headerRow) continue;
-        const cells = cellsOf(tr, ["td"]);
-        const [nameCell, typeCell] = cells;
-        const descCell = headers.length === 3 ? cells[2] : undefined;
+        const [nameCell, typeCell, descCell] = childElements(tr, ["td"]);
         if (!nameCell) continue;
 
-        // Name cell: anchor onto the row, permalink, `prop?` → optional flag.
-        const { id, rest } = extractAnchor(nameCell.children as Node[]);
-        const typedocOptional = stripOptionalMarker(rest);
-        if (id) {
-          ctx.setProperty(tr, "id", id);
-          rest.push(
-            el(
-              "a",
-              {
-                className: ["table-reference-anchor"],
-                href: `#${id}`,
-                ariaLabel: `Link to ${id}`,
-              },
-              [text("#")],
-            ),
-          );
+        // Name cell: anchor onto the row, permalink after the name. The `?`
+        // only comes off when there is a description cell to show the
+        // Optional flag in; a two-column table keeps it.
+        const anchor = extractAnchor(nameCell.children as Node[]);
+        const name = descCell
+          ? stripOptionalMarker(anchor.rest)
+          : { nodes: anchor.rest, optional: false };
+        if (anchor.id) {
+          ctx.setProperty(tr, "id", anchor.id);
+          name.nodes.push(permalink(anchor.id));
         }
         ctx.replaceNode(
           nameCell,
-          el("td", { ...(nameCell.properties ?? {}) }, rest),
+          el("td", { ...(nameCell.properties ?? {}) }, name.nodes),
         );
 
         // Type cell: a block wrapper so CSS can cap the column width. Short
@@ -311,12 +308,12 @@ export const referenceTableHastPlugin = defineHastPlugin({
         // Description cell: `<br>—<br>` metadata lines → `.prop-meta`.
         if (!descCell) continue;
         const split = splitDescription(descCell.children as Node[]);
-        if (!split && !typedocOptional) continue;
+        if (!split && !name.optional) continue;
 
         const items: Element[] = [];
-        if (typedocOptional) items.push(flagItem("optional"));
+        if (name.optional) items.push(flagItem("optional"));
         for (const line of split?.meta ?? []) {
-          if (typedocOptional && FLAG_RE.test(textOf(line).trim())) continue;
+          if (name.optional && FLAG_RE.test(textOf(line).trim())) continue;
           items.push(metaItem(line));
         }
         const body = split ? split.body : (descCell.children as Node[]);

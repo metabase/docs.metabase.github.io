@@ -2,7 +2,7 @@
 // before first paint. This flips it, persists the choice, and announces the
 // change to other scripts via a "themechange" event on document.
 (() => {
-  const KEY = "mb-docs-theme";
+  const KEY = "mb-docs-theme"; // same key as _includes/docs/theme-init.js
   const root = document.documentElement;
 
   const getTheme = () => (root.dataset.theme === "dark" ? "dark" : "light");

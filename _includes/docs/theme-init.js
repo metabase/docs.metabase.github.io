@@ -4,6 +4,7 @@
 (() => {
   let theme = null;
   try {
+    // Same key as new-docs-theme-toggle.js.
     theme = localStorage.getItem("mb-docs-theme");
   } catch {
     /* storage blocked (private mode, disabled cookies) */

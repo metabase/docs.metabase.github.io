@@ -2,7 +2,8 @@
  * tokens in docs-tokens.css. Each rule replaces a hardcoded-color rule in the
  * vendored styles.css / main.css bundle at equal or higher specificity; this
  * sheet loads last, so it wins ties. Rules whose colors are the same in both
- * themes (brand-blue hovers, CTAs) are left to the vendored sheet. */
+ * themes (brand-blue hovers, CTAs) are left to the vendored sheet. Tables are
+ * styled end to end, colors included, in docs-tables.css. */
 
 /* Page shell */
 
@@ -188,16 +189,12 @@
   color: var(--mb-pre-text);
 }
 
-.bootstrap .learn .learn__article table td code {
-  background-color: var(--mb-tag-bg);
-}
-
 /* Syntax highlighting: highlight.js classes, ported from the base16
  * atelier-sulphurpool-light theme that legacy pages still load from cdnjs.
  * The base16 accent colors are shared by the light and dark variants; only
- * the foreground and comment colors are tokens. `.bootstrap .hljs-string` and
- * `.bootstrap .hljs-attr` in styles.css override the base16 values, so those
- * two keep the styles.css colors. */
+ * the foreground and comment colors are tokens. styles.css already sets
+ * `.hljs-string` and `.hljs-attr` at this specificity; `.hljs-attr` is
+ * re-declared here with a token so it can change in the dark theme. */
 
 .bootstrap code.hljs {
   padding: 3px 5px;
@@ -273,10 +270,6 @@
   color: #ac9739;
 }
 
-.bootstrap .hljs-string {
-  color: #7aad4f;
-}
-
 .bootstrap .hljs-built_in,
 .bootstrap .hljs-doctag,
 .bootstrap .hljs-keyword.hljs-atrule,
@@ -317,53 +310,6 @@
 .bootstrap .hljs-meta .hljs-keyword,
 .bootstrap .hljs-meta-keyword {
   font-weight: 700;
-}
-
-/* Tables */
-
-.bootstrap .learn__post table {
-  background: var(--mb-surface);
-  border-color: var(--mb-border-subtle);
-}
-
-.bootstrap .learn__post table th {
-  background-color: var(--mb-surface-elevated);
-}
-
-.bootstrap .learn__post table td {
-  background: var(--mb-surface);
-}
-
-.bootstrap .learn__post table th,
-.bootstrap .learn__post table td {
-  border-bottom-color: var(--mb-border-subtle);
-  color: var(--mb-text);
-}
-
-/* Stacked card layout; docs-tables.css moves its breakpoint down from the
- * 1399.98px styles.css uses. */
-@media (max-width: 767.98px) {
-  .bootstrap .learn__post table {
-    background: none;
-  }
-
-  .bootstrap .learn__post table tr {
-    border-color: var(--mb-border-subtle);
-  }
-
-  .bootstrap .learn__post table tr td,
-  .bootstrap .learn__post table tr:last-child td {
-    border-bottom-color: var(--mb-border-subtle);
-  }
-
-  .bootstrap .learn__post table tr td::before,
-  .bootstrap .learn__post table tr td:first-child {
-    background-color: var(--mb-surface-elevated);
-  }
-}
-
-.bootstrap .table-overflow-indicator::after {
-  background: linear-gradient(270deg, var(--mb-surface) 0%, transparent 100%);
 }
 
 /* Blockquotes */

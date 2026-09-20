@@ -1,20 +1,16 @@
 import { describe, expect, test } from "bun:test";
 import { getMarkdownRenderer } from "../markdownRenderer";
 
-const render = async (md: string) => (await getMarkdownRenderer()).render(md);
-
-const html = (rendered: Awaited<ReturnType<typeof render>>) =>
-  typeof rendered === "string" ? rendered : rendered.code;
+const render = async (md: string) =>
+  (await (await getMarkdownRenderer()).render(md)).code;
 
 describe("referenceTableHastPlugin", () => {
   test("restructures a Property / Type / Description table", async () => {
-    const out = html(
-      await render(`| Property | Type | Description |
+    const out = await render(`| Property | Type | Description |
 |---|---|---|
 | <a id="foo"></a> \`foo?\` | \`string\`[] | Body text.<br>---<br>Optional<br>Default: \`x\`<br>Available in Pro/Enterprise. |
-| <a id="bar"></a> \`bar\` | \`"a" \\| "b"\` | Plain body.<br>---<br>Required<br>Possible values: \`a\`, \`b\` |
-`),
-    );
+| <a id="bar"></a> \`bar\` | \`"a" \\| "b"\` | Plain body.<br>---<br>Required<br>Possible values: \`a\`, \`b\`<br>Default: none. |
+`);
 
     expect(out).toContain('<table class="table-reference">');
 
@@ -43,15 +39,25 @@ describe("referenceTableHastPlugin", () => {
     expect(out).toContain(
       '<span class="prop-meta-label">Possible values</span>',
     );
+    expect(out).toContain('<span class="prop-meta-value">none</span>');
+  });
+
+  test("keeps the optional marker in a two-column table", async () => {
+    const out = await render(`| Property | Type |
+|---|---|
+| <a id="foo"></a> \`foo?\` | \`string\` |
+`);
+    expect(out).toContain('<table class="table-reference">');
+    expect(out).toContain('<tr id="foo">');
+    expect(out).toContain(">foo?</code>");
+    expect(out).not.toContain("prop-meta");
   });
 
   test("leaves other tables alone", async () => {
-    const out = html(
-      await render(`| Name | Type | Required |
+    const out = await render(`| Name | Type | Required |
 |---|---|---|
 | \`a\` | \`string\` | yes |
-`),
-    );
+`);
     expect(out).not.toContain("table-reference");
     expect(out).not.toContain("prop-type");
   });

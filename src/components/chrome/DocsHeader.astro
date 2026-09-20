@@ -106,8 +106,10 @@ const tabs = nav.categories.map((category) => ({
 
 <style is:global>
   /* --navigation-header-height is read by inkeep.css and docs-local.css to keep
-     the search modal and sticky sidebars below the fixed header. */
-  :root {
+     the search modal and sticky sidebars below the fixed header. styles.css
+     sets the same variable on :root for the marketing navbar (85px below
+     992px); the attribute selector outranks it whatever the load order. */
+  :root[data-theme] {
     --docs-header-main-height: 64px;
     --docs-header-tabs-height: 44px;
     --navigation-header-height: calc(
@@ -137,7 +139,6 @@ const tabs = nav.categories.map((category) => ({
     height: var(--docs-header-main-height);
   }
 
-  /* The wordmark's "Metabase" text is currentColor. */
   .docs-header__brand {
     align-items: center;
     color: var(--mb-text-secondary);
@@ -153,6 +154,9 @@ const tabs = nav.categories.map((category) => ({
     opacity: 0.75;
   }
 
+  /* The wordmark's "Metabase" text is currentColor. Its light color is the
+     secondary text tone, but that is too dim on dark surfaces, so this is the
+     one per-theme color rule outside docs-tokens.css. */
   :global([data-theme="dark"]) .docs-header__brand {
     color: var(--mb-heading);
   }
@@ -221,7 +225,7 @@ const tabs = nav.categories.map((category) => ({
 
   /* Quiet icon button sized and styled like the version selector's
      .version__current beside it, so the pair reads as one group in the
-     44px tabs row. The icons take the button's color. */
+     44px tabs row. */
   .docs-header__theme {
     align-items: center;
     background: none;
@@ -243,11 +247,6 @@ const tabs = nav.categories.map((category) => ({
   .docs-header__theme:hover {
     background-color: var(--mb-surface-active);
     color: var(--mb-brand);
-  }
-
-  .docs-header__theme:focus-visible {
-    outline: 2px solid var(--mb-brand);
-    outline-offset: 2px;
   }
 
   .docs-header__theme svg {
@@ -273,8 +272,8 @@ const tabs = nav.categories.map((category) => ({
     justify-content: flex-end;
   }
 
-  /* Quiet text button back to the marketing site. Same type size, height,
-     and padding as the CTA beside it so the pair reads as one button group. */
+  /* Quiet text button back to the marketing site, the same 40px tall as the
+     CTA beside it so the pair reads as one button group. */
   .docs-header__home {
     border-radius: 8px;
     color: var(--mb-text-secondary);
@@ -307,7 +306,7 @@ const tabs = nav.categories.map((category) => ({
   }
 
   .docs-header__cta:hover {
-    background-color: #1c6bb0;
+    background-color: var(--mb-brand-hover);
     color: #fff;
   }
 
