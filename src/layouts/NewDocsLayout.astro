@@ -31,11 +31,13 @@ const version = page.latest ? "latest" : (page.version ?? "latest");
 ---
 
 <DefaultNewLayout page={page} dirname={dirname} {unify} docsTheme>
-  <DocsHeader slot="header" version={version} pageUrl={page.url} />
+  <DocsHeader slot="header" version={version} pageUrl={page.url} sidebar />
 
   <div class="bootstrap">
     <div class="learn docs blog-post MB-Page">
       <LeftSidebar url={page.url} version={version} />
+      {/* Click target behind the mobile nav drawer; docs-local.css shows it. */}
+      <div class="docs-nav-backdrop" data-docs-nav-close></div>
 
       <article
         class:list={[
@@ -93,6 +95,11 @@ const version = page.latest ? "latest" : (page.version ?? "latest");
     is:inline
     type="text/javascript"
     src="/docs/js/new-docs-theme-toggle.js"
+  ></script>
+  <script
+    is:inline
+    type="text/javascript"
+    src="/docs/js/new-docs-mobile-nav.js"
   ></script>
   <script
     is:inline

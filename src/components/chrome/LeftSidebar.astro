@@ -1,10 +1,18 @@
 ---
 import NavItem from "@/components/chrome/NavItem.astro";
-import { getActiveCategory, getNavForVersion } from "@/lib/docs/nav";
+import {
+  getActiveCategory,
+  getLandingUrl,
+  getNavForVersion,
+} from "@/lib/docs/nav";
 
 // Only the active category's pages; the header tabs switch categories. Pages
 // outside the nav (home, /docs/all, 404) show the first category. Top-level
 // sections start open.
+//
+// Below 992px docs-local.css turns this into a drawer opened from the header
+// (new-docs-mobile-nav.js), where the tabs are hidden, so the drawer starts
+// with the section list. docs-local.css hides it on desktop.
 type Props = {
   url: string;
   version?: string;
@@ -16,7 +24,23 @@ const nav = getNavForVersion(version);
 const category = getActiveCategory(nav, pageUrl) ?? nav.categories[0];
 ---
 
-<div class="learn-left-sidebar" id="main-navigation-content">
+<div class="learn-left-sidebar" id="main-navigation-content" tabindex="-1">
+  <nav class="docs-sections" aria-label="Documentation sections">
+    <h5>Sections</h5>
+    <ul>
+      {nav.categories.map((node) => (
+        <li>
+          <a
+            href={getLandingUrl(node)}
+            class={node === category ? "selected" : ""}
+            aria-current={node === category ? "page" : undefined}
+          >
+            {node.name}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
   {category && (
     <ul>
       {category.pages?.map((node) => (

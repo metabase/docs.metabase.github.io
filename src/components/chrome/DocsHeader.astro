@@ -16,9 +16,12 @@ import {
 type Props = {
   version?: string;
   pageUrl: string;
+  /** The page renders a LeftSidebar; below 992px the section tabs give way
+   *  to a menu button that opens it as a drawer (new-docs-mobile-nav.js). */
+  sidebar?: boolean;
 };
 
-const { version = "latest", pageUrl } = Astro.props;
+const { version = "latest", pageUrl, sidebar = false } = Astro.props;
 
 const nav = getNavForVersion(version);
 const activeCategory = getActiveCategory(nav, pageUrl);
@@ -30,7 +33,13 @@ const tabs = nav.categories.map((category) => ({
 }));
 ---
 
-<header class="docs-header navigation-header">
+<header
+  class:list={[
+    "docs-header",
+    "navigation-header",
+    { "docs-header--with-nav": sidebar },
+  ]}
+>
   <div class="docs-header__row docs-header__main">
     <a
       class="docs-header__brand"
@@ -72,6 +81,42 @@ const tabs = nav.categories.map((category) => ({
     class="docs-header__row docs-header__tabs"
     aria-label="Documentation sections"
   >
+    {sidebar && (
+      <button
+        type="button"
+        class="docs-header__menu"
+        data-docs-nav-toggle
+        aria-controls="main-navigation-content"
+        aria-expanded="false"
+        aria-label="Open navigation"
+      >
+        <svg
+          class="docs-header__menu-open"
+          viewBox="0 0 20 20"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          aria-hidden="true"
+        >
+          <path d="M3 5h14M3 10h14M3 15h14" />
+        </svg>
+        <svg
+          class="docs-header__menu-close"
+          viewBox="0 0 20 20"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          aria-hidden="true"
+        >
+          <path d="M5 5l10 10M15 5L5 15" />
+        </svg>
+        <span class="docs-header__menu-label">
+          {activeCategory?.name ?? "Menu"}
+        </span>
+      </button>
+    )}
     {tabs.length > 0 && (
       <ul class="docs-header__tab-list">
         {tabs.map((tab) => (
@@ -325,6 +370,56 @@ const tabs = nav.categories.map((category) => ({
     height: var(--docs-header-tabs-height);
   }
 
+  /* Mobile-only. Shown below 992px on pages with a sidebar, in place of the
+     tab list; labeled with the active section so the row still says where
+     you are. new-docs-mobile-nav.js toggles aria-expanded. */
+  .docs-header__menu {
+    align-items: center;
+    background: none;
+    border: 0;
+    border-radius: 8px;
+    color: var(--mb-text-secondary);
+    cursor: pointer;
+    display: none;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    gap: 8px;
+    height: 32px;
+    line-height: 20px;
+    /* -8px lines the icon up with the wordmark at the 16px row gutter. */
+    margin-left: -8px;
+    min-width: 0;
+    padding: 0 8px;
+    transition:
+      background-color 0.3s ease,
+      color 0.3s ease;
+  }
+
+  .docs-header__menu:hover,
+  .docs-header__menu[aria-expanded="true"] {
+    background-color: var(--mb-surface-active);
+    color: var(--mb-brand);
+  }
+
+  .docs-header__menu svg {
+    flex-shrink: 0;
+    height: 20px;
+    width: 20px;
+  }
+
+  /* Hamburger while closed, X while open. */
+  .docs-header__menu[aria-expanded="true"] .docs-header__menu-open,
+  .docs-header__menu:not([aria-expanded="true"]) .docs-header__menu-close {
+    display: none;
+  }
+
+  .docs-header__menu-label {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
   /* Pins the theme toggle and version selector to the far right, apart from
      the section tabs, even when there is no tab list. */
   .docs-header__version {
@@ -422,9 +517,20 @@ const tabs = nav.categories.map((category) => ({
       padding: 0 10px;
     }
 
-    /* The tab list scrolls with its scrollbar hidden, so fade its right edge
-       to show there is more. The row keeps its 44px height because
-       --navigation-header-height positions the search modal from it. */
+    /* With a sidebar, the menu button (labeled with the active section)
+       replaces the tab list; the sections are listed in the drawer. The row
+       keeps its 44px height because --navigation-header-height positions the
+       search modal from it. */
+    .docs-header--with-nav .docs-header__menu {
+      display: flex;
+    }
+
+    .docs-header--with-nav .docs-header__tab-list {
+      display: none;
+    }
+
+    /* Without a sidebar (404), the tab list scrolls with its scrollbar
+       hidden, so fade its right edge to show there is more. */
     .docs-header__tab-list {
       mask-image: linear-gradient(
         to right,

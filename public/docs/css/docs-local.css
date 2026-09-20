@@ -60,11 +60,87 @@
   padding-top: 0;
 }
 
+/* Click target behind the open mobile nav drawer (NewDocsLayout). It sits in
+ * the .learn.docs grid, so keep it out of layout until the drawer exists. */
+.docs-nav-backdrop {
+  display: none;
+}
+
 /* styles.css hides the sidebar at max-width: 992px but only collapses the grid
  * at 991px, which leaves an empty column at exactly 992px. */
 @media screen and (max-width: 992px) {
   .bootstrap .learn.docs {
     grid-template-columns: 1fr;
+  }
+
+  /* The sidebar becomes a drawer under the header, opened by the header's
+   * menu button (new-docs-mobile-nav.js sets data-docs-nav on <html>). This
+   * selector outranks the three display: none rules in styles.css. Fixed
+   * positioning takes it out of the grid, so the article keeps the single
+   * column. visibility keeps the closed drawer's links out of the tab order;
+   * its delay lets the slide-out play first. Colors are in docs-theme.css. */
+  .bootstrap .learn.docs #main-navigation-content.learn-left-sidebar {
+    bottom: 0;
+    box-shadow: var(--mb-shadow);
+    display: block;
+    height: auto;
+    left: 0;
+    max-height: none;
+    overflow-y: auto;
+    padding: 16px 12px 32px;
+    position: fixed;
+    top: var(--navigation-header-height);
+    transform: translateX(-100%);
+    transition:
+      transform 0.25s ease,
+      visibility 0s linear 0.25s;
+    visibility: hidden;
+    width: min(320px, 85vw);
+
+    /* Below the header (1001), above the article. */
+    z-index: 1000;
+  }
+
+  html[data-docs-nav="open"] .bootstrap .learn.docs #main-navigation-content.learn-left-sidebar {
+    transform: none;
+    transition-delay: 0s;
+    visibility: visible;
+  }
+
+  .docs-nav-backdrop {
+    display: block;
+    inset: var(--navigation-header-height) 0 0;
+    opacity: 0;
+    position: fixed;
+    transition:
+      opacity 0.25s ease,
+      visibility 0s linear 0.25s;
+    visibility: hidden;
+    z-index: 999;
+  }
+
+  html[data-docs-nav="open"] .docs-nav-backdrop {
+    opacity: 1;
+    transition-delay: 0s;
+    visibility: visible;
+  }
+
+  /* No page scroll behind the open drawer. */
+  html[data-docs-nav="open"] {
+    overflow: hidden;
+  }
+
+  .bootstrap .learn.docs .docs-sections {
+    border-bottom: 1px solid var(--mb-border-subtle);
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .bootstrap .learn.docs #main-navigation-content.learn-left-sidebar,
+    .docs-nav-backdrop {
+      transition: none;
+    }
   }
 }
 
@@ -105,6 +181,11 @@
     background-color: var(--mb-surface);
     padding-left: 12px;
     padding-top: 30px;
+  }
+
+  /* The header tabs switch sections on desktop. */
+  .bootstrap .learn.docs .docs-sections {
+    display: none;
   }
 
   /* styles.css centers the top bar across the full .learn__post box (left: 50%
