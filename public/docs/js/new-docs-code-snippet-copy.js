@@ -46,6 +46,9 @@ function hasDarkBackground(codeSnippet) {
   );
 }
 
+// One handler per code block, run together when the docs theme toggles.
+const iconPickers = [];
+
 document.querySelectorAll("code").forEach((codeSnippet) => {
   if (
     codeSnippet.classList.contains("language-plaintext") ||
@@ -96,12 +99,15 @@ document.querySelectorAll("code").forEach((codeSnippet) => {
     copyButton.innerHTML = hasDarkBackground(codeSnippet) ? DARKMODE : LIGHTMODE;
   };
   pickIcons();
-  // Swap the icon set when the docs theme toggle changes the code background.
-  document.addEventListener("themechange", pickIcons);
+  iconPickers.push(pickIcons);
 
   copyButton.classList.add("copy-code-button");
 
   addCopyFunction(copyButton, codeSnippet.innerText);
 
   wrapper.appendChild(copyButton);
+});
+
+document.addEventListener("themechange", () => {
+  iconPickers.forEach((pickIcons) => pickIcons());
 });

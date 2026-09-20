@@ -208,9 +208,8 @@ const tabs = nav.categories.map((category) => ({
     opacity: 0.75;
   }
 
-  /* The wordmark's "Metabase" text is currentColor. Its light color is the
-     secondary text tone, but that is too dim on dark surfaces, so this is the
-     one per-theme color rule outside docs-tokens.css. */
+  /* The wordmark text is currentColor; secondary text is too dim on dark
+     surfaces. */
   :global([data-theme="dark"]) .docs-header__brand {
     color: var(--mb-heading);
   }
@@ -222,9 +221,8 @@ const tabs = nav.categories.map((category) => ({
     width: auto;
   }
 
-  /* Matches the wordmark's "Metabase", which is Lato Bold with a 12.2px cap
-     height when the SVG renders at 24px (17px Lato). The 24px line box plus
-     1px bottom padding puts the text baseline on the wordmark's baseline. */
+  /* 17px Lato Bold matches the wordmark text at 24px; the 1px pad puts it on
+     the wordmark's baseline. */
   .docs-header__docs {
     color: var(--mb-brand);
     font-size: 17px;

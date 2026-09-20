@@ -1,17 +1,14 @@
-/* Tables for the docs, layout and color, on top of the vendored styles.css /
- * main.css bundle. Colors are tokens from docs-tokens.css, which resolve to
- * the historic light values on pages without a theme.
+/* Docs tables, layout and color, on top of the vendored styles.css / main.css
+ * bundle. Colors are docs-tokens.css tokens, which stay light on unthemed pages.
  *
  * styles.css stacks every `.learn__post table` into labeled cards below
- * 1399.98px, a phone layout applied to most laptops. Since
- * new-docs-table-overflow.js gives tables a horizontal scroll wrapper, the
- * real table layout is restored wherever the article column is wide enough:
- * 768–992px (no sidebar) and 1200px up. Between 993px and 1199px the sidebar
- * and table of contents leave the text column under 650px, so those widths
- * keep the stacked cards.
+ * 1399.98px, a phone layout applied to most laptops. The scroll wrapper from
+ * new-docs-table-overflow.js makes real tables safe, so they come back wherever
+ * the article column is wide enough. The 993–1199px band keeps the cards: the
+ * sidebar and table of contents leave the text column under 650px there.
  *
- * src/lib/markdown/plugins/referenceTableHastPlugin.ts tags Property / Type /
- * Description tables `table-reference` and adds the .prop-* hooks below. */
+ * referenceTableHastPlugin.ts tags Property / Type / Description tables
+ * `table-reference` and adds the .prop-* hooks below. */
 
 @media (min-width: 768px) and (max-width: 992px),
   (min-width: 1200px) and (max-width: 1399.98px) {

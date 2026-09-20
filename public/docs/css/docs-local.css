@@ -22,11 +22,9 @@
   color: var(--mb-tag-lts-text);
 }
 
-/* Notice on docs for versions past their EOL date. `.docs` is present in
- * both the current and legacy layouts, so this rule (not docs-theme.css,
- * which only themed pages load) carries the colors. The second selector
- * outranks the generic `.bootstrap .learn blockquote` in docs-theme.css,
- * which loads later. */
+/* Notice on docs for versions past their EOL date. Lives here, not in
+ * docs-theme.css, because legacy pages show it too; the second selector
+ * outranks docs-theme.css's `.bootstrap .learn blockquote`. */
 .docs blockquote.version-unsupported-notice,
 .bootstrap .learn blockquote.version-unsupported-notice {
   background-color: var(--mb-notice-bg);
@@ -53,7 +51,7 @@
 /* Metric-matched local fallbacks so the swap to Lato does not reflow. Lato's
  * line box is 1.2em (ascender 1974 / descender 426 on a 2000 em); the widths
  * were measured against docs prose in Chrome: Lato is 95.7% of Helvetica
- * Neue and 96.8% of Arial. Only NewDocsLayout pages (data-theme) use them. */
+ * Neue and 96.8% of Arial. */
 @font-face {
   ascent-override: 98.7%;
   descent-override: 21.3%;
@@ -79,8 +77,7 @@ html[data-theme] body {
 /* Leading and rag. Unitless line-height replaces the 30px in styles.css,
  * which inherited as an absolute value into code blocks and images inside
  * list items. text-wrap is a progressive enhancement: `pretty` avoids
- * orphans and very short last lines, `balance` evens out wrapped headings.
- * No hyphenation and no justification. */
+ * orphans and very short last lines, `balance` evens out wrapped headings. */
 .bootstrap .learn.docs div.learn__post__content p,
 .bootstrap .learn.docs div.learn__post__content li {
   line-height: 1.65;
@@ -94,11 +91,10 @@ html[data-theme] body {
   text-wrap: balance;
 }
 
-/* Heading scale: 36 / 28 / 22 / 18 / 16 over an 18px body. styles.css had
- * h4 at 16px 900, smaller than the paragraphs under it. Margins stay where
- * they are: new-docs-anchor-links.js wraps each heading in
- * div.copy-clip-container.hN and styles.css puts the spacing on that
- * wrapper, so the wrapper's font-size follows the heading's. */
+/* Heading scale: 36 / 28 / 22 / 18 / 16 over an 18px body (styles.css had h4
+ * at 16px, smaller than its paragraphs). The .copy-clip-container.hN wrappers
+ * from new-docs-anchor-links.js carry the heading margins in em, so they
+ * get the same font-size. */
 .bootstrap .learn.docs div.learn__post__content h1 {
   font-size: 2.25rem;
 }
@@ -218,8 +214,9 @@ html[data-theme] body {
 }
 
 /* Sticky offsets in styles.css assume the 77px marketing navbar; derive them
- * from the docs header's height variable instead. The sidebar is painted white,
- * so it runs edge to edge from the header to the viewport bottom. */
+ * from the docs header's height variable instead. The sidebar runs from the
+ * header to the viewport bottom; the TOC keeps styles.css's 14px overlap
+ * (63px under a 77px navbar). */
 .bootstrap .learn #main-navigation-content.learn-left-sidebar {
   max-height: calc(100vh - var(--navigation-header-height));
   top: var(--navigation-header-height);
@@ -255,11 +252,10 @@ html[data-theme] body {
   }
 
   /* The sidebar becomes a drawer under the header, opened by the header's
-   * menu button (new-docs-mobile-nav.js sets data-docs-nav on <html>). This
-   * selector outranks the three display: none rules in styles.css. Fixed
-   * positioning takes it out of the grid, so the article keeps the single
-   * column. visibility keeps the closed drawer's links out of the tab order;
-   * its delay lets the slide-out play first. Colors are in docs-theme.css. */
+   * menu button (new-docs-mobile-nav.js sets data-docs-nav on <html>). The
+   * selector outranks the three display: none rules in styles.css. visibility
+   * keeps the closed drawer's links out of the tab order; its delay lets the
+   * slide-out play first. */
   .bootstrap .learn.docs #main-navigation-content.learn-left-sidebar {
     bottom: 0;
     box-shadow: var(--mb-shadow);
