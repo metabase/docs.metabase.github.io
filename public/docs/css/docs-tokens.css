@@ -52,66 +52,44 @@
   --mb-image-filter: none;
 }
 
-:root[data-theme="dark"] {
-  color-scheme: dark;
+/* Dark values apply on screen only, so print falls back to the light
+ * palette above without restating it. */
+@media screen {
+  :root[data-theme="dark"] {
+    color-scheme: dark;
 
-  --mb-bg: #1b1f2b;
-  --mb-surface: #22242b;
-  --mb-surface-elevated: #2b2f3b;
-  --mb-surface-hover: #2f3442;
-  --mb-surface-active: #363b4a;
-  --mb-border: #3a3f4d;
-  --mb-border-subtle: #2f3442;
-  --mb-border-strong: #4c5261;
-  --mb-text: #c6c9d2;
-  --mb-text-secondary: #b4b8c5;
-  --mb-heading: #f0f1f4;
-  --mb-code-bg: #2f3442;
-  --mb-code-heading-bg: #2f3442;
-  --mb-pre-bg: #14161d;
-  --mb-pre-text: #e6e8ee;
-  --mb-syntax-fg: #979db4; /* base16 atelier-sulphurpool-dark */
-  --mb-syntax-attr: #b39ddb;
-  --mb-syntax-meta: #c98aa0;
-  --mb-blockquote-bg: #1f2a3a;
-  --mb-notice-bg: #2e2a1a;
-  --mb-tag-bg: #2f3442;
-  --mb-tag-lts-bg: #23301b;
-  --mb-tag-lts-text: #9ccf72;
-  --mb-shadow: 0 3px 24px rgba(0, 0, 0, 0.4);
-  --mb-image-filter: brightness(0.9) contrast(0.95);
+    --mb-bg: #1b1f2b;
+    --mb-surface: #22242b;
+    --mb-surface-elevated: #2b2f3b;
+    --mb-surface-hover: #2f3442;
+    --mb-surface-active: #363b4a;
+    --mb-border: #3a3f4d;
+    --mb-border-subtle: #2f3442;
+    --mb-border-strong: #4c5261;
+    --mb-text: #c6c9d2;
+    --mb-text-secondary: #b4b8c5;
+    --mb-heading: #f0f1f4;
+    --mb-code-bg: #2f3442;
+    --mb-code-heading-bg: #2f3442;
+    --mb-pre-bg: #14161d;
+    --mb-pre-text: #e6e8ee;
+    --mb-syntax-fg: #979db4; /* base16 atelier-sulphurpool-dark */
+    --mb-syntax-attr: #b39ddb;
+    --mb-syntax-meta: #c98aa0;
+    --mb-blockquote-bg: #1f2a3a;
+    --mb-notice-bg: #2e2a1a;
+    --mb-tag-bg: #2f3442;
+    --mb-tag-lts-bg: #23301b;
+    --mb-tag-lts-text: #9ccf72;
+    --mb-shadow: 0 3px 24px rgba(0, 0, 0, 0.4);
+    --mb-image-filter: brightness(0.9) contrast(0.95);
+  }
 }
 
-/* Print in the light palette whatever the on-screen theme: dark page
- * backgrounds waste ink and the dark text tokens are unreadable on paper. */
+/* Dark page backgrounds waste ink; the light palette otherwise prints as is. */
 @media print {
-  :root[data-theme="dark"] {
-    color-scheme: light;
-
+  :root {
     --mb-bg: #fff;
-    --mb-surface: #fff;
-    --mb-surface-elevated: #fff;
-    --mb-surface-hover: #eef6fc;
-    --mb-surface-active: #e4ecfb;
-    --mb-border: #e4ecfb;
-    --mb-border-subtle: #f1f2f4;
-    --mb-border-strong: #c6c9d2;
-    --mb-text: #4c5773;
-    --mb-text-secondary: #5a6072;
-    --mb-heading: #22242b;
-    --mb-code-bg: #e4ecfb;
-    --mb-code-heading-bg: #c2daf0;
-    --mb-pre-bg: #fff;
-    --mb-pre-text: #22242b;
-    --mb-syntax-fg: #5e6687;
-    --mb-syntax-attr: #574c73;
-    --mb-syntax-meta: #9c637a;
-    --mb-blockquote-bg: #eef6fc;
-    --mb-notice-bg: #fef9e6;
-    --mb-tag-bg: #f1f2f4;
-    --mb-tag-lts-bg: #f3faec;
-    --mb-tag-lts-text: #669438;
     --mb-shadow: none;
-    --mb-image-filter: none;
   }
 }

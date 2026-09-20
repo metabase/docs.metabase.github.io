@@ -13,10 +13,11 @@
 .docs a {
   color: #509ee3;
 
-  /* set a display context for links, helps prevent issues where titles
-   * inside of links have odd formatting like
-   * ttps://github.com/metabase/metabase.github.io/issues/573 */
-  display: inline-block;
+  /* Keep links inline so their text can wrap across lines like the
+   * surrounding prose. (This used to be inline-block to work around
+   * https://github.com/metabase/metabase.github.io/issues/573, but that
+   * made multi-word links unbreakable and left ragged line endings.) */
+  display: inline;
 }
 
 .docs a:hover {

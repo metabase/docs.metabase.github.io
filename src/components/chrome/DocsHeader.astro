@@ -115,8 +115,9 @@ const tabs = nav.categories.map((category) => ({
   /* --navigation-header-height is read by inkeep.css and docs-local.css to keep
      the search modal and sticky sidebars below the fixed header. styles.css
      sets the same variable on :root for the marketing navbar (85px below
-     992px); the attribute selector outranks it whatever the load order. */
-  :root[data-theme] {
+     992px); html:root outranks it whatever the load order, and unlike a
+     [data-theme] selector does not wait on the inline theme script. */
+  html:root {
     --navigation-header-height: calc(
       var(--docs-header-main-height) + var(--docs-header-tabs-height)
     );
