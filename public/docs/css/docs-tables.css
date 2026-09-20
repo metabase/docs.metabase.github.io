@@ -10,7 +10,9 @@
  * the sidebar is hidden and the article has the full width, and 1200px up.
  * Between 993px and 1199px the 280px sidebar and 200px table of contents leave
  * the text column under 650px, and a three-column table there squeezes the
- * description to a sliver, so those widths keep the stacked cards.
+ * description to a sliver, so those widths keep the stacked cards. From 1200px
+ * up, tables also run 32px into the gutter between the text column and the
+ * table of contents.
  *
  * src/lib/markdown/plugins/referenceTableHastPlugin.ts tags Property / Type /
  * Description tables `table-reference` and adds the .prop-* hooks below. */
@@ -147,6 +149,21 @@
   .bootstrap .learn__post table.table-reference td:not(:last-child) .prop-type {
     max-width: 20rem;
     min-width: 6rem;
+  }
+}
+
+/* Tables run into the gutter between the text column and the table of
+ * contents. The column has 72px of right padding from 1200px up and the TOC
+ * pulls itself 20px into it, so 32px keeps a 20px gap to the TOC text. On
+ * wide screens the column itself is wider than the paragraphs (docs-local.css
+ * caps those at --docs-article-width and sizes the box for
+ * --docs-table-width), so tables grow past them before the bleed even starts.
+ * 993-1199px pads only 40px and renders stacked cards, so no bleed there.
+ * Direct child only: a table nested in a list or blockquote keeps its indent.
+ * new-docs-table-overflow.js adds .docs-table-wrap to the wrapper. */
+@media (min-width: 1200px) {
+  .bootstrap .learn.docs div.learn__post__content > .docs-table-wrap {
+    margin-right: -32px;
   }
 }
 

@@ -36,6 +36,27 @@
   display: inline;
 }
 
+/* Justified, hyphenated prose. Only paragraphs and list items: headings,
+ * code, tables and the summary stay ragged. Needs lang="en-US" on <html>
+ * (set in the layouts) so the browser has a hyphenation dictionary.
+ * hyphenate-limit-chars (min word / before / after) and text-wrap: pretty are
+ * progressive enhancements; browsers without them still justify and hyphenate. */
+.bootstrap .learn.docs div.learn__post__content p,
+.bootstrap .learn.docs div.learn__post__content li {
+  hyphenate-limit-chars: 7 4 3;
+  hyphens: auto;
+  text-align: justify;
+  text-wrap: pretty;
+}
+
+/* Never break identifiers, and keep code blocks and tables start-aligned. */
+.bootstrap .learn.docs div.learn__post__content pre,
+.bootstrap .learn.docs div.learn__post__content code,
+.bootstrap .learn.docs div.learn__post__content table {
+  hyphens: manual;
+  text-align: start;
+}
+
 /* Sticky offsets in styles.css assume the 77px marketing navbar; derive them
  * from the docs header's height variable instead. The sidebar is painted white,
  * so it runs edge to edge from the header to the viewport bottom. */
@@ -149,8 +170,10 @@
  * pushed the nav inward. */
 @media screen and (min-width: 993px) {
   .bootstrap .learn.docs {
-    /* Paragraph measure; the centered box below is derived from it. */
+    /* Paragraph measure. Tables run past it into the gutter (docs-tables.css)
+     * up to --docs-table-width; the centered box below is sized to that. */
     --docs-article-width: 800px;
+    --docs-table-width: 960px;
     --docs-nav-width: 280px;
 
     /* styles.css painted #fafbfe only right of the centered box; paint the
@@ -165,13 +188,20 @@
     max-width: none;
   }
 
-  /* Center article + TOC as one box: 72px padding + text + 72px padding +
-   * 200px TOC (border-box). The breadcrumb is absolutely positioned inside,
-   * so it follows. */
+  /* Center article + TOC as one box: 72px padding + widest table + 40px (the
+   * 72px content padding minus the 32px table bleed) + 200px TOC (border-box).
+   * The breadcrumb is absolutely positioned inside, so it follows. On narrower
+   * viewports the box shrinks and the text column with it. */
   .bootstrap .learn.docs .learn__post {
     margin: 0 auto;
-    max-width: calc(72px + var(--docs-article-width) + 72px + 200px); /* 1144px */
+    max-width: calc(72px + var(--docs-table-width) + 40px + 200px); /* 1272px */
     width: 100%;
+  }
+
+  /* The text column is wider than the paragraph measure on big screens, so
+   * cap everything in it except the table wrappers. */
+  .bootstrap .learn.docs div.learn__post__content > :not(.docs-table-wrap) {
+    max-width: var(--docs-article-width);
   }
 
   /* 8px link padding + 12px aligns nav text with the header wordmark at 20px.
