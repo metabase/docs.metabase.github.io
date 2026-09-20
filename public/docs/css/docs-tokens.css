@@ -81,3 +81,37 @@
   --mb-shadow: 0 3px 24px rgba(0, 0, 0, 0.4);
   --mb-image-filter: brightness(0.9) contrast(0.95);
 }
+
+/* Print in the light palette whatever the on-screen theme: dark page
+ * backgrounds waste ink and the dark text tokens are unreadable on paper. */
+@media print {
+  :root[data-theme="dark"] {
+    color-scheme: light;
+
+    --mb-bg: #fff;
+    --mb-surface: #fff;
+    --mb-surface-elevated: #fff;
+    --mb-surface-hover: #eef6fc;
+    --mb-surface-active: #e4ecfb;
+    --mb-border: #e4ecfb;
+    --mb-border-subtle: #f1f2f4;
+    --mb-border-strong: #c6c9d2;
+    --mb-text: #4c5773;
+    --mb-text-secondary: #5a6072;
+    --mb-heading: #22242b;
+    --mb-code-bg: #e4ecfb;
+    --mb-code-heading-bg: #c2daf0;
+    --mb-pre-bg: #fff;
+    --mb-pre-text: #22242b;
+    --mb-syntax-fg: #5e6687;
+    --mb-syntax-attr: #574c73;
+    --mb-syntax-meta: #9c637a;
+    --mb-blockquote-bg: #eef6fc;
+    --mb-notice-bg: #fef9e6;
+    --mb-tag-bg: #f1f2f4;
+    --mb-tag-lts-bg: #f3faec;
+    --mb-tag-lts-text: #669438;
+    --mb-shadow: none;
+    --mb-image-filter: none;
+  }
+}

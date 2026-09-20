@@ -118,15 +118,17 @@ describe("Vercel workflows", () => {
   });
 
   test("runs tooling tests in CI rather than the deployment jobs", () => {
+    // `bun run test` covers tools/vercel as well as src.
+    const testRuns = ["bun run test", "bun run test-vercel"];
     expect(
-      testWorkflow.jobs["test-build"].steps.some(
-        (entry: any) => entry.run === "bun run test-vercel",
+      testWorkflow.jobs["test-build"].steps.some((entry: any) =>
+        testRuns.includes(entry.run),
       ),
     ).toBe(true);
     for (const job of [preview, production]) {
-      expect(
-        job.steps.some((entry: any) => entry.run === "bun run test-vercel"),
-      ).toBe(false);
+      expect(job.steps.some((entry: any) => testRuns.includes(entry.run))).toBe(
+        false,
+      );
     }
   });
 

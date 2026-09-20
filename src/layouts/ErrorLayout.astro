@@ -7,16 +7,18 @@ import { getLiquidRenderer } from "@/lib/liquid/liquidRenderer";
 type Props = {
   page: Record<string, unknown>;
   dirname: string;
+  /** Enables the light/dark theme (init script + docs-theme.css). */
+  docsTheme?: boolean;
 };
 
-const { page, dirname } = Astro.props;
+const { page, dirname, docsTheme } = Astro.props;
 
 const lq = getLiquidRenderer({ page, dirname });
 ---
 
 <!doctype html>
 <html lang="en-US">
-  <LiquidInclude lq={lq} src="head.html" />
+  <LiquidInclude lq={lq} src="head.html" docs_theme={docsTheme} />
 
   <body>
     <slot name="header">
