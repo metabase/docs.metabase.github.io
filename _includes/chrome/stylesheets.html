@@ -1,6 +1,16 @@
+{% comment %}
+Themed docs pages (NewDocsLayout) use only Lato and Roboto Mono, and nothing on
+them is set in Lato 900 (docs-local.css / docs-tables.css override the two
+styles.css rules that were), so they make one font request instead of three.
+Every other page keeps the full set for the marketing styles.
+{% endcomment %}
+{% if include.docs_theme %}
+<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400;1,700&family=Roboto+Mono&display=swap" rel="stylesheet" />
+{% else %}
 <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;0,900&display=swap" rel="stylesheet" />
 <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet" />
 <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Roboto+Mono&display=swap" rel="stylesheet" />
+{% endif %}
 <link href="/docs/gdpr-cookie-notice/dist/style.css" rel="stylesheet" />
 {% unless page.layout == "docs-api" %}
 <link href="/docs/css/docs.css" rel="stylesheet" />

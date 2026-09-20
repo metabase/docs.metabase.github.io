@@ -36,6 +36,180 @@
   display: inline;
 }
 
+/* Prose (NewDocsLayout). The vendored bundle sizes code and headings by
+ * inheritance and in px, so the same element renders differently depending
+ * on where it sits; the rules below set each value once. The selector
+ * `.bootstrap .learn.docs div.learn__post__content` (0,4,1) outranks every
+ * prose rule in styles.css / main.css, including `.blog-post code`, which
+ * reaches the docs because the wrapper still carries `blog-post`. */
+
+/* Metric-matched local fallbacks so the swap to Lato does not reflow. Lato's
+ * line box is 1.2em (ascender 1974 / descender 426 on a 2000 em); the widths
+ * were measured against docs prose in Chrome: Lato is 95.7% of Helvetica
+ * Neue and 96.8% of Arial. Only NewDocsLayout pages (data-theme) use them. */
+@font-face {
+  ascent-override: 98.7%;
+  descent-override: 21.3%;
+  font-family: "Lato Fallback";
+  line-gap-override: 0%;
+  size-adjust: 95.7%;
+  src: local("Helvetica Neue");
+}
+
+@font-face {
+  ascent-override: 98.7%;
+  descent-override: 21.3%;
+  font-family: "Lato Fallback Arial";
+  line-gap-override: 0%;
+  size-adjust: 96.8%;
+  src: local("Arial");
+}
+
+html[data-theme] body {
+  font-family: Lato, "Lato Fallback", "Lato Fallback Arial", "Helvetica Neue", Helvetica, sans-serif;
+}
+
+/* Leading and rag. Unitless line-height replaces the 30px in styles.css,
+ * which inherited as an absolute value into code blocks and images inside
+ * list items. text-wrap is a progressive enhancement: `pretty` avoids
+ * orphans and very short last lines, `balance` evens out wrapped headings.
+ * No hyphenation and no justification. */
+.bootstrap .learn.docs div.learn__post__content p,
+.bootstrap .learn.docs div.learn__post__content li {
+  line-height: 1.65;
+  text-wrap: pretty;
+}
+
+.bootstrap .learn.docs div.learn__post__content h1,
+.bootstrap .learn.docs div.learn__post__content h2,
+.bootstrap .learn.docs div.learn__post__content h3,
+.bootstrap .learn.docs div.learn__post__content h4 {
+  text-wrap: balance;
+}
+
+/* Heading scale: 36 / 28 / 22 / 18 / 16 over an 18px body. styles.css had
+ * h4 at 16px 900, smaller than the paragraphs under it. Margins stay where
+ * they are: new-docs-anchor-links.js wraps each heading in
+ * div.copy-clip-container.hN and styles.css puts the spacing on that
+ * wrapper, so the wrapper's font-size follows the heading's. */
+.bootstrap .learn.docs div.learn__post__content h1 {
+  font-size: 2.25rem;
+}
+
+.bootstrap .learn.docs div.learn__post__content h2,
+.bootstrap .learn.docs div.learn__post__content .copy-clip-container.h2 {
+  font-size: 1.75rem;
+}
+
+.bootstrap .learn.docs div.learn__post__content h3,
+.bootstrap .learn.docs div.learn__post__content .copy-clip-container.h3 {
+  font-size: 1.375rem;
+}
+
+.bootstrap .learn.docs div.learn__post__content h4,
+.bootstrap .learn.docs div.learn__post__content .copy-clip-container.h4 {
+  font-size: 1.125rem;
+  font-weight: 700;
+}
+
+.bootstrap .learn.docs div.learn__post__content h5,
+.bootstrap .learn.docs div.learn__post__content h6 {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+/* styles.css pins code inside h2 / h3 to 24px / 20px. */
+.bootstrap .learn.docs div.learn__post__content h2 code,
+.bootstrap .learn.docs div.learn__post__content h3 code,
+.bootstrap .learn.docs div.learn__post__content h4 code {
+  font-size: 0.9em;
+  line-height: inherit;
+}
+
+/* Code. Inline code was 14px in 18px prose (`.blog-post code`). Blocks
+ * inherited their size and leading from the parent, so a top-level block was
+ * 14px / normal and the same block inside a list item 15.75px / 30px. */
+.bootstrap .learn.docs div.learn__post__content code {
+  font-size: 0.875em;
+}
+
+.bootstrap .learn.docs div.learn__post__content pre,
+.bootstrap .learn.docs div.learn__post__content pre code {
+  font-size: 0.9375rem;
+  line-height: 1.6;
+}
+
+/* Lato 900 is no longer requested for the docs (stylesheets.html), so the
+ * two remaining 900 users in styles.css drop to 700 rather than synthesize. */
+.bootstrap .learn.docs div.code-snippet-wrapper .copy-code-button p {
+  font-weight: 700;
+}
+
+.bootstrap .learn.docs #main-navigation-content.learn-left-sidebar h5,
+.bootstrap .learn.docs #main-navigation-content.learn-left-sidebar .h5 {
+  font-weight: 700;
+}
+
+/* Lists. One rhythm for tight and loose items: styles.css gave a tight
+ * item 12px below and a loose item (li > p) 16px + 12px. */
+.bootstrap .learn.docs div.learn__post__content li {
+  margin-bottom: 0.5rem;
+}
+
+.bootstrap .learn.docs div.learn__post__content li > p {
+  margin-bottom: 0.5rem;
+}
+
+.bootstrap .learn.docs div.learn__post__content li > :last-child {
+  margin-bottom: 0;
+}
+
+/* Blocks inside a step keep page-level margins otherwise: a callout inside a
+ * step had 32px above and below in a list whose items are 8px apart.
+ * .code-snippet-wrapper is added around highlighted blocks by
+ * new-docs-code-snippet-copy.js; plaintext blocks stay a bare pre.
+ * .image-wrapper is added by image-zoom.js. */
+.bootstrap .learn.docs div.learn__post__content li > blockquote,
+.bootstrap .learn.docs div.learn__post__content li > pre,
+.bootstrap .learn.docs div.learn__post__content li > .code-snippet-wrapper,
+.bootstrap .learn.docs div.learn__post__content li > img,
+.bootstrap .learn.docs div.learn__post__content li > .image-wrapper {
+  margin-block: 0.75rem;
+}
+
+.bootstrap .learn.docs div.learn__post__content li > blockquote {
+  padding: 1rem 1.25rem;
+}
+
+/* Same nested-list gap on every viewport; styles.css gave 0.5em above 60em
+ * and main.css 1.3em below it. */
+.bootstrap .learn.docs div.learn__post__content li > ul,
+.bootstrap .learn.docs div.learn__post__content li > ol {
+  margin-bottom: 0;
+  margin-top: 0.5rem;
+}
+
+/* Indent in rem so nested lists match top-level ones: 20px for bullets as before, 28px
+ * for numbers so two-digit steps do not hang into the gutter. */
+.bootstrap .learn.docs div.learn__post__content ul {
+  padding-inline-start: 1.25rem;
+}
+
+.bootstrap .learn.docs div.learn__post__content ol {
+  padding-inline-start: 1.75rem;
+}
+
+/* Numbered steps read as steps; bullets stay quiet. */
+.bootstrap .learn.docs div.learn__post__content ol > li::marker {
+  color: var(--mb-text-secondary);
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+}
+
+.bootstrap .learn.docs div.learn__post__content ul > li::marker {
+  color: var(--mb-text-muted);
+}
+
 /* Sticky offsets in styles.css assume the 77px marketing navbar; derive them
  * from the docs header's height variable instead. The sidebar is painted white,
  * so it runs edge to edge from the header to the viewport bottom. */
