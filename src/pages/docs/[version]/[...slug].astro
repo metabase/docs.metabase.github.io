@@ -5,7 +5,10 @@ import { DOCS_SRC_ROOT, METABASE_REPO_PATH } from "@/constants";
 import NewDocsLayout from "@/layouts/NewDocsLayout.astro";
 import OldDocsLayout from "@/layouts/OldDocsLayout.astro";
 import { constructDocMetadata } from "@/lib/docs/constructDocMetadata";
-import { reformatMarkdownUrls } from "@/lib/docs/reformatMarkdownUrls";
+import {
+  reformatMarkdownUrls,
+  replaceVersionInUrls,
+} from "@/lib/docs/reformatMarkdownUrls";
 import { resolveDocUrl } from "@/lib/docs/resolveDoc";
 import { baseCtx, getLiquidRenderer } from "@/lib/liquid/liquidRenderer";
 import { getMarkdownRenderer } from "@/lib/markdown/markdownRenderer";
@@ -38,10 +41,6 @@ export const getStaticPaths = async () => {
 const { version } = Astro.params;
 const { kind, doc: propsDoc } = Astro.props;
 const { url } = resolveDocUrl({ id: propsDoc.id });
-// TODO: GRO-688 Remove processing from /script/docs so src files are raw whether reading from _docs or METABASE_REPO_PATH
-// The only known gap is updateRedirectsAndLinks for non-latest versions, which is two separate fixes:
-// 1. replaceVersionInUrls belongs alongside reformatMarkdownUrls
-// 2. redirect_from rewriting belongs in collectRedirects
 const doc = {
   ...propsDoc,
   data: {
@@ -54,7 +53,12 @@ const doc = {
     ),
     ...propsDoc.data,
   },
-  body: reformatMarkdownUrls(propsDoc.body ?? ""),
+  body:
+    version === "latest"
+      ? reformatMarkdownUrls(propsDoc.body ?? "")
+      : replaceVersionInUrls(reformatMarkdownUrls(propsDoc.body ?? ""), {
+          version: version!,
+        }),
 };
 const dirname = path.dirname(doc.filePath!);
 

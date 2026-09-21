@@ -45,10 +45,16 @@ const scanDocEntries = (): {
       const id = DOCS_VERSION
         ? `${DOCS_VERSION}/${strippedPath}`
         : strippedPath;
-      const { url } = resolveDocUrl({ id });
+      const { url, version } = resolveDocUrl({ id });
       validUrls.add(url);
 
-      const redirectFrom: string[] | undefined = data.redirect_from;
+      // Non-latest versions redirect from their own version's URLs, not /latest
+      const redirectFrom: string[] | undefined =
+        version === "latest"
+          ? data.redirect_from
+          : data.redirect_from?.map((source: string) =>
+              source.replace("/latest", `/${version}`),
+            );
       if (redirectFrom?.length) {
         docsWithRedirects.push({ relPath, url, redirectFrom });
       }
