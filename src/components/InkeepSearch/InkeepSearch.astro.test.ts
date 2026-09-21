@@ -1,6 +1,5 @@
 import TopBar from "@/components/chrome/TopBar.astro";
 import { TOP_BAR_ID } from "@/constants";
-import { getLiquidRenderer } from "@/lib/liquid/liquidRenderer";
 import { renderToDocument } from "@/test/render-astro";
 import { Window } from "happy-dom";
 import { describe, expect, test } from "vitest";
@@ -45,12 +44,8 @@ describe("positionModal", () => {
 });
 
 test("the docs top bar wraps the search in the shared id", async () => {
-  const lq = getLiquidRenderer({
-    page: { title: "x", url: "/docs/latest/", version: "latest" },
-    dirname: "",
-  });
   const { doc } = await renderToDocument(TopBar, {
-    lq,
+    page: { title: "x", url: "/docs/latest/", version: "latest" },
     showBreadcrumb: false,
   });
   const search = doc.querySelector<HTMLElement>(`#${TOP_BAR_ID} #inkeep`);
