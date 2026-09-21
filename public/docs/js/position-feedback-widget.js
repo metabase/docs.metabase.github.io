@@ -17,6 +17,11 @@ function resizeLearnRightSidebar() {
     "sub-navigation-content",
   );
 
+  if (window.innerWidth < 992) {
+    $subNavigationContent.style.height = "";
+    return;
+  }
+
   const feedbackWidget = getFeedbackWidget();
 
   const feedbackWidgetHeight = feedbackWidget.checkVisibility()

@@ -60,6 +60,15 @@ const unify = UNIFY_ENABLED_PAGES.includes(page.url);
         </div>
 
         <div class="learn__right-sidebar">
+          <button
+            class="d-lg-none toc-toggle"
+            type="button"
+            data-toggle="sub-navigation-content"
+            aria-controls="sub-navigation-content"
+            aria-expanded="false"
+          >
+            On this page
+          </button>
           <div id="sub-navigation-content">{/* Is populated via js */}</div>
           <LiquidInclude
             lq={lq}
@@ -107,4 +116,33 @@ const unify = UNIFY_ENABLED_PAGES.includes(page.url);
     src="/docs/js/position-feedback-widget.js"
   ></script>
   <script is:inline src="/docs/js/use-custom-header-checkout-link.js"></script>
+  <script>
+    const setOpen = (button: HTMLElement, open: boolean) => {
+      document
+        .getElementById(button.dataset.toggle!)!
+        .classList.toggle("open", open);
+      button.setAttribute("aria-expanded", String(open));
+    };
+
+    document
+      .querySelectorAll<HTMLElement>("[data-toggle]")
+      .forEach((button) => {
+        button.addEventListener("click", () =>
+          setOpen(button, button.getAttribute("aria-expanded") !== "true"),
+        );
+      });
+
+    const closeDrawer = () =>
+      setOpen(document.querySelector<HTMLElement>(".docs-nav-toggle")!, false);
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeDrawer();
+    });
+
+    document
+      .getElementById("main-navigation-content")
+      ?.addEventListener("click", (e) => {
+        if (e.target === e.currentTarget) closeDrawer();
+      });
+  </script>
 </DefaultNewLayout>

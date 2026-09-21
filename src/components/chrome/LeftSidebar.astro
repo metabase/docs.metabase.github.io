@@ -11,16 +11,18 @@ const { url: pageUrl, version = "latest" } = Astro.props;
 ---
 
 <div id="main-navigation-content">
-  {getNavForVersion(version).categories.map((category) => (
-    <>
-      <h5>{category.name}</h5>
-      <ul>
-        {category.pages?.map((node) => (
-          <NavItem node={node} pageUrl={pageUrl} />
-        ))}
-      </ul>
-    </>
-  ))}
+  <div>
+    {getNavForVersion(version).categories.map((category) => (
+      <>
+        <h5>{category.name}</h5>
+        <ul>
+          {category.pages?.map((node) => (
+            <NavItem node={node} pageUrl={pageUrl} />
+          ))}
+        </ul>
+      </>
+    ))}
+  </div>
 </div>
 
 <style is:global>
@@ -35,8 +37,53 @@ const { url: pageUrl, version = "latest" } = Astro.props;
     top: var(--navigation-header-height);
     width: 100%;
 
-    @media (max-width: 992px) {
-      display: none;
+    @media (max-width: 991.98px) {
+      --drawer-width: min(75vw, 320px);
+
+      border-right: 0;
+      height: auto;
+      inset: 0 auto 0 calc(-1 * var(--drawer-width));
+      overflow: visible; /* iOS Safari clips fixed descendants of a scroll container */
+      padding: 0;
+      position: fixed;
+      transition:
+        left 0.15s ease-in,
+        visibility 0s 0.15s;
+      visibility: hidden;
+      width: var(--drawer-width);
+      z-index: 10001; /* header.sticky is 10000 */
+
+      &::before {
+        -webkit-backdrop-filter: blur(4px);
+        backdrop-filter: blur(4px);
+        background-color: rgba(255, 255, 255, 0.4);
+        content: "";
+        inset: 0;
+        opacity: 0;
+        position: fixed;
+        transition: opacity 0.1s ease-in;
+        z-index: -1;
+      }
+
+      &.open {
+        left: 0;
+        transition: left 0.1s ease-out;
+        visibility: visible;
+
+        &::before {
+          opacity: 1;
+          transition: opacity 0.1s ease-out;
+        }
+      }
+
+      > div {
+        background-color: #fff;
+        border-right: 1px solid #f1f2f4;
+        height: 100%;
+        overflow-y: auto;
+        padding: 40px 20px 24px;
+        position: relative; /* Safari paints the backdrop-filter layer over non-positioned content */
+      }
     }
 
     h5 {
