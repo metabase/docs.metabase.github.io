@@ -1,4 +1,3 @@
-// Extracted from lib/utils.js so it can be used in script/docs (for cross-repo ingestion) and [...slug].astro for JIT processing
 const MARKDOWN_LINK_REGEX = /\[(.+?)\]\((.+?)\)/gim;
 const FOOTER_LINK_REGEX = /^\[(.+?)\]:\s+(.+?)\n/gim;
 
@@ -57,6 +56,8 @@ const getReplacements = (
     .filter((replacement) => replacement !== null);
 };
 
+// Rewrites relative and metabase.com links (inline and footer-style) to site-relative
+// paths by stripping file extensions and the metabase.com origin.
 export const reformatMarkdownUrls = (body: string): string => {
   let formattedBody = `${body}\n`;
 
@@ -76,3 +77,9 @@ export const reformatMarkdownUrls = (body: string): string => {
 
   return formattedBody;
 };
+
+// Non-latest versions link to their own embedding docs rather than /latest.
+export const replaceVersionInUrls = (
+  body: string,
+  { version }: { version: string },
+): string => body.replaceAll("/latest/embedding/", `/${version}/embedding/`);
