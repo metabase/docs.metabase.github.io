@@ -52,6 +52,7 @@ async function main() {
   }
 
   await copyLatest(config.docs_version);
+  await removeCloudFromVersions(versions);
   await rm(CLONE_DIR, { recursive: true, force: true });
   console.log(`seeded ${versions.length} versions`);
 }
@@ -138,6 +139,19 @@ async function copyLatest(docsVersion: string) {
     );
   }
   await cp(source, join(OUT_DIR, "latest"), { recursive: true });
+}
+
+// --- 5. cloud ------------------------------------------------------------
+
+/**
+ * Cloud docs only live in _docs/latest/cloud (cloud is always on the newest
+ * version), so drop cloud/ from every versioned copy. Must run after
+ * copyLatest, which sources latest/cloud from the docs_version copy.
+ */
+async function removeCloudFromVersions(versions: Version[]) {
+  for (const { name } of versions) {
+    await rm(join(OUT_DIR, name, "cloud"), { recursive: true, force: true });
+  }
 }
 
 await main();
