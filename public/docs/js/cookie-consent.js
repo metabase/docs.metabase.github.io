@@ -59,10 +59,11 @@
     return !!countryObj;
   }
 
-  async function loadGeolocation(retryCount) {
+  async function loadGeolocation(retryCount = 0) {
     try {
       const response = await fetch("https://get.geojs.io/v1/ip/country.json", {
         method: "GET",
+        signal: AbortSignal.timeout(3000),
       });
       const geolocation = await response.json();
       if (
@@ -76,26 +77,15 @@
       );
       return geolocation;
     } catch (err) {
-      // retry with Sentry message
       if (retryCount + 1 < MAX_RETRY) {
         return await loadGeolocation(retryCount + 1);
       }
-      // error
-      else {
-        window.Sentry.captureException(
-          new Error(
-            `Fail to load geolocation: ${err.message ||
-              err.status ||
-              err.toString()}`,
-          ),
-        );
-      }
     }
 
-    return {};
+    return { hasCookiePolicyRestriction: true };
   }
 
-  const geolocation = await loadGeolocation(0);
+  const geolocation = await loadGeolocation();
 
   function whenDomReady(callback) {
     if (document.readyState === "loading") {
