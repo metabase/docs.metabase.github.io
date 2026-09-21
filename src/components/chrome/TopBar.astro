@@ -1,32 +1,38 @@
 ---
+import Breadcrumb from "@/components/chrome/Breadcrumb.astro";
+import VersionSelector from "@/components/chrome/VersionSelector.astro";
 import InkeepSearch from "@/components/InkeepSearch/InkeepSearch.astro";
-import LiquidInclude from "@/components/LiquidInclude.astro";
 import { TOP_BAR_ID } from "@/constants";
-import type { LiquidRenderer } from "@/lib/liquid/liquidRenderer";
+import Stars from "@/icons/stars.svg";
 
 interface Props {
-  lq: LiquidRenderer;
+  page: {
+    version?: string;
+    url: string;
+    title?: string;
+    category?: string;
+    has_magic_breadcrumbs?: boolean;
+    show_category_breadcrumb?: boolean;
+  };
   showBreadcrumb: boolean;
 }
 
-const { lq, showBreadcrumb } = Astro.props;
+const { page, showBreadcrumb } = Astro.props;
 ---
 
 <div id={TOP_BAR_ID} class="top-bar">
   <div>
-    {
-      showBreadcrumb && (
-        <div class="learn-breadcrumb-trail">
-          <LiquidInclude lq={lq} src="docs_breadcrumb.html" />
-        </div>
-      )
-    }
+    {showBreadcrumb && (
+      <div class="learn-breadcrumb-trail">
+        <Breadcrumb page={page} />
+      </div>
+    )}
   </div>
 
   <div>
-    <LiquidInclude lq={lq} src="docs_version.html" />
+    <VersionSelector version={page.version} />
     <a href="/releases" class="whats-new">
-      <LiquidInclude lq={lq} src="svg-icons/stars.html" />
+      <Stars />
       What’s new
     </a>
     <InkeepSearch />

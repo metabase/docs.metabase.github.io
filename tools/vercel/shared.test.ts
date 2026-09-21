@@ -138,21 +138,19 @@ describe("Vercel deployment helpers", () => {
     ).toThrow("HTTPS");
   });
 
-  test("treats a 404 from Vercel as a missing resource and rethrows the rest", async () => {
+  test("treats a 404 from Vercel as a missing resource and rethrows the rest", () => {
     const httpError = (status: number) =>
       new SDKError("nope", {
         response: new Response(null, { status }),
         request: new Request("https://api.vercel.com/v4/aliases/x"),
         body: "",
       });
-    await expect(ifFound(Promise.resolve({ ok: true }))).resolves.toEqual({
+    expect(ifFound(Promise.resolve({ ok: true }))).resolves.toEqual({
       ok: true,
     });
-    await expect(ifFound(Promise.reject(httpError(404)))).resolves.toBeNull();
-    await expect(ifFound(Promise.reject(httpError(403)))).rejects.toThrow(
-      "nope",
-    );
-    await expect(ifFound(Promise.reject(new Error("offline")))).rejects.toThrow(
+    expect(ifFound(Promise.reject(httpError(404)))).resolves.toBeNull();
+    expect(ifFound(Promise.reject(httpError(403)))).rejects.toThrow("nope");
+    expect(ifFound(Promise.reject(new Error("offline")))).rejects.toThrow(
       "offline",
     );
   });
