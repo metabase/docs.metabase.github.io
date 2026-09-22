@@ -16,6 +16,16 @@ function initDocsVersionSelector() {
       event.stopPropagation(); // Prevent this click from triggering the outside click event
       setOpen(versionSelector, !versionSelector.classList.contains("open"));
     });
+
+    // Close when keyboard focus moves out of the selector (past "See more").
+    // A null relatedTarget means focus went to the body (Safari does not
+    // focus links on click); the outside-click handler covers that case.
+    versionSelector.addEventListener("focusout", function(event) {
+      const next = event.relatedTarget;
+      if (next && !versionSelector.contains(next)) {
+        setOpen(versionSelector, false);
+      }
+    });
   });
 
   // Close selector on click outside with a slight delay

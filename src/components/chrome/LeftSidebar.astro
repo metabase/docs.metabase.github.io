@@ -8,8 +8,9 @@ import {
 
 // Only the active category's pages, with top-level sections open; the header
 // tabs switch categories. Pages outside the nav (home, /docs/all, 404) show
-// the first category. The section list is for the mobile drawer, where the
-// header tabs are hidden; docs-local.css hides it on desktop.
+// the first category's pages but highlight no section, matching the header,
+// which shows no active tab there. The section list is for the mobile drawer,
+// where the header tabs are hidden; docs-local.css hides it on desktop.
 type Props = {
   url: string;
   version?: string;
@@ -18,7 +19,8 @@ type Props = {
 const { url: pageUrl, version = "latest" } = Astro.props;
 
 const nav = getNavForVersion(version);
-const category = getActiveCategory(nav, pageUrl) ?? nav.categories[0];
+const active = getActiveCategory(nav, pageUrl);
+const category = active ?? nav.categories[0];
 ---
 
 <div class="learn-left-sidebar" id="main-navigation-content" tabindex="-1">
@@ -29,8 +31,8 @@ const category = getActiveCategory(nav, pageUrl) ?? nav.categories[0];
         <li>
           <a
             href={getLandingUrl(node)}
-            class={node === category ? "selected" : ""}
-            aria-current={node === category ? "page" : undefined}
+            class={node === active ? "selected" : ""}
+            aria-current={node === active ? "page" : undefined}
           >
             {node.name}
           </a>

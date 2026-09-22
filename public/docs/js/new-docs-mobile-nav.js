@@ -9,6 +9,10 @@
     const toggle = document.querySelector("[data-docs-nav-toggle]");
     const nav = document.getElementById("main-navigation-content");
     const backdrop = document.querySelector("[data-docs-nav-close]");
+    // Made inert while the drawer is open so Tab and screen readers stay in
+    // the header and the drawer instead of reaching the page behind the
+    // backdrop.
+    const article = document.querySelector(".learn__post");
     if (!toggle || !nav) return; // pages without a sidebar (404)
 
     const isOpen = () => root.dataset.docsNav === "open";
@@ -24,6 +28,7 @@
         "aria-label",
         open ? "Close navigation" : "Open navigation",
       );
+      if (article) article.inert = open;
 
       if (!open) return;
 
