@@ -25,6 +25,22 @@ const { url: pageUrl, version = "latest" } = Astro.props;
   </div>
 </div>
 
+<script>
+  import { DOCS_NAV_EVENT, setDocsNavOpen } from "@/lib/docs-nav";
+
+  const drawer = document.getElementById("main-navigation-content")!;
+
+  document.addEventListener(DOCS_NAV_EVENT, (e) =>
+    drawer.classList.toggle("open", e.detail.open),
+  );
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") setDocsNavOpen(false);
+  });
+  drawer.addEventListener("click", (e) => {
+    if (e.target === e.currentTarget) setDocsNavOpen(false);
+  });
+</script>
+
 <style is:global>
   #main-navigation-content {
     border-right: 1px solid #f1f2f4;

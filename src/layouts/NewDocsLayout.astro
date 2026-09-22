@@ -1,5 +1,6 @@
 ---
 import LeftSidebar from "@/components/chrome/LeftSidebar.astro";
+import PageNav from "@/components/chrome/PageNav.astro";
 import TopBar from "@/components/chrome/TopBar.astro";
 import VersionNotice from "@/components/chrome/VersionNotice.astro";
 import VersionSelector from "@/components/chrome/VersionSelector.astro";
@@ -60,16 +61,7 @@ const unify = UNIFY_ENABLED_PAGES.includes(page.url);
         </div>
 
         <div class="learn__right-sidebar">
-          <button
-            class="d-lg-none toc-toggle"
-            type="button"
-            data-toggle="sub-navigation-content"
-            aria-controls="sub-navigation-content"
-            aria-expanded="false"
-          >
-            On this page
-          </button>
-          <div id="sub-navigation-content">{/* Is populated via js */}</div>
+          <PageNav />
           <LiquidInclude
             lq={lq}
             src="shared/was-this-helpful-widget.html"
@@ -108,41 +100,31 @@ const unify = UNIFY_ENABLED_PAGES.includes(page.url);
   <script
     is:inline
     type="text/javascript"
-    src="/docs/js/docs/right-sidebar.js"
-  ></script>
-  <script
-    is:inline
-    type="text/javascript"
     src="/docs/js/position-feedback-widget.js"
   ></script>
   <script is:inline src="/docs/js/use-custom-header-checkout-link.js"></script>
-  <script>
-    const setOpen = (button: HTMLElement, open: boolean) => {
-      document
-        .getElementById(button.dataset.toggle!)!
-        .classList.toggle("open", open);
-      button.setAttribute("aria-expanded", String(open));
-    };
-
-    document
-      .querySelectorAll<HTMLElement>("[data-toggle]")
-      .forEach((button) => {
-        button.addEventListener("click", () =>
-          setOpen(button, button.getAttribute("aria-expanded") !== "true"),
-        );
-      });
-
-    const closeDrawer = () =>
-      setOpen(document.querySelector<HTMLElement>(".docs-nav-toggle")!, false);
-
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") closeDrawer();
-    });
-
-    document
-      .getElementById("main-navigation-content")
-      ?.addEventListener("click", (e) => {
-        if (e.target === e.currentTarget) closeDrawer();
-      });
-  </script>
 </DefaultNewLayout>
+
+<style is:global>
+  .learn__post {
+    display: grid;
+    grid-template-columns: 1fr 200px;
+    margin-bottom: 0;
+    position: relative;
+
+    @media (max-width: 991.98px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* On phones the sidebar dissolves so the TOC becomes an in-flow row above the article. */
+  @media (max-width: 991.98px) {
+    .learn__right-sidebar {
+      display: contents;
+
+      > :not(#toc-toggle):not(#sub-navigation-content) {
+        display: none;
+      }
+    }
+  }
+</style>
