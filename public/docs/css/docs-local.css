@@ -302,8 +302,11 @@ html[data-theme] body {
     visibility: visible;
   }
 
-  /* No page scroll behind the open drawer. */
-  html[data-docs-nav="open"] {
+  /* No page scroll behind the open drawer. The lock goes on body, not html:
+   * main.css sets body { overflow-x: hidden }, and a non-visible overflow on
+   * html stops that value propagating to the viewport, which turns body into
+   * the scroll container and unsticks the header. */
+  html[data-docs-nav="open"] body {
     overflow: hidden;
   }
 

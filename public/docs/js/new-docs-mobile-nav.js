@@ -28,8 +28,10 @@
       if (!open) return;
 
       // Bring the current page into view inside the drawer. The drawer is
-      // positioned, so it is the link's offsetParent.
-      const current = nav.querySelector("ul a.selected");
+      // positioned, so it is the link's offsetParent. Only the page list
+      // (the direct ul): the sections list above it marks its active
+      // section .selected too.
+      const current = nav.querySelector(":scope > ul a.selected");
       if (current) {
         nav.scrollTop = Math.max(
           0,
