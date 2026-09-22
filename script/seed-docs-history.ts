@@ -8,18 +8,22 @@
  * _data/major_version_support.json). Pass "all" to seed every version listed
  * in `available_versions` in _config.yml.
  *
- * Steps: sparse-clone the metabase repo (docs/ only), then for each version
- * check out its branch or tag and copy docs/ to _docs/<version>/.
+ * How it stays fast:
+ *  - No checkout. We keep a bare, blobless cache repo in tmp/ and only ever
+ *    download the blobs under docs/.
+ *  - Blobs are deduplicated across versions and fetched in one request.
+ *  - A version is skipped when its docs/ tree id matches the last extraction.
  */
-import { $ } from "bun";
 import { existsSync } from "node:fs";
-import { cp, mkdir, readFile, rm } from "node:fs/promises";
+import { cp, mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import { join } from "node:path";
+import { $ } from "bun";
 
 const REPO_URL =
   process.env.METABASE_REPO_URL ?? "https://github.com/metabase/metabase.git";
 const ROOT = join(import.meta.dir, "..");
-const CLONE_DIR = join(ROOT, "tmp/metabase");
+const CACHE_DIR = join(ROOT, "tmp/metabase-docs.git");
+const STAMP_DIR = join(CACHE_DIR, "seeded"); // version -> docs/ tree id
 const OUT_DIR = join(ROOT, "_docs");
 
 // v0.44+ have reliable release-x.NN.x branches; older minors use their newest tag.
@@ -27,34 +31,34 @@ const FIRST_BRANCH_MINOR = 44;
 
 type Version = { name: string; minor: number }; // { name: "v0.63", minor: 63 }
 
-const git = (...args: string[]) => $`git -C ${CLONE_DIR} ${args}`.quiet();
+const git = (...args: string[]) => $`git -C ${CACHE_DIR} ${args}`.quiet();
 
 async function main() {
   const seedAll = process.argv[2] === "all";
   const config = await readConfig();
   const versions = await selectVersions(config, seedAll);
+  const refs = await resolveRefs(versions);
 
-  await sparseClone();
-  const remoteRefs = await listRefs();
+  await initCache();
+  await fetchRefs(refs);
 
-  await rm(OUT_DIR, { recursive: true, force: true });
-  await mkdir(OUT_DIR, { recursive: true });
-
-  for (const version of versions) {
-    const ref = findRef(version, remoteRefs);
-    if (!ref) throw new Error(`No branch or tag found for ${version.name}`);
-
-    console.log(`${version.name} <- ${ref}`);
-    await git("checkout", "--force", "--detach", ref);
-    await cp(join(CLONE_DIR, "docs"), join(OUT_DIR, version.name), {
-      recursive: true,
-    });
+  const stale = await findStaleVersions(versions);
+  if (stale.length > 0) {
+    await fetchMissingBlobs(
+      stale.map((s) => s.name),
+      config.docs_version,
+    );
+    await Promise.all(stale.map((s) => extract(s, config.docs_version)));
   }
 
-  await copyLatest(config.docs_version);
-  await removeCloudFromVersions(versions);
-  await rm(CLONE_DIR, { recursive: true, force: true });
-  console.log(`seeded ${versions.length} versions`);
+  const copiedLatest = await syncLatest(config.docs_version);
+  await pruneCloud(versions);
+  await rm(CACHE_DIR, { recursive: true, force: true });
+
+  console.log(
+    `seeded ${stale.length}, skipped ${versions.length - stale.length} (unchanged)` +
+      (copiedLatest ? `, copied ${config.docs_version} to latest` : ""),
+  );
 }
 
 // --- 1. which versions ---------------------------------------------------
@@ -89,37 +93,39 @@ async function selectVersions(
   return versions;
 }
 
-// --- 2. sparse clone -----------------------------------------------------
+// --- 2. version -> remote ref --------------------------------------------
 
-/** Fresh clone with full history but no file contents; only docs/ is checked out. */
-async function sparseClone() {
-  await rm(CLONE_DIR, { recursive: true, force: true });
-  await mkdir(join(CLONE_DIR, ".."), { recursive: true });
-  await $`git clone --quiet --filter=blob:none --no-checkout ${REPO_URL} ${CLONE_DIR}`;
-  await git("sparse-checkout", "set", "docs");
+async function resolveRefs(versions: Version[]) {
+  const remote =
+    await $`git ls-remote --tags --heads ${REPO_URL} 'refs/heads/release-x.*' 'refs/tags/v0.*'`.text();
+  const remoteRefs = remote
+    .split("\n")
+    .map((line) => line.split("\t")[1])
+    .filter(Boolean);
+
+  return versions.map((v) => {
+    const ref = findRef(v, remoteRefs);
+    if (!ref) throw new Error(`No branch or tag found for ${v.name}`);
+    return { ...v, ref };
+  });
 }
 
-async function listRefs() {
-  const out = await git(
-    "for-each-ref", "--format=%(refname)", "refs/remotes/origin", "refs/tags",
-  ).text();
-  return out.split("\n").filter(Boolean);
-}
-
-// --- 3. version -> ref ---------------------------------------------------
-
-function findRef({ minor }: Version, refs: string[]): string | undefined {
+function findRef({ minor }: Version, remoteRefs: string[]): string | undefined {
   if (minor >= FIRST_BRANCH_MINOR) {
-    const branch = `refs/remotes/origin/release-x.${minor}.x`;
-    return refs.includes(branch) ? branch : undefined;
+    const branch = `refs/heads/release-x.${minor}.x`;
+    return remoteRefs.includes(branch) ? branch : undefined;
   }
-  // Non-prerelease tags only: v0.12.1, v0.12.1.2 (not v0.12.0-rc1)
+  // Non-prerelease tags only: v0.12.1, v0.12.1.2 (not v0.12.0-rc1 or ^{})
   const tagPattern = new RegExp(`^refs/tags/v0\\.${minor}(\\.\\d+)+$`);
-  return refs.filter((ref) => tagPattern.test(ref)).sort(compareNumeric).at(-1);
+  return remoteRefs
+    .filter((ref) => tagPattern.test(ref))
+    .sort((a, b) => compareNumeric(a, b))
+    .at(-1);
 }
 
 function compareNumeric(a: string, b: string) {
-  const parts = (ref: string) => ref.split("/").pop()!.slice(1).split(".").map(Number);
+  const parts = (ref: string) =>
+    ref.split("/").pop()!.slice(1).split(".").map(Number);
   const [pa, pb] = [parts(a), parts(b)];
   for (let i = 0; i < Math.max(pa.length, pb.length); i++) {
     const diff = (pa[i] ?? 0) - (pb[i] ?? 0);
@@ -128,30 +134,162 @@ function compareNumeric(a: string, b: string) {
   return 0;
 }
 
-// --- 4. latest -----------------------------------------------------------
+// --- 3. blobless cache repo ----------------------------------------------
 
-/** Copies _docs/<docs_version> to _docs/latest. */
-async function copyLatest(docsVersion: string) {
+async function initCache() {
+  if (existsSync(join(CACHE_DIR, "HEAD"))) return;
+  await mkdir(CACHE_DIR, { recursive: true });
+  await $`git init --bare -q ${CACHE_DIR}`;
+  await git("remote", "add", "origin", REPO_URL);
+}
+
+const seedRef = (name: string) => `refs/seed/${name}`;
+
+/** One fetch for all versions: commits + trees only, no file contents. */
+async function fetchRefs(refs: { name: string; ref: string }[]) {
+  const refspecs = refs.map((r) => `+${r.ref}:${seedRef(r.name)}`);
+  await git(
+    "fetch",
+    "--depth=1",
+    "--filter=blob:none",
+    "--no-tags",
+    "--no-write-fetch-head",
+    "origin",
+    ...refspecs,
+  );
+}
+
+// --- 4. skip unchanged versions ------------------------------------------
+
+async function findStaleVersions(versions: Version[]) {
+  const checks = await Promise.all(
+    versions.map(async ({ name }) => {
+      const tree = (
+        await git("rev-parse", `${seedRef(name)}:docs`).text()
+      ).trim();
+      const stampFile = join(STAMP_DIR, name);
+      const upToDate =
+        existsSync(join(OUT_DIR, name)) &&
+        existsSync(stampFile) &&
+        (await readFile(stampFile, "utf8")) === tree;
+      return upToDate ? null : { name, tree };
+    }),
+  );
+  return checks.filter((c) => c !== null);
+}
+
+// --- 5. fetch only the blobs we don't have, in a single request ----------
+
+async function fetchMissingBlobs(names: string[], docsVersion: string) {
+  const listings = await Promise.all(
+    names.map((name) => git("ls-tree", "-r", seedRef(name), "docs").text()),
+  );
+  // "<mode> blob <oid>\t<path>" -- identical files share an oid across versions.
+  // Cloud docs only end up in _docs/latest/cloud (see pruneCloud), so there's
+  // no point fetching docs/cloud blobs for any version but the current one.
+  const oids = new Set(
+    listings.flatMap((listing, i) =>
+      listing
+        .split("\n")
+        .filter(Boolean)
+        .filter(
+          (line) =>
+            names[i] === docsVersion ||
+            !line.split("\t")[1]?.startsWith("docs/cloud/"),
+        )
+        .map((line) => line.split(/\s/)[2]),
+    ),
+  );
+
+  // GIT_NO_LAZY_FETCH stops cat-file from downloading blobs one at a time.
+  const check =
+    await $`git -C ${CACHE_DIR} cat-file --batch-check < ${lines(oids)}`
+      .env({ ...process.env, GIT_NO_LAZY_FETCH: "1" })
+      .quiet()
+      .text();
+  const missing = check
+    .split("\n")
+    .filter((line) => line.endsWith(" missing"))
+    .map((line) => line.split(" ")[0]);
+
+  if (missing.length === 0) return;
+  console.log(`fetching ${missing.length} blobs`);
+  // Same invocation git uses for its own lazy fetches, but batched.
+  await $`git -C ${CACHE_DIR} -c fetch.negotiationAlgorithm=noop fetch origin --no-tags --no-write-fetch-head --filter=blob:none --stdin < ${lines(missing)}`.quiet();
+}
+
+/** Newline-separated stdin for a shell redirect. */
+const lines = (items: Iterable<string>) =>
+  new Response([...items].join("\n") + "\n");
+
+// --- 6. extract ----------------------------------------------------------
+
+async function extract(
+  { name, tree }: { name: string; tree: string },
+  docsVersion: string,
+) {
+  const dest = join(OUT_DIR, name);
+  const stamp = join(STAMP_DIR, name);
+  await rm(stamp, { force: true }); // an interrupted run must not look complete
+  await rm(dest, { recursive: true, force: true });
+  await mkdir(dest, { recursive: true });
+
+  // Cloud docs only belong in _docs/latest/cloud (see pruneCloud), so skip
+  // them here for every version except the one syncLatest copies from.
+  const pathspec = name === docsVersion ? [] : [":!docs/cloud"];
+
+  // Not piped: a pipeline only reports the last command's exit code, so a
+  // failed `git archive` would leave a truncated tree that looks complete.
+  const tarball = `${dest}.tar`;
+  await git("archive", "-o", tarball, seedRef(name), "docs", ...pathspec);
+  await $`tar -x -f ${tarball} --strip-components=1 -C ${dest}`.quiet();
+  await rm(tarball);
+
+  await mkdir(STAMP_DIR, { recursive: true });
+  await writeFile(stamp, tree);
+}
+
+// --- 7. latest -------------------------------------------------------------
+
+/** Copies _docs/<docs_version> to _docs/latest unless it's already current. */
+async function syncLatest(docsVersion: string) {
   const source = join(OUT_DIR, docsVersion);
   if (!existsSync(source)) {
     throw new Error(
       `docs_version ${docsVersion} was not seeded (is it supported? try "all")`,
     );
   }
-  await cp(source, join(OUT_DIR, "latest"), { recursive: true });
+  const dest = join(OUT_DIR, "latest");
+  const stamp = join(STAMP_DIR, "latest");
+  const current = `${docsVersion}:${await readFile(join(STAMP_DIR, docsVersion), "utf8")}`;
+
+  if (
+    existsSync(dest) &&
+    existsSync(stamp) &&
+    (await readFile(stamp, "utf8")) === current
+  ) {
+    return false;
+  }
+  await rm(stamp, { force: true });
+  await rm(dest, { recursive: true, force: true });
+  await cp(source, dest, { recursive: true });
+  await writeFile(stamp, current);
+  return true;
 }
 
-// --- 5. cloud ------------------------------------------------------------
+// --- 8. cloud ----------------------------------------------------------
 
 /**
  * Cloud docs only live in _docs/latest/cloud (cloud is always on the newest
- * version), so drop cloud/ from every versioned copy. Must run after
- * copyLatest, which sources latest/cloud from the docs_version copy.
+ * version), so drop cloud/ from every versioned copy, namely docs_version's
+ * own since syncLatest sourced latest/cloud from it in the previous step.
  */
-async function removeCloudFromVersions(versions: Version[]) {
-  for (const { name } of versions) {
-    await rm(join(OUT_DIR, name, "cloud"), { recursive: true, force: true });
-  }
+async function pruneCloud(versions: Version[]) {
+  await Promise.all(
+    versions.map((v) =>
+      rm(join(OUT_DIR, v.name, "cloud"), { recursive: true, force: true }),
+    ),
+  );
 }
 
 await main();
