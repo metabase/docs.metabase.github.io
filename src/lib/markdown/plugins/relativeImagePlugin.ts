@@ -28,6 +28,15 @@ export const relativeImagePlugin = defineHastPlugin({
       if (relPath.startsWith("..") || path.isAbsolute(relPath)) return;
 
       ctx.setProperty(node, "src", `${URL_PREFIX}${toSitePath(relPath)}`);
+
+      // @astrojs/markdown-satteri's image-marker plugin runs after ours and
+      // turns any <img> whose src is in localImagePaths into an
+      // `__ASTRO_IMAGE_` placeholder for Astro's markdown pipeline, which we
+      // bypass (see getMarkdownRenderer). Drop it from the set so the marker
+      // leaves this img alone.
+      (
+        ctx.data as { astro?: { localImagePaths?: Set<string> } }
+      ).astro?.localImagePaths?.delete(decodeURI(rawSrc));
     },
   },
 });

@@ -180,10 +180,17 @@
   box-shadow: var(--mb-shadow);
 }
 
+/* new-docs-anchor-links.js wraps h2 / h3 in div.copy-clip-container.h2|h3, so
+ * code inside a heading also matches the vendored `.h2 code` rules, which are
+ * one class more specific than `h2 code`. List both forms. */
 .bootstrap .learn__post h2 code,
+.bootstrap .learn__post .h2 code,
 .bootstrap .learn__post h3 code,
+.bootstrap .learn__post .h3 code,
 .bootstrap .learn__post h4 code,
-.bootstrap .learn__post h5 code {
+.bootstrap .learn__post .h4 code,
+.bootstrap .learn__post h5 code,
+.bootstrap .learn__post .h5 code {
   background: var(--mb-code-heading-bg);
   color: var(--mb-text-secondary);
 }
@@ -338,6 +345,19 @@
 .bootstrap .learn .plans-blockquote {
   background-color: var(--mb-blockquote-bg);
   color: var(--mb-text-secondary);
+}
+
+/* Checkpoints (docs/checkpoints.js builds div.checkpoint on the embedding
+ * quick-start guides). The light values match the vendored styles.css rule. */
+
+.bootstrap .learn .checkpoint {
+  background-color: var(--mb-blockquote-bg);
+  border-color: var(--mb-code-heading-bg);
+}
+
+.bootstrap .learn .checkpoint h3,
+.bootstrap .learn .checkpoint .h3 {
+  color: var(--mb-heading);
 }
 
 /* Images */

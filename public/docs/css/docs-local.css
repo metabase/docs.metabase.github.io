@@ -93,8 +93,8 @@ html[data-theme] body {
 
 /* Heading scale: 36 / 28 / 22 / 18 / 16 over an 18px body (styles.css had h4
  * at 16px, smaller than its paragraphs). The .copy-clip-container.hN wrappers
- * from new-docs-anchor-links.js carry the heading margins in em, so they
- * get the same font-size. */
+ * from new-docs-anchor-links.js pick up the same styles.css heading rules as
+ * the headings themselves, so they get the same font-size. */
 .bootstrap .learn.docs div.learn__post__content h1 {
   font-size: 2.25rem;
 }
@@ -102,6 +102,19 @@ html[data-theme] body {
 .bootstrap .learn.docs div.learn__post__content h2,
 .bootstrap .learn.docs div.learn__post__content .copy-clip-container.h2 {
   font-size: 1.75rem;
+}
+
+/* Section spacing. styles.css gives the h2 wrapper `margin: 64px 0 24px` and
+ * `padding-bottom: 16px` above the rule, then adds `margin-top: 16px` on the
+ * h2 inside it; the wrapper is a flex row, so that inner margin never
+ * collapses and the heading sat ~80px below the previous paragraph. */
+.bootstrap .learn.docs div.learn__post__content > .copy-clip-container.h2 {
+  margin: 48px 0 16px;
+  padding-bottom: 10px;
+}
+
+.bootstrap .learn.docs .learn__article .copy-clip-container.h2 > h2 {
+  margin-top: 0;
 }
 
 .bootstrap .learn.docs div.learn__post__content h3,
@@ -329,10 +342,9 @@ html[data-theme] body {
  * pushed the nav inward. */
 @media screen and (min-width: 993px) {
   .bootstrap .learn.docs {
-    /* Paragraph measure. Tables run past it into the gutter (docs-tables.css)
-     * up to --docs-table-width; the centered box below is sized to that. */
+    /* Text column measure. Paragraphs, tables and h2 section rules all stop
+     * at this width; the centered box below is sized to it. */
     --docs-article-width: 800px;
-    --docs-table-width: 960px;
     --docs-nav-width: 280px;
 
     /* styles.css painted #fafbfe only right of the centered box; paint the
@@ -347,28 +359,21 @@ html[data-theme] body {
     max-width: none;
   }
 
-  /* Center article + TOC as one box sized to the widest table; on narrower
+  /* Center article + TOC as one box sized to the text column: 72px box
+   * padding-left + text + 72px content padding-right + 200px TOC. On narrower
    * viewports the box shrinks and the text column with it. */
   .bootstrap .learn.docs .learn__post {
     margin: 0 auto;
-    max-width: calc(72px + var(--docs-table-width) + 40px + 200px); /* 1272px */
+    max-width: calc(72px + var(--docs-article-width) + 72px + 200px); /* 1144px */
     width: 100%;
   }
 
-  /* The text column is wider than the paragraph measure on big screens, so
-   * cap everything in it except the table wrappers and the h2 wrappers.
-   * new-docs-anchor-links.js wraps each h2 in div.copy-clip-container.h2 and
-   * styles.css draws the section rule on that wrapper, so exempting it lets
-   * the rule span the column like a table does; the heading text inside is
-   * capped separately so long headings still wrap at the measure. */
-  .bootstrap
-    .learn.docs
-    div.learn__post__content
-    > :not(.docs-table-wrap):not(.copy-clip-container.h2) {
-    max-width: var(--docs-article-width);
-  }
-
-  .bootstrap .learn.docs div.learn__post__content > .copy-clip-container.h2 > h2 {
+  /* The grid column can be wider than the measure between breakpoints, so
+   * cap everything in it. That includes the table wrappers from
+   * new-docs-table-overflow.js (wider tables scroll inside them) and the h2
+   * wrappers from new-docs-anchor-links.js, which carry the section rule, so
+   * tables, rules and paragraphs share one right edge. */
+  .bootstrap .learn.docs div.learn__post__content > * {
     max-width: var(--docs-article-width);
   }
 
@@ -387,13 +392,20 @@ html[data-theme] body {
   }
 
   /* styles.css centers the top bar across the whole .learn__post box. Pin it
-   * to the text column instead so its divider lines up with the h2 rules and
-   * tables, which end 72px padding + 200px TOC + 40px short of the box. */
+   * to the text column instead (72px padding either side + 200px TOC short of
+   * the box) so its divider ends where the text, tables and h2 rules do. */
   .bootstrap .learn.docs .top-bar {
     left: 72px;
     padding-left: 0;
     transform: none;
-    width: calc(100% - 72px - 200px - 40px);
+    width: calc(100% - 72px - 72px - 200px);
+  }
+
+  /* styles.css drops the content padding-right to 40px below 1200px. */
+  @media (max-width: 1199.98px) {
+    .bootstrap .learn.docs .top-bar {
+      width: calc(100% - 72px - 40px - 200px);
+    }
   }
 
   .bootstrap .learn.docs .top-bar .breadcrumb {

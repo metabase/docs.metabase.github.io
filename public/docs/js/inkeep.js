@@ -50,6 +50,10 @@ const handleOpenChange = (isOpen) => {
   inkeepWidget?.update({
     modalSettings: { isOpen, onOpenChange: handleOpenChange },
   });
+  // The widget keeps its last view across closes, so after "Ask AI" the
+  // search bar would reopen on chat. Every open that isn't the Ask AI button
+  // should start on search.
+  if (!isOpen) inkeepWidget?.setView("search");
 };
 
 // "Ask AI" buttons in the docs header open the widget straight into chat.
