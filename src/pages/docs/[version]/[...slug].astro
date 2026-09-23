@@ -5,6 +5,7 @@ import { DOCS_SRC_ROOT, METABASE_REPO_PATH } from "@/constants";
 import NewDocsLayout from "@/layouts/NewDocsLayout.astro";
 import OldDocsLayout from "@/layouts/OldDocsLayout.astro";
 import { constructDocMetadata } from "@/lib/docs/constructDocMetadata";
+import { getPageUrl } from "@/lib/docs/pageUrl";
 import { reformatMarkdownUrls } from "@/lib/docs/reformatMarkdownUrls";
 import { resolveDocUrl } from "@/lib/docs/resolveDoc";
 import { baseCtx, getLiquidRenderer } from "@/lib/liquid/liquidRenderer";
@@ -35,9 +36,8 @@ export const getStaticPaths = async () => {
   return [...docs.map(toPath("md")), ...docsHtml.map(toPath("html"))];
 };
 
-const { version, slug = "" } = Astro.params;
+const { version } = Astro.params;
 const { kind, doc: propsDoc } = Astro.props;
-const url = `/docs/${version}/${slug}`;
 // TODO: GRO-688 Remove processing from /script/docs so src files are raw whether reading from _docs or METABASE_REPO_PATH
 // The only known gap is updateRedirectsAndLinks for non-latest versions, which is two separate fixes:
 // 1. replaceVersionInUrls belongs alongside reformatMarkdownUrls
@@ -95,7 +95,7 @@ const Layout = doc.data.layout === "docs" ? OldDocsLayout : NewDocsLayout;
 {kind === "html" ? (
   <Fragment set:html={renderedHtml} />
 ) : (
-  <Layout page={{ url, ...doc.data }} dirname={dirname}>
+  <Layout page={{ url: getPageUrl(Astro.url), ...doc.data }} dirname={dirname}>
     <Fragment set:html={renderedHtml} />
   </Layout>
 )}

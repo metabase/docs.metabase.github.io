@@ -2,13 +2,14 @@
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import NewDocsLayout from "@/layouts/NewDocsLayout.astro";
+import { getPageUrl } from "@/lib/docs/pageUrl";
 import { baseCtx } from "@/lib/liquid/liquidRenderer";
 
 const { site } = baseCtx;
 
 const page = {
   title: "Available Versions",
-  url: Astro.url.pathname,
+  url: getPageUrl(Astro.url),
 };
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
