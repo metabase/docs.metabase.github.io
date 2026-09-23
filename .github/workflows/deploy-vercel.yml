@@ -6,6 +6,9 @@ on:
     types: [opened, synchronize, reopened]
   push:
     branches: [master]
+  schedule:
+    # Nightly rebuild, so production picks up docs changes from metabase release branches.
+    - cron: "0 2 * * *"
   workflow_dispatch:
 
 permissions:
