@@ -1,5 +1,6 @@
 ---
 import Breadcrumb from "@/components/chrome/Breadcrumb.astro";
+import DocsNavToggle from "@/components/chrome/DocsNavToggle.astro";
 import VersionSelector from "@/components/chrome/VersionSelector.astro";
 import InkeepSearch from "@/components/InkeepSearch/InkeepSearch.astro";
 import { TOP_BAR_ID } from "@/constants";
@@ -22,6 +23,7 @@ const { page, showBreadcrumb } = Astro.props;
 
 <div id={TOP_BAR_ID} class="top-bar">
   <div>
+    <DocsNavToggle />
     {showBreadcrumb && (
       <div class="learn-breadcrumb-trail">
         <Breadcrumb page={page} />

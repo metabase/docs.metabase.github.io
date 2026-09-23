@@ -1,0 +1,47 @@
+<button
+  class="d-lg-none docs-nav-toggle"
+  type="button"
+  aria-controls="main-navigation-content"
+  aria-expanded="false"
+  aria-label="Open docs navigation"
+>
+  <svg width="18" height="9" viewBox="0 0 18 9" fill="none" aria-hidden="true">
+    <path
+      d="M1 1.5h16M1 7.5h10"
+      stroke="currentColor"
+      stroke-width="1.5"
+      stroke-linecap="round"
+    />
+  </svg>
+</button>
+
+<script>
+  import { DOCS_NAV_EVENT, setDocsNavOpen } from "@/lib/docs-nav";
+
+  const button = document.querySelector<HTMLElement>(".docs-nav-toggle")!;
+
+  button.addEventListener("click", () =>
+    setDocsNavOpen(button.getAttribute("aria-expanded") !== "true"),
+  );
+  document.addEventListener(DOCS_NAV_EVENT, (e) =>
+    button.setAttribute("aria-expanded", String(e.detail.open)),
+  );
+</script>
+
+<style>
+  .docs-nav-toggle {
+    appearance: none;
+    background-color: transparent;
+    border: 0;
+    color: #5a6072;
+    display: flex;
+    flex-shrink: 0;
+    margin-left: -11px;
+    padding: 8px;
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: #509ee3;
+    }
+  }
+</style>

@@ -10,15 +10,193 @@ type Props = {
 const { url: pageUrl, version = "latest" } = Astro.props;
 ---
 
-<div class="learn-left-sidebar" id="main-navigation-content">
-  {getNavForVersion(version).categories.map((category) => (
-    <>
-      <h5>{category.name}</h5>
-      <ul>
-        {category.pages?.map((node) => (
-          <NavItem node={node} pageUrl={pageUrl} />
-        ))}
-      </ul>
-    </>
-  ))}
+<div id="main-navigation-content">
+  <div>
+    {getNavForVersion(version).categories.map((category) => (
+      <>
+        <h5>{category.name}</h5>
+        <ul>
+          {category.pages?.map((node) => (
+            <NavItem node={node} pageUrl={pageUrl} />
+          ))}
+        </ul>
+      </>
+    ))}
+  </div>
 </div>
+
+<script>
+  import { DOCS_NAV_EVENT, setDocsNavOpen } from "@/lib/docs-nav";
+
+  const drawer = document.getElementById("main-navigation-content")!;
+
+  document.addEventListener(DOCS_NAV_EVENT, (e) =>
+    drawer.classList.toggle("open", e.detail.open),
+  );
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") setDocsNavOpen(false);
+  });
+  drawer.addEventListener("click", (e) => {
+    if (e.target === e.currentTarget) setDocsNavOpen(false);
+  });
+</script>
+
+<style is:global>
+  #main-navigation-content {
+    border-right: 1px solid #f1f2f4;
+    box-shadow: 4px 2px 4px 0 rgba(16, 24, 40, 0.05);
+    height: calc(100vh - var(--navigation-header-height));
+    overflow-y: auto;
+    padding-right: 10px;
+    padding-top: 80px;
+    position: sticky;
+    top: var(--navigation-header-height);
+    width: 100%;
+
+    @media (max-width: 991.98px) {
+      --drawer-width: min(75vw, 320px);
+
+      border-right: 0;
+      height: auto;
+      inset: 0 auto 0 calc(-1 * var(--drawer-width));
+      overflow: visible; /* iOS Safari clips fixed descendants of a scroll container */
+      padding: 0;
+      position: fixed;
+      transition:
+        left 0.15s ease-in,
+        visibility 0s 0.15s;
+      visibility: hidden;
+      width: var(--drawer-width);
+      z-index: 10001; /* header.sticky is 10000 */
+
+      &::before {
+        -webkit-backdrop-filter: blur(4px);
+        backdrop-filter: blur(4px);
+        background-color: rgba(255, 255, 255, 0.4);
+        content: "";
+        inset: 0;
+        opacity: 0;
+        position: fixed;
+        transition: opacity 0.1s ease-in;
+        z-index: -1;
+      }
+
+      &.open {
+        left: 0;
+        transition: left 0.1s ease-out;
+        visibility: visible;
+
+        &::before {
+          opacity: 1;
+          transition: opacity 0.1s ease-out;
+        }
+      }
+
+      > div {
+        background-color: #fff;
+        border-right: 1px solid #f1f2f4;
+        height: 100%;
+        overflow-y: auto;
+        padding: 40px 20px 24px;
+        position: relative; /* Safari paints the backdrop-filter layer over non-positioned content */
+      }
+    }
+
+    h5 {
+      color: #8d93a5;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.2em;
+      margin-bottom: 4px;
+      padding: 4px 8px 5px;
+      text-transform: uppercase;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      margin: 0;
+      padding: 0 0 4px;
+
+      ul {
+        display: none;
+      }
+
+      li {
+        border-left: 1px solid #e4ecfb;
+        padding-left: 10px;
+      }
+
+      li li {
+        margin-left: 10px;
+      }
+    }
+
+    li.expanded {
+      > ul {
+        display: block;
+      }
+
+      > a svg {
+        transform: rotate(0);
+      }
+    }
+
+    a {
+      border-radius: 8px;
+      color: #5a6072;
+      display: block;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 20px;
+      padding: 4px 38px 5px 8px;
+      position: relative;
+      transition:
+        background-color 0.3s ease,
+        color 0.3s ease;
+
+      &:hover,
+      &.selected {
+        background-color: #eef6fc;
+        color: #509ee3;
+
+        svg path {
+          stroke: #509ee3;
+        }
+      }
+
+      &.selected {
+        font-weight: 700;
+      }
+
+      > div {
+        align-items: center;
+        display: flex;
+        height: 30px;
+        justify-content: center;
+        pointer-events: none;
+        position: absolute;
+        right: 2px;
+        top: 50%;
+        translate: 0 -50%;
+        width: 30px;
+      }
+
+      svg {
+        display: block;
+        height: 12px;
+        transform: rotate(-90deg);
+        transition: transform 0.3s ease-in-out;
+        width: 20px;
+      }
+
+      svg path {
+        stroke: #c6c9d2;
+        transition: stroke 0.3s ease-in-out;
+      }
+    }
+  }
+</style>
