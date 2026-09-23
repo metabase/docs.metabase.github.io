@@ -2,14 +2,20 @@
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import NewDocsLayout from "@/layouts/NewDocsLayout.astro";
-import { getPageUrl } from "@/lib/docs/pageUrl";
 import { baseCtx } from "@/lib/liquid/liquidRenderer";
 
 const { site } = baseCtx;
 
 const page = {
   title: "Available Versions",
-  url: getPageUrl(Astro.url),
+
+  /**
+   * Remove trailing slash -- dev and static builds have different behavior.
+   * Dev reports the request path (`/docs/all`), but static builds with
+   * `build.format: "preserve"` add a trailing slash (`/docs/all/`) so we strip it.
+   * TODO: Revisit this once trailing slash behavior is normalized.
+   */
+  url: Astro.url.pathname.replace(/\/$/, ""),
 };
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
