@@ -99,6 +99,12 @@ function removeExcessiveIndentation(text: string): string {
     .join("");
 }
 
+// Site URLs have no extension, `[`ParameterValues`](./api/ParameterValues.md)` -> `[`ParameterValues`](./api/ParameterValues)`.
+// Only relative links are touched; absolute URLs are left alone.
+function stripMarkdownLinkExtensions(text: string): string {
+  return text.replace(/(\]\((?!\w+:|\/\/)[^)\s#?]*?)\.mdx?(?=[)#?\s])/g, "$1");
+}
+
 export const registerIncludeFileTag = (engine: Liquid) => {
   engine.registerTag("include_file", {
     parse(tagToken: TagToken) {
@@ -137,6 +143,7 @@ export const registerIncludeFileTag = (engine: Liquid) => {
       text = removeExcessiveNewlines(text);
       text = removeExcessiveIndentation(text);
       text = renderComments(text, ctx.getSync(["page", "lang"]) as any);
+      if (!params.syntax) text = stripMarkdownLinkExtensions(text);
       if (params.syntax) text = `\`\`\`${params.syntax}\n${text}\n\`\`\``;
       return text;
     },
