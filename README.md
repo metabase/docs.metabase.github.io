@@ -14,7 +14,7 @@ bun i
 
 #### Option 1: Serve docs from a local Metabase repo
 
-Use this to preview docs changes as you write them. Changes to files in your Metabase repo show up in the browser immediately.
+ℹ️ *Use this to preview docs changes as you write them. Changes to files in your Metabase repo show up in the browser immediately.*
 
 ```sh
 cp .env-dist .env
@@ -30,7 +30,7 @@ To serve all versions from `./_docs`, comment out `METABASE_REPO_PATH` in your `
 
 #### Option 2: Seed historical `./_docs` versions
 
-Use this to browse the docs for older Metabase versions (e.g. `/docs/v0.55/`), or to work on the site without a local Metabase repo.
+ℹ️ *Use this to browse the docs for older Metabase versions (e.g. `/docs/v0.55/`), or to work on the site without a local Metabase repo.*
 
 ```sh
 bun script/seed-docs-history.ts
