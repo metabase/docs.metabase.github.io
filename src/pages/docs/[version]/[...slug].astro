@@ -95,7 +95,7 @@ const Layout = doc.data.layout === "docs" ? OldDocsLayout : NewDocsLayout;
 {kind === "html" ? (
   <Fragment set:html={renderedHtml} />
 ) : (
-  <Layout page={{ url, ...doc.data }} dirname={dirname}>
+  <Layout page={{ url, ...doc.data, content: renderedHtml }} dirname={dirname}>
     <Fragment set:html={renderedHtml} />
   </Layout>
 )}
