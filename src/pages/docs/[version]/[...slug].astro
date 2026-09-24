@@ -5,11 +5,8 @@ import { DOCS_SRC_ROOT, METABASE_REPO_PATH } from "@/constants";
 import NewDocsLayout from "@/layouts/NewDocsLayout.astro";
 import OldDocsLayout from "@/layouts/OldDocsLayout.astro";
 import { constructDocMetadata } from "@/lib/docs/constructDocMetadata";
-import {
-  reformatMarkdownUrls,
-  replaceVersionInUrls,
-} from "@/lib/docs/reformatMarkdownUrls";
 import { resolveDocUrl } from "@/lib/docs/resolveDoc";
+import { rewriteDocLinks } from "@/lib/docs/rewriteDocLinks";
 import { baseCtx, getLiquidRenderer } from "@/lib/liquid/liquidRenderer";
 import { getMarkdownRenderer } from "@/lib/markdown/markdownRenderer";
 import { getCollection, type DataEntryMap } from "astro:content";
@@ -53,12 +50,10 @@ const doc = {
     ),
     ...propsDoc.data,
   },
-  body:
-    version === "latest"
-      ? reformatMarkdownUrls(propsDoc.body ?? "")
-      : replaceVersionInUrls(reformatMarkdownUrls(propsDoc.body ?? ""), {
-          version: version!,
-        }),
+  body: rewriteDocLinks(propsDoc.body ?? "", {
+    version: version!,
+    latest: version === "latest",
+  }),
 };
 const dirname = path.dirname(doc.filePath!);
 
