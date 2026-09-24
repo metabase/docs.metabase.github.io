@@ -35,9 +35,9 @@ export const getStaticPaths = async () => {
   return [...docs.map(toPath("md")), ...docsHtml.map(toPath("html"))];
 };
 
-const { version, slug = "" } = Astro.params;
+const { version } = Astro.params;
 const { kind, doc: propsDoc } = Astro.props;
-const url = `/docs/${version}/${slug}`;
+const { url } = resolveDocUrl({ id: propsDoc.id });
 // TODO: GRO-688 Remove processing from /script/docs so src files are raw whether reading from _docs or METABASE_REPO_PATH
 // The only known gap is updateRedirectsAndLinks for non-latest versions, which is two separate fixes:
 // 1. replaceVersionInUrls belongs alongside reformatMarkdownUrls

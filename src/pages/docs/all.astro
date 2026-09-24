@@ -8,7 +8,14 @@ const { site } = baseCtx;
 
 const page = {
   title: "Available Versions",
-  url: Astro.url.pathname,
+
+  /**
+   * Remove trailing slash -- dev and static builds have different behavior.
+   * Dev reports the request path (`/docs/all`), but static builds with
+   * `build.format: "preserve"` add a trailing slash (`/docs/all/`) so we strip it.
+   * TODO: Revisit this once trailing slash behavior is normalized.
+   */
+  url: Astro.url.pathname.replace(/\/$/, ""),
 };
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
