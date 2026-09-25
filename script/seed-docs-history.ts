@@ -8,22 +8,20 @@
  * _data/major_version_support.json). Pass "all" to seed every version listed
  * in `available_versions` in _config.yml.
  *
- * How it stays fast:
- *  - No checkout. We keep a bare, blobless cache repo in tmp/ and only ever
+ * Every run builds _docs fresh, same as CI. How it stays fast:
+ *  - No checkout. We use a throwaway bare, blobless repo in tmp/ and only
  *    download the blobs under docs/.
  *  - Blobs are deduplicated across versions and fetched in one request.
- *  - A version is skipped when its docs/ tree id matches the last extraction.
  */
 import { existsSync } from "node:fs";
-import { cp, mkdir, readFile, rm, writeFile } from "node:fs/promises";
+import { cp, mkdir, readFile, rm } from "node:fs/promises";
 import { join } from "node:path";
 import { $ } from "bun";
 
 const REPO_URL =
   process.env.METABASE_REPO_URL ?? "https://github.com/metabase/metabase.git";
 const ROOT = join(import.meta.dir, "..");
-const CACHE_DIR = join(ROOT, "tmp/metabase-docs.git");
-const STAMP_DIR = join(CACHE_DIR, "seeded"); // version -> docs/ tree id
+const REPO_DIR = join(ROOT, "tmp/metabase-docs.git");
 const OUT_DIR = join(ROOT, "_docs");
 
 // v0.44+ have reliable release-x.NN.x branches; older minors use their newest tag.
@@ -31,7 +29,7 @@ const FIRST_BRANCH_MINOR = 44;
 
 type Version = { name: string; minor: number }; // { name: "v0.63", minor: 63 }
 
-const git = (...args: string[]) => $`git -C ${CACHE_DIR} ${args}`.quiet();
+const git = (...args: string[]) => $`git -C ${REPO_DIR} ${args}`.quiet();
 
 async function main() {
   const seedAll = process.argv[2] === "all";
@@ -39,25 +37,21 @@ async function main() {
   const versions = await selectVersions(config, seedAll);
   const refs = await resolveRefs(versions);
 
-  await initCache();
-  await fetchRefs(refs);
-
-  const stale = await findStaleVersions(versions);
-  if (stale.length > 0) {
-    await fetchMissingBlobs(
-      stale.map((s) => s.name),
-      config.docs_version,
-    );
-    await Promise.all(stale.map((s) => extract(s, config.docs_version)));
+  await initRepo();
+  try {
+    await fetchRefs(refs);
+    const names = versions.map((v) => v.name);
+    await fetchBlobs(names, config.docs_version);
+    await rm(OUT_DIR, { recursive: true, force: true });
+    await Promise.all(names.map((name) => extract(name, config.docs_version)));
+  } finally {
+    await rm(REPO_DIR, { recursive: true, force: true });
   }
 
-  const copiedLatest = await syncLatest(config.docs_version);
-  await pruneCloud(versions);
-  await rm(CACHE_DIR, { recursive: true, force: true });
+  await copyLatest(config.docs_version);
 
   console.log(
-    `seeded ${stale.length}, skipped ${versions.length - stale.length} (unchanged)` +
-      (copiedLatest ? `, copied ${config.docs_version} to latest` : ""),
+    `seeded ${versions.length} versions, copied ${config.docs_version} to latest`,
   );
 }
 
@@ -134,12 +128,13 @@ function compareNumeric(a: string, b: string) {
   return 0;
 }
 
-// --- 3. blobless cache repo ----------------------------------------------
+// --- 3. blobless repo ---------------------------------------------------
 
-async function initCache() {
-  if (existsSync(join(CACHE_DIR, "HEAD"))) return;
-  await mkdir(CACHE_DIR, { recursive: true });
-  await $`git init --bare -q ${CACHE_DIR}`;
+async function initRepo() {
+  // Clears leftovers from an interrupted run.
+  await rm(REPO_DIR, { recursive: true, force: true });
+  await mkdir(REPO_DIR, { recursive: true });
+  await $`git init --bare -q ${REPO_DIR}`;
   await git("remote", "add", "origin", REPO_URL);
 }
 
@@ -159,33 +154,14 @@ async function fetchRefs(refs: { name: string; ref: string }[]) {
   );
 }
 
-// --- 4. skip unchanged versions ------------------------------------------
+// --- 4. fetch every docs/ blob in a single request -----------------------
 
-async function findStaleVersions(versions: Version[]) {
-  const checks = await Promise.all(
-    versions.map(async ({ name }) => {
-      const tree = (
-        await git("rev-parse", `${seedRef(name)}:docs`).text()
-      ).trim();
-      const stampFile = join(STAMP_DIR, name);
-      const upToDate =
-        existsSync(join(OUT_DIR, name)) &&
-        existsSync(stampFile) &&
-        (await readFile(stampFile, "utf8")) === tree;
-      return upToDate ? null : { name, tree };
-    }),
-  );
-  return checks.filter((c) => c !== null);
-}
-
-// --- 5. fetch only the blobs we don't have, in a single request ----------
-
-async function fetchMissingBlobs(names: string[], docsVersion: string) {
+async function fetchBlobs(names: string[], docsVersion: string) {
   const listings = await Promise.all(
     names.map((name) => git("ls-tree", "-r", seedRef(name), "docs").text()),
   );
   // "<mode> blob <oid>\t<path>" -- identical files share an oid across versions.
-  // Cloud docs only end up in _docs/latest/cloud (see pruneCloud), so there's
+  // Cloud docs only end up in _docs/latest/cloud (see copyLatest), so there's
   // no point fetching docs/cloud blobs for any version but the current one.
   const oids = new Set(
     listings.flatMap((listing, i) =>
@@ -201,41 +177,23 @@ async function fetchMissingBlobs(names: string[], docsVersion: string) {
     ),
   );
 
-  // GIT_NO_LAZY_FETCH stops cat-file from downloading blobs one at a time.
-  const check =
-    await $`git -C ${CACHE_DIR} cat-file --batch-check < ${lines(oids)}`
-      .env({ ...process.env, GIT_NO_LAZY_FETCH: "1" })
-      .quiet()
-      .text();
-  const missing = check
-    .split("\n")
-    .filter((line) => line.endsWith(" missing"))
-    .map((line) => line.split(" ")[0]);
-
-  if (missing.length === 0) return;
-  console.log(`fetching ${missing.length} blobs`);
+  console.log(`fetching ${oids.size} blobs`);
   // Same invocation git uses for its own lazy fetches, but batched.
-  await $`git -C ${CACHE_DIR} -c fetch.negotiationAlgorithm=noop fetch origin --no-tags --no-write-fetch-head --filter=blob:none --stdin < ${lines(missing)}`.quiet();
+  await $`git -C ${REPO_DIR} -c fetch.negotiationAlgorithm=noop fetch origin --no-tags --no-write-fetch-head --filter=blob:none --stdin < ${lines(oids)}`.quiet();
 }
 
 /** Newline-separated stdin for a shell redirect. */
 const lines = (items: Iterable<string>) =>
   new Response([...items].join("\n") + "\n");
 
-// --- 6. extract ----------------------------------------------------------
+// --- 5. extract ----------------------------------------------------------
 
-async function extract(
-  { name, tree }: { name: string; tree: string },
-  docsVersion: string,
-) {
+async function extract(name: string, docsVersion: string) {
   const dest = join(OUT_DIR, name);
-  const stamp = join(STAMP_DIR, name);
-  await rm(stamp, { force: true }); // an interrupted run must not look complete
-  await rm(dest, { recursive: true, force: true });
   await mkdir(dest, { recursive: true });
 
-  // Cloud docs only belong in _docs/latest/cloud (see pruneCloud), so skip
-  // them here for every version except the one syncLatest copies from.
+  // Cloud docs only belong in _docs/latest/cloud (see copyLatest), so skip
+  // them here for every version except the one copyLatest copies from.
   const pathspec = name === docsVersion ? [] : [":!docs/cloud"];
 
   // Not piped: a pipeline only reports the last command's exit code, so a
@@ -244,52 +202,24 @@ async function extract(
   await git("archive", "-o", tarball, seedRef(name), "docs", ...pathspec);
   await $`tar -x -f ${tarball} --strip-components=1 -C ${dest}`.quiet();
   await rm(tarball);
-
-  await mkdir(STAMP_DIR, { recursive: true });
-  await writeFile(stamp, tree);
 }
 
-// --- 7. latest -------------------------------------------------------------
+// --- 6. latest -------------------------------------------------------------
 
-/** Copies _docs/<docs_version> to _docs/latest unless it's already current. */
-async function syncLatest(docsVersion: string) {
+/**
+ * Copies _docs/<docs_version> to _docs/latest. Cloud docs only live in
+ * _docs/latest/cloud (cloud is always on the newest version), so once copied,
+ * they're dropped from _docs/<docs_version>.
+ */
+async function copyLatest(docsVersion: string) {
   const source = join(OUT_DIR, docsVersion);
   if (!existsSync(source)) {
     throw new Error(
       `docs_version ${docsVersion} was not seeded (is it supported? try "all")`,
     );
   }
-  const dest = join(OUT_DIR, "latest");
-  const stamp = join(STAMP_DIR, "latest");
-  const current = `${docsVersion}:${await readFile(join(STAMP_DIR, docsVersion), "utf8")}`;
-
-  if (
-    existsSync(dest) &&
-    existsSync(stamp) &&
-    (await readFile(stamp, "utf8")) === current
-  ) {
-    return false;
-  }
-  await rm(stamp, { force: true });
-  await rm(dest, { recursive: true, force: true });
-  await cp(source, dest, { recursive: true });
-  await writeFile(stamp, current);
-  return true;
-}
-
-// --- 8. cloud ----------------------------------------------------------
-
-/**
- * Cloud docs only live in _docs/latest/cloud (cloud is always on the newest
- * version), so drop cloud/ from every versioned copy, namely docs_version's
- * own since syncLatest sourced latest/cloud from it in the previous step.
- */
-async function pruneCloud(versions: Version[]) {
-  await Promise.all(
-    versions.map((v) =>
-      rm(join(OUT_DIR, v.name, "cloud"), { recursive: true, force: true }),
-    ),
-  );
+  await cp(source, join(OUT_DIR, "latest"), { recursive: true });
+  await rm(join(source, "cloud"), { recursive: true, force: true });
 }
 
 await main();
