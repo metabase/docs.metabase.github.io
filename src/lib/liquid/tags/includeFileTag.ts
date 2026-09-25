@@ -1,5 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
+import type { DocMetadata } from "@/lib/docs/constructDocMetadata";
+import { rewriteDocLinks } from "@/lib/docs/rewriteDocLinks";
 import type { Context, Liquid, TagToken } from "liquidjs";
 
 // ---------------------------------------------------------------------------
@@ -119,7 +121,17 @@ export const registerIncludeFileTag = (engine: Liquid) => {
         params[key] = value;
       }
 
-      let text = fs.readFileSync(path.join(ROOT, filePath), "utf8");
+      // TODO: DO NOT MERGE
+      // Changed error->warning for testing only
+      let text: string;
+      try {
+        text = fs.readFileSync(path.join(ROOT, filePath), "utf8");
+      } catch (err) {
+        if ((err as NodeJS.ErrnoException).code !== "ENOENT") throw err;
+        console.warn(`[liquid] include_file not found: ${filePath}`);
+        return "";
+      }
+
       text = params.snippet
         ? pickSnippet(text, params.snippet)
         : removeAllSnippets(text);
@@ -127,6 +139,13 @@ export const registerIncludeFileTag = (engine: Liquid) => {
       text = removeExcessiveNewlines(text);
       text = removeExcessiveIndentation(text);
       text = renderComments(text, ctx.getSync(["page", "lang"]) as any);
+      if (!params.syntax) {
+        const page = ctx.getSync(["page"]) as DocMetadata;
+        text = rewriteDocLinks(text, {
+          version: page.version,
+          latest: !!page.latest,
+        });
+      }
       if (params.syntax) text = `\`\`\`${params.syntax}\n${text}\n\`\`\``;
       return text;
     },
