@@ -62,7 +62,7 @@ const doc = !isRaw
 const dirname = path.dirname(doc.filePath!);
 
 // Process liquid first (e.g. control flow, includes, variables, etc)
-const lq = getLiquidRenderer({ page: doc.data, dirname });
+const lq = getLiquidRenderer({ page: { url, ...doc.data }, dirname });
 const lqOutput = await lq.render(doc.body!, undefined, {
   maxSyntaxErrors: version === "latest" ? 0 : 3,
 });
