@@ -1,0 +1,138 @@
+/* Phone chrome for the Docs hub: a compact site header that hides on
+   scroll-down and a section bar that sticks in its place. Desktop is untouched.
+   Every selector starts with `body` to outrank the legacy sheets, which load later. */
+
+body header.bootstrap .section-label {
+  border-left: 1px solid #c6c9d2;
+  color: #5a6072;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1;
+  margin-left: 10px;
+  padding-left: 10px;
+}
+
+@media (max-width: 991.98px) {
+  body:has(header.section-chrome) {
+    --navigation-header-height: 56px;
+    --section-bar-top: var(--navigation-header-height);
+  }
+
+  :root[data-nav-hidden] body {
+    --section-bar-top: 0;
+  }
+
+  body .legacy-scope header.bootstrap.section-chrome {
+    position: sticky;
+    top: 0;
+    transition: transform 0.2s ease;
+  }
+
+  :root[data-nav-hidden] body .legacy-scope header.bootstrap.section-chrome {
+    transform: translateY(-100%);
+  }
+
+  body header.bootstrap.section-chrome .navigation-header > .container {
+    padding-bottom: 5px;
+    padding-top: 5px;
+  }
+
+  body header.bootstrap.section-chrome .home-link svg {
+    height: 22px;
+  }
+
+  /* The hub label widens the home link past its bootstrap column; let the two halves size to content. */
+  body header.bootstrap.section-chrome .home-link {
+    flex: 0 0 auto;
+    width: auto;
+  }
+
+  body header.bootstrap.section-chrome .nav-actions {
+    flex: 1 1 auto;
+    min-width: 0;
+    width: auto;
+  }
+
+  /* `.legacy-scope` and `!important` both needed to outrank desktop.scss's header button rule. */
+  body .legacy-scope header.bootstrap.section-chrome #get-started-btn {
+    align-items: center;
+    border-radius: 8px !important;
+    display: inline-flex;
+    height: 36px;
+    padding-bottom: 0;
+    padding-top: 0;
+  }
+
+  body header.bootstrap.section-chrome #nav-menu-mobile {
+    height: calc(100vh - var(--navigation-header-height)) !important;
+  }
+
+  /* Classes are doubled: docs pages wrap the legacy sheet in `.bootstrap`, one class deeper. */
+  body .learn .learn__post.learn__post,
+  body .learn .learn__index.learn__index {
+    overflow: clip;
+    padding-top: 40px;
+  }
+
+  /* Fixed rather than sticky: the article gutters differ per page, and the bar must span the viewport. */
+  body .learn .top-bar.top-bar {
+    background-color: #fff;
+    gap: 8px;
+    height: 40px;
+    justify-content: flex-start;
+    left: 0;
+    margin: 0;
+    max-width: none;
+    padding: 0 20px;
+    position: fixed;
+    right: 0;
+    top: var(--section-bar-top);
+    transform: none;
+    transition: top 0.2s ease;
+    width: auto;
+    z-index: 5;
+  }
+
+  /* Flatten the two groups so search can sit right after the menu toggle; the TOC chip stays at the far end. */
+  body .learn .top-bar.top-bar > div {
+    display: contents;
+  }
+
+  /* Icons sit on the 20px content gutter: the buttons' own padding hangs outside it. */
+  body .learn .top-bar.top-bar .docs-nav-toggle {
+    margin-left: -8px;
+    order: -2;
+    padding: 8px;
+  }
+
+  body .learn .top-bar.top-bar #inkeep {
+    order: -1;
+  }
+
+  body .learn .top-bar.top-bar .toc-toggle {
+    margin-left: auto;
+    padding-right: 0;
+  }
+
+  /* The bar's own trail; the phone trail renders above the content instead. */
+  body .learn .top-bar.top-bar .learn-breadcrumb-trail {
+    display: none;
+  }
+
+  /* Tap leaves `:hover` stuck on phones, so the header burger and the section-bar toggle stay neutral. */
+  body header.bootstrap.section-chrome #mobile-nav-hamburger-wrapper {
+    margin-right: -12px;
+  }
+
+  body header.bootstrap.section-chrome #mobile-nav-hamburger-wrapper:hover {
+    background-color: transparent;
+  }
+
+  body header.bootstrap.section-chrome #mobile-nav-hamburger-wrapper:hover path {
+    stroke: #5a6072;
+  }
+
+  body .learn .top-bar.top-bar .docs-nav-toggle:hover {
+    color: #5a6072;
+  }
+}

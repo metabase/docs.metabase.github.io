@@ -1,4 +1,5 @@
 ---
+import Breadcrumb from "@/components/chrome/Breadcrumb.astro";
 import LeftSidebar from "@/components/chrome/LeftSidebar.astro";
 import PageNav from "@/components/chrome/PageNav.astro";
 import TopBar from "@/components/chrome/TopBar.astro";
@@ -8,6 +9,7 @@ import LiquidInclude from "@/components/LiquidInclude.astro";
 import { UNIFY_ENABLED_PAGES } from "@/constants";
 import { getLiquidRenderer } from "@/lib/liquid/liquidRenderer";
 import DefaultNewLayout from "./DefaultNewLayout.astro";
+import "@/styles/section-chrome.css";
 
 type Props = {
   page: {
@@ -31,7 +33,7 @@ const lq = getLiquidRenderer({ page, dirname });
 const unify = UNIFY_ENABLED_PAGES.includes(page.url);
 ---
 
-<DefaultNewLayout page={page} dirname={dirname} {unify}>
+<DefaultNewLayout page={page} dirname={dirname} {unify} section="Docs">
   <div class="bootstrap">
     <div class="learn docs blog-post MB-Page">
       <LeftSidebar
@@ -43,6 +45,7 @@ const unify = UNIFY_ENABLED_PAGES.includes(page.url);
         <TopBar {page} {showBreadcrumb} />
 
         <div class="learn__post__content">
+          {showBreadcrumb && <Breadcrumb page={page} phone />}
           {!showBreadcrumb && <VersionSelector version={page.version} />}
 
           <VersionNotice version={page.version} />
@@ -117,12 +120,12 @@ const unify = UNIFY_ENABLED_PAGES.includes(page.url);
     }
   }
 
-  /* On phones the sidebar dissolves so the TOC becomes an in-flow row above the article. */
+  /* On phones the rail dissolves; the TOC becomes a bottom sheet opened from the section bar. */
   @media (max-width: 991.98px) {
     .learn__right-sidebar {
       display: contents;
 
-      > :not(#toc-toggle):not(#sub-navigation-content) {
+      > :not(#sub-navigation-content) {
         display: none;
       }
     }
