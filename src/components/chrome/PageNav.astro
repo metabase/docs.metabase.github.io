@@ -1,27 +1,32 @@
-<button
-  id="toc-toggle"
-  class="d-lg-none"
-  type="button"
-  aria-controls="sub-navigation-content"
-  aria-expanded="false"
->
-  On this page
-</button>
-<div id="sub-navigation-content"></div>
+<nav id="sub-navigation-content" aria-label="On this page"></nav>
 
 <script>
-  const button = document.getElementById("toc-toggle")!;
   const content = document.getElementById("sub-navigation-content")!;
-
-  button.addEventListener("click", () => {
-    const open = button.getAttribute("aria-expanded") !== "true";
+  // The phone toggle lives in the section bar, outside the rail.
+  const toggle = document.querySelector<HTMLElement>("[data-toc-toggle]");
+  const setOpen = (open: boolean) => {
     content.classList.toggle("open", open);
-    button.setAttribute("aria-expanded", String(open));
+    toggle?.setAttribute("aria-expanded", String(open));
+  };
+
+  toggle?.addEventListener("click", () =>
+    setOpen(toggle.getAttribute("aria-expanded") !== "true"),
+  );
+  // Links close the sheet as they navigate; so does any click outside it.
+  document.addEventListener("click", (event) => {
+    const target = event.target as Element;
+    if (toggle?.contains(target)) return;
+    if (!content.contains(target) || target.closest("a")) setOpen(false);
+  });
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") setOpen(false);
   });
 
   const headers = Array.from(document.querySelectorAll("h2"));
   const links = new Map<HTMLHeadingElement, HTMLAnchorElement>();
   let activeLink: HTMLAnchorElement | null = null;
+
+  if (headers.length === 0) toggle?.setAttribute("hidden", "");
 
   for (const header of headers) {
     const link = document.createElement("a");
@@ -49,12 +54,13 @@
     overflow-y: auto;
     padding-top: 3em;
 
-    > :first-child::before {
+    &::before {
       color: #22242b;
       content: "On this page";
       display: block;
+      font-size: 14px;
       font-weight: 700;
-      padding-bottom: 1.5rem;
+      padding: 0 0 1.5rem 20px;
     }
 
     a {
@@ -82,51 +88,50 @@
     }
   }
 
+  /* Below lg the rail dissolves; the list becomes a bottom sheet. The backdrop is a
+     spread shadow: a pseudo-element would paint over the sheet's own background. */
   @media (max-width: 991.98px) {
-    #toc-toggle {
-      appearance: none;
-      background-color: transparent;
-      border: 0;
-      border-bottom: 1px solid #e4ecfb;
-      color: #22242b;
-      display: flex;
-      font-size: 14px;
-      font-weight: 700;
-      justify-content: space-between;
-      order: -1;
-      padding: 12px 0;
-
-      &::after {
-        content: "\25BE";
-        transition: transform 0.3s ease;
-      }
-
-      &[aria-expanded="true"]::after {
-        transform: rotate(180deg);
-      }
-    }
-
     #sub-navigation-content {
-      display: none;
-      order: -1;
-      padding-top: 12px;
+      background-color: #fff;
+      border-radius: 16px 16px 0 0;
+      bottom: -100vh;
+      box-shadow: 0 0 0 100vmax rgba(34, 36, 43, 0.35);
+      left: 0;
+      max-height: 70dvh;
+      overflow-y: auto;
+      padding: 24px 20px calc(16px + env(safe-area-inset-bottom));
+      position: fixed;
+      right: 0;
+      transition:
+        bottom 0.2s ease,
+        visibility 0s 0.2s;
+      visibility: hidden;
+      z-index: 10001;
 
       &.open {
-        display: block;
+        bottom: 0;
+        transition: bottom 0.2s ease;
+        visibility: visible;
       }
 
-      > :first-child::before {
-        content: none;
+      &::before {
+        font-size: 15px;
+        padding: 0 8px 12px;
       }
-    }
-  }
 
-  /* At phone widths the article's 20px right gutter lives on .learn__post__content,
-   * which the TOC row is not inside. */
-  @media (max-width: 575.98px) {
-    #toc-toggle,
-    #sub-navigation-content {
-      margin-right: 20px;
+      a {
+        border-radius: 8px;
+        color: #5a6072;
+        font-size: 15px;
+        margin-bottom: 0;
+        padding: 10px 8px;
+
+        &.selected {
+          background-color: #eef6fc;
+          color: #509ee3;
+          font-weight: 700;
+        }
+      }
     }
   }
 </style>

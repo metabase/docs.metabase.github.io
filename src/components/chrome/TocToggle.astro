@@ -1,0 +1,55 @@
+---
+/** Phone-only "On this page" trigger for `PageNav`'s bottom sheet; lives in the section bar. */
+---
+
+<button
+  type="button"
+  class="toc-toggle"
+  aria-controls="sub-navigation-content"
+  aria-expanded="false"
+  data-toc-toggle
+>
+  On this page
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    aria-hidden="true"
+  >
+    <path d="M12,15.5c-0.3,0-0.5-0.1-0.7-0.3l-6-6c-0.4-0.4-0.4-1,0-1.4s1-0.4,1.4,0l5.3,5.3l5.3-5.3c0.4-0.4,1-0.4,1.4,0s0.4,1,0,1.4l-6,6C12.5,15.4,12.3,15.5,12,15.5z" />
+  </svg>
+</button>
+
+<style>
+  .toc-toggle {
+    appearance: none;
+    background-color: transparent;
+    border: 0;
+    color: #5a6072;
+    display: none;
+    flex-shrink: 0;
+    font-size: 14px;
+    font-weight: 400;
+    gap: 2px;
+    line-height: 1;
+    padding: 0 4px 0 8px;
+    white-space: nowrap;
+
+    svg {
+      transition: rotate 0.2s ease;
+      translate: 0 1px;
+    }
+
+    &[aria-expanded="true"] svg {
+      rotate: 180deg;
+    }
+  }
+
+  @media (max-width: 991.98px) {
+    .toc-toggle {
+      align-items: center;
+      display: inline-flex;
+    }
+  }
+</style>
