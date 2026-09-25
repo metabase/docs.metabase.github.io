@@ -1,7 +1,7 @@
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { DOCS_DEST, DOCS_SRC_ROOT } from "@/constants";
 import { defineHastPlugin } from "satteri";
+import { DOCS_DEST, DOCS_SRC_ROOT } from "../../../constants";
 
 // Resolves relative images from docs md files.
 // The images themselves are copied via viteStaticCopy in astro.config.mjs.
