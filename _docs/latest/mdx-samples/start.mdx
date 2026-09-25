@@ -1,0 +1,31 @@
+---
+category: Questions
+title: MDX samples
+---
+
+import LiquidInclude from "@/components/LiquidInclude.astro";
+import CachingOverview from "../util/includes/caching-overview.mdx";
+
+# MDX samples
+
+This page is written in MDX. It pulls in a Liquid include directly and an MDX partial that nests another partial.
+
+## Liquid include
+
+Equivalent to `{% include plans-blockquote.html feature="Duration caching policy" %}`:
+
+<LiquidInclude src="plans-blockquote.html" feature="Duration caching policy" />
+
+Enterprise-only, plural variant:
+
+<LiquidInclude src="plans-blockquote.html" feature="Custom caching rules" is_plural={true} enterprise-only={true} />
+
+## MDX partial
+
+<CachingOverview name="dashboards" feature="Dashboard caching" />
+
+## Page variables
+
+This page's title is "{props.page.title}", and its URL is {props.page.url}.
+
+See also [Question caching](./question-caching).
