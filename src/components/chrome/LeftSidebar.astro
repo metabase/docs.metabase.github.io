@@ -120,6 +120,7 @@ const { url: pageUrl, version = "latest" } = Astro.props;
     li {
       margin: 0;
       padding: 0 0 4px;
+      position: relative;
 
       ul {
         display: none;
@@ -140,8 +141,40 @@ const { url: pageUrl, version = "latest" } = Astro.props;
         display: block;
       }
 
-      > a svg {
+      > button svg {
         transform: rotate(0);
+      }
+    }
+
+    li > button {
+      align-items: center;
+      appearance: none;
+      background: none;
+      border: 0;
+      display: flex;
+      height: 29px;
+      justify-content: center;
+      padding: 0;
+      position: absolute;
+      right: 2px;
+      top: 0;
+      width: 30px;
+
+      svg {
+        display: block;
+        height: 12px;
+        transform: rotate(-90deg);
+        transition: transform 0.3s ease-in-out;
+        width: 20px;
+      }
+
+      svg path {
+        stroke: #c6c9d2;
+        transition: stroke 0.3s ease-in-out;
+      }
+
+      &:hover svg path {
+        stroke: #509ee3;
       }
     }
 
@@ -162,40 +195,15 @@ const { url: pageUrl, version = "latest" } = Astro.props;
       &.selected {
         background-color: #eef6fc;
         color: #509ee3;
+      }
 
-        svg path {
-          stroke: #509ee3;
-        }
+      &:hover + button svg path,
+      &.selected + button svg path {
+        stroke: #509ee3;
       }
 
       &.selected {
         font-weight: 700;
-      }
-
-      > div {
-        align-items: center;
-        display: flex;
-        height: 30px;
-        justify-content: center;
-        pointer-events: none;
-        position: absolute;
-        right: 2px;
-        top: 50%;
-        translate: 0 -50%;
-        width: 30px;
-      }
-
-      svg {
-        display: block;
-        height: 12px;
-        transform: rotate(-90deg);
-        transition: transform 0.3s ease-in-out;
-        width: 20px;
-      }
-
-      svg path {
-        stroke: #c6c9d2;
-        transition: stroke 0.3s ease-in-out;
       }
     }
   }

@@ -42,12 +42,15 @@ export interface Props {
   hideMenu?: boolean;
   scrollable?: boolean;
   checkoutHref?: string;
+  /** Hub label after the wordmark; on phones the header also hides on scroll. */
+  section?: "Docs";
 }
 
 const {
   hideMenu = false,
   scrollable = false,
   checkoutHref = "https://store.metabase.com/checkout",
+  section,
 } = Astro.props;
 
 const showPromoBanner = false;
@@ -156,7 +159,9 @@ const resourceLinks: NavLinkProps[] = [
       "bootstrap",
       scrollable ? "scrollable" : "sticky",
       !showPromoBanner && "promo-banner-hidden",
+      section && "section-chrome",
     ]}
+    data-section={section}
   >
     <div
       class:list={[
@@ -180,6 +185,11 @@ const resourceLinks: NavLinkProps[] = [
             >
               <MetabaseWordmark />
             </a>
+            {section && (
+              <a class="section-label" href="/docs/latest/">
+                {section}
+              </a>
+            )}
           </div>
 
           {!hideMenu && (
@@ -798,6 +808,23 @@ const resourceLinks: NavLinkProps[] = [
             highlight.style.width = `${button.offsetWidth}px`;
             highlight.style.height = `${button.offsetHeight}px`;
           }),
+        );
+      }
+
+      const header = navbar.closest<HTMLElement>("header.bootstrap");
+      if (header?.dataset.section) {
+        let last = window.scrollY;
+        window.addEventListener(
+          "scroll",
+          () => {
+            const y = window.scrollY;
+            document.documentElement.toggleAttribute(
+              "data-nav-hidden",
+              y > last && y > header.offsetHeight,
+            );
+            last = y;
+          },
+          { passive: true },
         );
       }
 

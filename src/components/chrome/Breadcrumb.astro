@@ -10,9 +10,11 @@ type Props = {
     has_magic_breadcrumbs?: boolean;
     show_category_breadcrumb?: boolean;
   };
+  /** The plain slash-separated trail shown above the content on phones. */
+  phone?: boolean;
 };
 
-const { page } = Astro.props;
+const { page, phone = false } = Astro.props;
 const { site } = baseCtx;
 
 const slugify = (str: string) =>
@@ -36,16 +38,39 @@ const categorySlugPart =
       : "/start";
 ---
 
-<div class="bootstrap">
+<div class:list={["bootstrap", phone ? "phone-trail" : "bar-trail"]}>
   <nav
-    style="--bs-breadcrumb-divider: url('/images/chevron_blue_right.svg')"
+    style={
+      phone
+        ? "--bs-breadcrumb-divider: '/'"
+        : "--bs-breadcrumb-divider: url('/images/chevron_blue_right.svg')"
+    }
     aria-label="breadcrumb"
   >
     <ol class="breadcrumb">
       {page.has_magic_breadcrumbs ? (
         <>
           <li class="breadcrumb-item">
-            <a href={`/docs/${latestOrExplicitVersion}/`}>Home</a>
+            <a
+              href={`/docs/${latestOrExplicitVersion}/`}
+              aria-label="Home"
+              class="breadcrumb-home"
+            >
+              <svg
+                width="16"
+                height="16"
+                fill="none"
+                viewBox="0 0 16 16"
+                aria-hidden="true"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M14 7.6 8 2 2 7.6M3.6 8.4V14h3.2v-3.2h2.4V14h3.2V8.4"
+                />
+              </svg>
+            </a>
           </li>
 
           {page.title === "README" ? (
@@ -94,3 +119,43 @@ const categorySlugPart =
     </ol>
   </nav>
 </div>
+
+<style>
+  .breadcrumb-home {
+    align-self: center;
+    display: flex;
+  }
+
+  .phone-trail {
+    display: none;
+  }
+
+  @media (max-width: 991.98px) {
+    .bar-trail {
+      display: none;
+    }
+
+    .phone-trail {
+      display: block;
+    }
+
+    .phone-trail .breadcrumb {
+      margin: 16px 0;
+    }
+
+    .phone-trail .breadcrumb-item,
+    .phone-trail .breadcrumb-item a,
+    .phone-trail .breadcrumb-item span,
+    .phone-trail .breadcrumb-item p {
+      color: #5a6072;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 20px;
+      margin: 0;
+    }
+
+    .phone-trail .breadcrumb-item + .breadcrumb-item::before {
+      color: #c6c9d2;
+    }
+  }
+</style>
