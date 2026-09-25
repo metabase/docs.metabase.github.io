@@ -27,6 +27,7 @@ const isMetabaseUrl = (url: string): boolean =>
 const formatUrl = (url: string): string =>
   url
     // Remove extensions
+    .replace(".mdx", "")
     .replace(".md", "")
     .replace(".markdown", "")
     .replace(".html", "")

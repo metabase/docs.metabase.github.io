@@ -7,10 +7,14 @@ import { resolveDocUrl } from "./resolveDoc";
 
 const EXCLUDE = ["**/embedding/sdk/api/snippets/**"];
 
-type ScanTarget = { extension: "md" | "html"; stripExtension: boolean };
+type ScanTarget = {
+  extension: "md" | "mdx" | "html";
+  stripExtension: boolean;
+};
 
 const SCAN_TARGETS: ScanTarget[] = [
   { extension: "md", stripExtension: true },
+  { extension: "mdx", stripExtension: true },
   { extension: "html", stripExtension: false },
 ];
 
@@ -40,7 +44,7 @@ const scanDocEntries = (): {
       const { data } = matter(fs.readFileSync(absPath, "utf8"));
 
       const strippedPath = stripExtension
-        ? relPath.replace(/\.md$/, "")
+        ? relPath.replace(/\.mdx?$/, "")
         : relPath;
       const id = DOCS_VERSION
         ? `${DOCS_VERSION}/${strippedPath}`

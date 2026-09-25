@@ -18,7 +18,7 @@ const ACRONYMS = [
 ];
 
 function formatDocTitle(filename: string) {
-  filename = filename.replace(".md", "");
+  filename = filename.replace(/\.mdx?$/, "");
   filename = filename.replace(/-/g, " ");
   filename = toTitleCase(filename);
   return filename
@@ -51,7 +51,6 @@ export type DocMetadata = {
   category: string;
   title: string;
   source_url: string;
-  layout: "docs" | "new-docs";
   permalink?: string;
   latest?: boolean;
 };
@@ -64,7 +63,6 @@ export function constructDocMetadata(
   version: string,
   isLatest = false,
 ): DocMetadata {
-  const versionNumber = parseInt(version.split(".").pop() || "", 10);
   const metadata: Partial<DocMetadata> = {
     version,
     has_magic_breadcrumbs: true,
@@ -91,13 +89,12 @@ export function constructDocMetadata(
   }
 
   // MOST categories use start.md, except for the troubleshooting guide :)
-  if (pathArray.length > 1 && pathArray[1].match(/^(index|start)\.md$/))
+  if (pathArray.length > 1 && pathArray[1].match(/^(index|start)\.mdx?$/))
     metadata.show_title_breadcrumb = false;
 
   metadata.source_url = constructSourceUrl(docPath);
-  metadata.layout = versionNumber > 43 ? "new-docs" : "docs";
 
-  if (path.basename(docPath, ".md") === "README") {
+  if (path.basename(docPath, path.extname(docPath)) === "README") {
     metadata.permalink =
       "/" + path.join("docs", version, "index.html").split(path.sep).join("/");
   }

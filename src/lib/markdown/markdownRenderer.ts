@@ -4,7 +4,7 @@ import { ialHastPlugin } from "./plugins/ialHastPlugin";
 import { relativeImagePlugin } from "./plugins/relativeImagePlugin";
 import { responsiveTableLabelsHastPlugin } from "./plugins/responsiveTableLabelsHastPlugin";
 
-const docsMarkdownProcessor = satteri({
+export const docsMarkdownProcessor = satteri({
   hastPlugins: [
     ialHastPlugin,
     codeDefaultsHastPlugin,

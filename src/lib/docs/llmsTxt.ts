@@ -68,11 +68,11 @@ const releaseBranch: string | undefined = YAML.parse(
   fs.readFileSync(path.join(process.cwd(), "_config.yml"), "utf8"),
 ).release_branch;
 
-// Path relative to the doc's version root, with the `.md` extension
+// Path relative to the doc's version root, with the `.md`/`.mdx` extension
 // restored (e.g. "embedding/authentication.md"), matching the old plugin's
 // `doc.relative_path.sub(%r{^_docs/[^/]+/}, '')`.
 const versionRelativePath = (doc: Doc): string =>
-  `${doc.id.slice(doc.id.indexOf("/") + 1)}.md`;
+  `${doc.id.slice(doc.id.indexOf("/") + 1)}${path.extname(doc.filePath ?? ".md")}`;
 
 // Groups the `docs` content collection by version, keyed like the old
 // `_docs/VERSION/...` directory structure (e.g. "latest", "v0.58"), sorted
@@ -330,8 +330,10 @@ export const generateFullContent = (
 
   const documentsContent = sectionDocs
     .map((doc) => {
-      // Strip Jekyll/Liquid template syntax
+      // Strip Jekyll/Liquid template syntax (`.md`) and leading component
+      // imports (`.mdx`; only leading, so code samples keep theirs)
       const content = (doc.body ?? "")
+        .replace(/^(?:\s*import\s.*\n)+/, "")
         .replace(/\{%.*?%\}/gs, "")
         .replace(/\{\{.*?\}\}/gs, "");
       return `${content.trim()}\n\n---`;

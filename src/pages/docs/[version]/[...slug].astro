@@ -9,7 +9,7 @@ import { reformatMarkdownUrls } from "@/lib/docs/reformatMarkdownUrls";
 import { resolveDocUrl } from "@/lib/docs/resolveDoc";
 import { baseCtx, getLiquidRenderer } from "@/lib/liquid/liquidRenderer";
 import { getMarkdownRenderer } from "@/lib/markdown/markdownRenderer";
-import { getCollection, type DataEntryMap } from "astro:content";
+import { getCollection, render, type DataEntryMap } from "astro:content";
 
 type Props =
   | { kind: "md"; doc: DataEntryMap["docs"][number] }
@@ -63,18 +63,20 @@ const dirname = path.dirname(doc.filePath!);
 const page = { url, ...doc.data };
 
 // Process liquid first (e.g. control flow, includes, variables, etc)
-const lq = getLiquidRenderer({ page, dirname });
-const lqOutput = await lq.render(doc.body!, undefined, {
-  maxSyntaxErrors: version === "latest" ? 0 : 3,
-});
+const renderLiquid = () =>
+  getLiquidRenderer({ page, dirname }).render(doc.body!, undefined, {
+    maxSyntaxErrors: version === "latest" ? 0 : 3,
+  });
 
 // `.html` docs (TypeDoc SDK API reference pages, api.html ToC pages) are
 // already complete standalone HTML documents — only Liquid needs to run on
 // them (e.g. the embedded-analytics-sdk-metadata include), no markdown
 // conversion, and no NewDocsLayout chrome (mirrors the old Jekyll
 // `docs-api` layout, which was a bare passthrough).
-let renderedHtml: string;
+let renderedHtml: string | undefined;
+let Content: Awaited<ReturnType<typeof render>>["Content"] | undefined;
 if (kind === "html") {
+  const lqOutput = await renderLiquid();
   // TypeDoc's standalone HTML is generated upstream with root-relative asset
   // paths. In production, those paths resolve against the marketing site, so
   // keep the generated sources untouched and scope their local assets here.
@@ -82,7 +84,13 @@ if (kind === "html") {
     .replaceAll('"/gdpr-cookie-notice/', '"/docs/gdpr-cookie-notice/')
     .replaceAll('"/js/', '"/docs/js/')
     .replaceAll('"/css/', '"/docs/css/');
+} else if (doc.filePath!.endsWith(".mdx")) {
+  // `.mdx` docs are compiled by Astro at build time, so they can't go through
+  // Liquid (MDX parses `{% ... %}` as a JS expression). They use components
+  // instead of includes, and read page variables from the `page` prop.
+  ({ Content } = await render(propsDoc));
 } else {
+  const lqOutput = await renderLiquid();
   const md = await getMarkdownRenderer();
   const renderResult = await md.render(lqOutput, {
     fileURL: pathToFileURL(path.resolve(doc.filePath!)),
@@ -90,13 +98,17 @@ if (kind === "html") {
   renderedHtml = renderResult.code;
 }
 
-const Layout = doc.data.layout === "docs" ? OldDocsLayout : NewDocsLayout;
+// Docs for v0.43 and earlier keep the old Jekyll-era layout. Derived from the
+// version rather than `layout` frontmatter, which MDX reserves for a
+// component import path. Non-numeric versions (e.g. "latest") use the new one.
+const versionNumber = Number(version?.match(/^v0\.(\d+)$/)?.[1]);
+const Layout = versionNumber <= 43 ? OldDocsLayout : NewDocsLayout;
 ---
 
 {kind === "html" ? (
   <Fragment set:html={renderedHtml} />
 ) : (
   <Layout page={{ ...page, content: renderedHtml }} dirname={dirname}>
-    <Fragment set:html={renderedHtml} />
+    {Content ? <Content page={page} /> : <Fragment set:html={renderedHtml} />}
   </Layout>
 )}

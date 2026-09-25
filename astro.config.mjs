@@ -1,9 +1,11 @@
 // @ts-check
 import path from "node:path";
+import mdx from "@astrojs/mdx";
 import { defineConfig } from "astro/config";
 import { viteStaticCopy } from "vite-plugin-static-copy";
 import { DOCS_DEST, DOCS_SRC_ROOT } from "./src/constants";
 import { collectRedirects } from "./src/lib/docs/collectRedirects";
+import { docsMarkdownProcessor } from "./src/lib/markdown/markdownRenderer";
 import { noopMarkdownProcessor } from "./src/lib/markdown/noopMarkdownProcessor";
 
 // The number of leading path segments to strip from each copied file's directory.
@@ -23,6 +25,16 @@ export default defineConfig({
   // Static equivalent of the old jekyll-redirect-from plugin: builds one
   // meta-refresh stub page per `redirect_from` entry across all _docs files.
   redirects: collectRedirects(),
+
+  integrations: [
+    // `.mdx` docs are compiled by Astro at build time (not rendered at request
+    // time like `.md` docs), so they skip Liquid and use components instead.
+    // They share the `.md` docs' hast plugins via the same satteri processor.
+    mdx({
+      processor: docsMarkdownProcessor,
+      syntaxHighlight: false, // Match `.md` docs; see getMarkdownRenderer
+    }),
+  ],
 
   build: {
     // TLDR mimic what jekyll did to prevent broken links.
