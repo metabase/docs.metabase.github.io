@@ -194,13 +194,15 @@ async function extract(name: string, docsVersion: string) {
 
   // Cloud docs only belong in _docs/latest/cloud (see copyLatest), so skip
   // them here for every version except the one copyLatest copies from.
-  const pathspec = name === docsVersion ? [] : [":!docs/cloud"];
+  const pathspec = name === docsVersion ? [] : [":!cloud"];
 
   // Not piped: a pipeline only reports the last command's exit code, so a
   // failed `git archive` would leave a truncated tree that looks complete.
   const tarball = `${dest}.tar`;
-  await git("archive", "-o", tarball, seedRef(name), "docs", ...pathspec);
-  await $`tar -x -f ${tarball} --strip-components=1 -C ${dest}`.quiet();
+  // Archive the docs tree itself (`<ref>:docs`), not `<ref> docs`: given the
+  // whole commit, git archive prefetches every missing blob in the repo.
+  await git("archive", "-o", tarball, `${seedRef(name)}:docs`, ...pathspec);
+  await $`tar -x -f ${tarball} -C ${dest}`.quiet();
   await rm(tarball);
 }
 
