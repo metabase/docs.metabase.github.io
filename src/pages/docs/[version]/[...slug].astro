@@ -60,9 +60,10 @@ const doc = !isRaw
       body: reformatMarkdownUrls(propsDoc.body ?? ""),
     };
 const dirname = path.dirname(doc.filePath!);
+const page = { url, ...doc.data };
 
 // Process liquid first (e.g. control flow, includes, variables, etc)
-const lq = getLiquidRenderer({ page: doc.data, dirname });
+const lq = getLiquidRenderer({ page, dirname });
 const lqOutput = await lq.render(doc.body!, undefined, {
   maxSyntaxErrors: version === "latest" ? 0 : 3,
 });
@@ -95,7 +96,7 @@ const Layout = doc.data.layout === "docs" ? OldDocsLayout : NewDocsLayout;
 {kind === "html" ? (
   <Fragment set:html={renderedHtml} />
 ) : (
-  <Layout page={{ url, ...doc.data }} dirname={dirname}>
+  <Layout page={{ ...page, content: renderedHtml }} dirname={dirname}>
     <Fragment set:html={renderedHtml} />
   </Layout>
 )}

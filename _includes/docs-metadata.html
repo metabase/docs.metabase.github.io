@@ -5,7 +5,7 @@
 {% elsif page.summary %}
 {% assign desc = page.summary %}
 {% else %}
-{% assign desc = page.content | truncatewords: 42 | strip_html %}
+{% assign desc = page.content | strip_html | truncatewords: 25 | escape_once %}
 {% endif %}
 
 {% assign img = "https://cdn.metabase.com/images/docs/docs-og.png" %}
