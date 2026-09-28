@@ -12,14 +12,14 @@ on:
   workflow_dispatch:
     inputs:
       major_versions:
-        description: 'Comma separated major versions to pull docs from metabase/metabase release branches, eg. "63,62"'
+        description: 'Comma separated major versions to pull docs from metabase/metabase release branches, eg. "64,63"'
         required: true
         type: string
         default: "999"
 
 env:
   # Every version listed here is pulled in and published by a single nightly build.
-  DOC_VERSIONS: "63,62"
+  DOC_VERSIONS: "64,63"
 
 concurrency:
   group: update-docs
@@ -40,12 +40,12 @@ jobs:
         run: |
           versions="$(echo "$RAW_VERSIONS" | tr -d '[:space:]')"
           if ! echo "$versions" | grep -Eq '^[0-9]+(,[0-9]+)*$'; then
-            echo "::error::Expected a comma separated list of major versions (eg. \"63,62\"), got: '$RAW_VERSIONS'"
+            echo "::error::Expected a comma separated list of major versions (eg. \"64,63\"), got: '$RAW_VERSIONS'"
             exit 1
           fi
           case ",$versions," in
             *,999,*)
-              echo "::error::999 is the placeholder value - pick real major versions (eg. \"63,62\")."
+              echo "::error::999 is the placeholder value - pick real major versions (eg. \"64,63\")."
               exit 1 ;;
           esac
           echo "versions=$versions" >> "$GITHUB_OUTPUT"
