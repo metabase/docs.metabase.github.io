@@ -22,13 +22,7 @@ export const config = {
   ],
   headers: [
     {
-      source: "/",
-      has: [{ type: "host", value: { suf: ".vercel.app" } }],
-      headers: [{ key: "X-Robots-Tag", value: "noindex" }],
-    },
-    {
-      source: "/:path*",
-      has: [{ type: "host", value: { suf: ".vercel.app" } }],
+      source: "/(.*)",
       headers: [{ key: "X-Robots-Tag", value: "noindex" }],
     },
     {

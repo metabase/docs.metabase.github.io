@@ -92,20 +92,24 @@ describe("docs Vercel configuration", () => {
   });
 
   test("protects every route from indexing and cross-origin framing", () => {
-    const noIndexRules = config.headers?.filter(({ has }) => has);
-    expect(noIndexRules?.map(({ source }) => source)).toEqual(["/", "/:path*"]);
+    const noIndexRules = config.headers?.filter(({ headers }) =>
+      headers.some(({ key }) => key === "X-Robots-Tag"),
+    );
+    expect(noIndexRules?.map(({ source }) => source)).toEqual(["/(.*)"]);
     expect(
       noIndexRules?.every(
-        ({ has, headers }) =>
-          has?.[0]?.type === "host" &&
-          has[0].value.suf === ".vercel.app" &&
-          headers.some(
+        (rule) =>
+          !("has" in rule) &&
+          !("missing" in rule) &&
+          rule.headers.some(
             ({ key, value }) => key === "X-Robots-Tag" && value === "noindex",
           ),
       ),
     ).toBe(true);
 
-    const frameRules = config.headers?.filter(({ has }) => !has);
+    const frameRules = config.headers?.filter(({ headers }) =>
+      headers.some(({ key }) => key === "Content-Security-Policy"),
+    );
     expect(frameRules?.map(({ source }) => source)).toEqual(["/", "/:path*"]);
     expect(
       frameRules?.every(({ headers }) =>
