@@ -8,10 +8,10 @@ type Props = {
   page: Record<string, unknown>;
   dirname: string;
   unify?: boolean;
-  section?: "Docs";
+  hideOnScroll?: boolean;
 };
 
-const { page, dirname, unify, section } = Astro.props;
+const { page, dirname, unify, hideOnScroll } = Astro.props;
 
 const lq = getLiquidRenderer({ page, dirname });
 ---
@@ -21,7 +21,7 @@ const lq = getLiquidRenderer({ page, dirname });
   <LiquidInclude lq={lq} src="head.html" {unify} />
 
   <body>
-    <Header {section} />
+    <Header {hideOnScroll} />
 
     <div>
       <slot />

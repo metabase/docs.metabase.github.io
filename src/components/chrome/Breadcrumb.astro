@@ -1,21 +1,18 @@
 ---
-import { baseCtx } from "@/lib/liquid/liquidRenderer";
-
 type Props = {
   page: {
-    version?: string;
     url: string;
     title?: string;
     category?: string;
     has_magic_breadcrumbs?: boolean;
     show_category_breadcrumb?: boolean;
   };
-  /** The plain slash-separated trail shown above the content on phones. */
-  phone?: boolean;
+  variant: "bar" | "inline";
 };
 
-const { page, phone = false } = Astro.props;
-const { site } = baseCtx;
+type Crumb = { label: string; href?: string };
+
+const { page, variant } = Astro.props;
 
 const slugify = (str: string) =>
   str
@@ -24,159 +21,116 @@ const slugify = (str: string) =>
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "");
 
-const version = page.version === "latest" ? site.docs_version : page.version;
-const latestOrExplicitVersion =
-  site.docs_version === page.version && page.url.includes("/docs/latest/")
-    ? "latest"
-    : (page.version ?? "");
-const categorySlug = slugify(page.category ?? "");
-const categorySlugPart =
-  categorySlug === "troubleshooting-guide"
-    ? "/"
-    : categorySlug === "api"
-      ? "api-documentation"
-      : "/start";
+const categoryPath = (category: string) => {
+  const slug = slugify(category);
+  if (slug === "api") return "api-documentation";
+  if (slug === "troubleshooting-guide") return `${slug}/`;
+  return `${slug}/start`;
+};
+
+const getCrumbs = ({ page }: Props): Crumb[] => {
+  if (!page.has_magic_breadcrumbs) return [{ label: page.title ?? "" }];
+
+  const root = `/docs/${page.url.split("/")[2]}/`;
+  const crumbs: Crumb[] = [{ label: "Home", href: root }];
+  if (page.show_category_breadcrumb && page.category) {
+    crumbs.push({
+      label: page.category,
+      href: root + categoryPath(page.category),
+    });
+  }
+  return crumbs;
+};
 ---
 
-<div class:list={["bootstrap", phone ? "phone-trail" : "bar-trail"]}>
-  <nav
-    style={
-      phone
-        ? "--bs-breadcrumb-divider: '/'"
-        : "--bs-breadcrumb-divider: url('/images/chevron_blue_right.svg')"
-    }
-    aria-label="breadcrumb"
-  >
-    <ol class="breadcrumb">
-      {page.has_magic_breadcrumbs ? (
-        <>
-          <li class="breadcrumb-item">
-            {phone ? (
-              <a
-                href={`/docs/${latestOrExplicitVersion}/`}
-                aria-label="Home"
-                class="breadcrumb-home"
-              >
-                <svg
-                  width="16"
-                  height="16"
-                  fill="none"
-                  viewBox="0 0 16 16"
-                  aria-hidden="true"
-                >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M14 7.6 8 2 2 7.6M3.6 8.4V14h3.2v-3.2h2.4V14h3.2V8.4"
-                  />
-                </svg>
-              </a>
-            ) : (
-              <a href={`/docs/${latestOrExplicitVersion}/`}>Home</a>
-            )}
-          </li>
-
-          {page.title === "README" ? (
-            <li class="breadcrumb-item">
-              <p class="neutral-40">{page.category}</p>
-            </li>
-          ) : (
-            page.show_category_breadcrumb && (
-              <li class="breadcrumb-item">
-                <a
-                  class="blue-60"
-                  href={`/docs/${latestOrExplicitVersion}/${page.category !== "Api" ? categorySlug : ""}${categorySlugPart}`}
-                >
-                  {page.category}
-                </a>
-              </li>
-            )
-          )}
-        </>
-      ) : (
-        <>
-          {page.title === "Search" ? (
-            <li class="breadcrumb-item">
-              <span class="m-0 paragraph-5 neutral-40 fw-bold">
-                <a href="/docs/latest/">{site.latest_version}</a>
-              </span>
-            </li>
-          ) : (
-            <li class="breadcrumb-item">
-              <span class="neutral-40">{version}</span>
-            </li>
-          )}
-
-          {page.category === "Api" && (
-            <li class="breadcrumb-item">
-              <span class="neutral-40">{page.category}</span>
-            </li>
-          )}
-          {page.title !== "README" && (
-            <li class="breadcrumb-item">
-              <span class="neutral-40">{page.title}</span>
-            </li>
-          )}
-        </>
-      )}
-    </ol>
-  </nav>
-</div>
+<nav class:list={["trail", variant]} aria-label="breadcrumb">
+  <ol>
+    {getCrumbs({ page, variant }).map(({ label, href }) => (
+      <li>{href ? <a href={href}>{label}</a> : <span>{label}</span>}</li>
+    ))}
+  </ol>
+</nav>
 
 <style>
-  .phone-trail {
-    display: none;
-  }
-
-  @media (max-width: 991.98px) {
-    .bar-trail {
-      display: none;
-    }
-
-    .phone-trail {
-      display: block;
-    }
-
-    .breadcrumb-home {
+  /* Doubled to outrank the legacy `.bootstrap .learn__post a` / `li` rules, which load later. */
+  .trail.trail {
+    ol {
       align-items: center;
-      align-self: center;
       display: flex;
-    }
-
-    .phone-trail .breadcrumb,
-    .phone-trail .breadcrumb-item {
-      align-items: center;
-    }
-
-    .phone-trail .breadcrumb {
-      margin: 16px 0;
-    }
-
-    .phone-trail .breadcrumb-item,
-    .phone-trail .breadcrumb-item a,
-    .phone-trail .breadcrumb-item span,
-    .phone-trail .breadcrumb-item p {
-      color: #5a6072;
-      font-size: 14px;
-      font-weight: 400;
-      line-height: 20px;
+      list-style: none;
       margin: 0;
+      padding: 0;
     }
 
-    /* The legacy sheet positions the divider for the chevron image; the slash just flows inline. */
-    .phone-trail .breadcrumb-item + .breadcrumb-item {
-      padding-left: 0;
+    li {
+      align-items: baseline;
+      display: flex;
+      margin: 0;
+      position: relative;
+      white-space: nowrap;
     }
 
-    .phone-trail .breadcrumb-item + .breadcrumb-item::before {
-      color: #c6c9d2;
-      height: auto;
-      left: auto;
-      line-height: inherit;
-      padding: 0 6px;
-      position: static;
-      transform: none;
+    a {
+      color: #509ee3;
+    }
+
+    span {
+      color: #5a6072;
+    }
+
+    &.bar {
+      li {
+        font-size: 18px;
+        line-height: 30px;
+      }
+
+      a {
+        font-size: 16px;
+        font-weight: 700;
+      }
+
+      li + li {
+        padding-left: 23px;
+
+        &::before {
+          content: url("/images/chevron_blue_right.svg");
+          left: 7px;
+          position: absolute;
+          top: 50%;
+          transform: translateY(calc(-50% + 3px));
+        }
+      }
+
+      @media (max-width: 991.98px) {
+        display: none;
+      }
+    }
+
+    &.inline {
+      display: none;
+
+      @media (max-width: 991.98px) {
+        display: block;
+
+        ol {
+          margin: 16px 0;
+        }
+
+        li,
+        a,
+        span {
+          color: #5a6072;
+          font-size: 14px;
+          font-weight: 400;
+          line-height: 20px;
+        }
+
+        li + li::before {
+          color: #c6c9d2;
+          content: "/";
+          padding: 0 6px;
+        }
+      }
     }
   }
 </style>
