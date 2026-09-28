@@ -1,18 +1,30 @@
-<nav id="sub-navigation-content" aria-label="On this page"></nav>
+<nav id="sub-navigation-content" aria-label="On this page">
+  <button type="button" class="return-to-top" data-return-to-top>
+    Return to top
+  </button>
+</nav>
 
 <script>
   const content = document.getElementById("sub-navigation-content")!;
   // The phone toggle lives in the section bar, outside the rail.
   const toggle = document.querySelector<HTMLElement>("[data-toc-toggle]");
+  const markOverflow = () =>
+    content.classList.toggle(
+      "overflowing",
+      content.scrollTop + content.clientHeight < content.scrollHeight - 1,
+    );
   const setOpen = (open: boolean) => {
     content.classList.toggle("open", open);
     toggle?.setAttribute("aria-expanded", String(open));
+    if (open) markOverflow();
   };
+
+  content.addEventListener("scroll", markOverflow, { passive: true });
 
   toggle?.addEventListener("click", () =>
     setOpen(toggle.getAttribute("aria-expanded") !== "true"),
   );
-  // Links close the sheet as they navigate; so does any click outside it.
+  // Links close the dropdown as they navigate; so does any click outside it.
   document.addEventListener("click", (event) => {
     const target = event.target as Element;
     if (toggle?.contains(target)) return;
@@ -21,9 +33,14 @@
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape") setOpen(false);
   });
+  content
+    .querySelector<HTMLElement>("[data-return-to-top]")
+    ?.addEventListener("click", () => {
+      window.scrollTo(0, 0);
+      setOpen(false);
+    });
 
   const headers = Array.from(document.querySelectorAll("h2"));
-  if (!headers.length) button.remove();
   const links = new Map<HTMLHeadingElement, HTMLAnchorElement>();
   let activeLink: HTMLAnchorElement | null = null;
 
@@ -64,6 +81,10 @@
       padding: 0 0 1.5rem 20px;
     }
 
+    .return-to-top {
+      display: none;
+    }
+
     a {
       background: transparent;
       box-shadow: none;
@@ -89,35 +110,78 @@
     }
   }
 
-  /* Below lg the rail dissolves; the list becomes a bottom sheet. The backdrop is a
-     spread shadow: a pseudo-element would paint over the sheet's own background. */
+  /* Below lg the rail dissolves; the list becomes a dropdown hanging off the section bar. */
   @media (max-width: 991.98px) {
     #sub-navigation-content {
       background-color: #fff;
-      border-radius: 16px 16px 0 0;
-      bottom: -100vh;
-      box-shadow: 0 0 0 100vmax rgba(34, 36, 43, 0.35);
-      left: 0;
-      max-height: 70dvh;
+      border: 1px solid #eeecec;
+      border-radius: 8px;
+      box-shadow: 0 12px 32px rgba(34, 36, 43, 0.16);
+      left: 16px;
+      max-height: min(60dvh, calc(100dvh - var(--section-bar-top, 0px) - 72px));
+      opacity: 0;
       overflow-y: auto;
-      padding: 24px 20px calc(16px + env(safe-area-inset-bottom));
+      overscroll-behavior: contain;
+      padding: 6px 8px 0;
       position: fixed;
-      right: 0;
+      right: 16px;
+      top: calc(var(--section-bar-top, 0px) + 48px);
       transition:
-        bottom 0.2s ease,
+        opacity 0.2s ease,
+        top 0.2s ease,
+        translate 0.2s ease,
         visibility 0s 0.2s;
+      translate: 0 -8px;
       visibility: hidden;
-      z-index: 10001;
+      z-index: 6;
 
       &.open {
-        bottom: 0;
-        transition: bottom 0.2s ease;
+        opacity: 1;
+        transition:
+          opacity 0.2s ease,
+          top 0.2s ease,
+          translate 0.2s ease;
+        translate: 0;
         visibility: visible;
       }
 
       &::before {
+        display: none;
+      }
+
+      /* Sticky so it rides the scrollport's bottom edge; JS hides it once the end is in view. */
+      &::after {
+        background: linear-gradient(to bottom, rgba(255, 255, 255, 0), #fff);
+        bottom: 0;
+        content: "";
+        display: block;
+        height: 40px;
+        margin-top: -40px;
+        opacity: 0;
+        pointer-events: none;
+        position: sticky;
+        transition: opacity 0.2s ease;
+      }
+
+      &.overflowing::after {
+        opacity: 1;
+      }
+
+      .return-to-top {
+        appearance: none;
+        background-color: transparent;
+        border: 0;
+        border-bottom: 1px solid #eeecec;
+        border-radius: 0;
+        color: #509ee3;
+        display: block;
         font-size: 15px;
-        padding: 0 8px 12px;
+        font-weight: 400;
+        line-height: 1.33;
+        margin-bottom: 4px;
+        padding: 8px 8px 10px;
+        text-align: left;
+        width: 100%;
       }
 
       a {
@@ -125,7 +189,11 @@
         color: #5a6072;
         font-size: 15px;
         margin-bottom: 0;
-        padding: 10px 8px;
+        padding: 6px 8px;
+
+        &:last-of-type {
+          margin-bottom: 6px;
+        }
 
         &.selected {
           background-color: #eef6fc;

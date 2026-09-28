@@ -37,7 +37,18 @@ const { url: pageUrl, version = "latest" } = Astro.props;
     if (e.key === "Escape") setDocsNavOpen(false);
   });
   drawer.addEventListener("click", (e) => {
-    if (e.target === e.currentTarget) setDocsNavOpen(false);
+    if (e.target === e.currentTarget) return setDocsNavOpen(false);
+
+    const item = (e.target as Element).closest("button")?.closest("li");
+    if (!item) return;
+
+    drawer.querySelectorAll("li.expanded").forEach((open) => {
+      if (!open.contains(item)) open.classList.remove("expanded");
+    });
+    const expanded = item.classList.toggle("expanded");
+    item
+      .querySelector(":scope > button")
+      ?.setAttribute("aria-expanded", String(expanded));
   });
 </script>
 

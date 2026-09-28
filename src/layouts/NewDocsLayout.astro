@@ -33,7 +33,7 @@ const lq = getLiquidRenderer({ page, dirname });
 const unify = UNIFY_ENABLED_PAGES.includes(page.url);
 ---
 
-<DefaultNewLayout page={page} dirname={dirname} {unify} section="Docs">
+<DefaultNewLayout page={page} dirname={dirname} {unify} hideOnScroll>
   <div class="bootstrap">
     <div class="learn docs blog-post MB-Page">
       <LeftSidebar
@@ -45,7 +45,7 @@ const unify = UNIFY_ENABLED_PAGES.includes(page.url);
         <TopBar {page} {showBreadcrumb} />
 
         <div class="learn__post__content">
-          {showBreadcrumb && <Breadcrumb page={page} phone />}
+          {showBreadcrumb && <Breadcrumb page={page} variant="inline" />}
           {!showBreadcrumb && <VersionSelector version={page.version} />}
 
           <VersionNotice version={page.version} />
@@ -98,11 +98,6 @@ const unify = UNIFY_ENABLED_PAGES.includes(page.url);
   <script
     is:inline
     type="text/javascript"
-    src="/docs/js/learn/left-sidebar.js"
-  ></script>
-  <script
-    is:inline
-    type="text/javascript"
     src="/docs/js/position-feedback-widget.js"
   ></script>
   <script is:inline src="/docs/js/use-custom-header-checkout-link.js"></script>
@@ -120,7 +115,7 @@ const unify = UNIFY_ENABLED_PAGES.includes(page.url);
     }
   }
 
-  /* On phones the rail dissolves; the TOC becomes a bottom sheet opened from the section bar. */
+  /* On phones the rail dissolves; the TOC becomes a dropdown opened from the section bar. */
   @media (max-width: 991.98px) {
     .learn__right-sidebar {
       display: contents;
