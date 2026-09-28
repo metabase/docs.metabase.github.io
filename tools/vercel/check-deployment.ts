@@ -38,7 +38,6 @@ export function checkDeployment(
       redirectUrl: "",
     },
   ];
-  checks.length = 0; // TODO: Remove this. Added temporarily to make `gro-688-delete-_docs` build succeed.
   for (const check of checks) {
     const response = runner(
       "curl",
