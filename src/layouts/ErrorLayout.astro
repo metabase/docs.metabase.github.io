@@ -1,29 +1,26 @@
 ---
 import Footer from "@/components/chrome/Footer.astro";
-import Header from "@/components/chrome/Header.astro";
 import LiquidInclude from "@/components/LiquidInclude.astro";
 import { getLiquidRenderer } from "@/lib/liquid/liquidRenderer";
 
+// Docs-only: the theme is always on, and there is no default header, so
+// callers must fill the "header" slot (DocsHeader).
 type Props = {
   page: Record<string, unknown>;
   dirname: string;
-  /** Enables the light/dark theme (init script + docs-theme.css). */
-  docsTheme?: boolean;
 };
 
-const { page, dirname, docsTheme } = Astro.props;
+const { page, dirname } = Astro.props;
 
 const lq = getLiquidRenderer({ page, dirname });
 ---
 
 <!doctype html>
 <html lang="en-US">
-  <LiquidInclude lq={lq} src="head.html" docs_theme={docsTheme} />
+  <LiquidInclude lq={lq} src="head.html" docs_theme />
 
   <body>
-    <slot name="header">
-      <Header />
-    </slot>
+    <slot name="header" />
 
     <div class="bootstrap">
       <div class="container pt-6 pb-9">

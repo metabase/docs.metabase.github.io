@@ -41,10 +41,8 @@
  * (0,4,1) outranks every prose rule in styles.css / main.css, including
  * `.blog-post code`, which reaches the docs through the wrapper's class. */
 
-/* Metric-matched local fallbacks so the swap to Lato does not reflow. Lato's
- * line box is 1.2em (ascender 1974 / descender 426 on a 2000 em); the widths
- * were measured against docs prose in Chrome: Lato is 95.7% of Helvetica
- * Neue and 96.8% of Arial. */
+/* Metric-matched local fallbacks so the swap to Lato does not reflow. Widths
+ * measured against docs prose in Chrome. */
 @font-face {
   ascent-override: 98.7%;
   descent-override: 21.3%;
@@ -141,7 +139,6 @@ html[data-theme] body {
   line-height: inherit;
 }
 
-/* Lists. One rhythm for tight and loose (li > p) items. */
 .bootstrap .learn.docs div.learn__post__content li,
 .bootstrap .learn.docs div.learn__post__content li > p {
   margin-bottom: 0.5rem;
@@ -183,7 +180,6 @@ html[data-theme] body {
   margin-top: 0.5rem;
 }
 
-/* Numbered steps read as steps; bullets stay quiet. */
 .bootstrap .learn.docs div.learn__post__content ol > li::marker {
   color: var(--mb-text-secondary);
   font-variant-numeric: tabular-nums;
@@ -229,10 +225,8 @@ html[data-theme] body {
     grid-template-columns: 1fr;
   }
 
-  /* The sidebar becomes a drawer under the header, opened by the header's
-   * menu button (DocsHeader.astro sets data-docs-nav on <html>). visibility
-   * keeps the closed drawer's links out of the tab order; its delay lets the
-   * slide-out play first. */
+  /* The sidebar becomes a drawer; DocsHeader.astro sets data-docs-nav on
+   * <html>. visibility keeps the closed drawer's links out of the tab order. */
   .bootstrap .learn.docs #main-navigation-content.learn-left-sidebar {
     bottom: 0;
     box-shadow: var(--mb-shadow);
@@ -304,8 +298,7 @@ html[data-theme] body {
  * article in the remaining space; styles.css centers the whole grid. */
 @media screen and (min-width: 993px) {
   .bootstrap .learn.docs {
-    /* Text column measure. Paragraphs, tables and h2 section rules all stop
-     * at this width; the centered box below is sized to it. */
+    /* Text column measure. */
     --docs-article-width: 800px;
 
     /* Full bleed; styles.css paints only right of its centered box. */
@@ -318,32 +311,24 @@ html[data-theme] body {
     max-width: none;
   }
 
-  /* Center article + TOC as one box sized to the text column: 72px box
-   * padding-left + text + 72px content padding-right + 200px TOC. On narrower
-   * viewports the box shrinks and the text column with it. */
   .bootstrap .learn.docs .learn__post {
     margin: 0 auto;
-    max-width: calc(72px + var(--docs-article-width) + 72px + 200px); /* 1144px */
+    max-width: calc(72px + var(--docs-article-width) + 72px + 200px);
     width: 100%;
   }
 
-  /* The grid column can be wider than the measure between breakpoints, so
-   * cap everything in it. That includes the table wrappers from
-   * new-docs-table-overflow.js (wider tables scroll inside them) and the h2
-   * wrappers from new-docs-anchor-links.js, which carry the section rule, so
-   * tables, rules and paragraphs share one right edge. */
+  /* The grid column can be wider than the measure, so cap everything in it,
+   * including the script-generated table and h2 wrappers. */
   .bootstrap .learn.docs div.learn__post__content > * {
     max-width: var(--docs-article-width);
   }
 
-  /* The header tabs switch sections on desktop. */
   .bootstrap .learn.docs .docs-sections {
     display: none;
   }
 
-  /* styles.css centers the top bar across the whole .learn__post box. Pin it
-   * to the text column instead (72px padding either side + 200px TOC short of
-   * the box) so its divider ends where the text, tables and h2 rules do. */
+  /* styles.css centers the top bar across .learn__post; pin it to the text
+   * column so its divider ends where the text does. */
   .bootstrap .learn.docs .top-bar {
     left: 72px;
     padding-left: 0;

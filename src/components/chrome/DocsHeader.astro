@@ -59,10 +59,10 @@ const tabs = getSections(nav, pageUrl);
     </div>
 
     <div class="docs-header__actions">
-      <a class="docs-header__whats-new" href="/releases">
+      <a class="docs-header__whats-new docs-header__quiet" href="/releases">
         What’s new
       </a>
-      <a class="docs-header__home" href="/">
+      <a class="docs-header__home docs-header__quiet" href="/">
         Metabase home
       </a>
       <a
@@ -82,7 +82,7 @@ const tabs = getSections(nav, pageUrl);
     {sidebar && (
       <button
         type="button"
-        class="docs-header__menu"
+        class="docs-header__menu docs-header__quiet"
         data-docs-nav-toggle
         aria-controls="main-navigation-content"
         aria-expanded="false"
@@ -91,10 +91,6 @@ const tabs = getSections(nav, pageUrl);
         <svg
           class="docs-header__menu-open"
           viewBox="0 0 20 20"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.5"
-          stroke-linecap="round"
           aria-hidden="true"
         >
           <path d="M3 5h14M3 10h14M3 15h14" />
@@ -102,10 +98,6 @@ const tabs = getSections(nav, pageUrl);
         <svg
           class="docs-header__menu-close"
           viewBox="0 0 20 20"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.5"
-          stroke-linecap="round"
           aria-hidden="true"
         >
           <path d="M5 5l10 10M15 5L5 15" />
@@ -133,7 +125,7 @@ const tabs = getSections(nav, pageUrl);
     <div class="docs-header__version">
       <button
         type="button"
-        class="docs-header__theme"
+        class="docs-header__theme docs-header__quiet"
         data-theme-toggle
         aria-label="Switch to dark theme"
       >
@@ -146,8 +138,9 @@ const tabs = getSections(nav, pageUrl);
 </header>
 
 <script>
-  // theme-init.js (inlined in <head>) sets data-theme before first paint.
-  const THEME_KEY = "mb-docs-theme"; // same key as _includes/docs/theme-init.js
+  // Same key as _includes/docs/theme-init.js, which sets data-theme before
+  // first paint.
+  const THEME_KEY = "mb-docs-theme";
   const root = document.documentElement;
   const themeButton = document.querySelector("[data-theme-toggle]");
 
@@ -277,9 +270,10 @@ const tabs = getSections(nav, pageUrl);
   .docs-header {
     background-color: var(--mb-surface);
     border-bottom: 1px solid var(--mb-border);
-    /* Same shadow as the left sidebar (LeftSidebar.astro), cast downward instead of
-       rightward, so header and nav read as one layer above the article. */
+    /* Matches the left sidebar's shadow (LeftSidebar.astro). */
     box-shadow: 2px 4px 4px 0 var(--mb-shadow-chrome);
+    /* Set here because the body font in docs-local.css needs data-theme,
+       which only theme-init.js sets. */
     font-family: Lato, "Helvetica Neue", Helvetica, sans-serif;
     position: sticky;
     top: 0;
@@ -345,8 +339,6 @@ const tabs = getSections(nav, pageUrl);
     min-width: 0;
   }
 
-  /* :global because #inkeep is rendered by InkeepSearch and never gets this
-     component's scope class. */
   .docs-header__search :global(#inkeep) {
     flex: 1 1 auto;
     height: 40px;
@@ -372,7 +364,8 @@ const tabs = getSections(nav, pageUrl);
       color 0.3s ease;
   }
 
-  .docs-header__ask:hover {
+  .docs-header__ask:hover,
+  .docs-header__tab:hover {
     background-color: var(--mb-surface-hover);
     color: var(--mb-brand);
   }
@@ -382,28 +375,34 @@ const tabs = getSections(nav, pageUrl);
     width: 16px;
   }
 
-  /* Styled like the version selector's .version__current beside it. */
+  /* Color, radius and hover for the quiet controls (menu, theme, what's new,
+     home); each pairs this with its own layout class. The version selector
+     repeats these in DocsVersionSelector.astro, out of reach of this scope. */
+  .docs-header__quiet {
+    border-radius: 8px;
+    color: var(--mb-text-secondary);
+    transition:
+      background-color 0.3s ease,
+      color 0.3s ease;
+  }
+
+  .docs-header__quiet:hover,
+  .docs-header__quiet[aria-expanded="true"] {
+    background-color: var(--mb-surface-active);
+    color: var(--mb-brand);
+  }
+
   .docs-header__theme {
     align-items: center;
     background: none;
     border: 0;
-    border-radius: 8px;
-    color: var(--mb-text-secondary);
     cursor: pointer;
     display: flex;
     flex-shrink: 0;
     height: 32px;
     justify-content: center;
     padding: 0;
-    transition:
-      background-color 0.3s ease,
-      color 0.3s ease;
     width: 32px;
-  }
-
-  .docs-header__theme:hover {
-    background-color: var(--mb-surface-active);
-    color: var(--mb-brand);
   }
 
   .docs-header__theme svg {
@@ -428,26 +427,14 @@ const tabs = getSections(nav, pageUrl);
     justify-content: flex-end;
   }
 
-  /* Quiet text buttons (release notes, back to the marketing site), the same
-     40px tall as the CTA beside them so the group reads as one. */
+  /* 40px tall, like the CTA beside them. */
   .docs-header__whats-new,
   .docs-header__home {
-    border-radius: 8px;
-    color: var(--mb-text-secondary);
     font-size: 14px;
     line-height: 20px;
     padding: 10px 14px;
     text-decoration: none;
-    transition:
-      background-color 0.3s ease,
-      color 0.3s ease;
     white-space: nowrap;
-  }
-
-  .docs-header__whats-new:hover,
-  .docs-header__home:hover {
-    background-color: var(--mb-surface-active);
-    color: var(--mb-brand);
   }
 
   .docs-header__cta {
@@ -477,8 +464,6 @@ const tabs = getSections(nav, pageUrl);
     align-items: center;
     background: none;
     border: 0;
-    border-radius: 8px;
-    color: var(--mb-text-secondary);
     cursor: pointer;
     display: none;
     font-family: inherit;
@@ -491,20 +476,15 @@ const tabs = getSections(nav, pageUrl);
     margin-left: -8px;
     min-width: 0;
     padding: 0 8px;
-    transition:
-      background-color 0.3s ease,
-      color 0.3s ease;
-  }
-
-  .docs-header__menu:hover,
-  .docs-header__menu[aria-expanded="true"] {
-    background-color: var(--mb-surface-active);
-    color: var(--mb-brand);
   }
 
   .docs-header__menu svg {
+    fill: none;
     flex-shrink: 0;
     height: 20px;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-width: 1.5;
     width: 20px;
   }
 
@@ -519,8 +499,7 @@ const tabs = getSections(nav, pageUrl);
     white-space: nowrap;
   }
 
-  /* Pins the theme toggle and version selector to the far right, apart from
-     the section tabs, even when there is no tab list. */
+  /* margin-left: auto pins it right even when there is no tab list. */
   .docs-header__version {
     align-items: center;
     display: flex;
@@ -566,11 +545,6 @@ const tabs = getSections(nav, pageUrl);
       color 0.3s ease,
       border-color 0.3s ease;
     white-space: nowrap;
-  }
-
-  .docs-header__tab:hover {
-    background-color: var(--mb-surface-hover);
-    color: var(--mb-brand);
   }
 
   .docs-header__tab[aria-current="page"] {

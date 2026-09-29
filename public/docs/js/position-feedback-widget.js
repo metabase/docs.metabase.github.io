@@ -31,8 +31,6 @@ function resizeLearnRightSidebar() {
 
   const header = document.querySelector("header");
 
-  const extraBottomPadding = 25;
-
   const bottomOfHeader = Math.max(0, header.getBoundingClientRect().bottom);
 
   // The top bar is not rendered on the docs home page
@@ -42,7 +40,7 @@ function resizeLearnRightSidebar() {
   $subNavigationContent.style.height = `calc(100vh - ${Math.max(
     bottomOfTopBar,
     bottomOfHeader,
-  )}px - ${feedbackWidgetHeight}px - ${extraBottomPadding}px)`;
+  )}px - ${feedbackWidgetHeight}px - 25px)`;
 
   maybeRestyleFeedbackWidget();
 }

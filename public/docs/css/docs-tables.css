@@ -48,6 +48,8 @@
   }
 }
 
+/* The background is set outside the media queries below so fractional
+ * viewport widths, which match neither, never show styles.css's #fff. */
 .bootstrap .learn__post table {
   background: var(--mb-surface);
   border-color: var(--mb-border-subtle);
@@ -67,7 +69,7 @@
   color: var(--mb-text);
 }
 
-/* styles.css asks for Lato 900, which the docs don't load (stylesheets.html). */
+/* The docs don't load Lato 900 (stylesheets.html). */
 .bootstrap .learn__post table th,
 .bootstrap .learn__post table tr td::before {
   font-weight: 700;
@@ -158,12 +160,12 @@
   white-space: nowrap;
 }
 
-/* Row permalink, revealed on hover or keyboard focus. */
 .bootstrap .learn__post table.table-reference tr[id] {
   scroll-margin-top: calc(var(--navigation-header-height) + 1rem);
 }
 
-/* table.table-reference outranks the link color in docs-theme.css. */
+/* Row permalink, revealed on hover or keyboard focus. table.table-reference
+ * outranks the link color in docs-theme.css. */
 .bootstrap .learn__post table.table-reference .table-reference-anchor {
   color: var(--mb-text-muted);
   font-weight: 700;
@@ -177,10 +179,7 @@
   color: var(--mb-brand);
 }
 
-.bootstrap .learn__post table .table-reference-anchor:focus-visible {
-  opacity: 1;
-}
-
+.bootstrap .learn__post table .table-reference-anchor:focus-visible,
 .bootstrap .learn__post table tr:hover .table-reference-anchor,
 .bootstrap .learn__post table tr:target .table-reference-anchor {
   opacity: 1;
