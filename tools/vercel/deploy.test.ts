@@ -32,14 +32,14 @@ describe("promote", () => {
     expect(calls).toEqual(["promote dpl_new"]);
   });
 
-  test("fails when Vercel reports the promotion failed or times out", async () => {
-    await expect(
+  test("fails when Vercel reports the promotion failed or times out", () => {
+    expect(
       promote(fakeApi(["failed"]).api, "prj_docs", "dpl_new"),
     ).rejects.toThrow("failed");
-    await expect(
+    expect(
       promote(fakeApi(["in-progress"]).api, "prj_docs", "dpl_new", 0),
     ).rejects.toThrow("still in-progress");
-    await expect(
+    expect(
       promote(fakeApi([undefined]).api, "prj_docs", "dpl_new", 0),
     ).rejects.toThrow("still pending");
   });

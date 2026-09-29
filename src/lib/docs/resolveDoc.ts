@@ -10,7 +10,7 @@ export const resolveDocUrl = ({
 }): { version: string; slug: string; url: string } => {
   let resolvedId = id.replace(/\.html$/, "").replace(/\/README$/, "/index");
   if (!includeTrailingIndex) {
-    resolvedId = resolvedId.replace(/index$/, "");
+    resolvedId = resolvedId.replace(/\/index$/, "/");
   }
   const separatorIndex = resolvedId.indexOf("/");
   const version =

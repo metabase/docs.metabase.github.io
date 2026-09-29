@@ -29,6 +29,9 @@ export default defineConfig({
     // E.g. some old hrefs point to like `start.html` so moving the file to `start/index.html` would break the link.
     // But we also want the ability to have like `about/index.html` instead of `about.html` as well.
     format: "preserve",
+    // production routes only /docs/* to this site
+    // root-level /_astro/ would 404
+    assets: "docs/_astro",
   },
   vite: {
     plugins: [

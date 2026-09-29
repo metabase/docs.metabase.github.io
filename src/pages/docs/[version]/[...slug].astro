@@ -35,9 +35,9 @@ export const getStaticPaths = async () => {
   return [...docs.map(toPath("md")), ...docsHtml.map(toPath("html"))];
 };
 
-const { version, slug = "" } = Astro.params;
+const { version } = Astro.params;
 const { kind, doc: propsDoc } = Astro.props;
-const url = `/docs/${version}/${slug}`;
+const { url } = resolveDocUrl({ id: propsDoc.id });
 // TODO: GRO-688 Remove processing from /script/docs so src files are raw whether reading from _docs or METABASE_REPO_PATH
 // The only known gap is updateRedirectsAndLinks for non-latest versions, which is two separate fixes:
 // 1. replaceVersionInUrls belongs alongside reformatMarkdownUrls
@@ -60,9 +60,10 @@ const doc = !isRaw
       body: reformatMarkdownUrls(propsDoc.body ?? ""),
     };
 const dirname = path.dirname(doc.filePath!);
+const page = { url, ...doc.data };
 
 // Process liquid first (e.g. control flow, includes, variables, etc)
-const lq = getLiquidRenderer({ page: doc.data, dirname });
+const lq = getLiquidRenderer({ page, dirname });
 const lqOutput = await lq.render(doc.body!, undefined, {
   maxSyntaxErrors: version === "latest" ? 0 : 3,
 });
@@ -95,7 +96,7 @@ const Layout = doc.data.layout === "docs" ? OldDocsLayout : NewDocsLayout;
 {kind === "html" ? (
   <Fragment set:html={renderedHtml} />
 ) : (
-  <Layout page={{ url, ...doc.data }} dirname={dirname}>
+  <Layout page={{ ...page, content: renderedHtml }} dirname={dirname}>
     <Fragment set:html={renderedHtml} />
   </Layout>
 )}

@@ -30,11 +30,11 @@ import Rows from "@/icons/chrome/rows.svg";
 import Sandbox from "@/icons/chrome/sandbox.svg";
 import SecureShieldOutline from "@/icons/chrome/secure-shield-outline.svg";
 import StarOutline from "@/icons/chrome/star-outline.svg";
-import Stars from "@/icons/chrome/stars.svg";
 import Support from "@/icons/chrome/support-bubble.svg";
 import UsageAnalytics from "@/icons/chrome/usage-analytics.svg";
 import View from "@/icons/chrome/view.svg";
 import WhiteLabel from "@/icons/chrome/white-label.svg";
+import Stars from "@/icons/stars.svg";
 import { formatGithubStars, getGithubStars } from "@/lib/github/getGithubStars";
 import NavLink, { type Props as NavLinkProps } from "./NavLink.astro";
 
@@ -815,6 +815,14 @@ const resourceLinks: NavLinkProps[] = [
 </script>
 
 <style>
+  :global(:root) {
+    --navigation-header-height: 74px;
+
+    @media (max-width: 991.98px) {
+      --navigation-header-height: 78px;
+    }
+  }
+
   .home-link svg {
     flex-shrink: 0;
     height: clamp(24px, 7vw, 32px);

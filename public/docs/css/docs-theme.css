@@ -131,6 +131,12 @@
   color: var(--mb-text-secondary);
 }
 
+/* "On this page" toggle that PageNav.astro shows at 991px and below. */
+.bootstrap #toc-toggle {
+  border-bottom-color: var(--mb-border);
+  color: var(--mb-heading);
+}
+
 /* Left sidebar */
 
 .bootstrap .learn #main-navigation-content.learn-left-sidebar {
@@ -180,17 +186,10 @@
   box-shadow: var(--mb-shadow);
 }
 
-/* new-docs-anchor-links.js wraps h2 / h3 in div.copy-clip-container.h2|h3, so
- * code inside a heading also matches the vendored `.h2 code` rules, which are
- * one class more specific than `h2 code`. List both forms. */
 .bootstrap .learn__post h2 code,
-.bootstrap .learn__post .h2 code,
 .bootstrap .learn__post h3 code,
-.bootstrap .learn__post .h3 code,
 .bootstrap .learn__post h4 code,
-.bootstrap .learn__post .h4 code,
-.bootstrap .learn__post h5 code,
-.bootstrap .learn__post .h5 code {
+.bootstrap .learn__post h5 code {
   background: var(--mb-code-heading-bg);
   color: var(--mb-text-secondary);
 }
@@ -205,6 +204,18 @@
   color: var(--mb-pre-text);
 }
 
+/* new-docs-anchor-links.js wraps h2 / h3 in div.copy-clip-container.h2|h3, so
+ * code inside a heading also matches the vendored `.h2 code` rules, which are
+ * one class more specific than `h2 code`. Same values as the `h2 code` rule
+ * above, listed last because these selectors outrank the ones before them. */
+.bootstrap .learn__post .h2 code,
+.bootstrap .learn__post .h3 code,
+.bootstrap .learn__post .h4 code,
+.bootstrap .learn__post .h5 code {
+  background: var(--mb-code-heading-bg);
+  color: var(--mb-text-secondary);
+}
+
 /* new-docs-code-snippet-copy.js wraps highlighted blocks in
  * div.code-snippet-wrapper; styles.css restyles them at 0,3,2. */
 .bootstrap .learn div.code-snippet-wrapper pre,
@@ -212,6 +223,21 @@
   background: var(--mb-pre-bg);
   box-shadow: var(--mb-shadow);
   color: var(--mb-pre-text);
+}
+
+/* Copy button. The light values of these tokens are the colors styles.css
+ * already uses; new-docs-code-snippet-copy.js swaps in white icons on the
+ * dark theme, so the label follows. */
+.bootstrap .learn.docs div.code-snippet-wrapper .copy-code-button {
+  background-color: var(--mb-surface-hover);
+}
+
+.bootstrap .learn.docs div.code-snippet-wrapper .copy-code-button:hover {
+  background-color: var(--mb-surface-active);
+}
+
+[data-theme="dark"] .bootstrap .learn.docs div.code-snippet-wrapper .copy-code-button p {
+  color: #fff;
 }
 
 /* Syntax highlighting: highlight.js classes, ported from the base16
@@ -421,4 +447,56 @@
 
 .bootstrap .learn #was-this-helpful-widget div#page-feedback-email-container {
   color: var(--mb-text-muted);
+}
+
+/* Cookie banner (gdpr.css and the vendored gdpr-cookie-notice styles). The
+ * banner is appended to <body>, outside .bootstrap, and both sheets load on
+ * every page with fixed colors, so only the dark theme is restated here. The
+ * pill needs !important to outrank the revamp block in gdpr.css. */
+
+:root[data-theme="dark"] .gdpr-cookie-notice {
+  background: var(--mb-surface-elevated) !important;
+  box-shadow:
+    0 0 0 1px var(--mb-border),
+    var(--mb-shadow) !important;
+}
+
+:root[data-theme="dark"] .gdpr-cookie-notice-description {
+  color: var(--mb-text) !important;
+}
+
+:root[data-theme="dark"] .gdpr-cookie-notice-modal {
+  background: var(--mb-backdrop);
+}
+
+:root[data-theme="dark"] .gdpr-cookie-notice-modal-content {
+  background: var(--mb-surface-elevated);
+}
+
+:root[data-theme="dark"] .gdpr-cookie-notice-modal-title,
+:root[data-theme="dark"] .gdpr-cookie-notice-modal-cookie-title {
+  color: var(--mb-heading);
+}
+
+:root[data-theme="dark"] .gdpr-cookie-notice-modal-cookie-info {
+  color: var(--mb-text-muted);
+}
+
+:root[data-theme="dark"] .gdpr-cookie-notice-modal-header,
+:root[data-theme="dark"] .gdpr-cookie-notice-modal-cookie {
+  border-bottom-color: var(--mb-border);
+}
+
+:root[data-theme="dark"] .gdpr-cookie-notice-modal-footer {
+  background: var(--mb-surface);
+}
+
+/* Without :root, so the checked switch in gdpr.css (0,3,0) still outranks it. */
+[data-theme="dark"] .gdpr-cookie-notice-modal-cookie-input-switch {
+  box-shadow: inset 0 0 0 1px var(--mb-border-strong);
+}
+
+:root[data-theme="dark"] .gdpr-cookie-notice-modal-close::before,
+:root[data-theme="dark"] .gdpr-cookie-notice-modal-close::after {
+  background: var(--mb-text-muted);
 }

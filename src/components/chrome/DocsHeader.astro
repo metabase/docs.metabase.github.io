@@ -2,8 +2,8 @@
 import DocsVersionSelector from "@/components/chrome/DocsVersionSelector.astro";
 import MetabaseWordmark from "@/icons/chrome/metabase-wordmark-docs.svg";
 import Moon from "@/icons/chrome/moon.svg";
-import Stars from "@/icons/chrome/stars.svg";
 import Sun from "@/icons/chrome/sun.svg";
+import Stars from "@/icons/stars.svg";
 import {
   getActiveCategory,
   getLandingUrl,
@@ -64,6 +64,9 @@ const tabs = nav.categories.map((category) => ({
     </div>
 
     <div class="docs-header__actions">
+      <a class="docs-header__whats-new" href="/releases">
+        What’s new
+      </a>
       <a class="docs-header__home" href="/">
         Metabase home
       </a>
@@ -325,8 +328,9 @@ const tabs = nav.categories.map((category) => ({
     justify-content: flex-end;
   }
 
-  /* Quiet text button back to the marketing site, the same 40px tall as the
-     CTA beside it so the pair reads as one button group. */
+  /* Quiet text buttons (release notes, back to the marketing site), the same
+     40px tall as the CTA beside them so the group reads as one. */
+  .docs-header__whats-new,
   .docs-header__home {
     border-radius: 8px;
     color: var(--mb-text-secondary);
@@ -340,6 +344,7 @@ const tabs = nav.categories.map((category) => ({
     white-space: nowrap;
   }
 
+  .docs-header__whats-new:hover,
   .docs-header__home:hover {
     background-color: var(--mb-surface-active);
     color: var(--mb-brand);
@@ -487,6 +492,14 @@ const tabs = nav.categories.map((category) => ({
   /* Tabs fill the 44px row, so keep the ring inside it to avoid clipping. */
   .docs-header__tab:focus-visible {
     outline-offset: -2px;
+  }
+
+  /* Below 1200px the actions would squeeze the brand into the search box, so
+     the release notes link goes first; the footer still links to it. */
+  @media screen and (max-width: 1199.98px) {
+    .docs-header__whats-new {
+      display: none;
+    }
   }
 
   @media screen and (max-width: 992px) {

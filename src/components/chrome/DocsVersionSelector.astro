@@ -95,12 +95,14 @@ const otherVersions = [...availableVersions]
     width: 12px;
   }
 
-  .version__current svg path {
+  /* :global because the path comes from chevron.svg and never gets this
+     component's scope class. */
+  .version__current svg :global(path) {
     stroke: var(--mb-text-secondary);
   }
 
-  .version__current:hover svg path,
-  .version__selector.open .version__current svg path {
+  .version__current:hover svg :global(path),
+  .version__selector.open .version__current svg :global(path) {
     stroke: var(--mb-brand);
   }
 

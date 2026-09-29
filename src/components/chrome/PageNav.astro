@@ -1,0 +1,132 @@
+<button
+  id="toc-toggle"
+  class="d-lg-none"
+  type="button"
+  aria-controls="sub-navigation-content"
+  aria-expanded="false"
+>
+  On this page
+</button>
+<div id="sub-navigation-content"></div>
+
+<script>
+  const button = document.getElementById("toc-toggle")!;
+  const content = document.getElementById("sub-navigation-content")!;
+
+  button.addEventListener("click", () => {
+    const open = button.getAttribute("aria-expanded") !== "true";
+    content.classList.toggle("open", open);
+    button.setAttribute("aria-expanded", String(open));
+  });
+
+  const headers = Array.from(document.querySelectorAll("h2"));
+  const links = new Map<HTMLHeadingElement, HTMLAnchorElement>();
+  let activeLink: HTMLAnchorElement | null = null;
+
+  for (const header of headers) {
+    const link = document.createElement("a");
+    link.href = `#${header.id}`;
+    link.innerText = header.innerText;
+    content.appendChild(link);
+    links.set(header, link);
+  }
+
+  const setSelectedLink = () => {
+    const header = headers.find((h) => h.getBoundingClientRect().top > 0);
+    const link = header && links.get(header);
+    if (!link || activeLink === link) return;
+    activeLink?.classList.remove("selected");
+    activeLink = link;
+    activeLink.classList.add("selected");
+  };
+
+  document.addEventListener("scroll", setSelectedLink);
+  setSelectedLink();
+</script>
+
+<style is:global>
+  #sub-navigation-content {
+    overflow-y: auto;
+    padding-top: 3em;
+
+    > :first-child::before {
+      color: #22242b;
+      content: "On this page";
+      display: block;
+      font-weight: 700;
+      padding-bottom: 1.5rem;
+    }
+
+    a {
+      background: transparent;
+      box-shadow: none;
+      color: #8d93a5;
+      display: block;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1.33;
+      margin-bottom: 1rem;
+      padding-bottom: 0;
+      padding-left: 20px;
+      position: relative;
+      transition: initial;
+
+      &::after {
+        content: none;
+      }
+
+      &:hover,
+      &.selected {
+        color: #5a6072;
+      }
+    }
+  }
+
+  @media (max-width: 991.98px) {
+    #toc-toggle {
+      appearance: none;
+      background-color: transparent;
+      border: 0;
+      border-bottom: 1px solid #e4ecfb;
+      color: #22242b;
+      display: flex;
+      font-size: 14px;
+      font-weight: 700;
+      justify-content: space-between;
+      order: -1;
+      padding: 12px 0;
+
+      &::after {
+        content: "\25BE";
+        transition: transform 0.3s ease;
+      }
+
+      &[aria-expanded="true"]::after {
+        transform: rotate(180deg);
+      }
+    }
+
+    #sub-navigation-content {
+      display: none;
+      order: -1;
+      padding-top: 12px;
+
+      &.open {
+        display: block;
+      }
+
+      > :first-child::before {
+        content: none;
+      }
+    }
+  }
+
+  /* At phone widths the article's 20px right gutter lives on .learn__post__content,
+   * which the TOC row is not inside. */
+  @media (max-width: 575.98px) {
+    #toc-toggle,
+    #sub-navigation-content {
+      margin-right: 20px;
+    }
+  }
+</style>

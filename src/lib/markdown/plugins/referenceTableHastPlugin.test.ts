@@ -1,4 +1,4 @@
-import { describe, expect, test } from "bun:test";
+import { describe, expect, test } from "vitest";
 import { getMarkdownRenderer } from "../markdownRenderer";
 
 const render = async (md: string) =>

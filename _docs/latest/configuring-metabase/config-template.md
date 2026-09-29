@@ -173,7 +173,6 @@ config:
     help-link: metabase
     help-link-custom-destination: https://www.metabase.com/help/premium
     hide-stacktraces: false
-    http-channel-host-strategy: external-only
     humanization-strategy: simple
     index-update-thread-count: 2
     jdbc-data-warehouse-connection-pool-checkout-timeout-ms: 0
@@ -273,7 +272,6 @@ config:
     notification-link-base-url: null
     notification-system-event-thread-pool-size: 5
     notification-thread-pool-size: 3
-    oidc-allowed-networks: allow-all
     oidc-providers: []
     oidc-user-provisioning-enabled: true
     persisted-model-refresh-cron-schedule: 0 0 0/6 * * ? *
@@ -368,5 +366,4 @@ config:
     usage-metadata-retention-days: 90
     usage-metadata-schedule: 0 0 2 * * ? *
     user-visibility: all
-    warehouse-allowed-networks: null
 ```
