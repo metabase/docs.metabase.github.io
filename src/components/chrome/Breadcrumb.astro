@@ -9,7 +9,7 @@ type Props = {
     has_magic_breadcrumbs?: boolean;
     show_category_breadcrumb?: boolean;
   };
-  variant: "bar" | "inline";
+  variant: "top-bar" | "inline";
 };
 
 type Crumb = { label: string; href?: string };
@@ -24,7 +24,7 @@ const getFallbackCategoryPath = (url: string) => {
   return `${slug}/start`;
 };
 
-const getCrumbs = ({ page }: Props): Crumb[] => {
+const getCrumbs = (page: Props["page"]): Crumb[] => {
   if (!page.has_magic_breadcrumbs) return [{ label: page.title ?? "" }];
 
   const version = page.url.split("/")[2];
@@ -44,7 +44,7 @@ const getCrumbs = ({ page }: Props): Crumb[] => {
 
 <nav class:list={["trail", variant]} aria-label="breadcrumb">
   <ol>
-    {getCrumbs({ page, variant }).map(({ label, href }) => (
+    {getCrumbs(page).map(({ label, href }) => (
       <li>{href ? <a href={href}>{label}</a> : <span>{label}</span>}</li>
     ))}
   </ol>
@@ -77,7 +77,7 @@ const getCrumbs = ({ page }: Props): Crumb[] => {
       color: #5a6072;
     }
 
-    &.bar {
+    &.top-bar {
       li {
         font-size: 18px;
         line-height: 30px;

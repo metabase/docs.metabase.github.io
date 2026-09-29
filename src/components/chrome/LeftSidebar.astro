@@ -1,18 +1,18 @@
 ---
 import NavItem from "@/components/chrome/NavItem.astro";
-import { getNavForVersion } from "@/lib/docs/nav";
+import type { NavNode } from "@/lib/docs/nav";
 
 type Props = {
   url: string;
-  version?: string;
+  categories: NavNode[];
 };
 
-const { url: pageUrl, version = "latest" } = Astro.props;
+const { url: pageUrl, categories } = Astro.props;
 ---
 
 <div id="main-navigation-content">
   <div>
-    {getNavForVersion(version).categories.map((category) => (
+    {categories.map((category) => (
       <>
         <h5>{category.name}</h5>
         <ul>
@@ -45,10 +45,15 @@ const { url: pageUrl, version = "latest" } = Astro.props;
     drawer.querySelectorAll("li.expanded").forEach((open) => {
       if (!open.contains(item)) open.classList.remove("expanded");
     });
-    const expanded = item.classList.toggle("expanded");
-    item
-      .querySelector(":scope > button")
-      ?.setAttribute("aria-expanded", String(expanded));
+    item.classList.toggle("expanded");
+    drawer
+      .querySelectorAll("li > button")
+      .forEach((button) =>
+        button.setAttribute(
+          "aria-expanded",
+          String(button.parentElement!.classList.contains("expanded")),
+        ),
+      );
   });
 </script>
 
@@ -208,7 +213,6 @@ const { url: pageUrl, version = "latest" } = Astro.props;
         color: #509ee3;
       }
 
-      &:hover + button svg path,
       &.selected + button svg path {
         stroke: #509ee3;
       }
