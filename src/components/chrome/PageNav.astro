@@ -118,14 +118,17 @@
       border-radius: 8px;
       box-shadow: 0 12px 32px rgba(34, 36, 43, 0.16);
       left: 16px;
-      max-height: min(60dvh, calc(100dvh - var(--section-bar-top, 0px) - 72px));
+      --dropdown-top: calc(
+        var(--section-bar-top, 0px) + var(--section-bar-height, 0px) + 8px
+      );
+      max-height: min(60dvh, calc(100dvh - var(--dropdown-top) - 24px));
       opacity: 0;
       overflow-y: auto;
       overscroll-behavior: contain;
       padding: 6px 8px 0;
       position: fixed;
       right: 16px;
-      top: calc(var(--section-bar-top, 0px) + 48px);
+      top: var(--dropdown-top);
       transition:
         opacity 0.2s ease,
         top 0.2s ease,

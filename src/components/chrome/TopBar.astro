@@ -27,7 +27,7 @@ const { page, showBreadcrumb, showNavToggle } = Astro.props;
   <div class="container">
     <div>
       {showNavToggle && <DocsNavToggle />}
-      {showBreadcrumb && <Breadcrumb page={page} variant="bar" />}
+      {showBreadcrumb && <Breadcrumb page={page} variant="top-bar" />}
     </div>
 
     <div>
@@ -46,7 +46,7 @@ const { page, showBreadcrumb, showNavToggle } = Astro.props;
   /* The id outranks every `.bootstrap .learn …` rule in the legacy sheet, so nothing here needs doubling. */
   #top-bar {
     align-items: center;
-    border-bottom: 1px solid #e4ecfb;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
     display: flex;
     height: 57px;
     justify-content: space-between;
@@ -57,7 +57,7 @@ const { page, showBreadcrumb, showNavToggle } = Astro.props;
     width: 100%;
     z-index: 3;
 
-    :global(div) {
+    > .container > div {
       align-items: center;
       display: flex;
       gap: 12px;
@@ -66,6 +66,20 @@ const { page, showBreadcrumb, showNavToggle } = Astro.props;
 
     > .container {
       display: contents;
+    }
+
+    /* Bootstrap's clearfix would otherwise become a third, empty flex item. */
+    > .container::after {
+      content: none;
+    }
+
+    :global(.version__selector) {
+      display: flex;
+      margin-top: 0;
+    }
+
+    :global(.trail) {
+      margin-left: 64px;
     }
   }
 
@@ -96,10 +110,13 @@ const { page, showBreadcrumb, showNavToggle } = Astro.props;
 
   /* On phones the bar is fixed under the site header and shares its bootstrap `.container` width steps. */
   @media (max-width: 991.98px) {
+    :global(:root) {
+      --section-bar-height: 40px;
+    }
+
     #top-bar {
       background-color: #fff;
-      border: 0;
-      height: 40px;
+      height: var(--section-bar-height);
       padding: 0;
       position: fixed;
       right: 0;
@@ -110,6 +127,7 @@ const { page, showBreadcrumb, showNavToggle } = Astro.props;
 
       /* 12px plus each control's 8px tap padding puts the glyphs on the header's 20px gutter. */
       > .container {
+        align-items: center;
         display: flex;
         gap: 8px;
         height: 100%;
