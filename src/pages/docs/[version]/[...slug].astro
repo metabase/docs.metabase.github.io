@@ -2,14 +2,24 @@
 import path from "node:path";
 import { pathToFileURL } from "node:url";
 import { DOCS_SRC_ROOT, METABASE_REPO_PATH } from "@/constants";
-import NewDocsLayout from "@/layouts/NewDocsLayout.astro";
-import OldDocsLayout from "@/layouts/OldDocsLayout.astro";
 import { constructDocMetadata } from "@/lib/docs/constructDocMetadata";
 import { resolveDocUrl } from "@/lib/docs/resolveDoc";
 import { rewriteDocLinks } from "@/lib/docs/rewriteDocLinks";
 import { baseCtx, getLiquidRenderer } from "@/lib/liquid/liquidRenderer";
 import { getMarkdownRenderer } from "@/lib/markdown/markdownRenderer";
 import { getCollection, type DataEntryMap } from "astro:content";
+import type { AstroComponentFactory } from "astro/runtime/server/index.js";
+
+// Keyed by filename, e.g. src/layouts/new-docs.astro → "new-docs", so a doc's
+// `layout` frontmatter value selects the component.
+const layouts = Object.fromEntries(
+  Object.entries(
+    import.meta.glob<AstroComponentFactory>("/src/layouts/*.astro", {
+      eager: true,
+      import: "default",
+    }),
+  ).map(([file, component]) => [path.basename(file, ".astro"), component]),
+);
 
 type Props =
   | { kind: "md"; doc: DataEntryMap["docs"][number] }
@@ -86,7 +96,8 @@ if (kind === "html") {
   renderedHtml = renderResult.code;
 }
 
-const Layout = doc.data.layout === "docs" ? OldDocsLayout : NewDocsLayout;
+// TODO: There's probably a better way to handle docs-api than the Fragment fallback
+const Layout = layouts[doc.data.layout] || Fragment;
 ---
 
 {kind === "html" ? (
