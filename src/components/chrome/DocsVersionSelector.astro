@@ -3,8 +3,7 @@ import Chevron from "@/icons/chevron.svg";
 import { getVersionSupport } from "@/lib/docs/versionSupport";
 import { baseCtx } from "@/lib/liquid/liquidRenderer";
 
-// Class names are kept for new-docs-version-selector.js and the .version__tag
-// rules in docs-local.css.
+// Class names are kept for the .version__tag rules in docs-local.css.
 type Props = {
   version: string;
 };
@@ -53,6 +52,62 @@ const otherVersions = [...availableVersions]
   </ul>
 </div>
 
+<script>
+  const versionSelectors =
+    document.querySelectorAll<HTMLElement>(".version__selector");
+
+  // Mirror the .open class on the trigger button for assistive tech.
+  const setOpen = (versionSelector: HTMLElement, open: boolean) => {
+    versionSelector.classList.toggle("open", open);
+    versionSelector
+      .querySelector(".version__current")
+      ?.setAttribute("aria-expanded", open ? "true" : "false");
+  };
+
+  versionSelectors.forEach((versionSelector) => {
+    setOpen(versionSelector, false);
+    versionSelector.addEventListener("click", (event) => {
+      event.stopPropagation(); // Prevent this click from triggering the outside click event
+      setOpen(versionSelector, !versionSelector.classList.contains("open"));
+    });
+
+    // Close when keyboard focus moves out of the selector (past "See more").
+    // A null relatedTarget means focus went to the body (Safari does not
+    // focus links on click); the outside-click handler covers that case.
+    versionSelector.addEventListener("focusout", (event) => {
+      const next = event.relatedTarget as Node | null;
+      if (next && !versionSelector.contains(next)) {
+        setOpen(versionSelector, false);
+      }
+    });
+  });
+
+  // Close selector on click outside with a slight delay
+  document.addEventListener("click", (event) => {
+    setTimeout(() => {
+      versionSelectors.forEach((versionSelector) => {
+        if (!versionSelector.contains(event.target as Node)) {
+          setOpen(versionSelector, false);
+        }
+      });
+    }, 10); // Small delay to ensure clicks inside elements get registered first
+  });
+
+  // Close on Escape and hand focus back to the trigger.
+  document.addEventListener("keydown", (event) => {
+    if (event.key !== "Escape") return;
+    versionSelectors.forEach((versionSelector) => {
+      if (!versionSelector.classList.contains("open")) return;
+      setOpen(versionSelector, false);
+      if (versionSelector.contains(document.activeElement)) {
+        versionSelector
+          .querySelector<HTMLElement>(".version__current")
+          ?.focus();
+      }
+    });
+  });
+</script>
+
 <style>
   .version__selector {
     cursor: pointer;
@@ -60,7 +115,7 @@ const otherVersions = [...availableVersions]
   }
 
   /* A button so the selector is reachable by keyboard; the click bubbles to
-     .version__selector, which new-docs-version-selector.js toggles. */
+     .version__selector, which the script above toggles. */
   .version__current {
     align-items: center;
     background: none;

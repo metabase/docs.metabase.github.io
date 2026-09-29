@@ -4,7 +4,7 @@
 (() => {
   let theme = null;
   try {
-    // Same key as new-docs-theme-toggle.js.
+    // Same key as the theme toggle in DocsHeader.astro.
     theme = localStorage.getItem("mb-docs-theme");
   } catch {
     /* storage blocked (private mode, disabled cookies) */

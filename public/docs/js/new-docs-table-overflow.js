@@ -30,7 +30,6 @@
     // wrapper
     const $wrapper = document.createElement("div");
     $wrapper.classList.add("position-relative");
-    $wrapper.classList.add("docs-table-wrap");
     $parent.insertBefore($wrapper, $nextChild);
 
     // container

@@ -5,7 +5,7 @@ import LeftSidebar from "@/components/chrome/LeftSidebar.astro";
 import PageNav from "@/components/chrome/PageNav.astro";
 import VersionNotice from "@/components/chrome/VersionNotice.astro";
 import LiquidInclude from "@/components/LiquidInclude.astro";
-import { TOP_BAR_ID, UNIFY_ENABLED_PAGES } from "@/constants";
+import { UNIFY_ENABLED_PAGES } from "@/constants";
 import { getLiquidRenderer } from "@/lib/liquid/liquidRenderer";
 import DefaultNewLayout from "./DefaultNewLayout.astro";
 
@@ -51,7 +51,7 @@ const version = page.latest ? "latest" : (page.version ?? "latest");
       >
         {/* Breadcrumb only: search and the version selector are in DocsHeader. */}
         {showBreadcrumb && (
-          <div id={TOP_BAR_ID} class="top-bar">
+          <div class="top-bar">
             <div>
               <div class="learn-breadcrumb-trail">
                 <Breadcrumb page={page} />
@@ -90,21 +90,6 @@ const version = page.latest ? "latest" : (page.version ?? "latest");
     </div>
   </div>
 
-  <script
-    is:inline
-    type="text/javascript"
-    src="/docs/js/new-docs-version-selector.js"
-  ></script>
-  <script
-    is:inline
-    type="text/javascript"
-    src="/docs/js/new-docs-theme-toggle.js"
-  ></script>
-  <script
-    is:inline
-    type="text/javascript"
-    src="/docs/js/new-docs-mobile-nav.js"
-  ></script>
   <script
     is:inline
     type="text/javascript"

@@ -216,25 +216,15 @@ html[data-theme] body {
 }
 
 /* Lato 900 is no longer requested for the docs (stylesheets.html), so the
- * two remaining 900 users in styles.css drop to 700 rather than synthesize. */
+ * copy button label drops to 700 rather than synthesize. */
 .bootstrap .learn.docs div.code-snippet-wrapper .copy-code-button p {
   font-weight: 700;
 }
 
-.bootstrap .learn.docs #main-navigation-content.learn-left-sidebar h5,
-.bootstrap .learn.docs #main-navigation-content.learn-left-sidebar .h5 {
-  font-weight: 700;
-}
-
-/* Sticky offsets in styles.css assume the 77px marketing navbar; derive them
- * from the docs header's height variable instead. The sidebar runs from the
- * header to the viewport bottom; the TOC keeps styles.css's 14px overlap
- * (63px under a 77px navbar). */
-.bootstrap .learn #main-navigation-content.learn-left-sidebar {
-  max-height: calc(100vh - var(--navigation-header-height));
-  top: var(--navigation-header-height);
-}
-
+/* The TOC's sticky offset in styles.css assumes the 77px marketing navbar;
+ * derive it from the docs header's height variable instead, keeping
+ * styles.css's 14px overlap (63px under a 77px navbar). The left sidebar
+ * already reads the variable in LeftSidebar.astro. */
 .bootstrap .learn .learn__right-sidebar {
   top: calc(var(--navigation-header-height) - 14px);
 }
@@ -257,25 +247,22 @@ html[data-theme] body {
   display: none;
 }
 
-/* styles.css hides the sidebar at max-width: 992px but only collapses the grid
- * at 991px, which leaves an empty column at exactly 992px. */
+/* styles.css collapses the grid at 991px; the sidebar leaves the flow at
+ * 992px, which would leave an empty column at exactly 992px. */
 @media screen and (max-width: 992px) {
   .bootstrap .learn.docs {
     grid-template-columns: 1fr;
   }
 
   /* The sidebar becomes a drawer under the header, opened by the header's
-   * menu button (new-docs-mobile-nav.js sets data-docs-nav on <html>). The
-   * selector outranks the three display: none rules in styles.css. visibility
+   * menu button (DocsHeader.astro sets data-docs-nav on <html>). visibility
    * keeps the closed drawer's links out of the tab order; its delay lets the
    * slide-out play first. */
   .bootstrap .learn.docs #main-navigation-content.learn-left-sidebar {
     bottom: 0;
     box-shadow: var(--mb-shadow);
-    display: block;
     height: auto;
     left: 0;
-    max-height: none;
     overflow-y: auto;
     padding: 16px 12px 32px;
     position: fixed;
@@ -378,8 +365,8 @@ html[data-theme] body {
   }
 
   /* 8px link padding + 12px aligns nav text with the header wordmark at 20px.
-   * padding-top replaces the 80px styles.css reserved for the old Learn "home"
-   * link, which this sidebar no longer renders. */
+   * padding-top replaces the 80px LeftSidebar.astro reserves for the old
+   * Learn "home" link, which this sidebar no longer renders. */
   .bootstrap .learn.docs #main-navigation-content.learn-left-sidebar {
     background-color: var(--mb-surface);
     padding-left: 12px;

@@ -21,16 +21,21 @@ const { url: pageUrl, version = "latest" } = Astro.props;
 const nav = getNavForVersion(version);
 const active = getActiveCategory(nav, pageUrl);
 const category = active ?? nav.categories[0];
+
+// Same rule as the header tabs: no linked pages, no entry.
+const sections = nav.categories
+  .map((node) => ({ node, href: getLandingUrl(node) }))
+  .filter((section) => section.href);
 ---
 
 <div class="learn-left-sidebar" id="main-navigation-content" tabindex="-1">
   <nav class="docs-sections" aria-label="Documentation sections">
     <h5>Sections</h5>
     <ul>
-      {nav.categories.map((node) => (
+      {sections.map(({ node, href }) => (
         <li>
           <a
-            href={getLandingUrl(node)}
+            href={href}
             class={node === active ? "selected" : ""}
             aria-current={node === active ? "page" : undefined}
           >
@@ -49,12 +54,12 @@ const category = active ?? nav.categories[0];
   )}
 </div>
 
-{/* Base sidebar rules. The mobile drawer is in docs-local.css and is driven by
-    new-docs-mobile-nav.js; docs-theme.css recolors these with the theme tokens. */}
+{/* Base sidebar rules, colored with the docs-tokens.css tokens. The mobile
+    drawer is in docs-local.css and is driven by DocsHeader.astro. */}
 <style is:global>
   #main-navigation-content {
-    border-right: 1px solid #f1f2f4;
-    box-shadow: 4px 2px 4px 0 rgba(16, 24, 40, 0.05);
+    border-right: 1px solid var(--mb-border-subtle);
+    box-shadow: 4px 2px 4px 0 var(--mb-shadow-chrome);
     height: calc(100vh - var(--navigation-header-height));
     overflow-y: auto;
     padding-right: 10px;
@@ -64,9 +69,9 @@ const category = active ?? nav.categories[0];
     width: 100%;
 
     h5 {
-      color: #8d93a5;
+      color: var(--mb-text-muted);
       font-size: 11px;
-      font-weight: 900;
+      font-weight: 700;
       letter-spacing: 0.2em;
       margin-bottom: 4px;
       padding: 4px 8px 5px;
@@ -87,7 +92,7 @@ const category = active ?? nav.categories[0];
       }
 
       li {
-        border-left: 1px solid #e4ecfb;
+        border-left: 1px solid var(--mb-border);
         padding-left: 10px;
       }
 
@@ -108,7 +113,7 @@ const category = active ?? nav.categories[0];
 
     a {
       border-radius: 8px;
-      color: #5a6072;
+      color: var(--mb-text-secondary);
       display: block;
       font-size: 14px;
       font-weight: 400;
@@ -121,11 +126,11 @@ const category = active ?? nav.categories[0];
 
       &:hover,
       &.selected {
-        background-color: #eef6fc;
-        color: #509ee3;
+        background-color: var(--mb-surface-hover);
+        color: var(--mb-brand);
 
         svg path {
-          stroke: #509ee3;
+          stroke: var(--mb-brand);
         }
       }
 
@@ -155,7 +160,7 @@ const category = active ?? nav.categories[0];
       }
 
       svg path {
-        stroke: #c6c9d2;
+        stroke: var(--mb-border-strong);
         transition: stroke 0.3s ease-in-out;
       }
     }
