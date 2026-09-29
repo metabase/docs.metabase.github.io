@@ -94,11 +94,7 @@ if (kind === "html") {
   renderedHtml = renderResult.code;
 }
 
-// Docs for v0.43 and earlier keep the old Jekyll-era layout. Derived from the
-// version rather than `layout` frontmatter, which MDX reserves for a
-// component import path. Non-numeric versions (e.g. "latest") use the new one.
-const versionNumber = Number(version?.match(/^v0\.(\d+)$/)?.[1]);
-const Layout = versionNumber <= 43 ? OldDocsLayout : NewDocsLayout;
+const Layout = doc.data.layout === "docs" ? OldDocsLayout : NewDocsLayout;
 ---
 
 {kind === "html" ? (

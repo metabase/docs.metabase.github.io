@@ -51,6 +51,7 @@ export type DocMetadata = {
   category: string;
   title: string;
   source_url: string;
+  layout: "docs" | "new-docs";
   permalink?: string;
   latest?: boolean;
 };
@@ -63,6 +64,7 @@ export function constructDocMetadata(
   version: string,
   isLatest = false,
 ): DocMetadata {
+  const versionNumber = parseInt(version.split(".").pop() || "", 10);
   const metadata: Partial<DocMetadata> = {
     version,
     has_magic_breadcrumbs: true,
@@ -93,6 +95,7 @@ export function constructDocMetadata(
     metadata.show_title_breadcrumb = false;
 
   metadata.source_url = constructSourceUrl(docPath);
+  metadata.layout = versionNumber > 43 ? "new-docs" : "docs";
 
   if (path.basename(docPath, path.extname(docPath)) === "README") {
     metadata.permalink =
