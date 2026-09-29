@@ -1,29 +1,27 @@
-/* Color tokens for the docs. Light values are the hex values the docs have
- * always used, so they change nothing on their own; the dark block swaps them
- * when theme-init.js / the toggle in DocsHeader.astro sets data-theme="dark" on
- * <html>. Loaded on every page (legacy pages never get the attribute, so they
- * stay light); docs-theme.css and the docs chrome components read these. */
+/* Color tokens for the docs. The dark block applies when theme-init.js or the
+ * toggle in DocsHeader.astro sets data-theme="dark" on <html>. Loaded on every
+ * page; legacy pages never get the attribute, so they stay light. */
 
 :root {
   color-scheme: light;
 
   /* Surfaces */
-  --mb-bg: #fafbfe; /* page and article */
-  --mb-surface: #fff; /* header, sidebar, tables, footer */
-  --mb-surface-elevated: #fff; /* dropdowns, feedback form */
-  --mb-surface-stripe: #f8f9fb; /* every second table row */
-  --mb-surface-hover: #eef6fc; /* hovered or selected rows */
-  --mb-surface-active: #e4ecfb; /* open or pressed controls */
+  --mb-bg: #fafbfe;
+  --mb-surface: #fff;
+  --mb-surface-elevated: #fff;
+  --mb-surface-stripe: #f8f9fb;
+  --mb-surface-hover: #eef6fc;
+  --mb-surface-active: #e4ecfb;
 
   /* Borders */
   --mb-border: #e4ecfb;
   --mb-border-subtle: #f1f2f4;
-  --mb-border-strong: #c6c9d2; /* h2 underline */
+  --mb-border-strong: #c6c9d2;
 
   /* Text */
-  --mb-text: #4c5773; /* paragraphs, list items, table cells */
-  --mb-text-secondary: #5a6072; /* nav links, header, inline code */
-  --mb-text-muted: #686e87; /* table of contents, footer headings, tags; 4.9:1 on --mb-bg */
+  --mb-text: #4c5773;
+  --mb-text-secondary: #5a6072;
+  --mb-text-muted: #686e87; /* 4.9:1 on --mb-bg */
   --mb-heading: #22242b;
 
   /* Brand */
@@ -55,10 +53,8 @@
   --mb-image-filter: none;
 }
 
-/* Dark values apply on screen only, so print falls back to the light
- * palette above without restating it. Tokens missing from this block
- * (--mb-brand, --mb-brand-hover, --mb-syntax-comment, --mb-notice-border) are
- * the same in both themes. */
+/* Screen only, so print uses the light palette. Tokens missing from this
+ * block are the same in both themes. */
 @media screen {
   :root[data-theme="dark"] {
     color-scheme: dark;
@@ -95,7 +91,7 @@
   }
 }
 
-/* Dark page backgrounds waste ink; the light palette otherwise prints as is. */
+/* White paper instead of the off-white page background. */
 @media print {
   :root {
     --mb-bg: #fff;

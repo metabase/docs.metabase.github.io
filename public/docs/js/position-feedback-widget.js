@@ -31,9 +31,8 @@ function resizeLearnRightSidebar() {
 
   const header = document.querySelector("header");
 
-  const extraBottomPadding = header.classList.contains("scrollable") ? 85 : 25;
+  const extraBottomPadding = 25;
 
-  // Header can be scrollable or sticky
   const bottomOfHeader = Math.max(0, header.getBoundingClientRect().bottom);
 
   // The top bar is not rendered on the docs home page
@@ -49,8 +48,6 @@ function resizeLearnRightSidebar() {
 }
 
 function maybeRestyleFeedbackWidget() {
-  const extraTopPadding = 0;
-
   const feedbackWidget = getFeedbackWidget();
 
   if (!feedbackWidget) {
@@ -67,9 +64,7 @@ function maybeRestyleFeedbackWidget() {
   const shouldRestyleFeedbackWidget =
     lastAnchorInSubnavigationContent &&
     lastAnchorInSubnavigationContent.getBoundingClientRect().bottom >
-      subnavigationContent.offsetHeight +
-        feedbackWidget.offsetHeight -
-        extraTopPadding;
+      subnavigationContent.offsetHeight + feedbackWidget.offsetHeight;
 
   if (shouldRestyleFeedbackWidget) {
     feedbackWidget.classList.add("add-border-top");

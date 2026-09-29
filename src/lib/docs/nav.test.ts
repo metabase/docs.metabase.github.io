@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { getActiveCategory, getLandingUrl, type Nav } from "./nav";
+import { getActiveCategory, getLandingUrl, getSections, type Nav } from "./nav";
 
 describe("getLandingUrl", () => {
   test("uses the category's own url", () => {
@@ -101,5 +101,27 @@ describe("getActiveCategory", () => {
 
   test("is undefined for pages outside the nav", () => {
     expect(getActiveCategory(nav, "/docs/latest/")).toBeUndefined();
+  });
+});
+
+describe("getSections", () => {
+  test("skips categories with no linked pages and marks the active one", () => {
+    const nav: Nav = {
+      categories: [
+        {
+          name: "Analytics",
+          pages: [{ name: "Questions", url: "/docs/latest/questions/start" }],
+        },
+        { name: "Empty", pages: [{ name: "Group" }] },
+      ],
+    };
+
+    expect(getSections(nav, "/docs/latest/questions/start")).toEqual([
+      {
+        name: "Analytics",
+        href: "/docs/latest/questions/start",
+        active: true,
+      },
+    ]);
   });
 });

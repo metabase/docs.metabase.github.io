@@ -2,44 +2,37 @@
 import NavItem from "@/components/chrome/NavItem.astro";
 import {
   getActiveCategory,
-  getLandingUrl,
   getNavForVersion,
+  getSections,
 } from "@/lib/docs/nav";
 
-// Only the active category's pages, with top-level sections open; the header
-// tabs switch categories. Pages outside the nav (home, /docs/all, 404) show
-// the first category's pages but highlight no section, matching the header,
-// which shows no active tab there. The section list is for the mobile drawer,
-// where the header tabs are hidden; docs-local.css hides it on desktop.
+// Only the active category's pages; the header tabs switch categories. Pages
+// outside the nav (home, /docs/all) show the first category's pages. The
+// section list is for the mobile drawer, where the header tabs are hidden.
 type Props = {
   url: string;
-  version?: string;
+  version: string;
 };
 
-const { url: pageUrl, version = "latest" } = Astro.props;
+const { url: pageUrl, version } = Astro.props;
 
 const nav = getNavForVersion(version);
-const active = getActiveCategory(nav, pageUrl);
-const category = active ?? nav.categories[0];
-
-// Same rule as the header tabs: no linked pages, no entry.
-const sections = nav.categories
-  .map((node) => ({ node, href: getLandingUrl(node) }))
-  .filter((section) => section.href);
+const category = getActiveCategory(nav, pageUrl) ?? nav.categories[0];
+const sections = getSections(nav, pageUrl);
 ---
 
 <div class="learn-left-sidebar" id="main-navigation-content" tabindex="-1">
   <nav class="docs-sections" aria-label="Documentation sections">
     <h5>Sections</h5>
     <ul>
-      {sections.map(({ node, href }) => (
+      {sections.map(({ name, href, active }) => (
         <li>
           <a
             href={href}
-            class={node === active ? "selected" : ""}
-            aria-current={node === active ? "page" : undefined}
+            class={active ? "selected" : ""}
+            aria-current={active ? "page" : undefined}
           >
-            {node.name}
+            {name}
           </a>
         </li>
       ))}
@@ -58,12 +51,13 @@ const sections = nav.categories
     drawer is in docs-local.css and is driven by DocsHeader.astro. */}
 <style is:global>
   #main-navigation-content {
+    background-color: var(--mb-surface);
     border-right: 1px solid var(--mb-border-subtle);
     box-shadow: 4px 2px 4px 0 var(--mb-shadow-chrome);
     height: calc(100vh - var(--navigation-header-height));
     overflow-y: auto;
-    padding-right: 10px;
-    padding-top: 80px;
+    /* 8px link padding + 12px aligns nav text with the header wordmark at 20px. */
+    padding: 30px 10px 0 12px;
     position: sticky;
     top: var(--navigation-header-height);
     width: 100%;

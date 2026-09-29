@@ -8,34 +8,24 @@ import {
 } from "./hastUtils";
 
 // Reference tables (Property / Type / Description) come from generators in the
-// metabase repo: the web-component attribute snippets
-// (docs/embedding/eajs/snippets/*.md) and the typedoc SDK snippets
-// (docs/embedding/sdk/api/snippets/*.md). Both pack structured facts into the
-// Description cell as `<br>`-separated lines after a `---` rule
-// (`Optional`, `Default: ...`, `Possible values: ...`, `Available in ...`),
-// and typedoc marks optional props with a trailing `?` on the name.
-//
-// This plugin tags such tables `table-reference`, lifts the metadata lines
-// into a `div.prop-meta` block, wraps the type in `div.prop-type`, moves each
-// row's `<a id>` anchor onto the `<tr>` and adds a hover permalink. Layout
-// for those hooks lives in public/docs/css/docs-tables.css. Tables whose
-// header row doesn't match are left untouched.
+// metabase repo (docs/embedding/eajs/snippets, docs/embedding/sdk/api/snippets).
+// Both pack facts into the Description cell as `<br>`-separated lines after a
+// `---` rule, and typedoc marks optional props with a trailing `?` on the name.
+// Styled in public/docs/css/docs-tables.css.
 //
 // By the time hast plugins run, inline HTML is opaque `raw` nodes: `<br>` is
 // one, and `<a id="…"></a>` is two (`<a id="…">` then `</a>`), never an element
-// with children. Smartypants turns the `---` rule into an em dash, so the rule
-// is matched in both forms. Source nodes are read-only (see hastUtils.ts), so
-// every edit builds a new node and applies it through `ctx`.
+// with children. Smartypants turns the `---` rule into an em dash.
 
 type RawNode = { type: "raw"; value: string };
 type Node = ElementContent | RawNode;
 
 const NAME_HEADERS = new Set(["property", "parameter", "name", "prop"]);
 const BR_RE = /^<br\s*\/?>$/i;
-const RULES = new Set(["---", "\u2014"]);
+const RULE = "\u2014";
 const ANCHOR_OPEN_RE = /^<a\s+id=["']([^"']+)["']\s*>$/i;
 const ANCHOR_CLOSE_RE = /^<\/a>$/i;
-const FLAG_RE = /^(optional|required)\.?$/i;
+const OPTIONAL_RE = /^optional\.?$/i;
 const AVAILABLE_RE = /^Available in\s+/i;
 const LABEL_RE = /^([A-Z][\w ]{0,30}?):\s*/;
 const SHORT_TYPE_LENGTH = 24;
@@ -80,13 +70,6 @@ function textOf(nodes: Node[]): string {
     .join("");
 }
 
-function classNames(node: Element): unknown[] {
-  return Array.isArray(node.properties?.className)
-    ? (node.properties.className as unknown[])
-    : [];
-}
-
-/** Split nodes on `<br>`, dropping whitespace-only lines. */
 function splitOnBr(nodes: Node[]): Node[][] {
   const lines: Node[][] = [[]];
   for (const n of nodes) {
@@ -104,7 +87,7 @@ function splitDescription(
     const n = children[i];
     if (
       isText(n) &&
-      RULES.has(n.value.trim()) &&
+      n.value.trim() === RULE &&
       isBr(children[i - 1]) &&
       isBr(children[i + 1])
     ) {
@@ -117,12 +100,10 @@ function splitDescription(
   return undefined;
 }
 
-function flagItem(flag: string): Element {
-  return el(
-    "div",
-    { className: ["prop-meta-item", "prop-meta-flag", `is-${flag}`] },
-    [text(flag.charAt(0).toUpperCase() + flag.slice(1))],
-  );
+function optionalFlag(): Element {
+  return el("div", { className: ["prop-meta-item", "prop-meta-flag"] }, [
+    text("Optional"),
+  ]);
 }
 
 function withoutTrailingPeriod(nodes: Node[]): Node[] {
@@ -134,19 +115,12 @@ function withoutTrailingPeriod(nodes: Node[]): Node[] {
 function labeledItem(label: string, value: Node[]): Element {
   return el("div", { className: ["prop-meta-item"] }, [
     el("span", { className: ["prop-meta-label"] }, [text(label)]),
-    el(
-      "span",
-      { className: ["prop-meta-value"] },
-      withoutTrailingPeriod(value),
-    ),
+    ...withoutTrailingPeriod(value),
   ]);
 }
 
-/** Turn one metadata line into a `.prop-meta-item`. */
 function metaItem(line: Node[]): Element {
-  const plain = textOf(line).trim();
-  const flag = FLAG_RE.exec(plain);
-  if (flag) return flagItem(flag[1].toLowerCase());
+  if (OPTIONAL_RE.test(textOf(line).trim())) return optionalFlag();
 
   const first = line[0];
   if (first && isText(first)) {
@@ -244,12 +218,10 @@ export const referenceTableHastPlugin = defineHastPlugin({
     filter: ["table"],
     visit(table, ctx) {
       const thead = findFirstDescendant(table, "thead");
-      const headerRow = thead
-        ? findFirstDescendant(thead, "tr")
-        : findFirstDescendant(table, "tr");
+      const headerRow = thead && findFirstDescendant(thead, "tr");
       if (!headerRow) return;
 
-      const headers = childElements(headerRow, ["th", "td"]).map((c) =>
+      const headers = childElements(headerRow, ["th"]).map((c) =>
         ctx.textContent(c).trim().toLowerCase(),
       );
       const isReference =
@@ -259,19 +231,15 @@ export const referenceTableHastPlugin = defineHastPlugin({
           (headers.length === 3 && headers[2] === "description"));
       if (!isReference) return;
 
-      ctx.setProperty(table, "className", [
-        ...classNames(table),
-        "table-reference",
-      ]);
+      ctx.setProperty(table, "className", ["table-reference"]);
 
       for (const tr of findAllDescendants(table, "tr")) {
         if (tr === headerRow) continue;
         const [nameCell, typeCell, descCell] = childElements(tr, ["td"]);
         if (!nameCell) continue;
 
-        // Name cell: anchor onto the row, permalink after the name. The `?`
-        // only comes off when there is a description cell to show the
-        // Optional flag in; a two-column table keeps it.
+        // The `?` only comes off when there is a description cell to show
+        // the Optional flag in.
         const anchor = extractAnchor(nameCell.children as Node[]);
         const name = descCell
           ? stripOptionalMarker(anchor.rest)
@@ -282,18 +250,15 @@ export const referenceTableHastPlugin = defineHastPlugin({
         }
         ctx.replaceNode(
           nameCell,
-          el("td", { ...(nameCell.properties ?? {}) }, name.nodes),
+          el("td", { ...nameCell.properties }, name.nodes),
         );
 
-        // Type cell: a block wrapper so CSS can cap the column width. Short
-        // types (`string | number`) are flagged so they never wrap; long
-        // typedoc signatures wrap inside the cap instead.
         if (typeCell) {
           const typeNodes = foldArraySuffix(typeCell.children as Node[]);
           const isShort = textOf(typeNodes).trim().length <= SHORT_TYPE_LENGTH;
           ctx.replaceNode(
             typeCell,
-            el("td", { ...(typeCell.properties ?? {}) }, [
+            el("td", { ...typeCell.properties }, [
               el(
                 "div",
                 { className: ["prop-type", ...(isShort ? ["is-short"] : [])] },
@@ -303,17 +268,14 @@ export const referenceTableHastPlugin = defineHastPlugin({
           );
         }
 
-        // Description cell: `<br>—<br>` metadata lines → `.prop-meta`.
         if (!descCell) continue;
         const split = splitDescription(descCell.children as Node[]);
         if (!split && !name.optional) continue;
 
-        const items: Element[] = [];
-        if (name.optional) items.push(flagItem("optional"));
-        for (const line of split?.meta ?? []) {
-          if (name.optional && FLAG_RE.test(textOf(line).trim())) continue;
-          items.push(metaItem(line));
-        }
+        const items = [
+          ...(name.optional ? [optionalFlag()] : []),
+          ...(split?.meta ?? []).map(metaItem),
+        ];
         const body = split ? split.body : (descCell.children as Node[]);
         const children: Node[] = [
           el("div", { className: ["prop-desc"] }, body),
@@ -323,7 +285,7 @@ export const referenceTableHastPlugin = defineHastPlugin({
         }
         ctx.replaceNode(
           descCell,
-          el("td", { ...(descCell.properties ?? {}) }, children),
+          el("td", { ...descCell.properties }, children),
         );
       }
     },

@@ -37,16 +37,9 @@
   padding: 0.75rem 1rem;
 }
 
-.docs blockquote.version-unsupported-notice a {
-  display: inline;
-}
-
-/* Prose (NewDocsLayout). The vendored bundle sizes code and headings by
- * inheritance and in px, so the same element renders differently depending
- * on where it sits; the rules below set each value once. The selector
- * `.bootstrap .learn.docs div.learn__post__content` (0,4,1) outranks every
- * prose rule in styles.css / main.css, including `.blog-post code`, which
- * reaches the docs because the wrapper still carries `blog-post`. */
+/* Prose (NewDocsLayout). `.bootstrap .learn.docs div.learn__post__content`
+ * (0,4,1) outranks every prose rule in styles.css / main.css, including
+ * `.blog-post code`, which reaches the docs through the wrapper's class. */
 
 /* Metric-matched local fallbacks so the swap to Lato does not reflow. Lato's
  * line box is 1.2em (ascender 1974 / descender 426 on a 2000 em); the widths
@@ -74,10 +67,8 @@ html[data-theme] body {
   font-family: Lato, "Lato Fallback", "Lato Fallback Arial", "Helvetica Neue", Helvetica, sans-serif;
 }
 
-/* Leading and rag. Unitless line-height replaces the 30px in styles.css,
- * which inherited as an absolute value into code blocks and images inside
- * list items. text-wrap is a progressive enhancement: `pretty` avoids
- * orphans and very short last lines, `balance` evens out wrapped headings. */
+/* Unitless, because the 30px in styles.css inherits as an absolute value into
+ * code blocks and images inside list items. */
 .bootstrap .learn.docs div.learn__post__content p,
 .bootstrap .learn.docs div.learn__post__content li {
   line-height: 1.65;
@@ -91,10 +82,9 @@ html[data-theme] body {
   text-wrap: balance;
 }
 
-/* Heading scale: 36 / 28 / 22 / 18 / 16 over an 18px body (styles.css had h4
- * at 16px, smaller than its paragraphs). The .copy-clip-container.hN wrappers
- * from new-docs-anchor-links.js pick up the same styles.css heading rules as
- * the headings themselves, so they get the same font-size. */
+/* Heading scale: 36 / 28 / 22 / 18 / 16 over an 18px body. The
+ * .copy-clip-container.hN wrappers from new-docs-anchor-links.js match the
+ * styles.css heading rules too, so they get the same font-size. */
 .bootstrap .learn.docs div.learn__post__content h1 {
   font-size: 2.25rem;
 }
@@ -104,10 +94,8 @@ html[data-theme] body {
   font-size: 1.75rem;
 }
 
-/* Section spacing. styles.css gives the h2 wrapper `margin: 64px 0 24px` and
- * `padding-bottom: 16px` above the rule, then adds `margin-top: 16px` on the
- * h2 inside it; the wrapper is a flex row, so that inner margin never
- * collapses and the heading sat ~80px below the previous paragraph. */
+/* Section spacing. The wrapper is a flex row, so the h2's own margin-top in
+ * styles.css never collapses into the wrapper's. */
 .bootstrap .learn.docs div.learn__post__content > .copy-clip-container.h2 {
   margin: 48px 0 16px;
   padding-bottom: 10px;
@@ -122,8 +110,7 @@ html[data-theme] body {
   font-size: 1.375rem;
 }
 
-.bootstrap .learn.docs div.learn__post__content h4,
-.bootstrap .learn.docs div.learn__post__content .copy-clip-container.h4 {
+.bootstrap .learn.docs div.learn__post__content h4 {
   font-size: 1.125rem;
   font-weight: 700;
 }
@@ -134,9 +121,8 @@ html[data-theme] body {
   font-weight: 700;
 }
 
-/* Code. Inline code was 14px in 18px prose (`.blog-post code`). Blocks
- * inherited their size and leading from the parent, so a top-level block was
- * 14px / normal and the same block inside a list item 15.75px / 30px. */
+/* Code. Sized here so a block renders the same at the top level and inside
+ * a list item, where it would otherwise inherit the item's size and leading. */
 .bootstrap .learn.docs div.learn__post__content code {
   font-size: 0.875em;
 }
@@ -155,12 +141,8 @@ html[data-theme] body {
   line-height: inherit;
 }
 
-/* Lists. One rhythm for tight and loose items: styles.css gave a tight
- * item 12px below and a loose item (li > p) 16px + 12px. */
-.bootstrap .learn.docs div.learn__post__content li {
-  margin-bottom: 0.5rem;
-}
-
+/* Lists. One rhythm for tight and loose (li > p) items. */
+.bootstrap .learn.docs div.learn__post__content li,
 .bootstrap .learn.docs div.learn__post__content li > p {
   margin-bottom: 0.5rem;
 }
@@ -169,11 +151,9 @@ html[data-theme] body {
   margin-bottom: 0;
 }
 
-/* Blocks inside a step keep page-level margins otherwise: a callout inside a
- * step had 32px above and below in a list whose items are 8px apart.
- * .code-snippet-wrapper is added around highlighted blocks by
- * new-docs-code-snippet-copy.js; plaintext blocks stay a bare pre.
- * .image-wrapper is added by image-zoom.js. */
+/* Blocks inside a step would otherwise keep their page-level margins.
+ * .code-snippet-wrapper comes from new-docs-code-snippet-copy.js (plaintext
+ * blocks stay a bare pre), .image-wrapper from image-zoom.js. */
 .bootstrap .learn.docs div.learn__post__content li > blockquote,
 .bootstrap .learn.docs div.learn__post__content li > pre,
 .bootstrap .learn.docs div.learn__post__content li > .code-snippet-wrapper,
@@ -186,8 +166,8 @@ html[data-theme] body {
   padding: 1rem 1.25rem;
 }
 
-/* Indent in rem so nested lists match top-level ones: 20px for bullets as before, 28px
- * for numbers so two-digit steps do not hang into the gutter. */
+/* In rem so nested lists match top-level ones. Numbers get more room so
+ * two-digit steps do not hang into the gutter. */
 .bootstrap .learn.docs div.learn__post__content ul {
   padding-inline-start: 1.25rem;
 }
@@ -196,8 +176,7 @@ html[data-theme] body {
   padding-inline-start: 1.75rem;
 }
 
-/* Same nested-list gap on every viewport; styles.css gave 0.5em above 60em
- * and main.css 1.3em below it. */
+/* Same nested-list gap on every viewport; styles.css and main.css disagree. */
 .bootstrap .learn.docs div.learn__post__content li > ul,
 .bootstrap .learn.docs div.learn__post__content li > ol {
   margin-bottom: 0;
@@ -215,22 +194,18 @@ html[data-theme] body {
   color: var(--mb-text-muted);
 }
 
-/* Lato 900 is no longer requested for the docs (stylesheets.html), so the
- * copy button label drops to 700 rather than synthesize. */
+/* styles.css asks for Lato 900, which the docs don't load (stylesheets.html). */
 .bootstrap .learn.docs div.code-snippet-wrapper .copy-code-button p {
   font-weight: 700;
 }
 
-/* The TOC's sticky offset in styles.css assumes the 77px marketing navbar;
- * derive it from the docs header's height variable instead, keeping
- * styles.css's 14px overlap (63px under a 77px navbar). The left sidebar
- * already reads the variable in LeftSidebar.astro. */
+/* The TOC's sticky offset in styles.css assumes the 77px marketing navbar.
+ * Keeps its 14px overlap. */
 .bootstrap .learn .learn__right-sidebar {
   top: calc(var(--navigation-header-height) - 14px);
 }
 
-/* Search and version selector moved to the header; let the breadcrumb fill
- * the top bar. */
+/* The breadcrumb is the only thing in the top bar. */
 .bootstrap .learn.docs .top-bar > div:first-child {
   width: 100%;
 }
@@ -285,6 +260,7 @@ html[data-theme] body {
   }
 
   .docs-nav-backdrop {
+    background-color: var(--mb-backdrop);
     display: block;
     inset: var(--navigation-header-height) 0 0;
     opacity: 0;
@@ -325,23 +301,19 @@ html[data-theme] body {
 }
 
 /* With the sidebar visible, pin the nav to the viewport edge and center the
- * article in the remaining space. styles.css centers the whole grid, which
- * pushed the nav inward. */
+ * article in the remaining space; styles.css centers the whole grid. */
 @media screen and (min-width: 993px) {
   .bootstrap .learn.docs {
     /* Text column measure. Paragraphs, tables and h2 section rules all stop
      * at this width; the centered box below is sized to it. */
     --docs-article-width: 800px;
-    --docs-nav-width: 280px;
 
-    /* styles.css painted #fafbfe only right of the centered box; paint the
-     * full-bleed grid instead. */
+    /* Full bleed; styles.css paints only right of its centered box. */
     background-color: var(--mb-bg);
     box-shadow: none;
 
-    /* styles.css sets 226px for the Learn sidebar; docs nav labels are
-     * longer ("Dashboard heading and text cards"), so give it more room. */
-    grid-template-columns: var(--docs-nav-width) 1fr;
+    /* Wider than the 226px Learn sidebar: docs nav labels are longer. */
+    grid-template-columns: 280px 1fr;
     margin: 0;
     max-width: none;
   }
@@ -362,15 +334,6 @@ html[data-theme] body {
    * tables, rules and paragraphs share one right edge. */
   .bootstrap .learn.docs div.learn__post__content > * {
     max-width: var(--docs-article-width);
-  }
-
-  /* 8px link padding + 12px aligns nav text with the header wordmark at 20px.
-   * padding-top replaces the 80px LeftSidebar.astro reserves for the old
-   * Learn "home" link, which this sidebar no longer renders. */
-  .bootstrap .learn.docs #main-navigation-content.learn-left-sidebar {
-    background-color: var(--mb-surface);
-    padding-left: 12px;
-    padding-top: 30px;
   }
 
   /* The header tabs switch sections on desktop. */

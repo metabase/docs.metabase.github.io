@@ -1,9 +1,6 @@
-/* Color rules for the themed docs layout (NewDocsLayout), written once with the
- * tokens in docs-tokens.css. Each rule replaces a hardcoded-color rule in the
- * vendored styles.css / main.css bundle at equal or higher specificity; this
- * sheet loads last, so it wins ties. Rules whose colors are the same in both
- * themes (brand-blue hovers, CTAs) are left to the vendored sheet. Tables are
- * styled end to end, colors included, in docs-tables.css. */
+/* Color rules for the themed docs layout (NewDocsLayout). Each rule replaces a
+ * hardcoded color in the vendored styles.css / main.css at equal or higher
+ * specificity; this sheet loads last, so it wins ties. */
 
 /* Page shell */
 
@@ -60,11 +57,7 @@
   color: var(--mb-text);
 }
 
-.bootstrap .learn article > p,
-.bootstrap .learn article .learn__summary {
-  color: var(--mb-text-secondary);
-}
-
+/* Also outranks the vendored `a:hover` (#1c6bb0), which is too dim on dark. */
 .bootstrap .learn.docs a {
   color: var(--mb-brand);
 }
@@ -73,8 +66,7 @@
   border-bottom-color: var(--mb-border-strong);
 }
 
-/* new-docs-anchor-links.js wraps each h2 in div.copy-clip-container.h2 and
- * styles.css draws the section rule on that wrapper, so recolor it too. */
+/* The wrapper new-docs-anchor-links.js puts around each h2. */
 .bootstrap .learn .learn__article .copy-clip-container.h2 {
   border-bottom-color: var(--mb-border-strong);
 }
@@ -116,52 +108,11 @@
   border-top-color: var(--mb-border-subtle);
 }
 
-/* Right sidebar: table of contents */
-
-.bootstrap #sub-navigation-content > *:first-child::before {
-  color: var(--mb-heading);
-}
-
-.bootstrap #sub-navigation-content a {
-  color: var(--mb-text-muted);
-}
-
-.bootstrap #sub-navigation-content a.selected,
-.bootstrap #sub-navigation-content a:hover {
-  color: var(--mb-text-secondary);
-}
-
-/* "On this page" toggle that PageNav.astro shows at 991px and below. */
-.bootstrap #toc-toggle {
-  border-bottom-color: var(--mb-border);
-  color: var(--mb-heading);
-}
-
-/* Left sidebar. Its own colors are tokens in LeftSidebar.astro. As a mobile
- * drawer (docs-local.css) it is painted over the article. */
-@media screen and (max-width: 992px) {
-  .bootstrap .learn.docs #main-navigation-content.learn-left-sidebar {
-    background-color: var(--mb-surface);
-  }
-
-  .docs-nav-backdrop {
-    background-color: var(--mb-backdrop);
-  }
-}
-
 /* Code */
 
 .bootstrap .learn pre,
 .bootstrap .learn pre code {
   box-shadow: var(--mb-shadow);
-}
-
-.bootstrap .learn__post h2 code,
-.bootstrap .learn__post h3 code,
-.bootstrap .learn__post h4 code,
-.bootstrap .learn__post h5 code {
-  background: var(--mb-code-heading-bg);
-  color: var(--mb-text-secondary);
 }
 
 .bootstrap .learn article code {
@@ -174,20 +125,14 @@
   color: var(--mb-pre-text);
 }
 
-/* new-docs-anchor-links.js wraps h2 / h3 in div.copy-clip-container.h2|h3, so
- * code inside a heading also matches the vendored `.h2 code` rules, which are
- * one class more specific than `h2 code`. Same values as the `h2 code` rule
- * above, listed last because these selectors outrank the ones before them. */
+/* new-docs-anchor-links.js wraps h2 / h3 in div.copy-clip-container.h2|h3. */
 .bootstrap .learn__post .h2 code,
-.bootstrap .learn__post .h3 code,
-.bootstrap .learn__post .h4 code,
-.bootstrap .learn__post .h5 code {
+.bootstrap .learn__post .h3 code {
   background: var(--mb-code-heading-bg);
   color: var(--mb-text-secondary);
 }
 
-/* new-docs-code-snippet-copy.js wraps highlighted blocks in
- * div.code-snippet-wrapper; styles.css restyles them at 0,3,2. */
+/* The wrapper new-docs-code-snippet-copy.js puts around highlighted blocks. */
 .bootstrap .learn div.code-snippet-wrapper pre,
 .bootstrap .learn div.code-snippet-wrapper code {
   background: var(--mb-pre-bg);
@@ -211,25 +156,12 @@
 }
 
 /* Syntax highlighting: highlight.js classes, ported from the base16
- * atelier-sulphurpool-light theme that legacy pages still load from cdnjs.
- * The base16 accent colors are shared by the light and dark variants; only
- * the foreground and comment colors are tokens. styles.css already sets
- * `.hljs-string` and `.hljs-attr` at this specificity; `.hljs-attr` is
- * re-declared here with a token so it can change in the dark theme. */
-
-.bootstrap code.hljs {
-  padding: 3px 5px;
-}
+ * atelier-sulphurpool-light theme that legacy pages load from cdnjs. The
+ * accent colors are shared by the light and dark variants. */
 
 .bootstrap pre code.hljs {
   display: block;
   overflow-x: auto;
-  padding: 1em;
-}
-
-.bootstrap .hljs {
-  background: var(--mb-pre-bg);
-  color: var(--mb-syntax-fg);
 }
 
 .bootstrap .hljs::selection,
@@ -375,8 +307,6 @@
   border-bottom-color: var(--mb-border);
 }
 
-.bootstrap .learn #was-this-helpful-widget h6,
-.bootstrap .learn #was-this-helpful-widget .h6,
 .bootstrap .learn #was-this-helpful-widget div#page-comment p {
   color: var(--mb-text-secondary);
 }
@@ -394,17 +324,6 @@
   color: var(--mb-text-muted);
 }
 
-.bootstrap .learn #was-this-helpful-widget button.vote-button:hover {
-  border-color: var(--mb-brand);
-  color: var(--mb-brand);
-}
-
-.bootstrap .learn #was-this-helpful-widget button.vote-button.active {
-  background-color: var(--mb-brand);
-  border-color: var(--mb-brand);
-  color: #fff;
-}
-
 .bootstrap .learn #was-this-helpful-widget form {
   background-color: var(--mb-surface-elevated);
   border-color: var(--mb-border-subtle);
@@ -415,16 +334,9 @@
   color: var(--mb-text-muted);
 }
 
-.bootstrap .learn #was-this-helpful-widget div#page-feedback-email-container {
-  color: var(--mb-text-muted);
-}
-
-/* Cookie banner (gdpr.css and the vendored gdpr-cookie-notice styles). The
- * banner is appended to <body>, outside .bootstrap, and both sheets load on
- * every page with fixed colors, so only the dark theme is restated here. The
- * pill needs !important to outrank the revamp block in gdpr.css. It stays
- * inverted against the page, as in the light theme: a dark surface color
- * would blend into the tables and code blocks it floats over. */
+/* Cookie banner, dark theme only. !important outranks the revamp block in
+ * gdpr.css. The pill stays inverted against the page: a dark surface would
+ * blend into the tables and code blocks it floats over. */
 
 :root[data-theme="dark"] .gdpr-cookie-notice {
   background: var(--mb-heading) !important;

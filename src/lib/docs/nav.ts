@@ -43,6 +43,18 @@ export const getActiveCategory = (
 ): NavNode | undefined =>
   nav.categories.find((category) => containsUrl(category, pageUrl));
 
+// Header tabs and the drawer's section list. A category with no linked pages
+// has nowhere to go, so it gets no entry.
+export const getSections = (nav: Nav, pageUrl: string) => {
+  const active = getActiveCategory(nav, pageUrl);
+  return nav.categories.flatMap((category) => {
+    const href = getLandingUrl(category);
+    return href
+      ? [{ name: category.name, href, active: category === active }]
+      : [];
+  });
+};
+
 const isRelativeUrl = (url: string) => !/^(\/|[a-z][a-z0-9+.-]*:)/i.test(url);
 
 const navCache: Record<string, Nav> = {};

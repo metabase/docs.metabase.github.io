@@ -7,7 +7,6 @@ export function isElement(node: { type: string }): node is Element {
   return node.type === "element";
 }
 
-/** First descendant element with the given tag, depth first. */
 export function findFirstDescendant(
   node: Element,
   tagName: string,
@@ -21,7 +20,6 @@ export function findFirstDescendant(
   return undefined;
 }
 
-/** Every descendant element with the given tag, in document order. */
 export function findAllDescendants(node: Element, tagName: string): Element[] {
   const results: Element[] = [];
   for (const child of node.children) {
@@ -32,7 +30,7 @@ export function findAllDescendants(node: Element, tagName: string): Element[] {
   return results;
 }
 
-/** Direct child elements whose tag is one of `tagNames`. */
+/** Direct children only. */
 export function childElements(node: Element, tagNames: string[]): Element[] {
   return node.children.filter(
     (child): child is Element =>

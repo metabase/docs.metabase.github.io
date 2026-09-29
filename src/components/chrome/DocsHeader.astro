@@ -1,40 +1,31 @@
 ---
 import DocsVersionSelector from "@/components/chrome/DocsVersionSelector.astro";
 import InkeepSearch from "@/components/InkeepSearch/InkeepSearch.astro";
-import MetabaseWordmark from "@/icons/chrome/metabase-wordmark-docs.svg";
+import MetabaseWordmark from "@/icons/chrome/metabase-wordmark.svg";
 import Moon from "@/icons/chrome/moon.svg";
 import Sun from "@/icons/chrome/sun.svg";
 import Stars from "@/icons/stars.svg";
 import {
   getActiveCategory,
-  getLandingUrl,
   getNavForVersion,
+  getSections,
 } from "@/lib/docs/nav";
 
-// Docs header that replaces the marketing navbar on modern docs pages. Rendered
-// outside `.bootstrap` so the marketing navbar styles don't apply; `navigation-header`
-// and `#get-started-btn` are kept for navigation-header.js and use-custom-header-checkout-link.js.
+// Rendered outside `.bootstrap` so the marketing navbar styles don't apply.
+// navigation-header.js needs `navigation-header`, and
+// use-custom-header-checkout-link.js needs `#get-started-btn`.
 type Props = {
-  version?: string;
+  version: string;
   pageUrl: string;
-  /** The page renders a LeftSidebar; at 992px and below the section tabs give
-   *  way to a menu button that opens it as a drawer (script below). */
+  /** The page renders a LeftSidebar, which the menu button opens as a drawer. */
   sidebar?: boolean;
 };
 
-const { version = "latest", pageUrl, sidebar = false } = Astro.props;
+const { version, pageUrl, sidebar = false } = Astro.props;
 
 const nav = getNavForVersion(version);
 const activeCategory = getActiveCategory(nav, pageUrl);
-
-// A category with no linked pages has nowhere to go, so it gets no tab.
-const tabs = nav.categories
-  .map((category) => ({
-    name: category.name,
-    href: getLandingUrl(category),
-    active: category === activeCategory,
-  }))
-  .filter((tab) => tab.href);
+const tabs = getSections(nav, pageUrl);
 ---
 
 <header
@@ -155,12 +146,10 @@ const tabs = nav.categories
 </header>
 
 <script>
-  // Theme toggle. theme-init.js (inlined in <head>) has already set data-theme
-  // on <html> before first paint. This flips it, persists the choice, and
-  // announces the change to other scripts via a "themechange" event on document.
+  // theme-init.js (inlined in <head>) sets data-theme before first paint.
   const THEME_KEY = "mb-docs-theme"; // same key as _includes/docs/theme-init.js
   const root = document.documentElement;
-  const themeButtons = document.querySelectorAll("[data-theme-toggle]");
+  const themeButton = document.querySelector("[data-theme-toggle]");
 
   const getTheme = () => (root.dataset.theme === "dark" ? "dark" : "light");
 
@@ -173,13 +162,11 @@ const tabs = nav.categories
     }
   };
 
-  const syncButtons = (theme: string) => {
+  const syncButton = (theme: string) => {
     const label =
       theme === "dark" ? "Switch to light theme" : "Switch to dark theme";
-    themeButtons.forEach((button) => {
-      button.setAttribute("aria-label", label);
-      button.setAttribute("title", label);
-    });
+    themeButton?.setAttribute("aria-label", label);
+    themeButton?.setAttribute("title", label);
   };
 
   const applyTheme = (theme: string, persist: boolean) => {
@@ -191,38 +178,30 @@ const tabs = nav.categories
         /* storage blocked; the choice lasts for this page only */
       }
     }
-    syncButtons(theme);
-    document.dispatchEvent(
-      new CustomEvent("themechange", { detail: { theme } }),
-    );
+    syncButton(theme);
+    // new-docs-code-snippet-copy.js swaps its icons on this.
+    document.dispatchEvent(new CustomEvent("themechange"));
   };
 
-  syncButtons(getTheme());
-  themeButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-      applyTheme(getTheme() === "dark" ? "light" : "dark", true);
-    });
+  syncButton(getTheme());
+  themeButton?.addEventListener("click", () => {
+    applyTheme(getTheme() === "dark" ? "light" : "dark", true);
   });
 
-  // Follow the OS while the visitor has not chosen explicitly.
   matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (e) => {
     if (!hasStoredPreference()) applyTheme(e.matches ? "dark" : "light", false);
   });
 
-  // Mobile nav. At 992px and below docs-local.css turns the left sidebar
-  // (#main-navigation-content) into a drawer under the header. This opens and
-  // closes it from the menu button, mirroring the state on
-  // <html data-docs-nav="open"> for the CSS and on the button's aria-expanded
-  // for assistive tech.
+  // Mobile nav. At 992px and below docs-local.css turns the left sidebar into
+  // a drawer, which it shows while <html> has data-docs-nav="open".
   const toggle = document.querySelector<HTMLElement>("[data-docs-nav-toggle]");
   const drawer = document.getElementById("main-navigation-content");
 
   // Pages without a sidebar (404) have neither.
   if (toggle && drawer) {
     const backdrop = document.querySelector("[data-docs-nav-close]");
-    // Made inert while the drawer is open so Tab and screen readers stay in
-    // the header and the drawer instead of reaching the page behind the
-    // backdrop.
+    // Inert while the drawer is open, so Tab and screen readers stay out of
+    // the page behind the backdrop.
     const article = document.querySelector<HTMLElement>(".learn__post");
 
     const isOpen = () => root.dataset.docsNav === "open";
@@ -242,10 +221,8 @@ const tabs = nav.categories
 
       if (!open) return;
 
-      // Bring the current page into view inside the drawer. The drawer is
-      // positioned, so it is the link's offsetParent. Only the page list
-      // (the direct ul): the sections list above it marks its active
-      // section .selected too.
+      // Center the current page in the drawer. Only the page list (the direct
+      // ul): the sections list above it marks its active section .selected too.
       const current = drawer.querySelector<HTMLElement>(
         ":scope > ul a.selected",
       );
@@ -263,7 +240,6 @@ const tabs = nav.categories
     toggle.addEventListener("click", () => setOpen(!isOpen()));
     backdrop?.addEventListener("click", () => setOpen(false));
 
-    // Close on Escape and hand focus back to the button.
     document.addEventListener("keydown", (event) => {
       if (event.key !== "Escape" || !isOpen()) return;
       setOpen(false);
@@ -284,17 +260,12 @@ const tabs = nav.categories
 </script>
 
 <style is:global>
-  /* Row heights are on :root so the header is sized wherever it renders,
-     themed or not. */
-  :root {
+  /* html:root outranks the marketing navbar's value, which styles.css sets on
+     :root. inkeep.css and docs-local.css read --navigation-header-height to
+     keep the search modal and sticky sidebars below the header. */
+  html:root {
     --docs-header-main-height: 64px;
     --docs-header-tabs-height: 44px;
-  }
-
-  /* Read by inkeep.css and docs-local.css to keep the search modal and sticky
-     sidebars below the header. styles.css sets the marketing navbar's value
-     on :root; html:root outranks it whatever the load order. */
-  html:root {
     /* + 1px for .docs-header's border-bottom, which sits below the two rows. */
     --navigation-header-height: calc(
       var(--docs-header-main-height) + var(--docs-header-tabs-height) + 1px
@@ -312,8 +283,7 @@ const tabs = nav.categories
     font-family: Lato, "Helvetica Neue", Helvetica, sans-serif;
     position: sticky;
     top: 0;
-    /* Same as the marketing navbar it replaces: above page content, below the
-       image-zoom overlay (2000, image-zoom.js) and the search modal (100000). */
+    /* Below the image-zoom overlay (2000) and the search modal (100000). */
     z-index: 1001;
   }
 
@@ -412,9 +382,7 @@ const tabs = nav.categories
     width: 16px;
   }
 
-  /* Quiet icon button sized and styled like the version selector's
-     .version__current beside it, so the pair reads as one group in the
-     44px tabs row. */
+  /* Styled like the version selector's .version__current beside it. */
   .docs-header__theme {
     align-items: center;
     background: none;
@@ -443,7 +411,6 @@ const tabs = nav.categories
     width: 18px;
   }
 
-  /* Sun in light mode, moon in dark mode. */
   .docs-header__theme svg:last-child,
   :global([data-theme="dark"]) .docs-header__theme svg:first-child {
     display: none;
@@ -505,9 +472,7 @@ const tabs = nav.categories
     height: var(--docs-header-tabs-height);
   }
 
-  /* Mobile-only. Shown at 992px and below on pages with a sidebar, in place of the
-     tab list; labeled with the active section so the row still says where
-     you are. The script above toggles aria-expanded. */
+  /* Shown at 992px and below on pages with a sidebar, in place of the tabs. */
   .docs-header__menu {
     align-items: center;
     background: none;
@@ -543,7 +508,6 @@ const tabs = nav.categories
     width: 20px;
   }
 
-  /* Hamburger while closed, X while open. */
   .docs-header__menu[aria-expanded="true"] .docs-header__menu-open,
   .docs-header__menu:not([aria-expanded="true"]) .docs-header__menu-close {
     display: none;
@@ -660,10 +624,7 @@ const tabs = nav.categories
       padding: 0 10px;
     }
 
-    /* With a sidebar, the menu button (labeled with the active section)
-       replaces the tab list; the sections are listed in the drawer. The row
-       keeps its 44px height because --navigation-header-height positions the
-       search modal from it. */
+    /* The sections are listed in the drawer instead. */
     .docs-header--with-nav .docs-header__menu {
       display: flex;
     }

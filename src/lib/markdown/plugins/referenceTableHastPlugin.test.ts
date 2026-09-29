@@ -8,8 +8,8 @@ describe("referenceTableHastPlugin", () => {
   test("restructures a Property / Type / Description table", async () => {
     const out = await render(`| Property | Type | Description |
 |---|---|---|
-| <a id="foo"></a> \`foo?\` | \`string\`[] | Body text.<br>---<br>Optional<br>Default: \`x\`<br>Available in Pro/Enterprise. |
-| <a id="bar"></a> \`bar\` | \`"a" \\| "b"\` | Plain body.<br>---<br>Required<br>Possible values: \`a\`, \`b\`<br>Default: none. |
+| <a id="foo"></a> \`foo?\` | \`string\`[] | Body text.<br>---<br>Default: \`x\`<br>Available in Pro/Enterprise. |
+| <a id="bar"></a> \`bar\` | \`"a" \\| "b"\` | Plain body.<br>---<br>Optional<br>Possible values: \`a\`, \`b\`<br>Default: none. |
 `);
 
     expect(out).toContain('<table class="table-reference">');
@@ -21,9 +21,9 @@ describe("referenceTableHastPlugin", () => {
     );
     expect(out).not.toContain('<a id="foo">');
 
-    // typedoc's `foo?` becomes a plain name plus an Optional flag, once.
+    // An Optional flag for typedoc's `foo?` and for bar's `Optional` line.
     expect(out).toContain(">foo</code>");
-    expect(out.match(/prop-meta-flag is-optional/g)).toHaveLength(1);
+    expect(out.match(/prop-meta-flag/g)).toHaveLength(2);
 
     // `string`[] folds into one code span.
     expect(out).toContain(">string[]</code>");
@@ -33,13 +33,12 @@ describe("referenceTableHastPlugin", () => {
     expect(out).toContain('<div class="prop-desc">Body text.</div>');
     expect(out).toContain('<span class="prop-meta-label">Default</span>');
     expect(out).toContain(
-      '<span class="prop-meta-label">Available in</span><span class="prop-meta-value">Pro/Enterprise</span>',
+      '<span class="prop-meta-label">Available in</span>Pro/Enterprise</div>',
     );
-    expect(out).toContain("prop-meta-flag is-required");
     expect(out).toContain(
       '<span class="prop-meta-label">Possible values</span>',
     );
-    expect(out).toContain('<span class="prop-meta-value">none</span>');
+    expect(out).toContain('<span class="prop-meta-label">Default</span>none<');
   });
 
   test("keeps the optional marker in a two-column table", async () => {

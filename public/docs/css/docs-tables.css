@@ -1,19 +1,12 @@
-/* Docs tables, layout and color, on top of the vendored styles.css / main.css
- * bundle. Colors are docs-tokens.css tokens, which stay light on unthemed pages.
- *
- * styles.css stacks every `.learn__post table` into labeled cards below
- * 1399.98px, a phone layout applied to most laptops. The scroll wrapper from
- * new-docs-table-overflow.js makes real tables safe, so they come back wherever
- * the article column is wide enough. The 993–1199px band keeps the cards: the
- * sidebar and table of contents leave the text column under 650px there.
- *
- * referenceTableHastPlugin.ts tags Property / Type / Description tables
- * `table-reference` and adds the .prop-* hooks below. */
+/* Docs tables. styles.css stacks every `.learn__post table` into labeled cards
+ * below 1399.98px; real tables come back wherever the article column is wide
+ * enough. The 993–1199px band keeps the cards: the text column is under 650px
+ * there. The .table-reference and .prop-* hooks come from
+ * referenceTableHastPlugin.ts. */
 
 @media (min-width: 768px) and (max-width: 992px),
   (min-width: 1200px) and (max-width: 1399.98px) {
   .bootstrap .learn__post table {
-    background: var(--mb-surface);
     border: 1px solid var(--mb-border-subtle);
     border-radius: 0.5rem;
   }
@@ -55,8 +48,6 @@
   }
 }
 
-/* Colors, replacing the hardcoded ones in styles.css. */
-
 .bootstrap .learn__post table {
   background: var(--mb-surface);
   border-color: var(--mb-border-subtle);
@@ -76,8 +67,7 @@
   color: var(--mb-text);
 }
 
-/* styles.css sets the uppercase header labels in Lato 900, which the docs no
- * longer request (stylesheets.html); 700 instead of a synthesized weight. */
+/* styles.css asks for Lato 900, which the docs don't load (stylesheets.html). */
 .bootstrap .learn__post table th,
 .bootstrap .learn__post table tr td::before {
   font-weight: 700;
@@ -108,9 +98,7 @@
   background: linear-gradient(270deg, var(--mb-surface) 0%, transparent 100%);
 }
 
-/* Density and scanning aids for the table layout (same widths as above).
- * main.css pads every cell 1em on a 1.6rem line-height; the header is 11px
- * uppercase. */
+/* Density and scanning aids for the table layout. */
 @media (min-width: 768px) and (max-width: 992px), (min-width: 1200px) {
   .bootstrap .learn__post table {
     margin-bottom: 2rem !important;
@@ -135,8 +123,7 @@
     line-height: 1.5;
   }
 
-  /* Every second body row, so long reference tables read across. Only in
-   * the real table layout; stacked cards are separate boxes already. */
+  /* Only in the table layout; stacked cards are separate boxes already. */
   .bootstrap .learn__post table tbody tr:nth-child(even) td {
     background: var(--mb-surface-stripe);
   }
@@ -160,7 +147,6 @@
 
 .bootstrap .learn .learn__article table td code {
   background-color: var(--mb-tag-bg);
-  font-size: 0.875em;
   padding: 0.0625rem 0.1875rem;
 }
 
@@ -177,7 +163,8 @@
   scroll-margin-top: calc(var(--navigation-header-height) + 1rem);
 }
 
-.bootstrap .learn__post table .table-reference-anchor {
+/* table.table-reference outranks the link color in docs-theme.css. */
+.bootstrap .learn__post table.table-reference .table-reference-anchor {
   color: var(--mb-text-muted);
   font-weight: 700;
   margin-left: 0.375rem;
@@ -186,7 +173,7 @@
   transition: opacity 0.15s ease;
 }
 
-.bootstrap .learn__post table .table-reference-anchor:hover {
+.bootstrap .learn__post table.table-reference .table-reference-anchor:hover {
   color: var(--mb-brand);
 }
 
@@ -204,9 +191,7 @@
 }
 
 /* Metadata lifted out of the description: Optional / Default / Possible
- * values / Available in, laid out as a wrapping row of small items. Items are
- * plain inline flow so a label and its value share a baseline and wrap
- * together like text. */
+ * values / Available in, as a wrapping row of small items. */
 .bootstrap .learn__post table .prop-meta {
   align-items: baseline;
   display: flex;
@@ -218,10 +203,6 @@
 
 .bootstrap .learn__post table .prop-desc + .prop-meta {
   margin-top: 0.5rem;
-}
-
-.bootstrap .learn__post table .prop-meta-item {
-  display: inline;
 }
 
 .bootstrap .learn__post table .prop-meta-label {
@@ -249,9 +230,4 @@
   line-height: 1.125rem;
   padding: 0 0.5rem;
   text-transform: uppercase;
-}
-
-.bootstrap .learn__post table .prop-meta-flag.is-required {
-  background: var(--mb-surface-active);
-  color: var(--mb-brand);
 }
