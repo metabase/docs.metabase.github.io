@@ -86,6 +86,17 @@ const replaceVersionInUrls = (
   { version }: { version: string },
 ): string => body.replaceAll("/latest/embedding/", `/${version}/embedding/`);
 
+// Single-URL form of rewriteDocLinks, for links that are already parsed out of
+// the markdown (e.g. hrefs in compiled MDX; see docLinksHastPlugin).
+export const rewriteDocUrl = (
+  url: string,
+  { version, latest }: { version: string; latest: boolean },
+): string => {
+  const formatted =
+    isRelativeUrl(url) || isMetabaseUrl(url) ? formatUrl(url) : url;
+  return latest ? formatted : replaceVersionInUrls(formatted, { version });
+};
+
 // Makes a doc's links resolve on this site.
 // Strips extensions and pins embedding links to the doc's version.
 // Apply to any markdown that ends up in a doc page, including snippets.

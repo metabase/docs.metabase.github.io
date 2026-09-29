@@ -1,0 +1,29 @@
+---
+import DocsLayout from "@/layouts/DocLayout.astro";
+import type { DocPage } from "@/lib/docs/constructDocMetadata";
+import { renderDocLiquid } from "@/lib/docs/renderDocLiquid";
+import { renderMarkdown } from "@/lib/markdown/markdownRenderer";
+import type { DataEntryMap } from "astro:content";
+
+// A `.md` doc: Liquid runs first (includes, control flow, variables), then
+// the result is converted from markdown to HTML at request time.
+
+type Props = {
+  doc: DataEntryMap["docs"][number];
+  page: DocPage;
+  dirname: string;
+};
+
+const { doc, page, dirname } = Astro.props;
+
+const liquidOutput = await renderDocLiquid({
+  body: doc.body ?? "",
+  page,
+  dirname,
+});
+const html = await renderMarkdown(liquidOutput, doc.filePath!);
+---
+
+<DocsLayout page={{ ...page, content: html }} dirname={dirname}>
+  <Fragment set:html={html} />
+</DocsLayout>

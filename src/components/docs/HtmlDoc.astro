@@ -1,0 +1,31 @@
+---
+import type { DocPage } from "@/lib/docs/constructDocMetadata";
+import { renderDocLiquid } from "@/lib/docs/renderDocLiquid";
+import type { DataEntryMap } from "astro:content";
+
+// A `.html` doc (TypeDoc SDK API reference pages, api.html ToC pages): an
+// already complete standalone HTML document. Only Liquid runs on it (e.g. the
+// embedded-analytics-sdk-metadata include), with no markdown conversion and no
+// docs layout chrome (mirrors the old Jekyll `docs-api` layout, which was a
+// bare passthrough).
+
+type Props = {
+  doc: DataEntryMap["docsHtml"][number];
+  page: DocPage;
+  dirname: string;
+};
+
+const { doc, page, dirname } = Astro.props;
+
+const html = await renderDocLiquid({ body: doc.body ?? "", page, dirname });
+
+// TypeDoc's standalone HTML is generated upstream with root-relative asset
+// paths. In production, those paths resolve against the marketing site, so
+// keep the generated sources untouched and scope their local assets here.
+const scoped = html
+  .replaceAll('"/gdpr-cookie-notice/', '"/docs/gdpr-cookie-notice/')
+  .replaceAll('"/js/', '"/docs/js/')
+  .replaceAll('"/css/', '"/docs/css/');
+---
+
+<Fragment set:html={scoped} />

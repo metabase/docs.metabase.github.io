@@ -1,0 +1,24 @@
+---
+import DocsLayout from "@/layouts/DocLayout.astro";
+import type { DocPage } from "@/lib/docs/constructDocMetadata";
+import { render, type DataEntryMap } from "astro:content";
+
+// A `.mdx` doc: compiled by Astro at build time, so it can't go through Liquid
+// (MDX parses `{% ... %}` as a JS expression). It uses components instead of
+// includes, and reads page variables from the `page` prop. Its links are
+// rewritten by docLinksHastPlugin during compilation.
+
+type Props = {
+  doc: DataEntryMap["docs"][number];
+  page: DocPage;
+  dirname: string;
+};
+
+const { doc, page, dirname } = Astro.props;
+
+const { Content } = await render(doc);
+---
+
+<DocsLayout page={page} dirname={dirname}>
+  <Content page={page} />
+</DocsLayout>

@@ -1,18 +1,19 @@
 ---
 import path from "node:path";
-import { pathToFileURL } from "node:url";
+import HtmlDoc from "@/components/docs/HtmlDoc.astro";
+import MdDoc from "@/components/docs/MdDoc.astro";
+import MdxDoc from "@/components/docs/MdxDoc.astro";
 import { DOCS_SRC_ROOT, METABASE_REPO_PATH } from "@/constants";
-import NewDocsLayout from "@/layouts/NewDocsLayout.astro";
-import OldDocsLayout from "@/layouts/OldDocsLayout.astro";
-import { constructDocMetadata } from "@/lib/docs/constructDocMetadata";
+import {
+  constructDocMetadata,
+  type DocPage,
+} from "@/lib/docs/constructDocMetadata";
 import { resolveDocUrl } from "@/lib/docs/resolveDoc";
-import { rewriteDocLinks } from "@/lib/docs/rewriteDocLinks";
-import { baseCtx, getLiquidRenderer } from "@/lib/liquid/liquidRenderer";
-import { getMarkdownRenderer } from "@/lib/markdown/markdownRenderer";
-import { getCollection, render, type DataEntryMap } from "astro:content";
+import { baseCtx } from "@/lib/liquid/liquidRenderer";
+import { getCollection, type DataEntryMap } from "astro:content";
 
 type Props =
-  | { kind: "md"; doc: DataEntryMap["docs"][number] }
+  | { kind: "md" | "mdx"; doc: DataEntryMap["docs"][number] }
   | { kind: "html"; doc: DataEntryMap["docsHtml"][number] };
 
 export const getStaticPaths = async () => {
@@ -21,86 +22,46 @@ export const getStaticPaths = async () => {
     getCollection("docsHtml"),
   ]);
 
-  const toPath =
-    <Kind extends Props["kind"]>(kind: Kind) =>
-    (doc: { id: string; data: Record<string, unknown>; body?: string }) => {
-      const { version, slug } = resolveDocUrl({
-        id: doc.id,
-        // For prod builds, we want to output like folder/index.html, but for the dev server, the route should exclude /index
-        includeTrailingIndex: import.meta.env.MODE !== "development",
-      });
-      return { props: { kind, doc }, params: { version, slug } };
-    };
+  const toPath = (kind: Props["kind"], doc: Props["doc"]) => {
+    const { version, slug } = resolveDocUrl({
+      id: doc.id,
+      // For prod builds, we want to output like folder/index.html, but for the dev server, the route should exclude /index
+      includeTrailingIndex: import.meta.env.MODE !== "development",
+    });
+    return { props: { kind, doc }, params: { version, slug } };
+  };
 
-  return [...docs.map(toPath("md")), ...docsHtml.map(toPath("html"))];
+  return [
+    ...docs.map((doc) =>
+      toPath(doc.filePath!.endsWith(".mdx") ? "mdx" : "md", doc),
+    ),
+    ...docsHtml.map((doc) => toPath("html", doc)),
+  ];
 };
 
 const { version } = Astro.params;
-const { kind, doc: propsDoc } = Astro.props;
-const { url } = resolveDocUrl({ id: propsDoc.id });
-const doc = {
-  ...propsDoc,
-  data: {
-    ...constructDocMetadata(
-      METABASE_REPO_PATH
-        ? `/${path.relative(METABASE_REPO_PATH, propsDoc.filePath!)}`
-        : `/docs/${path.relative(`${DOCS_SRC_ROOT}/${version}`, propsDoc.filePath!)}`,
-      version === "latest" ? baseCtx.site.docs_version : version,
-      version === "latest",
-    ),
-    ...propsDoc.data,
-  },
-  body: rewriteDocLinks(propsDoc.body ?? "", {
-    version: version!,
-    latest: version === "latest",
-  }),
+const { kind, doc } = Astro.props;
+const latest = version === "latest";
+const filePath = doc.filePath!;
+const dirname = path.dirname(filePath);
+
+const page: DocPage = {
+  url: resolveDocUrl({ id: doc.id }).url,
+  ...constructDocMetadata(
+    METABASE_REPO_PATH
+      ? `/${path.relative(METABASE_REPO_PATH, filePath)}`
+      : `/docs/${path.relative(`${DOCS_SRC_ROOT}/${version}`, filePath)}`,
+    latest ? baseCtx.site.docs_version : version!,
+    latest,
+  ),
+  ...doc.data,
 };
-const dirname = path.dirname(doc.filePath!);
-const page = { url, ...doc.data };
-
-// Process liquid first (e.g. control flow, includes, variables, etc)
-const renderLiquid = () =>
-  getLiquidRenderer({ page, dirname }).render(doc.body!, undefined, {
-    maxSyntaxErrors: version === "latest" ? 0 : 3,
-  });
-
-// `.html` docs (TypeDoc SDK API reference pages, api.html ToC pages) are
-// already complete standalone HTML documents — only Liquid needs to run on
-// them (e.g. the embedded-analytics-sdk-metadata include), no markdown
-// conversion, and no NewDocsLayout chrome (mirrors the old Jekyll
-// `docs-api` layout, which was a bare passthrough).
-let renderedHtml: string | undefined;
-let Content: Awaited<ReturnType<typeof render>>["Content"] | undefined;
-if (kind === "html") {
-  const lqOutput = await renderLiquid();
-  // TypeDoc's standalone HTML is generated upstream with root-relative asset
-  // paths. In production, those paths resolve against the marketing site, so
-  // keep the generated sources untouched and scope their local assets here.
-  renderedHtml = lqOutput
-    .replaceAll('"/gdpr-cookie-notice/', '"/docs/gdpr-cookie-notice/')
-    .replaceAll('"/js/', '"/docs/js/')
-    .replaceAll('"/css/', '"/docs/css/');
-} else if (doc.filePath!.endsWith(".mdx")) {
-  // `.mdx` docs are compiled by Astro at build time, so they can't go through
-  // Liquid (MDX parses `{% ... %}` as a JS expression). They use components
-  // instead of includes, and read page variables from the `page` prop.
-  ({ Content } = await render(propsDoc));
-} else {
-  const lqOutput = await renderLiquid();
-  const md = await getMarkdownRenderer();
-  const renderResult = await md.render(lqOutput, {
-    fileURL: pathToFileURL(path.resolve(doc.filePath!)),
-  });
-  renderedHtml = renderResult.code;
-}
-
-const Layout = doc.data.layout === "docs" ? OldDocsLayout : NewDocsLayout;
 ---
 
 {kind === "html" ? (
-  <Fragment set:html={renderedHtml} />
-) : (
-  <Layout page={{ ...page, content: renderedHtml }} dirname={dirname}>
-    {Content ? <Content page={page} /> : <Fragment set:html={renderedHtml} />}
-  </Layout>
-)}
+  <HtmlDoc doc={doc} page={page} dirname={dirname} />
+) : kind === "md" ? (
+  <MdDoc doc={doc} page={page} dirname={dirname} />
+) : kind === "mdx" ? (
+  <MdxDoc doc={doc} page={page} dirname={dirname} />
+) : null}

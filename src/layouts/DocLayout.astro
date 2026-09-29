@@ -1,0 +1,19 @@
+---
+import type { DocPage } from "@/lib/docs/constructDocMetadata";
+import NewDocsLayout from "./NewDocsLayout.astro";
+import OldDocsLayout from "./OldDocsLayout.astro";
+
+type Props = {
+  page: DocPage & { content?: string };
+  dirname: string;
+};
+
+const { page, dirname } = Astro.props;
+
+// Old doc versions keep their old chrome (see `layout` in constructDocMetadata).
+const Layout = page.layout === "docs" ? OldDocsLayout : NewDocsLayout;
+---
+
+<Layout page={page} dirname={dirname}>
+  <slot />
+</Layout>

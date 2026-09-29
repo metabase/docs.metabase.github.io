@@ -5,7 +5,7 @@ import { defineConfig } from "astro/config";
 import { viteStaticCopy } from "vite-plugin-static-copy";
 import { DOCS_DEST, DOCS_SRC_ROOT } from "./src/constants";
 import { collectRedirects } from "./src/lib/docs/collectRedirects";
-import { docsMarkdownProcessor } from "./src/lib/markdown/markdownRenderer";
+import { docsMdxProcessor } from "./src/lib/markdown/markdownRenderer";
 import { noopMarkdownProcessor } from "./src/lib/markdown/noopMarkdownProcessor";
 
 // The number of leading path segments to strip from each copied file's directory.
@@ -29,9 +29,9 @@ export default defineConfig({
   integrations: [
     // `.mdx` docs are compiled by Astro at build time (not rendered at request
     // time like `.md` docs), so they skip Liquid and use components instead.
-    // They share the `.md` docs' hast plugins via the same satteri processor.
+    // They share the `.md` docs' hast plugins, plus a link rewriter (see docsMdxProcessor).
     mdx({
-      processor: docsMarkdownProcessor,
+      processor: docsMdxProcessor,
       syntaxHighlight: false, // Match `.md` docs; see getMarkdownRenderer
     }),
   ],
