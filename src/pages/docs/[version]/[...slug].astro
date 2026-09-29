@@ -2,6 +2,7 @@
 import path from "node:path";
 import { pathToFileURL } from "node:url";
 import { DOCS_SRC_ROOT, METABASE_REPO_PATH } from "@/constants";
+import NewDocsLayout from "@/layouts/new-docs.astro";
 import { constructDocMetadata } from "@/lib/docs/constructDocMetadata";
 import { resolveDocUrl } from "@/lib/docs/resolveDoc";
 import { rewriteDocLinks } from "@/lib/docs/rewriteDocLinks";
@@ -96,8 +97,7 @@ if (kind === "html") {
   renderedHtml = renderResult.code;
 }
 
-// TODO: There's probably a better way to handle docs-api than the Fragment fallback
-const Layout = layouts[doc.data.layout] || Fragment;
+const Layout = layouts[doc.data.layout] || NewDocsLayout;
 ---
 
 {kind === "html" ? (

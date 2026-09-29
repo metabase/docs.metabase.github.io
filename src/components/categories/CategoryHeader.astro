@@ -1,0 +1,61 @@
+---
+interface Props {
+  title: string;
+  summary?: string;
+  image?: string;
+}
+
+const { title, summary, image } = Astro.props;
+---
+
+<header class:list={[image && "has-bg-image"]}>
+  <h1>{title}</h1>
+  {summary && <div class="learn__summary">{summary}</div>}
+  {image && <img src={image} alt={title} class="no-zoom" />}
+</header>
+
+<style>
+  header {
+    margin-bottom: 64px;
+  }
+
+  header.has-bg-image {
+    padding-bottom: 120px;
+    padding-right: 200px;
+  }
+
+  h1 {
+    color: #22242b;
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 32px 0 0.5rem;
+  }
+
+  img {
+    background-color: transparent;
+    border-radius: 0;
+    box-shadow: none;
+    display: none;
+    margin: 0 auto;
+    width: 50%;
+  }
+
+  @media screen and (max-width: 992px) {
+    header.has-bg-image {
+      padding-right: 0;
+    }
+
+    img {
+      display: block;
+    }
+  }
+
+  .learn__summary {
+    color: #5a6072;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 28px;
+    margin: 16px 0;
+  }
+</style>
