@@ -795,7 +795,7 @@ const resourceLinks: NavLinkProps[] = [
       const mobileMenu = navbar.querySelector<HTMLElement>("#nav-menu-mobile");
       const resizeMobileMenu = () => {
         if (mobileMenu)
-          mobileMenu.style.height = `${window.innerHeight - 72}px`;
+          mobileMenu.style.height = `${window.innerHeight - mobileMenu.getBoundingClientRect().top}px`;
       };
 
       hamburger?.addEventListener("click", () => {

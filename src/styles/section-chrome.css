@@ -1,6 +1,6 @@
-/* Phone chrome for the Docs hub: a compact site header that hides on
-   scroll-down and a section bar that sticks in its place. Desktop is untouched.
-   Every selector starts with `body` to outrank the legacy sheets, which load later. */
+/* Phone chrome for the Docs hub: the site header compacts, sticks, and hides on scroll-down.
+   `--section-bar-top` tells the section bar (TopBar.astro) and the TOC dropdown where to sit.
+   Desktop is untouched. Selectors carry `header.bootstrap.hide-on-scroll` to outrank the legacy sheet. */
 
 @media (max-width: 991.98px) {
   body:has(header.hide-on-scroll) {
@@ -12,118 +12,49 @@
     --section-bar-top: 0px;
   }
 
-  body .legacy-scope header.bootstrap.hide-on-scroll {
+  header.bootstrap.hide-on-scroll {
     position: sticky;
     top: 0;
     transition: transform 0.2s ease;
   }
 
-  :root[data-nav-hidden] body .legacy-scope header.bootstrap.hide-on-scroll {
+  :root[data-nav-hidden] header.bootstrap.hide-on-scroll {
     transform: translateY(-100%);
   }
 
   /* Its drop shadow would otherwise peek over the section bar while it is hidden. */
-  :root[data-nav-hidden] body header.bootstrap.hide-on-scroll .navigation-header {
+  :root[data-nav-hidden] header.bootstrap.hide-on-scroll .navigation-header {
     box-shadow: none;
   }
 
-  body header.bootstrap.hide-on-scroll .navigation-header > .container {
+  header.bootstrap.hide-on-scroll .navigation-header > .container {
     padding-bottom: 5px;
     padding-top: 5px;
   }
 
-  body header.bootstrap.hide-on-scroll .home-link svg {
+  header.bootstrap.hide-on-scroll .home-link svg {
     height: 22px;
   }
 
-  /* `.legacy-scope` and `!important` both needed to outrank desktop.scss's header button rule. */
-  body .legacy-scope header.bootstrap.hide-on-scroll #get-started-btn {
+  /* The legacy radius is `!important`, so only a more specific `!important` can replace it. */
+  .legacy-scope header.bootstrap.hide-on-scroll #get-started-btn {
     align-items: center;
     border-radius: 8px !important;
     display: inline-flex;
     height: 36px;
-    padding-bottom: 0;
-    padding-top: 0;
   }
 
-  body header.bootstrap.hide-on-scroll #nav-menu-mobile {
-    height: calc(100vh - var(--navigation-header-height)) !important;
-  }
-
-  /* Classes are doubled: docs pages wrap the legacy sheet in `.bootstrap`, one class deeper. */
-  body .learn .learn__post.learn__post,
-  body .learn .learn__index.learn__index {
-    overflow: clip;
-    padding-top: 40px;
-  }
-
-  /* Fixed rather than sticky: the article gutters differ per page, and the bar must span the viewport.
-     The side padding tracks the header's bootstrap `.container` (540px from sm, 720px from md). */
-  body .learn .top-bar.top-bar {
-    background-color: #fff;
-    gap: 8px;
-    height: 40px;
-    justify-content: flex-start;
-    left: 0;
-    margin: 0;
-    max-width: none;
-    padding: 0 20px;
-    position: fixed;
-    right: 0;
-    top: var(--section-bar-top);
-    transform: none;
-    transition: top 0.2s ease;
-    width: auto;
-    z-index: 5;
-  }
-
-  @media (min-width: 576px) {
-    body .learn .top-bar.top-bar {
-      padding: 0 calc((100% - 540px) / 2 + 20px);
-    }
-  }
-
-  @media (min-width: 768px) {
-    body .learn .top-bar.top-bar {
-      padding: 0 calc((100% - 720px) / 2 + 20px);
-    }
-  }
-
-  /* Flatten the two groups so search can sit right after the menu toggle; the TOC chip stays at the far end. */
-  body .learn .top-bar.top-bar > div {
-    display: contents;
-  }
-
-  /* Icons sit on the 20px content gutter: the buttons' own padding hangs outside it. */
-  body .learn .top-bar.top-bar .docs-nav-toggle {
-    margin-left: -8px;
-    order: -2;
-    padding: 8px;
-  }
-
-  body .learn .top-bar.top-bar #inkeep {
-    order: -1;
-  }
-
-  body .learn .top-bar.top-bar .toc-toggle {
-    margin-left: auto;
-    padding-right: 0;
-  }
-
-  /* Tap leaves `:hover` stuck on phones, so the header burger and the section-bar toggle stay neutral. */
-  body header.bootstrap.hide-on-scroll #mobile-nav-hamburger-wrapper {
+  /* The burger's tap padding hangs outside the gutter the logo sits on. */
+  header.bootstrap.hide-on-scroll #mobile-nav-hamburger-wrapper {
     margin-right: -12px;
   }
 
-  body header.bootstrap.hide-on-scroll #mobile-nav-hamburger-wrapper:hover {
+  /* Tap leaves `:hover` stuck on phones. */
+  header.bootstrap.hide-on-scroll #mobile-nav-hamburger-wrapper:hover {
     background-color: transparent;
   }
 
-  body header.bootstrap.hide-on-scroll #mobile-nav-hamburger-wrapper:hover path {
+  header.bootstrap.hide-on-scroll #mobile-nav-hamburger-wrapper:hover path {
     stroke: #5a6072;
-  }
-
-  body .learn .top-bar.top-bar .docs-nav-toggle:hover {
-    color: #5a6072;
   }
 }
