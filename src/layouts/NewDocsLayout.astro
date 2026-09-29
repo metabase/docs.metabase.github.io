@@ -7,6 +7,7 @@ import VersionNotice from "@/components/chrome/VersionNotice.astro";
 import VersionSelector from "@/components/chrome/VersionSelector.astro";
 import LiquidInclude from "@/components/LiquidInclude.astro";
 import { UNIFY_ENABLED_PAGES } from "@/constants";
+import { getNavForVersion } from "@/lib/docs/nav";
 import { getLiquidRenderer } from "@/lib/liquid/liquidRenderer";
 import DefaultNewLayout from "./DefaultNewLayout.astro";
 import "@/styles/section-chrome.css";
@@ -27,6 +28,8 @@ const { page, dirname } = Astro.props;
 const parts = Astro.url.pathname.split("/");
 const isHomePage = parts[3] === "index" || !parts[3];
 const showBreadcrumb = !isHomePage || parts[2] === "all";
+const navVersion = page.latest ? "latest" : (page.version ?? "latest");
+const showNavToggle = getNavForVersion(navVersion).categories.length > 0;
 
 const lq = getLiquidRenderer({ page, dirname });
 
@@ -36,13 +39,10 @@ const unify = UNIFY_ENABLED_PAGES.includes(page.url);
 <DefaultNewLayout page={page} dirname={dirname} {unify} hideOnScroll>
   <div class="bootstrap">
     <div class="learn docs blog-post MB-Page">
-      <LeftSidebar
-        url={page.url}
-        version={page.latest ? "latest" : page.version}
-      />
+      <LeftSidebar url={page.url} version={navVersion} />
 
       <article class="learn__post learn__article">
-        <TopBar {page} {showBreadcrumb} />
+        <TopBar {page} {showBreadcrumb} {showNavToggle} />
 
         <div class="learn__post__content">
           {showBreadcrumb && <Breadcrumb page={page} variant="inline" />}
@@ -117,6 +117,12 @@ const unify = UNIFY_ENABLED_PAGES.includes(page.url);
 
   /* On phones the rail dissolves; the TOC becomes a dropdown opened from the section bar. */
   @media (max-width: 991.98px) {
+    /* Room for the fixed section bar; outranks the legacy `.bootstrap .learn .learn__article` padding. */
+    .bootstrap .learn article.learn__post {
+      overflow: clip;
+      padding-top: 40px;
+    }
+
     .learn__right-sidebar {
       display: contents;
 
