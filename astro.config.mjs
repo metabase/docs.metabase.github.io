@@ -36,7 +36,6 @@ export default defineConfig({
   vite: {
     plugins: [
       viteStaticCopy({
-        silent: true, // TODO: Remove this. Added temporarily to make `gro-688-delete-_docs` build succeed.
         targets: [
           {
             src: `${DOCS_SRC_ROOT}/**/*.{jpg,png,gif,json}`,

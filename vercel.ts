@@ -11,7 +11,7 @@ const redirects = parseAmplifyRedirects(amplifyRedirects).map((redirect) =>
 export const config = {
   framework: "astro",
   installCommand: "bun install --frozen-lockfile",
-  buildCommand: "bun run build",
+  buildCommand: "bun script/seed-docs-history.ts all && bun run build",
   outputDirectory: "_site",
   cleanUrls: true,
   redirects: [

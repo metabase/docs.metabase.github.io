@@ -1,4 +1,3 @@
-// Extracted from lib/utils.js so it can be used in script/docs (for cross-repo ingestion) and [...slug].astro for JIT processing
 const MARKDOWN_LINK_REGEX = /\[(.+?)\]\((.+?)\)/gim;
 const FOOTER_LINK_REGEX = /^\[(.+?)\]:\s+(.+?)\n/gim;
 
@@ -57,7 +56,10 @@ const getReplacements = (
     .filter((replacement) => replacement !== null);
 };
 
-export const reformatMarkdownUrls = (body: string): string => {
+// Rewrites relative and metabase.com links (inline and footer-style) to site-relative
+// paths by stripping file extensions and the metabase.com origin.
+const reformatMarkdownUrls = (body: string): string => {
+  // Trailing newline lets FOOTER_LINK_REGEX match a footer link on the last line; removed on return.
   let formattedBody = `${body}\n`;
 
   const bodyReplacements = getReplacements(
@@ -74,5 +76,22 @@ export const reformatMarkdownUrls = (body: string): string => {
     formattedBody = formattedBody.replace(match, updatedMatch);
   });
 
-  return formattedBody;
+  return formattedBody.slice(0, -1);
+};
+
+// Non-latest versions link to their own embedding docs rather than /latest.
+const replaceVersionInUrls = (
+  body: string,
+  { version }: { version: string },
+): string => body.replaceAll("/latest/embedding/", `/${version}/embedding/`);
+
+// Makes a doc's links resolve on this site.
+// Strips extensions and pins embedding links to the doc's version.
+// Apply to any markdown that ends up in a doc page, including snippets.
+export const rewriteDocLinks = (
+  body: string,
+  { version, latest }: { version: string; latest: boolean },
+): string => {
+  const reformatted = reformatMarkdownUrls(body);
+  return latest ? reformatted : replaceVersionInUrls(reformatted, { version });
 };
