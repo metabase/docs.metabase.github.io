@@ -31,17 +31,9 @@ export async function promote(
       idOrName: projectId,
       teamId,
     });
-    const request = project.lastAliasRequest;
-    const status =
-      request?.toDeploymentId === deploymentId ? request.jobStatus : undefined;
-    if (status === "succeeded") return;
-    if (status === "failed" || status === "skipped") {
-      throw new Error(`Promotion of ${deploymentId} ${status}`);
-    }
+    if (project.targets?.production?.id === deploymentId) return;
     if (Date.now() >= deadline) {
-      throw new Error(
-        `Promotion of ${deploymentId} is still ${status ?? "pending"}`,
-      );
+      throw new Error(`Promotion of ${deploymentId} is still pending`);
     }
     await Bun.sleep(PROMOTE_POLL_MS);
   }
