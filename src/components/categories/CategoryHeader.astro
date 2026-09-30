@@ -8,54 +8,39 @@ interface Props {
 const { title, summary, image } = Astro.props;
 ---
 
-<header class:list={[image && "has-bg-image"]}>
+<header class:list={["category-header", image && "has-image"]}>
   <h1>{title}</h1>
   {summary && <div class="learn__summary">{summary}</div>}
-  {image && <img src={image} alt={title} class="no-zoom" />}
+  {image && <img src={image} alt="" class="category-header__image no-zoom" />}
 </header>
 
 <style>
-  header {
-    margin-bottom: 64px;
+  .category-header {
+    position: relative;
   }
 
-  header.has-bg-image {
-    padding-bottom: 120px;
-    padding-right: 200px;
-  }
-
-  h1 {
-    color: #22242b;
-    font-size: 36px;
-    font-weight: 700;
-    line-height: 1.2;
-    margin: 32px 0 0.5rem;
-  }
-
-  img {
-    background-color: transparent;
-    border-radius: 0;
+  .category-header .category-header__image {
     box-shadow: none;
-    display: none;
+    display: block;
     margin: 0 auto;
     width: 50%;
   }
 
-  @media screen and (max-width: 992px) {
-    header.has-bg-image {
-      padding-right: 0;
+  @media screen and (min-width: 992px) {
+    .category-header.has-image {
+      padding-bottom: 96px;
     }
 
-    img {
-      display: block;
+    .learn__summary {
+      width: 75%;
     }
-  }
 
-  .learn__summary {
-    color: #5a6072;
-    font-size: 20px;
-    font-weight: 400;
-    line-height: 28px;
-    margin: 16px 0;
+    .category-header .category-header__image {
+      bottom: 0;
+      position: absolute;
+      right: -200px;
+      width: clamp(270px, 30vw, 420px);
+      z-index: -1;
+    }
   }
 </style>
