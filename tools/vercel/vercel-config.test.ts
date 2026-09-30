@@ -107,6 +107,26 @@ describe("docs Vercel configuration", () => {
       ),
     ).toBe(true);
 
+    // Vercel adds HSTS itself; these two it does not.
+    const hardeningRules = config.headers?.filter(({ headers }) =>
+      headers.some(({ key }) => key === "X-Content-Type-Options"),
+    );
+    expect(hardeningRules?.map(({ source }) => source)).toEqual(["/(.*)"]);
+    expect(
+      hardeningRules?.every(
+        ({ headers }) =>
+          headers.some(
+            ({ key, value }) =>
+              key === "X-Content-Type-Options" && value === "nosniff",
+          ) &&
+          headers.some(
+            ({ key, value }) =>
+              key === "Referrer-Policy" &&
+              value === "strict-origin-when-cross-origin",
+          ),
+      ),
+    ).toBe(true);
+
     const frameRules = config.headers?.filter(({ headers }) =>
       headers.some(({ key }) => key === "Content-Security-Policy"),
     );

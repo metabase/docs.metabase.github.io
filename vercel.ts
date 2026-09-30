@@ -23,7 +23,15 @@ export const config = {
   headers: [
     {
       source: "/(.*)",
-      headers: [{ key: "X-Robots-Tag", value: "noindex" }],
+      headers: [
+        // The docs project's own hostnames (previews and docs-*.vercel.app)
+        // are never the canonical URL, so keep them all out of search.
+        // www.metabase.com/docs is served by the marketing site's proxy, which
+        // does not forward these headers.
+        { key: "X-Robots-Tag", value: "noindex" },
+        { key: "X-Content-Type-Options", value: "nosniff" },
+        { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+      ],
     },
     {
       source: "/",
