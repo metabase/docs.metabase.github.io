@@ -6,21 +6,21 @@ import { containsUrl, type NavNode } from "@/lib/docs/nav";
 type Props = {
   node: NavNode;
   pageUrl: string;
-  /** Start open even when the item does not contain the current page. */
-  open?: boolean;
+  /** Top-level item: a heading over its pages, always open, no chevron. */
+  topic?: boolean;
 };
 
-const { node, pageUrl, open = false } = Astro.props;
+const { node, pageUrl, topic = false } = Astro.props;
 
 const hasChildren = Boolean(node.pages && node.pages.length > 0);
-const expanded = containsUrl(node, pageUrl) || (open && hasChildren);
+const expanded = hasChildren && (topic || containsUrl(node, pageUrl));
 ---
 
-<li class={expanded ? "expanded" : ""}>
+<li class:list={{ expanded, "docs-nav-topic": topic }}>
   <a href={node.url} class={pageUrl === node.url ? "selected" : ""}>
     {node.name}
 
-    {hasChildren && (
+    {hasChildren && !topic && (
       <div>
         <Chevron />
       </div>

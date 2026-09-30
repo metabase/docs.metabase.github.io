@@ -199,6 +199,19 @@ const tabs = getSections(nav, pageUrl);
 
     const isOpen = () => root.dataset.docsNav === "open";
 
+    // Center the current page in the sidebar. Only the page list (the direct
+    // ul): the sections list above it marks its active section .selected too.
+    const centerCurrentPage = () => {
+      const current = drawer.querySelector<HTMLElement>(
+        ":scope > ul a.selected",
+      );
+      if (!current) return;
+      drawer.scrollTop = Math.max(
+        0,
+        current.offsetTop - drawer.clientHeight / 2 + current.offsetHeight / 2,
+      );
+    };
+
     const setOpen = (open: boolean) => {
       if (open) {
         root.dataset.docsNav = "open";
@@ -214,21 +227,13 @@ const tabs = getSections(nav, pageUrl);
 
       if (!open) return;
 
-      // Center the current page in the drawer. Only the page list (the direct
-      // ul): the sections list above it marks its active section .selected too.
-      const current = drawer.querySelector<HTMLElement>(
-        ":scope > ul a.selected",
-      );
-      if (current) {
-        drawer.scrollTop = Math.max(
-          0,
-          current.offsetTop -
-            drawer.clientHeight / 2 +
-            current.offsetHeight / 2,
-        );
-      }
+      centerCurrentPage();
       drawer.focus({ preventScroll: true });
     };
+
+    // On desktop the sticky sidebar scrolls; land on the current page instead
+    // of the top.
+    centerCurrentPage();
 
     toggle.addEventListener("click", () => setOpen(!isOpen()));
     backdrop?.addEventListener("click", () => setOpen(false));

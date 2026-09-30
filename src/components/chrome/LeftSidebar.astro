@@ -9,6 +9,8 @@ import {
 // Only the active category's pages; the header tabs switch categories. Pages
 // outside the nav (home, /docs/all) show the first category's pages. The
 // section list is for the mobile drawer, where the header tabs are hidden.
+// The category's top-level items are topics: always-open headings over their
+// pages. Groups below them open when they contain the current page.
 type Props = {
   url: string;
   version: string;
@@ -41,7 +43,7 @@ const sections = getSections(nav, pageUrl);
   {category && (
     <ul>
       {category.pages?.map((node) => (
-        <NavItem node={node} pageUrl={pageUrl} open />
+        <NavItem node={node} pageUrl={pageUrl} topic />
       ))}
     </ul>
   )}
@@ -57,7 +59,7 @@ const sections = getSections(nav, pageUrl);
     height: calc(100vh - var(--navigation-header-height));
     overflow-y: auto;
     /* 8px link padding + 12px aligns nav text with the header wordmark at 20px. */
-    padding: 30px 10px 0 12px;
+    padding: 30px 10px 24px 12px;
     position: sticky;
     top: var(--navigation-header-height);
     width: 100%;
@@ -85,13 +87,12 @@ const sections = getSections(nav, pageUrl);
         display: none;
       }
 
-      li {
-        border-left: 1px solid var(--mb-border);
-        padding-left: 10px;
-      }
-
+      /* A topic's pages sit flush under its heading; the rail starts under
+         collapsible groups, 8px in so it lines up with the group's text. */
       li li {
-        margin-left: 10px;
+        border-left: 1px solid var(--mb-border);
+        margin-left: 8px;
+        padding-left: 10px;
       }
     }
 
@@ -102,6 +103,36 @@ const sections = getSections(nav, pageUrl);
 
       > a svg {
         transform: rotate(0);
+      }
+    }
+
+    /* Space above a topic with pages and after one; a run of page-less topics
+       (Other resources) stays a tight list. */
+    .docs-nav-topic {
+      &.expanded,
+      &.expanded + li {
+        margin-top: 24px;
+      }
+
+      &:first-child {
+        margin-top: 0;
+      }
+
+      /* Before the a rules below, so hover and selected still win. */
+      > a {
+        color: var(--mb-heading);
+        font-weight: 700;
+        padding-right: 8px;
+      }
+
+      /* A topic with no landing page is a label, not a link. */
+      > a:not([href]) {
+        cursor: default;
+
+        &:hover {
+          background-color: transparent;
+          color: var(--mb-heading);
+        }
       }
     }
 
