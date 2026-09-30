@@ -1,6 +1,7 @@
 ---
 import type { DocPage } from "@/lib/docs/constructDocMetadata";
 import { renderDocLiquid } from "@/lib/docs/renderDocLiquid";
+import { rewriteDocLinks } from "@/lib/docs/rewriteDocLinks";
 import type { DataEntryMap } from "astro:content";
 
 // A `.html` doc (TypeDoc SDK API reference pages, api.html ToC pages): an
@@ -17,7 +18,17 @@ type Props = {
 
 const { doc, page, dirname } = Astro.props;
 
-const html = await renderDocLiquid({ body: doc.body ?? "", page, dirname });
+// Unlike markdown docs, these aren't parsed, so their links are rewritten as
+// text. Notably, this pins their many `/latest/embedding/` URLs (in hrefs and
+// inline scripts) to the doc's version.
+const html = await renderDocLiquid({
+  body: rewriteDocLinks(doc.body ?? "", {
+    version: page.version,
+    latest: !!page.latest,
+  }),
+  page,
+  dirname,
+});
 
 // TypeDoc's standalone HTML is generated upstream with root-relative asset
 // paths. In production, those paths resolve against the marketing site, so

@@ -4,9 +4,8 @@ import { defineHastPlugin } from "satteri";
 import { DOCS_SRC_ROOT, DOCS_VERSION } from "../../../constants";
 import { rewriteDocUrl } from "../../docs/rewriteDocLinks";
 
-// `.md` docs get rewriteDocLinks applied to their source text before Liquid
-// runs. `.mdx` docs are compiled by Astro and skip that step, so this applies
-// the same rewrite to their compiled links instead.
+// Makes `.md` and `.mdx` docs' links resolve on this site (see rewriteDocUrl).
+// Runs on parsed links, so links in code and raw HTML are left alone.
 
 const ROOT_ABS = path.resolve(DOCS_SRC_ROOT);
 

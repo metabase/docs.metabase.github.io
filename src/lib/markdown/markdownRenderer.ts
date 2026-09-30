@@ -7,22 +7,17 @@ import { ialHastPlugin } from "./plugins/ialHastPlugin";
 import { relativeImagePlugin } from "./plugins/relativeImagePlugin";
 import { responsiveTableLabelsHastPlugin } from "./plugins/responsiveTableLabelsHastPlugin";
 
-const hastPlugins = [
-  ialHastPlugin,
-  codeDefaultsHastPlugin,
-  responsiveTableLabelsHastPlugin,
-  relativeImagePlugin,
-];
-
-const features = { headingAttributes: true };
-
-const docsMarkdownProcessor = satteri({ hastPlugins, features });
-
-// `.mdx` docs skip the source-text link rewrite that `.md` docs get, so they
-// rewrite links on the compiled output instead.
-export const docsMdxProcessor = satteri({
-  hastPlugins: [...hastPlugins, docLinksHastPlugin],
-  features,
+// Shared by `.md` docs (rendered at request time, see getMarkdownRenderer) and
+// `.mdx` docs (compiled by Astro, see astro.config.mjs).
+export const docsMarkdownProcessor = satteri({
+  hastPlugins: [
+    ialHastPlugin,
+    codeDefaultsHastPlugin,
+    responsiveTableLabelsHastPlugin,
+    relativeImagePlugin,
+    docLinksHastPlugin,
+  ],
+  features: { headingAttributes: true },
 });
 
 let rendererPromise:

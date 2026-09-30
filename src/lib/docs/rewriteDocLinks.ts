@@ -87,7 +87,7 @@ const replaceVersionInUrls = (
 ): string => body.replaceAll("/latest/embedding/", `/${version}/embedding/`);
 
 // Single-URL form of rewriteDocLinks, for links that are already parsed out of
-// the markdown (e.g. hrefs in compiled MDX; see docLinksHastPlugin).
+// the markdown (see docLinksHastPlugin).
 export const rewriteDocUrl = (
   url: string,
   { version, latest }: { version: string; latest: boolean },
@@ -97,9 +97,8 @@ export const rewriteDocUrl = (
   return latest ? formatted : replaceVersionInUrls(formatted, { version });
 };
 
-// Makes a doc's links resolve on this site.
+// Text form of rewriteDocUrl, for `.html` docs, which aren't parsed.
 // Strips extensions and pins embedding links to the doc's version.
-// Apply to any markdown that ends up in a doc page, including snippets.
 export const rewriteDocLinks = (
   body: string,
   { version, latest }: { version: string; latest: boolean },
