@@ -241,6 +241,7 @@ Metabase's reference documentation.
 - [Configuration overview](./configuring-metabase/start)
 - [Setting up Metabase](./configuring-metabase/setting-up-metabase)
 - [General settings](./configuring-metabase/settings)
+- [Allow iframes and images from other domains](./configuring-metabase/domains)
 - [Email](./configuring-metabase/email)
 - [Slack](./configuring-metabase/slack)
 - [Webhooks](./configuring-metabase/webhooks)

@@ -60,7 +60,7 @@ On self-hosted Metabases, this option determines whether or not you allow [anony
 
 {% include plans-blockquote.html feature="Collecting user data" %}
 
-You can switch on logging of IP addresses, user agents, embed path, query parameters, and Metabot conversation metadata for people using your Metabase, both for people directly by logging into Metabase, or for people who view an embedded Metabase component in your app. If enabled, you can find this information in your [usage analytics](../usage-and-performance-tools/usage-analytics).
+You can switch on logging of IP addresses, user agents, embed path, query parameters, the values people submit when they run an action, and Metabot conversation metadata for people using your Metabase, both for people directly by logging into Metabase, or for people who view an embedded Metabase component in your app. If enabled, you can find this information in your [usage analytics](../usage-and-performance-tools/usage-analytics).
 
 By default, collection of user data is turned **off**.
 

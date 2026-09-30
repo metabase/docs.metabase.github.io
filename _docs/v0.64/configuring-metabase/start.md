@@ -21,6 +21,10 @@ A walkthrough of when you first boot up your Metabase.
 
 Site name, report timezone, and more settings.
 
+## [Allow iframes and images from other domains](./domains)
+
+Allowlist sites for iframe cards, and restrict which domains images can load from.
+
 ## [Email](./email)
 
 Set up email for [Alerts](../questions/alerts) and [Dashboard subscriptions](../dashboards/subscriptions).
