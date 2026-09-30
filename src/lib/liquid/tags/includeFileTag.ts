@@ -1,5 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
+import type { DocMetadata } from "@/lib/docs/constructDocMetadata";
+import { rewriteDocLinks } from "@/lib/docs/rewriteDocLinks";
 import type { Context, Liquid, TagToken } from "liquidjs";
 
 // ---------------------------------------------------------------------------
@@ -127,6 +129,13 @@ export const registerIncludeFileTag = (engine: Liquid) => {
       text = removeExcessiveNewlines(text);
       text = removeExcessiveIndentation(text);
       text = renderComments(text, ctx.getSync(["page", "lang"]) as any);
+      if (!params.syntax) {
+        const page = ctx.getSync(["page"]) as DocMetadata;
+        text = rewriteDocLinks(text, {
+          version: page.version,
+          latest: !!page.latest,
+        });
+      }
       if (params.syntax) text = `\`\`\`${params.syntax}\n${text}\n\`\`\``;
       return text;
     },

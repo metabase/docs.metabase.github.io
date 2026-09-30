@@ -1,8 +1,8 @@
 import path from "node:path";
-import { METABASE_REPO_PATH } from "@/constants";
+import { DOCS_SRC_ROOT, METABASE_REPO_PATH } from "@/constants";
 import { constructDocMetadata } from "@/lib/docs/constructDocMetadata";
-import { reformatMarkdownUrls } from "@/lib/docs/reformatMarkdownUrls";
 import { resolveDocUrl } from "@/lib/docs/resolveDoc";
+import { rewriteDocLinks } from "@/lib/docs/rewriteDocLinks";
 import {
   baseCtx,
   getLiquidRenderer,
@@ -25,25 +25,23 @@ export const renderDocLiquid = async ({
   output?: LiquidOutput;
 }) => {
   const { url } = resolveDocUrl({ id: entry.id });
-  // TODO: GRO-688 Remove processing from /script/docs so src files are raw whether reading from _docs or METABASE_REPO_PATH
-  // The only known gap is updateRedirectsAndLinks for non-latest versions, which is two separate fixes:
-  // 1. replaceVersionInUrls belongs alongside reformatMarkdownUrls
-  // 2. redirect_from rewriting belongs in collectRedirects
-  const isRaw = !!METABASE_REPO_PATH;
-  const doc = !isRaw
-    ? entry
-    : {
-        ...entry,
-        data: {
-          ...constructDocMetadata(
-            `/${path.relative(METABASE_REPO_PATH, entry.filePath!)}`,
-            version === "latest" ? baseCtx.site.docs_version : version,
-            version === "latest",
-          ),
-          ...entry.data,
-        },
-        body: reformatMarkdownUrls(entry.body ?? ""),
-      };
+  const doc = {
+    ...entry,
+    data: {
+      ...constructDocMetadata(
+        METABASE_REPO_PATH
+          ? `/${path.relative(METABASE_REPO_PATH, entry.filePath!)}`
+          : `/docs/${path.relative(`${DOCS_SRC_ROOT}/${version}`, entry.filePath!)}`,
+        version === "latest" ? baseCtx.site.docs_version : version,
+        version === "latest",
+      ),
+      ...entry.data,
+    },
+    body: rewriteDocLinks(entry.body ?? "", {
+      version,
+      latest: version === "latest",
+    }),
+  };
   const dirname = path.dirname(doc.filePath!);
   const page = { url, ...doc.data };
 
