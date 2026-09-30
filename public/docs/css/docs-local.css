@@ -201,9 +201,34 @@ html[data-theme] body {
   top: calc(var(--navigation-header-height) - 14px);
 }
 
-/* The breadcrumb is the only thing in the top bar. */
+/* The breadcrumb takes whatever the Copy Markdown button (NewDocsLayout)
+ * leaves; styles.css reserves a fixed 140px for the right-hand slot. */
 .bootstrap .learn.docs .top-bar > div:first-child {
-  width: 100%;
+  flex: 1;
+  width: auto;
+}
+
+/* On narrow phones a long category ends in an ellipsis instead of running
+ * under the button. Every flex container down to the last crumb has to be
+ * allowed to shrink, and styles.css makes the list 200% wide. */
+.bootstrap .learn.docs .top-bar .breadcrumb {
+  width: auto;
+}
+
+.bootstrap .learn.docs .top-bar .breadcrumb-item {
+  white-space: nowrap;
+}
+
+.bootstrap .learn.docs .top-bar > div:first-child,
+.bootstrap .learn.docs .top-bar > div:first-child div,
+.bootstrap .learn.docs .top-bar nav,
+.bootstrap .learn.docs .top-bar .breadcrumb-item:last-child {
+  min-width: 0;
+}
+
+.bootstrap .learn.docs .top-bar .breadcrumb-item:last-child > * {
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* styles.css reserves 56px above the article for the absolutely positioned

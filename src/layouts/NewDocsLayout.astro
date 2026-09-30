@@ -1,5 +1,6 @@
 ---
 import Breadcrumb from "@/components/chrome/Breadcrumb.astro";
+import CopyMarkdownButton from "@/components/chrome/CopyMarkdownButton.astro";
 import DocsHeader from "@/components/chrome/DocsHeader.astro";
 import LeftSidebar from "@/components/chrome/LeftSidebar.astro";
 import PageNav from "@/components/chrome/PageNav.astro";
@@ -18,9 +19,11 @@ type Props = {
     latest?: boolean;
   };
   dirname: string;
+  /** The page's Markdown version, for docs that publish one. */
+  markdownUrl?: string;
 };
 
-const { page, dirname } = Astro.props;
+const { page, dirname, markdownUrl } = Astro.props;
 
 const parts = Astro.url.pathname.split("/");
 const isHomePage = parts[3] === "index" || !parts[3];
@@ -56,6 +59,7 @@ const version = page.latest ? "latest" : (page.version ?? "latest");
                 <Breadcrumb page={page} />
               </div>
             </div>
+            {markdownUrl && <CopyMarkdownButton href={markdownUrl} />}
           </div>
         )}
 

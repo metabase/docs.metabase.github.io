@@ -1,0 +1,155 @@
+---
+import Check from "@/icons/check.svg";
+import Copy from "@/icons/copy.svg";
+
+// Copies the page's Markdown version (`src/pages/docs/[version]/[...slug].md.ts`)
+// to the clipboard. Same icons as the code block copy button
+// (new-docs-code-snippet-copy.js).
+type Props = {
+  /** URL of the page's Markdown version. */
+  href: string;
+};
+
+const { href } = Astro.props;
+---
+
+<button
+  type="button"
+  class="copy-markdown"
+  title="Copy Markdown"
+  data-copy-markdown={href}
+>
+  <Copy class="copy-markdown__copy-icon" aria-hidden="true" />
+  <Check class="copy-markdown__copied-icon" aria-hidden="true" />
+  <span class="copy-markdown__label" aria-live="polite">
+    Copy Markdown
+  </span>
+</button>
+
+<script>
+  const RESET_DELAY_MS = 2000;
+
+  const button = document.querySelector<HTMLButtonElement>(
+    "[data-copy-markdown]",
+  )!;
+  const label = button.querySelector(".copy-markdown__label")!;
+  const idleLabel = label.textContent;
+  let resetTimer: ReturnType<typeof setTimeout> | undefined;
+
+  const fetchMarkdown = async (url: string) => {
+    const response = await fetch(url);
+    if (!response.ok) throw new Error(`${response.status} for ${url}`);
+    return response.text();
+  };
+
+  const copyMarkdown = async (url: string) => {
+    const markdown = fetchMarkdown(url);
+    // Safari only allows a clipboard write while the click is being handled,
+    // and awaiting the fetch first would outlive that. A ClipboardItem takes
+    // the pending fetch instead, so the write itself starts inside the click.
+    if (typeof ClipboardItem !== "undefined") {
+      const blob = markdown.then(
+        (text) => new Blob([text], { type: "text/plain" }),
+      );
+      await navigator.clipboard.write([
+        new ClipboardItem({ "text/plain": blob }),
+      ]);
+    } else {
+      await navigator.clipboard.writeText(await markdown);
+    }
+  };
+
+  button.addEventListener("click", async () => {
+    let state = "copied";
+    try {
+      await copyMarkdown(button.dataset.copyMarkdown!);
+    } catch {
+      state = "error";
+    }
+
+    button.dataset.state = state;
+    label.textContent = state === "copied" ? "Copied" : "Couldn’t copy";
+
+    if (state === "copied") {
+      // The tracker only exists once marketing cookies are accepted.
+      window.snowplow?.(
+        "trackStructEvent",
+        "docs-copy-markdown",
+        "copy",
+        location.pathname,
+      );
+    }
+
+    clearTimeout(resetTimer);
+    resetTimer = setTimeout(() => {
+      delete button.dataset.state;
+      label.textContent = idleLabel;
+    }, RESET_DELAY_MS);
+  });
+</script>
+
+<style>
+  /* Quiet, like the header's text links (DocsHeader.astro). */
+  .copy-markdown {
+    align-items: center;
+    background: none;
+    border: 0;
+    border-radius: 8px;
+    color: var(--mb-text-muted);
+    cursor: pointer;
+    display: flex;
+    flex-shrink: 0;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    gap: 6px;
+    line-height: 20px;
+    transition:
+      background-color 0.3s ease,
+      color 0.3s ease;
+    white-space: nowrap;
+  }
+
+  /* Outranks `.bootstrap .learn article button` in styles.css. */
+  :global(.bootstrap .learn article) .copy-markdown {
+    padding: 6px;
+  }
+
+  .copy-markdown:hover {
+    background-color: var(--mb-surface-active);
+    color: var(--mb-brand);
+  }
+
+  .copy-markdown:focus-visible {
+    outline: 2px solid var(--mb-brand);
+    outline-offset: 2px;
+  }
+
+  .copy-markdown[data-state="copied"] {
+    color: var(--mb-brand);
+  }
+
+  .copy-markdown svg {
+    height: 20px;
+    width: 20px;
+  }
+
+  .copy-markdown__copied-icon,
+  .copy-markdown[data-state="copied"] .copy-markdown__copy-icon {
+    display: none;
+  }
+
+  .copy-markdown[data-state="copied"] .copy-markdown__copied-icon {
+    display: block;
+  }
+
+  /* The icon stands alone: the label is there for screen readers, and shows
+     only when a copy fails, which the icon has no way to say. */
+  .copy-markdown:not([data-state="error"]) .copy-markdown__label {
+    clip-path: inset(50%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    width: 1px;
+  }
+</style>

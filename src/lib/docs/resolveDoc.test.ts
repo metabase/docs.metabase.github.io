@@ -1,5 +1,39 @@
 import { describe, expect, test } from "vitest";
-import { resolveDocUrl } from "./resolveDoc";
+import { hasMarkdownVersion, resolveDocUrl, toMarkdownUrl } from "./resolveDoc";
+
+describe("hasMarkdownVersion", () => {
+  test.each([
+    ["latest", true],
+    ["master", true],
+    // Older than anything the support data tracks.
+    ["v0.30", false],
+  ])("%s", (version, expected) => {
+    expect(hasMarkdownVersion(version)).toBe(expected);
+  });
+});
+
+describe("toMarkdownUrl", () => {
+  test.each([
+    [
+      "/docs/latest/questions/introduction",
+      "/docs/latest/questions/introduction.md",
+    ],
+    ["/docs/v0.52/api/", "/docs/v0.52/api/index.md"],
+    ["/docs/latest/", "/docs/latest/index.md"],
+  ])("%s", (url, markdownUrl) => {
+    expect(toMarkdownUrl(url)).toBe(markdownUrl);
+  });
+
+  test("matches the path the markdown endpoint builds for an index doc", () => {
+    const { version, slug } = resolveDocUrl({
+      id: "v0.52/api/index",
+      includeTrailingIndex: true,
+    });
+    expect(toMarkdownUrl(resolveDocUrl({ id: "v0.52/api/index" }).url)).toBe(
+      `/docs/${version}/${slug}.md`,
+    );
+  });
+});
 
 describe("resolveDocUrl", () => {
   test.each([
