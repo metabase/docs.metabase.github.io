@@ -30,7 +30,7 @@ describe("promote", () => {
   });
 
   test("times out when production never moves", () => {
-    expect(
+    return expect(
       promote(fakeApi(["dpl_old"]).api, "prj_docs", "dpl_new", 0),
     ).rejects.toThrow("still pending");
   });
