@@ -43,7 +43,9 @@ async function main() {
     const names = versions.map((v) => v.name);
     await fetchBlobs(names, config.docs_version);
     await rm(OUT_DIR, { recursive: true, force: true });
-    await Promise.all(names.map((name) => extract(name, config.docs_version)));
+    // Sequential, not Promise.all: Bun's $ hangs with ~53+ concurrent
+    // commands producing sizable output.
+    for (const name of names) await extract(name, config.docs_version);
   } finally {
     await rm(REPO_DIR, { recursive: true, force: true });
   }
@@ -157,9 +159,11 @@ async function fetchRefs(refs: { name: string; ref: string }[]) {
 // --- 4. fetch every docs/ blob in a single request -----------------------
 
 async function fetchBlobs(names: string[], docsVersion: string) {
-  const listings = await Promise.all(
-    names.map((name) => git("ls-tree", "-r", seedRef(name), "docs").text()),
-  );
+  // Sequential for the same Bun $ hang as extract() above.
+  const listings: string[] = [];
+  for (const name of names) {
+    listings.push(await git("ls-tree", "-r", seedRef(name), "docs").text());
+  }
   // "<mode> blob <oid>\t<path>" -- identical files share an oid across versions.
   // Cloud docs only end up in _docs/latest/cloud (see copyLatest), so there's
   // no point fetching docs/cloud blobs for any version but the current one.
