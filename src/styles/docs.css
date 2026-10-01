@@ -5,23 +5,25 @@
  * themed pages.
  *
  * Layer order, lowest first. The vendored marketing bundle sits in `legacy`,
- * so every rule below outranks it whatever the specificity, except:
+ * so every rule below outranks it whatever the specificity, including the
+ * bundle's more specific rules for the same element (`:hover`, `.active`,
+ * `.checkpoint h6`): restyle those too, or scope the rule away from them.
+ * Two exceptions:
  * - its `!important` rules (Bootstrap utilities): layer order reverses for
  *   `!important`, so those win. Drop the vendored class from the markup
  *   rather than answering with another `!important`.
  * - unlayered CSS, which outranks every layer: video.js and flexboxgrid
- *   (head.html) and component <style> blocks such as Header.astro's. */
+ *   (stylesheets.html) and component <style> blocks such as Header.astro's. */
 @layer legacy, theme, base, components, utilities;
 
 /* No preflight: the vendored bundle (Bootstrap reboot + main.css) is the reset
- * the docs prose is tuned against. The cookie notice library's stylesheet
- * comes before gdpr.css, which restyles it. */
+ * the docs prose is tuned against, in the order stylesheets.html links it. */
 @import "tailwindcss/theme.css" layer(theme) prefix(tw);
 @import "tailwindcss/utilities.css" layer(utilities) source(none);
+@import "../../public/docs/gdpr-cookie-notice/dist/style.css" layer(legacy);
 @import "../../public/docs/css/docs.css" layer(legacy);
 @import "../../public/docs/css/styles.css" layer(legacy);
 @import "../../public/docs/css/main.css" layer(legacy);
-@import "../../public/docs/gdpr-cookie-notice/dist/style.css" layer(legacy);
 @import "../../public/docs/css/gdpr.css" layer(legacy);
 
 /* Scan only src/, the one place `tw:` classes are written. */
@@ -205,15 +207,16 @@
   }
 }
 
-/* Markup this repo does not author gets styled here: the rendered Markdown
- * (`.docs-prose`, on the article body in NewDocsLayout), the elements the
- * legacy scripts in public/docs/js inject into it, highlight.js tokens, and
- * the Liquid feedback widget. Everything else uses utilities in its
- * component. */
+/* Markup this repo does not author, or that the vendored bundle styles, gets
+ * styled here: the rendered Markdown (`.docs-prose`, on the article body in
+ * NewDocsLayout), the elements the legacy scripts in public/docs/js inject
+ * into it, highlight.js tokens, the Liquid feedback widget and the footer.
+ * Everything else uses utilities in its component. */
 @layer components {
-  /* Prose. Colors, then the type scale: 36 / 28 / 22 / 18 / 16 over an 18px
-   * body. The .copy-clip-container.hN wrappers from new-docs-anchor-links.js
-   * match the vendored heading rules too, so they get the same font-size. */
+  /* Prose. Colors, then the type scale: 36 (the vendored h1) / 28 / 22 / 18 /
+   * 16 over an 18px body. The .copy-clip-container.hN wrappers from
+   * new-docs-anchor-links.js match the vendored heading rules too, so they
+   * get the same font-size. */
   .docs-prose {
     & :is(h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6) {
       color: var(--tw-color-heading);
@@ -229,12 +232,10 @@
       text-wrap: pretty;
     }
 
+    /* Brand on hover too: this masks the vendored `a:hover` (#1c6bb0), which
+     * is too dim on dark. */
     & a {
       color: var(--tw-color-brand);
-    }
-
-    & h1 {
-      font-size: 2.25rem;
     }
 
     & :is(h2, .copy-clip-container.h2) {
@@ -269,7 +270,6 @@
 
     & :is(h5, h6) {
       font-size: 1rem;
-      font-weight: 700;
     }
 
     /* Code. Sized here so a block renders the same at the top level and
@@ -279,6 +279,10 @@
       background-color: var(--tw-color-code-bg);
       color: var(--tw-color-secondary);
       font-size: 0.875em;
+    }
+
+    & a code {
+      color: var(--tw-color-brand);
     }
 
     & :is(pre, pre code) {
@@ -317,8 +321,9 @@
     }
 
     /* Blocks inside a step would otherwise keep their page-level margins.
-     * .image-wrapper comes from image-zoom.js. */
-    & li > :is(blockquote, pre, img, .image-wrapper) {
+     * .image-wrapper comes from image-zoom.js. :where() leaves a last child
+     * to the rule above. */
+    & li > :where(blockquote, pre, img, .image-wrapper) {
       margin-block: 0.75rem;
     }
 
@@ -326,22 +331,16 @@
       padding: 1rem 1.25rem;
     }
 
-    & ul {
-      padding-inline-start: 1.25rem;
-    }
-
     & ol {
       padding-inline-start: 1.75rem;
     }
 
     & li > :is(ul, ol) {
-      margin-bottom: 0;
       margin-top: 0.5rem;
     }
 
     & ol > li::marker {
       color: var(--tw-color-secondary);
-      font-variant-numeric: tabular-nums;
       font-weight: 700;
     }
 
@@ -380,14 +379,20 @@
     }
 
     /* Checkpoints (docs/checkpoints.js builds div.checkpoint on the embedding
-     * quick-start guides). */
+     * quick-start guides). The title and chevron keep their vendored look
+     * over the heading and image rules above. */
     & .checkpoint {
       background-color: var(--tw-color-blockquote-bg);
       border-color: var(--tw-color-code-heading-bg);
-    }
 
-    & .checkpoint :is(h3, .h3) {
-      color: var(--tw-color-heading);
+      & :is(h6, .h6) {
+        color: var(--tw-color-brand);
+      }
+
+      & img {
+        background-color: transparent;
+        box-shadow: none;
+      }
     }
 
     /* Copy button on highlighted blocks (new-docs-code-snippet-copy.js, which
@@ -399,20 +404,21 @@
         background-color: var(--tw-color-surface-active);
       }
 
-      /* The vendored rule asks for Lato 900, which the docs don't load. */
+      /* The label matches the icons. The vendored rule asks for Lato 900,
+       * which the docs don't load. */
       & p {
+        color: var(--tw-color-brand);
         font-weight: 700;
+
+        @variant dark {
+          color: var(--tw-color-white);
+        }
       }
     }
 
     /* Syntax highlighting: highlight.js classes, ported from the base16
      * atelier-sulphurpool-light theme that legacy pages load from cdnjs. The
      * accent colors are shared by the light and dark variants. */
-    & pre code.hljs {
-      display: block;
-      overflow-x: auto;
-    }
-
     & .hljs::selection,
     & .hljs ::selection {
       background-color: rgba(80, 158, 227, 0.35);
@@ -529,11 +535,9 @@
 
         & thead {
           clip: auto;
-          height: auto;
           margin: 0;
           overflow: visible;
           position: static;
-          width: 100%;
         }
 
         & tr {
@@ -650,10 +654,8 @@
       /* Row permalink, revealed on hover or keyboard focus. */
       & .table-reference-anchor {
         color: var(--tw-color-muted);
-        font-weight: 700;
         margin-left: 0.375rem;
         opacity: 0;
-        text-decoration: none;
         transition: opacity 0.15s ease;
 
         &:hover {
@@ -700,7 +702,6 @@
         background: var(--tw-color-tag);
         border-radius: 999px;
         color: var(--tw-color-secondary);
-        display: inline-block;
         font-size: 0.6875rem;
         font-weight: 700;
         letter-spacing: 0.05em;
@@ -723,8 +724,9 @@
       color: var(--tw-color-heading);
     }
 
-    & button.vote-button {
-      background-color: transparent;
+    /* At rest only: the vendored hover and voted (.active) states sit in the
+     * lower legacy layer, so no specificity lets them outrank this. */
+    & button.vote-button:not(:hover, .active) {
       border-color: var(--tw-color-border);
       color: var(--tw-color-muted);
     }
@@ -741,6 +743,33 @@
 
     & .neutral-60 {
       color: var(--tw-color-muted);
+    }
+  }
+
+  /* Footer (Footer.astro). */
+  .site-footer {
+    background-color: var(--tw-color-surface);
+    color: var(--tw-color-secondary);
+
+    & :is(.site-footer-heading, .site-footer-brand span) {
+      color: var(--tw-color-muted);
+    }
+
+    & .site-footer-group a {
+      color: var(--tw-color-secondary);
+
+      &:hover {
+        color: var(--tw-color-brand);
+      }
+    }
+
+    & .site-footer-badge {
+      background-color: var(--tw-color-tag);
+      color: var(--tw-color-secondary);
+    }
+
+    & .site-footer-bottom {
+      border-top-color: var(--tw-color-border-subtle);
     }
   }
 
