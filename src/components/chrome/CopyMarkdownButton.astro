@@ -59,16 +59,12 @@ const { href } = Astro.props;
     // Safari only allows a clipboard write while the click is being handled,
     // and awaiting the fetch first would outlive that. A ClipboardItem takes
     // the pending fetch instead, so the write itself starts inside the click.
-    if (typeof ClipboardItem !== "undefined") {
-      const blob = markdown.then(
-        (text) => new Blob([text], { type: "text/plain" }),
-      );
-      await navigator.clipboard.write([
-        new ClipboardItem({ "text/plain": blob }),
-      ]);
-    } else {
-      await navigator.clipboard.writeText(await markdown);
-    }
+    const blob = markdown.then(
+      (text) => new Blob([text], { type: "text/plain" }),
+    );
+    await navigator.clipboard.write([
+      new ClipboardItem({ "text/plain": blob }),
+    ]);
   };
 
   button.addEventListener("click", async () => {
