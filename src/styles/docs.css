@@ -29,8 +29,10 @@
 /* Scan only src/, the one place `tw:` classes are written. */
 @source "../";
 
-/* `static`: inkeep.css and image-zoom.js read these at runtime, where
- * Tailwind can't see them, so emit them even if nothing here uses them. */
+/* `static`: emit every variable even if nothing here uses it. Tailwind
+ * already emits the ones docs.css references with var() (which covers what
+ * inkeep.css and image-zoom.js read); this adds the breakpoints, which
+ * DocsHeader.astro's script reads at runtime. */
 @theme static {
   --breakpoint-xs: 481px;
   --breakpoint-sm: 576px;
@@ -57,10 +59,13 @@
   /* Text column measure. */
   --spacing-article: 800px;
 
-  /* Article grid (NewDocsLayout.astro): the gutter either side of the text
-   * column, which mirrors .learn__post__content's padding in styles.css (40px
-   * on the right below 1200px), and the "On this page" column. */
+  /* Article grid (NewDocsLayout.astro): the left sidebar, the gutter either
+   * side of the text column, which mirrors .learn__post__content's padding in
+   * styles.css (the narrow one on the right below 1200px), and the "On this
+   * page" column. */
+  --spacing-sidebar: 280px;
   --spacing-gutter: 72px;
+  --spacing-gutter-narrow: 40px;
   --spacing-toc: 200px;
 
   /* Only the colors below: the default palette has no dark-theme values. */
@@ -100,6 +105,8 @@
   --color-syntax-comment: #898ea4;
   --color-syntax-attr: #574c73;
   --color-syntax-meta: #9c637a;
+  --color-syntax-variable: #c94922; /* shared by the dark variant */
+  --color-syntax-literal: #c76b29; /* shared by the dark variant */
 
   /* Callouts and tags */
   --color-blockquote-bg: #eef6fc;
@@ -421,7 +428,7 @@
      * accent colors are shared by the light and dark variants. */
     & .hljs::selection,
     & .hljs ::selection {
-      background-color: rgba(80, 158, 227, 0.35);
+      background-color: color-mix(in srgb, var(--tw-color-brand) 35%, transparent);
       color: inherit;
     }
 
@@ -438,11 +445,11 @@
     }
 
     & :is(.hljs-bullet, .hljs-deletion, .hljs-name, .hljs-selector-tag, .hljs-template-variable, .hljs-variable) {
-      color: #c94922;
+      color: var(--tw-color-syntax-variable);
     }
 
     & :is(.hljs-link, .hljs-literal, .hljs-number, .hljs-symbol, .hljs-variable.constant_) {
-      color: #c76b29;
+      color: var(--tw-color-syntax-literal);
     }
 
     & .hljs-attr {

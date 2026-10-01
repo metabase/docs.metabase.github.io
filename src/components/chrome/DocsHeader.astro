@@ -100,7 +100,7 @@ const menuIcon =
     class:list={[row, "tw:h-header-tabs"]}
     aria-label="Documentation sections"
   >
-    {/* Shown at 992px and below in place of the tabs; the sections are
+    {/* Shown below lg in place of the tabs; the sections are
         listed in the drawer instead. -8px lines the icon up with the wordmark
         at the 16px row gutter. */}
     {sidebar && (
@@ -226,7 +226,7 @@ const menuIcon =
     if (!hasStoredPreference()) applyTheme(e.matches ? "dark" : "light", false);
   });
 
-  // Mobile nav. At 992px and below LeftSidebar.astro turns the left sidebar
+  // Mobile nav. Below lg LeftSidebar.astro turns the left sidebar
   // into a drawer, shown while <html> has data-docs-nav="open" (the
   // `nav-open:` variant in src/styles/docs.css).
   const toggle = document.querySelector<HTMLElement>("[data-docs-nav-toggle]");
@@ -286,9 +286,13 @@ const menuIcon =
       toggle.focus();
     });
 
-    // The drawer only exists below 993px; drop the open state (and its body
-    // scroll lock) when the viewport grows past it.
-    matchMedia("(min-width: 993px)").addEventListener("change", (event) => {
+    // The drawer only exists below lg; drop the open state (and its body
+    // scroll lock) when the viewport grows past it. docs.css emits the
+    // breakpoint on :root (`@theme static`).
+    const lg = getComputedStyle(document.documentElement)
+      .getPropertyValue("--tw-breakpoint-lg")
+      .trim();
+    matchMedia(`(width >= ${lg})`).addEventListener("change", (event) => {
       if (event.matches && isOpen()) setOpen(false);
     });
 
