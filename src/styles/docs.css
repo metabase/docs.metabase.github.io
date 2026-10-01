@@ -1,19 +1,16 @@
-/* Tailwind entry for the themed docs layout (NewDocsLayout, ErrorLayout).
- * Legacy `layout: docs` pages link the vendored stylesheets from
- * _includes/chrome/stylesheets.html instead. They share the docs route with
- * NewDocsLayout, though, and Astro attaches CSS per route, so this file
- * reaches them too (and OldDocsLayout's component styles reach themed pages).
+/* Tailwind entry for the themed docs layouts (NewDocsLayout, ErrorLayout).
+ * Legacy `layout: docs` pages link the vendored stylesheets instead
+ * (_includes/chrome/stylesheets.html), but Astro attaches CSS per route, so
+ * this file reaches them too, and OldDocsLayout's component styles reach
+ * themed pages.
  *
- * Layer order, lowest first. The vendored marketing bundle goes in `legacy`
- * so every utility and component rule below outranks it without specificity
- * games. Two exceptions:
- * - Its `!important` rules (Bootstrap's utility classes), which nothing here
- *   can override: for `!important` the layer order is reversed, so the lowest
- *   layer wins. Don't answer one with another `!important`; drop the vendored
- *   class from the markup instead.
- * - Unlayered CSS, which outranks every layer: the stylesheets head.html still
- *   links (video.js, flexboxgrid) and component <style> blocks, such as
- *   Header.astro's, which sets --navigation-header-height on :root. */
+ * Layer order, lowest first. The vendored marketing bundle sits in `legacy`,
+ * so every rule below outranks it whatever the specificity, except:
+ * - its `!important` rules (Bootstrap utilities): layer order reverses for
+ *   `!important`, so those win. Drop the vendored class from the markup
+ *   rather than answering with another `!important`.
+ * - unlayered CSS, which outranks every layer: video.js and flexboxgrid
+ *   (head.html) and component <style> blocks such as Header.astro's. */
 @layer legacy, theme, base, components, utilities;
 
 /* No preflight: the vendored bundle (Bootstrap reboot + main.css) is the reset
@@ -27,13 +24,11 @@
 @import "../../public/docs/gdpr-cookie-notice/dist/style.css" layer(legacy);
 @import "../../public/docs/css/gdpr.css" layer(legacy);
 
-/* Only src/, the one place `tw:` classes are written. The prefix already keeps
- * the Bootstrap class names in the Liquid includes and public/docs/js from
- * generating utilities; this keeps the scan small. */
+/* Scan only src/, the one place `tw:` classes are written. */
 @source "../";
 
-/* `static`: inkeep.css, gdpr theming and image-zoom.js read these at runtime,
- * so they must be emitted even when no utility uses them. */
+/* `static`: inkeep.css and image-zoom.js read these at runtime, where
+ * Tailwind can't see them, so emit them even if nothing here uses them. */
 @theme static {
   --breakpoint-xs: 481px;
   --breakpoint-sm: 576px;
@@ -51,11 +46,10 @@
   --default-transition-timing-function: ease;
   --ease-in-out: ease-in-out;
 
-  /* Header rows (DocsHeader.astro); the +1px is its border-bottom. */
+  /* Header rows (DocsHeader.astro) and their total, +1px for its border-bottom.
+   * Tailwind prefixes these definitions but not var() references, hence --tw-. */
   --spacing-header-main: 64px;
   --spacing-header-tabs: 44px;
-
-  /* Explicit --tw- names: Tailwind prefixes the definitions, not var() references. */
   --spacing-header: calc(var(--tw-spacing-header-main) + var(--tw-spacing-header-tabs) + 1px);
 
   /* Text column measure. */
@@ -310,7 +304,6 @@
 
     & :is(.h2, .h3) code {
       background: var(--tw-color-code-heading-bg);
-      color: var(--tw-color-secondary);
     }
 
     /* Lists. Numbers get more room so two-digit steps do not hang into the
@@ -324,9 +317,8 @@
     }
 
     /* Blocks inside a step would otherwise keep their page-level margins.
-     * .code-snippet-wrapper comes from new-docs-code-snippet-copy.js
-     * (plaintext blocks stay a bare pre), .image-wrapper from image-zoom.js. */
-    & li > :is(blockquote, pre, .code-snippet-wrapper, img, .image-wrapper) {
+     * .image-wrapper comes from image-zoom.js. */
+    & li > :is(blockquote, pre, img, .image-wrapper) {
       margin-block: 0.75rem;
     }
 
@@ -368,7 +360,7 @@
     }
 
     /* Notice on docs for versions past their EOL date (VersionNotice.astro).
-     * Legacy pages get the same look from docs.css. */
+     * Legacy pages get the same look from public/docs/css/docs.css. */
     & blockquote.version-unsupported-notice {
       background-color: var(--tw-color-notice-bg);
       border: 1px solid var(--tw-color-notice-border);
@@ -398,14 +390,8 @@
       color: var(--tw-color-heading);
     }
 
-    /* Highlighted blocks and their copy button
-     * (new-docs-code-snippet-copy.js, which swaps in white icons on dark). */
-    & .code-snippet-wrapper :is(pre, code) {
-      background: var(--tw-color-pre-bg);
-      box-shadow: var(--tw-shadow-card);
-      color: var(--tw-color-pre-text);
-    }
-
+    /* Copy button on highlighted blocks (new-docs-code-snippet-copy.js, which
+     * swaps in white icons on dark). */
     & .code-snippet-wrapper .copy-code-button {
       background-color: var(--tw-color-surface-hover);
 
@@ -527,10 +513,6 @@
       & tr td::before {
         font-weight: 700;
       }
-
-      & tbody tr:target td {
-        background: var(--tw-color-surface-hover);
-      }
     }
 
     & .table-overflow-indicator::after {
@@ -573,7 +555,6 @@
         }
 
         & tr td:first-child {
-          background: var(--tw-color-surface);
           font-weight: inherit;
         }
 
@@ -592,10 +573,6 @@
 
         & tr {
           border-color: var(--tw-color-border-subtle);
-        }
-
-        & :is(tr td, tr:last-child td) {
-          border-bottom-color: var(--tw-color-border-subtle);
         }
 
         & tr td::before,
@@ -663,6 +640,11 @@
 
       & tr[id] {
         scroll-margin-top: calc(var(--tw-spacing-header) + 1rem);
+      }
+
+      /* The linked row. `.table-reference` lets it outrank the stripes. */
+      & tbody tr:target td {
+        background: var(--tw-color-surface-hover);
       }
 
       /* Row permalink, revealed on hover or keyboard focus. */

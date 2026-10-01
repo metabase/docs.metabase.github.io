@@ -4,9 +4,10 @@ import Chevron from "@/icons/chevron.svg";
 import { containsUrl, type NavNode } from "@/lib/docs/nav";
 import { navLink } from "./docs-ui";
 
-// public/docs/js/learn/left-sidebar.js toggles `expanded` on a group's <li>
-// when its chevron is clicked; the `[li.expanded>…]` variants below react to
-// it. A topic's own `expanded` is fixed at render time.
+// public/docs/js/learn/left-sidebar.js turns a click on a group's link into a
+// toggle of `expanded` on its <li> (the chevron lets clicks through to the
+// link); the `[li.expanded>…]` variants below react to it. A topic's own
+// `expanded` is fixed at render time.
 type Props = {
   node: NavNode;
   pageUrl: string;
@@ -33,7 +34,7 @@ const label = topic && !node.url;
   class:list={[
     "tw:m-0 tw:pb-1",
     { expanded },
-    topic && "tw:[li.expanded+&]:mt-6 tw:[&.expanded:not(:first-child)]:mt-6",
+    topic && "tw:[&.expanded:not(:first-child)]:mt-6 tw:[li.expanded+&]:mt-6",
     depth >= 2 && "tw:ml-2 tw:border-l tw:border-border tw:pl-2.5",
   ]}
 >
@@ -44,7 +45,7 @@ const label = topic && !node.url;
       "tw:group",
       topic
         ? "tw:pr-2 tw:font-bold tw:text-heading"
-        : "tw:pr-9.5 tw:text-secondary",
+        : "tw:pr-9.5 tw:font-normal tw:text-secondary",
       label
         ? "tw:cursor-default"
         : "tw:hover:bg-surface-hover tw:hover:text-brand",
@@ -55,7 +56,7 @@ const label = topic && !node.url;
 
     {hasChildren && !topic && (
       <div class="tw:pointer-events-none tw:absolute tw:top-1/2 tw:right-0.5 tw:flex tw:size-7.5 tw:-translate-y-1/2 tw:items-center tw:justify-center">
-        <Chevron class="tw:block tw:h-3 tw:w-5 tw:-rotate-90 tw:text-border-strong tw:transition-[rotate,color] tw:ease-in-out tw:group-hover:text-brand tw:group-aria-[current=page]:text-brand tw:[li.expanded>a>div>&]:rotate-0" />
+        <Chevron class="tw:h-3 tw:w-5 tw:-rotate-90 tw:text-border-strong tw:transition-[rotate,color] tw:ease-in-out tw:group-hover:text-brand tw:group-aria-[current=page]:text-brand tw:[li.expanded>a>div>&]:rotate-0" />
       </div>
     )}
   </a>

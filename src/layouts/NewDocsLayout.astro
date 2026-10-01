@@ -11,9 +11,8 @@ import { getLiquidRenderer } from "@/lib/liquid/liquidRenderer";
 import DefaultNewLayout from "./DefaultNewLayout.astro";
 
 // The `.bootstrap .learn …` classes keep the vendored bundle's article
-// styles and the hooks its scripts need (public/docs/js). Those rules sit in
-// the `legacy` cascade layer (src/styles/docs.css), so the utilities here
-// override them without specificity games.
+// styles and the hooks its scripts need (public/docs/js); the utilities here
+// override them through the cascade layers in src/styles/docs.css.
 type Props = {
   page: {
     title: string;
@@ -49,24 +48,23 @@ const version = page.latest ? "latest" : (page.version ?? "latest");
         visible, pin the nav to the viewport edge and center the article in
         the remaining space; the sidebar is wider than Learn's 226px because
         docs nav labels are longer. */}
-    <div class="learn docs blog-post MB-Page tw:grid tw:max-lg:grid-cols-1 tw:max-lg:border-b-surface-hover tw:max-lg:shadow-[1000px_0_0_var(--tw-color-page)] tw:lg:m-0 tw:lg:max-w-none tw:lg:grid-cols-[280px_1fr] tw:lg:bg-page tw:lg:shadow-none">
+    <div class="learn docs blog-post MB-Page tw:max-lg:grid-cols-1 tw:max-lg:border-b-surface-hover tw:max-lg:shadow-[1000px_0_0_var(--tw-color-page)] tw:lg:max-w-none tw:lg:grid-cols-[280px_1fr] tw:lg:bg-page tw:lg:shadow-none">
       <LeftSidebar url={page.url} version={version} />
       {/* Click target behind the mobile nav drawer (DocsHeader.astro opens
-          it); it fades with the drawer, the same way (LeftSidebar.astro). It
-          sits in the grid, so keep it out of layout until the drawer
-          exists. */}
+          it); it fades the way the drawer slides (LeftSidebar.astro). On
+          desktop, where there is no drawer, it would take a grid cell. */}
       <div
-        class="tw:hidden tw:max-lg:invisible tw:max-lg:fixed tw:max-lg:inset-x-0 tw:max-lg:top-header tw:max-lg:bottom-0 tw:max-lg:z-999 tw:max-lg:block tw:max-lg:bg-backdrop tw:max-lg:opacity-0 tw:max-lg:motion-safe:transition-[opacity,visibility] tw:max-lg:motion-safe:duration-250 tw:max-lg:nav-open:visible tw:max-lg:nav-open:opacity-100"
+        class="tw:invisible tw:fixed tw:inset-x-0 tw:top-header tw:bottom-0 tw:z-999 tw:bg-backdrop tw:opacity-0 tw:motion-safe:transition-[opacity,visibility] tw:motion-safe:duration-250 tw:lg:hidden tw:nav-open:visible tw:nav-open:opacity-100"
         data-docs-nav-close
       ></div>
 
-      {/* The text column with a --spacing-gutter (72px) either side, plus the
-          --spacing-toc (200px) column. The vendored bundle reserves 56px above
-          the article for the absolutely positioned breadcrumb bar; the docs
-          home renders none. */}
+      {/* The text column with a --spacing-gutter either side, plus the
+          --spacing-toc column. The vendored bundle reserves 56px above the
+          article for the absolutely positioned breadcrumb bar; the docs home
+          renders none. */}
       <article
         class:list={[
-          "learn__post learn__article tw:relative tw:mb-0 tw:grid tw:grid-cols-[1fr_var(--tw-spacing-toc)] tw:bg-page tw:shadow-[1000px_0_0_var(--tw-color-page)] tw:max-lg:grid-cols-1 tw:lg:mx-auto tw:lg:w-full tw:lg:max-w-[calc(var(--tw-spacing-article)+2*var(--tw-spacing-gutter)+var(--tw-spacing-toc))]",
+          "learn__post learn__article tw:grid tw:grid-cols-[1fr_var(--tw-spacing-toc)] tw:bg-page tw:shadow-[1000px_0_0_var(--tw-color-page)] tw:max-lg:grid-cols-1 tw:lg:mx-auto tw:lg:max-w-[calc(var(--tw-spacing-article)+2*var(--tw-spacing-gutter)+var(--tw-spacing-toc))]",
           { "tw:pt-0": !showBreadcrumb },
         ]}
       >
@@ -77,7 +75,7 @@ const version = page.latest ? "latest" : (page.version ?? "latest");
             40px below 1200px. */}
         {showBreadcrumb && (
           <div class="top-bar tw:border-b-border tw:lg:left-gutter tw:lg:w-[calc(100%-2*var(--tw-spacing-gutter)-var(--tw-spacing-toc))] tw:lg:transform-none tw:lg:pl-0 tw:lg:max-xl:w-[calc(100%-var(--tw-spacing-gutter)-40px-var(--tw-spacing-toc))]">
-            <div class="tw:w-auto tw:min-w-0 tw:flex-1">
+            <div class="tw:min-w-0 tw:flex-1">
               <div class="learn-breadcrumb-trail tw:min-w-0">
                 <Breadcrumb page={page} />
               </div>
@@ -107,7 +105,7 @@ const version = page.latest ? "latest" : (page.version ?? "latest");
         {/* The vendored sticky offset assumes the 77px marketing navbar; keep
             its 14px overlap under the docs header. On phones the sidebar
             dissolves so the TOC becomes an in-flow row above the article. */}
-        <div class="learn__right-sidebar tw:lg:top-[calc(var(--tw-spacing-header)-14px)] tw:max-lg:contents tw:max-lg:[&>:not(#toc-toggle):not(#sub-navigation-content)]:hidden">
+        <div class="learn__right-sidebar tw:max-lg:contents tw:lg:top-[calc(var(--tw-spacing-header)-14px)] tw:max-lg:[&>:not(#toc-toggle):not(#sub-navigation-content)]:hidden">
           <PageNav />
           {!isHomePage && (
             <LiquidInclude

@@ -11,7 +11,7 @@ export const docsBody =
  * layout classes.
  */
 export const quietControl =
-  "tw:rounded-lg tw:text-secondary tw:transition-colors tw:hover:bg-surface-active tw:hover:text-brand tw:aria-expanded:bg-surface-active tw:aria-expanded:text-brand";
+  "tw:cursor-pointer tw:rounded-lg tw:border-0 tw:bg-transparent tw:text-secondary tw:transition-colors tw:hover:bg-surface-active tw:hover:text-brand tw:focus-ring tw:aria-expanded:bg-surface-active tw:aria-expanded:text-brand";
 
 /** A page link in the left sidebar (LeftSidebar.astro, NavItem.astro). */
 export const navLink =
