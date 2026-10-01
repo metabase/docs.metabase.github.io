@@ -4,7 +4,7 @@ import Copy from "@/icons/copy.svg";
 
 // Copies the page's Markdown version (`src/pages/docs/[version]/[...slug].md.ts`)
 // to the clipboard. Same icons as the code block copy button
-// (new-docs-code-snippet-copy.js).
+// (new-docs-code-snippet-copy.js). Quiet, like the header's text links.
 type Props = {
   /** URL of the page's Markdown version. */
   href: string;
@@ -13,15 +13,27 @@ type Props = {
 const { href } = Astro.props;
 ---
 
+{/* The icon stands alone: the label is there for screen readers, and shows
+    only when a copy fails, which the icon has no way to say. */}
 <button
   type="button"
-  class="copy-markdown"
+  class="tw:group tw:flex tw:shrink-0 tw:cursor-pointer tw:items-center tw:gap-1.5 tw:rounded-lg tw:border-0 tw:bg-transparent tw:p-1.5 tw:font-sans tw:text-sm/5 tw:font-bold tw:whitespace-nowrap tw:text-muted tw:transition-colors tw:hover:bg-surface-active tw:hover:text-brand tw:focus-ring tw:data-[state=copied]:text-brand"
   title="Copy Markdown"
   data-copy-markdown={href}
 >
-  <Copy class="copy-markdown__copy-icon" aria-hidden="true" />
-  <Check class="copy-markdown__copied-icon" aria-hidden="true" />
-  <span class="copy-markdown__label" aria-live="polite">
+  <Copy
+    class="tw:size-5 tw:group-data-[state=copied]:hidden"
+    aria-hidden="true"
+  />
+  <Check
+    class="tw:hidden tw:size-5 tw:group-data-[state=copied]:block"
+    aria-hidden="true"
+  />
+  <span
+    class="tw:sr-only tw:group-data-[state=error]:not-sr-only"
+    data-copy-markdown-label
+    aria-live="polite"
+  >
     Copy Markdown
   </span>
 </button>
@@ -32,7 +44,7 @@ const { href } = Astro.props;
   const button = document.querySelector<HTMLButtonElement>(
     "[data-copy-markdown]",
   )!;
-  const label = button.querySelector(".copy-markdown__label")!;
+  const label = button.querySelector("[data-copy-markdown-label]")!;
   const idleLabel = label.textContent;
   let resetTimer: ReturnType<typeof setTimeout> | undefined;
 
@@ -87,69 +99,3 @@ const { href } = Astro.props;
     }, RESET_DELAY_MS);
   });
 </script>
-
-<style>
-  /* Quiet, like the header's text links (DocsHeader.astro). */
-  .copy-markdown {
-    align-items: center;
-    background: none;
-    border: 0;
-    border-radius: 8px;
-    color: var(--mb-text-muted);
-    cursor: pointer;
-    display: flex;
-    flex-shrink: 0;
-    font-family: inherit;
-    font-size: 14px;
-    font-weight: 700;
-    gap: 6px;
-    line-height: 20px;
-    transition:
-      background-color 0.3s ease,
-      color 0.3s ease;
-    white-space: nowrap;
-  }
-
-  /* Outranks `.bootstrap .learn article button` in styles.css. */
-  :global(.bootstrap .learn article) .copy-markdown {
-    padding: 6px;
-  }
-
-  .copy-markdown:hover {
-    background-color: var(--mb-surface-active);
-    color: var(--mb-brand);
-  }
-
-  .copy-markdown:focus-visible {
-    outline: 2px solid var(--mb-brand);
-    outline-offset: 2px;
-  }
-
-  .copy-markdown[data-state="copied"] {
-    color: var(--mb-brand);
-  }
-
-  .copy-markdown svg {
-    height: 20px;
-    width: 20px;
-  }
-
-  .copy-markdown__copied-icon,
-  .copy-markdown[data-state="copied"] .copy-markdown__copy-icon {
-    display: none;
-  }
-
-  .copy-markdown[data-state="copied"] .copy-markdown__copied-icon {
-    display: block;
-  }
-
-  /* The icon stands alone: the label is there for screen readers, and shows
-     only when a copy fails, which the icon has no way to say. */
-  .copy-markdown:not([data-state="error"]) .copy-markdown__label {
-    clip-path: inset(50%);
-    height: 1px;
-    overflow: hidden;
-    position: absolute;
-    width: 1px;
-  }
-</style>

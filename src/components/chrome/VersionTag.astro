@@ -1,0 +1,19 @@
+---
+// Support-status tag next to a docs version: "unsupported" past the EOL
+// date, "lts" for long-term-support releases, nothing otherwise. Used by the
+// header's version selector and /docs/all.
+type Props = {
+  support?: { status?: string; lts?: boolean } | null;
+};
+
+const { support } = Astro.props;
+
+const tag =
+  "tw:rounded-sm tw:px-1.25 tw:py-0.75 tw:text-[10px] tw:leading-none tw:font-bold tw:tracking-[0.02em] tw:uppercase";
+---
+
+{support?.status === "unsupported" ? (
+  <span class:list={[tag, "tw:bg-tag tw:text-secondary"]}>unsupported</span>
+) : support?.lts ? (
+  <span class:list={[tag, "tw:bg-tag-lts tw:text-tag-lts-text"]}>lts</span>
+) : null}

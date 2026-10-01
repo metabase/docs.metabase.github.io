@@ -1,8 +1,13 @@
 ---
 // Buttons marked `data-inkeep-ask-ai` open the widget straight into chat.
+type Props = {
+  class?: string;
+};
+
+const { class: className } = Astro.props;
 ---
 
-<div id="inkeep"></div>
+<div id="inkeep" class={className}></div>
 
 <script>
   // cxkit-js declares sideEffects: false, so a bare static import gets tree-shaken.

@@ -12,7 +12,7 @@ imageZoomWrapper.style.left = "0";
 imageZoomWrapper.style.height = "100vh";
 imageZoomWrapper.style.width = "100vw";
 imageZoomWrapper.style.zIndex = "2000";
-imageZoomWrapper.style.backgroundColor = "var(--mb-bg, #FAFBFE)";
+imageZoomWrapper.style.backgroundColor = "var(--tw-color-page, #FAFBFE)";
 imageZoomWrapper.style.visibility = "hidden";
 
 imageZoomInnerWrapper.style.transition = "transform 0.2s";

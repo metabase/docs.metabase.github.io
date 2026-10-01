@@ -11,7 +11,7 @@ import {
 // metabase repo (docs/embedding/eajs/snippets, docs/embedding/sdk/api/snippets).
 // Both pack facts into the Description cell as `<br>`-separated lines after a
 // `---` rule, and typedoc marks optional props with a trailing `?` on the name.
-// Styled in public/docs/css/docs-tables.css.
+// Styled in src/styles/docs.css.
 //
 // By the time hast plugins run, inline HTML is opaque `raw` nodes: `<br>` is
 // one, and `<a id="…"></a>` is two (`<a id="…">` then `</a>`), never an element

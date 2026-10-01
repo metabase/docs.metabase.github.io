@@ -10,10 +10,15 @@ import {
   getNavForVersion,
   getSections,
 } from "@/lib/docs/nav";
+import { quietControl } from "./docs-ui";
 
 // Rendered outside `.bootstrap` so the marketing navbar styles don't apply.
 // navigation-header.js needs `navigation-header`, and
 // use-custom-header-checkout-link.js needs `#get-started-btn`.
+//
+// Row heights come from --spacing-header-main / --spacing-header-tabs in
+// src/styles/docs.css; --spacing-header (their sum) keeps the search modal,
+// the sticky sidebars and the drawer below the header.
 type Props = {
   version: string;
   pageUrl: string;
@@ -26,48 +31,65 @@ const { version, pageUrl, sidebar = false } = Astro.props;
 const nav = getNavForVersion(version);
 const activeCategory = getActiveCategory(nav, pageUrl);
 const tabs = getSections(nav, pageUrl);
+
+const row =
+  "tw:flex tw:items-center tw:gap-4 tw:px-5 tw:max-lg:gap-3 tw:max-lg:px-4";
+// 40px tall, like the CTA beside them.
+const textLink =
+  "tw:whitespace-nowrap tw:px-3.5 tw:py-2.5 tw:text-sm/5 tw:no-underline tw:focus-ring";
+const menuIcon =
+  "tw:size-5 tw:shrink-0 tw:fill-none tw:stroke-current tw:stroke-[1.5] tw:[stroke-linecap:round]";
 ---
 
-<header
-  class:list={[
-    "docs-header",
-    "navigation-header",
-    { "docs-header--with-nav": sidebar },
-  ]}
->
-  <div class="docs-header__row docs-header__main">
+{/* z-index: below the image-zoom overlay (2000) and the search modal (100000).
+    The shadow matches the left sidebar's (LeftSidebar.astro). */}
+<header class="navigation-header tw:sticky tw:top-0 tw:z-1001 tw:border-b tw:border-border tw:bg-surface tw:shadow-header">
+  <div class:list={[row, "tw:h-header-main"]}>
+    {/* The wordmark text is currentColor; secondary text is too dim on dark
+        surfaces, so the brand goes heading-colored there. */}
     <a
-      class="docs-header__brand"
+      class="tw:flex tw:min-w-0 tw:flex-1 tw:basis-0 tw:items-center tw:gap-1 tw:text-secondary tw:no-underline tw:transition-opacity tw:hover:opacity-75 tw:focus-ring tw:max-lg:flex-none tw:dark:text-heading"
       href={`/docs/${version}/`}
       aria-label="Metabase docs home"
     >
-      <MetabaseWordmark />
-      <span class="docs-header__docs">docs</span>
+      <MetabaseWordmark class="tw:h-6 tw:w-auto tw:max-w-none tw:shrink-0" />
+      {/* 17px Lato Bold matches the wordmark text at 24px; the 1px pad puts
+          it on the wordmark's baseline. */}
+      <span class="tw:pb-px tw:text-[17px]/6 tw:font-bold tw:text-brand tw:max-lg:hidden">
+        docs
+      </span>
     </a>
 
-    <div class="docs-header__search">
-      <InkeepSearch />
+    <div class="tw:flex tw:min-w-0 tw:flex-[0_1_560px] tw:items-center tw:justify-center tw:gap-2 tw:max-lg:flex-auto">
+      <InkeepSearch class="tw:h-10 tw:min-w-30 tw:flex-auto tw:max-xs:min-w-0" />
+      {/* The search modal has its own "Ask" toggle, so the separate button
+          goes at phone widths. */}
       <button
         type="button"
-        class="docs-header__ask"
+        class="tw:flex tw:h-10 tw:shrink-0 tw:cursor-pointer tw:items-center tw:gap-1.5 tw:rounded-lg tw:border tw:border-border tw:bg-surface tw:px-3 tw:font-sans tw:text-sm tw:text-secondary tw:transition-colors tw:hover:bg-surface-hover tw:hover:text-brand tw:focus-ring tw:max-lg:px-2.5 tw:max-xs:hidden"
         data-inkeep-ask-ai
         aria-label="Ask AI"
       >
-        <span class="docs-header__ask-label">Ask AI</span>
-        <Stars />
+        <span class="tw:max-lg:hidden">Ask AI</span>
+        <Stars class="tw:size-4" />
       </button>
     </div>
 
-    <div class="docs-header__actions">
-      <a class="docs-header__whats-new docs-header__quiet" href="/releases">
+    {/* Below 1200px the actions would squeeze the brand into the search box,
+        so the release notes link goes first; the footer still links to it. */}
+    <div class="tw:flex tw:flex-1 tw:basis-0 tw:items-center tw:justify-end tw:gap-2 tw:max-lg:flex-none">
+      <a
+        class:list={[quietControl, textLink, "tw:max-xl:hidden"]}
+        href="/releases"
+      >
         What’s new
       </a>
-      <a class="docs-header__home docs-header__quiet" href="/">
+      <a class:list={[quietControl, textLink, "tw:max-lg:hidden"]} href="/">
         Metabase home
       </a>
       <a
         id="get-started-btn"
-        class="docs-header__cta"
+        class="tw:rounded-lg tw:bg-brand tw:px-4.5 tw:py-3 tw:text-[13px]/4 tw:font-bold tw:whitespace-nowrap tw:text-white tw:no-underline tw:transition-colors tw:hover:bg-brand-hover tw:focus-ring tw:max-xs:px-3 tw:max-xs:py-2.5"
         href="https://store.metabase.com/checkout"
       >
         Get started
@@ -76,43 +98,59 @@ const tabs = getSections(nav, pageUrl);
   </div>
 
   <nav
-    class="docs-header__row docs-header__tabs"
+    class:list={[row, "tw:h-header-tabs"]}
     aria-label="Documentation sections"
   >
+    {/* Shown at 992px and below in place of the tabs; the sections are
+        listed in the drawer instead. -8px lines the icon up with the wordmark
+        at the 16px row gutter. */}
     {sidebar && (
       <button
         type="button"
-        class="docs-header__menu docs-header__quiet"
+        class:list={[
+          quietControl,
+          "tw:group tw:-ml-2 tw:flex tw:h-8 tw:min-w-0 tw:cursor-pointer tw:items-center tw:gap-2 tw:border-0 tw:bg-transparent tw:px-2 tw:font-sans tw:text-sm/5 tw:font-bold tw:focus-ring tw:lg:hidden",
+        ]}
         data-docs-nav-toggle
         aria-controls="main-navigation-content"
         aria-expanded="false"
         aria-label="Open navigation"
       >
         <svg
-          class="docs-header__menu-open"
+          class:list={[menuIcon, "tw:group-aria-expanded:hidden"]}
           viewBox="0 0 20 20"
           aria-hidden="true"
         >
           <path d="M3 5h14M3 10h14M3 15h14" />
         </svg>
         <svg
-          class="docs-header__menu-close"
+          class:list={[menuIcon, "tw:hidden tw:group-aria-expanded:block"]}
           viewBox="0 0 20 20"
           aria-hidden="true"
         >
           <path d="M5 5l10 10M15 5L5 15" />
         </svg>
-        <span class="docs-header__menu-label">
-          {activeCategory?.name ?? "Menu"}
-        </span>
+        <span class="tw:truncate">{activeCategory?.name ?? "Menu"}</span>
       </button>
     )}
+    {/* -8px cancels the first tab's own padding so its label lines up with
+        the wordmark and the sidebar text at the 20px row gutter. Without a
+        sidebar (404) the list scrolls at narrow widths with its scrollbar
+        hidden, so its right edge fades to show there is more. */}
     {tabs.length > 0 && (
-      <ul class="docs-header__tab-list">
+      <ul
+        class:list={[
+          "tw:my-0 tw:-ml-2 tw:flex tw:h-full tw:min-w-0 tw:flex-auto tw:scrollbar-none tw:list-none tw:items-stretch tw:gap-2 tw:overflow-x-auto tw:p-0",
+          sidebar
+            ? "tw:max-lg:hidden"
+            : "tw:max-lg:mask-[linear-gradient(to_right,#000_calc(100%-32px),transparent)] tw:max-lg:pr-8",
+        ]}
+      >
         {tabs.map((tab) => (
-          <li>
+          <li class="tw:m-0 tw:flex tw:shrink-0">
+            {/* Tabs fill the 44px row, so the focus ring stays inside it. */}
             <a
-              class="docs-header__tab"
+              class="tw:flex tw:items-center tw:rounded-t-lg tw:border-b-2 tw:border-transparent tw:px-2 tw:text-sm/5 tw:whitespace-nowrap tw:text-secondary tw:no-underline tw:transition-[background-color,color,border-color] tw:hover:bg-surface-hover tw:hover:text-brand tw:focus-ring tw:focus-visible:-outline-offset-2 tw:aria-[current=page]:border-brand tw:aria-[current=page]:font-bold tw:aria-[current=page]:text-brand"
               href={tab.href}
               aria-current={tab.active ? "page" : undefined}
             >
@@ -122,15 +160,19 @@ const tabs = getSections(nav, pageUrl);
         ))}
       </ul>
     )}
-    <div class="docs-header__version">
+    {/* ml-auto pins it right even when there is no tab list. */}
+    <div class="tw:ml-auto tw:flex tw:shrink-0 tw:items-center tw:gap-1">
       <button
         type="button"
-        class="docs-header__theme docs-header__quiet"
+        class:list={[
+          quietControl,
+          "tw:flex tw:size-8 tw:shrink-0 tw:cursor-pointer tw:items-center tw:justify-center tw:border-0 tw:bg-transparent tw:p-0 tw:focus-ring",
+        ]}
         data-theme-toggle
         aria-label="Switch to dark theme"
       >
-        <Sun />
-        <Moon />
+        <Sun class="tw:size-4.5 tw:dark:hidden" />
+        <Moon class="tw:hidden tw:size-4.5 tw:dark:block" />
       </button>
       <DocsVersionSelector version={version} />
     </div>
@@ -185,8 +227,9 @@ const tabs = getSections(nav, pageUrl);
     if (!hasStoredPreference()) applyTheme(e.matches ? "dark" : "light", false);
   });
 
-  // Mobile nav. At 992px and below docs-local.css turns the left sidebar into
-  // a drawer, which it shows while <html> has data-docs-nav="open".
+  // Mobile nav. At 992px and below LeftSidebar.astro turns the left sidebar
+  // into a drawer, shown while <html> has data-docs-nav="open" (the
+  // `nav-open:` variant in src/styles/docs.css).
   const toggle = document.querySelector<HTMLElement>("[data-docs-nav-toggle]");
   const drawer = document.getElementById("main-navigation-content");
 
@@ -200,10 +243,10 @@ const tabs = getSections(nav, pageUrl);
     const isOpen = () => root.dataset.docsNav === "open";
 
     // Center the current page in the sidebar. Only the page list (the direct
-    // ul): the sections list above it marks its active section .selected too.
+    // ul): the sections list above it marks its active section too.
     const centerCurrentPage = () => {
       const current = drawer.querySelector<HTMLElement>(
-        ":scope > ul a.selected",
+        ':scope > ul a[aria-current="page"]',
       );
       if (!current) return;
       drawer.scrollTop = Math.max(
@@ -256,386 +299,3 @@ const tabs = getSections(nav, pageUrl);
     });
   }
 </script>
-
-<style is:global>
-  /* html:root outranks the marketing navbar's value, which styles.css sets on
-     :root. inkeep.css and docs-local.css read --navigation-header-height to
-     keep the search modal and sticky sidebars below the header. */
-  html:root {
-    --docs-header-main-height: 64px;
-    --docs-header-tabs-height: 44px;
-    /* + 1px for .docs-header's border-bottom, which sits below the two rows. */
-    --navigation-header-height: calc(
-      var(--docs-header-main-height) + var(--docs-header-tabs-height) + 1px
-    );
-  }
-</style>
-
-<style>
-  .docs-header {
-    background-color: var(--mb-surface);
-    border-bottom: 1px solid var(--mb-border);
-    /* Matches the left sidebar's shadow (LeftSidebar.astro). */
-    box-shadow: 2px 4px 4px 0 var(--mb-shadow-chrome);
-    /* Set here because the body font in docs-local.css needs data-theme,
-       which only theme-init.js sets. */
-    font-family: Lato, "Helvetica Neue", Helvetica, sans-serif;
-    position: sticky;
-    top: 0;
-    /* Below the image-zoom overlay (2000) and the search modal (100000). */
-    z-index: 1001;
-  }
-
-  .docs-header__row {
-    align-items: center;
-    display: flex;
-    gap: 16px;
-    padding: 0 20px;
-  }
-
-  .docs-header__main {
-    height: var(--docs-header-main-height);
-  }
-
-  .docs-header__brand {
-    align-items: center;
-    color: var(--mb-text-secondary);
-    display: flex;
-    flex: 1 1 0;
-    gap: 4px;
-    min-width: 0;
-    text-decoration: none;
-    transition: opacity 0.3s ease;
-  }
-
-  .docs-header__brand:hover {
-    opacity: 0.75;
-  }
-
-  /* The wordmark text is currentColor; secondary text is too dim on dark
-     surfaces. */
-  :global([data-theme="dark"]) .docs-header__brand {
-    color: var(--mb-heading);
-  }
-
-  .docs-header__brand svg {
-    flex-shrink: 0;
-    height: 24px;
-    max-width: none;
-    width: auto;
-  }
-
-  /* 17px Lato Bold matches the wordmark text at 24px; the 1px pad puts it on
-     the wordmark's baseline. */
-  .docs-header__docs {
-    color: var(--mb-brand);
-    font-size: 17px;
-    font-weight: 700;
-    line-height: 24px;
-    padding-bottom: 1px;
-  }
-
-  .docs-header__search {
-    align-items: center;
-    display: flex;
-    flex: 0 1 560px;
-    gap: 8px;
-    justify-content: center;
-    min-width: 0;
-  }
-
-  .docs-header__search :global(#inkeep) {
-    flex: 1 1 auto;
-    height: 40px;
-    min-width: 120px;
-  }
-
-  .docs-header__ask {
-    align-items: center;
-    background-color: var(--mb-surface);
-    border: 1px solid var(--mb-border);
-    border-radius: 8px;
-    color: var(--mb-text-secondary);
-    cursor: pointer;
-    display: flex;
-    flex-shrink: 0;
-    font-family: inherit;
-    font-size: 14px;
-    gap: 6px;
-    height: 40px;
-    padding: 0 12px;
-    transition:
-      background-color 0.3s ease,
-      color 0.3s ease;
-  }
-
-  .docs-header__ask:hover,
-  .docs-header__tab:hover {
-    background-color: var(--mb-surface-hover);
-    color: var(--mb-brand);
-  }
-
-  .docs-header__ask svg {
-    height: 16px;
-    width: 16px;
-  }
-
-  /* Color, radius and hover for the quiet controls (menu, theme, what's new,
-     home); each pairs this with its own layout class. The version selector
-     repeats these in DocsVersionSelector.astro, out of reach of this scope. */
-  .docs-header__quiet {
-    border-radius: 8px;
-    color: var(--mb-text-secondary);
-    transition:
-      background-color 0.3s ease,
-      color 0.3s ease;
-  }
-
-  .docs-header__quiet:hover,
-  .docs-header__quiet[aria-expanded="true"] {
-    background-color: var(--mb-surface-active);
-    color: var(--mb-brand);
-  }
-
-  .docs-header__theme {
-    align-items: center;
-    background: none;
-    border: 0;
-    cursor: pointer;
-    display: flex;
-    flex-shrink: 0;
-    height: 32px;
-    justify-content: center;
-    padding: 0;
-    width: 32px;
-  }
-
-  .docs-header__theme svg {
-    height: 18px;
-    width: 18px;
-  }
-
-  .docs-header__theme svg:last-child,
-  :global([data-theme="dark"]) .docs-header__theme svg:first-child {
-    display: none;
-  }
-
-  :global([data-theme="dark"]) .docs-header__theme svg:last-child {
-    display: block;
-  }
-
-  .docs-header__actions {
-    align-items: center;
-    display: flex;
-    flex: 1 1 0;
-    gap: 8px;
-    justify-content: flex-end;
-  }
-
-  /* 40px tall, like the CTA beside them. */
-  .docs-header__whats-new,
-  .docs-header__home {
-    font-size: 14px;
-    line-height: 20px;
-    padding: 10px 14px;
-    text-decoration: none;
-    white-space: nowrap;
-  }
-
-  .docs-header__cta {
-    background-color: var(--mb-brand);
-    border-radius: 8px;
-    color: #fff;
-    font-size: 13px;
-    font-weight: 700;
-    line-height: 16px;
-    padding: 12px 18px;
-    text-decoration: none;
-    transition: background-color 0.3s ease;
-    white-space: nowrap;
-  }
-
-  .docs-header__cta:hover {
-    background-color: var(--mb-brand-hover);
-    color: #fff;
-  }
-
-  .docs-header__tabs {
-    height: var(--docs-header-tabs-height);
-  }
-
-  /* Shown at 992px and below on pages with a sidebar, in place of the tabs. */
-  .docs-header__menu {
-    align-items: center;
-    background: none;
-    border: 0;
-    cursor: pointer;
-    display: none;
-    font-family: inherit;
-    font-size: 14px;
-    font-weight: 700;
-    gap: 8px;
-    height: 32px;
-    line-height: 20px;
-    /* -8px lines the icon up with the wordmark at the 16px row gutter. */
-    margin-left: -8px;
-    min-width: 0;
-    padding: 0 8px;
-  }
-
-  .docs-header__menu svg {
-    fill: none;
-    flex-shrink: 0;
-    height: 20px;
-    stroke: currentColor;
-    stroke-linecap: round;
-    stroke-width: 1.5;
-    width: 20px;
-  }
-
-  .docs-header__menu[aria-expanded="true"] .docs-header__menu-open,
-  .docs-header__menu:not([aria-expanded="true"]) .docs-header__menu-close {
-    display: none;
-  }
-
-  .docs-header__menu-label {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  /* margin-left: auto pins it right even when there is no tab list. */
-  .docs-header__version {
-    align-items: center;
-    display: flex;
-    flex-shrink: 0;
-    gap: 4px;
-    margin-left: auto;
-  }
-
-  /* -8px cancels the first tab's own padding so its label lines up with the
-     wordmark and the sidebar text at the 20px row gutter. */
-  .docs-header__tab-list {
-    align-items: stretch;
-    display: flex;
-    flex: 1 1 auto;
-    gap: 8px;
-    height: 100%;
-    list-style: none;
-    margin: 0 0 0 -8px;
-    min-width: 0;
-    overflow-x: auto;
-    padding: 0;
-    scrollbar-width: none;
-  }
-
-  .docs-header__tab-list li {
-    display: flex;
-    flex-shrink: 0;
-    margin: 0;
-  }
-
-  .docs-header__tab {
-    align-items: center;
-    border-bottom: 2px solid transparent;
-    border-radius: 8px 8px 0 0;
-    color: var(--mb-text-secondary);
-    display: flex;
-    font-size: 14px;
-    line-height: 20px;
-    padding: 0 8px;
-    text-decoration: none;
-    transition:
-      background-color 0.3s ease,
-      color 0.3s ease,
-      border-color 0.3s ease;
-    white-space: nowrap;
-  }
-
-  .docs-header__tab[aria-current="page"] {
-    border-bottom-color: var(--mb-brand);
-    color: var(--mb-brand);
-    font-weight: 700;
-  }
-
-  .docs-header a:focus-visible,
-  .docs-header button:focus-visible {
-    border-radius: 8px;
-    outline: 2px solid var(--mb-brand);
-    outline-offset: 2px;
-  }
-
-  /* Tabs fill the 44px row, so keep the ring inside it to avoid clipping. */
-  .docs-header__tab:focus-visible {
-    outline-offset: -2px;
-  }
-
-  /* Below 1200px the actions would squeeze the brand into the search box, so
-     the release notes link goes first; the footer still links to it. */
-  @media screen and (max-width: 1199.98px) {
-    .docs-header__whats-new {
-      display: none;
-    }
-  }
-
-  @media screen and (max-width: 992px) {
-    .docs-header__row {
-      gap: 12px;
-      padding: 0 16px;
-    }
-
-    .docs-header__brand,
-    .docs-header__actions {
-      flex: 0 0 auto;
-    }
-
-    .docs-header__docs,
-    .docs-header__home,
-    .docs-header__ask-label {
-      display: none;
-    }
-
-    .docs-header__search {
-      flex: 1 1 auto;
-    }
-
-    .docs-header__ask {
-      padding: 0 10px;
-    }
-
-    /* The sections are listed in the drawer instead. */
-    .docs-header--with-nav .docs-header__menu {
-      display: flex;
-    }
-
-    .docs-header--with-nav .docs-header__tab-list {
-      display: none;
-    }
-
-    /* Without a sidebar (404), the tab list scrolls with its scrollbar
-       hidden, so fade its right edge to show there is more. */
-    .docs-header__tab-list {
-      mask-image: linear-gradient(
-        to right,
-        #000 calc(100% - 32px),
-        transparent
-      );
-      padding-right: 32px;
-    }
-  }
-
-  @media screen and (max-width: 480px) {
-    .docs-header__search :global(#inkeep) {
-      min-width: 0;
-    }
-
-    /* The search modal has its own "Ask" toggle, so drop the separate button. */
-    .docs-header__ask {
-      display: none;
-    }
-
-    .docs-header__cta {
-      padding: 10px 12px;
-    }
-  }
-</style>

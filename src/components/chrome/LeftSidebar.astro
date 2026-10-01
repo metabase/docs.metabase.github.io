@@ -5,12 +5,21 @@ import {
   getNavForVersion,
   getSections,
 } from "@/lib/docs/nav";
+import { navLink } from "./docs-ui";
 
 // Only the active category's pages; the header tabs switch categories. Pages
 // outside the nav (home, /docs/all) show the first category's pages. The
 // section list is for the mobile drawer, where the header tabs are hidden.
 // The category's top-level items are topics: always-open headings over their
 // pages. Groups below them open when they contain the current page.
+//
+// At 992px and below the sidebar is a drawer, shown while <html> has
+// data-docs-nav="open" (set by DocsHeader.astro, the `nav-open:` variant).
+// visibility keeps the closed drawer's links out of the tab order; it
+// transitions with the slide, which keeps the drawer visible until the
+// slide-out ends. The transition is motion-safe only: a `motion-reduce:`
+// reset would lose to `max-lg:`, which Tailwind emits later. It sits below
+// the header (z 1001) and above the article.
 type Props = {
   url: string;
   version: string;
@@ -21,17 +30,35 @@ const { url: pageUrl, version } = Astro.props;
 const nav = getNavForVersion(version);
 const category = getActiveCategory(nav, pageUrl) ?? nav.categories[0];
 const sections = getSections(nav, pageUrl);
+
+// The lists keep the vendored margins (16px top-level, 9px above a group's
+// pages); the layout was tuned with them.
+const list = "tw:list-none tw:p-0";
 ---
 
-<div class="learn-left-sidebar" id="main-navigation-content" tabindex="-1">
-  <nav class="docs-sections" aria-label="Documentation sections">
-    <h5>Sections</h5>
-    <ul>
+{/* Desktop padding: 8px link padding + 12px aligns nav text with the header
+    wordmark at 20px. The shadow matches the header's (DocsHeader.astro). */}
+<div
+  class="tw:sticky tw:top-header tw:h-[calc(100vh-var(--tw-spacing-header))] tw:w-full tw:overflow-y-auto tw:border-r tw:border-border-subtle tw:bg-surface tw:pt-7.5 tw:pr-2.5 tw:pb-6 tw:pl-3 tw:shadow-sidebar tw:max-lg:invisible tw:max-lg:fixed tw:max-lg:bottom-0 tw:max-lg:left-0 tw:max-lg:z-1000 tw:max-lg:h-auto tw:max-lg:w-[min(320px,85vw)] tw:max-lg:-translate-x-full tw:max-lg:px-3 tw:max-lg:pt-4 tw:max-lg:pb-8 tw:max-lg:shadow-card tw:max-lg:motion-safe:transition-[translate,visibility] tw:max-lg:motion-safe:duration-250 tw:max-lg:nav-open:visible tw:max-lg:nav-open:translate-x-0"
+  id="main-navigation-content"
+  tabindex="-1"
+>
+  <nav
+    class="tw:max-lg:mb-3 tw:max-lg:border-b tw:max-lg:border-border-subtle tw:max-lg:pb-2 tw:lg:hidden"
+    aria-label="Documentation sections"
+  >
+    <h5 class="tw:mb-1 tw:px-2 tw:pt-1 tw:pb-1.25 tw:text-[11px] tw:leading-normal tw:font-bold tw:tracking-[0.2em] tw:text-muted tw:uppercase">
+      Sections
+    </h5>
+    <ul class={list}>
       {sections.map(({ name, href, active }) => (
-        <li>
+        <li class="tw:m-0 tw:pb-1">
           <a
             href={href}
-            class={active ? "selected" : ""}
+            class:list={[
+              navLink,
+              "tw:pr-2 tw:text-secondary tw:hover:bg-surface-hover tw:hover:text-brand",
+            ]}
             aria-current={active ? "page" : undefined}
           >
             {name}
@@ -41,153 +68,10 @@ const sections = getSections(nav, pageUrl);
     </ul>
   </nav>
   {category && (
-    <ul>
+    <ul class={list}>
       {category.pages?.map((node) => (
-        <NavItem node={node} pageUrl={pageUrl} topic />
+        <NavItem node={node} pageUrl={pageUrl} depth={0} />
       ))}
     </ul>
   )}
 </div>
-
-{/* Base sidebar rules, colored with the docs-tokens.css tokens. The mobile
-    drawer is in docs-local.css and is driven by DocsHeader.astro. */}
-<style is:global>
-  #main-navigation-content {
-    background-color: var(--mb-surface);
-    border-right: 1px solid var(--mb-border-subtle);
-    box-shadow: 4px 2px 4px 0 var(--mb-shadow-chrome);
-    height: calc(100vh - var(--navigation-header-height));
-    overflow-y: auto;
-    /* 8px link padding + 12px aligns nav text with the header wordmark at 20px. */
-    padding: 30px 10px 24px 12px;
-    position: sticky;
-    top: var(--navigation-header-height);
-    width: 100%;
-
-    h5 {
-      color: var(--mb-text-muted);
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.2em;
-      margin-bottom: 4px;
-      padding: 4px 8px 5px;
-      text-transform: uppercase;
-    }
-
-    ul {
-      list-style: none;
-      padding: 0;
-    }
-
-    li {
-      margin: 0;
-      padding: 0 0 4px;
-
-      ul {
-        display: none;
-      }
-
-      /* A topic's pages sit flush under its heading; the rail starts under
-         collapsible groups, 8px in so it lines up with the group's text. */
-      li li {
-        border-left: 1px solid var(--mb-border);
-        margin-left: 8px;
-        padding-left: 10px;
-      }
-    }
-
-    li.expanded {
-      > ul {
-        display: block;
-      }
-
-      > a svg {
-        transform: rotate(0);
-      }
-    }
-
-    /* Space above a topic with pages and after one; a run of page-less topics
-       (Other resources) stays a tight list. */
-    .docs-nav-topic {
-      &.expanded,
-      &.expanded + li {
-        margin-top: 24px;
-      }
-
-      &:first-child {
-        margin-top: 0;
-      }
-
-      /* Before the a rules below, so hover and selected still win. */
-      > a {
-        color: var(--mb-heading);
-        font-weight: 700;
-        padding-right: 8px;
-      }
-
-      /* A topic with no landing page is a label, not a link. */
-      > a:not([href]) {
-        cursor: default;
-
-        &:hover {
-          background-color: transparent;
-          color: var(--mb-heading);
-        }
-      }
-    }
-
-    a {
-      border-radius: 8px;
-      color: var(--mb-text-secondary);
-      display: block;
-      font-size: 14px;
-      font-weight: 400;
-      line-height: 20px;
-      padding: 4px 38px 5px 8px;
-      position: relative;
-      transition:
-        background-color 0.3s ease,
-        color 0.3s ease;
-
-      &:hover,
-      &.selected {
-        background-color: var(--mb-surface-hover);
-        color: var(--mb-brand);
-
-        svg path {
-          stroke: var(--mb-brand);
-        }
-      }
-
-      &.selected {
-        font-weight: 700;
-      }
-
-      > div {
-        align-items: center;
-        display: flex;
-        height: 30px;
-        justify-content: center;
-        pointer-events: none;
-        position: absolute;
-        right: 2px;
-        top: 50%;
-        translate: 0 -50%;
-        width: 30px;
-      }
-
-      svg {
-        display: block;
-        height: 12px;
-        transform: rotate(-90deg);
-        transition: transform 0.3s ease-in-out;
-        width: 20px;
-      }
-
-      svg path {
-        stroke: var(--mb-border-strong);
-        transition: stroke 0.3s ease-in-out;
-      }
-    }
-  }
-</style>

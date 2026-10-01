@@ -36,12 +36,17 @@ const categorySlugPart =
       : "/start";
 ---
 
-<div class="bootstrap">
+{/* Bootstrap breadcrumb from the vendored bundle. The utilities (the `*:`
+    ones style each crumb) let a long trail shrink and end in an ellipsis
+    inside NewDocsLayout's top bar instead of running under the Copy Markdown
+    button. */}
+<div class="bootstrap tw:min-w-0">
   <nav
+    class="tw:min-w-0"
     style="--bs-breadcrumb-divider: url('/images/chevron_blue_right.svg')"
     aria-label="breadcrumb"
   >
-    <ol class="breadcrumb">
+    <ol class="breadcrumb tw:ml-0 tw:w-auto tw:flex-nowrap tw:*:whitespace-nowrap tw:*:last:min-w-0 tw:*:last:*:truncate">
       {page.has_magic_breadcrumbs ? (
         <>
           <li class="breadcrumb-item">

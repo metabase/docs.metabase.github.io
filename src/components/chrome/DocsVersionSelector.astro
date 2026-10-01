@@ -1,9 +1,13 @@
 ---
+import VersionTag from "@/components/chrome/VersionTag.astro";
 import Chevron from "@/icons/chevron.svg";
 import { getVersionSupport } from "@/lib/docs/versionSupport";
 import { baseCtx } from "@/lib/liquid/liquidRenderer";
+import { quietControl } from "./docs-ui";
 
-// .version__tag is styled in docs-local.css, which /docs/all shares.
+// The trigger's aria-expanded drives the open state: `aria-expanded:` on the
+// trigger itself, `group-aria-expanded:` on its chevron and
+// `peer-aria-expanded:` on the menu that follows it.
 type Props = {
   version: string;
 };
@@ -20,37 +24,46 @@ const otherVersions = [...availableVersions]
   .slice(0, 10)
   .filter((v) => v !== currentLabel)
   .map((v) => ({ version: v, support: getVersionSupport(v) }));
+
+const menuLink =
+  "tw:block tw:px-4 tw:py-2 tw:text-sm tw:no-underline tw:hover:bg-page";
 ---
 
-<div class="version__selector">
+<div class="tw:relative" data-version-selector>
+  {/* quietControl covers color too: the chevron strokes in currentColor. */}
   <button
     type="button"
-    class="version__current"
+    class:list={[
+      quietControl,
+      "tw:group tw:peer tw:flex tw:cursor-pointer tw:items-center tw:gap-1.5 tw:border-0 tw:bg-transparent tw:py-1.5 tw:pr-2 tw:pl-3 tw:font-sans tw:text-sm/5 tw:select-none tw:focus-ring",
+    ]}
     aria-haspopup="true"
     aria-expanded="false"
+    data-version-trigger
   >
     {currentLabel}
-    <Chevron />
+    <Chevron class="tw:size-3 tw:transition-[rotate] tw:duration-200 tw:group-aria-expanded:rotate-180" />
   </button>
-  <ul class="version__dropdown">
+  {/* visibility keeps the closed menu's links out of the tab order. It
+      transitions with the fade: a transitioning visibility counts as visible
+      until the end, so the menu disappears only once the fade-out has
+      played. */}
+  <ul class="tw:pointer-events-none tw:invisible tw:absolute tw:top-[calc(100%+6px)] tw:right-0 tw:z-5 tw:m-0 tw:min-w-40 tw:scale-[0.97] tw:list-none tw:overflow-hidden tw:rounded-lg tw:border tw:border-border tw:bg-surface-elevated tw:px-0 tw:py-1 tw:opacity-0 tw:shadow-card tw:transition-[scale,opacity,visibility] tw:duration-200 tw:ease-in-out tw:peer-aria-expanded:pointer-events-auto tw:peer-aria-expanded:visible tw:peer-aria-expanded:scale-100 tw:peer-aria-expanded:opacity-100">
     {otherVersions.map(({ version: v, support }) => (
-      <li>
-        <a href={`/docs/${v}/`}>
-          <span class="version__dropdown--item">
+      <li class="tw:m-0">
+        <a
+          href={`/docs/${v}/`}
+          class:list={[menuLink, "tw:text-secondary tw:hover:text-brand"]}
+        >
+          <span class="tw:flex tw:items-center tw:justify-between tw:gap-2">
             <span>{v}</span>
-            {support?.status === "unsupported" ? (
-              <span class="version__tag version__tag--unsupported">
-                unsupported
-              </span>
-            ) : support?.lts ? (
-              <span class="version__tag version__tag--lts">lts</span>
-            ) : null}
+            <VersionTag support={support} />
           </span>
         </a>
       </li>
     ))}
-    <li>
-      <a class="version__more" href="/docs/all">
+    <li class="tw:m-0">
+      <a class:list={[menuLink, "tw:font-bold tw:text-brand"]} href="/docs/all">
         See more
       </a>
     </li>
@@ -58,15 +71,17 @@ const otherVersions = [...availableVersions]
 </div>
 
 <script>
-  const selector = document.querySelector<HTMLElement>(".version__selector");
-  const trigger = selector?.querySelector<HTMLElement>(".version__current");
+  const selector = document.querySelector<HTMLElement>(
+    "[data-version-selector]",
+  );
+  const trigger = selector?.querySelector<HTMLElement>(
+    "[data-version-trigger]",
+  );
 
   if (selector && trigger) {
-    const isOpen = () => selector.classList.contains("open");
+    const isOpen = () => trigger.getAttribute("aria-expanded") === "true";
 
-    // Mirror the .open class on the trigger button for assistive tech.
     const setOpen = (open: boolean) => {
-      selector.classList.toggle("open", open);
       trigger.setAttribute("aria-expanded", open ? "true" : "false");
     };
 
@@ -92,116 +107,3 @@ const otherVersions = [...availableVersions]
     });
   }
 </script>
-
-<style>
-  .version__selector {
-    position: relative;
-  }
-
-  .version__current {
-    align-items: center;
-    background: none;
-    border: 0;
-    border-radius: 8px;
-    color: var(--mb-text-secondary);
-    cursor: pointer;
-    display: flex;
-    font: inherit;
-    font-size: 14px;
-    gap: 6px;
-    line-height: 20px;
-    padding: 6px 8px 6px 12px;
-    /* color too: the chevron strokes in currentColor. */
-    transition:
-      background-color 0.3s ease,
-      color 0.3s ease;
-    user-select: none;
-  }
-
-  .version__current:focus-visible {
-    outline: 2px solid var(--mb-brand);
-    outline-offset: 2px;
-  }
-
-  .version__current:hover,
-  .version__selector.open .version__current {
-    background-color: var(--mb-surface-active);
-    color: var(--mb-brand);
-  }
-
-  .version__current svg {
-    height: 12px;
-    transition: rotate 0.2s ease;
-    width: 12px;
-  }
-
-  .version__selector.open .version__current svg {
-    rotate: 180deg;
-  }
-
-  .version__dropdown {
-    background: var(--mb-surface-elevated);
-    border: 1px solid var(--mb-border);
-    border-radius: 8px;
-    box-shadow: var(--mb-shadow);
-    list-style: none;
-    margin: 0;
-    min-width: 160px;
-    opacity: 0;
-    overflow: hidden;
-    padding: 4px 0;
-    pointer-events: none;
-    position: absolute;
-    right: 0;
-    scale: 0.97;
-    top: calc(100% + 6px);
-    /* visibility keeps the closed menu's links out of the tab order; its delay
-       lets the fade-out play before the menu disappears. */
-    transition:
-      scale 0.2s ease-in-out,
-      opacity 0.2s ease-in-out,
-      visibility 0s linear 0.2s;
-    visibility: hidden;
-    z-index: 5;
-  }
-
-  .version__selector.open .version__dropdown {
-    opacity: 1;
-    pointer-events: all;
-    scale: 1;
-    transition-delay: 0s;
-    visibility: visible;
-  }
-
-  .version__dropdown li {
-    margin: 0;
-  }
-
-  .version__dropdown li:hover {
-    background-color: var(--mb-bg);
-  }
-
-  .version__dropdown a {
-    color: var(--mb-text-secondary);
-    display: block;
-    font-size: 14px;
-    padding: 8px 16px;
-    text-decoration: none;
-  }
-
-  .version__dropdown li:hover a,
-  .version__dropdown a.version__more {
-    color: var(--mb-brand);
-  }
-
-  .version__dropdown a.version__more {
-    font-weight: 700;
-  }
-
-  .version__dropdown--item {
-    align-items: center;
-    display: flex;
-    gap: 0.5rem;
-    justify-content: space-between;
-  }
-</style>

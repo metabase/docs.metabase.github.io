@@ -38,9 +38,6 @@
     $container.classList.add("table-overflow");
     $wrapper.appendChild($container);
     $container.appendChild($table);
-
-    // table styles
-    $table.classList.add("mb-0");
   });
   window.addEventListener("resize", onResize);
   onResize();
