@@ -2,33 +2,69 @@
 import NavItem from "@/components/chrome/NavItem.astro";
 import Chevron from "@/icons/chevron.svg";
 import { containsUrl, type NavNode } from "@/lib/docs/nav";
+import { navLink } from "./docs-ui";
 
+// public/docs/js/learn/left-sidebar.js turns a click on a group's link into a
+// toggle of `expanded` on its <li> (the chevron lets clicks through to the
+// link); the `[li.expanded>…]` variants below react to it. A topic's own
+// `expanded` is fixed at render time.
 type Props = {
   node: NavNode;
   pageUrl: string;
+  /**
+   * 0 for a topic: a heading over its pages, always open, no chevron. Its
+   * pages (depth 1) sit flush under it; the rail starts under collapsible
+   * groups (depth 2+), 8px in so it lines up with the group's text.
+   */
+  depth: number;
 };
 
-const { node, pageUrl } = Astro.props;
+const { node, pageUrl, depth } = Astro.props;
 
+const topic = depth === 0;
 const hasChildren = Boolean(node.pages && node.pages.length > 0);
-const expanded = containsUrl(node, pageUrl);
+const expanded = hasChildren && (topic || containsUrl(node, pageUrl));
+// A topic with no landing page is a label, not a link.
+const label = topic && !node.url;
 ---
 
-<li class={expanded ? "expanded" : ""}>
-  <a href={node.url} class={pageUrl === node.url ? "selected" : ""}>
+{/* Space above a topic with pages and after one; a run of page-less topics
+    (Other resources) stays a tight list. */}
+<li
+  class:list={[
+    "tw:m-0 tw:pb-1",
+    { expanded },
+    topic && "tw:[&.expanded:not(:first-child)]:mt-6 tw:[li.expanded+&]:mt-6",
+    depth >= 2 && "tw:ml-2 tw:border-l tw:border-border tw:pl-2.5",
+  ]}
+>
+  <a
+    href={node.url}
+    class:list={[
+      navLink,
+      "tw:group",
+      topic
+        ? "tw:pr-2 tw:font-bold tw:text-heading"
+        : "tw:pr-9.5 tw:font-normal tw:text-secondary",
+      label
+        ? "tw:cursor-default"
+        : "tw:hover:bg-surface-hover tw:hover:text-brand",
+    ]}
+    aria-current={pageUrl === node.url ? "page" : undefined}
+  >
     {node.name}
 
-    {hasChildren && (
-      <div>
-        <Chevron />
+    {hasChildren && !topic && (
+      <div class="tw:pointer-events-none tw:absolute tw:top-1/2 tw:right-0.5 tw:flex tw:size-7.5 tw:-translate-y-1/2 tw:items-center tw:justify-center">
+        <Chevron class="tw:h-3 tw:w-5 tw:-rotate-90 tw:text-border-strong tw:transition-[rotate,color] tw:ease-in-out tw:group-hover:text-brand tw:group-aria-[current=page]:text-brand tw:[li.expanded>a>div>&]:rotate-0" />
       </div>
     )}
   </a>
 
   {hasChildren && (
-    <ul>
+    <ul class="tw:hidden tw:list-none tw:p-0 tw:[li.expanded>&]:block">
       {node.pages!.map((child) => (
-        <NavItem node={child} pageUrl={pageUrl} />
+        <NavItem node={child} pageUrl={pageUrl} depth={depth + 1} />
       ))}
     </ul>
   )}

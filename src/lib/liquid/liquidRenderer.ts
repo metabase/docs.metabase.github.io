@@ -42,6 +42,8 @@ const stripInvalidLiquidSpan = (
 
 const ROOT = process.cwd();
 const INCLUDES_ROOT = path.join(ROOT, "_includes");
+// Markdown stand-ins for includes that render HTML chrome (callouts, embeds).
+const MARKDOWN_INCLUDES_ROOT = path.join(INCLUDES_ROOT, "markdown");
 
 const loadDataDir = (dir: string): Record<string, unknown> => {
   const data: Record<string, any> = {};
@@ -84,33 +86,49 @@ export const baseCtx = {
   },
 };
 
-let liquidEngine: Liquid;
+// "html" feeds the markdown renderer on the way to a page; "markdown" is
+// published as-is (the `.md` version of a doc), so its includes resolve to
+// their `_includes/markdown` stand-in when there is one.
+export type LiquidOutput = "html" | "markdown";
+
+const liquidEngines: Partial<Record<LiquidOutput, Liquid>> = {};
 
 // Remove multiple newlines between elements so satteri doesn't turn them into code snippets.
 // Needed to preserve previous behavior (which used jekyll + kramdown).
 const collapseBlankLines = (html: string): string =>
   html.replace(/>([ \t]*\r?\n){2,}[ \t]*</g, ">\n<");
 
-export const getLiquidRenderer = ({
-  page,
-  dirname,
-}: {
-  page: Record<string, unknown>;
-  dirname: string;
-}) => {
-  if (!liquidEngine) {
-    liquidEngine = new Liquid({
-      root: [INCLUDES_ROOT],
+const createLiquidEngine = (output: LiquidOutput): Liquid =>
+  compose(
+    registerIncludeFileTag,
+    registerCustomIncludeTag(
+      output === "markdown" ? (include) => include.trim() : collapseBlankLines,
+    ),
+  )(
+    new Liquid({
+      // First match wins, so an include with no markdown stand-in falls back
+      // to its HTML, which is still valid markdown.
+      root:
+        output === "markdown"
+          ? [MARKDOWN_INCLUDES_ROOT, INCLUDES_ROOT]
+          : [INCLUDES_ROOT],
       jekyllInclude: true,
       jekyllWhere: true,
       strictVariables: false, // TODO: Would be nice to flip this to true
       cache: import.meta.env.MODE === "production",
-    });
-    compose(
-      registerIncludeFileTag,
-      registerCustomIncludeTag(collapseBlankLines),
-    )(liquidEngine);
-  }
+    }),
+  );
+
+export const getLiquidRenderer = ({
+  page,
+  dirname,
+  output = "html",
+}: {
+  page: Record<string, unknown>;
+  dirname: string;
+  output?: LiquidOutput;
+}) => {
+  const liquidEngine = (liquidEngines[output] ??= createLiquidEngine(output));
 
   const ctx = {
     ...baseCtx,

@@ -35,6 +35,20 @@ function snippetCopyTrackSnowplowEvent(button) {
   }
 }
 
+// White icons on dark code backgrounds: the docs dark theme, or a page (like
+// the embedding SDK page) whose code blocks are $neutral-15 in light mode.
+function hasDarkBackground(codeSnippet) {
+  if (document.documentElement.getAttribute("data-theme") === "dark") {
+    return true;
+  }
+  return (
+    window.getComputedStyle(codeSnippet).backgroundColor === "rgb(34, 36, 43)"
+  );
+}
+
+// One handler per code block, run together when the docs theme toggles.
+const iconPickers = [];
+
 document.querySelectorAll("code").forEach((codeSnippet) => {
   if (
     codeSnippet.classList.contains("language-plaintext") ||
@@ -81,18 +95,19 @@ document.querySelectorAll("code").forEach((codeSnippet) => {
     "        <p>Copied</p>" +
     "    </div>";
 
-  // If the color is $neutral-15, we should use the dark mode version of the copy button SVG
-  const codeElementBackgroundColor = window.getComputedStyle(codeSnippet)
-    .backgroundColor;
-  const isDarkBackground =
-    codeElementBackgroundColor === "rgb(34, 36, 43)" ||
-    codeElementBackgroundColor === "#22242b";
-
-  copyButton.innerHTML = isDarkBackground ? DARKMODE : LIGHTMODE;
+  const pickIcons = () => {
+    copyButton.innerHTML = hasDarkBackground(codeSnippet) ? DARKMODE : LIGHTMODE;
+  };
+  pickIcons();
+  iconPickers.push(pickIcons);
 
   copyButton.classList.add("copy-code-button");
 
   addCopyFunction(copyButton, codeSnippet.innerText);
 
   wrapper.appendChild(copyButton);
+});
+
+document.addEventListener("themechange", () => {
+  iconPickers.forEach((pickIcons) => pickIcons());
 });

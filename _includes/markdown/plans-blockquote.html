@@ -1,0 +1,22 @@
+{%- comment -%}
+  Markdown stand-in for ../plans-blockquote.html, used by the `.md` version of
+  a doc (see MARKDOWN_INCLUDES_ROOT in src/lib/liquid/liquidRenderer.ts).
+{%- endcomment -%}
+{%- if include.convert_pro_link_to_embedding -%}
+  {%- assign pro_link = "https://store.metabase.com/checkout/embedding" -%}
+{%- else -%}
+  {%- assign pro_link = "/product/pro" -%}
+{%- endif -%}
+{%- assign feature_text = include.feature | default: "This feature" -%}
+{%- assign verb = "is" -%}
+{%- if include.is_plural -%}
+  {%- assign verb = "are" -%}
+{%- endif -%}
+> {{ feature_text }} {{ verb }} only available on
+{%- if include.enterprise-only %} [Enterprise](/product/enterprise) plans
+{%- else %} [Pro]({{ pro_link }}) and [Enterprise](/product/enterprise) plans
+{%- endif -%}
+{%- if include.self-hosted-only %} (only on self-hosted plans)
+{%- else %} (both self-hosted and on Metabase Cloud)
+{%- endif -%}
+.

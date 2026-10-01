@@ -1,9 +1,12 @@
 ---
+import { docsBody } from "@/components/chrome/docs-ui";
 import Footer from "@/components/chrome/Footer.astro";
-import Header from "@/components/chrome/Header.astro";
 import LiquidInclude from "@/components/LiquidInclude.astro";
 import { getLiquidRenderer } from "@/lib/liquid/liquidRenderer";
+import "@/styles/docs.css";
 
+// Docs-only: the theme is always on, and there is no default header, so
+// callers must fill the "header" slot (DocsHeader).
 type Props = {
   page: Record<string, unknown>;
   dirname: string;
@@ -16,10 +19,10 @@ const lq = getLiquidRenderer({ page, dirname });
 
 <!doctype html>
 <html lang="en-US">
-  <LiquidInclude lq={lq} src="head.html" />
+  <LiquidInclude lq={lq} src="head.html" docs_theme />
 
-  <body>
-    <Header />
+  <body class={docsBody}>
+    <slot name="header" />
 
     <div class="bootstrap">
       <div class="container pt-6 pb-9">

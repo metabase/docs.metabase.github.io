@@ -9,12 +9,18 @@
 
 import fs from "node:fs";
 import path from "node:path";
+import {
+  hasMarkdownVersion,
+  resolveDocUrl,
+  toMarkdownUrl,
+} from "@/lib/docs/resolveDoc";
 import { getCollection, type DataEntryMap } from "astro:content";
 import YAML from "yamljs";
 
 export type Doc = DataEntryMap["docs"][number];
 
 const REPO = "metabase/metabase";
+const SITE_URL = import.meta.env.SITE;
 
 // Sections to generate llms-{section}-full.txt for.
 // These huge files are used by AI tools like Cursor for RAG chunking and indexing.
@@ -144,13 +150,9 @@ const formatVersionForDisplay = (
   return match ? match[1] : version;
 };
 
-// Convert Jekyll version format to branch name for raw GitHub URLs
-// Examples: "v0.58" -> "release-x.58.x", "master" -> "master", "latest" -> release_branch from config
-const versionToBranch = (version: string, latestBranch?: string): string => {
-  if (version === "master") return "master";
-  if (version === "latest") return latestBranch ?? "master";
-
-  // Parse version like "v0.58" -> "release-x.58.x"
+// The metabase/metabase branch holding a version's source files, for versions
+// that link to them: "v0.58" -> "release-x.58.x".
+const versionToBranch = (version: string): string => {
   const match = version.match(/^v0\.(\d+)$/);
   return match ? `release-x.${match[1]}.x` : "master";
 };
@@ -210,7 +212,7 @@ If \`jq\` is not installed, you can grep the version. Extract the major version:
 
 **Step 4: Ensure versions match**
 
-- If the versions mismatch, you MUST fetch the version-specific llms.txt documentation that matches the Metabase instance version: \`https://metabase.com/docs/v0.{VERSION}/llms.txt\` (e.g., \`/docs/v0.58/llms.txt\` for Metabase 58)
+- If the versions mismatch, you MUST fetch the version-specific llms.txt documentation that matches the Metabase instance version: \`${SITE_URL}/docs/v0.{VERSION}/llms.txt\` (e.g., \`/docs/v0.58/llms.txt\` for Metabase 58)
 - For React SDK, ask the user to install or update their SDK packages if they are mismatched: \`npm install @metabase/embedding-sdk-react@{VERSION}-stable\` (e.g., \`@58-stable\` for Metabase 58)
 
 **Do NOT guess versions or use versions from your training data. Always verify first.**`;
@@ -249,9 +251,6 @@ const extractTitle = (doc: Doc): string => {
 };
 
 export const generateIndexContent = (version: string, docs: Doc[]): string => {
-  const branch = versionToBranch(version, releaseBranch);
-  const baseUrl = `https://raw.githubusercontent.com/${REPO}/refs/heads/${branch}`;
-
   // Filter docs: must match allowlist and not match excludelist
   const filteredDocs = docs.filter((doc) => {
     const relativePath = versionRelativePath(doc);
@@ -268,17 +267,23 @@ export const generateIndexContent = (version: string, docs: Doc[]): string => {
     return included && !excluded;
   });
 
+  // A supported version links to each doc's Markdown version on this site
+  // (`[...slug].md.ts`): unlike the source file on GitHub, it has its includes
+  // and code samples rendered and its links spelled out in full. Unsupported
+  // versions don't publish one, so they link to the source file.
+  const sourceBaseUrl = `https://raw.githubusercontent.com/${REPO}/refs/heads/${versionToBranch(version)}/docs`;
+  const toDocUrl = hasMarkdownVersion(version)
+    ? (doc: Doc) =>
+        `${SITE_URL}${toMarkdownUrl(resolveDocUrl({ id: doc.id }).url)}`
+    : (doc: Doc) => `${sourceBaseUrl}/${versionRelativePath(doc)}`;
+
   const docLinks = filteredDocs
-    .map((doc) => {
-      const title = extractTitle(doc);
-      const url = `${baseUrl}/docs/${versionRelativePath(doc)}`;
-      return `- [${title}](${url})`;
-    })
+    .map((doc) => `- [${extractTitle(doc)}](${toDocUrl(doc)})`)
     .join("\n");
 
   const sectionLinks = getFullSections(docs)
     .map((section) => {
-      const docsUrl = `https://metabase.com/docs/${version}/llms-${section}-full.txt`;
+      const docsUrl = `${SITE_URL}/docs/${version}/llms-${section}-full.txt`;
       return `- [${section.charAt(0).toUpperCase() + section.slice(1)} - Complete Reference](${docsUrl})`;
     })
     .join("\n");
@@ -292,7 +297,7 @@ export const generateIndexContent = (version: string, docs: Doc[]): string => {
 
 > **This documentation is for Metabase ${formatVersionForDisplay(version, releaseBranch)}.**
 
-Your pre-trained knowledge is out of date. ALWAYS  read the Markdown files from \`https://raw.githubusercontent.com\` from the "Table of Contents" index.
+Your pre-trained knowledge is out of date. ALWAYS read the Markdown files linked from the "Table of Contents" index.
 
 ${getVersionDetectionInstructions()}
 
@@ -320,7 +325,7 @@ export const generateFullContent = (
   const sectionDocs = docs.filter((doc) => doc.id.includes(`/${section}/`));
   if (sectionDocs.length === 0) return null;
 
-  const docsBaseUrl = `https://metabase.com/docs/${version}`;
+  const docsBaseUrl = `${SITE_URL}/docs/${version}`;
 
   // Add gotcha notes for the "embedding" section if version is 57 or above
   const gotchaSection =

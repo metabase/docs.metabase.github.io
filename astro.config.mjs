@@ -1,5 +1,6 @@
 // @ts-check
 import path from "node:path";
+import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "astro/config";
 import { viteStaticCopy } from "vite-plugin-static-copy";
 import { DOCS_DEST, DOCS_SRC_ROOT } from "./src/constants";
@@ -35,6 +36,9 @@ export default defineConfig({
   },
   vite: {
     plugins: [
+      // Themed docs pages (src/styles/docs.css). Legacy `layout: docs` pages
+      // keep linking the vendored stylesheets from _includes/chrome/stylesheets.html.
+      tailwindcss(),
       viteStaticCopy({
         targets: [
           {
