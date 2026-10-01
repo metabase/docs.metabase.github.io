@@ -4,9 +4,9 @@ import CategoryCards, {
 } from "@/components/categories/CategoryCards.astro";
 import CategoryHeader from "@/components/categories/CategoryHeader.astro";
 import type { DocPage } from "@/lib/docs/constructDocMetadata";
-import { getNavForVersion, type NavNode } from "@/lib/docs/nav";
-import { resolveDocUrl } from "@/lib/docs/resolveDoc";
-import { getCollection } from "astro:content";
+import { findNavNode, getNavForVersion, type NavNode } from "@/lib/docs/nav";
+import { docIdFromUrl } from "@/lib/docs/resolveDoc";
+import { getEntry } from "astro:content";
 import NewDocsLayout from "./new-docs.astro";
 
 type Props = {
@@ -25,48 +25,27 @@ function getReadTime(body?: string, minimum = 0): number | undefined {
   return Math.max(minimum, Math.floor(words / 238));
 }
 
-// Nav urls have no trailing slash, but index pages resolve to one.
-const normalizeUrl = (url: string) => url.replace(/\/+$/, "");
-
-const findNavNode = (
-  nodes: NavNode[],
-  targetUrl: string,
-): NavNode | undefined => {
-  for (const node of nodes) {
-    if (node.url && normalizeUrl(node.url) === targetUrl) return node;
-    const match = node.pages && findNavNode(node.pages, targetUrl);
-    if (match) return match;
-  }
-};
-
-// page.url is `/docs/<version>/<slug>`
-const version = page.url.split("/")[2];
 const navNode = findNavNode(
-  getNavForVersion(version).categories,
-  normalizeUrl(page.url),
+  getNavForVersion(page.latest ? "latest" : page.version).categories,
+  (node) => !!node.url && node.url === page.url,
 );
 
-const docsByUrl = new Map(
-  (await getCollection("docs")).map((doc) => [
-    normalizeUrl(resolveDocUrl({ id: doc.id }).url),
-    doc,
-  ]),
+const pages: PageEntry[] = await Promise.all(
+  (navNode?.pages ?? [])
+    .filter((node): node is NavNode & { url: string } => Boolean(node.url))
+    .map(async (node) => {
+      const doc = await getEntry("docs", docIdFromUrl(node.url));
+      if (!doc) {
+        throw new Error(`Doc not found: ${node.url}`);
+      }
+      return {
+        url: node.url,
+        title: doc.data.title ?? node.name,
+        summary: doc.data.summary,
+        readTime: getReadTime(doc.body, 1),
+      };
+    }),
 );
-
-const pages: PageEntry[] = (navNode?.pages ?? [])
-  .filter((node): node is NavNode & { url: string } => Boolean(node.url))
-  .map((node) => {
-    const doc = docsByUrl.get(normalizeUrl(node.url));
-    if (!doc) {
-      throw new Error(`Doc not found: ${node.url}`);
-    }
-    return {
-      url: node.url,
-      title: doc.data.title ?? node.name,
-      summary: doc.data.summary,
-      readTime: getReadTime(doc.body, 1),
-    };
-  });
 ---
 
 <NewDocsLayout {page} {dirname}>

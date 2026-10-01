@@ -46,19 +46,26 @@ export const getNavForVersion = (version: string): Nav => {
   return shouldCache ? (navCache[version] ??= computeNav()) : computeNav();
 };
 
+// Depth-first search for the first node matching `predicate`.
+export const findNavNode = (
+  nodes: NavNode[] = [],
+  predicate: (node: NavNode) => boolean,
+): NavNode | undefined => {
+  for (const node of nodes) {
+    if (predicate(node)) return node;
+    const match = findNavNode(node.pages, predicate);
+    if (match) return match;
+  }
+};
+
 // Finds the url of the nav section (a node with child pages) named `category`.
 export const getCategoryUrl = (
   version: string,
   category: string,
 ): string | undefined => {
   const target = category.toLowerCase();
-  const find = (nodes: NavNode[] = []): NavNode | undefined => {
-    for (const node of nodes) {
-      if (node.url && node.pages && node.name.toLowerCase() === target)
-        return node;
-      const match = find(node.pages);
-      if (match) return match;
-    }
-  };
-  return find(getNavForVersion(version).categories)?.url;
+  return findNavNode(
+    getNavForVersion(version).categories,
+    (node) => !!node.url && !!node.pages && node.name.toLowerCase() === target,
+  )?.url;
 };

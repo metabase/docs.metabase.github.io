@@ -21,3 +21,8 @@ export const resolveDocUrl = ({
     separatorIndex !== -1 ? resolvedId.slice(separatorIndex + 1) : "";
   return { version, slug, url: `/docs/${version}/${slug}` };
 };
+
+// Inverse of resolveDocUrl for `.md` docs: maps `/docs/<version>/<slug>` back
+// to the collection id, with index pages ending in `/index`.
+export const docIdFromUrl = (url: string): string =>
+  url.replace(/^\/docs\//, "").replace(/\/$/, "/index");
