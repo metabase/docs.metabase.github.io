@@ -45,3 +45,20 @@ export const getNavForVersion = (version: string): Nav => {
   const shouldCache = import.meta.env.MODE !== "development";
   return shouldCache ? (navCache[version] ??= computeNav()) : computeNav();
 };
+
+// Finds the url of the nav section (a node with child pages) named `category`.
+export const getCategoryUrl = (
+  version: string,
+  category: string,
+): string | undefined => {
+  const target = category.toLowerCase();
+  const find = (nodes: NavNode[] = []): NavNode | undefined => {
+    for (const node of nodes) {
+      if (node.url && node.pages && node.name.toLowerCase() === target)
+        return node;
+      const match = find(node.pages);
+      if (match) return match;
+    }
+  };
+  return find(getNavForVersion(version).categories)?.url;
+};
