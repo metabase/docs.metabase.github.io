@@ -4,6 +4,7 @@ import PageNav from "@/components/chrome/PageNav.astro";
 import TopBar from "@/components/chrome/TopBar.astro";
 import VersionNotice from "@/components/chrome/VersionNotice.astro";
 import VersionSelector from "@/components/chrome/VersionSelector.astro";
+import ImageLightbox from "@/components/ImageLightbox.astro";
 import LiquidInclude from "@/components/LiquidInclude.astro";
 import { UNIFY_ENABLED_PAGES } from "@/constants";
 import { getLiquidRenderer } from "@/lib/liquid/liquidRenderer";
@@ -72,6 +73,8 @@ const unify = UNIFY_ENABLED_PAGES.includes(page.url);
     </div>
   </div>
 
+  <ImageLightbox selector=".learn article img:not(.no-zoom)" />
+
   <script
     is:inline
     type="text/javascript"
@@ -86,11 +89,6 @@ const unify = UNIFY_ENABLED_PAGES.includes(page.url);
     is:inline
     type="text/javascript"
     src="/docs/js/new-docs-table-overflow.js"
-  ></script>
-  <script
-    is:inline
-    type="text/javascript"
-    src="/docs/js/image-zoom.js"
   ></script>
   <script
     is:inline

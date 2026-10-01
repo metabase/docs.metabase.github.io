@@ -1,0 +1,191 @@
+---
+/**
+ * Click-to-zoom lightbox for images. Render once per page; attaches to every
+ * image matching `selector`.
+ *
+ * The enlarged <img> is created by the script, not in markup — a placeholder
+ * with an empty src fails the HTML link checker on every page using this.
+ */
+interface Props {
+  /** CSS selector for the images that should open in the lightbox. */
+  selector: string;
+}
+
+const { selector } = Astro.props;
+---
+
+<dialog
+  class="image-lightbox"
+  aria-label="Enlarged image"
+  data-selector={selector}
+>
+  <button
+    class="image-lightbox__close"
+    type="button"
+    aria-label="Close enlarged image"
+  >
+    <img src="/images/close-grey.svg" alt="" width="16" height="16" />
+  </button>
+  <div class="image-lightbox__scroll"></div>
+</dialog>
+
+<script>
+  function setUpLightbox(dialog: HTMLDialogElement) {
+    if (typeof dialog.showModal !== "function") return;
+    const scroller = dialog.querySelector<HTMLElement>(
+      ".image-lightbox__scroll",
+    )!;
+    const closeButton = dialog.querySelector<HTMLButtonElement>(
+      ".image-lightbox__close",
+    )!;
+    const img = document.createElement("img");
+    img.decoding = "async";
+    scroller.appendChild(img);
+
+    const selector = dialog.dataset.selector!;
+    document.querySelectorAll<HTMLImageElement>(selector).forEach((thumb) => {
+      thumb.classList.add("image-lightbox-zoomable");
+      thumb.setAttribute("role", "button");
+      thumb.setAttribute("tabindex", "0");
+      thumb.setAttribute(
+        "aria-label",
+        `Enlarge image: ${thumb.getAttribute("alt") || "image"}`,
+      );
+      const open = () => {
+        img.src = thumb.currentSrc || thumb.src;
+        img.alt = thumb.alt || "";
+        dialog.showModal();
+        scroller.scrollTop = 0;
+        document.documentElement.classList.add("image-lightbox-open");
+      };
+      thumb.addEventListener("click", open);
+      thumb.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          open();
+        }
+      });
+    });
+
+    // Idempotent, and wired into every close path directly rather than only
+    // the `close` event — some embedded browsers don't dispatch it reliably.
+    const cleanup = () => {
+      img.removeAttribute("src");
+      document.documentElement.classList.remove("image-lightbox-open");
+    };
+    const close = () => {
+      if (dialog.open) dialog.close();
+      cleanup();
+    };
+    closeButton.addEventListener("click", close);
+    // Click on the backdrop (or any dead space around the image) closes.
+    dialog.addEventListener("click", (e) => {
+      if (e.target === dialog || e.target === scroller) close();
+    });
+    // Esc: `cancel` fires before the dialog closes natively.
+    dialog.addEventListener("cancel", cleanup);
+    dialog.addEventListener("close", cleanup);
+  }
+
+  document
+    .querySelectorAll<HTMLDialogElement>("dialog.image-lightbox")
+    .forEach(setUpLightbox);
+</script>
+
+<style is:global>
+  img.image-lightbox-zoomable {
+    cursor: zoom-in;
+  }
+
+  .image-lightbox {
+    background: transparent;
+    border: 0;
+    height: 100%;
+    margin: 0;
+    max-height: none;
+    max-width: none;
+    padding: 0;
+    width: 100%;
+  }
+
+  .image-lightbox::backdrop {
+    background: #fafbfe;
+  }
+
+  .image-lightbox[open] {
+    align-items: flex-start;
+    display: flex;
+    justify-content: center;
+  }
+
+  .image-lightbox__scroll {
+    cursor: zoom-out;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 24px 16px;
+    width: 100%;
+  }
+
+  .image-lightbox__scroll img {
+    border: 0;
+    border-radius: 8px;
+    box-shadow:
+      0 10px 15px -3px rgb(0 0 0 / 10%),
+      0 4px 6px -4px rgb(0 0 0 / 10%);
+    cursor: default;
+    display: block;
+    flex-shrink: 0;
+    height: auto;
+    margin: auto;
+    max-width: min(1440px, 100%);
+    width: auto;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .image-lightbox[open] {
+      animation: image-lightbox-in 0.2s ease-out;
+    }
+
+    .image-lightbox[open]::backdrop {
+      animation: image-lightbox-fade 0.2s ease-out;
+    }
+  }
+
+  @keyframes image-lightbox-in {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+  }
+
+  @keyframes image-lightbox-fade {
+    from {
+      opacity: 0;
+    }
+  }
+
+  .image-lightbox__close {
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    padding: 0;
+    position: fixed;
+    right: 32px;
+    top: 16px;
+    transition: filter 0.15s ease;
+    z-index: 10;
+  }
+
+  .image-lightbox__close:hover {
+    filter: brightness(0.6);
+  }
+
+  /* Lock page scroll while the lightbox is open. */
+  html.image-lightbox-open,
+  html.image-lightbox-open body {
+    overflow: hidden;
+  }
+</style>
