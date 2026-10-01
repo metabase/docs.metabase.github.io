@@ -26,21 +26,19 @@ const { selector } = Astro.props;
   >
     <img src="/images/close-grey.svg" alt="" width="16" height="16" />
   </button>
-  <div class="image-lightbox__scroll"></div>
+  <div class="image-lightbox__stage"></div>
 </dialog>
 
 <script>
   function setUpLightbox(dialog: HTMLDialogElement) {
     if (typeof dialog.showModal !== "function") return;
-    const scroller = dialog.querySelector<HTMLElement>(
-      ".image-lightbox__scroll",
-    )!;
+    const stage = dialog.querySelector<HTMLElement>(".image-lightbox__stage")!;
     const closeButton = dialog.querySelector<HTMLButtonElement>(
       ".image-lightbox__close",
     )!;
     const img = document.createElement("img");
     img.decoding = "async";
-    scroller.appendChild(img);
+    stage.appendChild(img);
 
     const selector = dialog.dataset.selector!;
     document.querySelectorAll<HTMLImageElement>(selector).forEach((thumb) => {
@@ -55,7 +53,6 @@ const { selector } = Astro.props;
         img.src = thumb.currentSrc || thumb.src;
         img.alt = thumb.alt || "";
         dialog.showModal();
-        scroller.scrollTop = 0;
         document.documentElement.classList.add("image-lightbox-open");
       };
       thumb.addEventListener("click", open);
@@ -80,7 +77,7 @@ const { selector } = Astro.props;
     closeButton.addEventListener("click", close);
     // Click on the backdrop (or any dead space around the image) closes.
     dialog.addEventListener("click", (e) => {
-      if (e.target === dialog || e.target === scroller) close();
+      if (e.target === dialog || e.target === stage) close();
     });
     // Esc: `cancel` fires before the dialog closes natively.
     dialog.addEventListener("cancel", cleanup);
@@ -118,18 +115,15 @@ const { selector } = Astro.props;
     justify-content: center;
   }
 
-  .image-lightbox__scroll {
+  .image-lightbox__stage {
     cursor: zoom-out;
     display: flex;
-    flex-direction: column;
     height: 100%;
-    overflow-y: auto;
-    overscroll-behavior: contain;
     padding: 24px 16px;
     width: 100%;
   }
 
-  .image-lightbox__scroll img {
+  .image-lightbox__stage img {
     border: 0;
     border-radius: 8px;
     box-shadow:
@@ -140,6 +134,7 @@ const { selector } = Astro.props;
     flex-shrink: 0;
     height: auto;
     margin: auto;
+    max-height: 100%;
     max-width: min(1440px, 100%);
     width: auto;
   }
