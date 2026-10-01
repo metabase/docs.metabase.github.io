@@ -1,4 +1,0 @@
----
-permalink: /docs/
-redirect_to: /docs/latest/
----
