@@ -12,8 +12,6 @@ export const renderDocLiquid = ({
   page: DocPage;
   dirname: string;
 }) =>
-  getLiquidRenderer({ page, dirname }).render(
-    body,
-    undefined,
-    { maxSyntaxErrors: page.latest ? 0 : 3 },
-  );
+  getLiquidRenderer({ page, dirname }).render(body, undefined, {
+    maxSyntaxErrors: page.latest ? 0 : 3,
+  });
