@@ -56,8 +56,19 @@
 
 /* Upstream main.css gives nested lists `margin-top: 1.3em` and only tightens it
  * to 0.5em at min-width 60em, so on mobile sub-items look detached from their
- * parent item. Apply the tighter value at every width. */
+ * parent item. Use a tighter value at every width. */
 .learn.docs li > ul,
 .learn.docs li > ol {
-  margin-top: 0.5em;
+  margin-top: 0.25rem;
+}
+
+/* Sub-list items sit a bit closer together than top-level items (0.75rem). */
+.learn.docs li li {
+  margin-bottom: 0.5rem;
+}
+
+/* A paragraph ending in `:` introduces the list right after it (see
+ * listIntroHastPlugin), so keep the two together. */
+.learn.docs p.list-intro {
+  margin-bottom: 0.25rem;
 }
