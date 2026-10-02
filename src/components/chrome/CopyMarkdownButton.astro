@@ -1,10 +1,12 @@
 ---
+import { docAction } from "@/components/chrome/docs-ui";
 import Check from "@/icons/check.svg";
 import Copy from "@/icons/copy.svg";
 
 // Copies the page's Markdown version (`src/pages/docs/[version]/[...slug].md.ts`)
 // to the clipboard. Same icons as the code block copy button
-// (new-docs-code-snippet-copy.js).
+// (new-docs-code-snippet-copy.js). An item in the AI tools row
+// (DocActions.astro).
 type Props = {
   /** URL of the page's Markdown version. */
   href: string;
@@ -13,28 +15,21 @@ type Props = {
 const { href } = Astro.props;
 ---
 
-{/* The icon stands alone: the label is there for screen readers, and shows
-    only when a copy fails, which the icon has no way to say. */}
 <button
   type="button"
-  class="tw:group tw:flex tw:shrink-0 tw:cursor-pointer tw:items-center tw:gap-1.5 tw:rounded-lg tw:border-0 tw:bg-transparent tw:p-1.5 tw:font-sans tw:text-sm/5 tw:font-bold tw:whitespace-nowrap tw:text-muted tw:transition-colors tw:hover:bg-surface-active tw:hover:text-brand tw:focus-ring tw:data-[state=copied]:text-brand"
-  title="Copy Markdown"
+  class:list={[docAction, "tw:group tw:data-[state=copied]:text-brand"]}
   data-copy-markdown={href}
 >
   <Copy
-    class="tw:size-5 tw:group-data-[state=copied]:hidden"
+    class="tw:size-4 tw:group-data-[state=copied]:hidden"
     aria-hidden="true"
   />
   <Check
-    class="tw:hidden tw:size-5 tw:group-data-[state=copied]:block"
+    class="tw:hidden tw:size-4 tw:group-data-[state=copied]:block"
     aria-hidden="true"
   />
-  <span
-    class="tw:sr-only tw:group-data-[state=error]:not-sr-only"
-    data-copy-markdown-label
-    aria-live="polite"
-  >
-    Copy Markdown
+  <span data-copy-markdown-label aria-live="polite">
+    Copy as Markdown
   </span>
 </button>
 

@@ -1,12 +1,13 @@
 ---
 import Breadcrumb from "@/components/chrome/Breadcrumb.astro";
-import CopyMarkdownButton from "@/components/chrome/CopyMarkdownButton.astro";
+import DocActions from "@/components/chrome/DocActions.astro";
 import DocsHeader from "@/components/chrome/DocsHeader.astro";
 import LeftSidebar from "@/components/chrome/LeftSidebar.astro";
 import PageNav from "@/components/chrome/PageNav.astro";
 import VersionNotice from "@/components/chrome/VersionNotice.astro";
 import LiquidInclude from "@/components/LiquidInclude.astro";
 import { UNIFY_ENABLED_PAGES } from "@/constants";
+import { splitAtTitle } from "@/lib/docs/splitAtTitle";
 import { getLiquidRenderer } from "@/lib/liquid/liquidRenderer";
 import DefaultNewLayout from "./DefaultNewLayout.astro";
 
@@ -37,6 +38,13 @@ const lq = getLiquidRenderer({ page, dirname });
 const unify = UNIFY_ENABLED_PAGES.includes(page.url);
 
 const version = page.latest ? "latest" : (page.version ?? "latest");
+
+// The AI tools row goes between the Markdown's h1 and the body, so the slot
+// is rendered to a string and split there. Not on the docs home.
+const split =
+  markdownUrl && !isHomePage
+    ? splitAtTitle(await Astro.slots.render("default"))
+    : undefined;
 ---
 
 <DefaultNewLayout page={page} dirname={dirname} {unify}>
@@ -70,15 +78,13 @@ const version = page.latest ? "latest" : (page.version ?? "latest");
       >
         {/* The vendored top bar is centered across the article and reserves
             140px on the right; pin it to the text column so its divider ends
-            where the text does, and let the breadcrumb take whatever the
-            Copy Markdown button leaves. The content padding-right drops to
+            where the text does. The content padding-right drops to
             --spacing-gutter-narrow below 1200px. */}
         {showBreadcrumb && (
           <div class="top-bar tw:border-b-border tw:lg:left-gutter tw:lg:w-[calc(100%-2*var(--tw-spacing-gutter)-var(--tw-spacing-toc))] tw:lg:transform-none tw:lg:pl-0 tw:lg:max-xl:w-[calc(100%-var(--tw-spacing-gutter)-var(--tw-spacing-gutter-narrow)-var(--tw-spacing-toc))]">
             <div class="tw:min-w-0 tw:flex-1">
               <Breadcrumb page={page} />
             </div>
-            {markdownUrl && <CopyMarkdownButton href={markdownUrl} />}
           </div>
         )}
 
@@ -87,7 +93,15 @@ const version = page.latest ? "latest" : (page.version ?? "latest");
         <div class="learn__post__content docs-prose tw:lg:*:max-w-article">
           <VersionNotice version={page.version} />
 
-          <slot />
+          {split ? (
+            <>
+              <Fragment set:html={split[0]} />
+              <DocActions markdownUrl={markdownUrl!} />
+              <Fragment set:html={split[1]} />
+            </>
+          ) : (
+            <slot />
+          )}
 
           <div>
             <div class="widget-separator"></div>

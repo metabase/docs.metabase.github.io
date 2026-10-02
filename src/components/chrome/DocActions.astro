@@ -1,0 +1,44 @@
+---
+import CopyMarkdownButton from "@/components/chrome/CopyMarkdownButton.astro";
+import { docAction } from "@/components/chrome/docs-ui";
+import Plug from "@/icons/plug.svg";
+import Stars from "@/icons/stars.svg";
+
+// The AI tools row under the doc title (NewDocsLayout puts it after the
+// Markdown's h1). Ask AI opens the Inkeep chat through the same hook as the
+// header button (InkeepSearch.astro binds every `data-inkeep-ask-ai`).
+type Props = {
+  /** URL of the page's Markdown version. */
+  markdownUrl: string;
+};
+
+const { markdownUrl } = Astro.props;
+
+// Dividers only from sm up: on phones the row wraps, and a divider would
+// lead the second line.
+const item =
+  "tw:m-0 tw:flex tw:sm:px-3 tw:sm:first:pl-0 tw:sm:not-first:border-l tw:sm:not-first:border-border";
+---
+
+<nav
+  aria-label="AI tools"
+  class="tw:mt-3 tw:mb-6 tw:border-b tw:border-border tw:pb-3"
+>
+  <ul class="tw:m-0 tw:flex tw:list-none tw:flex-wrap tw:gap-y-2 tw:p-0 tw:max-sm:gap-x-5">
+    <li class={item}>
+      <button type="button" class={docAction} data-inkeep-ask-ai>
+        <Stars class="tw:size-4" aria-hidden="true" />
+        Ask AI
+      </button>
+    </li>
+    <li class={item}>
+      <CopyMarkdownButton href={markdownUrl} />
+    </li>
+    <li class={item}>
+      <a class={docAction} href="/docs/latest/ai/mcp">
+        <Plug class="tw:size-4" aria-hidden="true" />
+        Connect your AI agent
+      </a>
+    </li>
+  </ul>
+</nav>

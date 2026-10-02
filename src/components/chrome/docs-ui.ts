@@ -16,3 +16,7 @@ export const quietControl =
 /** A page link in the left sidebar (LeftSidebar.astro, NavItem.astro). */
 export const navLink =
   "tw:relative tw:block tw:rounded-lg tw:pt-1 tw:pb-1.25 tw:pl-2 tw:text-sm/5 tw:no-underline tw:transition-colors tw:aria-[current=page]:bg-surface-hover tw:aria-[current=page]:font-bold tw:aria-[current=page]:text-brand";
+
+/** An item in the AI tools row under the doc title (DocActions.astro, CopyMarkdownButton.astro). */
+export const docAction =
+  "tw:flex tw:cursor-pointer tw:items-center tw:gap-1.5 tw:border-0 tw:bg-transparent tw:p-0 tw:font-sans tw:text-sm/5 tw:font-bold tw:whitespace-nowrap tw:text-muted tw:no-underline tw:transition-colors tw:hover:text-brand tw:focus-ring";
