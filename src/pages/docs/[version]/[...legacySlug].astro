@@ -1,0 +1,36 @@
+---
+import OldDocsLayout from "@/layouts/OldDocsLayout.astro";
+import {
+  isLegacyDoc,
+  renderMarkdownDoc,
+  toDocParams,
+  type MarkdownDoc,
+} from "@/lib/docs/docPages";
+import { getCollection } from "astro:content";
+
+// Doc pages in the legacy `layout: docs` versions. Same URL pattern as
+// [...slug].astro, which builds every other doc; the two never generate the
+// same path. A separate route so legacy pages don't get the themed layout's
+// CSS (see src/lib/docs/docPages.ts). Keep NewDocsLayout out of this file.
+type Props = { doc: MarkdownDoc };
+
+export const getStaticPaths = async () => {
+  const docs = await getCollection("docs");
+
+  return docs.flatMap((doc) => {
+    const { version, slug } = toDocParams(doc.id);
+    return isLegacyDoc(doc, version)
+      ? [{ params: { version, legacySlug: slug }, props: { doc } }]
+      : [];
+  });
+};
+
+const { version } = Astro.params;
+const { doc } = Astro.props as Props;
+
+const { page, dirname, html } = await renderMarkdownDoc(doc, version);
+---
+
+<OldDocsLayout page={page} dirname={dirname}>
+  <Fragment set:html={html} />
+</OldDocsLayout>

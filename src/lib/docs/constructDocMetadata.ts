@@ -1,4 +1,4 @@
-// Extracted from lib/fetch-docs.js so it can be used in script/docs (for cross-repo ingestion) and [...slug].astro for JIT processing
+// Extracted from lib/fetch-docs.js so it can be used in script/docs (for cross-repo ingestion) and the doc page routes (src/lib/docs/docPages.ts) for JIT processing
 import path from "node:path";
 import toTitleCase from "titlecase";
 

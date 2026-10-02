@@ -1,19 +1,20 @@
 ---
-import path from "node:path";
-import { pathToFileURL } from "node:url";
 import NewDocsLayout from "@/layouts/NewDocsLayout.astro";
-import OldDocsLayout from "@/layouts/OldDocsLayout.astro";
-import { renderDocLiquid } from "@/lib/docs/renderDocLiquid";
 import {
-  hasMarkdownVersion,
-  resolveDocUrl,
-  toMarkdownUrl,
-} from "@/lib/docs/resolveDoc";
-import { getMarkdownRenderer } from "@/lib/markdown/markdownRenderer";
+  isLegacyDoc,
+  renderMarkdownDoc,
+  toDocParams,
+  type MarkdownDoc,
+} from "@/lib/docs/docPages";
+import { renderDocLiquid } from "@/lib/docs/renderDocLiquid";
+import { hasMarkdownVersion, toMarkdownUrl } from "@/lib/docs/resolveDoc";
 import { getCollection, type DataEntryMap } from "astro:content";
 
+// Doc pages in the themed layout, and the standalone `.html` docs. Legacy
+// `layout: docs` pages have their own route, [...legacySlug].astro; see
+// src/lib/docs/docPages.ts for why. Keep OldDocsLayout out of this file.
 type Props =
-  | { kind: "md"; doc: DataEntryMap["docs"][number] }
+  | { kind: "md"; doc: MarkdownDoc }
   | { kind: "html"; doc: DataEntryMap["docsHtml"][number] };
 
 export const getStaticPaths = async () => {
@@ -22,70 +23,55 @@ export const getStaticPaths = async () => {
     getCollection("docsHtml"),
   ]);
 
-  const toPath =
-    <Kind extends Props["kind"]>(kind: Kind) =>
-    (doc: { id: string; data: Record<string, unknown>; body?: string }) => {
-      const { version, slug } = resolveDocUrl({
-        id: doc.id,
-        // For prod builds, we want to output like folder/index.html, but for the dev server, the route should exclude /index
-        includeTrailingIndex: import.meta.env.MODE !== "development",
-      });
-      return { props: { kind, doc }, params: { version, slug } };
-    };
-
-  return [...docs.map(toPath("md")), ...docsHtml.map(toPath("html"))];
+  return [
+    ...docs.flatMap((doc) => {
+      const params = toDocParams(doc.id);
+      return isLegacyDoc(doc, params.version)
+        ? []
+        : [{ params, props: { kind: "md" as const, doc } }];
+    }),
+    ...docsHtml.map((doc) => ({
+      params: toDocParams(doc.id),
+      props: { kind: "html" as const, doc },
+    })),
+  ];
 };
 
 const { version } = Astro.params;
-const { kind, doc: propsDoc } = Astro.props;
-
-// Process liquid first (e.g. control flow, includes, variables, etc)
-const {
-  doc,
-  page,
-  dirname,
-  body: lqOutput,
-} = await renderDocLiquid({ doc: propsDoc, version });
+const { kind, doc } = Astro.props as Props;
 
 // `.html` docs (TypeDoc SDK API reference pages, api.html ToC pages) are
 // already complete standalone HTML documents — only Liquid needs to run on
 // them (e.g. the embedded-analytics-sdk-metadata include), no markdown
 // conversion, and no NewDocsLayout chrome (mirrors the old Jekyll
 // `docs-api` layout, which was a bare passthrough).
-let renderedHtml: string;
-if (kind === "html") {
+const renderHtmlDoc = async (doc: DataEntryMap["docsHtml"][number]) => {
+  const { body } = await renderDocLiquid({ doc, version });
   // TypeDoc's standalone HTML is generated upstream with root-relative asset
   // paths. In production, those paths resolve against the marketing site, so
   // keep the generated sources untouched and scope their local assets here.
-  renderedHtml = lqOutput
+  return body
     .replaceAll('"/gdpr-cookie-notice/', '"/docs/gdpr-cookie-notice/')
     .replaceAll('"/js/', '"/docs/js/')
     .replaceAll('"/css/', '"/docs/css/');
-} else {
-  const md = await getMarkdownRenderer();
-  const renderResult = await md.render(lqOutput, {
-    fileURL: pathToFileURL(path.resolve(doc.filePath!)),
-  });
-  renderedHtml = renderResult.code;
-}
+};
 
-const layoutPage = { ...page, content: renderedHtml };
+const rendered =
+  kind === "html"
+    ? { html: await renderHtmlDoc(doc) }
+    : await renderMarkdownDoc(doc, version);
 ---
 
-{kind === "html" ? (
-  <Fragment set:html={renderedHtml} />
-) : doc.data.layout === "docs" ? (
-  <OldDocsLayout page={layoutPage} dirname={dirname}>
-    <Fragment set:html={renderedHtml} />
-  </OldDocsLayout>
-) : (
+{"page" in rendered ? (
   <NewDocsLayout
-    page={layoutPage}
-    dirname={dirname}
+    page={rendered.page}
+    dirname={rendered.dirname}
     markdownUrl={
-      hasMarkdownVersion(version) ? toMarkdownUrl(page.url) : undefined
+      hasMarkdownVersion(version) ? toMarkdownUrl(rendered.page.url) : undefined
     }
   >
-    <Fragment set:html={renderedHtml} />
+    <Fragment set:html={rendered.html} />
   </NewDocsLayout>
+) : (
+  <Fragment set:html={rendered.html} />
 )}

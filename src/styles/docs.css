@@ -1,8 +1,8 @@
 /* Tailwind entry for the themed docs layouts (NewDocsLayout, ErrorLayout).
  * Legacy `layout: docs` pages link the vendored stylesheets instead
- * (_includes/chrome/stylesheets.html), but Astro attaches CSS per route, so
- * this file reaches them too, and OldDocsLayout's component styles reach
- * themed pages.
+ * (_includes/chrome/stylesheets.html). Astro attaches CSS per route by import
+ * graph, so the two layouts live in separate routes (src/lib/docs/docPages.ts)
+ * to keep this file off legacy pages.
  *
  * Layer order, lowest first. The vendored marketing bundle sits in `legacy`,
  * so every rule below outranks it whatever the specificity, including the
@@ -28,6 +28,31 @@
 
 /* Scan only src/, the one place `tw:` classes are written. */
 @source "../";
+
+/* Fixes to the vendored bundle for themed pages, appended to the `legacy`
+ * layer so they compete with the bundle by specificity and order, the way an
+ * edit to the vendored files would, without changing legacy pages. Keep the
+ * vendored files untouched: they are copies of the marketing site's. */
+@layer legacy {
+  /* docs.css's `.docs a { display: inline-block }` keeps a link from
+   * wrapping, so a long link in prose leaves a ragged gap. Only paragraph
+   * links need it undone: main.css gives every other link inline-block
+   * anyway. */
+  .docs p a {
+    display: inline;
+  }
+
+  /* styles.css gives article tables `margin-bottom: 4rem !important`, and an
+   * `!important` in a lower layer beats every higher one, so only a later rule
+   * of equal specificity in this layer can tighten it. Same bands as the
+   * table-layout density rules in the components layer. */
+  @media (width >= theme(--breakpoint-md)) and (width < theme(--breakpoint-lg)),
+    (width >= theme(--breakpoint-xl)) {
+    .bootstrap .learn__post table {
+      margin-bottom: 2rem !important;
+    }
+  }
+}
 
 /* `static`: emit every variable even if nothing here uses it. Tailwind
  * already emits the ones docs.css references with var() (which covers what
@@ -593,14 +618,13 @@
     /* Density and scanning aids for the table layout. */
     @media (width >= theme(--breakpoint-md)) and (width < theme(--breakpoint-lg)),
       (width >= theme(--breakpoint-xl)) {
-      /* The overflow fade is offset by the table's bottom margin. */
+      /* The overflow fade is offset by the table's bottom margin (2rem in
+       * these bands, set in the legacy layer above). */
       & .table-overflow-indicator::after {
         bottom: 2rem;
       }
 
       & table {
-        margin-bottom: 2rem;
-
         & :is(th, td) {
           padding: 0.625rem 0.875rem;
         }

@@ -12,6 +12,19 @@ import type { DataEntryMap } from "astro:content";
 
 type DocEntry = DataEntryMap["docs"][number] | DataEntryMap["docsHtml"][number];
 
+// A doc's metadata: what its path and version imply (title, category,
+// layout, …), overridden by its front matter.
+export const resolveDocData = (entry: DocEntry, version: string) => ({
+  ...constructDocMetadata(
+    METABASE_REPO_PATH
+      ? `/${path.relative(METABASE_REPO_PATH, entry.filePath!)}`
+      : `/docs/${path.relative(`${DOCS_SRC_ROOT}/${version}`, entry.filePath!)}`,
+    version === "latest" ? baseCtx.site.docs_version : version,
+    version === "latest",
+  ),
+  ...entry.data,
+});
+
 // The first rendering stage of a doc, shared by its page and its Markdown
 // version: resolves the doc's metadata, then runs Liquid over its body (e.g.
 // control flow, includes, variables, etc).
@@ -27,16 +40,7 @@ export const renderDocLiquid = async ({
   const { url } = resolveDocUrl({ id: entry.id });
   const doc = {
     ...entry,
-    data: {
-      ...constructDocMetadata(
-        METABASE_REPO_PATH
-          ? `/${path.relative(METABASE_REPO_PATH, entry.filePath!)}`
-          : `/docs/${path.relative(`${DOCS_SRC_ROOT}/${version}`, entry.filePath!)}`,
-        version === "latest" ? baseCtx.site.docs_version : version,
-        version === "latest",
-      ),
-      ...entry.data,
-    },
+    data: resolveDocData(entry, version),
     body: rewriteDocLinks(entry.body ?? "", {
       version,
       latest: version === "latest",
