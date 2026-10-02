@@ -1,0 +1,46 @@
+---
+interface Props {
+  title: string;
+  summary?: string;
+  category_image?: string;
+}
+
+const { title, summary, category_image: image } = Astro.props;
+---
+
+<header class:list={["category-header", image && "has-image"]}>
+  <h1>{title}</h1>
+  {summary && <div class="learn__summary">{summary}</div>}
+  {image && <img src={image} alt="" class="category-header__image no-zoom" />}
+</header>
+
+<style>
+  .category-header {
+    position: relative;
+  }
+
+  .category-header .category-header__image {
+    box-shadow: none;
+    display: block;
+    margin: 0 auto;
+    width: 50%;
+  }
+
+  @media screen and (min-width: 992px) {
+    .category-header.has-image {
+      padding-bottom: 96px;
+    }
+
+    .learn__summary {
+      width: 75%;
+    }
+
+    .category-header .category-header__image {
+      bottom: 0;
+      position: absolute;
+      right: -200px;
+      width: clamp(270px, 30vw, 420px);
+      z-index: -1;
+    }
+  }
+</style>
