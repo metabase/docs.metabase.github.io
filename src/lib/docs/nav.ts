@@ -59,13 +59,16 @@ export const findNavNode = (
 };
 
 // Finds the url of the nav section (a node with child pages) named `category`.
+// Sections only live one level below the top-level categories.
 export const getCategoryUrl = (
   version: string,
   category: string,
 ): string | undefined => {
   const target = category.toLowerCase();
-  return findNavNode(
-    getNavForVersion(version).categories,
-    (node) => !!node.url && !!node.pages && node.name.toLowerCase() === target,
-  )?.url;
+  return getNavForVersion(version)
+    .categories.flatMap((c) => c.pages ?? [])
+    .find(
+      (node) =>
+        !!node.url && !!node.pages && node.name.toLowerCase() === target,
+    )?.url;
 };

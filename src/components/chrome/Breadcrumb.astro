@@ -24,11 +24,12 @@ const latestOrExplicitVersion =
 const getFallbackCategoryUrl = (version: string, url: string) => {
   // page.url is /docs/<version>/<category-slug>/...
   const categorySlug = url.split("/")[3] ?? "";
+  const legacyMapping: Record<string, string> = {
+    api: "api-documentation",
+    "troubleshooting-guide": "troubleshooting-guide/",
+  };
   const fallbackCategoryPath =
-    {
-      api: "api-documentation",
-      "troubleshooting-guide": "troubleshooting-guide/",
-    }[categorySlug] ?? `${categorySlug}/start`;
+    legacyMapping[categorySlug] ?? `${categorySlug}/start`;
   return `/docs/${version}/${fallbackCategoryPath}`;
 };
 

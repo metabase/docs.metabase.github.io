@@ -51,7 +51,7 @@ export type DocMetadata = {
   category: string;
   title: string;
   source_url: string;
-  layout: "docs" | "new-docs";
+  layout: string;
   permalink?: string;
   latest?: boolean;
 };
