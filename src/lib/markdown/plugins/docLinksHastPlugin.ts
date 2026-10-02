@@ -14,6 +14,14 @@ const ROOT_ABS = path.resolve(DOCS_SRC_ROOT);
 const versionOf = (filePath: string) =>
   DOCS_VERSION ?? path.relative(ROOT_ABS, filePath).split(path.sep)[0];
 
+// TODO: (Grey area) bare metabase.com URLs are now rewritten. Figure out if this is desirable.
+// The previous regex method skipped these links because it couldn't detect them,
+// not because anyone decided they should stay absolute.
+// The plugin handles every link the same way regardless of how it was written.
+
+// TODO: Now that md doc rewriting moved here, HtmlDoc only needs rewriteDocLinks's
+// version pinning. Its markdown-link regexes can be deleted.
+
 export const docLinksHastPlugin = defineHastPlugin({
   name: "doc-links",
   element: {
