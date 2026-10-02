@@ -25,8 +25,7 @@ const REPO = "metabase/metabase";
 // `generateFullContent`/`getFullSections` below (mirroring the two existing
 // ones), since Astro needs a concrete route to build.
 
-// TODO: "agent-api" is not a folder so nothing gets output for it. This was an issue in the jekyll hook and left as-is in the astro migration.
-export const LLMS_FULL_SECTIONS = ["embedding", "agent-api"] as const;
+export const LLMS_FULL_SECTIONS = ["embedding"] as const;
 export type LlmsFullSection = (typeof LLMS_FULL_SECTIONS)[number];
 
 // Paths to include in llms.txt generation.
@@ -58,7 +57,7 @@ const INCLUDED_PATHS = [
   "configuring-metabase/config-file.md",
 
   // Agent API reference
-  "agent-api/",
+  "ai/agent-api.md",
 ];
 
 // Paths to exclude from llms.txt generation (applied after allowlist)
@@ -210,7 +209,7 @@ If \`jq\` is not installed, you can grep the version. Extract the major version:
 
 **Step 4: Ensure versions match**
 
-- If the versions mismatch, you MUST fetch the version-specific llms.txt documentation that matches the Metabase instance version: \`https://metabase.com/docs/v0.{VERSION}/llms.txt\` (e.g., \`/docs/v0.58/llms.txt\` for Metabase 58)
+- If the versions mismatch, you MUST fetch the version-specific llms.txt documentation that matches the Metabase instance version: \`https://www.metabase.com/docs/v0.{VERSION}/llms.txt\` (e.g., \`/docs/v0.58/llms.txt\` for Metabase 58)
 - For React SDK, ask the user to install or update their SDK packages if they are mismatched: \`npm install @metabase/embedding-sdk-react@{VERSION}-stable\` (e.g., \`@58-stable\` for Metabase 58)
 
 **Do NOT guess versions or use versions from your training data. Always verify first.**`;
@@ -278,7 +277,7 @@ export const generateIndexContent = (version: string, docs: Doc[]): string => {
 
   const sectionLinks = getFullSections(docs)
     .map((section) => {
-      const docsUrl = `https://metabase.com/docs/${version}/llms-${section}-full.txt`;
+      const docsUrl = `https://www.metabase.com/docs/${version}/llms-${section}-full.txt`;
       return `- [${section.charAt(0).toUpperCase() + section.slice(1)} - Complete Reference](${docsUrl})`;
     })
     .join("\n");
@@ -320,7 +319,7 @@ export const generateFullContent = (
   const sectionDocs = docs.filter((doc) => doc.id.includes(`/${section}/`));
   if (sectionDocs.length === 0) return null;
 
-  const docsBaseUrl = `https://metabase.com/docs/${version}`;
+  const docsBaseUrl = `https://www.metabase.com/docs/${version}`;
 
   // Add gotcha notes for the "embedding" section if version is 57 or above
   const gotchaSection =
