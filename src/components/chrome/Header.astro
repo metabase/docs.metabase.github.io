@@ -12,7 +12,6 @@ import Github from "@/icons/chrome/github-icon.svg";
 import Administration from "@/icons/chrome/gridded-circles/administration.svg";
 import Embedding from "@/icons/chrome/gridded-circles/embedding.svg";
 import Querying from "@/icons/chrome/gridded-circles/querying.svg";
-import Hamburger from "@/icons/chrome/hamburger.svg";
 import Heart from "@/icons/chrome/heart.svg";
 import InteractiveDashboards from "@/icons/chrome/interactive-dashboards.svg";
 import Learn from "@/icons/chrome/learn.svg";
@@ -36,18 +35,20 @@ import View from "@/icons/chrome/view.svg";
 import WhiteLabel from "@/icons/chrome/white-label.svg";
 import Stars from "@/icons/stars.svg";
 import { formatGithubStars, getGithubStars } from "@/lib/github/getGithubStars";
+import GetStartedButton from "./GetStartedButton.astro";
+import Hamburger from "./Hamburger.astro";
 import NavLink, { type Props as NavLinkProps } from "./NavLink.astro";
 
 export interface Props {
   hideMenu?: boolean;
   scrollable?: boolean;
-  checkoutHref?: string;
+  hideOnScroll?: boolean;
 }
 
 const {
   hideMenu = false,
   scrollable = false,
-  checkoutHref = "https://store.metabase.com/checkout",
+  hideOnScroll = false,
 } = Astro.props;
 
 const showPromoBanner = false;
@@ -156,6 +157,7 @@ const resourceLinks: NavLinkProps[] = [
       "bootstrap",
       scrollable ? "scrollable" : "sticky",
       !showPromoBanner && "promo-banner-hidden",
+      hideOnScroll && "hide-on-scroll",
     ]}
   >
     <div
@@ -474,25 +476,8 @@ const resourceLinks: NavLinkProps[] = [
                 Log in
               </a>
             )}
-            <a
-              class="fs-13 Button btn btn-primary rounded-3 ms-lg-2"
-              href={checkoutHref}
-              id="get-started-btn"
-            >
-              Get started
-            </a>
-            {!hideMenu && (
-              <button
-                class="d-lg-none rounded-3 ms-2 p-3"
-                id="mobile-nav-hamburger-wrapper"
-                type="button"
-                aria-controls="nav-menu-mobile"
-                aria-expanded="false"
-                aria-label="Toggle navigation"
-              >
-                <Hamburger />
-              </button>
-            )}
+            <GetStartedButton />
+            {!hideMenu && <Hamburger />}
           </div>
         </div>
       </div>
@@ -775,14 +760,15 @@ const resourceLinks: NavLinkProps[] = [
       const mobileMenu = navbar.querySelector<HTMLElement>("#nav-menu-mobile");
       const resizeMobileMenu = () => {
         if (mobileMenu)
-          mobileMenu.style.height = `${window.innerHeight - 72}px`;
+          mobileMenu.style.height = `${window.innerHeight - mobileMenu.getBoundingClientRect().top}px`;
       };
 
       hamburger?.addEventListener("click", () => {
-        const open = !hamburger.classList.contains(OPEN_CLASS);
-        hamburger.classList.toggle(OPEN_CLASS, open);
+        const open = hamburger.getAttribute("aria-expanded") !== "true";
         hamburger.setAttribute("aria-expanded", String(open));
         mobileMenu?.classList.toggle("d-none", !open);
+        // The menu lives inside the header, so an open menu needs the header on screen.
+        if (open) document.documentElement.removeAttribute("data-nav-hidden");
         if (open) resizeMobileMenu();
       });
 
@@ -798,6 +784,27 @@ const resourceLinks: NavLinkProps[] = [
             highlight.style.width = `${button.offsetWidth}px`;
             highlight.style.height = `${button.offsetHeight}px`;
           }),
+        );
+      }
+
+      const header = navbar.closest<HTMLElement>("header.bootstrap");
+      if (header?.classList.contains("hide-on-scroll")) {
+        const HIDE_THRESHOLD = 25;
+        // `last` is an anchor: it only advances once the scroll has moved past the threshold.
+        let last = window.scrollY;
+        window.addEventListener(
+          "scroll",
+          () => {
+            const y = window.scrollY;
+            if (Math.abs(y - last) < HIDE_THRESHOLD) return;
+            if (hamburger?.getAttribute("aria-expanded") !== "true")
+              document.documentElement.toggleAttribute(
+                "data-nav-hidden",
+                y > last && y > header.offsetHeight,
+              );
+            last = y;
+          },
+          { passive: true },
         );
       }
 
@@ -830,13 +837,45 @@ const resourceLinks: NavLinkProps[] = [
     width: auto;
   }
 
-  #mobile-nav-hamburger-wrapper {
-    appearance: none;
-    background-color: transparent;
-    border: 0;
-  }
-
   .legacy-scope {
     display: contents;
+  }
+
+  /* `hideOnScroll` (docs hub): on phones the header compacts, sticks, and slides away on scroll-down.
+     `--section-bar-top` tells the section bar and the TOC dropdown where to sit. */
+  @media (max-width: 991.98px) {
+    :global(body:has(header.hide-on-scroll)) {
+      --navigation-header-height: 56px;
+      --section-bar-top: var(--navigation-header-height);
+    }
+
+    :global(:root[data-nav-hidden] body),
+    :global(body:has(header.hide-on-scroll[hidden])) {
+      --section-bar-top: 0px;
+    }
+
+    header.bootstrap.hide-on-scroll {
+      position: sticky;
+      top: 0;
+      transition: transform 0.2s ease;
+
+      .navigation-header > .container {
+        padding-bottom: 5px;
+        padding-top: 5px;
+      }
+
+      .home-link svg {
+        height: 22px;
+      }
+    }
+
+    :global(:root[data-nav-hidden]) header.bootstrap.hide-on-scroll {
+      transform: translateY(-100%);
+
+      /* Its drop shadow would otherwise peek over the section bar while it is hidden. */
+      .navigation-header {
+        box-shadow: none;
+      }
+    }
   }
 </style>

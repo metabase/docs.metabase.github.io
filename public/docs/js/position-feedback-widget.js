@@ -36,7 +36,7 @@ function resizeLearnRightSidebar() {
   const bottomOfHeader = Math.max(0, header.getBoundingClientRect().bottom);
 
   const bottomOfTopBar = document
-    .querySelector(".top-bar")
+    .getElementById("top-bar")
     .getBoundingClientRect().bottom;
 
   $subNavigationContent.style.height = `calc(100vh - ${Math.max(

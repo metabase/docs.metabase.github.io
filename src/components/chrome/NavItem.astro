@@ -17,13 +17,17 @@ const expanded = containsUrl(node, pageUrl);
 <li class={expanded ? "expanded" : ""}>
   <a href={node.url} class={pageUrl === node.url ? "selected" : ""}>
     {node.name}
-
-    {hasChildren && (
-      <div>
-        <Chevron />
-      </div>
-    )}
   </a>
+
+  {hasChildren && (
+    <button
+      type="button"
+      aria-expanded={expanded}
+      aria-label={`Toggle ${node.name}`}
+    >
+      <Chevron />
+    </button>
+  )}
 
   {hasChildren && (
     <ul>
