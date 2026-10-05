@@ -790,6 +790,12 @@ const resourceLinks: NavLinkProps[] = [
       const header = navbar.closest<HTMLElement>("header.bootstrap");
       if (header?.classList.contains("hide-on-scroll")) {
         const HIDE_THRESHOLD = 25;
+        const mobile = window.matchMedia("(max-width: 991.98px)");
+        const setHidden = (hidden: boolean) => {
+          document.documentElement.toggleAttribute("data-nav-hidden", hidden);
+          header.inert = hidden;
+        };
+        mobile.addEventListener("change", () => setHidden(false));
         // `last` is an anchor: it only advances once the scroll has moved past the threshold.
         let last = window.scrollY;
         window.addEventListener(
@@ -798,9 +804,11 @@ const resourceLinks: NavLinkProps[] = [
             const y = window.scrollY;
             if (Math.abs(y - last) < HIDE_THRESHOLD) return;
             if (hamburger?.getAttribute("aria-expanded") !== "true")
-              document.documentElement.toggleAttribute(
-                "data-nav-hidden",
-                y > last && y > header.offsetHeight,
+              setHidden(
+                mobile.matches &&
+                  y > last &&
+                  y > header.offsetHeight &&
+                  !header.querySelector(":focus-visible"),
               );
             last = y;
           },
@@ -841,8 +849,7 @@ const resourceLinks: NavLinkProps[] = [
     display: contents;
   }
 
-  /* `hideOnScroll` (docs hub): on phones the header compacts, sticks, and slides away on scroll-down.
-     `--section-bar-top` tells the section bar and the TOC dropdown where to sit. */
+  /* `--section-bar-top` tells the section bar and the TOC dropdown where to sit. */
   @media (max-width: 991.98px) {
     :global(body:has(header.hide-on-scroll)) {
       --navigation-header-height: 56px;

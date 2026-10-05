@@ -39,7 +39,9 @@ const { url: pageUrl, categories } = Astro.props;
   drawer.addEventListener("click", (e) => {
     if (e.target === e.currentTarget) return setDocsNavOpen(false);
 
-    const item = (e.target as Element).closest("button")?.closest("li");
+    const item = (e.target as Element)
+      .closest("button, a:not([href])")
+      ?.closest("li");
     if (!item) return;
 
     drawer.querySelectorAll("li.expanded").forEach((open) => {
@@ -167,6 +169,7 @@ const { url: pageUrl, categories } = Astro.props;
       appearance: none;
       background: none;
       border: 0;
+      cursor: pointer;
       display: flex;
       height: 29px;
       justify-content: center;
