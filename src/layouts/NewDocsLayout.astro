@@ -25,9 +25,11 @@ type Props = {
   dirname: string;
   /** The page's Markdown version, for docs that publish one. */
   markdownUrl?: string;
+  /** The page's front matter summary, as inline HTML. */
+  summary?: string;
 };
 
-const { page, dirname, markdownUrl } = Astro.props;
+const { page, dirname, markdownUrl, summary } = Astro.props;
 
 const parts = Astro.url.pathname.split("/");
 const isHomePage = parts[3] === "index" || !parts[3];
@@ -39,10 +41,10 @@ const unify = UNIFY_ENABLED_PAGES.includes(page.url);
 
 const version = page.latest ? "latest" : (page.version ?? "latest");
 
-// The AI tools row goes between the Markdown's h1 and the body, so the slot
-// is rendered to a string and split there. Not on the docs home.
+// The summary and the AI tools row go between the Markdown's h1 and the body,
+// so the slot is rendered to a string and split there. Not on the docs home.
 const split =
-  markdownUrl && !isHomePage
+  (markdownUrl || summary) && !isHomePage
     ? splitAtTitle(await Astro.slots.render("default"))
     : undefined;
 ---
@@ -96,7 +98,14 @@ const split =
           {split ? (
             <>
               <Fragment set:html={split[0]} />
-              <DocActions markdownUrl={markdownUrl!} />
+              {/* The bottom margin collapses with DocActions' top margin. */}
+              {summary && (
+                <p
+                  class="tw:mt-3 tw:mb-4 tw:text-xl tw:text-pretty tw:text-secondary"
+                  set:html={summary}
+                />
+              )}
+              {markdownUrl && <DocActions markdownUrl={markdownUrl} />}
               <Fragment set:html={split[1]} />
             </>
           ) : (

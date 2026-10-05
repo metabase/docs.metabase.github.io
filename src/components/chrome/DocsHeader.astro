@@ -1,24 +1,20 @@
 ---
-import DocsVersionSelector from "@/components/chrome/DocsVersionSelector.astro";
 import InkeepSearch from "@/components/InkeepSearch/InkeepSearch.astro";
+import Book from "@/icons/chrome/book.svg";
+import MetabaseMark from "@/icons/chrome/metabase-mark.svg";
 import MetabaseWordmark from "@/icons/chrome/metabase-wordmark.svg";
-import Moon from "@/icons/chrome/moon.svg";
-import Sun from "@/icons/chrome/sun.svg";
-import Stars from "@/icons/stars.svg";
-import {
-  getActiveCategory,
-  getNavForVersion,
-  getSections,
-} from "@/lib/docs/nav";
-import { quietControl } from "./docs-ui";
+import { getNavForVersion, getSections } from "@/lib/docs/nav";
+import { iconButton, quietControl } from "./docs-ui";
+import DocsMoreMenu from "./DocsMoreMenu.astro";
 
 // Rendered outside `.bootstrap` so the marketing navbar styles don't apply.
 // navigation-header.js needs `navigation-header`, and
 // use-custom-header-checkout-link.js needs `#get-started-btn`.
 //
-// Row heights come from --spacing-header-main / --spacing-header-tabs in
-// src/styles/docs.css; --spacing-header (their sum) keeps the search modal,
-// the sticky sidebars and the drawer below the header.
+// One row, --spacing-header-row tall (src/styles/docs.css); --spacing-header
+// (the row plus the border) keeps the search modal, the sticky sidebars and
+// the drawer below the header. The version selector is at the top of the
+// left sidebar; the theme toggle is in the ⋯ menu.
 type Props = {
   version: string;
   pageUrl: string;
@@ -28,86 +24,31 @@ type Props = {
 
 const { version, pageUrl, sidebar = false } = Astro.props;
 
-const nav = getNavForVersion(version);
-const activeCategory = getActiveCategory(nav, pageUrl);
-const tabs = getSections(nav, pageUrl);
+const tabs = getSections(getNavForVersion(version), pageUrl);
 
-const row =
-  "tw:flex tw:items-center tw:gap-4 tw:px-5 tw:max-lg:gap-3 tw:max-lg:px-4";
-// 40px tall, like the CTA beside them.
-const textLink = "tw:px-3.5 tw:py-2.5 tw:whitespace-nowrap tw:no-underline";
-const menuIcon =
+const icon =
   "tw:size-5 tw:shrink-0 tw:fill-none tw:stroke-current tw:stroke-[1.5] tw:[stroke-linecap:round]";
+// The row's gaps, also used between the brand items.
+const gap = "tw:gap-4 tw:max-lg:gap-3 tw:max-xs:gap-2";
 ---
 
 {/* z-index: below the image-zoom overlay (2000) and the search modal (100000). */}
 <header class="navigation-header tw:sticky tw:top-0 tw:z-1001 tw:border-b tw:border-border tw:bg-surface tw:shadow-header">
-  <div class:list={[row, "tw:h-header-main"]}>
-    {/* The wordmark text is currentColor; secondary text is too dim on dark
-        surfaces, so the brand goes heading-colored there. */}
-    <a
-      class="tw:flex tw:min-w-0 tw:flex-1 tw:items-center tw:gap-1 tw:text-secondary tw:no-underline tw:transition-opacity tw:hover:opacity-75 tw:focus-ring tw:max-lg:flex-none tw:dark:text-heading"
-      href={`/docs/${version}/`}
-      aria-label="Metabase docs home"
-    >
-      <MetabaseWordmark class="tw:h-6 tw:w-auto tw:max-w-none tw:shrink-0" />
-      {/* 17px Lato Bold matches the wordmark text at 24px; the 1px pad puts
-          it on the wordmark's baseline. */}
-      <span class="tw:pb-px tw:text-[17px]/6 tw:font-bold tw:text-brand tw:max-lg:hidden">
-        docs
-      </span>
-    </a>
-
-    <div class="tw:flex tw:min-w-0 tw:flex-[0_1_560px] tw:items-center tw:justify-center tw:gap-2 tw:max-lg:flex-auto">
-      <InkeepSearch class="tw:h-10 tw:min-w-30 tw:flex-auto tw:max-xs:min-w-0" />
-      {/* The search modal has its own "Ask" toggle, so the separate button
-          goes at phone widths. */}
-      <button
-        type="button"
-        class="tw:flex tw:h-10 tw:shrink-0 tw:cursor-pointer tw:items-center tw:gap-1.5 tw:rounded-lg tw:border tw:border-border tw:bg-surface tw:px-3 tw:font-sans tw:text-sm tw:text-secondary tw:transition-colors tw:hover:bg-surface-hover tw:hover:text-brand tw:focus-ring tw:max-lg:px-2.5 tw:max-xs:hidden"
-        data-inkeep-ask-ai
-        aria-label="Ask AI"
-      >
-        <span class="tw:max-lg:hidden">Ask AI</span>
-        <Stars class="tw:size-4" />
-      </button>
-    </div>
-
-    {/* Below 1200px the actions would squeeze the brand into the search box,
-        so the release notes link goes first; the footer still links to it. */}
-    <div class="tw:flex tw:flex-1 tw:items-center tw:justify-end tw:gap-2 tw:max-lg:flex-none">
-      <a
-        class:list={[quietControl, textLink, "tw:max-xl:hidden"]}
-        href="/releases"
-      >
-        What’s new
-      </a>
-      <a class:list={[quietControl, textLink, "tw:max-lg:hidden"]} href="/">
-        Metabase home
-      </a>
-      <a
-        id="get-started-btn"
-        class="tw:rounded-lg tw:bg-brand tw:px-4.5 tw:py-3 tw:text-[13px]/4 tw:font-bold tw:whitespace-nowrap tw:text-white tw:no-underline tw:transition-colors tw:hover:bg-brand-hover tw:focus-ring tw:max-xs:px-3 tw:max-xs:py-2.5"
-        href="https://store.metabase.com/checkout"
-      >
-        Get started
-      </a>
-    </div>
-  </div>
-
-  <nav
-    class:list={[row, "tw:h-header-tabs"]}
-    aria-label="Documentation sections"
+  <div
+    class:list={[
+      gap,
+      "tw:flex tw:h-header-row tw:items-center tw:px-5 tw:max-lg:px-4 tw:max-xs:px-3",
+    ]}
   >
-    {/* Shown below lg in place of the tabs; the sections are
-        listed in the drawer instead. -8px lines the icon up with the wordmark
-        at the 16px row gutter. */}
+    {/* Below lg in place of the tabs; the drawer lists the sections. -6px
+        lines the icon up with the row gutter. Phones get tighter gaps and
+        gutters so the row fits at 320px. */}
     {sidebar && (
       <button
         type="button"
         class:list={[
           quietControl,
-          "tw:group tw:-ml-2 tw:flex tw:h-8 tw:min-w-0 tw:items-center tw:gap-2 tw:px-2 tw:font-bold tw:lg:hidden",
+          "tw:group tw:-ml-1.5 tw:flex tw:size-8 tw:shrink-0 tw:items-center tw:justify-center tw:p-0 tw:lg:hidden",
         ]}
         data-docs-nav-toggle
         aria-controls="main-navigation-content"
@@ -115,115 +56,121 @@ const menuIcon =
         aria-label="Open navigation"
       >
         <svg
-          class:list={[menuIcon, "tw:group-aria-expanded:hidden"]}
+          class:list={[icon, "tw:group-aria-expanded:hidden"]}
           viewBox="0 0 20 20"
           aria-hidden="true"
         >
           <path d="M3 5h14M3 10h14M3 15h14" />
         </svg>
         <svg
-          class:list={[menuIcon, "tw:hidden tw:group-aria-expanded:block"]}
+          class:list={[icon, "tw:hidden tw:group-aria-expanded:block"]}
           viewBox="0 0 20 20"
           aria-hidden="true"
         >
           <path d="M5 5l10 10M15 5L5 15" />
         </svg>
-        <span class="tw:truncate">{activeCategory?.name ?? "Menu"}</span>
       </button>
     )}
-    {/* -8px cancels the first tab's own padding so its label lines up with
-        the wordmark and the sidebar text at the 20px row gutter. Without a
-        sidebar (404) the list scrolls at narrow widths with its scrollbar
-        hidden, so its right edge fades to show there is more. */}
-    {tabs.length > 0 && (
-      <ul
-        class:list={[
-          "tw:my-0 tw:-ml-2 tw:flex tw:h-full tw:min-w-0 tw:flex-auto tw:scrollbar-none tw:list-none tw:gap-2 tw:overflow-x-auto tw:p-0",
-          sidebar
-            ? "tw:max-lg:hidden"
-            : "tw:max-lg:mask-[linear-gradient(to_right,#000_calc(100%-32px),transparent)] tw:max-lg:pr-8",
-        ]}
+
+    <div class:list={[gap, "tw:flex tw:shrink-0 tw:items-center"]}>
+      {/* The wordmark text is currentColor; secondary text is too dim on
+          dark surfaces, so the brand goes heading-colored there. Phones get
+          the mark only. */}
+      <a
+        class="tw:flex tw:items-center tw:text-secondary tw:no-underline tw:transition-opacity tw:hover:opacity-75 tw:focus-ring tw:dark:text-heading"
+        href="/"
+        aria-label="Metabase home"
       >
-        {tabs.map((tab) => (
-          <li class="tw:m-0 tw:flex tw:shrink-0">
-            {/* Tabs fill the 44px row, so the focus ring stays inside it. */}
-            <a
-              class="tw:flex tw:items-center tw:rounded-t-lg tw:border-b-2 tw:border-transparent tw:px-2 tw:text-sm/5 tw:whitespace-nowrap tw:text-secondary tw:no-underline tw:transition-[background-color,color,border-color] tw:hover:bg-surface-hover tw:hover:text-brand tw:focus-ring tw:focus-visible:-outline-offset-2 tw:aria-[current=page]:border-brand tw:aria-[current=page]:font-bold tw:aria-[current=page]:text-brand"
-              href={tab.href}
-              aria-current={tab.active ? "page" : undefined}
-            >
-              {tab.name}
-            </a>
-          </li>
-        ))}
-      </ul>
+        <MetabaseWordmark class="tw:h-6 tw:w-auto tw:max-w-none tw:shrink-0 tw:max-xs:hidden" />
+        <MetabaseMark class="tw:h-6 tw:w-auto tw:shrink-0 tw:xs:hidden" />
+      </a>
+      <span
+        class="tw:h-6 tw:w-px tw:bg-border-strong"
+        aria-hidden="true"
+      ></span>
+      {/* 17px Lato Bold matches the wordmark text at 24px; the 1px pad puts
+          it on the wordmark's baseline. The book's paths have a fixed stroke,
+          so stroke-current gives them the link color. Phones drop the book
+          so the row fits at 320px. */}
+      <a
+        class="tw:flex tw:items-center tw:gap-1.5 tw:pb-px tw:text-[17px]/6 tw:font-bold tw:text-brand tw:no-underline tw:transition-opacity tw:hover:opacity-75 tw:focus-ring"
+        href={`/docs/${version}/`}
+        aria-label="Metabase docs home"
+      >
+        <Book
+          class="tw:size-5 tw:shrink-0 tw:**:stroke-current tw:max-xs:hidden"
+          aria-hidden="true"
+        />
+        Docs
+      </a>
+    </div>
+
+    {/* The tabs fill the row, so the active tab's underline sits on the
+        header's border. They scroll if they run out of room. Without a
+        sidebar (404) they also show below lg, with their scrollbar hidden and
+        the right edge faded to show there is more. */}
+    {tabs.length > 0 && (
+      <nav
+        class:list={[
+          "tw:flex tw:h-full tw:min-w-0",
+          { "tw:max-lg:hidden": sidebar },
+        ]}
+        aria-label="Documentation sections"
+      >
+        <ul
+          class:list={[
+            "tw:my-0 tw:flex tw:min-w-0 tw:scrollbar-none tw:list-none tw:gap-2 tw:overflow-x-auto tw:p-0",
+            {
+              "tw:max-lg:mask-r-from-[calc(100%-32px)] tw:max-lg:pr-8":
+                !sidebar,
+            },
+          ]}
+        >
+          {tabs.map((tab) => (
+            <li class="tw:m-0 tw:flex tw:shrink-0">
+              {/* The focus ring stays inside the row. pt-1 drops the text
+                  2px (half the pad) onto the wordmark's baseline. */}
+              <a
+                class="tw:flex tw:items-center tw:rounded-t-lg tw:border-b-2 tw:border-transparent tw:px-2 tw:pt-1 tw:text-sm/5 tw:whitespace-nowrap tw:text-secondary tw:no-underline tw:transition-[background-color,color,border-color] tw:hover:bg-surface-hover tw:hover:text-brand tw:focus-ring tw:focus-visible:-outline-offset-2 tw:aria-[current=page]:border-brand tw:aria-[current=page]:font-bold tw:aria-[current=page]:text-brand"
+                href={tab.href}
+                aria-current={tab.active ? "page" : undefined}
+              >
+                {tab.name}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
     )}
-    {/* ml-auto pins it right even when there is no tab list. */}
-    <div class="tw:ml-auto tw:flex tw:shrink-0 tw:items-center tw:gap-1">
+
+    {/* ml-auto pins it right whatever the tabs take. The search box needs
+        room the tabs use below xl, so an icon opens the same modal there. */}
+    <div class="tw:ml-auto tw:flex tw:shrink-0 tw:items-center tw:gap-2">
+      <InkeepSearch class="tw:h-10 tw:w-64 tw:max-xl:hidden" />
       <button
         type="button"
-        class:list={[
-          quietControl,
-          "tw:flex tw:size-8 tw:shrink-0 tw:items-center tw:justify-center tw:p-0",
-        ]}
-        data-theme-toggle
-        aria-label="Switch to dark theme"
+        class:list={[iconButton, "tw:xl:hidden"]}
+        data-inkeep-search
+        aria-label="Search the docs or ask AI"
       >
-        <Sun class="tw:size-4.5 tw:dark:hidden" />
-        <Moon class="tw:hidden tw:size-4.5 tw:dark:block" />
+        <svg class={icon} viewBox="0 0 20 20" aria-hidden="true">
+          <path d="M16.5 16.5l-3.4-3.4M3.5 9a5.5 5.5 0 1 1 11 0 5.5 5.5 0 0 1-11 0Z" />
+        </svg>
       </button>
-      <DocsVersionSelector version={version} />
+      <a
+        id="get-started-btn"
+        class="tw:rounded-lg tw:bg-brand tw:px-4.5 tw:py-3 tw:text-control/4 tw:font-bold tw:whitespace-nowrap tw:text-white tw:no-underline tw:transition-colors tw:hover:bg-brand-hover tw:focus-ring tw:max-xs:px-3 tw:max-xs:py-2.5"
+        href="https://store.metabase.com/checkout"
+      >
+        Get started
+      </a>
+      <DocsMoreMenu />
     </div>
-  </nav>
+  </div>
 </header>
 
 <script>
-  // Same key as _includes/docs/theme-init.js, which sets data-theme before
-  // first paint.
-  const THEME_KEY = "mb-docs-theme";
   const root = document.documentElement;
-  const themeButton = document.querySelector("[data-theme-toggle]");
-
-  const getTheme = () => (root.dataset.theme === "dark" ? "dark" : "light");
-
-  const hasStoredPreference = () => {
-    try {
-      const stored = localStorage.getItem(THEME_KEY);
-      return stored === "light" || stored === "dark";
-    } catch {
-      return false;
-    }
-  };
-
-  const syncButton = (theme: string) => {
-    const label =
-      theme === "dark" ? "Switch to light theme" : "Switch to dark theme";
-    themeButton?.setAttribute("aria-label", label);
-    themeButton?.setAttribute("title", label);
-  };
-
-  const applyTheme = (theme: string, persist: boolean) => {
-    root.dataset.theme = theme;
-    if (persist) {
-      try {
-        localStorage.setItem(THEME_KEY, theme);
-      } catch {
-        /* storage blocked; the choice lasts for this page only */
-      }
-    }
-    syncButton(theme);
-    // new-docs-code-snippet-copy.js swaps its icons on this.
-    document.dispatchEvent(new CustomEvent("themechange"));
-  };
-
-  syncButton(getTheme());
-  themeButton?.addEventListener("click", () => {
-    applyTheme(getTheme() === "dark" ? "light" : "dark", true);
-  });
-
-  matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (e) => {
-    if (!hasStoredPreference()) applyTheme(e.matches ? "dark" : "light", false);
-  });
 
   // Mobile nav. Below lg LeftSidebar.astro turns the left sidebar
   // into a drawer, shown while <html> has data-docs-nav="open" (the

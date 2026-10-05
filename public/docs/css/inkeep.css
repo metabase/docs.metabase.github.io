@@ -11,16 +11,34 @@ inkeep-portal {
 }
 
 .ikp-modal-widget__content {
-  font-family: Lato, sans-serif;
+  font-family: var(--tw-font-sans);
 }
 
 .ikp-ai-chat__toolbar-header {
   visibility: hidden;
 }
 
-/* Match the 8px radius of the docs header's Ask AI and Get started buttons. */
+/* Match the 8px radius of the docs header's buttons. */
 .ikp-search-bar__button {
   border-radius: 8px;
+}
+
+/* The placeholder names both search and AI; keep it on one line in the
+   header's 256px box. The ⌘K hint would cut it short; the shortcut still
+   works. */
+kbd.ikp-search-bar__kbd-wrapper {
+  display: none;
+}
+
+/* The font and size of the Get started button beside it (theme variables
+   from src/styles/docs.css). Inkeep's Inter looks larger at the same size. */
+.ikp-search-bar__text {
+  font-family: var(--tw-font-sans);
+  font-size: var(--tw-text-control);
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .ikp-ai-chat-page-wrapper {
@@ -52,10 +70,4 @@ div.ikp-d_flex.ikp-flex_row.ikp-items_center.ikp-pt_3.ikp-pb_1:has(.ikp-search-b
 
 .ikp-ai-chat-footer__content-wrapper {
   padding-bottom: 30px;
-}
-
-@media screen and (max-width: 992px) {
-  kbd.ikp-search-bar__kbd-wrapper {
-    display: none;
-  }
 }

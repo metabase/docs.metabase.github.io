@@ -40,8 +40,18 @@ export const renderMarkdownDoc = async (doc: MarkdownDoc, version: string) => {
     body,
   } = await renderDocLiquid({ doc, version });
   const md = await getMarkdownRenderer();
-  const { code: html } = await md.render(body, {
-    fileURL: pathToFileURL(path.resolve(resolved.filePath!)),
-  });
-  return { page: { ...page, content: html }, dirname, html };
+  const fileURL = pathToFileURL(path.resolve(resolved.filePath!));
+  const { code: html } = await md.render(body, { fileURL });
+
+  // The subheading under the title (NewDocsLayout.astro), as inline HTML:
+  // summaries can hold inline code.
+  const text = page.summary ?? page.description;
+  const summary =
+    typeof text === "string" && text.trim()
+      ? (await md.render(text, { fileURL })).code
+          .trim()
+          .replace(/^<p>([\s\S]*)<\/p>$/, "$1")
+      : undefined;
+
+  return { page: { ...page, content: html }, dirname, html, summary };
 };

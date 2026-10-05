@@ -3,9 +3,10 @@ import VersionTag from "@/components/chrome/VersionTag.astro";
 import Chevron from "@/icons/chevron.svg";
 import { getVersionSupport } from "@/lib/docs/versionSupport";
 import { baseCtx } from "@/lib/liquid/liquidRenderer";
-import { quietControl } from "./docs-ui";
+import { menuItem, menuPanel, quietControl } from "./docs-ui";
 
-// The trigger's aria-expanded drives the open state: `aria-expanded:` on the
+// At the top of the left sidebar (LeftSidebar.astro). The trigger's
+// aria-expanded drives the open state (dropdown.ts): `aria-expanded:` on the
 // trigger itself, `group-aria-expanded:` on its chevron and
 // `peer-aria-expanded:` on the menu that follows it.
 type Props = {
@@ -24,17 +25,15 @@ const otherVersions = [...availableVersions]
   .slice(0, 10)
   .filter((v) => v !== currentLabel)
   .map((v) => ({ version: v, support: getVersionSupport(v) }));
-
-const menuLink =
-  "tw:block tw:px-4 tw:py-2 tw:text-sm tw:no-underline tw:hover:bg-page";
 ---
 
 <div class="tw:relative" data-version-selector>
+  {/* 8px left padding lines the label up with the nav link text. */}
   <button
     type="button"
     class:list={[
       quietControl,
-      "tw:group tw:peer tw:flex tw:items-center tw:gap-1.5 tw:py-1.5 tw:pr-2 tw:pl-3 tw:select-none",
+      "tw:group tw:peer tw:flex tw:items-center tw:gap-1.5 tw:px-2 tw:py-1.5 tw:select-none",
     ]}
     aria-haspopup="true"
     aria-expanded="false"
@@ -43,26 +42,23 @@ const menuLink =
     {currentLabel}
     <Chevron class="tw:size-3 tw:transition-[rotate] tw:duration-200 tw:group-aria-expanded:rotate-180" />
   </button>
-  {/* visibility keeps the closed menu's links out of the tab order. It
-      transitions with the fade: a transitioning visibility counts as visible
-      until the end, so the menu disappears only once the fade-out has
-      played. */}
-  <ul class="tw:pointer-events-none tw:invisible tw:absolute tw:top-[calc(100%+6px)] tw:right-0 tw:z-5 tw:m-0 tw:min-w-40 tw:scale-[0.97] tw:list-none tw:overflow-hidden tw:rounded-lg tw:border tw:border-border tw:bg-surface-elevated tw:px-0 tw:py-1 tw:opacity-0 tw:shadow-card tw:transition-[scale,opacity,visibility] tw:duration-200 tw:ease-in-out tw:peer-aria-expanded:pointer-events-auto tw:peer-aria-expanded:visible tw:peer-aria-expanded:scale-100 tw:peer-aria-expanded:opacity-100">
+  <ul class:list={[menuPanel, "tw:left-0"]}>
     {otherVersions.map(({ version: v, support }) => (
       <li class="tw:m-0">
         <a
           href={`/docs/${v}/`}
-          class:list={[menuLink, "tw:text-secondary tw:hover:text-brand"]}
+          class:list={[
+            menuItem,
+            "tw:justify-between tw:text-secondary tw:hover:text-brand",
+          ]}
         >
-          <span class="tw:flex tw:items-center tw:justify-between tw:gap-2">
-            <span>{v}</span>
-            <VersionTag support={support} />
-          </span>
+          <span>{v}</span>
+          <VersionTag support={support} />
         </a>
       </li>
     ))}
     <li class="tw:m-0">
-      <a class:list={[menuLink, "tw:font-bold tw:text-brand"]} href="/docs/all">
+      <a class:list={[menuItem, "tw:font-bold tw:text-brand"]} href="/docs/all">
         See more
       </a>
     </li>
@@ -70,6 +66,8 @@ const menuLink =
 </div>
 
 <script>
+  import { initDropdown } from "./dropdown";
+
   const selector = document.querySelector<HTMLElement>(
     "[data-version-selector]",
   );
@@ -77,32 +75,5 @@ const menuLink =
     "[data-version-trigger]",
   );
 
-  if (selector && trigger) {
-    const isOpen = () => trigger.getAttribute("aria-expanded") === "true";
-
-    const setOpen = (open: boolean) => {
-      trigger.setAttribute("aria-expanded", open ? "true" : "false");
-    };
-
-    selector.addEventListener("click", (event) => {
-      // Keeps the click from reaching the document handler below.
-      event.stopPropagation();
-      setOpen(!isOpen());
-    });
-
-    // A null relatedTarget means focus went to the body (Safari does not
-    // focus links on click); the document click handler covers that case.
-    selector.addEventListener("focusout", (event) => {
-      const next = event.relatedTarget as Node | null;
-      if (next && !selector.contains(next)) setOpen(false);
-    });
-
-    document.addEventListener("click", () => setOpen(false));
-
-    document.addEventListener("keydown", (event) => {
-      if (event.key !== "Escape" || !isOpen()) return;
-      setOpen(false);
-      if (selector.contains(document.activeElement)) trigger.focus();
-    });
-  }
+  if (selector && trigger) initDropdown(selector, trigger);
 </script>

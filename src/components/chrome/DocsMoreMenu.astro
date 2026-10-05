@@ -1,0 +1,115 @@
+---
+import Moon from "@/icons/chrome/moon.svg";
+import Sun from "@/icons/chrome/sun.svg";
+import { iconButton, menuItem, menuPanel } from "./docs-ui";
+
+// The header's ⋯ menu: outside links and the theme toggle. Opens and closes
+// like the version selector (dropdown.ts).
+const links = [
+  { label: "Metabase.com", href: "/" },
+  { label: "GitHub", href: "https://github.com/metabase/metabase" },
+  { label: "Forum", href: "https://discourse.metabase.com/" },
+  { label: "What’s new", href: "/releases" },
+];
+
+// font-normal: the vendored bundle bolds header links.
+const item = [menuItem, "tw:font-normal tw:text-secondary tw:hover:text-brand"];
+const themeIcon = "tw:size-4 tw:shrink-0";
+---
+
+<div class="tw:relative" data-more-menu>
+  <button
+    type="button"
+    class:list={[iconButton, "tw:peer"]}
+    aria-label="More"
+    aria-haspopup="true"
+    aria-expanded="false"
+    data-more-trigger
+  >
+    <svg
+      class="tw:size-5 tw:fill-current"
+      viewBox="0 0 20 20"
+      aria-hidden="true"
+    >
+      <circle cx="4.5" cy="10" r="1.5" />
+      <circle cx="10" cy="10" r="1.5" />
+      <circle cx="15.5" cy="10" r="1.5" />
+    </svg>
+  </button>
+  <ul class:list={[menuPanel, "tw:right-0 tw:min-w-48"]}>
+    {links.map(({ label, href }) => (
+      <li class="tw:m-0">
+        <a class:list={item} href={href}>
+          {label}
+        </a>
+      </li>
+    ))}
+    {/* The label names the theme the button switches to. Only one of each
+        pair is displayed, so screen readers read only that one. */}
+    <li class="tw:m-0 tw:mt-1 tw:border-t tw:border-border tw:pt-1">
+      <button
+        type="button"
+        class:list={[
+          item,
+          "tw:w-full tw:cursor-pointer tw:border-0 tw:bg-transparent tw:text-left tw:font-sans",
+        ]}
+        data-theme-toggle
+      >
+        <Moon class:list={[themeIcon, "tw:dark:hidden"]} aria-hidden="true" />
+        <span class="tw:dark:hidden">Dark theme</span>
+        <Sun
+          class:list={[themeIcon, "tw:hidden tw:dark:block"]}
+          aria-hidden="true"
+        />
+        <span class="tw:hidden tw:dark:inline">Light theme</span>
+      </button>
+    </li>
+  </ul>
+</div>
+
+<script>
+  import { initDropdown } from "./dropdown";
+
+  const menu = document.querySelector<HTMLElement>("[data-more-menu]");
+  const trigger = menu?.querySelector<HTMLElement>("[data-more-trigger]");
+  if (menu && trigger) initDropdown(menu, trigger);
+
+  // Same key as _includes/docs/theme-init.js, which sets data-theme before
+  // first paint.
+  const THEME_KEY = "mb-docs-theme";
+  const root = document.documentElement;
+
+  const getTheme = () => (root.dataset.theme === "dark" ? "dark" : "light");
+
+  const hasStoredPreference = () => {
+    try {
+      const stored = localStorage.getItem(THEME_KEY);
+      return stored === "light" || stored === "dark";
+    } catch {
+      return false;
+    }
+  };
+
+  const applyTheme = (theme: string, persist: boolean) => {
+    root.dataset.theme = theme;
+    if (persist) {
+      try {
+        localStorage.setItem(THEME_KEY, theme);
+      } catch {
+        /* storage blocked; the choice lasts for this page only */
+      }
+    }
+    // new-docs-code-snippet-copy.js swaps its icons on this.
+    document.dispatchEvent(new CustomEvent("themechange"));
+  };
+
+  document
+    .querySelector("[data-theme-toggle]")
+    ?.addEventListener("click", () => {
+      applyTheme(getTheme() === "dark" ? "light" : "dark", true);
+    });
+
+  matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (e) => {
+    if (!hasStoredPreference()) applyTheme(e.matches ? "dark" : "light", false);
+  });
+</script>

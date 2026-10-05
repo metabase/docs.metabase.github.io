@@ -1,5 +1,6 @@
 ---
-// Buttons marked `data-inkeep-ask-ai` open the widget straight into chat.
+// Buttons marked `data-inkeep-search` open the widget in the visitor's
+// preferred view; `data-inkeep-ask-ai` opens it straight into chat.
 type Props = {
   class?: string;
 };
@@ -72,7 +73,7 @@ const { class: className } = Astro.props;
       userAvatar: "/images/icons/person.svg",
     },
     searchSettings: {
-      placeholder: "Search",
+      placeholder: "Search the docs or ask AI…",
     },
     shouldShowAskAICard: false,
     askAILabel: "Ask",
@@ -91,6 +92,10 @@ const { class: className } = Astro.props;
       isOpen: false,
       onOpenChange,
     },
+  });
+
+  document.querySelectorAll("[data-inkeep-search]").forEach((button) => {
+    button.addEventListener("click", () => onOpenChange(true));
   });
 
   document.querySelectorAll("[data-inkeep-ask-ai]").forEach((button) => {
