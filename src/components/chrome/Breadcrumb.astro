@@ -1,4 +1,5 @@
 ---
+import { getCategoryUrl } from "@/lib/docs/nav";
 import { baseCtx } from "@/lib/liquid/liquidRenderer";
 
 type Props = {
@@ -15,25 +16,26 @@ type Props = {
 const { page } = Astro.props;
 const { site } = baseCtx;
 
-const slugify = (str: string) =>
-  str
-    .toLowerCase()
-    .trim()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
-
-const version = page.version === "latest" ? site.docs_version : page.version;
 const latestOrExplicitVersion =
   site.docs_version === page.version && page.url.includes("/docs/latest/")
     ? "latest"
     : (page.version ?? "");
-const categorySlug = slugify(page.category ?? "");
-const categorySlugPart =
-  categorySlug === "troubleshooting-guide"
-    ? "/"
-    : categorySlug === "api"
-      ? "api-documentation"
-      : "/start";
+
+const getFallbackCategoryUrl = (version: string, url: string) => {
+  // page.url is /docs/<version>/<category-slug>/...
+  const categorySlug = url.split("/")[3] ?? "";
+  const legacyMapping: Record<string, string> = {
+    api: "api-documentation",
+    "troubleshooting-guide": "troubleshooting-guide/",
+  };
+  const fallbackCategoryPath =
+    legacyMapping[categorySlug] ?? `${categorySlug}/start`;
+  return `/docs/${version}/${fallbackCategoryPath}`;
+};
+
+const categoryUrl =
+  getCategoryUrl(latestOrExplicitVersion, page.category ?? "") ??
+  getFallbackCategoryUrl(latestOrExplicitVersion, page.url);
 ---
 
 <div class="bootstrap">
@@ -55,10 +57,7 @@ const categorySlugPart =
           ) : (
             page.show_category_breadcrumb && (
               <li class="breadcrumb-item">
-                <a
-                  class="blue-60"
-                  href={`/docs/${latestOrExplicitVersion}/${page.category !== "Api" ? categorySlug : ""}${categorySlugPart}`}
-                >
+                <a class="blue-60" href={categoryUrl}>
                   {page.category}
                 </a>
               </li>
@@ -66,30 +65,9 @@ const categorySlugPart =
           )}
         </>
       ) : (
-        <>
-          {page.title === "Search" ? (
-            <li class="breadcrumb-item">
-              <span class="m-0 paragraph-5 neutral-40 fw-bold">
-                <a href="/docs/latest/">{site.latest_version}</a>
-              </span>
-            </li>
-          ) : (
-            <li class="breadcrumb-item">
-              <span class="neutral-40">{version}</span>
-            </li>
-          )}
-
-          {page.category === "Api" && (
-            <li class="breadcrumb-item">
-              <span class="neutral-40">{page.category}</span>
-            </li>
-          )}
-          {page.title !== "README" && (
-            <li class="breadcrumb-item">
-              <span class="neutral-40">{page.title}</span>
-            </li>
-          )}
-        </>
+        <li class="breadcrumb-item">
+          <span class="neutral-40">{page.title}</span>
+        </li>
       )}
     </ol>
   </nav>

@@ -1,0 +1,57 @@
+---
+import CategoryCards, {
+  type PageEntry,
+} from "@/components/categories/CategoryCards.astro";
+import CategoryHeader from "@/components/categories/CategoryHeader.astro";
+import type { DocPage } from "@/lib/docs/constructDocMetadata";
+import { findNavNode, getNavForVersion, type NavNode } from "@/lib/docs/nav";
+import { docIdFromUrl } from "@/lib/docs/resolveDoc";
+import { getEntry } from "astro:content";
+import NewDocsLayout from "./NewDocsLayout.astro";
+
+type Props = {
+  page: DocPage;
+  dirname: string;
+};
+
+const { page, dirname } = Astro.props;
+
+function getReadTime(body?: string, minimum = 0): number | undefined {
+  if (!body) return undefined;
+
+  // Match Jekyll's `number_of_words` filter, which counts whitespace-separated
+  // tokens in the unrendered collection content.
+  const words = body.trim().split(/\s+/).filter(Boolean).length;
+  return Math.max(minimum, Math.floor(words / 238));
+}
+
+const navNode = findNavNode(
+  getNavForVersion(page.latest ? "latest" : page.version).categories,
+  (node) => !!node.url && node.url === page.url,
+);
+
+const pages: PageEntry[] = await Promise.all(
+  (navNode?.pages ?? [])
+    // Only docs pages get cards; external links are skipped.
+    .filter((node): node is NavNode & { url: string } =>
+      Boolean(node.url?.startsWith("/docs/")),
+    )
+    .map(async (node) => {
+      const doc = await getEntry("docs", docIdFromUrl(node.url));
+      if (!doc) {
+        throw new Error(`Doc not found: ${node.url}`);
+      }
+      return {
+        url: node.url,
+        title: doc.data.title ?? node.name,
+        summary: doc.data.summary,
+        readTime: getReadTime(doc.body, 1),
+      };
+    }),
+);
+---
+
+<NewDocsLayout {page} {dirname}>
+  <CategoryHeader {...page} />
+  <CategoryCards pages={pages} />
+</NewDocsLayout>
