@@ -32,7 +32,10 @@ const navNode = findNavNode(
 
 const pages: PageEntry[] = await Promise.all(
   (navNode?.pages ?? [])
-    .filter((node): node is NavNode & { url: string } => Boolean(node.url))
+    // Only docs pages get cards; external links are skipped.
+    .filter((node): node is NavNode & { url: string } =>
+      Boolean(node.url?.startsWith("/docs/")),
+    )
     .map(async (node) => {
       const doc = await getEntry("docs", docIdFromUrl(node.url));
       if (!doc) {
