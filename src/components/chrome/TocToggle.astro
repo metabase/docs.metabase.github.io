@@ -60,7 +60,10 @@
   };
   const hide = supportsPopover
     ? () => list.hidePopover()
-    : () => setOpen(false);
+    : () => {
+        setOpen(false);
+        toggle.focus();
+      };
 
   if (supportsPopover) {
     list.addEventListener("toggle", (event) => {
@@ -74,6 +77,9 @@
     document.addEventListener("click", (event) => {
       const target = event.target as Node;
       if (!list.contains(target) && !toggle.contains(target)) setOpen(false);
+    });
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && list.classList.contains("open")) hide();
     });
   }
 
