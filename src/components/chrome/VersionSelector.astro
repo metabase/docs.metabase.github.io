@@ -14,10 +14,10 @@ const versions = [...site.available_versions].reverse().slice(0, 10);
 ---
 
 <div class="version__selector cursor-pointer">
-  <span class="version__current">
-    {currentVersion}
+  <div class="version__current">
+    <span>{currentVersion}</span>
     <Chevron />
-  </span>
+  </div>
   <ul class="version__dropdown">
     {versions
       .filter((v: string) => v !== version)
@@ -75,16 +75,62 @@ const versions = [...site.available_versions].reverse().slice(0, 10);
 </script>
 
 <style is:global>
-  /* .bootstrap .learn .version__current {
-    padding: 9px 0 11px 12px;
-    margin-left: -12px;
+  .bootstrap .learn .version__selector {
+    display: inline-block;
+    height: auto;
+    margin: 32px 0 0 0 !important;
+    position: relative;
+    width: auto;
+  }
+  @media (min-width: 992.02px) {
+    .bootstrap .learn .version__selector {
+      margin-top: 0 !important;
+    }
+  }
+
+  .bootstrap .learn .version__current {
+    background-color: white;
+    border: 1px solid rgba(198,201,210,.5);
+    display: inline-flex;
+    float: none;
+    gap: 0!important;
+    padding: 10px 0 12px 12px;
+    width: auto;
+
+    &:hover,
+    &:focus,
+    &.open {
+      border-color: #c2daf0;
+    }
+  }
+  /* @media (min-width: 992.02px) {
+    .bootstrap .learn .version__current {
+      background-color: transparent;
+      border: none;
+    }
   } */
 
   .bootstrap .learn .version__current svg {
     margin-top: 2px;
   }
 
-  /* The top-bar picker is hidden only at ≤992px; show this one in that range only */
+  .bootstrap .learn .version__dropdown {
+    margin-top: 0;
+    left: 0;
+    right: auto;
+    top: 100%;
+  }
+  @media (min-width: 992.02px) {
+    .bootstrap .learn .version__dropdown {
+      left: auto;
+      right: 0;
+    }
+  }
+
+  .bootstrap .learn div.learn__post__content .version__selector {
+    display: inline-block;
+  }
+  /* FIX: the top-bar picker is hidden only at ≤992px; show this one in that range only */
   @media (min-width: 992.02px) {
     .bootstrap .learn div.learn__post__content .version__selector {
       display: none;
