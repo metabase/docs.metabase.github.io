@@ -33,7 +33,9 @@ const { page, showBreadcrumb, showNavToggle, showVersionSelector } =
     </div>
 
     <div>
-      {showVersionSelector && <VersionSelector version={page.version} />}
+      {showVersionSelector && (
+        <VersionSelector version={page.version} variant="top-bar" />
+      )}
       <a href="/releases" class="whats-new">
         <Stars />
         What’s new
@@ -73,11 +75,6 @@ const { page, showBreadcrumb, showNavToggle, showVersionSelector } =
     /* Bootstrap's clearfix would otherwise become a third, empty flex item. */
     > .container::after {
       content: none;
-    }
-
-    :global(.version__selector) {
-      display: flex;
-      margin-top: 0;
     }
 
     :global(.trail) {
@@ -137,10 +134,6 @@ const { page, showBreadcrumb, showNavToggle, showVersionSelector } =
 
       > .container > div {
         display: contents;
-      }
-
-      :global(.version__selector) {
-        display: none;
       }
 
       :global(.docs-nav-toggle),

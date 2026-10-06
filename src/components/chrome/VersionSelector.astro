@@ -4,16 +4,17 @@ import { baseCtx } from "@/lib/liquid/liquidRenderer";
 
 type Props = {
   version?: string;
+  variant: "top-bar" | "inline";
 };
 
-const { version } = Astro.props;
+const { version, variant } = Astro.props;
 const { site } = baseCtx;
 
 const currentVersion = version === "latest" ? site.docs_version : version;
 const versions = [...site.available_versions].reverse().slice(0, 10);
 ---
 
-<div class="version__selector cursor-pointer">
+<div class:list={["version__selector", "cursor-pointer", variant]}>
   <div class="version__current">
     <span>{currentVersion}</span>
     <Chevron />
@@ -74,67 +75,146 @@ const versions = [...site.available_versions].reverse().slice(0, 10);
   });
 </script>
 
-<style is:global>
-  .bootstrap .learn .version__selector {
-    display: inline-block;
-    height: auto;
-    margin: 32px 0 0 0 !important;
+<style>
+  /* Doubled to outrank the legacy `.bootstrap .learn__post a` / `li` rules. */
+  .version__selector.version__selector {
     position: relative;
-    width: auto;
-  }
-  @media (min-width: 992.02px) {
-    .bootstrap .learn .version__selector {
-      margin-top: 0 !important;
+
+    &.top-bar {
+      display: flex;
+
+      @media (max-width: 991.98px) {
+        display: none;
+      }
+
+      .version__dropdown {
+        left: auto;
+        right: 0;
+      }
     }
-  }
 
-  .bootstrap .learn .version__current {
-    background-color: white;
-    border: 1px solid rgba(198, 201, 210, 0.5);
-    display: inline-flex;
-    float: none;
-    gap: 0 !important;
-    padding: 10px 0 12px 12px;
-    width: auto;
+    &.inline {
+      display: inline-block;
+      margin: 32px 0 0;
 
-    &:hover {
-      border-color: #c2daf0;
+      @media (min-width: 992px) {
+        display: none;
+      }
+
+      .version__current {
+        background-color: #fff;
+        border: 1px solid rgba(198, 201, 210, 0.5);
+
+        &:hover {
+          border-color: #c2daf0;
+        }
+      }
+
+      .version__dropdown {
+        left: 0;
+        right: auto;
+      }
     }
-  }
-  .bootstrap .learn .version__selector.open .version__current {
-    border-color: #c2daf0;
-  }
-  @media (min-width: 992.02px) {
-    .bootstrap .learn .version__current {
-      background-color: transparent;
-      border: none;
+
+    .version__current {
+      align-items: center;
+      border-radius: 8px;
+      color: #8d93a5;
+      display: inline-flex;
+      font-size: 14px;
+      gap: 0;
+      padding: 10px 0 12px 12px;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: #e4ecfb;
+      }
+
+      :global(svg) {
+        height: 12px;
+        margin-top: 2px;
+      }
+
+      :global(svg path) {
+        stroke: #8d93a5;
+      }
     }
-  }
 
-  .bootstrap .learn .version__current svg {
-    margin-top: 2px;
-  }
+    .version__dropdown {
+      background: #fff;
+      border-radius: 0.25rem;
+      box-shadow: 0 3px 24px rgba(0, 0, 0, 0.08);
+      list-style-type: none;
+      margin-top: 0;
+      opacity: 0;
+      overflow: hidden;
+      padding: 0;
+      pointer-events: none;
+      position: absolute;
+      scale: 0.97;
+      top: 100%;
+      transition:
+        scale 0.2s ease-in-out,
+        opacity 0.2s ease-in-out;
+      z-index: 2;
 
-  .bootstrap .learn .version__dropdown {
-    margin-top: 0;
-    left: 0;
-    right: auto;
-    top: 100%;
-  }
-  @media (min-width: 992.02px) {
-    .bootstrap .learn .version__dropdown {
-      left: auto;
-      right: 0;
+      li {
+        margin-bottom: 0;
+        text-align: center;
+
+        &:hover {
+          background-color: #fafbfe;
+        }
+      }
+
+      li > a {
+        color: #8d93a5;
+        display: block;
+        font-size: 14px;
+        font-weight: 400;
+        padding: 8px 0;
+      }
+
+      li:hover > a,
+      li:last-child > a {
+        color: #509ee3;
+      }
+
+      li:last-child > a {
+        font-weight: 700;
+      }
     }
-  }
 
-  .bootstrap .learn div.learn__post__content .version__selector {
-    display: inline-block;
-  }
-  /* FIX: the top-bar picker is hidden only at ≤992px; show this one in that range only */
-  @media (min-width: 992px) {
-    .bootstrap .learn div.learn__post__content .version__selector {
-      display: none;
+    .version__dropdown--item {
+      align-items: center;
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 0.5rem;
+      justify-content: space-between;
+      padding-inline: 1rem;
+      text-align: left;
+    }
+
+    &.open {
+      .version__current {
+        background-color: #e4ecfb;
+        border-color: #c2daf0;
+        color: #509ee3;
+
+        :global(svg) {
+          rotate: 180deg;
+        }
+
+        :global(svg path) {
+          stroke: #509ee3;
+        }
+      }
+
+      .version__dropdown {
+        opacity: 1;
+        pointer-events: all;
+        scale: 1;
+      }
     }
   }
 </style>

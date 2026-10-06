@@ -53,7 +53,9 @@ const unify = UNIFY_ENABLED_PAGES.includes(page.url);
 
         <div class="learn__post__content">
           {showBreadcrumb && <Breadcrumb page={page} variant="inline" />}
-          {!showBreadcrumb && <VersionSelector version={page.version} />}
+          {!showBreadcrumb && (
+            <VersionSelector version={page.version} variant="inline" />
+          )}
 
           <VersionNotice version={page.version} />
 
