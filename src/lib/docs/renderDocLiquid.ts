@@ -50,7 +50,7 @@ export const renderDocLiquid = async ({
   const page = { url, ...doc.data };
 
   const lq = getLiquidRenderer({ page, dirname, output });
-  const body = await lq.render(doc.body!, undefined, {
+  const body = await lq.render(doc.body, undefined, {
     maxSyntaxErrors: version === "latest" ? 0 : 3,
   });
 

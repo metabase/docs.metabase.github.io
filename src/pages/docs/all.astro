@@ -40,23 +40,20 @@ const dirname = path.dirname(fileURLToPath(import.meta.url));
   </p>
 
   <p>
-    Versions marked <VersionTag support={{ status: "unsupported" }} /> have
-    passed their end-of-life date. See our{" "}
+    Versions marked <VersionTag tag="unsupported" /> have passed their
+    end-of-life date. See our{" "}
     <a href="/version-support">version support policy</a> for details.
   </p>
 
   <ul>
-    {[...site.available_versions].reverse().map((version: string) => {
-      const support = site.data.version_support[version];
-      return (
-        <li>
-          <p>
-            <a href={`/docs/${version}/`}>
-              {version} <VersionTag support={support} />
-            </a>
-          </p>
-        </li>
-      );
-    })}
+    {[...site.available_versions].reverse().map((version: string) => (
+      <li>
+        <p>
+          <a href={`/docs/${version}/`}>
+            {version} <VersionTag version={version} />
+          </a>
+        </p>
+      </li>
+    ))}
   </ul>
 </NewDocsLayout>

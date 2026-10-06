@@ -1,5 +1,4 @@
 ---
-import { docsBody } from "@/components/chrome/docs-ui";
 import Footer from "@/components/chrome/Footer.astro";
 import LiquidInclude from "@/components/LiquidInclude.astro";
 import { getLiquidRenderer } from "@/lib/liquid/liquidRenderer";
@@ -24,7 +23,7 @@ const lq = getLiquidRenderer({ page, dirname });
       stylesheet links, which src/styles/docs.css imports instead. */}
   <LiquidInclude lq={lq} src="head.html" {unify} docs_theme />
 
-  <body class={docsBody}>
+  <body class="tw:bg-page tw:font-sans tw:text-secondary tw:motion-safe:transition-colors tw:motion-safe:duration-200 tw:nav-open:overflow-hidden">
     <slot name="header" />
 
     <div>

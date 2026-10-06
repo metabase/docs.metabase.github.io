@@ -248,17 +248,14 @@ export const referenceTableHastPlugin = defineHastPlugin({
           ctx.setProperty(tr, "id", anchor.id);
           name.nodes.push(permalink(anchor.id));
         }
-        ctx.replaceNode(
-          nameCell,
-          el("td", { ...nameCell.properties }, name.nodes),
-        );
+        ctx.replaceNode(nameCell, withChildren(nameCell, name.nodes));
 
         if (typeCell) {
           const typeNodes = foldArraySuffix(typeCell.children as Node[]);
           const isShort = textOf(typeNodes).trim().length <= SHORT_TYPE_LENGTH;
           ctx.replaceNode(
             typeCell,
-            el("td", { ...typeCell.properties }, [
+            withChildren(typeCell, [
               el(
                 "div",
                 { className: ["prop-type", ...(isShort ? ["is-short"] : [])] },
@@ -283,10 +280,7 @@ export const referenceTableHastPlugin = defineHastPlugin({
         if (items.length) {
           children.push(el("div", { className: ["prop-meta"] }, items));
         }
-        ctx.replaceNode(
-          descCell,
-          el("td", { ...descCell.properties }, children),
-        );
+        ctx.replaceNode(descCell, withChildren(descCell, children));
       }
     },
   },

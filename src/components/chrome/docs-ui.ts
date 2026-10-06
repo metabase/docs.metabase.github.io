@@ -1,10 +1,6 @@
 // Utility class lists shared by more than one docs chrome component or
 // layout. Anything used in a single component stays inline in that component.
 
-/** <body> of the themed docs layouts (DefaultNewLayout.astro, ErrorLayout.astro). */
-export const docsBody =
-  "tw:bg-page tw:font-sans tw:text-secondary tw:motion-safe:transition-colors tw:motion-safe:duration-200 tw:nav-open:overflow-hidden";
-
 /**
  * Quiet controls: the header's menu button and the version selector trigger.
  * Each pairs this with its own layout classes.

@@ -1,4 +1,5 @@
-/* Tailwind entry for the themed docs layouts (NewDocsLayout, ErrorLayout).
+/* Tailwind entry for the themed docs layout (DefaultNewLayout, under
+ * NewDocsLayout and the 404 page).
  * Legacy `layout: docs` pages link the vendored stylesheets instead
  * (_includes/chrome/stylesheets.html). Astro attaches CSS per route by import
  * graph, so the two layouts live in separate routes (src/lib/docs/docPages.ts)
@@ -29,10 +30,11 @@
 /* Scan only src/, the one place `tw:` classes are written. */
 @source "../";
 
-/* Fixes to the vendored bundle for themed pages, appended to the `legacy`
- * layer so they compete with the bundle by specificity and order, the way an
- * edit to the vendored files would, without changing legacy pages. Keep the
- * vendored files untouched: they are copies of the marketing site's. */
+/* Fixes to the vendored bundle for themed pages only, appended to the
+ * `legacy` layer so they compete with the bundle by specificity and order,
+ * the way an edit to the vendored files would, without changing legacy pages.
+ * A change legacy pages need too goes in the file itself (the version notice
+ * in docs.css, the cookie pill in gdpr.css). */
 @layer legacy {
   /* docs.css's `.docs a { display: inline-block }` keeps a link from
    * wrapping, so a long link in prose leaves a ragged gap. Only paragraph
@@ -44,11 +46,9 @@
 
   /* styles.css gives article tables `margin-bottom: 4rem !important`, and an
    * `!important` in a lower layer beats every higher one, so only a later rule
-   * of equal specificity in this layer can tighten it. Same bands as the
-   * table-layout density rules in the components layer. */
-  @media (width >= theme(--breakpoint-md)) and (width < theme(--breakpoint-lg)),
-    (width >= theme(--breakpoint-xl)) {
-    .bootstrap .learn__post table {
+   * of equal specificity in this layer can tighten it. */
+  .bootstrap .learn__post table {
+    @variant table-layout {
       margin-bottom: 2rem !important;
     }
   }
@@ -156,6 +156,26 @@
  * drawer is open. */
 /* stylelint-disable-next-line scss/operator-no-unspaced */
 @custom-variant nav-open (&:where([data-docs-nav="open"], [data-docs-nav="open"] *));
+
+/* Article tables. The vendored bundle stacks every table into labeled cards
+ * below 1399.98px; real tables come back wherever the text column is wide
+ * enough. The 993–1199px band beside the sidebar keeps the cards: the column
+ * is under 650px there. Block form: the shorthand splits its argument at
+ * commas. */
+@custom-variant table-layout {
+  @media (width >= theme(--breakpoint-md)) and (width < theme(--breakpoint-lg)),
+    (width >= theme(--breakpoint-xl)) {
+    @slot;
+  }
+}
+
+/* The complement: phones, and the narrow-article band beside the sidebar. */
+@custom-variant card-layout {
+  @media (width < theme(--breakpoint-md)),
+    (width >= theme(--breakpoint-lg)) and (width < theme(--breakpoint-xl)) {
+    @slot;
+  }
+}
 
 @utility focus-ring {
   &:focus-visible {
@@ -428,8 +448,7 @@
       }
     }
 
-    /* Copy button on highlighted blocks (new-docs-code-snippet-copy.js, which
-     * swaps in white icons on dark). */
+    /* Copy button on highlighted blocks (new-docs-code-snippet-copy.js). */
     & .code-snippet-wrapper .copy-code-button {
       background-color: var(--tw-color-surface-hover);
 
@@ -437,15 +456,18 @@
         background-color: var(--tw-color-surface-active);
       }
 
-      /* The label matches the icons. The vendored rule asks for Lato 900,
-       * which the docs don't load. */
-      & p {
+      /* The icons are currentColor; the label matches them. */
+      & :is(svg, p) {
         color: var(--tw-color-brand);
-        font-weight: 700;
 
         @variant dark {
           color: var(--tw-color-white);
         }
+      }
+
+      /* The vendored rule asks for Lato 900, which the docs don't load. */
+      & p {
+        font-weight: 700;
       }
     }
 
@@ -524,10 +546,8 @@
       color: #6679cc;
     }
 
-    /* Tables. The vendored bundle stacks every table into labeled cards below
-     * 1399.98px; real tables come back wherever the article column is wide
-     * enough. The 993–1199px band keeps the cards: the text column is under
-     * 650px there. The .table-reference and .prop-* hooks come from
+    /* Tables, in the table-layout and card-layout bands defined above. The
+     * .table-reference and .prop-* hooks come from
      * referenceTableHastPlugin.ts; new-docs-table-overflow.js wraps each
      * table and adds .table-overflow-indicator when it scrolls. */
     & table {
@@ -558,53 +578,50 @@
       background: linear-gradient(270deg, var(--tw-color-surface) 0%, transparent 100%);
     }
 
-    /* Table layout: undo the vendored card rules in the two bands the cards
-     * would otherwise cover. */
-    @media (width >= theme(--breakpoint-md)) and (width < theme(--breakpoint-lg)),
-      (width >= theme(--breakpoint-xl)) and (width < theme(--breakpoint-2xl)) {
-      & table {
-        border: 1px solid var(--tw-color-border-subtle);
-        border-radius: 0.5rem;
+    /* Undo the vendored card rules, which stop at 2xl on their own. */
+    @variant table-layout {
+      @variant max-2xl {
+        & table {
+          border: 1px solid var(--tw-color-border-subtle);
+          border-radius: 0.5rem;
 
-        & thead {
-          clip: auto;
-          margin: 0;
-          overflow: visible;
-          position: static;
-        }
+          & thead {
+            clip: auto;
+            margin: 0;
+            overflow: visible;
+            position: static;
+          }
 
-        & tr {
-          border: 0;
-          border-radius: 0;
-          display: table-row;
-          margin-bottom: 0;
-          overflow: visible;
-        }
+          & tr {
+            border: 0;
+            border-radius: 0;
+            display: table-row;
+            margin-bottom: 0;
+            overflow: visible;
+          }
 
-        & tr td {
-          border-bottom: 1px solid var(--tw-color-border-subtle);
-          display: table-cell;
-          font-size: inherit;
-        }
+          & tr td {
+            border-bottom: 1px solid var(--tw-color-border-subtle);
+            display: table-cell;
+            font-size: inherit;
+          }
 
-        & tr td::before {
-          content: none;
-        }
+          & tr td::before {
+            content: none;
+          }
 
-        & tr td:first-child {
-          font-weight: inherit;
-        }
+          & tr td:first-child {
+            font-weight: inherit;
+          }
 
-        & tr:last-child td {
-          border-bottom: 0;
+          & tr:last-child td {
+            border-bottom: 0;
+          }
         }
       }
     }
 
-    /* Stacked card layout: phones, and the narrow-article band beside the
-     * sidebar. */
-    @media (width < theme(--breakpoint-md)),
-      (width >= theme(--breakpoint-lg)) and (width < theme(--breakpoint-xl)) {
+    @variant card-layout {
       & table {
         background: none;
 
@@ -620,10 +637,9 @@
     }
 
     /* Density and scanning aids for the table layout. */
-    @media (width >= theme(--breakpoint-md)) and (width < theme(--breakpoint-lg)),
-      (width >= theme(--breakpoint-xl)) {
-      /* The overflow fade is offset by the table's bottom margin (2rem in
-       * these bands, set in the legacy layer above). */
+    @variant table-layout {
+      /* The overflow fade is offset by the table's bottom margin (2rem here,
+       * set in the legacy layer above). */
       & .table-overflow-indicator::after {
         bottom: 2rem;
       }

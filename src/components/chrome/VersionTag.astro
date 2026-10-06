@@ -1,19 +1,39 @@
 ---
-// Support-status tag next to a docs version: "unsupported" past the EOL
-// date, "lts" for long-term-support releases, nothing otherwise. Used by the
-// header's version selector and /docs/all.
-type Props = {
-  support?: { status?: string; lts?: boolean } | null;
+import { getVersionSupport } from "@/lib/docs/versionSupport";
+import { baseCtx } from "@/lib/liquid/liquidRenderer";
+
+// Status tag next to a docs version: "latest" for the current docs version
+// (site.docs_version), "unsupported" past the EOL date, "lts" for
+// long-term-support releases, nothing otherwise. Shows one tag at most, in
+// that order. Pass `tag` instead to show one in prose. Used by the sidebar's
+// version selector and /docs/all.
+type Tag = "latest" | "unsupported" | "lts";
+type Props = { version: string } | { tag: Tag };
+
+const tagFor = (version: string): Tag | undefined => {
+  if (version === baseCtx.site.docs_version) return "latest";
+  const support = getVersionSupport(version);
+  if (support?.status === "unsupported") return "unsupported";
+  return support?.lts ? "lts" : undefined;
 };
 
-const { support } = Astro.props;
-
 const tag =
-  "tw:rounded-sm tw:px-1.25 tw:py-0.75 tw:text-[10px] tw:leading-none tw:font-bold tw:tracking-[0.02em] tw:uppercase";
+  "tag" in Astro.props ? Astro.props.tag : tagFor(Astro.props.version);
+
+const colors: Record<Tag, string> = {
+  latest: "tw:bg-surface-hover tw:text-brand",
+  unsupported: "tw:bg-tag tw:text-secondary",
+  lts: "tw:bg-tag-lts tw:text-tag-lts-text",
+};
 ---
 
-{support?.status === "unsupported" ? (
-  <span class:list={[tag, "tw:bg-tag tw:text-secondary"]}>unsupported</span>
-) : support?.lts ? (
-  <span class:list={[tag, "tw:bg-tag-lts tw:text-tag-lts-text"]}>lts</span>
-) : null}
+{tag && (
+  <span
+    class:list={[
+      "tw:rounded-sm tw:px-1.25 tw:py-0.75 tw:text-[10px] tw:leading-none tw:font-bold tw:tracking-[0.02em] tw:uppercase",
+      colors[tag],
+    ]}
+  >
+    {tag}
+  </span>
+)}

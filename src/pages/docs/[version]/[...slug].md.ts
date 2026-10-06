@@ -2,12 +2,13 @@
 // URL plus `.md` (see `toMarkdownUrl`). The "Copy Markdown" button fetches it,
 // and it's there for anything that would rather read Markdown than HTML.
 import { absolutizeMarkdownUrls } from "@/lib/docs/absolutizeMarkdownUrls";
+import type { MarkdownDoc } from "@/lib/docs/docPages";
 import { renderDocLiquid } from "@/lib/docs/renderDocLiquid";
 import { hasMarkdownVersion, resolveDocUrl } from "@/lib/docs/resolveDoc";
 import type { APIRoute, GetStaticPaths } from "astro";
-import { getCollection, type DataEntryMap } from "astro:content";
+import { getCollection } from "astro:content";
 
-type Props = { doc: DataEntryMap["docs"][number] };
+type Props = { doc: MarkdownDoc };
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const docs = await getCollection("docs");

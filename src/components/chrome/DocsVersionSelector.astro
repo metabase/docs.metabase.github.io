@@ -1,7 +1,6 @@
 ---
 import VersionTag from "@/components/chrome/VersionTag.astro";
 import Chevron from "@/icons/chevron.svg";
-import { getVersionSupport } from "@/lib/docs/versionSupport";
 import { baseCtx } from "@/lib/liquid/liquidRenderer";
 import { menuItem, menuPanel, quietControl } from "./docs-ui";
 
@@ -23,11 +22,10 @@ const currentLabel = version === "latest" ? docsVersion : version;
 const otherVersions = [...availableVersions]
   .reverse()
   .slice(0, 10)
-  .filter((v) => v !== currentLabel)
-  .map((v) => ({ version: v, support: getVersionSupport(v) }));
+  .filter((v) => v !== currentLabel);
 ---
 
-<div class="tw:relative" data-version-selector>
+<div class="tw:relative" data-dropdown>
   {/* 8px left padding lines the label up with the nav link text. */}
   <button
     type="button"
@@ -35,15 +33,15 @@ const otherVersions = [...availableVersions]
       quietControl,
       "tw:group tw:peer tw:flex tw:items-center tw:gap-1.5 tw:px-2 tw:py-1.5 tw:select-none",
     ]}
-    aria-haspopup="true"
     aria-expanded="false"
-    data-version-trigger
+    data-dropdown-trigger
   >
     {currentLabel}
+    <VersionTag version={currentLabel} />
     <Chevron class="tw:size-3 tw:transition-[rotate] tw:duration-200 tw:group-aria-expanded:rotate-180" />
   </button>
   <ul class:list={[menuPanel, "tw:left-0"]}>
-    {otherVersions.map(({ version: v, support }) => (
+    {otherVersions.map((v) => (
       <li class="tw:m-0">
         <a
           href={`/docs/${v}/`}
@@ -53,7 +51,7 @@ const otherVersions = [...availableVersions]
           ]}
         >
           <span>{v}</span>
-          <VersionTag support={support} />
+          <VersionTag version={v} />
         </a>
       </li>
     ))}
@@ -66,14 +64,5 @@ const otherVersions = [...availableVersions]
 </div>
 
 <script>
-  import { initDropdown } from "./dropdown";
-
-  const selector = document.querySelector<HTMLElement>(
-    "[data-version-selector]",
-  );
-  const trigger = selector?.querySelector<HTMLElement>(
-    "[data-version-trigger]",
-  );
-
-  if (selector && trigger) initDropdown(selector, trigger);
+  import "./dropdown";
 </script>

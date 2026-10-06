@@ -17,14 +17,13 @@ const item = [menuItem, "tw:font-normal tw:text-secondary tw:hover:text-brand"];
 const themeIcon = "tw:size-4 tw:shrink-0";
 ---
 
-<div class="tw:relative" data-more-menu>
+<div class="tw:relative" data-dropdown>
   <button
     type="button"
     class:list={[iconButton, "tw:peer"]}
     aria-label="More"
-    aria-haspopup="true"
     aria-expanded="false"
-    data-more-trigger
+    data-dropdown-trigger
   >
     <svg
       class="tw:size-5 tw:fill-current"
@@ -68,48 +67,22 @@ const themeIcon = "tw:size-4 tw:shrink-0";
 </div>
 
 <script>
-  import { initDropdown } from "./dropdown";
-
-  const menu = document.querySelector<HTMLElement>("[data-more-menu]");
-  const trigger = menu?.querySelector<HTMLElement>("[data-more-trigger]");
-  if (menu && trigger) initDropdown(menu, trigger);
+  import "./dropdown";
 
   // Same key as _includes/docs/theme-init.js, which sets data-theme before
-  // first paint.
+  // first paint and follows the system theme until a choice is stored here.
   const THEME_KEY = "mb-docs-theme";
   const root = document.documentElement;
 
-  const getTheme = () => (root.dataset.theme === "dark" ? "dark" : "light");
-
-  const hasStoredPreference = () => {
-    try {
-      const stored = localStorage.getItem(THEME_KEY);
-      return stored === "light" || stored === "dark";
-    } catch {
-      return false;
-    }
-  };
-
-  const applyTheme = (theme: string, persist: boolean) => {
-    root.dataset.theme = theme;
-    if (persist) {
+  document
+    .querySelector("[data-theme-toggle]")
+    ?.addEventListener("click", () => {
+      const theme = root.dataset.theme === "dark" ? "light" : "dark";
+      root.dataset.theme = theme;
       try {
         localStorage.setItem(THEME_KEY, theme);
       } catch {
         /* storage blocked; the choice lasts for this page only */
       }
-    }
-    // new-docs-code-snippet-copy.js swaps its icons on this.
-    document.dispatchEvent(new CustomEvent("themechange"));
-  };
-
-  document
-    .querySelector("[data-theme-toggle]")
-    ?.addEventListener("click", () => {
-      applyTheme(getTheme() === "dark" ? "light" : "dark", true);
     });
-
-  matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (e) => {
-    if (!hasStoredPreference()) applyTheme(e.matches ? "dark" : "light", false);
-  });
 </script>

@@ -1,8 +1,9 @@
 // Open and close for the docs chrome dropdowns (DocsVersionSelector.astro,
-// DocsMoreMenu.astro). The trigger's aria-expanded is the open state; the
-// components style off it (`aria-expanded:`, `group-aria-expanded:`,
-// `peer-aria-expanded:`).
-export const initDropdown = (root: HTMLElement, trigger: HTMLElement) => {
+// DocsMoreMenu.astro). Each marks its root `data-dropdown` and its trigger
+// `data-dropdown-trigger`, and imports this module, which Astro bundles once.
+// The trigger's aria-expanded is the open state; the components style off it
+// (`aria-expanded:`, `group-aria-expanded:`, `peer-aria-expanded:`).
+const initDropdown = (root: HTMLElement, trigger: HTMLElement) => {
   const isOpen = () => trigger.getAttribute("aria-expanded") === "true";
 
   const setOpen = (open: boolean) => {
@@ -30,3 +31,8 @@ export const initDropdown = (root: HTMLElement, trigger: HTMLElement) => {
     if (root.contains(document.activeElement)) trigger.focus();
   });
 };
+
+document.querySelectorAll<HTMLElement>("[data-dropdown]").forEach((root) => {
+  const trigger = root.querySelector<HTMLElement>("[data-dropdown-trigger]");
+  if (trigger) initDropdown(root, trigger);
+});
