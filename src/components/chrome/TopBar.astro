@@ -16,9 +16,10 @@ interface Props {
     show_category_breadcrumb?: boolean;
   };
   showBreadcrumb: boolean;
+  showVersionSelector: boolean;
 }
 
-const { page, showBreadcrumb } = Astro.props;
+const { page, showBreadcrumb, showVersionSelector } = Astro.props;
 ---
 
 <div id={TOP_BAR_ID} class="top-bar">
@@ -32,7 +33,7 @@ const { page, showBreadcrumb } = Astro.props;
   </div>
 
   <div>
-    <VersionSelector version={page.version} />
+    {showVersionSelector && <VersionSelector version={page.version} />}
     <a href="/releases" class="whats-new">
       <Stars />
       What’s new
