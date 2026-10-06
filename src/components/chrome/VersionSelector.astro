@@ -14,7 +14,7 @@ const currentVersion = version === "latest" ? site.docs_version : version;
 const versions = [...site.available_versions].reverse().slice(0, 10);
 ---
 
-<div class:list={["version__selector", "cursor-pointer", variant]}>
+<div id={`version-selector-${variant}`} class="version__selector">
   <div class="version__current">
     <span>{currentVersion}</span>
     <Chevron />
@@ -25,8 +25,8 @@ const versions = [...site.available_versions].reverse().slice(0, 10);
       .map((v: string) => {
         const support = site.data.version_support[v];
         return (
-          <li>
-            <a href={`/docs/${v}/`}>
+          <li class="version__option">
+            <a class="version__link" href={`/docs/${v}/`}>
               <div class="version__dropdown--item">
                 <span>{v}</span>
                 {support?.status === "unsupported" ? (
@@ -41,8 +41,10 @@ const versions = [...site.available_versions].reverse().slice(0, 10);
           </li>
         );
       })}
-    <li>
-      <a href="/docs/all">See more</a>
+    <li class="version__option">
+      <a class="version__link version__see-more" href="/docs/all">
+        See more
+      </a>
     </li>
   </ul>
 </div>
@@ -76,45 +78,10 @@ const versions = [...site.available_versions].reverse().slice(0, 10);
 </script>
 
 <style>
-  /* Doubled to outrank the legacy `.bootstrap .learn__post a` / `li` rules. */
-  .version__selector.version__selector {
+  /* The ids outrank the legacy `.bootstrap .learn__post a` / `li` rules. */
+  :is(#version-selector-top-bar, #version-selector-inline) {
+    cursor: pointer;
     position: relative;
-
-    &.top-bar {
-      display: flex;
-
-      @media (max-width: 991.98px) {
-        display: none;
-      }
-
-      .version__dropdown {
-        left: auto;
-        right: 0;
-      }
-    }
-
-    &.inline {
-      display: inline-block;
-      margin: 32px 0 0;
-
-      @media (min-width: 992px) {
-        display: none;
-      }
-
-      .version__current {
-        background-color: #fff;
-        border: 1px solid rgba(198, 201, 210, 0.5);
-
-        &:hover {
-          border-color: #c2daf0;
-        }
-      }
-
-      .version__dropdown {
-        left: 0;
-        right: auto;
-      }
-    }
 
     .version__current {
       align-items: center;
@@ -157,32 +124,32 @@ const versions = [...site.available_versions].reverse().slice(0, 10);
         scale 0.2s ease-in-out,
         opacity 0.2s ease-in-out;
       z-index: 2;
+    }
 
-      li {
-        margin-bottom: 0;
-        text-align: center;
+    .version__option {
+      margin-bottom: 0;
+      text-align: center;
 
-        &:hover {
-          background-color: #fafbfe;
-        }
+      &:hover {
+        background-color: #fafbfe;
       }
+    }
 
-      li > a {
-        color: #8d93a5;
-        display: block;
-        font-size: 14px;
-        font-weight: 400;
-        padding: 8px 0;
-      }
+    .version__link {
+      color: #8d93a5;
+      display: block;
+      font-size: 14px;
+      font-weight: 400;
+      padding: 8px 0;
+    }
 
-      li:hover > a,
-      li:last-child > a {
-        color: #509ee3;
-      }
+    .version__see-more {
+      color: #509ee3;
+      font-weight: 700;
+    }
 
-      li:last-child > a {
-        font-weight: 700;
-      }
+    .version__option:hover .version__link {
+      color: #509ee3;
     }
 
     .version__dropdown--item {
@@ -215,6 +182,40 @@ const versions = [...site.available_versions].reverse().slice(0, 10);
         pointer-events: all;
         scale: 1;
       }
+    }
+  }
+
+  #version-selector-top-bar {
+    display: flex;
+
+    @media (max-width: 991.98px) {
+      display: none;
+    }
+
+    .version__dropdown {
+      right: 0;
+    }
+  }
+
+  #version-selector-inline {
+    display: inline-block;
+    margin: 32px 0 0;
+
+    @media (min-width: 992px) {
+      display: none;
+    }
+
+    .version__current {
+      background-color: #fff;
+      border: 1px solid rgba(198, 201, 210, 0.5);
+
+      &:hover {
+        border-color: #c2daf0;
+      }
+    }
+
+    .version__dropdown {
+      left: 0;
     }
   }
 </style>
