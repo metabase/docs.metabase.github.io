@@ -1,8 +1,9 @@
 // Inlined into <head> by head.html before any stylesheet loads, so the theme
-// attribute is present at first paint (no flash of the wrong theme). Until the
-// visitor picks a theme with the toggle in DocsMoreMenu.astro, which stores it
-// under the same key, the page follows the system theme, live. Rendered
-// through Liquid, so keep it free of Liquid tag syntax.
+// attribute is present at first paint (no flash of the wrong theme).
+// data-theme-preference holds the visitor's choice from the theme options in
+// DocsMoreMenu.astro: system (the default, nothing stored), light or dark.
+// data-theme holds the theme in use; on system it follows the system theme,
+// live. Rendered through Liquid, so keep it free of Liquid tag syntax.
 (() => {
   const root = document.documentElement;
   const systemDark = matchMedia("(prefers-color-scheme: dark)");
@@ -15,10 +16,17 @@
       return null; /* storage blocked (private mode, disabled cookies) */
     }
   };
-  const system = () => (systemDark.matches ? "dark" : "light");
+  const apply = () => {
+    const preference = root.dataset.themePreference;
+    root.dataset.theme =
+      preference === "light" || preference === "dark"
+        ? preference
+        : systemDark.matches
+          ? "dark"
+          : "light";
+  };
 
-  root.dataset.theme = stored() ?? system();
-  systemDark.addEventListener("change", () => {
-    if (!stored()) root.dataset.theme = system();
-  });
+  root.dataset.themePreference = stored() ?? "system";
+  apply();
+  systemDark.addEventListener("change", apply);
 })();

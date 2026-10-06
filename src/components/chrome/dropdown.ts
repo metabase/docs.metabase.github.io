@@ -12,7 +12,7 @@ const initDropdown = (root: HTMLElement, trigger: HTMLElement) => {
 
   trigger.addEventListener("click", () => setOpen(!isOpen()));
 
-  // Clicks inside the menu leave it open (the theme item), and a click on
+  // Clicks inside the menu leave it open (the theme options), and a click on
   // another dropdown's trigger closes this one.
   document.addEventListener("click", (event) => {
     if (!root.contains(event.target as Node)) setOpen(false);

@@ -1,9 +1,8 @@
 ---
-import Moon from "@/icons/chrome/moon.svg";
-import Sun from "@/icons/chrome/sun.svg";
+import Check from "@/icons/check.svg";
 import { iconButton, menuItem, menuPanel } from "./docs-ui";
 
-// The header's ⋯ menu: outside links and the theme toggle. Opens and closes
+// The header's ⋯ menu: outside links and the theme options. Opens and closes
 // like the version selector (dropdown.ts).
 const links = [
   { label: "Metabase.com", href: "/" },
@@ -12,9 +11,15 @@ const links = [
   { label: "What’s new", href: "/releases" },
 ];
 
+// Values of data-theme-preference (_includes/docs/theme-init.js).
+const themes = [
+  { value: "system", label: "System" },
+  { value: "light", label: "Light" },
+  { value: "dark", label: "Dark" },
+];
+
 // font-normal: the vendored bundle bolds header links.
 const item = [menuItem, "tw:font-normal tw:text-secondary tw:hover:text-brand"];
-const themeIcon = "tw:size-4 tw:shrink-0";
 ---
 
 <div class="tw:relative" data-dropdown>
@@ -43,25 +48,34 @@ const themeIcon = "tw:size-4 tw:shrink-0";
         </a>
       </li>
     ))}
-    {/* The label names the theme the button switches to. Only one of each
-        pair is displayed, so screen readers read only that one. */}
+    {/* aria-pressed marks the current choice (set by the script below). The
+        check repeats it, so the state does not depend on color alone. */}
     <li class="tw:m-0 tw:mt-1 tw:border-t tw:border-border tw:pt-1">
-      <button
-        type="button"
-        class:list={[
-          item,
-          "tw:w-full tw:cursor-pointer tw:border-0 tw:bg-transparent tw:text-left tw:font-sans",
-        ]}
-        data-theme-toggle
-      >
-        <Moon class:list={[themeIcon, "tw:dark:hidden"]} aria-hidden="true" />
-        <span class="tw:dark:hidden">Dark theme</span>
-        <Sun
-          class:list={[themeIcon, "tw:hidden tw:dark:block"]}
-          aria-hidden="true"
-        />
-        <span class="tw:hidden tw:dark:inline">Light theme</span>
-      </button>
+      <div role="group" aria-labelledby="docs-theme-heading">
+        <span
+          id="docs-theme-heading"
+          class="tw:block tw:px-4 tw:pt-2 tw:pb-1 tw:text-xs tw:text-muted"
+        >
+          Theme
+        </span>
+        {themes.map(({ value, label }) => (
+          <button
+            type="button"
+            class:list={[
+              item,
+              "tw:group tw:w-full tw:cursor-pointer tw:justify-between tw:border-0 tw:bg-transparent tw:text-left tw:font-sans tw:aria-pressed:text-brand",
+            ]}
+            aria-pressed="false"
+            data-theme-option={value}
+          >
+            {label}
+            <Check
+              class="tw:hidden tw:size-4 tw:shrink-0 tw:group-aria-pressed:block"
+              aria-hidden="true"
+            />
+          </button>
+        ))}
+      </div>
     </li>
   </ul>
 </div>
@@ -69,20 +83,39 @@ const themeIcon = "tw:size-4 tw:shrink-0";
 <script>
   import "./dropdown";
 
-  // Same key as _includes/docs/theme-init.js, which sets data-theme before
-  // first paint and follows the system theme until a choice is stored here.
+  // Same key as _includes/docs/theme-init.js, which sets data-theme-preference
+  // and data-theme before first paint, and keeps data-theme in step with the
+  // system theme while the preference is system. Nothing stored means system.
   const THEME_KEY = "mb-docs-theme";
   const root = document.documentElement;
+  const options = document.querySelectorAll<HTMLButtonElement>(
+    "[data-theme-option]",
+  );
 
-  document
-    .querySelector("[data-theme-toggle]")
-    ?.addEventListener("click", () => {
-      const theme = root.dataset.theme === "dark" ? "light" : "dark";
-      root.dataset.theme = theme;
+  const showPreference = () => {
+    options.forEach((option) => {
+      const current =
+        option.dataset.themeOption === root.dataset.themePreference;
+      option.setAttribute("aria-pressed", current ? "true" : "false");
+    });
+  };
+
+  options.forEach((option) => {
+    option.addEventListener("click", () => {
+      const preference = option.dataset.themeOption!;
+      const systemDark = matchMedia("(prefers-color-scheme: dark)").matches;
+      root.dataset.themePreference = preference;
+      root.dataset.theme =
+        preference === "system" ? (systemDark ? "dark" : "light") : preference;
       try {
-        localStorage.setItem(THEME_KEY, theme);
+        if (preference === "system") localStorage.removeItem(THEME_KEY);
+        else localStorage.setItem(THEME_KEY, preference);
       } catch {
         /* storage blocked; the choice lasts for this page only */
       }
+      showPreference();
     });
+  });
+
+  showPreference();
 </script>
