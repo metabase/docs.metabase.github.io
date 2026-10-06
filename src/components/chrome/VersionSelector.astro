@@ -78,7 +78,7 @@ const versions = [...site.available_versions].reverse().slice(0, 10);
   .bootstrap .learn .version__selector {
     display: inline-block;
     height: auto;
-    margin: 32px 0 0 0 !important;
+    margin-top: 32px !important;
     position: relative;
     width: auto;
   }
@@ -90,18 +90,19 @@ const versions = [...site.available_versions].reverse().slice(0, 10);
 
   .bootstrap .learn .version__current {
     background-color: white;
-    border: 1px solid rgba(198,201,210,.5);
+    border: 1px solid rgba(198, 201, 210, 0.5);
     display: inline-flex;
     float: none;
-    gap: 0!important;
+    gap: 0 !important;
     padding: 10px 0 12px 12px;
     width: auto;
 
-    &:hover,
-    &:focus,
-    &.open {
+    &:hover {
       border-color: #c2daf0;
     }
+  }
+  .bootstrap .learn .version__selector.open .version__current {
+    border-color: #c2daf0;
   }
   @media (min-width: 992.02px) {
     .bootstrap .learn .version__current {
