@@ -1,0 +1,82 @@
+<button
+  class="hamburger"
+  id="mobile-nav-hamburger-wrapper"
+  type="button"
+  aria-controls="nav-menu-mobile"
+  aria-expanded="false"
+  aria-label="Toggle navigation"
+>
+  <svg
+    width="22"
+    height="22"
+    viewBox="0 0 22 14"
+    fill="none"
+    aria-hidden="true"
+  >
+    <path d="M1.1 1.5h19.8" />
+    <path d="M1.1 7h19.8" />
+    <path d="M1.1 12.5h19.8" />
+  </svg>
+</button>
+
+<style>
+  .hamburger {
+    appearance: none;
+    background-color: transparent;
+    border: 0;
+    border-radius: 8px;
+    color: #5a6072;
+    cursor: pointer;
+    display: block;
+    margin-left: 8px;
+    padding: 12px;
+    transition: background-color 0.3s ease;
+
+    path {
+      stroke: currentColor;
+      stroke-linecap: round;
+      stroke-width: 1.5;
+      transition:
+        opacity 0.3s ease,
+        transform 0.3s ease;
+    }
+
+    path:first-of-type {
+      transform-origin: 4.5px 4px;
+    }
+
+    path:last-of-type {
+      transform-origin: 4px 10px;
+    }
+
+    &[aria-expanded="true"] path {
+      opacity: 0;
+    }
+
+    &[aria-expanded="true"] path:first-of-type {
+      opacity: 1;
+      transform: rotate(45deg);
+    }
+
+    &[aria-expanded="true"] path:last-of-type {
+      opacity: 1;
+      transform: rotate(-45deg);
+    }
+
+    @media (hover: hover) {
+      &:hover {
+        background-color: #f3f8fc;
+        color: #509ee3;
+      }
+    }
+
+    @media (min-width: 992px) {
+      display: none;
+    }
+  }
+
+  /* The tap padding hangs outside the gutter the logo sits on. */
+  :global(header.hide-on-scroll) .hamburger {
+    margin-right: -12px;
+  }
+</style>

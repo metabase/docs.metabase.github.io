@@ -1,0 +1,239 @@
+<button type="button" class="toc-toggle" popovertarget="page-toc">
+  On this page
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    aria-hidden="true"
+  >
+    <path
+      d="M12,15.5c-0.3,0-0.5-0.1-0.7-0.3l-6-6c-0.4-0.4-0.4-1,0-1.4s1-0.4,1.4,0l5.3,5.3l5.3-5.3c0.4-0.4,1-0.4,1.4,0s0.4,1,0,1.4l-6,6C12.5,15.4,12.3,15.5,12,15.5z"
+    ></path>
+  </svg>
+</button>
+<nav id="page-toc" popover aria-label="On this page">
+  <button
+    type="button"
+    class="return-to-top"
+    popovertarget="page-toc"
+    popovertargetaction="hide"
+    data-return-to-top
+  >
+    Return to top
+  </button>
+</nav>
+
+<script>
+  import {
+    appendHeadingLinks,
+    currentHeading,
+    pageHeadings,
+  } from "@/lib/page-toc";
+
+  const list = document.getElementById("page-toc")!;
+  const toggle = document.querySelector<HTMLElement>(".toc-toggle")!;
+  const headings = pageHeadings();
+  const links = appendHeadingLinks(list, headings);
+  toggle.hidden = headings.length === 0;
+
+  const markOverflow = () =>
+    list.classList.toggle(
+      "overflowing",
+      list.scrollTop + list.clientHeight < list.scrollHeight - 1,
+    );
+
+  const onOpen = () => {
+    markOverflow();
+    const current = currentHeading(headings);
+    if (!current) return;
+    links.forEach((link, heading) =>
+      link.classList.toggle("selected", heading === current),
+    );
+  };
+
+  const supportsPopover = typeof list.hidePopover === "function";
+  const setOpen = (open: boolean) => {
+    list.classList.toggle("open", open);
+    toggle.setAttribute("aria-expanded", String(open));
+    if (open) onOpen();
+  };
+  const hide = supportsPopover
+    ? () => list.hidePopover()
+    : () => {
+        setOpen(false);
+        toggle.focus();
+      };
+
+  if (supportsPopover) {
+    list.addEventListener("toggle", (event) => {
+      if ((event as ToggleEvent).newState === "open") onOpen();
+    });
+  } else {
+    toggle.setAttribute("aria-expanded", "false");
+    toggle.addEventListener("click", () =>
+      setOpen(!list.classList.contains("open")),
+    );
+    document.addEventListener("click", (event) => {
+      const target = event.target as Node;
+      if (!list.contains(target) && !toggle.contains(target)) setOpen(false);
+    });
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && list.classList.contains("open")) hide();
+    });
+  }
+
+  list.addEventListener("scroll", markOverflow, { passive: true });
+  list.addEventListener("click", (event) => {
+    const target = event.target as Element;
+    const top = target.closest("[data-return-to-top]");
+    if (top) window.scrollTo(0, 0);
+    if (target.closest("a") || (top && !supportsPopover)) hide();
+  });
+</script>
+
+<style is:global>
+  /* Doubled to outrank the legacy `.bootstrap .learn …` button rules. */
+  .toc-toggle.toc-toggle {
+    appearance: none;
+    background-color: transparent;
+    border: 0;
+    color: #5a6072;
+    display: none;
+    flex-shrink: 0;
+    font-size: 14px;
+    font-weight: 400;
+    gap: 2px;
+    line-height: 1;
+    white-space: nowrap;
+
+    svg {
+      transition: rotate 0.2s ease;
+      translate: 0 1px;
+    }
+
+    &:has(+ :popover-open) svg {
+      rotate: 180deg;
+    }
+  }
+
+  #page-toc {
+    --dropdown-top: calc(
+      var(--section-bar-top, 0px) + var(--section-bar-height, 0px) + 8px
+    );
+
+    background-color: #fff;
+    border: 1px solid #eeecec;
+    border-radius: 8px;
+    box-shadow: 0 12px 32px rgba(34, 36, 43, 0.16);
+    height: auto;
+    inset: var(--dropdown-top) 16px auto 16px;
+    margin: 0;
+    max-height: min(60dvh, calc(100dvh - var(--dropdown-top) - 24px));
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 6px 8px 0;
+    transition:
+      opacity 0.2s ease,
+      top 0.2s ease,
+      translate 0.2s ease;
+    width: auto;
+
+    &:popover-open {
+      @starting-style {
+        opacity: 0;
+        translate: 0 -8px;
+      }
+    }
+
+    /* Sticky so it rides the scrollport's bottom edge; JS hides it once the end is in view. */
+    &::after {
+      background: linear-gradient(to bottom, rgba(255, 255, 255, 0), #fff);
+      bottom: 0;
+      content: "";
+      display: block;
+      height: 40px;
+      margin-top: -40px;
+      opacity: 0;
+      pointer-events: none;
+      position: sticky;
+      transition: opacity 0.2s ease;
+    }
+
+    &.overflowing::after {
+      opacity: 1;
+    }
+
+    .return-to-top {
+      appearance: none;
+      background-color: transparent;
+      border: 0;
+      border-bottom: 1px solid #eeecec;
+      border-radius: 0;
+      color: #509ee3;
+      display: block;
+      font-size: 15px;
+      font-weight: 400;
+      line-height: 1.33;
+      margin-bottom: 4px;
+      padding: 8px 8px 10px;
+      text-align: left;
+      width: 100%;
+    }
+
+    a {
+      background: transparent;
+      border-radius: 8px;
+      box-shadow: none;
+      color: #5a6072;
+      display: block;
+      font-size: 15px;
+      font-weight: 400;
+      line-height: 1.33;
+      padding: 6px 8px;
+      position: relative;
+
+      &::after {
+        content: none;
+      }
+
+      &:last-of-type {
+        margin-bottom: 6px;
+      }
+
+      &.selected {
+        background-color: #eef6fc;
+        color: #509ee3;
+        font-weight: 700;
+      }
+    }
+  }
+
+  @supports not selector(:popover-open) {
+    #page-toc {
+      position: fixed;
+      z-index: 20;
+
+      &:not(.open) {
+        display: none;
+      }
+    }
+
+    .toc-toggle.toc-toggle:has(+ .open) svg {
+      rotate: 180deg;
+    }
+  }
+
+  @media (max-width: 991.98px) {
+    .toc-toggle.toc-toggle:not([hidden]) {
+      align-items: center;
+      display: inline-flex;
+    }
+  }
+
+  @media (min-width: 992px) {
+    #page-toc {
+      display: none;
+    }
+  }
+</style>
