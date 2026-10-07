@@ -2,6 +2,7 @@ import { describe, expect, test } from "vitest";
 import {
   getActiveCategory,
   getCategoryByDirectory,
+  getCategoryUrl,
   getLandingUrl,
   getPrevNext,
   getSections,
@@ -253,5 +254,37 @@ describe("getSections", () => {
         active: true,
       },
     ]);
+  });
+});
+
+describe("getCategoryUrl", () => {
+  const nav: Nav = {
+    categories: [
+      {
+        name: "Data",
+        url: "/docs/latest/data",
+        pages: [
+          { name: "Tables", url: "/docs/latest/data/tables" },
+          {
+            name: "Data studio",
+            url: "/docs/latest/data-studio/overview",
+            pages: [
+              { name: "Library", url: "/docs/latest/data-studio/library" },
+            ],
+          },
+        ],
+      },
+    ],
+  };
+
+  test("finds the section by name, ignoring case", () => {
+    expect(getCategoryUrl(nav, "Data Studio")).toBe(
+      "/docs/latest/data-studio/overview",
+    );
+  });
+
+  test("only matches sections: second-level nodes with pages", () => {
+    expect(getCategoryUrl(nav, "Data")).toBeUndefined();
+    expect(getCategoryUrl(nav, "Tables")).toBeUndefined();
   });
 });

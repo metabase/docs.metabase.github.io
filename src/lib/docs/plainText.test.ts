@@ -14,6 +14,10 @@ describe("htmlToText", () => {
     ).toBe(`Tom & Jerry <3 "hi" 'x'`);
   });
 
+  test("drops an unclosed tag at the end", () => {
+    expect(htmlToText("Use the <code>a</code> <script")).toBe("Use the a");
+  });
+
   test("leaves unknown entities alone", () => {
     expect(htmlToText("a &bogus; b")).toBe("a &bogus; b");
   });

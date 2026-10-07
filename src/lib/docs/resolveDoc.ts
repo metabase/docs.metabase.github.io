@@ -26,6 +26,11 @@ export const resolveDocUrl = ({
   return { version, slug, url: `/docs/${version}/${slug}` };
 };
 
+// Inverse of resolveDocUrl for `.md` docs: maps `/docs/<version>/<slug>` back
+// to the collection id, with index pages ending in `/index`.
+export const docIdFromUrl = (url: string): string =>
+  url.replace(/^\/docs\//, "").replace(/\/$/, "/index");
+
 // Only supported versions publish Markdown versions of their docs. Versions
 // the support data has no verdict on ("latest", "master") count as supported.
 export const hasMarkdownVersion = (version: string): boolean =>

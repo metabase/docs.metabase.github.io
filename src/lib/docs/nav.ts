@@ -147,3 +147,30 @@ export const getNavForVersion = (version: string): Nav => {
   const shouldCache = import.meta.env.MODE !== "development";
   return shouldCache ? (navCache[version] ??= computeNav()) : computeNav();
 };
+
+// Depth-first search for the first node matching `predicate`.
+export const findNavNode = (
+  nodes: NavNode[] = [],
+  predicate: (node: NavNode) => boolean,
+): NavNode | undefined => {
+  for (const node of nodes) {
+    if (predicate(node)) return node;
+    const match = findNavNode(node.pages, predicate);
+    if (match) return match;
+  }
+};
+
+// Finds the url of the nav section (a node with child pages) named `category`.
+// Sections only live one level below the top-level categories.
+export const getCategoryUrl = (
+  nav: Nav,
+  category: string,
+): string | undefined => {
+  const target = category.toLowerCase();
+  return nav.categories
+    .flatMap((c) => c.pages ?? [])
+    .find(
+      (node) =>
+        !!node.url && !!node.pages && node.name.toLowerCase() === target,
+    )?.url;
+};

@@ -38,9 +38,16 @@
 @layer legacy {
   /* main.css reserves 10em above anchor targets for the 77px marketing
    * navbar; the docs header is shorter. The "On this page" highlight
-   * (PageNav.astro) reads the same offset. */
+   * (src/lib/page-toc.ts) reads the same offset. */
   html {
     scroll-padding-top: calc(var(--tw-spacing-header) + 1rem);
+
+    /* Below lg the section bar sits under the header too. The full header,
+     * not --spacing-header-offset: a jump down hides the header after it
+     * lands, and the highlight would then fall a section behind. */
+    @variant max-lg {
+      scroll-padding-top: calc(var(--tw-spacing-header) + var(--tw-spacing-section-bar) + 1rem);
+    }
   }
 
   /* docs.css's `.docs a` and main.css's `a` make links inline-block, which
@@ -92,6 +99,13 @@
    * references, hence --tw-. */
   --spacing-header-row: 64px;
   --spacing-header: calc(var(--tw-spacing-header-row) + 1px);
+
+  /* Below lg: the section bar under the header (SectionBar.astro), and how
+   * much of the header is on screen, which the bar, the nav drawer and its
+   * backdrop sit under. DocsHeader.astro slides the header away while the
+   * reader scrolls down; the base layer zeroes this then. */
+  --spacing-section-bar: 40px;
+  --spacing-header-offset: var(--tw-spacing-header);
 
   /* Text column measure. */
   --spacing-article: 800px;
@@ -178,10 +192,15 @@
 /* stylelint-disable-next-line scss/operator-no-unspaced */
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
-/* DocsHeader.astro sets data-docs-nav="open" on <html> while the mobile nav
+/* LeftSidebar.astro sets data-docs-nav="open" on <html> while the mobile nav
  * drawer is open. */
 /* stylelint-disable-next-line scss/operator-no-unspaced */
 @custom-variant nav-open (&:where([data-docs-nav="open"], [data-docs-nav="open"] *));
+
+/* DocsHeader.astro sets data-docs-header="hidden" on <html> while it has slid
+ * the header away (below lg, scrolling down). */
+/* stylelint-disable-next-line scss/operator-no-unspaced */
+@custom-variant header-hidden (&:where([data-docs-header="hidden"], [data-docs-header="hidden"] *));
 
 /* Article tables. The vendored bundle stacks every table into labeled cards
  * below 1399.98px; real tables come back wherever the text column is wide
@@ -216,6 +235,10 @@
     color-scheme: light;
 
     --docs-image-filter: none;
+  }
+
+  :root[data-docs-header="hidden"] {
+    --tw-spacing-header-offset: 0px;
   }
 
   /* Screen only, so print uses the light palette. Tokens missing from this
@@ -924,7 +947,8 @@
       margin-left: 0;
     }
 
-    /* The article's 20px phone gutter, as on the "On this page" row. */
+    /* The article's 20px phone gutter is on .learn__post__content, which
+     * the widget is not inside. */
     @variant max-sm {
       margin-right: 1.25rem;
     }

@@ -1,87 +1,72 @@
 ---
-import { getDocBreadcrumbs } from "@/lib/docs/breadcrumbs";
-import { baseCtx } from "@/lib/liquid/liquidRenderer";
+import type { Crumb } from "@/lib/docs/breadcrumbs";
 
+// The page's trail (NewDocsLayout.astro): getDocBreadcrumbs on doc pages,
+// else just the page title (/docs/all).
+//
+// "top-bar": from lg up, in the bar above the article. Bootstrap breadcrumb
+// from the vendored bundle. The utilities (the `*:` ones style each crumb)
+// stand in for the vendored top bar rules, which master's styles.css
+// dropped, and let a long trail shrink and end in an ellipsis instead of
+// running past the bar's end.
+//
+// "inline": below lg, at the top of the article, where the section bar has
+// no room for it. Not the vendored classes: their divider is absolutely
+// positioned for the 18px bar. It sits in .docs-prose, so the utilities
+// override its list and link styles.
 type Props = {
-  page: {
-    version?: string;
-    url: string;
-    title?: string;
-    category?: string;
-    has_magic_breadcrumbs?: boolean;
-    show_category_breadcrumb?: boolean;
-  };
+  crumbs: Crumb[];
+  variant: "top-bar" | "inline";
 };
 
-const { page } = Astro.props;
-const { site } = baseCtx;
-
-const version = page.version === "latest" ? site.docs_version : page.version;
-const [home, category] = page.has_magic_breadcrumbs
-  ? getDocBreadcrumbs(page)
-  : [];
+const { crumbs, variant } = Astro.props;
 ---
 
-{/* Bootstrap breadcrumb from the vendored bundle. The utilities (the `*:`
-    ones style each crumb) let a long trail shrink and end in an ellipsis
-    inside NewDocsLayout's top bar instead of running past its end. */}
-<div class="bootstrap tw:min-w-0">
-  <nav
-    class="tw:min-w-0"
-    style="--bs-breadcrumb-divider: url('/images/chevron_blue_right.svg')"
-    aria-label="breadcrumb"
-  >
-    <ol class="breadcrumb tw:ml-0 tw:w-auto tw:*:whitespace-nowrap tw:*:last:min-w-0 tw:*:last:*:truncate">
-      {home ? (
-        <>
+{variant === "top-bar" ? (
+  <div class="bootstrap tw:min-w-0">
+    <nav
+      class="tw:min-w-0"
+      style="--bs-breadcrumb-divider: url('/images/chevron_blue_right.svg')"
+      aria-label="breadcrumb"
+    >
+      <ol class="breadcrumb tw:m-0 tw:w-auto tw:flex-nowrap tw:items-center tw:*:whitespace-nowrap tw:*:last:min-w-0 tw:*:last:*:truncate">
+        {crumbs.map(({ name, url }, index) => (
           <li class="breadcrumb-item">
-            <a class="tw:rounded-sm tw:focus-ring" href={home.url}>
-              {home.name}
-            </a>
-          </li>
-
-          {category &&
-            (category.url ? (
-              <li class="breadcrumb-item">
-                <a
-                  class="blue-60 tw:rounded-sm tw:focus-ring"
-                  href={category.url}
-                >
-                  {category.name}
-                </a>
-              </li>
+            {url ? (
+              <a
+                class:list={[
+                  "tw:rounded-sm tw:text-base tw:focus-ring",
+                  index > 0 && "blue-60",
+                ]}
+                href={url}
+              >
+                {name}
+              </a>
             ) : (
-              <li class="breadcrumb-item">
-                <p class="tw:text-secondary">{category.name}</p>
-              </li>
-            ))}
-        </>
-      ) : (
-        <>
-          {page.title === "Search" ? (
-            <li class="breadcrumb-item">
-              <span class="m-0 paragraph-5 fw-bold tw:text-secondary">
-                <a href="/docs/latest/">{site.latest_version}</a>
-              </span>
-            </li>
+              <span class="tw:text-secondary">{name}</span>
+            )}
+          </li>
+        ))}
+      </ol>
+    </nav>
+  </div>
+) : (
+  <nav class="tw:my-4 tw:lg:hidden tw:print:hidden" aria-label="breadcrumb">
+    <ol class="tw:m-0 tw:flex tw:list-none tw:flex-wrap tw:p-0 tw:*:m-0 tw:*:text-sm/5 tw:*:text-secondary tw:*:not-first:before:px-1.5 tw:*:not-first:before:text-border-strong tw:*:not-first:before:content-['/'_/_'']">
+      {crumbs.map(({ name, url }) => (
+        <li>
+          {url ? (
+            <a
+              class="tw:rounded-sm tw:font-normal tw:text-secondary tw:no-underline tw:hover:text-brand tw:focus-ring"
+              href={url}
+            >
+              {name}
+            </a>
           ) : (
-            <li class="breadcrumb-item">
-              <span class="tw:text-secondary">{version}</span>
-            </li>
+            name
           )}
-
-          {page.category === "Api" && (
-            <li class="breadcrumb-item">
-              <span class="tw:text-secondary">{page.category}</span>
-            </li>
-          )}
-          {page.title !== "README" && (
-            <li class="breadcrumb-item">
-              <span class="tw:text-secondary">{page.title}</span>
-            </li>
-          )}
-        </>
-      )}
+        </li>
+      ))}
     </ol>
   </nav>
-</div>
+)}

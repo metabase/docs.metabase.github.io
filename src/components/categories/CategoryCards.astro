@@ -1,0 +1,29 @@
+---
+import ReadTime from "./ReadTime.astro";
+
+export type PageEntry = {
+  url: string;
+  title: string;
+  summary: string;
+  readTime?: number;
+};
+
+type Props = {
+  pages: PageEntry[];
+};
+
+const { pages } = Astro.props;
+---
+
+{/* The vendored card is white with a light border; the theme's surface and
+    border in dark mode. */}
+{pages?.map((pageEntry) => (
+  <a
+    href={pageEntry.url}
+    class="learn__category__link tw:dark:border-border tw:dark:bg-surface"
+  >
+    <h4>{pageEntry.title}</h4>
+    <p>{pageEntry.summary}</p>
+    {!!pageEntry.readTime && <ReadTime minutes={pageEntry.readTime} />}
+  </a>
+))}

@@ -1,0 +1,101 @@
+---
+import Chevron from "@/icons/chevron.svg";
+import { menuPanel, quietControl } from "./docs-ui";
+
+// "On this page" in the section bar (SectionBar.astro), below lg, where the
+// right sidebar's list (PageNav.astro) is hidden: a dropdown of the same
+// headings (src/lib/page-toc.ts) that opens like the version selector
+// (dropdown.ts). The root isn't positioned, so the menu hangs from the bar,
+// across the viewport less 16px each side. Unlike the other menus, a choice
+// closes it. Hidden while the nav drawer is open: the bar stays above the
+// drawer.
+---
+
+<div data-dropdown data-toc>
+  <button
+    type="button"
+    class:list={[
+      quietControl,
+      "tw:group tw:peer tw:-mr-2 tw:flex tw:items-center tw:gap-1 tw:px-2 tw:py-1.5 tw:whitespace-nowrap tw:nav-open:invisible",
+    ]}
+    aria-expanded="false"
+    data-dropdown-trigger
+  >
+    On this page
+    <Chevron class="tw:size-3 tw:group-aria-expanded:rotate-180 tw:motion-safe:transition-[rotate] tw:motion-safe:duration-200" />
+  </button>
+  {/* The fade rides the bottom of the scrollport (sticky) while there is
+      more below. */}
+  <nav
+    class:list={[
+      menuPanel,
+      "tw:inset-x-4 tw:max-h-[min(60dvh,calc(100dvh-var(--tw-spacing-header-offset)-var(--tw-spacing-section-bar)-2rem))] tw:overflow-y-auto tw:overscroll-contain tw:after:pointer-events-none tw:after:sticky tw:after:bottom-0 tw:after:-mt-10 tw:after:block tw:after:h-10 tw:after:bg-linear-to-b tw:after:from-transparent tw:after:to-surface-elevated tw:after:opacity-0 tw:after:motion-safe:transition-opacity tw:data-overflowing:after:opacity-100",
+    ]}
+    aria-label="On this page"
+    data-toc-menu
+  >
+    <button
+      type="button"
+      class="tw:flex tw:w-full tw:cursor-pointer tw:border-0 tw:border-b tw:border-border tw:bg-transparent tw:px-4 tw:py-2 tw:text-left tw:font-sans tw:text-sm tw:text-brand tw:hover:bg-page tw:focus-ring tw:focus-visible:-outline-offset-2"
+      data-return-to-top
+    >
+      Return to top
+    </button>
+  </nav>
+</div>
+
+<script>
+  import "./dropdown";
+  import {
+    appendHeadingLinks,
+    currentHeadingIndex,
+    pageHeadings,
+  } from "@/lib/page-toc";
+  import { menuItem } from "./docs-ui";
+
+  const root = document.querySelector<HTMLElement>("[data-toc]")!;
+  const trigger = root.querySelector<HTMLElement>("[data-dropdown-trigger]")!;
+  const menu = root.querySelector<HTMLElement>("[data-toc-menu]")!;
+  const headings = pageHeadings();
+
+  // Nothing to list: no dropdown (PageNav.astro shows no list either).
+  if (headings.length === 0) root.remove();
+  else {
+    // font-normal: main.css bolds links.
+    const links = appendHeadingLinks(
+      menu,
+      headings,
+      `${menuItem} tw:font-normal tw:text-secondary tw:hover:text-brand tw:aria-[current=true]:font-bold tw:aria-[current=true]:text-brand`,
+    );
+
+    const close = () => trigger.setAttribute("aria-expanded", "false");
+    const markOverflow = () =>
+      menu.toggleAttribute(
+        "data-overflowing",
+        menu.scrollTop + menu.clientHeight < menu.scrollHeight - 1,
+      );
+
+    // Marks the section being read each time the menu opens.
+    trigger.addEventListener("click", () => {
+      const current = links[currentHeadingIndex(headings)];
+      for (const link of links) {
+        if (link === current) link.setAttribute("aria-current", "true");
+        else link.removeAttribute("aria-current");
+      }
+      markOverflow();
+    });
+    menu.addEventListener("scroll", markOverflow, { passive: true });
+
+    // The jump to a heading happens after the click, so it lands right.
+    menu.addEventListener("click", (event) => {
+      const target = event.target as Element;
+      if (target.closest("[data-return-to-top]")) {
+        scrollTo(0, 0);
+        close();
+        trigger.focus();
+      } else if (target.closest("a")) {
+        close();
+      }
+    });
+  }
+</script>

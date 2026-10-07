@@ -1,49 +1,29 @@
 ---
-// "On this page" list of the article's h2s, filled in by the script below.
-// Below lg the right sidebar is `display: contents` (NewDocsLayout), so
-// the toggle and the list become an in-flow row above the article; -order-1
-// puts them first. At phone widths the article's 20px right gutter lives on
-// .learn__post__content, which this row is not inside, hence max-sm:mr-5.
+// "On this page" list of the article's h2s from lg up, filled in by the
+// script below. Below lg the section bar's dropdown (TocToggle.astro) lists
+// the same headings.
 ---
 
-<button
-  id="toc-toggle"
-  class="tw:-order-1 tw:flex tw:items-center tw:justify-between tw:border-0 tw:border-b tw:border-border tw:bg-transparent tw:px-0 tw:py-3 tw:font-sans tw:text-sm tw:font-bold tw:text-heading tw:after:content-['▾'] tw:motion-safe:after:transition-[rotate] tw:aria-expanded:after:rotate-180 tw:max-sm:mr-5 tw:lg:hidden"
-  type="button"
-  aria-controls="sub-navigation-content"
-  aria-expanded="false"
->
-  On this page
-</button>
 <div
   id="sub-navigation-content"
-  class="tw:overflow-y-auto tw:pt-[3em] tw:max-lg:-order-1 tw:max-lg:hidden tw:max-lg:pt-3 tw:max-lg:data-open:block tw:max-sm:mr-5"
+  class="tw:overflow-y-auto tw:pt-[3em] tw:max-lg:hidden"
 ></div>
 
 <script>
-  const button = document.getElementById("toc-toggle")!;
+  import {
+    appendHeadingLinks,
+    currentHeadingIndex,
+    pageHeadings,
+  } from "@/lib/page-toc";
+
   const content = document.getElementById("sub-navigation-content")!;
+  const headers = pageHeadings();
 
-  const setOpen = (open: boolean) => {
-    content.toggleAttribute("data-open", open);
-    button.setAttribute("aria-expanded", String(open));
-  };
-
-  button.addEventListener("click", () => {
-    setOpen(button.getAttribute("aria-expanded") !== "true");
-  });
-
-  const headers = Array.from(
-    document.querySelectorAll<HTMLHeadingElement>(".docs-prose h2[id]"),
-  );
-
-  // Nothing to list: no toggle either. From lg up the heading below names
-  // the list; below lg the toggle does.
-  if (headers.length === 0) button.remove();
-  else {
+  // Nothing to list: no heading either.
+  if (headers.length > 0) {
     const heading = document.createElement("p");
     heading.className =
-      "tw:mb-6 tw:pl-5 tw:text-sm tw:leading-[1.33] tw:font-bold tw:text-heading tw:max-lg:hidden";
+      "tw:mb-6 tw:pl-5 tw:text-sm tw:leading-[1.33] tw:font-bold tw:text-heading";
     heading.textContent = "On this page";
     content.appendChild(heading);
   }
@@ -51,33 +31,15 @@
   // The 2px rail plus 18px keeps the text where the vendored 20px put it.
   // The focus ring sits inside: the list scrolls, so it clips overflow.
   // Only the right corners round; rounded left corners bend the rail.
-  const linkClass =
-    "tw:mb-4 tw:block tw:rounded-r-sm tw:border-l-2 tw:border-transparent tw:pl-4.5 tw:text-sm tw:leading-[1.33] tw:font-normal tw:text-muted tw:no-underline tw:transition-none tw:hover:text-secondary tw:focus-ring tw:focus-visible:-outline-offset-2 tw:aria-[current=true]:border-brand-strong tw:aria-[current=true]:text-heading";
+  const links = appendHeadingLinks(
+    content,
+    headers,
+    "tw:mb-4 tw:block tw:rounded-r-sm tw:border-l-2 tw:border-transparent tw:pl-4.5 tw:text-sm tw:leading-[1.33] tw:font-normal tw:text-muted tw:no-underline tw:transition-none tw:hover:text-secondary tw:focus-ring tw:focus-visible:-outline-offset-2 tw:aria-[current=true]:border-brand-strong tw:aria-[current=true]:text-heading",
+  );
 
-  const links = headers.map((header) => {
-    const link = document.createElement("a");
-    link.href = `#${header.id}`;
-    link.innerText = header.innerText;
-    link.className = linkClass;
-    // Below lg the list is a dropdown above the article; get it out of the
-    // way. The jump to the heading happens after this, so it lands right.
-    link.addEventListener("click", () => setOpen(false));
-    content.appendChild(link);
-    return link;
-  });
-
-  // The section being read: the last heading that has scrolled up to where
-  // anchor links land (scroll-padding-top, src/styles/docs.css), or the first.
   let activeLink: HTMLAnchorElement | undefined;
   const setSelectedLink = () => {
-    const line =
-      (parseFloat(
-        getComputedStyle(document.documentElement).scrollPaddingTop,
-      ) || 0) + 8;
-    const index = headers.findLastIndex(
-      (header) => header.getBoundingClientRect().top <= line,
-    );
-    const link = links[Math.max(index, 0)];
+    const link = links[currentHeadingIndex(headers)];
     if (!link || link === activeLink) return;
     activeLink?.removeAttribute("aria-current");
     activeLink = link;

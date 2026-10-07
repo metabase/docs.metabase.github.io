@@ -31,8 +31,7 @@ const SITE_URL = import.meta.env.SITE;
 // `generateFullContent`/`getFullSections` below (mirroring the two existing
 // ones), since Astro needs a concrete route to build.
 
-// TODO: "agent-api" is not a folder so nothing gets output for it. This was an issue in the jekyll hook and left as-is in the astro migration.
-export const LLMS_FULL_SECTIONS = ["embedding", "agent-api"] as const;
+export const LLMS_FULL_SECTIONS = ["embedding"] as const;
 export type LlmsFullSection = (typeof LLMS_FULL_SECTIONS)[number];
 
 // Paths to include in llms.txt generation.
@@ -64,7 +63,7 @@ const INCLUDED_PATHS = [
   "configuring-metabase/config-file.md",
 
   // Agent API reference
-  "agent-api/",
+  "ai/agent-api.md",
 ];
 
 // Paths to exclude from llms.txt generation (applied after allowlist)

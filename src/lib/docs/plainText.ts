@@ -1,7 +1,10 @@
 // Plain text from a doc's rendered HTML, for places that can't hold markup:
 // meta descriptions, structured data, the `.md` front matter.
 
-const TAG_REGEX = /<[^>]*>/g;
+// A tag, or an unclosed one at the end, so no `<` from the markup survives:
+// a `<` in the result was an entity (`&lt;`), i.e. text. Callers escape the
+// result for where it goes (Liquid, JSON-LD, YAML).
+const TAG_REGEX = /<[^>]*(?:>|$)/g;
 const ENTITY_REGEX = /&(#x[0-9a-f]+|#\d+|[a-z]+);/gi;
 const NAMED_ENTITIES: Record<string, string> = {
   amp: "&",

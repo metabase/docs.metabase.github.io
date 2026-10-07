@@ -2,11 +2,16 @@
 // layout. Anything used in a single component stays inline in that component.
 
 /**
- * Quiet controls: the header's menu button and the version selector trigger.
- * Each pairs this with its own layout classes.
+ * Quiet controls: the section bar's buttons (SectionBar.astro,
+ * TocToggle.astro) and the version selector trigger. Each pairs this with its
+ * own layout classes.
  */
 export const quietControl =
   "tw:cursor-pointer tw:rounded-lg tw:border-0 tw:bg-transparent tw:font-sans tw:text-sm/5 tw:text-secondary tw:transition-colors tw:hover:bg-surface-active tw:hover:text-brand tw:focus-ring tw:aria-expanded:bg-surface-active tw:aria-expanded:text-brand";
+
+/** A 20px line icon (an inline <svg> on a 20×20 viewBox). */
+export const strokeIcon =
+  "tw:size-5 tw:shrink-0 tw:fill-none tw:stroke-current tw:stroke-[1.5] tw:[stroke-linecap:round]";
 
 /** Outlined 40px icon buttons in the header: search (below xl) and ⋯. */
 export const iconButton =
