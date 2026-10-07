@@ -36,10 +36,20 @@ const gap = "tw:gap-4 tw:max-lg:gap-3 tw:max-xs:gap-2";
 ---
 
 {/* z-index: below the image-zoom overlay (2000) and the search modal
-    (100000), above the section bar (1000). Hidden, the shadow would peek
-    over the section bar. */}
+    (100000), above the section bar (1000).
+
+    The tabs drive the sidebar, so with one the header casts no shadow on it
+    (or on the section bar that stands in for it below lg): the two read as
+    one surface. From lg up a pseudo-element casts the shadow on the article
+    only. It starts at the sidebar's edge, takes in the border so the shadow
+    starts below it, and clips the blur that would spill left. */}
 <header
-  class="navigation-header tw:sticky tw:top-0 tw:z-1001 tw:border-b tw:border-border tw:bg-surface tw:shadow-header tw:motion-safe:transition-[translate] tw:motion-safe:duration-200 tw:header-hidden:-translate-y-full tw:header-hidden:shadow-none tw:print:hidden"
+  class:list={[
+    "navigation-header tw:sticky tw:top-0 tw:z-1001 tw:border-b tw:border-border tw:bg-surface tw:motion-safe:transition-[translate] tw:motion-safe:duration-200 tw:header-hidden:-translate-y-full tw:print:hidden",
+    sidebar
+      ? "tw:lg:after:absolute tw:lg:after:top-0 tw:lg:after:right-0 tw:lg:after:-bottom-px tw:lg:after:left-sidebar tw:lg:after:-z-1 tw:lg:after:shadow-header tw:lg:after:[clip-path:inset(0_0_-100%)]"
+      : "tw:shadow-header",
+  ]}
   data-hide-on-scroll={sidebar || undefined}
 >
   {/* Phones get tighter gaps and gutters so the row fits at 320px. */}
