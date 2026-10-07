@@ -26,7 +26,10 @@ const versions = [...site.available_versions].reverse().slice(0, 10);
         const support = site.data.version_support[v];
         return (
           <li class="version__option">
-            <a class="version__link" href={`/docs/${v}/`}>
+            <a
+              class="version__link"
+              href={v === site.docs_version ? "/docs/latest/" : `/docs/${v}/`}
+            >
               <div class="version__dropdown--item">
                 <span>{v}</span>
                 {support?.status === "unsupported" ? (

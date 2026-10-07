@@ -51,7 +51,13 @@ const dirname = path.dirname(fileURLToPath(import.meta.url));
       return (
         <li>
           <p>
-            <a href={`/docs/${version}/`}>
+            <a
+              href={
+                version === site.docs_version
+                  ? "/docs/latest/"
+                  : `/docs/${version}/`
+              }
+            >
               {version}{" "}
               {support.status === "unsupported" ? (
                 <span class="version__tag version__tag--unsupported">
