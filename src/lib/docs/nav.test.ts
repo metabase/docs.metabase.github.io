@@ -1,5 +1,12 @@
 import { describe, expect, test } from "vitest";
-import { getActiveCategory, getLandingUrl, getSections, type Nav } from "./nav";
+import {
+  getActiveCategory,
+  getCategoryByDirectory,
+  getLandingUrl,
+  getPrevNext,
+  getSections,
+  type Nav,
+} from "./nav";
 
 describe("getLandingUrl", () => {
   test("uses the category's own url", () => {
@@ -99,8 +106,131 @@ describe("getActiveCategory", () => {
     );
   });
 
-  test("is undefined for pages outside the nav", () => {
+  test("falls back to the category listing the page's neighbors", () => {
+    expect(
+      getActiveCategory(nav, "/docs/latest/questions/unlisted")?.name,
+    ).toBe("Analytics");
+  });
+
+  test("is undefined for the docs home and pages outside a version", () => {
     expect(getActiveCategory(nav, "/docs/latest/")).toBeUndefined();
+    expect(getActiveCategory(nav, "/docs/all")).toBeUndefined();
+  });
+});
+
+describe("getCategoryByDirectory", () => {
+  const nav: Nav = {
+    categories: [
+      {
+        name: "Analytics",
+        pages: [
+          { name: "Questions", url: "/docs/latest/questions/start" },
+          { name: "Basics", url: "/docs/latest/troubleshooting-guide/basics" },
+        ],
+      },
+      {
+        name: "Administration",
+        pages: [
+          { name: "Guide", url: "/docs/latest/troubleshooting-guide/" },
+          {
+            name: "Sync",
+            url: "/docs/latest/troubleshooting-guide/sync#schedules",
+          },
+        ],
+      },
+      {
+        name: "Embedding",
+        pages: [{ name: "Learn", url: "/learn/embedding" }],
+      },
+    ],
+  };
+
+  test("picks the category listing the most pages from the directory", () => {
+    expect(
+      getCategoryByDirectory(nav, "/docs/latest/troubleshooting-guide/ldap")
+        ?.name,
+    ).toBe("Administration");
+  });
+
+  test("walks up to the nearest directory with listed pages", () => {
+    expect(
+      getCategoryByDirectory(
+        nav,
+        "/docs/latest/questions/query-builder/expressions/case",
+      )?.name,
+    ).toBe("Analytics");
+  });
+
+  test("breaks ties in nav order", () => {
+    const tied: Nav = {
+      categories: [
+        { name: "First", pages: [{ name: "A", url: "/docs/latest/x/a" }] },
+        { name: "Second", pages: [{ name: "B", url: "/docs/latest/x/b" }] },
+      ],
+    };
+    expect(getCategoryByDirectory(tied, "/docs/latest/x/c")?.name).toBe(
+      "First",
+    );
+  });
+
+  test("stops at the version root", () => {
+    expect(
+      getCategoryByDirectory(nav, "/docs/latest/CONTRIBUTING"),
+    ).toBeUndefined();
+    expect(getCategoryByDirectory(nav, "/docs/latest/")).toBeUndefined();
+    expect(getCategoryByDirectory(nav, "/docs/all")).toBeUndefined();
+  });
+});
+
+describe("getPrevNext", () => {
+  const category = {
+    name: "Analytics",
+    pages: [
+      {
+        name: "Questions",
+        url: "/docs/latest/questions/start",
+        pages: [
+          { name: "Alerts", url: "/docs/latest/questions/alerts" },
+          { name: "Alerts setup", url: "/docs/latest/questions/alerts#setup" },
+          { name: "Tutorial", url: "/learn/questions" },
+        ],
+      },
+      {
+        name: "Group",
+        pages: [
+          { name: "Charts", url: "/docs/latest/questions/charts" },
+          { name: "Alerts again", url: "/docs/latest/questions/alerts" },
+        ],
+      },
+      { name: "Models", url: "/docs/latest/data-modeling/models" },
+    ],
+  };
+
+  test("follows the nav depth first, skipping non-pages and repeats", () => {
+    expect(getPrevNext(category, "/docs/latest/questions/alerts")).toEqual({
+      prev: { name: "Questions", url: "/docs/latest/questions/start" },
+      next: { name: "Charts", url: "/docs/latest/questions/charts" },
+    });
+    expect(getPrevNext(category, "/docs/latest/questions/charts")).toEqual({
+      prev: { name: "Alerts", url: "/docs/latest/questions/alerts" },
+      next: { name: "Models", url: "/docs/latest/data-modeling/models" },
+    });
+  });
+
+  test("has no prev on the first page and no next on the last", () => {
+    expect(getPrevNext(category, "/docs/latest/questions/start").prev).toBe(
+      undefined,
+    );
+    expect(
+      getPrevNext(category, "/docs/latest/data-modeling/models").next,
+    ).toBe(undefined);
+  });
+
+  test("is empty for pages the category doesn't list", () => {
+    expect(getPrevNext(category, "/docs/latest/questions/unlisted")).toEqual(
+      {},
+    );
+    expect(getPrevNext(undefined, "/docs/latest/questions/alerts")).toEqual({});
   });
 });
 

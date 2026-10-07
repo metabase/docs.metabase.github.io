@@ -8,10 +8,10 @@ import {
 } from "@/lib/docs/nav";
 import { navLink } from "./docs-ui";
 
-// Only the active category's pages; the header tabs switch categories. Pages
-// outside the nav (home, /docs/all) show the first category's pages. The
-// section list is for the mobile drawer, where the header tabs are hidden.
-// The version selector heads both.
+// Only the active category's pages; the header tabs switch categories. The
+// docs home and /docs/all show the first category's pages. The section list
+// is for the mobile drawer, where the header tabs are hidden. The version
+// selector heads both.
 //
 // Below lg the sidebar is a drawer, shown while <html> has
 // data-docs-nav="open" (set by DocsHeader.astro, the `nav-open:` variant).
@@ -39,7 +39,7 @@ const list = "tw:list-none tw:p-0";
 {/* Desktop padding: 8px link padding + 12px aligns nav text with the header
     wordmark at 20px. */}
 <div
-  class="tw:sticky tw:top-header tw:h-[calc(100vh-var(--tw-spacing-header))] tw:overflow-y-auto tw:border-r tw:border-border-subtle tw:bg-surface tw:pt-7.5 tw:pr-2.5 tw:pb-6 tw:pl-3 tw:shadow-sidebar tw:max-lg:invisible tw:max-lg:fixed tw:max-lg:bottom-0 tw:max-lg:left-0 tw:max-lg:z-1000 tw:max-lg:h-auto tw:max-lg:w-[min(320px,85vw)] tw:max-lg:-translate-x-full tw:max-lg:px-3 tw:max-lg:pt-4 tw:max-lg:pb-8 tw:max-lg:shadow-card tw:max-lg:motion-safe:transition-[translate,visibility] tw:max-lg:motion-safe:duration-250 tw:max-lg:nav-open:visible tw:max-lg:nav-open:translate-x-0"
+  class="tw:sticky tw:top-header tw:h-[calc(100vh-var(--tw-spacing-header))] tw:overflow-y-auto tw:border-r tw:border-border-subtle tw:bg-surface tw:pt-7.5 tw:pr-2.5 tw:pb-6 tw:pl-3 tw:shadow-sidebar tw:max-lg:invisible tw:max-lg:fixed tw:max-lg:bottom-0 tw:max-lg:left-0 tw:max-lg:z-1000 tw:max-lg:h-auto tw:max-lg:w-[min(320px,85vw)] tw:max-lg:-translate-x-full tw:max-lg:px-3 tw:max-lg:pt-4 tw:max-lg:pb-8 tw:max-lg:shadow-card tw:max-lg:motion-safe:transition-[translate,visibility] tw:max-lg:motion-safe:duration-250 tw:max-lg:nav-open:visible tw:max-lg:nav-open:translate-x-0 tw:print:hidden"
   id="main-navigation-content"
   tabindex="-1"
 >
@@ -49,7 +49,7 @@ const list = "tw:list-none tw:p-0";
       Sticky offsets count from inside the padding, so the negative top
       (the padding) puts it at the very top. */}
   <div class="tw:sticky tw:-top-7.5 tw:z-10 tw:-mx-3 tw:-mt-4 tw:mb-1 tw:bg-surface tw:px-3 tw:pt-4 tw:pb-2 tw:max-lg:-top-4 tw:lg:-mr-2.5 tw:lg:pr-2.5">
-    <DocsVersionSelector version={version} />
+    <DocsVersionSelector version={version} pageUrl={pageUrl} />
   </div>
   <nav
     class="tw:max-lg:mb-3 tw:max-lg:border-b tw:max-lg:border-border-subtle tw:max-lg:pb-2 tw:lg:hidden"
@@ -77,9 +77,22 @@ const list = "tw:list-none tw:p-0";
   </nav>
   {category && (
     <ul class={list}>
-      {category.pages?.map((node) => (
-        <NavItem node={node} pageUrl={pageUrl} depth={0} />
+      {category.pages?.map((node, index) => (
+        <NavItem node={node} pageUrl={pageUrl} depth={0} id={`nav-${index}`} />
       ))}
     </ul>
   )}
 </div>
+
+<script>
+  // Group toggles (NavItem.astro) open and close the group's page list.
+  document
+    .getElementById("main-navigation-content")
+    ?.addEventListener("click", (event) => {
+      const toggle = (event.target as Element).closest("[data-nav-toggle]");
+      const item = toggle?.closest("li");
+      if (!toggle || !item) return;
+      const expanded = item.classList.toggle("expanded");
+      toggle.setAttribute("aria-expanded", String(expanded));
+    });
+</script>

@@ -25,15 +25,16 @@ const dirname = path.dirname(fileURLToPath(import.meta.url));
       return null;
     }
 
+    // Sentry loads in production only (head.html).
     function is404(err) {
       if (err) {
-        window.Sentry.captureException(err, {
+        window.Sentry?.captureException(err, {
           tags: {
             section: "404",
           },
         });
       } else {
-        window.Sentry.captureMessage(location.href, {
+        window.Sentry?.captureMessage(location.href, {
           tags: {
             section: "404",
           },
@@ -46,6 +47,21 @@ const dirname = path.dirname(fileURLToPath(import.meta.url));
       // latest documentation link
       if (window.location.href.includes("/docs/")) {
         document.getElementById("notfound-docs").classList.remove("hide");
+      }
+
+      // The same page in the latest docs, for a page this version doesn't
+      // have, when latest does.
+      const versioned = /^\/docs\/v[^/]+\/(.+)$/.exec(location.pathname);
+      if (versioned) {
+        const latestPage = `/docs/latest/${versioned[1]}`;
+        fetch(latestPage, { method: "HEAD" })
+          .then((response) => {
+            if (!response.ok) return;
+            const link = document.getElementById("notfound-latest-page");
+            link.href = latestPage;
+            link.classList.remove("hide");
+          })
+          .catch(() => {});
       }
     }
 
@@ -129,9 +145,23 @@ const dirname = path.dirname(fileURLToPath(import.meta.url));
           <h1 class="fs-5 m-0 mt-3 tw:text-heading">We're a little lost...</h1>
           <p class="m-0 mt-2">The page you asked for couldn't be found</p>
           <div class="align-center d-flex flex-column justify-center mt-7 w-100">
+            <a class="Button hide m-0 mb-2" id="notfound-latest-page">
+              Try this page in the latest docs
+            </a>
             <a class="Button hide" href="/docs/latest/" id="notfound-docs">
               Go to the latest version of the documentation
             </a>
+            {/* InkeepSearch.astro (in the header) opens search from any
+                `data-inkeep-search` element. The utilities restore the
+                vendored .Button look that Bootstrap's `button` reset (more
+                specific) takes away from a <button>. */}
+            <button
+              type="button"
+              class="Button m-0 mt-2 tw:rounded-md tw:font-sans tw:text-[0.843rem] tw:font-bold tw:text-brand"
+              data-inkeep-search
+            >
+              Search the docs
+            </button>
             <a class="Button m-0 mt-2" href="/">
               Go to Metabase homepage
             </a>

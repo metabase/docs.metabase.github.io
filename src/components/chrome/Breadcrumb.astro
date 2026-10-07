@@ -1,4 +1,5 @@
 ---
+import { getDocBreadcrumbs } from "@/lib/docs/breadcrumbs";
 import { baseCtx } from "@/lib/liquid/liquidRenderer";
 
 type Props = {
@@ -15,25 +16,10 @@ type Props = {
 const { page } = Astro.props;
 const { site } = baseCtx;
 
-const slugify = (str: string) =>
-  str
-    .toLowerCase()
-    .trim()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
-
 const version = page.version === "latest" ? site.docs_version : page.version;
-const latestOrExplicitVersion =
-  site.docs_version === page.version && page.url.includes("/docs/latest/")
-    ? "latest"
-    : (page.version ?? "");
-const categorySlug = slugify(page.category ?? "");
-const categorySlugPart =
-  categorySlug === "troubleshooting-guide"
-    ? "/"
-    : categorySlug === "api"
-      ? "api-documentation"
-      : "/start";
+const [home, category] = page.has_magic_breadcrumbs
+  ? getDocBreadcrumbs(page)
+  : [];
 ---
 
 {/* Bootstrap breadcrumb from the vendored bundle. The utilities (the `*:`
@@ -46,28 +32,29 @@ const categorySlugPart =
     aria-label="breadcrumb"
   >
     <ol class="breadcrumb tw:ml-0 tw:w-auto tw:*:whitespace-nowrap tw:*:last:min-w-0 tw:*:last:*:truncate">
-      {page.has_magic_breadcrumbs ? (
+      {home ? (
         <>
           <li class="breadcrumb-item">
-            <a href={`/docs/${latestOrExplicitVersion}/`}>Home</a>
+            <a class="tw:rounded-sm tw:focus-ring" href={home.url}>
+              {home.name}
+            </a>
           </li>
 
-          {page.title === "README" ? (
-            <li class="breadcrumb-item">
-              <p class="tw:text-secondary">{page.category}</p>
-            </li>
-          ) : (
-            page.show_category_breadcrumb && (
+          {category &&
+            (category.url ? (
               <li class="breadcrumb-item">
                 <a
-                  class="blue-60"
-                  href={`/docs/${latestOrExplicitVersion}/${page.category !== "Api" ? categorySlug : ""}${categorySlugPart}`}
+                  class="blue-60 tw:rounded-sm tw:focus-ring"
+                  href={category.url}
                 >
-                  {page.category}
+                  {category.name}
                 </a>
               </li>
-            )
-          )}
+            ) : (
+              <li class="breadcrumb-item">
+                <p class="tw:text-secondary">{category.name}</p>
+              </li>
+            ))}
         </>
       ) : (
         <>

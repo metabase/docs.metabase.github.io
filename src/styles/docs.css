@@ -36,11 +36,19 @@
  * A change legacy pages need too goes in the file itself (the version notice
  * in docs.css, the cookie pill in gdpr.css). */
 @layer legacy {
-  /* docs.css's `.docs a { display: inline-block }` keeps a link from
-   * wrapping, so a long link in prose leaves a ragged gap. Only paragraph
-   * links need it undone: main.css gives every other link inline-block
-   * anyway. */
-  .docs p a {
+  /* main.css reserves 10em above anchor targets for the 77px marketing
+   * navbar; the docs header is shorter. The "On this page" highlight
+   * (PageNav.astro) reads the same offset. */
+  html {
+    scroll-padding-top: calc(var(--tw-spacing-header) + 1rem);
+  }
+
+  /* docs.css's `.docs a` and main.css's `a` make links inline-block, which
+   * keeps a link from wrapping, so a long link in prose leaves a ragged gap.
+   * Only prose text needs it undone; `.docs-prose`, not `.docs`, so the
+   * breadcrumb's last crumb can still truncate. */
+  .docs p a,
+  .docs-prose :is(li, td, th, dd) a {
     display: inline;
   }
 
@@ -123,6 +131,10 @@
   /* Brand */
   --color-brand: #509ee3;
   --color-brand-hover: #1c6bb0; /* hover background on brand buttons */
+
+  /* Focus rings and indicators, which need 3:1 against the page: brand is
+   * 2.8:1 on --color-page, this is 5.4:1. Brand again on dark. */
+  --color-brand-strong: #1c6bb0;
   --color-white: #fff; /* text on brand buttons */
 
   /* Code */
@@ -134,8 +146,22 @@
   --color-syntax-attr: #574c73;
   --color-syntax-meta: #9c637a;
 
-  /* Callouts and tags */
+  /* Syntax accents: the atelier-sulphurpool hues, darkened to 4.5:1 on
+   * --color-pre-bg. The dark theme keeps the originals. */
+  --color-syntax-comment: #707486;
+  --color-syntax-red: #c94922;
+  --color-syntax-orange: #b15f24;
+  --color-syntax-yellow: #966c25;
+  --color-syntax-green: #84742c;
+  --color-syntax-cyan: #1b7e9d;
+  --color-syntax-blue: #3378b0;
+  --color-syntax-violet: #5e6fbc;
+  --color-syntax-string: #5b813b; /* the vendored #7aad4f, darkened */
+
+  /* Callouts, tags and highlights */
   --color-blockquote-bg: #eef6fc;
+  --color-blockquote-border: #509ee3;
+  --color-mark-bg: #fdf0c2;
   --color-notice-bg: #fef9e6; /* version-unsupported notice */
   --color-notice-border: #f7be08;
   --color-tag: #f1f2f4;
@@ -177,10 +203,10 @@
   }
 }
 
+/* The outline follows the element's own border-radius. */
 @utility focus-ring {
   &:focus-visible {
-    border-radius: 0.5rem;
-    outline: 2px solid var(--tw-color-brand);
+    outline: 2px solid var(--tw-color-brand-strong);
     outline-offset: 2px;
   }
 }
@@ -211,6 +237,7 @@
       --tw-color-secondary: #b4b8c5;
       --tw-color-muted: #8d93a5; /* 5.4:1 on the dark --color-page */
       --tw-color-heading: #f0f1f4;
+      --tw-color-brand-strong: #509ee3;
       --tw-color-code-bg: #2f3442;
       --tw-color-code-heading-bg: #2f3442;
       --tw-color-pre-bg: #14161d;
@@ -218,7 +245,16 @@
       --tw-color-syntax-fg: #979db4; /* base16 atelier-sulphurpool-dark */
       --tw-color-syntax-attr: #b39ddb;
       --tw-color-syntax-meta: #c98aa0;
+      --tw-color-syntax-comment: #898ea4;
+      --tw-color-syntax-orange: #c76b29;
+      --tw-color-syntax-yellow: #c08b30;
+      --tw-color-syntax-green: #ac9739;
+      --tw-color-syntax-cyan: #22a2c9;
+      --tw-color-syntax-blue: #3d8fd1;
+      --tw-color-syntax-violet: #6679cc;
+      --tw-color-syntax-string: #7aad4f;
       --tw-color-blockquote-bg: #1f2a3a;
+      --tw-color-mark-bg: #4d4220;
       --tw-color-notice-bg: #2e2a1a;
       --tw-color-tag: #2f3442;
       --tw-color-tag-lts: #23301b;
@@ -266,6 +302,25 @@
  * into it, highlight.js tokens, the Liquid feedback widget and the footer.
  * Everything else uses utilities in its component. */
 @layer components {
+  /* Image zoom overlay (image-zoom.js appends it to <body>). The zoomed copy
+   * is outside .docs-prose, so it repeats the prose image's surface and
+   * dark-theme dimming. Ahead of the prose rules: stylelint wants the less
+   * specific img rule first. */
+  .image-zoom-wrapper .container > img {
+    background-color: var(--tw-color-surface);
+    filter: var(--docs-image-filter);
+  }
+
+  .image-zoom-close-button:focus-visible {
+    border-radius: 0.25rem;
+    outline: 2px solid var(--tw-color-brand-strong);
+    outline-offset: 2px;
+  }
+
+  [data-theme="dark"] .image-zoom-close {
+    filter: invert(0.8);
+  }
+
   /* Prose. Colors, then the type scale: 36 (the vendored h1) / 28 / 22 / 18 /
    * 16 over an 18px body. The .copy-clip-container.hN wrappers from
    * new-docs-anchor-links.js match the vendored heading rules too, so they
@@ -401,14 +456,65 @@
       color: var(--tw-color-muted);
     }
 
-    /* Blockquotes and the plans callout include. */
+    /* Blockquotes and the plans callout include. The plans border stays the
+     * vendored brand: Bootstrap's `.border-primary` sets it `!important`. */
     & :is(blockquote, .plans-blockquote) {
       background-color: var(--tw-color-blockquote-bg);
+      border-color: var(--tw-color-blockquote-border);
       color: var(--tw-color-secondary);
+    }
+
+    /* The beta callout (_includes/beta-blockquote.html) is a warning; it
+     * borrows the version notice's colors. */
+    & blockquote.beta-blockquote {
+      background-color: var(--tw-color-notice-bg);
+      border-color: var(--tw-color-notice-border);
     }
 
     & blockquote p em {
       color: var(--tw-color-secondary);
+    }
+
+    /* Keys, highlights and disclosures. The vendored kbd is near-black and
+     * mark pale yellow in both themes. */
+    & kbd {
+      background-color: var(--tw-color-surface);
+      border: 1px solid var(--tw-color-border-strong);
+      border-bottom-width: 2px;
+      border-radius: 0.25rem;
+      color: var(--tw-color-heading);
+      font-size: 0.8125em;
+      padding: 0.0625rem 0.375rem;
+      white-space: nowrap;
+    }
+
+    & mark {
+      background-color: var(--tw-color-mark-bg);
+      border-radius: 0.2em;
+      color: inherit;
+    }
+
+    & details {
+      background-color: var(--tw-color-surface);
+      border: 1px solid var(--tw-color-border);
+      border-radius: 0.5rem;
+      margin: 1.5rem 0;
+      padding: 0.75rem 1rem;
+    }
+
+    & summary {
+      border-radius: 0.25rem;
+      color: var(--tw-color-heading);
+      font-weight: 700;
+
+      &:focus-visible {
+        outline: 2px solid var(--tw-color-brand-strong);
+        outline-offset: 2px;
+      }
+    }
+
+    & details[open] > summary {
+      margin-bottom: 0.75rem;
     }
 
     /* Notice on docs for versions past their EOL date (VersionNotice.astro).
@@ -448,16 +554,25 @@
       }
     }
 
-    /* Copy button on highlighted blocks (new-docs-code-snippet-copy.js). */
+    /* Copy button on highlighted blocks (new-docs-code-snippet-copy.js). A
+     * <button>, so it drops the browser's border and font, and keyboard focus
+     * reveals the label the way hover does. */
     & .code-snippet-wrapper .copy-code-button {
       background-color: var(--tw-color-surface-hover);
+      border: 0;
+      font-family: inherit;
 
       &:hover {
         background-color: var(--tw-color-surface-active);
       }
 
+      &:focus-visible {
+        outline: 2px solid var(--tw-color-brand-strong);
+        outline-offset: 2px;
+      }
+
       /* The icons are currentColor; the label matches them. */
-      & :is(svg, p) {
+      & :is(svg, .copy-button-label) {
         color: var(--tw-color-brand);
 
         @variant dark {
@@ -465,15 +580,57 @@
         }
       }
 
-      /* The vendored rule asks for Lato 900, which the docs don't load. */
-      & p {
+      /* The vendored `.copy-code-button p` rules, which the spans no longer
+       * match; at 700, since the docs don't load the Lato 900 they asked
+       * for. */
+      & .copy-button-label {
+        font-size: 14px;
         font-weight: 700;
+        line-height: 20px;
+        margin: 0;
+      }
+
+      & .copy-button-copied-wrapper.d-flex .copy-button-label {
+        width: 40px;
+      }
+
+      &:focus-visible .copy-button-copy {
+        margin-left: 4px;
+        margin-right: 8px;
+        opacity: 1;
+        width: 35px;
+      }
+    }
+
+    /* Section links beside h2s and h3s (new-docs-anchor-links.js): shown on
+     * keyboard focus, as on hover. */
+    & .copy-clip:focus-visible {
+      border-radius: 0.25rem;
+      outline: 2px solid var(--tw-color-brand-strong);
+      outline-offset: 2px;
+
+      & .share-button {
+        opacity: 1;
+      }
+    }
+
+    /* Zoomable images (image-zoom.js): the ring goes on the image, not on
+     * its full-width wrapper. */
+    & .image-wrapper[role="button"] {
+      &:focus-visible {
+        outline: none;
+
+        & > img {
+          outline: 2px solid var(--tw-color-brand-strong);
+          outline-offset: 2px;
+        }
       }
     }
 
     /* Syntax highlighting: highlight.js classes, ported from the base16
      * atelier-sulphurpool-light theme that legacy pages load from cdnjs. The
-     * accent colors are shared by the light and dark variants. */
+     * accents are the --color-syntax-* tokens: darker on light, for
+     * contrast. */
     & .hljs::selection,
     & .hljs ::selection {
       background-color: color-mix(in srgb, var(--tw-color-brand) 35%, transparent);
@@ -481,23 +638,24 @@
     }
 
     & .hljs-comment {
-      color: #898ea4;
+      color: var(--tw-color-syntax-comment);
+    }
+
+    /* Not in the ported theme: the vendored bundle's own string green. */
+    & .hljs-string {
+      color: var(--tw-color-syntax-string);
     }
 
     & :is(.hljs-tag, .hljs-operator, .hljs-punctuation, .hljs-subst) {
       color: var(--tw-color-syntax-fg);
     }
 
-    & .hljs-operator {
-      opacity: 0.7;
-    }
-
     & :is(.hljs-bullet, .hljs-deletion, .hljs-name, .hljs-selector-tag, .hljs-template-variable, .hljs-variable) {
-      color: #c94922;
+      color: var(--tw-color-syntax-red);
     }
 
     & :is(.hljs-link, .hljs-literal, .hljs-number, .hljs-symbol, .hljs-variable.constant_) {
-      color: #c76b29;
+      color: var(--tw-color-syntax-orange);
     }
 
     & .hljs-attr {
@@ -505,32 +663,32 @@
     }
 
     & :is(.hljs-title, .hljs-class .hljs-title, .hljs-title.class_) {
-      color: #c08b30;
+      color: var(--tw-color-syntax-yellow);
     }
 
     & .hljs-strong {
-      color: #c08b30;
+      color: var(--tw-color-syntax-yellow);
       font-weight: 700;
     }
 
     & :is(.hljs-addition, .hljs-code, .hljs-title.class_.inherited__) {
-      color: #ac9739;
+      color: var(--tw-color-syntax-green);
     }
 
     & :is(.hljs-built_in, .hljs-doctag, .hljs-keyword.hljs-atrule, .hljs-quote, .hljs-regexp) {
-      color: #22a2c9;
+      color: var(--tw-color-syntax-cyan);
     }
 
     & :is(.hljs-attribute, .hljs-function .hljs-title, .hljs-section, .hljs-title.function_, .ruby .hljs-property) {
-      color: #3d8fd1;
+      color: var(--tw-color-syntax-blue);
     }
 
     & :is(.hljs-keyword, .hljs-template-tag, .hljs-type) {
-      color: #6679cc;
+      color: var(--tw-color-syntax-violet);
     }
 
     & .hljs-emphasis {
-      color: #6679cc;
+      color: var(--tw-color-syntax-violet);
       font-style: italic;
     }
 
@@ -543,7 +701,7 @@
     }
 
     & .diff .hljs-meta {
-      color: #6679cc;
+      color: var(--tw-color-syntax-violet);
     }
 
     /* Tables, in the table-layout and card-layout bands defined above. The
@@ -690,10 +848,6 @@
         white-space: nowrap;
       }
 
-      & tr[id] {
-        scroll-margin-top: calc(var(--tw-spacing-header) + 1rem);
-      }
-
       /* The linked row. `.table-reference` lets it outrank the stripes. */
       & tbody tr:target td {
         background: var(--tw-color-surface-hover);
@@ -760,9 +914,20 @@
     }
   }
 
-  /* "Was this helpful?" widget (_includes/shared/was-this-helpful-widget.html). */
+  /* "Was this helpful?" widget (_includes/shared/was-this-helpful-widget.html).
+   * Below lg it follows the article (NewDocsLayout.astro) instead of sitting
+   * in the sidebar, which the vendored 20px left margin assumes. */
   #was-this-helpful-widget {
     border-bottom-color: var(--tw-color-border);
+
+    @variant max-lg {
+      margin-left: 0;
+    }
+
+    /* The article's 20px phone gutter, as on the "On this page" row. */
+    @variant max-sm {
+      margin-right: 1.25rem;
+    }
 
     & div#page-comment p {
       color: var(--tw-color-secondary);
@@ -786,6 +951,11 @@
       & textarea {
         background-color: transparent;
         color: var(--tw-color-muted);
+
+        /* iOS zooms the page into inputs under 16px. */
+        @variant max-sm {
+          font-size: 16px;
+        }
       }
     }
 
@@ -821,9 +991,25 @@
     }
   }
 
-  /* Image zoom overlay (image-zoom.js appends it to <body>). */
-  [data-theme="dark"] .image-zoom-close {
-    filter: invert(0.8);
+  /* Paper gets the article only. The chrome hides with `print:hidden` in
+   * its components; these are the parts the legacy scripts and the shared
+   * footer add. (The section links stay: Bootstrap's `d-flex !important`
+   * outranks this, and they're transparent until hovered anyway.) */
+  @media print {
+    .site-footer,
+    .gdpr-cookie-notice,
+    .image-zoom-wrapper,
+    .docs-prose .copy-code-button {
+      display: none;
+    }
+  }
+
+  /* The vendored transitions on the copy button's label and the section
+   * link icon. */
+  @media (prefers-reduced-motion: reduce) {
+    .docs-prose :is(.copy-code-button :is(.copy-button-copy, .copy-button-copied-wrapper), .share-button) {
+      transition: none;
+    }
   }
 
   /* Cookie notice, dark theme only. The pill stays inverted against the page:

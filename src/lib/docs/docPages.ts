@@ -11,8 +11,10 @@
 // and Header.astro's unlayered styles to themed ones.
 import path from "node:path";
 import { pathToFileURL } from "node:url";
+import { htmlToText, toExcerpt } from "@/lib/docs/plainText";
 import { renderDocLiquid, resolveDocData } from "@/lib/docs/renderDocLiquid";
 import { resolveDocUrl } from "@/lib/docs/resolveDoc";
+import { splitAtTitle } from "@/lib/docs/splitAtTitle";
 import { getMarkdownRenderer } from "@/lib/markdown/markdownRenderer";
 import type { DataEntryMap } from "astro:content";
 
@@ -31,6 +33,27 @@ export const toDocParams = (id: string) => {
 export const isLegacyDoc = (doc: MarkdownDoc, version: string): boolean =>
   resolveDocData(doc, version).layout === "docs";
 
+const nonEmpty = (value: unknown): string | undefined =>
+  typeof value === "string" && value.trim() ? value : undefined;
+
+// A front matter string (summary, description) as inline HTML: summaries can
+// hold inline code.
+export const renderInlineMarkdown = async (text: string, fileURL: URL) =>
+  (await (await getMarkdownRenderer()).render(text, { fileURL })).code
+    .trim()
+    .replace(/^<p>([\s\S]*)<\/p>$/, "$1");
+
+// What a doc says it's about, as plain text, for meta descriptions and the
+// `.md` front matter: its description, else its summary (docs-metadata.html's
+// order). Undefined when it has neither.
+export const getDocDescription = async (
+  page: Record<string, unknown>,
+  fileURL: URL,
+): Promise<string | undefined> => {
+  const text = nonEmpty(page.description) ?? nonEmpty(page.summary);
+  return text && htmlToText(await renderInlineMarkdown(text, fileURL));
+};
+
 // Liquid, then Markdown to HTML.
 export const renderMarkdownDoc = async (doc: MarkdownDoc, version: string) => {
   const {
@@ -43,15 +66,15 @@ export const renderMarkdownDoc = async (doc: MarkdownDoc, version: string) => {
   const fileURL = pathToFileURL(path.resolve(resolved.filePath!));
   const { code: html } = await md.render(body, { fileURL });
 
-  // The subheading under the title (NewDocsLayout.astro), as inline HTML:
-  // summaries can hold inline code.
-  const text = page.summary ?? page.description;
-  const summary =
-    typeof text === "string" && text.trim()
-      ? (await md.render(text, { fileURL })).code
-          .trim()
-          .replace(/^<p>([\s\S]*)<\/p>$/, "$1")
-      : undefined;
+  // The subheading under the title (NewDocsLayout.astro).
+  const text = nonEmpty(page.summary) ?? nonEmpty(page.description);
+  const summary = text && (await renderInlineMarkdown(text, fileURL));
 
-  return { page: { ...page, content: html }, dirname, html, summary };
+  // Most docs have no description, so the meta description falls back to the
+  // opening words of the body, past the h1 that repeats the title.
+  const meta_description =
+    (await getDocDescription(page, fileURL)) ??
+    toExcerpt(splitAtTitle(html)[1]);
+
+  return { page: { ...page, meta_description }, dirname, html, summary };
 };

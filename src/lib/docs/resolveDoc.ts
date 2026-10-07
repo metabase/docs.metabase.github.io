@@ -36,3 +36,26 @@ export const hasMarkdownVersion = (version: string): boolean =>
 // filename to hang the extension on, so they map to `index.md`.
 export const toMarkdownUrl = (url: string): string =>
   url.endsWith("/") ? `${url}index.md` : `${url}.md`;
+
+// The same page in another version: "/docs/latest/questions/start" ->
+// "/docs/v0.62/questions/start". Undefined for URLs outside a version
+// (/docs/all, /docs/404).
+export const toVersionUrl = (
+  url: string,
+  version: string,
+): string | undefined => {
+  const match = /^\/docs\/[^/]+\/(.*)$/.exec(url);
+  return match ? `/docs/${version}/${match[1]}` : undefined;
+};
+
+// Where a link to another version should go from `url`: the same page when
+// that version has it (`urls` from getDocUrls, src/lib/docs/docUrls.ts), else
+// the version's home.
+export const findDocInVersion = (
+  urls: ReadonlySet<string>,
+  url: string,
+  version: string,
+): string => {
+  const samePage = toVersionUrl(url, version);
+  return samePage && urls.has(samePage) ? samePage : `/docs/${version}/`;
+};

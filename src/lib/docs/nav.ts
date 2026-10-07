@@ -35,13 +35,75 @@ export const getLandingUrl = (node: NavNode): string | undefined => {
   )?.url;
 };
 
-// Category containing pageUrl; undefined for pages outside the nav (home,
-// /docs/all, 404), so callers decide whether to fall back.
+const VERSION_ROOT_REGEX = /^\/docs\/[^/]+\//;
+
+// For pages the nav doesn't list (about a third of the docs): the category
+// that lists the most pages from the page's directory, or else from the
+// nearest parent directory that has any. Ties go to the earlier category.
+// It stops at the version root, so the docs home and pages outside a version
+// (/docs/all, 404) get none.
+export const getCategoryByDirectory = (
+  nav: Nav,
+  pageUrl: string,
+): NavNode | undefined => {
+  const root = VERSION_ROOT_REGEX.exec(pageUrl)?.[0];
+  if (!root) return undefined;
+
+  for (
+    let dir = pageUrl.slice(0, pageUrl.lastIndexOf("/") + 1);
+    dir.length > root.length;
+    dir = dir.slice(0, dir.lastIndexOf("/", dir.length - 2) + 1)
+  ) {
+    let best: NavNode | undefined;
+    let bestCount = 0;
+    for (const category of nav.categories) {
+      const count = [category, ...descendants(category)].filter((node) =>
+        node.url?.split("#")[0].startsWith(dir),
+      ).length;
+      if (count > bestCount) {
+        best = category;
+        bestCount = count;
+      }
+    }
+    if (best) return best;
+  }
+  return undefined;
+};
+
+// Category containing pageUrl, or for pages the nav doesn't list, the one
+// that lists their neighbors (getCategoryByDirectory). Undefined for the docs
+// home, /docs/all and 404, so callers decide whether to fall back.
 export const getActiveCategory = (
   nav: Nav,
   pageUrl: string,
 ): NavNode | undefined =>
-  nav.categories.find((category) => containsUrl(category, pageUrl));
+  nav.categories.find((category) => containsUrl(category, pageUrl)) ??
+  getCategoryByDirectory(nav, pageUrl);
+
+type NavLink = { name: string; url: string };
+
+// The pages before and after pageUrl in reading order: the category's nav,
+// depth first. Only docs pages count, once each; links to a section of a
+// page (`#…`) and to other sites are skipped. Empty for pages the category
+// doesn't list.
+export const getPrevNext = (
+  category: NavNode | undefined,
+  pageUrl: string,
+): { prev?: NavLink; next?: NavLink } => {
+  if (!category) return {};
+
+  const pages: NavLink[] = [];
+  const seen = new Set<string>();
+  for (const { name, url } of [category, ...descendants(category)]) {
+    if (!url || !isDocsUrl(url) || url.includes("#") || seen.has(url)) continue;
+    seen.add(url);
+    pages.push({ name, url });
+  }
+  const index = pages.findIndex((page) => page.url === pageUrl);
+  if (index === -1) return {};
+
+  return { prev: pages[index - 1], next: pages[index + 1] };
+};
 
 // Header tabs and the drawer's section list. A category with no linked pages
 // has nowhere to go, so it gets no entry.

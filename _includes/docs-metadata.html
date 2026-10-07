@@ -1,12 +1,28 @@
-{% assign title = page.title | append: " | Metabase Documentation"%}
-
-{% if page.description %}
-{% assign desc = page.description %}
-{% elsif page.summary %}
-{% assign desc = page.summary %}
+{% comment %}
+Versioned pages name their version, so tabs and search results for different
+versions of a page can be told apart.
+{% endcomment %}
+{% if page.latest != true and page.version %}
+{% assign version_label = page.version | remove_first: "v0." %}
+{% assign title = page.title | append: " | Metabase " | append: version_label | append: " Documentation" %}
 {% else %}
-{% assign desc = page.content | strip_html | truncatewords: 25 | escape_once %}
+{% assign title = page.title | append: " | Metabase Documentation" %}
 {% endif %}
+{% assign title = title | escape_once %}
+
+{% comment %}
+meta_description is plain text from the doc page routes
+(src/lib/docs/docPages.ts): the description or summary, else the body's
+opening words.
+{% endcomment %}
+{% if page.meta_description %}
+{% assign desc = page.meta_description %}
+{% elsif page.description %}
+{% assign desc = page.description | strip_html %}
+{% elsif page.summary %}
+{% assign desc = page.summary | strip_html %}
+{% endif %}
+{% assign desc = desc | escape_once %}
 
 {% assign img = "https://cdn.metabase.com/images/docs/docs-og.png" %}
 

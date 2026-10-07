@@ -1,10 +1,16 @@
 // The Markdown version of each doc page in a supported version, at the page's
-// URL plus `.md` (see `toMarkdownUrl`). The "Copy Markdown" button fetches it,
-// and it's there for anything that would rather read Markdown than HTML.
+// URL plus `.md` (see `toMarkdownUrl`). The "Copy as Markdown" button fetches
+// it, the page's <head> links it (`rel="alternate"`), and it's there for
+// anything that would rather read Markdown than HTML. Front matter up top says
+// what the page is and where its HTML lives (markdownFrontMatter.ts).
+import path from "node:path";
+import { pathToFileURL } from "node:url";
 import { absolutizeMarkdownUrls } from "@/lib/docs/absolutizeMarkdownUrls";
-import type { MarkdownDoc } from "@/lib/docs/docPages";
+import { getDocDescription, type MarkdownDoc } from "@/lib/docs/docPages";
+import { toFrontMatter } from "@/lib/docs/markdownFrontMatter";
 import { renderDocLiquid } from "@/lib/docs/renderDocLiquid";
 import { hasMarkdownVersion, resolveDocUrl } from "@/lib/docs/resolveDoc";
+import { toVersionLabel } from "@/lib/docs/versionSupport";
 import type { APIRoute, GetStaticPaths } from "astro";
 import { getCollection } from "astro:content";
 
@@ -27,14 +33,29 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const GET: APIRoute = async ({ params, props, site }) => {
   const { doc } = props as Props;
-  const { page, body } = await renderDocLiquid({
+  const {
+    doc: resolved,
+    page,
+    body,
+  } = await renderDocLiquid({
     doc,
     version: params.version!,
     output: "markdown",
   });
+  const pageUrl = new URL(page.url, site);
+
+  const frontMatter = toFrontMatter({
+    title: page.title,
+    description: await getDocDescription(
+      page,
+      pathToFileURL(path.resolve(resolved.filePath!)),
+    ),
+    url: pageUrl.href,
+    version: toVersionLabel(page.version),
+  });
 
   return new Response(
-    `${absolutizeMarkdownUrls(body, new URL(page.url, site)).trim()}\n`,
+    `${frontMatter}${absolutizeMarkdownUrls(body, pageUrl).trim()}\n`,
     { headers: { "Content-Type": "text/markdown; charset=utf-8" } },
   );
 };

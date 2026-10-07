@@ -8,7 +8,7 @@
 
 <button
   id="toc-toggle"
-  class="tw:-order-1 tw:flex tw:items-center tw:justify-between tw:border-0 tw:border-b tw:border-border tw:bg-transparent tw:px-0 tw:py-3 tw:font-sans tw:text-sm tw:font-bold tw:text-heading tw:after:transition-[rotate] tw:after:content-['▾'] tw:aria-expanded:after:rotate-180 tw:max-sm:mr-5 tw:lg:hidden"
+  class="tw:-order-1 tw:flex tw:items-center tw:justify-between tw:border-0 tw:border-b tw:border-border tw:bg-transparent tw:px-0 tw:py-3 tw:font-sans tw:text-sm tw:font-bold tw:text-heading tw:after:content-['▾'] tw:motion-safe:after:transition-[rotate] tw:aria-expanded:after:rotate-180 tw:max-sm:mr-5 tw:lg:hidden"
   type="button"
   aria-controls="sub-navigation-content"
   aria-expanded="false"
@@ -24,40 +24,75 @@
   const button = document.getElementById("toc-toggle")!;
   const content = document.getElementById("sub-navigation-content")!;
 
-  button.addEventListener("click", () => {
-    const open = button.getAttribute("aria-expanded") !== "true";
+  const setOpen = (open: boolean) => {
     content.toggleAttribute("data-open", open);
     button.setAttribute("aria-expanded", String(open));
+  };
+
+  button.addEventListener("click", () => {
+    setOpen(button.getAttribute("aria-expanded") !== "true");
   });
 
-  // The first link carries the "On this page" heading as a ::before, so the
-  // heading only exists when there is something to list. Below lg the
-  // toggle button is the heading instead.
+  const headers = Array.from(
+    document.querySelectorAll<HTMLHeadingElement>(".docs-prose h2[id]"),
+  );
+
+  // Nothing to list: no toggle either. From lg up the heading below names
+  // the list; below lg the toggle does.
+  if (headers.length === 0) button.remove();
+  else {
+    const heading = document.createElement("p");
+    heading.className =
+      "tw:mb-6 tw:pl-5 tw:text-sm tw:leading-[1.33] tw:font-bold tw:text-heading tw:max-lg:hidden";
+    heading.textContent = "On this page";
+    content.appendChild(heading);
+  }
+
+  // The 2px rail plus 18px keeps the text where the vendored 20px put it.
+  // The focus ring sits inside: the list scrolls, so it clips overflow.
+  // Only the right corners round; rounded left corners bend the rail.
   const linkClass =
-    "tw:relative tw:mb-4 tw:block tw:pl-5 tw:text-sm tw:leading-[1.33] tw:font-normal tw:text-muted tw:no-underline tw:transition-none tw:first:before:block tw:first:before:pb-6 tw:first:before:font-bold tw:first:before:text-heading tw:first:before:content-['On_this_page'] tw:hover:text-secondary tw:data-active:text-secondary tw:max-lg:first:before:content-none";
+    "tw:mb-4 tw:block tw:rounded-r-sm tw:border-l-2 tw:border-transparent tw:pl-4.5 tw:text-sm tw:leading-[1.33] tw:font-normal tw:text-muted tw:no-underline tw:transition-none tw:hover:text-secondary tw:focus-ring tw:focus-visible:-outline-offset-2 tw:aria-[current=true]:border-brand-strong tw:aria-[current=true]:text-heading";
 
-  const headers = Array.from(document.querySelectorAll("h2"));
-  const links = new Map<HTMLHeadingElement, HTMLAnchorElement>();
-  let activeLink: HTMLAnchorElement | null = null;
-
-  for (const header of headers) {
+  const links = headers.map((header) => {
     const link = document.createElement("a");
     link.href = `#${header.id}`;
     link.innerText = header.innerText;
     link.className = linkClass;
+    // Below lg the list is a dropdown above the article; get it out of the
+    // way. The jump to the heading happens after this, so it lands right.
+    link.addEventListener("click", () => setOpen(false));
     content.appendChild(link);
-    links.set(header, link);
-  }
+    return link;
+  });
 
+  // The section being read: the last heading that has scrolled up to where
+  // anchor links land (scroll-padding-top, src/styles/docs.css), or the first.
+  let activeLink: HTMLAnchorElement | undefined;
   const setSelectedLink = () => {
-    const header = headers.find((h) => h.getBoundingClientRect().top > 0);
-    const link = header && links.get(header);
-    if (!link || activeLink === link) return;
-    activeLink?.removeAttribute("data-active");
+    const line =
+      (parseFloat(
+        getComputedStyle(document.documentElement).scrollPaddingTop,
+      ) || 0) + 8;
+    const index = headers.findLastIndex(
+      (header) => header.getBoundingClientRect().top <= line,
+    );
+    const link = links[Math.max(index, 0)];
+    if (!link || link === activeLink) return;
+    activeLink?.removeAttribute("aria-current");
     activeLink = link;
-    activeLink.setAttribute("data-active", "");
+    activeLink.setAttribute("aria-current", "true");
   };
 
-  document.addEventListener("scroll", setSelectedLink);
+  let frame = 0;
+  const scheduleUpdate = () => {
+    frame ||= requestAnimationFrame(() => {
+      frame = 0;
+      setSelectedLink();
+    });
+  };
+
+  addEventListener("scroll", scheduleUpdate, { passive: true });
+  addEventListener("resize", scheduleUpdate);
   setSelectedLink();
 </script>

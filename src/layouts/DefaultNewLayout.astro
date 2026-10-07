@@ -10,9 +10,11 @@ type Props = {
   page: Record<string, unknown>;
   dirname: string;
   unify?: boolean;
+  /** schema.org JSON for the page's <head> (src/lib/docs/jsonLd.ts). */
+  jsonLd?: string;
 };
 
-const { page, dirname, unify } = Astro.props;
+const { page, dirname, unify, jsonLd } = Astro.props;
 
 const lq = getLiquidRenderer({ page, dirname });
 ---
@@ -21,7 +23,7 @@ const lq = getLiquidRenderer({ page, dirname });
 <html prefix="og: https://ogp.me/ns#" lang="en-US">
   {/* docs_theme: head.html inlines the theme init script and skips the legacy
       stylesheet links, which src/styles/docs.css imports instead. */}
-  <LiquidInclude lq={lq} src="head.html" {unify} docs_theme />
+  <LiquidInclude lq={lq} src="head.html" {unify} docs_theme json_ld={jsonLd} />
 
   <body class="tw:bg-page tw:font-sans tw:text-secondary tw:motion-safe:transition-colors tw:motion-safe:duration-200 tw:nav-open:overflow-hidden">
     <slot name="header" />

@@ -37,20 +37,23 @@ function snippetCopyTrackSnowplowEvent(button) {
 
 // Same icons as src/icons/copy.svg and check.svg (the Copy Markdown button).
 // They are currentColor, so src/styles/docs.css colors them for each theme.
+// Spans, not divs and ps: the button can only hold phrasing content. The
+// vendored `.copy-code-button p` rules this loses live on in docs.css as
+// `.copy-button-label`.
 const COPY_BUTTON_HTML =
-  '<div class="copy-button-copy-wrapper d-flex align-items-center">' +
+  '<span class="copy-button-copy-wrapper d-flex align-items-center">' +
   '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">' +
   '<path d="M6.5 15.25C5.5335 15.25 4.75 14.4665 4.75 13.5V6.75C4.75 5.64543 5.64543 4.75 6.75 4.75H13.5C14.4665 4.75 15.25 5.5335 15.25 6.5"/>' +
   '<path d="M17.25 8.75H10.75C9.64543 8.75 8.75 9.64543 8.75 10.75V17.25C8.75 18.3546 9.64543 19.25 10.75 19.25H17.25C18.3546 19.25 19.25 18.3546 19.25 17.25V10.75C19.25 9.64543 18.3546 8.75 17.25 8.75Z"/>' +
   "</svg>" +
-  '<p class="copy-button-copy">Copy</p>' +
-  "</div>" +
-  '<div class="copy-button-copied-wrapper align-items-center gap-1">' +
+  '<span class="copy-button-copy copy-button-label">Copy</span>' +
+  "</span>" +
+  '<span class="copy-button-copied-wrapper align-items-center gap-1">' +
   '<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">' +
   '<path fill-rule="evenodd" clip-rule="evenodd" d="M19.8897 6L21 7.09741L10.6165 19L4 11.9572L5.07138 10.8168L10.5761 16.6762L19.8897 6Z"/>' +
   "</svg>" +
-  "<p>Copied</p>" +
-  "</div>";
+  '<span class="copy-button-label">Copied</span>' +
+  "</span>";
 
 document.querySelectorAll("code").forEach((codeSnippet) => {
   if (
@@ -66,9 +69,11 @@ document.querySelectorAll("code").forEach((codeSnippet) => {
   parent.replaceChild(wrapper, codeSnippet);
   wrapper.appendChild(codeSnippet);
 
-  const copyButton = document.createElement("div");
+  const copyButton = document.createElement("button");
 
+  copyButton.type = "button";
   copyButton.innerHTML = COPY_BUTTON_HTML;
+  copyButton.setAttribute("aria-label", "Copy code");
 
   copyButton.classList.add("copy-code-button");
 

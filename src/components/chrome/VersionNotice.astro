@@ -1,13 +1,20 @@
 ---
+import { getDocUrls } from "@/lib/docs/docUrls";
+import { findDocInVersion } from "@/lib/docs/resolveDoc";
 import { baseCtx } from "@/lib/liquid/liquidRenderer";
 
+// Above older versions' docs, pointing readers at the current version: the
+// same page there when it still exists, else the docs home.
 type Props = {
   version?: string;
+  pageUrl: string;
 };
 
-const { version } = Astro.props;
+const { version, pageUrl } = Astro.props;
 const { site } = baseCtx;
 const support = version && site.data.version_support[version];
+const latestUrl =
+  support && findDocInVersion(await getDocUrls(), pageUrl, "latest");
 ---
 
 <div>
@@ -23,14 +30,14 @@ const support = version && site.data.version_support[version];
           </a>
         </strong>
         . Check out the{" "}
-        <a class="text-purple text-underline" href="/docs/latest/">
+        <a class="text-purple text-underline" href={latestUrl}>
           docs for the current stable version, Metabase {site.docs_version}.
         </a>
       </blockquote>
     ) : (
       <blockquote>
         These are the docs for Metabase {version}. Check out the{" "}
-        <a class="text-purple text-underline" href="/docs/latest/">
+        <a class="text-purple text-underline" href={latestUrl}>
           docs for the current stable version, Metabase {site.docs_version}.
         </a>
       </blockquote>

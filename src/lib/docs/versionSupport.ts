@@ -35,6 +35,11 @@ const majorOf = (version: string): number | null => {
   return match ? Number(match[1]) : null;
 };
 
+// How a version reads to people and agents: "v0.63" -> "63", the way the
+// docs name Metabase releases. Names without a major ("master") stay as is.
+export const toVersionLabel = (version: string): string =>
+  majorOf(version)?.toString() ?? version;
+
 export const getVersionSupport = (version: string): VersionSupport | null => {
   const major = majorOf(version);
   if (major === null) return null;

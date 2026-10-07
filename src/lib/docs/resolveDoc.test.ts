@@ -1,5 +1,11 @@
 import { describe, expect, test } from "vitest";
-import { hasMarkdownVersion, resolveDocUrl, toMarkdownUrl } from "./resolveDoc";
+import {
+  findDocInVersion,
+  hasMarkdownVersion,
+  resolveDocUrl,
+  toMarkdownUrl,
+  toVersionUrl,
+} from "./resolveDoc";
 
 describe("hasMarkdownVersion", () => {
   test.each([
@@ -69,5 +75,43 @@ describe("resolveDocUrl", () => {
       slug: "api/model-index",
       url: "/docs/v0.52/api/model-index",
     });
+  });
+});
+
+describe("toVersionUrl", () => {
+  test.each([
+    ["/docs/latest/questions/start", "/docs/v0.62/questions/start"],
+    ["/docs/latest/api/", "/docs/v0.62/api/"],
+    ["/docs/latest/", "/docs/v0.62/"],
+  ])("%s", (url, expected) => {
+    expect(toVersionUrl(url, "v0.62")).toBe(expected);
+  });
+
+  test("is undefined outside a version", () => {
+    expect(toVersionUrl("/docs/all", "v0.62")).toBeUndefined();
+  });
+});
+
+describe("findDocInVersion", () => {
+  const urls = new Set([
+    "/docs/v0.62/",
+    "/docs/v0.62/questions/start",
+    "/docs/v0.62/api/",
+  ]);
+
+  test("keeps the page when the version has it", () => {
+    expect(
+      findDocInVersion(urls, "/docs/latest/questions/start", "v0.62"),
+    ).toBe("/docs/v0.62/questions/start");
+    expect(findDocInVersion(urls, "/docs/latest/api/", "v0.62")).toBe(
+      "/docs/v0.62/api/",
+    );
+  });
+
+  test("falls back to the version's home", () => {
+    expect(findDocInVersion(urls, "/docs/latest/ai/mcp", "v0.62")).toBe(
+      "/docs/v0.62/",
+    );
+    expect(findDocInVersion(urls, "/docs/all", "v0.62")).toBe("/docs/v0.62/");
   });
 });
