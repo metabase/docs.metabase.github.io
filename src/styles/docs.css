@@ -181,6 +181,7 @@
   --color-tag: #f1f2f4;
   --color-tag-lts: #f3faec;
   --color-tag-lts-text: #669438;
+  --color-success: #689735; /* Metabase palm-50; 3.3:1 on --color-surface-stripe */
 
   /* Effects */
   --color-backdrop: rgba(16, 24, 40, 0.45); /* behind the mobile nav drawer */
@@ -282,6 +283,7 @@
       --tw-color-tag: #2f3442;
       --tw-color-tag-lts: #23301b;
       --tw-color-tag-lts-text: #9ccf72;
+      --tw-color-success: #75a93d; /* Metabase palm-40 */
       --tw-color-backdrop: rgba(0, 0, 0, 0.6);
       --tw-shadow-card: 0 3px 24px rgba(0, 0, 0, 0.4);
       --tw-shadow-header: 2px 4px 4px 0 rgba(0, 0, 0, 0.35);
@@ -752,6 +754,29 @@
 
     & .table-overflow-indicator::after {
       background: linear-gradient(270deg, var(--tw-color-surface) 0%, transparent 100%);
+    }
+
+    /* Yes/no marks: statusIconHastPlugin.ts swaps the ✅ and ❌ emoji for
+     * Metabase's check and close icons. A block svg puts the span's baseline
+     * at its bottom edge, so the vendored `.bootstrap svg` vertical-align
+     * can't lift it out of line in lists. */
+    & .status-icon {
+      display: inline-block;
+      vertical-align: -0.125em;
+
+      & svg {
+        display: block;
+        height: 1em;
+        width: 1em;
+      }
+    }
+
+    & .status-icon-yes {
+      color: var(--tw-color-success);
+    }
+
+    & .status-icon-no {
+      color: var(--tw-color-muted);
     }
 
     /* Undo the vendored card rules, which stop at 2xl on their own. */

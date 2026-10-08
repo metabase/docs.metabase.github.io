@@ -4,6 +4,7 @@ import { ialHastPlugin } from "./plugins/ialHastPlugin";
 import { referenceTableHastPlugin } from "./plugins/referenceTableHastPlugin";
 import { relativeImagePlugin } from "./plugins/relativeImagePlugin";
 import { responsiveTableLabelsHastPlugin } from "./plugins/responsiveTableLabelsHastPlugin";
+import { statusIconHastPlugin } from "./plugins/statusIconHastPlugin";
 
 const docsMarkdownProcessor = satteri({
   hastPlugins: [
@@ -12,6 +13,7 @@ const docsMarkdownProcessor = satteri({
     responsiveTableLabelsHastPlugin,
     referenceTableHastPlugin,
     relativeImagePlugin,
+    statusIconHastPlugin,
   ],
   features: {
     headingAttributes: true,
