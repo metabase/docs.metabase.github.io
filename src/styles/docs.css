@@ -67,6 +67,12 @@
       margin-bottom: 2rem !important;
     }
   }
+
+  /* None in the expanded-table dialog (new-docs-table-overflow.js), where
+   * the table fills the panel. */
+  .bootstrap .learn__post .table-expand-scroll > table {
+    margin-bottom: 0 !important;
+  }
 }
 
 /* `static`: emit every variable even if nothing here uses it. Tailwind
@@ -184,7 +190,8 @@
   --color-success: #689735; /* Metabase palm-50; 3.3:1 on --color-surface-stripe */
 
   /* Effects */
-  --color-backdrop: rgba(16, 24, 40, 0.45); /* behind the mobile nav drawer */
+  --color-backdrop: rgba(16, 24, 40, 0.45); /* behind the mobile nav drawer and the table dialog */
+  --color-scroll-shadow: rgba(16, 24, 40, 0.08); /* where wide tables scroll under an edge */
   --shadow-card: 0 3px 24px rgba(0, 0, 0, 0.08);
   --shadow-header: 2px 4px 4px 0 rgba(16, 24, 40, 0.05);
   --shadow-sidebar: 4px 2px 4px 0 rgba(16, 24, 40, 0.05);
@@ -285,6 +292,7 @@
       --tw-color-tag-lts-text: #9ccf72;
       --tw-color-success: #75a93d; /* Metabase palm-40 */
       --tw-color-backdrop: rgba(0, 0, 0, 0.6);
+      --tw-color-scroll-shadow: rgba(0, 0, 0, 0.35);
       --tw-shadow-card: 0 3px 24px rgba(0, 0, 0, 0.4);
       --tw-shadow-header: 2px 4px 4px 0 rgba(0, 0, 0, 0.35);
       --tw-shadow-sidebar: 4px 2px 4px 0 rgba(0, 0, 0, 0.35);
@@ -351,6 +359,12 @@
 
   [data-theme="dark"] .image-zoom-close {
     filter: invert(0.8);
+  }
+
+  /* The page holds still behind an expanded table (new-docs-table-overflow.js;
+   * the dialog's rules are with the prose tables). */
+  :root:has(.table-expand-dialog[open]) {
+    overflow: hidden;
   }
 
   /* Prose. Colors, then the type scale: 36 (the vendored h1) / 28 / 22 / 18 /
@@ -726,8 +740,11 @@
 
     /* Tables, in the table-layout and card-layout bands defined above. The
      * .table-reference and .prop-* hooks come from
-     * referenceTableHastPlugin.ts; new-docs-table-overflow.js wraps each
-     * table and adds .table-overflow-indicator when it scrolls. */
+     * referenceTableHastPlugin.ts. new-docs-table-overflow.js wraps each
+     * table in a scroller; when the table is wider, it adds
+     * .table-overflow-indicator to the wrapper and shows the expand toolbar
+     * above it. It keeps data-scroll (none, start, middle, end) on the
+     * wrapper and on the dialog's body. */
     & table {
       background: var(--tw-color-surface);
       border-color: var(--tw-color-border-subtle);
@@ -752,8 +769,193 @@
       }
     }
 
-    & .table-overflow-indicator::after {
-      background: linear-gradient(270deg, var(--tw-color-surface) 0%, transparent 100%);
+    /* Wide tables. The right shadow shows while columns are hidden past the
+     * edge; the first column sticks, and casts a shadow once the others
+     * scroll under it. The cells' own backgrounds keep it opaque. */
+    & :is(.table-overflow-indicator, .table-expand-body)::after {
+      background: linear-gradient(270deg, var(--tw-color-scroll-shadow) 0%, transparent 100%);
+      opacity: 0;
+      pointer-events: none;
+      width: 1.5rem;
+
+      @variant motion-safe {
+        transition: opacity 0.2s;
+      }
+    }
+
+    & :is(.table-overflow-indicator, .table-expand-body):is([data-scroll="start"], [data-scroll="middle"])::after {
+      opacity: 1;
+    }
+
+    /* :where() keeps this low, so the dialog's sticky header row can stack
+     * over it. */
+    & :where(.table-overflow-indicator > .table-overflow, .table-expand-scroll) > table {
+      /* styles.css's `hidden` would make the table the sticky cells'
+       * scroller; `clip` still rounds the corners. */
+      overflow: clip;
+
+      & :is(th, td):first-child {
+        left: 0;
+        position: sticky;
+        z-index: 1;
+
+        @variant motion-safe {
+          transition: box-shadow 0.2s;
+        }
+      }
+    }
+
+    /* The expand button above a wide table. A <button>, so it drops the
+     * browser's border and font, like the copy button. */
+    & .table-toolbar {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 0.5rem;
+    }
+
+    & .table-expand-button {
+      align-items: center;
+      background-color: var(--tw-color-surface-hover);
+      border: 0;
+      border-radius: 0.25rem;
+      color: var(--tw-color-brand-strong);
+      cursor: pointer;
+      display: inline-flex;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 700;
+      gap: 0.375rem;
+      line-height: 20px;
+      padding: 0.25rem 0.625rem;
+
+      &:hover {
+        background-color: var(--tw-color-surface-active);
+      }
+
+      @variant dark {
+        color: var(--tw-color-white);
+      }
+    }
+
+    /* The expanded table: a modal <dialog>, so the top layer puts it over the
+     * docs header, and Escape and focus come built in. It sits inside the
+     * table's wrapper, so the article's table rules still apply. As big as
+     * the table, up to the window; the column flexbox shrinks the scroller
+     * to fit. */
+    & .table-expand-dialog {
+      background: var(--tw-color-page);
+      border: 1px solid var(--tw-color-border);
+      border-radius: 0.5rem;
+      box-shadow: var(--tw-shadow-card);
+      color: var(--tw-color-body);
+      max-height: calc(100dvh - 2rem);
+      max-width: calc(100vw - 2rem);
+      overflow: hidden;
+      padding: 0;
+      width: fit-content;
+
+      &[open] {
+        display: flex;
+        flex-direction: column;
+      }
+
+      &::backdrop {
+        background: var(--tw-color-backdrop);
+      }
+    }
+
+    & .table-expand-header {
+      align-items: center;
+      border-bottom: 1px solid var(--tw-color-border-subtle);
+      display: flex;
+      gap: 1rem;
+      justify-content: space-between;
+      padding: 0.5rem 0.75rem 0.5rem 1.25rem;
+    }
+
+    & .table-expand-title {
+      color: var(--tw-color-heading);
+      font-size: 1.125rem;
+      font-weight: 700;
+      line-height: 1.4;
+    }
+
+    /* The 8px padding gives the 16px icon a bigger target, as on the image
+     * zoom's close button. */
+    & .table-expand-close {
+      background: transparent;
+      border: 0;
+      border-radius: 0.25rem;
+      color: var(--tw-color-secondary);
+      cursor: pointer;
+      line-height: 0;
+      padding: 8px;
+
+      &:hover {
+        background: var(--tw-color-surface-hover);
+      }
+    }
+
+    & .table-expand-body {
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      position: relative;
+
+      &::after {
+        bottom: 0;
+        content: "";
+        position: absolute;
+        right: 0;
+        top: 0;
+        z-index: 4;
+      }
+    }
+
+    /* The table runs flush with the panel, which draws the frame. */
+    & .table-expand-scroll {
+      min-height: 0;
+      overflow: auto;
+      overscroll-behavior: contain;
+
+      & > table {
+        border: 0;
+        border-radius: 0;
+        min-width: 100%;
+
+        /* Room to keep long feature names to a line or two. */
+        & :is(th, td):first-child {
+          min-width: 14rem;
+        }
+
+        /* Over the sticky column; the corner over both. */
+        & thead th {
+          position: sticky;
+          top: 0;
+          z-index: 2;
+        }
+
+        & thead th:first-child {
+          z-index: 3;
+        }
+      }
+    }
+
+    /* The sticky column's shadow, once the others scroll under it. In the
+     * article, the inset line stands in for the table's left border, which
+     * scrolls away. */
+    & .table-overflow-indicator:is([data-scroll="middle"], [data-scroll="end"]) > .table-overflow > table {
+      & :is(th, td):first-child {
+        box-shadow:
+          inset 1px 0 var(--tw-color-border-subtle),
+          0.75rem 0 0.75rem -0.75rem var(--tw-color-scroll-shadow);
+      }
+    }
+
+    & .table-expand-body:is([data-scroll="middle"], [data-scroll="end"]) > .table-expand-scroll > table {
+      & :is(th, td):first-child {
+        box-shadow: 0.75rem 0 0.75rem -0.75rem var(--tw-color-scroll-shadow);
+      }
     }
 
     /* Yes/no marks: statusIconHastPlugin.ts swaps the ✅ and ❌ emoji for
@@ -1037,7 +1239,8 @@
 
   /* The focus-ring utility, for controls that the vendored scripts and the
    * Markdown render. */
-  :is(.image-zoom-close-button, .docs-prose :is(summary, .copy-code-button, .copy-clip)):focus-visible {
+  .image-zoom-close-button:focus-visible,
+  .docs-prose :is(summary, .copy-code-button, .copy-clip, .table-expand-button, .table-expand-close):focus-visible {
     outline: 2px solid var(--tw-color-brand-strong);
     outline-offset: 2px;
   }
@@ -1050,7 +1253,8 @@
     .site-footer,
     .gdpr-cookie-notice,
     .image-zoom-wrapper,
-    .docs-prose .copy-code-button {
+    .docs-prose :is(.copy-code-button, .table-toolbar),
+    .docs-prose .table-overflow-indicator::after {
       display: none;
     }
   }
