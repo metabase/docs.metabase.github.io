@@ -50,6 +50,24 @@
     return record.dialog !== null && record.dialog.open;
   }
 
+  // A named tab stop while the table scrolls, so the arrow keys can scroll a
+  // table with no links in it. Safari doesn't make scrollers focusable.
+  function setScrollRegion(record, scrolls) {
+    const container = record.container;
+    if (scrolls) {
+      container.tabIndex = 0;
+      container.setAttribute("role", "region");
+      container.setAttribute(
+        "aria-label",
+        record.title ? `Table: ${record.title}` : "Table",
+      );
+    } else {
+      container.removeAttribute("tabindex");
+      container.removeAttribute("role");
+      container.removeAttribute("aria-label");
+    }
+  }
+
   function update() {
     tables.forEach(function(record) {
       if (isOpen(record)) {
@@ -67,6 +85,7 @@
       const overflows =
         record.container.scrollWidth > record.container.clientWidth + 1;
       record.wrapper.classList.toggle("table-overflow-indicator", overflows);
+      setScrollRegion(record, overflows);
       if (record.toolbar) {
         record.toolbar.hidden = !overflows;
       }
@@ -120,6 +139,8 @@
 
     body.className = "table-expand-body";
     scroller.className = "table-expand-scroll";
+    // The dialog's title names it, as setScrollRegion() does in the article.
+    scroller.tabIndex = 0;
     body.appendChild(scroller);
 
     dialog.className = "table-expand-dialog";
@@ -171,9 +192,10 @@
     }
 
     // Hold the table's place, so the page behind doesn't move, and drop the
-    // empty place's shadow until it comes back.
+    // empty place's shadow and tab stop until it comes back.
     record.container.style.height = `${record.container.offsetHeight}px`;
     record.wrapper.dataset.scroll = "none";
+    setScrollRegion(record, false);
     record.scroller.appendChild(record.table);
     record.dialog.showModal();
     record.scroller.scrollTo(0, 0);
@@ -183,8 +205,6 @@
   function addExpandButton(record) {
     const toolbar = document.createElement("div");
     const button = document.createElement("button");
-
-    record.title = findTitle(record.wrapper);
 
     button.type = "button";
     button.className = "table-expand-button";
@@ -223,7 +243,7 @@
       table,
       container,
       wrapper,
-      title: "",
+      title: findTitle(wrapper),
       toolbar: null,
       button: null,
       dialog: null,

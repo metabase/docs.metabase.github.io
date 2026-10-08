@@ -910,6 +910,18 @@
         top: 0;
         z-index: 4;
       }
+
+      /* The scroller's focus ring, drawn over the table: the cells cover a
+       * ring on the scroller itself, and the dialog clips one outside it. */
+      &:has(> .table-expand-scroll:focus-visible)::before {
+        content: "";
+        inset: 0;
+        outline: 2px solid var(--tw-color-brand-strong);
+        outline-offset: -2px;
+        pointer-events: none;
+        position: absolute;
+        z-index: 5;
+      }
     }
 
     /* The table runs flush with the panel, which draws the frame. */
@@ -917,6 +929,11 @@
       min-height: 0;
       overflow: auto;
       overscroll-behavior: contain;
+
+      /* .table-expand-body draws the ring. */
+      &:focus-visible {
+        outline: none;
+      }
 
       & > table {
         border: 0;
@@ -1240,7 +1257,8 @@
   /* The focus-ring utility, for controls that the vendored scripts and the
    * Markdown render. */
   .image-zoom-close-button:focus-visible,
-  .docs-prose :is(summary, .copy-code-button, .copy-clip, .table-expand-button, .table-expand-close):focus-visible {
+  .docs-prose :is(summary, .copy-code-button, .copy-clip):focus-visible,
+  .docs-prose :is(.table-overflow, .table-expand-button, .table-expand-close):focus-visible {
     outline: 2px solid var(--tw-color-brand-strong);
     outline-offset: 2px;
   }
