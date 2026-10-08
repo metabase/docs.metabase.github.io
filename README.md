@@ -66,24 +66,6 @@ retired (GRO-828) and then pruned to what the rendered docs pages actually use
 | `gdpr.css`       | Metabase theme for the vendored GDPR cookie notice (`public/docs/gdpr-cookie-notice`).      |
 | `inkeep.css`     | Theme for the Inkeep search/chat widget.                                                    |
 
-The pruning is done by `script/audit-css.ts`:
-
-```sh
-bun run build && bun script/audit-css.ts          # report only, output in tmp/css-audit/
-bun run build && bun script/audit-css.ts --write  # rewrite public/docs/css in place
-```
-
-It keeps a selector when every class, id and tag it references appears in the
-built site (`_site`, so every docs version counts), in a class/id context in
-first-party JavaScript, in an Astro component or Liquid include, or belongs to a
-runtime library that injects its own markup (Inkeep `ikp-*`, highlight.js
-`hljs-*`, the GDPR notice, image zoom, anchor.js, checkpoints). Anything else was
-only used by marketing pages or the retired shared chrome and was removed.
-Pseudo-class, pseudo-element and media-query variants of a kept selector are
-kept with it. Re-run it after adding markup that relies on a rule the audit
-would otherwise drop, or pass `--safelist=class-a,class-b` for classes that are
-composed at runtime.
-
 Sections that remain large on purpose:
 
 - The Bootstrap reboot, grid (`.row`, `.col-*` used by the header) and spacing,
