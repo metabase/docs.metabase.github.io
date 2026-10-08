@@ -83,10 +83,8 @@ const item = [menuItem, "tw:font-normal tw:text-secondary tw:hover:text-brand"];
 <script>
   import "./dropdown";
 
-  // Same key as _includes/docs/theme-init.js, which sets data-theme-preference
-  // and data-theme before first paint, and keeps data-theme in step with the
-  // system theme while the preference is system. Nothing stored means system.
-  const THEME_KEY = "mb-docs-theme";
+  // _includes/docs/theme-init.js sets data-theme-preference before first
+  // paint, and applies and stores a new one (setDocsTheme).
   const root = document.documentElement;
   const options = document.querySelectorAll<HTMLButtonElement>(
     "[data-theme-option]",
@@ -102,17 +100,7 @@ const item = [menuItem, "tw:font-normal tw:text-secondary tw:hover:text-brand"];
 
   options.forEach((option) => {
     option.addEventListener("click", () => {
-      const preference = option.dataset.themeOption!;
-      const systemDark = matchMedia("(prefers-color-scheme: dark)").matches;
-      root.dataset.themePreference = preference;
-      root.dataset.theme =
-        preference === "system" ? (systemDark ? "dark" : "light") : preference;
-      try {
-        if (preference === "system") localStorage.removeItem(THEME_KEY);
-        else localStorage.setItem(THEME_KEY, preference);
-      } catch {
-        /* storage blocked; the choice lasts for this page only */
-      }
+      window.setDocsTheme(option.dataset.themeOption!);
       showPreference();
     });
   });

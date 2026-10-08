@@ -34,7 +34,7 @@ const { class: className } = Astro.props;
   // The view the visitor last picked with the Search/Ask toggle.
   let preferredView = getStoredView();
 
-  let widget: SearchBar | undefined = undefined;
+  let widget: SearchBar | undefined;
   const onOpenChange = (open: boolean) => {
     widget?.update({ modalSettings: { isOpen: open, onOpenChange } });
     // The widget keeps its last view across closes; without this, the search

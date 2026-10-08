@@ -43,37 +43,29 @@ const { href } = Astro.props;
   const idleLabel = label.textContent;
   let resetTimer: ReturnType<typeof setTimeout> | undefined;
 
-  const fetchMarkdown = async (url: string) => {
-    const response = await fetch(url);
-    if (!response.ok) throw new Error(`${response.status} for ${url}`);
-    return response.text();
-  };
-
-  const copyMarkdown = async (url: string) => {
-    const markdown = fetchMarkdown(url);
-    // Safari only allows a clipboard write while the click is being handled,
-    // and awaiting the fetch first would outlive that. A ClipboardItem takes
-    // the pending fetch instead, so the write itself starts inside the click.
-    const blob = markdown.then(
-      (text) => new Blob([text], { type: "text/plain" }),
-    );
-    await navigator.clipboard.write([
-      new ClipboardItem({ "text/plain": blob }),
+  // Safari only allows a clipboard write while the click is being handled,
+  // and awaiting the fetch first would outlive that. A ClipboardItem takes
+  // the pending fetch instead, so the write itself starts inside the click.
+  const copyMarkdown = (url: string) =>
+    navigator.clipboard.write([
+      new ClipboardItem({
+        "text/plain": fetch(url).then(async (response) => {
+          if (!response.ok) throw new Error(`${response.status} for ${url}`);
+          return new Blob([await response.text()], { type: "text/plain" });
+        }),
+      }),
     ]);
-  };
 
   button.addEventListener("click", async () => {
-    let state = "copied";
-    try {
-      await copyMarkdown(button.dataset.copyMarkdown!);
-    } catch {
-      state = "error";
-    }
+    const copied = await copyMarkdown(button.dataset.copyMarkdown!).then(
+      () => true,
+      () => false,
+    );
 
-    button.dataset.state = state;
-    label.textContent = state === "copied" ? "Copied" : "Couldn’t copy";
+    button.dataset.state = copied ? "copied" : "error";
+    label.textContent = copied ? "Copied" : "Couldn’t copy";
 
-    if (state === "copied") {
+    if (copied) {
       // The tracker only exists once marketing cookies are accepted.
       window.snowplow?.(
         "trackStructEvent",

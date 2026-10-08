@@ -25,7 +25,7 @@ export const appendHeadingLinks = (
  * The section being read: the last heading that has scrolled up to where
  * anchor links land (scroll-padding-top, src/styles/docs.css), or the first.
  */
-export const currentHeadingIndex = (headings: HTMLHeadingElement[]): number => {
+const currentHeadingIndex = (headings: HTMLHeadingElement[]): number => {
   const line =
     (parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) ||
       0) + 8;
@@ -35,4 +35,16 @@ export const currentHeadingIndex = (headings: HTMLHeadingElement[]): number => {
     ),
     0,
   );
+};
+
+/** Marks the link to the section being read with aria-current="true". */
+export const markCurrentLink = (
+  links: HTMLAnchorElement[],
+  headings: HTMLHeadingElement[],
+) => {
+  const current = currentHeadingIndex(headings);
+  links.forEach((link, index) => {
+    if (index === current) link.setAttribute("aria-current", "true");
+    else link.removeAttribute("aria-current");
+  });
 };

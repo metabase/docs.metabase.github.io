@@ -30,7 +30,7 @@ export const resolveDocData = (entry: DocEntry, version: string) => ({
 // version: resolves the doc's metadata, then runs Liquid over its body (e.g.
 // control flow, includes, variables, etc).
 export const renderDocLiquid = async ({
-  doc: entry,
+  doc,
   version,
   output,
 }: {
@@ -38,25 +38,22 @@ export const renderDocLiquid = async ({
   version: string;
   output?: LiquidOutput;
 }) => {
-  const { url } = resolveDocUrl({ id: entry.id });
-  const doc = {
-    ...entry,
-    data: resolveDocData(entry, version),
-    body: rewriteDocLinks(entry.body ?? "", {
-      version,
-      latest: version === "latest",
-    }),
-  };
-  const dirname = path.dirname(doc.filePath!);
-  const page = { url, ...doc.data };
+  const { url } = resolveDocUrl({ id: doc.id });
+  const filePath = doc.filePath!;
+  const dirname = path.dirname(filePath);
+  const page = { url, ...resolveDocData(doc, version) };
+  const source = rewriteDocLinks(doc.body ?? "", {
+    version,
+    latest: version === "latest",
+  });
 
   const lq = getLiquidRenderer({ page, dirname, output });
-  const body = await lq.render(doc.body, undefined, {
+  const body = await lq.render(source, undefined, {
     maxSyntaxErrors: version === "latest" ? 0 : 3,
   });
 
   // What the Markdown renderer resolves the doc's relative images against.
-  const fileURL = pathToFileURL(path.resolve(doc.filePath!));
+  const fileURL = pathToFileURL(path.resolve(filePath));
 
   return { page, dirname, body, fileURL };
 };

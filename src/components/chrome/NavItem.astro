@@ -27,6 +27,7 @@ const { node, pageUrl, depth, id } = Astro.props;
 const topic = depth === 0;
 const hasChildren = Boolean(node.pages && node.pages.length > 0);
 const expanded = hasChildren && (topic || containsUrl(node, pageUrl));
+const ariaExpanded = expanded ? "true" : "false";
 const collapsible = hasChildren && !topic;
 const current = pageUrl === node.url;
 const listId = `${id}-pages`;
@@ -66,7 +67,7 @@ const chevron = [
         row,
         "tw:group/toggle tw:w-full tw:cursor-pointer tw:border-0 tw:bg-transparent tw:text-left tw:font-sans",
       ]}
-      aria-expanded={expanded ? "true" : "false"}
+      aria-expanded={ariaExpanded}
       aria-controls={listId}
       data-nav-toggle
     >
@@ -92,7 +93,7 @@ const chevron = [
             "tw:group/toggle tw:cursor-pointer tw:rounded-md tw:border-0 tw:bg-transparent tw:p-0 tw:focus-ring tw:focus-visible:-outline-offset-2",
           ]}
           aria-label={`Pages in ${node.name}`}
-          aria-expanded={expanded ? "true" : "false"}
+          aria-expanded={ariaExpanded}
           aria-controls={listId}
           data-nav-toggle
         >

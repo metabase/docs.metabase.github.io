@@ -1,9 +1,8 @@
 // Click (or Enter/Space on) an article image to see it full screen; click
 // anywhere, the close button or Escape to go back. The overlay is a modal
 // dialog whose only control is the close button, so focus stays there and
-// returns to the image afterwards. src/styles/docs.css styles the focus
-// states and the zoomed copy (outside .docs-prose, so it needs its own
-// dark-theme filter).
+// returns to the image afterwards. src/styles/docs.css styles the close
+// button, the focus states and the zoomed copy.
 const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
 
 const imageZoomWrapper = document.createElement("div");
@@ -32,19 +31,10 @@ imageZoomInnerWrapper.style.display = "flex";
 imageZoomInnerWrapper.style.alignItems = "center";
 imageZoomInnerWrapper.style.justifyContent = "center";
 
-// The 8px padding keeps the icon where it was (16px from the top, 32px from
-// the right) while giving the button a bigger target.
+// Positioned and styled by src/styles/docs.css.
 closeImageButton.type = "button";
 closeImageButton.classList.add("image-zoom-close-button");
 closeImageButton.setAttribute("aria-label", "Close");
-closeImageButton.style.position = "absolute";
-closeImageButton.style.top = "8px";
-closeImageButton.style.right = "24px";
-closeImageButton.style.padding = "8px";
-closeImageButton.style.border = "0";
-closeImageButton.style.background = "transparent";
-closeImageButton.style.lineHeight = "0";
-closeImageButton.style.cursor = "pointer";
 
 closeImageIcon.classList.add("image-zoom-close");
 closeImageIcon.src = "/images/close-grey.svg";

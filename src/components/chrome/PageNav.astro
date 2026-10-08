@@ -12,7 +12,7 @@
 <script>
   import {
     appendHeadingLinks,
-    currentHeadingIndex,
+    markCurrentLink,
     pageHeadings,
   } from "@/lib/page-toc";
 
@@ -28,33 +28,24 @@
     content.appendChild(heading);
   }
 
-  // The 2px rail plus 18px keeps the text where the vendored 20px put it.
-  // The focus ring sits inside: the list scrolls, so it clips overflow.
-  // Only the right corners round; rounded left corners bend the rail.
+  // The 2px rail plus 18px puts the text 20px in. The focus ring sits
+  // inside: the list scrolls, so it clips overflow. Only the right corners
+  // round; rounded left corners bend the rail.
   const links = appendHeadingLinks(
     content,
     headers,
     "tw:mb-4 tw:block tw:rounded-r-sm tw:border-l-2 tw:border-transparent tw:pl-4.5 tw:text-sm tw:leading-[1.33] tw:font-normal tw:text-muted tw:no-underline tw:transition-none tw:hover:text-secondary tw:focus-ring tw:focus-visible:-outline-offset-2 tw:aria-[current=true]:border-brand-strong tw:aria-[current=true]:text-heading",
   );
 
-  let activeLink: HTMLAnchorElement | undefined;
-  const setSelectedLink = () => {
-    const link = links[currentHeadingIndex(headers)];
-    if (!link || link === activeLink) return;
-    activeLink?.removeAttribute("aria-current");
-    activeLink = link;
-    activeLink.setAttribute("aria-current", "true");
-  };
-
   let frame = 0;
   const scheduleUpdate = () => {
     frame ||= requestAnimationFrame(() => {
       frame = 0;
-      setSelectedLink();
+      markCurrentLink(links, headers);
     });
   };
 
   addEventListener("scroll", scheduleUpdate, { passive: true });
   addEventListener("resize", scheduleUpdate);
-  setSelectedLink();
+  markCurrentLink(links, headers);
 </script>

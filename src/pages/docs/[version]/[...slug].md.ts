@@ -25,7 +25,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
     });
     // `_docs/index.md` is only a redirect to /docs/latest/.
     if (!slug || !hasMarkdownVersion(version)) return [];
-    return { params: { version, slug }, props: { doc } };
+    return [{ params: { version, slug }, props: { doc } }];
   });
 };
 

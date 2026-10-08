@@ -5,12 +5,13 @@
 // data-theme holds the theme in use; on system it follows the system theme,
 // live. Rendered through Liquid, so keep it free of Liquid tag syntax.
 (() => {
+  const KEY = "mb-docs-theme";
   const root = document.documentElement;
   const systemDark = matchMedia("(prefers-color-scheme: dark)");
 
   const stored = () => {
     try {
-      const theme = localStorage.getItem("mb-docs-theme");
+      const theme = localStorage.getItem(KEY);
       return theme === "light" || theme === "dark" ? theme : null;
     } catch {
       return null; /* storage blocked (private mode, disabled cookies) */
@@ -24,6 +25,18 @@
         : systemDark.matches
           ? "dark"
           : "light";
+  };
+
+  // For the theme options in DocsMoreMenu.astro.
+  window.setDocsTheme = (preference) => {
+    root.dataset.themePreference = preference;
+    apply();
+    try {
+      if (preference === "system") localStorage.removeItem(KEY);
+      else localStorage.setItem(KEY, preference);
+    } catch {
+      /* storage blocked; the choice lasts for this page only */
+    }
   };
 
   root.dataset.themePreference = stored() ?? "system";

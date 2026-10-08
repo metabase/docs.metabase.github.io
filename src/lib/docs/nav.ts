@@ -16,8 +16,11 @@ export const containsUrl = (n: NavNode, targetUrl: string): boolean =>
   n.url === targetUrl ||
   (n.pages?.some((child) => containsUrl(child, targetUrl)) ?? false);
 
-const descendants = (node: NavNode): NavNode[] =>
-  node.pages?.flatMap((child) => [child, ...descendants(child)]) ?? [];
+// The node and everything under it, depth first.
+const walk = (node: NavNode): NavNode[] => [
+  node,
+  ...(node.pages?.flatMap(walk) ?? []),
+];
 
 const isDocsUrl = (url: string) => url.startsWith("/docs/");
 
@@ -26,7 +29,7 @@ const isDocsUrl = (url: string) => url.startsWith("/docs/");
 // chrome-less pages like the API reference.
 export const getLandingUrl = (node: NavNode): string | undefined => {
   if (node.url) return node.url;
-  const linked = descendants(node).filter(
+  const linked = walk(node).filter(
     (n): n is NavNode & { url: string } => !!n.url,
   );
   return (
@@ -48,6 +51,10 @@ export const getCategoryByDirectory = (
   const version = parseDocUrl(pageUrl)?.version;
   if (!version) return undefined;
   const root = `/docs/${version}/`;
+  const listed = nav.categories.map((category) => ({
+    category,
+    urls: walk(category).flatMap(({ url }) => (url ? [url.split("#")[0]] : [])),
+  }));
 
   for (
     let dir = pageUrl.slice(0, pageUrl.lastIndexOf("/") + 1);
@@ -56,10 +63,8 @@ export const getCategoryByDirectory = (
   ) {
     let best: NavNode | undefined;
     let bestCount = 0;
-    for (const category of nav.categories) {
-      const count = [category, ...descendants(category)].filter((node) =>
-        node.url?.split("#")[0].startsWith(dir),
-      ).length;
+    for (const { category, urls } of listed) {
+      const count = urls.filter((url) => url.startsWith(dir)).length;
       if (count > bestCount) {
         best = category;
         bestCount = count;
@@ -94,7 +99,7 @@ export const getPrevNext = (
 
   const pages: NavLink[] = [];
   const seen = new Set<string>();
-  for (const { name, url } of [category, ...descendants(category)]) {
+  for (const { name, url } of walk(category)) {
     if (!url || !isDocsUrl(url) || url.includes("#") || seen.has(url)) continue;
     seen.add(url);
     pages.push({ name, url });

@@ -99,10 +99,8 @@ const split =
 
   <div class="bootstrap">
     {/* Below lg the vendored grid collapses and paints the page to the
-        right of its centered box with a 1000px shadow. With the sidebar
-        visible, pin the nav to the viewport edge and center the article in
-        the remaining space; the sidebar is wider than Learn's 226px because
-        docs nav labels are longer. */}
+        right of its centered box with a 1000px shadow. From lg up, pin the
+        nav to the viewport edge and center the article in the rest. */}
     <div class="learn docs blog-post MB-Page tw:print:grid-cols-1 tw:max-lg:grid-cols-1 tw:max-lg:border-b-surface-hover tw:max-lg:shadow-[1000px_0_0_var(--tw-color-page)] tw:lg:max-w-none tw:lg:grid-cols-[var(--tw-spacing-sidebar)_1fr] tw:lg:bg-page tw:lg:shadow-none">
       <LeftSidebar
         url={page.url}
@@ -131,16 +129,12 @@ const split =
           { "tw:lg:pt-0": isDocsHome },
         ]}
       >
-        {/* The breadcrumb bar from lg up, pinned to the text column so its
-            divider ends where the text does. The content padding-right drops
-            to --spacing-gutter-narrow below 1200px. The vendored rules for it
-            went with master's styles.css; position-feedback-widget.js still
-            measures `.top-bar`. Below lg the trail is inline. */}
+        {/* The breadcrumb bar from lg up, as wide as the text column, so its
+            divider ends where the text does. position-feedback-widget.js
+            measures `.top-bar`. */}
         {!isDocsHome && (
           <div class="top-bar tw:absolute tw:top-0 tw:left-gutter tw:z-3 tw:flex tw:h-[57px] tw:w-[calc(100%-2*var(--tw-spacing-gutter)-var(--tw-spacing-toc))] tw:items-center tw:border-b tw:border-border tw:py-2 tw:max-xl:w-[calc(100%-var(--tw-spacing-gutter)-var(--tw-spacing-gutter-narrow)-var(--tw-spacing-toc))] tw:max-lg:hidden tw:print:hidden">
-            <div class="tw:min-w-0 tw:flex-1">
-              <Breadcrumb crumbs={breadcrumbs} variant="top-bar" />
-            </div>
+            <Breadcrumb crumbs={breadcrumbs} variant="top-bar" />
           </div>
         )}
 

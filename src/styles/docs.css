@@ -334,10 +334,17 @@
     filter: var(--docs-image-filter);
   }
 
-  .image-zoom-close-button:focus-visible {
+  /* The 8px padding gives the 16px icon a bigger target. */
+  .image-zoom-close-button {
+    background: transparent;
+    border: 0;
     border-radius: 0.25rem;
-    outline: 2px solid var(--tw-color-brand-strong);
-    outline-offset: 2px;
+    cursor: pointer;
+    line-height: 0;
+    padding: 8px;
+    position: absolute;
+    right: 24px;
+    top: 8px;
   }
 
   [data-theme="dark"] .image-zoom-close {
@@ -529,11 +536,6 @@
       border-radius: 0.25rem;
       color: var(--tw-color-heading);
       font-weight: 700;
-
-      &:focus-visible {
-        outline: 2px solid var(--tw-color-brand-strong);
-        outline-offset: 2px;
-      }
     }
 
     & details[open] > summary {
@@ -589,11 +591,6 @@
         background-color: var(--tw-color-surface-active);
       }
 
-      &:focus-visible {
-        outline: 2px solid var(--tw-color-brand-strong);
-        outline-offset: 2px;
-      }
-
       /* The icons are currentColor; the label matches them. */
       & :is(svg, .copy-button-label) {
         color: var(--tw-color-brand);
@@ -629,8 +626,6 @@
      * keyboard focus, as on hover. */
     & .copy-clip:focus-visible {
       border-radius: 0.25rem;
-      outline: 2px solid var(--tw-color-brand-strong);
-      outline-offset: 2px;
 
       & .share-button {
         opacity: 1;
@@ -1013,6 +1008,13 @@
     & .site-footer-bottom {
       border-top-color: var(--tw-color-border-subtle);
     }
+  }
+
+  /* The focus-ring utility, for controls that the vendored scripts and the
+   * Markdown render. */
+  :is(.image-zoom-close-button, .docs-prose :is(summary, .copy-code-button, .copy-clip)):focus-visible {
+    outline: 2px solid var(--tw-color-brand-strong);
+    outline-offset: 2px;
   }
 
   /* Paper gets the article only. The chrome hides with `print:hidden` in

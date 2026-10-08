@@ -37,10 +37,11 @@ const nonEmpty = (value: unknown): string | undefined =>
 
 // A front matter string (summary, description) as inline HTML: summaries can
 // hold inline code.
-export const renderInlineMarkdown = async (text: string, fileURL: URL) =>
-  (await (await getMarkdownRenderer()).render(text, { fileURL })).code
-    .trim()
-    .replace(/^<p>([\s\S]*)<\/p>$/, "$1");
+const renderInlineMarkdown = async (text: string, fileURL: URL) => {
+  const md = await getMarkdownRenderer();
+  const { code } = await md.render(text, { fileURL });
+  return code.trim().replace(/^<p>([\s\S]*)<\/p>$/, "$1");
+};
 
 // What a doc says it's about, as plain text, for meta descriptions and the
 // `.md` front matter: its description, else its summary (docs-metadata.html's

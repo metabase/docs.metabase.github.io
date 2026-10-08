@@ -4,15 +4,9 @@ import NavItem from "@/components/chrome/NavItem.astro";
 import type { NavNode, Section } from "@/lib/docs/nav";
 import { navLink } from "./docs-ui";
 
-// One category's pages; the header tabs switch categories. The section list
-// stands in for the tabs in the mobile drawer.
-//
-// Below lg the sidebar is a drawer, open while <html> has data-docs-nav="open"
-// (the script below; the `nav-open:` variant). visibility keeps the closed
-// drawer's links out of the tab order and transitions with the slide, so the
-// drawer stays visible until the slide-out ends. motion-safe, because a
-// `motion-reduce:` reset would lose to `max-lg:`. It sits under the section
-// bar (z 1000), so the bar's toggle can close it.
+// One category's pages; the header tabs switch categories. Below lg the
+// sidebar is a drawer, open while <html> has data-docs-nav="open" (the
+// `nav-open:` variant), and the section list stands in for the tabs.
 type Props = {
   url: string;
   version: string;
@@ -28,7 +22,9 @@ const list = "tw:list-none tw:p-0";
 ---
 
 {/* Desktop padding: 8px link padding + 12px aligns nav text with the header
-    wordmark at 20px. */}
+    wordmark at 20px. Drawer: visibility keeps the closed drawer's links out
+    of the tab order and transitions with the slide. motion-safe, because a
+    `motion-reduce:` reset would lose to `max-lg:`. */}
 <div
   class="tw:sticky tw:top-header tw:h-[calc(100vh-var(--tw-spacing-header))] tw:overflow-y-auto tw:border-r tw:border-border-subtle tw:bg-surface tw:pt-7.5 tw:pr-2.5 tw:pb-6 tw:pl-3 tw:shadow-sidebar tw:max-lg:invisible tw:max-lg:fixed tw:max-lg:top-[calc(var(--tw-spacing-header-offset)+var(--tw-spacing-section-bar))] tw:max-lg:bottom-0 tw:max-lg:left-0 tw:max-lg:z-999 tw:max-lg:h-auto tw:max-lg:w-[min(320px,85vw)] tw:max-lg:-translate-x-full tw:max-lg:px-3 tw:max-lg:pt-4 tw:max-lg:pb-8 tw:max-lg:shadow-card tw:max-lg:motion-safe:transition-[translate,visibility] tw:max-lg:motion-safe:duration-250 tw:max-lg:nav-open:visible tw:max-lg:nav-open:translate-x-0 tw:print:hidden"
   id="main-navigation-content"

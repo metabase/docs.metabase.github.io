@@ -1,4 +1,5 @@
 import { getCategoryUrl, type Nav } from "@/lib/docs/nav";
+import { parseDocUrl } from "@/lib/docs/resolveDoc";
 
 // The trail above a doc page in the breadcrumb bar (Breadcrumb.astro) and
 // its structured data (jsonLd.ts): the version's docs home, then the page's
@@ -23,9 +24,9 @@ const fallbackCategoryPath = (dir: string) => {
 // `nav` is the page's version's (getNavForVersion): the category links to
 // its nav section, which may not be its directory's start page.
 export const getDocBreadcrumbs = (page: BreadcrumbPage, nav: Nav): Crumb[] => {
-  // The URL's version segment ("latest" on latest pages, so the trail stays
-  // on /docs/latest/), then the page's top-level directory.
-  const [, , version, dir = ""] = page.url.split("/");
+  // The URL's version ("latest" on latest pages, so the trail stays on
+  // /docs/latest/) and the path after it. Doc pages always have both.
+  const { version, path } = parseDocUrl(page.url)!;
   const root = `/docs/${version}/`;
   const home = { name: "Home", url: root };
 
@@ -35,7 +36,8 @@ export const getDocBreadcrumbs = (page: BreadcrumbPage, nav: Nav): Crumb[] => {
     {
       name: page.category,
       url:
-        getCategoryUrl(nav, page.category) ?? root + fallbackCategoryPath(dir),
+        getCategoryUrl(nav, page.category) ??
+        root + fallbackCategoryPath(path.split("/")[0]),
     },
   ];
 };

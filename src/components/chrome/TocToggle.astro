@@ -48,7 +48,7 @@ import { menuPanel, quietControl } from "./docs-ui";
   import "./dropdown";
   import {
     appendHeadingLinks,
-    currentHeadingIndex,
+    markCurrentLink,
     pageHeadings,
   } from "@/lib/page-toc";
   import { menuItem } from "./docs-ui";
@@ -77,11 +77,7 @@ import { menuPanel, quietControl } from "./docs-ui";
 
     // Marks the section being read each time the menu opens.
     trigger.addEventListener("click", () => {
-      const current = links[currentHeadingIndex(headings)];
-      for (const link of links) {
-        if (link === current) link.setAttribute("aria-current", "true");
-        else link.removeAttribute("aria-current");
-      }
+      markCurrentLink(links, headings);
       markOverflow();
     });
     menu.addEventListener("scroll", markOverflow, { passive: true });
