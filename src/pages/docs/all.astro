@@ -3,6 +3,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import VersionTag from "@/components/chrome/VersionTag.astro";
 import NewDocsLayout from "@/layouts/NewDocsLayout.astro";
+import { toShortVersion } from "@/lib/docs/versionSupport";
 import { baseCtx } from "@/lib/liquid/liquidRenderer";
 
 const { site } = baseCtx;
@@ -50,7 +51,7 @@ const dirname = path.dirname(fileURLToPath(import.meta.url));
       <li>
         <p>
           <a href={`/docs/${version}/`}>
-            {version} <VersionTag version={version} />
+            {toShortVersion(version)} <VersionTag version={version} />
           </a>
         </p>
       </li>
