@@ -2,6 +2,7 @@ import { describe, expect, test } from "vitest";
 import {
   findDocInVersion,
   hasMarkdownVersion,
+  parseDocUrl,
   resolveDocUrl,
   toMarkdownUrl,
   toVersionUrl,
@@ -75,6 +76,21 @@ describe("resolveDocUrl", () => {
       slug: "api/model-index",
       url: "/docs/v0.52/api/model-index",
     });
+  });
+});
+
+describe("parseDocUrl", () => {
+  test.each([
+    ["/docs/latest/questions/start", "latest", "questions/start"],
+    ["/docs/v0.62/api/", "v0.62", "api/"],
+    ["/docs/latest/", "latest", ""],
+  ])("%s", (url, version, path) => {
+    expect(parseDocUrl(url)).toEqual({ version, path });
+  });
+
+  test("is undefined outside a version", () => {
+    expect(parseDocUrl("/docs/all")).toBeUndefined();
+    expect(parseDocUrl("/docs/latest")).toBeUndefined();
   });
 });
 

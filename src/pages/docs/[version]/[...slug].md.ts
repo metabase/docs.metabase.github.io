@@ -3,8 +3,6 @@
 // it, the page's <head> links it (`rel="alternate"`), and it's there for
 // anything that would rather read Markdown than HTML. Front matter up top says
 // what the page is and where its HTML lives (markdownFrontMatter.ts).
-import path from "node:path";
-import { pathToFileURL } from "node:url";
 import { absolutizeMarkdownUrls } from "@/lib/docs/absolutizeMarkdownUrls";
 import { getDocDescription, type MarkdownDoc } from "@/lib/docs/docPages";
 import { toFrontMatter } from "@/lib/docs/markdownFrontMatter";
@@ -33,11 +31,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const GET: APIRoute = async ({ params, props, site }) => {
   const { doc } = props as Props;
-  const {
-    doc: resolved,
-    page,
-    body,
-  } = await renderDocLiquid({
+  const { page, body, fileURL } = await renderDocLiquid({
     doc,
     version: params.version!,
     output: "markdown",
@@ -46,10 +40,7 @@ export const GET: APIRoute = async ({ params, props, site }) => {
 
   const frontMatter = toFrontMatter({
     title: page.title,
-    description: await getDocDescription(
-      page,
-      pathToFileURL(path.resolve(resolved.filePath!)),
-    ),
+    description: await getDocDescription(page, fileURL),
     url: pageUrl.href,
     version: toVersionLabel(page.version),
   });

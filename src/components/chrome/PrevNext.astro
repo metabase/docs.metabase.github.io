@@ -1,24 +1,16 @@
 ---
-import {
-  getActiveCategory,
-  getNavForVersion,
-  getPrevNext,
-} from "@/lib/docs/nav";
+import { getPrevNext, type NavNode } from "@/lib/docs/nav";
 
 // Previous and next links at the end of a doc, in the order its category's
-// nav lists pages (getPrevNext in src/lib/docs/nav.ts). Pages the nav doesn't
-// list get none. In NewDocsLayout, above the "other versions" line.
+// nav lists pages (getPrevNext). Pages the nav doesn't list get none.
 type Props = {
-  version: string;
+  category?: NavNode;
   pageUrl: string;
 };
 
-const { version, pageUrl } = Astro.props;
+const { category, pageUrl } = Astro.props;
 
-const { prev, next } = getPrevNext(
-  getActiveCategory(getNavForVersion(version), pageUrl),
-  pageUrl,
-);
+const { prev, next } = getPrevNext(category, pageUrl);
 
 const card =
   "tw:flex tw:flex-col tw:gap-1 tw:rounded-lg tw:border tw:border-border tw:bg-surface tw:px-4 tw:py-3 tw:no-underline tw:transition-colors tw:hover:border-brand tw:focus-ring";

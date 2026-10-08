@@ -18,9 +18,8 @@ export const iconButton =
   "tw:flex tw:size-10 tw:shrink-0 tw:cursor-pointer tw:items-center tw:justify-center tw:rounded-lg tw:border tw:border-border tw:bg-surface tw:p-0 tw:text-secondary tw:transition-colors tw:hover:bg-surface-hover tw:hover:text-brand tw:focus-ring tw:aria-expanded:bg-surface-active tw:aria-expanded:text-brand";
 
 /**
- * A dropdown's menu (DocsVersionSelector.astro, DocsMoreMenu.astro). It
- * follows its trigger, which carries `peer` and the aria-expanded state
- * (dropdown.ts). Callers add the side: `tw:left-0` or `tw:right-0`.
+ * A dropdown's menu. It follows its trigger, which carries `peer` and the
+ * aria-expanded state (dropdown.ts). Callers add its horizontal position.
  *
  * visibility keeps the closed menu's links out of the tab order. It
  * transitions with the fade: a transitioning visibility counts as visible

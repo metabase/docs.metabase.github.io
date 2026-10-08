@@ -9,8 +9,6 @@
 // graph, not by what a page renders: one route importing both layouts would
 // ship the Tailwind bundle (with its copy of the vendored CSS) to legacy pages
 // and Header.astro's unlayered styles to themed ones.
-import path from "node:path";
-import { pathToFileURL } from "node:url";
 import { htmlToText, toExcerpt } from "@/lib/docs/plainText";
 import { renderDocLiquid, resolveDocData } from "@/lib/docs/renderDocLiquid";
 import { resolveDocUrl } from "@/lib/docs/resolveDoc";
@@ -19,6 +17,7 @@ import { getMarkdownRenderer } from "@/lib/markdown/markdownRenderer";
 import type { DataEntryMap } from "astro:content";
 
 export type MarkdownDoc = DataEntryMap["docs"][number];
+export type HtmlDoc = DataEntryMap["docsHtml"][number];
 
 // A doc's route params. For prod builds, we want to output like
 // folder/index.html, but for the dev server, the route should exclude /index.
@@ -56,14 +55,11 @@ export const getDocDescription = async (
 
 // Liquid, then Markdown to HTML.
 export const renderMarkdownDoc = async (doc: MarkdownDoc, version: string) => {
-  const {
-    doc: resolved,
-    page,
-    dirname,
-    body,
-  } = await renderDocLiquid({ doc, version });
+  const { page, dirname, body, fileURL } = await renderDocLiquid({
+    doc,
+    version,
+  });
   const md = await getMarkdownRenderer();
-  const fileURL = pathToFileURL(path.resolve(resolved.filePath!));
   const { code: html } = await md.render(body, { fileURL });
 
   // The subheading under the title (NewDocsLayout.astro).
@@ -77,4 +73,20 @@ export const renderMarkdownDoc = async (doc: MarkdownDoc, version: string) => {
     toExcerpt(splitAtTitle(html)[1]);
 
   return { page: { ...page, meta_description }, dirname, html, summary };
+};
+
+// `.html` docs (TypeDoc SDK API reference pages, api.html ToC pages) are
+// already complete standalone HTML documents — only Liquid needs to run on
+// them (e.g. the embedded-analytics-sdk-metadata include), no markdown
+// conversion, and no NewDocsLayout chrome (mirrors the old Jekyll
+// `docs-api` layout, which was a bare passthrough).
+export const renderHtmlDoc = async (doc: HtmlDoc, version: string) => {
+  const { body } = await renderDocLiquid({ doc, version });
+  // TypeDoc's standalone HTML is generated upstream with root-relative asset
+  // paths. In production, those paths resolve against the marketing site, so
+  // keep the generated sources untouched and scope their local assets here.
+  return body
+    .replaceAll('"/gdpr-cookie-notice/', '"/docs/gdpr-cookie-notice/')
+    .replaceAll('"/js/', '"/docs/js/')
+    .replaceAll('"/css/', '"/docs/css/');
 };

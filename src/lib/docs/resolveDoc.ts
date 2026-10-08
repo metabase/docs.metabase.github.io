@@ -42,15 +42,24 @@ export const hasMarkdownVersion = (version: string): boolean =>
 export const toMarkdownUrl = (url: string): string =>
   url.endsWith("/") ? `${url}index.md` : `${url}.md`;
 
+// A docs URL's version and the path after it: "/docs/latest/questions/start"
+// -> { version: "latest", path: "questions/start" }, and path "" for a
+// version's home. Undefined for URLs outside a version (/docs/all, /docs/404).
+export const parseDocUrl = (
+  url: string,
+): { version: string; path: string } | undefined => {
+  const match = /^\/docs\/([^/]+)\/(.*)$/.exec(url);
+  return match ? { version: match[1], path: match[2] } : undefined;
+};
+
 // The same page in another version: "/docs/latest/questions/start" ->
-// "/docs/v0.62/questions/start". Undefined for URLs outside a version
-// (/docs/all, /docs/404).
+// "/docs/v0.62/questions/start".
 export const toVersionUrl = (
   url: string,
   version: string,
 ): string | undefined => {
-  const match = /^\/docs\/[^/]+\/(.*)$/.exec(url);
-  return match ? `/docs/${version}/${match[1]}` : undefined;
+  const parsed = parseDocUrl(url);
+  return parsed && `/docs/${version}/${parsed.path}`;
 };
 
 // Where a link to another version should go from `url`: the same page when

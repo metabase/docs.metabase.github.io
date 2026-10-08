@@ -1,36 +1,26 @@
 ---
 import DocsVersionSelector from "@/components/chrome/DocsVersionSelector.astro";
 import NavItem from "@/components/chrome/NavItem.astro";
-import {
-  getActiveCategory,
-  getNavForVersion,
-  getSections,
-} from "@/lib/docs/nav";
+import type { NavNode, Section } from "@/lib/docs/nav";
 import { navLink } from "./docs-ui";
 
-// Only the active category's pages; the header tabs switch categories. The
-// docs home and /docs/all show the first category's pages. The section list
-// is for the mobile drawer, where the header tabs are hidden. The version
-// selector heads both.
+// One category's pages; the header tabs switch categories. The section list
+// stands in for the tabs in the mobile drawer.
 //
-// Below lg the sidebar is a drawer, shown while <html> has
-// data-docs-nav="open" (set by the script below, the `nav-open:` variant).
-// visibility keeps the closed drawer's links out of the tab order; it
-// transitions with the slide, which keeps the drawer visible until the
-// slide-out ends. The transition is motion-safe only: a `motion-reduce:`
-// reset would lose to `max-lg:`, which Tailwind emits later. It hangs under
-// the section bar (SectionBar.astro, z 1000), whose toggle opens it and
-// stays above it so its X can close it, and sits above the article.
+// Below lg the sidebar is a drawer, open while <html> has data-docs-nav="open"
+// (the script below; the `nav-open:` variant). visibility keeps the closed
+// drawer's links out of the tab order and transitions with the slide, so the
+// drawer stays visible until the slide-out ends. motion-safe, because a
+// `motion-reduce:` reset would lose to `max-lg:`. It sits under the section
+// bar (z 1000), so the bar's toggle can close it.
 type Props = {
   url: string;
   version: string;
+  category?: NavNode;
+  sections: Section[];
 };
 
-const { url: pageUrl, version } = Astro.props;
-
-const nav = getNavForVersion(version);
-const category = getActiveCategory(nav, pageUrl) ?? nav.categories[0];
-const sections = getSections(nav, pageUrl);
+const { url: pageUrl, version, category, sections } = Astro.props;
 
 // The lists keep the vendored margins (16px top-level, 9px above a group's
 // pages); the layout was tuned with them.
@@ -86,6 +76,8 @@ const list = "tw:list-none tw:p-0";
 </div>
 
 <script>
+  import { belowLg } from "./breakpoints";
+
   const root = document.documentElement;
   const drawer = document.getElementById("main-navigation-content")!;
 
@@ -145,13 +137,9 @@ const list = "tw:list-none tw:p-0";
   });
 
   // The drawer only exists below lg; drop the open state (and its body
-  // scroll lock) when the viewport grows past it. docs.css emits the
-  // breakpoint on :root (`@theme static`).
-  const lg = getComputedStyle(root)
-    .getPropertyValue("--tw-breakpoint-lg")
-    .trim();
-  matchMedia(`(width >= ${lg})`).addEventListener("change", (event) => {
-    if (event.matches && isOpen()) setOpen(false);
+  // scroll lock) when the viewport grows past it.
+  belowLg.addEventListener("change", (event) => {
+    if (!event.matches && isOpen()) setOpen(false);
   });
 
   // A back/forward cache restore keeps the DOM as it was; start closed.

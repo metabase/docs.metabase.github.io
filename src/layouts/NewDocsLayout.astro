@@ -12,7 +12,12 @@ import { UNIFY_ENABLED_PAGES } from "@/constants";
 import { getDocBreadcrumbs, type Crumb } from "@/lib/docs/breadcrumbs";
 import { getDocUrls } from "@/lib/docs/docUrls";
 import { buildDocJsonLd } from "@/lib/docs/jsonLd";
-import { getNavForVersion } from "@/lib/docs/nav";
+import {
+  getActiveCategory,
+  getNavForVersion,
+  getSections,
+} from "@/lib/docs/nav";
+import { parseDocUrl } from "@/lib/docs/resolveDoc";
 import { splitAtTitle } from "@/lib/docs/splitAtTitle";
 import { getLiquidRenderer } from "@/lib/liquid/liquidRenderer";
 import DefaultNewLayout from "./DefaultNewLayout.astro";
@@ -40,9 +45,12 @@ type Props = {
 
 const { page, dirname, markdownUrl, summary } = Astro.props;
 
-const parts = Astro.url.pathname.split("/");
-const isHomePage = parts[3] === "index" || !parts[3];
-const showBreadcrumb = !isHomePage || parts[2] === "all";
+// The path after the version: "" on the docs home, undefined outside a
+// version (/docs/all). Only doc pages get structured data, the AI tools row,
+// prev/next and the feedback widget; the docs home also has no breadcrumbs.
+const docPath = parseDocUrl(page.url)?.path;
+const isDocsHome = docPath === "";
+const isDocPage = !!docPath;
 
 const lq = getLiquidRenderer({ page, dirname });
 
@@ -50,10 +58,16 @@ const unify = UNIFY_ENABLED_PAGES.includes(page.url);
 
 const version = page.latest ? "latest" : (page.version ?? "latest");
 
+// The page's category drives the header tabs, the sidebar and prev/next. The
+// docs home and /docs/all have none; their sidebar shows the first category.
+const nav = getNavForVersion(version);
+const category = getActiveCategory(nav, page.url);
+const sections = getSections(nav, category);
+
 // The breadcrumb trail (Breadcrumb.astro) and its structured data. Pages
 // outside the docs tree (/docs/all) get just their title.
 const breadcrumbs: Crumb[] = page.has_magic_breadcrumbs
-  ? getDocBreadcrumbs(page, getNavForVersion(version))
+  ? getDocBreadcrumbs(page, nav)
   : [{ name: page.title }];
 
 // For agents and search engines (head.html): the page's Markdown version,
@@ -62,7 +76,7 @@ const headPage = markdownUrl
   ? { ...page, markdown_alternate: new URL(markdownUrl, Astro.site).href }
   : page;
 const jsonLd =
-  page.has_magic_breadcrumbs && !isHomePage
+  page.has_magic_breadcrumbs && isDocPage
     ? buildDocJsonLd({
         site: Astro.site!,
         page,
@@ -72,15 +86,15 @@ const jsonLd =
     : undefined;
 
 // The summary and the AI tools row go between the Markdown's h1 and the body,
-// so the slot is rendered to a string and split there. Not on the docs home.
+// so the slot is rendered to a string and split there.
 const split =
-  (markdownUrl || summary) && !isHomePage
+  (markdownUrl || summary) && isDocPage
     ? splitAtTitle(await Astro.slots.render("default"))
     : undefined;
 ---
 
 <DefaultNewLayout page={headPage} dirname={dirname} {unify} {jsonLd}>
-  <DocsHeader slot="header" version={version} pageUrl={page.url} sidebar />
+  <DocsHeader slot="header" version={version} {sections} sidebar />
   <SectionBar />
 
   <div class="bootstrap">
@@ -90,7 +104,12 @@ const split =
         the remaining space; the sidebar is wider than Learn's 226px because
         docs nav labels are longer. */}
     <div class="learn docs blog-post MB-Page tw:print:grid-cols-1 tw:max-lg:grid-cols-1 tw:max-lg:border-b-surface-hover tw:max-lg:shadow-[1000px_0_0_var(--tw-color-page)] tw:lg:max-w-none tw:lg:grid-cols-[var(--tw-spacing-sidebar)_1fr] tw:lg:bg-page tw:lg:shadow-none">
-      <LeftSidebar url={page.url} version={version} />
+      <LeftSidebar
+        url={page.url}
+        version={version}
+        category={category ?? nav.categories[0]}
+        {sections}
+      />
       {/* Click target behind the mobile nav drawer (SectionBar.astro's toggle
           opens it, LeftSidebar.astro's script); it fades the way the drawer
           slides. On desktop, where there is no drawer, it would take a grid
@@ -109,7 +128,7 @@ const split =
         class:list={[
           "learn__post learn__article tw:grid tw:grid-cols-[1fr_var(--tw-spacing-toc)] tw:bg-page tw:shadow-[1000px_0_0_var(--tw-color-page)] tw:max-lg:grid-cols-1 tw:lg:mx-auto tw:lg:max-w-[calc(var(--tw-spacing-article)+2*var(--tw-spacing-gutter)+var(--tw-spacing-toc))] tw:print:grid-cols-1",
           "tw:max-lg:pt-section-bar",
-          { "tw:lg:pt-0": !showBreadcrumb },
+          { "tw:lg:pt-0": isDocsHome },
         ]}
       >
         {/* The breadcrumb bar from lg up, pinned to the text column so its
@@ -117,7 +136,7 @@ const split =
             to --spacing-gutter-narrow below 1200px. The vendored rules for it
             went with master's styles.css; position-feedback-widget.js still
             measures `.top-bar`. Below lg the trail is inline. */}
-        {showBreadcrumb && (
+        {!isDocsHome && (
           <div class="top-bar tw:absolute tw:top-0 tw:left-gutter tw:z-3 tw:flex tw:h-[57px] tw:w-[calc(100%-2*var(--tw-spacing-gutter)-var(--tw-spacing-toc))] tw:items-center tw:border-b tw:border-border tw:py-2 tw:max-xl:w-[calc(100%-var(--tw-spacing-gutter)-var(--tw-spacing-gutter-narrow)-var(--tw-spacing-toc))] tw:max-lg:hidden tw:print:hidden">
             <div class="tw:min-w-0 tw:flex-1">
               <Breadcrumb crumbs={breadcrumbs} variant="top-bar" />
@@ -128,9 +147,7 @@ const split =
         {/* The grid column can be wider than the measure, so cap everything
             in it, including the script-generated table and h2 wrappers. */}
         <div class="learn__post__content docs-prose tw:lg:*:max-w-article">
-          {showBreadcrumb && (
-            <Breadcrumb crumbs={breadcrumbs} variant="inline" />
-          )}
+          {!isDocsHome && <Breadcrumb crumbs={breadcrumbs} variant="inline" />}
           <VersionNotice version={page.version} pageUrl={page.url} />
 
           {split ? (
@@ -152,7 +169,7 @@ const split =
             <slot />
           )}
 
-          {!isHomePage && <PrevNext version={version} pageUrl={page.url} />}
+          {isDocPage && <PrevNext {category} pageUrl={page.url} />}
 
           <div class="tw:print:hidden">
             <div class="widget-separator"></div>
@@ -171,7 +188,7 @@ const split =
             and the feedback widget follows the article. */}
         <div class="learn__right-sidebar tw:max-lg:contents tw:lg:top-[calc(var(--tw-spacing-header)-14px)] tw:print:hidden">
           <PageNav />
-          {!isHomePage && (
+          {isDocPage && (
             <LiquidInclude
               lq={lq}
               src="shared/was-this-helpful-widget.html"

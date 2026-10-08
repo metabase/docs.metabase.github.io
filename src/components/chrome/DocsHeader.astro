@@ -3,33 +3,25 @@ import InkeepSearch from "@/components/InkeepSearch/InkeepSearch.astro";
 import Book from "@/icons/chrome/book.svg";
 import MetabaseMark from "@/icons/chrome/metabase-mark.svg";
 import MetabaseWordmark from "@/icons/chrome/metabase-wordmark.svg";
-import { getNavForVersion, getSections } from "@/lib/docs/nav";
+import type { Section } from "@/lib/docs/nav";
 import { iconButton, strokeIcon } from "./docs-ui";
 import DocsMoreMenu from "./DocsMoreMenu.astro";
 
-// Rendered outside `.bootstrap` so the marketing navbar styles don't apply.
-// navigation-header.js needs `navigation-header`.
-//
-// One row, --spacing-header-row tall (src/styles/docs.css); --spacing-header
-// (the row plus the border) keeps the search modal and the sticky sidebars
-// below the header. Below lg the section bar, the drawer and its backdrop
-// follow --spacing-header-offset instead, which tracks the header as it hides.
-// The version selector is at the top of the left sidebar; the theme toggle is
-// in the ⋯ menu.
+// Rendered outside `.bootstrap` so the marketing navbar styles don't apply;
+// navigation-header.js needs the `navigation-header` class. One row,
+// --spacing-header-row tall (src/styles/docs.css).
 type Props = {
   version: string;
-  pageUrl: string;
+  /** The header tabs (getSections). */
+  sections: Section[];
   /**
-   * Doc pages: the page renders a LeftSidebar, so below lg the tabs give way
-   * to its drawer (SectionBar.astro opens it), and the header hides on
-   * scroll there.
+   * The page has a LeftSidebar: below lg its drawer replaces the tabs, and
+   * the header hides on scroll.
    */
   sidebar?: boolean;
 };
 
-const { version, pageUrl, sidebar = false } = Astro.props;
-
-const tabs = getSections(getNavForVersion(version), pageUrl);
+const { version, sections: tabs, sidebar = false } = Astro.props;
 
 // The row's gaps, also used between the brand items.
 const gap = "tw:gap-4 tw:max-lg:gap-3 tw:max-xs:gap-2";
@@ -157,6 +149,8 @@ const gap = "tw:gap-4 tw:max-lg:gap-3 tw:max-xs:gap-2";
 </header>
 
 <script>
+  import { belowLg } from "./breakpoints";
+
   const root = document.documentElement;
 
   // Below lg on doc pages the header slides away while the reader scrolls
@@ -177,12 +171,6 @@ const gap = "tw:gap-4 tw:max-lg:gap-3 tw:max-xs:gap-2";
     // Scrolls shorter than this neither hide nor show it.
     const THRESHOLD = 25;
 
-    // docs.css emits the breakpoint on :root (`@theme static`).
-    const lg = getComputedStyle(root)
-      .getPropertyValue("--tw-breakpoint-lg")
-      .trim();
-    const mobile = matchMedia(`(width < ${lg})`);
-
     const setHidden = (hidden: boolean) => {
       if (hidden) {
         root.dataset.docsHeader = "hidden";
@@ -202,7 +190,7 @@ const gap = "tw:gap-4 tw:max-lg:gap-3 tw:max-xs:gap-2";
         if (Math.abs(y - last) < THRESHOLD) return;
         if (root.dataset.docsNav !== "open") {
           setHidden(
-            mobile.matches &&
+            belowLg.matches &&
               y > last &&
               y > header.offsetHeight &&
               !header.querySelector(':focus-visible, [aria-expanded="true"]'),
@@ -213,6 +201,6 @@ const gap = "tw:gap-4 tw:max-lg:gap-3 tw:max-xs:gap-2";
       { passive: true },
     );
 
-    mobile.addEventListener("change", () => setHidden(false));
+    belowLg.addEventListener("change", () => setHidden(false));
   }
 </script>

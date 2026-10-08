@@ -1,6 +1,6 @@
-// Open and close for the docs chrome dropdowns (DocsVersionSelector.astro,
-// DocsMoreMenu.astro). Each marks its root `data-dropdown` and its trigger
-// `data-dropdown-trigger`, and imports this module, which Astro bundles once.
+// Open and close for the docs chrome dropdowns. Each marks its root
+// `data-dropdown` and its trigger `data-dropdown-trigger`, and imports this
+// module, which Astro bundles once.
 // The trigger's aria-expanded is the open state; the components style off it
 // (`aria-expanded:`, `group-aria-expanded:`, `peer-aria-expanded:`).
 const initDropdown = (root: HTMLElement, trigger: HTMLElement) => {

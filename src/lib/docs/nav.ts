@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { DOCS_SRC_ROOT, METABASE_REPO_PATH } from "@/constants";
+import { parseDocUrl } from "@/lib/docs/resolveDoc";
 import YAML from "yamljs";
 
 export type NavNode = {
@@ -35,8 +36,6 @@ export const getLandingUrl = (node: NavNode): string | undefined => {
   )?.url;
 };
 
-const VERSION_ROOT_REGEX = /^\/docs\/[^/]+\//;
-
 // For pages the nav doesn't list (about a third of the docs): the category
 // that lists the most pages from the page's directory, or else from the
 // nearest parent directory that has any. Ties go to the earlier category.
@@ -46,8 +45,9 @@ export const getCategoryByDirectory = (
   nav: Nav,
   pageUrl: string,
 ): NavNode | undefined => {
-  const root = VERSION_ROOT_REGEX.exec(pageUrl)?.[0];
-  if (!root) return undefined;
+  const version = parseDocUrl(pageUrl)?.version;
+  if (!version) return undefined;
+  const root = `/docs/${version}/`;
 
   for (
     let dir = pageUrl.slice(0, pageUrl.lastIndexOf("/") + 1);
@@ -105,17 +105,18 @@ export const getPrevNext = (
   return { prev: pages[index - 1], next: pages[index + 1] };
 };
 
-// Header tabs and the drawer's section list. A category with no linked pages
-// has nowhere to go, so it gets no entry.
-export const getSections = (nav: Nav, pageUrl: string) => {
-  const active = getActiveCategory(nav, pageUrl);
-  return nav.categories.flatMap((category) => {
+// Header tabs and the drawer's section list, with the page's category
+// (getActiveCategory) marked. A category with no linked pages has nowhere to
+// go, so it gets no entry.
+export type Section = { name: string; href: string; active: boolean };
+
+export const getSections = (nav: Nav, active?: NavNode): Section[] =>
+  nav.categories.flatMap((category) => {
     const href = getLandingUrl(category);
     return href
       ? [{ name: category.name, href, active: category === active }]
       : [];
   });
-};
 
 const isRelativeUrl = (url: string) => !/^(\/|[a-z][a-z0-9+.-]*:)/i.test(url);
 

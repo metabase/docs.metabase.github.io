@@ -3,13 +3,15 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import DocsHeader from "@/components/chrome/DocsHeader.astro";
 import DefaultNewLayout from "@/layouts/DefaultNewLayout.astro";
+import { getNavForVersion, getSections } from "@/lib/docs/nav";
 
 const page = { title: "Page not found", url: "/docs/404" };
+const sections = getSections(getNavForVersion("latest"));
 const dirname = path.dirname(fileURLToPath(import.meta.url));
 ---
 
 <DefaultNewLayout page={page} dirname={dirname}>
-  <DocsHeader slot="header" version="latest" pageUrl={page.url} />
+  <DocsHeader slot="header" version="latest" {sections} />
   <script is:inline>
     function redirectFrom404(theLocation) {
       // trailing slash

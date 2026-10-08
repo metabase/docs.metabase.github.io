@@ -1,4 +1,5 @@
 import path from "node:path";
+import { pathToFileURL } from "node:url";
 import { DOCS_SRC_ROOT, METABASE_REPO_PATH } from "@/constants";
 import { constructDocMetadata } from "@/lib/docs/constructDocMetadata";
 import { resolveDocUrl } from "@/lib/docs/resolveDoc";
@@ -54,5 +55,8 @@ export const renderDocLiquid = async ({
     maxSyntaxErrors: version === "latest" ? 0 : 3,
   });
 
-  return { doc, page, dirname, body };
+  // What the Markdown renderer resolves the doc's relative images against.
+  const fileURL = pathToFileURL(path.resolve(doc.filePath!));
+
+  return { page, dirname, body, fileURL };
 };

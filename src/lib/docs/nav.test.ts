@@ -247,13 +247,14 @@ describe("getSections", () => {
       ],
     };
 
-    expect(getSections(nav, "/docs/latest/questions/start")).toEqual([
+    expect(getSections(nav, nav.categories[0])).toEqual([
       {
         name: "Analytics",
         href: "/docs/latest/questions/start",
         active: true,
       },
     ]);
+    expect(getSections(nav)[0].active).toBe(false);
   });
 });
 

@@ -2,14 +2,12 @@
 import { quietControl, strokeIcon } from "./docs-ui";
 import TocToggle from "./TocToggle.astro";
 
-// Below lg, a bar under the header (NewDocsLayout.astro): the nav drawer's
-// toggle (LeftSidebar.astro's script) and "On this page". Fixed, not sticky,
-// so it spans the viewport rather than the centered .learn box; the article
-// reserves --spacing-section-bar for it. It follows the header's bottom edge
-// (--spacing-header-offset), which reaches 0 while DocsHeader.astro hides the
-// header. Outside the article, which is inert while the drawer is open, and
-// above the drawer (z 999) so the toggle can close it; below the header
-// (z 1001) so the ⋯ menu drops over it. The header row's gutters.
+// Below lg, a bar under the header: the nav drawer's toggle and "On this
+// page". Fixed, not sticky, so it spans the viewport, not the centered .learn
+// box; it follows the header's bottom edge (--spacing-header-offset). Outside
+// the article, which is inert while the drawer is open. z 1000: above the
+// drawer, so the toggle can close it, and below the header, so the ⋯ menu
+// drops over it. Same side padding as the header row below lg.
 ---
 
 <div class="tw:fixed tw:inset-x-0 tw:top-header-offset tw:z-1000 tw:flex tw:h-section-bar tw:items-center tw:justify-between tw:gap-3 tw:border-b tw:border-border tw:bg-surface tw:px-4 tw:shadow-header tw:motion-safe:transition-[top] tw:motion-safe:duration-200 tw:max-xs:px-3 tw:lg:hidden tw:print:hidden">
