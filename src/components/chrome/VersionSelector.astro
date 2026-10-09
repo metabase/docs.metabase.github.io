@@ -1,5 +1,6 @@
 ---
 import Chevron from "@/icons/chevron.svg";
+import { docsVersionHref } from "@/lib/docs/versionHref";
 import { baseCtx } from "@/lib/liquid/liquidRenderer";
 
 type Props = {
@@ -28,7 +29,7 @@ const versions = [...site.available_versions].reverse().slice(0, 10);
           <li class="version__option">
             <a
               class="version__link"
-              href={v === site.docs_version ? "/docs/latest/" : `/docs/${v}/`}
+              href={docsVersionHref(v, site.docs_version)}
             >
               <div class="version__dropdown--item">
                 <span>{v}</span>
@@ -81,7 +82,8 @@ const versions = [...site.available_versions].reverse().slice(0, 10);
 </script>
 
 <style>
-  /* The ids outrank the legacy `.bootstrap .learn__post a` / `li` rules. */
+  /* The ids outrank the legacy `.bootstrap .learn__post a` / `li` rules.
+     Each variant renders at most once per page, so the ids stay unique. */
   :is(#version-selector-top-bar, #version-selector-inline) {
     cursor: pointer;
     position: relative;
@@ -92,7 +94,6 @@ const versions = [...site.available_versions].reverse().slice(0, 10);
       color: #8d93a5;
       display: inline-flex;
       font-size: 14px;
-      gap: 0;
       padding: 10px 0 12px 12px;
       transition: background-color 0.3s ease;
 
@@ -125,7 +126,10 @@ const versions = [...site.available_versions].reverse().slice(0, 10);
       top: 100%;
       transition:
         scale 0.2s ease-in-out,
-        opacity 0.2s ease-in-out;
+        opacity 0.2s ease-in-out,
+        visibility 0.2s;
+      /* Keeps the links of the closed menu out of the tab order. */
+      visibility: hidden;
       z-index: 2;
     }
 
@@ -162,7 +166,6 @@ const versions = [...site.available_versions].reverse().slice(0, 10);
       gap: 0.5rem;
       justify-content: space-between;
       padding-inline: 1rem;
-      text-align: left;
     }
 
     &.open {
@@ -183,6 +186,7 @@ const versions = [...site.available_versions].reverse().slice(0, 10);
         opacity: 1;
         pointer-events: all;
         scale: 1;
+        visibility: visible;
       }
     }
   }
