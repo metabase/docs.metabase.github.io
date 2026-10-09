@@ -1,31 +1,36 @@
 ---
 import Chevron from "@/icons/chevron.svg";
+import { docsVersionHref } from "@/lib/docs/versionHref";
 import { baseCtx } from "@/lib/liquid/liquidRenderer";
 
 type Props = {
   version?: string;
+  variant: "top-bar" | "inline";
 };
 
-const { version } = Astro.props;
+const { version, variant } = Astro.props;
 const { site } = baseCtx;
 
 const currentVersion = version === "latest" ? site.docs_version : version;
 const versions = [...site.available_versions].reverse().slice(0, 10);
 ---
 
-<div class="version__selector cursor-pointer">
-  <span class="version__current">
-    {currentVersion}
+<div class:list={["version__selector", variant]}>
+  <div class="version__current">
+    <span>{currentVersion}</span>
     <Chevron />
-  </span>
+  </div>
   <ul class="version__dropdown">
     {versions
       .filter((v: string) => v !== version)
       .map((v: string) => {
         const support = site.data.version_support[v];
         return (
-          <li>
-            <a href={`/docs/${v}/`}>
+          <li class="version__option">
+            <a
+              class="version__link"
+              href={docsVersionHref(v, site.docs_version)}
+            >
               <div class="version__dropdown--item">
                 <span>{v}</span>
                 {support?.status === "unsupported" ? (
@@ -40,8 +45,10 @@ const versions = [...site.available_versions].reverse().slice(0, 10);
           </li>
         );
       })}
-    <li>
-      <a href="/docs/all">See more</a>
+    <li class="version__option">
+      <a class="version__link version__see-more" href="/docs/all">
+        See more
+      </a>
     </li>
   </ul>
 </div>
@@ -73,3 +80,149 @@ const versions = [...site.available_versions].reverse().slice(0, 10);
     initDocsVersionSelector();
   });
 </script>
+
+<style>
+  .version__selector {
+    cursor: pointer;
+    position: relative;
+
+    .version__current {
+      align-items: center;
+      border-radius: 8px;
+      color: #8d93a5;
+      display: inline-flex;
+      font-size: 14px;
+      padding: 10px 0 12px 12px;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: #e4ecfb;
+      }
+
+      :global(svg) {
+        height: 12px;
+        margin-top: 2px;
+      }
+
+      :global(svg path) {
+        stroke: #8d93a5;
+      }
+    }
+
+    .version__dropdown {
+      background: #fff;
+      border-radius: 0.25rem;
+      box-shadow: 0 3px 24px rgba(0, 0, 0, 0.08);
+      list-style-type: none;
+      margin-top: 0;
+      opacity: 0;
+      overflow: hidden;
+      padding: 0;
+      pointer-events: none;
+      position: absolute;
+      scale: 0.97;
+      top: 100%;
+      transition:
+        scale 0.2s ease-in-out,
+        opacity 0.2s ease-in-out,
+        visibility 0.2s;
+      /* Keeps the links of the closed menu out of the tab order. */
+      visibility: hidden;
+      z-index: 2;
+    }
+
+    .version__option {
+      margin-bottom: 0;
+      text-align: center;
+
+      &:hover {
+        background-color: #fafbfe;
+      }
+    }
+
+    .version__link {
+      color: #8d93a5;
+      display: block;
+      font-size: 14px;
+      font-weight: 400;
+      padding: 8px 0;
+    }
+
+    .version__see-more {
+      color: #509ee3;
+      font-weight: 700;
+    }
+
+    .version__option:hover .version__link {
+      color: #509ee3;
+    }
+
+    .version__dropdown--item {
+      align-items: center;
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 0.5rem;
+      justify-content: space-between;
+      padding-inline: 1rem;
+    }
+
+    &.open {
+      .version__current {
+        background-color: #e4ecfb;
+        color: #509ee3;
+
+        :global(svg) {
+          rotate: 180deg;
+        }
+
+        :global(svg path) {
+          stroke: #509ee3;
+        }
+      }
+
+      .version__dropdown {
+        opacity: 1;
+        pointer-events: all;
+        scale: 1;
+        visibility: visible;
+      }
+    }
+
+    &.top-bar {
+      display: flex;
+
+      @media (max-width: 991.98px) {
+        display: none;
+      }
+
+      .version__dropdown {
+        right: 0;
+      }
+    }
+
+    &.inline {
+      display: inline-block;
+      margin-top: 32px;
+
+      @media (min-width: 992px) {
+        display: none;
+      }
+
+      .version__current {
+        padding-left: 0;
+
+        &:hover {
+          background-color: transparent;
+        }
+      }
+
+      &.open .version__current {
+        background-color: transparent;
+      }
+
+      .version__dropdown {
+        left: 0;
+      }
+    }
+  }
+</style>
