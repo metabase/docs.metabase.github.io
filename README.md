@@ -49,3 +49,35 @@ bun dev
 ```
 
 The dev server runs at http://localhost:4321/docs/latest/.
+
+## Stylesheets
+
+`public/docs/css` holds the stylesheets the docs chrome and content rely on. They
+were copied from the marketing site when the remotely fetched shared chrome was
+retired (GRO-828) and then pruned to what the rendered docs pages actually use
+(GRO-905):
+
+| File             | Role                                                                                        |
+| ---------------- | ------------------------------------------------------------------------------------------- |
+| `styles.css`     | Minified Bootstrap 5 subset (scoped under `.bootstrap`) plus the header, footer, `.learn` docs layout, breadcrumb, in-page promo and code-copy styles ported from the marketing bundle. |
+| `main.css`       | Legacy global styles: typography, links, lists, tables, `.Button`, the old (pre-v0.44) docs layout, image zoom and the feedback widget. Linted by stylelint. |
+| `docs.css`       | Docs-only overrides for the old docs layout (`.MB-Documentation`, `.container-docs`) and the unsupported-version notice. |
+| `gdpr.css`       | Metabase theme for the vendored GDPR cookie notice (`public/docs/gdpr-cookie-notice`).      |
+| `inkeep.css`     | Theme for the Inkeep search/chat widget.                                                    |
+
+Themed docs pages don't link these files: `src/styles/docs.css` imports
+`docs.css`, `styles.css`, `main.css` and `gdpr.css` into its `legacy` cascade
+layer. A prune must keep the rules those pages use too.
+
+Sections that remain large on purpose:
+
+- The Bootstrap reboot, grid (`.row`, `.col-*` used by the header) and spacing,
+  flex, display and typography utilities that the header, footer, breadcrumb,
+  plans blockquote and feedback widget markup use.
+- `.navigation-header` / `#nav-menu-mobile` (desktop mega menu and mobile
+  drawer) and `.site-footer`.
+- `.bootstrap .learn …` rules: the current docs layout, including the
+  `.copy-code-button`, `.checkpoint__*`, `.table-overflow` and
+  `.image-wrapper` styles that JavaScript adds after load.
+- `.h1`–`.h6` alias selectors: `new-docs-anchor-links.js` adds the heading tag
+  name as a class to the wrappers it creates.
