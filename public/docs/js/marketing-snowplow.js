@@ -47,7 +47,6 @@ try {
   referrerUrl = document.referrer ? new URL(document.referrer) : null;
 } catch (e) {
   // Ignore invalid referrer URLs
-  referrerUrl = null;
 }
 
 if (
