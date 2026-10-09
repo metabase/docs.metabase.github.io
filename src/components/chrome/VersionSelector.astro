@@ -168,7 +168,6 @@ const versions = [...site.available_versions].reverse().slice(0, 10);
     &.open {
       .version__current {
         background-color: #e4ecfb;
-        border-color: #c2daf0;
         color: #509ee3;
 
         :global(svg) {
@@ -202,19 +201,22 @@ const versions = [...site.available_versions].reverse().slice(0, 10);
 
   #version-selector-inline {
     display: inline-block;
-    margin: 32px 0 0;
+    margin-top: 32px;
 
     @media (min-width: 992px) {
       display: none;
     }
 
     .version__current {
-      background-color: #fff;
-      border: 1px solid rgba(198, 201, 210, 0.5);
+      padding-left: 0;
 
       &:hover {
-        border-color: #c2daf0;
+        background-color: transparent;
       }
+    }
+
+    &.open .version__current {
+      background-color: transparent;
     }
 
     .version__dropdown {
