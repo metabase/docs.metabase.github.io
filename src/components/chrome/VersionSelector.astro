@@ -15,7 +15,7 @@ const currentVersion = version === "latest" ? site.docs_version : version;
 const versions = [...site.available_versions].reverse().slice(0, 10);
 ---
 
-<div id={`version-selector-${variant}`} class="version__selector">
+<div class:list={["version__selector", variant]}>
   <div class="version__current">
     <span>{currentVersion}</span>
     <Chevron />
@@ -82,9 +82,7 @@ const versions = [...site.available_versions].reverse().slice(0, 10);
 </script>
 
 <style>
-  /* The ids outrank the legacy `.bootstrap .learn__post a` / `li` rules.
-     Each variant renders at most once per page, so the ids stay unique. */
-  :is(#version-selector-top-bar, #version-selector-inline) {
+  .version__selector {
     cursor: pointer;
     position: relative;
 
@@ -189,42 +187,42 @@ const versions = [...site.available_versions].reverse().slice(0, 10);
         visibility: visible;
       }
     }
-  }
 
-  #version-selector-top-bar {
-    display: flex;
+    &.top-bar {
+      display: flex;
 
-    @media (max-width: 991.98px) {
-      display: none;
-    }
+      @media (max-width: 991.98px) {
+        display: none;
+      }
 
-    .version__dropdown {
-      right: 0;
-    }
-  }
-
-  #version-selector-inline {
-    display: inline-block;
-    margin-top: 32px;
-
-    @media (min-width: 992px) {
-      display: none;
-    }
-
-    .version__current {
-      padding-left: 0;
-
-      &:hover {
-        background-color: transparent;
+      .version__dropdown {
+        right: 0;
       }
     }
 
-    &.open .version__current {
-      background-color: transparent;
-    }
+    &.inline {
+      display: inline-block;
+      margin-top: 32px;
 
-    .version__dropdown {
-      left: 0;
+      @media (min-width: 992px) {
+        display: none;
+      }
+
+      .version__current {
+        padding-left: 0;
+
+        &:hover {
+          background-color: transparent;
+        }
+      }
+
+      &.open .version__current {
+        background-color: transparent;
+      }
+
+      .version__dropdown {
+        left: 0;
+      }
     }
   }
 </style>
