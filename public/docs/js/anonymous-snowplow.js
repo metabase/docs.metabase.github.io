@@ -39,10 +39,18 @@ if (formattedCustomUrlAnon) {
 }
 
 // custom referrer (only for metabase.com)
+var referrerUrlAnon = null;
+try {
+  referrerUrlAnon = document.referrer ? new URL(document.referrer) : null;
+} catch (e) {
+  // Ignore invalid referrer URLs
+}
+
 if (
-  document.referrer &&
-  (document.referrer.indexOf("https://www.metabase.com") > -1 ||
-    document.referrer.indexOf("https://metabase.com") > -1)
+  referrerUrlAnon &&
+  referrerUrlAnon.protocol === "https:" &&
+  (referrerUrlAnon.hostname === "www.metabase.com" ||
+    referrerUrlAnon.hostname === "metabase.com")
 ) {
   var formattedReferrerUrlAnon = window.redirectTo(document.referrer);
   if (formattedReferrerUrlAnon) {
