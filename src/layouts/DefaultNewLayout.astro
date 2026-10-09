@@ -1,27 +1,32 @@
 ---
 import Footer from "@/components/chrome/Footer.astro";
-import Header from "@/components/chrome/Header.astro";
 import LiquidInclude from "@/components/LiquidInclude.astro";
 import { getLiquidRenderer } from "@/lib/liquid/liquidRenderer";
+import "@/styles/docs.css";
 
+// Docs-only: the theme is always on, and there is no default header, so
+// callers must fill the "header" slot (DocsHeader).
 type Props = {
   page: Record<string, unknown>;
   dirname: string;
   unify?: boolean;
-  hideOnScroll?: boolean;
+  /** schema.org JSON for the page's <head> (src/lib/docs/jsonLd.ts). */
+  jsonLd?: string;
 };
 
-const { page, dirname, unify, hideOnScroll } = Astro.props;
+const { page, dirname, unify, jsonLd } = Astro.props;
 
 const lq = getLiquidRenderer({ page, dirname });
 ---
 
 <!doctype html>
 <html prefix="og: https://ogp.me/ns#" lang="en-US">
-  <LiquidInclude lq={lq} src="head.html" {unify} />
+  {/* docs_theme: head.html inlines the theme init script and skips the legacy
+      stylesheet links, which src/styles/docs.css imports instead. */}
+  <LiquidInclude lq={lq} src="head.html" {unify} docs_theme json_ld={jsonLd} />
 
-  <body>
-    <Header {hideOnScroll} />
+  <body class="tw:bg-page tw:font-sans tw:text-secondary tw:motion-safe:transition-colors tw:motion-safe:duration-200 tw:nav-open:overflow-hidden">
+    <slot name="header" />
 
     <div>
       <slot />

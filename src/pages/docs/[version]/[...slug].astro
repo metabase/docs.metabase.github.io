@@ -1,21 +1,22 @@
 ---
-import path from "node:path";
-import { pathToFileURL } from "node:url";
-import { DOCS_SRC_ROOT, METABASE_REPO_PATH } from "@/constants";
 import CategoryLayout from "@/layouts/CategoryLayout.astro";
 import NewDocsLayout from "@/layouts/NewDocsLayout.astro";
-import OldDocsLayout from "@/layouts/OldDocsLayout.astro";
-import { constructDocMetadata } from "@/lib/docs/constructDocMetadata";
-import { resolveDocUrl } from "@/lib/docs/resolveDoc";
-import { rewriteDocLinks } from "@/lib/docs/rewriteDocLinks";
-import { baseCtx, getLiquidRenderer } from "@/lib/liquid/liquidRenderer";
-import { getMarkdownRenderer } from "@/lib/markdown/markdownRenderer";
-import { getCollection, type DataEntryMap } from "astro:content";
-import type { AstroComponentFactory } from "astro/runtime/server/index.js";
+import {
+  isLegacyDoc,
+  renderHtmlDoc,
+  renderMarkdownDoc,
+  toDocParams,
+  type HtmlDoc,
+  type MarkdownDoc,
+} from "@/lib/docs/docPages";
+import { hasMarkdownVersion, toMarkdownUrl } from "@/lib/docs/resolveDoc";
+import { getCollection } from "astro:content";
 
-type Props =
-  | { kind: "md"; doc: DataEntryMap["docs"][number] }
-  | { kind: "html"; doc: DataEntryMap["docsHtml"][number] };
+// Doc pages in the themed layout (`layout: category` landing pages wrap it in
+// CategoryLayout), and the standalone `.html` docs. Legacy `layout: docs`
+// pages have their own route, [...legacySlug].astro; see
+// src/lib/docs/docPages.ts for why. Keep OldDocsLayout out of this file.
+type Props = { kind: "md"; doc: MarkdownDoc } | { kind: "html"; doc: HtmlDoc };
 
 export const getStaticPaths = async () => {
   const [docs, docsHtml] = await Promise.all([
@@ -23,82 +24,43 @@ export const getStaticPaths = async () => {
     getCollection("docsHtml"),
   ]);
 
-  const toPath =
-    <Kind extends Props["kind"]>(kind: Kind) =>
-    (doc: { id: string; data: Record<string, unknown>; body?: string }) => {
-      const { version, slug } = resolveDocUrl({
-        id: doc.id,
-        // For prod builds, we want to output like folder/index.html, but for the dev server, the route should exclude /index
-        includeTrailingIndex: import.meta.env.MODE !== "development",
-      });
-      return { props: { kind, doc }, params: { version, slug } };
-    };
-
-  return [...docs.map(toPath("md")), ...docsHtml.map(toPath("html"))];
+  return [
+    ...docs.flatMap((doc) => {
+      const params = toDocParams(doc.id);
+      return isLegacyDoc(doc, params.version)
+        ? []
+        : [{ params, props: { kind: "md" as const, doc } }];
+    }),
+    ...docsHtml.map((doc) => ({
+      params: toDocParams(doc.id),
+      props: { kind: "html" as const, doc },
+    })),
+  ];
 };
 
 const { version } = Astro.params;
-const { kind, doc: propsDoc } = Astro.props;
-const { url } = resolveDocUrl({ id: propsDoc.id });
-const doc = {
-  ...propsDoc,
-  data: {
-    ...constructDocMetadata(
-      METABASE_REPO_PATH
-        ? `/${path.relative(METABASE_REPO_PATH, propsDoc.filePath!)}`
-        : `/docs/${path.relative(`${DOCS_SRC_ROOT}/${version}`, propsDoc.filePath!)}`,
-      version === "latest" ? baseCtx.site.docs_version : version,
-      version === "latest",
-    ),
-    ...propsDoc.data,
-  },
-  body: rewriteDocLinks(propsDoc.body ?? "", {
-    version: version!,
-    latest: version === "latest",
-  }),
-};
-const dirname = path.dirname(doc.filePath!);
-const page = { url, ...doc.data };
+const { kind, doc } = Astro.props as Props;
 
-// Process liquid first (e.g. control flow, includes, variables, etc)
-const lq = getLiquidRenderer({ page, dirname });
-const lqOutput = await lq.render(doc.body!, undefined, {
-  maxSyntaxErrors: version === "latest" ? 0 : 3,
-});
-
-// `.html` docs (TypeDoc SDK API reference pages, api.html ToC pages) are
-// already complete standalone HTML documents — only Liquid needs to run on
-// them (e.g. the embedded-analytics-sdk-metadata include), no markdown
-// conversion, and no NewDocsLayout chrome (mirrors the old Jekyll
-// `docs-api` layout, which was a bare passthrough).
-let renderedHtml: string;
-if (kind === "html") {
-  // TypeDoc's standalone HTML is generated upstream with root-relative asset
-  // paths. In production, those paths resolve against the marketing site, so
-  // keep the generated sources untouched and scope their local assets here.
-  renderedHtml = lqOutput
-    .replaceAll('"/gdpr-cookie-notice/', '"/docs/gdpr-cookie-notice/')
-    .replaceAll('"/js/', '"/docs/js/')
-    .replaceAll('"/css/', '"/docs/css/');
-} else {
-  const md = await getMarkdownRenderer();
-  const renderResult = await md.render(lqOutput, {
-    fileURL: pathToFileURL(path.resolve(doc.filePath!)),
-  });
-  renderedHtml = renderResult.code;
-}
-
-const layouts: Record<string, AstroComponentFactory> = {
-  docs: OldDocsLayout,
-  category: CategoryLayout,
-};
-const Layout = layouts[doc.data.layout] ?? NewDocsLayout;
+// `.html` docs are complete standalone pages: no layout (renderHtmlDoc).
+const html = kind === "html" ? await renderHtmlDoc(doc, version) : undefined;
+const md = kind === "md" ? await renderMarkdownDoc(doc, version) : undefined;
 ---
 
-{kind === "html" ? (
-  <Fragment set:html={renderedHtml} />
+{md ? (
+  md.page.layout === "category" ? (
+    <CategoryLayout page={md.page} dirname={md.dirname} />
+  ) : (
+    <NewDocsLayout
+      page={md.page}
+      dirname={md.dirname}
+      summary={md.summary}
+      markdownUrl={
+        hasMarkdownVersion(version) ? toMarkdownUrl(md.page.url) : undefined
+      }
+    >
+      <Fragment set:html={md.html} />
+    </NewDocsLayout>
+  )
 ) : (
-  <Layout page={{ ...page, content: renderedHtml }} dirname={dirname}>
-    <Fragment set:html={renderedHtml} />
-  </Layout>
+  <Fragment set:html={html} />
 )}

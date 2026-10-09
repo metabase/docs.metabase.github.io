@@ -24,33 +24,33 @@ function resizeLearnRightSidebar() {
 
   const feedbackWidget = getFeedbackWidget();
 
-  const feedbackWidgetHeight = feedbackWidget.checkVisibility()
-    ? feedbackWidget.offsetHeight
-    : 0;
+  const feedbackWidgetHeight =
+    feedbackWidget && feedbackWidget.checkVisibility()
+      ? feedbackWidget.offsetHeight
+      : 0;
 
   const header = document.querySelector("header");
 
-  const extraBottomPadding = header.classList.contains("scrollable") ? 85 : 25;
-
-  // Header can be scrollable or sticky
   const bottomOfHeader = Math.max(0, header.getBoundingClientRect().bottom);
 
-  const bottomOfTopBar = document
-    .getElementById("top-bar")
-    .getBoundingClientRect().bottom;
+  // The top bar is not rendered on the docs home page
+  const topBar = document.querySelector(".top-bar");
+  const bottomOfTopBar = topBar ? topBar.getBoundingClientRect().bottom : 0;
 
   $subNavigationContent.style.height = `calc(100vh - ${Math.max(
     bottomOfTopBar,
     bottomOfHeader,
-  )}px - ${feedbackWidgetHeight}px - ${extraBottomPadding}px)`;
+  )}px - ${feedbackWidgetHeight}px - 25px)`;
 
   maybeRestyleFeedbackWidget();
 }
 
 function maybeRestyleFeedbackWidget() {
-  const extraTopPadding = 0;
-
   const feedbackWidget = getFeedbackWidget();
+
+  if (!feedbackWidget) {
+    return;
+  }
 
   const subnavigationContent = document.getElementById(
     "sub-navigation-content",
@@ -62,9 +62,7 @@ function maybeRestyleFeedbackWidget() {
   const shouldRestyleFeedbackWidget =
     lastAnchorInSubnavigationContent &&
     lastAnchorInSubnavigationContent.getBoundingClientRect().bottom >
-      subnavigationContent.offsetHeight +
-        feedbackWidget.offsetHeight -
-        extraTopPadding;
+      subnavigationContent.offsetHeight + feedbackWidget.offsetHeight;
 
   if (shouldRestyleFeedbackWidget) {
     feedbackWidget.classList.add("add-border-top");

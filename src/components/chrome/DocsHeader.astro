@@ -1,0 +1,206 @@
+---
+import InkeepSearch from "@/components/InkeepSearch/InkeepSearch.astro";
+import Book from "@/icons/chrome/book.svg";
+import MetabaseMark from "@/icons/chrome/metabase-mark.svg";
+import MetabaseWordmark from "@/icons/chrome/metabase-wordmark.svg";
+import type { Section } from "@/lib/docs/nav";
+import { iconButton, strokeIcon } from "./docs-ui";
+import DocsMoreMenu from "./DocsMoreMenu.astro";
+
+// Rendered outside `.bootstrap` so the marketing navbar styles don't apply;
+// navigation-header.js needs the `navigation-header` class. One row,
+// --spacing-header-row tall (src/styles/docs.css).
+type Props = {
+  version: string;
+  /** The header tabs (getSections). */
+  sections: Section[];
+  /**
+   * The page has a LeftSidebar: below lg its drawer replaces the tabs, and
+   * the header hides on scroll.
+   */
+  sidebar?: boolean;
+};
+
+const { version, sections: tabs, sidebar = false } = Astro.props;
+
+// The row's gaps, also used between the brand items.
+const gap = "tw:gap-4 tw:max-lg:gap-3 tw:max-xs:gap-2";
+---
+
+{/* z-index: below the image-zoom overlay (2000) and the search modal
+    (100000), above the section bar (1000).
+
+    The tabs drive the sidebar, so with one the header casts no shadow on it
+    (or on the section bar that stands in for it below lg): the two read as
+    one surface. From lg up a pseudo-element casts the shadow on the article
+    only. It starts at the sidebar's edge, takes in the border so the shadow
+    starts below it, and clips the blur that would spill left. */}
+<header
+  class:list={[
+    "navigation-header tw:sticky tw:top-0 tw:z-1001 tw:border-b tw:border-border tw:bg-surface tw:motion-safe:transition-[translate] tw:motion-safe:duration-200 tw:header-hidden:-translate-y-full tw:print:hidden",
+    sidebar
+      ? "tw:lg:after:absolute tw:lg:after:top-0 tw:lg:after:right-0 tw:lg:after:-bottom-px tw:lg:after:left-sidebar tw:lg:after:-z-1 tw:lg:after:shadow-header tw:lg:after:[clip-path:inset(0_0_-100%)]"
+      : "tw:shadow-header",
+  ]}
+  data-hide-on-scroll={sidebar || undefined}
+>
+  {/* Phones get tighter gaps and gutters so the row fits at 320px. */}
+  <div
+    class:list={[
+      gap,
+      "tw:flex tw:h-header-row tw:items-center tw:px-5 tw:max-lg:px-4 tw:max-xs:px-3",
+    ]}
+  >
+    <div class:list={[gap, "tw:flex tw:shrink-0 tw:items-center"]}>
+      {/* The wordmark text is currentColor; secondary text is too dim on
+          dark surfaces, so the brand goes heading-colored there. Phones get
+          the mark only. */}
+      <a
+        class="tw:flex tw:items-center tw:rounded-md tw:text-secondary tw:no-underline tw:transition-opacity tw:hover:opacity-75 tw:focus-ring tw:dark:text-heading"
+        href="/"
+        aria-label="Metabase home"
+      >
+        <MetabaseWordmark class="tw:h-6 tw:w-auto tw:max-w-none tw:shrink-0 tw:max-xs:hidden" />
+        <MetabaseMark class="tw:h-6 tw:w-auto tw:shrink-0 tw:xs:hidden" />
+      </a>
+      <span
+        class="tw:h-6 tw:w-px tw:bg-border-strong"
+        aria-hidden="true"
+      ></span>
+      {/* 17px Lato Bold matches the wordmark text at 24px; the 1px pad puts
+          it on the wordmark's baseline. The book's paths have a fixed stroke,
+          so stroke-current gives them the link color. Phones drop the book
+          so the row fits at 320px. */}
+      <a
+        class="tw:flex tw:items-center tw:gap-1.5 tw:rounded-md tw:pb-px tw:text-[17px]/6 tw:font-bold tw:text-brand tw:no-underline tw:transition-opacity tw:hover:opacity-75 tw:focus-ring"
+        href={`/docs/${version}/`}
+        aria-label="Metabase docs home"
+      >
+        <Book
+          class="tw:size-5 tw:shrink-0 tw:**:stroke-current tw:max-xs:hidden"
+          aria-hidden="true"
+        />
+        Docs
+      </a>
+    </div>
+
+    {/* The tabs fill the row, so the active tab's underline sits on the
+        header's border. They scroll if they run out of room. Without a
+        sidebar (404) they also show below lg, with their scrollbar hidden and
+        the right edge faded to show there is more. */}
+    {tabs.length > 0 && (
+      <nav
+        class:list={[
+          "tw:flex tw:h-full tw:min-w-0",
+          { "tw:max-lg:hidden": sidebar },
+        ]}
+        aria-label="Documentation sections"
+      >
+        <ul
+          class:list={[
+            "tw:my-0 tw:flex tw:min-w-0 tw:scrollbar-none tw:list-none tw:gap-2 tw:overflow-x-auto tw:p-0",
+            {
+              "tw:max-lg:mask-r-from-[calc(100%-32px)] tw:max-lg:pr-8":
+                !sidebar,
+            },
+          ]}
+        >
+          {tabs.map((tab) => (
+            <li class="tw:m-0 tw:flex tw:shrink-0">
+              {/* The focus ring stays inside the row. pt-1 drops the text
+                  2px (half the pad) onto the wordmark's baseline. */}
+              <a
+                class="tw:flex tw:items-center tw:rounded-t-lg tw:border-b-2 tw:border-transparent tw:px-2 tw:pt-1 tw:text-sm/5 tw:whitespace-nowrap tw:text-secondary tw:no-underline tw:transition-[background-color,color,border-color] tw:hover:bg-surface-hover tw:hover:text-brand tw:focus-ring tw:focus-visible:-outline-offset-2 tw:aria-[current=page]:border-brand tw:aria-[current=page]:font-bold tw:aria-[current=page]:text-brand"
+                href={tab.href}
+                aria-current={tab.active ? "page" : undefined}
+              >
+                {tab.name}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    )}
+
+    {/* ml-auto pins it right whatever the tabs take. The search box needs
+        room the tabs use below xl, so an icon opens the same modal there. */}
+    <div class="tw:ml-auto tw:flex tw:shrink-0 tw:items-center tw:gap-2">
+      <InkeepSearch class="tw:h-10 tw:w-80 tw:max-xl:hidden" />
+      <button
+        type="button"
+        class:list={[iconButton, "tw:xl:hidden"]}
+        data-inkeep-search
+        aria-label="Search the docs or ask AI"
+      >
+        <svg class={strokeIcon} viewBox="0 0 20 20" aria-hidden="true">
+          <path d="M16.5 16.5l-3.4-3.4M3.5 9a5.5 5.5 0 1 1 11 0 5.5 5.5 0 0 1-11 0Z" />
+        </svg>
+      </button>
+      <a
+        id="get-started-btn"
+        class="tw:rounded-lg tw:bg-brand tw:px-4.5 tw:py-3 tw:text-control/4 tw:font-bold tw:whitespace-nowrap tw:text-white tw:no-underline tw:transition-colors tw:hover:bg-brand-hover tw:focus-ring tw:max-xs:px-3 tw:max-xs:py-2.5"
+        href="https://store.metabase.com/checkout"
+      >
+        Get started
+      </a>
+      <DocsMoreMenu />
+    </div>
+  </div>
+</header>
+
+<script>
+  import { belowLg } from "./breakpoints";
+
+  const root = document.documentElement;
+
+  // Below lg on doc pages the header slides away while the reader scrolls
+  // down and comes back on the way up, leaving the section bar at the top.
+  // <html data-docs-header="hidden"> drives it (`header-hidden:` here,
+  // --spacing-header-offset for the bar, the drawer and its backdrop). Inert
+  // while hidden, so Tab skips it. It stays put while the drawer or a header
+  // menu is open, or while keyboard focus is in it.
+  const header = document.querySelector<HTMLElement>(
+    "header[data-hide-on-scroll]",
+  );
+
+  // ?hide_nav=true (navigation-header.js) removes the header for good, so
+  // the section bar goes to the top.
+  if (new URLSearchParams(location.search).get("hide_nav") === "true") {
+    root.dataset.docsHeader = "hidden";
+  } else if (header) {
+    // Scrolls shorter than this neither hide nor show it.
+    const THRESHOLD = 25;
+
+    const setHidden = (hidden: boolean) => {
+      if (hidden) {
+        root.dataset.docsHeader = "hidden";
+      } else {
+        delete root.dataset.docsHeader;
+      }
+      header.inert = hidden;
+    };
+
+    // `last` only moves once a scroll passes the threshold, so slow scrolls
+    // add up.
+    let last = scrollY;
+    addEventListener(
+      "scroll",
+      () => {
+        const y = scrollY;
+        if (Math.abs(y - last) < THRESHOLD) return;
+        if (root.dataset.docsNav !== "open") {
+          setHidden(
+            belowLg.matches &&
+              y > last &&
+              y > header.offsetHeight &&
+              !header.querySelector(':focus-visible, [aria-expanded="true"]'),
+          );
+        }
+        last = y;
+      },
+      { passive: true },
+    );
+
+    belowLg.addEventListener("change", () => setHidden(false));
+  }
+</script>

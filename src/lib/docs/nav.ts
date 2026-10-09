@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { DOCS_SRC_ROOT, METABASE_REPO_PATH } from "@/constants";
+import { parseDocUrl } from "@/lib/docs/resolveDoc";
 import YAML from "yamljs";
 
 export type NavNode = {
@@ -14,6 +15,113 @@ export type Nav = { categories: NavNode[] };
 export const containsUrl = (n: NavNode, targetUrl: string): boolean =>
   n.url === targetUrl ||
   (n.pages?.some((child) => containsUrl(child, targetUrl)) ?? false);
+
+// The node and everything under it, depth first.
+const walk = (node: NavNode): NavNode[] => [
+  node,
+  ...(node.pages?.flatMap(walk) ?? []),
+];
+
+const isDocsUrl = (url: string) => url.startsWith("/docs/");
+
+// Tab target for a category: prefer a docs section with sub-pages, then any
+// docs url, then anything. Categories often open with /learn links or
+// chrome-less pages like the API reference.
+export const getLandingUrl = (node: NavNode): string | undefined => {
+  if (node.url) return node.url;
+  const linked = walk(node).filter(
+    (n): n is NavNode & { url: string } => !!n.url,
+  );
+  return (
+    linked.find((n) => isDocsUrl(n.url) && n.pages?.length) ??
+    linked.find((n) => isDocsUrl(n.url)) ??
+    linked[0]
+  )?.url;
+};
+
+// For pages the nav doesn't list (about a third of the docs): the category
+// that lists the most pages from the page's directory, or else from the
+// nearest parent directory that has any. Ties go to the earlier category.
+// It stops at the version root, so the docs home and pages outside a version
+// (/docs/all, 404) get none.
+export const getCategoryByDirectory = (
+  nav: Nav,
+  pageUrl: string,
+): NavNode | undefined => {
+  const version = parseDocUrl(pageUrl)?.version;
+  if (!version) return undefined;
+  const root = `/docs/${version}/`;
+  const listed = nav.categories.map((category) => ({
+    category,
+    urls: walk(category).flatMap(({ url }) => (url ? [url.split("#")[0]] : [])),
+  }));
+
+  for (
+    let dir = pageUrl.slice(0, pageUrl.lastIndexOf("/") + 1);
+    dir.length > root.length;
+    dir = dir.slice(0, dir.lastIndexOf("/", dir.length - 2) + 1)
+  ) {
+    let best: NavNode | undefined;
+    let bestCount = 0;
+    for (const { category, urls } of listed) {
+      const count = urls.filter((url) => url.startsWith(dir)).length;
+      if (count > bestCount) {
+        best = category;
+        bestCount = count;
+      }
+    }
+    if (best) return best;
+  }
+  return undefined;
+};
+
+// Category containing pageUrl, or for pages the nav doesn't list, the one
+// that lists their neighbors (getCategoryByDirectory). Undefined for the docs
+// home, /docs/all and 404, so callers decide whether to fall back.
+export const getActiveCategory = (
+  nav: Nav,
+  pageUrl: string,
+): NavNode | undefined =>
+  nav.categories.find((category) => containsUrl(category, pageUrl)) ??
+  getCategoryByDirectory(nav, pageUrl);
+
+type NavLink = { name: string; url: string };
+
+// The pages before and after pageUrl in reading order: the category's nav,
+// depth first. Only docs pages count, once each; links to a section of a
+// page (`#…`) and to other sites are skipped. Empty for pages the category
+// doesn't list.
+export const getPrevNext = (
+  category: NavNode | undefined,
+  pageUrl: string,
+): { prev?: NavLink; next?: NavLink } => {
+  if (!category) return {};
+
+  const pages: NavLink[] = [];
+  const seen = new Set<string>();
+  for (const { name, url } of walk(category)) {
+    if (!url || !isDocsUrl(url) || url.includes("#") || seen.has(url)) continue;
+    seen.add(url);
+    pages.push({ name, url });
+  }
+  const index = pages.findIndex((page) => page.url === pageUrl);
+  if (index === -1) return {};
+
+  return { prev: pages[index - 1], next: pages[index + 1] };
+};
+
+// Header tabs and the drawer's section list, with the page's category
+// (getActiveCategory) marked. A category with no linked pages has nowhere to
+// go, so it gets no entry.
+export type Section = { name: string; href: string; active: boolean };
+
+export const getSections = (nav: Nav, active?: NavNode): Section[] =>
+  nav.categories.flatMap((category) => {
+    const href = getLandingUrl(category);
+    return href
+      ? [{ name: category.name, href, active: category === active }]
+      : [];
+  });
 
 const isRelativeUrl = (url: string) => !/^(\/|[a-z][a-z0-9+.-]*:)/i.test(url);
 
@@ -61,12 +169,12 @@ export const findNavNode = (
 // Finds the url of the nav section (a node with child pages) named `category`.
 // Sections only live one level below the top-level categories.
 export const getCategoryUrl = (
-  version: string,
+  nav: Nav,
   category: string,
 ): string | undefined => {
   const target = category.toLowerCase();
-  return getNavForVersion(version)
-    .categories.flatMap((c) => c.pages ?? [])
+  return nav.categories
+    .flatMap((c) => c.pages ?? [])
     .find(
       (node) =>
         !!node.url && !!node.pages && node.name.toLowerCase() === target,

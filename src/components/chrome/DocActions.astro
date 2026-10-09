@@ -1,0 +1,60 @@
+---
+import CopyMarkdownButton from "@/components/chrome/CopyMarkdownButton.astro";
+import { docAction } from "@/components/chrome/docs-ui";
+import Markdown from "@/icons/markdown.svg";
+import Plug from "@/icons/plug.svg";
+import Stars from "@/icons/stars.svg";
+import { getDocUrls } from "@/lib/docs/docUrls";
+
+// The AI tools row under the doc title (NewDocsLayout puts it after the
+// Markdown's h1 and the summary). Ask AI opens the Inkeep chat
+// (InkeepSearch.astro binds every `data-inkeep-ask-ai`). The MCP link shows
+// only in versions that document the MCP server.
+type Props = {
+  /** URL of the page's Markdown version. */
+  markdownUrl: string;
+  version: string;
+};
+
+const { markdownUrl, version } = Astro.props;
+
+const mcpUrl = `/docs/${version}/ai/mcp`;
+const hasMcp = (await getDocUrls()).has(mcpUrl);
+
+// Every item has a divider on its left. The list sits 12px out to the left
+// and clips its overflow; each item's -1px margin then pushes the divider of
+// whichever item starts a line just outside, so a wrapped line doesn't start
+// with one. py-1 leaves room for the focus rings.
+const item = "tw:m-0 tw:-ml-px tw:flex tw:border-l tw:border-border tw:px-3";
+---
+
+<nav
+  aria-label="AI tools"
+  class="tw:mt-2 tw:mb-6 tw:border-b tw:border-border tw:pb-2 tw:print:hidden"
+>
+  <ul class="tw:m-0 tw:-ml-3 tw:flex tw:list-none tw:flex-wrap tw:gap-y-2 tw:overflow-hidden tw:px-0 tw:py-1">
+    <li class={item}>
+      <button type="button" class={docAction} data-inkeep-ask-ai>
+        <Stars class="tw:size-4" aria-hidden="true" />
+        Ask AI
+      </button>
+    </li>
+    <li class={item}>
+      <CopyMarkdownButton href={markdownUrl} />
+    </li>
+    <li class={item}>
+      <a class={docAction} href={markdownUrl} type="text/markdown">
+        <Markdown class="tw:size-4" aria-hidden="true" />
+        View as Markdown
+      </a>
+    </li>
+    {hasMcp && (
+      <li class={item}>
+        <a class={docAction} href={mcpUrl}>
+          <Plug class="tw:size-4" aria-hidden="true" />
+          Connect your AI agent
+        </a>
+      </li>
+    )}
+  </ul>
+</nav>

@@ -1,66 +1,51 @@
-<nav id="sub-navigation-content" aria-label="On this page"></nav>
+---
+// "On this page" list of the article's h2s from lg up, filled in by the
+// script below. Below lg the section bar's dropdown (TocToggle.astro) lists
+// the same headings.
+---
+
+<div
+  id="sub-navigation-content"
+  class="tw:overflow-y-auto tw:pt-[3em] tw:max-lg:hidden"
+></div>
 
 <script>
   import {
     appendHeadingLinks,
-    currentHeading,
+    markCurrentLink,
     pageHeadings,
   } from "@/lib/page-toc";
 
   const content = document.getElementById("sub-navigation-content")!;
   const headers = pageHeadings();
-  const links = appendHeadingLinks(content, headers);
-  let activeLink: HTMLAnchorElement | null = null;
 
-  const setSelectedLink = () => {
-    const header = currentHeading(headers);
-    const link = header && links.get(header);
-    if (!link || activeLink === link) return;
-    activeLink?.classList.remove("selected");
-    activeLink = link;
-    activeLink.classList.add("selected");
+  // Nothing to list: no heading either.
+  if (headers.length > 0) {
+    const heading = document.createElement("p");
+    heading.className =
+      "tw:mb-6 tw:pl-5 tw:text-sm tw:leading-[1.33] tw:font-bold tw:text-heading";
+    heading.textContent = "On this page";
+    content.appendChild(heading);
+  }
+
+  // The 2px rail plus 18px puts the text 20px in. The focus ring sits
+  // inside: the list scrolls, so it clips overflow. Only the right corners
+  // round; rounded left corners bend the rail.
+  const links = appendHeadingLinks(
+    content,
+    headers,
+    "tw:mb-4 tw:block tw:rounded-r-sm tw:border-l-2 tw:border-transparent tw:pl-4.5 tw:text-sm tw:leading-[1.33] tw:font-normal tw:text-muted tw:no-underline tw:transition-none tw:hover:text-secondary tw:focus-ring tw:focus-visible:-outline-offset-2 tw:aria-[current=true]:border-brand-strong tw:aria-[current=true]:text-heading",
+  );
+
+  let frame = 0;
+  const scheduleUpdate = () => {
+    frame ||= requestAnimationFrame(() => {
+      frame = 0;
+      markCurrentLink(links, headers);
+    });
   };
 
-  document.addEventListener("scroll", setSelectedLink);
-  setSelectedLink();
+  addEventListener("scroll", scheduleUpdate, { passive: true });
+  addEventListener("resize", scheduleUpdate);
+  markCurrentLink(links, headers);
 </script>
-
-<style is:global>
-  #sub-navigation-content {
-    overflow-y: auto;
-    padding-top: 3em;
-
-    &:has(a)::before {
-      color: #22242b;
-      content: "On this page";
-      display: block;
-      font-size: 14px;
-      font-weight: 700;
-      padding: 0 0 1.5rem 20px;
-    }
-
-    a {
-      background: transparent;
-      box-shadow: none;
-      color: #8d93a5;
-      display: block;
-      font-size: 14px;
-      font-weight: 400;
-      line-height: 1.33;
-      margin-bottom: 1rem;
-      padding-bottom: 0;
-      padding-left: 20px;
-      position: relative;
-      transition: initial;
-
-      &::after {
-        content: none;
-      }
-
-      &:hover,
-      &.selected {
-        color: #5a6072;
-      }
-    }
-  }
-</style>

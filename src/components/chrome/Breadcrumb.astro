@@ -1,135 +1,65 @@
 ---
-import { getCategoryUrl } from "@/lib/docs/nav";
+import type { Crumb } from "@/lib/docs/breadcrumbs";
 
+// The page's trail (NewDocsLayout.astro): getDocBreadcrumbs on doc pages,
+// else just the page title (/docs/all).
+//
+// "top-bar": from lg up, in the bar above the article: the vendored Bootstrap
+// breadcrumb, with a long trail truncated at the end.
+//
+// "inline": below lg, at the top of the article. Not the vendored classes:
+// their divider is absolutely positioned for the bar.
 type Props = {
-  page: {
-    url: string;
-    title?: string;
-    category?: string;
-    has_magic_breadcrumbs?: boolean;
-    show_category_breadcrumb?: boolean;
-  };
+  crumbs: Crumb[];
   variant: "top-bar" | "inline";
 };
 
-type Crumb = { label: string; href?: string };
-
-const { page, variant } = Astro.props;
-
-// page.url is /docs/<version>/<category-slug>/...
-const getFallbackCategoryPath = (url: string) => {
-  const slug = url.split("/")[3] ?? "";
-  if (slug === "api") return "api-documentation";
-  if (slug === "troubleshooting-guide") return `${slug}/`;
-  return `${slug}/start`;
-};
-
-const getCrumbs = (page: Props["page"]): Crumb[] => {
-  if (!page.has_magic_breadcrumbs) return [{ label: page.title ?? "" }];
-
-  const version = page.url.split("/")[2];
-  const root = `/docs/${version}/`;
-  const crumbs: Crumb[] = [{ label: "Home", href: root }];
-  if (page.show_category_breadcrumb && page.category) {
-    crumbs.push({
-      label: page.category,
-      href:
-        getCategoryUrl(version, page.category) ??
-        root + getFallbackCategoryPath(page.url),
-    });
-  }
-  return crumbs;
-};
+const { crumbs, variant } = Astro.props;
 ---
 
-<nav class:list={["trail", variant]} aria-label="breadcrumb">
-  <ol>
-    {getCrumbs(page).map(({ label, href }) => (
-      <li>{href ? <a href={href}>{label}</a> : <span>{label}</span>}</li>
-    ))}
-  </ol>
-</nav>
-
-<style>
-  /* Doubled to outrank the legacy `.bootstrap .learn__post a` / `li` rules, which load later. */
-  .trail.trail {
-    ol {
-      align-items: center;
-      display: flex;
-      list-style: none;
-      margin: 0;
-      padding: 0;
-    }
-
-    li {
-      align-items: baseline;
-      display: flex;
-      margin: 0;
-      position: relative;
-      white-space: nowrap;
-    }
-
-    a {
-      color: #509ee3;
-    }
-
-    span {
-      color: #5a6072;
-    }
-
-    &.top-bar {
-      li {
-        font-size: 18px;
-        line-height: 30px;
-      }
-
-      a {
-        font-size: 16px;
-        font-weight: 700;
-      }
-
-      li + li {
-        padding-left: 23px;
-
-        &::before {
-          content: url("/images/chevron_blue_right.svg");
-          left: 7px;
-          position: absolute;
-          top: 50%;
-          transform: translateY(calc(-50% + 3px));
-        }
-      }
-
-      @media (max-width: 991.98px) {
-        display: none;
-      }
-    }
-
-    &.inline {
-      display: none;
-
-      @media (max-width: 991.98px) {
-        display: block;
-
-        ol {
-          margin: 16px 0;
-        }
-
-        li,
-        a,
-        span {
-          color: #5a6072;
-          font-size: 14px;
-          font-weight: 400;
-          line-height: 20px;
-        }
-
-        li + li::before {
-          color: #c6c9d2;
-          content: "/";
-          padding: 0 6px;
-        }
-      }
-    }
-  }
-</style>
+{variant === "top-bar" ? (
+  <nav
+    class="tw:min-w-0 tw:flex-1"
+    style="--bs-breadcrumb-divider: url('/images/chevron_blue_right.svg')"
+    aria-label="breadcrumb"
+  >
+    <ol class="breadcrumb tw:m-0 tw:w-auto tw:flex-nowrap tw:items-center tw:*:whitespace-nowrap tw:*:last:min-w-0 tw:*:last:*:truncate">
+      {crumbs.map(({ name, url }, index) => (
+        <li class="breadcrumb-item">
+          {url ? (
+            <a
+              class:list={[
+                "tw:rounded-sm tw:text-base tw:focus-ring",
+                index > 0 && "blue-60",
+              ]}
+              href={url}
+            >
+              {name}
+            </a>
+          ) : (
+            <span class="tw:text-secondary">{name}</span>
+          )}
+        </li>
+      ))}
+    </ol>
+  </nav>
+) : (
+  <nav class="tw:my-4 tw:lg:hidden tw:print:hidden" aria-label="breadcrumb">
+    <ol class="tw:m-0 tw:flex tw:list-none tw:flex-wrap tw:p-0 tw:*:m-0 tw:*:text-sm/5 tw:*:text-secondary tw:*:not-first:before:px-1.5 tw:*:not-first:before:text-border-strong tw:*:not-first:before:content-['/'_/_'']">
+      {crumbs.map(({ name, url }) => (
+        <li>
+          {url ? (
+            <a
+              class="tw:rounded-sm tw:font-normal tw:text-secondary tw:no-underline tw:hover:text-brand tw:focus-ring"
+              href={url}
+            >
+              {name}
+            </a>
+          ) : (
+            name
+          )}
+        </li>
+      ))}
+    </ol>
+  </nav>
+)}

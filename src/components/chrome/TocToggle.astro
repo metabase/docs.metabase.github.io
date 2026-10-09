@@ -1,239 +1,97 @@
-<button type="button" class="toc-toggle" popovertarget="page-toc">
-  On this page
-  <svg
-    width="16"
-    height="16"
-    viewBox="0 0 24 24"
-    fill="currentColor"
-    aria-hidden="true"
-  >
-    <path
-      d="M12,15.5c-0.3,0-0.5-0.1-0.7-0.3l-6-6c-0.4-0.4-0.4-1,0-1.4s1-0.4,1.4,0l5.3,5.3l5.3-5.3c0.4-0.4,1-0.4,1.4,0s0.4,1,0,1.4l-6,6C12.5,15.4,12.3,15.5,12,15.5z"
-    ></path>
-  </svg>
-</button>
-<nav id="page-toc" popover aria-label="On this page">
+---
+import Chevron from "@/icons/chevron.svg";
+import { menuPanel, quietControl } from "./docs-ui";
+
+// "On this page" in the section bar (SectionBar.astro), below lg, where the
+// right sidebar's list (PageNav.astro) is hidden: a dropdown of the same
+// headings (src/lib/page-toc.ts) that opens like the version selector
+// (dropdown.ts). The root isn't positioned, so the menu hangs from the bar,
+// across the viewport less 16px each side. Unlike the other menus, a choice
+// closes it. Hidden while the nav drawer is open: the bar stays above the
+// drawer.
+---
+
+<div data-dropdown data-toc>
   <button
     type="button"
-    class="return-to-top"
-    popovertarget="page-toc"
-    popovertargetaction="hide"
-    data-return-to-top
+    class:list={[
+      quietControl,
+      "tw:group tw:peer tw:-mr-2 tw:flex tw:items-center tw:gap-1 tw:px-2 tw:py-1.5 tw:whitespace-nowrap tw:nav-open:invisible",
+    ]}
+    aria-expanded="false"
+    data-dropdown-trigger
   >
-    Return to top
+    On this page
+    <Chevron class="tw:size-3 tw:group-aria-expanded:rotate-180 tw:motion-safe:transition-[rotate] tw:motion-safe:duration-200" />
   </button>
-</nav>
+  {/* The fade rides the bottom of the scrollport (sticky) while there is
+      more below. */}
+  <nav
+    class:list={[
+      menuPanel,
+      "tw:inset-x-4 tw:max-h-[min(60dvh,calc(100dvh-var(--tw-spacing-header-offset)-var(--tw-spacing-section-bar)-2rem))] tw:overflow-y-auto tw:overscroll-contain tw:after:pointer-events-none tw:after:sticky tw:after:bottom-0 tw:after:-mt-10 tw:after:block tw:after:h-10 tw:after:bg-linear-to-b tw:after:from-transparent tw:after:to-surface-elevated tw:after:opacity-0 tw:after:motion-safe:transition-opacity tw:data-overflowing:after:opacity-100",
+    ]}
+    aria-label="On this page"
+    data-toc-menu
+  >
+    <button
+      type="button"
+      class="tw:flex tw:w-full tw:cursor-pointer tw:border-0 tw:border-b tw:border-border tw:bg-transparent tw:px-4 tw:py-2 tw:text-left tw:font-sans tw:text-sm tw:text-brand tw:hover:bg-page tw:focus-ring tw:focus-visible:-outline-offset-2"
+      data-return-to-top
+    >
+      Return to top
+    </button>
+  </nav>
+</div>
 
 <script>
+  import "./dropdown";
   import {
     appendHeadingLinks,
-    currentHeading,
+    markCurrentLink,
     pageHeadings,
   } from "@/lib/page-toc";
+  import { menuItem } from "./docs-ui";
 
-  const list = document.getElementById("page-toc")!;
-  const toggle = document.querySelector<HTMLElement>(".toc-toggle")!;
+  const root = document.querySelector<HTMLElement>("[data-toc]")!;
+  const trigger = root.querySelector<HTMLElement>("[data-dropdown-trigger]")!;
+  const menu = root.querySelector<HTMLElement>("[data-toc-menu]")!;
   const headings = pageHeadings();
-  const links = appendHeadingLinks(list, headings);
-  toggle.hidden = headings.length === 0;
 
-  const markOverflow = () =>
-    list.classList.toggle(
-      "overflowing",
-      list.scrollTop + list.clientHeight < list.scrollHeight - 1,
+  // Nothing to list: no dropdown (PageNav.astro shows no list either).
+  if (headings.length === 0) root.remove();
+  else {
+    // font-normal: the vendored bundle bolds links.
+    const links = appendHeadingLinks(
+      menu,
+      headings,
+      `${menuItem} tw:font-normal tw:text-secondary tw:hover:text-brand tw:aria-[current=true]:font-bold tw:aria-[current=true]:text-brand`,
     );
 
-  const onOpen = () => {
-    markOverflow();
-    const current = currentHeading(headings);
-    if (!current) return;
-    links.forEach((link, heading) =>
-      link.classList.toggle("selected", heading === current),
-    );
-  };
+    const close = () => trigger.setAttribute("aria-expanded", "false");
+    const markOverflow = () =>
+      menu.toggleAttribute(
+        "data-overflowing",
+        menu.scrollTop + menu.clientHeight < menu.scrollHeight - 1,
+      );
 
-  const supportsPopover = typeof list.hidePopover === "function";
-  const setOpen = (open: boolean) => {
-    list.classList.toggle("open", open);
-    toggle.setAttribute("aria-expanded", String(open));
-    if (open) onOpen();
-  };
-  const hide = supportsPopover
-    ? () => list.hidePopover()
-    : () => {
-        setOpen(false);
-        toggle.focus();
-      };
-
-  if (supportsPopover) {
-    list.addEventListener("toggle", (event) => {
-      if ((event as ToggleEvent).newState === "open") onOpen();
+    // Marks the section being read each time the menu opens.
+    trigger.addEventListener("click", () => {
+      markCurrentLink(links, headings);
+      markOverflow();
     });
-  } else {
-    toggle.setAttribute("aria-expanded", "false");
-    toggle.addEventListener("click", () =>
-      setOpen(!list.classList.contains("open")),
-    );
-    document.addEventListener("click", (event) => {
-      const target = event.target as Node;
-      if (!list.contains(target) && !toggle.contains(target)) setOpen(false);
-    });
-    document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape" && list.classList.contains("open")) hide();
+    menu.addEventListener("scroll", markOverflow, { passive: true });
+
+    // The jump to a heading happens after the click, so it lands right.
+    menu.addEventListener("click", (event) => {
+      const target = event.target as Element;
+      if (target.closest("[data-return-to-top]")) {
+        scrollTo(0, 0);
+        close();
+        trigger.focus();
+      } else if (target.closest("a")) {
+        close();
+      }
     });
   }
-
-  list.addEventListener("scroll", markOverflow, { passive: true });
-  list.addEventListener("click", (event) => {
-    const target = event.target as Element;
-    const top = target.closest("[data-return-to-top]");
-    if (top) window.scrollTo(0, 0);
-    if (target.closest("a") || (top && !supportsPopover)) hide();
-  });
 </script>
-
-<style is:global>
-  /* Doubled to outrank the legacy `.bootstrap .learn …` button rules. */
-  .toc-toggle.toc-toggle {
-    appearance: none;
-    background-color: transparent;
-    border: 0;
-    color: #5a6072;
-    display: none;
-    flex-shrink: 0;
-    font-size: 14px;
-    font-weight: 400;
-    gap: 2px;
-    line-height: 1;
-    white-space: nowrap;
-
-    svg {
-      transition: rotate 0.2s ease;
-      translate: 0 1px;
-    }
-
-    &:has(+ :popover-open) svg {
-      rotate: 180deg;
-    }
-  }
-
-  #page-toc {
-    --dropdown-top: calc(
-      var(--section-bar-top, 0px) + var(--section-bar-height, 0px) + 8px
-    );
-
-    background-color: #fff;
-    border: 1px solid #eeecec;
-    border-radius: 8px;
-    box-shadow: 0 12px 32px rgba(34, 36, 43, 0.16);
-    height: auto;
-    inset: var(--dropdown-top) 16px auto 16px;
-    margin: 0;
-    max-height: min(60dvh, calc(100dvh - var(--dropdown-top) - 24px));
-    overflow-y: auto;
-    overscroll-behavior: contain;
-    padding: 6px 8px 0;
-    transition:
-      opacity 0.2s ease,
-      top 0.2s ease,
-      translate 0.2s ease;
-    width: auto;
-
-    &:popover-open {
-      @starting-style {
-        opacity: 0;
-        translate: 0 -8px;
-      }
-    }
-
-    /* Sticky so it rides the scrollport's bottom edge; JS hides it once the end is in view. */
-    &::after {
-      background: linear-gradient(to bottom, rgba(255, 255, 255, 0), #fff);
-      bottom: 0;
-      content: "";
-      display: block;
-      height: 40px;
-      margin-top: -40px;
-      opacity: 0;
-      pointer-events: none;
-      position: sticky;
-      transition: opacity 0.2s ease;
-    }
-
-    &.overflowing::after {
-      opacity: 1;
-    }
-
-    .return-to-top {
-      appearance: none;
-      background-color: transparent;
-      border: 0;
-      border-bottom: 1px solid #eeecec;
-      border-radius: 0;
-      color: #509ee3;
-      display: block;
-      font-size: 15px;
-      font-weight: 400;
-      line-height: 1.33;
-      margin-bottom: 4px;
-      padding: 8px 8px 10px;
-      text-align: left;
-      width: 100%;
-    }
-
-    a {
-      background: transparent;
-      border-radius: 8px;
-      box-shadow: none;
-      color: #5a6072;
-      display: block;
-      font-size: 15px;
-      font-weight: 400;
-      line-height: 1.33;
-      padding: 6px 8px;
-      position: relative;
-
-      &::after {
-        content: none;
-      }
-
-      &:last-of-type {
-        margin-bottom: 6px;
-      }
-
-      &.selected {
-        background-color: #eef6fc;
-        color: #509ee3;
-        font-weight: 700;
-      }
-    }
-  }
-
-  @supports not selector(:popover-open) {
-    #page-toc {
-      position: fixed;
-      z-index: 20;
-
-      &:not(.open) {
-        display: none;
-      }
-    }
-
-    .toc-toggle.toc-toggle:has(+ .open) svg {
-      rotate: 180deg;
-    }
-  }
-
-  @media (max-width: 991.98px) {
-    .toc-toggle.toc-toggle:not([hidden]) {
-      align-items: center;
-      display: inline-flex;
-    }
-  }
-
-  @media (min-width: 992px) {
-    #page-toc {
-      display: none;
-    }
-  }
-</style>

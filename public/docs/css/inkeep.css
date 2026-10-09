@@ -3,87 +3,45 @@ inkeep-portal {
   z-index: 100000;
 }
 
-.ikp-search-bar-trigger__container {
-  font-family: Lato, "Helvetica Neue", Helvetica, sans-serif;
+/* Push the modal below the docs header (--spacing-header-offset in
+   src/styles/docs.css: 0 while the header is hidden on scroll). The content
+   is position: fixed, so this margin is what moves it; padding on its
+   .ikp-modal__overlay parent would not. */
+.ikp-modal__content {
+  margin-top: var(--tw-spacing-header-offset);
 }
 
 .ikp-modal-widget__content {
-  font-family: Lato, sans-serif;
+  font-family: var(--tw-font-sans);
 }
 
 .ikp-ai-chat__toolbar-header {
   visibility: hidden;
 }
 
-.ikp-search-bar-trigger__wrapper .ikp-btn {
-  background-color: #eef6fc;
-  border: 1px solid #e4ecfb;
+/* Match the 8px radius of the docs header's buttons. */
+.ikp-search-bar__button {
+  border-radius: 8px;
 }
 
-.ikp-search-bar-trigger__wrapper {
-  background-color: #eef6fc;
-  border-radius: 6px;
-  transition: background-color 0.3s ease;
-}
-
-.ikp-search-bar-trigger__wrapper:hover {
-  background-color: white;
-}
-
-.ikp-search-bar-trigger__container--variant_subtle:is(:hover,[data-hover]) {
-  background-color: #eef6fc !important;
+/* The font and size of the Get started button beside it (theme variables
+   from src/styles/docs.css). Inkeep's Inter looks larger at the same size. */
+.ikp-search-bar__text {
+  font-family: var(--tw-font-sans);
+  font-size: var(--tw-text-control);
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .ikp-ai-chat-page-wrapper {
   padding-top: 10px;
 }
 
-.ikp-search-bar-trigger__text--size_compact {
-  font-size: 14px;
-}
-
-.ikp-switch-view-toggle {
-  background-color: transparent;
-  border: 1px solid #e2e4e9;
-  margin-right: 8px;
-}
-
-.ikp-switch-view-toggle button {
-  font-size: 14px;
-  font-weight: 700;
-  margin-left: 6px;
-  padding: 18px;
-  transition: background-color 0.2s ease, color 0.2s ease;
-}
-
-.ikp-switch-view-toggle button:hover {
-  background-color: #fafbfe;
-}
-
-.ikp-switch-view-toggle button:first-child {
-  margin-left: 0;
-}
-
-.ikp-switch-view-toggle__button--active {
-  background-color: #eef6fc;
-  border: none;
-  box-shadow: none;
-  color: #509ee3;
-}
-
-.ikp-switch-view-toggle__button--active:hover {
-  background-color: #eef6fc !important;
-  border: none;
-  color: #509ee3;
-}
-
-.ikp-switch-view-toggle__button--active svg path {
-  fill: #509ee3;
-}
-
 .ikp-code {
-  background-color: #f9fbfe;
-  color: #5a6072;
+  background-color: var(--tw-color-code-bg);
+  color: var(--tw-color-secondary);
   font-weight: 400;
 }
 
@@ -99,30 +57,11 @@ div.ikp-d_flex.ikp-flex_row.ikp-items_center.ikp-pt_3.ikp-pb_1:has(.ikp-search-b
 }
 
 .ikp-ai-chat__message-box {
-  background-color: #eef6fc;
-  border: 1px solid #e4ecfb;
+  background-color: var(--tw-color-surface-hover);
+  border: 1px solid var(--tw-color-border);
   box-shadow: none;
 }
 
 .ikp-ai-chat-footer__content-wrapper {
   padding-bottom: 30px;
-}
-
-@media (max-width: 991.98px) {
-  .ikp-search-bar__text,
-  .ikp-search-bar__kbd-wrapper {
-    display: none;
-  }
-
-  .ikp-search-bar__button {
-    background: none;
-    border: 0;
-    justify-content: center;
-    padding: 0;
-  }
-
-  .ikp-search-bar__icon {
-    color: #5a6072;
-    font-size: 18px;
-  }
 }

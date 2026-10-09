@@ -1,15 +1,19 @@
 import { satteri } from "@astrojs/markdown-satteri";
 import { codeDefaultsHastPlugin } from "./plugins/codeDefaultsHastPlugin";
 import { ialHastPlugin } from "./plugins/ialHastPlugin";
+import { referenceTableHastPlugin } from "./plugins/referenceTableHastPlugin";
 import { relativeImagePlugin } from "./plugins/relativeImagePlugin";
 import { responsiveTableLabelsHastPlugin } from "./plugins/responsiveTableLabelsHastPlugin";
+import { statusIconHastPlugin } from "./plugins/statusIconHastPlugin";
 
 const docsMarkdownProcessor = satteri({
   hastPlugins: [
     ialHastPlugin,
     codeDefaultsHastPlugin,
     responsiveTableLabelsHastPlugin,
+    referenceTableHastPlugin,
     relativeImagePlugin,
+    statusIconHastPlugin,
   ],
   features: {
     headingAttributes: true,

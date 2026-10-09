@@ -1,22 +1,46 @@
 ---
-import { TOP_BAR_ID } from "@/constants";
+// Buttons marked `data-inkeep-search` open the widget in the visitor's
+// preferred view; `data-inkeep-ask-ai` opens it straight into chat.
+type Props = {
+  class?: string;
+};
+
+const { class: className } = Astro.props;
 ---
 
-<div id="inkeep" data-top-bar-id={TOP_BAR_ID}></div>
+<div id="inkeep" class={className}></div>
 
 <script>
-  import { MODAL_STYLE, positionModal } from "./position-modal";
-
   // cxkit-js declares sideEffects: false, so a bare static import gets tree-shaken.
   await import("@inkeep/cxkit-js");
 
-  const topBarId = document.getElementById("inkeep")?.dataset.topBarId ?? "";
+  // cxkit-types doesn't declare setView; it is undefined until the component
+  // has mounted.
+  type View = "search" | "chat";
+  type SearchBar = ReturnType<typeof window.Inkeep.SearchBar> & {
+    setView?: (view: View) => void;
+  };
 
-  let widget: ReturnType<typeof window.Inkeep.SearchBar> | undefined =
-    undefined;
+  const VIEW_KEY = "mb-docs-search-view";
+
+  const getStoredView = (): View => {
+    try {
+      return localStorage.getItem(VIEW_KEY) === "chat" ? "chat" : "search";
+    } catch {
+      return "search";
+    }
+  };
+
+  // The view the visitor last picked with the Search/Ask toggle.
+  let preferredView = getStoredView();
+
+  let widget: SearchBar | undefined;
   const onOpenChange = (open: boolean) => {
-    if (open) positionModal(topBarId);
     widget?.update({ modalSettings: { isOpen: open, onOpenChange } });
+    // The widget keeps its last view across closes; without this, the search
+    // bar would reopen on chat after "Ask AI" even for visitors who prefer
+    // search.
+    if (!open) widget?.setView?.(preferredView);
   };
 
   widget = window.Inkeep.SearchBar("#inkeep", {
@@ -25,10 +49,14 @@ import { TOP_BAR_ID } from "@/constants";
       organizationDisplayName: "Metabase",
       primaryBrandColor: "#509EE3",
       theme: {
-        styles: [
-          { type: "link", value: "/docs/css/inkeep.css" },
-          { type: "style", value: MODAL_STYLE },
-        ],
+        styles: [{ type: "link", value: "/docs/css/inkeep.css" }],
+      },
+      colorMode: {
+        sync: {
+          target: document.documentElement,
+          attributes: ["data-theme"],
+          isDarkMode: (attributes) => attributes["data-theme"] === "dark",
+        },
       },
     },
     aiChatSettings: {
@@ -45,26 +73,35 @@ import { TOP_BAR_ID } from "@/constants";
       userAvatar: "/images/icons/person.svg",
     },
     searchSettings: {
-      placeholder: "Search",
+      placeholder: "Search the docs or ask AI…",
     },
     shouldShowAskAICard: false,
     askAILabel: "Ask",
-    forceDefaultView: "search",
+    defaultView: preferredView,
+    // Fires for clicks on the toggle only, not for our own setView calls.
+    onToggleView: ({ view }: { view: View }) => {
+      preferredView = view;
+      try {
+        localStorage.setItem(VIEW_KEY, view);
+      } catch {
+        /* storage blocked; the choice lasts for this page only */
+      }
+    },
     modalSettings: {
       shortcutKey: "k",
       isOpen: false,
       onOpenChange,
     },
   });
-</script>
 
-<style>
-  @media (max-width: 991.98px) {
-    #inkeep {
-      background: none;
-      flex: none;
-      min-width: 0;
-      width: 34px;
-    }
-  }
-</style>
+  document.querySelectorAll("[data-inkeep-search]").forEach((button) => {
+    button.addEventListener("click", () => onOpenChange(true));
+  });
+
+  document.querySelectorAll("[data-inkeep-ask-ai]").forEach((button) => {
+    button.addEventListener("click", () => {
+      onOpenChange(true);
+      widget?.setView?.("chat");
+    });
+  });
+</script>

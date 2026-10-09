@@ -1,0 +1,74 @@
+---
+import VersionTag from "@/components/chrome/VersionTag.astro";
+import Chevron from "@/icons/chevron.svg";
+import { getDocUrls } from "@/lib/docs/docUrls";
+import { findDocInVersion } from "@/lib/docs/resolveDoc";
+import { toShortVersion } from "@/lib/docs/versionSupport";
+import { baseCtx } from "@/lib/liquid/liquidRenderer";
+import { menuItem, menuPanel, quietControl } from "./docs-ui";
+
+// At the top of the left sidebar (LeftSidebar.astro). The trigger's
+// aria-expanded drives the open state (dropdown.ts): `aria-expanded:` on the
+// trigger itself, `group-aria-expanded:` on its chevron and
+// `peer-aria-expanded:` on the menu that follows it. Each version links to
+// the same page in that version when it has one, else to its home.
+type Props = {
+  version: string;
+  pageUrl: string;
+};
+
+const { version, pageUrl } = Astro.props;
+const docUrls = await getDocUrls();
+
+const { available_versions: availableVersions, docs_version: docsVersion } =
+  baseCtx.site as { available_versions: string[]; docs_version: string };
+
+const currentLabel = version === "latest" ? docsVersion : version;
+
+const otherVersions = [...availableVersions]
+  .reverse()
+  .slice(0, 10)
+  .filter((v) => v !== currentLabel);
+---
+
+<div class="tw:relative" data-dropdown>
+  {/* 8px left padding lines the label up with the nav link text. */}
+  <button
+    type="button"
+    class:list={[
+      quietControl,
+      "tw:group tw:peer tw:flex tw:items-center tw:gap-1.5 tw:px-2 tw:py-1.5 tw:select-none",
+    ]}
+    aria-expanded="false"
+    data-dropdown-trigger
+  >
+    {toShortVersion(currentLabel)}
+    <VersionTag version={currentLabel} />
+    <Chevron class="tw:size-3 tw:group-aria-expanded:rotate-180 tw:motion-safe:transition-[rotate] tw:motion-safe:duration-200" />
+  </button>
+  <ul class:list={[menuPanel, "tw:left-0"]}>
+    {otherVersions.map((v) => (
+      <li class="tw:m-0">
+        <a
+          href={findDocInVersion(docUrls, pageUrl, v)}
+          class:list={[
+            menuItem,
+            "tw:justify-between tw:text-secondary tw:hover:text-brand",
+          ]}
+        >
+          <span>{toShortVersion(v)}</span>
+          <VersionTag version={v} />
+        </a>
+      </li>
+    ))}
+    <li class="tw:m-0">
+      <a class:list={[menuItem, "tw:font-bold tw:text-brand"]} href="/docs/all">
+        See more
+      </a>
+    </li>
+  </ul>
+</div>
+
+<script>
+  import "./dropdown";
+</script>

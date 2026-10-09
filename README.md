@@ -61,10 +61,13 @@ retired (GRO-828) and then pruned to what the rendered docs pages actually use
 | ---------------- | ------------------------------------------------------------------------------------------- |
 | `styles.css`     | Minified Bootstrap 5 subset (scoped under `.bootstrap`) plus the header, footer, `.learn` docs layout, breadcrumb, in-page promo and code-copy styles ported from the marketing bundle. |
 | `main.css`       | Legacy global styles: typography, links, lists, tables, `.Button`, the old (pre-v0.44) docs layout, image zoom and the feedback widget. Linted by stylelint. |
-| `docs.css`       | Docs-only overrides for the old docs layout (`.MB-Documentation`, `.container-docs`).       |
-| `docs-local.css` | Styles that only ever lived in this repo (version selector tags, unsupported-version notice). Loaded last so it can override the files above. |
+| `docs.css`       | Docs-only overrides for the old docs layout (`.MB-Documentation`, `.container-docs`) and the unsupported-version notice. |
 | `gdpr.css`       | Metabase theme for the vendored GDPR cookie notice (`public/docs/gdpr-cookie-notice`).      |
 | `inkeep.css`     | Theme for the Inkeep search/chat widget.                                                    |
+
+Themed docs pages don't link these files: `src/styles/docs.css` imports
+`docs.css`, `styles.css`, `main.css` and `gdpr.css` into its `legacy` cascade
+layer. A prune must keep the rules those pages use too.
 
 Sections that remain large on purpose:
 

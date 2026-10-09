@@ -1,0 +1,48 @@
+---
+import { getPrevNext, type NavNode } from "@/lib/docs/nav";
+
+// Previous and next links at the end of a doc, in the order its category's
+// nav lists pages (getPrevNext). Pages the nav doesn't list get none.
+type Props = {
+  category?: NavNode;
+  pageUrl: string;
+};
+
+const { category, pageUrl } = Astro.props;
+
+const { prev, next } = getPrevNext(category, pageUrl);
+
+const card =
+  "tw:flex tw:flex-col tw:gap-1 tw:rounded-lg tw:border tw:border-border tw:bg-surface tw:px-4 tw:py-3 tw:no-underline tw:transition-colors tw:hover:border-brand tw:focus-ring";
+// font-normal: the vendored bundle bolds every link.
+const label = "tw:text-sm tw:font-normal tw:text-muted";
+const name = "tw:font-bold tw:text-heading";
+---
+
+{(prev || next) && (
+  <nav
+    class="tw:mt-12 tw:grid tw:gap-3 tw:sm:grid-cols-2 tw:print:hidden"
+    aria-label="Previous and next pages"
+  >
+    {prev && (
+      <a class={card} href={prev.url} rel="prev">
+        <span class={label}>
+          <span aria-hidden="true">← </span>Previous
+        </span>
+        <span class={name}>{prev.name}</span>
+      </a>
+    )}
+    {next && (
+      <a
+        class:list={[card, "tw:text-right tw:sm:col-start-2"]}
+        href={next.url}
+        rel="next"
+      >
+        <span class={label}>
+          Next<span aria-hidden="true"> →</span>
+        </span>
+        <span class={name}>{next.name}</span>
+      </a>
+    )}
+  </nav>
+)}

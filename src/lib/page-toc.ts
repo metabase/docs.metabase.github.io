@@ -1,21 +1,50 @@
+// The article's section headings, for the two "On this page" lists: the
+// right sidebar's from lg up (PageNav.astro) and the section bar's dropdown
+// below it (TocToggle.astro).
 export const pageHeadings = (): HTMLHeadingElement[] =>
-  Array.from(document.querySelectorAll("h2"));
+  Array.from(
+    document.querySelectorAll<HTMLHeadingElement>(".docs-prose h2[id]"),
+  );
 
-export function appendHeadingLinks(
+/** Appends a link to each heading to `container`, in order. */
+export const appendHeadingLinks = (
   container: HTMLElement,
   headings: HTMLHeadingElement[],
-): Map<HTMLHeadingElement, HTMLAnchorElement> {
-  const links = new Map<HTMLHeadingElement, HTMLAnchorElement>();
-  for (const heading of headings) {
+  className: string,
+): HTMLAnchorElement[] =>
+  headings.map((heading) => {
     const link = document.createElement("a");
     link.href = `#${heading.id}`;
     link.innerText = heading.innerText;
+    link.className = className;
     container.appendChild(link);
-    links.set(heading, link);
-  }
-  return links;
-}
+    return link;
+  });
 
-/** The first section heading still below the top of the viewport. */
-export const currentHeading = (headings: HTMLHeadingElement[]) =>
-  headings.find((heading) => heading.getBoundingClientRect().top > 0);
+/**
+ * The section being read: the last heading that has scrolled up to where
+ * anchor links land (scroll-padding-top, src/styles/docs.css), or the first.
+ */
+const currentHeadingIndex = (headings: HTMLHeadingElement[]): number => {
+  const line =
+    (parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) ||
+      0) + 8;
+  return Math.max(
+    headings.findLastIndex(
+      (heading) => heading.getBoundingClientRect().top <= line,
+    ),
+    0,
+  );
+};
+
+/** Marks the link to the section being read with aria-current="true". */
+export const markCurrentLink = (
+  links: HTMLAnchorElement[],
+  headings: HTMLHeadingElement[],
+) => {
+  const current = currentHeadingIndex(headings);
+  links.forEach((link, index) => {
+    if (index === current) link.setAttribute("aria-current", "true");
+    else link.removeAttribute("aria-current");
+  });
+};

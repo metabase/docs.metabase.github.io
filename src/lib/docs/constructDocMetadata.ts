@@ -1,4 +1,4 @@
-// Extracted from lib/fetch-docs.js so it can be used in script/docs (for cross-repo ingestion) and [...slug].astro for JIT processing
+// Extracted from lib/fetch-docs.js so it can be used in script/docs (for cross-repo ingestion) and the doc page routes (src/lib/docs/docPages.ts) for JIT processing
 import path from "node:path";
 import toTitleCase from "titlecase";
 
@@ -36,8 +36,9 @@ function formatDocTitle(filename: string) {
     .join(" ");
 }
 
+// GitHub's editor for the doc's source on master, where docs changes land.
 function constructSourceUrl(path: string) {
-  const baseUrl = "https://github.com/metabase/metabase/blob/master/";
+  const baseUrl = "https://github.com/metabase/metabase/edit/master/";
   const source = path.split("/");
   source.splice(0, 1);
   return baseUrl + source.join("/");

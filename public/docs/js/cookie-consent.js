@@ -272,8 +272,9 @@
     // locales
     gdprCookieNoticeLocales = {
       en: {
-        description:
-          "Like so many others, we use cookies to improve your experience on this website. We assume you're OK with it, but you can opt out if you want.",
+        // Shown as the one-line label of the cookie pill (gdpr.css), which
+        // has no room for more.
+        description: "We use cookies.",
         settings: "Settings",
         accept: "Accept cookies",
         statement: "Our cookie statement",

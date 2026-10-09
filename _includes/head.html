@@ -1,7 +1,7 @@
 <head>
   <meta charset="utf-8" />
   <meta content="IE=edge" http-equiv="X-UA-Compatible" />
-  <meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport" />
+  <meta content="width=device-width, initial-scale=1" name="viewport" />
 
   <meta content="frame-ancestors 'none'" http-equiv="Content-Security-Policy" />
   <meta content="deny" http-equiv="X-Frame-Options" />
@@ -32,6 +32,9 @@
   {% include docs-metadata.html %}
 
   {% include schema-markup.html %}
+  {% if include.json_ld %}
+  <script type="application/ld+json">{{ include.json_ld }}</script>
+  {% endif %}
 
   {% if jekyll.environment == "development" %}
   <link href="/docs/images/favicon-dev.svg" rel="shortcut icon" />
@@ -43,13 +46,12 @@
   <link rel="apple-touch-icon" href="/docs/images/apple-touch-icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  {% include chrome/stylesheets.html %}
-
-  {% comment %}
-  Loaded after the local chrome so it can override those stylesheets. Must stay
-  outside the canonical-URL block above, which skips versioned docs pages.
-  {% endcomment %}
-  <link rel="stylesheet" href="/docs/css/docs-local.css" />
+  {% if include.docs_theme %}
+  <script>
+    {% include docs/theme-init.js %}
+  </script>
+  {% endif %}
+  {% include chrome/stylesheets.html docs_theme=include.docs_theme %}
 
   {% if page.url contains "/data-stack-report-2023/" %}
   <!-- Cooper Font -->

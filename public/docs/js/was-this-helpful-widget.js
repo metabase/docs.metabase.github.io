@@ -37,13 +37,23 @@
 
   /**
    * We need to link to the GitHub page for the article so that people can propose changes.
+   * Docs pages render that link (page.source_url) in #page-feedback-footer;
+   * the path guess below is for pages without it, and misses docs whose URL
+   * isn't their file path.
    * @param {string} pathName
-   * @returns {string} URL to the GitHub page for the article
+   * @returns {string} URL to GitHub's editor for the article
    */
   function getGitHubURL(pathName) {
+    // The attribute, not .href: an empty href would resolve to this page.
+    const renderedLink = document.querySelector("#page-feedback-footer a");
+    const renderedURL = renderedLink && renderedLink.getAttribute("href");
+    if (renderedURL) {
+      return renderedURL;
+    }
+
     const regex = /^\/docs\/(?:latest|v\d+\.\d+)\/(.*)/;
     const newPath = pathName.replace(regex, "$1");
-    const host = "https://github.com/metabase/metabase/blob/master/docs/";
+    const host = "https://github.com/metabase/metabase/edit/master/docs/";
     return host + updatePath(newPath);
   }
 
