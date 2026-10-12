@@ -211,6 +211,12 @@
 
   // analytics
 
+  // VWO consent states: 1 = accepted, 3 = rejected (2 = pending is the
+  // initial state set in `_includes/marketing-vwo.html`).
+  function setVwoConsent(accepted) {
+    window.VWO?.init?.(accepted ? 1 : 3);
+  }
+
   let hasAnalyticsScripts = false;
   let haveConsent;
   function loadAnalyticsScripts(accepted) {
@@ -260,6 +266,9 @@
       (gdprcookie.analytics === undefined &&
         !geolocation.hasCookiePolicyRestriction);
     loadAnalyticsScripts(accepted);
+    // A stored choice was already passed to VWO in `marketing-vwo.html`; this
+    // covers implied consent outside restricted countries.
+    if (accepted) setVwoConsent(true);
   }
 
   function checkBarDismissed() {
@@ -332,9 +341,10 @@
       loadMarketingScripts();
     }
 
-    loadAnalyticsScripts(
-      typeof e.detail === "boolean" ? e.detail : e.detail.analytics,
-    );
+    const analytics =
+      typeof e.detail === "boolean" ? e.detail : e.detail.analytics;
+    loadAnalyticsScripts(analytics);
+    setVwoConsent(analytics);
 
     document.body.classList.add("cookies-accepted");
     hideBar();
