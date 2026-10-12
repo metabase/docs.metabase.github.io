@@ -2,6 +2,7 @@
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import NewDocsLayout from "@/layouts/NewDocsLayout.astro";
+import { docsVersionHref } from "@/lib/docs/versionHref";
 import { baseCtx } from "@/lib/liquid/liquidRenderer";
 
 const { site } = baseCtx;
@@ -51,7 +52,7 @@ const dirname = path.dirname(fileURLToPath(import.meta.url));
       return (
         <li>
           <p>
-            <a href={`/docs/${version}/`}>
+            <a href={docsVersionHref(version, site.docs_version)}>
               {version}{" "}
               {support.status === "unsupported" ? (
                 <span class="version__tag version__tag--unsupported">
