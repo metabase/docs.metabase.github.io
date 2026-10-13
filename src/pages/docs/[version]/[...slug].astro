@@ -62,7 +62,12 @@ const page = { url, ...doc.data };
 
 // Process liquid first (e.g. control flow, includes, variables, etc)
 const lq = getLiquidRenderer({ page, dirname });
-const lqOutput = await lq.render(doc.body!, undefined, {
+// Standalone `.html` docs skip the shared head, so add VWO to their own `<head>`.
+const lqSource =
+  kind === "html"
+    ? doc.body!.replace("</head>", "{% include marketing-vwo.html %}</head>")
+    : doc.body!;
+const lqOutput = await lq.render(lqSource, undefined, {
   maxSyntaxErrors: version === "latest" ? 0 : 3,
 });
 
