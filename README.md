@@ -1,5 +1,9 @@
 # Metabase docs site
 
+> [!IMPORTANT]
+> **This repository is archived.** The docs site now lives in [`apps/docs`](https://github.com/metabase/metabase.github.io/tree/master/apps/docs) in the [metabase/metabase.github.io](https://github.com/metabase/metabase.github.io) monorepo.
+> The docs content itself is still in [metabase/metabase](https://github.com/metabase/metabase/tree/master/docs).
+
 An Astro site that renders the Metabase docs.
 
 ## Quick start
