@@ -11,7 +11,8 @@ import { menuItem, menuPanel, quietControl } from "./docs-ui";
 // aria-expanded drives the open state (dropdown.ts): `aria-expanded:` on the
 // trigger itself, `group-aria-expanded:` on its chevron and
 // `peer-aria-expanded:` on the menu that follows it. Each version links to
-// the same page in that version when it has one, else to its home.
+// the same page in that version when it has one, else to its home. The
+// current stable version links to latest instead (as in versionHref.ts).
 type Props = {
   version: string;
   pageUrl: string;
@@ -50,7 +51,11 @@ const otherVersions = [...availableVersions]
     {otherVersions.map((v) => (
       <li class="tw:m-0">
         <a
-          href={findDocInVersion(docUrls, pageUrl, v)}
+          href={findDocInVersion(
+            docUrls,
+            pageUrl,
+            v === docsVersion ? "latest" : v,
+          )}
           class:list={[
             menuItem,
             "tw:justify-between tw:text-secondary tw:hover:text-brand",

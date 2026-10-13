@@ -12,9 +12,17 @@ type Props = {
   version: string;
   category?: NavNode;
   sections: Section[];
+  /** False on /docs/all, which lists every version. */
+  versionSelector?: boolean;
 };
 
-const { url: pageUrl, version, category, sections } = Astro.props;
+const {
+  url: pageUrl,
+  version,
+  category,
+  sections,
+  versionSelector = true,
+} = Astro.props;
 
 // The lists keep the vendored margins (16px top-level, 9px above a group's
 // pages); the layout was tuned with them.
@@ -35,9 +43,11 @@ const list = "tw:list-none tw:p-0";
       links scroll under it out of sight; it keeps 16px of the top padding.
       Sticky offsets count from inside the padding, so the negative top
       (the padding) puts it at the very top. */}
-  <div class="tw:sticky tw:-top-7.5 tw:z-10 tw:-mx-3 tw:-mt-4 tw:mb-1 tw:bg-surface tw:px-3 tw:pt-4 tw:pb-2 tw:max-lg:-top-4 tw:lg:-mr-2.5 tw:lg:pr-2.5">
-    <DocsVersionSelector version={version} pageUrl={pageUrl} />
-  </div>
+  {versionSelector && (
+    <div class="tw:sticky tw:-top-7.5 tw:z-10 tw:-mx-3 tw:-mt-4 tw:mb-1 tw:bg-surface tw:px-3 tw:pt-4 tw:pb-2 tw:max-lg:-top-4 tw:lg:-mr-2.5 tw:lg:pr-2.5">
+      <DocsVersionSelector version={version} pageUrl={pageUrl} />
+    </div>
+  )}
   <nav
     class="tw:max-lg:mb-3 tw:max-lg:border-b tw:max-lg:border-border-subtle tw:max-lg:pb-2 tw:lg:hidden"
     aria-label="Documentation sections"

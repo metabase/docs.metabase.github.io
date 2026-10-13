@@ -48,6 +48,7 @@ const { page, dirname, markdownUrl, summary } = Astro.props;
 // The path after the version: "" on the docs home, undefined outside a
 // version (/docs/all). Only doc pages get structured data, the AI tools row,
 // prev/next and the feedback widget; the docs home also has no breadcrumbs.
+// /docs/all lists every version, so it gets no version selector.
 const docPath = parseDocUrl(page.url)?.path;
 const isDocsHome = docPath === "";
 const isDocPage = !!docPath;
@@ -107,6 +108,7 @@ const split =
         version={version}
         category={category ?? nav.categories[0]}
         {sections}
+        versionSelector={docPath !== undefined}
       />
       {/* Click target behind the mobile nav drawer (SectionBar.astro's toggle
           opens it, LeftSidebar.astro's script); it fades the way the drawer
