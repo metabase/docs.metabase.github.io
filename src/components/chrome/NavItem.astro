@@ -18,16 +18,16 @@ const selected = isCurrent ? "selected" : "";
 
 <li class={expanded ? "expanded" : ""}>
   {hasChildren ? (
-    <button
-      type="button"
-      class={selected}
-      aria-expanded={expanded}
-    >
+    <button type="button" class={selected} aria-expanded={expanded}>
       {node.name}
       <Chevron />
     </button>
   ) : (
-    <a href={node.url} class={selected} aria-current={isCurrent ? "page" : undefined}>
+    <a
+      href={node.url}
+      class={selected}
+      aria-current={isCurrent ? "page" : undefined}
+    >
       {node.name}
     </a>
   )}
