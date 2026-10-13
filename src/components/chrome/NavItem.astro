@@ -12,21 +12,26 @@ const { node, pageUrl } = Astro.props;
 
 const hasChildren = Boolean(node.pages && node.pages.length > 0);
 const expanded = containsUrl(node, pageUrl);
+const isCurrent = pageUrl === node.url;
+const selected = isCurrent ? "selected" : "";
+const current = isCurrent ? "page" : undefined;
 ---
 
 <li class={expanded ? "expanded" : ""}>
-  <a href={node.url} class={pageUrl === node.url ? "selected" : ""}>
-    {node.name}
-  </a>
-
-  {hasChildren && (
+  {hasChildren ? (
     <button
       type="button"
+      class={selected}
+      aria-current={current}
       aria-expanded={expanded}
-      aria-label={`Toggle ${node.name}`}
     >
+      {node.name}
       <Chevron />
     </button>
+  ) : (
+    <a href={node.url} class={selected} aria-current={current}>
+      {node.name}
+    </a>
   )}
 
   {hasChildren && (
